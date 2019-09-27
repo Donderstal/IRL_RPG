@@ -4,33 +4,37 @@
     function handleButtonHover() {
         console.log('why u hovering bro?1')
     }
+    import GfxContainer from './game-gfx-container/GfxContainer.svelte'
+    import UIContainer from './game-ui-container/UIContainer.svelte'
+    import TxtContainer from './game-txt-container/TxtContainer.svelte'
+
 </script>
 
 <style>
-    div {
-        text-align: center
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 1000px;
+        margin: 0 auto;
+        height: 80vh;
+        border-left: 1px groove #190019;
+        border-right: 1px groove #190019;
+        box-shadow: -15px 0 15px -15px inset;
     }
 
-    button, .welcome {
-        display: inline-block;
-        width: 33vw;
+    .buttonCont{
+        flex: 50%;
     }
 
-    .buttonCont {
-        width: 47vw;
-        float: left
+    button {
+        margin: 0 auto;
+        width: 10vw;
     }
 
 </style>
 
-<div>
-    {#each Object.keys(classList) as player}
-        <div class="buttonCont">        
-            <button class="button" >
-                <h3 on:mouseover={handleButtonHover}>
-                    {player}           
-                </h3>
-            </button>
-        </div>            
-    {/each}
+<div class="main-container">
+    <GfxContainer />
+    <TxtContainer />
+    <UIContainer />
 </div>

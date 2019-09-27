@@ -41,6 +41,45 @@ class Influencer extends initCharacter.characterBlueprint {
     }
 }
 
+class Neckbeard extends initCharacter.characterBlueprint {
+    constructor (name, gender) {
+        super(name, gender),
+
+        this.className     = "Neckbeard",
+
+        this.classFocus   = [ "INT" ],
+
+        this.description   = "The internet neckbeard has a lot in common with the developer, but lacks their Endurance. This high-intelligence, low everything-else class is one of the most difficult to use effectively.",
+
+        this.uniqueAttack  = {
+            'Induce cringe' : { 
+                description: 'Deals damage by inducing intense cringe in the opponent. Damage dealt is based on the Intelligence and Charisma traits.' 
+            }
+        },
+
+        this.traits         = this.initTraits( this.gender ),
+
+        this.skills         = initSkills.calcSkills(this.traits),
+        
+        this.stats          = initStats.calcStats(this.traits),
+        
+        this.moves          = initMoves.initMoves(this.classFocus);
+    }
+
+    initTraits( gender ) {
+        let baseTraits = initCharacter.getBaseTraits( gender )
+        return {
+            STR : baseTraits.STR,
+            END : baseTraits.END - 1,
+            INT : baseTraits.INT + 3,
+            AGI : baseTraits.AGI - 1,
+            CHA : baseTraits.CHA - 5,
+            FIN : baseTraits.FIN
+        }
+    }
+}
+
+
 class Athlete extends initCharacter.characterBlueprint {
     constructor (name, gender) {
         super(name, gender),
@@ -112,44 +151,6 @@ class Developer extends initCharacter.characterBlueprint {
             INT : baseTraits.INT + 3,
             AGI : baseTraits.AGI - 1,
             CHA : baseTraits.CHA - 2,
-            FIN : baseTraits.FIN
-        }
-    }
-}
-
-class Neckbeard extends initCharacter.characterBlueprint {
-    constructor (name, gender) {
-        super(name, gender),
-
-        this.className     = "Neckbeard",
-
-        this.classFocus   = [ "INT" ],
-
-        this.description   = "The internet neckbeard has a lot in common with the developer, but lacks their Endurance. This high-intelligence, low everything-else class is one of the most difficult to use effectively.",
-
-        this.uniqueAttack  = {
-            'Induce cringe' : { 
-                description: 'Deals damage by inducing intense cringe in the opponent. Damage dealt is based on the Intelligence and Charisma traits.' 
-            }
-        },
-
-        this.traits         = this.initTraits( this.gender ),
-
-        this.skills         = initSkills.calcSkills(this.traits),
-        
-        this.stats          = initStats.calcStats(this.traits),
-        
-        this.moves          = initMoves.initMoves(this.classFocus);
-    }
-
-    initTraits( gender ) {
-        let baseTraits = initCharacter.getBaseTraits( gender )
-        return {
-            STR : baseTraits.STR,
-            END : baseTraits.END - 1,
-            INT : baseTraits.INT + 3,
-            AGI : baseTraits.AGI - 1,
-            CHA : baseTraits.CHA - 5,
             FIN : baseTraits.FIN
         }
     }
