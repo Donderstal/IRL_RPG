@@ -6,10 +6,19 @@ const app = new App({
 		name: 'world',
 		gameState : {
 			overWorldState : {
-				overworld: true
+				overworld		: true,
+				curOverworld	: 'overWorld1'
+
 			},
 			battleState : {
 				battle: false
+			},
+			characterState : {
+				cool:	false
+			},
+			characterPos : {
+				x: '',
+				y: ''
 			}
 		}
 	}

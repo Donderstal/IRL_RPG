@@ -6,8 +6,8 @@
 
     console.log(utilFunctions)
 
-    /* utilFunctions.docReady(function() {
-        console.log( document.getElementById("game-gfx-body"))
+    utilFunctions.docReady(function() {
+        /* console.log( document.getElementById("game-gfx-body"))
 
         const gridWidth     = document.getElementById("game-gfx-body").offsetWidth
         const gridHeight    = document.getElementById("game-gfx-body").offsetHeight
@@ -16,10 +16,8 @@
         const blockDimensions = gridWidth / 48
 
         console.log(gridWidth / 24)
-        console.log(gridHeight / 16)
-        
-
-    }); */
+        console.log(gridHeight / 16) */
+    });
 
     function passRowConfig(rowNum) {
         return overWorld.overworld1[rowNum]
@@ -39,12 +37,13 @@
     }
 
     .game-gfx-body {
-        max-height: 600px;
-        max-width: 900px;
+        max-height: 592px;
+        max-width: 888px;
         display: flex;
         background-size: cover;
         flex-direction: column;
         vertical-align: middle;
+        margin: 0 auto;
     }
 </style>
 

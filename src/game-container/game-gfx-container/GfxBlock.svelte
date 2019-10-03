@@ -6,23 +6,22 @@
 
     const id = rowNum+"-"+colNum
 
-    function handleTileConfig() {
+    /* function handleTileConfig() {
         console.log(colConfig)
     }
 
-    handleTileConfig(colConfig)
+    handleTileConfig(colConfig) */
 </script>
 
 <style>
     span {
         box-sizing: border-box;
         display: inline-block;
-        border: .5px solid rgba(192,192,192, 0.3);
-        height: 37.5px;
-        width: 37.5px;
+        height: 37px;
+        width: 37px;
         z-index: 5;
+        border: .25px solid white;
         color: white;
-        font-size: .5rem;
         opacity: .5
     }
 </style>
