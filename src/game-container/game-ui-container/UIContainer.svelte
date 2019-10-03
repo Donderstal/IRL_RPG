@@ -1,9 +1,9 @@
 <script>
-    import classList from '../../../game/character-initialization/initClasses.js';
     import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
     let className
+    export let classList
 
     function handleButtonHover() {
         className = event.target.id

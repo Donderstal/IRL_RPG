@@ -1,6 +1,6 @@
 <script>
     console.log('hi!!')
-    import classList from '../../game/character-initialization/initClasses.js';
+    import classList from '../game/character-initialization/initClasses.js';
     function handleButtonHover() {
         console.log('why u hovering bro?1')
     }
@@ -27,5 +27,5 @@
 <div class="main-container">
     <GfxContainer />
     <TxtContainer />
-    <UIContainer />
+    <UIContainer {classList} />
 </div>
