@@ -171,5 +171,7 @@ const classEnumerable = {
 }
 
 module.exports = {
-    classEnumerable
+    classEnumerable,
+    Influencer,
+    Neckbeard
 }

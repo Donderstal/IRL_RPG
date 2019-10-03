@@ -1,7 +1,7 @@
 
 <style>
     .header {
-        height: 10vh;
+        height: 5vh;
         border-bottom: 1px groove #190019
     }
 </style>

@@ -1,7 +1,7 @@
 
 <style>
     .footer {
-        height: 10vh;
+        height: 5vh;
         border-top: 1px groove #190019
     }
 </style>

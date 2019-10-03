@@ -14,21 +14,12 @@
     .main-container {
         display: flex;
         flex-direction: column;
-        max-width: 1000px;
+        max-width: 900px;
         margin: 0 auto;
-        height: 80vh;
+        height: 90vh;
         border-left: 1px groove #190019;
         border-right: 1px groove #190019;
         box-shadow: -15px 0 15px -15px inset;
-    }
-
-    .buttonCont{
-        flex: 50%;
-    }
-
-    button {
-        margin: 0 auto;
-        width: 10vw;
     }
 
 </style>
