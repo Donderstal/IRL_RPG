@@ -6,7 +6,7 @@
 
     const id = rowNum+"-"+colNum
 
-    function handleTileConfig(id) {
+    function handleTileConfig() {
         console.log(colConfig)
     }
 
@@ -22,7 +22,8 @@
         width: 37.5px;
         z-index: 5;
         color: white;
-        font-size: .5rem
+        font-size: .5rem;
+        opacity: .5
     }
 </style>
 

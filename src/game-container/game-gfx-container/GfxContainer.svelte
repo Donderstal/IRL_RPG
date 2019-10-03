@@ -1,6 +1,7 @@
 <script>
     import utilFunctions from '../../helpers/utilFunctions'
     import GameBlockRow from './GameBlockRow.svelte'
+    import Player from './player/Player.svelte'
     import overWorld from '../../helpers/overWorldInfo/overWorlds.json'
 
     console.log(utilFunctions)
@@ -32,21 +33,25 @@
         display: flex;
         flex-direction: column;
         flex: 75%;
-        background-color: grey
+        background-color: grey;
+        justify-content: center;
+        text-align: center;
     }
 
     .game-gfx-body {
         max-height: 600px;
-        flex: 100%;
+        max-width: 900px;
         display: flex;
         background-size: cover;
         flex-direction: column;
+        vertical-align: middle;
     }
 </style>
 
 <div class="game-gfx-container">
         
     <div id="game-gfx-body" class="game-gfx-body">
+    <Player />
         {#each Array(16) as heightNum, i}
             <GameBlockRow 
                 rowNum={i + 1} 
