@@ -4,7 +4,7 @@
     export let rowNum
     export let colNum
     
-    const id="block-row-"+rowNum+"-col"+colNum
+    const id=rowNum+"-"+colNum
 </script>
 
 <style>

@@ -23,6 +23,10 @@
 </script>
 
 <style>
+    .player-sprite {
+        z-index: 5;
+    }
+
     .game-gfx-container {
         display: flex;
         flex-direction: column;
@@ -30,34 +34,18 @@
         background-color: #800080
     }
 
-    .game-gfx-header {
-        flex: 5%;
-        padding: 1rem;
-    }
-
     .game-gfx-body {
         max-height: 600px;
-        flex: 95%;
-                display: flex;
+        flex: 100%;
+        display: flex;
+        background-image: url('./images/practice-city-grid.jpg');
+        background-size: cover;
         flex-direction: column;
-    }
-
-    p {
-        text-align: center;
-    }
-
-    h3 {
-        text-align: center;
-        display: block;
-        margin: 0 auto;
-		color: white;
     }
 </style>
 
 <div class="game-gfx-container">
-    <div class="game-gfx-header">        
-        <h3>Choose your class!</h3>
-    </div>            
+        
     <div 
         
         id="game-gfx-body" class="game-gfx-body">
