@@ -1,12 +1,14 @@
 <script>
     console.log('hi!!')
     import classList from '../game/character-initialization/initClasses.js';
-    function handleButtonHover() {
-        console.log('why u hovering bro?1')
-    }
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import UIContainer from './game-ui-container/UIContainer.svelte'
     import TxtContainer from './game-txt-container/TxtContainer.svelte'
+
+    function handleHoverOverClass(event) {
+        console.log(event.detail)
+        console.log(event.detail.chosenClass)
+    }
 
 </script>
 
@@ -27,5 +29,7 @@
 <div class="main-container">
     <GfxContainer />
     <TxtContainer />
-    <UIContainer {classList} />
+    <UIContainer 
+        on:hoverOverClass={handleHoverOverClass} 
+        {classList} />
 </div>

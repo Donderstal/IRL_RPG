@@ -1,10 +1,16 @@
 <script>
-    import utilFunctions from '../../helpers/utilFunctions'
     export let blockDimensions
     export let rowNum
     export let colNum
-    
-    const id=rowNum+"-"+colNum
+    export let colConfig
+
+    const id = rowNum+"-"+colNum
+
+    function handleTileConfig(id) {
+        console.log(colConfig)
+    }
+
+    handleTileConfig(colConfig)
 </script>
 
 <style>
@@ -20,6 +26,9 @@
     }
 </style>
 
-<span id={id}>
+<span 
+    id={id}
+    style="background-color:{colConfig};"
+    >
     {colNum}
 </span>

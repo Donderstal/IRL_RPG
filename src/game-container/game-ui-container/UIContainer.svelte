@@ -1,12 +1,16 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
-    let className
+    
     export let classList
+    
+    const dispatch = createEventDispatcher();
+    
+    let className
+
 
     function handleButtonHover() {
         className = event.target.id
+        console.log(className)
         dispatch('hoverOverClass', {
             chosenClass : className
         })

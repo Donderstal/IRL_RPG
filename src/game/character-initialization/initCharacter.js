@@ -21,7 +21,7 @@ const athlete = new Classes.Athlete()
  const influencer = new Classes.Influencer()
  const  neckbeard  = new Classes.Neckbeard()
 
-console.log( influencer.name + " and " + neckbeard.name + " enter the arena!"  )
+/* console.log( influencer.name + " and " + neckbeard.name + " enter the arena!"  )
 
 console.log("Fight!!")
 
@@ -42,7 +42,7 @@ influencer.moves.attack(influencer, neckbeard)
 console.log("It's " + neckbeard.name + "'s turn!")
 
 neckbeard.moves.attack( neckbeard, influencer )
-
+ */
 /* console.log(athlete)
 
 console.log(developer) */

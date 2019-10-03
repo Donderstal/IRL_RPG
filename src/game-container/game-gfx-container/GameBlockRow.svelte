@@ -3,6 +3,12 @@
 
     export let blockDimensions
     export let rowNum
+    export let rowConfig
+
+    function passColConfig(colNum) {
+        return rowConfig[colNum]
+    }
+
 </script>
 
 <style>
@@ -16,9 +22,10 @@
 
 <div class="game-block-row">
     {#each Array(24) as widthNum, i}
-        <GfxBlock id="gridblock" 
+        <GfxBlock 
             colNum={i + 1}
             rowNum={rowNum}
+            colConfig={passColConfig(i + 1)}
             blockDimensions={blockDimensions} />
     {/each}
 </div>
