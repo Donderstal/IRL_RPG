@@ -1,29 +1,61 @@
 <script>
     import utilFunctions from '../../helpers/utilFunctions'
-    import GameBlockRow from './GameBlockRow.svelte'
-    import Player from './player/Player.svelte'
+    /* import GameBlockRow from './GameBlockRow.svelte'
+    import Player from './player/Player.svelte' */
     import overWorld from '../../helpers/overWorldInfo/overWorlds.json'
 
     console.log(utilFunctions)
 
     utilFunctions.docReady(function() {
-        /* console.log( document.getElementById("game-gfx-body"))
 
-        const gridWidth     = document.getElementById("game-gfx-body").offsetWidth
-        const gridHeight    = document.getElementById("game-gfx-body").offsetHeight
+        initCanvas()
 
-        const gridDimension = [ 48, 32 ]
-        const blockDimensions = gridWidth / 48
-
-        console.log(gridWidth / 24)
-        console.log(gridHeight / 16) */
     });
 
-    function passRowConfig(rowNum) {
-        return overWorld.overworld1[rowNum]
+    function initCanvas() {
+        const gameCanvas    = document.getElementById("game-canvas")
+        const ctx       = gameCanvas.getContext('2d')
+        ctx.canvas.height   = 592
+        ctx.canvas.width    = 888
+        const canvHeight    = ctx.canvas.height
+        const canvWidth     = ctx.canvas.width
+
+        console.log( gameCanvas )
+        console.log( ctx.canvas.height )
+        console.log( ctx.canvas.width )
+
+        drawGrid(ctx, canvWidth, canvHeight, overWorld)
     }
 
-    const blockDimensions = 1
+    function drawGrid(ctx, canvWidth, canvHeight, overWorld) {
+        const vertiGrid = canvHeight / 16
+        const horiGrid  = canvWidth / 24
+        let vertAccumulator = 0
+        let horiAccumulator = 0
+
+        let currWorld = overWorld.overworld1
+
+        console.log(vertiGrid)
+        console.log(horiGrid)
+        console.log(currWorld)
+
+        for ( var i = 0; i < 16; i++ ) {
+            horiAccumulator = 0
+
+            if ( i !== 0) {
+                vertAccumulator += vertiGrid                
+            }
+
+            for ( var j = 0; j < 24; j++ ) {
+                ctx.fillStyle = "yellow"
+                ctx.fillRect(horiAccumulator, vertAccumulator, horiGrid, vertiGrid)
+                horiAccumulator += horiGrid
+            }
+
+        }
+
+    }
+
 </script>
 
 <style>
@@ -37,8 +69,9 @@
     }
 
     .game-gfx-body {
-        max-height: 592px;
-        max-width: 888px;
+        height: 592px;
+        width: 888px;
+        background-color: white;
         display: flex;
         background-size: cover;
         flex-direction: column;
@@ -48,8 +81,13 @@
 </style>
 
 <div class="game-gfx-container">
-        
-    <div id="game-gfx-body" class="game-gfx-body">
+    <canvas id="game-canvas" class="game-gfx-body">
+    
+    </canvas>
+</div>
+
+
+<!--     <div id="game-gfx-body" class="game-gfx-body">
     <Player />
         {#each Array(16) as heightNum, i}
             <GameBlockRow 
@@ -57,5 +95,4 @@
                 rowConfig={passRowConfig(i + 1)}
                 blockDimensions={blockDimensions} />
         {/each}
-    </div>
-</div>
+    </div> -->
