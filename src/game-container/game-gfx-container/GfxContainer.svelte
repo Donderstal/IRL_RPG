@@ -14,7 +14,7 @@
 
     function initCanvas() {
         const gameCanvas    = document.getElementById("game-canvas")
-        const ctx       = gameCanvas.getContext('2d')
+        const ctx           = gameCanvas.getContext('2d')
         ctx.canvas.height   = 592
         ctx.canvas.width    = 888
         const canvHeight    = ctx.canvas.height
@@ -41,11 +41,16 @@
             }
 
             for ( var j = 0; j < 24; j++ ) {
-                let imageSrc = currWorldRow[ j + 1 ]
                 let bgImage = new Image()
+
+                let imageSrc = currWorldRow[ j + 1 ]       
                 
-                bgImage.onload = function() {
-                    ctx.drawImage(bgImage, 0, 0, horiGrid, vertiGrid)                
+                bgImage.id = i + "-" + j
+                
+                bgImage.onload = function(j) {
+                    let vertPos = ( bgImage.id.split("-")[0] * 37 )
+                    let horiPos = ( bgImage.id.split("-")[1] * 37 )
+                    ctx.drawImage(bgImage, horiPos, vertPos, horiGrid, vertiGrid)                
                 }
 
                 bgImage.src = imageSrc
@@ -88,14 +93,3 @@
     
     </canvas>
 </div>
-
-
-<!--     <div id="game-gfx-body" class="game-gfx-body">
-    <Player />
-        {#each Array(16) as heightNum, i}
-            <GameBlockRow 
-                rowNum={i + 1} 
-                rowConfig={passRowConfig(i + 1)}
-                blockDimensions={blockDimensions} />
-        {/each}
-    </div> -->
