@@ -20,11 +20,8 @@
         const canvHeight    = ctx.canvas.height
         const canvWidth     = ctx.canvas.width
 
-        console.log( gameCanvas )
-        console.log( ctx.canvas.height )
-        console.log( ctx.canvas.width )
-
         drawGrid(ctx, canvWidth, canvHeight, overWorld)
+
     }
 
     function drawGrid(ctx, canvWidth, canvHeight, overWorld) {
@@ -35,20 +32,26 @@
 
         let currWorld = overWorld.overworld1
 
-        console.log(vertiGrid)
-        console.log(horiGrid)
-        console.log(currWorld)
-
         for ( var i = 0; i < 16; i++ ) {
             horiAccumulator = 0
+            const currWorldRow = currWorld[ i + 1 ]
 
             if ( i !== 0) {
                 vertAccumulator += vertiGrid                
             }
 
             for ( var j = 0; j < 24; j++ ) {
-                ctx.fillStyle = "yellow"
-                ctx.fillRect(horiAccumulator, vertAccumulator, horiGrid, vertiGrid)
+                let imageSrc = currWorldRow[ j + 1 ]
+                let bgImage = new Image()
+                
+                bgImage.onload = function() {
+                    ctx.drawImage(bgImage, 0, 0, horiGrid, vertiGrid)                
+                }
+
+                bgImage.src = imageSrc
+                ctx.beginPath()
+                ctx.rect(horiAccumulator, vertAccumulator, horiGrid, vertiGrid)
+                ctx.stroke()
                 horiAccumulator += horiGrid
             }
 
