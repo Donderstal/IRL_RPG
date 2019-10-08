@@ -9,17 +9,14 @@ class characterBlueprint {
         this.experience = 0
 
         this.receiveDamage = (damage) => {
-            console.log( this.name + "'s defense is " + this.stats.Defense )
             damage -= this.stats.Defense
             damage = damage < 0 ? 0 : damage
-            console.log(this.name + " takes " + damage + " damage!")
             this.stats.Health -= damage
         }
 
         this.receiveManaDamage = (damage) => {
             damage -= this.stats.Defense
             damage = damage < 0 ? 0 : damage
-            console.log(this.name + " takes " + damage + " damage!")
             this.stats.Mana -= damage
         }
     

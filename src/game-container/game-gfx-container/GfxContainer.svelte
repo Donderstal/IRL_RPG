@@ -2,9 +2,6 @@
     import utilFunctions from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
 
-    console.log(initOverworld)
-    console.log(utilFunctions)
-
     utilFunctions.docReady(function() {
 
         initOverworld.initCanvas()

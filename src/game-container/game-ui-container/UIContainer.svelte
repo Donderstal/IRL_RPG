@@ -10,7 +10,6 @@
 
     function handleButtonHover() {
         className = event.target.id
-        console.log(className)
         dispatch('hoverOverClass', {
             chosenClass : className
         })
