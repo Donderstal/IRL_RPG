@@ -1,7 +1,10 @@
 const overWorld = require('../helpers/overWorldInfo/overWorlds.json')
 
 function initCanvas() {
-    const gameCanvas    = document.getElementById("game-canvas")
+    const gameCanvas    = document.createElement('canvas');
+    gameCanvas.className = 'game-gfx-body'
+    gameCanvas.id       = 'game-canvas'
+    document.getElementsByClassName('game-gfx-container')[0].appendChild(gameCanvas)
     const ctx           = gameCanvas.getContext('2d')
     ctx.canvas.height   = 592
     ctx.canvas.width    = 888

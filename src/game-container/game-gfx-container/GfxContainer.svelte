@@ -33,7 +33,5 @@
 </style>
 
 <div class="game-gfx-container">
-    <canvas id="game-canvas" class="game-gfx-body">
-    
-    </canvas>
+
 </div>

@@ -1,3 +1,12 @@
+<script>
+    export let gameState
+    
+    function plusOne() {
+        gameState.characterState.number += 1
+        console.log(gameState)
+    }
+</script>
+
 
 <style>
     .footer {
@@ -7,5 +16,8 @@
 </style>
 
 <div class="footer">
-    <span>IRL - RPG</span>  
+    <span>IRL - RPG</span> 
+    <button on:click={
+        plusOne
+    } >+1</button>
 </div>

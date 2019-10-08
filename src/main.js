@@ -10,20 +10,27 @@ const app = new App({
 	props: {
 		name: 'world',
 		gameState : {
+			cinematicState : {
+				cinematic 		: false
+			},
+
 			overWorldState : {
 				overworld		: true,
 				curOverworld	: 'overWorld1'
 
 			},
+
 			battleState : {
-				battle: false
+				battle			: false
 			},
+
 			characterState : {
-				cool:	false
+				number	: 0
 			},
+
 			characterPos : {
-				x: '',
-				y: ''
+				x				: '',
+				y				: ''
 			}
 		}
 	}

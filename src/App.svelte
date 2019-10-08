@@ -5,7 +5,6 @@
 	import Footer from './footer.svelte'
 	import Header from './header.svelte'
 
-	export let name;
 	export let gameState;
 	
 </script>
@@ -20,8 +19,8 @@
 
 <div>
 	<Header />
-	<MainContainer />	
-	<Footer />
+	<MainContainer gameState={gameState} />	
+	<Footer gameState={gameState} />
 </div>
 
 

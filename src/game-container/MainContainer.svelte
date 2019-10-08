@@ -8,6 +8,8 @@
         console.log(event.detail.chosenClass)
     }
 
+	export let gameState;
+
 </script>
 
 <style>
