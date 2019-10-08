@@ -1,5 +1,5 @@
 <script>
-    import classList from '../game/character-initialization/initClasses.js';
+    import classList from '../game/character-init/initClasses.js';
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import UIContainer from './game-ui-container/UIContainer.svelte'
     import TxtContainer from './game-txt-container/TxtContainer.svelte'

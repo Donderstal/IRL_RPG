@@ -35,7 +35,7 @@ function drawGrid(ctx, canvWidth, canvHeight, overWorld) {
             
             bgImage.id = i + "-" + j
             
-            bgImage.onload = function(j) {
+            bgImage.onload = ( ) => {
                 let vertPos = ( bgImage.id.split("-")[0] * 37 )
                 let horiPos = ( bgImage.id.split("-")[1] * 37 )
                 ctx.drawImage(bgImage, horiPos, vertPos, horiGrid, vertiGrid)                

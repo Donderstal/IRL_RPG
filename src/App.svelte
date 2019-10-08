@@ -1,6 +1,6 @@
 <script>
 
-	import initCharacter from './game/character-initialization/initCharacter.js';
+	import initCharacter from './game/character-init/initCharacter.js';
 	import MainContainer from './game-container/MainContainer.svelte'
 	import Footer from './footer.svelte'
 	import Header from './header.svelte'
