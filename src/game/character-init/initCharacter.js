@@ -1,12 +1,12 @@
 const Classes = require('./initClasses')
 
-const classList = Classes.classEnumerable
+const classList = Classes.initClasses
 
 module.exports = {
-    getClass : ( className ) => {
+    getCharWithClass : ( className, name, gender ) => {
         for ( var key in classList ) { 
             if ( key === className ) {
-                return classList[className]
+                return new classList[className](name, gender)
             }
         }
     }

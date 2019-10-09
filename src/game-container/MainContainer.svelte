@@ -27,9 +27,12 @@
 </style>
 
 <div class="main-container">
-    <GfxContainer />
+    <GfxContainer
+        {classList}
+     />
     <TxtContainer />
     <UIContainer 
         on:hoverOverClass={handleHoverOverClass} 
-        {classList} />
+        {classList} 
+    />
 </div>

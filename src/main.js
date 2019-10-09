@@ -25,10 +25,10 @@ const app = new App({
 			},
 
 			characterState : {
-				number	: 0
+
 			},
 
-			characterPos : {
+			characterPiece : {
 				x				: '',
 				y				: ''
 			}

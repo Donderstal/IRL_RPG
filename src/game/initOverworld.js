@@ -11,7 +11,7 @@ function initCanvas() {
     const canvHeight    = ctx.canvas.height
     const canvWidth     = ctx.canvas.width
 
-    drawGrid(ctx, canvWidth, canvHeight, overWorld)
+    drawGrid( ctx, canvWidth, canvHeight, overWorld )
 
 }
 
