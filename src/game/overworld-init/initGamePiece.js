@@ -7,6 +7,8 @@ function initGamePiece (
     this.height     = cellSize,
     this.sprite     = getSprite( x, y )
     this.onKeyPress = handleKeyPress( this.x, this.y )
+
+    return this
 }
 
 function handleKeyPress (  ) {

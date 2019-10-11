@@ -5,6 +5,9 @@
 
     export let classList
 
+    let gameChar = {}
+    let canvCtx;
+
     function startGame() {
         const charName      =  util.getInputVal('name')
         const charGender    =  util.getInputVal('gender')
@@ -16,13 +19,15 @@
         }, 50 )
 
         setTimeout( () => {
-            initOverworld.initCanvas()      
-                  
+            canvCtx = initOverworld.initCanvas()      
+            
         }, 75 )
 
         setTimeout( () => {
             const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )      
             console.log(playerCharacter)      
+
+            gameChar = playerCharacter
 
         }, 100 )
         
@@ -43,15 +48,24 @@
             case 'Tab' :
             case 'i' :
             case 'o' :
-                openMenu(event.key)
+                /* openMenu(event.key) */
             case ' ' :
-                handleActionButton()
+                /* handleActionButton() */
         }
     }
 
     util.docReady(
         window.addEventListener('keydown', handleInput)
     )
+
+    function handleActionButton(key) {
+
+        console.log('x = ' + gameChar.characterPiece.x + '  y = ' + gameChar.characterPiece.y)
+        console.log('width = ' + gameChar.characterPiece.width + '  width = ' + gameChar.characterPiece.height)
+        console.log(canvCtx)
+
+        canvCtx.clearRect(gameChar.characterPiece.x,gameChar.characterPiece.x,gameChar.characterPiece.x * 2 , gameChar.characterPiece.x * 2)
+    }
 
 </script>
 

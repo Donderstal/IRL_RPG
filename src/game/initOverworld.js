@@ -13,6 +13,7 @@ function initCanvas() {
 
     drawGrid( ctx, canvWidth, canvHeight, overWorld )
 
+    return ctx
 }
 
 function drawGrid(ctx, canvWidth, canvHeight, overWorld) {
