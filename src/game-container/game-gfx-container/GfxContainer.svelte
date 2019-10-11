@@ -6,7 +6,8 @@
     export let classList
 
     let gameChar = {}
-    let canvCtx;
+    let frontCtx;
+    let backCtx;
 
     function startGame() {
         const charName      =  util.getInputVal('name')
@@ -19,8 +20,8 @@
         }, 50 )
 
         setTimeout( () => {
-            canvCtx = initOverworld.initCanvas()      
-            
+            backCtx     = initOverworld.initCanvas(0)      
+            frontCtx    = initOverworld.initCanvas(1)     
         }, 75 )
 
         setTimeout( () => {
@@ -86,16 +87,30 @@
         text-align: center;
     }
 
-    .game-gfx-body {
+    .game-background-body {
         height: 592px;
         width: 888px;
-        background-color: white;
-        display: flex;
+        background-color: transparent;
         background-size: cover;
-        flex-direction: column;
-        vertical-align: middle;
         margin: 0 auto;
+        z-index: 0
     }
+
+    .game-front-body {
+        position: absolute;
+        height: 592px;
+        width: 888px;
+        background-color: transparent;
+        background-size: cover;
+        margin: 0 auto;
+        z-index: 5
+    }
+
+    .do-not-display {
+        display: none;
+    }
+
+
 </style>
 
 <div class="game-gfx-container">
@@ -132,4 +147,10 @@
         </div>
 
     </div>
+
+    <canvas class="game-background-body do-not-display" ></canvas>
+
+    <canvas class="game-front-body do-not-display" ></canvas>
+
+
 </div>

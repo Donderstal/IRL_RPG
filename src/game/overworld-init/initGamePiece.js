@@ -21,7 +21,7 @@ function getSprite( x, y ) {
 
     bgImage.onload = ( ) => {
 
-        const canv = document.getElementsByTagName('canvas')[0]
+        const canv = document.getElementsByTagName('canvas')[1]
 
         const ctx  = canv.getContext('2d')
 
