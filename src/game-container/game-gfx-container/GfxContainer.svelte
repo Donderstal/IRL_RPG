@@ -1,16 +1,14 @@
 <script>
-    import utilFunctions from '../../helpers/utilFunctions'
+    import util from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
     import createCharInstance from '../../game/createCharInstance'
 
     export let classList
 
-    console.log(classList)
-
     function startGame() {
-        const charName      =  getInputVal('name')
-        const charGender    =  getInputVal('gender')
-        const charClass     =  getInputVal('class')
+        const charName      =  util.getInputVal('name')
+        const charGender    =  util.getInputVal('gender')
+        const charClass     =  util.getInputVal('class')
 
         setTimeout( () => {
             document.getElementById('intro-screen').remove()
@@ -25,23 +23,35 @@
         setTimeout( () => {
             const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )      
             console.log(playerCharacter)      
+
         }, 100 )
         
     }
-
-    function getInputVal(id) {
-        return document.getElementById(id).value
+	
+    function handleInput ( event ) {
+        switch (event.key) {
+            // fallthrough for movement
+            case 's' :
+            case 'a' :
+            case 'w' : 
+            case 'd' :
+            case 'ArrowRight' :
+            case 'ArrowUp' :
+            case 'ArrowLeft' :
+            case 'ArrowDown' :
+                handleMovement(event.key)
+            case 'Tab' :
+            case 'i' :
+            case 'o' :
+                openMenu(event.key)
+            case ' ' :
+                handleActionButton()
+        }
     }
 
-    utilFunctions.docReady(function() {
-
-        /* initOverworld.initCanvas() */
-
-    });
-
-    function onKeyUp() {
-        
-    }
+    util.docReady(
+        window.addEventListener('keydown', handleInput)
+    )
 
 </script>
 

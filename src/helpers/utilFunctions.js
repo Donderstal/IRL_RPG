@@ -1,4 +1,5 @@
 module.exports = {
+
     // Unashamedly stolen from Stackoverflow user jfriend000
      docReady : (fn) => {
         // see if DOM is already available
@@ -8,5 +9,10 @@ module.exports = {
         } else {
             document.addEventListener("DOMContentLoaded", fn);
         }
+    },
+
+    // Get value of input fiel with ID
+    getInputVal : (id) => {
+        return document.getElementById(id).value
     }   
 }
