@@ -58,13 +58,20 @@
         window.addEventListener('keydown', handleInput)
     )
 
-    function handleActionButton(key) {
+    function handleMovement(key) {
 
         console.log('x = ' + gameChar.characterPiece.x + '  y = ' + gameChar.characterPiece.y)
         console.log('width = ' + gameChar.characterPiece.width + '  width = ' + gameChar.characterPiece.height)
         console.log(canvCtx)
 
+        var ctxTemp = canvCtx.getImageData(gameChar.characterPiece.x,gameChar.characterPiece.x,gameChar.characterPiece.x * 2 , gameChar.characterPiece.x * 2); 
+
         canvCtx.clearRect(gameChar.characterPiece.x,gameChar.characterPiece.x,gameChar.characterPiece.x * 2 , gameChar.characterPiece.x * 2)
+
+        setTimeout( () => {
+            canvCtx.putImageData(ctxTemp, gameChar.characterPiece.x,gameChar.characterPiece.x) 
+            }, 2000 
+        )
     }
 
 </script>

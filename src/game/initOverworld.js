@@ -8,10 +8,8 @@ function initCanvas() {
     const ctx           = gameCanvas.getContext('2d')
     ctx.canvas.height   = 592
     ctx.canvas.width    = 888
-    const canvHeight    = ctx.canvas.height
-    const canvWidth     = ctx.canvas.width
 
-    drawGrid( ctx, canvWidth, canvHeight, overWorld )
+    drawMap( ctx, ctx.canvas.width, ctx.canvas.height, overWorld )
 
     return ctx
 }
@@ -53,7 +51,18 @@ function drawGrid(ctx, canvWidth, canvHeight, overWorld) {
         }
 
     }
+}
 
+function drawMap(ctx, canvWidth, canvHeight, overWorld) {
+    let bgImage = new Image()
+
+    let imageSrc = './images/gridExp.jpg'     
+    
+    bgImage.onload = ( ) => {
+        ctx.drawImage(bgImage, 0, 0, canvWidth, canvHeight)                
+    }
+
+    bgImage.src = imageSrc
 }
 
 module.exports = {
