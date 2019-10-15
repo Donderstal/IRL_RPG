@@ -11,12 +11,6 @@
         background-color: #800080;
         padding: .5rem 1rem;
     }
-
-    p {
-        text-align: center;
-        color: white
-    }
-
 </style>
 
 <div class="game-txt-container">

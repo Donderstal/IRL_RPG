@@ -14,6 +14,7 @@
         const charGender    =  util.getInputVal('gender')
         const charClass     =  util.getInputVal('class')
 
+        // The setTimeouts setup is not definitive and might change later
         setTimeout( () => {
             document.getElementById('intro-screen').remove()
 
