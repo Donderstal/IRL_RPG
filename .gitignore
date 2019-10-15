@@ -2,3 +2,5 @@
 node_modules
 public/bundle.*
 public/game
+public/assets
+public/images
