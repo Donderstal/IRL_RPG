@@ -2,6 +2,7 @@
     import util from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
     import createCharInstance from '../../game/createCharInstance'
+    import animation from '../../game/overworld-anim/animExperiment'
 
     export let classList
 
@@ -29,6 +30,10 @@
             const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
 
             gameChar = playerCharacter
+
+            console.log(animation)
+
+            animation.init(frontCtx, gameChar)
 
         }, 100 )
         
@@ -61,22 +66,33 @@
         window.addEventListener('keydown', handleInput)
     )
 
-    function handleMovement(key) {
+    /* function handleMovement(key) {
 
-        var charX = gameChar.characterPiece.x
-        var charY = gameChar.characterPiece.y
+        console.log(gameChar.characterPiece.sprite)
 
-        var charW = gameChar.characterPiece.width
-        var charH = gameChar.characterPiece.height
+        for ( var i = 0; i < 6;  i++ ) {
+            console.log(gameChar.characterPiece.y)
+            moveSprite( gameChar.characterPiece, i + 1 )  
 
-        var ctxTemp = frontCtx.getImageData( charX, charY, charW, charH ); 
-
-        frontCtx.clearRect( charX, charY, charW, charH )
-
-        frontCtx.putImageData(ctxTemp, charX, charY) 
-
+        }
         
     }
+
+    function moveSprite(character, index, direction = null) {
+        console.log(character)
+        const sheetPos = ( 24 * index ) 
+        console.log(sheetPos)
+        character.ctx.clearRect( character.x, character.y, character.width, character.height )
+
+        character.ctx.drawImage(  
+            character.sprite, 
+            sheetPos, 0, 
+            24, 24, 
+            character.x, character.y, 
+            character.width, character.height
+        )  
+    }
+ */
 
 </script>
 
