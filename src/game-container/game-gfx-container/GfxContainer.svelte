@@ -66,7 +66,7 @@
         window.addEventListener('keydown', handleInput)
     )
 
-    /* function handleMovement(key) {
+    function handleMovement(key) {
 
         console.log(gameChar.characterPiece.sprite)
 
@@ -92,7 +92,7 @@
             character.width, character.height
         )  
     }
- */
+
 
 </script>
 

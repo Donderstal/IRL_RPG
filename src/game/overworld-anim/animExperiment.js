@@ -21,6 +21,8 @@ function init(myctx, gameCharac) {
     
     gameChar = gameCharac;
 
+    console.log(gameChar)
+
     window.requestAnimationFrame(step);
 }
 
