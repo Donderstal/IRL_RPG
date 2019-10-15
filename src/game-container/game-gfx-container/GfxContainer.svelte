@@ -25,8 +25,7 @@
         }, 75 )
 
         setTimeout( () => {
-            const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )      
-            console.log(playerCharacter)      
+            const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
 
             gameChar = playerCharacter
 
@@ -61,18 +60,19 @@
 
     function handleMovement(key) {
 
-        console.log('x = ' + gameChar.characterPiece.x + '  y = ' + gameChar.characterPiece.y)
-        console.log('width = ' + gameChar.characterPiece.width + '  width = ' + gameChar.characterPiece.height)
-        console.log(canvCtx)
+        var charX = gameChar.characterPiece.x
+        var charY = gameChar.characterPiece.y
 
-        var ctxTemp = canvCtx.getImageData(gameChar.characterPiece.x,gameChar.characterPiece.x,gameChar.characterPiece.x * 2 , gameChar.characterPiece.x * 2); 
+        var charW = gameChar.characterPiece.width
+        var charH = gameChar.characterPiece.height
 
-        canvCtx.clearRect(gameChar.characterPiece.x,gameChar.characterPiece.x,gameChar.characterPiece.x * 2 , gameChar.characterPiece.x * 2)
+        var ctxTemp = frontCtx.getImageData( charX, charY, charW, charH ); 
 
-        setTimeout( () => {
-            canvCtx.putImageData(ctxTemp, gameChar.characterPiece.x,gameChar.characterPiece.x) 
-            }, 2000 
-        )
+        frontCtx.clearRect( charX, charY, charW, charH )
+
+        frontCtx.putImageData(ctxTemp, charX, charY) 
+
+        
     }
 
 </script>
@@ -82,6 +82,8 @@
         display: flex;
         flex-direction: column;
         flex: 75%;
+        height: 592px;
+        width: 888px;
         background-color: grey;
         justify-content: center;
         text-align: center;

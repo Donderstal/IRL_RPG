@@ -4,10 +4,6 @@
     import UIContainer from './game-ui-container/UIContainer.svelte'
     import TxtContainer from './game-txt-container/TxtContainer.svelte'
 
-    function handleHoverOverClass(event) {
-        console.log(event.detail.chosenClass)
-    }
-
 	export let gameState;
 
 </script>
@@ -31,8 +27,5 @@
         {classList}
      />
     <TxtContainer />
-    <UIContainer 
-        on:hoverOverClass={handleHoverOverClass} 
-        {classList} 
-    />
+    <UIContainer  />
 </div>

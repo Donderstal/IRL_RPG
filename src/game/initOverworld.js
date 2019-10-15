@@ -16,8 +16,6 @@ function initCanvas(canvasNum) {
         canvas.id           = 'game-front-canvas'
     }
 
-    console.log('ctx is: ' + ctx)
-
     return ctx
 }
 

@@ -24,11 +24,13 @@ function getSprite( x, y ) {
         const canv = document.getElementsByTagName('canvas')[1]
 
         const ctx  = canv.getContext('2d')
-
-        ctx.drawImage(bgImage, x, y, x * 2, y * 2)                
+        
+        // temp measurements
+        // must be replaced by dynamic stuff later
+        ctx.drawImage(bgImage, 0, 0, 24, 24, x, y, 37, 37)                
     }
 
-    bgImage.src =  './images/test-sprite.png'   
+    bgImage.src =  './assets/chars/mani/mani-idle-run.png'      
 }
 
 
