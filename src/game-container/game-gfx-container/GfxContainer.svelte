@@ -36,6 +36,8 @@
     function handleInput ( event ) {
         switch (event.key) {
             // fallthrough for movement
+            // this switch statement and associated functionalities
+            // are still in an experimental phase
             case 's' :
             case 'a' :
             case 'w' : 
