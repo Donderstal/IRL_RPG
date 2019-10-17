@@ -5,6 +5,10 @@ module.exports = {
     }
 }
 
+// this is just some dummy stuff for now
+// skills are assigned to character instances
+// but they don't do anything yet
+
 function initSkills (traits) {
     return {
         //Strength skills

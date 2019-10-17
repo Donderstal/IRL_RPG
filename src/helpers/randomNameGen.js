@@ -124,5 +124,3 @@ function getLetterType ( letterCounter ) {
         return 'V'
     }
 }
-
-console.log(module.exports.getRandomName())

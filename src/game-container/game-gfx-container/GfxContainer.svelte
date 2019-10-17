@@ -1,56 +1,160 @@
 <script>
-    import utilFunctions from '../../helpers/utilFunctions'
-    import GameBlockRow from './GameBlockRow.svelte'
+    import util from '../../helpers/utilFunctions'
+    import initOverworld from '../../game/initOverworld'
+    import createCharInstance from '../../game/createCharInstance'
 
-    console.log(utilFunctions)
+    export let classList
 
-    utilFunctions.docReady(function() {
+    let gameChar = {}
+    let frontContext;
+    let backContext;
 
-        const gridWidth     = document.getElementById("game-gfx-body").offsetWidth
-        const gridHeight    = document.getElementById("game-gfx-body").offsetHeight
-        const gridDimension = [ 48, 32 ]
-        const blockDimensions = gridWidth / 48
+    function startGame() {
+        const charName      =  util.getInputVal('name')
+        const charGender    =  util.getInputVal('gender')
+        const charClass     =  util.getInputVal('class')
 
-        console.log(gridWidth / 24)
-        console.log(gridHeight / 16)
+        // The setTimeouts setup is not definitive and might change later
+        setTimeout( () => {
+            document.getElementById('intro-screen').remove()
+
+        }, 50 )
+
+        setTimeout( () => {
+            backContext     = initOverworld.initCanvas(0)      
+            frontContext    = initOverworld.initCanvas(1)     
+        }, 75 )
+
+        setTimeout( () => {
+            const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
+
+            gameChar = playerCharacter
+
+        }, 100 )
         
+    }
+	
+    function handleInput ( event ) {
+        switch (event.key) {
+            // fallthrough for movement
+            // this switch statement and associated functionalities
+            // are still in an experimental phase
+            case 's' :
+            case 'a' :
+            case 'w' : 
+            case 'd' :
+            case 'ArrowRight' :
+            case 'ArrowUp' :
+            case 'ArrowLeft' :
+            case 'ArrowDown' :
+                handleMovement(event.key)
+            case 'Tab' :
+            case 'i' :
+            case 'o' :
+                /* openMenu(event.key) */
+            case ' ' :
+                /* handleActionButton() */
+        }
+    }
 
-    });
+    util.docReady(
+        window.addEventListener('keydown', handleInput)
+    )
 
-    const flex_wrap = 100 / 32
+    function handleMovement(key) {
 
-    const blockDimensions = 2
+        let charX = gameChar.characterPiece.x
+        let charY = gameChar.characterPiece.y
+
+        let charW = gameChar.characterPiece.width
+        let charH = gameChar.characterPiece.height
+
+        let ctxTemp = frontContext.getImageData( charX, charY, charW, charH ); 
+
+        frontContext.clearRect( charX, charY, charW, charH )
+
+        frontContext.putImageData(ctxTemp, charX, charY) 
+
+        
+    }
+
 </script>
 
 <style>
-    .player-sprite {
-        z-index: 5;
-    }
-
     .game-gfx-container {
         display: flex;
         flex-direction: column;
         flex: 75%;
-        background-color: #800080
+        height: 592px;
+        width: 888px;
+        background-color: grey;
+        justify-content: center;
+        text-align: center;
     }
 
-    .game-gfx-body {
-        max-height: 600px;
-        flex: 100%;
-        display: flex;
-        background-image: url('./images/practice-city-grid.jpg');
+    .game-background-body {
+        height: 592px;
+        width: 888px;
+        background-color: transparent;
         background-size: cover;
-        flex-direction: column;
+        margin: 0 auto;
+        z-index: 0
     }
+
+    .game-front-body {
+        position: absolute;
+        height: 592px;
+        width: 888px;
+        background-color: transparent;
+        margin: 0 auto;
+        z-index: 5
+    }
+
+    .do-not-display {
+        display: none;
+    }
+
+
 </style>
 
 <div class="game-gfx-container">
-        
-    <div 
-        
-        id="game-gfx-body" class="game-gfx-body">
-        {#each Array(16) as heightNum, i}
-            <GameBlockRow rowNum={i + 1} blockDimensions={blockDimensions} />
-        {/each}
+
+    <div id="intro-screen">
+
+        <div>
+            <h3>Welcome to IRL-RPG</h3>
+        </div>
+
+        <div>
+            <label>Name your character!</label>
+            <input id='name'>
+
+            <label>Choose your gender!</label>
+            <select id='gender'>
+                <option value="Male" > Male </option>
+                <option value="Female"> Female </option>
+                <option value="None of your business"> None of your business </option>
+            </select>    
+
+            <label>Choose your class!</label>
+            <select id='class'>
+                {#each Object.keys(classList.initClasses) as className}
+                    <option value="{className}" > {className} </option>
+                {/each}
+            </select>    
+
+            <br />
+
+            <button on:click={ startGame }  >
+                Ok let's go!!!
+            </button>
+        </div>
+
     </div>
+
+    <canvas class="game-background-body do-not-display" ></canvas>
+
+    <canvas class="game-front-body do-not-display" ></canvas>
+
+
 </div>

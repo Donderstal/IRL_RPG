@@ -1,4 +1,3 @@
-
 <style>
     .footer {
         height: 5vh;
@@ -7,5 +6,5 @@
 </style>
 
 <div class="footer">
-    <span>IRL - RPG</span>  
+    <span>IRL - RPG</span> 
 </div>

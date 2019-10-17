@@ -1,15 +1,18 @@
-const initChar = require('./character-initialization/initCharacter')
+const initChar      = require('./character-init/initCharacter')
+const initGamePiece = require('./overworld-init/initGamePiece')
 
 module.exports = {
-    initChar
+    getCharacter : ( className, name, gender ) => {
+        return {
+            
+            // entry point for creating a character
+            // is called from GfxContainer.svelte
+            
+
+            characterState : initChar.getCharWithClass( className, name, gender ),
+            characterPiece : initGamePiece.initGamePiece(37, 37, 37)               
+        }
+     
+    }
+
 }
-
-console.log('in instancecharcreate')
-
-/* const influencerClass = classBlueprint('influencer') */
-
-/* console.log(influencerClass) */
-
-/* const influencerInstance = influencerClass('John', 'Male') */
-
-/* console.log(influencerInstance) */

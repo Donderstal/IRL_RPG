@@ -1,16 +1,4 @@
 <script>
-    import classList from '../../../game/character-initialization/initClasses.js';
-    import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
-    let className
-
-    function handleButtonHover() {
-        className = event.target.id
-        dispatch('hoverOverClass', {
-            chosenClass : className
-        })
-    }
 
 </script>
 
@@ -23,27 +11,8 @@
         border-top: 1px groove #190019;
     }
 
-    .buttonCont{
-        flex: 50%;
-    }
-
-    button {
-        background-color: #4c004c;
-        color: #ffffff;
-        margin: .5rem auto;
-        width: 10vw;
-    }
-
 </style>
 
 <div class="game-ui-container">
-    {#each Object.keys(classList) as player}
-        <div class="buttonCont">        
-            <button class="button" >
-                <h3 id={player}  on:mouseover={handleButtonHover}>
-                    {player}           
-                </h3>
-            </button>
-        </div>            
-    {/each}
+
 </div>

@@ -1,5 +1,5 @@
-const randomNameGen = require('../helpers/randomNameGen')
-const mathHelpers = require('../helpers/mathHelpers')
+const randomNameGen = require('../../helpers/randomNameGen')
+const mathHelpers = require('../../helpers/mathHelpers')
 
 class characterBlueprint {
     constructor(name, gender) {
@@ -8,18 +8,19 @@ class characterBlueprint {
         this.level = 1,
         this.experience = 0
 
+        // the methods below will become the primary handlers of stats changes
+        // battle moves will not directly access the other character's stats
+        // they will call one of the methods below
+
         this.receiveDamage = (damage) => {
-            console.log( this.name + "'s defense is " + this.stats.Defense )
             damage -= this.stats.Defense
             damage = damage < 0 ? 0 : damage
-            console.log(this.name + " takes " + damage + " damage!")
             this.stats.Health -= damage
         }
 
         this.receiveManaDamage = (damage) => {
             damage -= this.stats.Defense
             damage = damage < 0 ? 0 : damage
-            console.log(this.name + " takes " + damage + " damage!")
             this.stats.Mana -= damage
         }
     

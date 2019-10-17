@@ -1,12 +1,10 @@
 <script>
-    console.log('hi!!')
-    import classList from '../../game/character-initialization/initClasses.js';
-    function handleButtonHover() {
-        console.log('why u hovering bro?1')
-    }
+    import classList from '../game/character-init/initClasses.js';
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import UIContainer from './game-ui-container/UIContainer.svelte'
     import TxtContainer from './game-txt-container/TxtContainer.svelte'
+
+	export let gameState;
 
 </script>
 
@@ -25,7 +23,9 @@
 </style>
 
 <div class="main-container">
-    <GfxContainer />
+    <GfxContainer
+        {classList}
+     />
     <TxtContainer />
     <UIContainer />
 </div>
