@@ -1,3 +1,6 @@
+// This is still experimental and somewhat disorganised 
+// 17-Oct-2019
+
 let ctx;
 
 let gameChar;
@@ -8,14 +11,14 @@ const height = 24;
 const scaledWidth = scale * width;
 const scaledHeight = scale * height;
 
-const drawFrame = function (frameX, frameY, canvasX, canvasY) {
+const drawFrame = (frameX, frameY, canvasX, canvasY) => {
 
     ctx.drawImage(gameChar.characterPiece.sprite,
         frameX * width, frameY * height, width, height,
         canvasX, canvasY, scaledWidth, scaledHeight);
 }
 
-const init = function (myctx, gameCharac) {
+const init = (myctx, gameCharac) => {
 
     ctx = myctx;
     
@@ -31,7 +34,7 @@ let currentLoopIndex = 0;
 let frameCount = 0;
 
 
-const step = function ( ) {
+const step = ( ) => {
 
     frameCount++;
 

@@ -1,10 +1,6 @@
-module.exports = {
-    calcStats : (traits) => {
-        return calculateStats(traits)
-    }
-}
+// Initialize stats based on character traits
 
-const calculateStats = function (traits) {
+const calculateStats = (traits) => {
     return {
         Health: getHealth(traits.END),
         Mana: getMana(traits.INT),
@@ -17,26 +13,30 @@ const calculateStats = function (traits) {
     }
 }
 
-const getHealth = function (endurance) {
+const getHealth = (endurance) => {
     return Math.round(endurance * 5)
 }
 
-const getMana = function (intelligence) {
+const getMana = (intelligence) => {
     return Math.round(intelligence * 5)
 }
 
-const getAttack = function (strength, agility) {
+const getAttack = (strength, agility) => {
     return Math.round((strength + agility) / 2)
 }
 
-const getDefense = function (strength, endurance) {
+const getDefense = (strength, endurance) => {
     return Math.round((strength + endurance) / 2)
 }
 
-const getSpAttack = function (intelligence, agility) {
+const getSpAttack = (intelligence, agility) => {
     return Math.round((intelligence + agility) / 2)
 }
 
-const getSpDefense = function (intelligence, endurance) {
+const getSpDefense = (intelligence, endurance) => {
     return Math.round((intelligence + endurance) / 2)
+}
+
+module.exports = {
+    calculateStats
 }

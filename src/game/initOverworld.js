@@ -1,4 +1,4 @@
-const initCanvas = function (canvasNum) {
+const initCanvas = (canvasNum) => {
 
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
     canvas.classList.remove('do-not-display')
@@ -19,7 +19,7 @@ const initCanvas = function (canvasNum) {
     return ctx
 }
 
-const drawMap = function (ctx, canvWidth, canvHeight) {
+const drawMap = (ctx, canvWidth, canvHeight) => {
     let bgImage = new Image()
 
     let imageSrc = './images/gridExp.jpg'     

@@ -39,33 +39,34 @@ class characterBlueprint {
     }
 }
 
-module.exports = {
-    characterBlueprint,
+const getBaseTraits = ( gender )=>  {
+    const charGender = gender || 0
 
-    getBaseTraits : ( gender )=>  {
-        const charGender = gender || 0
-    
-        const baseTraits = {
-            STR : 5,
-            END : 5,
-            INT : 5,
-            AGI : 5,
-            CHA : 5,
-            FIN : 5,
-        }
-    
-        if ( charGender === 'Female' ) {
-            baseTraits.STR - 1
-            baseTraits.AGI + 1
-            return baseTraits
-        }
-    
-        if ( charGender === 'Male' ) {
-            baseTraits.STR + 1
-            baseTraits.AGI - 1
-            return baseTraits
-        }
-    
+    const baseTraits = {
+        STR : 5,
+        END : 5,
+        INT : 5,
+        AGI : 5,
+        CHA : 5,
+        FIN : 5,
+    }
+
+    if ( charGender === 'Female' ) {
+        baseTraits.STR - 1
+        baseTraits.AGI + 1
         return baseTraits
     }
+
+    if ( charGender === 'Male' ) {
+        baseTraits.STR + 1
+        baseTraits.AGI - 1
+        return baseTraits
+    }
+
+    return baseTraits
+}
+
+module.exports = {
+    characterBlueprint,
+    getBaseTraits
 }

@@ -1,6 +1,6 @@
-const initGamePiece  = function(
+const initGamePiece  = (
     x, y, cellSize, type
-) {
+) => {
     this.x          = x
     this.y          = y
     this.width      = (cellSize / 3) * 4,
@@ -12,7 +12,7 @@ const initGamePiece  = function(
     return this
 }
 
-const getSprite = function( x, y ) {
+const getSprite = ( x, y ) => {
 
     let bgImage = new Image()
 
@@ -29,7 +29,7 @@ const getSprite = function( x, y ) {
     return bgImage
 }
 
-const getCanvasContext = function() {
+const getCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
 
     let ctx = canv.getContext('2d')
