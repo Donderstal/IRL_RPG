@@ -11,7 +11,7 @@
     let frontContext;
     let backContext;
 
-    const startGame = function() {
+    const startGame = () => {
         const charName      =  util.getInputVal('name')
         const charGender    =  util.getInputVal('gender')
         const charClass     =  util.getInputVal('class')
@@ -49,8 +49,6 @@
     util.docReady(
         window.addEventListener('keyup', handleInput.handleInput)
     )
-
-
 
 </script>
 
