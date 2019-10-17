@@ -1,15 +1,15 @@
-const initGamePiece  = (
-    x, y, cellSize, type
-) => {
-    this.x          = x
-    this.y          = y
-    this.width      = (cellSize / 3) * 4,
-    this.height     = cellSize * 2,
-    this.spriteSize = 24,
-    this.ctx        = getCanvasContext( ),
-    this.sprite     = getSprite( x, y )
+const initGamePiece  = ( x, y, cellSize, type ) => {
 
-    return this
+    return gamePiece = {
+        x          : x,
+        y          : y,
+        width      : (cellSize / 3) * 4,
+        height     : cellSize * 2,
+        spriteSize : 24,
+        ctx        : getCanvasContext( ),
+        sprite     : getSprite( x, y )        
+    }
+    
 }
 
 const getSprite = ( x, y ) => {
