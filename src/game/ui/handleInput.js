@@ -2,7 +2,7 @@ let pressedKeys = {
 
 }
 
-function handleInput ( event ) {
+const handleInput = function ( event ) {
     const booley = ( event.type == 'keyup' )
 
     console.log(event.type)
@@ -27,7 +27,7 @@ function handleInput ( event ) {
     }
 }
 
-function handleMovement(key) {
+const handleMovement = function (key) {
     if (key === 'up') {
 
     }

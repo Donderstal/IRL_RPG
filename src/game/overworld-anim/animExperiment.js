@@ -8,14 +8,14 @@ const height = 24;
 const scaledWidth = scale * width;
 const scaledHeight = scale * height;
 
-function drawFrame(frameX, frameY, canvasX, canvasY) {
+const drawFrame = function (frameX, frameY, canvasX, canvasY) {
 
     ctx.drawImage(gameChar.characterPiece.sprite,
         frameX * width, frameY * height, width, height,
         canvasX, canvasY, scaledWidth, scaledHeight);
 }
 
-function init(myctx, gameCharac) {
+const init = function (myctx, gameCharac) {
 
     ctx = myctx;
     
@@ -31,7 +31,7 @@ let currentLoopIndex = 0;
 let frameCount = 0;
 
 
-function step( ) {
+const step = function ( ) {
 
     frameCount++;
 

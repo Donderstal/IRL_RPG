@@ -11,7 +11,7 @@
     let frontContext;
     let backContext;
 
-    function startGame() {
+    const startGame = function() {
         const charName      =  util.getInputVal('name')
         const charGender    =  util.getInputVal('gender')
         const charClass     =  util.getInputVal('class')
@@ -34,7 +34,7 @@
 
             console.log(animation)
 
-            animation.init(frontCtx, gameChar)
+            animation.init(frontContext, gameChar)
 
         }, 100 )
         
