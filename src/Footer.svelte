@@ -1,8 +1,3 @@
-<script>
-
-</script>
-
-
 <style>
     .footer {
         height: 5vh;

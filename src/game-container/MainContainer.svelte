@@ -27,5 +27,5 @@
         {classList}
      />
     <TxtContainer />
-    <UIContainer  />
+    <UIContainer />
 </div>
