@@ -8,6 +8,10 @@ class characterBlueprint {
         this.level = 1,
         this.experience = 0
 
+        // the methods below will become the primary handlers of stats changes
+        // battle moves will not directly access the other character's stats
+        // they will call one of the methods below
+
         this.receiveDamage = (damage) => {
             damage -= this.stats.Defense
             damage = damage < 0 ? 0 : damage

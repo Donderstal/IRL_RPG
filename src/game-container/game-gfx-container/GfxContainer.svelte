@@ -8,8 +8,8 @@
     export let classList
 
     let gameChar = {}
-    let frontCtx;
-    let backCtx;
+    let frontContext;
+    let backContext;
 
     function startGame() {
         const charName      =  util.getInputVal('name')
@@ -23,8 +23,8 @@
         }, 50 )
 
         setTimeout( () => {
-            backCtx     = initOverworld.initCanvas(0)      
-            frontCtx    = initOverworld.initCanvas(1)     
+            backContext     = initOverworld.initCanvas(0)      
+            frontContext    = initOverworld.initCanvas(1)     
         }, 75 )
 
         setTimeout( () => {
@@ -80,7 +80,6 @@
         height: 592px;
         width: 888px;
         background-color: transparent;
-        background-size: cover;
         margin: 0 auto;
         z-index: 5
     }

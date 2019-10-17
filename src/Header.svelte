@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <style>
     .header {
         height: 5vh;

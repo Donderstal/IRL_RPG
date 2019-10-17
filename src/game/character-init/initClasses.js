@@ -3,6 +3,10 @@ const initSkills = require('./initSkills')
 const initStats = require('./initStats')
 const initMoves = require('./initMoves')
 
+// all classes are stored in the initClasses object, which is exported
+// class constructors can be accessed directly from this object
+
+
 const initClasses = {
     Influencer : class extends initCharacter.characterBlueprint {
         constructor (name, gender) {
