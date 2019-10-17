@@ -1,42 +1,40 @@
 const mathHelpers = require('./mathHelpers')
 
-module.exports = {
-    getRandomName : () => {
+const getRandomName = () => {
 
-        const letterCollection = [
-            [
-                'a', 'e', 'i', 'o', 'u', 'y'
-            ],
-            [
-                'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k',
-                'l', 'm', 'n', 'p', 'q', 'r', 's', 't',
-                'v', 'w', 'x', 'z'
-            ]
+    const letterCollection = [
+        [
+            'a', 'e', 'i', 'o', 'u', 'y'
+        ],
+        [
+            'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k',
+            'l', 'm', 'n', 'p', 'q', 'r', 's', 't',
+            'v', 'w', 'x', 'z'
         ]
+    ]
 
-        const letterCounter = {
-            vowels : 0,
-            consonants: 0,
-            oddConsonants: false
-        }
-
-        let nameLength = mathHelpers.getRandomInteger(12)
-
-        nameLength = checkNameLength ( nameLength )
-
-        var name = '';
-
-        for ( var i = 0; i < nameLength; i++ ) {
-            name += getLetter( i, letterCollection, letterCounter )   
-        }
-
-        return name.charAt(0).toUpperCase() + name.slice(1);
-
+    const letterCounter = {
+        vowels : 0,
+        consonants: 0,
+        oddConsonants: false
     }
+
+    let nameLength = mathHelpers.getRandomInteger(12)
+
+    nameLength = checkNameLength ( nameLength )
+
+    var name = '';
+
+    for ( var i = 0; i < nameLength; i++ ) {
+        name += getLetter( i, letterCollection, letterCounter )   
+    }
+
+    return name.charAt(0).toUpperCase() + name.slice(1);
+
 }
 
 // Retrieve letter from collection. Change letterCounter accordingly
-function getLetter ( i, letterCollection, letterCounter ) {
+const getLetter = ( i, letterCollection, letterCounter ) => {
     let letterArray;
 
     if ( i !== 0) {
@@ -62,7 +60,7 @@ function getLetter ( i, letterCollection, letterCounter ) {
 }
 
 // check if name has a somewhat normal length
-function checkNameLength ( nameLength ) {
+const checkNameLength = ( nameLength ) => {
     if ( nameLength < 1 ) {
         return nameLength += 3
     }
@@ -72,7 +70,7 @@ function checkNameLength ( nameLength ) {
     return nameLength
 }
 
-function getLetterTypeFromCollection( collection, type ) {
+const getLetterTypeFromCollection = ( collection, type ) => {
     let letterType = type || null
 
     if ( letterType !== null ) {
@@ -85,12 +83,12 @@ function getLetterTypeFromCollection( collection, type ) {
     return collection[letterType]
 }
 
-function getRandomEntryFromArray ( array ) {
+const getRandomEntryFromArray = function  ( array ) {
     return array[ mathHelpers.getRandomInteger( array.length ) ]
 }
 
 // small 'algorithm' to somewhat mirror the structure of a normal English word
-function getLetterType ( letterCounter ) {
+const getLetterType = ( letterCounter ) => {
 
     if ( letterCounter.oddConsonants !== true ) {
         if ( letterCounter.vowels <= 1 && letterCounter.consonants <= 1 ) {
@@ -123,4 +121,9 @@ function getLetterType ( letterCounter ) {
         letterCounter.oddConsonants = false
         return 'V'
     }
+}
+
+
+module.exports = {
+    getRandomName
 }

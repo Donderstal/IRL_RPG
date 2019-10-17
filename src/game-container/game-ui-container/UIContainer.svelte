@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <style>
     .game-ui-container {
         display: flex;

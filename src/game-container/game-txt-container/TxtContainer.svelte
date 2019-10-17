@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <style>
     .game-txt-container {
         display: flex;

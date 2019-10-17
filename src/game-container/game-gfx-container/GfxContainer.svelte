@@ -2,6 +2,8 @@
     import util from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
     import createCharInstance from '../../game/createCharInstance'
+    import handleInput from '../../game/ui/handleInput'
+    import animation from '../../game/overworld-anim/animExperiment'
 
     export let classList
 
@@ -9,7 +11,7 @@
     let frontContext;
     let backContext;
 
-    function startGame() {
+    const startGame = () => {
         const charName      =  util.getInputVal('name')
         const charGender    =  util.getInputVal('gender')
         const charClass     =  util.getInputVal('class')
@@ -30,53 +32,23 @@
 
             gameChar = playerCharacter
 
+            console.log(animation)
+
+            animation.init(frontContext, gameChar)
+
         }, 100 )
         
     }
-	
-    function handleInput ( event ) {
-        switch (event.key) {
-            // fallthrough for movement
-            // this switch statement and associated functionalities
-            // are still in an experimental phase
-            case 's' :
-            case 'a' :
-            case 'w' : 
-            case 'd' :
-            case 'ArrowRight' :
-            case 'ArrowUp' :
-            case 'ArrowLeft' :
-            case 'ArrowDown' :
-                handleMovement(event.key)
-            case 'Tab' :
-            case 'i' :
-            case 'o' :
-                /* openMenu(event.key) */
-            case ' ' :
-                /* handleActionButton() */
-        }
-    }
+
 
     util.docReady(
-        window.addEventListener('keydown', handleInput)
+        window.addEventListener('keydown', handleInput.handleInput)
     )
 
-    function handleMovement(key) {
-
-        let charX = gameChar.characterPiece.x
-        let charY = gameChar.characterPiece.y
-
-        let charW = gameChar.characterPiece.width
-        let charH = gameChar.characterPiece.height
-
-        let ctxTemp = frontContext.getImageData( charX, charY, charW, charH ); 
-
-        frontContext.clearRect( charX, charY, charW, charH )
-
-        frontContext.putImageData(ctxTemp, charX, charY) 
-
-        
-    }
+    
+    util.docReady(
+        window.addEventListener('keyup', handleInput.handleInput)
+    )
 
 </script>
 

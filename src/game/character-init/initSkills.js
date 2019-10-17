@@ -6,10 +6,9 @@ module.exports = {
 }
 
 // this is just some dummy stuff for now
-// skills are assigned to character instances
-// but they don't do anything yet
+// skills are assigned to character instances, but they don't do anything yet
 
-function initSkills (traits) {
+const initSkills = (traits) => {
     return {
         //Strength skills
         Muscle : {
@@ -87,7 +86,7 @@ function initSkills (traits) {
 
 }
 
-function initCombinedSkills (skills) {
+const initCombinedSkills = (skills) => {
     //Combined skills
     skills.Trustworthyness = {
         skillLevel: calcTrustworthyness(skills),
@@ -128,30 +127,30 @@ function initCombinedSkills (skills) {
     return skills
 }
 
-function calcTrustworthyness(skills) {
+const calcTrustworthyness = (skills) => {
     return Math.round(( skills.Credit_Rating.skillLevel + skills.Speech.skillLevel + skills.Wisdom.skillLevel ) / 3)
 }
 
-function calcAttractiveness(skills) {
+const calcAttractiveness = (skills) => {
     return Math.round(( skills.Speech.skillLevel + (skills.Beauty.skillLevel * 2) + skills.Fitness.skillLevel ) / 4)
 }
 
-function calcAcrobatics(skills) {
+const calcAcrobatics = (skills) => {
     return Math.round(( skills.Fitness.skillLevel + skills.Athletics.skillLevel ) / 2)
 }
 
-function calcLearning(skills) {
+const calcLearning = (skills) => {
     return Math.round(( skills.Willpower.skillLevel + skills.Perception.skillLevel ) / 2)
 }
 
-function calcLightWeapons(skills) {
+const calcLightWeapons = (skills) => {
     return Math.round(( skills.Athletics.skillLevel + skills.Perception.skillLevel ) / 2)
 }
 
-function calcHeavyWeapons(skills) {
+const calcHeavyWeapons = (skills) => {
     return Math.round(( skills.Muscle.skillLevel + skills.Perseverance.skillLevel ) / 2)
 }
 
-function calcDodge(skills) {
+const calcDodge = (skills) => {
     return Math.round(( skills.Perception.skillLevel + skills.Sneak.skillLevel ) / 2)
 }
