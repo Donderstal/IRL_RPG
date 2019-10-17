@@ -1,3 +1,6 @@
+// this is still a tryout and doesn't work properly
+// 17-10-2019
+
 let pressedKeys = {
 
 }
