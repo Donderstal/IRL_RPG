@@ -10,24 +10,27 @@
 
     let pressedKeys = {};
 
-    let characterXY = {};
-    let characterWidth
-    let characterHeight
-
+    let playerCharacter;
 
     let frontContext;
     let backContext;
+    let frameCount = 0;
 
-    const MOVEMENT_SPEED = 1.85
+    const MOVEMENT_SPEED = 1.85;
+    
+    const FACING_DOWN    = 0;
+    const FACING_UP      = 3;
+    const FACING_LEFT    = 1;
+    const FACING_RIGHT   = 2;
+
+    const FRAME_LIMIT = 12;
+
 
     const getGameState = () => {
         return gameState
     }
 
     const startGame = () => {
-
-        const gotState = getGameState()
-
         const charName      =  util.getInputVal('name')
         const charGender    =  util.getInputVal('gender')
         const charClass     =  util.getInputVal('class')
@@ -44,13 +47,9 @@
         }, 75 )
         
         setTimeout( () => {
-            const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
+            gameState.playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
 
-            gameState.playerCharacter = playerCharacter
-
-            characterXY =  gameState.playerCharacter.characterPiece.xy
-            characterWidth = gameState.playerCharacter.characterPiece.width
-            characterHeight = gameState.playerCharacter.characterPiece.height
+            playerCharacter = gameState.playerCharacter.characterPiece
 
             window.requestAnimationFrame(movementController)
 
@@ -59,33 +58,56 @@
 
     const movementController = ( ) => {       
         
-        frontContext.clearRect( characterXY.x, characterXY.y, characterWidth, characterHeight )
+        frontContext.clearRect( playerCharacter.xy.x, playerCharacter.xy.y, playerCharacter.width, playerCharacter.height )
+
+        let hasMoved = false;
     
         if ( pressedKeys.d ) {
-            characterXY.x  += MOVEMENT_SPEED
+            playerCharacter.xy.x += MOVEMENT_SPEED
+            playerCharacter.direction = FACING_RIGHT
+            hasMoved = true;
         }
         if ( pressedKeys.a ) {
-            characterXY.x  -= MOVEMENT_SPEED
+            playerCharacter.xy.x  -= MOVEMENT_SPEED
+            playerCharacter.direction = FACING_LEFT
+            hasMoved = true;
         }
         if ( pressedKeys.w ) {
-            characterXY.y  -= MOVEMENT_SPEED
+            playerCharacter.xy.y  -= MOVEMENT_SPEED
+            playerCharacter.direction = FACING_UP
+            hasMoved = true;
         }
         if ( pressedKeys.s ) {
-            characterXY.y  += MOVEMENT_SPEED
+            playerCharacter.xy.y  += MOVEMENT_SPEED
+            playerCharacter.direction = FACING_DOWN
+            hasMoved = true;
+        }
+
+        if (hasMoved) {
+            frameCount++;
+        
+            if (frameCount >= FRAME_LIMIT) {
+                frameCount = 0;
+                playerCharacter.animIterator++;
+
+                if (playerCharacter.animIterator >= playerCharacter.animLoop.length) {
+                    playerCharacter.animIterator = 0;
+                }
+            }
         }
             
-        frontContext.drawImage(gameState.playerCharacter.characterPiece.sprite,
-        0, 0, 24, 24,
-        characterXY.x, characterXY.y, characterWidth, characterHeight);
+        frontContext.drawImage(
+            playerCharacter.sprite,
+            playerCharacter.animLoop[playerCharacter.animIterator] * 48, ( playerCharacter.direction * 64 ), 48, 64,
+            playerCharacter.xy.x, playerCharacter.xy.y, playerCharacter.width, playerCharacter.height
+        );
 
         window.requestAnimationFrame(movementController)
-
     }
 
     const prepareUI = () => {
         window.addEventListener('keydown', (event) => {
             pressedKeys[event.key] = true
-            console.log(characterXY)
         })
         window.addEventListener('keyup', () => {
             pressedKeys[event.key] = false

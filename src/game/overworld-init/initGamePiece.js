@@ -21,28 +21,32 @@ class gamePiece {
         // The three following properties have arbitray values (for now)
         this.width      = cellSize;
         this.height     = cellSize * 1.5;
-        this.spriteSize = 24
+        this.animLoop   = [ 0, 1, 2, 3]
+        this.animIterator   = 0
+        this.spriteSize = { 
+            width: 48,
+            height: 64
+        }
+        this.direction  = 0;
         //
         this.ctx        = getCanvasContext( )
-        this.sprite     = getSprite( x, y )    
+        this.sprite     = getSprite( x, y, this.spriteSize )    
         this.getXY      = ( ) => {
             return this.xy
         }  
     }
 }
 
-const getSprite = ( x, y ) => {
+const getSprite = ( x, y, spriteSize ) => {
 
     let bgImage = new Image()
 
     bgImage.onload = ( ) => {
         var ctx = getCanvasContext () 
-        // temp measurements
-        // must be replaced by dynamic stuff later
-        ctx.drawImage(bgImage, 0, 0, 24, 24, x, y, 37, 37)                
+        ctx.drawImage(bgImage, 0, 0, spriteSize.width, spriteSize.height, x, y, 37, 37)                
     }
 
-    bgImage.src =  './assets/chars/mani/mani-idle-run.png'      
+    bgImage.src =  './images/practice-sheet-1.png'      
 
     return bgImage
 }
