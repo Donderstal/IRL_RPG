@@ -1,5 +1,6 @@
 const initCanvas = (canvasNum) => {
-
+    // canvasNum === 0 generates background Canvas
+    // 1 generates the front canvas
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
     canvas.classList.remove('do-not-display')
     let ctx         = canvas.getContext('2d');

@@ -20,18 +20,22 @@ const app = new App({
 
 			},
 
-			battleState : {
+			battleState 	: {
 				battle			: false
 			},
 
-			characterState : {
+			playerCharacter : {
+				characterState : {
 
-			},
+				},
 
-			characterPiece : {
-				x				: '',
-				y				: ''
+				characterPiece : {
+					x				: '',
+					y				: ''
+				}				
 			}
+
+
 		}
 	}
 });

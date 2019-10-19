@@ -1,6 +1,6 @@
 // Initialize stats based on character traits
 
-const calculateStats = (traits) => {
+const calcStats = (traits) => {
     return {
         Health: getHealth(traits.END),
         Mana: getMana(traits.INT),
@@ -38,5 +38,5 @@ const getSpDefense = (intelligence, endurance) => {
 }
 
 module.exports = {
-    calculateStats
+    calcStats
 }

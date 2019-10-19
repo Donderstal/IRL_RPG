@@ -4,6 +4,8 @@
 	import Header from './header.svelte'
 
 	export let gameState;
+
+	
 	
 </script>
 

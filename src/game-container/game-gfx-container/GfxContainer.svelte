@@ -1,17 +1,25 @@
 <script>
+
     import util from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
     import createCharInstance from '../../game/createCharInstance'
     import handleInput from '../../game/ui/handleInput'
     import animation from '../../game/overworld-anim/animExperiment'
 
-    export let classList
+    export let classList;
+    export let gameState;
 
-    let gameChar = {}
     let frontContext;
     let backContext;
 
+    const getGameState = () => {
+        return gameState
+    }
+
     const startGame = () => {
+
+        const gotState = getGameState()
+
         const charName      =  util.getInputVal('name')
         const charGender    =  util.getInputVal('gender')
         const charClass     =  util.getInputVal('class')
@@ -30,24 +38,27 @@
         setTimeout( () => {
             const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
 
-            gameChar = playerCharacter
+            gameState.playerCharacter = playerCharacter
 
-            console.log(animation)
-
-            animation.init(frontContext, gameChar)
+            animation.init(frontContext, gameState.playerCharacter)
 
         }, 100 )
-        
+
+        console.log(gameState)
+    }
+
+    const handleKeyboardInput = (event) => {
+       /*  handleInput.handleInput(event, gameState) */
     }
 
 
     util.docReady(
-        window.addEventListener('keydown', handleInput.handleInput)
+        window.addEventListener('keydown', handleKeyboardInput)
     )
 
     
     util.docReady(
-        window.addEventListener('keyup', handleInput.handleInput)
+        window.addEventListener('keyup', handleKeyboardInput)
     )
 
 </script>

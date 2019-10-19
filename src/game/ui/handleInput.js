@@ -5,7 +5,9 @@ let pressedKeys = {
 
 }
 
-const handleInput = ( event ) => {
+const handleInput = ( event, gameState ) => {
+
+    console.log(gameState)
     const booley = ( event.type == 'keyup' )
 
     console.log(event.type)
