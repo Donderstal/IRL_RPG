@@ -56,5 +56,6 @@ const step = ( ) => {
 }
 
 module.exports = {
-    init
+    init,
+    drawFrame
 }

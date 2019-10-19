@@ -1,3 +1,5 @@
+const anim = require('../overworld-anim/animExperiment')
+
 const initGamePiece  = ( x, y, cellSize, type ) => {
     return new gamePiece(  x, y, cellSize )
 }
@@ -17,22 +19,16 @@ class gamePiece {
         }
 
         // The three following properties have arbitray values (for now)
-        this.width      = (cellSize / 3) * 4;
-        this.height     = cellSize * 2;
+        this.width      = cellSize;
+        this.height     = cellSize * 1.5;
         this.spriteSize = 24
         //
         this.ctx        = getCanvasContext( )
         this.sprite     = getSprite( x, y )    
         this.getXY      = ( ) => {
             return this.xy
-        }
-        this.updateXY   = ( newX, newY ) => {
-            this.xy.x       = newX
-            this.xy.y       = newY
-            this.xy.cell    = getGridLocation( newX, newY )
-        }     
+        }  
     }
-
 }
 
 const getSprite = ( x, y ) => {
@@ -40,7 +36,6 @@ const getSprite = ( x, y ) => {
     let bgImage = new Image()
 
     bgImage.onload = ( ) => {
-    console.log('yo')
         var ctx = getCanvasContext () 
         // temp measurements
         // must be replaced by dynamic stuff later
@@ -53,7 +48,6 @@ const getSprite = ( x, y ) => {
 }
 
 const getGridLocation = ( x, y ) => {
-    console.log("Grid location! X is " + x + ", Y is " + y)
     return x + ", " + y
 }
 

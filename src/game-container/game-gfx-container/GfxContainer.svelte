@@ -3,14 +3,22 @@
     import util from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
     import createCharInstance from '../../game/createCharInstance'
-    import handleInput from '../../game/ui/handleInput'
     import animation from '../../game/overworld-anim/animExperiment'
 
     export let classList;
     export let gameState;
 
+    let pressedKeys = {};
+
+    let characterXY = {};
+    let characterWidth
+    let characterHeight
+
+
     let frontContext;
     let backContext;
+
+    const MOVEMENT_SPEED = 1.85
 
     const getGameState = () => {
         return gameState
@@ -34,32 +42,60 @@
             backContext     = initOverworld.initCanvas(0)      
             frontContext    = initOverworld.initCanvas(1)     
         }, 75 )
-
+        
         setTimeout( () => {
             const playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
 
             gameState.playerCharacter = playerCharacter
 
-            animation.init(frontContext, gameState.playerCharacter)
+            characterXY =  gameState.playerCharacter.characterPiece.xy
+            characterWidth = gameState.playerCharacter.characterPiece.width
+            characterHeight = gameState.playerCharacter.characterPiece.height
+
+            window.requestAnimationFrame(movementController)
 
         }, 100 )
-
-        console.log(gameState)
     }
 
-    const handleKeyboardInput = (event) => {
-       /*  handleInput.handleInput(event, gameState) */
-    }
-
-
-    util.docReady(
-        window.addEventListener('keydown', handleKeyboardInput)
-    )
-
+    const movementController = ( ) => {       
+        
+        frontContext.clearRect( characterXY.x, characterXY.y, characterWidth, characterHeight )
     
+        if ( pressedKeys.d ) {
+            characterXY.x  += MOVEMENT_SPEED
+        }
+        if ( pressedKeys.a ) {
+            characterXY.x  -= MOVEMENT_SPEED
+        }
+        if ( pressedKeys.w ) {
+            characterXY.y  -= MOVEMENT_SPEED
+        }
+        if ( pressedKeys.s ) {
+            characterXY.y  += MOVEMENT_SPEED
+        }
+            
+        frontContext.drawImage(gameState.playerCharacter.characterPiece.sprite,
+        0, 0, 24, 24,
+        characterXY.x, characterXY.y, characterWidth, characterHeight);
+
+        window.requestAnimationFrame(movementController)
+
+    }
+
+    const prepareUI = () => {
+        window.addEventListener('keydown', (event) => {
+            pressedKeys[event.key] = true
+            console.log(characterXY)
+        })
+        window.addEventListener('keyup', () => {
+            pressedKeys[event.key] = false
+        })
+    }
+
+
     util.docReady(
-        window.addEventListener('keyup', handleKeyboardInput)
-    )
+        prepareUI()
+    )   
 
 </script>
 
