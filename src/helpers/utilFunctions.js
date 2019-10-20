@@ -13,7 +13,17 @@ const getInputVal = (id) => {
     return document.getElementById(id).value
 }   
 
+//Return front Canvas ctx
+const getFrontCanvasContext = () => {
+    let canv = document.getElementsByTagName('canvas')[1]
+
+    let ctx = canv.getContext('2d')
+
+    return ctx
+}
+
 module.exports = {
     docReady,
-    getInputVal
+    getInputVal,
+    getFrontCanvasContext
 }

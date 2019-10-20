@@ -3,28 +3,13 @@
     import util from '../../helpers/utilFunctions'
     import initOverworld from '../../game/initOverworld'
     import createCharInstance from '../../game/createCharInstance'
-    import animation from '../../game/overworld-anim/animExperiment'
-
+    import movement from '../../game/overworld-ui/movement'
+    
     export let classList;
     export let gameState;
 
-    let pressedKeys = {};
-
-    let playerCharacter;
-
     let frontContext;
     let backContext;
-    let frameCount = 0;
-
-    const MOVEMENT_SPEED = 1.85;
-    
-    const FACING_DOWN    = 0;
-    const FACING_UP      = 3;
-    const FACING_LEFT    = 1;
-    const FACING_RIGHT   = 2;
-
-    const FRAME_LIMIT = 12;
-
 
     const getGameState = () => {
         return gameState
@@ -49,68 +34,17 @@
         setTimeout( () => {
             gameState.playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
 
-            playerCharacter = gameState.playerCharacter.characterPiece
-
-            window.requestAnimationFrame(movementController)
+            movement.initMovement(gameState.playerCharacter.characterPiece)
 
         }, 100 )
     }
 
-    const movementController = ( ) => {       
-        
-        frontContext.clearRect( playerCharacter.xy.x, playerCharacter.xy.y, playerCharacter.width, playerCharacter.height )
-
-        let hasMoved = false;
-    
-        if ( pressedKeys.d ) {
-            playerCharacter.xy.x += MOVEMENT_SPEED
-            playerCharacter.direction = FACING_RIGHT
-            hasMoved = true;
-        }
-        if ( pressedKeys.a ) {
-            playerCharacter.xy.x  -= MOVEMENT_SPEED
-            playerCharacter.direction = FACING_LEFT
-            hasMoved = true;
-        }
-        if ( pressedKeys.w ) {
-            playerCharacter.xy.y  -= MOVEMENT_SPEED
-            playerCharacter.direction = FACING_UP
-            hasMoved = true;
-        }
-        if ( pressedKeys.s ) {
-            playerCharacter.xy.y  += MOVEMENT_SPEED
-            playerCharacter.direction = FACING_DOWN
-            hasMoved = true;
-        }
-
-        if (hasMoved) {
-            frameCount++;
-        
-            if (frameCount >= FRAME_LIMIT) {
-                frameCount = 0;
-                playerCharacter.animIterator++;
-
-                if (playerCharacter.animIterator >= playerCharacter.animLoop.length) {
-                    playerCharacter.animIterator = 0;
-                }
-            }
-        }
-            
-        frontContext.drawImage(
-            playerCharacter.sprite,
-            playerCharacter.animLoop[playerCharacter.animIterator] * 48, ( playerCharacter.direction * 64 ), 48, 64,
-            playerCharacter.xy.x, playerCharacter.xy.y, playerCharacter.width, playerCharacter.height
-        );
-
-        window.requestAnimationFrame(movementController)
-    }
-
     const prepareUI = () => {
         window.addEventListener('keydown', (event) => {
-            pressedKeys[event.key] = true
+            movement.pressedKeys[event.key] = true
         })
         window.addEventListener('keyup', () => {
-            pressedKeys[event.key] = false
+            movement.pressedKeys[event.key] = false
         })
     }
 

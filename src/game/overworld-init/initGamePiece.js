@@ -1,4 +1,4 @@
-const anim = require('../overworld-anim/animExperiment')
+const util = require('../../helpers/utilFunctions')
 
 const initGamePiece  = ( x, y, cellSize, type ) => {
     return new gamePiece(  x, y, cellSize )
@@ -15,7 +15,7 @@ class gamePiece {
         this.xy         = { 
             x       : x, 
             y       : y,
-            cell    : getGridLocation( x, y )
+            cell    : getGridLocation
         }
 
         // The three following properties have arbitray values (for now)
@@ -23,17 +23,16 @@ class gamePiece {
         this.height     = cellSize * 1.5;
         this.animLoop   = [ 0, 1, 2, 3]
         this.animIterator   = 0
+        this.direction  = 0;
+        this.ctx        = util.getFrontCanvasContext( )
         this.spriteSize = { 
             width: 48,
             height: 64
         }
-        this.direction  = 0;
-        //
-        this.ctx        = getCanvasContext( )
         this.sprite     = getSprite( x, y, this.spriteSize )    
         this.getXY      = ( ) => {
             return this.xy
-        }  
+        }
     }
 }
 
@@ -42,7 +41,7 @@ const getSprite = ( x, y, spriteSize ) => {
     let bgImage = new Image()
 
     bgImage.onload = ( ) => {
-        var ctx = getCanvasContext () 
+        var ctx = util.getFrontCanvasContext( ) 
         ctx.drawImage(bgImage, 0, 0, spriteSize.width, spriteSize.height, x, y, 37, 37)                
     }
 
@@ -54,15 +53,6 @@ const getSprite = ( x, y, spriteSize ) => {
 const getGridLocation = ( x, y ) => {
     return x + ", " + y
 }
-
-const getCanvasContext = () => {
-    let canv = document.getElementsByTagName('canvas')[1]
-
-    let ctx = canv.getContext('2d')
-
-    return ctx
-}
-
 
 module.exports = {
     initGamePiece
