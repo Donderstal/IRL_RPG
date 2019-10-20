@@ -8,14 +8,15 @@ const initGamePiece  = ( x, y, cellSize, type ) => {
 // Changes on 
 
 class gamePiece {
-    constructor ( x, y, cellSize ) {
+    constructor ( cellSize ) {
+
         // XY object to determine location
         // Cells will be used to determine the location 
         // of the character in the overworld
         this.xy         = { 
             x       : x, 
             y       : y,
-            cell    : getGridLocation
+            cell    : x + ', ' + y
         }
 
         // The three following properties have arbitray values (for now)
@@ -29,7 +30,7 @@ class gamePiece {
             width: 48,
             height: 64
         }
-        this.sprite     = getSprite( x, y, this.spriteSize )    
+        this.sprite     = getSprite( cellSize, cellSize, this.spriteSize )    
         this.getXY      = ( ) => {
             return this.xy
         }
@@ -45,13 +46,10 @@ const getSprite = ( x, y, spriteSize ) => {
         ctx.drawImage(bgImage, 0, 0, spriteSize.width, spriteSize.height, x, y, 37, 37)                
     }
 
+    // this should be made dynamic at some point
     bgImage.src =  './images/practice-sheet-1.png'      
 
     return bgImage
-}
-
-const getGridLocation = ( x, y ) => {
-    return x + ", " + y
 }
 
 module.exports = {

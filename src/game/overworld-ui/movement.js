@@ -9,6 +9,9 @@ const initMovement = (character) => {
     window.requestAnimationFrame(movementController)
 }
 
+// this function gets called by Window.requestAnimationFrame about 60 times per second
+// The pressedKeys variable is manipulated in GfxContainer with Eventlisteners
+
 const movementController = ( ) => {    
     
     let frontContext = playerCharacter.ctx
@@ -42,7 +45,6 @@ const movementController = ( ) => {
     }
 
     if (hasMoved) {
-        console.log(playerCharacter.xy.cell)
 
         frameCount++;
     
@@ -55,7 +57,8 @@ const movementController = ( ) => {
             }
         }
     }
-        
+    
+    // see helpers/docs.js for a description of drawImage's parameters
     frontContext.drawImage(
         playerCharacter.sprite,
         playerCharacter.animLoop[playerCharacter.animIterator] * 48, ( playerCharacter.direction * 64 ), 48, 64,

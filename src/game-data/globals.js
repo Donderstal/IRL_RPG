@@ -1,3 +1,5 @@
+// This file should store all global constants
+
 module.exports = {
 
     // speed for characters
@@ -16,4 +18,5 @@ module.exports = {
     GRID_BLOCK_PX  : 37,
     GRID_WIDTH     : 888,
     GRID_HEIGHT    : 592
+    
 }
