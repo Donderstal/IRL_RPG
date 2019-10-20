@@ -13,10 +13,11 @@ class gamePiece {
         // XY object to determine location
         // Cells will be used to determine the location 
         // of the character in the overworld
+        // still experimental
         this.xy         = { 
-            x       : x, 
-            y       : y,
-            cell    : x + ', ' + y
+            x       : cellSize, 
+            y       : cellSize,
+            cell    : cellSize + ', ' + cellSize
         }
 
         // The three following properties have arbitray values (for now)
