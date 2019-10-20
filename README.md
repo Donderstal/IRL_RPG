@@ -31,6 +31,14 @@ As of October 20th, 2019
 * A basic background is render
 * PlayerCharacter object is added to gameState after initialization
 
+#### DOCUMENTATION
 
+*Basic Setup*
+All game logic is handled seperately from the front end code.
+All actual front-end code and direct user interaction will be handled by the Svelte files
+There are two canvases: the background canvas contains the overworld and background, the front canvas contains the characters
+
+*GfxContainer.svelte*
+This file is the container of both canvases. Keyboard input is also registered here. The game is started by the ```startGame``` function in this file, which is called when the user clicks the Start Game button.
 
 Donderstal
