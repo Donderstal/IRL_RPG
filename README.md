@@ -6,8 +6,12 @@ RPG Game in Node.js, Svelte and HTML5 Canvas
 
 #### INSTALLATION
 NOTE: as of now the project is mostly experimental. You can download it, but it will only have limited functionalities.
-The latest working version of IRL_RPG can be found on the Next branch
-When we get to that point, the Master branch will contain the latest stable release
+
+The latest working version of IRL_RPG can be found on the Next branch.
+
+When we get to that point, the Master branch will contain the latest stable release.
+
+*Instructions*
 
 Clone the repo to a folder on your machine
 Run ```
