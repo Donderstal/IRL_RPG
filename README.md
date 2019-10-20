@@ -38,11 +38,18 @@ As of October 20th, 2019
 #### DOCUMENTATION
 
 *Basic Setup*
-All game logic is handled seperately from the front end code.
-All actual front-end code and direct user interaction will be handled by the Svelte files
-There are two canvases: the background canvas contains the overworld and background, the front canvas contains the characters
+All game logic is handled seperately from the front end code. All front-end code and direct user interaction will be handled by the Svelte files
+
+There are two canvases: the background canvas contains the overworld and background, the front canvas contains the characters.
+
+Game functionalities are handled by JS files in the ```src/game``` folder. These files export functions and variables. 
+
+The gameState object is initialized in ```src/main.js```.
 
 *GfxContainer.svelte*
 This file is the container of both canvases. Keyboard input is also registered here. The game is started by the ```startGame``` function in this file, which is called when the user clicks the Start Game button.
+
+*createCharInstance*
+```src/game/createCharInstance.js``` is where a character is initialized. It calls `initChar` and `initGamePiece` and returns these. This then overwrites the ```playerCharacter``` property in ```gameState```. 
 
 Donderstal
