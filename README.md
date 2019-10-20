@@ -10,14 +10,14 @@ The latest working version of IRL_RPG can be found on the Next branch
 When we get to that point, the Master branch will contain the latest stable release
 
 Clone the repo to a folder on your machine
-Run ```bash 
+Run ```
 cd /path/to/IRL_RPG```
-Then run ```bash
+Then run ```
 npm install```
 
 Wait until all Node packages are installed.
 
-Then run ```bash
+Then run ```
 NPM run dev```
 
 This will compile the Javascript and assets
