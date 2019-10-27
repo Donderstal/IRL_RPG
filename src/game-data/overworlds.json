@@ -1,0 +1,18 @@
+{
+    "overworld-a" : {
+        "imageSrc": "",
+        "dimensions" : {
+            "horizontal" : 24,
+            "vertical" : 16
+        },
+        "border-blocks" : {
+            "top" : [ "A-1", "A-24" ],
+            "left": [ "A-1", "P-1" ],
+            "bottom": [ "P-1", "P-24" ],
+            "right": [ "A-24", "P-24" ]
+        },
+        "doors" : {
+            
+        }
+    }
+}
