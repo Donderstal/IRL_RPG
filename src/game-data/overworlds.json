@@ -11,8 +11,12 @@
             "bottom": [ "P-1", "P-24" ],
             "right": [ "A-24", "P-24" ]
         },
-        "doors" : {
-            
-        }
+        "inaccessible" : {
+            "": []
+        },
+        "doors" : [
+            { "P-16": "Overworld-B" },
+            { "D-4": "subWorlds[houseA]" }
+        ]
     }
 }

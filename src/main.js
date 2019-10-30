@@ -16,7 +16,10 @@ const app = new App({
 
 			overWorldState : {
 				overworld		: true,
-				curOverworld	: 'overWorld1'
+				activeOverworld	: 'overWorld1',
+				overWorldData : {
+
+				}
 
 			},
 
