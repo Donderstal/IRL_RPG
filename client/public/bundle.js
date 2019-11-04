@@ -1010,8 +1010,10 @@ var app = (function () {
                     throw new Error("HTTP error " + response.status);
                 }
 
-                console.log(response);
-                console.log(response.json());
+                return response.json()
+            })
+            .then( (json) => {
+                console.log(json);
             });
     };
 
