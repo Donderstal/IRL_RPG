@@ -1,8 +1,8 @@
 {
-    "tileset": "my-house",
+    "tileSet": "my-house",
     "dimensions": {
-        "horizontal": 4,
-        "vertical": 8
+        "hori": 4,
+        "vert": 8
     },
     "grid": [
         1, 2, 3, 4,

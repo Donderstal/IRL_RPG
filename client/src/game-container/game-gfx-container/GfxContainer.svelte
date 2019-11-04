@@ -60,7 +60,7 @@
         flex: 75%;
         height: 592px;
         width: 888px;
-        background-color: grey;
+        background-color: black;
         justify-content: center;
         text-align: center;
     }

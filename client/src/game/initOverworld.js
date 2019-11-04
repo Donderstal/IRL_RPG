@@ -13,28 +13,13 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        drawMap(ctx,  ctx.canvas.width, ctx.canvas.height)    
+        getGrid.gridGetter()
 
     } else {
         canvas.id           = 'game-front-canvas'
     }
 
     return ctx
-}
-
-const drawMap = (ctx, canvWidth, canvHeight) => {
-    let bgImage = new Image()
-
-    let imageSrc = './images/gridExp.jpg'     
-
-    
-    getGrid.gridGetter()
-    
-    bgImage.onload = ( ) => {
-        ctx.drawImage(bgImage, 0, 0, canvWidth, canvHeight)                
-    }
-
-    bgImage.src = imageSrc
 }
 
 module.exports = {

@@ -36,9 +36,6 @@ class gamePiece {
 }
 
 const getSprite = ( x, y, width, height ) => {
-
-    console.log( x, y, width, height )
-
     let newSprite = new Image()
 
     newSprite.onload = ( ) => {
@@ -47,7 +44,7 @@ const getSprite = ( x, y, width, height ) => {
     }
 
     // this should be made dynamic at some point
-    newSprite.src =  './sprites-and-tiles/sprites/animation_guy.png'      
+    newSprite.src =  '/static/sprites/neckbeard.png'      
 
     return newSprite
 }

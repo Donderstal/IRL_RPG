@@ -22,8 +22,19 @@ const getFrontCanvasContext = () => {
     return ctx
 }
 
+//Return back Canvas ctx
+const getBackCanvasContext = () => {
+    let canv = document.getElementsByTagName('canvas')[0]
+
+    let ctx = canv.getContext('2d')
+
+    return ctx
+}
+
+
 module.exports = {
     docReady,
     getInputVal,
-    getFrontCanvasContext
+    getFrontCanvasContext,
+    getBackCanvasContext
 }
