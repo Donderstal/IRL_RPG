@@ -28,7 +28,7 @@
         }, 75 )
         
         setTimeout( () => {
-            gameState.playerCharacter = createCharInstance.getCharacter( charClass, charName, charClass )           
+            gameState.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )           
 
             movement.initMovement(gameState.playerCharacter.characterPiece)
 
