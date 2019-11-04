@@ -1,11 +1,10 @@
 const util = require('../../helpers/utilFunctions')
 
-const initGamePiece  = ( x, y, cellSize, type ) => {
+const initGamePiece  = ( x, y, cellSize ) => {
     return new gamePiece(  x, y, cellSize )
 }
 
 // The gamePiece class will be assigned to all overworld characters in the game
-// Changes on 
 
 class gamePiece {
     constructor ( cellSize ) {
@@ -20,7 +19,7 @@ class gamePiece {
             cell    : cellSize + ', ' + cellSize
         }
 
-        // The three following properties have arbitray values (for now)
+        // The three following properties have arbitrary values (for now)
         this.width      = cellSize;
         this.height     = cellSize * 1.5;
         this.animLoop   = [ 0, 1, 2, 3]

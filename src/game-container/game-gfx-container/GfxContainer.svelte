@@ -95,7 +95,8 @@
     <div id="intro-screen">
 
         <div>
-            <h3>Welcome to IRL-RPG</h3>
+            <h3>Welcome to <br/> 
+            <span>NECKBEARD 2020</span></h3>
         </div>
 
         <div>
