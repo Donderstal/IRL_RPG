@@ -61,7 +61,9 @@ const movementController = ( ) => {
     // see helpers/docs.js for a description of drawImage's parameters
     frontContext.drawImage(
         playerCharacter.sprite,
-        playerCharacter.animLoop[playerCharacter.animIterator] * 48, ( playerCharacter.direction * 64 ), 48, 64,
+        playerCharacter.animLoop[playerCharacter.animIterator] * globals.GRID_BLOCK_PX, 
+        playerCharacter.direction * globals.GRID_BLOCK_PX, 
+        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
         playerCharacter.xy.x, playerCharacter.xy.y, playerCharacter.width, playerCharacter.height
     );
 

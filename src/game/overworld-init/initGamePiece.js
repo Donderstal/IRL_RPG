@@ -28,7 +28,7 @@ class gamePiece {
         this.direction      = 0;
 
         this.ctx            = util.getFrontCanvasContext( )
-        this.sprite         = getSprite( cellSize, cellSize, this.width, this.height )    
+        this.sprite         = getSprite( this.xy.x, this.xy.y, this.width, this.height )    
         this.getXY          = ( ) => {
             return this.xy
         }
@@ -43,7 +43,7 @@ const getSprite = ( x, y, width, height ) => {
 
     newSprite.onload = ( ) => {
         var ctx = util.getFrontCanvasContext( ) 
-        ctx.drawImage(newSprite, 0, 0, 74, 74, x, y, width, height)                
+        ctx.drawImage(newSprite, 0, 0, 37, 37, x, y, width, height)                
     }
 
     // this should be made dynamic at some point
