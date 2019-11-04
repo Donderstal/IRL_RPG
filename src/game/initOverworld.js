@@ -1,3 +1,5 @@
+const getGrid = require('./overworld-init/getGrid')
+
 const initCanvas = (canvasNum) => {
     // canvasNum === 0 generates background Canvas
     // 1 generates the front canvas
@@ -24,6 +26,9 @@ const drawMap = (ctx, canvWidth, canvHeight) => {
     let bgImage = new Image()
 
     let imageSrc = './images/gridExp.jpg'     
+
+    
+    getGrid.gridGetter()
     
     bgImage.onload = ( ) => {
         ctx.drawImage(bgImage, 0, 0, canvWidth, canvHeight)                

@@ -1,22 +1,24 @@
-const overworlds = require('../../game-data/overworlds.json')
 const globals   = require('../../game-data/globals')
 
-const gridGetter = (gridName) => {
-    const newOverworld  = overworlds[gridName]
-    const dimensions    = getDimensionsInPixels(newOverworld)
+const gridGetter = () => {
+    /* const newOverworld  = overworlds[gridName]
+    const dimensions    = getDimensionsInPixels(newOverworld) */
 
-    console.log(dimensions)
+    fetch('/public/overworlds/my-neighbourhood/my-house.json')
+        .then( (response) => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+
+            console.log(response)
+            response.json()
+        })
+        .then( (mapJson) => {
+            console.log(mapJson)
+        })
+
 }
 
-const getDimensionsInPixels = (newOverworld) => {
-    const overworldDimensions   = newOverworld.dimensions
-
-    return {
-        horizontalPX  : overworldDimensions["horizontal"] * globals.GRID_BLOCK_PX, 
-        verticalPX    : overworldDimensions["vertical"] * globals.GRID_BLOCK_PX         
-    }
+module.exports = {
+    gridGetter
 }
-
-gridGetter('overworld-a')
-
-console.log('bruh')

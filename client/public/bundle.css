@@ -1,0 +1,13 @@
+div.svelte-tiib54{text-align:center;height:100vh}
+.footer.svelte-tvy6xy{height:5vh;border-top:1px groove #190019
+    }
+.header.svelte-jwsxw2{height:5vh;border-bottom:1px groove #190019
+    }
+.main-container.svelte-b4k9w5{display:flex;flex-direction:column;max-width:900px;margin:0 auto;height:90vh;border-left:1px groove #190019;border-right:1px groove #190019;box-shadow:-15px 0 15px -15px inset}
+.game-ui-container.svelte-2t4vdp{display:flex;flex-wrap:wrap;flex:17.5%;background-color:#800080;border-top:1px groove #190019}
+.game-gfx-container.svelte-1ugpmht{display:flex;flex-direction:column;flex:75%;height:592px;width:888px;background-color:grey;justify-content:center;text-align:center}.game-background-body.svelte-1ugpmht{height:592px;width:888px;background-color:transparent;background-size:cover;margin:0 auto;z-index:0
+    }.game-front-body.svelte-1ugpmht{position:absolute;height:592px;width:888px;background-color:transparent;margin:0 auto;z-index:5
+    }.do-not-display.svelte-1ugpmht{display:none}
+.game-txt-container.svelte-1khomd6{display:flex;flex-wrap:wrap;flex:7.5%;border-top:1px groove #190019;background-color:#800080;padding:.5rem 1rem}
+
+/*# sourceMappingURL=bundle.css.map */

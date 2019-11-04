@@ -70,10 +70,6 @@ const movementController = ( ) => {
     window.requestAnimationFrame(movementController)
 }
 
-const getCell = (x, y) => {
-
-}
-
 module.exports = {
     pressedKeys,
     initMovement
