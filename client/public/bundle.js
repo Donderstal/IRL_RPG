@@ -1004,19 +1004,15 @@ var app = (function () {
         /* const newOverworld  = overworlds[gridName]
         const dimensions    = getDimensionsInPixels(newOverworld) */
 
-        fetch('/public/overworlds/my-neighbourhood/my-house.json')
+        fetch('/static/overworlds/my-neighbourhood/my-house.json')
             .then( (response) => {
                 if (!response.ok) {
                     throw new Error("HTTP error " + response.status);
                 }
 
                 console.log(response);
-                response.json();
-            })
-            .then( (mapJson) => {
-                console.log(mapJson);
+                console.log(response.json());
             });
-
     };
 
     var getGrid = {
