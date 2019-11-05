@@ -17,6 +17,8 @@ module.exports = {
     // canvas dimensions
     GRID_BLOCK_PX  : 37,
     GRID_WIDTH     : 888,
-    GRID_HEIGHT    : 592
+    GRID_HEIGHT    : 592,
+    HORI_BLOCKS    : 24,
+    VERT_BLOCKS    : 16
     
 }

@@ -18,23 +18,26 @@ const gridGetter = () => {
 
 const generateOverworld = (json) => {
     const tileSet = json.tileSet
-    const startPos = getPositionOfGrid(json.dimensions.horizontal, json.dimensions.vertical)
+    const startPos = getPositionOfGridInCanvas(json.dimensions.hori, json.dimensions.vert)
     drawGrid(startPos)
+    
 }
 
-const getPositionOfGrid = (horizontalBlocks, verticalBlocks) => {
+const getPositionOfGridInCanvas = (horizontalBlocks, verticalBlocks) => {
     console.log(horizontalBlocks, verticalBlocks)
-    if ( horizontalBlocks > 24 || verticalBlocks > 16 ) {
+    if ( horizontalBlocks > globals.HORI_BLOCKS || verticalBlocks > globals.VERTI_BLOCKS ) {
         // helper function to be written for maps that are larger than 24 * 16 blocks
     }
 
     return {
-        horizontalStartingPoint: horizontalBlocks * globals.GRID_BLOCK_PX,
-        verticalStartingPoint: verticalBlocks * globals.GRID_BLOCK_PX
+        horizontalStartingPoint: ( ( globals.HORI_BLOCKS - horizontalBlocks ) / 2 ) * globals.GRID_BLOCK_PX,
+        verticalStartingPoint: ( ( globals.VERT_BLOCKS - verticalBlocks ) / 2 )  * globals.GRID_BLOCK_PX
     }
 }
 
 const drawGrid = (startPos) => {
+
+    console.log(startPos)
     
     let bgImage = new Image()
 
