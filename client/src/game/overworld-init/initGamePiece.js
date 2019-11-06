@@ -28,14 +28,14 @@ class gamePiece {
         this.direction      = 0;
 
         this.ctx            = util.getFrontCanvasContext( )
-        this.sprite         = getSprite( this.xy.x, this.xy.y, this.width, this.height )    
+        this.sprite         = getSprite( this.xy.x, this.xy.y, this.width, this.height, '/static/sprites/neckbeard.png' )    
         this.getXY          = ( ) => {
             return this.xy
         }
     }
 }
 
-const getSprite = ( x, y, width, height ) => {
+const getSprite = ( x, y, width, height, spriteSrc ) => {
     let newSprite = new Image()
 
     newSprite.onload = ( ) => {
@@ -43,8 +43,7 @@ const getSprite = ( x, y, width, height ) => {
         ctx.drawImage(newSprite, 0, 0, 37, 37, x, y, width, height)                
     }
 
-    // this should be made dynamic at some point
-    newSprite.src =  '/static/sprites/neckbeard.png'      
+    newSprite.src = spriteSrc
 
     return newSprite
 }

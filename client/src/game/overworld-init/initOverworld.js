@@ -1,8 +1,14 @@
 const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
-const gridGetter = () => {
-    fetch('/static/overworlds/my-neighbourhood/my-house.json')
+/** 
+ * Fetch JSON file with data of overworlds or subworlds
+ * Call generateOveworld() when ready
+ * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
+ */
+
+const fetchOverworldJsonWithCallback = (worldName) => {
+    fetch('/static/overworlds/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
@@ -11,10 +17,14 @@ const gridGetter = () => {
             return response.json()
         })
         .then( (json) => {
-            console.log(json)
            generateOverworld(json)
-        })    
+    })    
 }
+
+/** 
+ * Master function which calls all overworld rendering functionalities
+ * @param {Object} json - JSON containing data of an overworld
+ */
 
 const generateOverworld = (json) => {
     const tileSet = json.tileSet
@@ -23,10 +33,18 @@ const generateOverworld = (json) => {
     
 }
 
+/** 
+ * Fetch JSON file with data of overworlds or subworlds
+ * Call generateOveworld() when ready
+ * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
+ */
+
 const getPositionOfGridInCanvas = (horizontalBlocks, verticalBlocks) => {
     console.log(horizontalBlocks, verticalBlocks)
     if ( horizontalBlocks > globals.HORI_BLOCKS || verticalBlocks > globals.VERTI_BLOCKS ) {
         // helper function to be written for maps that are larger than 24 * 16 blocks
+        // We need a way to determine what part of the map is rendered when
+        // this will probably depend on the player character's entry point into the overworld
     }
 
     return {
@@ -34,6 +52,12 @@ const getPositionOfGridInCanvas = (horizontalBlocks, verticalBlocks) => {
         verticalStartingPoint: ( ( globals.VERT_BLOCKS - verticalBlocks ) / 2 )  * globals.GRID_BLOCK_PX
     }
 }
+
+/** 
+ * Fetch JSON file with data of overworlds or subworlds
+ * Call generateOveworld() when ready
+ * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
+ */
 
 const drawGrid = (startPos) => {
 
@@ -53,5 +77,5 @@ const drawGrid = (startPos) => {
 }
 
 module.exports = {
-    gridGetter
+    fetchOverworldJsonWithCallback
 }

@@ -1,4 +1,4 @@
-const getGrid = require('./overworld-init/getGrid')
+const initOverworld = require('./overworld-init/initOverworld')
 
 const initCanvas = (canvasNum) => {
     // canvasNum === 0 generates background Canvas
@@ -13,7 +13,7 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        getGrid.gridGetter()
+        initOverworld.fetchOverworldJsonWithCallback('my-neighbourhood/my-house')
 
     } else {
         canvas.id           = 'game-front-canvas'

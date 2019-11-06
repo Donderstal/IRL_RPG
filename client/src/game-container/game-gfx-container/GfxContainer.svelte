@@ -1,7 +1,7 @@
 <script>
 
     import util from '../../helpers/utilFunctions'
-    import initOverworld from '../../game/initOverworld'
+    import initCanvas from '../../game/initCanvas'
     import createCharInstance from '../../game/createCharInstance'
     import movement from '../../game/overworld-ui/movement'
     
@@ -23,8 +23,8 @@
         }, 50 )
 
         setTimeout( () => {
-            backContext     = initOverworld.initCanvas(0)      
-            frontContext    = initOverworld.initCanvas(1)     
+            backContext     = initCanvas.initCanvas(0)      
+            frontContext    = initCanvas.initCanvas(1)     
         }, 75 )
         
         setTimeout( () => {
