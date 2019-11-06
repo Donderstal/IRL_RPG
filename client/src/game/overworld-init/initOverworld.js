@@ -1,67 +1,7 @@
 const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
-/** 
- * Fetch JSON file with data of overworlds or subworlds
- * Call generateOveworld() when ready
- * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
- */
-
-const fetchOverworldJsonWithCallback = (worldName) => {
-    fetch('/static/overworlds/' + worldName +'.json')
-        .then( (response) => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-
-            return response.json()
-        })
-        .then( (json) => {
-           generateOverworld(json)
-    })    
-}
-
-/** 
- * Master function which calls all overworld rendering functionalities
- * @param {Object} json - JSON containing data of an overworld
- */
-
-const generateOverworld = (json) => {
-    const tileSet = json.tileSet
-    const startPos = getPositionOfGridInCanvas(json.dimensions.hori, json.dimensions.vert)
-    drawGrid(startPos)
-    
-}
-
-/** 
- * Fetch JSON file with data of overworlds or subworlds
- * Call generateOveworld() when ready
- * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
- */
-
-const getPositionOfGridInCanvas = (horizontalBlocks, verticalBlocks) => {
-    console.log(horizontalBlocks, verticalBlocks)
-    if ( horizontalBlocks > globals.HORI_BLOCKS || verticalBlocks > globals.VERTI_BLOCKS ) {
-        // helper function to be written for maps that are larger than 24 * 16 blocks
-        // We need a way to determine what part of the map is rendered when
-        // this will probably depend on the player character's entry point into the overworld
-    }
-
-    return {
-        horizontalStartingPoint: ( ( globals.HORI_BLOCKS - horizontalBlocks ) / 2 ) * globals.GRID_BLOCK_PX,
-        verticalStartingPoint: ( ( globals.VERT_BLOCKS - verticalBlocks ) / 2 )  * globals.GRID_BLOCK_PX
-    }
-}
-
-/** 
- * Fetch JSON file with data of overworlds or subworlds
- * Call generateOveworld() when ready
- * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
- */
-
 const drawGrid = (startPos) => {
-
-    console.log(startPos)
     
     let bgImage = new Image()
 
@@ -69,7 +9,6 @@ const drawGrid = (startPos) => {
 
     bgImage.onload = ( ) => {
         const ctx = utilFunctions.getBackCanvasContext()
-        console.log('yeah!!!')
         ctx.drawImage(bgImage, startPos.horizontalStartingPoint, startPos.verticalStartingPoint, globals.GRID_WIDTH, globals.GRID_HEIGHT)                
     }
 
@@ -77,5 +16,5 @@ const drawGrid = (startPos) => {
 }
 
 module.exports = {
-    fetchOverworldJsonWithCallback
+    drawGrid
 }
