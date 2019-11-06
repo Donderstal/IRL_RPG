@@ -1,71 +1,34 @@
-*Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+Readme last updated on November 4th, 2019
 
----
+### IRL-RPG
 
-# svelte app
+Online RPG Game in Flask, Svelte and HTML5 Canvas
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+#### INSTALLATION
+NOTE: as of now the project is mostly experimental. You can download it, but it will only have limited functionalities.
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+The latest working version of IRL_RPG can be found on the Next branch
+When we get to that point, the Master branch will contain the latest stable release
 
 
-## Get started
+Clone the repo to a folder on your machine
 
-Install the dependencies...
+You will need Python 3. You will also need to install Flask by running ```pip install flask```
 
-```bash
-cd svelte-app
-npm install
-```
+Cd to the ```client``` folder
+Then run ```npm install```
 
-...then start [Rollup](https://rollupjs.org):
+Wait until all Node packages are installed.
 
-```bash
-npm run dev
-```
+Open a new terminal window and rund ```server.py``` to get the Flask server running
+Finally, run ```npm run autobuild``` in the client folder. This will start the svelte compiler and watch for changes
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+After everything is compiled, you can visit the app on localhost:5000
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
+#### FEATURES
+As of November 4th, 2019
+* User is able to select a class, gender and character name
+* Basic wasd controls are present, player character can move and movement is animated
+* Basic server for serving JSON files which contain overworld information
 
-
-## Deploying to the web
-
-### With [now](https://zeit.co/now)
-
-Install `now` if you haven't already:
-
-```bash
-npm install -g now
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-now
-```
-
-As an alternative, use the [Now desktop client](https://zeit.co/download) and simply drag the unzipped project folder to the taskbar icon.
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public
-```
+Donderstal
