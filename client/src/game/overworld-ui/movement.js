@@ -4,11 +4,6 @@ let frameCount = 0;
 let playerCharacter;
 let pressedKeys = {};
 
-const initMovement = (character) => {
-    playerCharacter = character
-    window.requestAnimationFrame(movementController)
-}
-
 // this function gets called by Window.requestAnimationFrame about 60 times per second
 // The pressedKeys variable is manipulated in GfxContainer with Eventlisteners
 
@@ -69,6 +64,12 @@ const movementController = ( ) => {
 
     window.requestAnimationFrame(movementController)
 }
+
+const initMovement = (character) => {
+    playerCharacter = character
+    window.requestAnimationFrame(movementController)
+}
+
 
 module.exports = {
     pressedKeys,
