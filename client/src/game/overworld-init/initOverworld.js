@@ -3,6 +3,7 @@ const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
 /** 
+ * @function getStartingPositionOfGridInCanvas
  * Fetch JSON file with data of overworlds or subworlds
  * Call generateOveworld() when ready
  * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
@@ -22,27 +23,28 @@ const fetchOverworldJsonWithCallback = (worldName) => {
 }
 
 /** 
+ * @function generateOverworld
  * Master function which calls all overworld rendering functionalities
  * @param {Object} json - JSON containing data of an overworld
  */
 
 const generateOverworld = (json) => {
-    const startingPos = getPositionOfGridInCanvas( json.dimensions )
-    
+    const startingPos = getStartingPositionOfGridInCanvas( json.dimensions )
+
     drawGrid(startingPos)
     
 }
 
 /** 
- * Fetch JSON file with data of overworlds or subworlds
- * Call generateOveworld() when ready
+ * @function getStartingPositionOfGridInCanvas
+ * Calculate starting position of grid relative to canvas based on data from JSON
  * @param {object} dimensions - width and height of overworld expressed in grid blocks
  * @return {object} - top and left position in Canvas to start drawing grid in px 
  */
 
-const getPositionOfGridInCanvas = (horizontalBlocks, verticalBlocks) => {
-    console.log(horizontalBlocks, verticalBlocks)
-    if ( horizontalBlocks > globals.HORI_BLOCKS || verticalBlocks > globals.VERTI_BLOCKS ) {
+const getStartingPositionOfGridInCanvas = ( dimensions ) => {
+    console.log( dimensions )
+    if ( dimensions.hori > globals.HORI_BLOCKS || dimensions.vert > globals.VERTI_BLOCKS ) {
 
         // helper function to be written for maps that are larger than 24 * 16 blocks
         // We need a way to determine what part of the map is rendered when
@@ -51,8 +53,8 @@ const getPositionOfGridInCanvas = (horizontalBlocks, verticalBlocks) => {
     }
 
     return {
-        horizontalStartingPoint: ( ( globals.HORI_BLOCKS - horizontalBlocks ) / 2 ) * globals.GRID_BLOCK_PX,
-        verticalStartingPoint: ( ( globals.VERT_BLOCKS - verticalBlocks ) / 2 )  * globals.GRID_BLOCK_PX
+        horizontalStartingPoint: ( ( globals.HORI_BLOCKS - dimensions.hori ) / 2 ) * globals.GRID_BLOCK_PX,
+        verticalStartingPoint: ( ( globals.VERT_BLOCKS - dimensions.vert ) / 2 )  * globals.GRID_BLOCK_PX
     }
 }
 
