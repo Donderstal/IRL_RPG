@@ -22,6 +22,8 @@ const fetchOverworldJsonWithCallback = (worldName) => {
     })    
 }
 
+
+
 /** 
  * @function generateOverworld
  * Master function which calls all overworld rendering functionalities
@@ -29,9 +31,10 @@ const fetchOverworldJsonWithCallback = (worldName) => {
  */
 
 const generateOverworld = (json) => {
+
     const startingPos = getStartingPositionOfGridInCanvas( json.dimensions )
 
-    drawGrid(startingPos)
+    drawGrid( startingPos, json )
     
 }
 
@@ -43,7 +46,7 @@ const generateOverworld = (json) => {
  */
 
 const getStartingPositionOfGridInCanvas = ( dimensions ) => {
-    console.log( dimensions )
+
     if ( dimensions.hori > globals.HORI_BLOCKS || dimensions.vert > globals.VERTI_BLOCKS ) {
 
         // helper function to be written for maps that are larger than 24 * 16 blocks
@@ -53,20 +56,62 @@ const getStartingPositionOfGridInCanvas = ( dimensions ) => {
     }
 
     return {
-        horizontalStartingPoint: ( ( globals.HORI_BLOCKS - dimensions.hori ) / 2 ) * globals.GRID_BLOCK_PX,
-        verticalStartingPoint: ( ( globals.VERT_BLOCKS - dimensions.vert ) / 2 )  * globals.GRID_BLOCK_PX
+        hori: ( ( globals.HORI_BLOCKS - dimensions.hori ) / 2 ) * globals.GRID_BLOCK_PX,
+        vert: ( ( globals.VERT_BLOCKS - dimensions.vert ) / 2 )  * globals.GRID_BLOCK_PX
     }
+
 }
 
-const drawGrid = (startPos) => {
+const drawGrid = ( startPos, json ) => {
+
+    const position    = startPos
+    const columns   = json.dimensions.hori
+    const rows      = json.dimensions.vert
+    const grid      = json.grid
+    const tileset   = json.tileSet
+
+    for ( var i = 0; i < rows; i++ ) {
+
+        const row = grid[i] 
+
+        console.log(row)
+
+        drawRow( columns, position, row, tileset )
+
+        position.vert += globals.GRID_BLOCK_PX
+
+        position.hori = ( ( globals.HORI_BLOCKS - columns ) / 2 ) * globals.GRID_BLOCK_PX
+
+    }
     
+}
+
+const drawRow = ( columns, position, row, tileset ) => {
+
+    for ( var j = 0; j < columns; j++) {
+
+        drawGridBlock( position, row[j], tileset )
+
+        position.hori += globals.GRID_BLOCK_PX
+
+    }
+
+}
+
+const drawGridBlock = ( position, tile, tileset ) => {
     let bgImage = new Image()
+    bgImage.hori = position.hori
+    bgImage.vert = position.vert
 
-    let imageSrc = '/static/gridExp.jpg'     
+    let imageSrc = '/static/tilesets/' + tileset + '/Tile0' + tile + '.png'      //tile 
+    
 
-    bgImage.onload = ( ) => {
+    bgImage.onload = ( ) => {      
+
+        console.log( imageSrc, bgImage.hori, bgImage.vert )
         const ctx = utilFunctions.getBackCanvasContext()
-        ctx.drawImage(bgImage, startPos.horizontalStartingPoint, startPos.verticalStartingPoint, globals.GRID_WIDTH, globals.GRID_HEIGHT)                
+        ctx.drawImage( bgImage, bgImage.hori, bgImage.vert, globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX)   
+
     }
 
     bgImage.src = imageSrc
