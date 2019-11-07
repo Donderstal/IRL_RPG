@@ -3,10 +3,10 @@ const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
 /** 
- * @function getStartingPositionOfGridInCanvas
- * Fetch JSON file with data of overworlds or subworlds
- * Call generateOveworld() when ready
- * @param {string} worldName - Name of overworld written as follows: 'overworld/subworld'
+ * @function fetchOverworldJsonWithCallback
+ * Fetch JSON file with data based on path relative to overworlds folder
+ * @param {string} worldName - Name of overworld written as follows: 'path/to/overworld'
+ * @callback generateOveworld - Start overworld rendering with JSON data
  */
 
 const fetchOverworldJsonWithCallback = (worldName) => {
@@ -23,40 +23,35 @@ const fetchOverworldJsonWithCallback = (worldName) => {
 }
 
 
-
 /** 
  * @function generateOverworld
- * Master function which calls all overworld rendering functionalities
+ * Main function
+ * Call @function getStartingPositionOfGridInCanvas to get pixels values to start drawing
+ * When tilesheet has been loaded based on the path in the json file, call @function drawGrid
  * @param {Object} json - JSON containing data of an overworld
  */
 
 const generateOverworld = (json) => {
 
-    const startingPos = getStartingPositionOfGridInCanvas( json.dimensions )
+    const startingPos = getStartingPositionOfGridInCanvas( json.columns, json.rows )
 
-    let bgImage = new Image()
-
-    let tileSheet = '/static/tilesets/' + json.sheet.src      //tilesheet
-    
-
+    const bgImage = new Image();
+    bgImage.src = '/static/tilesets/' + json.src
     bgImage.onload = ( ) => {      
         drawGrid( startingPos, json, bgImage )
     }
 
-    bgImage.src = tileSheet
-    
 }
 
 /** 
  * @function getStartingPositionOfGridInCanvas
  * Calculate starting position of grid relative to canvas based on data from JSON
- * @param {object} dimensions - width and height of overworld expressed in grid blocks
- * @return {object} - top and left position in Canvas to start drawing grid in px 
+ * @param {object} dimensions - columns and rows of overworld expressed in grid blocks
+ * @return {object} - top and left position in Canvas to start drawing grid ( in pixels ) 
  */
 
-const getStartingPositionOfGridInCanvas = ( dimensions ) => {
-
-    if ( dimensions.hori > globals.HORI_BLOCKS || dimensions.vert > globals.VERTI_BLOCKS ) {
+const getStartingPositionOfGridInCanvas = ( columns, rows ) => {
+    if ( columns > globals.HORI_BLOCKS || rows > globals.VERTI_BLOCKS ) {
 
         // helper function to be written for maps that are larger than 24 * 16 blocks
         // We need a way to determine what part of the map is rendered when
@@ -65,56 +60,62 @@ const getStartingPositionOfGridInCanvas = ( dimensions ) => {
     }
 
     return {
-        hori: ( ( globals.HORI_BLOCKS - dimensions.hori ) / 2 ) * globals.GRID_BLOCK_PX,
-        vert: ( ( globals.VERT_BLOCKS - dimensions.vert ) / 2 )  * globals.GRID_BLOCK_PX
+
+        hori: ( ( globals.HORI_BLOCKS - columns ) / 2 ) * globals.GRID_BLOCK_PX,
+        vert: ( ( globals.VERT_BLOCKS - rows ) / 2 )  * globals.GRID_BLOCK_PX
+
     }
 
 }
 
+/** 
+ * @function drawGrid
+ * 
+ * @param {object} startPos - columns and rows of overworld expressed in grid blocks
+ * @param {JSON} json - columns and rows of overworld expressed in grid blocks
+ * @param {object} tileSheet - columns and rows of overworld expressed in grid blocks
+ */
+
 const drawGrid = ( startPos, json, tileSheet ) => {
 
-    console.log( 'Tilesheet is: ' + tileSheet)
-
     const position  = startPos
-    const columns   = json.dimensions.hori
-    const rows      = json.dimensions.vert
-    const grid      = json.grid
-    const sheetInfo =   json.sheet
+    const columns   = json.columns
+    const rows      = json.rows
 
     for ( var i = 0; i < rows; i++ ) {
 
-        const row = grid[i]
+        const currentRow = json.grid[i]
 
-        drawRow( columns, position, row, sheetInfo, tileSheet )
+        drawRow( columns, position, currentRow, tileSheet )
 
         position.vert += globals.GRID_BLOCK_PX
-
         position.hori = ( ( globals.HORI_BLOCKS - columns ) / 2 ) * globals.GRID_BLOCK_PX
-
     }
     
 }
 
-const drawRow = ( columns, position, row, sheetInfo, tileSheet) => {
+const drawRow = ( columns, position, currentRow, tileSheet) => {
 
     for ( var j = 0; j < columns; j++) {
 
-        drawGridBlock( position, row[j], sheetInfo, tileSheet )
+        const currentTile = currentRow[j]
+
+        drawGridBlock( position, currentTile, tileSheet )
 
         position.hori += globals.GRID_BLOCK_PX
-
     }
 
 }
 
-const drawGridBlock = ( position, tile, sheetInfo, tileSheet ) => {
+const drawGridBlock = ( position, tile, tileSheet ) => {
 
     const blockSize = globals.GRID_BLOCK_PX
 
-    const tilePositionInSheet = sheetInfo.dimensions[tile]
-
-    console.log(tileSheet)
-    console.log( position.hori, position.vert, tilePositionInSheet.x, tilePositionInSheet.y )
+    // The global TILESHEET_GRID_XY_VALUES is used to represent the x and y position...
+    // of tiles in a tilesheet. A tilesheet is always 4 blocks wide.
+    // Using the global, we won't have to type more or less the same info... 
+    // ...in each overworld JSON file individually
+    const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
     const ctx = utilFunctions.getBackCanvasContext()
     ctx.drawImage( 
