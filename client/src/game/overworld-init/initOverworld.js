@@ -74,8 +74,6 @@ const drawGrid = ( startPos, json ) => {
 
         const row = grid[i] 
 
-        console.log(row)
-
         drawRow( columns, position, row, tileset )
 
         position.vert += globals.GRID_BLOCK_PX
@@ -108,7 +106,6 @@ const drawGridBlock = ( position, tile, tileset ) => {
 
     bgImage.onload = ( ) => {      
 
-        console.log( imageSrc, bgImage.hori, bgImage.vert )
         const ctx = utilFunctions.getBackCanvasContext()
         ctx.drawImage( bgImage, bgImage.hori, bgImage.vert, globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX)   
 
