@@ -34,7 +34,16 @@ const generateOverworld = (json) => {
 
     const startingPos = getStartingPositionOfGridInCanvas( json.dimensions )
 
-    drawGrid( startingPos, json )
+    let bgImage = new Image()
+
+    let tileSheet = '/static/tilesets/' + json.sheet.src      //tilesheet
+    
+
+    bgImage.onload = ( ) => {      
+        drawGrid( startingPos, json, bgImage )
+    }
+
+    bgImage.src = tileSheet
     
 }
 
@@ -62,19 +71,21 @@ const getStartingPositionOfGridInCanvas = ( dimensions ) => {
 
 }
 
-const drawGrid = ( startPos, json ) => {
+const drawGrid = ( startPos, json, tileSheet ) => {
 
-    const position    = startPos
+    console.log( 'Tilesheet is: ' + tileSheet)
+
+    const position  = startPos
     const columns   = json.dimensions.hori
     const rows      = json.dimensions.vert
     const grid      = json.grid
-    const tileset   = json.tileSet
+    const sheetInfo =   json.sheet
 
     for ( var i = 0; i < rows; i++ ) {
 
-        const row = grid[i] 
+        const row = grid[i]
 
-        drawRow( columns, position, row, tileset )
+        drawRow( columns, position, row, sheetInfo, tileSheet )
 
         position.vert += globals.GRID_BLOCK_PX
 
@@ -84,11 +95,11 @@ const drawGrid = ( startPos, json ) => {
     
 }
 
-const drawRow = ( columns, position, row, tileset ) => {
+const drawRow = ( columns, position, row, sheetInfo, tileSheet) => {
 
     for ( var j = 0; j < columns; j++) {
 
-        drawGridBlock( position, row[j], tileset )
+        drawGridBlock( position, row[j], sheetInfo, tileSheet )
 
         position.hori += globals.GRID_BLOCK_PX
 
@@ -96,22 +107,23 @@ const drawRow = ( columns, position, row, tileset ) => {
 
 }
 
-const drawGridBlock = ( position, tile, tileset ) => {
-    let bgImage = new Image()
-    bgImage.hori = position.hori
-    bgImage.vert = position.vert
+const drawGridBlock = ( position, tile, sheetInfo, tileSheet ) => {
 
-    let imageSrc = '/static/tilesets/' + tileset + '/Tile0' + tile + '.png'      //tile 
-    
+    const blockSize = globals.GRID_BLOCK_PX
 
-    bgImage.onload = ( ) => {      
+    const tilePositionInSheet = sheetInfo.dimensions[tile]
 
-        const ctx = utilFunctions.getBackCanvasContext()
-        ctx.drawImage( bgImage, bgImage.hori, bgImage.vert, globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX)   
+    console.log(tileSheet)
+    console.log( position.hori, position.vert, tilePositionInSheet.x, tilePositionInSheet.y )
 
-    }
-
-    bgImage.src = imageSrc
+    const ctx = utilFunctions.getBackCanvasContext()
+    ctx.drawImage( 
+        tileSheet, 
+        tilePositionInSheet.x, tilePositionInSheet.y,
+        blockSize, blockSize,
+        position.hori, position.vert,
+        blockSize, blockSize,
+    )   
 }
 
 module.exports = {

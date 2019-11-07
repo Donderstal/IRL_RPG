@@ -1,5 +1,6 @@
 {
     "tileSet": "my-house",
+    "sheet" : "my-house/Bed_Room.png",
     "dimensions": {
         "hori": 8,
         "vert": 14
