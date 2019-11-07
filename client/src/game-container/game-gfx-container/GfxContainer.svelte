@@ -30,9 +30,13 @@
         setTimeout( () => {
             gameState.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )           
 
-            movement.initMovement(gameState.playerCharacter.characterPiece)
-
         }, 100 )
+
+        setTimeout( () => {
+            movement.initMovement(gameState.playerCharacter.characterPiece)      
+
+        }, 125 )
+
     }
 
     // Event listener to handle keyboard presses
