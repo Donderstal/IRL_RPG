@@ -1,69 +1,101 @@
 const globals = require('../../game-data/globals')
+const util = require('../../helpers/utilFunctions')
 
 let frameCount = 0;
 let sprite;
 let frontContext;
 let pressedKeys = {};
-let hasMoved;
-
-// this function gets called by Window.requestAnimationFrame about 60 times per second
-// The pressedKeys variable is manipulated in GfxContainer with Eventlisteners
 
 /**
- * @function initMovement
- * 
+ * EXPORT @function initMovement
+ * Listen for keypresses
+ * and pass them to 
+ */
+const listenForKeyPress = () => {
+    window.addEventListener('keydown', (event) => {
+        pressedKeys[event.key] = true
+    })
+    window.addEventListener('keyup', () => {
+        pressedKeys[event.key] = false
+    })
+}
+
+/**
+ * EXPORT @function initMovement
  * Is called when player sprite is rendered
+ * 
  * Passes @function playerMovementController as callback
  * to requestAnimationFrame
  */
 const initPlayerMovement = (character) => {
 
     sprite = character
-    frontContext = sprite.ctx
+    frontContext = util.getFrontCanvasContext( )
     window.requestAnimationFrame(playerMovementController)
 }
 
 /**
  * @function playerMovementController
- * MAIN FUNCTION
- * Recursive function
- * Called +/- 60 times per second through requestAnimationFrame
+ * Gets called +/- 60 times per second with requestAnimationFrame
  * 
- * If the player presses d-pad or wasd...
- * Call @function clearRect to clear sprite from old location 
- * Then update coordinates and direction with @function moveInDirection 
- * of sprite,
- *  
+ * If the player is pressing d-pad or wasd...
+ * Call @function handleMovementOfSprite
  */
 const playerMovementController = ( ) => {   
 
-    hasMoved = false
-
     if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-        clearRect( sprite )
-        moveInDirection( 'FACING_UP' )
+        handleMovementOfSprite('FACING_UP')
     }
     if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-        clearRect( sprite )
-        moveInDirection( 'FACING_LEFT' )
+        handleMovementOfSprite('FACING_LEFT')
     }
     if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-        clearRect( sprite )
-        moveInDirection( 'FACING_DOWN' )
+        handleMovementOfSprite('FACING_DOWN')
     }
     if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-        clearRect( sprite )
-        moveInDirection( 'FACING_RIGHT' )
+        handleMovementOfSprite('FACING_RIGHT')
     }    
-
-    if ( hasMoved ) {
-        countFrame()
-        redrawSprite()
-    }
 
     window.requestAnimationFrame(playerMovementController)
 }
 
+/**
+ * @function handleMovementOfSprite
+ * Call functions in order to move sprite
+ * @param {string} direction - string representing direction
+ * 
+ * Call @function clearRect to clear old sprite
+ * Call @function moveInDirection to update sprite xy and direction
+ * Call @function countFrame to update animationIterator and framecount
+ * Call @function redrawSprite to draw sprite in new location and/or pose
+ */
+const handleMovementOfSprite = ( direction ) => {
+
+    clearSprite( )
+    moveInDirection( direction )
+    countFrame( )
+    redrawSprite( )
+}
+
+/**
+ * @function clearSprite
+ * Call clearRect to clear sprite from its location
+ */
+const clearSprite = () => {
+    
+    frontContext.clearRect( 
+        sprite.x, sprite.y, 
+        sprite.width, sprite.height
+    )
+}
+
+/**
+ * @function moveInDirection
+ * @param {string} direction - string representing direction
+ * 
+ * Update sprite x or y with movement speed based on direction
+ * Update sprite direction prop based on direction globals
+ */
 const moveInDirection = ( direction ) => {
 
     if ( direction == 'FACING_RIGHT' ) {
@@ -82,18 +114,15 @@ const moveInDirection = ( direction ) => {
         sprite.y -= globals.MOVEMENT_SPEED        
     }
 
-    sprite.direction = globals[direction]
-    hasMoved = true;
+    sprite.direction = globals[direction]        
 }
 
-const clearRect = () => {
-
-    frontContext.clearRect( 
-        sprite.x, sprite.y, 
-        sprite.width, sprite.height
-    )
-}
-
+/**
+ * @function countFrame
+ * Update frame count every time requestAnimationFrame fires callback
+ * Update sprite's animIterator every time FRAME_LIMIT is equal to framecount 
+ * Reset animIterator to zero if necessary
+ */
 const countFrame = () => {
     
     frameCount++;
@@ -105,10 +134,13 @@ const countFrame = () => {
         if (sprite.animIterator >= sprite.animLoop.length) {
             sprite.animIterator = 0;
         }
-
     }
 }
 
+/**
+ * @function redrawSprite
+ * Call drawImage to render sprite in updated location and/or position
+ */
 const redrawSprite = (  ) => {
 
     // see sr/helpers/docs.js for a description of drawImage's parameters
@@ -122,6 +154,6 @@ const redrawSprite = (  ) => {
 }
 
 module.exports = {
-    pressedKeys,
+    listenForKeyPress,
     initPlayerMovement
 }

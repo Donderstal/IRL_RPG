@@ -34,27 +34,10 @@
 
         setTimeout( () => {
             movement.initPlayerMovement( gameState.playerCharacter.characterPiece )      
-
+            movement.listenForKeyPress()
         }, 125 )
 
     }
-
-    // Event listener to handle keyboard presses
-    // Movement and animation logic is handled in /gane/game-ui/movement.js
-    const prepareUI = () => {
-        window.addEventListener('keydown', (event) => {
-            console.log(event.key)
-            movement.pressedKeys[event.key] = true
-        })
-        window.addEventListener('keyup', () => {
-            movement.pressedKeys[event.key] = false
-        })
-    }
-
-
-    util.docReady(
-        prepareUI()
-    )   
 
 </script>
 
