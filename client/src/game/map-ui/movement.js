@@ -11,46 +11,57 @@ let hasMoved;
 
 /**
  * @function initMovement
- * MAIN FUNCTION
  * 
- * Is called when sprite is rendered
- * 
+ * Is called when player sprite is rendered
+ * Passes @function playerMovementController as callback
+ * to requestAnimationFrame
  */
-const initMovement = (character) => {
+const initPlayerMovement = (character) => {
 
     sprite = character
-    window.requestAnimationFrame(movementController)
+    frontContext = sprite.ctx
+    window.requestAnimationFrame(playerMovementController)
 }
 
-const movementController = ( ) => {   
+/**
+ * @function playerMovementController
+ * MAIN FUNCTION
+ * Recursive function
+ * Called +/- 60 times per second through requestAnimationFrame
+ * 
+ * If the player presses d-pad or wasd...
+ * Call @function clearRect to clear sprite from old location 
+ * Then update coordinates and direction with @function moveInDirection 
+ * of sprite,
+ *  
+ */
+const playerMovementController = ( ) => {   
 
     hasMoved = false
 
-    frontContext = sprite.ctx
-
-    if ( pressedKeys.w ) {
+    if ( pressedKeys.w || pressedKeys.ArrowUp ) {
         clearRect( sprite )
         moveInDirection( 'FACING_UP' )
     }
-    if ( pressedKeys.a ) {
+    if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
         clearRect( sprite )
         moveInDirection( 'FACING_LEFT' )
     }
-    if ( pressedKeys.s ) {
+    if ( pressedKeys.s || pressedKeys.ArrowDown ) {
         clearRect( sprite )
         moveInDirection( 'FACING_DOWN' )
     }
-    if ( pressedKeys.d ) {
+    if ( pressedKeys.d || pressedKeys.ArrowRight ) {
         clearRect( sprite )
         moveInDirection( 'FACING_RIGHT' )
     }    
 
-    if (hasMoved) {
+    if ( hasMoved ) {
         countFrame()
         redrawSprite()
     }
 
-    window.requestAnimationFrame(movementController)
+    window.requestAnimationFrame(playerMovementController)
 }
 
 const moveInDirection = ( direction ) => {
@@ -100,7 +111,7 @@ const countFrame = () => {
 
 const redrawSprite = (  ) => {
 
-    // see helpers/docs.js for a description of drawImage's parameters
+    // see sr/helpers/docs.js for a description of drawImage's parameters
     frontContext.drawImage(
         sprite.image,
         sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
@@ -112,5 +123,5 @@ const redrawSprite = (  ) => {
 
 module.exports = {
     pressedKeys,
-    initMovement
+    initPlayerMovement
 }
