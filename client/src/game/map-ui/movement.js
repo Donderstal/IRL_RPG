@@ -84,8 +84,8 @@ const handleMovementOfSprite = ( direction ) => {
 const clearSprite = () => {
     
     frontContext.clearRect( 
-        sprite.x, sprite.y, 
-        sprite.width, sprite.height
+        0, 0, 
+        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
     )
 }
 
