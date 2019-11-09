@@ -18,11 +18,25 @@ module.exports = {
     GRID_BLOCK_PX  : 37,
     GRID_WIDTH     : 888,
     GRID_HEIGHT    : 592,
-    HORI_BLOCKS    : 24,
-    VERT_BLOCKS    : 16,
+    CANVAS_COLUMNS : 24,
+    CANVAS_ROWS    : 16,
 
-    // pixel grid for overworld tilesheet
+    
     TILESHEET_GRID_XY_VALUES : [
+
+    // We will use tilesheets to render our maps. Tilesheet are always 4 tiles wide.
+    // TILESHEET_GRID_XY_VALUES is an array used to store the x and y position of
+    // individual tiles in a sheet. 
+    
+    // This array must always be as long as the largest tilesheet included in the game.
+
+    // The Json files that store maps, represent them as a an array of arrays, where
+    // numbers in the array represent a tile in the map
+
+    // When a map is rendered in /map-init/initMap.js, the drawRow function checks this global
+    // using the tile number retrieved from the map Json to determine where in the 
+    // tilesheet the requested tile is. The x y is then passed to ctx.drawImage
+
         { "y": 0, "x": 0 },
         { "y": 0, "x": 37 },
         { "y": 0, "x": 74 },
