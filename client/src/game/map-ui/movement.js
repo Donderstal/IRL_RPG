@@ -1,5 +1,7 @@
 const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
+const state         = require('../../game-data/state')
+
 
 let frameCount = 0;
 let sprite;
@@ -30,6 +32,7 @@ const listenForKeyPress = () => {
 const initPlayerMovement = (character) => {
 
     sprite = character
+    sprite.getCurrentCellCoordinates
     frontContext = util.getFrontCanvasContext( )
     window.requestAnimationFrame(playerMovementController)
 }
@@ -98,19 +101,20 @@ const clearSprite = () => {
  */
 const moveInDirection = ( direction ) => {
 
-    if ( direction == 'FACING_RIGHT' ) {
+
+    if ( direction == 'FACING_RIGHT' && state.mapState.borders.right > sprite.x ) {
         sprite.x += globals.MOVEMENT_SPEED        
     }
 
-    if ( direction == 'FACING_LEFT' ) {
+    if ( direction == 'FACING_LEFT' && state.mapState.borders.left < sprite.x ) {
         sprite.x -= globals.MOVEMENT_SPEED        
     }
     
-    if ( direction == 'FACING_DOWN' ) {
+    if ( direction == 'FACING_DOWN' && state.mapState.borders.bottom > sprite.y ) {
         sprite.y += globals.MOVEMENT_SPEED        
     }
 
-    if ( direction == 'FACING_UP' ) {
+    if ( direction == 'FACING_UP' && state.mapState.borders.top < sprite.y ){
         sprite.y -= globals.MOVEMENT_SPEED        
     }
 

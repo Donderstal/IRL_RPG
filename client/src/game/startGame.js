@@ -17,14 +17,18 @@ const startGame = () => {
 
     setTimeout( () => {
         initCanvas(0)      
-        initCanvas(1)     
+        initCanvas(1)    
     }, 50 )
-    
+
     setTimeout( () => {
         state.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )     
+    }, 75 )
+    
+    setTimeout( () => {
+           
         movement.initPlayerMovement( state.playerCharacter.characterPiece )      
         movement.listenForKeyPress()      
-    }, 75 )
+    }, 100 )
 }
 
 const initCanvas = (canvasNum) => {

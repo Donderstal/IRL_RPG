@@ -75,6 +75,13 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
     if ( mapRows <= globals.CANVAS_ROWS ) {
         gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
     }
+    
+    state.mapState.borders = { 
+        top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
+        left    : gridStartingPosition.x,
+        bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - state.playerCharacter.characterPiece.height ),
+        right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - state.playerCharacter.characterPiece.width )
+    }
 
     return gridStartingPosition 
 }

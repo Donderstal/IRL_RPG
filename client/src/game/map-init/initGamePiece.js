@@ -9,18 +9,21 @@ class gamePiece {
         this.y       =  185,
 
         // this prop is experimental
-        this.cell    =  cellSize + ', ' + cellSize
+        this.cell    = setCurrentCellCoordinates( this.x, this.y, this.cell ),
 
-        this.width          = cellSize;
-        this.height         = cellSize * 1.5;
+        this.width   = cellSize;
+        this.height  = cellSize * 1.5;
 
-
-        this.animLoop       = [ 0, 1, 2, 3]
-        this.animIterator   = 0
-        this.direction      = 0;
+        this.animLoop      = [ 0, 1, 2, 3]
+        this.animIterator  = 0
+        this.direction     = 0;
 
         this.image         = getSprite( this.x, this.y, this.width, this.height, '/static/sprites/neckbeard.png' )    
     }
+}
+
+const setCurrentCellCoordinates = ( x, y ) => {
+    console.log( x, y )
 }
 
 const getSprite = ( x, y, width, height, spriteSrc ) => {
