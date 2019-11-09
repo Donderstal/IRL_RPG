@@ -1,12 +1,7 @@
 <script>
 	import MainContainer from './game-container/MainContainer.svelte'
 	import Footer from './footer.svelte'
-	import Header from './header.svelte'
-
-	export let gameState;
-
-	
-	
+	import Header from './header.svelte'	
 </script>
 
 <style>
@@ -19,7 +14,7 @@
 
 <div>
 	<Header />
-	<MainContainer gameState={gameState} />	
+	<MainContainer />	
 	<Footer/>
 </div>
 

@@ -6,7 +6,6 @@
     import movement from '../../game/map-ui/movement'
     
     export let classList;
-    export let gameState;
 
     let frontContext;
     let backContext;
