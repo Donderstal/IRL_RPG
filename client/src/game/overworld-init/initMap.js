@@ -3,15 +3,15 @@ const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
 /** 
- * @function fetchOverworldJsonWithCallback
- * Fetch JSON file with data based on path relative to overworlds folder
+ * @function fetchMapJsonWithCallback
+ * Fetch JSON file with data based on path relative to Maps folder
  * 
- * @param {string} worldName - Name of overworld written as follows: 'path/to/overworld'
- * @callback generateOveworld - Start overworld rendering with JSON data when fetch succeeds
+ * @param {string} worldName - Name of Map written as follows: 'path/to/Map'
+ * @callback generateOveworld - Start Map rendering with JSON data when fetch succeeds
  */
 
-const fetchOverworldJsonWithCallback = (worldName) => {
-    fetch('/static/overworlds/' + worldName +'.json')
+const fetchMapJsonWithCallback = (worldName) => {
+    fetch('/static/Maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
@@ -19,22 +19,22 @@ const fetchOverworldJsonWithCallback = (worldName) => {
             return response.json()
         })
         .then( (json) => {
-           generateOverworld(json)
+           generateMap(json)
     })    
 }
 
 
 /** 
- * @function generateOverworld
+ * @function generateMap
  * MAIN FUNCTION
  * 
  * Call @function getStartingPositionOfGridInCanvas to get the xy to start drawing in the canvas
  * Call @function drawGrid when tilesheet has been loaded based on the image path in the json file
  * 
- * @param {Object} json - JSON containing data on the overworld
+ * @param {Object} json - JSON containing data on the Map
  */
 
-const generateOverworld = (json) => {
+const generateMap = (json) => {
 
     const startingPos = getStartingPositionOfGridInCanvas( json.columns, json.rows )
 
@@ -50,28 +50,35 @@ const generateOverworld = (json) => {
  * @function getStartingPositionOfGridInCanvas
  * Calculate starting position of grid relative to canvas based on data from JSON
  * 
- * @param {object} dimensions - columns and rows of overworld expressed in grid blocks
+ * @param {object} dimensions - columns and rows of Map expressed in grid blocks
  * @return {object} - top and left position in Canvas to start drawing grid ( in pixels ) 
  */
 
-const getStartingPositionOfGridInCanvas = ( columns, rows ) => {
+const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 
-    if ( columns > globals.CANVAS_COLUMNS || rows > globals.CANVAS_ROWS ) {
+    const gridStartingPosition = {}
 
-        // helper function to be written for maps that are larger than 24 * 16 blocks
-        // We need a way to determine what part of the map is rendered when
-        // this will probably depend on the player character's entry point into the overworld
+    if ( mapColumns > globals.CANVAS_COLUMNS ) {
 
-
+        gridStartingPosition.x = ( ( mapColumns - globals.CANVAS_COLUMNS ) / 2 ) * -globals.GRID_BLOCK_PX
     }
 
-    return {
+    if ( mapColumns < globals.CANVAS_COLUMNS ) {
 
-        x: ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX,
-        y: ( ( globals.CANVAS_ROWS - rows ) / 2 )  * globals.GRID_BLOCK_PX
-
+        gridStartingPosition.x = ( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
     }
 
+    if ( mapRows > globals.CANVAS_ROWS ) {
+
+        gridStartingPosition.y = ( ( mapRows - globals.CANVAS_ROWS ) / 2 )  * -globals.GRID_BLOCK_PX
+    }
+
+    if ( mapRows < globals.CANVAS_ROWS ) {
+
+        gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
+    }
+
+    return gridStartingPosition 
 }
 
 /** 
@@ -80,7 +87,7 @@ const getStartingPositionOfGridInCanvas = ( columns, rows ) => {
  * Call @function drawRow for each row
  * 
  * @param {object} startPos - Starting x and y Canvas in pixels
- * @param {JSON} json - JSON containing data on the overworld
+ * @param {JSON} json - JSON containing data on the Map
  * @param {object} tileSheet - tilesheet HTML image
  */
 
@@ -106,7 +113,7 @@ const drawGrid = ( startPos, json, tileSheet ) => {
  * @function drawRow
  * Call @function drawGridBlock for column in this row
  * 
- * @param {JSON} json - JSON containing data on the overworld
+ * @param {JSON} json - JSON containing data on the Map
  * @param {columns} position - Starting x and y Canvas in pixels
  * @param {object} tileSheet - tilesheet HTML image
  */
@@ -154,5 +161,5 @@ const drawGridBlock = ( startPositionInCanvas, tile, tileSheet ) => {
 }
 
 module.exports = {
-    fetchOverworldJsonWithCallback
+    fetchMapJsonWithCallback
 }
