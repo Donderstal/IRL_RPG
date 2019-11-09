@@ -62,7 +62,7 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
         gridStartingPosition.x = ( ( mapColumns - globals.CANVAS_COLUMNS ) / 2 ) * -globals.GRID_BLOCK_PX
     }
 
-    if ( mapColumns < globals.CANVAS_COLUMNS ) {
+    if ( mapColumns <= globals.CANVAS_COLUMNS ) {
         gridStartingPosition.x = ( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
     }
 
@@ -70,7 +70,7 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
         gridStartingPosition.y = ( ( mapRows - globals.CANVAS_ROWS ) / 2 )  * -globals.GRID_BLOCK_PX
     }
 
-    if ( mapRows < globals.CANVAS_ROWS ) {
+    if ( mapRows <= globals.CANVAS_ROWS ) {
         gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
     }
 
@@ -136,11 +136,16 @@ const drawRow = ( columns, position, currentRow, tileSheet) => {
  */
 const drawGridBlock = ( startPositionInCanvas, tile, tileSheet ) => {
 
+    if ( tile === "E" ) {
+        return
+    }
+
     const blockSize = globals.GRID_BLOCK_PX
 
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
     const ctx = utilFunctions.getBackCanvasContext()
+
     ctx.drawImage( 
 
         tileSheet, 

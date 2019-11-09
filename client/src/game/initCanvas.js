@@ -13,7 +13,7 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initmap.fetchMapJsonWithCallback('my-neighbourhood/my-large-house')
+        initmap.fetchMapJsonWithCallback('my-neighbourhood/my-odd-house')
 
     } else {
         canvas.id           = 'game-front-canvas'
