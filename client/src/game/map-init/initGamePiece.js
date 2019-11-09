@@ -13,11 +13,9 @@ class gamePiece {
         // Cells will be used to determine the location 
         // of the character in the map
         // still experimental
-        this.xy             = { 
-            x       : 370, 
-            y       : 185,
-            cell    : cellSize + ', ' + cellSize
-        }
+        this.x       =  370, 
+        this.y       =  185,
+        this.cell    =  cellSize + ', ' + cellSize
 
         // The three following properties have arbitrary values (for now)
         this.width          = cellSize;
@@ -28,10 +26,7 @@ class gamePiece {
         this.direction      = 0;
 
         this.ctx            = util.getFrontCanvasContext( )
-        this.sprite         = getSprite( this.xy.x, this.xy.y, this.width, this.height, '/static/sprites/neckbeard.png' )    
-        this.getXY          = ( ) => {
-            return this.xy
-        }
+        this.image         = getSprite( this.x, this.y, this.width, this.height, '/static/sprites/neckbeard.png' )    
     }
 }
 

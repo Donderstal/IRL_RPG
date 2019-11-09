@@ -1,7 +1,7 @@
 const globals = require('../../game-data/globals')
 
 let frameCount = 0;
-let playerCharacter;
+let sprite;
 let frontContext;
 let pressedKeys = {};
 let hasMoved;
@@ -9,26 +9,39 @@ let hasMoved;
 // this function gets called by Window.requestAnimationFrame about 60 times per second
 // The pressedKeys variable is manipulated in GfxContainer with Eventlisteners
 
+/**
+ * @function initMovement
+ * MAIN FUNCTION
+ * 
+ * Is called when sprite is rendered
+ * 
+ */
+const initMovement = (character) => {
+
+    sprite = character
+    window.requestAnimationFrame(movementController)
+}
+
 const movementController = ( ) => {   
 
     hasMoved = false
 
-    frontContext = playerCharacter.ctx
+    frontContext = sprite.ctx
 
     if ( pressedKeys.w ) {
-        clearRect( playerCharacter )
+        clearRect( sprite )
         moveInDirection( 'FACING_UP' )
     }
     if ( pressedKeys.a ) {
-        clearRect( playerCharacter )
+        clearRect( sprite )
         moveInDirection( 'FACING_LEFT' )
     }
     if ( pressedKeys.s ) {
-        clearRect( playerCharacter )
+        clearRect( sprite )
         moveInDirection( 'FACING_DOWN' )
     }
     if ( pressedKeys.d ) {
-        clearRect( playerCharacter )
+        clearRect( sprite )
         moveInDirection( 'FACING_RIGHT' )
     }    
 
@@ -43,30 +56,30 @@ const movementController = ( ) => {
 const moveInDirection = ( direction ) => {
 
     if ( direction == 'FACING_RIGHT' ) {
-        playerCharacter.xy.x += globals.MOVEMENT_SPEED        
+        sprite.x += globals.MOVEMENT_SPEED        
     }
 
     if ( direction == 'FACING_LEFT' ) {
-        playerCharacter.xy.x -= globals.MOVEMENT_SPEED        
+        sprite.x -= globals.MOVEMENT_SPEED        
     }
     
     if ( direction == 'FACING_DOWN' ) {
-        playerCharacter.xy.y += globals.MOVEMENT_SPEED        
+        sprite.y += globals.MOVEMENT_SPEED        
     }
 
     if ( direction == 'FACING_UP' ) {
-        playerCharacter.xy.y -= globals.MOVEMENT_SPEED        
+        sprite.y -= globals.MOVEMENT_SPEED        
     }
 
-    playerCharacter.direction = globals[direction]
+    sprite.direction = globals[direction]
     hasMoved = true;
 }
 
 const clearRect = () => {
 
     frontContext.clearRect( 
-        playerCharacter.xy.x, playerCharacter.xy.y, 
-        playerCharacter.width, playerCharacter.height
+        sprite.x, sprite.y, 
+        sprite.width, sprite.height
     )
 }
 
@@ -76,10 +89,10 @@ const countFrame = () => {
     
     if (frameCount >= globals.FRAME_LIMIT) {
         frameCount = 0;
-        playerCharacter.animIterator++;
+        sprite.animIterator++;
 
-        if (playerCharacter.animIterator >= playerCharacter.animLoop.length) {
-            playerCharacter.animIterator = 0;
+        if (sprite.animIterator >= sprite.animLoop.length) {
+            sprite.animIterator = 0;
         }
 
     }
@@ -89,20 +102,13 @@ const redrawSprite = (  ) => {
 
     // see helpers/docs.js for a description of drawImage's parameters
     frontContext.drawImage(
-        playerCharacter.sprite,
-        playerCharacter.animLoop[playerCharacter.animIterator] * globals.GRID_BLOCK_PX, 
-        playerCharacter.direction * globals.GRID_BLOCK_PX, 
+        sprite.image,
+        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
+        sprite.direction * globals.GRID_BLOCK_PX, 
         globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
-        playerCharacter.xy.x, playerCharacter.xy.y, playerCharacter.width, playerCharacter.height
+        sprite.x, sprite.y, sprite.width, sprite.height
     );
 }
-
-const initMovement = (character) => {
-
-    playerCharacter = character
-    window.requestAnimationFrame(movementController)
-}
-
 
 module.exports = {
     pressedKeys,

@@ -33,7 +33,7 @@
         }, 100 )
 
         setTimeout( () => {
-            movement.initMovement(gameState.playerCharacter.characterPiece)      
+            movement.initMovement( gameState.playerCharacter.characterPiece )      
 
         }, 125 )
 
