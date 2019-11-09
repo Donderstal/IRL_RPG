@@ -3,7 +3,7 @@
     import util from '../../helpers/utilFunctions'
     import initCanvas from '../../game/initCanvas'
     import createCharInstance from '../../game/createCharInstance'
-    import movement from '../../game/overworld-ui/movement'
+    import movement from '../../game/map-ui/movement'
     
     export let classList;
     export let gameState;

@@ -1,5 +1,5 @@
 const initChar      = require('./character-init/initCharacter')
-const initGamePiece = require('./overworld-init/initGamePiece')
+const initGamePiece = require('./map-init/initGamePiece')
 const globals       = require('../game-data/globals')
 
 const getCharacter = ( className, name, gender ) => {

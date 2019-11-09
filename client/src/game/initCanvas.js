@@ -1,4 +1,4 @@
-const initOverworld = require('./overworld-init/initMap')
+const initmap = require('./map-init/initMap')
 
 const initCanvas = (canvasNum) => {
     // canvasNum === 0 generates background Canvas
@@ -13,7 +13,7 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initOverworld.fetchMapJsonWithCallback('my-neighbourhood/my-large-house')
+        initmap.fetchMapJsonWithCallback('my-neighbourhood/my-large-house')
 
     } else {
         canvas.id           = 'game-front-canvas'

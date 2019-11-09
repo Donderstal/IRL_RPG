@@ -11,7 +11,7 @@ const utilFunctions = require('../../helpers/utilFunctions')
  */
 
 const fetchMapJsonWithCallback = (worldName) => {
-    fetch('/static/Maps/' + worldName +'.json')
+    fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
@@ -36,12 +36,12 @@ const fetchMapJsonWithCallback = (worldName) => {
 
 const generateMap = (json) => {
 
-    const startingPos = getStartingPositionOfGridInCanvas( json.columns, json.rows )
+    const startingPosition = getStartingPositionOfGridInCanvas( json.columns, json.rows )
 
     const bgImage = new Image();
     bgImage.src = '/static/tilesets/' + json.src
     bgImage.onload = ( ) => {      
-        drawGrid( startingPos, json, bgImage )
+        drawGrid( startingPosition, json, bgImage )
     }
 
 }
@@ -59,22 +59,18 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
     const gridStartingPosition = {}
 
     if ( mapColumns > globals.CANVAS_COLUMNS ) {
-
         gridStartingPosition.x = ( ( mapColumns - globals.CANVAS_COLUMNS ) / 2 ) * -globals.GRID_BLOCK_PX
     }
 
     if ( mapColumns < globals.CANVAS_COLUMNS ) {
-
         gridStartingPosition.x = ( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
     }
 
     if ( mapRows > globals.CANVAS_ROWS ) {
-
         gridStartingPosition.y = ( ( mapRows - globals.CANVAS_ROWS ) / 2 )  * -globals.GRID_BLOCK_PX
     }
 
     if ( mapRows < globals.CANVAS_ROWS ) {
-
         gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
     }
 
@@ -86,19 +82,18 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * Get number of columns and rows from JSON
  * Call @function drawRow for each row
  * 
- * @param {object} startPos - Starting x and y Canvas in pixels
- * @param {JSON} json - JSON containing data on the Map
+ * @param {object} startingPosition - Starting x and y position in backgroundCanvas ( pixels )
+ * @param {JSON} json - JSON containing data on the Map to be brawn
  * @param {object} tileSheet - tilesheet HTML image
  */
 
-const drawGrid = ( startPos, json, tileSheet ) => {
+const drawGrid = ( startingPosition, json, tileSheet ) => {
 
-    const position  = startPos
+    const position  = startingPosition
     const columns   = json.columns
     const rows      = json.rows
 
     for ( var i = 0; i < rows; i++ ) {
-
         const currentRow = json.grid[i]
 
         drawRow( columns, position, currentRow, tileSheet )
@@ -121,7 +116,6 @@ const drawGrid = ( startPos, json, tileSheet ) => {
 const drawRow = ( columns, position, currentRow, tileSheet) => {
 
     for ( var j = 0; j < columns; j++) {
-
         const currentTile = currentRow[j]
 
         drawGridBlock( position, currentTile, tileSheet )
@@ -144,8 +138,6 @@ const drawGridBlock = ( startPositionInCanvas, tile, tileSheet ) => {
 
     const blockSize = globals.GRID_BLOCK_PX
 
-    // The global TILESHEET_GRID_XY_VALUES is an array used to store the x and y...
-    // ...position of single tiles in the tilesheet, which is always 4 tiles wide.
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
     const ctx = utilFunctions.getBackCanvasContext()

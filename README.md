@@ -29,6 +29,6 @@ After everything is compiled, you can visit the app on localhost:5000
 As of November 4th, 2019
 * User is able to select a class, gender and character name
 * Basic wasd controls are present, player character can move and movement is animated
-* Basic server for serving JSON files which contain overworld information
+* Basic server for serving JSON files which contain map information
 
 Donderstal

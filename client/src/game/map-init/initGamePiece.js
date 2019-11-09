@@ -4,14 +4,14 @@ const initGamePiece  = ( cellSize ) => {
     return new gamePiece(  cellSize )
 }
 
-// The gamePiece class will be assigned to all overworld characters in the game
+// The gamePiece class will be assigned to all map characters in the game
 
 class gamePiece {
     constructor ( cellSize ) {
 
         // XY object to determine location
         // Cells will be used to determine the location 
-        // of the character in the overworld
+        // of the character in the map
         // still experimental
         this.xy             = { 
             x       : cellSize, 
