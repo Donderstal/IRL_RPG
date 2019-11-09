@@ -89,14 +89,15 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 
 const drawGrid = ( startingPosition, json, tileSheet ) => {
 
-    const position  = startingPosition
-    const columns   = json.columns
-    const rows      = json.rows
+    const position   = startingPosition
+    const columns    = json.columns
+    const rows       = json.rows
+    const fillerTile = json.fillerTile
 
     for ( var i = 0; i < rows; i++ ) {
         const currentRow = json.grid[i]
 
-        drawRow( columns, position, currentRow, tileSheet )
+        drawRow( columns, position, currentRow, tileSheet, fillerTile )
 
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX
@@ -113,12 +114,12 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
  * @param {object} tileSheet - tilesheet HTML image
  */
 
-const drawRow = ( columns, position, currentRow, tileSheet) => {
+const drawRow = ( columns, position, currentRow, tileSheet, fillerTile ) => {
 
     for ( var j = 0; j < columns; j++) {
         const currentTile = currentRow[j]
 
-        drawGridBlock( position, currentTile, tileSheet )
+        drawGridBlock( position, currentTile, tileSheet, fillerTile )
 
         position.x += globals.GRID_BLOCK_PX
     }
@@ -134,10 +135,16 @@ const drawRow = ( columns, position, currentRow, tileSheet) => {
  * @param {integer} tile - Integer representing a tile position in the sheet
  * @param {object} tileSheet - tilesheet HTML image
  */
-const drawGridBlock = ( startPositionInCanvas, tile, tileSheet ) => {
+const drawGridBlock = ( startPositionInCanvas, tile, tileSheet, fillerTile ) => {
 
+    // if tile is E - empty...
     if ( tile === "E" ) {
-        return
+        return 
+    }
+
+    // if tile is F - filler...
+    if ( tile === "F" ) {
+        tile = fillerTile
     }
 
     const blockSize = globals.GRID_BLOCK_PX
