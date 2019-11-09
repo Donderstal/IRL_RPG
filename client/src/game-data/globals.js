@@ -18,8 +18,8 @@ module.exports = {
     GRID_BLOCK_PX  : 37,
     GRID_WIDTH     : 888,
     GRID_HEIGHT    : 592,
-    HORI_BLOCKS    : 24,
-    VERT_BLOCKS    : 16,
+    CANVAS_COLUMNS : 24,
+    CANVAS_ROWS    : 16,
 
     // pixel grid for overworld tilesheet
     TILESHEET_GRID_XY_VALUES : [

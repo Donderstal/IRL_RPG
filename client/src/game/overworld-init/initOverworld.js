@@ -55,18 +55,20 @@ const generateOverworld = (json) => {
  */
 
 const getStartingPositionOfGridInCanvas = ( columns, rows ) => {
-    if ( columns > globals.HORI_BLOCKS || rows > globals.VERTI_BLOCKS ) {
+
+    if ( columns > globals.CANVAS_COLUMNS || rows > globals.CANVAS_ROWS ) {
 
         // helper function to be written for maps that are larger than 24 * 16 blocks
         // We need a way to determine what part of the map is rendered when
         // this will probably depend on the player character's entry point into the overworld
 
+
     }
 
     return {
 
-        x: ( ( globals.HORI_BLOCKS - columns ) / 2 ) * globals.GRID_BLOCK_PX,
-        y: ( ( globals.VERT_BLOCKS - rows ) / 2 )  * globals.GRID_BLOCK_PX
+        x: ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX,
+        y: ( ( globals.CANVAS_ROWS - rows ) / 2 )  * globals.GRID_BLOCK_PX
 
     }
 
@@ -95,7 +97,7 @@ const drawGrid = ( startPos, json, tileSheet ) => {
         drawRow( columns, position, currentRow, tileSheet )
 
         position.y += globals.GRID_BLOCK_PX
-        position.x = ( ( globals.HORI_BLOCKS - columns ) / 2 ) * globals.GRID_BLOCK_PX
+        position.x = ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
     
 }
