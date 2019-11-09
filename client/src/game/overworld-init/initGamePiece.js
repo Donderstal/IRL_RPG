@@ -14,8 +14,8 @@ class gamePiece {
         // of the character in the overworld
         // still experimental
         this.xy             = { 
-            x       : cellSize, 
-            y       : cellSize,
+            x       : 370, 
+            y       : 185,
             cell    : cellSize + ', ' + cellSize
         }
 
