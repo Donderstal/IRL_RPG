@@ -96,6 +96,7 @@ const clearSprite = () => {
  * @function moveInDirection
  * @param {string} direction - string representing direction
  * 
+ * Check map borders to see if movement is allowd
  * Update sprite x or y with movement speed based on direction
  * Update sprite direction prop based on direction globals
  */

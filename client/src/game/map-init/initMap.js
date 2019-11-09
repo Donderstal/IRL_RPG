@@ -75,15 +75,24 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
     if ( mapRows <= globals.CANVAS_ROWS ) {
         gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
     }
-    
+
+    return gridStartingPosition 
+}
+
+/**
+ * @function getMapBorders
+ * 
+ * set borders in mapState
+ * these will be used in movement.js to determine where characters can't pass through
+ */
+
+const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
     state.mapState.borders = { 
         top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
         left    : gridStartingPosition.x,
         bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - state.playerCharacter.characterPiece.height ),
         right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - state.playerCharacter.characterPiece.width )
     }
-
-    return gridStartingPosition 
 }
 
 /** 
@@ -102,6 +111,8 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
     const columns    = json.columns
     const rows       = json.rows
     const fillerTile = json.fillerTile
+    
+    setMapBorders(startingPosition, rows, columns)
 
     for ( var i = 0; i < rows; i++ ) {
         const currentRow = json.grid[i]
