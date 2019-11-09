@@ -5,7 +5,6 @@ module.exports = {
 
     mapState : {
         map		: true,
-        activemap	: 'map1',
         mapData : {
 
         }
@@ -17,13 +16,6 @@ module.exports = {
     },
 
     playerCharacter : {
-        characterState : {
 
-        },
-
-        characterPiece : {
-            x				: '',
-            y				: ''
-        }				
     }
 }
