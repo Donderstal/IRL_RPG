@@ -1,42 +1,6 @@
 <script>
-
-    import util from '../../helpers/utilFunctions'
-    import initCanvas from '../../game/initCanvas'
-    import createCharInstance from '../../game/createCharInstance'
-    import movement from '../../game/map-ui/movement'
-    
+    import startGame from '../../game/startGame'    
     export let classList;
-
-    let frontContext;
-    let backContext;
-
-    const startGame = () => {
-        const charName      =  util.getInputVal('name')
-        const charGender    =  util.getInputVal('gender')
-        const charClass     =  util.getInputVal('class')
-
-        // The setTimeouts setup is not definitive and might change later
-        setTimeout( () => {
-            document.getElementById('intro-screen').remove()
-
-        }, 50 )
-
-        setTimeout( () => {
-            backContext     = initCanvas.initCanvas(0)      
-            frontContext    = initCanvas.initCanvas(1)     
-        }, 75 )
-        
-        setTimeout( () => {
-            gameState.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )           
-
-        }, 100 )
-
-        setTimeout( () => {
-            movement.initPlayerMovement( gameState.playerCharacter.characterPiece )      
-            movement.listenForKeyPress()
-        }, 125 )
-
-    }
 
 </script>
 
@@ -106,7 +70,7 @@
 
             <br />
 
-            <button on:click={ startGame }  >
+            <button on:click={ startGame.startGame }  >
                 Ok let's go!!!
             </button>
         </div>

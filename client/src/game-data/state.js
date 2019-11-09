@@ -1,4 +1,4 @@
-const state = {
+module.exports = {
     cinematicState : {
         cinematic 		: false
     },
@@ -26,10 +26,4 @@ const state = {
             y				: ''
         }				
     }
-
-
-}
-
-module.exports = {
-    
 }
