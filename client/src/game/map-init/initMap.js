@@ -4,7 +4,7 @@ const utilFunctions = require('../../helpers/utilFunctions')
 const state         = require('../../game-data/state')
 
 /** 
- * @function fetchMapJsonWithCallback
+ * EXPORT @function fetchMapJsonWithCallback
  * Fetch JSON file with data based on path relative to Maps folder
  * 
  * @param {string} worldName - Name of Map written as follows: 'path/to/Map'

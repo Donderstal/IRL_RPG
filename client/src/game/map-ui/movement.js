@@ -46,6 +46,8 @@ const initPlayerMovement = (character) => {
  */
 const playerMovementController = ( ) => {   
 
+    console.log(state.mapState)
+
     if ( pressedKeys.w || pressedKeys.ArrowUp ) {
         handleMovementOfSprite('FACING_UP')
     }
