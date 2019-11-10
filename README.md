@@ -1,4 +1,4 @@
-Readme last updated on November 4th, 2019
+ReadMe last updated on November 9h, 2019
 
 ### IRL-RPG
 
@@ -25,10 +25,10 @@ Finally, run ```npm run autobuild``` in the client folder. This will start the s
 
 After everything is compiled, you can visit the app on localhost:5000
 
-#### FEATURES
-As of November 4th, 2019
+#### FEATURES AS OF NOVEMBER 9th, 2019
 * User is able to select a class, gender and character name
-* Basic wasd controls are present, player character can move and movement is animated
+* Basic controls are present, player character can move and movement is animated
+* A functioning map generation system based on a tilesheet and a json file
 * Basic server for serving JSON files which contain map information
 
 Donderstal
