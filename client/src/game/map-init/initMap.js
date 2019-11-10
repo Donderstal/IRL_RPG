@@ -3,8 +3,7 @@ const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
 /** 
- * @EXPORT
- * @function fetchMapJsonWithCallback
+ * EXPORTED @function fetchMapJsonWithCallback
  * Fetch JSON file with data based on path relative to Maps folder
  * 
  * @param {string} worldName - Name of Map written as follows: 'path/to/Map'
