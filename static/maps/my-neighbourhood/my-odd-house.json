@@ -1,4 +1,5 @@
 {
+    "mapName": "my-odd-house",
     "tileSet": "my-house",
     "src" : "my-house/Bed_Room.png",
     "fillerTile" : 20,

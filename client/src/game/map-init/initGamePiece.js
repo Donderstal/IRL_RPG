@@ -1,4 +1,5 @@
 const util = require('../../helpers/utilFunctions')
+const state = require('../../game-data/state')
 
 // The gamePiece class will be assigned to all map characters in the game
 
@@ -7,9 +8,6 @@ class gamePiece {
 
         this.x       =  370, 
         this.y       =  185,
-
-        // this prop is experimental
-        this.cell    = setCurrentCellCoordinates( this.x, this.y, this.cell ),
 
         this.width   = cellSize;
         this.height  = cellSize * 1.5;
@@ -23,6 +21,11 @@ class gamePiece {
 }
 
 const setCurrentCellCoordinates = ( x, y ) => {
+    console.log(state)
+    /* console.log(state.mapState.mapData.rows)
+    console.log(state.mapState.mapData.columns)
+    console.log(state.mapState.borders.top)
+    console.log(state.mapState.borders.left) */
     console.log( x, y )
 }
 

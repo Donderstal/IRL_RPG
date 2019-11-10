@@ -1,4 +1,5 @@
 {
+    "mapName": "my-large-house",
     "tileSet": "my-house",
     "src" : "my-house/Bed_Room.png",
     "uniqueTiles": 31,

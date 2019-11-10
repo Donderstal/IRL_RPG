@@ -1,6 +1,6 @@
 const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
-const state         = require('../../game-data/state')
+const state = require('../../game-data/state')
 
 
 let frameCount = 0;
@@ -45,8 +45,6 @@ const initPlayerMovement = (character) => {
  * Call @function handleMovementOfSprite
  */
 const playerMovementController = ( ) => {   
-
-    console.log(state.mapState)
 
     if ( pressedKeys.w || pressedKeys.ArrowUp ) {
         handleMovementOfSprite('FACING_UP')
