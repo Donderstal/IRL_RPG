@@ -3,11 +3,11 @@ const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 
 /** 
- * @function fetchMapJsonWithCallback
+ * EXPORTED @function fetchMapJsonWithCallback
  * Fetch JSON file with data based on path relative to Maps folder
  * 
  * @param {string} worldName - Name of Map written as follows: 'path/to/Map'
- * @callback generateOveworld - Start Map rendering with JSON data when fetch succeeds
+ * @callback generateMAp - Start Map rendering with JSON data when fetch succeeds
  */
 
 const fetchMapJsonWithCallback = (worldName) => {
@@ -50,7 +50,8 @@ const generateMap = (json) => {
  * @function getStartingPositionOfGridInCanvas
  * Calculate starting position of grid relative to canvas based on data from JSON
  * 
- * @param {object} dimensions - columns and rows of Map expressed in grid blocks
+ * @param {object} mapColumns - columns of map ( in grid blocks )
+ * @param {object} mapRows - rows of map  ( in grid blocks )
  * @return {object} - top and left position in Canvas to start drawing grid ( in pixels ) 
  */
 
@@ -97,7 +98,7 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
     for ( var i = 0; i < rows; i++ ) {
         const currentRow = json.grid[i]
 
-        drawRow( columns, position, currentRow, tileSheet, fillerTile )
+        drawRow( columns, position, currentRow, fillerTile, tileSheet )
 
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX
@@ -107,19 +108,21 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
 
 /** 
  * @function drawRow
- * Call @function drawGridBlock for column in this row
+ * Call @function drawTileInGridBlock for each column in this row
  * 
- * @param {JSON} json - JSON containing data on the Map
- * @param {columns} position - Starting x and y Canvas in pixels
- * @param {object} tileSheet - tilesheet HTML image
+ * @param {integer} columnsInRow - number columns in a row
+ * @param {object} position - Starting x and y Canvas in pixels
+ * @param {array} currentRow - Array with numbers representing a row
+ * @param {integer} fillerTile - number of tile in tilesheet to be used as filler
+ * @param {object} tileSheet - tilesheet HTML Image
  */
 
-const drawRow = ( columns, position, currentRow, tileSheet, fillerTile ) => {
+const drawRow = ( columnsInRow, currentRow, position, tileSheet, fillerTile ) => {
 
-    for ( var j = 0; j < columns; j++) {
+    for ( var j = 0; j < columnsInRow; j++) {
         const currentTile = currentRow[j]
 
-        drawGridBlock( position, currentTile, tileSheet, fillerTile )
+        drawTileInGridBlock( currentTile, position, tileSheet, fillerTile )
 
         position.x += globals.GRID_BLOCK_PX
     }
@@ -127,15 +130,18 @@ const drawRow = ( columns, position, currentRow, tileSheet, fillerTile ) => {
 }
 
 /** 
- * @function drawRow
- * Get blocksize and tile position in sheet from globals
- * Then draw block based on starting position in canvas and blocksize
+ * @function drawTileInGridBlock
  * 
+ * Handle non-numeric tile if necessary
+ * Get blocksize and current tile xy in sheet from globals
+ * Then draw the tile in block
+ * 
+ * @param {integer} tile - number representing position of the tile in a tilesheet
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
- * @param {integer} tile - Integer representing a tile position in the sheet
- * @param {object} tileSheet - tilesheet HTML image
+ * @param {integer} fillerTile - number of tile in tilesheet to be used as filler
+ * @param {object} tileSheet - tilesheet HTML Image
  */
-const drawGridBlock = ( startPositionInCanvas, tile, tileSheet, fillerTile ) => {
+const drawTileInGridBlock = ( tile, startPositionInCanvas, tileSheet, fillerTile ) => {
 
     // if tile is E - empty...
     if ( tile === "E" ) {
