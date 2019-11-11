@@ -26,18 +26,17 @@ module.exports = {
     
     TILESHEET_GRID_XY_VALUES : [
 
-    // We will use tilesheets to render our maps. Tilesheet are always 4 tiles wide.
-    // TILESHEET_GRID_XY_VALUES is an array used to store the x and y position of
-    // individual tiles in a sheet. 
-    
-    // This array must always be as long as the largest tilesheet included in the game.
+    // We use PNG tilesheets to render our maps. Tilesheets are always 4 tiles wide.
+    // TILESHEET_GRID_XY_VALUES is used to store the x y of tiles within a sheet. 
+    // This array must always be as long as the largest tilesheet in the game.
 
-    // The Json files that store maps, represent them as a an array of arrays, where
-    // numbers in the array represent a tile in the map
+    // The Json files that store maps, represent them as an array of arrays
+    // with integers. The inner arrays are the rows of the map and the integers
+    // represent the position of that blocks' tiles in the tilesheet.
 
-    // When a map is rendered in /map-init/initMap.js, the drawRow function checks this global
-    // using the tile number retrieved from the map Json to determine where in the 
-    // tilesheet the requested tile is. The x y is then passed to ctx.drawImage
+    // When a map is rendered in initMap.js, the drawTileInGridBlock
+    // function uses this global to determine where in the tilesheet
+    //  the requested tile is. The x y is then passed to ctx.drawImage
 
         { "y": 0, "x": 0 },
         { "y": 0, "x": 37 },
