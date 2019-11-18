@@ -91,8 +91,8 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
     state.mapState.borders = { 
         top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
         left    : gridStartingPosition.x,
-        bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - state.playerCharacter.characterPiece.height ),
-        right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - state.playerCharacter.characterPiece.width )
+        bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * 1.5 ),
+        right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX )
     }
 }
 
