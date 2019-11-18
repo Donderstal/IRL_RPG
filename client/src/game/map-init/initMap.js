@@ -136,12 +136,12 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
  * @param {object} tileSheet - tilesheet HTML Image
  */
 
-const drawRow = ( columnsInRow, currentRow, position, tileSheet, fillerTile ) => {
+const drawRow = ( columnsInRow, position, currentRow, fillerTile, tileSheet ) => {
 
     for ( var j = 0; j < columnsInRow; j++) {
         const currentTile = currentRow[j]
 
-        drawTileInGridBlock( currentTile, position, tileSheet, fillerTile )
+        drawTileInGridBlock( currentTile, position, fillerTile, tileSheet )
 
         position.x += globals.GRID_BLOCK_PX
     }
@@ -160,7 +160,7 @@ const drawRow = ( columnsInRow, currentRow, position, tileSheet, fillerTile ) =>
  * @param {integer} fillerTile - number of tile in tilesheet to be used as filler
  * @param {object} tileSheet - tilesheet HTML Image
  */
-const drawTileInGridBlock = ( tile, startPositionInCanvas, tileSheet, fillerTile ) => {
+const drawTileInGridBlock = ( tile, startPositionInCanvas, fillerTile, tileSheet  ) => {
 
     // if tile is E - empty...
     if ( tile === "E" ) {

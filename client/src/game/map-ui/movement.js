@@ -101,7 +101,7 @@ const clearSprite = () => {
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( direction ) => {
-
+    checkForBorders( direction )
 
     if ( direction == 'FACING_RIGHT' && state.mapState.borders.right > sprite.x ) {
         sprite.x += globals.MOVEMENT_SPEED        
@@ -121,6 +121,17 @@ const moveInDirection = ( direction ) => {
 
     sprite.direction = globals[direction]        
 }
+
+/**
+ * @function checkForBorders
+ * Check if player movement is allowed
+ * 
+ * @param {string} direction - string representing direction
+ */
+
+ const checkForBorders = ( ) => {
+     
+ }
 
 /**
  * @function countFrame
