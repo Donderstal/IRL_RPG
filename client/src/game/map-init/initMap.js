@@ -20,10 +20,8 @@ const fetchMapJsonWithCallback = (worldName) => {
             return response.json()
         })
         .then( (json) => {
-            state.currentMap = {};
             state.currentMap.mapData = json;
 
-            console.log(state)
             generateMap( state.currentMap )
     })    
 }
@@ -80,6 +78,8 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
         gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
     }
 
+    console.log(gridStartingPosition)
+
     return gridStartingPosition 
 }
 
@@ -95,6 +95,8 @@ const drawGrid = ( currentMap ) => {
 
     setMapBorders( currentMap.startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
+    currentMap.topLeftCell = getTopLeftCellOfGridInCanvas()
+    
     const position = currentMap.startingPosition
 
     for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
@@ -102,9 +104,13 @@ const drawGrid = ( currentMap ) => {
 
         drawRow( currentMap, currentRow, position )
 
+        console.log(currentMap.startingPosition)
+
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
+
+
 }
 
 /**
@@ -183,6 +189,24 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     ) 
 
 }
+
+/**
+ * @function getTopLeftCellOfGridInCanvas
+ */
+
+ const getTopLeftCellOfGridInCanvas = ( ) => {
+    if ( 1 == 2) {
+
+    }
+    
+    return {
+        x: state.currentMap.startingPosition.x,
+        y: state.currentMap.startingPosition.y,
+        row: 0,
+        column: 0
+
+    }
+ }
 
 module.exports = {
     fetchMapJsonWithCallback
