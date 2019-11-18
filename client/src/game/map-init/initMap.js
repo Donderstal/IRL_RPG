@@ -20,7 +20,10 @@ const fetchMapJsonWithCallback = (worldName) => {
             return response.json()
         })
         .then( (json) => {
-            state.currentMap.mapData = json
+            state.currentMap = {};
+            state.currentMap.mapData = json;
+
+            console.log(state)
             generateMap( state.currentMap )
     })    
 }
@@ -92,9 +95,9 @@ const drawGrid = ( currentMap ) => {
 
     setMapBorders( currentMap.startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
-    const position = startingPosition
+    const position = currentMap.startingPosition
 
-    for ( var i = 0; i < rows; i++ ) {
+    for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
 
         drawRow( currentMap, currentRow, position )

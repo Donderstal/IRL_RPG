@@ -26,7 +26,6 @@ const startGame = () => {
     setTimeout( () => {
         movement.initPlayerMovement( state.playerCharacter.characterPiece )      
         movement.listenForKeyPress()      
-        console.log(state.mapState.borders)
     }, 100 )
 }
 

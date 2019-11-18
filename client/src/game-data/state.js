@@ -3,7 +3,7 @@ module.exports = {
         cinematic 		: false
     },
 
-    mapState : {
+    currentMap : {
         map		: true,
         mapData : {
 

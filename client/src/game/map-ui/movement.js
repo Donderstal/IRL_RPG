@@ -103,19 +103,19 @@ const clearSprite = () => {
 const moveInDirection = ( direction ) => {
     checkForBorders( direction )
 
-    if ( direction == 'FACING_RIGHT' && state.mapState.borders.right > sprite.x ) {
+    if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
         sprite.x += globals.MOVEMENT_SPEED        
     }
 
-    if ( direction == 'FACING_LEFT' && state.mapState.borders.left < sprite.x ) {
+    if ( direction == 'FACING_LEFT' && state.currentMap.borders.left < sprite.x ) {
         sprite.x -= globals.MOVEMENT_SPEED        
     }
     
-    if ( direction == 'FACING_DOWN' && state.mapState.borders.bottom > sprite.y ) {
+    if ( direction == 'FACING_DOWN' && state.currentMap.borders.bottom > sprite.y ) {
         sprite.y += globals.MOVEMENT_SPEED        
     }
 
-    if ( direction == 'FACING_UP' && state.mapState.borders.top < sprite.y ){
+    if ( direction == 'FACING_UP' && state.currentMap.borders.top < sprite.y ){
         sprite.y -= globals.MOVEMENT_SPEED        
     }
 
@@ -144,6 +144,7 @@ const countFrame = () => {
     frameCount++;
     
     if (frameCount >= globals.FRAME_LIMIT) {
+        console.log(state.currentMap)
         frameCount = 0;
         sprite.animIterator++;
 
