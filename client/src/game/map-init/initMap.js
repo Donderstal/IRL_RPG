@@ -78,8 +78,6 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
         gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
     }
 
-    console.log(gridStartingPosition)
-
     return gridStartingPosition 
 }
 
@@ -104,12 +102,9 @@ const drawGrid = ( currentMap ) => {
 
         drawRow( currentMap, currentRow, position )
 
-        console.log(currentMap.startingPosition)
-
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
-
 
 }
 

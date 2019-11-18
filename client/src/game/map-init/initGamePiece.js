@@ -22,12 +22,7 @@ class gamePiece {
 }
 
 const setCurrentCellCoordinates = ( x, y ) => {
-    console.log(state)
-    /* console.log(state.mapState.mapData.rows)
-    console.log(state.mapState.mapData.columns)
-    console.log(state.mapState.borders.top)
-    console.log(state.mapState.borders.left) */
-    console.log( x, y )
+
 }
 
 const getSprite = ( x, y, width, height, spriteSrc ) => {

@@ -2,7 +2,6 @@ const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
 
-
 let frameCount = 0;
 let sprite;
 let frontContext;
@@ -101,7 +100,8 @@ const clearSprite = () => {
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( direction ) => {
-    checkForBorders( direction )
+
+    checkIfMovementAllowed(sprite)
 
     if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
         sprite.x += globals.MOVEMENT_SPEED        
@@ -123,15 +123,26 @@ const moveInDirection = ( direction ) => {
 }
 
 /**
- * @function checkForBorders
- * Check if player movement is allowed
+ * @function checkIfMovementAllowed
  * 
- * @param {string} direction - string representing direction
+ * 
  */
 
- const checkForBorders = ( ) => {
-     
- }
+const checkIfMovementAllowed = ( sprite ) => {
+    getCurrentCell(sprite.x, sprite.y)
+}
+
+
+const getCurrentCell = (x, y) => {
+    const roundedX = Math.floor(x)
+    const roundedY = Math.floor(y)
+    const topLeftCell = state.currentMap.topLeftCell
+
+    console.log( ( roundedX - topLeftCell.x ) / globals.GRID_BLOCK_PX )
+    console.log( ( roundedY - topLeftCell.y ) / globals.GRID_BLOCK_PX )
+
+    console.log(state.currentMap.topLeftCell)
+}
 
 /**
  * @function countFrame
@@ -144,7 +155,6 @@ const countFrame = () => {
     frameCount++;
     
     if (frameCount >= globals.FRAME_LIMIT) {
-        console.log(state.currentMap)
         frameCount = 0;
         sprite.animIterator++;
 
