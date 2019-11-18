@@ -96,7 +96,7 @@ const drawGrid = ( currentMap ) => {
     setMapBorders( currentMap.startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
     currentMap.topLeftCell = getTopLeftCellOfGridInCanvas()
-    
+
     const position = currentMap.startingPosition
 
     for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
@@ -192,18 +192,34 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
 /**
  * @function getTopLeftCellOfGridInCanvas
+ * 
+ * The Top Left Cell will be used as a checkpoint
+ * To find out where characters and tiles are relative to the map
+ * 
+ * @return {object} - holding x and y of top left cell and its position in the map grid
  */
 
  const getTopLeftCellOfGridInCanvas = ( ) => {
-    if ( 1 == 2) {
+    let row = 0
+    let col = 0
+    let x = state.currentMap.startingPosition.x 
+    let y = state.currentMap.startingPosition.y
 
+    if ( x < 0 ) {
+        row = x / -globals.GRID_BLOCK_PX
+        x = 0
+    }
+
+    if ( y < 0 ) {
+        col = y / -globals.GRID_BLOCK_PX
+        y = 0
     }
     
     return {
-        x: state.currentMap.startingPosition.x,
-        y: state.currentMap.startingPosition.y,
-        row: 0,
-        column: 0
+        x: x,
+        y: y,
+        row: row,
+        col: col
 
     }
  }
