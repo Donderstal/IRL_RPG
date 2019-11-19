@@ -72,10 +72,10 @@ const getCellOfXY = (x, y) => {
 /**
  * @function getXYOfCell
  * 
- * @param {integer} row - row of map grid
- * @param {integer} col - col of map grid
+ * @param {integer} row - row in map grid
+ * @param {integer} col - column in map grid
  * Get top-left x an y of a cell 
- * @return {object} - with row and column as props
+ * @return {object} - with x and y as props
  */
 const getXYOfCell = (row, col) => {
     const topLeftCell = state.currentMap.topLeftCell
@@ -87,6 +87,19 @@ const getXYOfCell = (row, col) => {
         'y': y
     }
 
+}
+
+/**
+ * @function getTileIdOfCell
+ * 
+ * @param {integer} row - row of map grid
+ * @param {integer} col - col of map grid
+ * Get Id of Tile displayed in requested cell
+ * 
+ * @return {integer} - tile id
+ */
+const getTileIdOfCell = ( row, col ) => {
+    return state.currentMap.mapData.grid[row][col]
 }
 
 module.exports = {
