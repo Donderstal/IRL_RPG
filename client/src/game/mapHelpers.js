@@ -63,6 +63,7 @@ const getCellOfXY = (x, y) => {
     if ( row < 0 ) {
         row = 0
     }
+
     return { 
         'row': row,
         'col': col
@@ -94,17 +95,19 @@ const getXYOfCell = (row, col) => {
  * 
  * @param {integer} row - row of map grid
  * @param {integer} col - col of map grid
- * Get Id of Tile displayed in requested cell
- * 
+ * Get Id of Tile displayed in requested cell..
+ * within the map grid stored in json files
+ *  
  * @return {integer} - tile id
  */
 const getTileIdOfCell = ( row, col ) => {
-    return state.currentMap.mapData.grid[row][col]
+    const gridRow = state.currentMap.mapData.grid[row]
+    return gridRow[col]
 }
 
 module.exports = {
     getTopLeftCellOfGridInCanvas,
     getCellOfXY, 
     getXYOfCell,
-
+    getTileIdOfCell
 }
