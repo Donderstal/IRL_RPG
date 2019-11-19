@@ -136,31 +136,60 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
     const forbiddenTiles = state.currentMap.mapData.blocked
     const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
-    let nextTile = false;
+    let nextTile = {};
 
-    if ( direction == 'FACING_RIGHT' && locationInGrid.columns !== state.currentMap.mapData.columns ) {
-        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col + 1 )
-    }
 
-    if ( direction == 'FACING_LEFT' && locationInGrid.col !== 0 ) {
-        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col - 1 )
-    }
-    
-    if ( direction == 'FACING_DOWN' && locationInGrid.row !== state.currentMap.mapData.rows ) {
-        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row + 1, locationInGrid.col )     
-    }
+    if ( direction == 'FACING_RIGHT' && locationInGrid.col < state.currentMap.mapData.columns ) {
+        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col + 1 )
+        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col + 1 )
 
-    if ( direction == 'FACING_UP' && locationInGrid.row !== 0 ){
-        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row - 1, locationInGrid.col )         
-    }    
-
-    console.log(nextTile)
-
-    for ( var i = 0; i < forbiddenTiles.length; i++) {
-        if ( forbiddenTiles[i] === nextTile ) {
-            return false
+        for ( var i = 0; i < forbiddenTiles.length; i++) {
+            if ( forbiddenTiles[i] === nextTile.id ) {
+                        
+                return false
+            }
         }
     }
+
+    if ( direction == 'FACING_LEFT' && locationInGrid.col > 0 ) {
+        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col - 1 )
+        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col - 1 )
+
+        for ( var i = 0; i < forbiddenTiles.length; i++) {
+            if ( forbiddenTiles[i] === nextTile.id && sprite.x <= ( nextTile.xy.x + globals.GRID_BLOCK_PX + .1) )  {
+                        
+                return false
+            }
+        }
+    }
+    
+    if ( direction == 'FACING_DOWN' && locationInGrid.row < state.currentMap.mapData.rows ) {
+        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row + 1, locationInGrid.col )     
+        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row + 1, locationInGrid.col )
+
+        for ( var i = 0; i < forbiddenTiles.length; i++) {
+            if ( forbiddenTiles[i] === nextTile.id ) {
+                        
+                return false
+            }
+        }
+    }
+
+    if ( direction == 'FACING_UP' && locationInGrid.row > 0 ){
+        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row - 1, locationInGrid.col )        
+        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row - 1, locationInGrid.col )
+
+        for ( var i = 0; i < forbiddenTiles.length; i++) {
+            if ( forbiddenTiles[i] === nextTile.id ) {
+                        
+                return false
+            }
+        } 
+    }    
+
+    console.log(nextTile.id)
+    console.log(sprite.x)
+    console.log(nextTile.xy)
 
     return true
 }
@@ -179,7 +208,7 @@ const countFrame = () => {
         frameCount = 0;
         sprite.animIterator++;
 
-        if (sprite.animIterator >= sprite.animLoop.length) {a
+        if (sprite.animIterator >= sprite.animLoop.length) {
             sprite.animIterator = 0;
         }
     }

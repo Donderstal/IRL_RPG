@@ -120,11 +120,12 @@ const drawGrid = ( startingPosition, currentMap ) => {
  */
 
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
+    // adjust for the first row/col index being 0
     state.currentMap.borders = { 
         top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
         left    : gridStartingPosition.x,
-        bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * 1.5 ),
-        right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX )
+        bottom  : gridStartingPosition.y + ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * .5 ,
+        right   : gridStartingPosition.x + ( mapColumns * globals.GRID_BLOCK_PX )
     }
 }
 
