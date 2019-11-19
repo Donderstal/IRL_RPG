@@ -1,6 +1,49 @@
 const state = require('../game-data/state')
 const globals = require('../game-data/globals')
 
+/**
+ * @function getTopLeftCellOfGridInCanvas
+ * 
+ * The top left cell will be included in the game state and will used as..
+ * a measuring point for other functionalities. It is the connecting point..
+ * of the canvas x and y and the map grid columns and rows
+ * @return {object} - x and y of top left cell and row and column in the grid
+ */
+
+const getTopLeftCellOfGridInCanvas = ( x, y ) => {
+
+    // if map is not larger than canvas, row and col are always 0
+    let row = 0
+    let col = 0
+
+    // if map is wider than canvas, the most left cell...
+    // currently displayed must have a x of 0
+    if ( x < 0 ) {
+        col = x / -globals.GRID_BLOCK_PX
+        let x = 0
+    }
+
+    if ( y < 0 ) {
+        row  = y / -globals.GRID_BLOCK_PX
+        let y = 0
+    }
+    
+    return {
+        x: x,
+        y: y,
+        row: row,
+        col: col
+    }
+}
+
+/**
+ * @function getCellOfXY 
+ * 
+ * @param {integer} x - x axis within canvas
+ * @param {integer} y - y axis within canvas
+ * Get row and column of a map grid cell based on x and y
+ * @return {object} - with row and column as props
+ */
 const getCellOfXY = (x, y) => {
     const topLeftCell = state.currentMap.topLeftCell    
     let col = topLeftCell.col + Math.floor( (x - topLeftCell.x) / globals.GRID_BLOCK_PX )
@@ -26,6 +69,14 @@ const getCellOfXY = (x, y) => {
     }
 }
 
+/**
+ * @function getXYOfCell
+ * 
+ * @param {integer} row - row of map grid
+ * @param {integer} col - col of map grid
+ * Get top-left x an y of a cell 
+ * @return {object} - with row and column as props
+ */
 const getXYOfCell = (row, col) => {
     const topLeftCell = state.currentMap.topLeftCell
     const x = topLeftCell.x + ( ( col - topLeftCell.col ) * globals.GRID_BLOCK_PX )
@@ -38,46 +89,9 @@ const getXYOfCell = (row, col) => {
 
 }
 
-/**
- * @function getTopLeftCellOfGridInCanvas
- * 
- * The Top Left Cell will be used as a checkpoint
- * To find out where characters and tiles are relative to the map
- * 
- * @return {object} - holding x and y of top left cell and its position in the map grid
- */
-
-const getTopLeftCellOfGridInCanvas = ( ) => {
-    let row = 0
-    let col = 0
-    let x = state.currentMap.startingPosition.x 
-    let y = state.currentMap.startingPosition.y
-
-    // if map is larger than the canvas, x or y will be negative dividing 
-    // the negative x / y with the negative size of a single block will return
-    // the cell offset between top-left of canvas and top left of entire map
-
-    if ( x < 0 ) {
-        col = x / -globals.GRID_BLOCK_PX
-        x = 0
-    }
-
-    if ( y < 0 ) {
-        row  = y / -globals.GRID_BLOCK_PX
-        y = 0
-    }
-    
-    return {
-        x: x,
-        y: y,
-        row: row,
-        col: col
-
-    }
-}
-
 module.exports = {
+    getTopLeftCellOfGridInCanvas,
     getCellOfXY, 
     getXYOfCell,
-    getTopLeftCellOfGridInCanvas
+
 }

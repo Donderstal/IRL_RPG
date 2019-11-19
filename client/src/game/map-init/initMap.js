@@ -40,12 +40,12 @@ const fetchMapJsonWithCallback = (worldName) => {
 
 const generateMap = ( currentMap ) => {
 
-    currentMap.startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
+    let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
     currentMap.tileSheet = new Image();
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {      
-        drawGrid(  currentMap )
+        drawGrid(  startingPosition, currentMap )
     }
 
 }
@@ -87,16 +87,17 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * Get number of columns and rows from JSON
  * Call @function drawRow for each row
  * 
+ * @param {object} startingPosition - starting x and y for drawing
  * @param {object} currentMap - Object containing all the data needed to draw Grid
  */
 
-const drawGrid = ( currentMap ) => {
+const drawGrid = ( startingPosition, currentMap ) => {
 
-    setMapBorders( currentMap.startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
+    setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
-    currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas()
+    currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
 
-    const position = currentMap.startingPosition
+    const position = startingPosition
 
     for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
