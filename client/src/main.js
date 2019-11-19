@@ -19,10 +19,10 @@ const app = new App({
 				cinematic 		: false
 			},
 
-			overWorldState : {
-				overworld		: true,
-				activeOverworld	: 'overWorld1',
-				overWorldData : {
+			mapState : {
+				map		: true,
+				activemap	: 'map1',
+				mapData : {
 
 				}
 
