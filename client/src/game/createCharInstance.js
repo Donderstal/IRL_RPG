@@ -9,7 +9,7 @@ const getCharacter = ( className, name, gender ) => {
         // is called from GfxContainer.svelte
 
         characterState : initChar.getCharWithClass( className, name, gender ),
-        characterPiece : initGamePiece.initGamePiece(globals.GRID_BLOCK_PX)               
+        characterPiece : new initGamePiece.gamePiece(globals.GRID_BLOCK_PX)               
     }
  
 }

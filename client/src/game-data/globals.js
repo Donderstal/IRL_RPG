@@ -5,11 +5,13 @@ module.exports = {
     // speed for characters
     MOVEMENT_SPEED : 1.85,
 
-    // for us in movement animation
+    // for use in movement animation
+    // first row of a spritesheet will always face down
+    // second row is always left etc...
     FACING_DOWN    : 0,
-    FACING_UP      : 3,
     FACING_LEFT    : 1,
     FACING_RIGHT   : 2,
+    FACING_UP      : 3,
 
     // animation frame limit
     FRAME_LIMIT    : 12,
