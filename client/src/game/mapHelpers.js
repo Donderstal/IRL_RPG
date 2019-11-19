@@ -96,7 +96,7 @@ const getXYOfCell = (row, col) => {
  * @param {integer} row - row of map grid
  * @param {integer} col - col of map grid
  * Get Id of Tile displayed in requested cell..
- * within the map grid stored in json files
+ * within the map grid stored in the map state
  *  
  * @return {integer} - tile id
  */
