@@ -1,18 +1,18 @@
 const state = require('../game-data/state')
 const globals = require('../game-data/globals')
 
-const getCellFromXY = (x, y) => {
+const getCellOfXY = (x, y) => {
     const topLeftCell = state.currentMap.topLeftCell    
     let col = topLeftCell.col + Math.floor( (x - topLeftCell.x) / globals.GRID_BLOCK_PX )
     let row = topLeftCell.row + Math.floor( (y - topLeftCell.y) / globals.GRID_BLOCK_PX )
 
 
-    // top row of indoors houses are walls and impassable
+    // top row of indoors houses are walls and impassables
     if ( state.currentMap.mapData.location === "indoors") {
         row += 1
     }
 
-    // some checks for edgecases 
+    // there is no row or column -1
     if ( col < 0 ) {
         col = 0
     }
@@ -21,14 +21,21 @@ const getCellFromXY = (x, y) => {
         row = 0
     }
     return { 
-        'row': row ,
+        'row': row,
         'col': col
     }
 }
 
-const getXYFromCell = (row, col) => {
+const getXYOfCell = (row, col) => {
     const topLeftCell = state.currentMap.topLeftCell
-    console.log( row, col, topLeftCell )
+    const x = topLeftCell.x + ( ( col - topLeftCell.col ) * globals.GRID_BLOCK_PX )
+    const y = topLeftCell.y +( ( row - topLeftCell.row ) * globals.GRID_BLOCK_PX )
+
+    return  { 
+        'x': x,
+        'y': y
+    }
+
 }
 
 /**
@@ -70,7 +77,7 @@ const getTopLeftCellOfGridInCanvas = ( ) => {
 }
 
 module.exports = {
-    getCellFromXY, 
-    getXYFromCell,
+    getCellOfXY, 
+    getXYOfCell,
     getTopLeftCellOfGridInCanvas
 }

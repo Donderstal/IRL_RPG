@@ -82,7 +82,7 @@ const handleMovementOfSprite = ( direction ) => {
 
 /**
  * @function clearSprite
- * Call clearRect to clear sprite from its location
+ * Call clearRect to clear sprite Of its location
  */
 const clearSprite = () => {
     
@@ -130,9 +130,9 @@ const moveInDirection = ( direction ) => {
  */
 
 const checkIfMovementAllowed = ( sprite ) => {
-    const locationInGrid = mapHelpers.getCellFromXY(sprite.x, sprite.y)
+    const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
 
-    mapHelpers.getXYFromCell( locationInGrid.row, locationInGrid.col )
+    mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col )
 
 }
 
