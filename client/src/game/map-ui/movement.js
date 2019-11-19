@@ -156,7 +156,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col - 1 )
 
         for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id && sprite.x <= ( nextTile.xy.x + globals.GRID_BLOCK_PX + .1) )  {
+            if ( forbiddenTiles[i] === nextTile.id && sprite.x <= ( nextTile.xy.x + globals.GRID_BLOCK_PX + .1 ) )  {
                         
                 return false
             }
@@ -180,7 +180,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row - 1, locationInGrid.col )
 
         for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id ) {
+            if ( forbiddenTiles[i] === nextTile.id && (sprite.y - globals.STRD_SPRITE_HEIGHT) <= ( nextTile.xy.y - 37 )) {
                         
                 return false
             }
@@ -188,7 +188,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }    
 
     console.log(nextTile.id)
-    console.log(sprite.x)
+    console.log(sprite.y)
     console.log(nextTile.xy)
 
     return true
