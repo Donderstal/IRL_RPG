@@ -157,7 +157,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     console.log(nextTile)
 
     for ( var i = 0; i < forbiddenTiles.length; i++) {
-        if (forbiddenTiles[i] === nextTile ) {
+        if ( forbiddenTiles[i] === nextTile ) {
             return false
         }
     }
@@ -179,7 +179,7 @@ const countFrame = () => {
         frameCount = 0;
         sprite.animIterator++;
 
-        if (sprite.animIterator >= sprite.animLoop.length) {
+        if (sprite.animIterator >= sprite.animLoop.length) {a
             sprite.animIterator = 0;
         }
     }

@@ -4,8 +4,8 @@
     "src" : "my-house/Bed_Room.png",
     "location": "indoors",
     "uniqueTiles": 31,
-    "columns": 24,
-    "rows": 20,
+    "columns": 23,
+    "rows": 19,
     "grid": [
         [  0,  1,  2,  3,  0,  1,  2,  3,  0,  1,  2,  3,  0,  1,  2,  3,  0,  1,  2,  3,  0,  1,  2,  3 ],
         [  4,  5,  6,  7,  4,  5,  6,  7,  4,  5,  6,  7,  4,  5,  6,  7,  4,  5,  6,  7,  4,  5,  6,  7 ],

@@ -99,7 +99,7 @@ const drawGrid = ( startingPosition, currentMap ) => {
 
     const position = startingPosition
 
-    for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
+    for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
 
         drawRow( currentMap, currentRow, position )
@@ -139,7 +139,7 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
 
 const drawRow = ( currentMap, currentRow, position ) => {
 
-    for ( var j = 0; j < currentMap.mapData.columns; j++) {
+    for ( var j = 0; j <= currentMap.mapData.columns; j++) {
         const currentTile = currentRow[j]
 
         drawTileInGridBlock( currentMap, currentTile, position )
