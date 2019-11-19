@@ -1,6 +1,7 @@
 
 const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
+const state         = require('../../game-data/state')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -19,7 +20,8 @@ const fetchMapJsonWithCallback = (worldName) => {
             return response.json()
         })
         .then( (json) => {
-           generateMap(json)
+            state.mapState.mapData = json
+            generateMap(json)
     })    
 }
 
@@ -103,7 +105,6 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
-    
 }
 
 /** 

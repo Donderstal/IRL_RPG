@@ -4,8 +4,6 @@
     import UIContainer from './game-ui-container/UIContainer.svelte'
     import TxtContainer from './game-txt-container/TxtContainer.svelte'
 
-    export let gameState;
-
 </script>
 
 <style>
@@ -25,7 +23,6 @@
 <div class="main-container">
     <GfxContainer
         classList={classList}
-        gameState={gameState}
      />
     <TxtContainer />
     <UIContainer />
