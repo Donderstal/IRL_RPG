@@ -2,6 +2,7 @@
 const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 const state         = require('../../game-data/state')
+const mapHelpers    = require('../mapHelpers')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -93,7 +94,7 @@ const drawGrid = ( currentMap ) => {
 
     setMapBorders( currentMap.startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
-    currentMap.topLeftCell = getTopLeftCellOfGridInCanvas()
+    currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas()
 
     const position = currentMap.startingPosition
 
@@ -113,6 +114,8 @@ const drawGrid = ( currentMap ) => {
  * 
  * set borders in currentMap
  * these will be used in movement.js to determine where characters can't pass through
+ * this needs to be adapted to a few different types of map
+ * for example: indoors, outdoors and non-square maps
  */
 
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
@@ -184,40 +187,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     ) 
 
 }
-
-/**
- * @function getTopLeftCellOfGridInCanvas
- * 
- * The Top Left Cell will be used as a checkpoint
- * To find out where characters and tiles are relative to the map
- * 
- * @return {object} - holding x and y of top left cell and its position in the map grid
- */
-
- const getTopLeftCellOfGridInCanvas = ( ) => {
-    let row = 0
-    let col = 0
-    let x = state.currentMap.startingPosition.x 
-    let y = state.currentMap.startingPosition.y
-
-    if ( x < 0 ) {
-        row = x / -globals.GRID_BLOCK_PX
-        x = 0
-    }
-
-    if ( y < 0 ) {
-        col = y / -globals.GRID_BLOCK_PX
-        y = 0
-    }
-    
-    return {
-        x: x,
-        y: y,
-        row: row,
-        col: col
-
-    }
- }
 
 module.exports = {
     fetchMapJsonWithCallback

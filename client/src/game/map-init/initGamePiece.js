@@ -21,10 +21,6 @@ class gamePiece {
     }
 }
 
-const setCurrentCellCoordinates = ( x, y ) => {
-
-}
-
 const getSprite = ( x, y, width, height, spriteSrc ) => {
     let newSprite = new Image()
 

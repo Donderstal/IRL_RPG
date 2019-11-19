@@ -1,6 +1,7 @@
 const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
+const mapHelpers = require('../mapHelpers')
 
 let frameCount = 0;
 let sprite;
@@ -129,19 +130,10 @@ const moveInDirection = ( direction ) => {
  */
 
 const checkIfMovementAllowed = ( sprite ) => {
-    getCurrentCell(sprite.x, sprite.y)
-}
+    const locationInGrid = mapHelpers.getCellFromXY(sprite.x, sprite.y)
 
+    mapHelpers.getXYFromCell( locationInGrid.row, locationInGrid.col )
 
-const getCurrentCell = (x, y) => {
-    const roundedX = Math.floor(x)
-    const roundedY = Math.floor(y)
-    const topLeftCell = state.currentMap.topLeftCell
-
-    console.log( ( roundedX - topLeftCell.x ) / globals.GRID_BLOCK_PX )
-    console.log( ( roundedY - topLeftCell.y ) / globals.GRID_BLOCK_PX )
-
-    console.log(state.currentMap.topLeftCell)
 }
 
 /**

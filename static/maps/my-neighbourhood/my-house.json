@@ -2,6 +2,7 @@
     "mapName": "my-house",
     "tileSet": "my-house",
     "src": "my-house/Bed_Room.png",
+    "location": "indoors",
     "uniqueTiles": 31,
     "columns": 4,
     "rows": 8,
