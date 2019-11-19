@@ -102,23 +102,26 @@ const clearSprite = () => {
  */
 const moveInDirection = ( direction ) => {
 
-    checkIfMovementAllowed(sprite)
+    const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
 
-    if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
-        sprite.x += globals.MOVEMENT_SPEED        
+    if (movementIsAllowed) {
+        if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
+            sprite.x += globals.MOVEMENT_SPEED        
+        }
+
+        if ( direction == 'FACING_LEFT' && state.currentMap.borders.left < sprite.x ) {
+            sprite.x -= globals.MOVEMENT_SPEED        
+        }
+        
+        if ( direction == 'FACING_DOWN' && state.currentMap.borders.bottom > sprite.y ) {
+            sprite.y += globals.MOVEMENT_SPEED        
+        }
+
+        if ( direction == 'FACING_UP' && state.currentMap.borders.top < sprite.y ){
+            sprite.y -= globals.MOVEMENT_SPEED        
+        }        
     }
 
-    if ( direction == 'FACING_LEFT' && state.currentMap.borders.left < sprite.x ) {
-        sprite.x -= globals.MOVEMENT_SPEED        
-    }
-    
-    if ( direction == 'FACING_DOWN' && state.currentMap.borders.bottom > sprite.y ) {
-        sprite.y += globals.MOVEMENT_SPEED        
-    }
-
-    if ( direction == 'FACING_UP' && state.currentMap.borders.top < sprite.y ){
-        sprite.y -= globals.MOVEMENT_SPEED        
-    }
 
     sprite.direction = globals[direction]        
 }
@@ -129,11 +132,37 @@ const moveInDirection = ( direction ) => {
  * 
  */
 
-const checkIfMovementAllowed = ( sprite ) => {
+const checkIfMovementAllowed = ( sprite, direction ) => {
+
+    const forbiddenTiles = state.currentMap.mapData.blocked
     const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
+    let nextTile = false;
 
-    mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col )
+    if ( direction == 'FACING_RIGHT' && locationInGrid.columns !== state.currentMap.mapData.columns ) {
+        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col + 1 )
+    }
 
+    if ( direction == 'FACING_LEFT' && locationInGrid.col !== 0 ) {
+        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col - 1 )
+    }
+    
+    if ( direction == 'FACING_DOWN' && locationInGrid.row !== state.currentMap.mapData.rows ) {
+        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row + 1, locationInGrid.col )     
+    }
+
+    if ( direction == 'FACING_UP' && locationInGrid.row !== 0 ){
+        nextTile = mapHelpers.getTileIdOfCell( locationInGrid.row - 1, locationInGrid.col )         
+    }    
+
+    console.log(nextTile)
+
+    for ( var i = 0; i < forbiddenTiles.length; i++) {
+        if (forbiddenTiles[i] === nextTile ) {
+            return false
+        }
+    }
+
+    return true
 }
 
 /**
