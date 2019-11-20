@@ -105,6 +105,7 @@ const moveInDirection = ( direction ) => {
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
 
     if (movementIsAllowed) {
+
         if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
             sprite.x += globals.MOVEMENT_SPEED        
         }
@@ -138,10 +139,12 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
     let nextTile = {};
 
-
     if ( direction == 'FACING_RIGHT' && locationInGrid.col < state.currentMap.mapData.columns ) {
         nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col + 1 )
         nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col + 1 )
+
+        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
+        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
 
         for ( var i = 0; i < forbiddenTiles.length; i++) {
             if ( forbiddenTiles[i] === nextTile.id ) {
@@ -154,9 +157,13 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     if ( direction == 'FACING_LEFT' && locationInGrid.col > 0 ) {
         nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col - 1 )
         nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col - 1 )
+        
+        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
+        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
+
 
         for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id && sprite.x <= ( nextTile.xy.x + globals.GRID_BLOCK_PX + .1 ) )  {
+            if ( forbiddenTiles[i] === nextTile.id )  {
                         
                 return false
             }
@@ -166,6 +173,10 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     if ( direction == 'FACING_DOWN' && locationInGrid.row < state.currentMap.mapData.rows ) {
         nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row + 1, locationInGrid.col )     
         nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row + 1, locationInGrid.col )
+        
+        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
+        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
+
 
         for ( var i = 0; i < forbiddenTiles.length; i++) {
             if ( forbiddenTiles[i] === nextTile.id ) {
@@ -178,19 +189,19 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     if ( direction == 'FACING_UP' && locationInGrid.row > 0 ){
         nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row - 1, locationInGrid.col )        
         nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row - 1, locationInGrid.col )
+        
+        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
+        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
+
 
         for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id && (sprite.y - globals.STRD_SPRITE_HEIGHT) <= ( nextTile.xy.y - 37 )) {
+            if ( forbiddenTiles[i] === nextTile.id ) {
                         
                 return false
             }
         } 
     }    
-
-    console.log(nextTile.id)
-    console.log(sprite.y)
-    console.log(nextTile.xy)
-
+    
     return true
 }
 

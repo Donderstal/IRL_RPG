@@ -120,7 +120,6 @@ const drawGrid = ( startingPosition, currentMap ) => {
  */
 
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
-    // adjust for the first row/col index being 0
     state.currentMap.borders = { 
         top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
         left    : gridStartingPosition.x,
@@ -179,14 +178,29 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const ctx = utilFunctions.getBackCanvasContext()
 
-    ctx.drawImage( 
+    ctx.tileBlocked = false
 
-        currentMap.tileSheet, 
-        tilePositionInSheet.x, tilePositionInSheet.y,
-        blockSize, blockSize,
-        startPositionInCanvas.x, startPositionInCanvas.y,
-        blockSize, blockSize,
-    ) 
+    for ( var  i = 0; i < currentMap.mapData.blocked.length; i++ ) {
+        if ( tile === currentMap.mapData.blocked[i] ) {
+            ctx.tileBlocked = true
+            ctx.fillRect( 
+                startPositionInCanvas.x, startPositionInCanvas.y,
+                blockSize, blockSize 
+            )
+        }
+    }
+
+    if (ctx.tileBlocked == false) {
+        ctx.drawImage( 
+
+            currentMap.tileSheet, 
+            tilePositionInSheet.x, tilePositionInSheet.y,
+            blockSize, blockSize,
+            startPositionInCanvas.x, startPositionInCanvas.y,
+            blockSize, blockSize
+        )         
+    }
+
 
 }
 
