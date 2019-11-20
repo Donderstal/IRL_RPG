@@ -20,12 +20,12 @@ const getTopLeftCellOfGridInCanvas = ( x, y ) => {
     // currently displayed must have a x of 0
     if ( x < 0 ) {
         col = x / -globals.GRID_BLOCK_PX
-        let x = 0
+        x = 0
     }
 
     if ( y < 0 ) {
         row  = y / -globals.GRID_BLOCK_PX
-        let y = 0
+        y = 0
     }
     
     return {

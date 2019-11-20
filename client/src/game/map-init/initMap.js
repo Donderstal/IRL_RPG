@@ -178,29 +178,29 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const ctx = utilFunctions.getBackCanvasContext()
 
-    ctx.tileBlocked = false
+    ctx.drawImage( 
 
-    for ( var  i = 0; i < currentMap.mapData.blocked.length; i++ ) {
-        if ( tile === currentMap.mapData.blocked[i] ) {
-            ctx.tileBlocked = true
-            ctx.fillRect( 
-                startPositionInCanvas.x, startPositionInCanvas.y,
-                blockSize, blockSize 
-            )
-        }
-    }
+        currentMap.tileSheet, 
+        tilePositionInSheet.x, tilePositionInSheet.y,
+        blockSize, blockSize,
+        startPositionInCanvas.x, startPositionInCanvas.y,
+        blockSize, blockSize
+    )          
 
-    if (ctx.tileBlocked == false) {
-        ctx.drawImage( 
+    // ctx methods down here are for testing purposes only
+    
+    ctx.strokeRect( 
+        startPositionInCanvas.x, startPositionInCanvas.y,
+        blockSize, blockSize 
+    )
 
-            currentMap.tileSheet, 
-            tilePositionInSheet.x, tilePositionInSheet.y,
-            blockSize, blockSize,
-            startPositionInCanvas.x, startPositionInCanvas.y,
-            blockSize, blockSize
-        )         
-    }
-
+    ctx.fillStyle = "gold"
+    ctx.font = "17.5px Georgia";
+    ctx.fillText(
+        tile,
+        (startPositionInCanvas.x + 9.25), 
+        (startPositionInCanvas.y + 18.5)
+    )
 
 }
 

@@ -104,6 +104,7 @@ const moveInDirection = ( direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
 
+
     if (movementIsAllowed) {
 
         if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
@@ -136,6 +137,10 @@ const moveInDirection = ( direction ) => {
 const checkIfMovementAllowed = ( sprite, direction ) => {
 
     const forbiddenTiles = state.currentMap.mapData.blocked
+    if ( forbiddenTiles === undefined ) {
+        return true
+    }
+
     const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
     let nextTile = {};
 
