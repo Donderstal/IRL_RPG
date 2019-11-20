@@ -188,11 +188,23 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     )          
 
     // ctx methods down here are for testing purposes only
-    
+
+    for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
+        if ( tile === currentMap.mapData.blocked[i] ) {
+            ctx.fillStyle = "red"
+
+            ctx.fillRect( 
+                startPositionInCanvas.x, startPositionInCanvas.y,
+                blockSize, blockSize 
+            )
+        }
+    }
+
     ctx.strokeRect( 
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize 
-    )
+    )        
+
 
     ctx.fillStyle = "gold"
     ctx.font = "17.5px Georgia";

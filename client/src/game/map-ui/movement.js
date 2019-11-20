@@ -244,6 +244,13 @@ const redrawSprite = (  ) => {
         globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
         sprite.x, sprite.y, sprite.width, sprite.height
     );
+
+    // for collision detectiont testing...
+    frontContext.strokeStyle = "blue";
+
+    frontContext.strokeRect( 
+        sprite.x, sprite.y, sprite.width, sprite.height
+    )
 }
 
 module.exports = {
