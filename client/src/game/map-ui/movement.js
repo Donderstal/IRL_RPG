@@ -136,75 +136,50 @@ const moveInDirection = ( direction ) => {
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
 
-    const forbiddenTiles = state.currentMap.mapData.blocked
-    if ( forbiddenTiles === undefined ) {
+    if ( state.currentMap.blockedXyValues === undefined ) {
         return true
     }
 
-    const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
-    let nextTile = {};
-
+    const locationInGrid = mapHelpers.getCellOfXY( sprite.x + ( sprite.width / 2 ) , sprite.y + ( ( sprite.height * 2 ) / 3 ) )
+        
     if ( direction == 'FACING_RIGHT' && locationInGrid.col < state.currentMap.mapData.columns ) {
-        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col + 1 )
-        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col + 1 )
 
-        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
-        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
-
-        for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id ) {
-                        
+        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
+            const blockedTile = state.currentMap.blockedXyValues[i]
+            if ( ( sprite.x + sprite.width) >= blockedTile[direction] ) {
                 return false
             }
         }
     }
 
     if ( direction == 'FACING_LEFT' && locationInGrid.col > 0 ) {
-        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row, locationInGrid.col - 1 )
-        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col - 1 )
-        
-        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
-        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
 
-
-        for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id )  {
-                        
+        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
+            const blockedTile = state.currentMap.blockedXyValues[i]
+            if ( sprite.x <= blockedTile[direction] ) {
                 return false
             }
         }
     }
     
     if ( direction == 'FACING_DOWN' && locationInGrid.row < state.currentMap.mapData.rows ) {
-        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row + 1, locationInGrid.col )     
-        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row + 1, locationInGrid.col )
-        
-        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
-        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
 
-
-        for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id ) {
-                        
+        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
+            const blockedTile = state.currentMap.blockedXyValues[i]
+            if (  ( sprite.y + sprite.height) >= blockedTile[direction] ) {
                 return false
             }
         }
     }
 
     if ( direction == 'FACING_UP' && locationInGrid.row > 0 ){
-        nextTile.id = mapHelpers.getTileIdOfCell( locationInGrid.row - 1, locationInGrid.col )        
-        nextTile.xy = mapHelpers.getXYOfCell( locationInGrid.row - 1, locationInGrid.col )
-        
-        console.log("sprite x: " + sprite.x, "sprite y:" + sprite.y)
-        console.log("nexttile id: " + nextTile.id, "nexttile xy: " + nextTile.xy)
 
-
-        for ( var i = 0; i < forbiddenTiles.length; i++) {
-            if ( forbiddenTiles[i] === nextTile.id ) {
-                        
+        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
+            const blockedTile = state.currentMap.blockedXyValues[i]
+            if ( ( sprite.y + (globals.GRID_BLOCK_PX / 2) ) <= blockedTile[direction] ) {
                 return false
             }
-        } 
+        }
     }    
     
     return true

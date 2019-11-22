@@ -43,6 +43,7 @@ const generateMap = ( currentMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
     currentMap.tileSheet = new Image();
+    currentMap.blockedXyValues = []
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {      
         drawGrid(  startingPosition, currentMap )
@@ -191,6 +192,13 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
         if ( tile === currentMap.mapData.blocked[i] ) {
+            currentMap.blockedXyValues.push( { 
+                "FACING_UP": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                "FACING_RIGHT": startPositionInCanvas.x,
+                "FACING_LEFT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                "FACING_DOWN": startPositionInCanvas.y
+            } )
+
             ctx.fillStyle = "red"
 
             ctx.fillRect( 
