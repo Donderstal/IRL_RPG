@@ -61,9 +61,7 @@ const getCellOfXY = (x, y) => {
     }
     if ( row < 0 ) {
         row = 0
-    }
-
-    
+    }  
 
     return { 
         'row': row,

@@ -34,13 +34,12 @@ const listenForKeyPress = () => {
 const initPlayerMovement = (character) => {
 
     sprite = character
-    sprite.getCurrentCellCoordinates
     frontContext = util.getFrontCanvasContext( )
     requestAnimationFrame(playerMovementController)
 }
 
 /**
- * EXPORT @function initMovement
+ * EXPORT @function stopMovement
  * Called when game is stopped
  * 
  * Stop @function playerMovementController callback
@@ -116,10 +115,10 @@ const clearSprite = () => {
 const moveInDirection = ( direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
+    
+    checkIfDoor(sprite, direction)
 
     if ( movementIsAllowed ) {
-
-        checkIfDoor(sprite, direction)
 
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        
@@ -138,7 +137,6 @@ const moveInDirection = ( direction ) => {
         }        
     }
 
-
     sprite.direction = globals[direction]        
 }
 
@@ -154,16 +152,19 @@ const moveInDirection = ( direction ) => {
 const checkIfDoor = (sprite, direction) => {
     const doors = state.currentMap.doors
 
-    const spriteGridLocation = mapHelpers.getCellOfXY( sprite.x, sprite.y )
+    console.log(doors)
 
-    doors.forEach( (door) => {
-        if ( door.row === spriteGridLocation.row && door.col === spriteGridLocation.col && direction === door.direction) {
-            console.log( 'door!!!' )
+    const spriteGridLocation = mapHelpers.getCellOfXY( ( sprite.x + ( sprite.width / 2 ) ), ( sprite.y + ( sprite.height / 3 ) ) )
+    for( var i = 0; i < doors.length; i++ ) {
+        const currentDoor = doors[i]
+        if ( currentDoor.row === spriteGridLocation.row && currentDoor.col === spriteGridLocation.col 
+            && !currentDoor.locked && direction === currentDoor.direction) {
             const backgroundCanvas = util.getBackCanvasContext()
             backgroundCanvas.clearRect( 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_WIDTH)
-            initMap.fetchMapJsonWithCallback(door.to)
+            initMap.fetchMapJsonWithCallback(currentDoor.to)
+            return true
         }
-    })
+    }
 }
 
 /**
@@ -178,7 +179,7 @@ const checkIfDoor = (sprite, direction) => {
  * Check if x or y of sprite is equal to a forbidden x or y
  * And check if the location of sprite relative to blocked tile
  * 
- * I know this function is a ugly mess of ifs and fors
+ * I know this function is a ugly mess of ifs and forsw
  * But I had difficulty thinking of a different way to do this
  * Let met know what you think
  * 

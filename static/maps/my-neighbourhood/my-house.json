@@ -26,6 +26,13 @@
             "to"  : "my-neighbourhood/my-other-house",
             "direction": "FACING_DOWN",
             "locked": false
+        },
+        {
+            "row": 1, 
+            "col": 3,
+            "to"  : "my-neighbourhood/my-large-house",
+            "direction": "FACING_UP",
+            "locked": false
         }
     ]
 }

@@ -106,9 +106,9 @@ const drawGrid = ( startingPosition, currentMap ) => {
         const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
         door.x = doorXy.x
         door.y = doorXy.y
-        currentMap.doors.push({
-            ...door
-        })
+        currentMap.doors.push(
+            {...door}
+        )
     }
 
     const position = startingPosition
