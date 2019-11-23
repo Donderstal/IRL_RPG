@@ -12,12 +12,13 @@ const startGame = () => {
 
     // The setTimeouts setup is not definitive and might change later
     setTimeout( () => {
-        document.getElementById('intro-screen').remove()
+        document.getElementById('intro-screen').style.display = 'none'
     }, 25 )
 
     setTimeout( () => {
         initCanvas(0, map)      
         initCanvas(1)
+        document.getElementById('stopGameButton').style.display = 'block'
     }, 50 )
 
     setTimeout( () => {
@@ -30,11 +31,22 @@ const startGame = () => {
     }, 100 )
 }
 
+const stopGame = () => {
+    document.getElementsByTagName('canvas')[0].style.display = 'none'
+    document.getElementsByTagName('canvas')[1].style.display = 'none'
+
+    document.getElementById('intro-screen').style.display = 'block'
+    
+    document.getElementById('stopGameButton').style.display = 'none'
+
+    movement.stopPlayerMovement()
+}
+
 const initCanvas = (canvasNum, map = null) => {
     // canvasNum === 0 generates background Canvas
     // 1 generates the front canvas
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
-    canvas.classList.remove('do-not-display')
+    canvas.style.display = 'block'
     let ctx         = canvas.getContext('2d');
     ctx.canvas.height   = 592
     ctx.canvas.width    = 888
@@ -53,5 +65,5 @@ const initCanvas = (canvasNum, map = null) => {
 }
 
 module.exports = {
-    startGame
+    startGame, stopGame
 }
