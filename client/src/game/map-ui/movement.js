@@ -117,7 +117,6 @@ const moveInDirection = ( direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
 
-
     if ( movementIsAllowed ) {
 
         checkIfDoor(sprite, direction)
@@ -157,10 +156,12 @@ const checkIfDoor = (sprite, direction) => {
 
     const spriteGridLocation = mapHelpers.getCellOfXY( sprite.x, sprite.y )
 
-    doors.forEach( (e) => {
-        if ( e.row === spriteGridLocation.row && e.col === spriteGridLocation.col ) {
+    doors.forEach( (door) => {
+        if ( door.row === spriteGridLocation.row && door.col === spriteGridLocation.col && direction === door.direction) {
             console.log( 'door!!!' )
-            initMap.fetchMapJsonWithCallback(e.to)
+            const backgroundCanvas = util.getBackCanvasContext()
+            backgroundCanvas.clearRect( 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_WIDTH)
+            initMap.fetchMapJsonWithCallback(door.to)
         }
     })
 }
