@@ -1,5 +1,4 @@
 const globals = require('../../game-data/globals')
-const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 
@@ -14,7 +13,7 @@ let animationRequest;
  * and pass them to pressedKeys variable
  */
 const listenForKeyPress = () => {
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', () => {
         pressedKeys[event.key] = true
     })
     window.addEventListener('keyup', () => {
@@ -77,20 +76,22 @@ const playerMovementController = ( ) => {
  * Call functions in order to move sprite
  * @param {string} direction - string representing direction
  * 
- * Call @function clearRect to clear old sprite
+ * Clear old sprite
  * Call @function moveInDirection to update sprite xy and direction
  * Call @function countFrame to update animationIterator and framecount
- * Call @function redrawSprite to draw sprite in new location and/or pose
+ * Draw sprite in new location and/or pose
  */
 const handleMovementOfSprite = ( direction ) => {
 
-    canvasHelpers.clearFrontCanvasRectangle( 
-        sprite.x, sprite.y, sprite.width, sprite.height 
+    canvasHelpers.clearCanvasRectangle( 
+        "FRONT", sprite.x, sprite.y, sprite.width, sprite.height 
     )
 
     moveInDirection( direction )
     countFrame( )
-    canvasHelpers.drawSprite(
+
+    canvasHelpers.drawFromImageToCanvas(
+        "FRONT",
         sprite.image,
         sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
         sprite.direction * globals.GRID_BLOCK_PX, 
@@ -104,14 +105,13 @@ const handleMovementOfSprite = ( direction ) => {
  * @function moveInDirection
  * @param {string} direction - string representing direction
  * 
- * Check map s to see if movement is allowd
+ * Check map state to see if movement is allowed
  * Update sprite x or y with movement speed based on direction
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
-
 
     if ( movementIsAllowed ) {
 

@@ -24,7 +24,8 @@ const getSprite = ( x, y, width, height, spriteSrc ) => {
     let newSprite = new Image()
 
     newSprite.onload = ( ) => {
-        canvasHelpers.drawSprite( newSprite, 0, 0, 37, 37, x, y, width, height )                
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", newSprite, 0, 0, 37, 37, x, y, width, height )                
     }
 
     newSprite.src = spriteSrc

@@ -29,6 +29,8 @@ const getRandomName = () => {
         name += getLetter( i, letterCollection, letterCounter )   
     }
 
+    console.log(name.charAt(0).toUpperCase() + name.slice(1))
+
     return name.charAt(0).toUpperCase() + name.slice(1);
 
 }
@@ -122,6 +124,8 @@ const getLetterType = ( letterCounter ) => {
         return 'V'
     }
 }
+
+getRandomName()
 
 
 module.exports = {

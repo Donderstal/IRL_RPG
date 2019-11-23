@@ -16,32 +16,38 @@ const getBackCanvasContext = () => {
     return ctx
 }
 
-const drawSprite = ( 
-        sprite, 
-        sheetX, sheetY, 
-        widthInSheet, heightInSheet,
+const drawFromImageToCanvas = ( 
+        canvas,
+        image, 
+        imageX, imageY, 
+        widthInImage, heightInImage,
         canvasX, canvasY,
         widthInCanvas, heightInCanvas 
     ) => {
 
-    const frontCanvasContext = getFrontCanvasContext()
-    frontCanvasContext.drawImage(
-        sprite, 
-        sheetX, sheetY, 
-        widthInSheet, heightInSheet,
+    let ctx;
+    canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
+
+    ctx.drawImage(
+        image, 
+        imageX, imageY, 
+        widthInImage, heightInImage,
         canvasX, canvasY,
         widthInCanvas, heightInCanvas 
     )
 
 }
 
-const clearFrontCanvasRectangle = (
+const clearCanvasRectangle = (
+        canvas,
         canvasX, canvasY,
         widthInCanvas, heightInCanvas
     ) => {
+
+    let ctx;
+    canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
         
-    const frontCanvasContext = getFrontCanvasContext()
-    frontCanvasContext.clearRect( 
+    ctx.clearRect( 
         canvasX, canvasY,
         widthInCanvas, heightInCanvas 
     )
@@ -49,6 +55,6 @@ const clearFrontCanvasRectangle = (
 
 
 module.exports = {
-    drawSprite,
-    clearFrontCanvasRectangle
+    drawFromImageToCanvas,
+    clearCanvasRectangle
 }
