@@ -158,6 +158,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         for ( var i = 0; i < blockedXyValues.length; i++) {
             const blockedTile = blockedXyValues[i]
             if ( spriteLeftBorder <= blockedTile['RIGHT']
+                 && spriteRightBorder > blockedTile['RIGHT']
                  && spriteBottomBorder >= blockedTile['TOP']
                  && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
@@ -171,6 +172,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         for ( var i = 0; i < blockedXyValues.length; i++) {
             const blockedTile = blockedXyValues[i]
             if ( spriteRightBorder >= blockedTile['LEFT'] 
+                && spriteLeftBorder < blockedTile['LEFT']
                 && spriteBottomBorder >= blockedTile['TOP']
                 && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
@@ -184,6 +186,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         for ( var i = 0; i < blockedXyValues.length; i++) {
             const blockedTile = blockedXyValues[i]
             if ( spriteTopBorder <= blockedTile['BOTTOM'] 
+                && spriteBottomBorder > blockedTile['BOTTOM'] 
                 && spriteHorizontalMiddle <= blockedTile['RIGHT']  
                 && spriteHorizontalMiddle >= blockedTile['LEFT']
             ) {
@@ -196,7 +199,8 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
         for ( var i = 0; i < blockedXyValues.length; i++) {
             const blockedTile = blockedXyValues[i]
-            if ( spriteBottomBorder >= blockedTile['TOP'] - 1
+            if ( spriteBottomBorder >= blockedTile['TOP'] - 1 
+                && spriteTopBorder < blockedTile['TOP']
                 && spriteHorizontalMiddle <= blockedTile['RIGHT']  
                 && spriteHorizontalMiddle >= blockedTile['LEFT']
                 ) {
