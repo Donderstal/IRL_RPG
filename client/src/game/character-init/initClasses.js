@@ -9,8 +9,8 @@ const initMoves = require('./initMoves')
 
 const initClasses = {
     Influencer : class extends initCharacter.characterBlueprint {
-        constructor (name, gender) {
-            super(name, gender),
+        constructor (name) {
+            super(name),
 
             this.className    = "Influencer",
 
@@ -24,7 +24,7 @@ const initClasses = {
                 }
             },
 
-            this.traits         = this.initTraits( this.gender ),
+            this.traits         = this.initTraits( ),
 
             this.skills         = initSkills.calcSkills(this.traits),
             
@@ -33,8 +33,8 @@ const initClasses = {
             this.moves          = initMoves.initMoves(this.classFocus);
         }
 
-        initTraits( gender ) {
-            let baseTraits = initCharacter.getBaseTraits( gender )
+        initTraits(  ) {
+            let baseTraits = initCharacter.getBaseTraits( "Female" )
             return {
                 STR : baseTraits.STR + 2,
                 END : baseTraits.END - 1,
@@ -47,8 +47,8 @@ const initClasses = {
     },
 
     Athlete : class extends initCharacter.characterBlueprint {
-        constructor (name, gender) {
-            super(name, gender),
+        constructor (name) {
+            super(name),
 
             this.className     = "Athlete",
 
@@ -62,7 +62,7 @@ const initClasses = {
                 }
             },
 
-            this.traits         = this.initTraits( this.gender ),
+            this.traits         = this.initTraits( ),
 
             this.skills         = initSkills.calcSkills(this.traits),
             
@@ -71,8 +71,8 @@ const initClasses = {
             this.moves          = initMoves.initMoves(this.classFocus);
         }
 
-        initTraits( gender ) {
-            let baseTraits = initCharacter.getBaseTraits( gender )
+        initTraits( ) {
+            let baseTraits = initCharacter.getBaseTraits( "Male" )
             return {
                 STR : baseTraits.STR + 2,
                 END : baseTraits.END + 2,
@@ -85,8 +85,8 @@ const initClasses = {
     },
 
     Developer : class extends initCharacter.characterBlueprint {
-        constructor (name, gender) {
-            super(name, gender),
+        constructor (name) {
+            super(name),
 
             this.className     = "Developer",
 
@@ -100,7 +100,7 @@ const initClasses = {
                 }
             },
 
-            this.traits         = this.initTraits( this.gender ),
+            this.traits         = this.initTraits(  ),
 
             this.skills         = initSkills.calcSkills(this.traits),
             
@@ -109,8 +109,8 @@ const initClasses = {
             this.moves          = initMoves.initMoves(this.classFocus);
         }
 
-        initTraits( gender ) {
-            let baseTraits = initCharacter.getBaseTraits( gender )
+        initTraits( ) {
+            let baseTraits = initCharacter.getBaseTraits( "Female" )
             return {
                 STR : baseTraits.STR - 2,
                 END : baseTraits.END + 2,
@@ -123,8 +123,8 @@ const initClasses = {
     },
 
     Neckbeard : class extends initCharacter.characterBlueprint {
-        constructor (name, gender) {
-            super(name, gender),
+        constructor (name) {
+            super(name),
 
             this.className     = "Neckbeard",
 
@@ -138,7 +138,7 @@ const initClasses = {
                 }
             },
 
-            this.traits         = this.initTraits( this.gender ),
+            this.traits         = this.initTraits( ),
 
             this.skills         = initSkills.calcSkills(this.traits),
             
@@ -147,8 +147,8 @@ const initClasses = {
             this.moves          = initMoves.initMoves(this.classFocus);
         }
 
-        initTraits( gender ) {
-            let baseTraits = initCharacter.getBaseTraits( gender )
+        initTraits( ) {
+            let baseTraits = initCharacter.getBaseTraits( "Male" )
             return {
                 STR : baseTraits.STR,
                 END : baseTraits.END - 1,

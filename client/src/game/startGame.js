@@ -5,8 +5,9 @@ const util = require('../helpers/utilFunctions')
 const state = require('../game-data/state')
 
 const startGame = () => {
+
     const charName      =  util.getInputVal('name')
-    const charGender    =  util.getInputVal('gender')
+    const map           =  util.getInputVal('map')
     const charClass     =  util.getInputVal('class')
 
     // The setTimeouts setup is not definitive and might change later
@@ -15,12 +16,12 @@ const startGame = () => {
     }, 25 )
 
     setTimeout( () => {
-        initCanvas(0)      
+        initCanvas(0, map)      
         initCanvas(1)
     }, 50 )
 
     setTimeout( () => {
-        state.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )     
+        state.playerCharacter = createCharInstance.getCharacter( charClass, charName )     
     }, 75 )
     
     setTimeout( () => {
@@ -29,7 +30,7 @@ const startGame = () => {
     }, 100 )
 }
 
-const initCanvas = (canvasNum) => {
+const initCanvas = (canvasNum, map = null) => {
     // canvasNum === 0 generates background Canvas
     // 1 generates the front canvas
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
@@ -42,7 +43,7 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initMap.fetchMapJsonWithCallback('my-neighbourhood/my-odd-house')
+        initMap.fetchMapJsonWithCallback(map)
     } 
     else { 
         canvas.id           = 'game-front-canvas'
