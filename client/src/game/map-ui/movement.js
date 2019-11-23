@@ -1,6 +1,7 @@
 const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
+const mapHelpers = require('../mapHelpers')
 
 let frameCount = 0;
 let sprite;
@@ -173,6 +174,9 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     // this needs to be corrected when calculating position
     const spriteTop = sprite.y + ( sprite.height / 3 ) 
     const spriteBottom = sprite.y + sprite.height
+
+    console.log ( mapHelpers.getCellOfXY(spriteLeft, spriteTop) )
+    console.log ( spriteLeft, spriteTop)
 
     const spriteVerticalMiddle = spriteBottom - ( globals.GRID_BLOCK_PX * .5 )
 

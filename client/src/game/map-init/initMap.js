@@ -98,6 +98,19 @@ const drawGrid = ( startingPosition, currentMap ) => {
 
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
 
+    currentMap.doors = []
+
+    for ( var i = 0; i < currentMap.mapData.doors.length; i++ ) {
+
+        const door = currentMap.mapData.doors[i]
+        const doorXy = mapHelpers.getXYOfCell( door.row, door.column )
+        door.x = doorXy.x
+        door.y = doorXy.y
+        currentMap.doors.push({
+            door
+        })
+    }
+
     const position = startingPosition
 
     for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
@@ -203,19 +216,19 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     // draw border of the grid block
     // so different tiles are easily distinguished
-    /* ctx.strokeRect( 
+    ctx.strokeRect( 
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize 
-    )        */ 
+    )        
 
     // draw tile number in grid block
-    /* ctx.fillStyle = "gold"
+    ctx.fillStyle = "gold"
     ctx.font = "17.5px Georgia";
     ctx.fillText(
         tile,
         (startPositionInCanvas.x + 9.25), 
         (startPositionInCanvas.y + 18.5)
-    ) */
+    )
 
 }
 

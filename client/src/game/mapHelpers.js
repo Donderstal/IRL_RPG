@@ -59,10 +59,11 @@ const getCellOfXY = (x, y) => {
     if ( col < 0 ) {
         col = 0
     }
-
     if ( row < 0 ) {
         row = 0
     }
+
+    
 
     return { 
         'row': row,

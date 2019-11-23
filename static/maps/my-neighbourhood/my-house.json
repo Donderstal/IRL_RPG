@@ -21,11 +21,9 @@
     ],
     "doors": [ 
         {
-           "cells": [ 
-               [ 7, 2 ],
-               [ 7, 3 ]
-           ],
-            "to"  : "my-neighbourhood",
+            "row": 7, 
+            "column": 1,
+            "to"  : "my-neighbourhood/my-other-house",
             "locked": "no"
         }
     ]
