@@ -87,8 +87,8 @@ const handleMovementOfSprite = ( direction ) => {
 const clearSprite = () => {
     
     frontContext.clearRect( 
-        0, 0, 
-        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
+        sprite.x, sprite.y, 
+        sprite.width, sprite.height
     )
 }
 
@@ -155,7 +155,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     if ( direction == 'FACING_LEFT' ) {
         for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
-            if ( spriteLeft < blockedTile['RIGHT'] + 1
+            if ( spriteLeft < blockedTile['RIGHT'] + 2
                  && spriteRight > blockedTile['RIGHT']
                  && spriteBottom >= blockedTile['TOP'] + 1
                  && spriteVerticalMiddle <= blockedTile['BOTTOM']
@@ -181,7 +181,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     if ( direction == 'FACING_UP' ){
         for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
-            if ( spriteTop <= blockedTile['BOTTOM'] 
+            if ( spriteTop <= blockedTile['BOTTOM'] + 2
                 && spriteBottom > blockedTile['BOTTOM'] 
                 && spriteLeft <= blockedTile['RIGHT']
                 && spriteRight >= blockedTile['LEFT']
@@ -194,7 +194,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     if ( direction == 'FACING_DOWN' ) {
         for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
-            if ( spriteBottom >= blockedTile['TOP'] - 1 
+            if ( spriteBottom >= blockedTile['TOP'] - 2 
                 && spriteTop < blockedTile['TOP']
                 && spriteLeft <= blockedTile['RIGHT']
                 && spriteRight >= blockedTile['LEFT']
@@ -242,12 +242,13 @@ const redrawSprite = (  ) => {
         sprite.x, sprite.y, sprite.width, sprite.height
     );
 
-    // for collision detectiont testing...
-    frontContext.strokeStyle = "blue";
+    // draw a blue rectangle around sprite
+    // keeping this here for future testing...
+    /* frontContext.strokeStyle = "blue";
 
     frontContext.strokeRect( 
         sprite.x, sprite.y, sprite.width, sprite.height
-    )
+    ) */
 }
 
 module.exports = {

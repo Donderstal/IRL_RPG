@@ -201,23 +201,23 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         }
     }
 
-    // ctx methods down here are for testing purposes only
+    // commented methods down here are for testing purposes
 
     // draw border of the grid block
-    // 
-    ctx.strokeRect( 
+    // so different tiles are easily distinguished
+    /* ctx.strokeRect( 
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize 
-    )        
+    )        */ 
 
-
-    ctx.fillStyle = "gold"
+    // draw tile number in grid block
+    /* ctx.fillStyle = "gold"
     ctx.font = "17.5px Georgia";
     ctx.fillText(
         tile,
         (startPositionInCanvas.x + 9.25), 
         (startPositionInCanvas.y + 18.5)
-    )
+    ) */
 
 }
 
