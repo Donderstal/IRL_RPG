@@ -148,15 +148,22 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const spriteTopBorder = sprite.y + ( sprite.height / 3 ) 
     const spriteBottomBorder = sprite.y + sprite.height
 
+    const spriteHorizontalMiddle = spriteRightBorder - ( globals.GRID_BLOCK_PX * .5 )
+    const spriteVerticalMiddle = spriteBottomBorder - ( globals.GRID_BLOCK_PX * .5 )
+
     const locationInGrid = mapHelpers.getCellOfXY( sprite.x + ( sprite.width / 2 ) , sprite.y + ( ( sprite.height * 2 ) / 3 ) )
+
+    console.log(spriteVerticalMiddle)
 
     if ( direction == 'FACING_LEFT' && locationInGrid.col > 0 ) {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( spriteLeftBorder <= blockedTile['RIGHT_BORDER'] 
-
+            if ( spriteLeftBorder <= blockedTile['RIGHT'] 
+                 && spriteBottomBorder >= blockedTile['TOP']
+                 && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
+                console.log("Blocked: " + direction)
                 return false
             }
         }
@@ -166,9 +173,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( spriteRightBorder >= blockedTile['LEFT_BORDER'] 
-
+            if ( spriteRightBorder >= blockedTile['LEFT'] 
+                && spriteBottomBorder >= blockedTile['TOP']
+                && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
+                console.log("Blocked: " + direction)
                 return false
             }
         }
@@ -178,9 +187,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( spriteTopBorder <= blockedTile['BOTTOM_BORDER'] 
-
+            if ( spriteTopBorder <= blockedTile['BOTTOM'] 
+                && spriteRightBorder <= blockedTile['RIGHT']  
+                && spriteLeftBorder >= blockedTile['LEFT']
             ) {
+                console.log("Blocked: " + direction)
                 return false
             }
         }
@@ -190,9 +201,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( spriteBottomBorder >= blockedTile['TOP_BORDER']  
-
+            if ( spriteBottomBorder >= blockedTile['TOP']  
+                && spriteRightBorder <= blockedTile['RIGHT']  
+                && spriteLeftBorder >= blockedTile['LEFT']
                 ) {
+                console.log("Blocked: " + direction)
                 return false
             }
         }
