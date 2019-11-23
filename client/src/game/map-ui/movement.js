@@ -150,15 +150,14 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const spriteTop = sprite.y + ( sprite.height / 3 ) 
     const spriteBottom = sprite.y + sprite.height
 
-    const spriteHorizontalMiddle = spriteRight - ( globals.GRID_BLOCK_PX * .5 )
     const spriteVerticalMiddle = spriteBottom - ( globals.GRID_BLOCK_PX * .5 )
 
     if ( direction == 'FACING_LEFT' ) {
-        for ( var i = 0; i < blockedXyValues.length; i++) {
+        for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
-            if ( spriteLeft <= blockedTile['RIGHT']
+            if ( spriteLeft < blockedTile['RIGHT'] + 1
                  && spriteRight > blockedTile['RIGHT']
-                 && spriteBottom >= blockedTile['TOP']
+                 && spriteBottom >= blockedTile['TOP'] + 1
                  && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
                 return false
@@ -167,11 +166,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }    
 
     if ( direction == 'FACING_RIGHT' ) {
-        for ( var i = 0; i < blockedXyValues.length; i++) {
+        for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
-            if ( spriteRight >= blockedTile['LEFT'] 
+            if ( spriteRight > blockedTile['LEFT'] - 2
                 && spriteLeft < blockedTile['LEFT']
-                && spriteBottom >= blockedTile['TOP']
+                && spriteBottom >= blockedTile['TOP'] + 1
                 && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
                 return false
@@ -180,11 +179,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }
 
     if ( direction == 'FACING_UP' ){
-        for ( var i = 0; i < blockedXyValues.length; i++) {
+        for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
             if ( spriteTop <= blockedTile['BOTTOM'] 
                 && spriteBottom > blockedTile['BOTTOM'] 
-                && spriteLeft <= blockedTile['RIGHT']  
+                && spriteLeft <= blockedTile['RIGHT']
                 && spriteRight >= blockedTile['LEFT']
             ) {
                 return false
@@ -193,11 +192,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }   
 
     if ( direction == 'FACING_DOWN' ) {
-        for ( var i = 0; i < blockedXyValues.length; i++) {
+        for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
             if ( spriteBottom >= blockedTile['TOP'] - 1 
                 && spriteTop < blockedTile['TOP']
-                && spriteLeft <= blockedTile['RIGHT']  
+                && spriteLeft <= blockedTile['RIGHT']
                 && spriteRight >= blockedTile['LEFT']
                 ) {
                 return false

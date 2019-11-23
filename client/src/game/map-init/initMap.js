@@ -188,7 +188,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         blockSize, blockSize
     )          
 
-    // ctx methods down here are for testing purposes only
+
 
     for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
         if ( tile === currentMap.mapData.blocked[i] ) {
@@ -198,16 +198,13 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
                 "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
                 "TOP": startPositionInCanvas.y
             } )
-
-            ctx.fillStyle = "red"
-
-            ctx.fillRect( 
-                startPositionInCanvas.x, startPositionInCanvas.y,
-                blockSize, blockSize 
-            )
         }
     }
 
+    // ctx methods down here are for testing purposes only
+
+    // draw border of the grid block
+    // 
     ctx.strokeRect( 
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize 
