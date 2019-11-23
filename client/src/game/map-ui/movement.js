@@ -10,7 +10,7 @@ let pressedKeys = {};
 /**
  * EXPORT @function initMovement
  * Listen for keypresses
- * and pass them to 
+ * and pass them to pressedKeys variable
  */
 const listenForKeyPress = () => {
     window.addEventListener('keydown', (event) => {
@@ -130,7 +130,15 @@ const moveInDirection = ( direction ) => {
 /**
  * @function checkIfMovementAllowed
  * 
+ * @param {string} direction - string representing direction
+ * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
  * 
+ * Take the blockedXyValues prop from the current map, generated in initMap.js
+ * Dependending on the direction the sprite is facing...
+ * Check if x or y of sprite is equal to a forbidden x or y
+ * And check if the location of sprite relative to blocked tile
+ * 
+ * @return {boolean} - expressing wether movement is allowed
  */
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
