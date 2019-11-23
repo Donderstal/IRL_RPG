@@ -103,11 +103,11 @@ const drawGrid = ( startingPosition, currentMap ) => {
     for ( var i = 0; i < currentMap.mapData.doors.length; i++ ) {
 
         const door = currentMap.mapData.doors[i]
-        const doorXy = mapHelpers.getXYOfCell( door.row, door.column )
+        const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
         door.x = doorXy.x
         door.y = doorXy.y
         currentMap.doors.push({
-            door
+            ...door
         })
     }
 

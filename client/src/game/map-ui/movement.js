@@ -2,6 +2,7 @@ const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
 const mapHelpers = require('../mapHelpers')
+const initMap = require('../map-init/initMap')
 
 let frameCount = 0;
 let sprite;
@@ -119,6 +120,8 @@ const moveInDirection = ( direction ) => {
 
     if ( movementIsAllowed ) {
 
+        checkIfDoor(sprite, direction)
+
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        
         }
@@ -138,6 +141,28 @@ const moveInDirection = ( direction ) => {
 
 
     sprite.direction = globals[direction]        
+}
+
+/**
+ * @function checkIfDoor
+ * 
+ * @param {string} direction - string representing direction
+ * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
+ * 
+ * Render new map if player is passing through
+ */
+
+const checkIfDoor = (sprite, direction) => {
+    const doors = state.currentMap.doors
+
+    const spriteGridLocation = mapHelpers.getCellOfXY( sprite.x, sprite.y )
+
+    doors.forEach( (e) => {
+        if ( e.row === spriteGridLocation.row && e.col === spriteGridLocation.col ) {
+            console.log( 'door!!!' )
+            initMap.fetchMapJsonWithCallback(e.to)
+        }
+    })
 }
 
 /**
@@ -174,9 +199,6 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     // this needs to be corrected when calculating position
     const spriteTop = sprite.y + ( sprite.height / 3 ) 
     const spriteBottom = sprite.y + sprite.height
-
-    console.log ( mapHelpers.getCellOfXY(spriteLeft, spriteTop) )
-    console.log ( spriteLeft, spriteTop)
 
     const spriteVerticalMiddle = spriteBottom - ( globals.GRID_BLOCK_PX * .5 )
 

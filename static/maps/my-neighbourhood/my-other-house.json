@@ -22,9 +22,10 @@
     "doors": [ 
         {
             "row": 7, 
-            "column": 3,
+            "col": 3,
             "to"  : "my-neighbourhood/my-house",
-            "locked": "no"
+            "direction": "FACING_DOWN",
+            "locked": false
         }
     ]
 }
