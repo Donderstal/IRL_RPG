@@ -12,7 +12,6 @@ const docReady = (fn) => {
 const getInputVal = (id) => {
     return document.getElementById(id).value
 }   
-
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]

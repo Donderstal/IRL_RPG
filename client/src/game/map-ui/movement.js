@@ -1,10 +1,10 @@
 const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
+const canvasHelpers = require('../../helpers/canvasHelpers')
 
 let frameCount = 0;
 let sprite;
-let frontContext;
 let pressedKeys = {};
 let animationRequest;
 
@@ -33,7 +33,6 @@ const initPlayerMovement = (character) => {
 
     sprite = character
     sprite.getCurrentCellCoordinates
-    frontContext = util.getFrontCanvasContext( )
     requestAnimationFrame(playerMovementController)
 }
 
@@ -85,22 +84,20 @@ const playerMovementController = ( ) => {
  */
 const handleMovementOfSprite = ( direction ) => {
 
-    clearSprite( )
+    canvasHelpers.clearFrontCanvasRectangle( 
+        sprite.x, sprite.y, sprite.width, sprite.height 
+    )
+
     moveInDirection( direction )
     countFrame( )
-    redrawSprite( )
-}
-
-/**
- * @function clearSprite
- * Call clearRect to clear sprite Of its location
- */
-const clearSprite = () => {
-    
-    frontContext.clearRect( 
-        sprite.x, sprite.y, 
-        sprite.width, sprite.height
+    canvasHelpers.drawSprite(
+        sprite.image,
+        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
+        sprite.direction * globals.GRID_BLOCK_PX, 
+        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
+        sprite.x, sprite.y, sprite.width, sprite.height
     )
+
 }
 
 /**
@@ -261,30 +258,6 @@ const countFrame = () => {
             sprite.animIterator = 0;
         }
     }
-}
-
-/**
- * @function redrawSprite
- * Call drawImage to render sprite in updated location and/or position
- */
-const redrawSprite = (  ) => {
-
-    // see sr/helpers/docs.js for a description of drawImage's parameters
-    frontContext.drawImage(
-        sprite.image,
-        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
-        sprite.direction * globals.GRID_BLOCK_PX, 
-        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
-        sprite.x, sprite.y, sprite.width, sprite.height
-    );
-
-    // draw a blue rectangle around sprite
-    // keeping this here for future testing...
-    /* frontContext.strokeStyle = "blue";
-
-    frontContext.strokeRect( 
-        sprite.x, sprite.y, sprite.width, sprite.height
-    ) */
 }
 
 module.exports = {

@@ -1,4 +1,3 @@
-
 const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 const state         = require('../../game-data/state')
