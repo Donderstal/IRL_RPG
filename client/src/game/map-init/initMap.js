@@ -163,6 +163,17 @@ const drawRow = ( currentMap, currentRow, position ) => {
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
+    for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
+        if ( tile === currentMap.mapData.blocked[i] || tile === "F" || tile === "E" ) {
+            currentMap.blockedXyValues.push( { 
+                "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                "LEFT": startPositionInCanvas.x,
+                "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                "TOP": startPositionInCanvas.y
+            } )
+        }
+    }   
+    
     // if tile is E - empty...
     if ( tile === "E" ) {
         return 
@@ -187,19 +198,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )          
-
-
-
-    for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
-        if ( tile === currentMap.mapData.blocked[i] ) {
-            currentMap.blockedXyValues.push( { 
-                "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                "LEFT": startPositionInCanvas.x,
-                "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                "TOP": startPositionInCanvas.y
-            } )
-        }
-    }
 
     // commented methods down here are for testing purposes
 
