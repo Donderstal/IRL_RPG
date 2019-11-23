@@ -193,10 +193,10 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
         if ( tile === currentMap.mapData.blocked[i] ) {
             currentMap.blockedXyValues.push( { 
-                "FACING_UP": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                "FACING_RIGHT": startPositionInCanvas.x,
-                "FACING_LEFT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                "FACING_DOWN": startPositionInCanvas.y
+                "BOTTOM_BORDER": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                "LEFT_BORDER": startPositionInCanvas.x,
+                "RIGHT_BORDER": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                "TOP_BORDER": startPositionInCanvas.y
             } )
 
             ctx.fillStyle = "red"

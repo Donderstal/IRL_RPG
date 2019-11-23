@@ -140,33 +140,35 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return true
     }
 
-    const locationInGrid = mapHelpers.getCellOfXY( sprite.x + ( sprite.width / 2 ) , sprite.y + ( ( sprite.height * 2 ) / 3 ) )
-        
-    if ( direction == 'FACING_RIGHT' && locationInGrid.col < state.currentMap.mapData.columns ) {
+    const spriteLeftBorder = sprite.x
+    const spriteRightBorder = sprite.x + sprite.width
 
-        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
-            const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( ( sprite.x + sprite.width) >= blockedTile[direction] ) {
-                return false
-            }
-        }
-    }
+    // a sprite is higher than a grid block
+    // this needs to be corrected when calculating position
+    const spriteTopBorder = sprite.y + ( sprite.height / 3 ) 
+    const spriteBottomBorder = sprite.y + sprite.height
+
+    const locationInGrid = mapHelpers.getCellOfXY( sprite.x + ( sprite.width / 2 ) , sprite.y + ( ( sprite.height * 2 ) / 3 ) )
 
     if ( direction == 'FACING_LEFT' && locationInGrid.col > 0 ) {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( sprite.x <= blockedTile[direction] ) {
+            if ( spriteLeftBorder <= blockedTile['RIGHT_BORDER'] 
+
+                ) {
                 return false
             }
         }
-    }
-    
-    if ( direction == 'FACING_DOWN' && locationInGrid.row < state.currentMap.mapData.rows ) {
+    }    
+
+    if ( direction == 'FACING_RIGHT' && locationInGrid.col < state.currentMap.mapData.columns ) {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if (  ( sprite.y + sprite.height) >= blockedTile[direction] ) {
+            if ( spriteRightBorder >= blockedTile['LEFT_BORDER'] 
+
+                ) {
                 return false
             }
         }
@@ -176,11 +178,25 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
         for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
             const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( ( sprite.y + (globals.GRID_BLOCK_PX / 2) ) <= blockedTile[direction] ) {
+            if ( spriteTopBorder <= blockedTile['BOTTOM_BORDER'] 
+
+            ) {
                 return false
             }
         }
-    }    
+    }   
+
+    if ( direction == 'FACING_DOWN' && locationInGrid.row < state.currentMap.mapData.rows ) {
+
+        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
+            const blockedTile = state.currentMap.blockedXyValues[i]
+            if ( spriteBottomBorder >= blockedTile['TOP_BORDER']  
+
+                ) {
+                return false
+            }
+        }
+    }
     
     return true
 }
