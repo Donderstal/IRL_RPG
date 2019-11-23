@@ -105,7 +105,7 @@ const moveInDirection = ( direction ) => {
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
 
 
-    if (movementIsAllowed) {
+    if ( movementIsAllowed ) {
 
         if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
             sprite.x += globals.MOVEMENT_SPEED        
@@ -136,7 +136,9 @@ const moveInDirection = ( direction ) => {
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
 
-    if ( state.currentMap.blockedXyValues === undefined ) {
+    const blockedXyValues = state.currentMap.blockedXyValues
+
+    if ( blockedXyValues === undefined ) {
         return true
     }
 
@@ -151,61 +153,53 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const spriteHorizontalMiddle = spriteRightBorder - ( globals.GRID_BLOCK_PX * .5 )
     const spriteVerticalMiddle = spriteBottomBorder - ( globals.GRID_BLOCK_PX * .5 )
 
-    const locationInGrid = mapHelpers.getCellOfXY( sprite.x + ( sprite.width / 2 ) , sprite.y + ( ( sprite.height * 2 ) / 3 ) )
+    if ( direction == 'FACING_LEFT' ) {
 
-    console.log(spriteVerticalMiddle)
-
-    if ( direction == 'FACING_LEFT' && locationInGrid.col > 0 ) {
-
-        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
-            const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( spriteLeftBorder <= blockedTile['RIGHT'] 
+        for ( var i = 0; i < blockedXyValues.length; i++) {
+            const blockedTile = blockedXyValues[i]
+            if ( spriteLeftBorder <= blockedTile['RIGHT']
                  && spriteBottomBorder >= blockedTile['TOP']
                  && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
-                console.log("Blocked: " + direction)
                 return false
             }
         }
     }    
 
-    if ( direction == 'FACING_RIGHT' && locationInGrid.col < state.currentMap.mapData.columns ) {
+    if ( direction == 'FACING_RIGHT' ) {
 
-        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
-            const blockedTile = state.currentMap.blockedXyValues[i]
+        for ( var i = 0; i < blockedXyValues.length; i++) {
+            const blockedTile = blockedXyValues[i]
             if ( spriteRightBorder >= blockedTile['LEFT'] 
                 && spriteBottomBorder >= blockedTile['TOP']
                 && spriteVerticalMiddle <= blockedTile['BOTTOM']
                 ) {
-                console.log("Blocked: " + direction)
                 return false
             }
         }
     }
 
-    if ( direction == 'FACING_UP' && locationInGrid.row > 0 ){
+    if ( direction == 'FACING_UP' ){
 
-        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
-            const blockedTile = state.currentMap.blockedXyValues[i]
+        for ( var i = 0; i < blockedXyValues.length; i++) {
+            const blockedTile = blockedXyValues[i]
             if ( spriteTopBorder <= blockedTile['BOTTOM'] 
-                && spriteRightBorder <= blockedTile['RIGHT']  
-                && spriteLeftBorder >= blockedTile['LEFT']
+                && spriteHorizontalMiddle <= blockedTile['RIGHT']  
+                && spriteHorizontalMiddle >= blockedTile['LEFT']
             ) {
-                console.log("Blocked: " + direction)
                 return false
             }
         }
     }   
 
-    if ( direction == 'FACING_DOWN' && locationInGrid.row < state.currentMap.mapData.rows ) {
+    if ( direction == 'FACING_DOWN' ) {
 
-        for ( var i = 0; i < state.currentMap.blockedXyValues.length; i++) {
-            const blockedTile = state.currentMap.blockedXyValues[i]
-            if ( spriteBottomBorder >= blockedTile['TOP']  
-                && spriteRightBorder <= blockedTile['RIGHT']  
-                && spriteLeftBorder >= blockedTile['LEFT']
+        for ( var i = 0; i < blockedXyValues.length; i++) {
+            const blockedTile = blockedXyValues[i]
+            if ( spriteBottomBorder >= blockedTile['TOP'] - 1
+                && spriteHorizontalMiddle <= blockedTile['RIGHT']  
+                && spriteHorizontalMiddle >= blockedTile['LEFT']
                 ) {
-                console.log("Blocked: " + direction)
                 return false
             }
         }
