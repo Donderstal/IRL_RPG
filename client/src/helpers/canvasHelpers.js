@@ -1,3 +1,5 @@
+const globals = require('../game-data/globals')
+
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
@@ -53,8 +55,19 @@ const clearCanvasRectangle = (
     )
 }
 
+const clearEntireCanvas = ( canvas ) => {
+    let ctx;
+    canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
+        
+    ctx.clearRect( 
+        0, 0,
+        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
+    )
+}
+
 
 module.exports = {
     drawFromImageToCanvas,
-    clearCanvasRectangle
+    clearCanvasRectangle,
+    clearEntireCanvas
 }
