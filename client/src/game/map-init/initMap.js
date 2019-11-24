@@ -1,6 +1,6 @@
 const globals       = require('../../game-data/globals')
 const state         = require('../../game-data/state')
-const mapHelpers    = require('../mapHelpers')
+const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 
 /** 
