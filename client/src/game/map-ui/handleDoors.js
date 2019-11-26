@@ -3,6 +3,7 @@ const mapHelpers = require('../../helpers/mapHelpers')
 const initMap = require('../map-init/initMap')
 const controls = require('./controls')
 const movement = require('./movement')
+const canvasHelpers = require('../../helpers/canvasHelpers')
 
 let newMap;
 let oldMap;
@@ -35,13 +36,11 @@ const checkIfDoor = ( sprite, direction ) => {
 }
 
 const getNewMap = ( ) => {
-     
-    controls.stopListenForKeyPress()
+    
+    canvasHelpers.clearBothCanvases()
+    canvasHelpers.getLoadingScreen()
 
-    initMap.fetchMapJsonWithCallback( newMap, oldMap )
-
-    movement.resumePlayerMovement()
-    controls.listenForKeyPress()        
+    initMap.fetchMapJsonWithCallback( newMap, oldMap )   
 }    
 
 module.exports = {

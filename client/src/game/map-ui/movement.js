@@ -52,6 +52,8 @@ const stopPlayerMovement = () => {
  */
 const playerMovementController = ( ) => {   
 
+    console.log(continueAnimating)
+
     if ( continueAnimating ) {
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
             handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
@@ -105,14 +107,6 @@ const moveInDirection = ( sprite, direction ) => {
     
     const nextTileIsDoor = handleDoors.checkIfDoor(sprite, direction)
 
-    if ( nextTileIsDoor ) {
-        stopPlayerMovement()
-
-        handleDoors.getNewMap()
-        return
-
-    }
-
     if ( movementIsAllowed ) {
 
         if ( direction == 'FACING_RIGHT' ) {
@@ -131,6 +125,18 @@ const moveInDirection = ( sprite, direction ) => {
             sprite.y -= globals.MOVEMENT_SPEED        
         }        
     }
+
+    
+    if ( nextTileIsDoor ) {
+        controls.stopListenForKeyPress()
+        stopPlayerMovement()
+        sprite.clearSprite()
+        
+        handleDoors.getNewMap()
+        return
+
+    }
+
 
     sprite.direction = globals[direction]        
 }

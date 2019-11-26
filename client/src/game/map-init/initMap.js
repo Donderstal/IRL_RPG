@@ -3,6 +3,8 @@ const state         = require('../../game-data/state')
 const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const createCharInstance = require('../createCharInstance')
+const controls      = require('../map-ui/controls')
+const movement      = require('../map-ui/movement')
 
 let drawingGrid = false;
 
@@ -24,7 +26,6 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
             return response.json()
         })
         .then( (json) => {
-            canvasHelpers.clearBothCanvases()
             state.currentMap.mapData = json;
 
             generateMap( state.currentMap, previousMap )
@@ -111,7 +112,6 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
     for ( var i = 0; i < currentMap.mapData.doors.length; i++ ) {
 
         const door = currentMap.mapData.doors[i]
-        console.log(door)
         const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
         door.x = doorXy.x
         door.y = doorXy.y
@@ -143,7 +143,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
     else {
         canvasHelpers.clearEntireCanvas( "FRONT" )
         state.playerCharacter.sprite.calcXyFromCell()
-        state.playerCharacter.sprite.drawSprite()
+        state.playerCharacter.sprite.drawSprite() 
     }
 
     drawingGrid = false

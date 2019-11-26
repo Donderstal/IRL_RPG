@@ -1,5 +1,14 @@
 const globals = require('../game-data/globals')
 
+//Return loading ctx
+const getLoadingCanvasContext = () => {
+    let canv = document.getElementsByTagName('canvas')[2]
+
+    let ctx = canv.getContext('2d')
+
+    return ctx
+}
+
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
@@ -38,6 +47,32 @@ const drawFromImageToCanvas = (
         widthInCanvas, heightInCanvas 
     )
 
+}
+
+const getLoadingScreen = () => {
+    clearEntireCanvas("FRONT")
+
+    let ctx = getFrontCanvasContext() 
+
+    ctx.strokeRect( 
+        0, 0,
+        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
+    )
+
+    // draw tile number in grid block
+    ctx.fillStyle = "gold"
+    ctx.font = "25px Georgia";
+    ctx.fillText(
+        "Loading...",
+        globals.CANVAS_WIDTH / 3, globals.CANVAS_HEIGHT / 2
+    )
+
+    ctx.fillStyle = "white"
+    ctx.font = "17.5px Georgia";
+    ctx.fillText(
+        "NECKBEARD 2020",
+        globals.CANVAS_WIDTH / 3, globals.CANVAS_HEIGHT / 2 + 25
+    )
 }
 
 const clearCanvasRectangle = (
@@ -82,6 +117,7 @@ const clearBothCanvases = ( ) => {
 
 
 module.exports = {
+    getLoadingScreen,
     drawFromImageToCanvas,
     clearCanvasRectangle,
     clearEntireCanvas,

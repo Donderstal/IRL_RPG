@@ -36,7 +36,6 @@ class gamePiece {
         
         this.calcXyFromCell()
         this.getSpriteAndDrawWhenLoaded()
-        this.logGamePiece()
     }
 
     getSpriteAndDrawWhenLoaded( ) {
@@ -80,7 +79,6 @@ class gamePiece {
     }
 
     drawSprite( ) {
-        console.log(this.animIterator)
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
@@ -97,10 +95,6 @@ class gamePiece {
             this.x, this.y, this.width, this.height
         )
     } 
-
-    logGamePiece() {
-        console.log(this)
-    }
 }
 
 module.exports = {
