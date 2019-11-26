@@ -35,13 +35,19 @@ const checkIfDoor = ( sprite, direction ) => {
 }
 
 const getNewMap = ( ) => {
-    movement.stopPlayerMovement()
     controls.stopListenForKeyPress()
+    movement.stopPlayerMovement()
 
     canvasHelpers.clearBothCanvases()
 
+    console.log(newMap, oldMap)
+
     initMap.fetchMapJsonWithCallback( newMap, oldMap )
-}
+
+
+    movement.initPlayerMovement()
+    controls.listenForKeyPress()
+}    
 
 module.exports = {
     checkIfDoor,

@@ -1,5 +1,5 @@
 {   
-    "mapName": "my-house",
+    "mapName": "my-neighbourhood/my-other-house",
     "tileSet": "my-house",
     "src": "my-house/Bed_Room.png",
     "location": "indoors",

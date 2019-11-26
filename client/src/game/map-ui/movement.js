@@ -92,6 +92,7 @@ const moveInDirection = ( sprite, direction ) => {
 
     if ( nextTileIsDoor ) {
         handleDoors.getNewMap()
+        return
 
     }
 
