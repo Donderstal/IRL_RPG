@@ -70,11 +70,11 @@ class gamePiece {
     calcXyFromCell( ) {
         const xy = mapHelpers.getXYOfCell(this.row, this.col)
         this.x = xy.x
-        this.y = xy.y
+        this.y = xy.y - this.height / 3
     }
         
     calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXy(this.x, this.y)
+        const cell = mapHelpers.getCellOfXy(this.x, this.y - this.height / 3 )
         this.row = cell.row
         this.col = cell.col
     }
