@@ -2,6 +2,7 @@ const globals       = require('../../game-data/globals')
 const state         = require('../../game-data/state')
 const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
+const createCharInstance = require('../createCharInstance')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -46,6 +47,7 @@ const generateMap = ( currentMap ) => {
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {      
         drawGrid(  startingPosition, currentMap )
+
     }
 
 }
@@ -107,6 +109,8 @@ const drawGrid = ( startingPosition, currentMap ) => {
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
+
+    state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John' )    
 
 }
 
