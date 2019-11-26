@@ -1,9 +1,7 @@
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
-const canvasHelpers = require('../../helpers/canvasHelpers')
 
 let frameCount = 0;
-let sprite;
 let pressedKeys = {};
 let animationRequest;
 
@@ -28,10 +26,7 @@ const listenForKeyPress = () => {
  * Passes @function playerMovementController as callback
  * to requestAnimationFrame
  */
-const initPlayerMovement = (character) => {
-
-    sprite = character
-    sprite.getCurrentCellCoordinates
+const initPlayerMovement = ( ) => {
     requestAnimationFrame(playerMovementController)
 }
 
@@ -83,21 +78,14 @@ const playerMovementController = ( ) => {
  */
 const handleMovementOfSprite = ( direction ) => {
 
-    canvasHelpers.clearCanvasRectangle( 
-        "FRONT", sprite.x, sprite.y, sprite.width, sprite.height 
-    )
+    console.log(state)
+
+    state.playerCharacter.sprite.clearSprite()
 
     moveInDirection( direction )
     countFrame( )
 
-    canvasHelpers.drawFromImageToCanvas(
-        "FRONT",
-        sprite.image,
-        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
-        sprite.direction * globals.GRID_BLOCK_PX, 
-        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
-        sprite.x, sprite.y, sprite.width, sprite.height
-    )
+    state.playerCharacter.sprite.drawSprite()
 
 }
 
@@ -111,36 +99,36 @@ const handleMovementOfSprite = ( direction ) => {
  */
 const moveInDirection = ( direction ) => {
 
-    const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
+    const movementIsAllowed = checkIfMovementAllowed( state.playerCharacter.sprite, direction )
 
     if ( movementIsAllowed ) {
 
         if ( direction == 'FACING_RIGHT' ) {
-            sprite.x += globals.MOVEMENT_SPEED        
+            state.playerCharacter.sprite.x += globals.MOVEMENT_SPEED        
         }
 
         if ( direction == 'FACING_LEFT' ) {
-            sprite.x -= globals.MOVEMENT_SPEED        
+            state.playerCharacter.sprite.x -= globals.MOVEMENT_SPEED        
         }
         
         if ( direction == 'FACING_DOWN' ) {
-            sprite.y += globals.MOVEMENT_SPEED        
+            state.playerCharacter.sprite.y += globals.MOVEMENT_SPEED        
         }
 
         if ( direction == 'FACING_UP' ){
-            sprite.y -= globals.MOVEMENT_SPEED        
+            state.playerCharacter.sprite.y -= globals.MOVEMENT_SPEED        
         }        
     }
 
 
-    sprite.direction = globals[direction]        
+    state.playerCharacter.sprite.direction = globals[direction]        
 }
 
 /**
  * @function checkIfMovementAllowed
  * 
  * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
+ * @param {object} sprite - instance of the sprite class from initsprite.js
  * 
  * Take the blockedXyValues prop from the current map, generated in initMap.js
  * Dependending on the direction the sprite is facing...
@@ -252,10 +240,10 @@ const countFrame = () => {
     
     if (frameCount >= globals.FRAME_LIMIT) {
         frameCount = 0;
-        sprite.animIterator++;
+        state.playerCharacter.sprite.animIterator++;
 
-        if (sprite.animIterator >= sprite.animLoop.length) {
-            sprite.animIterator = 0;
+        if (state.playerCharacter.sprite.animIterator >= state.playerCharacter.sprite.animLoop.length) {
+            state.playerCharacter.sprite.animIterator = 0;
         }
     }
 }

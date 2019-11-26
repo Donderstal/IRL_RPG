@@ -60,17 +60,18 @@ class gamePiece {
 
     drawSprite( ) {
         canvasHelpers.drawFromImageToCanvas(
-            "FRONT", this.sheet, 0, 0, 37, 37, this.x, this.y, this.width, this.height 
-        )
-    }
-
-    clearSprite( ) {
-        canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
             this.animLoop[this.animIterator] * globals.GRID_BLOCK_PX, 
             this.direction * globals.GRID_BLOCK_PX, 
             globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
+            this.x, this.y, this.width, this.height
+        )
+    }
+
+    clearSprite( ) {
+        canvasHelpers.clearCanvasRectangle(
+            "FRONT",
             this.x, this.y, this.width, this.height
         )
     } 

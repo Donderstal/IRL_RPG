@@ -86,8 +86,11 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 
 /** 
  * @function drawGrid
+ * Get map borders
  * Get number of columns and rows from JSON
+ * Get top left cell of map in grid
  * Call @function drawRow for each row
+ * Initaliase character
  * 
  * @param {object} startingPosition - starting x and y for drawing
  * @param {object} currentMap - Object containing all the data needed to draw Grid
