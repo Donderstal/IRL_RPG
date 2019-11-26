@@ -12,7 +12,7 @@ const createCharInstance = require('../createCharInstance')
  * @callback generateMAp - Start Map rendering with JSON data when fetch succeeds
  */
 
-const fetchMapJsonWithCallback = (worldName) => {
+const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
     fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
@@ -23,7 +23,7 @@ const fetchMapJsonWithCallback = (worldName) => {
         .then( (json) => {
             state.currentMap.mapData = json;
 
-            generateMap( state.currentMap )
+            generateMap( state.currentMap, previousMap )
     })    
 }
 
@@ -36,9 +36,10 @@ const fetchMapJsonWithCallback = (worldName) => {
  * Call @function drawGrid when tilesheet has been loaded based on the image path in the json file
  * 
  * @param {Object} currentMap - JSON containing data on the Map
+ * @param {string} previousMap - Name of previous map if applicable
  */
 
-const generateMap = ( currentMap ) => {
+const generateMap = ( currentMap, previousMap ) => {
 
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
@@ -46,7 +47,7 @@ const generateMap = ( currentMap ) => {
     currentMap.blockedXyValues = []
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {      
-        drawGrid(  startingPosition, currentMap )
+        drawGrid(  startingPosition, currentMap, previousMap )
 
     }
 
@@ -96,7 +97,7 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * @param {object} currentMap - Object containing all the data needed to draw Grid
  */
 
-const drawGrid = ( startingPosition, currentMap ) => {
+const drawGrid = ( startingPosition, currentMap, previousMap ) => {
 
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
@@ -113,6 +114,11 @@ const drawGrid = ( startingPosition, currentMap ) => {
         currentMap.doors.push(
             {...door}
         )
+
+        if ( previousMap === door.to) {
+            state.playerCharacter.sprite.setCell( { 'row': door.row, 'col': door.col } )
+        }
+
     }
 
     const position = startingPosition
@@ -126,7 +132,14 @@ const drawGrid = ( startingPosition, currentMap ) => {
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
 
-    state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )    
+    if ( previousMap === "NO" ) {
+        state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )     
+    }
+    else {
+        state.playerCharacter.sprite.calcXyFromCell()
+        state.playerCharacter.sprite.drawSprite()
+    }
+
 
 }
 
@@ -215,25 +228,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )          
-
-    // commented methods down here are for testing purposes
-
-    // draw border of the grid block
-    // so different tiles are easily distinguished
-    ctx.strokeRect( 
-        startPositionInCanvas.x, startPositionInCanvas.y,
-        blockSize, blockSize 
-    )        
-
-    // draw tile number in grid block
-    ctx.fillStyle = "gold"
-    ctx.font = "17.5px Georgia";
-    ctx.fillText(
-        tile,
-        (startPositionInCanvas.x + 9.25), 
-        (startPositionInCanvas.y + 18.5)
-    )
-
 }
 
 module.exports = {

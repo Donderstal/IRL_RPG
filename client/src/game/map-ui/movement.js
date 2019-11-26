@@ -1,7 +1,8 @@
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
-const mapHelpers = require('../mapHelpers')
+const mapHelpers = require('../../helpers/mapHelpers')
 const initMap = require('../map-init/initMap')
+const canvasHelpers = require('../../helpers/canvasHelpers')
 
 let frameCount = 0;
 let pressedKeys = {};
@@ -17,6 +18,21 @@ const listenForKeyPress = () => {
         pressedKeys[event.key] = true
     })
     window.addEventListener('keyup', () => {
+        pressedKeys[event.key] = false
+    })
+}
+
+
+/**
+ * EXPORT @function initMovement
+ * Listen for keypresses
+ * and pass them to pressedKeys variable
+ */
+const stopListenForKeyPress = () => {
+    window.removeEventListener('keydown', () => {
+        pressedKeys[event.key] = true
+    })
+    window.removeEventListener('keyup', () => {
         pressedKeys[event.key] = false
     })
 }
@@ -139,16 +155,19 @@ const moveInDirection = ( sprite, direction ) => {
 const checkIfDoor = (sprite, direction) => {
     const doors = state.currentMap.doors
 
-    console.log(doors)
-
     const spriteGridLocation = mapHelpers.getCellOfXY( ( sprite.x + ( sprite.width / 2 ) ), ( sprite.y + ( sprite.height / 3 ) ) )
     for( var i = 0; i < doors.length; i++ ) {
         const currentDoor = doors[i]
         if ( currentDoor.row === spriteGridLocation.row && currentDoor.col === spriteGridLocation.col 
             && !currentDoor.locked && direction === currentDoor.direction) {
-            const backgroundCanvas = util.getBackCanvasContext()
-            backgroundCanvas.clearRect( 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_WIDTH)
-            initMap.fetchMapJsonWithCallback(currentDoor.to)
+
+            stopPlayerMovement()
+            stopListenForKeyPress()
+
+            canvasHelpers.clearBothCanvases()
+
+            initMap.fetchMapJsonWithCallback( currentDoor.to, state.currentMap.mapData.mapName )
+
             return true
         }
     }

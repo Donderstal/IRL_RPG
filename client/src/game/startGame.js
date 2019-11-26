@@ -50,7 +50,7 @@ const initCanvas = (canvasNum, map = null) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initMap.fetchMapJsonWithCallback(map)
+        initMap.fetchMapJsonWithCallback( map, "NO" )
     } 
     else { 
         canvas.id           = 'game-front-canvas'

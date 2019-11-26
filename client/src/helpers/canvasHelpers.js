@@ -65,9 +65,25 @@ const clearEntireCanvas = ( canvas ) => {
     )
 }
 
+const clearBothCanvases = ( ) => {
+    let front = getFrontCanvasContext()
+    let back = getBackCanvasContext()
+
+    back.clearRect( 
+        0, 0,
+        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
+    )
+
+    front.clearRect( 
+        0, 0,
+        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
+    )
+}
+
 
 module.exports = {
     drawFromImageToCanvas,
     clearCanvasRectangle,
-    clearEntireCanvas
+    clearEntireCanvas,
+    clearBothCanvases
 }
