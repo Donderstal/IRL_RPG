@@ -113,7 +113,7 @@ const drawGrid = ( startingPosition, currentMap ) => {
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
 
-    state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John' )    
+    state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )    
 
 }
 

@@ -19,6 +19,9 @@
     "blocked": [
         4, 8, 11, 15, 20, 23, 27
     ],
+    "playerStart": [
+        2, 1
+    ],
     "doors": [ 
         {
            "cells": [ 

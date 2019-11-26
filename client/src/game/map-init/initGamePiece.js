@@ -33,12 +33,13 @@ class gamePiece {
         this.direction     = 0;
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();
+        
         this.calcXyFromCell()
-        this.getSprite()
+        this.getSpriteAndDrawWhenLoaded()
         this.logGamePiece()
     }
 
-    getSprite( ) {
+    getSpriteAndDrawWhenLoaded( ) {
         this.sheet.onload = () => {
             this.drawSprite()
         }
