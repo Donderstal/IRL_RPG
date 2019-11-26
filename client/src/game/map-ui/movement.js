@@ -1,12 +1,9 @@
 const globals = require('../../game-data/globals')
-const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
 const mapHelpers = require('../mapHelpers')
 const initMap = require('../map-init/initMap')
 
 let frameCount = 0;
-let sprite;
-let frontContext;
 let pressedKeys = {};
 let animationRequest;
 
@@ -16,7 +13,7 @@ let animationRequest;
  * and pass them to pressedKeys variable
  */
 const listenForKeyPress = () => {
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', () => {
         pressedKeys[event.key] = true
     })
     window.addEventListener('keyup', () => {
@@ -31,10 +28,7 @@ const listenForKeyPress = () => {
  * Passes @function playerMovementController as callback
  * to requestAnimationFrame
  */
-const initPlayerMovement = (character) => {
-
-    sprite = character
-    frontContext = util.getFrontCanvasContext( )
+const initPlayerMovement = ( ) => {
     requestAnimationFrame(playerMovementController)
 }
 
@@ -58,17 +52,19 @@ const stopPlayerMovement = () => {
  */
 const playerMovementController = ( ) => {   
 
+    const playerSprite = state.playerCharacter.sprite
+
     if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-        handleMovementOfSprite('FACING_UP')
+        handleMovementOfSprite(playerSprite, 'FACING_UP')
     }
     if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-        handleMovementOfSprite('FACING_LEFT')
+        handleMovementOfSprite(playerSprite, 'FACING_LEFT')
     }
     if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-        handleMovementOfSprite('FACING_DOWN')
+        handleMovementOfSprite(playerSprite, 'FACING_DOWN')
     }
     if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-        handleMovementOfSprite('FACING_RIGHT')
+        handleMovementOfSprite(playerSprite, 'FACING_RIGHT')
     }    
 
     animationRequest = requestAnimationFrame(playerMovementController)
@@ -79,40 +75,31 @@ const playerMovementController = ( ) => {
  * Call functions in order to move sprite
  * @param {string} direction - string representing direction
  * 
- * Call @function clearRect to clear old sprite
+ * Clear old sprite
  * Call @function moveInDirection to update sprite xy and direction
  * Call @function countFrame to update animationIterator and framecount
- * Call @function redrawSprite to draw sprite in new location and/or pose
+ * Draw sprite in new location and/or pose
  */
-const handleMovementOfSprite = ( direction ) => {
+const handleMovementOfSprite = ( sprite, direction ) => {
+    sprite.clearSprite()
 
-    clearSprite( )
-    moveInDirection( direction )
-    countFrame( )
-    redrawSprite( )
-}
+    moveInDirection( sprite, direction )
+    countFrame( sprite )
 
-/**
- * @function clearSprite
- * Call clearRect to clear sprite Of its location
- */
-const clearSprite = () => {
-    
-    frontContext.clearRect( 
-        sprite.x, sprite.y, 
-        sprite.width, sprite.height
-    )
+    sprite.drawSprite()
+
 }
 
 /**
  * @function moveInDirection
  * @param {string} direction - string representing direction
+ * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  * 
- * Check map s to see if movement is allowd
+ * Check map state to see if movement is allowed
  * Update sprite x or y with movement speed based on direction
  * Update sprite direction prop based on direction globals
  */
-const moveInDirection = ( direction ) => {
+const moveInDirection = ( sprite, direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     
@@ -171,7 +158,7 @@ const checkIfDoor = (sprite, direction) => {
  * @function checkIfMovementAllowed
  * 
  * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
+ * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  * 
  * Take the blockedXyValues prop from the current map, generated in initMap.js
  * Dependending on the direction the sprite is facing...
@@ -276,8 +263,10 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
  * Update frame count every time requestAnimationFrame fires callback
  * Update sprite's animIterator every time FRAME_LIMIT is equal to framecount 
  * Reset animIterator to zero if necessary
+ * 
+ * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  */
-const countFrame = () => {
+const countFrame = ( sprite ) => {
     
     frameCount++;
     
@@ -289,30 +278,6 @@ const countFrame = () => {
             sprite.animIterator = 0;
         }
     }
-}
-
-/**
- * @function redrawSprite
- * Call drawImage to render sprite in updated location and/or position
- */
-const redrawSprite = (  ) => {
-
-    // see sr/helpers/docs.js for a description of drawImage's parameters
-    frontContext.drawImage(
-        sprite.image,
-        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
-        sprite.direction * globals.GRID_BLOCK_PX, 
-        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
-        sprite.x, sprite.y, sprite.width, sprite.height
-    );
-
-    // draw a blue rectangle around sprite
-    // keeping this here for future testing...
-    /* frontContext.strokeStyle = "blue";
-
-    frontContext.strokeRect( 
-        sprite.x, sprite.y, sprite.width, sprite.height
-    ) */
 }
 
 module.exports = {

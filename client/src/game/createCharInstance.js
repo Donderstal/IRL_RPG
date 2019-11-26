@@ -1,14 +1,14 @@
 const initChar      = require('./character-init/initCharacter')
 const initGamePiece = require('./map-init/initGamePiece')
 
-const getCharacter = ( className, name, gender ) => {
+const getCharacter = ( className, name, playerStart ) => {
     return {
         
         // entry point for creating a character
         // is called from GfxContainer.svelte
 
-        characterState : initChar.getCharWithClass( className, name ),
-        characterPiece : new initGamePiece.gamePiece( )               
+        stats : initChar.getCharWithClass( className, name ),
+        sprite : new initGamePiece.gamePiece( playerStart[0], playerStart[1], '/static/sprites/neckbeard.png' )               
     }
  
 }

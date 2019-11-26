@@ -1,8 +1,8 @@
-
 const globals       = require('../../game-data/globals')
-const utilFunctions = require('../../helpers/utilFunctions')
 const state         = require('../../game-data/state')
-const mapHelpers    = require('../mapHelpers')
+const mapHelpers    = require('../../helpers/mapHelpers')
+const canvasHelpers = require('../../helpers/canvasHelpers')
+const createCharInstance = require('../createCharInstance')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -47,6 +47,7 @@ const generateMap = ( currentMap ) => {
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {      
         drawGrid(  startingPosition, currentMap )
+
     }
 
 }
@@ -85,8 +86,11 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 
 /** 
  * @function drawGrid
+ * Get map borders
  * Get number of columns and rows from JSON
+ * Get top left cell of map in grid
  * Call @function drawRow for each row
+ * Initaliase character
  * 
  * @param {object} startingPosition - starting x and y for drawing
  * @param {object} currentMap - Object containing all the data needed to draw Grid
@@ -121,6 +125,8 @@ const drawGrid = ( startingPosition, currentMap ) => {
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
     }
+
+    state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )    
 
 }
 
@@ -201,10 +207,8 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
-    const ctx = utilFunctions.getBackCanvasContext()
-
-    ctx.drawImage( 
-
+    canvasHelpers.drawFromImageToCanvas( 
+        "BACK",
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
         blockSize, blockSize,
