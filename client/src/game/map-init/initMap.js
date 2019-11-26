@@ -4,6 +4,8 @@ const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const createCharInstance = require('../createCharInstance')
 
+let drawingGrid = false;
+
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
  * Fetch JSON file with data based on path relative to Maps folder
@@ -13,6 +15,7 @@ const createCharInstance = require('../createCharInstance')
  */
 
 const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
+    if ( drawingGrid === false )
     fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
@@ -21,6 +24,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
             return response.json()
         })
         .then( (json) => {
+            canvasHelpers.clearBothCanvases()
             state.currentMap.mapData = json;
 
             generateMap( state.currentMap, previousMap )
@@ -40,6 +44,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
  */
 
 const generateMap = ( currentMap, previousMap ) => {
+    drawingGrid = true
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
     currentMap.tileSheet = new Image();
@@ -97,7 +102,6 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  */
 
 const drawGrid = ( startingPosition, currentMap, previousMap ) => {
-
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
@@ -135,12 +139,13 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
         state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )     
     }
     else {
+        console.log(state.playerCharacter.sprite)
+        canvasHelpers.clearEntireCanvas( "FRONT" )
         state.playerCharacter.sprite.calcXyFromCell()
         state.playerCharacter.sprite.drawSprite()
-        console.log( state.playerCharacter.sprite )
     }
 
-
+    drawingGrid = false
 }
 
 /**

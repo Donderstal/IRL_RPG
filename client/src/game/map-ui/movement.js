@@ -6,27 +6,40 @@ const handleDoors = require('./handleDoors')
 
 let frameCount = 0;
 let pressedKeys = controls.pressedKeys;
-let animationRequest;
+let continueAnimating;
+
 
 /**
  * EXPORT @function initMovement
  * Is called when player sprite is rendered
  * 
+ * set continueAnimating to true
  * Passes @function playerMovementController as callback
  * to requestAnimationFrame
  */
 const initPlayerMovement = ( ) => {
-    animationRequest = requestAnimationFrame(playerMovementController)
+    continueAnimating = true
+    requestAnimationFrame(playerMovementController)
+}
+
+/**
+ * EXPORT @function resumePlayerMovement
+ * Is called after a map is loaded
+ * 
+ * set continueAnimating to true to resume movement
+ */
+const resumePlayerMovement = ( ) => {
+    continueAnimating = true
 }
 
 /**
  * EXPORT @function stopMovement
- * Called when game is stopped
+ * Called when game is stopped or new map is loaded
  * 
- * Stop @function playerMovementController callback
+ * set continueAnimating to false to stop movement
  */
 const stopPlayerMovement = () => {
-    cancelAnimationFrame(animationRequest)
+    continueAnimating = false
 }
 
 
@@ -39,20 +52,22 @@ const stopPlayerMovement = () => {
  */
 const playerMovementController = ( ) => {   
 
-    if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
-    }
-    if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
-    }
-    if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
-    }
-    if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
-    }    
+    if ( continueAnimating ) {
+        if ( pressedKeys.w || pressedKeys.ArrowUp ) {
+            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
+        }
+        if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
+            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
+        }
+        if ( pressedKeys.s || pressedKeys.ArrowDown ) {
+            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
+        }
+        if ( pressedKeys.d || pressedKeys.ArrowRight ) {
+            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
+        }    
 
-    requestAnimationFrame(playerMovementController)
+        requestAnimationFrame(playerMovementController)        
+    }
 }
 
 /**
@@ -91,6 +106,8 @@ const moveInDirection = ( sprite, direction ) => {
     const nextTileIsDoor = handleDoors.checkIfDoor(sprite, direction)
 
     if ( nextTileIsDoor ) {
+        stopPlayerMovement()
+
         handleDoors.getNewMap()
         return
 
@@ -142,5 +159,6 @@ const countFrame = ( sprite ) => {
 
 module.exports = {
     initPlayerMovement,
+    resumePlayerMovement,
     stopPlayerMovement
 }
