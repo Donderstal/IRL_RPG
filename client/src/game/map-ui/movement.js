@@ -9,32 +9,31 @@ let pressedKeys = {};
 let animationRequest;
 
 /**
- * EXPORT @function initMovement
+ * EXPORT @function listenForKeyPress
  * Listen for keypresses
  * and pass them to pressedKeys variable
  */
 const listenForKeyPress = () => {
-    window.addEventListener('keydown', () => {
-        pressedKeys[event.key] = true
-    })
-    window.addEventListener('keyup', () => {
-        pressedKeys[event.key] = false
-    })
+    window.addEventListener('keydown', addKeyToPressed)
+    window.addEventListener('keyup', removeKeyFromPressed)
 }
 
-
 /**
- * EXPORT @function initMovement
+ * EXPORT @function stopListenForKeyPress
  * Listen for keypresses
  * and pass them to pressedKeys variable
  */
 const stopListenForKeyPress = () => {
-    window.removeEventListener('keydown', () => {
-        pressedKeys[event.key] = true
-    })
-    window.removeEventListener('keyup', () => {
-        pressedKeys[event.key] = false
-    })
+    window.removeEventListener('keydown', addKeyToPressed)
+    window.removeEventListener('keyup', removeKeyFromPressed)
+}
+
+const addKeyToPressed = () => {
+    pressedKeys[event.key] = true
+}
+
+const removeKeyFromPressed = () => {
+    pressedKeys[event.key] = false
 }
 
 /**
@@ -45,7 +44,7 @@ const stopListenForKeyPress = () => {
  * to requestAnimationFrame
  */
 const initPlayerMovement = ( ) => {
-    requestAnimationFrame(playerMovementController)
+    animationRequest = requestAnimationFrame(playerMovementController)
 }
 
 /**
@@ -83,7 +82,7 @@ const playerMovementController = ( ) => {
         handleMovementOfSprite(playerSprite, 'FACING_RIGHT')
     }    
 
-    animationRequest = requestAnimationFrame(playerMovementController)
+    requestAnimationFrame(playerMovementController)
 }
 
 /**

@@ -40,7 +40,6 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
  */
 
 const generateMap = ( currentMap, previousMap ) => {
-
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
     currentMap.tileSheet = new Image();
@@ -138,6 +137,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
     else {
         state.playerCharacter.sprite.calcXyFromCell()
         state.playerCharacter.sprite.drawSprite()
+        console.log( state.playerCharacter.sprite )
     }
 
 
