@@ -1,10 +1,8 @@
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
-const mapHelpers = require('../../helpers/mapHelpers')
-const initMap = require('../map-init/initMap')
-const canvasHelpers = require('../../helpers/canvasHelpers')
 const controls = require('./controls')
 const movementChecker = require('./movementChecker')
+const handleDoors = require('./handleDoors')
 
 let frameCount = 0;
 let pressedKeys = controls.pressedKeys;
@@ -41,19 +39,17 @@ const stopPlayerMovement = () => {
  */
 const playerMovementController = ( ) => {   
 
-    const playerSprite = state.playerCharacter.sprite
-
     if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-        handleMovementOfSprite(playerSprite, 'FACING_UP')
+        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
     }
     if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-        handleMovementOfSprite(playerSprite, 'FACING_LEFT')
+        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
     }
     if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-        handleMovementOfSprite(playerSprite, 'FACING_DOWN')
+        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
     }
     if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-        handleMovementOfSprite(playerSprite, 'FACING_RIGHT')
+        handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
     }    
 
     requestAnimationFrame(playerMovementController)
@@ -92,13 +88,10 @@ const moveInDirection = ( sprite, direction ) => {
 
     const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
     
-    const nextTileIsDoor = checkIfDoor(sprite, direction)
+    const nextTileIsDoor = handleDoors.checkIfDoor(sprite, direction)
 
     if ( nextTileIsDoor ) {
-        stopPlayerMovement()
-        controls.stopListenForKeyPress()
-
-        canvasHelpers.clearBothCanvases()
+        handleDoors.getNewMap()
 
     }
 
@@ -122,31 +115,6 @@ const moveInDirection = ( sprite, direction ) => {
     }
 
     sprite.direction = globals[direction]        
-}
-
-/**
- * @function checkIfDoor
- * 
- * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
- * 
- * Render new map if player is passing through
- */
-
-const checkIfDoor = (sprite, direction) => {
-    const doors = state.currentMap.doors
-
-    const spriteGridLocation = mapHelpers.getCellOfXY( ( sprite.x + ( sprite.width / 2 ) ), ( sprite.y + ( sprite.height / 3 ) ) )
-    for( var i = 0; i < doors.length; i++ ) {
-        const currentDoor = doors[i]
-        if ( currentDoor.row === spriteGridLocation.row && currentDoor.col === spriteGridLocation.col 
-            && !currentDoor.locked && direction === currentDoor.direction) {
-
-            initMap.fetchMapJsonWithCallback( currentDoor.to, state.currentMap.mapData.mapName )
-
-            return true
-        }
-    }
 }
 
 /**
