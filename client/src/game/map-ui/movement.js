@@ -1,23 +1,10 @@
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
+const controls = require('./controls')
 
 let frameCount = 0;
-let pressedKeys = {};
+let pressedKeys = controls.pressedKeys;
 let animationRequest;
-
-/**
- * EXPORT @function initMovement
- * Listen for keypresses
- * and pass them to pressedKeys variable
- */
-const listenForKeyPress = () => {
-    window.addEventListener('keydown', () => {
-        pressedKeys[event.key] = true
-    })
-    window.addEventListener('keyup', () => {
-        pressedKeys[event.key] = false
-    })
-}
 
 /**
  * EXPORT @function initMovement
