@@ -4,6 +4,7 @@ const mapHelpers = require('../../helpers/mapHelpers')
 const initMap = require('../map-init/initMap')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const controls = require('./controls')
+const movementChecker = require('./movementChecker')
 
 let frameCount = 0;
 let pressedKeys = controls.pressedKeys;
@@ -89,9 +90,17 @@ const handleMovementOfSprite = ( sprite, direction ) => {
  */
 const moveInDirection = ( sprite, direction ) => {
 
-    const movementIsAllowed = movementOK.checkIfMovementAllowed( sprite, direction )
+    const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
     
-    checkIfDoor(sprite, direction)
+    const nextTileIsDoor = checkIfDoor(sprite, direction)
+
+    if ( nextTileIsDoor ) {
+        stopPlayerMovement()
+        controls.stopListenForKeyPress()
+
+        canvasHelpers.clearBothCanvases()
+
+    }
 
     if ( movementIsAllowed ) {
 
@@ -133,11 +142,6 @@ const checkIfDoor = (sprite, direction) => {
         if ( currentDoor.row === spriteGridLocation.row && currentDoor.col === spriteGridLocation.col 
             && !currentDoor.locked && direction === currentDoor.direction) {
 
-            stopPlayerMovement()
-            stopListenForKeyPress()
-
-            canvasHelpers.clearBothCanvases()
-
             initMap.fetchMapJsonWithCallback( currentDoor.to, state.currentMap.mapData.mapName )
 
             return true
@@ -168,7 +172,6 @@ const countFrame = ( sprite ) => {
 }
 
 module.exports = {
-    listenForKeyPress,
     initPlayerMovement,
     stopPlayerMovement
 }

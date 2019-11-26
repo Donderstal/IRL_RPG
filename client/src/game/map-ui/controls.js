@@ -1,4 +1,4 @@
-let pressedKeys
+let pressedKeys = {};
 
 /**
  * EXPORT @function listenForKeyPress

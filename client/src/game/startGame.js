@@ -1,5 +1,5 @@
 const movement = require('./map-ui/movement')
-const movement = require('./map-ui/controls')
+const controls = require('./map-ui/controls')
 const initMap = require('./map-init/initMap')
 const util = require('../helpers/utilFunctions')
 const state = require('../game-data/state')
