@@ -24,7 +24,8 @@
             "row": 7, 
             "col": 3,
             "to"  : "my-neighbourhood/my-house",
-            "direction": "FACING_DOWN",
+            "directionIn": "FACING_DOWN",
+            "directionOut": "FACING_UP",
             "locked": false
         }
     ]

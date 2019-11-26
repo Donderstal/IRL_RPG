@@ -28,14 +28,17 @@
             "row": 7, 
             "col": 1,
             "to"  : "my-neighbourhood/my-other-house",
-            "direction": "FACING_DOWN",
+            "directionIn": "FACING_DOWN",
+            "directionOut": "FACING_UP",
             "locked": false
         },
         {
             "row": 1, 
             "col": 3,
             "to"  : "my-neighbourhood/my-large-house",
-            "direction": "FACING_UP",
+
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
             "locked": false
         }
     ]

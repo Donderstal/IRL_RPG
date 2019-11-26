@@ -24,7 +24,7 @@ const checkIfDoor = ( sprite, direction ) => {
     for( var i = 0; i < doors.length; i++ ) {
         const currentDoor = doors[i]
         if ( currentDoor.row === spriteGridLocation.row && currentDoor.col === spriteGridLocation.col 
-            && !currentDoor.locked && direction === currentDoor.direction) {
+            && !currentDoor.locked && direction === currentDoor.directionIn) {
 
             newMap = currentDoor.to 
             oldMap = state.currentMap.mapData.mapName

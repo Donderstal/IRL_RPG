@@ -80,6 +80,7 @@ class gamePiece {
     }
 
     drawSprite( ) {
+        console.log(this.animIterator)
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,

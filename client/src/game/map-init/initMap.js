@@ -111,6 +111,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
     for ( var i = 0; i < currentMap.mapData.doors.length; i++ ) {
 
         const door = currentMap.mapData.doors[i]
+        console.log(door)
         const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
         door.x = doorXy.x
         door.y = doorXy.y
@@ -120,6 +121,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
 
         if ( previousMap === door.to) {
             state.playerCharacter.sprite.setCell( { 'row': door.row, 'col': door.col } )
+            state.playerCharacter.sprite.direction = globals[door.directionOut]
         }
 
     }
@@ -139,7 +141,6 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
         state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )     
     }
     else {
-        console.log(state.playerCharacter.sprite)
         canvasHelpers.clearEntireCanvas( "FRONT" )
         state.playerCharacter.sprite.calcXyFromCell()
         state.playerCharacter.sprite.drawSprite()
