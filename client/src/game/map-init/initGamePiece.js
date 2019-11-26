@@ -46,6 +46,16 @@ class gamePiece {
 
         this.sheet.src = this.sheetSrc
     }
+    
+    setXY( xy ) {
+        this.x = xy.x
+        this.y = xy.y
+    }
+
+    setCell( cell ) {
+        this.row = cell.row
+        this.col = cell.col
+    }
 
     setXY( xy ) {
         this.x = xy.x
