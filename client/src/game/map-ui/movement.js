@@ -50,17 +50,19 @@ const stopPlayerMovement = () => {
  */
 const playerMovementController = ( ) => {   
 
+    const playerSprite = state.playerCharacter.sprite
+
     if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-        handleMovementOfSprite('FACING_UP')
+        handleMovementOfSprite(playerSprite, 'FACING_UP')
     }
     if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-        handleMovementOfSprite('FACING_LEFT')
+        handleMovementOfSprite(playerSprite, 'FACING_LEFT')
     }
     if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-        handleMovementOfSprite('FACING_DOWN')
+        handleMovementOfSprite(playerSprite, 'FACING_DOWN')
     }
     if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-        handleMovementOfSprite('FACING_RIGHT')
+        handleMovementOfSprite(playerSprite, 'FACING_RIGHT')
     }    
 
     animationRequest = requestAnimationFrame(playerMovementController)
@@ -76,59 +78,57 @@ const playerMovementController = ( ) => {
  * Call @function countFrame to update animationIterator and framecount
  * Draw sprite in new location and/or pose
  */
-const handleMovementOfSprite = ( direction ) => {
+const handleMovementOfSprite = ( sprite, direction ) => {
+    sprite.clearSprite()
 
-    console.log(state)
+    moveInDirection( sprite, direction )
+    countFrame( sprite )
 
-    state.playerCharacter.sprite.clearSprite()
-
-    moveInDirection( direction )
-    countFrame( )
-
-    state.playerCharacter.sprite.drawSprite()
+    sprite.drawSprite()
 
 }
 
 /**
  * @function moveInDirection
  * @param {string} direction - string representing direction
+ * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  * 
  * Check map state to see if movement is allowed
  * Update sprite x or y with movement speed based on direction
  * Update sprite direction prop based on direction globals
  */
-const moveInDirection = ( direction ) => {
+const moveInDirection = ( sprite, direction ) => {
 
-    const movementIsAllowed = checkIfMovementAllowed( state.playerCharacter.sprite, direction )
+    const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
 
     if ( movementIsAllowed ) {
 
         if ( direction == 'FACING_RIGHT' ) {
-            state.playerCharacter.sprite.x += globals.MOVEMENT_SPEED        
+            sprite.x += globals.MOVEMENT_SPEED        
         }
 
         if ( direction == 'FACING_LEFT' ) {
-            state.playerCharacter.sprite.x -= globals.MOVEMENT_SPEED        
+            sprite.x -= globals.MOVEMENT_SPEED        
         }
         
         if ( direction == 'FACING_DOWN' ) {
-            state.playerCharacter.sprite.y += globals.MOVEMENT_SPEED        
+            sprite.y += globals.MOVEMENT_SPEED        
         }
 
         if ( direction == 'FACING_UP' ){
-            state.playerCharacter.sprite.y -= globals.MOVEMENT_SPEED        
+            sprite.y -= globals.MOVEMENT_SPEED        
         }        
     }
 
 
-    state.playerCharacter.sprite.direction = globals[direction]        
+    sprite.direction = globals[direction]        
 }
 
 /**
  * @function checkIfMovementAllowed
  * 
  * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the sprite class from initsprite.js
+ * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  * 
  * Take the blockedXyValues prop from the current map, generated in initMap.js
  * Dependending on the direction the sprite is facing...
@@ -233,17 +233,19 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
  * Update frame count every time requestAnimationFrame fires callback
  * Update sprite's animIterator every time FRAME_LIMIT is equal to framecount 
  * Reset animIterator to zero if necessary
+ * 
+ * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  */
-const countFrame = () => {
+const countFrame = ( sprite ) => {
     
     frameCount++;
     
     if (frameCount >= globals.FRAME_LIMIT) {
         frameCount = 0;
-        state.playerCharacter.sprite.animIterator++;
+        sprite.animIterator++;
 
-        if (state.playerCharacter.sprite.animIterator >= state.playerCharacter.sprite.animLoop.length) {
-            state.playerCharacter.sprite.animIterator = 0;
+        if (sprite.animIterator >= sprite.animLoop.length) {
+            sprite.animIterator = 0;
         }
     }
 }
