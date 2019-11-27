@@ -2,6 +2,7 @@ const movementController = require('./map-ui/movementController')
 const initMap = require('./map-init/initMap')
 const util = require('../helpers/utilFunctions')
 const animationFrameController = require('./animationFrameController')
+const canvasHelpers = require('../helpers/canvasHelpers')
 
 const startGame = () => {
 
@@ -17,6 +18,7 @@ const startGame = () => {
     setTimeout( () => {
         initCanvas(0, map)      
         initCanvas(1)
+        canvasHelpers.initTextCanvas()
         document.getElementById('stopGameButton').style.display = 'block'
         document.getElementsByTagName('canvas')[2].style.display = 'block'
     }, 50 )

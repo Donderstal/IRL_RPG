@@ -12,6 +12,17 @@ const getTextCanvasContext = () => {
     return ctx
 }
 
+const initTextCanvas = () => {
+    let ctx = getTextCanvasContext()
+
+    ctx.fillStyle = "white"
+        ctx.fillRect( 
+            0, 0,
+            globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT / 6
+        )        
+   
+}
+
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
@@ -80,7 +91,6 @@ const getLoadingScreen = () => {
 
 const writeToTextCanvas = ( text ) => {
     let ctx = getTextCanvasContext()
-    ctx.fillStyle = "black"
     ctx.font = "20px Times New Roman";
     ctx.fillText(
         text,
@@ -130,6 +140,7 @@ const clearBothCanvases = ( ) => {
 
 
 module.exports = {
+    initTextCanvas,
     getLoadingScreen,
     drawFromImageToCanvas,
     clearCanvasRectangle,

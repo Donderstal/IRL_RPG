@@ -7,15 +7,13 @@ let pressedKeys = controls.pressedKeys
 let actionIsActive = false
 
 const handleActionButton = () => {
-    if ( pressedKeys.spaceBar && !actionIsActive ) {
+    if ( pressedKeys.spaceBar ) {
         actionIsActive = true
         const spriteRow = state.playerCharacter.sprite.row
         const spriteCol = state.playerCharacter.sprite.col
         const direction = state.playerCharacter.sprite.direction
 
         state.currentMap.mapData.actions.forEach( ( action ) => {
-            console.log(state.playerCharacter.sprite)
-            console.log(direction === globals[action.direction])
             if ( spriteCol === action.col && spriteRow === action.row && direction === globals[action.direction] ) {
                 handleAction(action)
             }
