@@ -6,8 +6,6 @@ const createCharInstance = require('../createCharInstance')
 const movement      = require('../map-ui/movement')
 const controls = require('../map-ui/controls')
 
-let drawingGrid = false;
-
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
  * Fetch JSON file with data based on path relative to Maps folder
@@ -17,7 +15,6 @@ let drawingGrid = false;
  */
 
 const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
-    if ( drawingGrid === false )
     fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
@@ -45,13 +42,12 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
  */
 
 const generateMap = ( currentMap, previousMap ) => {
-    drawingGrid = true
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
     currentMap.tileSheet = new Image();
     currentMap.blockedXyValues = []
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
-    currentMap.tileSheet.onload = ( ) => {      
+    currentMap.tileSheet.onload = ( ) => {    
         drawGrid(  startingPosition, currentMap, previousMap )
 
     }
@@ -147,8 +143,6 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
         movement.startPlayerMovement()
         controls.listenForKeyPress()
     }
-
-    drawingGrid = false
 }
 
 /**

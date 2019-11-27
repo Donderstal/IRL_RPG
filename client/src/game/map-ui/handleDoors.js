@@ -40,7 +40,6 @@ const checkIfDoor = ( sprite, direction ) => {
  * Master function for generating a map after door entry
  */
 const getNewMap = ( ) => {
-
     state.playerCharacter.sprite.clearSprite()
     
     canvasHelpers.clearBothCanvases()

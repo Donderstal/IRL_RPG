@@ -29,6 +29,11 @@ const removeKeyFromPressed = () => {
     pressedKeys[event.key] = false
 }
 
+/**
+ * EXPORT @function clearPressedKeys
+ * set all pressedKeys to false
+ * Use when loading a new map or in cinematic
+ */ 
 const clearPressedKeys = () => {
     Object.keys(pressedKeys).forEach( (key) => {
         pressedKeys[key] = false

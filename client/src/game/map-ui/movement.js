@@ -23,7 +23,7 @@ const startPlayerMovement = ( ) => {
 }
 
 /**
- * EXPORT @function stopMovement
+ * EXPORT @function stopPlayerMovement
  * Called when game is stopped or new map is loaded
  * 
  * set continueAnimating to false to stop movement
@@ -77,7 +77,9 @@ const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
     countFrame( sprite )
 
+    if ( continueAnimating ) {
     sprite.drawSprite()
+    }
 
 }
 
