@@ -34,9 +34,12 @@ const checkIfDoor = ( sprite, direction ) => {
     }
 }
 
+/**
+ * EXPORT @function getNewMap
+ * 
+ * Master function for generating a map after door entry
+ */
 const getNewMap = ( ) => {
-
-    controls.stopListenForKeyPress()
 
     state.playerCharacter.sprite.clearSprite()
     

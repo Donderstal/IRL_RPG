@@ -22,7 +22,7 @@ const startGame = () => {
     }, 50 )
 
     setTimeout( () => {
-        movement.initPlayerMovement( state.playerCharacter.characterPiece )      
+        movement.startPlayerMovement( state.playerCharacter.characterPiece )      
         controls.listenForKeyPress()      
     }, 100 )
 }

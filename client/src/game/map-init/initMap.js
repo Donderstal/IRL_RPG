@@ -4,6 +4,7 @@ const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const createCharInstance = require('../createCharInstance')
 const movement      = require('../map-ui/movement')
+const controls = require('../map-ui/controls')
 
 let drawingGrid = false;
 
@@ -143,7 +144,8 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
         canvasHelpers.clearEntireCanvas( "FRONT" )
         state.playerCharacter.sprite.calcXyFromCell()
         state.playerCharacter.sprite.drawSprite() 
-        movement.resumePlayerMovement()
+        movement.startPlayerMovement()
+        controls.listenForKeyPress()
     }
 
     drawingGrid = false

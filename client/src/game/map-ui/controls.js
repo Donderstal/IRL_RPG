@@ -18,6 +18,7 @@ const listenForKeyPress = () => {
 const stopListenForKeyPress = () => {
     window.removeEventListener('keydown', addKeyToPressed)
     window.removeEventListener('keyup', removeKeyFromPressed)
+    clearPressedKeys()
 }
 
 const addKeyToPressed = () => {
@@ -28,8 +29,15 @@ const removeKeyFromPressed = () => {
     pressedKeys[event.key] = false
 }
 
+const clearPressedKeys = () => {
+    Object.keys(pressedKeys).forEach( (key) => {
+        pressedKeys[key] = false
+    })
+}
+
 module.exports = {
     pressedKeys,
     listenForKeyPress,
-    stopListenForKeyPress
+    stopListenForKeyPress,
+    clearPressedKeys
 }

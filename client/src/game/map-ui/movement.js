@@ -17,19 +17,9 @@ let continueAnimating;
  * Passes @function playerMovementController as callback
  * to requestAnimationFrame
  */
-const initPlayerMovement = ( ) => {
+const startPlayerMovement = ( ) => {
     continueAnimating = true
     requestAnimationFrame(playerMovementController)
-}
-
-/**
- * EXPORT @function resumePlayerMovement
- * Is called after a map is loaded
- * 
- * set continueAnimating to true to resume movement
- */
-const resumePlayerMovement = ( ) => {
-    continueAnimating = true
 }
 
 /**
@@ -52,8 +42,6 @@ const stopPlayerMovement = () => {
  */
 const playerMovementController = ( ) => {   
 
-    console.log(continueAnimating)
-
     if ( continueAnimating ) {
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
             handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
@@ -68,8 +56,9 @@ const playerMovementController = ( ) => {
             handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
         }    
 
-        requestAnimationFrame(playerMovementController)        
+        requestAnimationFrame(playerMovementController)    
     }
+    
 }
 
 /**
@@ -128,6 +117,7 @@ const moveInDirection = ( sprite, direction ) => {
 
     
     if ( nextTileIsDoor ) {
+        controls.stopListenForKeyPress()
         stopPlayerMovement()
         handleDoors.getNewMap()
         return
@@ -168,7 +158,7 @@ const countFrame = ( sprite ) => {
  */
 
 module.exports = {
-    initPlayerMovement,
-    resumePlayerMovement,
+    startPlayerMovement,
+    startPlayerMovement,
     stopPlayerMovement
 }
