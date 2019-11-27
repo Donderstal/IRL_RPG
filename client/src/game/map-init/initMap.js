@@ -124,7 +124,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
 }
 
 /**
- * @function getMapBorders
+ * @function setMapBorders
  * 
  * set borders in currentMap
  * these will be used in movement.js to determine where characters can't pass through

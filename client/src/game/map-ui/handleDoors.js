@@ -8,7 +8,6 @@ const globals = require('../../game-data/globals')
 let newMap;
 let oldMap;
 
-
 /**
  * EXPORT @function checkIfDoor
  * 
@@ -53,8 +52,9 @@ const getNewMap = ( ) => {
 
 /**
  * EXPORT @function initPlayerSpriteInNewMap
+ * 
+ * call @clearEntireCanvas from canvasHelpers
  */
-
  const initPlayerSpriteInNewMap = () => {
     canvasHelpers.clearEntireCanvas( "FRONT" )
     state.playerCharacter.sprite.calcXyFromCell()
@@ -64,8 +64,14 @@ const getNewMap = ( ) => {
 
  /**
   * EXPORT @function getDoors
+  * 
+  * @param {string} previousMap - string representing relative path to previous map
+  * 
+  * Get doors in current map from mapData json in state
+  * Loop over them, calc their xy values
+  * Push them to doors array in currentMap
+  * If player entered from a door, call @setSpritePositionForNewMap
   */
-
 const getDoors = ( previousMap ) => {
     state.currentMap.doors = []
     const mapDoors = state.currentMap.mapData.doors
@@ -81,13 +87,26 @@ const getDoors = ( previousMap ) => {
         )
 
         if ( previousMap === door.to) {
-            state.playerCharacter.sprite.setCell( { 'row': door.row, 'col': door.col } )
-            state.playerCharacter.sprite.direction = globals[door.directionOut]
+            setSpritePositionForNewMap(door)
         }
 
     }
 }
 
+/**
+ * @function setSpritePositionForNewMap
+ * 
+ * @param {object} previousMap - door where the player is entering map
+ * 
+ * Adjust character grid position to position of door
+ * Set character direction to door direction
+ */
+
+ const setSpritePositionForNewMap = (door) => {
+    state.playerCharacter.sprite.setCell( { 'row': door.row, 'col': door.col } )
+    state.playerCharacter.sprite.direction = globals[door.directionOut]
+ }
+ 
 
 module.exports = {
     checkIfDoor,
