@@ -31,15 +31,15 @@
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
-        },
+        }
+    ],
+    "actions" : [
         {
-            "row": 1, 
+            "row": 1,
             "col": 3,
-            "to"  : "my-neighbourhood/my-large-house",
-
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
-            "locked": false
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "text": "This is my fridge. Sadly, there's nothing in it..."
         }
     ]
 }

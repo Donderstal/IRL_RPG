@@ -10,5 +10,7 @@
 </style>
 
 <div class="game-ui-container">
-
+    <canvas id="ui-and-text-canvas">
+    
+    </canvas>
 </div>
