@@ -52,6 +52,7 @@ class gamePiece {
     }
 
     setCell( cell ) {
+        
         this.row = cell.row
         this.col = cell.col
     }
@@ -62,6 +63,7 @@ class gamePiece {
     }
 
     calcXyFromCell( ) {
+        console.log( "in gamePiece: " + this.row, this.col )
         const xy = mapHelpers.getXYOfCell(this.row, this.col)
         this.x = xy.x
         this.y = xy.y - this.height / 3

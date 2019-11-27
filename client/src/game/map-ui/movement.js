@@ -1,64 +1,10 @@
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
-const controls = require('./controls')
 const movementChecker = require('./movementChecker')
 const handleDoors = require('./handleDoors')
+const initMap = require('../map-init/initMap')
 
 let frameCount = 0;
-let pressedKeys = controls.pressedKeys;
-let continueAnimating;
-
-/**
- * EXPORT @function initMovement
- * Is called when player sprite is rendered
- * 
- * set continueAnimating to true
- * Passes @function playerMovementController as callback
- * to requestAnimationFrame
- */
-const startPlayerMovement = ( ) => {
-    continueAnimating = true
-    requestAnimationFrame(playerMovementController)
-}
-
-/**
- * EXPORT @function stopPlayerMovement
- * Called when game is stopped or new map is loaded
- * 
- * set continueAnimating to false to stop movement
- */
-const stopPlayerMovement = () => {
-    continueAnimating = false
-}
-
-
-/**
- * @function playerMovementController
- * Gets called +/- 60 times per second with requestAnimationFrame
- * 
- * If the player is pressing d-pad or wasd...
- * Call @function handleMovementOfSprite
- */
-const playerMovementController = ( ) => {   
-
-    if ( continueAnimating ) {
-        if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
-        }
-        if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
-        }
-        if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
-        }
-        if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-            handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
-        }    
-
-        requestAnimationFrame(playerMovementController)    
-    }
-    
-}
 
 /**
  * @function handleMovementOfSprite
@@ -70,7 +16,7 @@ const playerMovementController = ( ) => {
  * Call @function countFrame to update animationIterator and framecount
  * Draw sprite in new location and/or pose
  */
-const handleMovementOfSprite = ( sprite, direction ) => {
+const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
     sprite.clearSprite()
 
     moveInDirection( sprite, direction )
@@ -95,7 +41,7 @@ const moveInDirection = ( sprite, direction ) => {
 
     const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
     
-    const nextTileIsDoor = handleDoors.checkIfDoor(sprite, direction)
+    const urlToNewMap = handleDoors.checkIfDoor(sprite, direction)
 
     if ( movementIsAllowed ) {
 
@@ -117,8 +63,8 @@ const moveInDirection = ( sprite, direction ) => {
     }
 
     
-    if ( nextTileIsDoor ) {
-        handleDoors.initNewMapAfterClearingOld()
+    if ( urlToNewMap ) {
+        initMap.initNewMapAfterClearingOld(urlToNewMap, state.currentMap.mapData.mapName)
         return
     }
 
@@ -148,16 +94,6 @@ const countFrame = ( sprite ) => {
     }
 }
 
-/**
- * @function stopAnimationAndinitNewMapAfterClearingOld
- * 
- * Called when player is walking into door
- * Stop listening for controls, stop animations, clear sprite
- * then get a new map
- */
-
 module.exports = {
-    startPlayerMovement,
-    startPlayerMovement,
-    stopPlayerMovement
+    handleMovementOfSprite
 }

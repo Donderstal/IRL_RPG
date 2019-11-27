@@ -1,8 +1,7 @@
-const movement = require('./map-ui/movement')
-const controls = require('./map-ui/controls')
+const movementController = require('./map-ui/movementController')
 const initMap = require('./map-init/initMap')
 const util = require('../helpers/utilFunctions')
-const state = require('../game-data/state')
+const animationFrameController = require('./animationFrameController')
 
 const startGame = () => {
 
@@ -22,8 +21,8 @@ const startGame = () => {
     }, 50 )
 
     setTimeout( () => {
-        movement.startPlayerMovement( state.playerCharacter.characterPiece )      
-        controls.listenForKeyPress()      
+        movementController.startPlayerMovement()      
+        animationFrameController.startRequestingFrame()
     }, 100 )
 }
 
