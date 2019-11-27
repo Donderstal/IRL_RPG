@@ -102,7 +102,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
 
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
 
-    handleDoors.getDoors( previousMap )
+    handleDoors.setDoorsAndDetectEntryPoint( previousMap )
 
     const position = startingPosition
 

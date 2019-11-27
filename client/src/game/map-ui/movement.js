@@ -118,7 +118,7 @@ const moveInDirection = ( sprite, direction ) => {
 
     
     if ( nextTileIsDoor ) {
-        handleDoors.getNewMap()
+        handleDoors.initNewMapAfterClearingOld()
         return
     }
 
@@ -149,7 +149,7 @@ const countFrame = ( sprite ) => {
 }
 
 /**
- * @function stopAnimationAndGetNewMap
+ * @function stopAnimationAndinitNewMapAfterClearingOld
  * 
  * Called when player is walking into door
  * Stop listening for controls, stop animations, clear sprite

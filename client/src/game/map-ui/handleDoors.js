@@ -37,13 +37,15 @@ const checkIfDoor = ( sprite, direction ) => {
 }
 
 /**
- * EXPORT @function getNewMap
+ * EXPORT @function initNewMapAfterClearingOld
  * 
- * Master function for generating a map after door entry
+ * Call @stopMovementAndKeyListen from utilFunctions
+ * Call @clearBothCanvases from @namespace canvasHelpers
+ * Get the loading screen
+ * Then fetch the new map
  */
-const getNewMap = ( ) => {
+const initNewMapAfterClearingOld = ( ) => {
     utilFunctions.stopMovementAndKeyListen()
-    state.playerCharacter.sprite.clearSprite()
     canvasHelpers.clearBothCanvases()
     canvasHelpers.getLoadingScreen()
 
@@ -63,7 +65,7 @@ const getNewMap = ( ) => {
  }
 
  /**
-  * EXPORT @function getDoors
+  * EXPORT @function setDoorsAndDetectEntryPoint
   * 
   * @param {string} previousMap - string representing relative path to previous map
   * 
@@ -72,7 +74,7 @@ const getNewMap = ( ) => {
   * Push them to doors array in currentMap
   * If player entered from a door, call @setSpritePositionForNewMap
   */
-const getDoors = ( previousMap ) => {
+const setDoorsAndDetectEntryPoint = ( previousMap ) => {
     state.currentMap.doors = []
     const mapDoors = state.currentMap.mapData.doors
 
@@ -110,7 +112,7 @@ const getDoors = ( previousMap ) => {
 
 module.exports = {
     checkIfDoor,
-    getNewMap,
+    initNewMapAfterClearingOld,
     initPlayerSpriteInNewMap,
-    getDoors
+    setDoorsAndDetectEntryPoint
 }
