@@ -3,8 +3,7 @@ const state         = require('../../game-data/state')
 const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const createCharInstance = require('../createCharInstance')
-const movement      = require('../map-ui/movement')
-const controls = require('../map-ui/controls')
+const handleDoors = require('../map-ui/handleDoors')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -103,24 +102,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
 
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
 
-    currentMap.doors = []
-
-    for ( var i = 0; i < currentMap.mapData.doors.length; i++ ) {
-
-        const door = currentMap.mapData.doors[i]
-        const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
-        door.x = doorXy.x
-        door.y = doorXy.y
-        currentMap.doors.push(
-            {...door}
-        )
-
-        if ( previousMap === door.to) {
-            state.playerCharacter.sprite.setCell( { 'row': door.row, 'col': door.col } )
-            state.playerCharacter.sprite.direction = globals[door.directionOut]
-        }
-
-    }
+    handleDoors.getDoors( previousMap )
 
     const position = startingPosition
 
@@ -137,11 +119,7 @@ const drawGrid = ( startingPosition, currentMap, previousMap ) => {
         state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', currentMap.mapData.playerStart )     
     }
     else {
-        canvasHelpers.clearEntireCanvas( "FRONT" )
-        state.playerCharacter.sprite.calcXyFromCell()
-        state.playerCharacter.sprite.drawSprite() 
-        movement.startPlayerMovement()
-        controls.listenForKeyPress()
+        handleDoors.initPlayerSpriteInNewMap()
     }
 }
 

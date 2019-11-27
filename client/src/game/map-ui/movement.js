@@ -8,7 +8,6 @@ let frameCount = 0;
 let pressedKeys = controls.pressedKeys;
 let continueAnimating;
 
-
 /**
  * EXPORT @function initMovement
  * Is called when player sprite is rendered
@@ -78,7 +77,7 @@ const handleMovementOfSprite = ( sprite, direction ) => {
     countFrame( sprite )
 
     if ( continueAnimating ) {
-    sprite.drawSprite()
+        sprite.drawSprite()
     }
 
 }
@@ -119,8 +118,6 @@ const moveInDirection = ( sprite, direction ) => {
 
     
     if ( nextTileIsDoor ) {
-        controls.stopListenForKeyPress()
-        stopPlayerMovement()
         handleDoors.getNewMap()
         return
     }
