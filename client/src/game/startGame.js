@@ -18,6 +18,7 @@ const startGame = () => {
         initCanvas(0, map)      
         initCanvas(1)
         document.getElementById('stopGameButton').style.display = 'block'
+        document.getElementsByTagName('canvas')[2].style.display = 'block'
     }, 50 )
 
     setTimeout( () => {
@@ -29,12 +30,13 @@ const startGame = () => {
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
     document.getElementsByTagName('canvas')[1].style.display = 'none'
+    document.getElementsByTagName('canvas')[2].style.display = 'none'
 
     document.getElementById('intro-screen').style.display = 'block'
     
     document.getElementById('stopGameButton').style.display = 'none'
 
-    movement.stopPlayerMovement()
+    movementController.stopPlayerMovement()
 }
 
 const initCanvas = (canvasNum, map = null) => {

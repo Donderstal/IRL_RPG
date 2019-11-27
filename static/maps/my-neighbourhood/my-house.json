@@ -40,6 +40,20 @@
             "type": "TEXT",
             "direction": "FACING_UP",
             "text": "This is my fridge. Sadly, there's nothing in it..."
+        },
+        {
+            "row": 6,
+            "col": 0,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "text": "I <3 my computer"
+        },
+        {
+            "row": 4,
+            "col": 2,
+            "type": "TEXT",
+            "direction": "FACING_RIGHT",
+            "text": "I should clean this stove sometime"
         }
     ]
 }

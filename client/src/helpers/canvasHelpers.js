@@ -1,8 +1,11 @@
 const globals = require('../game-data/globals')
 
 //Return loading ctx
-const getLoadingCanvasContext = () => {
+const getTextCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[2]
+
+    canv.width = globals.CANVAS_WIDTH
+    canv.height = globals.CANVAS_HEIGHT / 6
 
     let ctx = canv.getContext('2d')
 
@@ -75,6 +78,16 @@ const getLoadingScreen = () => {
     )
 }
 
+const writeToTextCanvas = ( text ) => {
+    let ctx = getTextCanvasContext()
+    ctx.fillStyle = "black"
+    ctx.font = "20px Times New Roman";
+    ctx.fillText(
+        text,
+        5, globals.GRID_BLOCK_PX
+    )
+}
+
 const clearCanvasRectangle = (
         canvas,
         canvasX, canvasY,
@@ -121,5 +134,6 @@ module.exports = {
     drawFromImageToCanvas,
     clearCanvasRectangle,
     clearEntireCanvas,
-    clearBothCanvases
+    clearBothCanvases,
+    writeToTextCanvas
 }

@@ -59,7 +59,9 @@ const moveInDirection = ( sprite, direction ) => {
 
         if ( direction == 'FACING_UP' ){
             sprite.y -= globals.MOVEMENT_SPEED        
-        }        
+        }     
+        
+        state.playerCharacter.sprite.calcCellFromXy( )
     }
 
     

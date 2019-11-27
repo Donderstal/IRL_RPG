@@ -1,16 +1,17 @@
 <style>
     .game-ui-container {
+        background-color: white;
+        height: 100%;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         flex: 17.5%;
-        background-color: #800080;
+        display: none;
         border-top: 1px groove #190019;
     }
 
 </style>
 
-<div class="game-ui-container">
-    <canvas id="ui-and-text-canvas">
-    
-    </canvas>
-</div>
+<canvas class="game-ui-container">
+
+</canvas>

@@ -1,5 +1,4 @@
 const state = require('../../game-data/state')
-const mapHelpers = require('../../helpers/mapHelpers')
 
 /**
  * EXPORT @function checkIfDoor
@@ -12,12 +11,10 @@ const mapHelpers = require('../../helpers/mapHelpers')
 
 const checkIfDoor = ( sprite, direction ) => {
     const doors = state.currentMap.doors
-
-    const spriteGridLocation = mapHelpers.getCellOfXY( ( sprite.x + ( sprite.width / 2 ) ), ( sprite.y + ( sprite.height / 3 ) ) )
     for( var i = 0; i < doors.length; i++ ) {
         const currentDoor = doors[i]
-        if ( currentDoor.row === spriteGridLocation.row 
-            && currentDoor.col === spriteGridLocation.col 
+        if ( currentDoor.row === sprite.row 
+            && currentDoor.col === sprite.col 
             && !currentDoor.locked 
             && direction === currentDoor.directionIn) {
 
