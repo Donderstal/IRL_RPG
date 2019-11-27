@@ -22,10 +22,16 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = () => {
+    if (event.key === " ") {
+        pressedKeys.spaceBar = true        
+    }
     pressedKeys[event.key] = true
 }
 
 const removeKeyFromPressed = () => {
+    if (event.key === " ") {
+        pressedKeys.spaceBar = false     
+    }
     pressedKeys[event.key] = false
 }
 

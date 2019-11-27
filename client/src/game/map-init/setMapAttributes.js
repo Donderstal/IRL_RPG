@@ -3,6 +3,14 @@ const state = require('../../game-data/state')
 const mapHelpers = require('../../helpers/mapHelpers')
 
 /**
+ * EXPORT @function setMapEvents
+ */
+const setMapEvents = ( ) => {
+    state.currentMap.events = []
+}
+
+
+/**
   * EXPORT @function setDoorsAndDetectEntryPoint
   * 
   * @param {string} previousMap - string representing relative path to previous map
