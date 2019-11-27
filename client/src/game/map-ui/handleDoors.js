@@ -1,8 +1,7 @@
 const state = require('../../game-data/state')
-const mapHelpers = require('../../helpers/mapHelpers')
-const initMap = require('../map-init/initMap')
 const controls = require('./controls')
-const movement = require('./movement')
+const initMap = require('../map-init/initMap')
+const mapHelpers = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 
 let newMap;
@@ -36,6 +35,10 @@ const checkIfDoor = ( sprite, direction ) => {
 }
 
 const getNewMap = ( ) => {
+
+    controls.stopListenForKeyPress()
+
+    state.playerCharacter.sprite.clearSprite()
     
     canvasHelpers.clearBothCanvases()
     canvasHelpers.getLoadingScreen()

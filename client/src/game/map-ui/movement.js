@@ -128,13 +128,9 @@ const moveInDirection = ( sprite, direction ) => {
 
     
     if ( nextTileIsDoor ) {
-        controls.stopListenForKeyPress()
         stopPlayerMovement()
-        sprite.clearSprite()
-        
         handleDoors.getNewMap()
         return
-
     }
 
 
@@ -162,6 +158,14 @@ const countFrame = ( sprite ) => {
         }
     }
 }
+
+/**
+ * @function stopAnimationAndGetNewMap
+ * 
+ * Called when player is walking into door
+ * Stop listening for controls, stop animations, clear sprite
+ * then get a new map
+ */
 
 module.exports = {
     initPlayerMovement,
