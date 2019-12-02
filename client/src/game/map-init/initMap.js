@@ -13,7 +13,6 @@ const movementController = require('../map-ui/movementController')
  */
 
 const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
-    console.log( worldName )
     fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
@@ -31,7 +30,6 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
             }
             else {
                 initPlayerSpriteInNewMap()
-                console.log(state.playerCharacter.sprite)
             }
     })    
 }
