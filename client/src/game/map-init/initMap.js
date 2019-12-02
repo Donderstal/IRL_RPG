@@ -13,6 +13,7 @@ const movementController = require('../map-ui/movementController')
  */
 
 const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
+    console.log( worldName )
     fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
@@ -22,7 +23,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
         })
         .then( (json) => {
             state.currentMap.mapData = json;
-
+            canvasHelpers.clearBothCanvases()
             drawGrid.generateMap( state.currentMap, previousMap )
 
             if ( previousMap === "NO" ) {
@@ -30,6 +31,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
             }
             else {
                 initPlayerSpriteInNewMap()
+                console.log(state.playerCharacter.sprite)
             }
     })    
 }
@@ -45,7 +47,6 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
 const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
     canvasHelpers.getLoadingScreen()
     movementController.stopPlayerMovement()
-    canvasHelpers.clearBothCanvases()
 
     fetchMapJsonWithCallback( newMap, oldMap )   
 }

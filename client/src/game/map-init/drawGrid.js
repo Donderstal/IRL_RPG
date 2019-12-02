@@ -18,6 +18,8 @@ const globals       = require('../../game-data/globals')
 const generateMap = ( currentMap, previousMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
+    console.log(currentMap.topLeftCell)
+    console.log(currentMap.borders)
     setMapAttributes.setDoorsAndDetectEntryPoint( previousMap )
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
     currentMap.blockedXyValues = []

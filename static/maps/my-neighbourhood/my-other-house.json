@@ -23,7 +23,7 @@
         {
             "row": 7, 
             "col": 3,
-            "to"  : "my-neighbourhood/my-house",
+            "to"  : "my-neighbourhood/my-neighbourhood",
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
