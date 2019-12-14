@@ -13,10 +13,6 @@ const globals = require('../../game-data/globals')
  * Check if x or y of sprite is equal to a forbidden x or y
  * And check if the location of sprite relative to blocked tile
  * 
- * I know this function is a ugly mess of ifs and forsw
- * But I had difficulty thinking of a different way to do this
- * Let met know what you think
- * 
  * @return {boolean} - expressing wether movement is allowed
  */
 

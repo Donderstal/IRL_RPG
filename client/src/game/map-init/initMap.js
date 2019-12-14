@@ -26,7 +26,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
             drawGrid.generateMap( state.currentMap, previousMap )
 
             if ( previousMap === "NO" ) {
-                state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'John', state.currentMap.mapData.playerStart )     
+                state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
             }
             else {
                 initPlayerSpriteInNewMap()
@@ -60,7 +60,11 @@ const initPlayerSpriteInNewMap = () => {
     state.playerCharacter.sprite.calcXyFromCell()
     state.playerCharacter.sprite.drawSprite() 
     movementController.startPlayerMovement()
+    console.log(state)
  }
+
+
+
 
 module.exports = {
     fetchMapJsonWithCallback,

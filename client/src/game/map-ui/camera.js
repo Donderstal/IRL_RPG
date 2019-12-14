@@ -1,5 +1,6 @@
   // eerlijk gestolen van https://stackoverflow.com/questions/16919601/html5-canvas-camera-viewport-how-to-actually-do-it
   // mogelijk kan ik ook ctx.translate gebruiken?
+  // nog een voorbeeld : https://stackoverflow.com/questions/7909583/2d-side-scrolling-camera-view-in-html5/7911682#7911682
 
   var AXIS = {
     NONE: 1,
