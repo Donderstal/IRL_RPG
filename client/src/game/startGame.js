@@ -1,4 +1,3 @@
-const createCharInstance = require('./createCharInstance')
 const movement = require('./map-ui/movement')
 const initMap = require('./map-init/initMap')
 const util = require('../helpers/utilFunctions')
@@ -21,10 +20,6 @@ const startGame = () => {
         document.getElementById('stopGameButton').style.display = 'block'
     }, 50 )
 
-    setTimeout( () => {
-        state.playerCharacter = createCharInstance.getCharacter( charClass, charName )     
-    }, 75 )
-    
     setTimeout( () => {
         movement.initPlayerMovement( state.playerCharacter.characterPiece )      
         movement.listenForKeyPress()      
