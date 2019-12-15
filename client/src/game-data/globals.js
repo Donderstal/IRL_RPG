@@ -18,10 +18,14 @@ module.exports = {
 
     // canvas dimensions
     GRID_BLOCK_PX  : 37,
-    GRID_WIDTH     : 888,
-    GRID_HEIGHT    : 592,
+    CANVAS_WIDTH   : 888,
+    CANVAS_HEIGHT  : 592,
     CANVAS_COLUMNS : 24,
     CANVAS_ROWS    : 16,
+
+    // sprite dimensions
+    STRD_SPRITE_WIDTH : 37,
+    STRD_SPRITE_HEIGHT : (37 * 1.5),
 
     
     TILESHEET_GRID_XY_VALUES : [

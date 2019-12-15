@@ -1,6 +1,6 @@
 const createCharInstance = require('./createCharInstance')
 const movement = require('./map-ui/movement')
-const initmap = require('./map-init/initMap')
+const initMap = require('./map-init/initMap')
 const util = require('../helpers/utilFunctions')
 const state = require('../game-data/state')
 
@@ -12,19 +12,21 @@ const startGame = () => {
     // The setTimeouts setup is not definitive and might change later
     setTimeout( () => {
         document.getElementById('intro-screen').remove()
-
     }, 25 )
 
     setTimeout( () => {
         initCanvas(0)      
-        initCanvas(1)     
+        initCanvas(1)
     }, 50 )
-    
+
     setTimeout( () => {
         state.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )     
+    }, 75 )
+    
+    setTimeout( () => {
         movement.initPlayerMovement( state.playerCharacter.characterPiece )      
         movement.listenForKeyPress()      
-    }, 75 )
+    }, 100 )
 }
 
 const initCanvas = (canvasNum) => {
@@ -40,9 +42,9 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initmap.fetchMapJsonWithCallback('my-neighbourhood/my-house')
-
-    } else {
+        initMap.fetchMapJsonWithCallback('my-neighbourhood/my-house')
+    } 
+    else { 
         canvas.id           = 'game-front-canvas'
     }
 

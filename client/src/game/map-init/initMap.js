@@ -2,6 +2,7 @@
 const globals       = require('../../game-data/globals')
 const utilFunctions = require('../../helpers/utilFunctions')
 const state         = require('../../game-data/state')
+const mapHelpers    = require('../mapHelpers')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -20,8 +21,9 @@ const fetchMapJsonWithCallback = (worldName) => {
             return response.json()
         })
         .then( (json) => {
-            state.mapState.mapData = json
-            generateMap(json)
+            state.currentMap.mapData = json;
+
+            generateMap( state.currentMap )
     })    
 }
 
@@ -33,17 +35,17 @@ const fetchMapJsonWithCallback = (worldName) => {
  * Call @function getStartingPositionOfGridInCanvas to get the xy to start drawing in the canvas
  * Call @function drawGrid when tilesheet has been loaded based on the image path in the json file
  * 
- * @param {Object} json - JSON containing data on the Map
+ * @param {Object} currentMap - JSON containing data on the Map
  */
 
-const generateMap = (json) => {
+const generateMap = ( currentMap ) => {
 
-    const startingPosition = getStartingPositionOfGridInCanvas( json.columns, json.rows )
+    let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
-    const bgImage = new Image();
-    bgImage.src = '/static/tilesets/' + json.src
-    bgImage.onload = ( ) => {      
-        drawGrid( startingPosition, json, bgImage )
+    currentMap.tileSheet = new Image();
+    currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
+    currentMap.tileSheet.onload = ( ) => {      
+        drawGrid(  startingPosition, currentMap )
     }
 
 }
@@ -85,25 +87,44 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * Get number of columns and rows from JSON
  * Call @function drawRow for each row
  * 
- * @param {object} startingPosition - Starting x and y position in backgroundCanvas ( pixels )
- * @param {JSON} json - JSON containing data on the Map to be brawn
- * @param {object} tileSheet - tilesheet HTML image
+ * @param {object} startingPosition - starting x and y for drawing
+ * @param {object} currentMap - Object containing all the data needed to draw Grid
  */
 
-const drawGrid = ( startingPosition, json, tileSheet ) => {
+const drawGrid = ( startingPosition, currentMap ) => {
 
-    const position   = startingPosition
-    const columns    = json.columns
-    const rows       = json.rows
-    const fillerTile = json.fillerTile
+    setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
-    for ( var i = 0; i < rows; i++ ) {
-        const currentRow = json.grid[i]
+    currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
 
-        drawRow( columns, position, currentRow, fillerTile, tileSheet )
+    const position = startingPosition
+
+    for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
+        const currentRow = currentMap.mapData.grid[i]
+
+        drawRow( currentMap, currentRow, position )
 
         position.y += globals.GRID_BLOCK_PX
-        position.x = ( ( globals.CANVAS_COLUMNS - columns ) / 2 ) * globals.GRID_BLOCK_PX
+        position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
+    }
+
+}
+
+/**
+ * @function getMapBorders
+ * 
+ * set borders in currentMap
+ * these will be used in movement.js to determine where characters can't pass through
+ * this needs to be adapted to a few different types of map
+ * for example: indoors, outdoors and non-square maps
+ */
+
+const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
+    state.currentMap.borders = { 
+        top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
+        left    : gridStartingPosition.x,
+        bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * 1.5 ),
+        right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX )
     }
 }
 
@@ -111,19 +132,17 @@ const drawGrid = ( startingPosition, json, tileSheet ) => {
  * @function drawRow
  * Call @function drawTileInGridBlock for each column in this row
  * 
- * @param {integer} columnsInRow - number columns in a row
+ * @param {object} currentMap - Object containing all the data needed to draw Grid
  * @param {object} position - Starting x and y Canvas in pixels
  * @param {array} currentRow - Array with numbers representing a row
- * @param {integer} fillerTile - number of tile in tilesheet to be used as filler
- * @param {object} tileSheet - tilesheet HTML Image
  */
 
-const drawRow = ( columnsInRow, currentRow, position, tileSheet, fillerTile ) => {
+const drawRow = ( currentMap, currentRow, position ) => {
 
-    for ( var j = 0; j < columnsInRow; j++) {
+    for ( var j = 0; j < currentMap.mapData.columns; j++) {
         const currentTile = currentRow[j]
 
-        drawTileInGridBlock( currentTile, position, tileSheet, fillerTile )
+        drawTileInGridBlock( currentMap, currentTile, position )
 
         position.x += globals.GRID_BLOCK_PX
     }
@@ -137,12 +156,11 @@ const drawRow = ( columnsInRow, currentRow, position, tileSheet, fillerTile ) =>
  * Get blocksize and current tile xy in sheet from globals
  * Then draw the tile in block
  * 
+ * @param {object} currentMap - Object containing all the data needed to draw Grid
  * @param {integer} tile - number representing position of the tile in a tilesheet
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
- * @param {integer} fillerTile - number of tile in tilesheet to be used as filler
- * @param {object} tileSheet - tilesheet HTML Image
  */
-const drawTileInGridBlock = ( tile, startPositionInCanvas, tileSheet, fillerTile ) => {
+const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     // if tile is E - empty...
     if ( tile === "E" ) {
@@ -151,7 +169,7 @@ const drawTileInGridBlock = ( tile, startPositionInCanvas, tileSheet, fillerTile
 
     // if tile is F - filler...
     if ( tile === "F" ) {
-        tile = fillerTile
+        tile = currentMap.mapData.fillerTile
     }
 
     const blockSize = globals.GRID_BLOCK_PX
@@ -162,7 +180,7 @@ const drawTileInGridBlock = ( tile, startPositionInCanvas, tileSheet, fillerTile
 
     ctx.drawImage( 
 
-        tileSheet, 
+        currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
         blockSize, blockSize,
         startPositionInCanvas.x, startPositionInCanvas.y,

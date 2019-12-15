@@ -1,5 +1,7 @@
 const globals = require('../../game-data/globals')
 const util = require('../../helpers/utilFunctions')
+const state = require('../../game-data/state')
+const mapHelpers = require('../mapHelpers')
 
 let frameCount = 0;
 let sprite;
@@ -30,6 +32,7 @@ const listenForKeyPress = () => {
 const initPlayerMovement = (character) => {
 
     sprite = character
+    sprite.getCurrentCellCoordinates
     frontContext = util.getFrontCanvasContext( )
     window.requestAnimationFrame(playerMovementController)
 }
@@ -79,13 +82,13 @@ const handleMovementOfSprite = ( direction ) => {
 
 /**
  * @function clearSprite
- * Call clearRect to clear sprite from its location
+ * Call clearRect to clear sprite Of its location
  */
 const clearSprite = () => {
     
     frontContext.clearRect( 
-        sprite.x, sprite.y, 
-        sprite.width, sprite.height
+        0, 0, 
+        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
     )
 }
 
@@ -93,28 +96,44 @@ const clearSprite = () => {
  * @function moveInDirection
  * @param {string} direction - string representing direction
  * 
+ * Check map borders to see if movement is allowd
  * Update sprite x or y with movement speed based on direction
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( direction ) => {
 
-    if ( direction == 'FACING_RIGHT' ) {
+    checkIfMovementAllowed(sprite)
+
+    if ( direction == 'FACING_RIGHT' && state.currentMap.borders.right > sprite.x ) {
         sprite.x += globals.MOVEMENT_SPEED        
     }
 
-    if ( direction == 'FACING_LEFT' ) {
+    if ( direction == 'FACING_LEFT' && state.currentMap.borders.left < sprite.x ) {
         sprite.x -= globals.MOVEMENT_SPEED        
     }
     
-    if ( direction == 'FACING_DOWN' ) {
+    if ( direction == 'FACING_DOWN' && state.currentMap.borders.bottom > sprite.y ) {
         sprite.y += globals.MOVEMENT_SPEED        
     }
 
-    if ( direction == 'FACING_UP' ) {
+    if ( direction == 'FACING_UP' && state.currentMap.borders.top < sprite.y ){
         sprite.y -= globals.MOVEMENT_SPEED        
     }
 
     sprite.direction = globals[direction]        
+}
+
+/**
+ * @function checkIfMovementAllowed
+ * 
+ * 
+ */
+
+const checkIfMovementAllowed = ( sprite ) => {
+    const locationInGrid = mapHelpers.getCellOfXY(sprite.x, sprite.y)
+
+    mapHelpers.getXYOfCell( locationInGrid.row, locationInGrid.col )
+
 }
 
 /**
