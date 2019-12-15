@@ -56,11 +56,6 @@ class gamePiece {
         this.col = cell.col
     }
 
-    setCell( cell ) {
-        this.row = cell.row
-        this.col = cell.col
-    }
-
     calcXyFromCell( ) {
         const xy = mapHelpers.getXYOfCell(this.row, this.col)
         this.x = xy.x

@@ -27,6 +27,7 @@ const handleAction = (action) => {
         console.log('lol')
             canvasHelpers.writeToTextCanvas( action.text )
             break
+            
     }
 }
 module.exports = {

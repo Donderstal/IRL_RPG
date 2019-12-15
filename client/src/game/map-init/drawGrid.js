@@ -3,6 +3,7 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const setMapAttributes = require('./setMapAttributes')
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
+const getNPCs       = require('./getNPCs')
 
 /** 
  * @function generateMap
@@ -18,11 +19,11 @@ const globals       = require('../../game-data/globals')
 const generateMap = ( currentMap, previousMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
-    console.log(currentMap.topLeftCell)
-    console.log(currentMap.borders)
     setMapAttributes.setDoorsAndDetectEntryPoint( previousMap )
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
+    
     currentMap.blockedXyValues = []
+    getNPCs.generateCharacters( currentMap )
 
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
@@ -119,7 +120,6 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
  */
 
 const drawRow = ( currentMap, currentRow, position ) => {
-
     for ( var j = 0; j <= currentMap.mapData.columns; j++) {
         const currentTile = currentRow[j]
 
@@ -142,17 +142,26 @@ const drawRow = ( currentMap, currentRow, position ) => {
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
+    //for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
+    if ( tile == 24 ) {
+        console.log(currentMap.blockedXyValues)
+    }
 
-    for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
-        if ( tile === currentMap.mapData.blocked[i] || tile === "F" || tile === "E" ) {
+    currentMap.mapData.blocked.forEach( ( e ) => {
+        if ( tile === e || tile === "F" || tile === "E" ) {
             currentMap.blockedXyValues.push( { 
                 "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
                 "LEFT": startPositionInCanvas.x,
                 "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
                 "TOP": startPositionInCanvas.y
             } )
-        }
-    }   
+        }        
+    })
+
+
+
+
+    //}   
     
     // if tile is E - empty...
     if ( tile === "E" ) {

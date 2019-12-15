@@ -3,6 +3,8 @@
     "tileSet": "my-neighbourhood",
     "src": "my-neighbourhood.png",
     "location": "oudoors",
+    "leftNeighbour": "",
+    "rightNeighbour": "",
     "uniqueTiles":47,
     "columns": 23,
     "rows": 9,
@@ -41,5 +43,80 @@
             "direction": "FACING_UP",
             "text": "What a dump, there's junk everywhere!"
         }
+    ],
+    "characters" : [
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_DOWN",
+                "row": 3,
+                "col": 17,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_UP",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_DOWN",
+                "row": 1,
+                "col": 2,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_UP",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_RIGHT",
+                "row": 4,
+                "col": 12,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_LEFT",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_LEFT",
+                "row": 4,
+                "col": 19,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_RIGHT",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_DOWN",
+                "row": 6,
+                "col": 23,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_UP",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_UP",
+                "row": 8,
+                "col": 14,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_DOWN",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            }
+
     ]
 }
