@@ -59,11 +59,11 @@ class gamePiece {
     calcXyFromCell( ) {
         const xy = mapHelpers.getXYOfCell(this.row, this.col)
         this.x = xy.x
-        this.y = xy.y 
+        this.y = xy.y + ( this.height - globals.GRID_BLOCK_PX )
     }
         
     calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXY(this.x, this.y + this.height / 3 )
+        const cell = mapHelpers.getCellOfXY(this.x, this.y )
         this.row = cell.row
         this.col = cell.col
     }

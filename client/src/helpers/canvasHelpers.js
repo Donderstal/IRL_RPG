@@ -146,5 +146,6 @@ module.exports = {
     clearCanvasRectangle,
     clearEntireCanvas,
     clearBothCanvases,
-    writeToTextCanvas
+    writeToTextCanvas,
+    getFrontCanvasContext
 }

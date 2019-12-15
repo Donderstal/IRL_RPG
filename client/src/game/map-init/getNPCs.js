@@ -17,7 +17,7 @@ const generateCharacters = ( currentMap ) => {
             pushCharacterSpriteToMapState( character, currentMap )
             sprite.calcXyFromCell( )
             currentMap.blockedXyValues.push( { 
-                "BOTTOM": sprite.y + (globals.GRID_BLOCK_PX * 1.5),
+                "BOTTOM": sprite.y + (globals.GRID_BLOCK_PX * 1.25),
                 "LEFT": sprite.x,
                 "RIGHT": sprite.x + globals.GRID_BLOCK_PX,
                 "TOP": sprite.y + (globals.GRID_BLOCK_PX * .5 )

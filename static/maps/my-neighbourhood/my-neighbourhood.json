@@ -86,7 +86,55 @@
                 "sprite": "influencer.png",
                 "direction": "FACING_LEFT",
                 "row": 4,
-                "col": 19,
+                "col": 11,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_RIGHT",
+                    "text": "Honey, please."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_RIGHT",
+                "row": 5,
+                "col": 12,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_LEFT",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "influencer.png",
+                "direction": "FACING_LEFT",
+                "row": 5,
+                "col": 11,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_RIGHT",
+                    "text": "Honey, please."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "neckbeard.png",
+                "direction": "FACING_RIGHT",
+                "row": 6,
+                "col": 12,
+                "action": {
+                    "type": "TEXT",
+                    "direction": "FACING_LEFT",
+                    "text": "I'm a level 24 Darkmage, m'lady."
+                }
+            },
+            {
+                "type": "generic",
+                "sprite": "influencer.png",
+                "direction": "FACING_LEFT",
+                "row": 6,
+                "col": 11,
                 "action": {
                     "type": "TEXT",
                     "direction": "FACING_RIGHT",

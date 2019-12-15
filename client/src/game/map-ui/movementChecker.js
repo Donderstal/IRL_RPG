@@ -29,7 +29,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
     // a sprite is higher than a grid block
     // this needs to be corrected when calculating position
-    const spriteTop = sprite.y + ( sprite.height / 3 ) 
+    const spriteTop = sprite.y + globals.GRID_BLOCK_PX
     const spriteBottom = sprite.y + sprite.height
 
     const spriteVerticalMiddle = spriteBottom - ( globals.GRID_BLOCK_PX * .5 )
