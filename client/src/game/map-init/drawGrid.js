@@ -142,10 +142,6 @@ const drawRow = ( currentMap, currentRow, position ) => {
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
-    //for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
-    if ( tile == 24 ) {
-        console.log(currentMap.blockedXyValues)
-    }
 
     currentMap.mapData.blocked.forEach( ( e ) => {
         if ( tile === e || tile === "F" || tile === "E" ) {

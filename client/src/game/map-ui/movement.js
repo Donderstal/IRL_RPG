@@ -23,7 +23,7 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
     countFrame( sprite )
 
     if ( continueAnimating ) {
-        sprite.drawSprite()
+        state.currentMap.layeredSprites.push(sprite)
     }
 
 }
@@ -51,7 +51,6 @@ const moveInDirection = ( sprite, direction ) => {
 
         if ( direction == 'FACING_LEFT' ) {
             sprite.x -= globals.MOVEMENT_SPEED    
-            console.log( sprite.x <= state.currentMap.borders.left + globals.GRID_BLOCK_PX * 3 )
         }
         
         if ( direction == 'FACING_DOWN' ) {

@@ -80,6 +80,7 @@ class gamePiece {
     }
 
     clearSprite( ) {
+        console.log('clearing')
         canvasHelpers.clearCanvasRectangle(
             "FRONT",
             this.x, this.y, this.width, this.height

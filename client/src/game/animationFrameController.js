@@ -8,23 +8,32 @@ const startRequestingFrame = () => {
 
 const animationFrameController = () => {
 
+    state.currentMap.layeredSprites = []
+    if(  state.currentMap.mapData.NPCs ) {
+        state.currentMap.mapData.NPCs.forEach((e) => {
+            state.currentMap.layeredSprites.push(e.sprite)
+            e.sprite.clearSprite()
+        })
+
+    }
+
     movementController.handleMovementKeys()
 
     actionController.handleActionButton()
-
-    if (state.currentMap.mapData.NPCs) {
-        state.currentMap.mapData.NPCs.forEach( (e) => {
-            if ( e.type === "generic" ) {
-                e.sprite.drawSprite()
-            }
-            else if ( e.type === "dynamic" ) {
-                console.log('hoe dan')
-            }
-        })       
-    }
-
+    drawSpritesInOrder()
 
     requestAnimationFrame(animationFrameController)    
+}
+
+const drawSpritesInOrder = ( ) => {
+    state.currentMap.layeredSprites.sort( (a,b) => {
+        (a.row > b.row) 
+        ? 1 
+        : ( (b.row > a.row) ? -1 : 0 )           
+    })
+    state.currentMap.layeredSprites.forEach( (e) => {
+        e.drawSprite()
+    })
 }
 
 module.exports = {
