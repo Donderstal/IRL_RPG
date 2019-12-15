@@ -1,8 +1,8 @@
-const movement = require('./map-ui/movement')
-const movement = require('./map-ui/controls')
+const movementController = require('./map-ui/movementController')
 const initMap = require('./map-init/initMap')
 const util = require('../helpers/utilFunctions')
-const state = require('../game-data/state')
+const animationFrameController = require('./animationFrameController')
+const canvasHelpers = require('../helpers/canvasHelpers')
 
 const startGame = () => {
 
@@ -18,24 +18,27 @@ const startGame = () => {
     setTimeout( () => {
         initCanvas(0, map)      
         initCanvas(1)
+        canvasHelpers.initTextCanvas()
         document.getElementById('stopGameButton').style.display = 'block'
+        document.getElementsByTagName('canvas')[2].style.display = 'block'
     }, 50 )
 
     setTimeout( () => {
-        movement.initPlayerMovement( state.playerCharacter.characterPiece )      
-        controls.listenForKeyPress()      
+        movementController.startPlayerMovement()      
+        animationFrameController.startRequestingFrame()
     }, 100 )
 }
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
     document.getElementsByTagName('canvas')[1].style.display = 'none'
+    document.getElementsByTagName('canvas')[2].style.display = 'none'
 
     document.getElementById('intro-screen').style.display = 'block'
     
     document.getElementById('stopGameButton').style.display = 'none'
 
-    movement.stopPlayerMovement()
+    movementController.stopPlayerMovement()
 }
 
 const initCanvas = (canvasNum, map = null) => {
@@ -51,7 +54,7 @@ const initCanvas = (canvasNum, map = null) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initMap.fetchMapJsonWithCallback(map)
+        initMap.fetchMapJsonWithCallback( map, "NO" )
     } 
     else { 
         canvas.id           = 'game-front-canvas'

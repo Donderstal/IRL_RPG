@@ -36,7 +36,6 @@ class gamePiece {
         
         this.calcXyFromCell()
         this.getSpriteAndDrawWhenLoaded()
-        this.logGamePiece()
     }
 
     getSpriteAndDrawWhenLoaded( ) {
@@ -64,7 +63,7 @@ class gamePiece {
     }
         
     calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXy(this.x, this.y)
+        const cell = mapHelpers.getCellOfXY(this.x, this.y + this.height / 3 )
         this.row = cell.row
         this.col = cell.col
     }
@@ -86,10 +85,6 @@ class gamePiece {
             this.x, this.y, this.width, this.height
         )
     } 
-
-    logGamePiece() {
-        console.log(this)
-    }
 }
 
 module.exports = {

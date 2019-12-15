@@ -30,15 +30,5 @@
     ],
     "blocked": [
         4, 8, 11, 15, 20, 23, 27
-    ],
-    "doors": [ 
-        {
-           "cells": [ 
-               [ 5, 0 ],
-               [ 6, 0 ]
-           ],
-            "to"  : "my-neighbourhood",
-            "locked": "no"
-        }
     ]
 }

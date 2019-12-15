@@ -24,6 +24,6 @@
     <GfxContainer
         classList={classList}
      />
+    <UIContainer /> 
     <TxtContainer />
-    <UIContainer />
 </div>
