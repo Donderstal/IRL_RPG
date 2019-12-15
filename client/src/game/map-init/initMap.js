@@ -43,6 +43,7 @@ const generateMap = ( currentMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
 
     currentMap.tileSheet = new Image();
+    currentMap.blockedXyValues = []
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {      
         drawGrid(  startingPosition, currentMap )
@@ -99,7 +100,7 @@ const drawGrid = ( startingPosition, currentMap ) => {
 
     const position = startingPosition
 
-    for ( var i = 0; i < currentMap.mapData.rows; i++ ) {
+    for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
 
         drawRow( currentMap, currentRow, position )
@@ -123,8 +124,8 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
     state.currentMap.borders = { 
         top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
         left    : gridStartingPosition.x,
-        bottom  : gridStartingPosition.y + ( ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * 1.5 ),
-        right   : gridStartingPosition.x + ( ( mapColumns * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX )
+        bottom  : gridStartingPosition.y + ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * .5 ,
+        right   : gridStartingPosition.x + ( mapColumns * globals.GRID_BLOCK_PX )
     }
 }
 
@@ -139,7 +140,7 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
 
 const drawRow = ( currentMap, currentRow, position ) => {
 
-    for ( var j = 0; j < currentMap.mapData.columns; j++) {
+    for ( var j = 0; j <= currentMap.mapData.columns; j++) {
         const currentTile = currentRow[j]
 
         drawTileInGridBlock( currentMap, currentTile, position )
@@ -162,6 +163,17 @@ const drawRow = ( currentMap, currentRow, position ) => {
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
+    for ( var i = 0; i < currentMap.mapData.blocked.length; i++ ) {
+        if ( tile === currentMap.mapData.blocked[i] || tile === "F" || tile === "E" ) {
+            currentMap.blockedXyValues.push( { 
+                "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                "LEFT": startPositionInCanvas.x,
+                "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                "TOP": startPositionInCanvas.y
+            } )
+        }
+    }   
+    
     // if tile is E - empty...
     if ( tile === "E" ) {
         return 
@@ -184,8 +196,26 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         tilePositionInSheet.x, tilePositionInSheet.y,
         blockSize, blockSize,
         startPositionInCanvas.x, startPositionInCanvas.y,
-        blockSize, blockSize,
-    ) 
+        blockSize, blockSize
+    )          
+
+    // commented methods down here are for testing purposes
+
+    // draw border of the grid block
+    // so different tiles are easily distinguished
+    /* ctx.strokeRect( 
+        startPositionInCanvas.x, startPositionInCanvas.y,
+        blockSize, blockSize 
+    )        */ 
+
+    // draw tile number in grid block
+    /* ctx.fillStyle = "gold"
+    ctx.font = "17.5px Georgia";
+    ctx.fillText(
+        tile,
+        (startPositionInCanvas.x + 9.25), 
+        (startPositionInCanvas.y + 18.5)
+    ) */
 
 }
 

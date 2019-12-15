@@ -4,8 +4,8 @@
     "src": "my-house/Bed_Room.png",
     "location": "indoors",
     "uniqueTiles": 31,
-    "columns": 4,
-    "rows": 8,
+    "columns": 3,
+    "rows": 7,
     "grid": [
         [ 0,  1,  2,  3  ],
         [ 4,  5,  6,  7  ],
@@ -17,6 +17,16 @@
         [ 28, 29, 30, 31 ]
     ],
     "blocked": [
-        11, 15, 24, 22, 26
+        4, 8, 11, 15, 20, 23, 27
+    ],
+    "doors": [ 
+        {
+           "cells": [ 
+               [ 7, 2 ],
+               [ 7, 3 ]
+           ],
+            "to"  : "my-neighbourhood",
+            "locked": "no"
+        }
     ]
 }

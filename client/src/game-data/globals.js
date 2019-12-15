@@ -20,8 +20,8 @@ module.exports = {
     GRID_BLOCK_PX  : 37,
     CANVAS_WIDTH   : 888,
     CANVAS_HEIGHT  : 592,
-    CANVAS_COLUMNS : 24,
-    CANVAS_ROWS    : 16,
+    CANVAS_COLUMNS : 23,
+    CANVAS_ROWS    : 15,
 
     // sprite dimensions
     STRD_SPRITE_WIDTH : 37,
