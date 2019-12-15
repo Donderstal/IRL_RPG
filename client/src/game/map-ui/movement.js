@@ -23,8 +23,18 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
     countFrame( sprite )
 
     if ( continueAnimating ) {
-        sprite.player = true
-        state.currentMap.layeredSprites.push(sprite)
+        sprite.player = true 
+
+        let playerInArray 
+        state.currentMap.layeredSprites.forEach((e) => {
+            if ( e.player === true ) {
+                playerInArray = true 
+            }
+        })
+        if ( !playerInArray ) {
+            state.currentMap.layeredSprites.push(sprite)            
+        }
+
         drawSpritesInOrder()
     }
 
@@ -77,27 +87,28 @@ const moveInDirection = ( sprite, direction ) => {
 }
 
 const drawSpritesInOrder = ( ) => {
-    state.currentMap.layeredSprites.sort( (a,b) => {
+    let layeredSprites = state.currentMap.layeredSprites
+    
+    layeredSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
-            1 
+            return 1 
         }
         else if (b.row > a.row || b.row === a.row && b.y > a.y ) {
-            -1
+            return -1
         }
         else {
-            0
+            return 0
         }          
     })
 
-    state.currentMap.layeredSprites.forEach( (e) => {
+    layeredSprites.forEach( (e) => {
         e.clearSprite()
     })
 
-    state.currentMap.layeredSprites.forEach( (e) => {
+    layeredSprites.forEach( (e) => {
         e.drawSprite()
     })
 }
-
 
 /**
  * @function countFrame
