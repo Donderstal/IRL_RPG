@@ -6,6 +6,7 @@ let frameCount = 0;
 let sprite;
 let frontContext;
 let pressedKeys = {};
+let animationRequest;
 
 /**
  * EXPORT @function initMovement
@@ -33,8 +34,19 @@ const initPlayerMovement = (character) => {
     sprite = character
     sprite.getCurrentCellCoordinates
     frontContext = util.getFrontCanvasContext( )
-    window.requestAnimationFrame(playerMovementController)
+    requestAnimationFrame(playerMovementController)
 }
+
+/**
+ * EXPORT @function initMovement
+ * Called when game is stopped
+ * 
+ * Stop @function playerMovementController callback
+ */
+const stopPlayerMovement = () => {
+    cancelAnimationFrame(animationRequest)
+}
+
 
 /**
  * @function playerMovementController
@@ -58,7 +70,7 @@ const playerMovementController = ( ) => {
         handleMovementOfSprite('FACING_RIGHT')
     }    
 
-    window.requestAnimationFrame(playerMovementController)
+    animationRequest = requestAnimationFrame(playerMovementController)
 }
 
 /**
@@ -277,5 +289,6 @@ const redrawSprite = (  ) => {
 
 module.exports = {
     listenForKeyPress,
-    initPlayerMovement
+    initPlayerMovement,
+    stopPlayerMovement
 }

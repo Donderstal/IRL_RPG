@@ -11,7 +11,7 @@
         flex: 75%;
         height: 592px;
         width: 888px;
-        background-color: black;
+        background-color: rgb(139, 4, 4);
         justify-content: center;
         text-align: center;
     }
@@ -54,18 +54,18 @@
             <label>Name your character!</label>
             <input id='name'>
 
-            <label>Choose your gender!</label>
-            <select id='gender'>
-                <option value="Male" > Male </option>
-                <option value="Female"> Female </option>
-                <option value="None of your business"> None of your business </option>
-            </select>    
-
             <label>Choose your class!</label>
             <select id='class'>
                 {#each Object.keys(classList.initClasses) as className}
                     <option value="{className}" > {className} </option>
                 {/each}
+            </select>    
+
+            <label>Choose your map!</label>
+            <select id='map'>
+                    <option value="my-neighbourhood/my-house" > House </option>
+                    <option value="my-neighbourhood/my-large-house" > Large House </option>
+                    <option value="my-neighbourhood/my-odd-house" > Odd House </option>
             </select>    
 
             <br />

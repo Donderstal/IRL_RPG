@@ -5,22 +5,24 @@ const util = require('../helpers/utilFunctions')
 const state = require('../game-data/state')
 
 const startGame = () => {
+
     const charName      =  util.getInputVal('name')
-    const charGender    =  util.getInputVal('gender')
+    const map           =  util.getInputVal('map')
     const charClass     =  util.getInputVal('class')
 
     // The setTimeouts setup is not definitive and might change later
     setTimeout( () => {
-        document.getElementById('intro-screen').remove()
+        document.getElementById('intro-screen').style.display = 'none'
     }, 25 )
 
     setTimeout( () => {
-        initCanvas(0)      
+        initCanvas(0, map)      
         initCanvas(1)
+        document.getElementById('stopGameButton').style.display = 'block'
     }, 50 )
 
     setTimeout( () => {
-        state.playerCharacter = createCharInstance.getCharacter( charClass, charName, charGender )     
+        state.playerCharacter = createCharInstance.getCharacter( charClass, charName )     
     }, 75 )
     
     setTimeout( () => {
@@ -29,11 +31,22 @@ const startGame = () => {
     }, 100 )
 }
 
-const initCanvas = (canvasNum) => {
+const stopGame = () => {
+    document.getElementsByTagName('canvas')[0].style.display = 'none'
+    document.getElementsByTagName('canvas')[1].style.display = 'none'
+
+    document.getElementById('intro-screen').style.display = 'block'
+    
+    document.getElementById('stopGameButton').style.display = 'none'
+
+    movement.stopPlayerMovement()
+}
+
+const initCanvas = (canvasNum, map = null) => {
     // canvasNum === 0 generates background Canvas
     // 1 generates the front canvas
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
-    canvas.classList.remove('do-not-display')
+    canvas.style.display = 'block'
     let ctx         = canvas.getContext('2d');
     ctx.canvas.height   = 592
     ctx.canvas.width    = 888
@@ -42,7 +55,7 @@ const initCanvas = (canvasNum) => {
 
         canvas.id           = 'game-background-canvas'
 
-        initMap.fetchMapJsonWithCallback('my-neighbourhood/my-odd-house')
+        initMap.fetchMapJsonWithCallback(map)
     } 
     else { 
         canvas.id           = 'game-front-canvas'
@@ -52,5 +65,5 @@ const initCanvas = (canvasNum) => {
 }
 
 module.exports = {
-    startGame
+    startGame, stopGame
 }

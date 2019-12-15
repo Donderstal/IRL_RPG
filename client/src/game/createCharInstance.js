@@ -7,7 +7,7 @@ const getCharacter = ( className, name, gender ) => {
         // entry point for creating a character
         // is called from GfxContainer.svelte
 
-        characterState : initChar.getCharWithClass( className, name, gender ),
+        characterState : initChar.getCharWithClass( className, name ),
         characterPiece : new initGamePiece.gamePiece( )               
     }
  

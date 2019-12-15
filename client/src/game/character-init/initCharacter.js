@@ -2,10 +2,10 @@ const Classes = require('./initClasses')
 
 const classList = Classes.initClasses
 
-const getCharWithClass = ( className, name, gender ) => {
+const getCharWithClass = ( className, name ) => {
     for ( let classKey in classList ) { 
         if ( classKey === className ) {
-            return new classList[className](name, gender)
+            return new classList[className](name )
         }
     }
 
