@@ -59,7 +59,7 @@ class gamePiece {
     calcXyFromCell( ) {
         const xy = mapHelpers.getXYOfCell(this.row, this.col)
         this.x = xy.x
-        this.y = xy.y
+        this.y = xy.y 
     }
         
     calcCellFromXy( ) {
@@ -80,7 +80,6 @@ class gamePiece {
     }
 
     clearSprite( ) {
-        console.log('clearing')
         canvasHelpers.clearCanvasRectangle(
             "FRONT",
             this.x, this.y, this.width, this.height
