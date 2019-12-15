@@ -1,10 +1,9 @@
 const globals = require('../../game-data/globals')
-const util = require('../../helpers/utilFunctions')
 const state = require('../../game-data/state')
+const canvasHelpers = require('../../helpers/canvasHelpers')
 
 let frameCount = 0;
 let sprite;
-let frontContext;
 let pressedKeys = {};
 let animationRequest;
 
@@ -14,7 +13,7 @@ let animationRequest;
  * and pass them to pressedKeys variable
  */
 const listenForKeyPress = () => {
-    window.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', () => {
         pressedKeys[event.key] = true
     })
     window.addEventListener('keyup', () => {
@@ -33,7 +32,6 @@ const initPlayerMovement = (character) => {
 
     sprite = character
     sprite.getCurrentCellCoordinates
-    frontContext = util.getFrontCanvasContext( )
     requestAnimationFrame(playerMovementController)
 }
 
@@ -78,43 +76,42 @@ const playerMovementController = ( ) => {
  * Call functions in order to move sprite
  * @param {string} direction - string representing direction
  * 
- * Call @function clearRect to clear old sprite
+ * Clear old sprite
  * Call @function moveInDirection to update sprite xy and direction
  * Call @function countFrame to update animationIterator and framecount
- * Call @function redrawSprite to draw sprite in new location and/or pose
+ * Draw sprite in new location and/or pose
  */
 const handleMovementOfSprite = ( direction ) => {
 
-    clearSprite( )
+    canvasHelpers.clearCanvasRectangle( 
+        "FRONT", sprite.x, sprite.y, sprite.width, sprite.height 
+    )
+
     moveInDirection( direction )
     countFrame( )
-    redrawSprite( )
-}
 
-/**
- * @function clearSprite
- * Call clearRect to clear sprite Of its location
- */
-const clearSprite = () => {
-    
-    frontContext.clearRect( 
-        sprite.x, sprite.y, 
-        sprite.width, sprite.height
+    canvasHelpers.drawFromImageToCanvas(
+        "FRONT",
+        sprite.image,
+        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
+        sprite.direction * globals.GRID_BLOCK_PX, 
+        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
+        sprite.x, sprite.y, sprite.width, sprite.height
     )
+
 }
 
 /**
  * @function moveInDirection
  * @param {string} direction - string representing direction
  * 
- * Check map s to see if movement is allowd
+ * Check map state to see if movement is allowed
  * Update sprite x or y with movement speed based on direction
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
-
 
     if ( movementIsAllowed ) {
 
@@ -261,30 +258,6 @@ const countFrame = () => {
             sprite.animIterator = 0;
         }
     }
-}
-
-/**
- * @function redrawSprite
- * Call drawImage to render sprite in updated location and/or position
- */
-const redrawSprite = (  ) => {
-
-    // see sr/helpers/docs.js for a description of drawImage's parameters
-    frontContext.drawImage(
-        sprite.image,
-        sprite.animLoop[sprite.animIterator] * globals.GRID_BLOCK_PX, 
-        sprite.direction * globals.GRID_BLOCK_PX, 
-        globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
-        sprite.x, sprite.y, sprite.width, sprite.height
-    );
-
-    // draw a blue rectangle around sprite
-    // keeping this here for future testing...
-    /* frontContext.strokeStyle = "blue";
-
-    frontContext.strokeRect( 
-        sprite.x, sprite.y, sprite.width, sprite.height
-    ) */
 }
 
 module.exports = {

@@ -1,8 +1,7 @@
-
 const globals       = require('../../game-data/globals')
-const utilFunctions = require('../../helpers/utilFunctions')
 const state         = require('../../game-data/state')
-const mapHelpers    = require('../mapHelpers')
+const mapHelpers    = require('../../helpers/mapHelpers')
+const canvasHelpers = require('../../helpers/canvasHelpers')
 
 /** 
  * EXPORTED @function fetchMapJsonWithCallback
@@ -188,34 +187,14 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
-    const ctx = utilFunctions.getBackCanvasContext()
-
-    ctx.drawImage( 
-
+    canvasHelpers.drawFromImageToCanvas( 
+        "BACK",
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
         blockSize, blockSize,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )          
-
-    // commented methods down here are for testing purposes
-
-    // draw border of the grid block
-    // so different tiles are easily distinguished
-    /* ctx.strokeRect( 
-        startPositionInCanvas.x, startPositionInCanvas.y,
-        blockSize, blockSize 
-    )        */ 
-
-    // draw tile number in grid block
-    /* ctx.fillStyle = "gold"
-    ctx.font = "17.5px Georgia";
-    ctx.fillText(
-        tile,
-        (startPositionInCanvas.x + 9.25), 
-        (startPositionInCanvas.y + 18.5)
-    ) */
 
 }
 

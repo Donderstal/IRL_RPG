@@ -1,5 +1,4 @@
-const util = require('../../helpers/utilFunctions')
-const state = require('../../game-data/state')
+const canvasHelpers = require('../../helpers/canvasHelpers')
 const globals = require('../../game-data/globals')
 
 // The gamePiece class will be assigned to all map characters in the game
@@ -25,8 +24,8 @@ const getSprite = ( x, y, width, height, spriteSrc ) => {
     let newSprite = new Image()
 
     newSprite.onload = ( ) => {
-        var ctx = util.getFrontCanvasContext( ) 
-        ctx.drawImage( newSprite, 0, 0, 37, 37, x, y, width, height )                
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", newSprite, 0, 0, 37, 37, x, y, width, height )                
     }
 
     newSprite.src = spriteSrc

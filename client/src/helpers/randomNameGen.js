@@ -123,6 +123,8 @@ const getLetterType = ( letterCounter ) => {
     }
 }
 
+getRandomName()
+
 
 module.exports = {
     getRandomName
