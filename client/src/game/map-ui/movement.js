@@ -24,7 +24,7 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
 
     if ( continueAnimating ) {
         sprite.player = true 
-
+        
         let playerInArray 
         state.currentMap.layeredSprites.forEach((e) => {
             if ( e.player === true ) {
@@ -34,8 +34,6 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
         if ( !playerInArray ) {
             state.currentMap.layeredSprites.push(sprite)            
         }
-
-        drawSpritesInOrder()
     }
 
 }
@@ -84,30 +82,6 @@ const moveInDirection = ( sprite, direction ) => {
 
 
     sprite.direction = globals[direction]        
-}
-
-const drawSpritesInOrder = ( ) => {
-    let layeredSprites = state.currentMap.layeredSprites
-    
-    layeredSprites.sort( ( a, b ) => {
-        if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
-            return 1 
-        }
-        else if (b.row > a.row || b.row === a.row && b.y > a.y ) {
-            return -1
-        }
-        else {
-            return 0
-        }          
-    })
-
-    layeredSprites.forEach( (e) => {
-        e.clearSprite()
-    })
-
-    layeredSprites.forEach( (e) => {
-        e.drawSprite()
-    })
 }
 
 /**
