@@ -21,24 +21,27 @@ const setMapEvents = ( ) => {
   * If player entered from a door, call setSpritePositionForNewMap
   */
  const setDoorsAndDetectEntryPoint = ( previousMap ) => {
-    state.currentMap.doors = []
-    const mapDoors = state.currentMap.mapData.doors
+     if ( state.currentMap.mapData.doors ) {
+        state.currentMap.doors = []
+        const mapDoors = state.currentMap.mapData.doors
 
-    for ( var i = 0; i < mapDoors.length; i++ ) {
+        for ( var i = 0; i < mapDoors.length; i++ ) {
 
-        const door = mapDoors[i]
-        const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
-        door.x = doorXy.x
-        door.y = doorXy.y
-        state.currentMap.doors.push(
-            {...door}
-        )
+            const door = mapDoors[i]
+            const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
+            door.x = doorXy.x
+            door.y = doorXy.y
+            state.currentMap.doors.push(
+                {...door}
+            )
 
-        if ( previousMap === door.to) {
-            setSpritePositionForNewMap(door)
+            if ( previousMap === door.to) {
+                setSpritePositionForNewMap(door)
+            }
+
         }
+     }
 
-    }
 }
 
 /**

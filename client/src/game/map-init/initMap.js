@@ -29,7 +29,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
                 state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
             }
             else {
-                initPlayerSpriteInNewMap()
+                initPlayerSpriteInNewMap(previousMap)
             }
     })    
 }
@@ -55,15 +55,48 @@ const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
  * 
  * call @clearEntireCanvas from canvasHelpers
  */
-const initPlayerSpriteInNewMap = () => {
+const initPlayerSpriteInNewMap = ( previousMap ) => {
     canvasHelpers.clearBothCanvases()
+    console.log('before...')
+    console.log(state.playerCharacter.sprite)
+    setCharacterLocationInNewMap( previousMap  )
     state.playerCharacter.sprite.calcXyFromCell()
     state.playerCharacter.sprite.drawSprite() 
     movementController.startPlayerMovement()
     console.log(state)
  }
 
+/**
+ * @function setCharacterLocationInNewMap
+ */
+const setCharacterLocationInNewMap = ( previousMap ) => {
+    const currentMapData = state.currentMap.mapData
+    const playerSprite = state.playerCharacter.sprite
 
+    if ( currentMapData.outdoors == true ) {
+
+        for ( var adjacentMap in currentMapData.neighbours ) {
+            console.log(adjacentMap)
+            console.log( previousMap)
+            console.log(currentMapData.neighbours)
+            if ( currentMapData.neighbours[adjacentMap] == previousMap) {
+                playerSprite.calcCellFromXy()
+                console.log(adjacentMap )
+                console.log(adjacentMap == "right")
+                if ( adjacentMap == "right") {
+                    console.log( 'right' )
+                    playerSprite.setCell( { 'row': playerSprite.row, 'col': 24 } )                    
+                }
+
+                if ( adjacentMap == "left") {
+                    console.log( 'left' )
+                    playerSprite.setCell( { 'row': playerSprite.row, 'col': -1 } )                    
+                }
+
+            } 
+        }
+    }
+}
 
 
 module.exports = {

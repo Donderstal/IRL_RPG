@@ -24,6 +24,9 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return true
     }
 
+    const activeMapData = state.currentMap.mapData
+    const activeMapBorders = state.currentMap.borders
+
     const spriteLeft = sprite.x + ( globals.GRID_BLOCK_PX * .25 )
     const spriteRight = sprite.x + ( sprite.width - ( globals.GRID_BLOCK_PX * .25 ) )
 
@@ -35,8 +38,13 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const spriteVerticalMiddle = spriteBottom - ( globals.GRID_BLOCK_PX * .5 )
 
     if ( direction == 'FACING_LEFT' ) {
-        if (state.currentMap.borders.left >= sprite.x ) {
-            return false
+        if ( activeMapBorders.left >= sprite.x ) {
+            if ( !activeMapData.outdoors ) {
+                return false
+            }
+            if ( !activeMapData.neighbours.left ) {
+                return false
+            }
         }
         for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
@@ -51,8 +59,13 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }    
 
     if ( direction == 'FACING_RIGHT' ) {
-        if (state.currentMap.borders.right <= sprite.x ) {
-            return false
+        if ( activeMapBorders.right <= sprite.x && !activeMapData.outdoors ) {
+            if ( !activeMapData.outdoors ) {
+                return false
+            }
+            if ( !activeMapData.neighbours.right ) {
+                return false
+            }
         }
         for ( var i = 0; i < blockedXyValues.length; i++ ) {
             const blockedTile = blockedXyValues[i]
@@ -67,7 +80,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }
 
     if ( direction == 'FACING_UP' ){
-        if ( state.currentMap.borders.top >= sprite.y ) {
+        if ( activeMapBorders.top >= sprite.y ) {
             return false
         }
         for ( var i = 0; i < blockedXyValues.length; i++ ) {
@@ -83,7 +96,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }   
 
     if ( direction == 'FACING_DOWN' ) {
-        if ( state.currentMap.borders.bottom <= sprite.y ) {
+        if ( activeMapBorders.bottom <= sprite.y ) {
             return false
         }
         for ( var i = 0; i < blockedXyValues.length; i++ ) {

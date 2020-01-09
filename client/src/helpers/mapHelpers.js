@@ -51,7 +51,7 @@ const getCellOfXY = (x, y) => {
 
 
     // top row of indoors houses are walls and impassables
-    if ( state.currentMap.mapData.location === "indoors") {
+    if ( !state.currentMap.mapData.outdoors) {
         row += 1
     }
 
