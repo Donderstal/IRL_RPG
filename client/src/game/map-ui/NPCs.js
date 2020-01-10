@@ -40,10 +40,12 @@ const checkForAnimationPath =  (NPC ) => {
 const getNextNPCPosition = ( NPC ) => {
     for ( var i = 0; i < NPC.path.length; i++ ) {
         let currentPath = NPC.path[i]
+        
         if ( NPC.lastPosition.id == currentPath.id ) {
             let index = i
             let pathIterator = i + 1
             let pathLength = NPC.path.length -1
+
             if ( index == pathLength ) {
                 NPC.nextPosition = NPC.path[0] 
             }

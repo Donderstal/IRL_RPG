@@ -38,7 +38,6 @@ const setMapEvents = ( ) => {
             if ( previousMap === door.to) {
                 setSpritePositionForNewMap(door)
             }
-
         }
      }
 

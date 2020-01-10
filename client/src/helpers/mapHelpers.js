@@ -16,18 +16,6 @@ const getTopLeftCellOfGridInCanvas = ( x, y ) => {
     let row = 0
     let col = 0
 
-    // if map is wider than canvas, the most left cell...
-    // currently displayed must have a x of 0
-    if ( x < 0 ) {
-        col = x / -globals.GRID_BLOCK_PX
-        x = 0
-    }
-
-    if ( y < 0 ) {
-        row  = y / -globals.GRID_BLOCK_PX
-        y = 0
-    }
-    
     return {
         x: x,
         y: y,
@@ -48,21 +36,7 @@ const getCellOfXY = (x, y) => {
     const topLeftCell = state.currentMap.topLeftCell    
     let col = topLeftCell.col + Math.floor( (x - topLeftCell.x) / globals.GRID_BLOCK_PX )
     let row = topLeftCell.row + Math.floor( (y - topLeftCell.y) / globals.GRID_BLOCK_PX )
-
-
-    // top row of indoors houses are walls and impassables
-    if ( !state.currentMap.mapData.outdoors) {
-        row += 1
-    }
-
-    // there is no row or column -1
-    if ( col < 0 ) {
-        col = 0
-    }
-    if ( row < 0 ) {
-        row = 0
-    }  
-
+    
     return { 
         'row': row,
         'col': col
@@ -80,7 +54,7 @@ const getCellOfXY = (x, y) => {
 const getXYOfCell = (row, col) => {
     const topLeftCell = state.currentMap.topLeftCell
     const x = topLeftCell.x + ( ( col - topLeftCell.col ) * globals.GRID_BLOCK_PX )
-    const y = topLeftCell.y +( ( row - topLeftCell.row ) * globals.GRID_BLOCK_PX )
+    const y = topLeftCell.y + ( ( row - topLeftCell.row ) * globals.GRID_BLOCK_PX )
 
     return  { 
         'x': x,

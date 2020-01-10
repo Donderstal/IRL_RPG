@@ -85,7 +85,7 @@ const drawGrid = ( startingPosition, currentMap ) => {
     for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
 
-        drawRow( currentMap, currentRow, position, i )
+        drawRow( currentMap, currentRow, position )
 
         position.y += globals.GRID_BLOCK_PX
         position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
@@ -143,11 +143,11 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
  * @param {array} currentRow - Array with numbers representing a row
  */
 
-const drawRow = ( currentMap, currentRow, position, i ) => {
+const drawRow = ( currentMap, currentRow, position ) => {
     for ( var j = 0; j <= currentMap.mapData.columns; j++) {
         const currentTile = currentRow[j]
 
-        drawTileInGridBlock( currentMap, currentTile, position, j, i )
+        drawTileInGridBlock( currentMap, currentTile, position )
 
         position.x += globals.GRID_BLOCK_PX
     }
@@ -165,17 +165,33 @@ const drawRow = ( currentMap, currentRow, position, i ) => {
  * @param {integer} tile - number representing position of the tile in a tilesheet
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
-const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas, j, currentRow ) => {
-
+const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     currentMap.mapData.blocked.forEach( ( e ) => {
-        if ( tile === e || tile === "F" || tile === "E" ) {
-            currentMap.blockedXyValues.push( { 
-                "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                "LEFT": startPositionInCanvas.x,
-                "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                "TOP": startPositionInCanvas.y
-            } )
-        }        
+        if ( e != Object(e) ) {
+            if ( tile === e || tile === "E" ) {
+
+                currentMap.blockedXyValues.push( { 
+                    "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                    "LEFT": startPositionInCanvas.x,
+                    "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                    "TOP": startPositionInCanvas.y
+                } )
+
+            }                   
+        }
+        else {
+            if ( tile === e.id || tile === "E" ) {
+                console.log('bruh')
+                if ( e.blockedArea == "bottom" ) {
+                    currentMap.blockedXyValues.push( { 
+                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                        "LEFT": startPositionInCanvas.x,
+                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                        "TOP": startPositionInCanvas.y + ( globals.GRID_BLOCK_PX * e.factor )
+                    } )                    
+                }
+            }    
+        }
     })
 
     //}   
@@ -192,26 +208,15 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas, j, curren
 
     const blockSize = globals.GRID_BLOCK_PX
 
-/*     const rectCtx = canvasHelpers.getFrontCanvasContext()
+    /* const rectCtx = canvasHelpers.getFrontCanvasContext()
     rectCtx.rect( startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize )
     rectCtx.stroke()
-    if ( j !== 0 ) {
         rectCtx.fillStyle = "white"
         rectCtx.font = "20px Times New Roman";
         rectCtx.fillText(
-            j,
-            startPositionInCanvas.x + 17.5, startPositionInCanvas.y + 17.5
-        )        
-    }
-    else {
-        rectCtx.fillStyle = "gold"
-        rectCtx.font = "20px Times New Roman";
-        rectCtx.fillText(
-            currentRow,
-            startPositionInCanvas.x + 17.5, startPositionInCanvas.y + 17.5
-        ) 
-    } */
-
+            tile,
+            startPositionInCanvas.x, startPositionInCanvas.y + 17.5
+        ) */        
 
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 

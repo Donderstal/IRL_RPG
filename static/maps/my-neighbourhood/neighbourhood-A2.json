@@ -27,5 +27,54 @@
             "topLeft": { "row": 0, "col": 0 },
             "bottomRight": { "row": 3, "col": 18 }
         }
+    ],
+    "characters" : [
+        {
+            "type": "static",
+            "sprite": "Tumblr_girl.png",
+            "direction": "FACING_DOWN",
+            "row": 5,
+            "col": 17,
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_UP",
+                "text": "I'm a level 24 Darkmage."
+            }
+        },
+        {
+            "type": "dynamic",
+            "sprite": "Tumblr_girl.png",
+            "row": 8,
+            "col": 14 ,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 8, 
+                "col": 14, 
+                "direction": "FACING_UP" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 6, "col": 14, "direction": "FACING_RIGHT" },
+                { "id": 1, "row": 4, "col": 14, "direction": "FACING_UP" },
+                { "id": 2, "row": 4, "col": 10, "direction": "FACING_LEFT" },
+                { "id": 3, "row": 6, "col": 10, "direction": "FACING_DOWN" }
+            ],
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_DOWN",
+                "text": "Gamers, rise up!"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "influencer.png",
+            "direction": "FACING_RIGHT",
+            "row": 1,
+            "col": 4,
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_LEFT",
+                "text": "What's up, nerd?"
+            }
+        }
     ]
 }

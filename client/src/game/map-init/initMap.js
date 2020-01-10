@@ -12,7 +12,7 @@ const movementController = require('../map-ui/movementController')
  * @callback generateMap - Start Map rendering with JSON data when fetch succeeds
  */
 
-const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
+const fetchMapJsonWithCallback = ( worldName, previousMapName  ) => {
     fetch('/static/maps/' + worldName +'.json')
         .then( (response) => {
             if (!response.ok) {
@@ -23,13 +23,13 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
         .then( (json) => {
             state.currentMap.mapData = json;
             canvasHelpers.clearBothCanvases()
-            drawGrid.generateMap( state.currentMap, previousMap )
+            drawGrid.generateMap( state.currentMap, previousMapName  )
 
-            if ( previousMap === "NO" ) {
+            if ( previousMapName  === "NO" ) {
                 state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
             }
             else {
-                initPlayerSpriteInNewMap(previousMap)
+                initPlayerSpriteInNewMap(previousMapName )
             }
     })    
 }
@@ -55,47 +55,45 @@ const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
  * 
  * call @clearEntireCanvas from canvasHelpers
  */
-const initPlayerSpriteInNewMap = ( previousMap ) => {
+const initPlayerSpriteInNewMap = ( previousMapName ) => {
+
     canvasHelpers.clearBothCanvases()
-    console.log('before...')
-    console.log(state.playerCharacter.sprite)
-    setCharacterLocationInNewMap( previousMap  )
+
+    setCharacterLocationInNewMap( previousMapName )
     state.playerCharacter.sprite.calcXyFromCell()
     state.playerCharacter.sprite.drawSprite() 
+    
     movementController.startPlayerMovement()
-    console.log(state)
  }
 
 /**
  * @function setCharacterLocationInNewMap
  */
-const setCharacterLocationInNewMap = ( previousMap ) => {
+const setCharacterLocationInNewMap = ( previousMapName  ) => {
     const currentMapData = state.currentMap.mapData
     const playerSprite = state.playerCharacter.sprite
 
     if ( currentMapData.outdoors == true ) {
 
         for ( var adjacentMap in currentMapData.neighbours ) {
-            console.log(adjacentMap)
-            console.log( previousMap)
-            console.log(currentMapData.neighbours)
-            if ( currentMapData.neighbours[adjacentMap] == previousMap) {
-                playerSprite.calcCellFromXy()
-                console.log(adjacentMap )
-                console.log(adjacentMap == "right")
-                if ( adjacentMap == "right") {
-                    console.log( 'right' )
-                    playerSprite.setCell( { 'row': playerSprite.row, 'col': 24 } )                    
-                }
-
-                if ( adjacentMap == "left") {
-                    console.log( 'left' )
-                    playerSprite.setCell( { 'row': playerSprite.row, 'col': -1 } )                    
-                }
-
-            } 
+            setPositionFromNeighbour( playerSprite, currentMapData, previousMapName, adjacentMap );
         }
     }
+}
+
+const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName, adjacentMap  ) => {
+    if ( currentMapData.neighbours[adjacentMap] == previousMapName ) {
+        playerSprite.calcCellFromXy()
+        
+        if ( adjacentMap == "right") {
+            playerSprite.setCell( { 'row': playerSprite.row, 'col': 24 } )                    
+        }
+
+        if ( adjacentMap == "left") {
+            playerSprite.setCell( { 'row': playerSprite.row, 'col': -1 } )                    
+        }
+
+    } 
 }
 
 

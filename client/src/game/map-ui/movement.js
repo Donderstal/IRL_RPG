@@ -53,7 +53,7 @@ const moveInDirection = ( sprite, direction ) => {
     
     const urlToNewMap = handleDoors.checkIfDoor(sprite, direction)
 
-    if ( movementIsAllowed ) {
+    if ( movementIsAllowed && !urlToNewMap ) {
 
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        

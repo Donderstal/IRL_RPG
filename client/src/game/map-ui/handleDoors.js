@@ -25,7 +25,7 @@ const checkIfDoor = ( sprite, direction ) => {
             && currentDoor.col === sprite.col 
             && !currentDoor.locked 
             && direction === currentDoor.directionIn) {
-
+                
             return currentDoor.to
         }
     }
