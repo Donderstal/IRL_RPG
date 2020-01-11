@@ -1,4 +1,4 @@
-ReadMe last updated on November 9h, 2019
+ReadMe last updated on January 11th, 2020
 
 ### IRL-RPG
 
