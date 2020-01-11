@@ -23,9 +23,39 @@
     ],
     "blocked": [ 
         1, 
-        { "id": 186, "blockedArea": "bottom", "factor": 0.5 }, 
-        { "id": 187, "blockedArea": "bottom", "factor": 0.5 }, 
-        { "id": 189, "blockedArea": "bottom", "factor": 0.5 } ],
+
+        { "id": 186, "top": { "factor": 0.5 } }, 
+        { "id": 187, "top": { "factor": 0.5 } }, 
+        { "id": 189, "top": { "factor": 0.5 } },
+
+        { "id": 209, "bottom": { "factor": 0.9 } },
+        { "id": 210, "bottom": { "factor": 0.9 } },
+        
+        { 
+            "id": 216, 
+            "top": { "factor": 0.15 },
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 },   
+            "bottom": { "factor": 0.1 } 
+        },
+        { 
+            "id": 212, 
+            "top": { "factor": 0.9 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+        { 
+            "id": 238, 
+            "bottom": { "factor": 0.3 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+        { 
+            "id": 239, 
+            "bottom": { "factor": 0.3 }, 
+            "left": { "factor": 0.4 }
+        }    
+    ],
     "inaccessible": [ 
         { 
             "topLeft": { "row": 0, "col": 1 },
@@ -107,7 +137,7 @@
             "sprite": "influencer.png",
             "direction": "FACING_RIGHT",
             "row": 5,
-            "col": 3,
+            "col": 1,
             "action": {
                 "type": "TEXT",
                 "direction": "FACING_LEFT",

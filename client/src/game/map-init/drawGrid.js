@@ -182,14 +182,26 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         else {
             if ( tile === e.id || tile === "E" ) {
                 console.log('bruh')
-                if ( e.blockedArea == "bottom" ) {
-                    currentMap.blockedXyValues.push( { 
-                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                        "LEFT": startPositionInCanvas.x,
-                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                        "TOP": startPositionInCanvas.y + ( globals.GRID_BLOCK_PX * e.factor )
-                    } )                    
+                let blockedTile = {
+                    "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                    "LEFT": startPositionInCanvas.x,
+                    "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                    "TOP": startPositionInCanvas.y
                 }
+
+                if ( e.top ) {
+                    blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
+                }
+                if ( e.bottom ) {
+                    blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
+                }
+                if ( e.left ) {
+                    blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
+                }
+                if ( e.right ) {
+                    blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
+                }
+                currentMap.blockedXyValues.push( blockedTile )
             }    
         }
     })
@@ -206,17 +218,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         tile = currentMap.mapData.fillerTile
     }
 
-    const blockSize = globals.GRID_BLOCK_PX
-
-    /* const rectCtx = canvasHelpers.getFrontCanvasContext()
-    rectCtx.rect( startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize )
-    rectCtx.stroke()
-        rectCtx.fillStyle = "white"
-        rectCtx.font = "20px Times New Roman";
-        rectCtx.fillText(
-            tile,
-            startPositionInCanvas.x, startPositionInCanvas.y + 17.5
-        ) */        
+    const blockSize = globals.GRID_BLOCK_PX  
 
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
