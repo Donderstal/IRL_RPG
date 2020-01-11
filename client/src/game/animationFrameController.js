@@ -1,6 +1,7 @@
 const movementController = require('./map-ui/movementController')
 const actionController = require('./map-ui/actionController')
 const state         = require('../game-data/state')
+const NPCs          = require('./map-ui/NPCs')
 
 const startRequestingFrame = () => {
     requestAnimationFrame(animationFrameController)
@@ -8,23 +9,42 @@ const startRequestingFrame = () => {
 
 const animationFrameController = () => {
 
+    state.currentMap.layeredSprites = []
+
+    NPCs.NPCController()        
+
     movementController.handleMovementKeys()
 
     actionController.handleActionButton()
 
-    if (state.currentMap.mapData.NPCs) {
-        state.currentMap.mapData.NPCs.forEach( (e) => {
-            if ( e.type === "generic" ) {
-                e.sprite.drawSprite()
-            }
-            else if ( e.type === "dynamic" ) {
-                console.log('hoe dan')
-            }
-        })       
-    }
-
-
     requestAnimationFrame(animationFrameController)    
+    
+    drawSpritesInOrder()
+}
+
+
+const drawSpritesInOrder = ( ) => {
+    let layeredSprites = state.currentMap.layeredSprites
+    
+    layeredSprites.sort( ( a, b ) => {
+        if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
+            return 1 
+        }
+        else if (b.row > a.row || b.row === a.row && b.y > a.y ) {
+            return -1
+        }
+        else {
+            return 0
+        }          
+    })
+
+    layeredSprites.forEach( (e) => { 
+        e.clearSprite()
+    })
+
+    layeredSprites.forEach( (e) => {
+        e.drawSprite()
+    })
 }
 
 module.exports = {

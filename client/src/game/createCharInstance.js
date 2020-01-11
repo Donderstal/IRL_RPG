@@ -8,7 +8,7 @@ const getCharacter = ( className, name, playerStart ) => {
         // is called from GfxContainer.svelte
 
         stats : initChar.getCharWithClass( className, name ),
-        sprite : new initGamePiece.gamePiece( playerStart.row, playerStart.col, '/static/sprites/influencer.png' )               
+        sprite : new initGamePiece.gamePiece( playerStart.row, playerStart.col, '/static/sprites/neckbeard.png' )               
     }
  
 }

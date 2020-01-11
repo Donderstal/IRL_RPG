@@ -23,7 +23,17 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
     countFrame( sprite )
 
     if ( continueAnimating ) {
-        sprite.drawSprite()
+        sprite.player = true 
+        
+        let playerInArray 
+        state.currentMap.layeredSprites.forEach((e) => {
+            if ( e.player === true ) {
+                playerInArray = true 
+            }
+        })
+        if ( !playerInArray ) {
+            state.currentMap.layeredSprites.push(sprite)            
+        }
     }
 
 }
@@ -43,7 +53,7 @@ const moveInDirection = ( sprite, direction ) => {
     
     const urlToNewMap = handleDoors.checkIfDoor(sprite, direction)
 
-    if ( movementIsAllowed ) {
+    if ( movementIsAllowed && !urlToNewMap ) {
 
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        
@@ -51,7 +61,6 @@ const moveInDirection = ( sprite, direction ) => {
 
         if ( direction == 'FACING_LEFT' ) {
             sprite.x -= globals.MOVEMENT_SPEED    
-            console.log( sprite.x <= state.currentMap.borders.left + globals.GRID_BLOCK_PX * 3 )
         }
         
         if ( direction == 'FACING_DOWN' ) {

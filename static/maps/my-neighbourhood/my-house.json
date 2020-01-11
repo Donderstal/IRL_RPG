@@ -2,7 +2,7 @@
     "mapName": "my-neighbourhood/my-house",
     "tileSet": "my-house",
     "src": "my-house/Bed_Room.png",
-    "location": "indoors",
+    "outdoors": false,
     "uniqueTiles": 31,
     "columns": 3,
     "rows": 7,
@@ -27,7 +27,7 @@
         {
             "row": 7, 
             "col": 1,
-            "to"  : "my-neighbourhood/my-neighbourhood",
+            "to"  : "my-neighbourhood/neighbourhood-A1",
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
