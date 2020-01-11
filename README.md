@@ -27,8 +27,20 @@ After everything is compiled, you can visit the app on localhost:5000
 
 #### LOG
 
+### JANUARY 10th, 2019
+* Improved way of adding blocked XY values
+* Collision detection now less restricted to grid squares
+
+### JANUARY 9th, 2020
+* Two maps added
+* Tweaks to map generation
+* Player can now move between maps
+
+### DECEMBER 18th, 2019
+* NPCs can now be animated by storing a path in a map JSON
+
 ### DECEMBER 15th, 2019
-* NPCs no longer dissapeard after contact with player
+* NPCs no longer disappear after contact with player
 * Basic NPC actions
 * Basic NPC collision detection
 
