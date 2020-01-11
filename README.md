@@ -20,7 +20,7 @@ Then run ```npm install```
 
 Wait until all Node packages are installed.
 
-Open a new terminal window and rund ```server.py``` to get the Flask server running
+Open a new terminal window and run ```server.py``` to get the Flask server running
 Finally, run ```npm run autobuild``` in the client folder. This will start the svelte compiler and watch for changes
 
 After everything is compiled, you can visit the app on localhost:5000
@@ -71,6 +71,9 @@ After everything is compiled, you can visit the app on localhost:5000
 
 ### NOVEMBER 4th, 2019
 * Basic server for serving JSON files which contain map information
+
+### OCTOBER 19th, 2019
+* Introduced GamePiece class, which will be assigned to all characters
 
 ### OCTOBER 16th, 2019
 * User is able to select a class, gender and character name
