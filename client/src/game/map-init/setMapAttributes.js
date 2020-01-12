@@ -1,6 +1,8 @@
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
 const mapHelpers = require('../../helpers/mapHelpers')
+const soundHelper   = require('../../helpers/soundHelpers')
+const soundClass    = soundHelper.soundClass
 
 /**
  * EXPORT @function setMapEvents
@@ -36,6 +38,8 @@ const setMapEvents = ( ) => {
             )
 
             if ( previousMap === door.to) {
+                const sfx = new soundClass( "misc/random6.wav", true )
+                sfx.play()
                 setSpritePositionForNewMap(door)
             }
         }

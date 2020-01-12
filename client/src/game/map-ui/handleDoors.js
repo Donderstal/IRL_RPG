@@ -1,4 +1,6 @@
 const state = require('../../game-data/state')
+const soundHelper   = require('../../helpers/soundHelpers')
+const soundClass    = soundHelper.soundClass
 
 /**
  * EXPORT @function checkIfDoor
@@ -25,7 +27,8 @@ const checkIfDoor = ( sprite, direction ) => {
             && currentDoor.col === sprite.col 
             && !currentDoor.locked 
             && direction === currentDoor.directionIn) {
-                
+            const sfx = new soundClass( "misc/random5.wav", true )
+            sfx.play()
             return currentDoor.to
         }
     }

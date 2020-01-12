@@ -2,12 +2,14 @@ const controls = require('./controls')
 const state = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 const canvasHelpers = require('../../helpers/canvasHelpers')
+const soundHelper   = require('../../helpers/soundHelpers')
+const soundClass    = soundHelper.soundClass
 
 let pressedKeys = controls.pressedKeys
 let actionIsActive = false
 
-const handleActionButton = () => {
-    if ( pressedKeys.spaceBar ) {
+const handleActionButton = ( ) => {
+    if ( pressedKeys.spaceBar && !actionIsActive ) {
         actionIsActive = true
         const spriteRow = state.playerCharacter.sprite.row
         const spriteCol = state.playerCharacter.sprite.col
@@ -24,11 +26,14 @@ const handleActionButton = () => {
 const handleAction = (action) => {
     switch ( action.type ) {
         case "TEXT" :
-        console.log('lol')
+            const sfx = new soundClass( action.sfx, true )
+            sfx.play()
             canvasHelpers.writeToTextCanvas( action.text )
             break
             
     }
+
+    actionIsActive = false
 }
 module.exports = {
     handleActionButton

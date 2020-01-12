@@ -71,7 +71,7 @@ const getNextNPCPosition = ( NPC ) => {
 const countFrame = ( NPC ) => {
     NPC.sprite.clearSprite()
     NPC.sprite.frameCount++;
-    const NPC_speed = globals.MOVEMENT_SPEED
+    const NPC_speed = globals.MOVEMENT_SPEED * 0.5
     if ( NPC.nextPosition.direction == 'FACING_RIGHT' ) {
         NPC.sprite.x += NPC_speed        
     }
