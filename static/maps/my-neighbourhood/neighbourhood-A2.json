@@ -52,6 +52,7 @@
             "col": 17,
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-2.mp3",
                 "direction": "FACING_UP",
                 "text": "I'm a level 24 Darkmage."
             }
@@ -75,6 +76,7 @@
             ],
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-2.mp3",
                 "direction": "FACING_DOWN",
                 "text": "Gamers, rise up!"
             }
@@ -87,6 +89,7 @@
             "col": 4,
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-2.mp3",
                 "direction": "FACING_LEFT",
                 "text": "What's up, nerd?"
             }

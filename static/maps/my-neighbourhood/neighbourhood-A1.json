@@ -102,7 +102,7 @@
             "type": "dynamic",
             "sprite": "neckbeard.png",
             "direction": "FACING_DOWN",
-            "row": 5,
+            "row": 3,
             "col": 17,
             "lastPosition" : { 
                 "id": 0,
@@ -111,79 +111,14 @@
                 "direction": "FACING_DOWN" 
             },
             "path" : [                     
-                { "id": 0, "row": 5, "col": 17, "direction": "FACING_UP" },
+                { "id": 0, "row": 3, "col": 17, "direction": "FACING_UP" },
                 { "id": 1, "row": 7, "col": 17, "direction": "FACING_DOWN" }
             ],
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-1.mp3",
                 "direction": "FACING_UP",
                 "text": "I'm a level 24 Darkmage."
-            }
-        },
-        {
-            "type": "dynamic",
-            "sprite": "chad.png",
-            "direction": "FACING_DOWN",
-            "row": 5,
-            "col": 16,
-            "lastPosition" : { 
-                "id": 0,
-                "row": 5, 
-                "col": 16, 
-                "direction": "FACING_DOWN" 
-            },
-            "path" : [                     
-                { "id": 0, "row": 5, "col": 16, "direction": "FACING_UP" },
-                { "id": 1, "row": 7, "col": 16, "direction": "FACING_DOWN" }
-            ],
-            "action": {
-                "type": "TEXT",
-                "direction": "FACING_UP",
-                "text": "Do you lift, bro?"
-            }
-        },
-        {
-            "type": "dynamic",
-            "sprite": "influencer.png",
-            "direction": "FACING_DOWN",
-            "row": 5,
-            "col": 15,
-            "lastPosition" : { 
-                "id": 0,
-                "row": 5, 
-                "col": 15, 
-                "direction": "FACING_DOWN" 
-            },
-            "path" : [                     
-                { "id": 0, "row": 5, "col": 15, "direction": "FACING_UP" },
-                { "id": 1, "row": 7, "col": 15, "direction": "FACING_DOWN" }
-            ],
-            "action": {
-                "type": "TEXT",
-                "direction": "FACING_UP",
-                "text": "Don't forget to like and subscribe!"
-            }
-        },
-        {
-            "type": "dynamic",
-            "sprite": "tumblr_girl.png",
-            "direction": "FACING_DOWN",
-            "row": 5,
-            "col": 14,
-            "lastPosition" : { 
-                "id": 0,
-                "row": 5, 
-                "col": 14, 
-                "direction": "FACING_DOWN" 
-            },
-            "path" : [                     
-                { "id": 0, "row": 5, "col": 14, "direction": "FACING_UP" },
-                { "id": 1, "row": 7, "col": 14, "direction": "FACING_DOWN" }
-            ],
-            "action": {
-                "type": "TEXT",
-                "direction": "FACING_UP",
-                "text": "Ugh, you bigot!"
             }
         },
         {
@@ -194,6 +129,7 @@
             "col": 21,
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-1.mp3",
                 "direction": "FACING_UP",
                 "text": "Do you even lift, bro?"
             }
@@ -210,13 +146,14 @@
                 "direction": "FACING_UP" 
             },
             "path" : [                     
-                { "id": 0, "row": 8, "col": 14, "direction": "FACING_RIGHT" },
-                { "id": 1, "row": 6, "col": 14, "direction": "FACING_UP" },
-                { "id": 2, "row": 6, "col": 10, "direction": "FACING_LEFT" },
-                { "id": 3, "row": 8, "col": 10, "direction": "FACING_DOWN" }
+                { "id": 0, "row": 5, "col": 14, "direction": "FACING_RIGHT" },
+                { "id": 1, "row": 3, "col": 14, "direction": "FACING_UP" },
+                { "id": 2, "row": 3, "col": 10, "direction": "FACING_LEFT" },
+                { "id": 3, "row": 5, "col": 10, "direction": "FACING_DOWN" }
             ],
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-1.mp3",
                 "direction": "FACING_DOWN",
                 "text": "Gamers, rise up!"
             }
@@ -229,7 +166,21 @@
             "col": 1,
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-2.mp3",
                 "direction": "FACING_LEFT",
+                "text": "What's up, nerd?"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "tumblr_girl.png",
+            "direction": "FACING_LEFT",
+            "row": 5,
+            "col": 2,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-2.mp3",
+                "direction": "FACING_RIGHT",
                 "text": "What's up, nerd?"
             }
         }

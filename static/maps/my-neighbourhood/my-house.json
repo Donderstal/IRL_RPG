@@ -2,6 +2,7 @@
     "mapName": "my-neighbourhood/my-house",
     "tileSet": "my-house",
     "src": "my-house/Bed_Room.png",
+    "music": "game-jam-2.mp3",
     "outdoors": false,
     "uniqueTiles": 31,
     "columns": 3,
