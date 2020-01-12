@@ -26,7 +26,7 @@ const animationFrameController = () => {
 
 const drawSpritesInOrder = ( ) => {
     let layeredSprites = state.currentMap.layeredSprites
-    
+
     layeredSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
             return 1 
@@ -43,7 +43,7 @@ const drawSpritesInOrder = ( ) => {
 
     layeredSprites.forEach( (e) => {
         e.drawSprite()
-    })
+    })        
 }
 
 module.exports = {

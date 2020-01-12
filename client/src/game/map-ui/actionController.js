@@ -9,8 +9,7 @@ let pressedKeys = controls.pressedKeys
 let actionIsActive = false
 
 const handleActionButton = ( ) => {
-    if ( pressedKeys.spaceBar && !actionIsActive ) {
-        actionIsActive = true
+    if ( pressedKeys.spaceBar ) {
         const spriteRow = state.playerCharacter.sprite.row
         const spriteCol = state.playerCharacter.sprite.col
         const direction = state.playerCharacter.sprite.direction
@@ -32,8 +31,6 @@ const handleAction = (action) => {
             break
             
     }
-
-    actionIsActive = false
 }
 module.exports = {
     handleActionButton
