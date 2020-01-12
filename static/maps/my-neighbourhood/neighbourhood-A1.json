@@ -129,9 +129,22 @@
             "col": 21,
             "action": {
                 "type": "TEXT",
-                "sfx": "voice-1.mp3",
+                "sfx": "voice-4.mp3",
                 "direction": "FACING_UP",
                 "text": "Do you even lift, bro?"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "influencer.png",
+            "direction": "FACING_DOWN",
+            "row": 4,
+            "col": 9,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-3.mp3",
+                "direction": "FACING_UP",
+                "text": "I'm just feeling SO fabulous today!"
             }
         },
         {
@@ -151,7 +164,9 @@
                 { "id": 2, "row": 3, "col": 10, "direction": "FACING_LEFT" },
                 { "id": 3, "row": 5, "col": 10, "direction": "FACING_DOWN" }
             ],
+            "actionid": 1,
             "action": {
+                "id": 1,
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_DOWN",
@@ -174,15 +189,25 @@
         {
             "type": "static",
             "sprite": "tumblr_girl.png",
-            "direction": "FACING_LEFT",
-            "row": 5,
+            "direction": "FACING_UP",
+            "row": 6,
             "col": 2,
             "action": {
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
-                "direction": "FACING_RIGHT",
-                "text": "What's up, nerd?"
+                "direction": "FACING_DOWN",
+                "text": "I ate oysters for breakfast this morning. It was a terrible idea..."
             }
+        }
+    ],
+    "actions" : [
+        {
+            "row": 3,
+            "col": 15,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "sfx": "typing.mp3",
+            "text": "Who still uses these things anyway?"
         }
     ]
 }

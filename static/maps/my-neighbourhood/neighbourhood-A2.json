@@ -52,9 +52,22 @@
             "col": 17,
             "action": {
                 "type": "TEXT",
-                "sfx": "voice-2.mp3",
+                "sfx": "poo-poo.mp3",
                 "direction": "FACING_UP",
-                "text": "I'm a level 24 Darkmage."
+                "text": "I used to date a level 24 Darkmage."
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "Neckbeard.png",
+            "direction": "FACING_LEFT",
+            "row": 6,
+            "col": 18,
+            "action": {
+                "type": "TEXT",
+                "sfx": "mauww.mp3",
+                "direction": "FACING_RIGHT",
+                "text": "I'm an aspiring ninja, m'lady."
             }
         },
         {
@@ -85,14 +98,24 @@
             "type": "static",
             "sprite": "influencer.png",
             "direction": "FACING_RIGHT",
-            "row": 3,
+            "row": 4,
             "col": 4,
             "action": {
                 "type": "TEXT",
-                "sfx": "voice-2.mp3",
+                "sfx": "lalala.mp3",
                 "direction": "FACING_LEFT",
-                "text": "What's up, nerd?"
+                "text": "Downtown with the girls on a beautiful day!! #FitGirl"
             }
+        }
+    ],
+    "actions" : [
+        {
+            "row": 3,
+            "col": 11,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "sfx": "typing.mp3",
+            "text": "Who still uses these things anyway?"
         }
     ]
 }
