@@ -20,7 +20,7 @@ const generateCharacters = ( currentMap ) => {
                 "BOTTOM": sprite.y + (globals.GRID_BLOCK_PX * 1.25),
                 "LEFT": sprite.x,
                 "RIGHT": sprite.x + globals.GRID_BLOCK_PX,
-                "TOP": sprite.y + (globals.GRID_BLOCK_PX * .5 )
+                "TOP": sprite.y + globals.GRID_BLOCK_PX
             })                
         })
     }

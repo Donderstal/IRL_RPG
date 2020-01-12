@@ -3,15 +3,15 @@ class soundClass {
         this.sound = document.createElement("audio");
         if ( sfx ) {
           this.sound.src = "/static/sfx/" + src;      
-          this.sound.volume = 0.25  
+          this.sound.volume = 0.66  
         }
         else {
           this.sound.src = "/static/music/" + src;     
-          this.sound.volume = 0.75   
+          this.sound.volume = 1   
         }
         this.sound.setAttribute("preload", "auto");
         this.sound.setAttribute("controls", "none");
-        this.sound.setAttribute("id", "src");
+        this.sound.setAttribute("id", src);
         this.sound.style.display = "none";
         document.body.appendChild(this.sound);        
     }

@@ -147,5 +147,6 @@ module.exports = {
     clearEntireCanvas,
     clearBothCanvases,
     writeToTextCanvas,
-    getFrontCanvasContext
+    getFrontCanvasContext,
+    getBackCanvasContext
 }

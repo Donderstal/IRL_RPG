@@ -167,7 +167,7 @@ const drawRow = ( currentMap, currentRow, position ) => {
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     currentMap.mapData.blocked.forEach( ( e ) => {
-        if ( e != Object(e) ) {
+        if ( !e.id ) {
             if ( tile === e || tile === "E" ) {
 
                 currentMap.blockedXyValues.push( { 
@@ -219,18 +219,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     }
 
     const blockSize = globals.GRID_BLOCK_PX  
-
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
-    const rectCtx = canvasHelpers.getFrontCanvasContext()
-/* rectCtx.rect( startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize ) 
-rectCtx.stroke()
-    rectCtx.fillStyle = "white"
-    rectCtx.font = "20px Times New Roman";
-    rectCtx.fillText(
-        tile,
-        startPositionInCanvas.x, startPositionInCanvas.y + 17.5
-    )       */
-
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
         currentMap.tileSheet, 
