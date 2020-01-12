@@ -3,6 +3,7 @@
     "tileSet": "neighbourhood-A2",
     "src": "city1big_tiles.png",
     "outdoors": true,
+    "music": "game-jam.mp3",
     "neighbours": {
         "left": "my-neighbourhood/neighbourhood-A1"
     },

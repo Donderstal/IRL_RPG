@@ -1,8 +1,6 @@
 const state         = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 
-let NPC_FrameCount = 0;
-
 const NPCController = () => {
     if ( state.currentMap.mapData.NPCs ) {
         state.currentMap.mapData.NPCs.forEach( ( NPC) => {
@@ -13,6 +11,18 @@ const NPCController = () => {
 
 const pushJsonNPCToState = ( NPC ) => {
     if ( NPC.type === "static" ) {
+        NPC.sprite.frameCount++
+        if ( NPC.sprite.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
+        
+            NPC.sprite.frameCount = 0;
+            if ( NPC.sprite.animIterator === 0 ) {
+                NPC.sprite.animIterator = 1
+            }
+            else if ( NPC.sprite.animIterator === 1 ) {
+                NPC.sprite.animIterator = 0
+            }
+
+        }
         state.currentMap.layeredSprites.push( NPC.sprite )        
     }
     if ( NPC.type === "dynamic" ) {
@@ -28,7 +38,7 @@ const handleNPCAnimation = ( NPC ) => {
     state.currentMap.layeredSprites.push( NPC.sprite )
 }
 
-const checkForAnimationPath =  (NPC ) => {
+const checkForAnimationPath =  ( NPC ) => {
     NPC.sprite.calcCellFromXy()
 
     if ( NPC.nextPosition.row === NPC.sprite.row && NPC.nextPosition.col === NPC.sprite.col ) {
@@ -60,8 +70,8 @@ const getNextNPCPosition = ( NPC ) => {
 
 const countFrame = ( NPC ) => {
     NPC.sprite.clearSprite()
-    NPC_FrameCount++;
-    const NPC_speed = globals.MOVEMENT_SPEED / 2
+    NPC.sprite.frameCount++;
+    const NPC_speed = globals.MOVEMENT_SPEED
     if ( NPC.nextPosition.direction == 'FACING_RIGHT' ) {
         NPC.sprite.x += NPC_speed        
     }
@@ -78,9 +88,8 @@ const countFrame = ( NPC ) => {
         NPC.sprite.y -= NPC_speed        
     }    
 
-    if ( NPC_FrameCount >= globals.FRAME_LIMIT) {
-        
-        NPC_FrameCount = 0;
+    if ( NPC.sprite.frameCount >= globals.FRAME_LIMIT) {
+        NPC.sprite.frameCount = 0;
         NPC.sprite.animIterator++;
 
         if (NPC.sprite.animIterator >= NPC.sprite.animLoop.length) {

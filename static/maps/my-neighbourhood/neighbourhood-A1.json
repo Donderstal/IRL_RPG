@@ -3,6 +3,7 @@
     "tileSet": "neighbourhood-A1",
     "src": "city1big_tiles.png",
     "outdoors": true,
+    "music": "game-jam.mp3",
     "neighbours": {
         "right": "my-neighbourhood/neighbourhood-A2"
     },
@@ -98,11 +99,21 @@
     ],
     "characters" : [
         {
-            "type": "static",
+            "type": "dynamic",
             "sprite": "neckbeard.png",
             "direction": "FACING_DOWN",
             "row": 5,
             "col": 17,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 5, 
+                "col": 17, 
+                "direction": "FACING_DOWN" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 5, "col": 17, "direction": "FACING_UP" },
+                { "id": 1, "row": 7, "col": 17, "direction": "FACING_DOWN" }
+            ],
             "action": {
                 "type": "TEXT",
                 "direction": "FACING_UP",
@@ -111,7 +122,85 @@
         },
         {
             "type": "dynamic",
-            "sprite": "Chad.png",
+            "sprite": "chad.png",
+            "direction": "FACING_DOWN",
+            "row": 5,
+            "col": 16,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 5, 
+                "col": 16, 
+                "direction": "FACING_DOWN" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 5, "col": 16, "direction": "FACING_UP" },
+                { "id": 1, "row": 7, "col": 16, "direction": "FACING_DOWN" }
+            ],
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_UP",
+                "text": "Do you lift, bro?"
+            }
+        },
+        {
+            "type": "dynamic",
+            "sprite": "influencer.png",
+            "direction": "FACING_DOWN",
+            "row": 5,
+            "col": 15,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 5, 
+                "col": 15, 
+                "direction": "FACING_DOWN" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 5, "col": 15, "direction": "FACING_UP" },
+                { "id": 1, "row": 7, "col": 15, "direction": "FACING_DOWN" }
+            ],
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_UP",
+                "text": "Don't forget to like and subscribe!"
+            }
+        },
+        {
+            "type": "dynamic",
+            "sprite": "tumblr_girl.png",
+            "direction": "FACING_DOWN",
+            "row": 5,
+            "col": 14,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 5, 
+                "col": 14, 
+                "direction": "FACING_DOWN" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 5, "col": 14, "direction": "FACING_UP" },
+                { "id": 1, "row": 7, "col": 14, "direction": "FACING_DOWN" }
+            ],
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_UP",
+                "text": "Ugh, you bigot!"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "chad.png",
+            "direction": "FACING_DOWN",
+            "row": 2,
+            "col": 21,
+            "action": {
+                "type": "TEXT",
+                "direction": "FACING_UP",
+                "text": "Do you even lift, bro?"
+            }
+        },
+        {
+            "type": "dynamic",
+            "sprite": "chad.png",
             "row": 8,
             "col": 14 ,
             "lastPosition" : { 
@@ -121,10 +210,10 @@
                 "direction": "FACING_UP" 
             },
             "path" : [                     
-                { "id": 0, "row": 6, "col": 14, "direction": "FACING_RIGHT" },
-                { "id": 1, "row": 4, "col": 14, "direction": "FACING_UP" },
-                { "id": 2, "row": 4, "col": 10, "direction": "FACING_LEFT" },
-                { "id": 3, "row": 6, "col": 10, "direction": "FACING_DOWN" }
+                { "id": 0, "row": 8, "col": 14, "direction": "FACING_RIGHT" },
+                { "id": 1, "row": 6, "col": 14, "direction": "FACING_UP" },
+                { "id": 2, "row": 6, "col": 10, "direction": "FACING_LEFT" },
+                { "id": 3, "row": 8, "col": 10, "direction": "FACING_DOWN" }
             ],
             "action": {
                 "type": "TEXT",

@@ -18,18 +18,18 @@ const globals = require('../../game-data/globals')
 
 class gamePiece {
 
-    constructor ( initialRow, initalCol, spriteSheetSrc, isPlayerCharacter = false ) {
+    constructor ( initialRow, initalCol, spriteSheetSrc ) {
 
         this.x       = 0
         this.y       = 0
         this.row     = initialRow
         this.col     = initalCol
-
         this.width   = globals.STRD_SPRITE_WIDTH;
         this.height  = globals.STRD_SPRITE_HEIGHT;
 
         this.animLoop      = [ 0, 1, 2, 3]
         this.animIterator  = 0
+        this.frameCount    = 0
         this.direction     = 0;
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();

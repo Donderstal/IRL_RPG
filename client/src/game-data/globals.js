@@ -25,7 +25,7 @@ module.exports = {
 
     // sprite dimensions
     STRD_SPRITE_WIDTH : 37,
-    STRD_SPRITE_HEIGHT : (37 * 1.5),
+    STRD_SPRITE_HEIGHT : 55.5,
 
     
     TILESHEET_GRID_XY_VALUES : [
