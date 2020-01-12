@@ -1,7 +1,14 @@
 class soundClass {
-    constructor ( src ) {
+    constructor ( src, sfx = false ) {
         this.sound = document.createElement("audio");
-        this.sound.src = "/static/music/" + src;
+        if ( sfx ) {
+          this.sound.src = "/static/sfx/" + src;      
+          this.sound.volume = 0.25  
+        }
+        else {
+          this.sound.src = "/static/music/" + src;     
+          this.sound.volume = 0.75   
+        }
         this.sound.setAttribute("preload", "auto");
         this.sound.setAttribute("controls", "none");
         this.sound.setAttribute("id", "src");

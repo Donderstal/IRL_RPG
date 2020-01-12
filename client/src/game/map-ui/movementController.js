@@ -49,6 +49,7 @@ const handleMovementKeys = ( ) => {
         if ( pressedKeys.d || pressedKeys.ArrowRight ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, continueAnimating, 'FACING_RIGHT')
         }    
+        state.currentMap.layeredSprites.push(state.playerCharacter.sprite)
     }
 }
 

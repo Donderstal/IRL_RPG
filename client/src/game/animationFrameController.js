@@ -2,6 +2,7 @@ const movementController = require('./map-ui/movementController')
 const actionController = require('./map-ui/actionController')
 const state         = require('../game-data/state')
 const NPCs          = require('./map-ui/NPCs')
+const canvasHelpers = require('../helpers/canvasHelpers')
 
 const startRequestingFrame = () => {
     requestAnimationFrame(animationFrameController)
@@ -38,9 +39,7 @@ const drawSpritesInOrder = ( ) => {
         }          
     })
 
-    layeredSprites.forEach( (e) => { 
-        e.clearSprite()
-    })
+    canvasHelpers.clearEntireCanvas("FRONT")
 
     layeredSprites.forEach( (e) => {
         e.drawSprite()

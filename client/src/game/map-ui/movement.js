@@ -22,20 +22,6 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
     moveInDirection( sprite, direction )
     countFrame( sprite )
 
-    if ( continueAnimating ) {
-        sprite.player = true 
-        
-        let playerInArray 
-        state.currentMap.layeredSprites.forEach((e) => {
-            if ( e.player === true ) {
-                playerInArray = true 
-            }
-        })
-        if ( !playerInArray ) {
-            state.currentMap.layeredSprites.push(sprite)            
-        }
-    }
-
 }
 
 /**
