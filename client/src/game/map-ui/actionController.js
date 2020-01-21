@@ -10,6 +10,7 @@ let actionIsActive = false
 
 const handleActionButton = ( ) => {
     if ( pressedKeys.spaceBar ) {
+        state.playerCharacter.sprite.calcCellFromXy()
         const spriteRow = state.playerCharacter.sprite.row
         const spriteCol = state.playerCharacter.sprite.col
         const direction = state.playerCharacter.sprite.direction
@@ -18,6 +19,14 @@ const handleActionButton = ( ) => {
             if ( spriteCol === action.col && spriteRow === action.row && direction === globals[action.direction] ) {
                 handleAction(action)
             }
+            else if ( spriteRow === action.row && direction === globals[action.direction] ) {
+                if ( spriteCol === ( action.col + 1) ) {
+                    handleAction(action)
+                }
+                else if ( spriteCol === ( action.col - 1) ) {
+                    handleAction(action)
+                }
+            }
         } )
     }
 }
@@ -25,12 +34,16 @@ const handleActionButton = ( ) => {
 const handleAction = (action) => {
     switch ( action.type ) {
         case "TEXT" :
-            const sfx = new soundClass( action.sfx, true )
-            sfx.play()
+            if ( !document.getElementById(action.sfx) ) {
+                const sfx = new soundClass( action.sfx, true )
+                sfx.play()
+                setTimeout( () => {
+                    document.getElementById(action.sfx).remove()                    
+                }, 1500)
+            } 
             canvasHelpers.writeToTextCanvas( action.text )
-            break
-            
-    }
+            break            
+        }
 }
 module.exports = {
     handleActionButton
