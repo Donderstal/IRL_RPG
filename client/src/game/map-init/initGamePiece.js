@@ -22,10 +22,18 @@ class gamePiece {
 
         this.x       = 0
         this.y       = 0
+
         this.row     = initialRow
         this.col     = initalCol
+        this.cell   = {}
+
         this.width   = globals.STRD_SPRITE_WIDTH;
         this.height  = globals.STRD_SPRITE_HEIGHT;
+
+        this.left    = 0
+        this.right   = 0
+        this.top     = 0
+        this.bottom  = 0
 
         this.animLoop      = [ 0, 1, 2, 3]
         this.animIterator  = 0
@@ -35,6 +43,7 @@ class gamePiece {
         this.sheet         = new Image();
         
         this.calcXyFromCell()
+        
         this.getSpriteAndDrawWhenLoaded()
     }
 
@@ -49,6 +58,20 @@ class gamePiece {
     setXY( xy ) {
         this.x = xy.x
         this.y = xy.y
+        this.updateSpriteBorders( )
+        this.updateSpriteCellXy( )
+    }
+
+    updateSpriteBorders( ) {
+        this.left   = this.x,
+        this.right  = this.x + this.width,
+        this.top    = this.y,
+        this.bottom = this.y + this.height
+    }
+
+    updateSpriteCellXy( ) {
+        this.cell.x = this.x + ( this.width * .5 ),
+        this.cell.y = this.y + ( this.height - globals.GRID_BLOCK_PX)
     }
 
     setCell( cell ) {
@@ -61,12 +84,18 @@ class gamePiece {
         
         this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
         this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
+
+        this.updateSpriteBorders( )
+        this.updateSpriteCellXy( )
     }
         
     calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXY(this.x + ( this.width * .5 ), this.y + ( this.height - globals.GRID_BLOCK_PX))
+        const cell = mapHelpers.getCellOfXY( this.cell.x, this.cell.y )
         this.row = cell.row
         this.col = cell.col
+
+        this.updateSpriteBorders( )
+        this.updateSpriteCellXy( )
     }
 
     drawSprite( ) {

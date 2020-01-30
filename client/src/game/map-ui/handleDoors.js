@@ -22,22 +22,52 @@ const checkIfDoor = ( sprite, direction ) => {
         }
 
     }
-
+    
     const doors = state.currentMap.doors
+    let facingDoor = false;
+
     for( var i = 0; i < doors.length; i++ ) {
         const currentDoor = doors[i]
-        if ( currentDoor.row === sprite.row 
-            && currentDoor.col === sprite.col 
-            && !currentDoor.locked 
-            && direction === currentDoor.directionIn) {
+
+        if ( direction === 'FACING_LEFT' ) {
+            if ( direction == currentDoor.directionIn && currentDoor.x >= sprite.left ) {
+                if ( sprite.cell.y > currentDoor.top && sprite.cell.x < currentDoor.bottom)
+                facingDoor = true
+            }
+        }
+
+        if ( direction === 'FACING_RIGHT' ) {
+            if ( direction == currentDoor.directionIn && currentDoor.x <= sprite.right ) {
+                if ( sprite.cell.y > currentDoor.top && sprite.cell.x < currentDoor.bottom)
+                facingDoor = true
+            }
+        }
+
+        if ( direction === 'FACING_UP' ) {
+            if ( direction == currentDoor.directionIn && currentDoor.y >= sprite.cell.y ) {
+                if ( sprite.cell.x > currentDoor.left && sprite.cell.x < currentDoor.right)
+                facingDoor = true
+            }
+        }
+
+        if ( direction === 'FACING_DOWN' ) {
+            if ( direction == currentDoor.directionIn && currentDoor.y <= sprite.bottom ) {
+                if ( sprite.cell.x > currentDoor.left && sprite.cell.x < currentDoor.right)
+                facingDoor = true
+            }
+        }
+
+        if ( facingDoor ) {
             const sfx = new soundClass( "misc/random5.wav", true )
             sfx.play()
             return currentDoor.to
         }
     }
 
-    return false
+    return facingDoor
 }    
+
+
 
 module.exports = {
     checkIfDoor

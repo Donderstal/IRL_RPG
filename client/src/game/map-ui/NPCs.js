@@ -1,9 +1,12 @@
 const state         = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 
+/**
+ * 
+ */
 const NPCController = () => {
-    if ( state.currentMap.mapData.NPCs ) {
-        state.currentMap.mapData.NPCs.forEach( ( NPC) => {
+    if ( state.currentMap.NPCs ) {
+        state.currentMap.NPCs.forEach( ( NPC) => {
             pushJsonNPCToState(NPC)
         })        
     }
@@ -11,26 +14,30 @@ const NPCController = () => {
 
 const pushJsonNPCToState = ( NPC ) => {
     if ( NPC.type === "static" ) {
-        NPC.sprite.frameCount++
-        if ( NPC.sprite.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
-        
-            NPC.sprite.frameCount = 0;
-            if ( NPC.sprite.animIterator === 0 ) {
-                NPC.sprite.animIterator = 1
-            }
-            else if ( NPC.sprite.animIterator === 1 ) {
-                NPC.sprite.animIterator = 0
-            }
-
-        }
-        state.currentMap.layeredSprites.push( NPC.sprite )        
+        handleStaticNPCAnimation( NPC )
     }
     if ( NPC.type === "dynamic" ) {
-        handleNPCAnimation( NPC )
+        handleDynamicNPCAnimation( NPC )
     }
 }
 
-const handleNPCAnimation = ( NPC ) => {
+const handleStaticNPCAnimation = ( NPC ) => {
+    NPC.sprite.frameCount++
+    if ( NPC.sprite.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
+    
+        NPC.sprite.frameCount = 0;
+        if ( NPC.sprite.animIterator === 0 ) {
+            NPC.sprite.animIterator = 1
+        }
+        else if ( NPC.sprite.animIterator === 1 ) {
+            NPC.sprite.animIterator = 0
+        }
+
+    }
+    state.currentMap.layeredSprites.push( NPC.sprite )          
+}
+
+const handleDynamicNPCAnimation = ( NPC ) => {
     getNextNPCPosition( NPC )
     countFrame( NPC )
 
@@ -43,7 +50,7 @@ const checkForAnimationPath =  ( NPC ) => {
 
     if ( NPC.nextPosition.row === NPC.sprite.row && NPC.nextPosition.col === NPC.sprite.col ) {
         NPC.lastPosition = NPC.nextPosition
-        getNextNPCPosition(NPC)
+        getNextNPCPosition( NPC )
     }
 }
 
@@ -87,6 +94,9 @@ const countFrame = ( NPC ) => {
     if ( NPC.nextPosition.direction == 'FACING_UP' ){
         NPC.sprite.y -= NPC_speed        
     }    
+
+    NPC.sprite.updateSpriteBorders( )
+    NPC.sprite.updateSpriteCellXy( )
 
     if ( NPC.sprite.frameCount >= globals.FRAME_LIMIT) {
         NPC.sprite.frameCount = 0;

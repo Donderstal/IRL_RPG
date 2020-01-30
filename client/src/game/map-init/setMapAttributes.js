@@ -27,20 +27,37 @@ const setMapEvents = ( ) => {
         state.currentMap.doors = []
         const mapDoors = state.currentMap.mapData.doors
 
-        for ( var i = 0; i < mapDoors.length; i++ ) {
 
-            const door = mapDoors[i]
-            const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
-            door.x = doorXy.x
-            door.y = doorXy.y
+        for ( var i = 0; i < mapDoors.length; i++ ) {
+            const newDoor = mapDoors[i]
+            const doorXy = mapHelpers.getXYOfCell( newDoor.row, newDoor.col )
+
+            switch ( newDoor.directionIn ) {
+                case ( 'FACING_DOWN' || 'FACING_UP' ) :
+                    newDoor.y = doorXy.y + globals.GRID_BLOCK_PX
+                    newDoor.left = doorXy.x
+                    newDoor.right = doorXy.x + globals.GRID_BLOCK_PX
+                    break
+                case ( 'FACING_LEFT' ) :
+                    newDoor.x = doorXy.x
+                    newDoor.top = doorXy.y
+                    newDoor.bottom = doorXy.y + globals.GRID_BLOCK_PX
+                    break
+                case ( 'FACING_RIGHT' ) :
+                    newDoor.x = doorXy.x + globals.GRID_BLOCK_PX
+                    newDoor.top = doorXy.y
+                    newDoor.bottom = doorXy.y + globals.GRID_BLOCK_PX
+                    break
+            }            
+
             state.currentMap.doors.push(
-                {...door}
+                {...newDoor}
             )
 
-            if ( previousMap === door.to) {
+            if ( previousMap === newDoor.to) {
                 const sfx = new soundClass( "misc/random6.wav", true )
                 sfx.play()
-                setSpritePositionForNewMap(door)
+                setSpritePositionForNewMap(newDoor)
             }
         }
      }

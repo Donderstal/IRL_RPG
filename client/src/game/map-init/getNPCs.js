@@ -4,12 +4,20 @@ const globals       = require('../../game-data/globals');
 const mapHelpers    = require('../../helpers/mapHelpers');
 const canvasHelpers = require('../../helpers/canvasHelpers');
 
+/**
+* EXPORT @function generateCharacters
+ * 
+ * @param {mapJson} currentMap - JSON of new map
+ * 
+ * Iterate over characters if they are present
+ * 
+ */
 const generateCharacters = ( currentMap ) => {
     const characters = currentMap.mapData.characters
     if ( characters ) {
         characters.forEach( ( character ) => {
             pushCharacterActions( character, currentMap );
-            const sprite = new GamePiece.gamePiece( character.row, character.col, '/static/sprites/'+ character.sprite )
+            const sprite = new NPC( character.row, character.col, character.sprite )
             sprite.direction = globals[character.direction]
 
             sprite.drawSprite()
@@ -44,11 +52,22 @@ const pushCharacterActions = ( character, currentMap ) => {
 }
 
 const pushCharacterSpriteToMapState = ( character, currentMap ) => {
-    if ( currentMap.mapData.NPCs ) {
-        currentMap.mapData.NPCs.push( character  )        
+    if ( currentMap.NPCs ) {
+        currentMap.NPCs.push( character  )        
     }
     else {
-       currentMap.mapData.NPCs = [ character ]
+       currentMap.NPCs = [ character ]
+    }
+}
+
+class NPC extends GamePiece.gamePiece {
+    constructor( row, col, src ) {
+        src = '/static/sprites/'+ src
+        super( row, col, src )        
+    }
+
+    updateXy() {
+        //
     }
 }
 
