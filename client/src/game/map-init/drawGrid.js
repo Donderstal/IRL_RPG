@@ -47,21 +47,9 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 
     const gridStartingPosition = {}
 
-    if ( mapColumns > globals.CANVAS_COLUMNS ) {
-        gridStartingPosition.x = ( ( mapColumns - globals.CANVAS_COLUMNS ) / 2 ) * -globals.GRID_BLOCK_PX
-    }
+    gridStartingPosition.x = Math.ceil( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
 
-    if ( mapColumns <= globals.CANVAS_COLUMNS ) {
-        gridStartingPosition.x = ( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
-    }
-
-    if ( mapRows > globals.CANVAS_ROWS ) {
-        gridStartingPosition.y = ( ( mapRows - globals.CANVAS_ROWS ) / 2 )  * -globals.GRID_BLOCK_PX
-    }
-
-    if ( mapRows <= globals.CANVAS_ROWS ) {
-        gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
-    }
+    gridStartingPosition.y = Math.ceil( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
 
     return gridStartingPosition 
 }
@@ -88,7 +76,8 @@ const drawGrid = ( startingPosition, currentMap ) => {
         drawRow( currentMap, currentRow, position )
 
         position.y += globals.GRID_BLOCK_PX
-        position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
+        position.x = Math.ceil( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
+
     }
 }
 
@@ -220,6 +209,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const blockSize = globals.GRID_BLOCK_PX  
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
+
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
         currentMap.tileSheet, 
@@ -227,8 +217,14 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         blockSize, blockSize,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
-    )          
+    )        
+    
+    
+    // draw tile borders, tilenumber
+    addEventListener      
+    
 }
+
 
 module.exports = {
     generateMap

@@ -5,7 +5,8 @@
     "outdoors": true,
     "music": "game-jam.mp3",
     "neighbours": {
-        "right": "my-neighbourhood/neighbourhood-A2"
+        "right": "my-neighbourhood/neighbourhood-A2",
+        "left": "my-neighbourhood/neighbourhood-A0"
     },
     "uniqueTiles": 299,
     "columns": 23,

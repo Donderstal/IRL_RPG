@@ -43,6 +43,24 @@
             "bottomRight": { "row": 3, "col": 18 }
         }
     ],
+    "doors": [ 
+        {
+            "row": 3, 
+            "col": 17,
+            "to"  : "my-neighbourhood/yum-mart",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        },
+        {
+            "row": 3, 
+            "col": 10,
+            "to"  : "my-neighbourhood/yum-corp",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        }
+    ],
     "characters" : [
         {
             "type": "static",

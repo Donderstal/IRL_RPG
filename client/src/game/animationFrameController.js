@@ -21,6 +21,7 @@ const animationFrameController = () => {
     requestAnimationFrame(animationFrameController)    
     
     drawSpritesInOrder()
+    
 }
 
 

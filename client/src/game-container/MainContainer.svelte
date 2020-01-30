@@ -1,5 +1,6 @@
 <script>
     import classList from '../game/character-init/initClasses.js';
+    import stateLogger from '../game-data/saveState.js';
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import UIContainer from './game-ui-container/UIContainer.svelte'
     import TxtContainer from './game-txt-container/TxtContainer.svelte'
@@ -26,4 +27,6 @@
      />
     <UIContainer /> 
     <TxtContainer />
+
+    <button on:click={stateLogger.logState}> SAVE ME </button>
 </div>
