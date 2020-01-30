@@ -31,14 +31,14 @@ const checkIfDoor = ( sprite, direction ) => {
 
         if ( direction === 'FACING_LEFT' ) {
             if ( direction == currentDoor.directionIn && currentDoor.x >= sprite.left ) {
-                if ( sprite.cell.y > currentDoor.top && sprite.cell.x < currentDoor.bottom)
+                if ( sprite.cell.y > currentDoor.top && sprite.cell.y < currentDoor.bottom)
                 facingDoor = true
             }
         }
 
         if ( direction === 'FACING_RIGHT' ) {
             if ( direction == currentDoor.directionIn && currentDoor.x <= sprite.right ) {
-                if ( sprite.cell.y > currentDoor.top && sprite.cell.x < currentDoor.bottom)
+                if ( sprite.cell.y > currentDoor.top && sprite.cell.y < currentDoor.bottom)
                 facingDoor = true
             }
         }

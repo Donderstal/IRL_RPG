@@ -10,23 +10,45 @@ let actionIsActive = false
 
 const handleActionButton = ( ) => {
     if ( pressedKeys.spaceBar ) {
-        state.playerCharacter.sprite.calcCellFromXy()
-        const spriteRow = state.playerCharacter.sprite.row
-        const spriteCol = state.playerCharacter.sprite.col
-        const direction = state.playerCharacter.sprite.direction
+        const sprite = state.playerCharacter.sprite
+        const direction = sprite.direction
 
-        state.currentMap.mapData.actions.forEach( ( action ) => {
-            if ( spriteCol === action.col && spriteRow === action.row && direction === globals[action.direction] ) {
+        state.currentMap.mapActions.forEach( ( action ) => {
+            let fireAction;
+
+            if ( direction === globals['FACING_LEFT'] ) {
+                if ( direction == globals[action.direction] && action.x >= sprite.left ) {
+                    if ( sprite.cell.y > action.top && sprite.cell.y < action.bottom)
+                    fireAction = true
+                }
+            }
+    
+            if ( direction === globals['FACING_RIGHT'] ) {
+                if ( direction == globals[action.direction] && action.x <= sprite.right ) {
+                    console.log( sprite.cell.y > action.top && sprite.cell.y < action.bottom)
+                    if ( sprite.cell.y > action.top && sprite.cell.y < action.bottom )
+                    fireAction = true
+                }
+            }
+    
+            if ( direction === globals['FACING_UP'] ) {
+                if ( direction == globals[action.direction] && action.y >= sprite.cell.y ) {
+                    if ( sprite.cell.x > action.left && sprite.cell.x < action.right)
+                    fireAction = true
+                }
+            }
+    
+            if ( direction === globals['FACING_DOWN'] ) {
+                if ( direction == globals[action.direction] && action.y <= sprite.bottom ) {
+                    if ( sprite.cell.x > action.left && sprite.cell.x < action.right)
+                    fireAction = true
+                }
+            }
+    
+            if ( fireAction ) {
                 handleAction(action)
             }
-            else if ( spriteRow === action.row && direction === globals[action.direction] ) {
-                if ( spriteCol === ( action.col + 1) ) {
-                    handleAction(action)
-                }
-                else if ( spriteCol === ( action.col - 1) ) {
-                    handleAction(action)
-                }
-            }
+
         } )
     }
 }

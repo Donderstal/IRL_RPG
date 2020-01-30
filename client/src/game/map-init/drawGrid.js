@@ -19,7 +19,7 @@ const getNPCs       = require('./getNPCs')
 const generateMap = ( currentMap, previousMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
-    setMapAttributes.setDoorsAndDetectEntryPoint( previousMap )
+    setMapAttributes.setMapAttributes( previousMap )
     currentMap.blockedXyValues = []
 
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)

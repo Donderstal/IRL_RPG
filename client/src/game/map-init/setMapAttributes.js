@@ -1,14 +1,15 @@
-const globals = require('../../game-data/globals')
-const state = require('../../game-data/state')
-const mapHelpers = require('../../helpers/mapHelpers')
+const globals       = require('../../game-data/globals')
+const state         = require('../../game-data/state')
+const mapHelpers    = require('../../helpers/mapHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
 const soundClass    = soundHelper.soundClass
 
 /**
  * EXPORT @function setMapEvents
  */
-const setMapEvents = ( ) => {
-    state.currentMap.events = []
+const setMapAttributes = ( previousMap ) => {
+    setDoorsAndDetectEntryPoint( previousMap )
+    setActions( )
 }
 
 
@@ -33,11 +34,6 @@ const setMapEvents = ( ) => {
             const doorXy = mapHelpers.getXYOfCell( newDoor.row, newDoor.col )
 
             switch ( newDoor.directionIn ) {
-                case ( 'FACING_DOWN' || 'FACING_UP' ) :
-                    newDoor.y = doorXy.y + globals.GRID_BLOCK_PX
-                    newDoor.left = doorXy.x
-                    newDoor.right = doorXy.x + globals.GRID_BLOCK_PX
-                    break
                 case ( 'FACING_LEFT' ) :
                     newDoor.x = doorXy.x
                     newDoor.top = doorXy.y
@@ -48,10 +44,14 @@ const setMapEvents = ( ) => {
                     newDoor.top = doorXy.y
                     newDoor.bottom = doorXy.y + globals.GRID_BLOCK_PX
                     break
+                default :
+                    newDoor.y = doorXy.y + globals.GRID_BLOCK_PX
+                    newDoor.left = doorXy.x
+                    newDoor.right = doorXy.x + globals.GRID_BLOCK_PX
             }            
 
             state.currentMap.doors.push(
-                {...newDoor}
+                newDoor
             )
 
             if ( previousMap === newDoor.to) {
@@ -62,6 +62,38 @@ const setMapEvents = ( ) => {
         }
      }
 
+}
+
+const setActions = (  ) => {
+    state.currentMap.mapActions = []
+
+    var actionsInMap = state.currentMap.mapData.actions
+
+    for ( var i = 0; i < actionsInMap.length; i++ ) {
+        const newAction = actionsInMap[i]
+        const actionCellXy = mapHelpers.getXYOfCell( newAction.row, newAction.col )
+
+        switch ( newAction.direction ) {
+            case ( 'FACING_LEFT' ) :
+                newAction.x = actionCellXy.x
+                newAction.top = actionCellXy.y
+                newAction.bottom = actionCellXy.y + globals.GRID_BLOCK_PX
+                break
+            case ( 'FACING_RIGHT' ) :
+                newAction.x = actionCellXy.x + globals.GRID_BLOCK_PX
+                newAction.top = actionCellXy.y
+                newAction.bottom = actionCellXy.y + globals.GRID_BLOCK_PX
+                break
+            default :
+                newAction.y = actionCellXy.y + globals.GRID_BLOCK_PX
+                newAction.left = actionCellXy.x
+                newAction.right = actionCellXy.x + globals.GRID_BLOCK_PX
+        }            
+
+        state.currentMap.mapActions.push(
+            newAction
+        )
+    }
 }
 
 /**
@@ -79,5 +111,5 @@ const setMapEvents = ( ) => {
  }
 
  module.exports = {
-    setDoorsAndDetectEntryPoint
+    setMapAttributes
  }
