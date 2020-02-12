@@ -2,20 +2,6 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const mapHelpers = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 
-// The gamePiece class will be assigned to all map characters in the game
-
-// What should our gamePiece class do and why?
-
-// Starting XY location should be passed to the constructor on initialization
-// Spritesheet src should be passed to constructor on initialization
-// Should we log row/ column location of sprite?
-// Direction sprite is facing should be passed to constructor
-// Possibly a boolean to identify player character and npcs
-
-// Method for drawing the sprite
-// Method for clearing the sprite
-// more methods?
-
 class gamePiece {
 
     constructor ( initialRow, initalCol, spriteSheetSrc ) {
@@ -43,16 +29,19 @@ class gamePiece {
         this.sheet         = new Image();
         
         this.calcXyFromCell()
-        
-        this.getSpriteAndDrawWhenLoaded()
+        this.loaded = false
+        this.getSpriteAndDrawWhenLoaded( )
     }
 
     getSpriteAndDrawWhenLoaded( ) {
-        this.sheet.onload = () => {
-            this.drawSprite()
-        }
+        if ( !this.loaded ) {
+            this.sheet.onload = () => {
+                this.loaded = true
+                this.drawSprite()
+            }
 
-        this.sheet.src = this.sheetSrc
+            this.sheet.src = this.sheetSrc            
+        }
     }
     
     setXY( xy ) {

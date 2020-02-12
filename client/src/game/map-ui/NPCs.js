@@ -19,6 +19,7 @@ const pushJsonNPCToState = ( NPC ) => {
     if ( NPC.type === "dynamic" ) {
         handleDynamicNPCAnimation( NPC )
     }
+    state.currentMap.layeredSprites.push( NPC.sprite )   
 }
 
 const handleStaticNPCAnimation = ( NPC ) => {
@@ -34,7 +35,7 @@ const handleStaticNPCAnimation = ( NPC ) => {
         }
 
     }
-    state.currentMap.layeredSprites.push( NPC.sprite )          
+       
 }
 
 const handleDynamicNPCAnimation = ( NPC ) => {
@@ -42,7 +43,9 @@ const handleDynamicNPCAnimation = ( NPC ) => {
     countFrame( NPC )
 
     checkForAnimationPath( NPC )
-    state.currentMap.layeredSprites.push( NPC.sprite )
+
+    NPC.blocked = NPC.sprite.updateBlockedXy( )
+    NPC.sprite.updateActionXy( NPC.action )
 }
 
 const checkForAnimationPath =  ( NPC ) => {
@@ -66,17 +69,16 @@ const getNextNPCPosition = ( NPC ) => {
             if ( index == pathLength ) {
                 NPC.nextPosition = NPC.path[0] 
             }
-
             else {
                 NPC.nextPosition = NPC.path[pathIterator]
             }
         }
     }
+
     NPC.sprite.direction = globals[NPC.nextPosition.direction]
 }
 
 const countFrame = ( NPC ) => {
-    NPC.sprite.clearSprite()
     NPC.sprite.frameCount++;
     const NPC_speed = globals.MOVEMENT_SPEED * 0.5
     if ( NPC.nextPosition.direction == 'FACING_RIGHT' ) {

@@ -15,18 +15,6 @@ module.exports = {
 
     // animation frame limit
     FRAME_LIMIT    : 12,
-
-    // canvas dimensions
-    GRID_BLOCK_PX  : 37,
-    CANVAS_WIDTH   : 888,
-    CANVAS_HEIGHT  : 592,
-    CANVAS_COLUMNS : 23,
-    CANVAS_ROWS    : 15,
-
-    // sprite dimensions
-    STRD_SPRITE_WIDTH : 37,
-    STRD_SPRITE_HEIGHT : 55.5,
-
     
     TILESHEET_GRID_XY_VALUES : [
 

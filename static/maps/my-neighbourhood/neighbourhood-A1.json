@@ -84,7 +84,7 @@
         {
             "row": 3, 
             "col": 6,
-            "to"  : "my-neighbourhood/my-other-house",
+            "to"  : "my-neighbourhood/neighbourhood-A0",
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",
             "locked": false
@@ -92,7 +92,7 @@
         {
             "row": 3, 
             "col": 7,
-            "to"  : "my-neighbourhood/my-other-house",
+            "to"  : "my-neighbourhood/neighbourhood-A0",
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",
             "locked": false

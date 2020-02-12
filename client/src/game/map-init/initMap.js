@@ -62,6 +62,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMapName  ) => {
  */
 const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
     canvasHelpers.getLoadingScreen()
+    state.currentMap.NPCs = []
     movementController.stopPlayerMovement()
 
     fetchMapJsonWithCallback( newMap, oldMap )   

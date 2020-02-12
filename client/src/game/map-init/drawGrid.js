@@ -18,12 +18,15 @@ const getNPCs       = require('./getNPCs')
 
 const generateMap = ( currentMap, previousMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
+    
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
+    currentMap.blockedXyValues = []    
+    getNPCs.generateCharacters( currentMap )
+
     setMapAttributes.setMapAttributes( previousMap )
-    currentMap.blockedXyValues = []
 
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
-    getNPCs.generateCharacters( currentMap )
+
 
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src

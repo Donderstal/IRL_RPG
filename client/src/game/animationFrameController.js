@@ -43,7 +43,10 @@ const drawSpritesInOrder = ( ) => {
     canvasHelpers.clearEntireCanvas("FRONT")
 
     layeredSprites.forEach( (e) => {
-        e.drawSprite()
+        e.loaded ? e.drawSprite() : e.getSpriteAndDrawWhenLoaded()
+        if ( !e.drawSprite() && !e.getSpriteAndDrawWhenLoaded() ) {
+
+        }
     })        
 }
 

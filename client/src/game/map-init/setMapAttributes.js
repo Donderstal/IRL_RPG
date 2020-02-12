@@ -1,6 +1,7 @@
 const globals       = require('../../game-data/globals')
 const state         = require('../../game-data/state')
 const mapHelpers    = require('../../helpers/mapHelpers')
+const actionHelpers    = require('../../helpers/actionHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
 const soundClass    = soundHelper.soundClass
 
@@ -31,27 +32,9 @@ const setMapAttributes = ( previousMap ) => {
 
         for ( var i = 0; i < mapDoors.length; i++ ) {
             const newDoor = mapDoors[i]
-            const doorXy = mapHelpers.getXYOfCell( newDoor.row, newDoor.col )
-
-            switch ( newDoor.directionIn ) {
-                case ( 'FACING_LEFT' ) :
-                    newDoor.x = doorXy.x
-                    newDoor.top = doorXy.y
-                    newDoor.bottom = doorXy.y + globals.GRID_BLOCK_PX
-                    break
-                case ( 'FACING_RIGHT' ) :
-                    newDoor.x = doorXy.x + globals.GRID_BLOCK_PX
-                    newDoor.top = doorXy.y
-                    newDoor.bottom = doorXy.y + globals.GRID_BLOCK_PX
-                    break
-                default :
-                    newDoor.y = doorXy.y + globals.GRID_BLOCK_PX
-                    newDoor.left = doorXy.x
-                    newDoor.right = doorXy.x + globals.GRID_BLOCK_PX
-            }            
-
+            
             state.currentMap.doors.push(
-                newDoor
+                actionHelpers.generateAction( 'MAP', newDoor )
             )
 
             if ( previousMap === newDoor.to) {
@@ -67,33 +50,16 @@ const setMapAttributes = ( previousMap ) => {
 const setActions = (  ) => {
     state.currentMap.mapActions = []
 
-    var actionsInMap = state.currentMap.mapData.actions
+    if ( state.currentMap.mapData.actions ) {
+        var actionsInMap = state.currentMap.mapData.actions
 
-    for ( var i = 0; i < actionsInMap.length; i++ ) {
-        const newAction = actionsInMap[i]
-        const actionCellXy = mapHelpers.getXYOfCell( newAction.row, newAction.col )
-
-        switch ( newAction.direction ) {
-            case ( 'FACING_LEFT' ) :
-                newAction.x = actionCellXy.x
-                newAction.top = actionCellXy.y
-                newAction.bottom = actionCellXy.y + globals.GRID_BLOCK_PX
-                break
-            case ( 'FACING_RIGHT' ) :
-                newAction.x = actionCellXy.x + globals.GRID_BLOCK_PX
-                newAction.top = actionCellXy.y
-                newAction.bottom = actionCellXy.y + globals.GRID_BLOCK_PX
-                break
-            default :
-                newAction.y = actionCellXy.y + globals.GRID_BLOCK_PX
-                newAction.left = actionCellXy.x
-                newAction.right = actionCellXy.x + globals.GRID_BLOCK_PX
-        }            
-
-        state.currentMap.mapActions.push(
-            newAction
-        )
+        for ( var i = 0; i < actionsInMap.length; i++ ) {
+            state.currentMap.mapActions.push(
+                actionHelpers.generateAction( 'NPC', actionsInMap[i] )
+            )
+        }        
     }
+
 }
 
 /**
