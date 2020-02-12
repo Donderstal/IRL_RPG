@@ -217,7 +217,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         "BACK",
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
-        blockSize, blockSize,
+        37, 37,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        

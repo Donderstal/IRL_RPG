@@ -91,9 +91,9 @@ class gamePiece {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.animLoop[this.animIterator] * globals.GRID_BLOCK_PX, 
-            this.direction * globals.GRID_BLOCK_PX, 
-            globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX,
+            this.animLoop[this.animIterator] * 37, 
+            this.direction * 37, 
+            37, 37,
             this.x, this.y, this.width, this.height
         )
     }

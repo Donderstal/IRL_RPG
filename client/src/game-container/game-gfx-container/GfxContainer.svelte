@@ -9,16 +9,16 @@
         display: flex;
         flex-direction: column;
         flex: 75%;
-        height: 592px;
-        width: 888px;
-        background-color: rgb(139, 4, 4);
+        height: 880px;
+        width: 1320px;
+        background-color: black;
         justify-content: center;
         text-align: center;
     }
 
     .game-background-body {
-        height: 592px;
-        width: 888px;
+        height: 880px;
+        width: 1320px;
         background-color: transparent;
         background-size: cover;
         margin: 0 auto;
@@ -27,8 +27,8 @@
 
     .game-front-body {
         position: absolute;
-        height: 592px;
-        width: 888px;
+        height: 880px;
+        width: 1320px;
         background-color: transparent;
         margin: 0 auto;
         z-index: 5

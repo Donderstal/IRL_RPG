@@ -11,11 +11,9 @@
     .main-container {
         display: flex;
         flex-direction: column;
-        max-width: 900px;
+        width: 1320px;
         margin: 0 auto;
-        height: 90vh;
-        border-left: 1px groove #190019;
-        border-right: 1px groove #190019;
+        height: 100vh;
         box-shadow: -15px 0 15px -15px inset;
     }
 

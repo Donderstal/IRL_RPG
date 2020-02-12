@@ -47,8 +47,8 @@ const initCanvas = (canvasNum, map = null) => {
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
     canvas.style.display = 'block'
     let ctx         = canvas.getContext('2d');
-    ctx.canvas.height   = 592
-    ctx.canvas.width    = 888
+    ctx.canvas.height   = 880
+    ctx.canvas.width    = 1320
 
     if (canvasNum === 0) {
 
