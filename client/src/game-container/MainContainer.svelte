@@ -13,12 +13,10 @@
         allButtons.forEach( ( e ) => {
             if ( e.id !== 'hide-buttons-button' ) {
                 if ( buttonsAreHidden ) {
-                    console.log( e.style.left )
                     e.style.visibility = 'visible'
                     document.getElementById('hide-buttons-button').innerText = "HIDE BUTTONS"
                 }
                 else {
-                    console.log( e.style.left )
                     e.style.visibility =  'hidden'
                     document.getElementById('hide-buttons-button').innerText = "SHOW"                    
                 }

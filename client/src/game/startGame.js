@@ -22,7 +22,6 @@ const stopGame = () => {
  * @param {string} url 
  */
 const startNewGame = ( ) => {
-    console.log(firstMapUrl)
     utility.fetchJSONWithCallback( firstMapUrl, initMap.initializeMap )
 }
 
@@ -72,6 +71,7 @@ const initCanvas = ( canvas ) => {
 }
 
 const startGame = ( savedGame = null ) => {
+    console.log( 'jo' )
     document.getElementById('intro-screen').style.display = 'none';
 
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {

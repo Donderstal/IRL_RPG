@@ -37,7 +37,6 @@ const generateMap = ( currentMap, previousMap ) => {
 }
 
 const calcTilesheetXyPositions = ( tilesInSheet ) => {
-    console.log(tilesInSheet)
     let tileX = 0
     let tileY = 0
     state.currentMap.tilesheetXyValues = []
@@ -46,7 +45,6 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
         state.currentMap.tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
         tileX += 37
         if ( i % 4 == 3 ) {
-            console.log( i )
             tileX = 0
             tileY += 37
         }
@@ -232,11 +230,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const blockSize = globals.GRID_BLOCK_PX  
     const tilePositionInSheet = currentMap.tilesheetXyValues[tile]
-    /* calcSheetXyPositionOfTile( tile ) */
-
-    if ( tilePositionInSheet == undefined ) {
-        console.log(tile)
-    }
 
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
