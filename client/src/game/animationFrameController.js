@@ -21,12 +21,14 @@ const animationFrameController = () => {
 
     movementController.handleMovementKeys()
 
-    actionController.handleActionButton()
-
     requestAnimationFrame(animationFrameController)    
     
     drawSpritesInOrder()
     
+    if ( state.currentMap.bubbleIsActive ) {
+        state.currentMap.activeBubble.drawText( )
+    }
+
 }
 
 /**

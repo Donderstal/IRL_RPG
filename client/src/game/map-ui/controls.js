@@ -1,5 +1,7 @@
 let pressedKeys = {};
 
+const actionController = require('./actionController')
+
 /**
  * EXPORT @function listenForKeyPress
  * Listen for keypresses
@@ -23,15 +25,13 @@ const stopListenForKeyPress = () => {
 
 const addKeyToPressed = () => {
     if (event.key === " ") {
-        pressedKeys.spaceBar = true        
+        console.log( 'jooo')
+        actionController.handleActionButton( )        
     }
     pressedKeys[event.key] = true
 }
 
 const removeKeyFromPressed = () => {
-    if (event.key === " ") {
-        pressedKeys.spaceBar = false     
-    }
     pressedKeys[event.key] = false
 }
 

@@ -89,8 +89,9 @@ const getLoadingScreen = () => {
 }
 
 const writeToTextCanvas = ( text ) => {
-    let ctx = getTextCanvasContext()
+    let ctx = getFrontCanvasContext()
     ctx.font = "20px Times New Roman";
+    ctx.color = "white"
     ctx.fillText(
         text,
         5, globals.GRID_BLOCK_PX
