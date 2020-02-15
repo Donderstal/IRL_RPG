@@ -15,28 +15,6 @@ module.exports = {
 
     // animation frame limit
     FRAME_LIMIT    : 12,
-
-    // canvas dimensions
-    /* GRID_BLOCK_PX  : 37,
-    CANVAS_WIDTH   : 888,
-    CANVAS_HEIGHT  : 592,
-    CANVAS_COLUMNS : 23,
-    CANVAS_ROWS    : 15,
-
-    // sprite dimensions
-    STRD_SPRITE_WIDTH : 37,
-    STRD_SPRITE_HEIGHT : 55.5, */
-
-    // canvas dimensions
-    /* GRID_BLOCK_PX  : 50,
-    CANVAS_WIDTH   : 1200,
-    CANVAS_HEIGHT  : 800,
-    CANVAS_COLUMNS : 23,
-    CANVAS_ROWS    : 15,
-
-    // sprite dimensions
-    STRD_SPRITE_WIDTH : 50,
-    STRD_SPRITE_HEIGHT : 75, */
     
     GRID_BLOCK_PX  : 54,
     CANVAS_WIDTH   : 1296,
