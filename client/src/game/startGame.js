@@ -2,6 +2,7 @@ const movementController = require('./map-ui/movementController')
 const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const initMap = require('./map-init/initMap')
+const utility = require('../helpers/utilFunctions')
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
@@ -19,9 +20,7 @@ const stopGame = () => {
  * @param {string} url 
  */
 const startNewGame = ( ) => {
-    initMap.fetchMapJsonWithCallback( 
-        'my-neighbourhood/my-house', "NO" 
-        )
+    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap.initializeMap )
 }
 
 /**

@@ -13,7 +13,19 @@ const getInputVal = (id) => {
     return document.getElementById(id).value
 }   
 
+const fetchJSONWithCallback = ( url, callback, callbackParams = null ) => {
+    fetch(url)
+        .then( (response) => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json()
+        })
+        .then( callback(json, callbackParams) )
+}
+
 module.exports = {
     docReady,
-    getInputVal
+    getInputVal,
+    fetchJSONWithCallback
 }

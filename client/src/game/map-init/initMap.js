@@ -2,54 +2,36 @@ const state         = require('../../game-data/state')
 const drawGrid      = require('./drawGrid')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
+const utility       = require('../../helpers/utilFunctions')
 const soundClass    = soundHelper.soundClass
 const createCharInstance = require('../createCharInstance')
 const movementController = require('../map-ui/movementController')
 
-/** 
- * EXPORTED @function fetchMapJsonWithCallback
- * Fetch JSON file with data based on path relative to Maps folder
- * 
- * @param {string} worldName - Name of Map written as follows: 'path/to/Map'
- * @callback generateMap - Start Map rendering with JSON data when fetch succeeds
- */
+const initializeMap = ( mapJson, previousMapName ) => {
+    state.currentMap.mapData = mapJson;
+    canvasHelpers.clearBothCanvases()
 
-const fetchMapJsonWithCallback = ( worldName, previousMapName  ) => {
-    fetch('/static/maps/' + worldName +'.json')
-        .then( (response) => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.json()
-        })
-        .then( (json) => {
-            state.currentMap.mapData = json;
-            canvasHelpers.clearBothCanvases()
+    if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
+        state.currentMap.mapMusic.stop()  
+    }
 
-            if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-                state.currentMap.mapMusic.stop()  
-            }
+    setTimeout(() => {
+        drawGrid.generateMap( state.currentMap, previousMapName  )               
+    }, 500)
 
-            setTimeout(() => {
-                drawGrid.generateMap( state.currentMap, previousMapName  )               
-            }, 500)
+    setTimeout(() => {
+        if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
+            state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
+            state.currentMap.mapMusic.play()         
+        }
 
-            setTimeout(() => {
-                if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-                    state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
-                    state.currentMap.mapMusic.play()         
-                }
-
-                if ( previousMapName  === "NO" ) {
-                    state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
-                }
-                else {
-                    initPlayerSpriteInNewMap(previousMapName )
-                }          
-            }, 1000)
-
-
-    })    
+        if ( previousMapName  === null ) {
+            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
+        }
+        else {
+            initPlayerSpriteInNewMap(previousMapName )
+        }          
+    }, 1000)
 }
 
 /**
@@ -60,7 +42,7 @@ const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
     state.currentMap.NPCs = []
     movementController.stopPlayerMovement()
 
-    fetchMapJsonWithCallback( newMap, oldMap )   
+    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initializeMap, oldMap )
 }
 
 
@@ -108,7 +90,7 @@ const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName
 }
 
 module.exports = {
-    fetchMapJsonWithCallback,
+    initializeMap,
     initPlayerSpriteInNewMap,
     initNewMapAfterClearingOld
 }
