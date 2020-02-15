@@ -15,7 +15,7 @@ const getTextCanvasContext = () => {
 const initTextCanvas = () => {
     let ctx = getTextCanvasContext()
 
-    ctx.fillStyle = "white"
+    ctx.fillStyle = "white,"
         ctx.fillRect( 
             0, 0,
             globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT / 6

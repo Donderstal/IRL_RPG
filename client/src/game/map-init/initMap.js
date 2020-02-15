@@ -35,12 +35,7 @@ const fetchMapJsonWithCallback = ( worldName, previousMap ) => {
 }
 
 /**
- * EXPORT @function initNewMapAfterClearingOld
- * 
- * Call @stopMovementAndKeyListen from utilFunctions
- * Call @clearBothCanvases from @namespace canvasHelpers
- * Get the loading screen
- * Then fetch the new map
+ * Get the loading screen, stop player controls and fetch the new map
  */
 const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
     canvasHelpers.getLoadingScreen()
@@ -51,20 +46,17 @@ const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
 
 
 /**
- * EXPORT @function initPlayerSpriteInNewMap
- * 
- * call @clearEntireCanvas from canvasHelpers
+ * Call front and back canvas.
+ * Update player sprite locations and draw.
+ * Start player controls
  */
 const initPlayerSpriteInNewMap = () => {
     canvasHelpers.clearBothCanvases()
     state.playerCharacter.sprite.calcXyFromCell()
     state.playerCharacter.sprite.drawSprite() 
     movementController.startPlayerMovement()
-    console.log(state)
+
  }
-
-
-
 
 module.exports = {
     fetchMapJsonWithCallback,

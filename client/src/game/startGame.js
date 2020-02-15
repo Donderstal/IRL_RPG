@@ -1,27 +1,13 @@
 const movementController = require('./map-ui/movementController')
-const initMap = require('./map-init/initMap')
-const util = require('../helpers/utilFunctions')
 const animationFrameController = require('./animationFrameController')
-const canvasHelpers = require('../helpers/canvasHelpers')
+const globals = require('../game-data/globals')
 
-const startGame = () => {
+const firstMap = ;
 
-    const charName      =  util.getInputVal('name')
-    const map           =  util.getInputVal('map')
-    const charClass     =  util.getInputVal('class')
+const startGame = ( savedGame = null ) => {
+    preparePageForGame()
 
-    // The setTimeouts setup is not definitive and might change later
-    setTimeout( () => {
-        document.getElementById('intro-screen').style.display = 'none'
-    }, 25 )
-
-    setTimeout( () => {
-        initCanvas(0, map)      
-        initCanvas(1)
-        canvasHelpers.initTextCanvas()
-        document.getElementById('stopGameButton').style.display = 'block'
-        document.getElementsByTagName('canvas')[2].style.display = 'block'
-    }, 50 )
+    ( savedGame == null ) ? startNewGame() : loadGameFromSave(savedGame)
 
     setTimeout( () => {
         movementController.startPlayerMovement()      
@@ -41,26 +27,44 @@ const stopGame = () => {
     movementController.stopPlayerMovement()
 }
 
-const initCanvas = (canvasNum, map = null) => {
-    // canvasNum === 0 generates background Canvas
-    // 1 generates the front canvas
-    const canvas    = document.getElementsByTagName('canvas')[canvasNum]
+/**
+ * 
+ */
+const preparePageForGame = () => {
+    document.getElementById('intro-screen').style.display = 'none'
+    const gameCanvases = Array.from(document.getElementsByTagName('canvas'))
+
+    gameCanvases.forEach( ( canvas ) => {
+        initCanvas( canvas )
+    } )
+}
+
+/**
+ * @param {string} url 
+ */
+const startNewGame = ( ) => {
+
+}
+
+/**
+ * @param {object} savedGameState saved game state object from a previous session
+ * 
+ * Run drawgrid function based on saved mapdata.
+ */
+
+const loadGameFromSave = ( savedGameState ) => {
+    // 
+}
+
+/**
+ * @param {HTMLElement} canvas
+ * 
+ * Prepare canvas for game
+ */
+const initCanvas = ( canvas ) => {
     canvas.style.display = 'block'
-    let ctx         = canvas.getContext('2d');
-    ctx.canvas.height   = 592
-    ctx.canvas.width    = 888
-
-    if (canvasNum === 0) {
-
-        canvas.id           = 'game-background-canvas'
-
-        initMap.fetchMapJsonWithCallback( map, "NO" )
-    } 
-    else { 
-        canvas.id           = 'game-front-canvas'
-    }
-
-    return ctx
+    canvas.height = ( canvas.id === 'game-text-canvas' ) ? (globals.CANVAS_HEIGHT / 6) : globals.CANVAS_HEIGHT 
+    canvas.width = globals.CANVAS_WIDTH   
 }
 
 module.exports = {

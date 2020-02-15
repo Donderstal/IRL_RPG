@@ -71,7 +71,7 @@ const moveInDirection = ( sprite, direction ) => {
             sprite.y -= globals.MOVEMENT_SPEED        
         }     
         
-        state.playerCharacter.sprite.calcCellFromXy( )
+        state.playerCharacter.sprite.calcCellFromXy( );
     }
 
     

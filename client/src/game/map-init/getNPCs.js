@@ -4,6 +4,16 @@ const globals       = require('../../game-data/globals');
 const mapHelpers    = require('../../helpers/mapHelpers');
 const canvasHelpers = require('../../helpers/canvasHelpers');
 
+/**
+ * @function generateCharacters
+ * 
+ * @param currentMap MapJSON object
+ * 
+ * Get characters array from currentMap
+ * InitGamePiece for each
+ * push to map state
+ * push spriteborders to blockedxys
+ */
 const generateCharacters = ( currentMap ) => {
     const characters = currentMap.mapData.characters
     if ( characters ) {
