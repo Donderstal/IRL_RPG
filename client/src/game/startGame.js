@@ -6,17 +6,13 @@ const canvasHelpers = require('../helpers/canvasHelpers')
 
 const startGame = () => {
 
-    const charName      =  util.getInputVal('name')
-    const map           =  util.getInputVal('map')
-    const charClass     =  util.getInputVal('class')
-
     // The setTimeouts setup is not definitive and might change later
     setTimeout( () => {
         document.getElementById('intro-screen').style.display = 'none'
     }, 25 )
 
     setTimeout( () => {
-        initCanvas(0, map)      
+        initCanvas(0, 'my-neighbourhood/my-house')      
         initCanvas(1)
         canvasHelpers.initTextCanvas()
         document.getElementById('stopGameButton').style.display = 'block'
@@ -47,8 +43,8 @@ const initCanvas = (canvasNum, map = null) => {
     const canvas    = document.getElementsByTagName('canvas')[canvasNum]
     canvas.style.display = 'block'
     let ctx         = canvas.getContext('2d');
-    ctx.canvas.height   = 880
-    ctx.canvas.width    = 1320
+    ctx.canvas.height   = 864
+    ctx.canvas.width    = 1296
 
     if (canvasNum === 0) {
 

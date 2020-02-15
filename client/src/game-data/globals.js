@@ -38,15 +38,15 @@ module.exports = {
     STRD_SPRITE_WIDTH : 50,
     STRD_SPRITE_HEIGHT : 75, */
     
-    GRID_BLOCK_PX  : 55,
-    CANVAS_WIDTH   : 1320,
-    CANVAS_HEIGHT  : 880,
+    GRID_BLOCK_PX  : 54,
+    CANVAS_WIDTH   : 1296,
+    CANVAS_HEIGHT  : 864,
     CANVAS_COLUMNS : 23,
     CANVAS_ROWS    : 15,
 
     // sprite dimensions
-    STRD_SPRITE_WIDTH : 55,
-    STRD_SPRITE_HEIGHT : 82.5,
+    STRD_SPRITE_WIDTH : 54,
+    STRD_SPRITE_HEIGHT : 81,
     
     TILESHEET_GRID_XY_VALUES : [
 
