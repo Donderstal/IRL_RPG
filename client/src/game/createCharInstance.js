@@ -6,7 +6,8 @@ const getCharacter = ( className, name, playerStart ) => {
         
         // entry point for creating a character
         // is called from GfxContainer.svelte
-
+        // posssible third property for usage in story state?
+        
         stats : initChar.getCharWithClass( className, name ),
         sprite : new initGamePiece.gamePiece( playerStart.row, playerStart.col, '/static/sprites/neckbeard.png' )               
     }

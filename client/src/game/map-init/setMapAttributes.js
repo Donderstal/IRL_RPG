@@ -1,12 +1,16 @@
-const globals = require('../../game-data/globals')
-const state = require('../../game-data/state')
-const mapHelpers = require('../../helpers/mapHelpers')
+const globals       = require('../../game-data/globals')
+const state         = require('../../game-data/state')
+const mapHelpers    = require('../../helpers/mapHelpers')
+const actionHelpers    = require('../../helpers/actionHelpers')
+const soundHelper   = require('../../helpers/soundHelpers')
+const soundClass    = soundHelper.soundClass
 
 /**
  * EXPORT @function setMapEvents
  */
-const setMapEvents = ( ) => {
-    state.currentMap.events = []
+const setMapAttributes = ( previousMap ) => {
+    setDoorsAndDetectEntryPoint( previousMap )
+    setActions( )
 }
 
 
@@ -25,21 +29,36 @@ const setMapEvents = ( ) => {
         state.currentMap.doors = []
         const mapDoors = state.currentMap.mapData.doors
 
-        for ( var i = 0; i < mapDoors.length; i++ ) {
 
-            const door = mapDoors[i]
-            const doorXy = mapHelpers.getXYOfCell( door.row, door.col )
-            door.x = doorXy.x
-            door.y = doorXy.y
+        for ( var i = 0; i < mapDoors.length; i++ ) {
+            const newDoor = mapDoors[i]
+            
             state.currentMap.doors.push(
-                {...door}
+                actionHelpers.generateAction( 'MAP', newDoor )
             )
 
-            if ( previousMap === door.to) {
-                setSpritePositionForNewMap(door)
+            if ( previousMap === newDoor.to) {
+                const sfx = new soundClass( "misc/random6.wav", true )
+                sfx.play()
+                setSpritePositionForNewMap(newDoor)
             }
         }
      }
+
+}
+
+const setActions = (  ) => {
+    state.currentMap.mapActions = []
+
+    if ( state.currentMap.mapData.actions ) {
+        var actionsInMap = state.currentMap.mapData.actions
+
+        for ( var i = 0; i < actionsInMap.length; i++ ) {
+            state.currentMap.mapActions.push(
+                actionHelpers.generateAction( 'NPC', actionsInMap[i] )
+            )
+        }        
+    }
 
 }
 
@@ -58,5 +77,5 @@ const setMapEvents = ( ) => {
  }
 
  module.exports = {
-    setDoorsAndDetectEntryPoint
+    setMapAttributes
  }

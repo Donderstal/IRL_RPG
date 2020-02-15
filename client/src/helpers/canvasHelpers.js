@@ -52,7 +52,6 @@ const drawFromImageToCanvas = (
 
     let ctx;
     canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
-
     ctx.drawImage(
         image, 
         imageX, imageY, 
@@ -147,5 +146,6 @@ module.exports = {
     clearEntireCanvas,
     clearBothCanvases,
     writeToTextCanvas,
-    getFrontCanvasContext
+    getFrontCanvasContext,
+    getBackCanvasContext
 }

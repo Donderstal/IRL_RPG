@@ -8,14 +8,13 @@
 	div {
 		text-align: center;
 		height: 100vh;
+		        background-color: black;
 	}
 
 </style>
 
 <div>
-	<Header />
 	<MainContainer />	
-	<Footer/>
 </div>
 
 

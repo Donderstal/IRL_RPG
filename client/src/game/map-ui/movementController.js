@@ -36,7 +36,7 @@ const stopPlayerMovement = () => {
  */
 const handleMovementKeys = ( ) => {   
 
-    if ( continueAnimating ) {
+    if ( continueAnimating && state.playerCharacter.sprite != undefined ) {
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, continueAnimating, 'FACING_UP')
         }
@@ -49,7 +49,10 @@ const handleMovementKeys = ( ) => {
         if ( pressedKeys.d || pressedKeys.ArrowRight ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, continueAnimating, 'FACING_RIGHT')
         }    
+        
+        state.currentMap.layeredSprites.push(state.playerCharacter.sprite)
     }
+    
 }
 
 module.exports = {

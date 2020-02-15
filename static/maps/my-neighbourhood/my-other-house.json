@@ -2,6 +2,7 @@
     "mapName": "my-neighbourhood/my-other-house",
     "tileSet": "my-house",
     "src": "my-house/Bed_Room.png",
+    "music": "game-jam-2.mp3",
     "outdoors": false,
     "uniqueTiles": 31,
     "columns": 6,
@@ -27,6 +28,60 @@
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
+        }
+    ],
+    "characters" : [
+        {
+            "type": "static",
+            "sprite": "neckbeard.png",
+            "direction": "FACING_DOWN",
+            "row": 1,
+            "col": 2,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "Welcome to my humble residence, neighbour. Fitting of a 24 level Darkmage, methinks."
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "tumblr_girl.png",
+            "direction": "FACING_DOWN",
+            "row": 1,
+            "col": 4,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-2.mp3",
+                "direction": "FACING_UP",
+                "text": "This dump is not fitting for a woman of my stature! I'll have you know I'm a level 30 Warlock."
+            }
+        }
+    ],
+    "actions" : [
+        {
+            "row": 0,
+            "col": 6,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "sfx": "typing.mp3",
+            "text": "The fridge is filled with... Doritos?"
+        },
+        {
+            "row": 5,
+            "col": 0,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "sfx": "typing.mp3",
+            "text": "Looks like they're playing Guild of Warcraft"
+        },
+        {
+            "row": 3,
+            "col": 5,
+            "type": "TEXT",
+            "direction": "FACING_RIGHT",
+            "sfx": "typing.mp3",
+            "text": "The neighbours' stove is much cleaner than mine..."
         }
     ]
 }

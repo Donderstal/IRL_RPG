@@ -18,12 +18,15 @@ const getNPCs       = require('./getNPCs')
 
 const generateMap = ( currentMap, previousMap ) => {
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
+    
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
-    setMapAttributes.setDoorsAndDetectEntryPoint( previousMap )
-    currentMap.blockedXyValues = []
+    currentMap.blockedXyValues = []    
+    getNPCs.generateCharacters( currentMap )
+
+    setMapAttributes.setMapAttributes( previousMap )
 
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
-    getNPCs.generateCharacters( currentMap )
+
 
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
@@ -47,21 +50,9 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 
     const gridStartingPosition = {}
 
-    if ( mapColumns > globals.CANVAS_COLUMNS ) {
-        gridStartingPosition.x = ( ( mapColumns - globals.CANVAS_COLUMNS ) / 2 ) * -globals.GRID_BLOCK_PX
-    }
+    gridStartingPosition.x = Math.ceil( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
 
-    if ( mapColumns <= globals.CANVAS_COLUMNS ) {
-        gridStartingPosition.x = ( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
-    }
-
-    if ( mapRows > globals.CANVAS_ROWS ) {
-        gridStartingPosition.y = ( ( mapRows - globals.CANVAS_ROWS ) / 2 )  * -globals.GRID_BLOCK_PX
-    }
-
-    if ( mapRows <= globals.CANVAS_ROWS ) {
-        gridStartingPosition.y = ( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
-    }
+    gridStartingPosition.y = Math.ceil( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
 
     return gridStartingPosition 
 }
@@ -88,7 +79,8 @@ const drawGrid = ( startingPosition, currentMap ) => {
         drawRow( currentMap, currentRow, position )
 
         position.y += globals.GRID_BLOCK_PX
-        position.x = ( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
+        position.x = Math.ceil( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
+
     }
 }
 
@@ -167,7 +159,7 @@ const drawRow = ( currentMap, currentRow, position ) => {
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     currentMap.mapData.blocked.forEach( ( e ) => {
-        if ( e != Object(e) ) {
+        if ( !e.id ) {
             if ( tile === e || tile === "E" ) {
 
                 currentMap.blockedXyValues.push( { 
@@ -181,7 +173,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         }
         else {
             if ( tile === e.id || tile === "E" ) {
-                console.log('bruh')
+                
                 let blockedTile = {
                     "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
                     "LEFT": startPositionInCanvas.x,
@@ -219,18 +211,23 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     }
 
     const blockSize = globals.GRID_BLOCK_PX  
-
     const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
 
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
-        blockSize, blockSize,
+        37, 37,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
-    )          
+    )        
+    
+    
+    // draw tile borders, tilenumber
+    addEventListener      
+    
 }
+
 
 module.exports = {
     generateMap

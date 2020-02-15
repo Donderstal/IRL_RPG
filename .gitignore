@@ -3,3 +3,5 @@ node_modules
 public/bundle.*
 public/game
 junk.js
+static/music
+static/sfx
