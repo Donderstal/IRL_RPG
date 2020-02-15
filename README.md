@@ -27,55 +27,77 @@ After everything is compiled, you can visit the app on localhost:5000
 
 #### LOG
 
-### JANUARY 10th, 2019
-* Improved way of adding blocked XY values
+### FEBRUARY 15, 2019
+* Some changes to how the game is started, to support saved games in the future
+* Rescaling the game to a larger size
+* Cleaned up and improved the website UI and looks
+
+### FEBRUARY 12, 2019
+* New helper file that stores action detection functionalities
+* Fixing some bugs in the new action system
+
+### JANUARY 30, 2019
+* Actions and Doors are now XY based instead of row/col based
+
+### JANUARY 21, 2019
+* Added improved sprites sprites
+* Recorded some try out sound effects
+* Adding sound effects to actions
+
+### JANUARY 12, 2019
+* Added some music
+* New music playing functionalities
+* Tweaking how NPC's and PC's are cleared and redrawn
+
+### JANUARY 10, 2019
+* Improved way of adding blocked XY values, so blocked Xy values are not always squares
 * Collision detection now less restricted to grid squares
 
-### JANUARY 9th, 2020
+### JANUARY 9, 2020
 * Two maps added
 * Tweaks to map generation
 * Player can now move between maps
 
-### DECEMBER 18th, 2019
+### DECEMBER 18, 2019
 * NPCs can now be animated by storing a path in a map JSON
 
-### DECEMBER 15th, 2019
+### DECEMBER 15, 2019
 * NPCs no longer disappear after contact with player
 * Basic NPC actions
 * Basic NPC collision detection
 
-### DECEMBER 14th, 2019
+### DECEMBER 14, 2019
 * Experiments with NPC generation
 * New stylistic approach to outdoor maps
 
-### NOVEMBER 29th, 2019
+### NOVEMBER 29, 2019
 * Adding basic doors functionalities. 
 * Code reorganization, split some files
 
-### NOVEMBER 28th, 2019
+### NOVEMBER 28, 2019
 * Improving the GamePiece class to suit NPCs and PCs
 * Updated keyboards controls
 
-### NOVEMBER 25th, 2019
+### NOVEMBER 25, 2019
 * Centralised Canvas functionalities in new helper file
 
-### NOVEMBER 24TH, 2019
+### NOVEMBER 24, 2019
 * Map borders detection
 * Basic collision detection
 
-### NOVEMBER 20th, 2019
+### NOVEMBER 20, 2019
 * Map generation improvement, added useful xy and col/row logging funtionalities
 
-### NOVEMBER 9th, 2019
+### NOVEMBER 9, 2019
 * A functioning map generation system based on a tilesheet and a json file
 
-### NOVEMBER 4th, 2019
+### NOVEMBER 4, 2019
 * Basic server for serving JSON files which contain map information
 
-### OCTOBER 19th, 2019
+### OCTOBER 19, 2019
 * Introduced GamePiece class, which will be assigned to all characters
 
-### OCTOBER 16th, 2019
+### OCTOBER 16, 2019
 * User is able to select a class, gender and character name
 * Basic controls are present, player can move and 
 * Movement is animated with spritesheet

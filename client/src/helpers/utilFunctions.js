@@ -21,7 +21,10 @@ const fetchJSONWithCallback = ( url, callback, callbackParams = null ) => {
             }
             return response.json()
         })
-        .then( callback(json, callbackParams) )
+        .then( (json) => {
+            callback(json, callbackParams) 
+        }
+    )
 }
 
 module.exports = {
