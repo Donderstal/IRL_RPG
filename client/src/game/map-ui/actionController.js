@@ -72,7 +72,7 @@ const handleAction = (action) => {
                     document.getElementById(action.sfx).remove()                    
                 }, 1500)
             } 
-            canvasHelpers.writeToTextCanvas( action.text )
+            console.log( action.text )
             break            
         }
 }

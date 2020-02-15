@@ -27,14 +27,30 @@ const generateMap = ( currentMap, previousMap ) => {
 
     setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
 
-
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {    
         drawGrid(  startingPosition, currentMap, previousMap )
-
     }
 
+    calcTilesheetXyPositions( currentMap.mapData.uniqueTiles )
+}
+
+const calcTilesheetXyPositions = ( tilesInSheet ) => {
+    console.log(tilesInSheet)
+    let tileX = 0
+    let tileY = 0
+    state.currentMap.tilesheetXyValues = []
+
+    for ( var i = 0; i <= tilesInSheet; i++ ) {
+        state.currentMap.tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
+        tileX += 37
+        if ( i % 4 == 3 ) {
+            console.log( i )
+            tileX = 0
+            tileY += 37
+        }
+    }
 }
 
 /** 
@@ -158,45 +174,49 @@ const drawRow = ( currentMap, currentRow, position ) => {
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
-    currentMap.mapData.blocked.forEach( ( e ) => {
-        if ( !e.id ) {
-            if ( tile === e || tile === "E" ) {
+    if ( currentMap.mapData.blocked ) {
+        currentMap.mapData.blocked.forEach( ( e ) => {
+            if ( !e.id ) {
+                if ( tile === e ) {
 
-                currentMap.blockedXyValues.push( { 
-                    "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                    "LEFT": startPositionInCanvas.x,
-                    "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                    "TOP": startPositionInCanvas.y
-                } )
+                    currentMap.blockedXyValues.push( { 
+                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                        "LEFT": startPositionInCanvas.x,
+                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                        "TOP": startPositionInCanvas.y
+                    } )
 
-            }                   
-        }
-        else {
-            if ( tile === e.id || tile === "E" ) {
-                
-                let blockedTile = {
-                    "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                    "LEFT": startPositionInCanvas.x,
-                    "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                    "TOP": startPositionInCanvas.y
-                }
+                }                   
+            }
+            else {
+                if ( tile === e.id ) {
+                    
+                    let blockedTile = {
+                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                        "LEFT": startPositionInCanvas.x,
+                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                        "TOP": startPositionInCanvas.y
+                    }
 
-                if ( e.top ) {
-                    blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
-                }
-                if ( e.bottom ) {
-                    blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
-                }
-                if ( e.left ) {
-                    blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
-                }
-                if ( e.right ) {
-                    blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
-                }
-                currentMap.blockedXyValues.push( blockedTile )
-            }    
-        }
-    })
+                    if ( e.top ) {
+                        blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
+                    }
+                    if ( e.bottom ) {
+                        blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
+                    }
+                    if ( e.left ) {
+                        blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
+                    }
+                    if ( e.right ) {
+                        blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
+                    }
+                    currentMap.blockedXyValues.push( blockedTile )
+                }    
+            }
+        })        
+    }
+
+
 
     //}   
     
@@ -211,7 +231,12 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     }
 
     const blockSize = globals.GRID_BLOCK_PX  
-    const tilePositionInSheet = globals.TILESHEET_GRID_XY_VALUES[ tile ]
+    const tilePositionInSheet = currentMap.tilesheetXyValues[tile]
+    /* calcSheetXyPositionOfTile( tile ) */
+
+    if ( tilePositionInSheet == undefined ) {
+        console.log(tile)
+    }
 
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
@@ -227,7 +252,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     addEventListener      
     
 }
-
 
 module.exports = {
     generateMap
