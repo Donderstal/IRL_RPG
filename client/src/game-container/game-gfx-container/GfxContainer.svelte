@@ -60,9 +60,9 @@
 
     </div>
 
-    <canvas class="game-background-body do-not-display" ></canvas>
+    <canvas id='game-background-canvas' class="game-background-body do-not-display" ></canvas>
 
-    <canvas class="game-front-body do-not-display" ></canvas>
+    <canvas id='game-front-canvas' class="game-front-body do-not-display" ></canvas>
 
 
 </div>

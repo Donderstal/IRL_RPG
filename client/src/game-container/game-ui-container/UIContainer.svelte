@@ -12,6 +12,6 @@
 
 </style>
 
-<canvas class="game-ui-container">
+<canvas id='game-text-canvas' class="game-ui-container">
 
 </canvas>
