@@ -36,7 +36,7 @@
         { id : "new-game-button", vw: '68vw', text : 'NEW GAME', action : startGame.startGame },
         { id : "load-button", vw: '76vw', text : 'LOAD GAME', action : stateLogger.logState },
         { id : "save-button", vw: '84vw', text : 'SAVE GAME', action : stateLogger.logState },
-        { id : "save-and-quit-button", vw: '92vw', text : 'SAVE & QUIT', action : startGame.stop }
+        { id : "save-and-quit-button", vw: '92vw', text : 'SAVE & QUIT', action : startGame.stopGame }
     ]
 </script>
 
