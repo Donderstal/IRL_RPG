@@ -1,4 +1,7 @@
 let pressedKeys = {};
+const state = require('../../game-data/state')
+
+const actionController = require('./actionController')
 
 /**
  * EXPORT @function listenForKeyPress
@@ -22,16 +25,19 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = () => {
-    if (event.key === " ") {
-        pressedKeys.spaceBar = true        
+    if ( event.which == 81 ) {
+        event.preventDefault()
+        actionController.handleActionButton( )        
+    }
+
+    if ( event.which == 69 && state.currentMap.bubbleIsActive ) {
+        state.currentMap.activeBubble = {}
+        state.currentMap.bubbleIsActive = false
     }
     pressedKeys[event.key] = true
 }
 
 const removeKeyFromPressed = () => {
-    if (event.key === " ") {
-        pressedKeys.spaceBar = false     
-    }
     pressedKeys[event.key] = false
 }
 

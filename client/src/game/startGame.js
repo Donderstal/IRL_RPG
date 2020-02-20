@@ -4,12 +4,11 @@ const globals = require('../game-data/globals')
 const initMap = require('./map-init/initMap')
 const utility = require('../helpers/utilFunctions')
 
-const firstMapUrl = '/static/maps/my-neighbourhood/my-house.json'
+const firstMapUrl = '/static/maps/my-neighbourhood/my-house.json';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
     document.getElementsByTagName('canvas')[1].style.display = 'none'
-    document.getElementsByTagName('canvas')[2].style.display = 'none'
 
     document.getElementById('intro-screen').style.display = 'block'
     
@@ -22,7 +21,6 @@ const stopGame = () => {
  * @param {string} url 
  */
 const startNewGame = ( ) => {
-    console.log(firstMapUrl)
     utility.fetchJSONWithCallback( firstMapUrl, initMap.initializeMap )
 }
 
@@ -37,6 +35,30 @@ const loadGameFromSave = ( savedGameState ) => {
 }
 
 /**
+ * @param {object} savedGameState saved game state object from a previous session
+ * 
+ * Run drawgrid function based on saved mapdata.
+ */
+
+const saveGame = ( ) => {
+    // 
+}
+
+
+
+/**
+ * @param {object} savedGameState saved game state object from a previous session
+ * 
+ * Run drawgrid function based on saved mapdata.
+ */
+
+const getSavedGame = ( savedGameState ) => {
+    // 
+}
+
+
+
+/**
  * @param {HTMLElement} canvas
  * 
  * Prepare canvas for game
@@ -48,13 +70,14 @@ const initCanvas = ( canvas ) => {
 }
 
 const startGame = ( savedGame = null ) => {
+    console.log( 'jo' )
     document.getElementById('intro-screen').style.display = 'none';
 
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
 
-    ( savedGame != 'hoi' ) ? startNewGame() : loadGameFromSave(savedGame)
+    ( savedGame != 'hoi' ) ? startNewGame() : loadGameFromSave( savedGame )
 
     setTimeout( () => {
         movementController.startPlayerMovement()      
@@ -63,5 +86,6 @@ const startGame = ( savedGame = null ) => {
 }
 
 module.exports = {
-    startGame, stopGame
+    startGame, 
+    stopGame
 }

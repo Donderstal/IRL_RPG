@@ -1,9 +1,3 @@
-<script>
-    import startGame from '../../game/startGame'    
-    export let classList;
-
-</script>
-
 <style>
     .game-gfx-container {
         display: flex;
@@ -44,20 +38,9 @@
 <div class="game-gfx-container">
 
     <div id="intro-screen">
-
         <div>
             <h3>Neckbeard's nightmare</h3>
         </div>
-
-        <div>
-            <button on:click={ startGame.startGame }  >
-                New game
-            </button>
-            <button on:click={ startGame.startGame }  >
-                Load game
-            </button>
-        </div>
-
     </div>
 
     <canvas id='game-background-canvas' class="game-background-body do-not-display" ></canvas>

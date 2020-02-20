@@ -38,7 +38,6 @@ const initializeMap = ( mapJson, previousMapName ) => {
  * Get the loading screen, stop player controls and fetch the new map
  */
 const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
-    canvasHelpers.getLoadingScreen()
     state.currentMap.NPCs = []
     movementController.stopPlayerMovement()
 
