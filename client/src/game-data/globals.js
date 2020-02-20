@@ -28,10 +28,10 @@ module.exports = {
 
     // speech bubbles 
     MIN_BUBBLE_WIDTH: 250,
-    MAX_BUBBLE_WIDTH: 750,
+    MAX_BUBBLE_WIDTH: 500,
 
     // canvas font sizes
-    SMALL_FONT_SIZE : '16px ',
-    LARGE_FONT_SIZE : '20px ',
+    SMALL_FONT_SIZE : 16,
+    LARGE_FONT_SIZE : 20,
     FONT_STYLE : 'Times New Roman '
 }

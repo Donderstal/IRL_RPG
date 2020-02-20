@@ -54,6 +54,38 @@ const clearCanvasRectangle = (
     )
 }
 
+const breakTextIntoLines = ( text, fontSize ) => {
+    let ctx = getFrontCanvasContext() 
+    setFont(fontSize)
+    if ( ctx.measureText( text ).width > globals.MAX_BUBBLE_WIDTH ) {
+        const lolarray = text.split(' ')
+        let accumulator = 0;
+        let textLine = "";
+        let textLineArray = [ ];
+
+        for ( var i = 0; i < lolarray.length; i++ ) {
+            let newWord = lolarray[i] + " "            
+            let wordOverflowsTextbox = ( ( accumulator + ctx.measureText(newWord).width ) > ( globals.MAX_BUBBLE_WIDTH - 10 ) )
+
+            if ( wordOverflowsTextbox ) {
+                textLineArray.push(textLine)
+                textLine = newWord
+                accumulator = 0
+            }
+            else {
+                accumulator += ctx.measureText(newWord).width
+                textLine += newWord
+                if ( i == lolarray.length - 1 ) {
+                    textLineArray.push(textLine)
+                }
+            }
+        }  
+        return textLineArray      
+    }
+
+    return text
+}
+
 const drawLineOnXAxis = (oldX, y, newX, color = null) => {
     let ctx = getFrontCanvasContext()   
 
@@ -84,10 +116,10 @@ const drawRect = ( x, y, width, height, color = null ) => {
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
     if ( size === "LARGE") {
-        ctx.font = globals.LARGE_FONT_SIZE + globals.FONT_STYLE;
+        ctx.font = globals.LARGE_FONT_SIZE + "px " + globals.FONT_STYLE;
     }
     else if ( size === "SMALL" ) {
-        ctx.font = globals.SMALL_FONT_SIZE + globals.FONT_STYLE;
+        ctx.font = globals.SMALL_FONT_SIZE + "px " + globals.FONT_STYLE;
     }
 }
 
@@ -135,5 +167,6 @@ module.exports = {
     getBackCanvasContext,
     setFont,
     drawRect,
+    breakTextIntoLines,
     writeTextLine
 }
