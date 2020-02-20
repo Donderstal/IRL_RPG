@@ -9,7 +9,6 @@ const firstMapUrl = '/static/maps/my-neighbourhood/my-house.json';
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
     document.getElementsByTagName('canvas')[1].style.display = 'none'
-    document.getElementsByTagName('canvas')[2].style.display = 'none'
 
     document.getElementById('intro-screen').style.display = 'block'
     

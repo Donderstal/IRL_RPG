@@ -26,4 +26,12 @@ module.exports = {
     STRD_SPRITE_WIDTH : 54,
     STRD_SPRITE_HEIGHT : 81,
 
+    // speech bubbles 
+    MIN_BUBBLE_WIDTH: 250,
+    MAX_BUBBLE_WIDTH: 750,
+
+    // canvas font sizes
+    SMALL_FONT_SIZE : '16px ',
+    LARGE_FONT_SIZE : '20px ',
+    FONT_STYLE : 'Times New Roman '
 }

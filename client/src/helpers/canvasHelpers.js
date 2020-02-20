@@ -1,28 +1,5 @@
 const globals = require('../game-data/globals')
 
-//Return loading ctx
-const getTextCanvasContext = () => {
-    let canv = document.getElementsByTagName('canvas')[2]
-
-    canv.width = globals.CANVAS_WIDTH
-    canv.height = globals.CANVAS_HEIGHT / 6
-
-    let ctx = canv.getContext('2d')
-
-    return ctx
-}
-
-const initTextCanvas = () => {
-    let ctx = getTextCanvasContext()
-
-    ctx.fillStyle = "white"
-        ctx.fillRect( 
-            0, 0,
-            globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT / 6
-        )        
-   
-}
-
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
@@ -62,42 +39,6 @@ const drawFromImageToCanvas = (
 
 }
 
-const getLoadingScreen = () => {
-    clearEntireCanvas("FRONT")
-
-    let ctx = getFrontCanvasContext() 
-
-    ctx.strokeRect( 
-        0, 0,
-        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
-    )
-
-    // draw tile number in grid block
-    ctx.fillStyle = "gold"
-    ctx.font = "25px Georgia";
-    ctx.fillText(
-        "Loading...",
-        globals.CANVAS_WIDTH / 3, globals.CANVAS_HEIGHT / 2
-    )
-
-    ctx.fillStyle = "white"
-    ctx.font = "17.5px Georgia";
-    ctx.fillText(
-        "NECKBEARD 2020",
-        globals.CANVAS_WIDTH / 3, globals.CANVAS_HEIGHT / 2 + 25
-    )
-}
-
-const writeToTextCanvas = ( text ) => {
-    let ctx = getFrontCanvasContext()
-    ctx.font = "20px Times New Roman";
-    ctx.color = "white"
-    ctx.fillText(
-        text,
-        5, globals.GRID_BLOCK_PX
-    )
-}
-
 const clearCanvasRectangle = (
         canvas,
         canvasX, canvasY,
@@ -111,6 +52,36 @@ const clearCanvasRectangle = (
         canvasX, canvasY,
         widthInCanvas, heightInCanvas 
     )
+}
+
+const drawLineOnXAxis = (oldX, newX, y) => {
+    let ctx = getFrontCanvasContext()   
+
+    ctx.beginPath( )
+    ctx.moveTo( oldX, y ); 
+    ctx.lineTo( newX, y ); 
+    ctx.strokeStyle = "white"
+    ctx.stroke();
+}
+
+const drawLineOnYAxis = (oldY, newY, x) => {
+    let ctx = getFrontCanvasContext()   
+
+    ctx.beginPath( )
+    ctx.moveTo( oldY, x ); 
+    ctx.lineTo( newY, x ); 
+    ctx.strokeStyle = "white"
+    ctx.stroke();
+}
+
+const setFont = ( size ) => {
+    let ctx = getFrontCanvasContext()
+    if ( size === "LARGE") {
+        ctx.font = globals.LARGE_FONT_SIZE + globals.FONT_STYLE;
+    }
+    else if ( size === "SMALL" ) {
+        ctx.font = globals.SMALL_FONT_SIZE + globals.FONT_STYLE;
+    }
 }
 
 const clearEntireCanvas = ( canvas ) => {
@@ -140,13 +111,13 @@ const clearBothCanvases = ( ) => {
 
 
 module.exports = {
-    initTextCanvas,
-    getLoadingScreen,
     drawFromImageToCanvas,
     clearCanvasRectangle,
     clearEntireCanvas,
     clearBothCanvases,
-    writeToTextCanvas,
+    drawLineOnYAxis,
+    drawLineOnXAxis,
     getFrontCanvasContext,
-    getBackCanvasContext
+    getBackCanvasContext,
+    setFont
 }
