@@ -1,4 +1,5 @@
 let pressedKeys = {};
+const state = require('../../game-data/state')
 
 const actionController = require('./actionController')
 
@@ -24,9 +25,14 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = () => {
-    if (event.key === " ") {
-        console.log( 'jooo')
+    if ( event.which == 81 ) {
+        event.preventDefault()
         actionController.handleActionButton( )        
+    }
+
+    if ( event.which == 69 && state.currentMap.bubbleIsActive ) {
+        state.currentMap.activeBubble = {}
+        state.currentMap.bubbleIsActive = false
     }
     pressedKeys[event.key] = true
 }

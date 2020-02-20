@@ -26,7 +26,7 @@ const animationFrameController = () => {
     drawSpritesInOrder()
     
     if ( state.currentMap.bubbleIsActive ) {
-        state.currentMap.activeBubble.drawText( )
+        state.currentMap.activeBubble.drawBubble( )
     }
 
 }

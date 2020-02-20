@@ -54,24 +54,31 @@ const clearCanvasRectangle = (
     )
 }
 
-const drawLineOnXAxis = (oldX, newX, y) => {
+const drawLineOnXAxis = (oldX, y, newX, color = null) => {
     let ctx = getFrontCanvasContext()   
 
     ctx.beginPath( )
     ctx.moveTo( oldX, y ); 
     ctx.lineTo( newX, y ); 
-    ctx.strokeStyle = "white"
-    ctx.stroke();
+    ctx.strokeStyle = (color != null) ? color : "white"
+    ctx.stroke( );
 }
 
-const drawLineOnYAxis = (oldY, newY, x) => {
+const drawLineOnYAxis = (oldY, x, newY, color = null) => {
     let ctx = getFrontCanvasContext()   
 
     ctx.beginPath( )
-    ctx.moveTo( oldY, x ); 
-    ctx.lineTo( newY, x ); 
-    ctx.strokeStyle = "white"
-    ctx.stroke();
+    ctx.moveTo( x, oldY ); 
+    ctx.lineTo( x, newY ); 
+    ctx.strokeStyle = (color != null) ? color : "white"
+    ctx.stroke( );
+}
+
+const drawRect = ( x, y, width, height, color = null ) => {
+    let ctx = getFrontCanvasContext()   
+
+    ctx.fillStyle = (color != null) ? color : "white"
+    ctx.fillRect( x, y, width, height );
 }
 
 const setFont = ( size ) => {
@@ -82,6 +89,13 @@ const setFont = ( size ) => {
     else if ( size === "SMALL" ) {
         ctx.font = globals.SMALL_FONT_SIZE + globals.FONT_STYLE;
     }
+}
+
+const writeTextLine = ( text, x, y, size, color = null ) => {
+    let ctx = getFrontCanvasContext()
+    setFont( size )
+    ctx.fillStyle = (color != null) ? color : "white"
+    ctx.fillText( text, x, y )
 }
 
 const clearEntireCanvas = ( canvas ) => {
@@ -119,5 +133,7 @@ module.exports = {
     drawLineOnXAxis,
     getFrontCanvasContext,
     getBackCanvasContext,
-    setFont
+    setFont,
+    drawRect,
+    writeTextLine
 }
