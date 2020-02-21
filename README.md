@@ -20,10 +20,9 @@ Then run ```npm install```
 
 Wait until all Node packages are installed.
 
-Open a new terminal window and run ```server.py``` to get the Flask server running
-Finally, run ```npm run autobuild``` in the client folder. This will start the svelte compiler and watch for changes
+Open a new terminal window and run ```server.py``` to get the Flask server running. This will serve the game on localhost:5000
 
-After everything is compiled, you can visit the app on localhost:5000
+If refresh the game while working on it, run ```npm run autobuild``` in the client folder. This will start the svelte compiler and watch for changes.
 
 ### LOG
 
