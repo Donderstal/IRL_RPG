@@ -1,6 +1,7 @@
 const movementController = require('./map-ui/movementController')
 const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
+const state = require('../game-data/state')
 const initMap = require('./map-init/initMap')
 const utility = require('../helpers/utilFunctions')
 
@@ -30,8 +31,12 @@ const startNewGame = ( ) => {
  * Run drawgrid function based on saved mapdata.
  */
 
-const loadGameFromSave = ( savedGameState ) => {
-    // 
+const loadGameFromSave = ( ) => {
+    utility.fetchJSONWithCallback( '~/save_game.json', loggg )
+}
+
+const loggg = ( json ) => {
+    console.log(json)
 }
 
 /**
@@ -41,7 +46,10 @@ const loadGameFromSave = ( savedGameState ) => {
  */
 
 const saveGame = ( ) => {
-    // 
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/save_game", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(state));
 }
 
 
@@ -87,5 +95,7 @@ const startGame = ( savedGame = null ) => {
 
 module.exports = {
     startGame, 
+    saveGame,
+    loadGameFromSave,
     stopGame
 }
