@@ -4,19 +4,19 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
 const utility       = require('../../helpers/utilFunctions')
 const soundClass    = soundHelper.soundClass
-const createCharInstance = require('../createCharInstance')
 const movementController = require('../map-ui/movementController')
 
-const initializeMap = ( mapJson, previousMapName ) => {
-    state.currentMap.mapData = mapJson;
+const initializeMap = ( mapJson, previousMapName = null ) => {
     canvasHelpers.clearBothCanvases()
+    state.currentMap.mapData = mapJson;
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
     }
 
     setTimeout(() => {
-        drawGrid.generateMap( state.currentMap, previousMapName  )               
+        console.log(state.currentMap)
+        drawGrid.generateMap( state.currentMap, previousMapName )               
     }, 500)
 
     setTimeout(() => {
@@ -25,12 +25,10 @@ const initializeMap = ( mapJson, previousMapName ) => {
             state.currentMap.mapMusic.play()         
         }
 
-        if ( previousMapName  === null ) {
-            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
-        }
-        else {
-            initPlayerSpriteInNewMap(previousMapName )
-        }          
+        if ( previousMapName != null && previousMapName != "SAVE_GAME" ) {
+            initPlayerSpriteInNewMap( previousMapName )
+        }     
+        
     }, 1000)
 }
 

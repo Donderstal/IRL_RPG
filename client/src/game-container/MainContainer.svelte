@@ -34,7 +34,7 @@
         { id : "help-button", vw: '46.5vw', text : 'HELP', action : stateLogger.logState },
 
         { id : "new-game-button", vw: '68vw', text : 'NEW GAME', action : startGame.startGame },
-        { id : "load-button", vw: '76vw', text : 'LOAD GAME', action : startGame.loadGameFromSave },
+        { id : "load-button", vw: '76vw', text : 'LOAD GAME', action : startGame.loadGame },
         { id : "save-button", vw: '84vw', text : 'SAVE GAME', action : startGame.saveGame },
         { id : "save-and-quit-button", vw: '92vw', text : 'SAVE & QUIT', action : startGame.stopGame }
     ]
