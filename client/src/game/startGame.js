@@ -36,6 +36,10 @@ const saveGame = ( ) => {
 }
 
 const initMapFromSave = ( savedGame ) => {
+    for ( const key in Object.keys(savedGame) ) {
+        state[key] = savedGame[key]
+    }
+
     const mapData = savedGame.currentMap.mapData
     initMap.initializeMap(mapData, "SAVE_GAME", savedGame)
 

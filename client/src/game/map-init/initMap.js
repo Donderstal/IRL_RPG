@@ -16,7 +16,6 @@ const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => 
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
     drawGrid.generateMap( state.currentMap, previousMapName )    
-    console.log(savedState)    
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
@@ -33,11 +32,13 @@ const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => 
 }
 
 const getMapAttributesFromSave = ( savedGame ) => {
+    const playerSpriteStart = { 'x' : savedGame.playerCharacter.sprite.x, 'y' : savedGame.playerCharacter.sprite.y }
     setTimeout( ( ) => {
         state.currentMap.doors = savedGame.currentMap.doors
         state.currentMap.mapActions = savedGame.currentMap.mapActions
-        /* state.currentMap.NPCs = savedGame.currentMap.NPCs */
-        state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
+        state.currentMap.NPCs = getNPCs.generateCharactersFromSave( savedGame.currentMap.NPCs )
+
+        state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', playerSpriteStart, 'XY' )
     }, 500)
 }
 
@@ -53,7 +54,7 @@ const getMapAttributes = ( previousMapName ) => {
             initPlayerSpriteInNewMap( previousMapName )
         }     
         else {
-            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
+            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart, 'CELL' )
         } 
     }, 1000)
 }
@@ -89,7 +90,6 @@ const setCharacterLocationInNewMap = ( previousMapName  ) => {
     const playerSprite = state.playerCharacter.sprite
 
     if ( currentMapData.outdoors == true ) {
-
         for ( var adjacentMap in currentMapData.neighbours ) {
             setPositionFromNeighbour( playerSprite, currentMapData, previousMapName, adjacentMap );
         }

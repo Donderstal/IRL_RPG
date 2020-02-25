@@ -9,10 +9,11 @@ const state         = require('../../game-data/state')
  */
 const generateCharacters = ( ) => {
     const characters = state.currentMap.mapData.characters
+
     if ( characters ) {
         characters.forEach( ( character ) => {
+            const sprite = new NPC( { 'row': character.row, 'col': character.col }, character.sprite, 'CELL' )
             pushCharacterActions( character );
-            const sprite = new NPC( character.row, character.col, character.sprite )
             sprite.direction = globals[character.direction]
             character.sprite = sprite
             pushCharacterSpriteToMapState( character )
@@ -20,6 +21,21 @@ const generateCharacters = ( ) => {
             pushCharacterCollision( character )
         } )
     }
+}
+
+const generateCharactersFromSave = ( savedNPCs ) => {
+    let newNPCs = []
+    savedNPCs.forEach( ( savedNPC ) => {
+        let toMapNPC = { ...savedNPC }  
+        toMapNPC.sprite = new NPC( 
+            { 'x': savedNPC.sprite.x, 'y': savedNPC.sprite.y }, 
+            savedNPC.sprite.sheetSrc, 'XY', savedNPC.sprite.direction 
+        )
+
+        newNPCs.push(toMapNPC)
+    } )
+
+    return newNPCs
 }
 
 const pushCharacterCollision = ( character ) => {
@@ -53,9 +69,11 @@ const pushCharacterSpriteToMapState = ( character ) => {
 }
 
 class NPC extends GamePiece.gamePiece {
-    constructor( row, col, src ) {
-        src = '/static/sprites/'+ src
-        super( row, col, src )        
+    constructor( startPos, src, typeOfStart, spriteDirection = 0 ) {
+        if( src[0] != '/' ) {
+            src = '/static/sprites/'+ src
+        }
+        super( startPos, src, typeOfStart, spriteDirection )        
     }
 
     updateActionXy( NPCAction ) {
@@ -95,5 +113,6 @@ class NPC extends GamePiece.gamePiece {
 }
 
 module.exports = {
-    generateCharacters
+    generateCharacters,
+    generateCharactersFromSave
 }
