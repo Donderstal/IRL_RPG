@@ -30,7 +30,7 @@ const generateMap = ( currentMap, previousMap ) => {
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {    
-        drawGrid(  startingPosition, currentMap, previousMap )
+        drawGrid( startingPosition, currentMap, previousMap )
     }
 
     calcTilesheetXyPositions( currentMap.mapData.uniqueTiles )
@@ -230,7 +230,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const blockSize = globals.GRID_BLOCK_PX  
     const tilePositionInSheet = currentMap.tilesheetXyValues[tile]
-
+    console.log(currentMap.tileSheet)
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
         currentMap.tileSheet, 
@@ -239,10 +239,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        
-    
-    
-    // draw tile borders, tilenumber
-    addEventListener      
     
 }
 

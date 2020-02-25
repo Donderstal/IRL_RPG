@@ -5,6 +5,7 @@ const soundHelper   = require('../../helpers/soundHelpers')
 const utility       = require('../../helpers/utilFunctions')
 const soundClass    = soundHelper.soundClass
 const movementController = require('../map-ui/movementController')
+const createCharInstance = require('../createCharInstance')
 
 const initializeMap = ( mapJson, previousMapName = null ) => {
     canvasHelpers.clearBothCanvases()
@@ -15,7 +16,6 @@ const initializeMap = ( mapJson, previousMapName = null ) => {
     }
 
     setTimeout(() => {
-        console.log(state.currentMap)
         drawGrid.generateMap( state.currentMap, previousMapName )               
     }, 500)
 
@@ -28,6 +28,9 @@ const initializeMap = ( mapJson, previousMapName = null ) => {
         if ( previousMapName != null && previousMapName != "SAVE_GAME" ) {
             initPlayerSpriteInNewMap( previousMapName )
         }     
+        else {
+            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
+        }
         
     }, 1000)
 }
