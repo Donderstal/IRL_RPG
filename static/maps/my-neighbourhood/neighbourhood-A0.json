@@ -2,9 +2,13 @@
     "mapName": "my-neighbourhood/neighbourhood-A0",
     "tileSet": "neighbourhood-A2",
     "src": "Generic_Room_A_Tile_Set.png",
-    "outdoors": false,
+    "outdoors": true,
     "music": "game-jam.mp3",
+    "neighbours": {
+        "right": "my-neighbourhood/neighbourhood-A1"
+    },
     "rows":7,
+    "uniqueTiles": 259,
     "columns":11,
     "grid":[
         [11,0,3,11,11,11,11,11,11,0,3,11],
