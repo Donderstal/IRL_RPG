@@ -6,17 +6,23 @@ const utility       = require('../../helpers/utilFunctions')
 const soundClass    = soundHelper.soundClass
 const movementController = require('../map-ui/movementController')
 const createCharInstance = require('../createCharInstance')
+const getNPCs       = require('./getNPCs')
+const setMapAttributes = require('./setMapAttributes')
 
 const initializeMap = ( mapJson, previousMapName = null ) => {
     canvasHelpers.clearBothCanvases()
     state.currentMap.mapData = mapJson;
+    state.currentMap.blockedXyValues = []    
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
-    }
+    }   
+
+    drawGrid.generateMap( state.currentMap, previousMapName )              
 
     setTimeout(() => {
-        drawGrid.generateMap( state.currentMap, previousMapName )               
+        getNPCs.generateCharacters( );
+        setMapAttributes.setMapAttributes( previousMapName );
     }, 500)
 
     setTimeout(() => {
