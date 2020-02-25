@@ -34,8 +34,8 @@
         { id : "help-button", vw: '46.5vw', text : 'HELP', action : stateLogger.logState },
 
         { id : "new-game-button", vw: '68vw', text : 'NEW GAME', action : startGame.startGame },
-        { id : "load-button", vw: '76vw', text : 'LOAD GAME', action : stateLogger.logState },
-        { id : "save-button", vw: '84vw', text : 'SAVE GAME', action : stateLogger.logState },
+        { id : "load-button", vw: '76vw', text : 'LOAD GAME', action : startGame.loadGame },
+        { id : "save-button", vw: '84vw', text : 'SAVE GAME', action : startGame.saveGame },
         { id : "save-and-quit-button", vw: '92vw', text : 'SAVE & QUIT', action : startGame.stopGame }
     ]
 </script>
@@ -50,9 +50,15 @@
         box-shadow: -15px 0 15px -15px inset;
     }
 
+    input {
+        visibility: hidden;
+        display: none;
+    }
+
 </style>
 
 <div class="main-container">
+    <input type="file" id="JSON_input" name="JSON_file">
     <GfxContainer
         classList={classList}
     />

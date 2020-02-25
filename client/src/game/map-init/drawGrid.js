@@ -1,38 +1,25 @@
 const mapHelpers    = require('../../helpers/mapHelpers')
 const canvasHelpers = require('../../helpers/canvasHelpers')
-const setMapAttributes = require('./setMapAttributes')
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
-const getNPCs       = require('./getNPCs')
 
 /** 
- * @function generateMap
- * MAIN FUNCTION
- * 
  * Call @function getStartingPositionOfGridInCanvas to get the xy to start drawing in the canvas
  * Call @function drawGrid when tilesheet has been loaded based on the image path in the json file
  * 
  * @param {Object} currentMap - JSON containing data on the Map
- * @param {string} previousMap - Name of previous map if applicable
  */
 
-const generateMap = ( currentMap, previousMap ) => {
-    let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
-    
-    currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
-    currentMap.blockedXyValues = []    
-    getNPCs.generateCharacters( currentMap )
-
-    setMapAttributes.setMapAttributes( previousMap )
-
-    setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
-
+const generateMap = ( currentMap ) => {
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
     currentMap.tileSheet.onload = ( ) => {    
-        drawGrid(  startingPosition, currentMap, previousMap )
+        drawGrid( startingPosition, currentMap )
     }
 
+    let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
+    currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
+    setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
     calcTilesheetXyPositions( currentMap.mapData.uniqueTiles )
 }
 
@@ -52,7 +39,6 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
 }
 
 /** 
- * @function getStartingPositionOfGridInCanvas
  * Calculate starting position of grid relative to canvas based on data from JSON
  * 
  * @param {object} mapColumns - columns of map ( in grid blocks )
@@ -72,12 +58,8 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
 }
 
 /** 
- * @function drawGrid
- * Get map borders
- * Get number of columns and rows from JSON
- * Get top left cell of map in grid
+ * Get starting position of grid in canvas
  * Call @function drawRow for each row
- * Initaliase character
  * 
  * @param {object} startingPosition - starting x and y for drawing
  * @param {object} currentMap - Object containing all the data needed to draw Grid
@@ -99,12 +81,7 @@ const drawGrid = ( startingPosition, currentMap ) => {
 }
 
 /**
- * @function setMapBorders
- * 
  * set borders in currentMap
- * these will be used in movement.js to determine where characters can't pass through
- * this needs to be adapted to a few different types of map
- * for example: indoors, outdoors and non-square maps
  */
 
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
@@ -161,8 +138,7 @@ const drawRow = ( currentMap, currentRow, position ) => {
 }
 
 /** 
- * @function drawTileInGridBlock
- * 
+ * Add block to BlockedXyValues if necessary
  * Handle non-numeric tile if necessary
  * Get blocksize and current tile xy in sheet from globals
  * Then draw the tile in block
@@ -176,7 +152,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         currentMap.mapData.blocked.forEach( ( e ) => {
             if ( !e.id ) {
                 if ( tile === e ) {
-
                     currentMap.blockedXyValues.push( { 
                         "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
                         "LEFT": startPositionInCanvas.x,
@@ -188,7 +163,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
             }
             else {
                 if ( tile === e.id ) {
-                    
                     let blockedTile = {
                         "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
                         "LEFT": startPositionInCanvas.x,
@@ -214,10 +188,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         })        
     }
 
-
-
-    //}   
-    
     // if tile is E - empty...
     if ( tile === "E" || tile === null) {
         return 
@@ -230,7 +200,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
 
     const blockSize = globals.GRID_BLOCK_PX  
     const tilePositionInSheet = currentMap.tilesheetXyValues[tile]
-
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
         currentMap.tileSheet, 
@@ -239,10 +208,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        
-    
-    
-    // draw tile borders, tilenumber
-    addEventListener      
     
 }
 

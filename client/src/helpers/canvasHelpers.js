@@ -126,7 +126,7 @@ const setFont = ( size ) => {
 const writeTextLine = ( text, x, y, size, color = null ) => {
     let ctx = getFrontCanvasContext()
     setFont( size )
-    ctx.fillStyle = (color != null) ? color : "white"
+    ctx.fillStyle = (color != null) ? color : "black"
     ctx.fillText( text, x, y )
 }
 

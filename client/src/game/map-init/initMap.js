@@ -1,36 +1,61 @@
 const state         = require('../../game-data/state')
-const drawGrid      = require('./drawGrid')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
 const utility       = require('../../helpers/utilFunctions')
 const soundClass    = soundHelper.soundClass
-const createCharInstance = require('../createCharInstance')
-const movementController = require('../map-ui/movementController')
 
-const initializeMap = ( mapJson, previousMapName ) => {
+const movementController = require('../map-ui/movementController')
+const createCharInstance = require('../createCharInstance')
+
+const getNPCs          = require('./getNPCs')
+const setMapAttributes = require('./setMapAttributes')
+const drawGrid      = require('./drawGrid')
+
+const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
+    canvasHelpers.clearBothCanvases();
     state.currentMap.mapData = mapJson;
-    canvasHelpers.clearBothCanvases()
+    state.currentMap.blockedXyValues = []    
+    drawGrid.generateMap( state.currentMap, previousMapName )    
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
     }
+    
+    ( previousMapName === "SAVE_GAME" ) ? getMapAttributesFromSave( savedState ) : getMapAttributes( previousMapName )
 
-    setTimeout(() => {
-        drawGrid.generateMap( state.currentMap, previousMapName  )               
-    }, 500)
-
-    setTimeout(() => {
+    setTimeout( ( ) => {
         if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
             state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
             state.currentMap.mapMusic.play()         
         }
+    }, 1000)
+}
 
-        if ( previousMapName  === null ) {
-            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )     
-        }
+const getMapAttributesFromSave = ( savedGame ) => {
+    const playerSpriteStart = { 'x' : savedGame.playerCharacter.sprite.x, 'y' : savedGame.playerCharacter.sprite.y }
+    setTimeout( ( ) => {
+        state.currentMap.doors = savedGame.currentMap.doors
+        state.currentMap.mapActions = savedGame.currentMap.mapActions
+        state.currentMap.NPCs = getNPCs.generateCharactersFromSave( savedGame.currentMap.NPCs )
+
+        state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', playerSpriteStart, 'XY' )
+    }, 500)
+}
+
+
+const getMapAttributes = ( previousMapName ) => {
+    setTimeout(() => {
+        getNPCs.generateCharacters( );
+        setMapAttributes.setMapAttributes( previousMapName );
+    }, 500)
+
+    setTimeout(() => {
+        if ( previousMapName != null ) {
+            initPlayerSpriteInNewMap( previousMapName )
+        }     
         else {
-            initPlayerSpriteInNewMap(previousMapName )
-        }          
+            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart, 'CELL' )
+        } 
     }, 1000)
 }
 
@@ -44,7 +69,6 @@ const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
     utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initializeMap, oldMap )
 }
 
-
 /**
  * Call front and back canvas.
  * Update player sprite locations and draw.
@@ -56,7 +80,7 @@ const initPlayerSpriteInNewMap = ( previousMapName ) => {
     state.playerCharacter.sprite.drawSprite() 
     
     movementController.startPlayerMovement()
- }
+}
 
 /**
  * @function setCharacterLocationInNewMap
@@ -66,7 +90,6 @@ const setCharacterLocationInNewMap = ( previousMapName  ) => {
     const playerSprite = state.playerCharacter.sprite
 
     if ( currentMapData.outdoors == true ) {
-
         for ( var adjacentMap in currentMapData.neighbours ) {
             setPositionFromNeighbour( playerSprite, currentMapData, previousMapName, adjacentMap );
         }

@@ -4,15 +4,8 @@ const globals = require('../../game-data/globals')
 
 class gamePiece {
 
-    constructor ( initialRow, initalCol, spriteSheetSrc ) {
-
-        this.x       = 0
-        this.y       = 0
-
-        this.row     = initialRow
-        this.col     = initalCol
+    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {        
         this.cell   = {}
-
         this.width   = globals.STRD_SPRITE_WIDTH;
         this.height  = globals.STRD_SPRITE_HEIGHT;
 
@@ -24,11 +17,28 @@ class gamePiece {
         this.animLoop      = [ 0, 1, 2, 3]
         this.animIterator  = 0
         this.frameCount    = 0
-        this.direction     = 0;
+        this.direction     = spriteDirection;
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();
-        
-        this.calcXyFromCell()
+
+        if ( typeOfStart === 'CELL' ) {
+            this.x       = 0
+            this.y       = 0
+
+            this.row     = start.row
+            this.col     = start.col  
+            this.calcXyFromCell()          
+        }
+        else if ( typeOfStart === 'XY' ) {
+            this.x       = start.x
+            this.y       = start.y
+
+            this.row     = 0
+            this.col     = 0  
+            this.setCellXy( )
+            this.calcCellFromXy()
+        }
+
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
     }
@@ -76,6 +86,11 @@ class gamePiece {
 
         this.updateSpriteBorders( )
         this.updateSpriteCellXy( )
+    }
+
+    setCellXy( ) {
+        this.cell.x = this.x + (( this.x + globals.GRID_BLOCK_PX ) - ( this.x + this.width ))
+        this.cell.y = this.y + (( this.y + globals.GRID_BLOCK_PX ) - ( this.y + this.height ))
     }
         
     calcCellFromXy( ) {

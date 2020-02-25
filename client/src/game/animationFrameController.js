@@ -1,5 +1,4 @@
 const movementController = require('./map-ui/movementController')
-const actionController = require('./map-ui/actionController')
 const state         = require('../game-data/state')
 const NPCs          = require('./map-ui/NPCs')
 const canvasHelpers = require('../helpers/canvasHelpers')
@@ -14,21 +13,16 @@ const startRequestingFrame = () => {
  * Controller for all animation duties in front-context
  */
 const animationFrameController = () => {
-
-    state.currentMap.layeredSprites = []
-
+    state.currentMap.layeredSprites = []    
     NPCs.NPCController()        
-
     movementController.handleMovementKeys()
-
-    requestAnimationFrame(animationFrameController)    
-    
     drawSpritesInOrder()
     
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawBubble( )
     }
 
+    requestAnimationFrame(animationFrameController)
 }
 
 /**
@@ -62,11 +56,9 @@ const drawSpritesInOrder = ( ) => {
     canvasHelpers.clearEntireCanvas("FRONT")
 
     layeredSprites.forEach( (e) => {
-        e.loaded ? e.drawSprite() : e.getSpriteAndDrawWhenLoaded()
-        if ( !e.drawSprite() && !e.getSpriteAndDrawWhenLoaded() ) {
-
-        }
+        e.drawSprite()
     })        
+
 }
 
 module.exports = {

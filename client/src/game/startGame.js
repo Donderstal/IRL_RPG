@@ -1,37 +1,20 @@
 const movementController = require('./map-ui/movementController')
 const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
+const state = require('../game-data/state')
 const initMap = require('./map-init/initMap')
 const utility = require('../helpers/utilFunctions')
+const fetchJson = utility.fetchJSONWithCallback
 
-const firstMapUrl = '/static/maps/my-neighbourhood/my-house.json';
+const mapJSONFolder = '/static/maps/'
+const firstMapUrl = mapJSONFolder + 'my-neighbourhood/my-house.json';
+const savedGame = '/static/save_game.json';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
     document.getElementsByTagName('canvas')[1].style.display = 'none'
 
-    document.getElementById('intro-screen').style.display = 'block'
-    
-    document.getElementById('stopGameButton').style.display = 'none'
-
     movementController.stopPlayerMovement()
-}
-
-/**
- * @param {string} url 
- */
-const startNewGame = ( ) => {
-    utility.fetchJSONWithCallback( firstMapUrl, initMap.initializeMap )
-}
-
-/**
- * @param {object} savedGameState saved game state object from a previous session
- * 
- * Run drawgrid function based on saved mapdata.
- */
-
-const loadGameFromSave = ( savedGameState ) => {
-    // 
 }
 
 /**
@@ -41,22 +24,57 @@ const loadGameFromSave = ( savedGameState ) => {
  */
 
 const saveGame = ( ) => {
-    // 
+    state.playerCharacter.sprite.calcCellFromXy( );
+    utility.downloadObjectAsJson( state, 'Neckbeard_save_game' )
+
+
+    /* 
+    TO DO // Add a place to store save games dynamically by user
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/save_game", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(state)); 
+    */
 }
 
+const initMapFromSave = ( savedGame ) => {
+    for ( const key in Object.keys(savedGame) ) {
+        state[key] = savedGame[key]
+    }
 
+    const mapData = savedGame.currentMap.mapData
+    initMap.initializeMap(mapData, "SAVE_GAME", savedGame)
 
-/**
- * @param {object} savedGameState saved game state object from a previous session
- * 
- * Run drawgrid function based on saved mapdata.
- */
-
-const getSavedGame = ( savedGameState ) => {
-    // 
+    setTimeout( () => {
+        movementController.startPlayerMovement( );      
+        animationFrameController.startRequestingFrame( );
+    }, 500 );
 }
 
+const loadGame = ( ) => {
+    document.getElementById('intro-screen').style.display = 'none';
 
+    [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
+        initCanvas( canvas );
+    } );
+
+    const inputElement = document.getElementById('JSON_input')
+    inputElement.click();
+    inputElement.onchange = ( ) => {
+        const jsonSrc = URL.createObjectURL(inputElement.files[0]);
+        fetchJson( jsonSrc, initMapFromSave );
+    } 
+}
+
+const startNewGame = ( ) => {
+    fetchJson( firstMapUrl, initMap.initializeMap );
+
+    setTimeout( () => {
+        movementController.startPlayerMovement( );      
+        animationFrameController.startRequestingFrame( );
+    }, 500 );
+}
 
 /**
  * @param {HTMLElement} canvas
@@ -65,27 +83,23 @@ const getSavedGame = ( savedGameState ) => {
  */
 const initCanvas = ( canvas ) => {
     canvas.style.display = 'block'
-    canvas.height = ( canvas.id === 'game-text-canvas' ) ? (globals.CANVAS_HEIGHT / 6) : globals.CANVAS_HEIGHT 
+    canvas.height = globals.CANVAS_HEIGHT 
     canvas.width = globals.CANVAS_WIDTH   
 }
 
-const startGame = ( savedGame = null ) => {
-    console.log( 'jo' )
+const startGame = ( ) => {
     document.getElementById('intro-screen').style.display = 'none';
 
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
 
-    ( savedGame != 'hoi' ) ? startNewGame() : loadGameFromSave( savedGame )
-
-    setTimeout( () => {
-        movementController.startPlayerMovement()      
-        animationFrameController.startRequestingFrame()
-    }, 100 )
+    startNewGame();
 }
 
 module.exports = {
     startGame, 
+    loadGame,
+    saveGame,
     stopGame
 }

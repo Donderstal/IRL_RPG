@@ -35,7 +35,7 @@ class SpeechBubble {
 const drawSpeechBubble = ( text, totalTextHeight, textRect, borderRect ) => {
     //Body
     canvas.drawRect( borderRect.left, borderRect.top, borderRect.width, borderRect.height );
-    canvas.drawRect( textRect.left, textRect.top, textRect.width, textRect.height, '#1a1423' );
+    canvas.drawRect( textRect.left, textRect.top, textRect.width, textRect.height, '#989898' );
 
     //Header
     let headerBottomY = textRect.top + 24
@@ -45,7 +45,7 @@ const drawSpeechBubble = ( text, totalTextHeight, textRect, borderRect ) => {
     //Main text
     let mainTextBottomY = headerBottomY + 28;
     if ( !Array.isArray(text) ) {
-        canvas.writeTextLine( text, textRect.left + 5, textRect.top + 44, "LARGE", "#586f7c" )
+        canvas.writeTextLine( text, textRect.left + 5, textRect.top + 44, "LARGE", "#000000" )
     }
     else {
         mainTextBottomY = drawMultipleLines( textRect.left + 5, headerBottomY, text,  );
