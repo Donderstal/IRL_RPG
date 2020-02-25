@@ -25,14 +25,17 @@ const stopGame = () => {
 
 const saveGame = ( ) => {
     state.playerCharacter.sprite.calcCellFromXy( );
-    state.currentMap.mapData.playerStart = {
-        'row': state.playerCharacter.sprite.row,
-        'col': state.playerCharacter.sprite.col
-    }
+    utility.downloadObjectAsJson( state, 'Neckbeard_save_game' )
+
+
+    /* 
+    TO DO // Add a place to store save games dynamically by user
+
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/save_game", true);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(state));
+    xhttp.send(JSON.stringify(state)); 
+    */
 }
 
 const initMapFromSave = ( savedGame ) => {
@@ -56,7 +59,12 @@ const loadGame = ( ) => {
         initCanvas( canvas );
     } );
 
-    fetchJson( savedGame, initMapFromSave );
+    const inputElement = document.getElementById('JSON_input')
+    inputElement.click();
+    inputElement.onchange = ( ) => {
+        const jsonSrc = URL.createObjectURL(inputElement.files[0]);
+        fetchJson( jsonSrc, initMapFromSave );
+    } 
 }
 
 const startNewGame = ( ) => {

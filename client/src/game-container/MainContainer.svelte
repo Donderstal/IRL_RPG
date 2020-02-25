@@ -50,9 +50,15 @@
         box-shadow: -15px 0 15px -15px inset;
     }
 
+    input {
+        visibility: hidden;
+        display: none;
+    }
+
 </style>
 
 <div class="main-container">
+    <input type="file" id="JSON_input" name="JSON_file">
     <GfxContainer
         classList={classList}
     />

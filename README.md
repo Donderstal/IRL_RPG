@@ -26,6 +26,11 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 
 ### LOG
 
+#### FEB 25, 2020
+* Loading and saving of games
+* Games are now saved/loaded to/from the user's pc
+* This is a temporary setup to postpone making user accounts etc.
+
 #### FEB 20, 2020
 * New text displaying functionalities
 * Dynamic speech bubbles (Alpha)
