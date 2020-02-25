@@ -1,25 +1,53 @@
 const state         = require('../../game-data/state')
-const drawGrid      = require('./drawGrid')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
 const utility       = require('../../helpers/utilFunctions')
 const soundClass    = soundHelper.soundClass
+
 const movementController = require('../map-ui/movementController')
 const createCharInstance = require('../createCharInstance')
-const getNPCs       = require('./getNPCs')
-const setMapAttributes = require('./setMapAttributes')
 
-const initializeMap = ( mapJson, previousMapName = null ) => {
-    canvasHelpers.clearBothCanvases()
+const getNPCs          = require('./getNPCs')
+const setMapAttributes = require('./setMapAttributes')
+const drawGrid      = require('./drawGrid')
+
+const initializeMap = ( mapJson, previousMapName = null ) => {    
+    canvasHelpers.clearBothCanvases();
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
+    drawGrid.generateMap( state.currentMap, previousMapName )        
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
-    }   
+    }
+    
+    ( previousMapName === "SAVE_GAME" ) ? setMapAttributesFromSave( previousMapName ) : setMapAttributes( previousMapName )
+}
 
-    drawGrid.generateMap( state.currentMap, previousMapName )              
+const setMapAttributesFromSave = ( ) => {
+    setTimeout( ( ) => {
+        state.currentMap.NPCs = 
+        setMapAttributes.setMapAttributes( previousMapName );
+    }, 500)
 
+    setTimeout(() => {
+        if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
+            state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
+            state.currentMap.mapMusic.play()         
+        }
+
+        if ( previousMapName != null && previousMapName != "SAVE_GAME" ) {
+            initPlayerSpriteInNewMap( previousMapName )
+        }     
+        else {
+            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
+        }
+        
+    }, 1000)
+}
+
+
+const setMapAttributes = ( ) => {
     setTimeout(() => {
         getNPCs.generateCharacters( );
         setMapAttributes.setMapAttributes( previousMapName );
@@ -51,7 +79,6 @@ const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
     utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initializeMap, oldMap )
 }
 
-
 /**
  * Call front and back canvas.
  * Update player sprite locations and draw.
@@ -63,7 +90,7 @@ const initPlayerSpriteInNewMap = ( previousMapName ) => {
     state.playerCharacter.sprite.drawSprite() 
     
     movementController.startPlayerMovement()
- }
+}
 
 /**
  * @function setCharacterLocationInNewMap
