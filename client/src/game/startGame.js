@@ -37,7 +37,7 @@ const saveGame = ( ) => {
 
 const initMapFromSave = ( savedGame ) => {
     const mapData = savedGame.currentMap.mapData
-    initMap.initializeMap(mapData, "SAVE_GAME")
+    initMap.initializeMap(mapData, "SAVE_GAME", savedGame)
 
     setTimeout( () => {
         movementController.startPlayerMovement( );      

@@ -11,61 +11,50 @@ const getNPCs          = require('./getNPCs')
 const setMapAttributes = require('./setMapAttributes')
 const drawGrid      = require('./drawGrid')
 
-const initializeMap = ( mapJson, previousMapName = null ) => {    
+const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
     canvasHelpers.clearBothCanvases();
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
-    drawGrid.generateMap( state.currentMap, previousMapName )        
+    drawGrid.generateMap( state.currentMap, previousMapName )    
+    console.log(savedState)    
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
     }
     
-    ( previousMapName === "SAVE_GAME" ) ? setMapAttributesFromSave( previousMapName ) : setMapAttributes( previousMapName )
-}
+    ( previousMapName === "SAVE_GAME" ) ? getMapAttributesFromSave( savedState ) : getMapAttributes( previousMapName )
 
-const setMapAttributesFromSave = ( ) => {
     setTimeout( ( ) => {
-        state.currentMap.NPCs = 
-        setMapAttributes.setMapAttributes( previousMapName );
-    }, 500)
-
-    setTimeout(() => {
         if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
             state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
             state.currentMap.mapMusic.play()         
         }
-
-        if ( previousMapName != null && previousMapName != "SAVE_GAME" ) {
-            initPlayerSpriteInNewMap( previousMapName )
-        }     
-        else {
-            state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
-        }
-        
     }, 1000)
 }
 
+const getMapAttributesFromSave = ( savedGame ) => {
+    setTimeout( ( ) => {
+        state.currentMap.doors = savedGame.currentMap.doors
+        state.currentMap.mapActions = savedGame.currentMap.mapActions
+        /* state.currentMap.NPCs = savedGame.currentMap.NPCs */
+        state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
+    }, 500)
+}
 
-const setMapAttributes = ( ) => {
+
+const getMapAttributes = ( previousMapName ) => {
     setTimeout(() => {
         getNPCs.generateCharacters( );
         setMapAttributes.setMapAttributes( previousMapName );
     }, 500)
 
     setTimeout(() => {
-        if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-            state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
-            state.currentMap.mapMusic.play()         
-        }
-
-        if ( previousMapName != null && previousMapName != "SAVE_GAME" ) {
+        if ( previousMapName != null ) {
             initPlayerSpriteInNewMap( previousMapName )
         }     
         else {
             state.playerCharacter = createCharInstance.getCharacter( 'Influencer', 'Johanna', state.currentMap.mapData.playerStart )
-        }
-        
+        } 
     }, 1000)
 }
 
