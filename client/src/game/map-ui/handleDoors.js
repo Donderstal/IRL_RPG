@@ -13,7 +13,7 @@ const soundClass    = soundHelper.soundClass
 
 const checkIfDoor = ( sprite, direction ) => {
     if (state.currentMap.mapData.outdoors ) {
-        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbours.right ) {
+        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbousrs.right ) {
             return state.currentMap.mapData.neighbours.right
         }
 
@@ -44,7 +44,7 @@ const checkIfDoor = ( sprite, direction ) => {
         }
 
         if ( direction === 'FACING_UP' ) {
-            if ( direction == currentDoor.directionIn && currentDoor.y >= sprite.cell.y ) {
+            if ( direction == currentDoor.directionIn && currentDoor.y >= sprite.y ) {
                 if ( sprite.cell.x > currentDoor.left && sprite.cell.x < currentDoor.right)
                 facingDoor = true
             }
