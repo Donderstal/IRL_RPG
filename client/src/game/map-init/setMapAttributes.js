@@ -25,8 +25,8 @@ const setMapAttributes = ( previousMap ) => {
   * If player entered from a door, call setSpritePositionForNewMap
   */
  const setDoorsAndDetectEntryPoint = ( previousMap ) => {
+    state.currentMap.doors = []
      if ( state.currentMap.mapData.doors ) {
-        state.currentMap.doors = []
         const mapDoors = state.currentMap.mapData.doors
 
 
@@ -43,7 +43,7 @@ const setMapAttributes = ( previousMap ) => {
                 setSpritePositionForNewMap(newDoor)
             }
         }
-     }
+    }
 
 }
 

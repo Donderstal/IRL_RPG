@@ -13,7 +13,7 @@ const soundClass    = soundHelper.soundClass
 
 const checkIfDoor = ( sprite, direction ) => {
     if (state.currentMap.mapData.outdoors ) {
-        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbousrs.right ) {
+        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbours.right ) {
             return state.currentMap.mapData.neighbours.right
         }
 
