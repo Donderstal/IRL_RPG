@@ -7,7 +7,7 @@ const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
 
 const mapJSONFolder = '/static/maps/'
-const firstMapUrl = mapJSONFolder + 'my-neighbourhood/my-house.json';
+const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
 const savedGame = '/static/save_game.json';
 
 const stopGame = () => {
@@ -26,16 +26,6 @@ const stopGame = () => {
 const saveGame = ( ) => {
     state.playerCharacter.sprite.calcCellFromXy( );
     utility.downloadObjectAsJson( state, 'Neckbeard_save_game' )
-
-
-    /* 
-    TO DO // Add a place to store save games dynamically by user
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/save_game", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(state)); 
-    */
 }
 
 const initMapFromSave = ( savedGame ) => {

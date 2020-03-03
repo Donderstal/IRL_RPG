@@ -3,8 +3,6 @@ const soundHelper   = require('../../helpers/soundHelpers')
 const soundClass    = soundHelper.soundClass
 
 /**
- * EXPORT @function checkIfDoor
- * 
  * @param {string} direction - string representing direction
  * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
  * 
@@ -13,7 +11,7 @@ const soundClass    = soundHelper.soundClass
 
 const checkIfDoor = ( sprite, direction ) => {
     if (state.currentMap.mapData.outdoors ) {
-        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbousrs.right ) {
+        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbours.right ) {
             return state.currentMap.mapData.neighbours.right
         }
 

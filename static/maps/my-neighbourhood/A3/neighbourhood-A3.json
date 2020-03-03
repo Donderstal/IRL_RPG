@@ -1,0 +1,203 @@
+{    
+    "mapName": "my-neighbourhood/A3/neighbourhood-A3",
+    "tileSet": "neighbourhood-A3",
+    "src": "city1big_tiles.png",
+    "outdoors": true,
+    "music": "game-jam.mp3",
+    "neighbours": {
+        "left": "my-neighbourhood/A2/neighbourhood-A2",
+        "right": "my-neighbourhood/A4/neighbourhood-A4"
+    },
+    "uniqueTiles": 519,
+    "columns": 23,
+    "rows": 9,
+    "grid": [
+        [ 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 41, 41, 42, 43, 44, 44, 44, 44, 44, 45, 46, 46],
+        [ 93, 94, 95, 96, 97, 98, 99,100,101,102,103,104,104,104,104,105,106,107,108,109,110,111,112,113],
+        [309,309,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205],
+        [309,309,309,270,282,272,273,274,275,276,277,278,278,278,279,280,282,281,282,283,284,285,286,287],
+        [309,309,309,328,329, 35,330,331,332,333,334, 35,332, 35,332, 35,332, 35,332, 35,332, 35,332, 35],
+        [309,309,309,270,282,281,282,281,282,281,359,360,282,361,362,363,364,281,282,281,282,281,282,281],
+        [309,309,396,397,398, 35,332, 35,332, 35,332, 35,399,400,401,402,332,403,332,35 ,332,404,405, 35],
+        [309,309,309,433,434,440,441,440,441,440,441,440,435,436,441,442,441,437,441,440,441,438,439,440],
+        [309,309,309,480,481,309,309,309,309,309,482,309,309,483,484,485,486,309,309,309,487,309,500,309],
+        [309,509,309,309,309,309,309,309,309,510,309,309,511,309,309,309,309,309,309,309,309,309,309,309]
+    ],
+    "inaccessible": [ 
+        { 
+            "topLeft": { "row": 0, "col": 7 },
+            "bottomRight": { "row": 3, "col": 14 }
+        },
+        { 
+            "topLeft": { "row": 0, "col": 15 },
+            "bottomRight": { "row": 2, "col": 21 }
+        },
+        { 
+            "topLeft": { "row": 0, "col": 22 },
+            "bottomRight": { "row": 3, "col": 23 }
+        }
+    ],
+    "blocked": [
+        93, 94, 95, 96, 97, 98, 188, 359, 360,
+
+        { 
+            "id": 185, 
+            "left": { "factor": 0.7 }, 
+            "bottom": { "factor": 0.5 } 
+        },
+        { 
+            "id": 328, 
+            "left": { "factor": 0.7 }, 
+            "top": { "factor": 0.2 },
+            "bottom": { "factor": 0.1 } 
+        },
+        { 
+            "id": 397, 
+            "left": { "factor": 0.7 }, 
+            "top": { "factor": 0.6 } 
+        },
+        { 
+            "id": 433, 
+            "left": { "factor": 0.7 }, 
+            "bottom": { "factor": 0.8 } 
+        },
+
+        { "id": 187, "left": { "factor": 0.5 } },
+
+        { 
+            "id": 272, 
+            "left": { "factor": 0.5 }, 
+            "bottom": { "factor": 0.8 } 
+        },
+        { 
+            "id": 273, 
+            "bottom": { "factor": 0.8 }, 
+            "left": { "factor": 0.8 } 
+        },
+
+        { 
+            "id": 283, 
+            "left": { "factor": 0.7 } ,
+            "bottom": { "factor": 0.5 } 
+        },
+
+        { "id": 284, "bottom": { "factor": 0.5 } },
+        { "id": 285, "bottom": { "factor": 0.5 } },
+
+        {
+            "id": 361, 
+            "left": { "factor": 0.8 }, 
+            "top": { "factor": 0.2 }
+        },
+        {
+            "id": 362, 
+            "right": { "factor": 0.5 }, 
+            "top": { "factor": 0.2 }
+        },
+
+        {
+            "id": 399,
+            "left": { "factor": 0.8 },
+            "top": { "factor": 0.6 } 
+        },
+        {
+            "id": 400,
+            "right": { "factor": 0.7 },
+            "top": { "factor": 0.6 } 
+        },
+        {
+            "id": 404,
+            "left": { "factor": 0.9 },
+            "top": { "factor": 0.6 } 
+        },
+        {
+            "id": 405,
+            "right": { "factor": 0.6 },
+            "top": { "factor": 0.6 } 
+        },
+        
+        {
+            "id": 435,
+            "left": { "factor": 0.8 },
+            "bottom": { "factor": 0.8 }
+        },
+        {
+            "id": 436,
+            "right": { "factor": 0.7 },
+            "bottom": { "factor": 0.8 }
+        },
+        {
+            "id": 438,
+            "left": { "factor": 0.9 },
+            "bottom": { "factor": 0.8 }
+        },
+        {
+            "id": 439,
+            "right": { "factor": 0.6 },
+            "bottom": { "factor": 0.8 }
+        },
+        {
+            "id": 403, 
+            "right": { "factor": 0.1 }, 
+            "left": { "factor": 0.4 },
+            "top": { "factor": 0.8 }
+        },
+        {
+            "id": 437, 
+            "right": { "factor": 0.1 }, 
+            "left": { "factor": 0.4 },
+            "bottom": { "factor": 0.5 }
+        }
+    ],
+    "characters": [
+        {
+            "type": "static",
+            "sprite": "chad.png",
+            "direction": "FACING_DOWN",
+            "row": 5,
+            "col": 10,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "I sold my kidneys to pay the rent."
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "neckbeard.png",
+            "direction": "FACING_DOWN",
+            "row": 3,
+            "col": 19,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "Bronies are so 2016"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "influencer.png",
+            "direction": "FACING_DOWN",
+            "row": 5,
+            "col": 11,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-3.mp3",
+                "direction": "FACING_UP",
+                "text": "I sold my house to pay for new kidneys."
+            }
+        }
+    ],
+    "doors": [ 
+        {
+            "row": 3, 
+            "col": 8,
+            "to"  : "my-neighbourhood/A3/hotel-le-canard/le-canard-lobby",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        }
+    ]
+}

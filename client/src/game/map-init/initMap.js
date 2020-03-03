@@ -82,9 +82,6 @@ const initPlayerSpriteInNewMap = ( previousMapName ) => {
     movementController.startPlayerMovement()
 }
 
-/**
- * @function setCharacterLocationInNewMap
- */
 const setCharacterLocationInNewMap = ( previousMapName  ) => {
     const currentMapData = state.currentMap.mapData
     const playerSprite = state.playerCharacter.sprite

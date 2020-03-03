@@ -76,7 +76,7 @@
         {
             "row": 12, 
             "col": 5,
-            "to"  : "my-neighbourhood/neighbourhood-A2",
+            "to"  : "my-neighbourhood/A4/neighbourhood-A4",
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
@@ -84,7 +84,7 @@
         {
             "row": 12, 
             "col": 6,
-            "to"  : "my-neighbourhood/neighbourhood-A2",
+            "to"  : "my-neighbourhood/A4/neighbourhood-A4",
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false

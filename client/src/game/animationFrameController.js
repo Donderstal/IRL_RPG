@@ -8,8 +8,6 @@ const startRequestingFrame = () => {
 }
 
 /**
- * @function animationFrameController
- * 
  * Controller for all animation duties in front-context
  */
 const animationFrameController = () => {
@@ -26,16 +24,14 @@ const animationFrameController = () => {
 }
 
 /**
- * @function drawSpritesInOrder
- * 
  * Get Layeredsprite prop from mapstate
- * Reorganize the layered sprites array based...
+ * Reorganize the layered sprites array based 
  * on location of sprite within grid
  * 
- * Then organise them accordingly, top...
+ * Then organise them accordingly, top 
  * sprites first
  * 
- * This must be done to make up for the...
+ * This must be done to make up for the 
  * lack of depth in HTMLCanvas
  */
 const drawSpritesInOrder = ( ) => {

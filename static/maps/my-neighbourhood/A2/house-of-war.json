@@ -1,10 +1,11 @@
 {
-    "mapName": "my-neighbourhood/neighbourhood-A0",
+    "mapName": "my-neighbourhood/A2/house-of-war",
     "tileSet": "neighbourhood-A2",
     "src": "Generic_Room_A_Tile_Set.png",
     "outdoors": false,
     "music": "game-jam.mp3",
     "rows":7,
+    "uniqueTiles": 259,
     "columns":11,
     "grid":[
         [11,0,3,11,11,11,11,11,11,0,3,11],
@@ -23,7 +24,7 @@
         {
             "row": 3, 
             "col": 11,
-            "to"  : "my-neighbourhood/neighbourhood-A1",
+            "to"  : "my-neighbourhood/A2/neighbourhood-A2",
             "directionIn": "FACING_RIGHT",
             "directionOut": "FACING_LEFT",
             "locked": false

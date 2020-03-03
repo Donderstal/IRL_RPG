@@ -1,22 +1,22 @@
 {
-    "mapName": "my-neighbourhood/neighbourhood-A2",
+    "mapName": "my-neighbourhood/A2/neighbourhood-A2",
     "tileSet": "neighbourhood-A2",
     "src": "city1big_tiles.png",
     "outdoors": true,
     "music": "game-jam.mp3",
     "neighbours": {
-        "left": "my-neighbourhood/neighbourhood-A1",
-        "right": "my-neighbourhood/neighbourhood-A3"
+        "left": "my-neighbourhood/A1/neighbourhood-A1",
+        "right": "my-neighbourhood/A3/neighbourhood-A3"
     },
     "uniqueTiles":519,
     "columns":23,
     "rows":9,
     "grid":[
-        [46,47,46,163,16,17,44,44,19,20,53,53,22,52,53,53,53,53,54,55,26,27,28,29],
-        [77,77,77,78,79,80,81,81,82,169,170,170,84,85,170,170,170,170,130,131,89,90,91,92],
+        [ 46, 47, 46,163, 16, 17, 44, 44, 19, 20, 53, 53, 22, 52, 53, 53, 53, 53, 54, 55, 26, 27, 28, 29],
+        [ 77, 77, 77, 78, 79, 80, 81, 81, 82,169,170,170, 84, 85,170,170,170,170,130,131, 89, 90, 91, 92],
         [160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,224,371,370,371,372,182],
         [248,248,249,250,251,252,253,254,255,256,264,258,259,260,261,262,263,264,304,305,406,407,308,309],
-        [322,311,312,311,132,311,132,311,132,311,"E",323,324,340,312,311,312,311,312,311,132,311,341,327],
+        [322,311,312,311,132,311,132,311,132,311,132,323,324,340,312,311,312,311,312,311,132,311,341,327],
         [370,371,348,371,370,371,370,349,350,351,352,371,368,369,370,371,370,371,370,371,370,371,372,373],
         [406,407,406,407,406,407,406,387,388,389,390,407,391,407,406,407,406,392,406,407,393,407,394,395],
         [449,450,449,450,449,443,444,450,449,450,449,450,449,450,449,448,449,427,449,429,430,450,432,309],
@@ -24,16 +24,73 @@
         [309,512,309,309,309,309,309,513,309,309,309,309,309,309,309,309,309,309,514,515,516,309,309,309]
     ],
     "blocked": [ 
-        1,
+        1, 89, 90, 91, 92,
         { 
-            "id": 230, 
-            "top": { "factor": 0.5 },
+            "id": 79, 
+            "right": { "factor": 0.8 }
+        },
+        { 
+            "id": 164, 
+            "right": { "factor": 0.8 }
+        },
+        { 
+            "id": 251, 
+            "right": { "factor": 0.8 }
+        },
+
+        { 
+            "id": 168, 
+            "top": { "factor": 0.8 }, 
             "left": { "factor": 0.1 },
-            "right": { "factor": 0.1 }  
+            "right": { "factor": 0.1 }
         },
         { 
             "id": 255, 
+            "bottom": { "factor": 0.5 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+
+        { 
+            "id": 350, 
             "top": { "factor": 0.5 }, 
+            "right": { "factor": 0.1 }
+        }, 
+
+        { "id": 351, "top": { "factor": 0.5 } }, 
+        { "id": 352, "top": { "factor": 0.5 } },
+
+        { 
+            "id": 388, 
+            "bottom": { "factor": 0.8 },
+            "right": { "factor": 0.1 }
+        },
+        
+        { "id": 389, "bottom": { "factor": 0.8 } },
+        { "id": 390, "bottom": { "factor": 0.8 } },
+
+        { 
+            "id": 392, 
+            "top": { "factor": 0.5 }, 
+            "left": { "factor": 0.2 },
+            "right": { "factor": 0.2 }
+        },
+        { 
+            "id": 427, 
+            "bottom": { "factor": 0.8 }, 
+            "left": { "factor": 0.2 },
+            "right": { "factor": 0.2 }
+        },
+
+        { 
+            "id": 393, 
+            "top": { "factor": 0.5 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+        { 
+            "id": 430, 
+            "bottom": { "factor": 0.8 }, 
             "left": { "factor": 0.1 },
             "right": { "factor": 0.1 }
         }
@@ -41,22 +98,30 @@
     "inaccessible": [ 
         { 
             "topLeft": { "row": 0, "col": 0 },
+            "bottomRight": { "row": 3, "col": 3 }
+        },
+        { 
+            "topLeft": { "row": 1, "col": 4 },
+            "bottomRight": { "row": 1, "col": 8 }
+        },
+        { 
+            "topLeft": { "row": 0, "col": 9 },
             "bottomRight": { "row": 3, "col": 18 }
         }
     ],
     "doors": [ 
         {
             "row": 3, 
-            "col": 17,
-            "to"  : "my-neighbourhood/yum-mart",
+            "col": 2,
+            "to"  : "my-neighbourhood/A2/yum-corp",
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",
             "locked": false
         },
         {
             "row": 3, 
-            "col": 10,
-            "to"  : "my-neighbourhood/yum-corp",
+            "col": 15,
+            "to"  : "my-neighbourhood/A2/house-of-war",
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",
             "locked": false

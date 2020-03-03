@@ -1,5 +1,5 @@
 {
-    "mapName": "my-neighbourhood/yum-corp",
+    "mapName": "my-neighbourhood/A2/yum-corp",
     "tileSet": "yum-mart",
     "src": "Interior_Yum_Mart_tiles.png",    
     "music": "yum-mart-theme.mp3",
@@ -64,7 +64,7 @@
         {
             "row": 13, 
             "col": 5,
-            "to"  : "my-neighbourhood/neighbourhood-A2",
+            "to"  : "my-neighbourhood/A2/neighbourhood-A2",
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
@@ -72,7 +72,7 @@
         {
             "row": 13, 
             "col": 4,
-            "to"  : "my-neighbourhood/neighbourhood-A2",
+            "to"  : "my-neighbourhood/A2/neighbourhood-A2",
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false

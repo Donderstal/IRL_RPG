@@ -7,7 +7,6 @@ const initMap = require('../map-init/initMap')
 let frameCount = 0;
 
 /**
- * @function handleMovementOfSprite
  * Call functions in order to move sprite
  * @param {string} direction - string representing direction
  * 
@@ -39,7 +38,6 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
 }
 
 /**
- * @function moveInDirection
  * @param {string} direction - string representing direction
  * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  * 
@@ -85,7 +83,6 @@ const moveInDirection = ( sprite, direction ) => {
 }
 
 /**
- * @function countFrame
  * Update frame count every time requestAnimationFrame fires callback
  * Update sprite's animIterator every time FRAME_LIMIT is equal to framecount 
  * Reset animIterator to zero if necessary
