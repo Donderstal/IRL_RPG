@@ -4,7 +4,6 @@ const state = require('../../game-data/state')
 const actionController = require('./actionController')
 
 /**
- * EXPORT @function listenForKeyPress
  * Listen for keypresses
  * and pass them to pressedKeys variable
  */
@@ -14,7 +13,6 @@ const listenForKeyPress = () => {
 }
 
 /**
- * EXPORT @function stopListenForKeyPress
  * Listen for keypresses
  * and pass them to pressedKeys variable
  */
@@ -42,7 +40,6 @@ const removeKeyFromPressed = () => {
 }
 
 /**
- * EXPORT @function clearPressedKeys
  * set all pressedKeys to false
  * Use when loading a new map or in cinematic
  */ 

@@ -5,9 +5,6 @@ const actionHelpers    = require('../../helpers/actionHelpers')
 const soundHelper   = require('../../helpers/soundHelpers')
 const soundClass    = soundHelper.soundClass
 
-/**
- * EXPORT @function setMapEvents
- */
 const setMapAttributes = ( previousMap ) => {
     setDoorsAndDetectEntryPoint( previousMap )
     setActions( )
@@ -15,8 +12,6 @@ const setMapAttributes = ( previousMap ) => {
 
 
 /**
-  * EXPORT @function setDoorsAndDetectEntryPoint
-  * 
   * @param {string} previousMap - string representing relative path to previous map
   * 
   * Get doors in current map from mapData json in state
@@ -63,8 +58,6 @@ const setActions = (  ) => {
 }
 
 /**
- * @function setSpritePositionForNewMap
- * 
  * @param {object} previousMap - door where the player is entering map
  * 
  * Adjust character grid position to position of door

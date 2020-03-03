@@ -80,10 +80,6 @@ const drawGrid = ( startingPosition, currentMap ) => {
     }
 }
 
-/**
- * set borders in currentMap
- */
-
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
     let borderObject = { 
         top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
@@ -118,7 +114,6 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
 }
 
 /** 
- * @function drawRow
  * Call @function drawTileInGridBlock for each column in this row
  * 
  * @param {object} currentMap - Object containing all the data needed to draw Grid

@@ -3,8 +3,6 @@ const soundHelper   = require('../../helpers/soundHelpers')
 const soundClass    = soundHelper.soundClass
 
 /**
- * EXPORT @function checkIfDoor
- * 
  * @param {string} direction - string representing direction
  * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
  * 
