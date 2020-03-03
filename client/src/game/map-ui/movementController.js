@@ -6,9 +6,7 @@ let pressedKeys = controls.pressedKeys;
 let continueAnimating = false;
 
 /**
- * EXPORT @function initMovement
  * Is called when player sprite is rendered
- * 
  * set continueAnimating to true
  */
 const startPlayerMovement = ( ) => {
@@ -17,9 +15,7 @@ const startPlayerMovement = ( ) => {
 }
 
 /**
- * EXPORT @function stopPlayerMovement
  * Called when game is stopped or new map is loaded
- * 
  * set continueAnimating to false to stop movement
  */
 const stopPlayerMovement = () => {
@@ -28,9 +24,7 @@ const stopPlayerMovement = () => {
 }
 
 /**
- * @function handleMovementKeys
  * Gets called +/- 60 times per second with requestAnimationFrame
- * 
  * If the player is pressing d-pad or wasd...
  * Call movement.handleMovementOfSprite
  */

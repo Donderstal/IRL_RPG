@@ -2,8 +2,6 @@ const state = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 
 /**
- * EXPORT @function checkIfMovementAllowed
- * 
  * @param {string} direction - string representing direction
  * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
  * 
