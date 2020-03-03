@@ -1,0 +1,235 @@
+{
+    "mapName": "my-neighbourhood/A1/neighbourhood-A1",
+    "tileSet": "neighbourhood-A1",
+    "src": "city1big_tiles.png",
+    "outdoors": true,
+    "music": "game-jam.mp3",
+    "neighbours": {
+        "right": "my-neighbourhood/A2/neighbourhood-A2"
+    },
+    "uniqueTiles":519,
+    "columns":23,
+    "rows": 9,
+    "grid": [
+        [  0,  1,  2,  2,  2,  3,  4,  5,  5,  5,  6,  7,  7,  7,  8,  7,  7,  7,  9, 10, 11, 12, 46, 46],
+        [ 60, 61, 62, 62, 62, 63, 64, 65, 66, 67, 68, 72, 69, 70, 71, 72, 72, 72, 73, 74, 75, 76, 77, 77],
+        [136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159],
+        [229,230,231,232,233,234,235,236,237,238,239,242,242,242,240,241,242,242,243,244,245,246,247,248],
+        [310,311,312,311,312,313,314,315,316,317,318,311,312,311,319,320,312,311,312,311,132,321,132,311],
+        [370,371,370,343,347,371,370,371,370,371,370,345,370,371,370,371,370,371,370,346,347,371,370,371],
+        [374,407,406,384,378,407,379,380,406,407,406,381,382,407,383,407,406,407,406,384,385,386,406,407],
+        [417,450,417,450,449,418,419,420,421,450,449,422,423,450,449,450,449,450,449,450,449,450,449,450],
+        [309,309,468,309,455,456,457,309,309,309,458,459,460,461,462,463,464,465,466,309,487,309,309,309],
+        [309,509,309,309,309,309,309,309,309,510,309,309,511,309,309,309,309,309,309,309,309,309,309,309]
+    ]       ,
+    "blocked": [ 
+        1, 
+        { 
+            "id": 168, 
+            "bottom": { "factor": 0.5 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+        { 
+            "id": 255, 
+            "top": { "factor": 0.8 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+
+        { "id": 343, "top": { "factor": 0.5 } }, 
+        { "id": 346, "top": { "factor": 0.5 } }, 
+        { "id": 347, "top": { "factor": 0.5 } },
+
+        { "id": 378, "bottom": { "factor": 0.8 } },
+        { "id": 384, "bottom": { "factor": 0.8 } },
+        { "id": 385, "bottom": { "factor": 0.8 } },
+        { 
+            "id": 380, 
+            "top": { "factor": 0.8 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+        { 
+            "id": 381, 
+            "top": { "factor": 0.8 }, 
+            "left": { "factor": 0.3 }
+        },
+        { 
+            "id": 386, 
+            "top": { "factor": 0.15 },
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 },   
+            "bottom": { "factor": 0.1 } 
+        },
+        { 
+            "id": 420, 
+            "bottom": { "factor": 0.5 }, 
+            "left": { "factor": 0.1 },
+            "right": { "factor": 0.1 }
+        },
+        { 
+            "id": 422, 
+            "bottom": { "factor": 0.5 }, 
+            "left": { "factor": 0.3 }
+        },
+        { 
+            "id": 423, 
+            "bottom": { "factor": 0.3 }, 
+            "right": { "factor": 0.9 }
+        }   
+    ],
+    "inaccessible": [ 
+        { 
+            "topLeft": { "row": 0, "col": 1 },
+            "bottomRight": { "row": 3, "col": 18 }
+        },
+        { 
+            "topLeft": { "row": 0, "col": 19 },
+            "bottomRight": { "row": 1, "col": 21 }
+        },
+        { 
+            "topLeft": { "row": 0, "col": 22 },
+            "bottomRight": { "row": 3, "col": 23 }
+        }
+    ],
+    "doors": [ 
+        {
+            "row": 3, 
+            "col": 4,
+            "to"  : "my-neighbourhood/A1/my-house",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        },
+        {
+            "row": 3, 
+            "col": 6,
+            "to"  : "my-neighbourhood/A1/neighbours-house",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        },
+        {
+            "row": 3, 
+            "col": 7,
+            "to"  : "my-neighbourhood/A1/neighbours-house",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        }
+    ],
+    "characters" : [
+        {
+            "type": "dynamic",
+            "sprite": "neckbeard.png",
+            "direction": "FACING_DOWN",
+            "row": 3,
+            "col": 17,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 5, 
+                "col": 17, 
+                "direction": "FACING_DOWN" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 3, "col": 17, "direction": "FACING_UP" },
+                { "id": 1, "row": 7, "col": 17, "direction": "FACING_DOWN" }
+            ],
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "I'm a level 24 Darkmage."
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "chad.png",
+            "direction": "FACING_DOWN",
+            "row": 2,
+            "col": 21,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "Do you even lift, bro?"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "influencer.png",
+            "direction": "FACING_DOWN",
+            "row": 4,
+            "col": 9,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-3.mp3",
+                "direction": "FACING_UP",
+                "text": "I'm just feeling SO fabulous today!"
+            }
+        },
+        {
+            "type": "dynamic",
+            "sprite": "chad.png",
+            "row": 8,
+            "col": 14 ,
+            "lastPosition" : { 
+                "id": 0,
+                "row": 8, 
+                "col": 14, 
+                "direction": "FACING_UP" 
+            },
+            "path" : [                     
+                { "id": 0, "row": 5, "col": 14, "direction": "FACING_RIGHT" },
+                { "id": 1, "row": 3, "col": 14, "direction": "FACING_UP" },
+                { "id": 2, "row": 3, "col": 10, "direction": "FACING_LEFT" },
+                { "id": 3, "row": 5, "col": 10, "direction": "FACING_DOWN" }
+            ],
+            "actionid": 1,
+            "action": {
+                "id": 1,
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_DOWN",
+                "text": "Gamers, rise up!"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "influencer.png",
+            "direction": "FACING_RIGHT",
+            "row": 5,
+            "col": 1,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-2.mp3",
+                "direction": "FACING_LEFT",
+                "text": "What's up, nerd?"
+            }
+        },
+        {
+            "type": "static",
+            "sprite": "tumblr_girl.png",
+            "direction": "FACING_UP",
+            "row": 6,
+            "col": 2,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-2.mp3",
+                "direction": "FACING_DOWN",
+                "text": "I ate oysters for breakfast this morning. It was a terrible idea..."
+            }
+        }
+    ],
+    "actions" : [
+        {
+            "row": 3,
+            "col": 15,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "sfx": "typing.mp3",
+            "text": "Who still uses these things anyway?"
+        }
+    ]
+}
