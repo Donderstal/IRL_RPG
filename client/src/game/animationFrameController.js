@@ -3,14 +3,56 @@ const state         = require('../game-data/state')
 const NPCs          = require('./map-ui/NPCs')
 const canvasHelpers = require('../helpers/canvasHelpers')
 
+let battleMode = false;
+let overworldMode = false;
+let cinematicMode = false;
+
+let paused = false;
+
 const startRequestingFrame = () => {
-    requestAnimationFrame(animationFrameController)
+    startOverworldAnimation()
+    animationFrameController()
+}
+
+const startBattleAnimation = ( ) => {
+    overworldMode = false;
+    cinematicMode = false;
+    battleMode = true
+}
+
+const startOverworldAnimation = ( ) => {
+    battleMode = false;
+    cinematicMode = false;
+    overworldMode = true
+}
+
+const startCinematicAnimations = ( ) =>{
+    overworldMode = true
 }
 
 /**
  * Controller for all animation duties in front-context
  */
 const animationFrameController = () => {
+    if ( paused ) {
+        return
+    }
+    
+    if ( overworldMode ) {
+        handleOverworldAnimations()
+    }
+    else if ( battleMode) {
+        handleBattleAnimations()
+    }
+
+    requestAnimationFrame(animationFrameController)
+}
+
+const handleBattleAnimations = ( ) => {
+
+}
+
+const handleOverworldAnimations = ( ) => {
     state.currentMap.layeredSprites = []    
     NPCs.NPCController()        
     movementController.handleMovementKeys()
@@ -20,7 +62,6 @@ const animationFrameController = () => {
         state.currentMap.activeBubble.drawBubble( )
     }
 
-    requestAnimationFrame(animationFrameController)
 }
 
 /**
@@ -58,5 +99,7 @@ const drawSpritesInOrder = ( ) => {
 }
 
 module.exports = {
-    startRequestingFrame
+    startRequestingFrame,
+    startOverworldAnimation,
+    startBattleAnimation
 }

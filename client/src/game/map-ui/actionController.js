@@ -63,17 +63,25 @@ const handleActionButton = ( ) => {
 const handleAction = (action) => {
     switch ( action.type ) {
         case "TEXT" :
-            if ( !document.getElementById(action.sfx) ) {
-                const sfx = new soundHelper.soundClass( action.sfx, true )
-                sfx.play()
-                setTimeout( () => {
-                    document.getElementById(action.sfx).remove()                    
-                }, 1500)
-            } 
-            displayText.getSpeechBubble( action )
+            displayActionText( action )
 
             break            
+        case "BATTLE" :
+            displayActionText( action )
+            state.battleState.requestingBattle = true
+            break            
         }
+}
+
+const displayActionText = ( action ) => {
+    if ( !document.getElementById(action.sfx) ) {
+        const sfx = new soundHelper.soundClass( action.sfx, true )
+        sfx.play()
+        setTimeout( () => {
+            document.getElementById(action.sfx).remove()                    
+        }, 1500)
+    } 
+    displayText.getSpeechBubble( action )
 }
 module.exports = {
     handleActionButton

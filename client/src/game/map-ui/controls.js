@@ -1,6 +1,6 @@
 let pressedKeys = {};
 const state = require('../../game-data/state')
-
+const initBattle = require('../battle/initBattle')
 const actionController = require('./actionController')
 
 /**
@@ -23,16 +23,26 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = () => {
-    if ( event.which == 81 ) {
+    if ( event.which == 81 && !state.battleState.requestingBattle ) {
         event.preventDefault()
         actionController.handleActionButton( )        
     }
 
-    if ( event.which == 69 && state.currentMap.bubbleIsActive ) {
+    else if ( event.which == 69 && state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
     }
-    pressedKeys[event.key] = true
+
+    else if ( event.which == 81 && state.currentMap.bubbleIsActive && state.battleState.requestingBattle ) {
+        state.currentMap.activeBubble = {}
+        state.currentMap.bubbleIsActive = false
+        initBattle.startBattle()
+    }
+
+    else {
+        pressedKeys[event.key] = true        
+    }
+
 }
 
 const removeKeyFromPressed = () => {
