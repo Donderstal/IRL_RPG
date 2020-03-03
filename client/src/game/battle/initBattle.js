@@ -1,29 +1,26 @@
 const state = require('../../game-data/state')
 const canvasHelpers = require('../../helpers/canvasHelpers')
+const utility = require('../../helpers/utilFunctions')
 const animation = require('../animationFrameController')
-const initMap = require('../map-init/initMap')
+const drawGrid      = require('../map-init/drawGrid')
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
-    alert('battle!!!!')
-
-    canvasHelpers.getFrontCanvasContext().save( );
-    canvasHelpers.getBackCanvasContext().save( );
-
     animation.startBattleAnimation( )
-
     canvasHelpers.clearBothCanvases( )
-
-    alert('omg!!!!')
-
-    setTimeout( restore, 1000)
+    utility.fetchJSONWithCallback( '/static/maps/battle-maps/battle_map1.json', getBattleMap )
 }
 
-const restore = ( ) => {
-    canvasHelpers.getFrontCanvasContext().restore( );
-    canvasHelpers.getBackCanvasContext().restore( );
-    console.log(initMap)
-    initMap.initializeMap(state.currentMap.mapData, "SAVE_GAME", state)
+const getBattleMap = ( battleMapJson ) => {
+    let battleMap = {};
+    battleMap.mapData = battleMapJson;
+    drawGrid.generateMap( battleMap )
+}
+
+const stopBattle = ( ) => {
+    canvasHelpers.clearBothCanvases( )
+    drawGrid.generateMap( state.currentMap )
+
     animation.startOverworldAnimation( )
 }
 

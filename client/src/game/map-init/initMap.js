@@ -15,7 +15,7 @@ const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => 
     canvasHelpers.clearBothCanvases();
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
-    drawGrid.generateMap( state.currentMap, previousMapName )    
+    drawGrid.generateMap( state.currentMap )    
 
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
