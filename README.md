@@ -26,6 +26,11 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 
 ### LOG
 
+#### MAR 3, 2020
+* Added 4 maps that make up the first leven
+* Reorganizing how maps are stored
+* Adding improved generic tilesheet
+
 #### FEB 25, 2020
 * Loading and saving of games
 * Games are now saved/loaded to/from the user's pc
