@@ -1,0 +1,54 @@
+{
+    "mapName": "my-neighbourhood/A2/house-of-war",
+    "tileSet": "neighbourhood-A2",
+    "src": "Generic_Room_A_Tile_Set.png",
+    "outdoors": false,
+    "music": "game-jam.mp3",
+    "rows":7,
+    "uniqueTiles": 259,
+    "columns":11,
+    "grid":[
+        [11,0,3,11,11,11,11,11,11,0,3,11],
+        [15,4,7,15,15,15,15,15,15,4,7,15],
+        [63,63,63,63,63,63,63,63,63,63,63,63],
+        [46,63,63,63,63,45,46,63,63,63,63,45],
+        [50,63,63,63,63,49,50,63,63,63,63,49],
+        [52,63,63,63,63,63,63,63,63,63,63,53],
+        [56,63,54,63,63,54,54,63,63,54,63,57],
+        [11,11,11,11,11,11,11,11,11,11,11,11]
+    ],
+    "blocked": [ 
+        1
+    ],
+    "doors": [ 
+        {
+            "row": 3, 
+            "col": 11,
+            "to"  : "my-neighbourhood/A2/neighbourhood-A2",
+            "directionIn": "FACING_RIGHT",
+            "directionOut": "FACING_LEFT",
+            "locked": false
+        }
+    ],
+    "inaccessible": [ 
+        { 
+            "topLeft": { "row": 0, "col": 0 },
+            "bottomRight": { "row": 0, "col": 0 }
+        }
+    ],
+    "characters": [
+        {
+            "type": "static",
+            "sprite": "chad.png",
+            "direction": "FACING_RIGHT",
+            "row": 3,
+            "col": 3,
+            "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_LEFT",
+                "text": "Do you even lift, bro?"
+            }
+        }
+    ]
+}
