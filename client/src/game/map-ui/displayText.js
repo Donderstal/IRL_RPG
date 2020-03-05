@@ -10,12 +10,15 @@ const getSpeechBubble = ( action ) => {
 class SpeechBubble {
     constructor( action ) {
         this.text = canvas.breakTextIntoLines( action.text, 'LARGE' )
-        this.textHeight = Array.isArray( this.text ) ? ((this.text.length * globals.LARGE_FONT_SIZE) - globals.LARGE_FONT_SIZE) : 0
+        this.textHeight = Array.isArray( this.text ) ? ((this.text.length * globals.LARGE_FONT_SIZE + 8 ) - globals.LARGE_FONT_SIZE) : 0
         
         this.y = action.top ? action.top - globals.STRD_SPRITE_HEIGHT : (action.y - (globals.STRD_SPRITE_HEIGHT * 2) ) 
         this.x = action.left ? action.left : action.x
 
-        this.speaker = 'Neckbeard'
+        this.speaker = 'SELF'
+        if ( action.name ) {
+            this.speaker = action.name
+        }
         this.textRect = setTextBoxRect(this.text, this.x, this.y, this.textHeight)
         this.borderRect = {   
             'width': this.textRect.width + 4,
@@ -28,34 +31,37 @@ class SpeechBubble {
     }
 
     drawBubble( ) {
-        drawSpeechBubble( this.text, this.textHeight, this.textRect, this.borderRect )   
+        drawSpeechBubble( this.text, this.speaker, this.textRect, this.borderRect )   
     }
 }
 
-const drawSpeechBubble = ( text, totalTextHeight, textRect, borderRect ) => {
+const drawSpeechBubble = ( text, speaker, textRect, borderRect ) => {
     //Body
-    canvas.drawRect( borderRect.left, borderRect.top, borderRect.width, borderRect.height );
-    canvas.drawRect( textRect.left, textRect.top, textRect.width, textRect.height, '#989898' );
+    canvas.drawRect( "FRONT", borderRect.left, borderRect.top, borderRect.width, borderRect.height, "rgba(0,0,0, 0.66)" );
+    canvas.drawRect( "FRONT",textRect.left, textRect.top, textRect.width, textRect.height, 'rgba(255,255,255, 0.66)' );
 
     //Header
     let headerBottomY = textRect.top + 24
-    canvas.writeTextLine( "Player says:", textRect.left + 5, textRect.top + 16, 'SMALL' )
-    canvas.drawLineOnXAxis( textRect.left, headerBottomY, textRect.right )
+    if ( speaker != "SELF" ) {
+        canvas.writeTextLine( speaker + ":", textRect.left + 5, textRect.top + 16, 'SMALL', "black" )        
+    }
+
+    /* canvas.drawLineOnXAxis( textRect.left, headerBottomY, textRect.right ) */
 
     //Main text
     let mainTextBottomY = headerBottomY + 28;
     if ( !Array.isArray(text) ) {
-        canvas.writeTextLine( text, textRect.left + 5, textRect.top + 44, "LARGE", "#000000" )
+        canvas.writeTextLine( text, textRect.left + 5, textRect.top + 44, "LARGE", "black" )
     }
     else {
         mainTextBottomY = drawMultipleLines( textRect.left + 5, headerBottomY, text,  );
     }
-    canvas.drawLineOnXAxis( textRect.left, mainTextBottomY, textRect.right )
+    /* canvas.drawLineOnXAxis( textRect.left, mainTextBottomY, textRect.right ) */
 
     //Bottom buttons
-    canvas.drawLineOnYAxis( mainTextBottomY, textRect.horiMiddle, textRect.top + textRect.height )
-    canvas.writeTextLine( "(Q) Ask again", textRect.left + 5, mainTextBottomY + globals.SMALL_FONT_SIZE, "SMALL" )
-    canvas.writeTextLine( "(E) Dismiss", textRect.horiMiddle + 5, mainTextBottomY + globals.SMALL_FONT_SIZE , "SMALL" )
+    /* canvas.drawLineOnYAxis( mainTextBottomY, textRect.horiMiddle, textRect.top + textRect.height ) */
+    canvas.writeTextLine( "(Q) Continue", textRect.left + 5, mainTextBottomY + globals.SMALL_FONT_SIZE, "SMALL", "black" )
+    canvas.writeTextLine( "(E) Dismiss", textRect.horiMiddle + 16, mainTextBottomY + globals.SMALL_FONT_SIZE , "SMALL", "black" )
 }
 
 const setTextBoxRect = ( text, x, y, totalTextHeight ) => {
@@ -75,10 +81,12 @@ const setTextBoxRect = ( text, x, y, totalTextHeight ) => {
 
     if ( textWidthAboveMin && !textWidthAboveMax ) {
         textRect.width = ctx.measureText( text ).width + 8;
+        textRect.left -= ( textRect.width / 2 )
         textRect.right = textRect.left + textRect.width
     }
     else if ( textWidthAboveMax ) {
         textRect.width = globals.MAX_BUBBLE_WIDTH;
+        textRect.left -= ( textRect.width / 2 )
         textRect.right = textRect.left + globals.MAX_BUBBLE_WIDTH
         textRect.height += totalTextHeight
     }
@@ -89,11 +97,11 @@ const setTextBoxRect = ( text, x, y, totalTextHeight ) => {
 
 const drawMultipleLines = ( startingX, startingY, linesArray ) => {
     linesArray.forEach( (e) => {
-        startingY += globals.LARGE_FONT_SIZE
-        canvas.writeTextLine( e, startingX, startingY, "LARGE", "#586f7c" )
+        startingY += globals.LARGE_FONT_SIZE + 8
+        canvas.writeTextLine( e, startingX, startingY, "LARGE", "black" )
     })
 
-    return startingY + 8
+    return startingY + 12
 }
 
 const setTextGlobals = ( ) => {

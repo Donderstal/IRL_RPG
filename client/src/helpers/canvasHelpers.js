@@ -27,8 +27,7 @@ const drawFromImageToCanvas = (
         widthInCanvas, heightInCanvas 
     ) => {
 
-    let ctx;
-    canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()   
     ctx.drawImage(
         image, 
         imageX, imageY, 
@@ -45,8 +44,7 @@ const clearCanvasRectangle = (
         widthInCanvas, heightInCanvas
     ) => {
 
-    let ctx;
-    canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()   
         
     ctx.clearRect( 
         canvasX, canvasY,
@@ -106,8 +104,8 @@ const drawLineOnYAxis = (oldY, x, newY, color = null) => {
     ctx.stroke( );
 }
 
-const drawRect = ( x, y, width, height, color = null ) => {
-    let ctx = getFrontCanvasContext()   
+const drawRect = ( canvas, x, y, width, height, color = null ) => {
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()
 
     ctx.fillStyle = (color != null) ? color : "white"
     ctx.fillRect( x, y, width, height );
@@ -116,10 +114,10 @@ const drawRect = ( x, y, width, height, color = null ) => {
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
     if ( size === "LARGE") {
-        ctx.font = globals.LARGE_FONT_SIZE + "px " + globals.FONT_STYLE;
+        ctx.font = globals.LARGE_FONT_SIZE + "px " + "GameFont";
     }
     else if ( size === "SMALL" ) {
-        ctx.font = globals.SMALL_FONT_SIZE + "px " + globals.FONT_STYLE;
+        ctx.font = globals.SMALL_FONT_SIZE + "px " + "GameFont";
     }
 }
 
