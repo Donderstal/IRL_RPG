@@ -38,6 +38,7 @@
             "row": 1,
             "col": 2,
             "action": {
+                "name": "Bar'zuhl Nag-Rah",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_UP",
@@ -51,6 +52,7 @@
             "row": 1,
             "col": 4,
             "action": {
+                "name": "R0x4NN3G4M3RG0D355",
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
                 "direction": "FACING_UP",
@@ -73,7 +75,7 @@
             "type": "TEXT",
             "direction": "FACING_UP",
             "sfx": "typing.mp3",
-            "text": "Looks like they're playing Guild of Warcraft"
+            "text": "Looks like they're playing Guild of Warcraft!"
         },
         {
             "row": 3,
