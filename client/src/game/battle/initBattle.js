@@ -67,8 +67,8 @@ const getBattleMap = ( battleMapJson ) => {
     }, 800)
 
     setTimeout( ( ) => {
-        state.battleState.player.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
-        state.battleState.enemy.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1 )
+        state.battleState.enemy.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
+        state.battleState.player.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
         animation.startBattleAnimation( )
     }, 2400)
 }

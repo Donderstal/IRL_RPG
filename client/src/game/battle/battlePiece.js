@@ -1,13 +1,17 @@
-const canvasHelpers = require('../../helpers/canvasHelpers')
-const mapHelpers = require('../../helpers/mapHelpers')
+const canvas = require('../../helpers/canvasHelpers')
+const map = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
+const battleButton = require('../battle-ui/battleButton').battleButton
 
 class battlePiece {
 
-    constructor ( start, spriteSheetSrc, spriteDirection = 0 ) {        
+    constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {        
         this.width   = globals.STRD_SPRITE_WIDTH  * 2;
         this.height  = globals.STRD_SPRITE_HEIGHT * 2;
-        this.cell   = {}
+
+        this.isPlayer= isPlayer
+        this.buttons = {}
+        this.buttonSprites = []
 
         this.left    = 0
         this.right   = 0
@@ -34,6 +38,9 @@ class battlePiece {
 
     getSpriteAndDrawWhenLoaded( ) {
         if ( !this.loaded ) {
+            if ( this.isPlayer ) {
+                this.initBattleUI( )            
+            }            
             this.sheet.onload = () => {
                 this.loaded = true
                 this.drawSprite()
@@ -41,13 +48,6 @@ class battlePiece {
 
             this.sheet.src = this.sheetSrc            
         }
-    }
-    
-    setXY( xy ) {
-        this.x = xy.x
-        this.y = xy.y
-        this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
     }
 
     updateSpriteBorders( ) {
@@ -57,42 +57,17 @@ class battlePiece {
         this.bottom = this.y + this.height
     }
 
-    updateSpriteCellXy( ) {
-        this.cell.x = this.x + ( this.width * .5 ),
-        this.cell.y = this.y + ( this.height - globals.GRID_BLOCK_PX)
-    }
-
-    setCell( cell ) {
-        this.row = cell.row
-        this.col = cell.col
-    }
-
     calcXyFromCell( ) {
-        const xy = mapHelpers.getXYOfCell(this.row, this.col)
+        const xy = map.getXYOfCell(this.row, this.col)
         
         this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
         this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
 
         this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
     }
-
-    setCellXy( ) {
-        this.cell.x = this.x + (( this.x + globals.GRID_BLOCK_PX ) - ( this.x + this.width ))
-        this.cell.y = this.y + (( this.y + globals.GRID_BLOCK_PX ) - ( this.y + this.height ))
-    }
-        
-    calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXY( this.cell.x, this.cell.y )
-        this.row = cell.row
-        this.col = cell.col
-
-        this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
-    }
-
+    
     drawSprite( ) {
-        canvasHelpers.drawFromImageToCanvas(
+        canvas.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
             this.animLoop[this.animIterator] * 37, 
@@ -100,14 +75,71 @@ class battlePiece {
             37, 37,
             this.x, this.y, this.width, this.height
         )
+
+        if ( this.isPlayer ) {
+            this.buttonSprites.forEach((e) => {
+                e.drawButton( )
+            })            
+        }    
+    }
+
+    setButtonAsActive( buttonKey ) {
+        let index = parseInt( buttonKey ) - 1
+        this.buttonSprites.forEach( (e) => {
+            e.setActive( true )
+        })
+
+        let spriteAtIndex = this.buttonSprites[index]
+        spriteAtIndex.setActive( )
     }
 
     clearSprite( ) {
-        canvasHelpers.clearCanvasRectangle(
+        canvas.clearCanvasRectangle(
             "FRONT",
             this.x, this.y, this.width, this.height
         )
     } 
+
+    initBattleUI( ) {
+
+        let topCircleY = this.y - globals.GRID_BLOCK_PX
+        let bottomCircleY = this.bottom + globals.GRID_BLOCK_PX
+
+        this.buttons.topCircle = { 
+            'x': this.x + this.width, 
+            'y': topCircleY, 
+            'text' : '( 1 )', 'toolTip': 'Punch' 
+        }
+        this.buttons.topMiddleCircle = { 
+            'x': this.x + ( this.width * 1.5 ),
+            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.25 ), 
+            'text' : '( 2 )', 'toolTip': 'Moves' 
+        }
+        this.buttons.middleCircle = { 
+            'x': this.x + ( this.width * 1.75 ), 
+            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.5 ), 
+            'text' : '( 3 )', 'toolTip': 'Defend' 
+        }
+        this.buttons.bottomMiddleCircle = { 
+            'x': this.x + ( this.width * 1.5 ), 
+            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.75 ), 
+            'text' : '( 4 )', 'toolTip': 'Item' 
+        }
+        this.buttons.bottomCircle = { 
+            'x': this.x + this.width,
+            'y': bottomCircleY, 
+            'text' : '( 5 )', 'toolTip': 'Flee' 
+        }
+
+        Object.keys(this.buttons).forEach( ( key ) => {
+            this.buttonSprites.push(
+                new battleButton( 
+                    this.buttons[key].x, this.buttons[key].y, 
+                    this.buttons[key].text, this.buttons[key].toolTip 
+                ) 
+            ) 
+        })
+    }
 }
 
 module.exports = {

@@ -18,6 +18,16 @@ const getBackCanvasContext = () => {
     return ctx
 }
 
+const drawCircle = ( canvasX, canvasY, radius, text = null ) => {
+    let ctx = getFrontCanvasContext()
+    ctx.beginPath();
+    ctx.arc( canvasX, canvasY, radius, 0, 2 * Math.PI );
+    ctx.fillStyle = "#800020"
+    ctx.fill(); 
+    ctx.strokeStyle = '#11001C';
+    ctx.stroke()
+}
+
 const drawFromImageToCanvas = ( 
         canvas,
         image, 
@@ -165,6 +175,7 @@ module.exports = {
     getBackCanvasContext,
     setFont,
     drawRect,
+    drawCircle,
     breakTextIntoLines,
     writeTextLine
 }
