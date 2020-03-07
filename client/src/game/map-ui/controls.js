@@ -2,6 +2,7 @@ let pressedKeys = {};
 const state = require('../../game-data/state')
 const initBattle = require('../battle/initBattle')
 const actionController = require('./actionController')
+const animation = require('../animationFrameController')
 
 /**
  * Listen for keypresses
@@ -23,26 +24,45 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = () => {
-    if ( event.which == 81 && !state.battleState.requestingBattle ) {
+    if ( state.animation.overworldMode ) {
+        handleOverworldKeyPress( event )
+    }
+    else if ( state.animation.battleMode ) { 
+        handleBattleKeyPress( event )
+    }
+}
+
+const handleOverworldKeyPress = ( event ) => {
+    if ( event.key == "q" && !state.battleState.requestingBattle ) {
         event.preventDefault()
         actionController.handleActionButton( )        
     }
 
-    else if ( event.which == 69 && state.currentMap.bubbleIsActive ) {
+    else if ( event.key == "e" && state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
+        state.battleState.requestingBattle = false
     }
 
-    else if ( event.which == 81 && state.currentMap.bubbleIsActive && state.battleState.requestingBattle ) {
+    else if ( event.key == "q" && state.currentMap.bubbleIsActive && state.battleState.requestingBattle ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
         initBattle.startBattle()
+    }
+    else {
+        pressedKeys[event.key] = true        
+    }
+}
+
+const handleBattleKeyPress = ( event ) => {
+    if ( event.key == "Escape" || event.key == "Esc" ) {
+        console.log('eyy')
+        initBattle.stopBattle()
     }
 
     else {
         pressedKeys[event.key] = true        
     }
-
 }
 
 const removeKeyFromPressed = () => {

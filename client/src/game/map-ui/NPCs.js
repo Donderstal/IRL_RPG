@@ -111,5 +111,6 @@ const countFrame = ( NPC ) => {
 }
 
 module.exports = {
-    NPCController
+    NPCController,
+    handleStaticNPCAnimation
 }

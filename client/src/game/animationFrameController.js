@@ -3,10 +3,6 @@ const state         = require('../game-data/state')
 const NPCs          = require('./map-ui/NPCs')
 const canvasHelpers = require('../helpers/canvasHelpers')
 
-let battleMode = false;
-let overworldMode = false;
-let cinematicMode = false;
-
 let paused = false;
 
 const startRequestingFrame = () => {
@@ -15,19 +11,21 @@ const startRequestingFrame = () => {
 }
 
 const startBattleAnimation = ( ) => {
-    overworldMode = false;
-    cinematicMode = false;
-    battleMode = true
+    state.animation.battleMode = true;
+    state.animation.overworldMode = false;
+    state.animation.cinematicMode = false;
 }
 
 const startOverworldAnimation = ( ) => {
-    battleMode = false;
-    cinematicMode = false;
-    overworldMode = true
+    state.animation.overworldMode = true
+    state.animation.battleMode = false;
+    state.animation.cinematicMode = false;
 }
 
-const startCinematicAnimations = ( ) =>{
-    overworldMode = true
+const startCinematicAnimation = ( ) =>{
+    state.animation.overworldMode = false
+    state.animation.battleMode = false;
+    state.animation.cinematicMode = true;
 }
 
 /**
@@ -38,10 +36,10 @@ const animationFrameController = () => {
         return
     }
     
-    if ( overworldMode ) {
+    if ( state.animation.overworldMode ) {
         handleOverworldAnimations()
     }
-    else if ( battleMode) {
+    else if ( state.animation.battleMode ) {
         handleBattleAnimations()
     }
 
@@ -49,7 +47,17 @@ const animationFrameController = () => {
 }
 
 const handleBattleAnimations = ( ) => {
+    state.currentMap.layeredSprites = []   
+    if ( state.battleState.player.sprite != undefined ) {
+        NPCs.handleStaticNPCAnimation( state.battleState.player )     
+        state.currentMap.layeredSprites.push( state.battleState.player.sprite )           
+    }
+    if ( state.battleState.enemy.sprite != undefined ) {
+        NPCs.handleStaticNPCAnimation( state.battleState.enemy )
+        state.currentMap.layeredSprites.push( state.battleState.enemy.sprite )
+    }
 
+    drawSpritesInOrder( )
 }
 
 const handleOverworldAnimations = ( ) => {
@@ -101,5 +109,6 @@ const drawSpritesInOrder = ( ) => {
 module.exports = {
     startRequestingFrame,
     startOverworldAnimation,
-    startBattleAnimation
+    startBattleAnimation,
+    startCinematicAnimation
 }

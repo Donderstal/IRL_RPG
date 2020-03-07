@@ -60,7 +60,7 @@ const handleActionButton = ( ) => {
     } )
 }
 
-const handleAction = (action) => {
+const handleAction = ( action ) => {
     switch ( action.type ) {
         case "TEXT" :
             displayActionText( action )
