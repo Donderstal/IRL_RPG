@@ -3,6 +3,8 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
 
+let tilesheetXyValues = [ ]
+
 /** 
  * Call @function getStartingPositionOfGridInCanvas to get the xy to start drawing in the canvas
  * Call @function drawGrid when tilesheet has been loaded based on the image path in the json file
@@ -19,17 +21,20 @@ const generateMap = ( currentMap ) => {
 
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
     currentMap.topLeftCell = mapHelpers.getTopLeftCellOfGridInCanvas( startingPosition.x, startingPosition.y )
-    setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
+    if ( currentMap.battleMap != true ) {
+        setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
+    }
+    
     calcTilesheetXyPositions( currentMap.mapData.uniqueTiles )
 }
 
 const calcTilesheetXyPositions = ( tilesInSheet ) => {
     let tileX = 0
     let tileY = 0
-    state.currentMap.tilesheetXyValues = []
+    tilesheetXyValues = []
 
     for ( var i = 0; i <= tilesInSheet; i++ ) {
-        state.currentMap.tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
+        tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
         tileX += 37
         if ( i % 4 == 3 ) {
             tileX = 0
@@ -143,45 +148,48 @@ const drawRow = ( currentMap, currentRow, position ) => {
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
-    if ( currentMap.mapData.blocked ) {
-        currentMap.mapData.blocked.forEach( ( e ) => {
-            if ( !e.id ) {
-                if ( tile === e ) {
-                    currentMap.blockedXyValues.push( { 
-                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                        "LEFT": startPositionInCanvas.x,
-                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                        "TOP": startPositionInCanvas.y
-                    } )
+    if ( currentMap.battleMap != true ) {
+        if ( currentMap.mapData.blocked ) {
+            currentMap.mapData.blocked.forEach( ( e ) => {
+                if ( !e.id ) {
+                    if ( tile === e ) {
+                        currentMap.blockedXyValues.push( { 
+                            "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                            "LEFT": startPositionInCanvas.x,
+                            "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                            "TOP": startPositionInCanvas.y
+                        } )
 
-                }                   
-            }
-            else {
-                if ( tile === e.id ) {
-                    let blockedTile = {
-                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                        "LEFT": startPositionInCanvas.x,
-                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                        "TOP": startPositionInCanvas.y
-                    }
+                    }                   
+                }
+                else {
+                    if ( tile === e.id ) {
+                        let blockedTile = {
+                            "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                            "LEFT": startPositionInCanvas.x,
+                            "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                            "TOP": startPositionInCanvas.y
+                        }
 
-                    if ( e.top ) {
-                        blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
-                    }
-                    if ( e.bottom ) {
-                        blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
-                    }
-                    if ( e.left ) {
-                        blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
-                    }
-                    if ( e.right ) {
-                        blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
-                    }
-                    currentMap.blockedXyValues.push( blockedTile )
-                }    
-            }
-        })        
+                        if ( e.top ) {
+                            blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
+                        }
+                        if ( e.bottom ) {
+                            blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
+                        }
+                        if ( e.left ) {
+                            blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
+                        }
+                        if ( e.right ) {
+                            blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
+                        }
+                        currentMap.blockedXyValues.push( blockedTile )
+                    }    
+                }
+            })        
+        }        
     }
+
 
     // if tile is E - empty...
     if ( tile === "E" || tile === null) {
@@ -194,7 +202,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     }
 
     const blockSize = globals.GRID_BLOCK_PX  
-    const tilePositionInSheet = currentMap.tilesheetXyValues[tile]
+    const tilePositionInSheet = tilesheetXyValues[tile]
     canvasHelpers.drawFromImageToCanvas( 
         "BACK",
         currentMap.tileSheet, 

@@ -62,3 +62,12 @@ button:active {
 button:focus {
 	border-color: #666;
 }
+
+@font-face {
+    font-family: GameFont;
+    src: url('/static/Fipps-Regular.otf');
+}
+
+canvas {
+	font-family: GameFont;
+}

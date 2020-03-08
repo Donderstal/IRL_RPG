@@ -3,14 +3,65 @@ const state         = require('../game-data/state')
 const NPCs          = require('./map-ui/NPCs')
 const canvasHelpers = require('../helpers/canvasHelpers')
 
+let paused = false;
+
 const startRequestingFrame = () => {
-    requestAnimationFrame(animationFrameController)
+    startOverworldAnimation()
+    animationFrameController()
+}
+
+const startBattleAnimation = ( ) => {
+    state.animation.battleMode = true;
+    state.animation.overworldMode = false;
+    state.animation.cinematicMode = false;
+}
+
+const startOverworldAnimation = ( ) => {
+    state.animation.overworldMode = true
+    state.animation.battleMode = false;
+    state.animation.cinematicMode = false;
+}
+
+const startCinematicAnimation = ( ) =>{
+    state.animation.overworldMode = false
+    state.animation.battleMode = false;
+    state.animation.cinematicMode = true;
 }
 
 /**
  * Controller for all animation duties in front-context
  */
 const animationFrameController = () => {
+    if ( paused ) {
+        return
+    }
+    
+    if ( state.animation.overworldMode ) {
+        handleOverworldAnimations()
+    }
+    else if ( state.animation.battleMode ) {
+        handleBattleAnimations()
+    }
+
+    requestAnimationFrame(animationFrameController)
+}
+
+const handleBattleAnimations = ( ) => {
+    state.currentMap.layeredSprites = []   
+    if ( state.battleState.player.sprite != undefined ) {
+        NPCs.handleStaticNPCAnimation( state.battleState.player )     
+        state.currentMap.layeredSprites.push( state.battleState.player.sprite )           
+    }
+    if ( state.battleState.enemy.sprite != undefined ) {
+        NPCs.handleStaticNPCAnimation( state.battleState.enemy )
+        state.currentMap.layeredSprites.push( state.battleState.enemy.sprite )
+    }
+
+    drawSpritesInOrder( )
+    state.battleState.textContainer.drawContainer()    
+}
+
+const handleOverworldAnimations = ( ) => {
     state.currentMap.layeredSprites = []    
     NPCs.NPCController()        
     movementController.handleMovementKeys()
@@ -20,7 +71,6 @@ const animationFrameController = () => {
         state.currentMap.activeBubble.drawBubble( )
     }
 
-    requestAnimationFrame(animationFrameController)
 }
 
 /**
@@ -58,5 +108,8 @@ const drawSpritesInOrder = ( ) => {
 }
 
 module.exports = {
-    startRequestingFrame
+    startRequestingFrame,
+    startOverworldAnimation,
+    startBattleAnimation,
+    startCinematicAnimation
 }

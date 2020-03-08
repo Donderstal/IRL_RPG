@@ -31,7 +31,7 @@ module.exports = {
     MAX_BUBBLE_WIDTH: 500,
 
     // canvas font sizes
-    SMALL_FONT_SIZE : 16,
-    LARGE_FONT_SIZE : 20,
+    SMALL_FONT_SIZE : 12,
+    LARGE_FONT_SIZE : 16,
     FONT_STYLE : 'Times New Roman '
 }

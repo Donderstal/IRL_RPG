@@ -150,6 +150,7 @@
             "row": 2,
             "col": 21,
             "action": {
+                "name": "Big Balls Bert",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_UP",
@@ -163,10 +164,16 @@
             "row": 4,
             "col": 9,
             "action": {
-                "type": "TEXT",
+                "name": "Pauline",
+                "type": "BATTLE",
                 "sfx": "voice-3.mp3",
                 "direction": "FACING_UP",
-                "text": "I'm just feeling SO fabulous today!"
+                "text": "Ever had your ass kicked by a lady?",
+                "character": {
+                    "class": "Influencer",
+                    "level": 5,
+                    "battleSprite": "influencer.png"
+                }
             }
         },
         {
@@ -189,6 +196,7 @@
             "actionid": 1,
             "action": {
                 "id": 1,
+                "name": "Paulie",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_DOWN",
@@ -203,6 +211,7 @@
             "col": 1,
             "action": {
                 "type": "TEXT",
+                "name": "Jennifer",
                 "sfx": "voice-2.mp3",
                 "direction": "FACING_LEFT",
                 "text": "What's up, nerd?"
@@ -216,9 +225,10 @@
             "col": 2,
             "action": {
                 "type": "TEXT",
+                "name": "Lisa",
                 "sfx": "voice-2.mp3",
                 "direction": "FACING_DOWN",
-                "text": "I ate oysters for breakfast this morning. It was a terrible idea..."
+                "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
             }
         }
     ],

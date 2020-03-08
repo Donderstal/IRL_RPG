@@ -98,6 +98,7 @@
             "row": 11,
             "col": 8,
             "action": {
+                "name": "TheFitGirlGoodLife",
                 "type": "TEXT",
                 "sfx": "voice-3.mp3",
                 "direction": "FACING_DOWN",
@@ -111,6 +112,7 @@
             "row": 1,
             "col": 1,
             "action": {
+                "name": "The Dealer",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_UP",
@@ -124,6 +126,7 @@
             "row": 5,
             "col": 7,
             "action": {
+                "name": "Small balled Steve",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_RIGHT",
@@ -137,6 +140,7 @@
             "row": 8,
             "col": 2,
             "action": {
+                "name": "Yum-mart branch manager",
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
                 "direction": "FACING_UP",
@@ -150,6 +154,7 @@
             "row": 1,
             "col": 8,
             "action": {
+                "name": "Alana",
                 "type": "TEXT",
                 "sfx": "voice-3.mp3",
                 "direction": "FACING_RIGHT",

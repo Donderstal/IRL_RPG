@@ -1,8 +1,9 @@
 module.exports = {
-    cinematicState : {
-        cinematic 		: false
+    animation : {
+        overworldMode : true,
+        battleMode : false,
+        cinematicMode : false
     },
-
     currentMap : {
         map		: true,
         mapData : {
@@ -12,7 +13,8 @@ module.exports = {
     },
 
     battleState 	: {
-        battle			: false
+        player  : {},
+        enemy   : {}
     },
 
     playerCharacter : {

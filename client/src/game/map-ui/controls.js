@@ -1,7 +1,8 @@
 let pressedKeys = {};
 const state = require('../../game-data/state')
-
+const initBattle = require('../battle/initBattle')
 const actionController = require('./actionController')
+const animation = require('../animationFrameController')
 
 /**
  * Listen for keypresses
@@ -23,16 +24,54 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = () => {
-    if ( event.which == 81 ) {
+    if ( state.animation.overworldMode ) {
+        handleOverworldKeyPress( event )
+    }
+    else if ( state.animation.battleMode ) { 
+        handleBattleKeyPress( event )
+    }
+}
+
+const handleOverworldKeyPress = ( event ) => {
+    if ( event.key == "q" && !state.battleState.requestingBattle ) {
         event.preventDefault()
         actionController.handleActionButton( )        
     }
 
-    if ( event.which == 69 && state.currentMap.bubbleIsActive ) {
+    else if ( event.key == "e" && state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
+        state.battleState.requestingBattle = false
     }
-    pressedKeys[event.key] = true
+
+    else if ( event.key == "q" && state.currentMap.bubbleIsActive && state.battleState.requestingBattle ) {
+        state.currentMap.activeBubble = {}
+        state.currentMap.bubbleIsActive = false
+        initBattle.startBattle()
+    }
+    else {
+        pressedKeys[event.key] = true        
+    }
+}
+
+const handleBattleKeyPress = ( event ) => {
+    if ( event.key == "Escape" || event.key == "Esc" ) {
+        initBattle.stopBattle()
+    }
+    if ( event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5" ) {
+        state.battleState.player.sprite.setButtonAsActive( event.key )
+    }
+    if ( event.key == "q" ) {
+        state.battleState.player.sprite.buttonSprites.forEach( (button) => {
+            if ( button.active ) {
+
+            }
+        })
+    }
+
+    else {
+        pressedKeys[event.key] = true        
+    }
 }
 
 const removeKeyFromPressed = () => {
