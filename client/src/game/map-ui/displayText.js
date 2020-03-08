@@ -33,6 +33,34 @@ class SpeechBubble {
     drawBubble( ) {
         drawSpeechBubble( this.text, this.speaker, this.textRect, this.borderRect )   
     }
+} 
+
+const getTextContainer = ( text ) => {
+    state.battleState.textContainer = new TextContainer( text )
+}
+
+class TextContainer {
+    constructor( text ) {
+        this.width  = globals.CANVAS_WIDTH / 2
+        this.height = globals.CANVAS_HEIGHT / 6
+
+        this.x      = globals.CANVAS_WIDTH / 4
+        this.y      = ( globals.CANVAS_HEIGHT / 3 ) * 2
+
+        this.text   = text
+
+        this.drawContainer()
+    }
+
+    drawContainer( ) {
+        canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
+        canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
+        canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
+    }
+
+    setText( text ) {
+        this.text = text
+    }
 }
 
 const drawSpeechBubble = ( text, speaker, textRect, borderRect ) => {
@@ -46,8 +74,6 @@ const drawSpeechBubble = ( text, speaker, textRect, borderRect ) => {
         canvas.writeTextLine( speaker + ":", textRect.left + 5, textRect.top + 16, 'SMALL', "black" )        
     }
 
-    /* canvas.drawLineOnXAxis( textRect.left, headerBottomY, textRect.right ) */
-
     //Main text
     let mainTextBottomY = headerBottomY + 28;
     if ( !Array.isArray(text) ) {
@@ -56,10 +82,8 @@ const drawSpeechBubble = ( text, speaker, textRect, borderRect ) => {
     else {
         mainTextBottomY = drawMultipleLines( textRect.left + 5, headerBottomY, text,  );
     }
-    /* canvas.drawLineOnXAxis( textRect.left, mainTextBottomY, textRect.right ) */
 
     //Bottom buttons
-    /* canvas.drawLineOnYAxis( mainTextBottomY, textRect.horiMiddle, textRect.top + textRect.height ) */
     canvas.writeTextLine( "(Q) Continue", textRect.left + 5, mainTextBottomY + globals.SMALL_FONT_SIZE, "SMALL", "black" )
     canvas.writeTextLine( "(E) Dismiss", textRect.horiMiddle + 16, mainTextBottomY + globals.SMALL_FONT_SIZE , "SMALL", "black" )
 }
@@ -111,5 +135,6 @@ const setTextGlobals = ( ) => {
 }
 
 module.exports = {
-    getSpeechBubble
+    getSpeechBubble,
+    getTextContainer
 }

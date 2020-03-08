@@ -2,6 +2,8 @@ const canvas = require('../../helpers/canvasHelpers')
 const map = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 const battleButton = require('../battle-ui/battleButton').battleButton
+const res   = require('../../resources/resourceStrings')
+const state = require('../../game-data/state')
 
 class battlePiece {
 
@@ -90,6 +92,7 @@ class battlePiece {
         })
 
         let spriteAtIndex = this.buttonSprites[index]
+        state.battleState.textContainer.setText( spriteAtIndex.hint )
         spriteAtIndex.setActive( )
     }
 
@@ -108,34 +111,40 @@ class battlePiece {
         this.buttons.topCircle = { 
             'x': this.x + this.width, 
             'y': topCircleY, 
-            'text' : '( 1 )', 'toolTip': 'Punch' 
+            'text' : res.BATTLE_PUNCH_BUTTON, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
+            'hint': res.BATTLE_PUNCH_HINT
         }
         this.buttons.topMiddleCircle = { 
             'x': this.x + ( this.width * 1.5 ),
             'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.25 ), 
-            'text' : '( 2 )', 'toolTip': 'Moves' 
+            'text' : res.BATTLE_MOVES_BUTTON, 'toolTip': res.BATTLE_MOVES_TOOLTIP,
+            'hint': res.BATTLE_MOVES_HINT
         }
         this.buttons.middleCircle = { 
             'x': this.x + ( this.width * 1.75 ), 
             'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.5 ), 
-            'text' : '( 3 )', 'toolTip': 'Defend' 
+            'text' : res.BATTLE_DEFEND_BUTTON, 'toolTip': res.BATTLE_DEFEND_TOOLTIP,
+            'hint': res.BATTLE_DEFEND_HINT
         }
         this.buttons.bottomMiddleCircle = { 
             'x': this.x + ( this.width * 1.5 ), 
             'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.75 ), 
-            'text' : '( 4 )', 'toolTip': 'Item' 
+            'text' : res.BATTLE_ITEM_BUTTON, 'toolTip': res.BATTLE_ITEM_TOOLTIP,
+            'hint': res.BATTLE_ITEM_HINT
         }
         this.buttons.bottomCircle = { 
             'x': this.x + this.width,
             'y': bottomCircleY, 
-            'text' : '( 5 )', 'toolTip': 'Flee' 
+            'text' : res.BATTLE_FLEE_BUTTON, 'toolTip': res.BATTLE_FLEE_TOOLTIP,
+            'hint': res.BATTLE_FLEE_HINT
         }
 
         Object.keys(this.buttons).forEach( ( key ) => {
             this.buttonSprites.push(
                 new battleButton( 
                     this.buttons[key].x, this.buttons[key].y, 
-                    this.buttons[key].text, this.buttons[key].toolTip 
+                    this.buttons[key].text, this.buttons[key].toolTip,
+                    this.buttons[key].hint
                 ) 
             ) 
         })

@@ -58,6 +58,7 @@ const handleBattleAnimations = ( ) => {
     }
 
     drawSpritesInOrder( )
+    state.battleState.textContainer.drawContainer()    
 }
 
 const handleOverworldAnimations = ( ) => {

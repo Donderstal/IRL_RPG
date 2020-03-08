@@ -1,11 +1,12 @@
-const state = require('../../game-data/state')
-const canvas = require('../../helpers/canvasHelpers')
-const utility = require('../../helpers/utilFunctions')
-const sound = require('../../helpers/soundHelpers')
-const animation = require('../animationFrameController')
+const state         = require('../../game-data/state')
+const canvas        = require('../../helpers/canvasHelpers')
+const utility       = require('../../helpers/utilFunctions')
+const sound         = require('../../helpers/soundHelpers')
+const animation     = require('../animationFrameController')
 const drawGrid      = require('../map-init/drawGrid')
-const battlePiece = require('./battlePiece')
-const globals = require('../../game-data/globals')
+const battlePiece   = require('./battlePiece')
+const globals       = require('../../game-data/globals')
+const text          = require('../map-ui/displayText')
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
@@ -69,17 +70,18 @@ const getBattleMap = ( battleMapJson ) => {
     setTimeout( ( ) => {
         state.battleState.enemy.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
         state.battleState.player.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
+        text.getTextContainer( "TESTESTEST" )
         animation.startBattleAnimation( )
     }, 2400)
 }
 
 const stopBattle = ( ) => {
     canvas.clearBothCanvases( )
+    state.animation.battleMode = false
 
     for( var i = 0; i <= globals.CANVAS_COLUMNS; i++ ) {
         let key = i
         setTimeout(( ) => {
-            console.log('hoi')
             canvas.drawRect( "FRONT", 
             globals.GRID_BLOCK_PX * key, 0, 
             globals.GRID_BLOCK_PX, globals.CANVAS_HEIGHT, 
@@ -92,7 +94,7 @@ const stopBattle = ( ) => {
         let key = i + 1
         setTimeout(( ) => {
             canvas.getFrontCanvasContext().clearRect( globals.CANVAS_WIDTH - ( globals.GRID_BLOCK_PX * key) , 0, globals.GRID_BLOCK_PX, globals.CANVAS_HEIGHT )
-        }, 1500 + (25 * key)) 
+        }, 1400 + (25 * key)) 
     }
 
     setTimeout( ( ) => {
@@ -102,7 +104,7 @@ const stopBattle = ( ) => {
     setTimeout( ( ) => {
         state.currentMap.mapMusic.play()
         animation.startOverworldAnimation( )
-    }, 1500)
+    }, 2000)
 }
 
 module.exports = {

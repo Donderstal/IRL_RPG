@@ -2,7 +2,7 @@ const canvas = require('../../helpers/canvasHelpers');
 const globals = require('../../game-data/globals');
 
 class battleButton {
-    constructor ( x, y, buttonText, toolTipText ) {
+    constructor ( x, y, buttonText, toolTipText, hintText ) {
 
         this.ctx        = canvas.getFrontCanvasContext()
         this.centralX   = x,
@@ -10,6 +10,7 @@ class battleButton {
         this.range      = globals.GRID_BLOCK_PX * .5
         this.text       = buttonText,
         this.toolTip    = toolTipText,
+        this.hint       = hintText
 
         this.textColor      = "black"
         this.active     = false
