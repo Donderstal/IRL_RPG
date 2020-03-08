@@ -1,5 +1,5 @@
 const initChar      = require('./character-init/initCharacter')
-const initGamePiece = require('./map-init/initGamePiece')
+const initMapSprite = require('./map-init/initMapSprite')
 
 const getCharacter = ( className, name, playerStart, typeOfStart ) => {
     return {
@@ -9,7 +9,7 @@ const getCharacter = ( className, name, playerStart, typeOfStart ) => {
         // posssible third property for usage in story state?
         
         stats : initChar.getCharWithClass( className, name ),
-        sprite : new initGamePiece.gamePiece( playerStart, '/static/sprites/neckbeard.png', typeOfStart )               
+        sprite : new initMapSprite.MapSprite( playerStart, '/static/sprites/neckbeard.png', typeOfStart )               
     }
  
 }

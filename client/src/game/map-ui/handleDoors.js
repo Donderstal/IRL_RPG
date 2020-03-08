@@ -4,7 +4,7 @@ const soundClass    = soundHelper.soundClass
 
 /**
  * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
+ * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
  * 
  * Render new map if player is passing through
  */
