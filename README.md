@@ -26,19 +26,22 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 
 ### LOG
 
-### MAR 8, 2020
+#### MAR 8, 2020
 * Added textContainer class, which will display battle Text
 * Experimenting with filling up textContainer dynamically
 
-### MAR 7, 2020
+#### MAR 7, 2020
 * Added UI-buttons for player in battle
 * Buttons are selectable and react to user input
 
-### MAR 5, 2020
-* Added 'battle mode'
-* Transitioning in and out of battles works
+#### MAR 5, 2020
 * Animation and SFX for start and end of battles
 * Added battlePiece class for battle sprites
+* Added new Pixelart style font
+
+#### MAR 4, 2020
+* Added 'battle mode'
+* Transitioning in and out of battles works
 
 #### MAR 3, 2020
 * Added 4 maps that make up the first level
