@@ -26,8 +26,22 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 
 ### LOG
 
+### MAR 8, 2020
+* Added textContainer class, which will display battle Text
+* Experimenting with filling up textContainer dynamically
+
+### MAR 7, 2020
+* Added UI-buttons for player in battle
+* Buttons are selectable and react to user input
+
+### MAR 5, 2020
+* Added 'battle mode'
+* Transitioning in and out of battles works
+* Animation and SFX for start and end of battles
+* Added battlePiece class for battle sprites
+
 #### MAR 3, 2020
-* Added 4 maps that make up the first leven
+* Added 4 maps that make up the first level
 * Reorganizing how maps are stored
 * Adding improved generic tilesheet
 
@@ -108,7 +122,7 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 #### NOV 9, 2019
 * A functioning map generation system based on a tilesheet and a json file
 
-#### NOVEMBER 4, 2019
+#### NOV 4, 2019
 * Basic server for serving JSON files which contain map information
 
 #### OCT 19, 2019
