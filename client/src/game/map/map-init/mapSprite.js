@@ -1,6 +1,6 @@
-const I_Sprite = require('../interfaces/I_Sprite').Sprite
-const mapHelpers = require('../../helpers/mapHelpers')
-const globals = require('../../game-data/globals')
+const I_Sprite = require('../../interfaces/I_Sprite').Sprite
+const mapHelpers = require('../../../helpers/mapHelpers')
+const globals = require('../../../game-data/globals')
 
 class MapSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {        

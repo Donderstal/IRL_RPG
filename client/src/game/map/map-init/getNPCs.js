@@ -1,7 +1,7 @@
 const MapSprite     = require('./mapSprite').MapSprite
-const globals       = require('../../game-data/globals');
-const actionHelpers = require('../../helpers/actionHelpers');
-const state         = require('../../game-data/state')
+const globals       = require('../../../game-data/globals');
+const actionHelpers = require('../../../helpers/actionHelpers');
+const state         = require('../../../game-data/state')
 
 /** 
  * Iterate over characters if they are present

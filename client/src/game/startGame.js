@@ -1,8 +1,8 @@
-const movementController = require('./map-ui/movementController')
+const movementController = require('./map/map-ui/movementController')
 const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const state = require('../game-data/state')
-const initMap = require('./map-init/initMap')
+const initMap = require('./map/map-init/initMap')
 const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
 

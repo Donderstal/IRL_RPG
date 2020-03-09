@@ -1,7 +1,7 @@
-const globals       = require('../../game-data/globals')
-const state         = require('../../game-data/state')
-const actionHelpers = require('../../helpers/actionHelpers')
-const Sound         = require('../interfaces/I_Sound').Sound
+const globals       = require('../../../game-data/globals')
+const state         = require('../../../game-data/state')
+const actionHelpers = require('../../../helpers/actionHelpers')
+const Sound         = require('../../interfaces/I_Sound').Sound
 
 const setMapAttributes = ( previousMap ) => {
     setDoorsAndDetectEntryPoint( previousMap )

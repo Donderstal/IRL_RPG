@@ -1,14 +1,14 @@
-const state         = require('../../game-data/state')
-const canvas        = require('../../helpers/canvasHelpers')
-const utility       = require('../../helpers/utilFunctions')
-const animation     = require('../animationFrameController')
-const drawGrid      = require('../map-init/drawGrid')
-const globals       = require('../../game-data/globals')
-const text          = require('../map-ui/displayText')
+const state         = require('../../../game-data/state')
+const canvas        = require('../../../helpers/canvasHelpers')
+const utility       = require('../../../helpers/utilFunctions')
+const animation     = require('../../animationFrameController')
+const drawGrid      = require('../../map/map-init/drawGrid')
+const globals       = require('../../../game-data/globals')
+const text          = require('../../map/map-ui/displayText')
 
 // classes
 const BattleSprite  = require('./BattleSprite').BattleSprite
-const Sound         = require('../interfaces/I_Sound').Sound
+const Sound         = require('../../interfaces/I_Sound').Sound
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false

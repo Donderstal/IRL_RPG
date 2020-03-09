@@ -1,7 +1,7 @@
-const state = require('../../game-data/state')
-const globals = require('../../game-data/globals')
+const state = require('../../../game-data/state')
+const globals = require('../../../game-data/globals')
 const displayText   = require('./displayText')
-const soundHelper = require('../interfaces/I_Sound')
+const soundHelper = require('../../interfaces/I_Sound')
 
 const handleActionButton = ( ) => {
     const sprite = state.playerCharacter.sprite

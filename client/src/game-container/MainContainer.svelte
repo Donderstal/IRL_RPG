@@ -1,5 +1,5 @@
 <script>
-    import classList from '../game/character-init/initClasses.js';
+    import classList from '../game/character/character-init/initClasses.js';
     import stateLogger from '../game-data/saveState.js';
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import MainUiButton from './svelte-partials/main-ui-button.svelte'

@@ -1,5 +1,5 @@
-const state = require('../../game-data/state')
-const Sound = require('../interfaces/I_Sound').Sound
+const state = require('../../../game-data/state')
+const Sound = require('../../interfaces/I_Sound').Sound
 
 /**
  * @param {string} direction - string representing direction

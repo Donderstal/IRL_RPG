@@ -1,7 +1,7 @@
-const mapHelpers    = require('../../helpers/mapHelpers')
-const canvasHelpers = require('../../helpers/canvasHelpers')
-const state         = require('../../game-data/state')
-const globals       = require('../../game-data/globals')
+const mapHelpers    = require('../../../helpers/mapHelpers')
+const canvasHelpers = require('../../../helpers/canvasHelpers')
+const state         = require('../../../game-data/state')
+const globals       = require('../../../game-data/globals')
 
 let tilesheetXyValues = [ ]
 

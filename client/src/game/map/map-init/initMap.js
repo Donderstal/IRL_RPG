@@ -1,14 +1,14 @@
-const state         = require('../../game-data/state')
-const canvasHelpers = require('../../helpers/canvasHelpers')
-const Sound         = require('../interfaces/I_Sound').Sound
-const utility       = require('../../helpers/utilFunctions')
+const state         = require('../../../game-data/state')
+const canvasHelpers = require('../../../helpers/canvasHelpers')
+const Sound         = require('../../interfaces/I_Sound').Sound
+const utility       = require('../../../helpers/utilFunctions')
 
 const movementController = require('../map-ui/movementController')
-const createCharInstance = require('../createCharInstance')
+const createCharInstance = require('../../createCharInstance')
 
-const getNPCs          = require('./getNPCs')
-const setMapAttributes = require('./setMapAttributes')
-const drawGrid      = require('./drawGrid')
+const getNPCs           = require('./getNPCs')
+const setMapAttributes  = require('./setMapAttributes')
+const drawGrid          = require('./drawGrid')
 
 const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
     canvasHelpers.clearBothCanvases();

@@ -1,5 +1,5 @@
-const globals = require('../../game-data/globals')
-const state = require('../../game-data/state')
+const globals = require('../../../game-data/globals')
+const state = require('../../../game-data/state')
 const movementChecker = require('./movementChecker')
 const handleDoors = require('./handleDoors')
 const initMap = require('../map-init/initMap')
