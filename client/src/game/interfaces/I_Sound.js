@@ -1,4 +1,4 @@
-class soundClass {
+class Sound {
     constructor ( src, sfx = false ) {
       this.sound = document.createElement("audio");
         if ( sfx ) {
@@ -31,5 +31,5 @@ class soundClass {
   }
 
 module.exports = {
-    soundClass
+    Sound
 }
