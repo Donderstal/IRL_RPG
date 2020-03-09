@@ -85,6 +85,8 @@ class Sprite {
             37, 37,
             this.x, this.y, this.width, this.height
         )
+
+        this.updateSpriteBorders( )
     }
 
     clearSprite( ) {

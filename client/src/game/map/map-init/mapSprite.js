@@ -3,15 +3,14 @@ const mapHelpers = require('../../../helpers/mapHelpers')
 const globals = require('../../../game-data/globals')
 
 class MapSprite extends I_Sprite {
-    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {        
+    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {       
         super ( start, spriteSheetSrc, typeOfStart, "STRD", spriteDirection )
         this.cell = {}
     }
 
-    initSpriteFromXy( start ) {
-        super.initSpriteFromXy( start )
-        this.setCellXy( )
-        this.calcCellFromXy()
+    drawSprite( ) {
+        super.drawSprite( )
+        this.updateSpriteCellXy( )
     }
 
     updateSpriteCellXy( ) {
@@ -24,10 +23,6 @@ class MapSprite extends I_Sprite {
         this.col = cell.col
     }
 
-    setCellXy( ) {
-        this.cell.x = this.x + (( this.x + globals.GRID_BLOCK_PX ) - ( this.x + this.width ))
-        this.cell.y = this.y + (( this.y + globals.GRID_BLOCK_PX ) - ( this.y + this.height ))
-    }
         
     calcCellFromXy( ) {
         const cell = mapHelpers.getCellOfXY( this.cell.x, this.cell.y )
