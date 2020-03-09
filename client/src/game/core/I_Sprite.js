@@ -4,9 +4,15 @@ const globals = require('../../game-data/globals')
 
 class Sprite {
 
-    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {        
-        this.width   = globals.STRD_SPRITE_WIDTH;
-        this.height  = globals.STRD_SPRITE_HEIGHT;
+    constructor ( start, spriteSheetSrc, typeOfStart, spriteSize, spriteDirection = 0 ) {   
+        if ( spriteSize == "STRD" ) {
+            this.width   = globals.STRD_SPRITE_WIDTH;
+            this.height  = globals.STRD_SPRITE_HEIGHT;            
+        }
+        else if ( spriteSize == "LARG" ) {
+            this.width   = globals.STRD_SPRITE_WIDTH * 2;
+            this.height  = globals.STRD_SPRITE_HEIGHT * 2;   
+        }
 
         this.left    = 0
         this.right   = 0
@@ -20,7 +26,7 @@ class Sprite {
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();
 
-       ( typeOfStart === 'CELL' ) ? this.initSpriteFromCell( start ) : this.initSpritFromXy( start )
+       ( typeOfStart === 'CELL' ) ? this.initSpriteFromCell( start ) : this.initSpriteFromXy( start )
 
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
@@ -35,7 +41,7 @@ class Sprite {
         this.calcXyFromCell()  
     }
 
-    initSpritFromXy( start ) {
+    initSpriteFromXy( start ) {
         this.x       = start.x
         this.y       = start.y
 

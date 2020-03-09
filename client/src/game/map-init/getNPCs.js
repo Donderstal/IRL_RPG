@@ -1,6 +1,6 @@
-const MapSprite     = require('./initMapSprite')
+const MapSprite     = require('./mapSprite').MapSprite
 const globals       = require('../../game-data/globals');
-const actionHelpers    = require('../../helpers/actionHelpers');
+const actionHelpers = require('../../helpers/actionHelpers');
 const state         = require('../../game-data/state')
 
 /** 
@@ -68,7 +68,7 @@ const pushCharacterSpriteToMapState = ( character ) => {
     }
 }
 
-class NPC extends MapSprite.MapSprite {
+class NPC extends MapSprite {
     constructor( startPos, src, typeOfStart, spriteDirection = 0 ) {
         if( src[0] != '/' ) {
             src = '/static/sprites/'+ src

@@ -1,13 +1,15 @@
-const canvas = require('../../helpers/canvasHelpers')
-const map = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 const battleButton = require('../battle-ui/battleButton').battleButton
 const res   = require('../../resources/resourceStrings')
 const state = require('../../game-data/state')
 
-class battlePiece {
+const I_Sprite = require('../core/I_Sprite').Sprite
 
-    constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {        
+class BattleSprite extends I_Sprite {
+    constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {
+        let typeOfStart = "CELL"
+        super ( start, spriteSheetSrc, typeOfStart, "LARG", spriteDirection ) 
+               
         this.width   = globals.STRD_SPRITE_WIDTH  * 2;
         this.height  = globals.STRD_SPRITE_HEIGHT * 2;
 
@@ -15,68 +17,13 @@ class battlePiece {
         this.buttons = {}
         this.buttonSprites = []
 
-        this.left    = 0
-        this.right   = 0
-        this.top     = 0
-        this.bottom  = 0
-
-        this.animLoop      = [ 0, 1, 2, 3]
-        this.animIterator  = 0
-        this.frameCount    = 0
-        this.direction     = spriteDirection;
-        this.sheetSrc      = spriteSheetSrc
-        this.sheet         = new Image();
-
-        this.x       = 0
-        this.y       = 0
-
-        this.row     = start.row
-        this.col     = start.col  
-        this.calcXyFromCell()          
-
-        this.loaded = false
-        this.getSpriteAndDrawWhenLoaded( )
-    }
-
-    getSpriteAndDrawWhenLoaded( ) {
-        if ( !this.loaded ) {
-            if ( this.isPlayer ) {
-                this.initBattleUI( )            
-            }            
-            this.sheet.onload = () => {
-                this.loaded = true
-                this.drawSprite()
-            }
-
-            this.sheet.src = this.sheetSrc            
+        if ( this.isPlayer ) {
+            this.initBattleUI( )            
         }
-    }
-
-    updateSpriteBorders( ) {
-        this.left   = this.x,
-        this.right  = this.x + this.width,
-        this.top    = this.y,
-        this.bottom = this.y + this.height
-    }
-
-    calcXyFromCell( ) {
-        const xy = map.getXYOfCell(this.row, this.col)
-        
-        this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
-        this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
-
-        this.updateSpriteBorders( )
     }
     
     drawSprite( ) {
-        canvas.drawFromImageToCanvas(
-            "FRONT",
-            this.sheet,
-            this.animLoop[this.animIterator] * 37, 
-            this.direction * 37, 
-            37, 37,
-            this.x, this.y, this.width, this.height
-        )
+        super.drawSprite( )
 
         if ( this.isPlayer ) {
             this.buttonSprites.forEach((e) => {
@@ -95,13 +42,6 @@ class battlePiece {
         state.battleState.textContainer.setText( spriteAtIndex.hint )
         spriteAtIndex.setActive( )
     }
-
-    clearSprite( ) {
-        canvas.clearCanvasRectangle(
-            "FRONT",
-            this.x, this.y, this.width, this.height
-        )
-    } 
 
     initBattleUI( ) {
 
@@ -152,5 +92,5 @@ class battlePiece {
 }
 
 module.exports = {
-    battlePiece
+    BattleSprite
 }

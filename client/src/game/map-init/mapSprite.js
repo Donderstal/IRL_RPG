@@ -4,12 +4,12 @@ const globals = require('../../game-data/globals')
 
 class MapSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {        
-        super ( start, spriteSheetSrc, typeOfStart, spriteDirection )
+        super ( start, spriteSheetSrc, typeOfStart, "STRD", spriteDirection )
         this.cell = {}
     }
 
-    initSpritFromXy( start ) {
-        super.initSpritFromXy( start )
+    initSpriteFromXy( start ) {
+        super.initSpriteFromXy( start )
         this.setCellXy( )
         this.calcCellFromXy()
     }
