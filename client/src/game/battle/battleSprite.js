@@ -3,7 +3,7 @@ const battleButton = require('../battle-ui/battleButton').battleButton
 const res   = require('../../resources/resourceStrings')
 const state = require('../../game-data/state')
 
-const I_Sprite = require('../core/I_Sprite').Sprite
+const I_Sprite = require('../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {

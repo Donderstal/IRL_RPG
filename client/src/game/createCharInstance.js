@@ -1,5 +1,5 @@
 const initChar      = require('./character-init/initCharacter')
-const initMapSprite = require('./map-init/initMapSprite')
+const initMapSprite = require('./map-init/mapSprite')
 
 const getCharacter = ( className, name, playerStart, typeOfStart ) => {
     return {

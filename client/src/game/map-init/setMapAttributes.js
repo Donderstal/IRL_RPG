@@ -1,9 +1,7 @@
 const globals       = require('../../game-data/globals')
 const state         = require('../../game-data/state')
-const mapHelpers    = require('../../helpers/mapHelpers')
-const actionHelpers    = require('../../helpers/actionHelpers')
-const soundHelper   = require('../../helpers/soundHelpers')
-const soundClass    = soundHelper.soundClass
+const actionHelpers = require('../../helpers/actionHelpers')
+const Sound         = require('../interfaces/I_Sound').Sound
 
 const setMapAttributes = ( previousMap ) => {
     setDoorsAndDetectEntryPoint( previousMap )
@@ -33,7 +31,7 @@ const setMapAttributes = ( previousMap ) => {
             )
 
             if ( previousMap === newDoor.to) {
-                const sfx = new soundClass( "misc/random6.wav", true )
+                const sfx = new Sound( "misc/random6.wav", true )
                 sfx.play()
                 setSpritePositionForNewMap(newDoor)
             }

@@ -1,7 +1,7 @@
 const state = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 const displayText   = require('./displayText')
-const soundHelper = require('../../helpers/soundHelpers')
+const soundHelper = require('../interfaces/I_Sound')
 
 const handleActionButton = ( ) => {
     const sprite = state.playerCharacter.sprite
@@ -75,7 +75,7 @@ const handleAction = ( action ) => {
 
 const displayActionText = ( action ) => {
     if ( !document.getElementById(action.sfx) ) {
-        const sfx = new soundHelper.soundClass( action.sfx, true )
+        const sfx = new soundHelper.Sound( action.sfx, true )
         sfx.play()
         setTimeout( () => {
             document.getElementById(action.sfx).remove()                    

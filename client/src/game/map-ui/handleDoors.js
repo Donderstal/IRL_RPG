@@ -1,6 +1,5 @@
 const state = require('../../game-data/state')
-const soundHelper   = require('../../helpers/soundHelpers')
-const soundClass    = soundHelper.soundClass
+const Sound = require('../interfaces/I_Sound').Sound
 
 /**
  * @param {string} direction - string representing direction
@@ -56,7 +55,7 @@ const checkIfDoor = ( sprite, direction ) => {
         }
 
         if ( facingDoor ) {
-            const sfx = new soundClass( "misc/random5.wav", true )
+            const sfx = new Sound( "misc/random5.wav", true )
             sfx.play()
             return currentDoor.to
         }

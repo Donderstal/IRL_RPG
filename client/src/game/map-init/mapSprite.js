@@ -1,4 +1,4 @@
-const I_Sprite = require('../core/I_Sprite').Sprite
+const I_Sprite = require('../interfaces/I_Sprite').Sprite
 const mapHelpers = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 
