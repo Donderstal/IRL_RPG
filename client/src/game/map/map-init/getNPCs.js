@@ -1,7 +1,7 @@
-const GamePiece     = require('./initGamePiece')
-const globals       = require('../../game-data/globals');
-const actionHelpers    = require('../../helpers/actionHelpers');
-const state         = require('../../game-data/state')
+const MapSprite     = require('./mapSprite').MapSprite
+const globals       = require('../../../game-data/globals');
+const actionHelpers = require('../../../helpers/actionHelpers');
+const state         = require('../../../game-data/state')
 
 /** 
  * Iterate over characters if they are present
@@ -68,7 +68,7 @@ const pushCharacterSpriteToMapState = ( character ) => {
     }
 }
 
-class NPC extends GamePiece.gamePiece {
+class NPC extends MapSprite {
     constructor( startPos, src, typeOfStart, spriteDirection = 0 ) {
         if( src[0] != '/' ) {
             src = '/static/sprites/'+ src

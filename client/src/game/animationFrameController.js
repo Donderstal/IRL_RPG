@@ -1,6 +1,6 @@
-const movementController = require('./map-ui/movementController')
+const movementController = require('./map/map-ui/movementController')
 const state         = require('../game-data/state')
-const NPCs          = require('./map-ui/NPCs')
+const NPCs          = require('./map/map-ui/NPCs')
 const canvasHelpers = require('../helpers/canvasHelpers')
 
 let paused = false;

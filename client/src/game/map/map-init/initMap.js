@@ -1,15 +1,14 @@
-const state         = require('../../game-data/state')
-const canvasHelpers = require('../../helpers/canvasHelpers')
-const soundHelper   = require('../../helpers/soundHelpers')
-const utility       = require('../../helpers/utilFunctions')
-const soundClass    = soundHelper.soundClass
+const state         = require('../../../game-data/state')
+const canvasHelpers = require('../../../helpers/canvasHelpers')
+const Sound         = require('../../interfaces/I_Sound').Sound
+const utility       = require('../../../helpers/utilFunctions')
 
 const movementController = require('../map-ui/movementController')
-const createCharInstance = require('../createCharInstance')
+const createCharInstance = require('../../createCharInstance')
 
-const getNPCs          = require('./getNPCs')
-const setMapAttributes = require('./setMapAttributes')
-const drawGrid      = require('./drawGrid')
+const getNPCs           = require('./getNPCs')
+const setMapAttributes  = require('./setMapAttributes')
+const drawGrid          = require('./drawGrid')
 
 const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
     canvasHelpers.clearBothCanvases();
@@ -25,7 +24,7 @@ const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => 
 
     setTimeout( ( ) => {
         if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-            state.currentMap.mapMusic = new soundClass(state.currentMap.mapData.music)     
+            state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
             state.currentMap.mapMusic.play()         
         }
     }, 1000)

@@ -1,5 +1,5 @@
-const randomNameGen = require('../../helpers/randomNameGen')
-const mathHelpers = require('../../helpers/mathHelpers')
+const randomNameGen = require('../../../helpers/randomNameGen')
+const mathHelpers = require('../../../helpers/mathHelpers')
 
 class characterBlueprint {
     constructor(name, gender) {

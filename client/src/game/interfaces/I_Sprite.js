@@ -2,12 +2,17 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const mapHelpers = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 
-class gamePiece {
+class Sprite {
 
-    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0 ) {        
-        this.cell   = {}
-        this.width   = globals.STRD_SPRITE_WIDTH;
-        this.height  = globals.STRD_SPRITE_HEIGHT;
+    constructor ( start, spriteSheetSrc, typeOfStart, spriteSize, spriteDirection = 0 ) {   
+        if ( spriteSize == "STRD" ) {
+            this.width   = globals.STRD_SPRITE_WIDTH;
+            this.height  = globals.STRD_SPRITE_HEIGHT;            
+        }
+        else if ( spriteSize == "LARG" ) {
+            this.width   = globals.STRD_SPRITE_WIDTH * 2;
+            this.height  = globals.STRD_SPRITE_HEIGHT * 2;   
+        }
 
         this.left    = 0
         this.right   = 0
@@ -21,26 +26,27 @@ class gamePiece {
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();
 
-        if ( typeOfStart === 'CELL' ) {
-            this.x       = 0
-            this.y       = 0
-
-            this.row     = start.row
-            this.col     = start.col  
-            this.calcXyFromCell()          
-        }
-        else if ( typeOfStart === 'XY' ) {
-            this.x       = start.x
-            this.y       = start.y
-
-            this.row     = 0
-            this.col     = 0  
-            this.setCellXy( )
-            this.calcCellFromXy()
-        }
+       ( typeOfStart === 'CELL' ) ? this.initSpriteFromCell( start ) : this.initSpriteFromXy( start )
 
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
+    }
+
+    initSpriteFromCell( start ) {
+        this.x       = 0
+        this.y       = 0
+
+        this.row     = start.row
+        this.col     = start.col  
+        this.calcXyFromCell()  
+    }
+
+    initSpriteFromXy( start ) {
+        this.x       = start.x
+        this.y       = start.y
+
+        this.row     = 0
+        this.col     = 0  
     }
 
     getSpriteAndDrawWhenLoaded( ) {
@@ -53,29 +59,12 @@ class gamePiece {
             this.sheet.src = this.sheetSrc            
         }
     }
-    
-    setXY( xy ) {
-        this.x = xy.x
-        this.y = xy.y
-        this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
-    }
 
     updateSpriteBorders( ) {
         this.left   = this.x,
         this.right  = this.x + this.width,
         this.top    = this.y,
         this.bottom = this.y + this.height
-    }
-
-    updateSpriteCellXy( ) {
-        this.cell.x = this.x + ( this.width * .5 ),
-        this.cell.y = this.y + ( this.height - globals.GRID_BLOCK_PX)
-    }
-
-    setCell( cell ) {
-        this.row = cell.row
-        this.col = cell.col
     }
 
     calcXyFromCell( ) {
@@ -85,21 +74,6 @@ class gamePiece {
         this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
 
         this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
-    }
-
-    setCellXy( ) {
-        this.cell.x = this.x + (( this.x + globals.GRID_BLOCK_PX ) - ( this.x + this.width ))
-        this.cell.y = this.y + (( this.y + globals.GRID_BLOCK_PX ) - ( this.y + this.height ))
-    }
-        
-    calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXY( this.cell.x, this.cell.y )
-        this.row = cell.row
-        this.col = cell.col
-
-        this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
     }
 
     drawSprite( ) {
@@ -111,6 +85,8 @@ class gamePiece {
             37, 37,
             this.x, this.y, this.width, this.height
         )
+
+        this.updateSpriteBorders( )
     }
 
     clearSprite( ) {
@@ -122,5 +98,5 @@ class gamePiece {
 }
 
 module.exports = {
-    gamePiece
+    Sprite
 }

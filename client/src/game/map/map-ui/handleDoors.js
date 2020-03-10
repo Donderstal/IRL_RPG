@@ -1,10 +1,9 @@
-const state = require('../../game-data/state')
-const soundHelper   = require('../../helpers/soundHelpers')
-const soundClass    = soundHelper.soundClass
+const state = require('../../../game-data/state')
+const Sound = require('../../interfaces/I_Sound').Sound
 
 /**
  * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the GamePiece class from initGamePiece.js
+ * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
  * 
  * Render new map if player is passing through
  */
@@ -56,7 +55,7 @@ const checkIfDoor = ( sprite, direction ) => {
         }
 
         if ( facingDoor ) {
-            const sfx = new soundClass( "misc/random5.wav", true )
+            const sfx = new Sound( "misc/random5.wav", true )
             sfx.play()
             return currentDoor.to
         }

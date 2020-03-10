@@ -1,5 +1,5 @@
-const canvas = require('../../helpers/canvasHelpers');
-const globals = require('../../game-data/globals');
+const canvas    = require('../../../helpers/canvasHelpers');
+const globals   = require('../../../game-data/globals');
 
 class battleButton {
     constructor ( x, y, buttonText, toolTipText, hintText ) {

@@ -1,19 +1,21 @@
-const state         = require('../../game-data/state')
-const canvas        = require('../../helpers/canvasHelpers')
-const utility       = require('../../helpers/utilFunctions')
-const sound         = require('../../helpers/soundHelpers')
-const animation     = require('../animationFrameController')
-const drawGrid      = require('../map-init/drawGrid')
-const battlePiece   = require('./battlePiece')
-const globals       = require('../../game-data/globals')
-const text          = require('../map-ui/displayText')
+const state         = require('../../../game-data/state')
+const canvas        = require('../../../helpers/canvasHelpers')
+const utility       = require('../../../helpers/utilFunctions')
+const animation     = require('../../animationFrameController')
+const drawGrid      = require('../../map/map-init/drawGrid')
+const globals       = require('../../../game-data/globals')
+const text          = require('../../map/map-ui/displayText')
+
+// classes
+const BattleSprite  = require('./BattleSprite').BattleSprite
+const Sound         = require('../../interfaces/I_Sound').Sound
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
     state.currentMap.mapMusic.pause()     
     animation.startCinematicAnimation()   
 
-    let sfx = new sound.soundClass( "battle-march.wav", true )
+    let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
 
     getBattleStartscreen( )
@@ -48,7 +50,7 @@ const getBattleStartscreen = ( ) => {
     }, 800 ) 
 
     
-    let sfx = new sound.soundClass( 'boxing-bell.wav', true )
+    let sfx = new Sound( 'boxing-bell.wav', true )
     sfx.play()
 
     for( var i = 0; i <= globals.CANVAS_COLUMNS; i++ ) {
@@ -68,8 +70,8 @@ const getBattleMap = ( battleMapJson ) => {
     }, 800)
 
     setTimeout( ( ) => {
-        state.battleState.enemy.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
-        state.battleState.player.sprite = new battlePiece.battlePiece( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
+        state.battleState.enemy.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
+        state.battleState.player.sprite = new BattleSprite( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
         text.getTextContainer( "TESTESTEST" )
         animation.startBattleAnimation( )
     }, 2400)

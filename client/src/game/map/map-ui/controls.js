@@ -1,8 +1,7 @@
 let pressedKeys = {};
-const state = require('../../game-data/state')
-const initBattle = require('../battle/initBattle')
+const state = require('../../../game-data/state')
+const initBattle = require('../../battle/battle-init/initBattle')
 const actionController = require('./actionController')
-const animation = require('../animationFrameController')
 
 /**
  * Listen for keypresses

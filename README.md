@@ -26,6 +26,11 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 
 ### LOG
 
+#### MAR 10, 2020
+* New folder structure
+* Adding interfaces for sound, sprites (more will follow)
+* Restructuring existing classes around new interfaces
+
 #### MAR 8, 2020
 * Added textContainer class, which will display battle Text
 * Experimenting with filling up textContainer dynamically

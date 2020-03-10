@@ -1,6 +1,6 @@
-const canvas = require( '../../helpers/canvasHelpers' )
-const state = require( '../../game-data/state' )
-const globals = require( '../../game-data/globals' )
+const canvas = require( '../../../helpers/canvasHelpers' )
+const state = require( '../../../game-data/state' )
+const globals = require( '../../../game-data/globals' )
 
 const getSpeechBubble = ( action ) => {
     state.currentMap.activeBubble = new SpeechBubble( action )

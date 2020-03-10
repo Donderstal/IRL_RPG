@@ -1,6 +1,6 @@
 const movement = require('./movement')
 const controls = require('./controls')
-const state = require('../../game-data/state')
+const state = require('../../../game-data/state')
 
 let pressedKeys = controls.pressedKeys;
 let continueAnimating = false;

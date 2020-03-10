@@ -1,9 +1,9 @@
-const state = require('../../game-data/state')
-const globals = require('../../game-data/globals')
+const state = require('../../../game-data/state')
+const globals = require('../../../game-data/globals')
 
 /**
  * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the gamePiece class from initGamePiece.js
+ * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
  * 
  * Take the blockedXyValues prop from the current map, generated in initMap.js
  * Dependending on the direction the sprite is facing...
