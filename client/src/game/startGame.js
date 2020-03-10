@@ -1,10 +1,12 @@
-const movementController = require('./map/map-ui/movementController')
 const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const initMap = require('./map/map-init/initMap')
 const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
+const controls = require('./controls')
+
+const gameController = require('./gameController')
 
 const mapJSONFolder = '/static/maps/'
 const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
@@ -14,7 +16,7 @@ const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
     document.getElementsByTagName('canvas')[1].style.display = 'none'
 
-    movementController.stopPlayerMovement()
+    controls.stopListenForKeyPress();
 }
 
 /**
@@ -37,7 +39,7 @@ const initMapFromSave = ( savedGame ) => {
     initMap.initializeMap(mapData, "SAVE_GAME", savedGame)
 
     setTimeout( () => {
-        movementController.startPlayerMovement( );      
+        controls.listenForKeyPress();     
         animationFrameController.startRequestingFrame( );
     }, 500 );
 }
@@ -61,7 +63,7 @@ const startNewGame = ( ) => {
     fetchJson( firstMapUrl, initMap.initializeMap );
 
     setTimeout( () => {
-        movementController.startPlayerMovement( );      
+        controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
     }, 500 );
 }

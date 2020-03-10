@@ -5,6 +5,7 @@ const animation     = require('../../animationFrameController')
 const drawGrid      = require('../../map/map-init/drawGrid')
 const globals       = require('../../../game-data/globals')
 const text          = require('../../map/map-ui/displayText')
+const initChar      = require('../../character/character-init/initCharacter')
 
 // classes
 const BattleSprite  = require('./BattleSprite').BattleSprite
@@ -70,9 +71,14 @@ const getBattleMap = ( battleMapJson ) => {
     }, 800)
 
     setTimeout( ( ) => {
-        state.battleState.enemy.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
         state.battleState.player.sprite = new BattleSprite( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
-        text.getTextContainer( "TESTESTEST" )
+        state.battleState.player.character = state.playerCharacter.stats
+
+        state.battleState.opponent.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
+        state.battleState.opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
+
+
+        text.getTextContainer( "Choose your move!" )
         animation.startBattleAnimation( )
     }, 2400)
 }
