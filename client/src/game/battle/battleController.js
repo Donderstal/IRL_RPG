@@ -1,4 +1,5 @@
-const initBattle = require('./battle-init/initBattle')
+const initBattle = require('./battle-init/initBattle').startBattle
+const state 	= require('../../game-data/state')
 
 const handleBattleKeyPress = ( event ) => {
     if ( event.key == "Escape" || event.key == "Esc" ) {
@@ -18,4 +19,9 @@ const handleBattleKeyPress = ( event ) => {
     else {
         state.pressedKeys[event.key] = true        
     }
+}
+
+module.exports = {
+    initBattle,
+    handleBattleKeyPress
 }

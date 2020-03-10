@@ -4,6 +4,8 @@ const gameController = require('../gameController')
 const state = require('../../game-data/state')
 const actionController = require('./map-ui/actionController')
 
+const battleController = require('../battle/battleController')
+
 const handleMapKeyPress = ( event ) => {
     if ( event.key == "q" && !state.battleState.requestingBattle ) {
         event.preventDefault()
@@ -51,11 +53,11 @@ const handleMovementKeys = ( ) => {
 const stopMap = ( ) => {
     state.battleState.requestingBattle = false
     state.currentMap.mapMusic.pause()     
-    animation.startCinematicAnimation()   
+    battleController.initBattle()
 }
 
 module.exports = {
-    initMap : initMap,
+    initMap,
     stopMap,
     handleMapKeyPress,
     handleMovementKeys
