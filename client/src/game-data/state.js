@@ -1,9 +1,11 @@
 module.exports = {
-    animation : {
-        overworldMode : true,
-        battleMode : false,
-        cinematicMode : false
-    },
+    overworldMode : true,
+    battleMode : false,
+    cinematicMode : false,
+    paused : false,
+    listeningForPress : false,
+    pressedKeys: { },
+
     currentMap : {
         map		: true,
         mapData : {
@@ -14,7 +16,7 @@ module.exports = {
 
     battleState 	: {
         player  : {},
-        enemy   : {}
+        opponent   : {}
     },
 
     playerCharacter : {
