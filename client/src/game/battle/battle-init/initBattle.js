@@ -85,7 +85,7 @@ const getBattleMap = ( battleMapJson ) => {
 
 const stopBattle = ( ) => {
     canvas.clearBothCanvases( )
-    state.animation.battleMode = false
+    state.battleMode = false
 
     for( var i = 0; i <= globals.CANVAS_COLUMNS; i++ ) {
         let key = i

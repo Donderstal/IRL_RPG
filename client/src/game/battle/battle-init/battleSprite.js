@@ -10,12 +10,13 @@ class BattleSprite extends I_Sprite {
         let typeOfStart = "CELL"
         super ( start, spriteSheetSrc, typeOfStart, "LARG", spriteDirection ) 
                
-        this.width   = globals.STRD_SPRITE_WIDTH  * 2;
-        this.height  = globals.STRD_SPRITE_HEIGHT * 2;
+        this.width          = globals.STRD_SPRITE_WIDTH  * 2;
+        this.height         = globals.STRD_SPRITE_HEIGHT * 2;
 
-        this.isPlayer= isPlayer
-        this.buttons = {}
-        this.buttonSprites = []
+        this.isPlayer       = isPlayer
+        this.buttons        = {}
+        this.buttonSprites  = []
+        this.animating      = false;
 
         if ( this.isPlayer ) {
             this.initBattleUI( )            
@@ -30,6 +31,10 @@ class BattleSprite extends I_Sprite {
                 e.drawButton( )
             })            
         }    
+    }
+
+    moveSpriteToPlace( ) {
+        
     }
 
     setButtonAsActive( buttonKey ) {

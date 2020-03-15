@@ -1,9 +1,9 @@
-const initBattle = require('./battle-init/initBattle').startBattle
+const init = require('./battle-init/initBattle')
 const state 	= require('../../game-data/state')
 
 const handleBattleKeyPress = ( event ) => {
     if ( event.key == "Escape" || event.key == "Esc" ) {
-        initBattle.stopBattle()
+        init.stopBattle()
     }
     if ( event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5" ) {
         state.battleState.player.sprite.setButtonAsActive( event.key )
@@ -19,6 +19,10 @@ const handleBattleKeyPress = ( event ) => {
     else {
         state.pressedKeys[event.key] = true        
     }
+}
+
+const initBattle = ( ) => {
+    init.startBattle()
 }
 
 module.exports = {
