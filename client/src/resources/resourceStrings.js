@@ -1,3 +1,28 @@
+
+const getBattleResString = ( template, literals = null ) => {
+    switch ( template ) {
+        case 'BATTLE_BEGIN_TURN'  : 
+            return `${literals.name}s turn begins!`
+        case 'BATTLE_CHOOSE_MOVE' :
+            return "Choose your move!"
+        case 'BATTLE_USE_MOVE'    : 
+            return `${literals.name} uses ${literals.move}!`
+        case 'BATTLE_MOVE_HIT'    : 
+            return `${literals.name} hits ${literals.target} for ${literals.damage} damage!`
+        case 'BATTLE_MOVE_MISS'   : 
+            return `${literals.target} evades ${literals.move}!`
+        case 'BATTLE_STAT_DOWN'   : 
+            return `${literals.target}'s ${literals.stat} drops!`
+        case 'BATTLE_STAT_UP'     : 
+            return `${literals.name}s ${literals.stat} is bolstered!`    
+        case 'BATTLE_USE_ITEM'    : 
+            return `${literals.name} uses ${literals.item}`    
+        case 'BATTLE_FAIL'        : 
+            return `${literals.name}s move failed! At least they tried...`    
+    }
+    
+}
+
 module.exports = {
 
     BATTLE_PUNCH_BUTTON     : "( 1 )",
@@ -19,4 +44,6 @@ module.exports = {
     BATTLE_FLEE_BUTTON      : "( 5 )",
     BATTLE_FLEE_TOOLTIP     : "Flee",
     BATTLE_FLEE_HINT        : "Flee courageously to fight another day!",
+
+    getBattleResString
 }

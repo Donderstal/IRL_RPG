@@ -4,7 +4,7 @@ const utility       = require('../../../helpers/utilFunctions')
 const animation     = require('../../animationFrameController')
 const drawGrid      = require('../../map/map-init/drawGrid')
 const globals       = require('../../../game-data/globals')
-const text          = require('../../map/map-ui/displayText')
+const text          = require('../battle-ui/battleText')
 const initChar      = require('../../character/character-init/initCharacter')
 
 // classes
@@ -60,6 +60,10 @@ const getBattleStartscreen = ( ) => {
             canvas.getFrontCanvasContext().clearRect( globals.CANVAS_WIDTH - ( globals.GRID_BLOCK_PX * key) , 0, globals.GRID_BLOCK_PX, globals.CANVAS_HEIGHT )
         }, 1500 + (25 * key)) 
     }
+
+    setTimeout(( ) => {
+        text.initTextContainer()
+    }, 2000) 
 }
 
 const getBattleMap = ( battleMapJson ) => {
@@ -77,8 +81,6 @@ const getBattleMap = ( battleMapJson ) => {
         state.battleState.opponent.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
         state.battleState.opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
 
-
-        text.getTextContainer( "Choose your move!" )
         animation.startBattleAnimation( )
     }, 2400)
 }

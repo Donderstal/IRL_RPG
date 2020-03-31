@@ -35,35 +35,6 @@ class SpeechBubble {
     }
 } 
 
-const getTextContainer = ( text ) => {
-    state.battleState.textContainer = new TextContainer( text )
-}
-
-class TextContainer {
-    constructor( text ) {
-        this.width  = globals.CANVAS_WIDTH / 2
-        this.height = globals.CANVAS_HEIGHT / 6
-
-        this.x      = globals.CANVAS_WIDTH / 4
-        this.y      = ( globals.CANVAS_HEIGHT / 3 ) * 2
-
-        this.text   = text
-
-        this.drawContainer()
-    }
-
-    drawContainer( ) {
-        canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
-        canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
-        canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
-        canvas.writeTextLine( "(Q) Select", this.x + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", "black" )
-    }
-
-    setText( text ) {
-        this.text = text
-    }
-}
-
 const drawSpeechBubble = ( text, speaker, textRect, borderRect ) => {
     //Body
     canvas.drawRect( "FRONT", borderRect.left, borderRect.top, borderRect.width, borderRect.height, "rgba(0,0,0, 0.66)" );
@@ -136,6 +107,5 @@ const setTextGlobals = ( ) => {
 }
 
 module.exports = {
-    getSpeechBubble,
-    getTextContainer
+    getSpeechBubble
 }

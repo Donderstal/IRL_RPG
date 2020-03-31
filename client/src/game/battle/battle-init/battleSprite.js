@@ -2,6 +2,7 @@ const globals = require('../../../game-data/globals')
 const battleButton = require('../battle-ui/battleButton').battleButton
 const res   = require('../../../resources/resourceStrings')
 const state = require('../../../game-data/state')
+let battleText;
 
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
@@ -31,6 +32,10 @@ class BattleSprite extends I_Sprite {
     }
     
     drawSprite( ) {
+        if ( state.battleState.textContainer ) {
+            battleText = state.battleState.textContainer
+        }
+
         if ( this.moving ) {
             this.handleSpriteMovement()
         }
@@ -52,6 +57,12 @@ class BattleSprite extends I_Sprite {
     handleSpriteMovement() {
         if ( this.x < ( this.destinationX - globals.MOVEMENT_SPEED ) && !this.returning ) {
             this.returning = true     
+            const stringLiterals = { 
+                name: state.battleState.player.character.name,
+                target: state.battleState.opponent.character.name,
+                damage: "0.111"
+            }
+            battleText.setText( res.getBattleResString( 'BATTLE_MOVE_HIT', stringLiterals ) )
         }
         else if ( this.x > this.destinationX && !this.returning ) {
             this.direction = globals['FACING_LEFT']
@@ -93,7 +104,7 @@ class BattleSprite extends I_Sprite {
         })
 
         let spriteAtIndex = this.buttonSprites[index]
-        state.battleState.textContainer.setText( spriteAtIndex.hint )
+        battleText.setText( spriteAtIndex.hint )
         spriteAtIndex.setActive( )
     }
 
