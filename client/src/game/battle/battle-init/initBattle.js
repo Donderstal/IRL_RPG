@@ -4,7 +4,8 @@ const utility       = require('../../../helpers/utilFunctions')
 const animation     = require('../../animationFrameController')
 const drawGrid      = require('../../map/map-init/drawGrid')
 const globals       = require('../../../game-data/globals')
-const text          = require('../../map/map-ui/displayText')
+const text          = require('../battle-ui/battleText')
+const initChar      = require('../../character/character-init/initCharacter')
 
 // classes
 const BattleSprite  = require('./BattleSprite').BattleSprite
@@ -59,6 +60,10 @@ const getBattleStartscreen = ( ) => {
             canvas.getFrontCanvasContext().clearRect( globals.CANVAS_WIDTH - ( globals.GRID_BLOCK_PX * key) , 0, globals.GRID_BLOCK_PX, globals.CANVAS_HEIGHT )
         }, 1500 + (25 * key)) 
     }
+
+    setTimeout(( ) => {
+        text.initTextContainer()
+    }, 2000) 
 }
 
 const getBattleMap = ( battleMapJson ) => {
@@ -70,16 +75,19 @@ const getBattleMap = ( battleMapJson ) => {
     }, 800)
 
     setTimeout( ( ) => {
-        state.battleState.enemy.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
         state.battleState.player.sprite = new BattleSprite( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
-        text.getTextContainer( "TESTESTEST" )
+        state.battleState.player.character = state.playerCharacter.stats
+
+        state.battleState.opponent.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
+        state.battleState.opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
+
         animation.startBattleAnimation( )
     }, 2400)
 }
 
 const stopBattle = ( ) => {
     canvas.clearBothCanvases( )
-    state.animation.battleMode = false
+    state.battleMode = false
 
     for( var i = 0; i <= globals.CANVAS_COLUMNS; i++ ) {
         let key = i

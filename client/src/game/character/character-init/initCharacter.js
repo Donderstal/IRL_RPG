@@ -5,7 +5,7 @@ const classList = Classes.initClasses
 const getCharWithClass = ( className, name ) => {
     for ( let classKey in classList ) { 
         if ( classKey === className ) {
-            return new classList[className](name )
+            return new classList[className]( name )
         }
     }
 
