@@ -1,6 +1,6 @@
-const state = require('../../game-data/state')
-const NPCs = require('../map/map-ui/NPCs')
-const canvas = require('../../helpers/canvasHelpers')
+const state     = require('../../game-data/state')
+const NPCs      = require('../map/map-ui/NPCs')
+const canvas    = require('../../helpers/canvasHelpers')
 
 const handleBattleAnimations = ( ) => {
     canvas.clearEntireCanvas("FRONT")
@@ -9,20 +9,14 @@ const handleBattleAnimations = ( ) => {
     let oppoSprite = state.battleState.opponent.sprite
 
     if ( playerSprite != undefined ) {
-        if ( !playerSprite.animating ) {
-            NPCs.handleStaticNPCAnimation( state.battleState.player )               
-        }
-        else {
-            oppoSprite.moveSpriteToPlace( ) 
+        if ( !playerSprite.moving ) {
+            NPCs.handleStaticNPCAnimation( state.battleState.player )            
         }
         playerSprite.drawSprite()         
     }
     if ( oppoSprite != undefined ) {
-        if ( !oppoSprite.animating ) {
+        if ( !oppoSprite.moving ) {
             NPCs.handleStaticNPCAnimation( state.battleState.opponent )
-        }
-        else {
-            oppoSprite.moveSpriteToPlace() 
         }
         oppoSprite.drawSprite() 
     }

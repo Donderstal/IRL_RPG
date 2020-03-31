@@ -17,6 +17,13 @@ class BattleSprite extends I_Sprite {
         this.buttons        = {}
         this.buttonSprites  = []
         this.animating      = false;
+        
+        this.initialX       = this.x;
+        this.destinationX   = null;
+        this.initialDir     = this.direction;
+
+        this.moving         = false;
+        this.returning      = false;
 
         if ( this.isPlayer ) {
             this.initBattleUI( )            
@@ -24,17 +31,59 @@ class BattleSprite extends I_Sprite {
     }
     
     drawSprite( ) {
+        if ( this.moving ) {
+            this.handleSpriteMovement()
+        }
+
         super.drawSprite( )
 
-        if ( this.isPlayer ) {
+        if ( this.isPlayer && !this.moving ) {
             this.buttonSprites.forEach((e) => {
                 e.drawButton( )
             })            
         }    
     }
 
-    moveSpriteToPlace( ) {
-        
+    moveSpriteToPlace( destinationX ) {
+        this.moving = true;
+        this.destinationX = destinationX;
+    }
+
+    handleSpriteMovement() {
+        if ( this.x < ( this.destinationX - globals.MOVEMENT_SPEED ) && !this.returning ) {
+            this.returning = true     
+        }
+        else if ( this.x > this.destinationX && !this.returning ) {
+            this.direction = globals['FACING_LEFT']
+        }
+        else if ( this.x > ( this.initialX - globals.MOVEMENT_SPEED ) && this.returning ) {
+            this.x = this.initialX;
+            this.direction = this.initialDir;
+            this.returning = false;
+            this.moving = false;
+        }
+        else if ( this.returning ) {
+            this.direction = globals['FACING_RIGHT']
+        }
+
+        this.frameCount++;
+   
+        if ( this.direction == globals['FACING_LEFT'] ) {
+            this.x -= globals.MOVEMENT_SPEED * 2  
+        }
+
+        if ( this.direction == globals['FACING_RIGHT'] ) {
+            this.x += globals.MOVEMENT_SPEED * 2   
+        }
+    
+        if ( this.frameCount >= globals.FRAME_LIMIT) {
+            this.frameCount = 0;
+            this.animIterator++;
+    
+            if (this.animIterator >= this.animLoop.length) {
+                this.animIterator = 0;
+            }
+        }
     }
 
     setButtonAsActive( buttonKey ) {
