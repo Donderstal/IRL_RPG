@@ -58,5 +58,6 @@ const stopBattle = ( ) => {
 }
 
 module.exports = {
-    startBattle
+    startBattle,
+    stopBattle
 }

@@ -33,5 +33,8 @@ module.exports = {
     // canvas font sizes
     SMALL_FONT_SIZE : 12,
     LARGE_FONT_SIZE : 16,
-    FONT_STYLE : 'Times New Roman '
+    FONT_STYLE : 'Times New Roman ',
+
+    // Length of some animations in milliseconds
+    BATTLE_INTRO_ANIM_MS : 2100,
 }

@@ -1,8 +1,10 @@
 const handleMapAnimations       = require('./map/mapAnimation').handleMapAnimations
 const handleBattleAnimations    = require('./battle/battleAnimation').handleBattleAnimations
 const state                     = require('../game-data/state')
+const globals                   = require('../game-data/globals')
 const controls                  = require('./controls')
 const controller                = require('./gameController')
+const canvasHelpers             = require('./../helpers/canvasHelpers')
 
 const startRequestingFrame = () => {
     startOverworldAnimation()
@@ -31,20 +33,23 @@ const startCinematicAnimation = ( ) =>{
  * Controller for all animation duties in front-context
  */
 const animationFrameController = () => {
-    checkForModeChangeRequest()
+    if ( !state.paused ) {
+        checkForModeChangeRequest()
 
-    if ( state.paused ) {
-        return
+        if ( !state.listeningForPress ) {
+            controls.listenForKeyPress()
+        }
+        
+        if ( state.overworldMode ) {
+            handleMapAnimations()
+        }
+        else if ( state.battleMode ) {
+            handleBattleAnimations()
+        }
     }
-    else if ( !state.listeningForPress ) {
-        controls.listenForKeyPress()
-    }
-    
-    if ( state.overworldMode ) {
-        handleMapAnimations()
-    }
-    else if ( state.battleMode ) {
-        handleBattleAnimations()
+    else {
+        canvasHelpers.clearEntireCanvas('FRONT')
+        canvasHelpers.drawRect('FRONT', 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT, "#800020");
     }
 
     requestAnimationFrame(animationFrameController)
@@ -63,7 +68,7 @@ const checkForModeChangeRequest = ( ) => {
         controller.startBattle()
         setTimeout(() => {
             startBattleAnimation()            
-        }, 2100 )
+        }, globals.BATTLE_INTRO_ANIM_MS )
     }
     else if ( state.changeRequest == 'CINEMATIC' ) {
         state.changeRequest = "NO"
