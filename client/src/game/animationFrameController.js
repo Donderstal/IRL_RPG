@@ -56,26 +56,23 @@ const animationFrameController = () => {
 }
 
 const checkForModeChangeRequest = ( ) => {
-    if ( state.changeRequest == 'OVERWORLD' ) {
-        state.changeRequest = "NO"
-        controller.stopCurrentMode()
-        controller.startMap()
-        startOverworldAnimation()
+    if ( state.changeRequest != "NO" ) {
+        if ( state.changeRequest == 'OVERWORLD' ) {
+            startOverworldAnimation()
+        }
+        else if ( state.changeRequest == 'BATTLE' ) {
+            setTimeout(() => {
+                startBattleAnimation()            
+            }, globals.BATTLE_INTRO_ANIM_MS )
+        }
+        else if ( state.changeRequest == 'CINEMATIC' ) {
+            startCinematicAnimation()
+        }
+        
+        controller.switchMode()        
     }
-    else if ( state.changeRequest == 'BATTLE' ) {
-        state.changeRequest = "NO"
-        controller.stopCurrentMode()
-        controller.startBattle()
-        setTimeout(() => {
-            startBattleAnimation()            
-        }, globals.BATTLE_INTRO_ANIM_MS )
-    }
-    else if ( state.changeRequest == 'CINEMATIC' ) {
-        state.changeRequest = "NO"
-        controller.stopCurrentMode()
-        controller.startCinematic()
-        startCinematicAnimation()
-    }
+
+    state.changeRequest = "NO"
 }
 
 module.exports = {

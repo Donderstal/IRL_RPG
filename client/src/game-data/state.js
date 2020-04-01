@@ -4,6 +4,7 @@ module.exports = {
     cinematicMode : false,
     paused : false,
     listeningForPress : false,
+    changeRequest : "NO",
     pressedKeys: { },
 
     currentMap : {

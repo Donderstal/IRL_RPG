@@ -1,20 +1,18 @@
 const state         = require('../../../game-data/state')
 const createCharInstance = require('../../createCharInstance')
-
+const Sound         = require('../../interfaces/I_Sound').Sound
 const getNPCs           = require('./getNPCs')
 const setMapAttributes  = require('./setMapAttributes')
 const drawGrid          = require('./drawGrid')
 
-const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
-    state.currentMap.mapData = mapJson;
-    state.currentMap.blockedXyValues = []    
-    drawGrid.generateMap( state.currentMap )    
-
+const getMapMusic = ( ) => {
     if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic.stop()  
     }
-    
-    ( previousMapName === "SAVE_GAME" ) ? getMapAttributesFromSave( savedState ) : getMapAttributes( previousMapName )
+    if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
+        state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
+        state.currentMap.mapMusic.play()  
+    }
 }
 
 const getMapAttributesFromSave = ( savedGame ) => {
@@ -41,6 +39,18 @@ const getMapAttributes = ( previousMapName ) => {
         } 
     }, 1000)
 }
+
+
+const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
+    state.currentMap.mapData = mapJson;
+    state.currentMap.blockedXyValues = []    
+    drawGrid.generateMap( state.currentMap )    
+
+    getMapMusic();
+    
+    ( previousMapName === "SAVE_GAME" ) ? getMapAttributesFromSave( savedState ) : getMapAttributes( previousMapName )
+}
+
 
 module.exports = {
     initializeMap

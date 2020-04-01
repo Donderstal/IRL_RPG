@@ -32,6 +32,20 @@ const stopCinematic = ( ) => {
 
 }
 
+const switchMode = ( MODE ) => {
+    stopCurrentMode()
+
+    if ( state.changeRequest == 'OVERWORLD' ) {
+        startMap()
+    }
+    else if ( state.changeRequest == 'BATTLE' ) {
+        startBattle()
+    }
+    else if ( state.changeRequest == 'CINEMATIC' ) {
+        startCinematic()
+    }
+}
+
 const stopCurrentMode = ( ) => {
     if ( state.overworldMode ) {
         stopMap()
@@ -45,11 +59,5 @@ const stopCurrentMode = ( ) => {
 }
 
 module.exports = {
-    startBattle,
-    stopBattle,
-    startMap,
-    stopMap,
-    startCinematic,
-    stopCinematic,
-    stopCurrentMode
+    switchMode
 }

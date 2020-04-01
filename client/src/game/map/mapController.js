@@ -1,5 +1,4 @@
 const state = require('../../game-data/state')
-const Sound         = require('./../interfaces/I_Sound').Sound
 const utility       = require('../../helpers/utilFunctions')
 const canvasHelpers = require('../../helpers/canvasHelpers')
 
@@ -13,11 +12,6 @@ const initMap = ( json, previousMapName = null, savedState = null ) =>{
     getMap( json, previousMapName, savedState )
 
     setTimeout( ( ) => {
-        if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-            state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
-            state.currentMap.mapMusic.play()  
-        }
-
         initializingMap = false;
     }, 1000)
 }
