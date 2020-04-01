@@ -1,9 +1,6 @@
 const state         = require('../../../game-data/state')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
-const Sound         = require('../../interfaces/I_Sound').Sound
-const utility       = require('../../../helpers/utilFunctions')
 const createCharInstance = require('../../createCharInstance')
-const anim          = require( '../../animationFrameController')
 
 const getNPCs           = require('./getNPCs')
 const setMapAttributes  = require('./setMapAttributes')
@@ -20,15 +17,6 @@ const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => 
     }
     
     ( previousMapName === "SAVE_GAME" ) ? getMapAttributesFromSave( savedState ) : getMapAttributes( previousMapName )
-
-    setTimeout( ( ) => {
-        if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-            state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
-            state.currentMap.mapMusic.play()  
-        }
-
-        anim.startRequestingFrame()
-    }, 1000)
 }
 
 const getMapAttributesFromSave = ( savedGame ) => {
@@ -57,16 +45,6 @@ const getMapAttributes = ( previousMapName ) => {
             state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Dildoboy', state.currentMap.mapData.playerStart, 'CELL' )
         } 
     }, 1000)
-}
-
-/**
- * Get the loading screen, stop player controls and fetch the new map
- */
-const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
-    state.currentMap.NPCs = []
-    state.paused = true;
-
-    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initializeMap, oldMap )
 }
 
 /**
@@ -110,6 +88,5 @@ const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName
 
 module.exports = {
     initializeMap,
-    initPlayerSpriteInNewMap,
-    initNewMapAfterClearingOld
+    initPlayerSpriteInNewMap
 }

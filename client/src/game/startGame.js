@@ -2,15 +2,13 @@ const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const initMap = require('./map/map-init/initMap')
-const utility = require('../helpers/utilFunctions')
-const fetchJson = utility.fetchJSONWithCallback
 const controls = require('./controls')
 
-const gameController = require('./gameController')
+const utility = require('../helpers/utilFunctions')
+const fetchJson = utility.fetchJSONWithCallback
 
 const mapJSONFolder = '/static/maps/'
 const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
-const savedGame = '/static/save_game.json';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
