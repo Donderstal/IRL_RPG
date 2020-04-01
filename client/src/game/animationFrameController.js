@@ -57,8 +57,12 @@ const animationFrameController = () => {
 
 const checkForModeChangeRequest = ( ) => {
     if ( state.changeRequest != "NO" ) {
+        controller.switchMode()
+
         if ( state.changeRequest == 'OVERWORLD' ) {
-            startOverworldAnimation()
+            setTimeout(() => {
+                startOverworldAnimation()         
+            }, globals.BATTLE_INTRO_ANIM_MS )
         }
         else if ( state.changeRequest == 'BATTLE' ) {
             setTimeout(() => {
@@ -67,9 +71,7 @@ const checkForModeChangeRequest = ( ) => {
         }
         else if ( state.changeRequest == 'CINEMATIC' ) {
             startCinematicAnimation()
-        }
-        
-        controller.switchMode()        
+        }        
     }
 
     state.changeRequest = "NO"

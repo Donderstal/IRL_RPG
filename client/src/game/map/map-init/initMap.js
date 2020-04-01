@@ -12,7 +12,7 @@ const getMapMusic = ( ) => {
     if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
         state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
         state.currentMap.mapMusic.play()  
-    }
+    }        
 }
 
 const getMapAttributesFromSave = ( ) => {
@@ -38,18 +38,23 @@ const getMapAttributes = ( BOOT_STATUS ) => {
     }, 1000)
 }
 
+const initMapFromBattle = ( ) => {
+    drawGrid.generateMap( state.currentMap )
+    state.currentMap.mapMusic.play() 
+}
 
 const initializeMap = ( mapJson, BOOT_STATUS ) => {    
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
     drawGrid.generateMap( state.currentMap )    
 
-    getMapMusic();
+    getMapMusic( BOOT_STATUS );
     
     ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS )
 }
 
 
 module.exports = {
-    initializeMap
+    initializeMap,
+    initMapFromBattle
 }

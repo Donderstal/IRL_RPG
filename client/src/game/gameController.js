@@ -8,7 +8,6 @@ const startBattle = ( ) => {
 
 const stopBattle = ( ) => {
     state.battleMode = false;
-
     battle.stopBattle()
 }
 
@@ -17,7 +16,7 @@ const startMap = ( BOOT_STATUS, json = null, isSavedGame ) => {
         map.initMap( json, BOOT_STATUS )
     }
     if ( BOOT_STATUS == "FROM_BATTLE" ) {
-        map.initMap(  )
+        map.initMap( state.currentMap.mapData, "FROM_BATTLE" )
     }
 }
 
@@ -38,10 +37,12 @@ const stopCinematic = ( ) => {
 }
 
 const switchMode = ( ) => {
-    stopCurrentMode()
+    const previousMode = stopCurrentMode()
 
     if ( state.changeRequest == 'OVERWORLD' ) {
-        startMap()
+        if ( previousMode == 'BATTLE' ) {
+            startMap("FROM_BATTLE")            
+        }
     }
     else if ( state.changeRequest == 'BATTLE' ) {
         startBattle()
@@ -54,12 +55,15 @@ const switchMode = ( ) => {
 const stopCurrentMode = ( ) => {
     if ( state.overworldMode ) {
         stopMap()
+        return "OVERWORLD"
     }
     else if ( state.battleMode ) {
         stopBattle()
+        return "BATTLE"
     }
     else if ( state.cinematicMode ) {
         stopCinematic()
+        return "CINEMATIC"
     }
 }
 

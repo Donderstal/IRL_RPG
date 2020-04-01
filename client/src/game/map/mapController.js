@@ -6,13 +6,20 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const Sound         = require('./../interfaces/I_Sound').Sound
 
 const getMap = require('./map-init/initMap').initializeMap
+const initMapFromBattle = require('./map-init/initMap').initMapFromBattle
 
 let initializingMap = false;
 
 const initMap = ( json, BOOT_STATUS ) =>{
     initializingMap = true
 
-    getMap( json, BOOT_STATUS )
+    if ( BOOT_STATUS == "FROM_BATTLE" ) {
+        initMapFromBattle( )
+    }
+    else {
+        getMap( json, BOOT_STATUS )        
+    }
+
 
     setTimeout( ( ) => {
         initializingMap = false;

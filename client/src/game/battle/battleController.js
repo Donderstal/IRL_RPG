@@ -44,17 +44,7 @@ const initBattleMapAndSprites = ( battleMapJson ) => {
 }
 
 const stopBattle = ( ) => {
-    state.battleMode = false
     init.getBattleStopScreen()
-
-    setTimeout( ( ) => {
-        drawGrid.generateMap( state.currentMap )
-    }, 800)
-
-    setTimeout( ( ) => {
-        state.currentMap.mapMusic.play()
-        animation.startOverworldAnimation( )
-    }, 2000)
 }
 
 module.exports = {
