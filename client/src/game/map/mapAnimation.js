@@ -6,7 +6,7 @@ const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
     if ( state.mapTransition != null ) {
-        mapController.initNewMapAfterClearingOld(state.mapTransition.urlToNewMap, state.mapTransition.oldMapName)
+        mapController.switchMap(state.mapTransition)
     }
 
     state.currentMap.layeredSprites = []    
