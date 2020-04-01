@@ -1,6 +1,6 @@
 const state = require('../game-data/state')
-const handleMapKeyPress = require('./map/mapController').handleMapKeyPress
-const handleBattleKeyPress = require('./battle/battleController').handleBattleKeyPress
+const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
+const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
 
 /**
  * Listen for keypresses
