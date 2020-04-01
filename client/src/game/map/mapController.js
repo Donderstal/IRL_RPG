@@ -1,26 +1,27 @@
-const state = require('../../game-data/state')
+const state         = require('../../game-data/state')
+const globals       = require('../../game-data/globals')
+const mapHelpers = require('../../helpers/mapHelpers')
 const utility       = require('../../helpers/utilFunctions')
 const canvasHelpers = require('../../helpers/canvasHelpers')
+const Sound         = require('./../interfaces/I_Sound').Sound
 
 const getMap = require('./map-init/initMap').initializeMap
 
 let initializingMap = false;
 
-const initMap = ( json, previousMapName = null, savedState = null ) =>{
+const initMap = ( json, BOOT_STATUS ) =>{
     initializingMap = true
 
-    getMap( json, previousMapName, savedState )
+    getMap( json, BOOT_STATUS )
 
     setTimeout( ( ) => {
         initializingMap = false;
     }, 1000)
 }
 
-const switchMap = ( ) => {
-    const urlToNewMap   = state.mapTransition.urlToNewMap
-    const oldMapName    = state.mapTransition.oldMapName
-    state.mapTransition = null
-    
+const switchMap = ( transition ) => {
+    const urlToNewMap   = transition.urlToNewMap
+    const oldMapName    = transition.oldMapName    
 
     if ( !initializingMap ) {
         canvasHelpers.clearBothCanvases();
@@ -28,29 +29,42 @@ const switchMap = ( ) => {
     }
 }
 
-const initNewMapAfterClearingOld = ( newMap, oldMap ) => {
+const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
     initializingMap = true;
     state.currentMap.NPCs = []
     state.paused = true;
-    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap, oldMap )
+    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap, "MAP_TO_MAP" )
 
     setTimeout( () => {
-        initPlayerSpriteInNewMap( oldMap )
-    }, 1000)
+        initPlayerSpriteInNewMap( previousMapName )
+        state.transitioning = false;
+    }, 660)
 }
 
 const initPlayerSpriteInNewMap = ( previousMapName ) => {
     setCharacterLocationInNewMap( previousMapName )
-    state.playerCharacter.sprite.calcXyFromCell()
     state.playerCharacter.sprite.drawSprite() 
     
     state.paused = false;
 }
 
-const setCharacterLocationInNewMap = ( previousMapName  ) => {
+const setCharacterLocationInNewMap = ( previousMapName ) => {
     const currentMapData = state.currentMap.mapData
     const playerSprite = state.playerCharacter.sprite
 
+    if ( state.currentMap.mapData.doors ) {
+        const mapDoors = state.currentMap.mapData.doors
+
+        for ( var i = 0; i < mapDoors.length; i++ ) {
+            const door = mapDoors[i]
+
+            if ( previousMapName === door.to) {
+                const sfx = new Sound( "misc/random6.wav", true )
+                sfx.play()
+                setSpritePositionForNewMap(door)
+            }
+        }
+    }
     if ( currentMapData.outdoors == true ) {
         for ( var adjacentMap in currentMapData.neighbours ) {
             setPositionFromNeighbour( playerSprite, currentMapData, previousMapName, adjacentMap );
@@ -58,16 +72,20 @@ const setCharacterLocationInNewMap = ( previousMapName  ) => {
     }
 }
 
+const setSpritePositionForNewMap = (door) => {
+    const doorXy = mapHelpers.getXYOfCell(door.row, door.col)
+    state.playerCharacter.sprite.initSpriteFromXy( doorXy )
+    state.playerCharacter.sprite.direction = globals[door.directionOut]
+ }
+
 const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName, adjacentMap  ) => {
-    if ( currentMapData.neighbours[adjacentMap] == previousMapName ) {
-        playerSprite.calcCellFromXy()
-        
+    if ( currentMapData.neighbours[adjacentMap] == previousMapName ) {        
         if ( adjacentMap == "right") {
-            playerSprite.setCell( { 'row': playerSprite.row, 'col': 24 } )                    
+            playerSprite.initSpriteFromXy( { 'y': playerSprite.y, 'x': ( state.currentMap.borders.right + ( playerSprite.width * .5 ) ) } )               
         }
 
         if ( adjacentMap == "left") {
-            playerSprite.setCell( { 'row': playerSprite.row, 'col': -1 } )                    
+            playerSprite.initSpriteFromXy( { 'y': playerSprite.y, 'x': ( state.currentMap.borders.left - ( playerSprite.width * .5 ) ) } )          
         }
     } 
 }

@@ -12,8 +12,13 @@ const stopBattle = ( ) => {
     battle.stopBattle()
 }
 
-const startMap = ( ) => {
-    map.initMap()
+const startMap = ( BOOT_STATUS, json = null, isSavedGame ) => {
+    if ( BOOT_STATUS == "NEW_GAME" || BOOT_STATUS == "SAVE_GAME" ) {
+        map.initMap( json, BOOT_STATUS )
+    }
+    if ( BOOT_STATUS == "FROM_BATTLE" ) {
+        map.initMap(  )
+    }
 }
 
 const stopMap = ( ) => {
@@ -32,7 +37,7 @@ const stopCinematic = ( ) => {
 
 }
 
-const switchMode = ( MODE ) => {
+const switchMode = ( ) => {
     stopCurrentMode()
 
     if ( state.changeRequest == 'OVERWORLD' ) {
@@ -59,5 +64,6 @@ const stopCurrentMode = ( ) => {
 }
 
 module.exports = {
-    switchMode
+    switchMode,
+    startMap
 }

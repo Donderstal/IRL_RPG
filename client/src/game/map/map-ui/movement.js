@@ -72,7 +72,7 @@ const moveInDirection = ( sprite, direction ) => {
     }
 
     
-    if ( urlToNewMap ) {
+    if ( urlToNewMap && !state.transitioning ) {
         state.mapTransition = {
             urlToNewMap: urlToNewMap, 
             oldMapName: state.currentMap.mapData.mapName

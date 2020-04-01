@@ -15,40 +15,38 @@ const getMapMusic = ( ) => {
     }
 }
 
-const getMapAttributesFromSave = ( savedGame ) => {
-    const playerSpriteStart = { 'x' : savedGame.playerCharacter.sprite.x, 'y' : savedGame.playerCharacter.sprite.y }
+const getMapAttributesFromSave = ( ) => {
+    const playerSpriteStart = { 'x' : state.playerCharacter.sprite.x, 'y' : state.playerCharacter.sprite.y }
     setTimeout( ( ) => {
-        state.currentMap.doors = savedGame.currentMap.doors
-        state.currentMap.mapActions = savedGame.currentMap.mapActions
-        state.currentMap.NPCs = getNPCs.generateCharactersFromSave( savedGame.currentMap.NPCs )
+        state.currentMap.NPCs = getNPCs.generateCharactersFromSave( state.currentMap.NPCs )
 
-        state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Dildoboy', playerSpriteStart, 'XY' )
+        state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Johnny', playerSpriteStart, 'XY' )
     }, 500)
 }
 
 
-const getMapAttributes = ( previousMapName ) => {
+const getMapAttributes = ( BOOT_STATUS ) => {
     setTimeout(() => {
         getNPCs.generateCharacters( );
-        setMapAttributes.setMapAttributes( previousMapName );
+        setMapAttributes.setMapAttributes( );
     }, 500)
 
     setTimeout(() => {
-        if ( previousMapName == null ) {
-            state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Dildoboy', state.currentMap.mapData.playerStart, 'CELL' )
+        if ( BOOT_STATUS == "NEW_GAME" ) {
+            state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Johnny', state.currentMap.mapData.playerStart, 'CELL' )
         } 
     }, 1000)
 }
 
 
-const initializeMap = ( mapJson, previousMapName = null, savedState = null ) => {    
+const initializeMap = ( mapJson, BOOT_STATUS ) => {    
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
     drawGrid.generateMap( state.currentMap )    
 
     getMapMusic();
     
-    ( previousMapName === "SAVE_GAME" ) ? getMapAttributesFromSave( savedState ) : getMapAttributes( previousMapName )
+    ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS )
 }
 
 

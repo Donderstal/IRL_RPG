@@ -6,7 +6,9 @@ const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
     if ( state.mapTransition != null ) {
-        mapController.switchMap(state.mapTransition)
+        mapController.switchMap( state.mapTransition )
+        state.transitioning = true;
+        state.mapTransition = null
     }
 
     state.currentMap.layeredSprites = []    

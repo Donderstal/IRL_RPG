@@ -3,6 +3,7 @@ const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const initMap = require('./map/map-init/initMap')
 const controls = require('./controls')
+const controller = require('./gameController')
 
 const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
@@ -25,7 +26,7 @@ const stopGame = () => {
 
 const saveGame = ( ) => {
     state.playerCharacter.sprite.calcCellFromXy( );
-    utility.downloadObjectAsJson( state, 'Neckbeard_save_game' )
+    utility.downloadObjectAsJson( state, 'Neckbeard_save_game' + Date.now().toString() )
 }
 
 const initMapFromSave = ( savedGame ) => {
@@ -34,7 +35,7 @@ const initMapFromSave = ( savedGame ) => {
     }
 
     const mapData = savedGame.currentMap.mapData
-    initMap.initializeMap(mapData, "SAVE_GAME", savedGame)
+    controller.startMap( "SAVE_GAME", mapData, savedGame )
 
     setTimeout( () => {
         controls.listenForKeyPress();     
@@ -57,8 +58,10 @@ const loadGame = ( ) => {
     } 
 }
 
-const startNewGame = ( ) => {
+const startNewGame = ( json ) => {
     fetchJson( firstMapUrl, initMap.initializeMap );
+
+    controller.startMap( "NEW_GAME", json )
 
     setTimeout( () => {
         controls.listenForKeyPress();  
@@ -84,7 +87,7 @@ const startGame = ( ) => {
         initCanvas( canvas );
     } );
 
-    startNewGame();
+    fetchJson( firstMapUrl, startNewGame );
 }
 
 module.exports = {

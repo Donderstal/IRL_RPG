@@ -1,13 +1,10 @@
-const globals       = require('../../../game-data/globals')
 const state         = require('../../../game-data/state')
 const actionHelpers = require('../../../helpers/actionHelpers')
-const Sound         = require('../../interfaces/I_Sound').Sound
 
-const setMapAttributes = ( previousMap ) => {
-    setDoorsAndDetectEntryPoint( previousMap )
+const setMapAttributes = ( ) => {
+    setDoorsAndDetectEntryPoint( )
     setActions( )
 }
-
 
 /**
   * @param {string} previousMap - string representing relative path to previous map
@@ -22,19 +19,12 @@ const setMapAttributes = ( previousMap ) => {
      if ( state.currentMap.mapData.doors ) {
         const mapDoors = state.currentMap.mapData.doors
 
-
         for ( var i = 0; i < mapDoors.length; i++ ) {
             const newDoor = mapDoors[i]
             
             state.currentMap.doors.push(
                 actionHelpers.generateAction( 'MAP', newDoor )
             )
-
-            if ( previousMap === newDoor.to) {
-                const sfx = new Sound( "misc/random6.wav", true )
-                sfx.play()
-                setSpritePositionForNewMap(newDoor)
-            }
         }
     }
 
@@ -55,17 +45,6 @@ const setActions = (  ) => {
 
 }
 
-/**
- * @param {object} previousMap - door where the player is entering map
- * 
- * Adjust character grid position to position of door
- * Set character direction to door direction
- */
-
- const setSpritePositionForNewMap = (door) => {
-    state.playerCharacter.sprite.setCell( { 'row': door.row, 'col': door.col } )
-    state.playerCharacter.sprite.direction = globals[door.directionOut]
- }
 
  module.exports = {
     setMapAttributes
