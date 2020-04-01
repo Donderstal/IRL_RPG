@@ -1,63 +1,62 @@
-const init      = require('./battle-init/initBattle')
-const state = require('../../game-data/state')
-const battleText = state.battleState.textContainer
-const res       = require('../../resources/resourceStrings')
+const init          = require('./battle-init/initBattle')
+const state         = require('../../game-data/state')
+const Sound         = require('./../interfaces/I_Sound').Sound
+const initChar      = require('./../character/character-init/initCharacter')
+const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
+const text          = require('./battle-ui/battleText')
+const drawGrid      = require('./../map/map-init/drawGrid')
+const utility       = require('./../../helpers/utilFunctions')
+const animation     = require('./../animationFrameController')
 
-const handleBattleKeyPress = ( event ) => {
-    if ( event.key == "Escape" || event.key == "Esc" ) {
-        init.stopBattle()
-    }
-    if ( event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5" ) {
-        state.battleState.player.sprite.setButtonAsActive( event.key )
-    }
-    if ( event.key == "q" ) {
-        handleActionButton(  )
-    }
+const startBattle = (  ) => {
+    state.battleState.requestingBattle = false
+    state.currentMap.mapMusic.pause()     
 
-    else {
-        state.pressedKeys[event.key] = true        
-    }
+    let sfx = new Sound( "battle-march.wav", true )
+    sfx.play()
+
+    init.getBattleStartScreen( )
+
+    utility.fetchJSONWithCallback( '/static/maps/battle-maps/battle_map1.json', initBattleMapAndSprites )
 }
 
-const handleActionButton = (  ) => {
-    if ( battlePhase.playerTurn ) {
-        state.battleState.player.sprite.buttonSprites.forEach( (button) => {
-            if ( button.active ) {
-                if ( button.text.includes("1") ) {
-                    state.battleState.player.sprite.moveSpriteToPlace( state.battleState.opponent.sprite.right )   
-                    battleText.setText( 
-                        res.getBattleResString('BATTLE_USE_MOVE', { name: state.battleState.player.character.name, move: "punch" } ) 
-                    )
-                }
-                if ( button.text.includes("2") ) {
-                    console.log(button)
-                    console.log("2!")                    
-                }
-                if ( button.text.includes("3") ) {
-                    console.log(button)
-                    console.log("3!")                    
-                }
-                if ( button.text.includes("4") ) {
-                    console.log(button)
-                    console.log("4!")                    
-                }
-                if ( button.text.includes("5") ) {
-                    console.log(button)
-                    console.log("5!")                    
-                }
-            }
-        })
-    }
-    else {
-        
-    }
+const initBattleMapAndSprites = ( battleMapJson ) => {
+    let battleMap = {};
+    battleMap.mapData = battleMapJson;
+
+    setTimeout( ( ) => {
+        drawGrid.generateMap( battleMap )
+    }, 800)
+
+    
+    setTimeout( ( ) => {
+        text.initTextContainer()
+    }, 2000) 
+
+    setTimeout( ( ) => {
+        state.battleState.player.sprite = new BattleSprite( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
+        state.battleState.player.character = state.playerCharacter.stats
+
+        state.battleState.opponent.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
+        state.battleState.opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
+
+    }, 2400)
 }
 
-const initBattle = ( ) => {
-    init.startBattle()
+const stopBattle = ( ) => {
+    state.battleMode = false
+    init.getBattleStopScreen()
+
+    setTimeout( ( ) => {
+        drawGrid.generateMap( state.currentMap )
+    }, 800)
+
+    setTimeout( ( ) => {
+        state.currentMap.mapMusic.play()
+        animation.startOverworldAnimation( )
+    }, 2000)
 }
 
 module.exports = {
-    initBattle,
-    handleBattleKeyPress,
+    startBattle
 }

@@ -3,9 +3,7 @@ const battle    = require('./battle/battleController')
 const map       = require('./map/mapController')
 
 const startBattle = ( ) => {
-    state.battleMode = true;    
-
-    battle.initBattle()
+    battle.startBattle()
 }
 
 const stopBattle = ( ) => {
@@ -15,8 +13,6 @@ const stopBattle = ( ) => {
 }
 
 const startMap = ( ) => {
-    state.overworldMode = true;
-
     map.initMap()
 }
 
@@ -36,11 +32,24 @@ const stopCinematic = ( ) => {
 
 }
 
+const stopCurrentMode = ( ) => {
+    if ( state.overworldMode ) {
+        stopMap()
+    }
+    else if ( state.battleMode ) {
+        stopBattle()
+    }
+    else if ( state.cinematicMode ) {
+        stopCinematic()
+    }
+}
+
 module.exports = {
     startBattle,
     stopBattle,
     startMap,
     stopMap,
     startCinematic,
-    stopCinematic
+    stopCinematic,
+    stopCurrentMode
 }
