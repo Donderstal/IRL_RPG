@@ -1,8 +1,8 @@
 const handleMapAnimations       = require('./map/mapAnimation').handleMapAnimations
 const handleBattleAnimations    = require('./battle/battleAnimation').handleBattleAnimations
-const gameController            = require('./gameController')
 const state                     = require('../game-data/state')
 const controls                  = require('./controls')
+const controller                = require('./gameController')
 
 const startRequestingFrame = () => {
     startOverworldAnimation()
@@ -31,6 +31,8 @@ const startCinematicAnimation = ( ) =>{
  * Controller for all animation duties in front-context
  */
 const animationFrameController = () => {
+    checkForModeChangeRequest()
+
     if ( state.paused ) {
         return
     }
@@ -46,6 +48,29 @@ const animationFrameController = () => {
     }
 
     requestAnimationFrame(animationFrameController)
+}
+
+const checkForModeChangeRequest = ( ) => {
+    if ( state.changeRequest == 'OVERWORLD' ) {
+        state.changeRequest = "NO"
+        controller.stopCurrentMode()
+        controller.startMap()
+        startOverworldAnimation()
+    }
+    else if ( state.changeRequest == 'BATTLE' ) {
+        state.changeRequest = "NO"
+        controller.stopCurrentMode()
+        controller.startBattle()
+        setTimeout(() => {
+            startBattleAnimation()            
+        }, 2100 )
+    }
+    else if ( state.changeRequest == 'CINEMATIC' ) {
+        state.changeRequest = "NO"
+        controller.stopCurrentMode()
+        controller.startCinematic()
+        startCinematicAnimation()
+    }
 }
 
 module.exports = {

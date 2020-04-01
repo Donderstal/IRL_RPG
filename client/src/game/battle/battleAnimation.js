@@ -6,7 +6,7 @@ const handleBattleAnimations = ( ) => {
     canvas.clearEntireCanvas("FRONT")
 
     let playerSprite = state.battleState.player.sprite
-    let oppoSprite = state.battleState.opponent.sprite
+    let nonPlayerSprite = state.battleState.opponent.sprite
 
     if ( playerSprite != undefined ) {
         if ( !playerSprite.moving ) {
@@ -14,14 +14,17 @@ const handleBattleAnimations = ( ) => {
         }
         playerSprite.drawSprite()         
     }
-    if ( oppoSprite != undefined ) {
-        if ( !oppoSprite.moving ) {
+    if ( nonPlayerSprite != undefined ) {
+        if ( !nonPlayerSprite.moving ) {
             NPCs.handleStaticNPCAnimation( state.battleState.opponent )
         }
-        oppoSprite.drawSprite() 
+        nonPlayerSprite.drawSprite() 
     }
 
-    state.battleState.textContainer.drawContainer()    
+    if ( state.battleState.textContainer != undefined ) {
+        state.battleState.textContainer.drawContainer()    
+    }
+
 }
 
 module.exports = {

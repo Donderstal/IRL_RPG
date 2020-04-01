@@ -1,14 +1,18 @@
 const NPCs = require('./map-ui/NPCs')
 const state = require('../../game-data/state')
 const canvas = require('../../helpers/canvasHelpers')
-const mapCtrl = require('./mapController')
+const mapControls = require('./mapControls')
+const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
+    if ( state.mapTransition != null ) {
+        mapController.initNewMapAfterClearingOld(state.mapTransition.urlToNewMap, state.mapTransition.oldMapName)
+    }
+
     state.currentMap.layeredSprites = []    
 
     NPCs.NPCController()    
-    console.log('bro')    
-    mapCtrl.handleMovementKeys( )
+    mapControls.handleMovementKeys( )
     drawSpritesInOrder()
     
     if ( state.currentMap.bubbleIsActive ) {
