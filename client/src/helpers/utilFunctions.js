@@ -16,7 +16,6 @@ const getInputVal = (id) => {
 const fetchJSONWithCallback = ( url, callback, callbackParams = null ) => {
     fetch(url)
         .then( (response) => {
-            console.log(url)
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status + " on url " + url);
             }

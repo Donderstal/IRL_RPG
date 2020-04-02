@@ -4,6 +4,7 @@ module.exports = {
     cinematicMode : false,
     paused : false,
     listeningForPress : false,
+    changeRequest : "NO",
     pressedKeys: { },
 
     currentMap : {
@@ -15,8 +16,13 @@ module.exports = {
     },
 
     battleState 	: {
-        player  : {},
-        opponent   : {}
+        player  : {
+            hasTurn : false
+        },
+        opponent   : {
+            hasTurn : false
+        },
+        battlePhase : null
     },
 
     playerCharacter : {
