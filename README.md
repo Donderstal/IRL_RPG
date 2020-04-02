@@ -1,4 +1,4 @@
-ReadMe last updated on 21-2-2020
+ReadMe last updated on April 2nd, 2020
 
 ### IRL-RPG
 
@@ -25,6 +25,26 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 If refresh the game while working on it, run ```npm run autobuild``` in the client folder. This will start the svelte compiler and watch for changes.
 
 ### LOG
+
+#### APR 2, 2020
+* Cleaning up some leftover crud and console logs
+* Finally cleared all circular dependencies 
+* Experimental setup for battle phases
+
+#### APR 1, 2020
+* Improving new setup with controllers
+* Moving some funcs from modules to respective controllers
+* New modeChangeRequest helper for switching modes
+* Updating animationController to new setup
+
+#### MAR 31, 2020
+* Experimenting with a resourcestring-like file
+* Seperating 'controls' from 'controllers'
+
+#### MAR 15, 2020
+* Experimental moves and animations for Battle sprites
+* Added gameController, which should be the location for starting or switching modes
+* Moving battleText container Class to seperate file
 
 #### MAR 10, 2020
 * New folder structure
