@@ -1,7 +1,6 @@
 const canvas        = require('../../../helpers/canvasHelpers')
 const globals       = require('../../../game-data/globals')
 const Sound         = require('../../interfaces/I_Sound').Sound
-const animation     = require('../../animationFrameController')
 
 const getBattleStartScreen = ( ) => {
     canvas.clearBothCanvases( )

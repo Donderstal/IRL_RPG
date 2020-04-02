@@ -31,27 +31,20 @@ const handleActionButton = (  ) => {
                     )
                 }
                 if ( button.text.includes("2") ) {
-                    console.log(button)
-                    console.log("2!")                    
+      
                 }
                 if ( button.text.includes("3") ) {
-                    console.log(button)
-                    console.log("3!")                    
+              
                 }
                 if ( button.text.includes("4") ) {
-                    console.log(button)
-                    console.log("4!")                    
+            
                 }
                 if ( button.text.includes("5") ) {
-                    console.log(button)
-                    console.log("5!")                    
+                
                 }
             }
         })
     }
-    /* else {
-        state.battleState.battlePhase += 1
-    } */
 }
 
 module.exports = {
