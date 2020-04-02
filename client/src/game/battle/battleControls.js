@@ -1,6 +1,7 @@
 const res           = require('../../resources/resourceStrings')
 const battleText    = state.battleState.textContainer
 const state         = require('../../game-data/state')
+const globals       = require('../../game-data/globals')
 const changeMode        = require('../../game-data/changeMode')
 
 const handleBattleKeyPress = ( event ) => {
@@ -20,7 +21,7 @@ const handleBattleKeyPress = ( event ) => {
 }
 
 const handleActionButton = (  ) => {
-    if ( battlePhase.playerTurn ) {
+    if ( state.battleState.player.hasTurn && state.battleState.battlePhase == globals['PHASE_SELECT_MOVE'] ) {
         state.battleState.player.sprite.buttonSprites.forEach( (button) => {
             if ( button.active ) {
                 if ( button.text.includes("1") ) {
@@ -48,9 +49,9 @@ const handleActionButton = (  ) => {
             }
         })
     }
-    else {
-        
-    }
+    /* else {
+        state.battleState.battlePhase += 1
+    } */
 }
 
 module.exports = {

@@ -37,4 +37,12 @@ module.exports = {
 
     // Length of some animations in milliseconds
     BATTLE_INTRO_ANIM_MS : 2100,
+
+    //battle phases
+    PHASE_BEGIN_BATTLE  : 0,
+    PHASE_SELECT_MOVE   : 1,
+    PHASE_DO_MOVE       : 2,
+    PHASE_STAT_CHECK    : 3,
+    PHASE_CHANGE_TURN   : 4,
+    PHASE_END_BATTLE    : 5
 }
