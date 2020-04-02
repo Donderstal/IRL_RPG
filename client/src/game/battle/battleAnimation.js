@@ -1,5 +1,4 @@
 const state     = require('../../game-data/state')
-const NPCs      = require('../map/map-ui/NPCs')
 const globals       = require('../../game-data/globals')
 const canvas    = require('../../helpers/canvasHelpers')
 
@@ -18,13 +17,13 @@ const handleBattleAnimations = ( ) => {
 
     if ( playerSprite != undefined ) {
         if ( !playerSprite.moving ) {
-            NPCs.handleStaticNPCAnimation( state.battleState.player )            
+            playerSprite.handleStaticAnimation( )       
         }
         playerSprite.drawSprite()         
     }
     if ( opponentSprite != undefined ) {
         if ( !opponentSprite.moving ) {
-            NPCs.handleStaticNPCAnimation( state.battleState.opponent )
+            opponentSprite.handleStaticAnimation( )
         }
         opponentSprite.drawSprite() 
     }

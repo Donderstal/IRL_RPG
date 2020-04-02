@@ -49,6 +49,22 @@ class BattleSprite extends I_Sprite {
         }    
     }
 
+    handleStaticAnimation( ) {
+        this.frameCount++
+        if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
+        
+            this.frameCount = 0;
+            if ( this.animIterator === 0 ) {
+                this.animIterator = 1
+            }
+            else if ( this.animIterator === 1 ) {
+                this.animIterator = 0
+            }
+    
+        }
+           
+    }
+
     moveSpriteToPlace( destinationX ) {
         this.moving = true;
         this.destinationX = destinationX;
