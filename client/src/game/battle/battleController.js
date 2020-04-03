@@ -6,6 +6,7 @@ const initChar      = require('./../character/character-init/initCharacter')
 const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
 const text          = require('./battle-ui/battleText')
 const canvas        = require('./../../helpers/canvasHelpers')
+const BattleStats      = require('./battle-ui/battleStats').BattleStats
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
@@ -53,9 +54,11 @@ const initBattleMapAndSprites = ( ) => {
 
         player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight_L.png', 0, true )
         player.character = state.playerCharacter.stats
+        player.statsBar = new BattleStats( player.character, true )
 
         opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 1 )
         opponent.character = initChar.getCharWithClass( 'Neckbeard', 'N00bpwner' )
+        opponent.statsBar = new BattleStats( opponent.character, false )
 
         decideWhoStarts( player, opponent )
     }, 2400)

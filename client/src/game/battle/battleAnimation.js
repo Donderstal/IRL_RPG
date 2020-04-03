@@ -1,23 +1,26 @@
-const state     = require('../../game-data/state')
+const state         = require('../../game-data/state')
 const res           = require('../../resources/resourceStrings')
 const globals       = require('../../game-data/globals')
-const canvas    = require('../../helpers/canvasHelpers')
+const canvas        = require('../../helpers/canvasHelpers')
 
 const handleBattleAnimations = ( ) => {
     canvas.clearEntireCanvas("FRONT")
 
-    let playerSprite = state.battleState.player.sprite
-    let opponentSprite = state.battleState.opponent.sprite
-
+    let playerSprite        = state.battleState.player.sprite
+    let opponentSprite      = state.battleState.opponent.sprite
+    let playerStatBar       = state.battleState.player.statsBar
+    let opponentStatsBar    = state.battleState.opponent.statsBar
     
     const battleText    = state.battleState.textContainer
     const debugText = state.battleState.debugText
 
     if ( playerSprite != undefined ) {
-        playerSprite.drawSprite()         
+        playerSprite.drawSprite()       
+        playerStatBar.drawStats()
     }
     if ( opponentSprite != undefined ) {
         opponentSprite.drawSprite() 
+        opponentStatsBar.drawStats()
     }
     if ( battleText != undefined ) {
         battleText.drawContainer()    
