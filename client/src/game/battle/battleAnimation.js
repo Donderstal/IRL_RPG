@@ -40,7 +40,8 @@ const handleBattleAnimations = ( ) => {
     switch ( state.battleState.battlePhase ) {
         case globals['PHASE_BEGIN_BATTLE'] :
             let name = ( playerHasTurn ) ? playerCharacter.name : opponentCharacter.name   
-            battleText.setText( name + " begins!" )
+            /* battleText.setText( name + " begins!" ) */
+            battleText.setText( "NECKBEARDS FIGHT!" )
             break;
         case globals['PHASE_SELECT_MOVE'] :
             if ( !playerHasTurn ) {
