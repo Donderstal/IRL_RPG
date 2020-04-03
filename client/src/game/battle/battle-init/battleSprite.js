@@ -66,9 +66,7 @@ class BattleSprite extends I_Sprite {
             else if ( this.animIterator === 1 ) {
                 this.animIterator = 0
             }
-    
-        }
-           
+        }    
     }
 
     moveSpriteToPlace( destinationX ) {
@@ -132,36 +130,33 @@ class BattleSprite extends I_Sprite {
 
     initBattleUI( ) {
 
-        let topCircleY = this.y - globals.GRID_BLOCK_PX
-        let bottomCircleY = this.bottom + globals.GRID_BLOCK_PX
-
         this.buttons.topCircle = { 
-            'x': this.x - this.width, 
-            'y': topCircleY, 
+            'x': this.x - ( this.width * 0.125 ), 
+            'y': this.y, 
             'text' : res.BATTLE_PUNCH_BUTTON, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
             'hint': res.BATTLE_PUNCH_HINT
         }
         this.buttons.topMiddleCircle = { 
-            'x': this.x - ( this.width * 1.5 ),
-            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.25 ), 
+            'x': this.x - ( this.width * 0.25 ),
+            'y': this.y + ( this.height * 0.25 ), 
             'text' : res.BATTLE_MOVES_BUTTON, 'toolTip': res.BATTLE_MOVES_TOOLTIP,
             'hint': res.BATTLE_MOVES_HINT
         }
         this.buttons.middleCircle = { 
-            'x': this.x - ( this.width * 1.75 ), 
-            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.5 ), 
+            'x': this.x - ( this.width * 0.375 ),
+            'y': this.y + ( this.height * 0.5 ), 
             'text' : res.BATTLE_DEFEND_BUTTON, 'toolTip': res.BATTLE_DEFEND_TOOLTIP,
             'hint': res.BATTLE_DEFEND_HINT
         }
         this.buttons.bottomMiddleCircle = { 
-            'x': this.x - ( this.width * 1.5 ), 
-            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.75 ), 
+            'x': this.x - ( this.width * 0.25 ),
+            'y': this.y + ( this.height * 0.75 ), 
             'text' : res.BATTLE_ITEM_BUTTON, 'toolTip': res.BATTLE_ITEM_TOOLTIP,
             'hint': res.BATTLE_ITEM_HINT
         }
         this.buttons.bottomCircle = { 
-            'x': this.x - this.width,
-            'y': bottomCircleY, 
+            'x': this.x - ( this.width * 0.125 ),
+            'y': this.y + this.height, 
             'text' : res.BATTLE_FLEE_BUTTON, 'toolTip': res.BATTLE_FLEE_TOOLTIP,
             'hint': res.BATTLE_FLEE_HINT
         }
@@ -174,7 +169,7 @@ class BattleSprite extends I_Sprite {
                     this.buttons[key].hint
                 ) 
             ) 
-        })
+        } )
     }
 }
 
