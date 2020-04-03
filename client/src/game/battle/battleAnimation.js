@@ -17,15 +17,15 @@ const handleBattleAnimations = ( ) => {
     let debugText = state.battleState.debugText
 
     if ( playerSprite != undefined ) {
-        if ( !playerSprite.moving ) {
+        /* if ( !playerSprite.moving ) {
             playerSprite.handleStaticAnimation( )       
-        }
+        } */
         playerSprite.drawSprite()         
     }
     if ( opponentSprite != undefined ) {
-        if ( !opponentSprite.moving ) {
+        /* if ( !opponentSprite.moving ) {
             opponentSprite.handleStaticAnimation( )
-        }
+        } */
         opponentSprite.drawSprite() 
     }
 

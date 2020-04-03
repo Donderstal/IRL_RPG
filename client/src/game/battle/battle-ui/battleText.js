@@ -19,13 +19,13 @@ class TextContainer {
             this.width  = globals.CANVAS_WIDTH / 2
             this.height = globals.CANVAS_HEIGHT / 6
             this.x      = globals.CANVAS_WIDTH / 4
-            this.y      = ( globals.CANVAS_HEIGHT / 3 ) * 2            
+            this.y      = globals.CANVAS_HEIGHT * .80            
         }
         else {
             this.width  = globals.CANVAS_WIDTH / 3
             this.height = globals.CANVAS_HEIGHT / 12
             this.x      = globals.CANVAS_WIDTH / 3
-            this.y      = 0           
+            this.y      = globals.CANVAS_HEIGHT * .05           
         }
 
 

@@ -37,10 +37,12 @@ class BattleSprite extends I_Sprite {
             this.handleSpriteMovement()
         }
 
+        let tilesheetX = ( this.isPlayer ) ? this.animLoop[this.direction] * 270 : this.animLoop[this.direction] * 270
+
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.animLoop[this.animIterator] * 270, 
+            tilesheetX, 
             0, 
             270, 270,
             this.x, this.y, this.width, this.height
@@ -131,31 +133,31 @@ class BattleSprite extends I_Sprite {
     initBattleUI( ) {
 
         this.buttons.topCircle = { 
-            'x': this.x - ( this.width * 0.125 ), 
+            'x': this.x - ( this.width * 0.25 ), 
             'y': this.y, 
             'text' : res.BATTLE_PUNCH_BUTTON, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
             'hint': res.BATTLE_PUNCH_HINT
         }
         this.buttons.topMiddleCircle = { 
-            'x': this.x - ( this.width * 0.25 ),
+            'x': this.x - ( this.width * 0.375 ),
             'y': this.y + ( this.height * 0.25 ), 
             'text' : res.BATTLE_MOVES_BUTTON, 'toolTip': res.BATTLE_MOVES_TOOLTIP,
             'hint': res.BATTLE_MOVES_HINT
         }
         this.buttons.middleCircle = { 
-            'x': this.x - ( this.width * 0.375 ),
+            'x': this.x - ( this.width * 0.5 ),
             'y': this.y + ( this.height * 0.5 ), 
             'text' : res.BATTLE_DEFEND_BUTTON, 'toolTip': res.BATTLE_DEFEND_TOOLTIP,
             'hint': res.BATTLE_DEFEND_HINT
         }
         this.buttons.bottomMiddleCircle = { 
-            'x': this.x - ( this.width * 0.25 ),
+            'x': this.x - ( this.width * 0.375 ),
             'y': this.y + ( this.height * 0.75 ), 
             'text' : res.BATTLE_ITEM_BUTTON, 'toolTip': res.BATTLE_ITEM_TOOLTIP,
             'hint': res.BATTLE_ITEM_HINT
         }
         this.buttons.bottomCircle = { 
-            'x': this.x - ( this.width * 0.125 ),
+            'x': this.x - ( this.width * 0.25 ),
             'y': this.y + this.height, 
             'text' : res.BATTLE_FLEE_BUTTON, 'toolTip': res.BATTLE_FLEE_TOOLTIP,
             'hint': res.BATTLE_FLEE_HINT

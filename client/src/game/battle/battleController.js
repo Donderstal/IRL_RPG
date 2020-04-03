@@ -51,10 +51,10 @@ const initBattleMapAndSprites = ( ) => {
             'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
         }
 
-        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight_L.png', 1, true )
+        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight_L.png', 0, true )
         player.character = state.playerCharacter.stats
 
-        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 2 )
+        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 1 )
         opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
 
         decideWhoStarts( player, opponent )
