@@ -26,6 +26,11 @@ If refresh the game while working on it, run ```npm run autobuild``` in the clie
 
 ### LOG
 
+#### APR 3, 2020
+* Battle phase system is now functioning
+* Added battle map, battle sprites and adjusted code to them
+* Working on displaying text in container dynamically per phase
+
 #### APR 2, 2020
 * Cleaning up some leftover crud and console logs
 * Finally cleared all circular dependencies 
