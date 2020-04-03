@@ -19,6 +19,8 @@ class BattleSprite extends I_Sprite {
         this.initialX       = this.x;
         this.destinationX   = null;
         this.initialDir     = this.direction;
+        this.showUI         = false;
+        this.hasActiveButton = false;
 
         this.moving         = false;
         this.returning      = false;
@@ -26,6 +28,10 @@ class BattleSprite extends I_Sprite {
         if ( this.isPlayer ) {
             this.initBattleUI( )            
         }
+    }
+    
+    activateUI( activate ) {
+        this.showUI = activate
     }
     
     drawSprite( ) {
@@ -50,7 +56,7 @@ class BattleSprite extends I_Sprite {
 
         this.updateSpriteBorders( )
 
-        if ( this.isPlayer && !this.moving ) {
+        if ( this.showUI ) {
             this.buttonSprites.forEach((e) => {
                 e.drawButton( )
             })            
@@ -120,14 +126,18 @@ class BattleSprite extends I_Sprite {
     }
 
     setButtonAsActive( buttonKey ) {
-        let index = parseInt( buttonKey ) - 1
-        this.buttonSprites.forEach( (e) => {
-            e.setActive( true )
-        })
+        this.hasActiveButton = true;
 
+        let index = parseInt( buttonKey ) - 1
         let spriteAtIndex = this.buttonSprites[index]
         battleText.setText( spriteAtIndex.hint )
-        spriteAtIndex.setActive( )
+        spriteAtIndex.setActive( true )
+
+        this.buttonSprites.forEach( (e) => {
+            if ( e != spriteAtIndex ) {
+                e.setActive( false )                
+            }
+        })
     }
 
     initBattleUI( ) {

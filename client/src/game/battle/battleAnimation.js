@@ -1,6 +1,9 @@
 const state     = require('../../game-data/state')
+const res           = require('../../resources/resourceStrings')
 const globals       = require('../../game-data/globals')
 const canvas    = require('../../helpers/canvasHelpers')
+
+const battleText    = state.battleState.textContainer
 
 const handleBattleAnimations = ( ) => {
     canvas.clearEntireCanvas("FRONT")
@@ -37,27 +40,35 @@ const handleBattleAnimations = ( ) => {
         debugText.drawContainer()    
     }
 
-    switch ( state.battleState.battlePhase ) {
-        case globals['PHASE_BEGIN_BATTLE'] :
+    const phase = state.battleState.battlePhase
+
+    switch ( phase ) {
+        case globals['PHASE_BEGIN_TURN'] :
             let name = ( playerHasTurn ) ? playerCharacter.name : opponentCharacter.name   
-            /* battleText.setText( name + " begins!" ) */
-            battleText.setText( "NECKBEARDS FIGHT!" )
+            battleText.setText( name + "'s turn begins!" )
             break;
         case globals['PHASE_SELECT_MOVE'] :
             if ( !playerHasTurn ) {
                 battleText.setText( opponentCharacter.name + " is thinking..." )
             }
-            else if ( playerHasTurn ) {
+            else if ( playerHasTurn && !playerSprite.hasActiveButton ) {
                 battleText.setText( "Choose your move with one of the number keys!" )
+                state.battleState.player.sprite.activateUI( true )
             }
             break;
         case globals['PHASE_DO_MOVE'] :
+            if ( !playerHasTurn ) {
+                battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: opponentCharacter.name, move: "punch" } ) )
+                state.battleState.moveResultText = playerCharacter.name + " takes 5 damage"
+            }
+            else {
+                playerSprite.hasActiveButton = false;
+                battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: playerCharacter.name, move: "punch" } ) )
+                state.battleState.moveResultText = opponentCharacter.name + " takes 5 damage"
+            }
             break;
         case globals['PHASE_STAT_CHECK'] :
-            break;
-        case globals['PHASE_CHANGE_TURN'] :
-            break;
-        case globals['PHASE_END_BATTLE'] :
+            battleText.setText( state.battleState.moveResultText )
             break;
     }
 

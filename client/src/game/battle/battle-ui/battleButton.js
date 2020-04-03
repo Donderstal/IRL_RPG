@@ -32,16 +32,14 @@ class battleButton {
         }
     }
 
-    setActive( setToActive = null ) {
-        this.active = ( setToActive == null ) ? this.active : setToActive
-
-        if ( this.active == true ) {
-            this.active = false;
-            this.textColor  = "black"
-        }
-        else {
+    setActive( setToActive = false ) {
+        if ( setToActive ) {
             this.active = true;
             this.textColor  = "#F6AA1C"
+        }
+        else {
+            this.active = false;
+            this.textColor  = "black"
         }
     }
 }

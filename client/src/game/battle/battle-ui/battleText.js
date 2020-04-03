@@ -45,12 +45,10 @@ class TextContainer {
         else {
             var turn = ( state.battleState.player.hasTurn ) ? "Player" : "Computer"
             var phases = {
-                PHASE_BEGIN_BATTLE  : 0,
+                PHASE_BEGIN_TURN    : 0,
                 PHASE_SELECT_MOVE   : 1,
                 PHASE_DO_MOVE       : 2,
-                PHASE_STAT_CHECK    : 3,
-                PHASE_CHANGE_TURN   : 4,
-                PHASE_END_BATTLE    : 5
+                PHASE_STAT_CHECK    : 3
             }
             var phase = Object.keys(phases).find(key => phases[key] === state.battleState.battlePhase)
             

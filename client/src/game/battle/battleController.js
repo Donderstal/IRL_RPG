@@ -55,7 +55,7 @@ const initBattleMapAndSprites = ( ) => {
         player.character = state.playerCharacter.stats
 
         opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 1 )
-        opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
+        opponent.character = initChar.getCharWithClass( 'Neckbeard', 'N00bpwner' )
 
         decideWhoStarts( player, opponent )
     }, 2400)
@@ -72,7 +72,7 @@ const decideWhoStarts = ( player, opponent ) => {
         ( Math.floor( Math.random( ) ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
     }
 
-    state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']
+    state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
 }
 
 const stopBattle = ( ) => {
