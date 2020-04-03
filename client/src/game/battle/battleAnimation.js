@@ -14,6 +14,7 @@ const handleBattleAnimations = ( ) => {
     let opponentCharacter = state.battleState.opponent.character;
 
     let battleText = state.battleState.textContainer
+    let debugText = state.battleState.debugText
 
     if ( playerSprite != undefined ) {
         if ( !playerSprite.moving ) {
@@ -30,6 +31,10 @@ const handleBattleAnimations = ( ) => {
 
     if ( battleText != undefined ) {
         battleText.drawContainer()    
+    }
+
+    if ( debugText != undefined ) {
+        debugText.drawContainer()    
     }
 
     switch ( state.battleState.battlePhase ) {

@@ -33,6 +33,7 @@ const initBattleMapAndSprites = ( battleMapJson ) => {
 
     
     setTimeout( ( ) => {
+        text.initTextContainer( true )
         text.initTextContainer()
     }, 2000) 
 
