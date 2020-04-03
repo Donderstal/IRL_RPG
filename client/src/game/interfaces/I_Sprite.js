@@ -10,8 +10,8 @@ class Sprite {
             this.height  = globals.STRD_SPRITE_HEIGHT;            
         }
         else if ( spriteSize == "LARG" ) {
-            this.width   = globals.STRD_SPRITE_WIDTH * 2;
-            this.height  = globals.STRD_SPRITE_HEIGHT * 2;   
+            this.width   = globals.BATTLE_SPRITE_WIDTH;
+            this.height  = globals.BATTLE_SPRITE_HEIGHT;   
         }
 
         this.left    = 0

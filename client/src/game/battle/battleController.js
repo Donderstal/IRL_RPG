@@ -5,8 +5,7 @@ const Sound         = require('./../interfaces/I_Sound').Sound
 const initChar      = require('./../character/character-init/initCharacter')
 const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
 const text          = require('./battle-ui/battleText')
-const drawGrid      = require('./../map/map-init/drawGrid')
-const utility       = require('./../../helpers/utilFunctions')
+const canvas        = require('./../../helpers/canvasHelpers')
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
@@ -14,34 +13,49 @@ const startBattle = (  ) => {
 
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
+    state.battleState.battleMusic = new Sound( "Rydeen.mp3" )
+    state.battleState.battleMusic.play()
 
     init.getBattleStartScreen( )
-
-    utility.fetchJSONWithCallback( '/static/maps/battle-maps/battle_map1.json', initBattleMapAndSprites )
+    initBattleMapAndSprites()
 }
 
-const initBattleMapAndSprites = ( battleMapJson ) => {
-    let battleMap = {};
-    battleMap.mapData = battleMapJson;
+const initBattleMapAndSprites = ( ) => {
+    let battleMap;
 
     let player = state.battleState.player;
     let opponent = state.battleState.opponent;
 
     setTimeout( ( ) => {
-        drawGrid.generateMap( battleMap )
+        battleMap = new Image();    
+        battleMap.src = '/static/battlemaps/city_fight_level.png'
+        battleMap.onload = ( ) => {    
+            canvas.drawFromImageToCanvas( "BACK", battleMap, 0, 0, 1296, 846, 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT )
+        }
     }, 800)
 
     
     setTimeout( ( ) => {
+        text.initTextContainer( true )
         text.initTextContainer()
     }, 2000) 
 
     setTimeout( ( ) => {
-        player.sprite = new BattleSprite( { 'row': 5, 'col': 19 }, '/static/sprites/neckbeard.png', 1, true )
+        let playerXy = {
+            'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+            'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+        }
+
+        let opponentXy = {
+            'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+            'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+        }
+
+        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight_L.png', 0, true )
         player.character = state.playerCharacter.stats
 
-        opponent.sprite = new BattleSprite( { 'row': 5, 'col': 5 }, '/static/sprites/influencer.png', 2 )
-        opponent.character = initChar.getCharWithClass( 'Influencer', 'Pauline' )
+        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 1 )
+        opponent.character = initChar.getCharWithClass( 'Neckbeard', 'N00bpwner' )
 
         decideWhoStarts( player, opponent )
     }, 2400)
@@ -58,11 +72,17 @@ const decideWhoStarts = ( player, opponent ) => {
         ( Math.floor( Math.random( ) ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
     }
 
-    state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']
+    state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
 }
 
 const stopBattle = ( ) => {
+    state.battleState.battleMusic.stop()
     init.getBattleStopScreen()
+    state.battleState = {
+        player  : { hasTurn : false },
+        opponent   : { hasTurn : false },
+        battlePhase : null
+    }
 }
 
 module.exports = {

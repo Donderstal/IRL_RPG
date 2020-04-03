@@ -18,7 +18,7 @@ class battleButton {
         canvas.setFont( "LARGE" )
         this.textX      = x - ( this.ctx.measureText(buttonText).width * .5 ),
         this.textY      = y + ( globals.SMALL_FONT_SIZE * .75 )
-        this.toolTipX   = x + ( globals.GRID_BLOCK_PX * .75 )
+        this.toolTipX   = x - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(toolTipText).width )
         this.toolTipY   = y + ( globals.SMALL_FONT_SIZE * .5 )
 
         this.drawButton( )
@@ -32,16 +32,14 @@ class battleButton {
         }
     }
 
-    setActive( setToActive = null ) {
-        this.active = ( setToActive == null ) ? this.active : setToActive
-
-        if ( this.active == true ) {
-            this.active = false;
-            this.textColor  = "black"
-        }
-        else {
+    setActive( setToActive = false ) {
+        if ( setToActive ) {
             this.active = true;
             this.textColor  = "#F6AA1C"
+        }
+        else {
+            this.active = false;
+            this.textColor  = "black"
         }
     }
 }

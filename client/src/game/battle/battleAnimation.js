@@ -1,5 +1,5 @@
 const state     = require('../../game-data/state')
-const NPCs      = require('../map/map-ui/NPCs')
+const res           = require('../../resources/resourceStrings')
 const globals       = require('../../game-data/globals')
 const canvas    = require('../../helpers/canvasHelpers')
 
@@ -9,53 +9,64 @@ const handleBattleAnimations = ( ) => {
     let playerSprite = state.battleState.player.sprite
     let opponentSprite = state.battleState.opponent.sprite
 
+    
+    const battleText    = state.battleState.textContainer
+    const debugText = state.battleState.debugText
+
+    if ( playerSprite != undefined ) {
+        playerSprite.drawSprite()         
+    }
+    if ( opponentSprite != undefined ) {
+        opponentSprite.drawSprite() 
+    }
+    if ( battleText != undefined ) {
+        battleText.drawContainer()    
+    }
+    if ( debugText != undefined ) {
+        debugText.drawContainer()    
+    }
+
+    handlePhase( battleText, playerSprite )
+
+}
+
+const handlePhase = ( battleText, playerSprite ) => {
+    const phase = state.battleState.battlePhase
     let playerHasTurn = state.battleState.player.hasTurn
 
     let playerCharacter = state.battleState.player.character;
     let opponentCharacter = state.battleState.opponent.character;
 
-    let battleText = state.battleState.textContainer
-
-    if ( playerSprite != undefined ) {
-        if ( !playerSprite.moving ) {
-            NPCs.handleStaticNPCAnimation( state.battleState.player )            
-        }
-        playerSprite.drawSprite()         
-    }
-    if ( opponentSprite != undefined ) {
-        if ( !opponentSprite.moving ) {
-            NPCs.handleStaticNPCAnimation( state.battleState.opponent )
-        }
-        opponentSprite.drawSprite() 
-    }
-
-    if ( battleText != undefined ) {
-        battleText.drawContainer()    
-    }
-
-    switch ( state.battleState.battlePhase ) {
-        case globals['PHASE_BEGIN_BATTLE'] :
+    switch ( phase ) {
+        case globals['PHASE_BEGIN_TURN'] :
             let name = ( playerHasTurn ) ? playerCharacter.name : opponentCharacter.name   
-            battleText.setText( name + " begins!" )
+            battleText.setText( name + "'s turn begins!" )
             break;
         case globals['PHASE_SELECT_MOVE'] :
             if ( !playerHasTurn ) {
                 battleText.setText( opponentCharacter.name + " is thinking..." )
             }
-            else if ( playerHasTurn ) {
+            else if ( playerHasTurn && !playerSprite.hasActiveButton ) {
                 battleText.setText( "Choose your move with one of the number keys!" )
+                state.battleState.player.sprite.activateUI( true )
             }
             break;
         case globals['PHASE_DO_MOVE'] :
+            if ( !playerHasTurn ) {
+                battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: opponentCharacter.name, move: "punch" } ) )
+                state.battleState.moveResultText = playerCharacter.name + " takes 5 damage"
+            }
+            else {
+                battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: playerCharacter.name, move: "punch" } ) )
+                state.battleState.moveResultText = opponentCharacter.name + " takes 5 damage"
+                state.battleState.player.sprite.hasActiveButton = false;
+                state.battleState.player.sprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
+            }
             break;
         case globals['PHASE_STAT_CHECK'] :
-            break;
-        case globals['PHASE_CHANGE_TURN'] :
-            break;
-        case globals['PHASE_END_BATTLE'] :
+            battleText.setText( state.battleState.moveResultText )
             break;
     }
-
 }
 
 module.exports = {

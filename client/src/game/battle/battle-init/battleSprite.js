@@ -2,17 +2,14 @@ const globals = require('../../../game-data/globals')
 const battleButton = require('../battle-ui/battleButton').battleButton
 const res   = require('../../../resources/resourceStrings')
 const state = require('../../../game-data/state')
+const canvasHelpers = require('../../../helpers/canvasHelpers')
 let battleText;
 
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {
-        let typeOfStart = "CELL"
-        super ( start, spriteSheetSrc, typeOfStart, "LARG", spriteDirection ) 
-               
-        this.width          = globals.STRD_SPRITE_WIDTH  * 2;
-        this.height         = globals.STRD_SPRITE_HEIGHT * 2;
+        super ( start, spriteSheetSrc, "XY", "LARG", spriteDirection ) 
 
         this.isPlayer       = isPlayer
         this.buttons        = {}
@@ -22,6 +19,8 @@ class BattleSprite extends I_Sprite {
         this.initialX       = this.x;
         this.destinationX   = null;
         this.initialDir     = this.direction;
+        this.showUI         = false;
+        this.hasActiveButton= false;
 
         this.moving         = false;
         this.returning      = false;
@@ -29,6 +28,10 @@ class BattleSprite extends I_Sprite {
         if ( this.isPlayer ) {
             this.initBattleUI( )            
         }
+    }
+    
+    activateUI( activate ) {
+        this.showUI = activate
     }
     
     drawSprite( ) {
@@ -40,12 +43,37 @@ class BattleSprite extends I_Sprite {
             this.handleSpriteMovement()
         }
 
-        super.drawSprite( )
+        let tilesheetX = ( this.isPlayer ) ? this.animLoop[this.direction] * 270 : this.animLoop[this.direction] * 270
 
-        if ( this.isPlayer && !this.moving ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT",
+            this.sheet,
+            tilesheetX, 
+            0, 
+            270, 270,
+            this.x, this.y, this.width, this.height
+        )
+
+        this.updateSpriteBorders( )
+
+        if ( this.showUI ) {
             this.buttonSprites.forEach((e) => {
                 e.drawButton( )
             })            
+        }    
+    }
+
+    handleStaticAnimation( ) {
+        this.frameCount++
+        if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
+        
+            this.frameCount = 0;
+            if ( this.animIterator === 0 ) {
+                this.animIterator = 1
+            }
+            else if ( this.animIterator === 1 ) {
+                this.animIterator = 0
+            }
         }    
     }
 
@@ -98,48 +126,50 @@ class BattleSprite extends I_Sprite {
     }
 
     setButtonAsActive( buttonKey ) {
-        let index = parseInt( buttonKey ) - 1
-        this.buttonSprites.forEach( (e) => {
-            e.setActive( true )
-        })
+        this.hasActiveButton = true;
 
+        let index = parseInt( buttonKey ) - 1
         let spriteAtIndex = this.buttonSprites[index]
+        
         battleText.setText( spriteAtIndex.hint )
-        spriteAtIndex.setActive( )
+        spriteAtIndex.setActive( true )
+
+        this.buttonSprites.forEach( (e) => {
+            if ( e != spriteAtIndex ) {
+                e.setActive( false )                
+            }
+        })
     }
 
     initBattleUI( ) {
 
-        let topCircleY = this.y - globals.GRID_BLOCK_PX
-        let bottomCircleY = this.bottom + globals.GRID_BLOCK_PX
-
         this.buttons.topCircle = { 
-            'x': this.x + this.width, 
-            'y': topCircleY, 
+            'x': this.x - ( this.width * 0.25 ), 
+            'y': this.y, 
             'text' : res.BATTLE_PUNCH_BUTTON, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
             'hint': res.BATTLE_PUNCH_HINT
         }
         this.buttons.topMiddleCircle = { 
-            'x': this.x + ( this.width * 1.5 ),
-            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.25 ), 
+            'x': this.x - ( this.width * 0.375 ),
+            'y': this.y + ( this.height * 0.25 ), 
             'text' : res.BATTLE_MOVES_BUTTON, 'toolTip': res.BATTLE_MOVES_TOOLTIP,
             'hint': res.BATTLE_MOVES_HINT
         }
         this.buttons.middleCircle = { 
-            'x': this.x + ( this.width * 1.75 ), 
-            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.5 ), 
+            'x': this.x - ( this.width * 0.5 ),
+            'y': this.y + ( this.height * 0.5 ), 
             'text' : res.BATTLE_DEFEND_BUTTON, 'toolTip': res.BATTLE_DEFEND_TOOLTIP,
             'hint': res.BATTLE_DEFEND_HINT
         }
         this.buttons.bottomMiddleCircle = { 
-            'x': this.x + ( this.width * 1.5 ), 
-            'y': topCircleY + ( ( bottomCircleY - topCircleY ) * 0.75 ), 
+            'x': this.x - ( this.width * 0.375 ),
+            'y': this.y + ( this.height * 0.75 ), 
             'text' : res.BATTLE_ITEM_BUTTON, 'toolTip': res.BATTLE_ITEM_TOOLTIP,
             'hint': res.BATTLE_ITEM_HINT
         }
         this.buttons.bottomCircle = { 
-            'x': this.x + this.width,
-            'y': bottomCircleY, 
+            'x': this.x - ( this.width * 0.25 ),
+            'y': this.y + this.height, 
             'text' : res.BATTLE_FLEE_BUTTON, 'toolTip': res.BATTLE_FLEE_TOOLTIP,
             'hint': res.BATTLE_FLEE_HINT
         }
@@ -152,7 +182,7 @@ class BattleSprite extends I_Sprite {
                     this.buttons[key].hint
                 ) 
             ) 
-        })
+        } )
     }
 }
 

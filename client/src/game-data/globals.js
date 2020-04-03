@@ -26,6 +26,10 @@ module.exports = {
     STRD_SPRITE_WIDTH : 54,
     STRD_SPRITE_HEIGHT : 81,
 
+    //
+    BATTLE_SPRITE_WIDTH : 180,
+    BATTLE_SPRITE_HEIGHT : 270,
+
     // speech bubbles 
     MIN_BUBBLE_WIDTH: 250,
     MAX_BUBBLE_WIDTH: 500,
@@ -39,10 +43,8 @@ module.exports = {
     BATTLE_INTRO_ANIM_MS : 2100,
 
     //battle phases
-    PHASE_BEGIN_BATTLE  : 0,
+    PHASE_BEGIN_TURN    : 0,
     PHASE_SELECT_MOVE   : 1,
     PHASE_DO_MOVE       : 2,
-    PHASE_STAT_CHECK    : 3,
-    PHASE_CHANGE_TURN   : 4,
-    PHASE_END_BATTLE    : 5
+    PHASE_STAT_CHECK    : 3
 }
