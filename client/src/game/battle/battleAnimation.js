@@ -57,9 +57,10 @@ const handlePhase = ( battleText, playerSprite ) => {
                 state.battleState.moveResultText = playerCharacter.name + " takes 5 damage"
             }
             else {
-                playerSprite.hasActiveButton = false;
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: playerCharacter.name, move: "punch" } ) )
                 state.battleState.moveResultText = opponentCharacter.name + " takes 5 damage"
+                state.battleState.player.sprite.hasActiveButton = false;
+                state.battleState.player.sprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
             }
             break;
         case globals['PHASE_STAT_CHECK'] :

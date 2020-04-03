@@ -3,10 +3,10 @@ const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
 const changeMode    = require('../../game-data/changeMode')
 
-const battleState   = state.battleState
-const battleText    = battleState.textContainer
-
 const handleBattleKeyPress = ( event ) => {
+    const battleState   = state.battleState
+    const battleText    = battleState.textContainer
+
     const keyIsNumberInMenu = event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5"
     const playerCanChooseMove = battleState.player.hasTurn && battleState.battlePhase == globals['PHASE_SELECT_MOVE']
 
@@ -17,7 +17,7 @@ const handleBattleKeyPress = ( event ) => {
         battleState.player.sprite.setButtonAsActive( event.key )
     }
     if ( event.key == "q" ) {
-        handleActionButton(  )
+        handleActionButton( playerCanChooseMove, battleState, battleText )
     }
 
     else {
@@ -25,16 +25,16 @@ const handleBattleKeyPress = ( event ) => {
     }
 }
 
-const handleActionButton = ( playerCanChooseMove ) => {
+const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
     if ( playerCanChooseMove ) {
-        handleBattleMenuClick( )
+        handleBattleMenuClick( battleState, battleText )
     }
     else {
-        passPhase( )
+        passPhase( battleState )
     }
 }
 
-const handleBattleMenuClick = ( ) => {
+const handleBattleMenuClick = ( battleState, battleText ) => {
     battleState.player.sprite.buttonSprites.forEach( (button) => {
         if ( button.active ) {
             if ( button.text.includes("1") ) {
@@ -59,24 +59,24 @@ const handleBattleMenuClick = ( ) => {
     } )
 }
 
-const passPhase = ( ) => {
-    let playerHasTurn = state.battleState.player.hasTurn
+const passPhase = ( battleState ) => {
+    let playerHasTurn = battleState.player.hasTurn
 
-    switch ( state.battleState.battlePhase ) {
+    switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_TURN'] :
-            state.battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
+            battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
             break;
         case globals['PHASE_SELECT_MOVE'] :
-            state.battleState.battlePhase = globals['PHASE_DO_MOVE'];
-            state.battleState.player.sprite.activateUI( false )
+            battleState.battlePhase = globals['PHASE_DO_MOVE'];
+            battleState.player.sprite.activateUI( false )
             break;
         case globals['PHASE_DO_MOVE'] :
-            state.battleState.battlePhase = globals['PHASE_STAT_CHECK'];
+            battleState.battlePhase = globals['PHASE_STAT_CHECK'];
             break;
         case globals['PHASE_STAT_CHECK'] :
-            state.battleState.player.hasTurn = ( playerHasTurn ) ? false : true
-            state.battleState.opponent.hasTurn = ( playerHasTurn ) ? false : true
-            state.battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
+            battleState.player.hasTurn = ( playerHasTurn ) ? false : true
+            battleState.opponent.hasTurn = ( playerHasTurn ) ? false : true
+            battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
             break;
     }
 }

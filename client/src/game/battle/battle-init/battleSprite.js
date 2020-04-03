@@ -20,7 +20,7 @@ class BattleSprite extends I_Sprite {
         this.destinationX   = null;
         this.initialDir     = this.direction;
         this.showUI         = false;
-        this.hasActiveButton = false;
+        this.hasActiveButton= false;
 
         this.moving         = false;
         this.returning      = false;
@@ -130,6 +130,7 @@ class BattleSprite extends I_Sprite {
 
         let index = parseInt( buttonKey ) - 1
         let spriteAtIndex = this.buttonSprites[index]
+        
         battleText.setText( spriteAtIndex.hint )
         spriteAtIndex.setActive( true )
 
