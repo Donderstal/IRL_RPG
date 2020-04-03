@@ -59,12 +59,14 @@ const handlePhase = ( battleText, playerSprite ) => {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: opponentCharacter.name, move: "punch" } ) )
                 if ( !state.battleState.opponent.sprite.moving ) {
                     state.battleState.opponent.sprite.animateAttack( "PUNCH" )
-                    state.battleState.moveResultText = playerCharacter.name + " takes 5 damage"                    
+                    playerSprite.animateHit( )
+                    opponentCharacter.moves.attack( opponentCharacter, playerCharacter )
+                    state.battleState.moveResultText = playerCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"                    
                 }
             }
             else {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: playerCharacter.name, move: "punch" } ) )
-                state.battleState.moveResultText = opponentCharacter.name + " takes 5 damage"
+                state.battleState.moveResultText = opponentCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"  
                 playerSprite.hasActiveButton = false;
                 playerSprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
             }

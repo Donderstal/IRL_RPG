@@ -14,7 +14,7 @@ const startBattle = (  ) => {
 
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
-    state.battleState.battleMusic = new Sound( "Rydeen.mp3" )
+    state.battleState.battleMusic = new Sound( "Rydeen.mp3", false, true )
     state.battleState.battleMusic.play()
 
     init.getBattleStartScreen( )

@@ -75,6 +75,34 @@ class BattleSprite extends I_Sprite {
         }
     }
 
+    animateHit( ) {
+        if ( !this.isPlayer ) {
+            this.direction += 1;
+            setTimeout(() => {
+                this.direction -= 1
+            }, 175 )        
+            setTimeout(() => {
+                this.direction += 1;
+            }, 350 )     
+            setTimeout(() => {
+                this.direction -= 1
+            }, 500 )             
+        }
+        else {
+            this.moving = true;
+            this.direction -= 1;
+            setTimeout(() => {
+                this.direction += 1
+            }, 175 )  
+            setTimeout(() => {
+                this.direction -= 1
+            }, 350 ) 
+            setTimeout(() => {
+                this.direction += 1
+            }, 500 )        
+        }
+    }
+
     setButtonAsActive( buttonKey ) {
         this.hasActiveButton = true;
 
