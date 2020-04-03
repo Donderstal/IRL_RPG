@@ -1,5 +1,7 @@
 const randomNameGen = require('../../../helpers/randomNameGen')
 const mathHelpers = require('../../../helpers/mathHelpers')
+const state = require('../../../game-data/state')
+const Sound = require('../../interfaces/I_Sound').Sound
 
 class characterBlueprint {
     constructor(name, gender) {
@@ -14,14 +16,20 @@ class characterBlueprint {
 
         this.receiveDamage = (damage) => {
             damage -= this.stats.Defense
-            damage = damage < 0 ? 0 : damage
-            this.stats.Health -= damage
+            if ( damage > 0 ) {
+                const sfx = new Sound( "misc/random6.wav", true )
+                sfx.play()
+                state.battleState.currentMoveDamage = damage
+                this.stats.Health -= damage                
+            }
         }
 
-        this.receiveManaDamage = (damage) => {
+        this.receiveSpDamage = (damage) => {
             damage -= this.stats.Defense
-            damage = damage < 0 ? 0 : damage
-            this.stats.Mana -= damage
+            if ( damage > 0 ) {
+                state.battleState.currentMoveDamage = damage
+                this.stats.Health -= damage                
+            }
         }
     
         this.changeStats = (stat, num) => {
