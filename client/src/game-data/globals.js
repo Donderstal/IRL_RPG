@@ -26,6 +26,10 @@ module.exports = {
     STRD_SPRITE_WIDTH : 54,
     STRD_SPRITE_HEIGHT : 81,
 
+    //
+    BATTLE_SPRITE_WIDTH : 180,
+    BATTLE_SPRITE_HEIGHT : 270,
+
     // speech bubbles 
     MIN_BUBBLE_WIDTH: 250,
     MAX_BUBBLE_WIDTH: 500,
