@@ -38,10 +38,13 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
     battleState.player.sprite.buttonSprites.forEach( (button) => {
         if ( button.active ) {
             if ( button.text.includes("1") ) {
-                battleState.player.sprite.moveSpriteToPlace( battleState.opponent.sprite.right )   
                 battleText.setText( 
                     res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
                 )
+                battleState.player.sprite.animateAttack( "PUNCH" )
+                setTimeout( ( ) => {
+                    passPhase( battleState )
+                }, 500 )
             }
             if ( button.text.includes("2") ) {
   

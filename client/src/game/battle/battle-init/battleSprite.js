@@ -21,9 +21,7 @@ class BattleSprite extends I_Sprite {
         this.initialDir     = this.direction;
         this.showUI         = false;
         this.hasActiveButton= false;
-
         this.moving         = false;
-        this.returning      = false;
 
         if ( this.isPlayer ) {
             this.initBattleUI( )            
@@ -39,17 +37,12 @@ class BattleSprite extends I_Sprite {
             battleText = state.battleState.textContainer
         }
 
-        if ( this.moving ) {
-            this.handleSpriteMovement()
-        }
-
-        let tilesheetX = ( this.isPlayer ) ? this.animLoop[this.direction] * 270 : this.animLoop[this.direction] * 270
+        let tilesheetX = this.animLoop[this.direction] * 270
 
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            tilesheetX, 
-            0, 
+            tilesheetX, 0, 
             270, 270,
             this.x, this.y, this.width, this.height
         )
@@ -63,65 +56,22 @@ class BattleSprite extends I_Sprite {
         }    
     }
 
-    handleStaticAnimation( ) {
-        this.frameCount++
-        if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
-        
-            this.frameCount = 0;
-            if ( this.animIterator === 0 ) {
-                this.animIterator = 1
+    animateAttack( type ) {
+        if ( type == "PUNCH" ) {
+            if ( this.isPlayer ) {
+                this.direction += 1;
+                setTimeout(() => {
+                    this.direction -= 1
+                }, 500 )                
             }
-            else if ( this.animIterator === 1 ) {
-                this.animIterator = 0
+            else {
+                this.moving = true;
+                this.direction -= 1;
+                setTimeout(() => {
+                    this.direction += 1
+                }, 500 )         
             }
-        }    
-    }
 
-    moveSpriteToPlace( destinationX ) {
-        this.moving = true;
-        this.destinationX = destinationX;
-    }
-
-    handleSpriteMovement() {
-        if ( this.x < ( this.destinationX - globals.MOVEMENT_SPEED ) && !this.returning ) {
-            this.returning = true     
-            const stringLiterals = { 
-                name: state.battleState.player.character.name,
-                target: state.battleState.opponent.character.name,
-                damage: "0.111"
-            }
-            battleText.setText( res.getBattleResString( 'BATTLE_MOVE_HIT', stringLiterals ) )
-        }
-        else if ( this.x > this.destinationX && !this.returning ) {
-            this.direction = globals['FACING_LEFT']
-        }
-        else if ( this.x > ( this.initialX - globals.MOVEMENT_SPEED ) && this.returning ) {
-            this.x = this.initialX;
-            this.direction = this.initialDir;
-            this.returning = false;
-            this.moving = false;
-        }
-        else if ( this.returning ) {
-            this.direction = globals['FACING_RIGHT']
-        }
-
-        this.frameCount++;
-   
-        if ( this.direction == globals['FACING_LEFT'] ) {
-            this.x -= globals.MOVEMENT_SPEED * 2  
-        }
-
-        if ( this.direction == globals['FACING_RIGHT'] ) {
-            this.x += globals.MOVEMENT_SPEED * 2   
-        }
-    
-        if ( this.frameCount >= globals.FRAME_LIMIT) {
-            this.frameCount = 0;
-            this.animIterator++;
-    
-            if (this.animIterator >= this.animLoop.length) {
-                this.animIterator = 0;
-            }
         }
     }
 
