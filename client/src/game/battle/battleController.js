@@ -78,6 +78,11 @@ const decideWhoStarts = ( player, opponent ) => {
 const stopBattle = ( ) => {
     state.battleState.battleMusic.stop()
     init.getBattleStopScreen()
+    state.battleState = {
+        player  : { hasTurn : false },
+        opponent   : { hasTurn : false },
+        battlePhase : null
+    }
 }
 
 module.exports = {
