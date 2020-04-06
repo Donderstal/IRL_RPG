@@ -23,11 +23,22 @@ const getBattleResString = ( template, literals = null ) => {
 }
 
 const getBattleShout = ( className, type ) => {
-    if ( className == "Neckbeard" && type == "FIGHT" ) {
-        return NECKBEARD_FIGHT_SHOUTS[Math.floor(Math.random() * NECKBEARD_FIGHT_SHOUTS.length)];
+    if ( className == "Neckbeard" ) {
+        if ( type == "FIGHT" ) {
+            return NECKBEARD_FIGHT_SHOUTS[Math.floor(Math.random() * NECKBEARD_FIGHT_SHOUTS.length)];
+        }
+        if ( type == "VICTORY" ) {
+            return NECKBEARD_VICTORY_SHOUTS[Math.floor(Math.random() * NECKBEARD_VICTORY_SHOUTS.length)];
+        }
     }
-    if ( className == "Neckbeard" && type == "VICTORY" ) {
-        return NECKBEARD_VICTORY_SHOUTS[Math.floor(Math.random() * NECKBEARD_VICTORY_SHOUTS.length)];
+
+    if ( className == "Influencer" ) {
+        if ( type == "FIGHT" ) {
+            return INFLUENCER_FIGHT_SHOUTS[Math.floor(Math.random() * INFLUENCER_FIGHT_SHOUTS.length)];
+        }
+        if ( type == "VICTORY" ) {
+            return INFLUENCER_VICTORY_SHOUTS[Math.floor(Math.random() * INFLUENCER_VICTORY_SHOUTS.length)];
+        }
     }
 }
 
@@ -48,6 +59,19 @@ const NECKBEARD_VICTORY_SHOUTS = [
     "Your paladin, m'lady",
     "That was way more exhausting than WoW...",
     "Can I go home now?"
+]
+
+const INFLUENCER_FIGHT_SHOUTS = [
+    "Creep!",
+    "#Damage",
+    "Stop following me!",
+    "Oh. My. God."
+]
+
+const INFLUENCER_VICTORY_SHOUTS = [
+    "I want to thank all my subscribers <3",
+    "#FitGirl #Hashtag",
+    "Felt cute might delete later idk"
 ]
 
 module.exports = {

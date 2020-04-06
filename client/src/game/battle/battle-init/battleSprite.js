@@ -41,7 +41,7 @@ class BattleSprite extends I_Sprite {
             battleText = state.battleState.textContainer
         }
 
-        if ( this.frameCount > ( globals.FRAME_LIMIT * 3 ) ) {
+        if ( this.frameCount > ( globals.FRAME_LIMIT * 3 ) && ( this.position == globals.B_SHEETPOS_IDLE2 || this.position == globals.B_SHEETPOS_IDLE ) ) {
             this.position = ( this.position == globals.B_SHEETPOS_IDLE ) ? globals.B_SHEETPOS_IDLE2 : globals.B_SHEETPOS_IDLE
             this.frameCount = 0;
         }
