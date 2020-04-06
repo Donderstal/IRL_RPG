@@ -2,6 +2,7 @@ const state         = require('../../game-data/state')
 const res           = require('../../resources/resourceStrings')
 const globals       = require('../../game-data/globals')
 const canvas        = require('../../helpers/canvasHelpers')
+const Sound         = require('./../interfaces/I_Sound').Sound
 
 const handleBattleAnimations = ( ) => {
     canvas.clearEntireCanvas("FRONT")
@@ -58,7 +59,10 @@ const handlePhase = ( battleText, playerSprite ) => {
             if ( !playerHasTurn ) {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: opponentCharacter.name, move: "punch" } ) )
                 if ( !state.battleState.opponent.sprite.moving ) {
+                    const sfx = new Sound( "battle-baba.mp3", true )
+                    sfx.play()
                     state.battleState.opponent.sprite.animateAttack( "PUNCH" )
+                    state.battleState.opponent.sprite.setShout( res.getBattleShout(state.battleState.player.character.className, "FIGHT") )
                     playerSprite.animateHit( )
                     opponentCharacter.moves.attack( opponentCharacter, playerCharacter )
                     state.battleState.moveResultText = playerCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"                    
@@ -75,6 +79,8 @@ const handlePhase = ( battleText, playerSprite ) => {
             state.battleState.opponent.sprite.moving = false;
             battleText.setText( state.battleState.moveResultText )
             break;
+        case "END" : 
+            
     }
 }
 

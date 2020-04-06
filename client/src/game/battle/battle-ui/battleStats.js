@@ -13,6 +13,9 @@ class BattleStats {
         this.HPBarWidth,
         this.MPBarWidth,
         this.width          = globals.CANVAS_WIDTH * .20
+        
+        canvas.setFont("SMALL")
+        this.manalabelWidth = canvas.getFrontCanvasContext().measureText("MP: " + this.startingMP).width
 
         this.height         = globals.CANVAS_HEIGHT * .05
         this.y              = globals.CANVAS_HEIGHT * .25
@@ -35,11 +38,11 @@ class BattleStats {
         this.name       = this.owner.name
         this.className  = this.owner.className
         this.HP         = this.owner.stats.Health
-        this.MP       = this.owner.stats.Mana
+        this.MP         = this.owner.stats.Mana
         this.level      = this.owner.level
 
-        this.HPBarWidth = this.width * ( this.HP / this.startingHP )
-        this.MPBarWidth = this.width * ( this.MP / this.startingMP  )
+        this.HPBarWidth = (this.width - this.manalabelWidth) * ( this.HP / this.startingHP )
+        this.MPBarWidth = (this.width - this.manalabelWidth) * ( this.MP / this.startingMP  )
     }
 
     refresh( ) {
@@ -64,11 +67,11 @@ class BattleStats {
         const manalabelWidth = canvas.getFrontCanvasContext().measureText("MP: " + this.MP).width     
         const statBarX = this.x + manalabelWidth + globals.SMALL_FONT_SIZE / 4
 
-        canvas.drawRect( "FRONT", statBarX, this.y, this.HPBarWidth - manalabelWidth, globals.LARGE_FONT_SIZE, 'green' );
+        canvas.drawRect( "FRONT", statBarX, this.y, this.HPBarWidth, globals.LARGE_FONT_SIZE, 'green' );
         canvas.drawRect( "FRONT", this.x, this.y + globals.LARGE_FONT_SIZE, this.width, 1, '#800020' );
         canvas.writeTextLine( "HP: " + this.HP, this.x + globals.SMALL_FONT_SIZE / 4, this.y + globals.LARGE_FONT_SIZE, "SMALL" )
 
-        canvas.drawRect( "FRONT", statBarX, this.y + globals.LARGE_FONT_SIZE + 1, this.MPBarWidth - manalabelWidth, globals.LARGE_FONT_SIZE, 'blue' )
+        canvas.drawRect( "FRONT", statBarX, this.y + globals.LARGE_FONT_SIZE + 1, this.MPBarWidth, globals.LARGE_FONT_SIZE, 'blue' )
         canvas.drawRect( "FRONT", this.x, this.y + ( globals.LARGE_FONT_SIZE * 2), this.width, 1, '#800020' );
         canvas.writeTextLine( "MP: " + this.MP, this.x + globals.SMALL_FONT_SIZE / 4, this.y + (globals.LARGE_FONT_SIZE * 2), "SMALL" )
     }

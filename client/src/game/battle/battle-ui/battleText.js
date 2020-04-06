@@ -56,7 +56,8 @@ class TextContainer {
                 PHASE_BEGIN_TURN    : 0,
                 PHASE_SELECT_MOVE   : 1,
                 PHASE_DO_MOVE       : 2,
-                PHASE_STAT_CHECK    : 3
+                PHASE_STAT_CHECK    : 3,
+                END                 : 4
             }
             var phase = Object.keys(phases).find(key => phases[key] === state.battleState.battlePhase)
             

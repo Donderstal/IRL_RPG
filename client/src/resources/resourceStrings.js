@@ -20,8 +20,35 @@ const getBattleResString = ( template, literals = null ) => {
         case 'BATTLE_FAIL'        : 
             return `${literals.name}s move failed! At least they tried...`    
     }
-    
 }
+
+const getBattleShout = ( className, type ) => {
+    if ( className == "Neckbeard" && type == "FIGHT" ) {
+        return NECKBEARD_FIGHT_SHOUTS[Math.floor(Math.random() * NECKBEARD_FIGHT_SHOUTS.length)];
+    }
+    if ( className == "Neckbeard" && type == "VICTORY" ) {
+        return NECKBEARD_VICTORY_SHOUTS[Math.floor(Math.random() * NECKBEARD_VICTORY_SHOUTS.length)];
+    }
+}
+
+const NECKBEARD_FIGHT_SHOUTS = [
+    "For the Horde!",
+    "Gamers, rise up!",
+    "Where is your god now??",
+    "Kamehameha!",
+    "So you have chosen war!",
+    "Scared yet, n00b?",
+    "Do not insult my honor!",
+    "Flee while you can, weakling!"
+]
+
+const NECKBEARD_VICTORY_SHOUTS = [
+    "My victory was worthy and righteous!",
+    "That'll teach you not to mess with a Darkmage",
+    "Your paladin, m'lady",
+    "That was way more exhausting than WoW...",
+    "Can I go home now?"
+]
 
 module.exports = {
 
@@ -45,5 +72,6 @@ module.exports = {
     BATTLE_FLEE_TOOLTIP     : "Flee",
     BATTLE_FLEE_HINT        : "Flee courageously to fight another day!",
 
-    getBattleResString
+    getBattleResString,
+    getBattleShout
 }

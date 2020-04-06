@@ -23,6 +23,8 @@ class BattleSprite extends I_Sprite {
         this.hasActiveButton= false;
         this.moving         = false;
 
+        this.shout          = null;
+
         if ( this.isPlayer ) {
             this.initBattleUI( )            
         }
@@ -49,11 +51,30 @@ class BattleSprite extends I_Sprite {
 
         this.updateSpriteBorders( )
 
+        if ( this.shout != null ) {
+            this.drawShout( )
+        }
+
         if ( this.showUI ) {
             this.buttonSprites.forEach((e) => {
                 e.drawButton( )
             })            
         }    
+    }
+
+    drawShout( ) {
+        canvasHelpers.setFont("LARGE")
+        let shoutX = ( this.isPlayer ) ? this.x + this.width : this.x - canvasHelpers.getFrontCanvasContext().measureText(this.shout).width;
+        canvasHelpers.writeTextLine( this.shout, shoutX, this.y, globals.LARGE_FONT_SIZE )
+    }
+
+    setShout( shout, endOfBattle = false ) {
+        this.shout = shout;
+        let timer = ( endOfBattle ) ? 10000 : 1000
+
+        setTimeout( ( ) => {
+            this.shout = null
+        }, timer )
     }
 
     animateAttack( type ) {
@@ -100,6 +121,40 @@ class BattleSprite extends I_Sprite {
             setTimeout(() => {
                 this.direction += 1
             }, 500 )        
+        }
+    }
+
+    fadeOut( ) {
+        if ( !this.isPlayer ) {
+            this.direction += 1;
+            setTimeout(() => {
+                this.direction -= 1
+            }, 250 )        
+            setTimeout(() => {
+                this.direction += 1;
+            }, 500 )     
+            setTimeout(() => {
+                this.direction -= 1
+            }, 750 ) 
+            setTimeout(() => {
+                this.direction += 1;
+            }, 1000 )               
+        }
+        else {
+            this.moving = true;
+            this.direction -= 1;
+            setTimeout(() => {
+                this.direction += 1
+            }, 250 )  
+            setTimeout(() => {
+                this.direction -= 1
+            }, 500 ) 
+            setTimeout(() => {
+                this.direction += 1
+            }, 750)    
+            setTimeout(() => {
+                this.direction -= 1
+            }, 1000 )     
         }
     }
 

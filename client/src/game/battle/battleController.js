@@ -72,15 +72,16 @@ const decideWhoStarts = ( player, opponent ) => {
         player.hasTurn = true;
     }
     else if ( opponent.character.traits.AGI == player.character.traits.AGI ) {
-        ( Math.floor( Math.random( ) ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
+        ( Math.random( ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
     }
 
     state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
 }
 
 const stopBattle = ( ) => {
-    state.battleState.battleMusic.stop()
     init.getBattleStopScreen()
+    let sfx = new Sound( "battle-march.wav", true )
+    sfx.play()
     state.battleState = {
         player  : { hasTurn : false },
         opponent   : { hasTurn : false },
