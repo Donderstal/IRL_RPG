@@ -20,7 +20,10 @@ class characterBlueprint {
                 const sfx = new Sound( "misc/random6.wav", true )
                 sfx.play()
                 state.battleState.currentMoveDamage = damage
-                this.stats.Health -= damage                
+                this.stats.Health -= damage     
+                if ( this.stats.Health < 0 ) {
+                    this.stats.Health = 0
+                }            
             }
         }
 

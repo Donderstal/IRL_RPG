@@ -1,34 +1,15 @@
-const Sound = require('../../interfaces/I_Sound').Sound
-
-const initMoves = ( classFocus ) => {
-    if ( classFocus = [ "STR", "CHA" ] ) {
-        return {
-            attack : (attacker, defender) => {
-                const damage = attacker.stats.Attack * 1.5
-                const sfx = new Sound( "misc/random5.wav", true )
-                sfx.play()
-                defender.receiveDamage(damage)
-            },
-            sing : (attacker, defender) => {
-                const damage = attacker.stats.Sp_Attack
-                defender.receiveSpDamage(damage)
-            }            
-        }                
-    }
-
-    if ( classFocus = [ "INT" ] ) {
-        return {
-            correctGrammar : (attacker, defender) => {
-                const damage = attacker.stats.Attack * 1.5
-                defender.receiveDamage(damage)
-            },
-            sing : (attacker, defender) => {
-                const damage = attacker.stats.Sp_Attack
-                defender.receiveSpDamage(damage)
-            }            
-        }                
-    }
-
+const initMoves = ( ) => {
+    return {
+        attack : (attacker, defender) => {
+            let damage = attacker.stats.Attack * 2
+            damage = ( Math.random() > 0.5 ) ? damage : ( Math.random() > 0.5 ) ? damage - 1 : damage + 1
+            defender.receiveDamage(damage)
+        },
+        sing : (attacker, defender) => {
+            const damage = attacker.stats.Sp_Attack
+            defender.receiveSpDamage(damage)
+        }            
+    }                
 }
 
 module.exports = {
