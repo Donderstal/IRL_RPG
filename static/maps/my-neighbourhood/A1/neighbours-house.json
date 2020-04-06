@@ -38,11 +38,16 @@
             "row": 1,
             "col": 2,
             "action": {
-                "name": "Bar'zuhl Nag-Rah",
-                "type": "TEXT",
+                "name": "N00bpwner",
+                "type": "BATTLE",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_UP",
-                "text": "Welcome to my humble residence, neighbour. Fitting of a 24 level Darkmage, methinks."
+                "text": "Alloweth me to kick thine arse!",
+                "character": {
+                    "class": "Influencer",
+                    "level": 5,
+                    "battleSprite": "influencer.png"
+                }
             }
         },
         {
