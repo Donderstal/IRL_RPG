@@ -6,6 +6,7 @@ const initChar      = require('./../character/character-init/initCharacter')
 const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
 const text          = require('./battle-ui/battleText')
 const canvas        = require('./../../helpers/canvasHelpers')
+const BattleStats      = require('./battle-ui/battleStats').BattleStats
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
@@ -13,7 +14,7 @@ const startBattle = (  ) => {
 
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
-    state.battleState.battleMusic = new Sound( "Rydeen.mp3" )
+    state.battleState.battleMusic = new Sound( "Rydeen.mp3", false, true )
     state.battleState.battleMusic.play()
 
     init.getBattleStartScreen( )
@@ -51,11 +52,13 @@ const initBattleMapAndSprites = ( ) => {
             'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
         }
 
-        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight_L.png', 0, true )
+        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
         player.character = state.playerCharacter.stats
+        player.statsBar = new BattleStats( player.character, true )
 
-        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 1 )
-        opponent.character = initChar.getCharWithClass( 'Neckbeard', 'N00bpwner' )
+        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/influencer_fight.png' )
+        opponent.character = initChar.getCharWithClass( 'Influencer', 'Johanna' )
+        opponent.statsBar = new BattleStats( opponent.character, false )
 
         decideWhoStarts( player, opponent )
     }, 2400)
@@ -69,15 +72,16 @@ const decideWhoStarts = ( player, opponent ) => {
         player.hasTurn = true;
     }
     else if ( opponent.character.traits.AGI == player.character.traits.AGI ) {
-        ( Math.floor( Math.random( ) ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
+        ( Math.random( ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
     }
 
     state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
 }
 
 const stopBattle = ( ) => {
-    state.battleState.battleMusic.stop()
     init.getBattleStopScreen()
+    let sfx = new Sound( "battle-march.wav", true )
+    sfx.play()
     state.battleState = {
         player  : { hasTurn : false },
         opponent   : { hasTurn : false },

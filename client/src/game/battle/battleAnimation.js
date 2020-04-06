@@ -1,23 +1,27 @@
-const state     = require('../../game-data/state')
+const state         = require('../../game-data/state')
 const res           = require('../../resources/resourceStrings')
 const globals       = require('../../game-data/globals')
-const canvas    = require('../../helpers/canvasHelpers')
+const canvas        = require('../../helpers/canvasHelpers')
+const Sound         = require('./../interfaces/I_Sound').Sound
 
 const handleBattleAnimations = ( ) => {
     canvas.clearEntireCanvas("FRONT")
 
-    let playerSprite = state.battleState.player.sprite
-    let opponentSprite = state.battleState.opponent.sprite
-
+    let playerSprite        = state.battleState.player.sprite
+    let opponentSprite      = state.battleState.opponent.sprite
+    let playerStatBar       = state.battleState.player.statsBar
+    let opponentStatsBar    = state.battleState.opponent.statsBar
     
     const battleText    = state.battleState.textContainer
     const debugText = state.battleState.debugText
 
     if ( playerSprite != undefined ) {
-        playerSprite.drawSprite()         
+        playerSprite.drawSprite()       
+        playerStatBar.drawStats()
     }
     if ( opponentSprite != undefined ) {
         opponentSprite.drawSprite() 
+        opponentStatsBar.drawStats()
     }
     if ( battleText != undefined ) {
         battleText.drawContainer()    
@@ -48,24 +52,36 @@ const handlePhase = ( battleText, playerSprite ) => {
             }
             else if ( playerHasTurn && !playerSprite.hasActiveButton ) {
                 battleText.setText( "Choose your move with one of the number keys!" )
-                state.battleState.player.sprite.activateUI( true )
+                playerSprite.activateUI( true )
             }
             break;
         case globals['PHASE_DO_MOVE'] :
             if ( !playerHasTurn ) {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: opponentCharacter.name, move: "punch" } ) )
-                state.battleState.moveResultText = playerCharacter.name + " takes 5 damage"
+                if ( !state.battleState.opponent.sprite.moving ) {
+                    const sfx = new Sound( "battle-baba.mp3", true )
+                    sfx.play()
+                    state.battleState.opponent.sprite.animateAttack( "PUNCH" )
+                    state.battleState.opponent.sprite.setShout( res.getBattleShout(state.battleState.opponent.character.className, "FIGHT") )
+                    playerSprite.animateHit( )
+                    opponentCharacter.moves.attack( opponentCharacter, playerCharacter )
+                    state.battleState.moveResultText = playerCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"                    
+                }
             }
             else {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: playerCharacter.name, move: "punch" } ) )
-                state.battleState.moveResultText = opponentCharacter.name + " takes 5 damage"
-                state.battleState.player.sprite.hasActiveButton = false;
-                state.battleState.player.sprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
+                state.battleState.moveResultText = opponentCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"  
+                playerSprite.hasActiveButton = false;
+                playerSprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
             }
             break;
         case globals['PHASE_STAT_CHECK'] :
+            state.battleState.opponent.sprite.moving = false;
+            state.battleState.opponent.sprite.moving = false;
             battleText.setText( state.battleState.moveResultText )
             break;
+        case "END" : 
+            
     }
 }
 

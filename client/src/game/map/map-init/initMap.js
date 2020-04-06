@@ -40,7 +40,9 @@ const getMapAttributes = ( BOOT_STATUS ) => {
 
 const initMapFromBattle = ( ) => {
     drawGrid.generateMap( state.currentMap )
-    state.currentMap.mapMusic.play() 
+    setTimeout(() => {
+        state.currentMap.mapMusic.play() 
+    }, 1000)
 }
 
 const initializeMap = ( mapJson, BOOT_STATUS ) => {    

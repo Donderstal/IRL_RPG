@@ -8,8 +8,8 @@ let battleText;
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
-    constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {
-        super ( start, spriteSheetSrc, "XY", "LARG", spriteDirection ) 
+    constructor ( start, spriteSheetSrc, isPlayer = false ) {
+        super ( start, spriteSheetSrc, "XY", "LARG", 0 ) 
 
         this.isPlayer       = isPlayer
         this.buttons        = {}
@@ -18,12 +18,13 @@ class BattleSprite extends I_Sprite {
         
         this.initialX       = this.x;
         this.destinationX   = null;
-        this.initialDir     = this.direction;
+        this.position       = globals.B_SHEETPOS_IDLE;
+        this.initialDir     = this.position;
         this.showUI         = false;
         this.hasActiveButton= false;
-
         this.moving         = false;
-        this.returning      = false;
+
+        this.shout          = null;
 
         if ( this.isPlayer ) {
             this.initBattleUI( )            
@@ -35,26 +36,31 @@ class BattleSprite extends I_Sprite {
     }
     
     drawSprite( ) {
+        this.frameCount++;
         if ( state.battleState.textContainer ) {
             battleText = state.battleState.textContainer
         }
 
-        if ( this.moving ) {
-            this.handleSpriteMovement()
+        if ( this.frameCount > ( globals.FRAME_LIMIT * 3 ) && ( this.position == globals.B_SHEETPOS_IDLE2 || this.position == globals.B_SHEETPOS_IDLE ) ) {
+            this.position = ( this.position == globals.B_SHEETPOS_IDLE ) ? globals.B_SHEETPOS_IDLE2 : globals.B_SHEETPOS_IDLE
+            this.frameCount = 0;
         }
 
-        let tilesheetX = ( this.isPlayer ) ? this.animLoop[this.direction] * 270 : this.animLoop[this.direction] * 270
+        let tilesheetX = this.animLoop[this.position] * 285
 
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            tilesheetX, 
-            0, 
-            270, 270,
+            tilesheetX, 0, 
+            285, 285,
             this.x, this.y, this.width, this.height
         )
 
         this.updateSpriteBorders( )
+
+        if ( this.shout != null ) {
+            this.drawShout( )
+        }
 
         if ( this.showUI ) {
             this.buttonSprites.forEach((e) => {
@@ -63,66 +69,58 @@ class BattleSprite extends I_Sprite {
         }    
     }
 
-    handleStaticAnimation( ) {
-        this.frameCount++
-        if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
-        
-            this.frameCount = 0;
-            if ( this.animIterator === 0 ) {
-                this.animIterator = 1
-            }
-            else if ( this.animIterator === 1 ) {
-                this.animIterator = 0
-            }
-        }    
+    drawShout( ) {
+        canvasHelpers.setFont("LARGE")
+        let shoutX = ( this.isPlayer ) ? this.x + this.width : this.x - canvasHelpers.getFrontCanvasContext().measureText(this.shout).width;
+        canvasHelpers.writeTextLine( this.shout, shoutX, this.y, globals.LARGE_FONT_SIZE )
     }
 
-    moveSpriteToPlace( destinationX ) {
-        this.moving = true;
-        this.destinationX = destinationX;
+    setShout( shout, endOfBattle = false ) {
+        this.shout = shout;
+        let timer = ( endOfBattle ) ? 10000 : 1000
+
+        setTimeout( ( ) => {
+            this.shout = null
+        }, timer )
     }
 
-    handleSpriteMovement() {
-        if ( this.x < ( this.destinationX - globals.MOVEMENT_SPEED ) && !this.returning ) {
-            this.returning = true     
-            const stringLiterals = { 
-                name: state.battleState.player.character.name,
-                target: state.battleState.opponent.character.name,
-                damage: "0.111"
-            }
-            battleText.setText( res.getBattleResString( 'BATTLE_MOVE_HIT', stringLiterals ) )
+    animateAttack( type ) {
+        if ( type == "PUNCH" ) {
+            this.moving = true;
+            this.position = globals.B_SHEETPOS_ATTACK;
+            setTimeout(() => {
+                this.position = globals.B_SHEETPOS_IDLE;
+            }, 500 )                
         }
-        else if ( this.x > this.destinationX && !this.returning ) {
-            this.direction = globals['FACING_LEFT']
-        }
-        else if ( this.x > ( this.initialX - globals.MOVEMENT_SPEED ) && this.returning ) {
-            this.x = this.initialX;
-            this.direction = this.initialDir;
-            this.returning = false;
-            this.moving = false;
-        }
-        else if ( this.returning ) {
-            this.direction = globals['FACING_RIGHT']
-        }
+    }
 
-        this.frameCount++;
-   
-        if ( this.direction == globals['FACING_LEFT'] ) {
-            this.x -= globals.MOVEMENT_SPEED * 2  
-        }
+    animateHit( ) {
+        this.position = globals.B_SHEETPOS_NONE;
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 175 )        
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_NONE;
+        }, 350 )     
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 500 )             
+    }
 
-        if ( this.direction == globals['FACING_RIGHT'] ) {
-            this.x += globals.MOVEMENT_SPEED * 2   
-        }
-    
-        if ( this.frameCount >= globals.FRAME_LIMIT) {
-            this.frameCount = 0;
-            this.animIterator++;
-    
-            if (this.animIterator >= this.animLoop.length) {
-                this.animIterator = 0;
-            }
-        }
+    fadeOut( ) {
+        this.position = globals.B_SHEETPOS_NONE;
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 250 )        
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_NONE;
+        }, 500 )     
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 750 ) 
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_NONE;
+        }, 1000 )               
     }
 
     setButtonAsActive( buttonKey ) {
