@@ -52,12 +52,12 @@ const initBattleMapAndSprites = ( ) => {
             'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
         }
 
-        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight_L.png', 0, true )
+        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
         player.character = state.playerCharacter.stats
         player.statsBar = new BattleStats( player.character, true )
 
-        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/neckbeard_fight_R.png', 1 )
-        opponent.character = initChar.getCharWithClass( 'Neckbeard', 'N00bpwner' )
+        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/influencer_fight.png' )
+        opponent.character = initChar.getCharWithClass( 'Influencer', 'Johanna' )
         opponent.statsBar = new BattleStats( opponent.character, false )
 
         decideWhoStarts( player, opponent )

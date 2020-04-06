@@ -8,8 +8,8 @@ let battleText;
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
-    constructor ( start, spriteSheetSrc, spriteDirection = 0, isPlayer = false ) {
-        super ( start, spriteSheetSrc, "XY", "LARG", spriteDirection ) 
+    constructor ( start, spriteSheetSrc, isPlayer = false ) {
+        super ( start, spriteSheetSrc, "XY", "LARG", 0 ) 
 
         this.isPlayer       = isPlayer
         this.buttons        = {}
@@ -18,7 +18,8 @@ class BattleSprite extends I_Sprite {
         
         this.initialX       = this.x;
         this.destinationX   = null;
-        this.initialDir     = this.direction;
+        this.position       = globals.B_SHEETPOS_IDLE;
+        this.initialDir     = this.position;
         this.showUI         = false;
         this.hasActiveButton= false;
         this.moving         = false;
@@ -35,17 +36,23 @@ class BattleSprite extends I_Sprite {
     }
     
     drawSprite( ) {
+        this.frameCount++;
         if ( state.battleState.textContainer ) {
             battleText = state.battleState.textContainer
         }
 
-        let tilesheetX = this.animLoop[this.direction] * 270
+        if ( this.frameCount > ( globals.FRAME_LIMIT * 3 ) ) {
+            this.position = ( this.position == globals.B_SHEETPOS_IDLE ) ? globals.B_SHEETPOS_IDLE2 : globals.B_SHEETPOS_IDLE
+            this.frameCount = 0;
+        }
+
+        let tilesheetX = this.animLoop[this.position] * 285
 
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
             tilesheetX, 0, 
-            270, 270,
+            285, 285,
             this.x, this.y, this.width, this.height
         )
 
@@ -79,83 +86,41 @@ class BattleSprite extends I_Sprite {
 
     animateAttack( type ) {
         if ( type == "PUNCH" ) {
-            if ( this.isPlayer ) {
-                this.direction += 1;
-                setTimeout(() => {
-                    this.direction -= 1
-                }, 500 )                
-            }
-            else {
-                this.moving = true;
-                this.direction -= 1;
-                setTimeout(() => {
-                    this.direction += 1
-                }, 500 )         
-            }
-
+            this.moving = true;
+            this.position = globals.B_SHEETPOS_ATTACK;
+            setTimeout(() => {
+                this.position = globals.B_SHEETPOS_IDLE;
+            }, 500 )                
         }
     }
 
     animateHit( ) {
-        if ( !this.isPlayer ) {
-            this.direction += 1;
-            setTimeout(() => {
-                this.direction -= 1
-            }, 175 )        
-            setTimeout(() => {
-                this.direction += 1;
-            }, 350 )     
-            setTimeout(() => {
-                this.direction -= 1
-            }, 500 )             
-        }
-        else {
-            this.moving = true;
-            this.direction -= 1;
-            setTimeout(() => {
-                this.direction += 1
-            }, 175 )  
-            setTimeout(() => {
-                this.direction -= 1
-            }, 350 ) 
-            setTimeout(() => {
-                this.direction += 1
-            }, 500 )        
-        }
+        this.position = globals.B_SHEETPOS_NONE;
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 175 )        
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_NONE;
+        }, 350 )     
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 500 )             
     }
 
     fadeOut( ) {
-        if ( !this.isPlayer ) {
-            this.direction += 1;
-            setTimeout(() => {
-                this.direction -= 1
-            }, 250 )        
-            setTimeout(() => {
-                this.direction += 1;
-            }, 500 )     
-            setTimeout(() => {
-                this.direction -= 1
-            }, 750 ) 
-            setTimeout(() => {
-                this.direction += 1;
-            }, 1000 )               
-        }
-        else {
-            this.moving = true;
-            this.direction -= 1;
-            setTimeout(() => {
-                this.direction += 1
-            }, 250 )  
-            setTimeout(() => {
-                this.direction -= 1
-            }, 500 ) 
-            setTimeout(() => {
-                this.direction += 1
-            }, 750)    
-            setTimeout(() => {
-                this.direction -= 1
-            }, 1000 )     
-        }
+        this.position = globals.B_SHEETPOS_NONE;
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 250 )        
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_NONE;
+        }, 500 )     
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_IDLE;
+        }, 750 ) 
+        setTimeout(() => {
+            this.position = globals.B_SHEETPOS_NONE;
+        }, 1000 )               
     }
 
     setButtonAsActive( buttonKey ) {

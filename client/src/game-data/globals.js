@@ -42,7 +42,13 @@ module.exports = {
     // Length of some animations in milliseconds
     BATTLE_INTRO_ANIM_MS : 2100,
 
-    //battle phases
+    // battle spritesheet positions
+    B_SHEETPOS_NONE    : -1,
+    B_SHEETPOS_IDLE    : 0,
+    B_SHEETPOS_IDLE2   : 1,
+    B_SHEETPOS_ATTACK  : 2,
+
+    // battle phases
     PHASE_BEGIN_TURN    : 0,
     PHASE_SELECT_MOVE   : 1,
     PHASE_DO_MOVE       : 2,

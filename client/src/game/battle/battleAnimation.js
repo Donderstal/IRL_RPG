@@ -77,6 +77,7 @@ const handlePhase = ( battleText, playerSprite ) => {
             break;
         case globals['PHASE_STAT_CHECK'] :
             state.battleState.opponent.sprite.moving = false;
+            state.battleState.opponent.sprite.moving = false;
             battleText.setText( state.battleState.moveResultText )
             break;
         case "END" : 
