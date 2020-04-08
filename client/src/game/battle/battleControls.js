@@ -37,21 +37,12 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
 }
 
 const handleBattleMenuClick = ( battleState, battleText ) => {
-    battleState.player.sprite.buttonSprites.forEach( (button) => {
+    const playerUiButtons = battleState.player.sprite.buttonSprites
+
+    playerUiButtons.forEach( (button) => {
         if ( button.active ) {
             if ( button.text.includes("1") ) {
-                battleText.setText( 
-                    res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
-                )
-                const sfx = new Sound( "battle-baba.mp3", true )
-                sfx.play()
-                passPhase( battleState )
-                setTimeout( ( ) => {
-                    battleState.player.sprite.animateAttack( "PUNCH" )
-                    battleState.opponent.sprite.animateHit( )
-                    battleState.player.sprite.setShout( res.getBattleShout( battleState.player.character.className, "FIGHT" ) )
-                    battleState.player.character.moves.attack( battleState.player.character, battleState.opponent.character )
-                }, 500 )
+                handlePunch( battleState, battleText )
             }
             if ( button.text.includes("2") ) {
   
@@ -71,52 +62,71 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
 
 const passPhase = ( battleState, battleText ) => {
     let playerHasTurn = battleState.player.hasTurn
+    const phase = battleState.battlePhase
 
-    switch ( battleState.battlePhase ) {
+    switch ( phase ) {
         case globals['PHASE_BEGIN_TURN'] :
-            battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
+            phase = globals['PHASE_SELECT_MOVE'];
             break;
         case globals['PHASE_SELECT_MOVE'] :
-            battleState.battlePhase = globals['PHASE_DO_MOVE'];
+            phase = globals['PHASE_DO_MOVE'];
             battleState.player.sprite.activateUI( false )
             break;
         case globals['PHASE_DO_MOVE'] :
-            battleState.battlePhase = globals['PHASE_STAT_CHECK'];
+            phase = globals['PHASE_STAT_CHECK'];
             break;
         case globals['PHASE_STAT_CHECK'] :
             if ( checkForDeath(battleState, battleText) ) {
-                state.battleState.battlePhase = "END"
+                phasee = "END"
             }
             else {
                 battleState.player.hasTurn = ( playerHasTurn ) ? false : true
                 battleState.opponent.hasTurn = ( playerHasTurn ) ? false : true
-                battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
+                phase = globals['PHASE_BEGIN_TURN'];
             }
             break;
         case "END":
-            state.battleState.battleMusic.stop()
+            battleState.battleMusic.stop()
             changeMode.requestModeChange( 'OVERWORLD' )
     }
 }
 
 const checkForDeath = ( battleState, battleText ) => {
     if ( battleState.player.character.stats.Health <= 0 ) {
-        battleText.setText( 
-            battleState.player.character.name + " has been wrecked..." 
-        )
-        battleState.player.sprite.fadeOut()
-        battleState.opponent.sprite.setShout( res.getBattleShout( battleState.opponent.character.className, "VICTORY"), true )
-        return true
+        return handleBattleDeath( battleState.player, battleState.opponent )
     }
     else if ( battleState.opponent.character.stats.Health <= 0 ) {
-        battleText.setText( 
-            battleState.opponent.character.name + " has been wrecked..." 
-        )
-        battleState.opponent.sprite.fadeOut()
-        battleState.player.sprite.setShout( res.getBattleShout( battleState.player.character.className, "VICTORY"), true )
-        return true
+        return handleBattleDeath( battleState.opponent, battleState.player )
     }
-    return false
+    else {
+        return false        
+    }
+}
+
+const handleBattleDeath = ( loser, winner ) => {
+    battleText.setText( 
+        loser.character.name + " has been wrecked..." 
+    )
+    loser.sprite.fadeOut()
+    winner.sprite.setShout( 
+        res.getBattleShout( winner.character.className, "VICTORY"), true 
+    );
+    return true
+}
+
+const handlePunch = ( battleState, battleText ) => {
+    battleText.setText( 
+        res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
+    )
+    const sfx = new Sound( "battle-baba.mp3", true )
+    sfx.play()
+    passPhase( battleState )
+    setTimeout( ( ) => {
+        battleState.player.sprite.animateAttack( "PUNCH" )
+        battleState.opponent.sprite.animateHit( )
+        battleState.player.sprite.setShout( res.getBattleShout( battleState.player.character.className, "FIGHT" ) )
+        battleState.player.character.moves.attack( battleState.player.character, battleState.opponent.character )
+    }, 500 )
 }
 
 module.exports = {

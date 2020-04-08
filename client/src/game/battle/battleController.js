@@ -43,30 +43,12 @@ const initBattleMapAndSprites = ( ) => {
 
     
     setTimeout( ( ) => {
-        text.initTextContainer( true )
-        text.initTextContainer()
+        text.initTextContainer( true ) // real text
+        text.initTextContainer() // debug
     }, 2000) 
 
     setTimeout( ( ) => {
-        const mapBattleAction = state.battleState.opponent.action
-
-        let playerXy = {
-            'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
-            'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-        }
-
-        let opponentXy = {
-            'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
-            'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-        }
-
-        player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
-        player.character    = initChar.getCharWithClass( state.playerCharacter.stats.className, state.playerCharacter.stats.name )
-        player.statsBar     = new BattleStats( player.character, true )
-
-        opponent.sprite     = new BattleSprite( opponentXy, '/static/battlesprites/' + mapBattleAction.character.class + '_fight_L.png' )
-        opponent.character  = initChar.getCharWithClass( mapBattleAction.character.class, mapBattleAction.name )
-        opponent.statsBar   = new BattleStats( opponent.character, false )
+        initializeBattleCharacter( player, opponent )
 
         decideWhoStarts( player, opponent )
     }, 2400)
@@ -84,6 +66,28 @@ const decideWhoStarts = ( player, opponent ) => {
     }
 
     state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
+}
+
+const initializeBattleCharacter = ( player, opponent ) => {
+    const mapBattleAction = opponent.action
+
+    let playerXy = {
+        'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+        'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+    }
+
+    let opponentXy = {
+        'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+        'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+    }
+
+    player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
+    player.character    = initChar.getCharWithClass( state.playerCharacter.stats.className, state.playerCharacter.stats.name )
+    player.statsBar     = new BattleStats( player.character, true )
+
+    opponent.sprite     = new BattleSprite( opponentXy, '/static/battlesprites/' + mapBattleAction.character.class + '_fight_L.png' )
+    opponent.character  = initChar.getCharWithClass( mapBattleAction.character.class, mapBattleAction.name )
+    opponent.statsBar   = new BattleStats( opponent.character, false )
 }
 
 const stopBattle = ( ) => {

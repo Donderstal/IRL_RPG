@@ -30,16 +30,17 @@ const handleBattleAnimations = ( ) => {
         debugText.drawContainer()    
     }
 
-    handlePhase( battleText, playerSprite )
+    handlePhase( battleText, playerSprite, opponentSprite )
 
 }
 
-const handlePhase = ( battleText, playerSprite ) => {
-    const phase = state.battleState.battlePhase
-    let playerHasTurn = state.battleState.player.hasTurn
+const handlePhase = ( battleText, playerSprite, opponentSprite ) => {
+    const battleState = state.battleState
+    const phase = battleState.battlePhase
 
-    let playerCharacter = state.battleState.player.character;
-    let opponentCharacter = state.battleState.opponent.character;
+    let playerHasTurn = battleState.player.hasTurn
+    let playerCharacter = battleState.player.character;
+    let opponentCharacter = battleState.opponent.character;
 
     switch ( phase ) {
         case globals['PHASE_BEGIN_TURN'] :
@@ -58,27 +59,27 @@ const handlePhase = ( battleText, playerSprite ) => {
         case globals['PHASE_DO_MOVE'] :
             if ( !playerHasTurn ) {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: opponentCharacter.name, move: "punch" } ) )
-                if ( !state.battleState.opponent.sprite.moving ) {
+                if ( !opponentSprite.moving ) {
                     const sfx = new Sound( "battle-baba.mp3", true )
                     sfx.play()
-                    state.battleState.opponent.sprite.animateAttack( "PUNCH" )
-                    state.battleState.opponent.sprite.setShout( res.getBattleShout(state.battleState.opponent.character.className, "FIGHT") )
+                    opponentSprite.animateAttack( "PUNCH" )
+                    opponentSprite.setShout( res.getBattleShout(opponentCharacte.className, "FIGHT") )
                     playerSprite.animateHit( )
                     opponentCharacter.moves.attack( opponentCharacter, playerCharacter )
-                    state.battleState.moveResultText = playerCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"                    
+                    battleState.moveResultText = playerCharacter.name + " takes "+ battleState.currentMoveDamage +" damage!!!"                    
                 }
             }
             else {
                 battleText.setText( res.getBattleResString('BATTLE_USE_MOVE', { name: playerCharacter.name, move: "punch" } ) )
-                state.battleState.moveResultText = opponentCharacter.name + " takes "+ state.battleState.currentMoveDamage +" damage!!!"  
+                battleState.moveResultText = opponentCharacter.name + " takes "+ battleState.currentMoveDamage +" damage!!!"  
                 playerSprite.hasActiveButton = false;
                 playerSprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
             }
             break;
         case globals['PHASE_STAT_CHECK'] :
-            state.battleState.opponent.sprite.moving = false;
-            state.battleState.opponent.sprite.moving = false;
-            battleText.setText( state.battleState.moveResultText )
+            playerSprite.moving = false;
+            opponentSprite.moving = false;
+            battleText.setText( battleState.moveResultText )
             break;
         case "END" : 
             
