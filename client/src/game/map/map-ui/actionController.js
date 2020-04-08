@@ -64,10 +64,10 @@ const handleAction = ( action ) => {
     switch ( action.type ) {
         case "TEXT" :
             displayActionText( action )
-
             break            
         case "BATTLE" :
             displayActionText( action )
+            state.battleState.opponent.action = action
             state.battleState.requestingBattle = true
             break            
         }

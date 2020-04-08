@@ -44,7 +44,7 @@ const handlePhase = ( battleText, playerSprite ) => {
     switch ( phase ) {
         case globals['PHASE_BEGIN_TURN'] :
             let name = ( playerHasTurn ) ? playerCharacter.name : opponentCharacter.name   
-            battleText.setText( name + "'s turn begins!" )
+            battleText.setText( name + "s turn begins!" )
             break;
         case globals['PHASE_SELECT_MOVE'] :
             if ( !playerHasTurn ) {

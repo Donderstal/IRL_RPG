@@ -46,15 +46,15 @@ const initClasses = {
         }
     },
 
-    Athlete : class extends initCharacter.characterBlueprint {
+    Chad : class extends initCharacter.characterBlueprint {
         constructor (name) {
             super(name),
 
-            this.className     = "Athlete",
+            this.className     = "Chad",
 
             this.classFocus   = [ "STR", "AGI" ],
 
-            this.description   = "The athlete is a class based on physical traits: Strength, Agility and Endurance. The exclusive focus on sports in their education means a severe lack in other traits, especially Finance and Intelligence",
+            this.description   = "The Chad is a class based on physical traits: Strength, Agility and Endurance. The exclusive focus on sports in their education means a severe lack in other traits, especially Finance and Intelligence",
 
             this.uniqueAttack  = {
                 'Push it to the limit!' : { 
@@ -84,19 +84,19 @@ const initClasses = {
         }
     },
 
-    Developer : class extends initCharacter.characterBlueprint {
+    Tumblr_Girl : class extends initCharacter.characterBlueprint {
         constructor (name) {
             super(name),
 
-            this.className     = "Developer",
+            this.className     = "Tumblr girl",
 
             this.classFocus   = [ "END", "INT" ],
 
-            this.description   = "Skilled but unattractive, the developer likes to play it safe. High Intelligence and Endurance stats.  Might have anxious reactions to social contact or attractive people.",
+            this.description   = "Skilled but unattractive, the Tumblr girl has high Intelligence and Endurance stats. Might have anxious reactions to social contact or attractive people.",
 
             this.uniqueAttack  = {
-                'Sprint review' : { 
-                    description: 'Greatly increases the developers Willpower, Perception and Wisdom. Has a small chance of backfiring and sharply lowering Endurance stats.' 
+                'Check privilege' : { 
+                    description: 'Greatly increases the Tumblr girls Special attack out of righteous anger towards our worlds injustices. Has a small chance of backfiring and sharply lowering Endurance stats.' 
                 }
             },
 

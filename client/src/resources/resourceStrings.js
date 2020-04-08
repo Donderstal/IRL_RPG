@@ -25,19 +25,37 @@ const getBattleResString = ( template, literals = null ) => {
 const getBattleShout = ( className, type ) => {
     if ( className == "Neckbeard" ) {
         if ( type == "FIGHT" ) {
-            return NECKBEARD_FIGHT_SHOUTS[Math.floor(Math.random() * NECKBEARD_FIGHT_SHOUTS.length)];
+            return NECKBEARD_FIGHT_SHOUTS[ Math.floor(Math.random() * NECKBEARD_FIGHT_SHOUTS.length) ];
         }
         if ( type == "VICTORY" ) {
-            return NECKBEARD_VICTORY_SHOUTS[Math.floor(Math.random() * NECKBEARD_VICTORY_SHOUTS.length)];
+            return NECKBEARD_VICTORY_SHOUTS[ Math.floor(Math.random() * NECKBEARD_VICTORY_SHOUTS.length) ];
         }
     }
 
     if ( className == "Influencer" ) {
         if ( type == "FIGHT" ) {
-            return INFLUENCER_FIGHT_SHOUTS[Math.floor(Math.random() * INFLUENCER_FIGHT_SHOUTS.length)];
+            return INFLUENCER_FIGHT_SHOUTS[ Math.floor(Math.random() * INFLUENCER_FIGHT_SHOUTS.length) ];
         }
         if ( type == "VICTORY" ) {
-            return INFLUENCER_VICTORY_SHOUTS[Math.floor(Math.random() * INFLUENCER_VICTORY_SHOUTS.length)];
+            return INFLUENCER_VICTORY_SHOUTS[ Math.floor(Math.random() * INFLUENCER_VICTORY_SHOUTS.length) ];
+        }
+    }
+
+    if ( className == "Chad" ) {
+        if ( type == "FIGHT" ) {
+            return CHAD_FIGHT_SHOUTS[ Math.floor(Math.random() * CHAD_FIGHT_SHOUTS.length) ];
+        }
+        if ( type == "VICTORY" ) {
+            return CHAD_VICTORY_SHOUTS[ Math.floor(Math.random() * CHAD_VICTORY_SHOUTS.length) ];
+        }
+    }
+
+    if ( className == "Tumblr girl" ) {
+        if ( type == "FIGHT" ) {
+            return TUMBLR_GIRL_FIGHT_SHOUTS[ Math.floor(Math.random() * TUMBLR_GIRL_FIGHT_SHOUTS.length) ];
+        }
+        if ( type == "VICTORY" ) {
+            return TUMBLR_GIRL_VICTORY_SHOUTS[ Math.floor(Math.random() * TUMBLR_GIRL_VICTORY_SHOUTS.length) ];
         }
     }
 }
@@ -50,7 +68,7 @@ const NECKBEARD_FIGHT_SHOUTS = [
     "So you have chosen war!",
     "Scared yet, n00b?",
     "Do not insult my honor!",
-    "Flee while you can, weakling!"
+    "Call of Duty prepared me for this!"
 ]
 
 const NECKBEARD_VICTORY_SHOUTS = [
@@ -72,6 +90,34 @@ const INFLUENCER_VICTORY_SHOUTS = [
     "I want to thank all my subscribers <3",
     "#FitGirl #Hashtag",
     "Felt cute might delete later idk"
+]
+
+const CHAD_FIGHT_SHOUTS = [
+    "I can feel the 'roids, bruh!",
+    "Damn bruh, you suck",
+    "Incel bitches!",
+    "My balls are regular sized dude",
+    "I hate long words, man"
+]
+
+const CHAD_VICTORY_SHOUTS = [
+    "Sarah conner get to da chopper",
+    "Incel bitches",
+    "Who's your chaddy?"
+]
+
+const TUMBLR_GIRL_FIGHT_SHOUTS = [
+    "Respect demikin pansexuals!",
+    "Smash patriarchy!",
+    "Nazi bastards!",
+    "Oh. My. God.",
+    "RIP Tumblr"
+]
+
+const TUMBLR_GIRL_VICTORY_SHOUTS = [
+    "That's what happens when you trigger me",
+    "Feminist DESTROYS you with LOGIC and FACTS",
+    "#BodyPositivity"
 ]
 
 module.exports = {

@@ -42,6 +42,8 @@ const initBattleMapAndSprites = ( ) => {
     }, 2000) 
 
     setTimeout( ( ) => {
+        const mapBattleAction = state.battleState.opponent.action
+
         let playerXy = {
             'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
             'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
@@ -52,13 +54,13 @@ const initBattleMapAndSprites = ( ) => {
             'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
         }
 
-        player.sprite = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
-        player.character = state.playerCharacter.stats
-        player.statsBar = new BattleStats( player.character, true )
+        player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
+        player.character    = initChar.getCharWithClass( state.playerCharacter.stats.className, state.playerCharacter.stats.name )
+        player.statsBar     = new BattleStats( player.character, true )
 
-        opponent.sprite = new BattleSprite( opponentXy, '/static/battlesprites/influencer_fight.png' )
-        opponent.character = initChar.getCharWithClass( 'Influencer', 'Johanna' )
-        opponent.statsBar = new BattleStats( opponent.character, false )
+        opponent.sprite     = new BattleSprite( opponentXy, '/static/battlesprites/' + mapBattleAction.character.class + '_fight_L.png' )
+        opponent.character  = initChar.getCharWithClass( mapBattleAction.character.class, mapBattleAction.name )
+        opponent.statsBar   = new BattleStats( opponent.character, false )
 
         decideWhoStarts( player, opponent )
     }, 2400)
