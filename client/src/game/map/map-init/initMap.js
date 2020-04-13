@@ -20,7 +20,7 @@ const getMapAttributesFromSave = ( ) => {
     setTimeout( ( ) => {
         state.currentMap.NPCs = getNPCs.generateCharactersFromSave( state.currentMap.NPCs )
 
-        state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Stefan Westerink', playerSpriteStart, 'XY' )
+        state.playerCharacter = createCharInstance.getCharacter( state.playerCharacter.className, state.playerCharacter.name, playerSpriteStart, 'XY' )
     }, 500)
 }
 
@@ -33,7 +33,7 @@ const getMapAttributes = ( BOOT_STATUS ) => {
 
     setTimeout(() => {
         if ( BOOT_STATUS == "NEW_GAME" ) {
-            state.playerCharacter = createCharInstance.getCharacter( 'Neckbeard', 'Stefan Westerink', state.currentMap.mapData.playerStart, 'CELL' )
+            state.playerCharacter = createCharInstance.getCharacter( state.playerCharacter.className, state.playerCharacter.name, state.currentMap.mapData.playerStart, 'CELL' )
         } 
     }, 1000)
 }

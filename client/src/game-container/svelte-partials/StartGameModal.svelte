@@ -7,20 +7,27 @@
     }
 
     const startGameWithParams = ( ) => {
+        const characterName = document.getElementById('charName').value;
+        const characterClass = document.getElementById('charClass').value;
+
+        let mode;
         if ( isCheckboxChecked( 'normal' ) ) {
-            console.log( 'normal')
+            mode = 'normal';
         }
         if ( isCheckboxChecked( 'battle' ) ) {
-            console.log( 'battle')      
+            mode = 'battle';
         }
         if ( isCheckboxChecked( 'map-debug' ) ) {
-            console.log('map-debug' )
+            state.debug.map     = true;
         }
         if ( isCheckboxChecked( 'battle-debug' ) ) {
-            console.log( 'battle-debug')
+            state.debug.battle  = true;
         }
-        console.log('Name: ' + document.getElementById('charName').value)
-        console.log('Class: ' + document.getElementById('charClass').value)
+
+        document.getElementsByClassName('Modal')[0].style.display      = 'none';
+        document.getElementsByClassName('Modal')[0].style.visibility   = 'hidden';
+
+        startGame.startGame( characterName, characterClass, mode );
     }
 </script>
 

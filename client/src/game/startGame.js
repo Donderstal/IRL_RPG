@@ -77,14 +77,18 @@ const initCanvas = ( canvas ) => {
     canvas.width = globals.CANVAS_WIDTH   
 }
 
-const startGame = ( ) => {
+const startGame = ( name, className, mode ) => {
     document.getElementById('intro-screen').style.display = 'none';
 
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
 
-    fetchJson( firstMapUrl, startNewGame );
+    let mapUrl = ( mode == 'normal' ) ? firstMapUrl : battleMapUrl;
+    state.playerCharacter.name      = name;
+    state.playerCharacter.className = className;
+
+    fetchJson( mapUrl, startNewGame );
 }
 
 module.exports = {
