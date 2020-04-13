@@ -27,5 +27,10 @@ module.exports = {
 
     playerCharacter : {
 
+    },
+    
+    debug : { 
+        map: false,
+        battle: false
     }
 }

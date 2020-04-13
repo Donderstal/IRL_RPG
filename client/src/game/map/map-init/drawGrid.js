@@ -148,47 +148,53 @@ const drawRow = ( currentMap, currentRow, position ) => {
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
-    if ( currentMap.battleMap != true ) {
-        if ( currentMap.mapData.blocked ) {
-            currentMap.mapData.blocked.forEach( ( e ) => {
-                if ( !e.id ) {
-                    if ( tile === e ) {
-                        currentMap.blockedXyValues.push( { 
-                            "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                            "LEFT": startPositionInCanvas.x,
-                            "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                            "TOP": startPositionInCanvas.y
-                        } )
+    if ( currentMap.mapData.blocked ) {
+        currentMap.mapData.blocked.forEach( ( e ) => {
+            if ( !e.id ) {
+                if ( tile === e ) {
+                    currentMap.blockedXyValues.push( { 
+                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                        "LEFT": startPositionInCanvas.x,
+                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                        "TOP": startPositionInCanvas.y
+                    } )
 
-                    }                   
-                }
-                else {
-                    if ( tile === e.id ) {
-                        let blockedTile = {
-                            "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                            "LEFT": startPositionInCanvas.x,
-                            "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                            "TOP": startPositionInCanvas.y
-                        }
+                }                   
+            }
+            else {
+                if ( tile === e.id ) {
+                    let blockedTile = {
+                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+                        "LEFT": startPositionInCanvas.x,
+                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+                        "TOP": startPositionInCanvas.y
+                    }
 
-                        if ( e.top ) {
-                            blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
-                        }
-                        if ( e.bottom ) {
-                            blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
-                        }
-                        if ( e.left ) {
-                            blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
-                        }
-                        if ( e.right ) {
-                            blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
-                        }
-                        currentMap.blockedXyValues.push( blockedTile )
-                    }    
-                }
-            })        
-        }        
-    }
+                    if ( e.top ) {
+                        blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
+                    }
+                    if ( e.bottom ) {
+                        blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
+                    }
+                    if ( e.left ) {
+                        blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
+                    }
+                    if ( e.right ) {
+                        blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
+                    }
+                    currentMap.blockedXyValues.push( blockedTile )
+
+                    if ( state.debug.map == true ) {
+                        const rectCtx = canvasHelpers.getBackCanvasContext()
+                        rectCtx.rect( blockedTile["LEFT"], blockedTile["TOP"], 
+                        blockedTile["RIGHT"] - blockedTile["LEFT"], blockedTile["BOTTOM"] - blockedTile["TOP"] )
+                        rectCtx.strokeStyle = "red";
+                        rectCtx.stroke()
+                    }
+                }    
+            }
+        })        
+    }        
 
 
     // if tile is E - empty...
@@ -211,6 +217,19 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        
+
+    if ( state.debug.map == 'pie' ) {
+        const rectCtx = canvasHelpers.getBackCanvasContext()
+        rectCtx.rect( startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize ) 
+        rectCtx.strokeStyle = "black";        
+        rectCtx.stroke()
+
+        rectCtx.font = "20px Times New Roman";
+        rectCtx.fillText(
+            tile,
+            startPositionInCanvas.x, startPositionInCanvas.y + 17.5
+        )
+    }
     
 }
 

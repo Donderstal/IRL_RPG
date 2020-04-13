@@ -81,7 +81,7 @@ const initializeBattleCharacter = ( player, opponent ) => {
         'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
 
-    player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
+    player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/' + state.playerCharacter.stats.className.toLowerCase() + '_fight.png', true )
     player.character    = new CharacterBlueprint( state.playerCharacter.stats.name, state.playerCharacter.stats.className )
     player.statsBar     = new BattleStats( player.character, true )
 

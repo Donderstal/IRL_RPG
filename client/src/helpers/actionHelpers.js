@@ -1,7 +1,9 @@
 const mapHelpers    = require('./mapHelpers')
+const canvasHelpers = require('./canvasHelpers')
 const globals       = require('../game-data/globals')
+const state       = require('../game-data/state')
 
-const generateAction = ( type, actionSource, newXy = null, npcDirection = null ) => {
+const generateAction = ( type, actionSource, newXy = null ) => {
     if ( type === 'NPC' ) {
 
         const actionCellXy = mapHelpers.getXYOfCell( actionSource.row, actionSource.col )
@@ -49,6 +51,23 @@ const generateAction = ( type, actionSource, newXy = null, npcDirection = null )
                 actionSource.y = actionCellXy.y
                 actionSource.left = actionCellXy.x
                 actionSource.right = actionCellXy.x + globals.GRID_BLOCK_PX
+        }
+
+        if ( state.debug.map == true ) {
+            if ( actionSource.x ) {
+                console.log( 'actionX: ' + actionSource.x )
+                canvasHelpers.drawLineOnYAxis( 
+                    actionSource.top, actionSource.x, 
+                    actionSource.bottom, 'red', 'BACK'
+                )                
+            }
+            else {
+                console.log( 'actionY: ' + actionSource.y )
+                canvasHelpers.drawLineOnXAxis( 
+                    actionSource.left, actionSource.y, 
+                    actionSource.right, 'red', 'BACK'
+                )       
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 <script>
     import MainUiButton from './main-ui-button.svelte'
     import startGame from '../../game/startGame.js';
+    import state from '../../game-data/state.js'
 
     const isCheckboxChecked = ( checkboxId ) => {
         return document.getElementById(checkboxId).checked
@@ -86,9 +87,9 @@
     <div>
         <h4>Battle test or normal?</h4>
         <label>Battle debug</label>
-        <input type="checkbox" id="map-debug">
-        <label>Map debug</label>
         <input type="checkbox" id="battle-debug">
+        <label>Map debug</label>
+        <input type="checkbox" id="map-debug">
     </div>
     <div>
         <button on:click={ startGameWithParams }>Start!!</button>
