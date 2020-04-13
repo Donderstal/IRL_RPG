@@ -1,7 +1,6 @@
 const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const state = require('../game-data/state')
-const initMap = require('./map/map-init/initMap')
 const controls = require('./controls')
 const controller = require('./gameController')
 
@@ -9,6 +8,7 @@ const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
 
 const mapJSONFolder = '/static/maps/'
+const battleMapUrl = mapJSONFolder + 'battle-maps/battle_map1.json';
 const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
 
 const stopGame = () => {
@@ -59,14 +59,11 @@ const loadGame = ( ) => {
 }
 
 const startNewGame = ( json ) => {
-    fetchJson( firstMapUrl, initMap.initializeMap );
-
     controller.startMap( "NEW_GAME", json )
-
     setTimeout( () => {
         controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
-    }, 500 );
+    }, 1000 );
 }
 
 /**

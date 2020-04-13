@@ -1,4 +1,4 @@
-const initChar      = require('./character/character-init/initCharacter')
+const CharacterBlueprint      = require('./character/character-init/characterBlueprint').CharacterBlueprint
 const initMapSprite = require('./map/map-init/mapSprite')
 
 const getCharacter = ( className, name, playerStart, typeOfStart ) => {
@@ -8,7 +8,7 @@ const getCharacter = ( className, name, playerStart, typeOfStart ) => {
         // is called from GfxContainer.svelte
         // posssible third property for usage in story state?
         
-        stats : initChar.getCharWithClass( className, name ),
+        stats : new CharacterBlueprint( name, className ),
         sprite : new initMapSprite.MapSprite( playerStart, '/static/sprites/neckbeard.png', typeOfStart )               
     }
  
