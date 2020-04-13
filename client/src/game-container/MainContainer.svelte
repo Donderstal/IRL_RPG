@@ -1,5 +1,4 @@
 <script>
-    import classList from '../game/character/character-init/initClasses.js';
     import stateLogger from '../game-data/saveState.js';
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import MainUiButton from './svelte-partials/main-ui-button.svelte'
@@ -59,9 +58,7 @@
 
 <div class="main-container">
     <input type="file" id="JSON_input" name="JSON_file">
-    <GfxContainer
-        classList={classList}
-    />
+    <GfxContainer/>
 
     { #each buttons as button }
         <MainUiButton vwFromLeft={button.vw} elementId={button.id} on:buttonPress={ button.action } buttonText={button.text} />

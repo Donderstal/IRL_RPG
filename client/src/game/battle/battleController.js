@@ -2,7 +2,7 @@ const init          = require('./battle-init/initBattle')
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
 const Sound         = require('./../interfaces/I_Sound').Sound
-const initChar      = require('./../character/character-init/initCharacter')
+const CharacterBlueprint  = require('./../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
 const text          = require('./battle-ui/battleText')
 const canvas        = require('./../../helpers/canvasHelpers')
@@ -82,11 +82,11 @@ const initializeBattleCharacter = ( player, opponent ) => {
     }
 
     player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/neckbeard_fight.png', true )
-    player.character    = initChar.getCharWithClass( state.playerCharacter.stats.className, state.playerCharacter.stats.name )
+    player.character    = new CharacterBlueprint( state.playerCharacter.stats.name, state.playerCharacter.stats.className )
     player.statsBar     = new BattleStats( player.character, true )
 
     opponent.sprite     = new BattleSprite( opponentXy, '/static/battlesprites/' + mapBattleAction.character.class + '_fight_L.png' )
-    opponent.character  = initChar.getCharWithClass( mapBattleAction.character.class, mapBattleAction.name )
+    opponent.character  = new CharacterBlueprint( mapBattleAction.name, mapBattleAction.character.class )
     opponent.statsBar   = new BattleStats( opponent.character, false )
 }
 

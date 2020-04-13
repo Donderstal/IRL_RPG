@@ -61,28 +61,27 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
 }
 
 const passPhase = ( battleState, battleText ) => {
-    let playerHasTurn = battleState.player.hasTurn
-    const phase = battleState.battlePhase
+    const playerHasTurn = battleState.player.hasTurn
 
-    switch ( phase ) {
+    switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_TURN'] :
-            phase = globals['PHASE_SELECT_MOVE'];
+            battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
             break;
         case globals['PHASE_SELECT_MOVE'] :
-            phase = globals['PHASE_DO_MOVE'];
+            battleState.battlePhase = globals['PHASE_DO_MOVE'];
             battleState.player.sprite.activateUI( false )
             break;
         case globals['PHASE_DO_MOVE'] :
-            phase = globals['PHASE_STAT_CHECK'];
+            battleState.battlePhase = globals['PHASE_STAT_CHECK'];
             break;
         case globals['PHASE_STAT_CHECK'] :
             if ( checkForDeath(battleState, battleText) ) {
-                phasee = "END"
+                battleState.battlePhase = "END"
             }
             else {
                 battleState.player.hasTurn = ( playerHasTurn ) ? false : true
                 battleState.opponent.hasTurn = ( playerHasTurn ) ? false : true
-                phase = globals['PHASE_BEGIN_TURN'];
+                battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
             }
             break;
         case "END":
@@ -93,17 +92,17 @@ const passPhase = ( battleState, battleText ) => {
 
 const checkForDeath = ( battleState, battleText ) => {
     if ( battleState.player.character.stats.Health <= 0 ) {
-        return handleBattleDeath( battleState.player, battleState.opponent )
+        return handleBattleDeath( battleState.player, battleState.opponent, battleText )
     }
     else if ( battleState.opponent.character.stats.Health <= 0 ) {
-        return handleBattleDeath( battleState.opponent, battleState.player )
+        return handleBattleDeath( battleState.opponent, battleState.player, battleText )
     }
     else {
         return false        
     }
 }
 
-const handleBattleDeath = ( loser, winner ) => {
+const handleBattleDeath = ( loser, winner, battleText ) => {
     battleText.setText( 
         loser.character.name + " has been wrecked..." 
     )

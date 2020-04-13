@@ -63,7 +63,7 @@ const handlePhase = ( battleText, playerSprite, opponentSprite ) => {
                     const sfx = new Sound( "battle-baba.mp3", true )
                     sfx.play()
                     opponentSprite.animateAttack( "PUNCH" )
-                    opponentSprite.setShout( res.getBattleShout(opponentCharacte.className, "FIGHT") )
+                    opponentSprite.setShout( res.getBattleShout(opponentCharacter.className, "FIGHT") )
                     playerSprite.animateHit( )
                     opponentCharacter.moves.attack( opponentCharacter, playerCharacter )
                     battleState.moveResultText = playerCharacter.name + " takes "+ battleState.currentMoveDamage +" damage!!!"                    

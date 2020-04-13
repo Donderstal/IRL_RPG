@@ -8,7 +8,8 @@ const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
 
 const mapJSONFolder = '/static/maps/'
-const firstMapUrl = mapJSONFolder + 'battle-maps/battle_map1.json';
+const battleMapUrl = mapJSONFolder + 'battle-maps/battle_map1.json';
+const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
