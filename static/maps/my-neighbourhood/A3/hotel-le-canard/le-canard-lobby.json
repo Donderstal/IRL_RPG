@@ -1,6 +1,5 @@
 {
-    "mapName": "my-neighbourhood/A3/hotel-le-canard",
-    "tileSet": "le-canard-lobby.json",
+    "mapName": "my-neighbourhood/A3/hotel-le-canard/le-canard-lobby",
     "src": "Generic_Room_C_Tile_Set.png",
     "music": "game-jam-2.mp3",
     "outdoors": false,
@@ -70,7 +69,7 @@
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
                 "direction": "FACING_LEFT",
-                "text": "Welcome to Hotel Le Canard. May I see you credit rating, please?"
+                "text": "Welcome to Hotel Le Canard. May I see your credit rating, please?"
             }
         },
         {
