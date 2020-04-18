@@ -4,6 +4,7 @@ const movementChecker = require('./movementChecker')
 const handleDoors = require('./handleDoors')
 
 let frameCount = 0;
+let doorFrameCount = 0; 
 
 /**
  * Call functions in order to move sprite
@@ -47,8 +48,7 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
 const moveInDirection = ( sprite, direction ) => {
 
     const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
-    
-    const urlToNewMap = handleDoors.checkIfDoor(sprite, direction)
+    let urlToNewMap = checkForDoorIfNeeded(sprite, direction)
 
     if ( movementIsAllowed && !urlToNewMap ) {
 
@@ -82,6 +82,17 @@ const moveInDirection = ( sprite, direction ) => {
 
 
     sprite.direction = globals[direction]        
+}
+
+const checkForDoorIfNeeded = (sprite, direction) => {
+    if ( doorFrameCount == 6 ) {
+        doorFrameCount = 0
+        return handleDoors.checkIfDoor(sprite, direction)
+    }
+    else {
+        doorFrameCount++
+        return false
+    }
 }
 
 /**

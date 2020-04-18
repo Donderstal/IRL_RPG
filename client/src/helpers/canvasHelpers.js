@@ -94,8 +94,8 @@ const breakTextIntoLines = ( text, fontSize ) => {
     return text
 }
 
-const drawLineOnXAxis = (oldX, y, newX, color = null) => {
-    let ctx = getFrontCanvasContext()   
+const drawLineOnXAxis = (oldX, y, newX, color = null, canvas = null) => {
+    let ctx = ( canvas == null ) ? getFrontCanvasContext() : getBackCanvasContext()
 
     ctx.beginPath( )
     ctx.moveTo( oldX, y ); 
@@ -104,8 +104,8 @@ const drawLineOnXAxis = (oldX, y, newX, color = null) => {
     ctx.stroke( );
 }
 
-const drawLineOnYAxis = (oldY, x, newY, color = null) => {
-    let ctx = getFrontCanvasContext()   
+const drawLineOnYAxis = (oldY, x, newY, color = null, canvas = null) => {
+    let ctx = ( canvas == null ) ? getFrontCanvasContext() : getBackCanvasContext()
 
     ctx.beginPath( )
     ctx.moveTo( x, oldY ); 

@@ -11,11 +11,12 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
 
-    state.currentMap.layeredSprites = []    
-
-    NPCs.NPCController()    
-    mapControls.handleMovementKeys( )
-    drawSpritesInOrder()
+    if (state.currentMap.borders) {
+        state.currentMap.layeredSprites = []            
+        NPCs.NPCController()    
+        mapControls.handleMovementKeys( )
+        drawSpritesInOrder()                    
+    }
     
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawBubble( )

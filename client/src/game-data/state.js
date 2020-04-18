@@ -6,15 +6,10 @@ module.exports = {
     listeningForPress : false,
     changeRequest : "NO",
     pressedKeys: { },
-
     currentMap : {
         map		: true,
-        mapData : {
-
-        }
-
+        mapData : {}
     },
-
     battleState 	: {
         player  : {
             hasTurn : false
@@ -24,8 +19,9 @@ module.exports = {
         },
         battlePhase : null
     },
-
-    playerCharacter : {
-
+    playerCharacter : {},
+    debug : { 
+        map: false,
+        battle: false
     }
 }

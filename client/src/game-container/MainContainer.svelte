@@ -3,6 +3,7 @@
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import MainUiButton from './svelte-partials/main-ui-button.svelte'
     import startGame from '../game/startGame.js';
+    import StartGameModal from './svelte-partials/StartGameModal.svelte'
 
     let buttonsAreHidden = false;
 
@@ -25,6 +26,10 @@
         buttonsAreHidden = !buttonsAreHidden;
     }
 
+    const showStartGameModal = ( ) => {
+        document.getElementsByClassName('Modal')[0].style.visibility = "visible";
+    }
+
     const buttons = [
         { id : "hide-buttons-button", vw: '1vw', text : 'HIDE BUTTONS', action : hideButtons },
         { id : "log-in-button", vw: '9vw', text : 'LOG IN', action : hideButtons },
@@ -32,7 +37,7 @@
 
         { id : "help-button", vw: '46.5vw', text : 'HELP', action : stateLogger.logState },
 
-        { id : "new-game-button", vw: '68vw', text : 'NEW GAME', action : startGame.startGame },
+        { id : "new-game-button", vw: '68vw', text : 'NEW GAME', action : showStartGameModal },
         { id : "load-button", vw: '76vw', text : 'LOAD GAME', action : startGame.loadGame },
         { id : "save-button", vw: '84vw', text : 'SAVE GAME', action : startGame.saveGame },
         { id : "save-and-quit-button", vw: '92vw', text : 'SAVE & QUIT', action : startGame.stopGame }
@@ -57,9 +62,9 @@
 </style>
 
 <div class="main-container">
+    <StartGameModal/>
     <input type="file" id="JSON_input" name="JSON_file">
     <GfxContainer/>
-
     { #each buttons as button }
         <MainUiButton vwFromLeft={button.vw} elementId={button.id} on:buttonPress={ button.action } buttonText={button.text} />
     {/each}

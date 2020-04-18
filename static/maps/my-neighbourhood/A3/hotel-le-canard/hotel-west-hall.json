@@ -1,0 +1,33 @@
+{
+    "mapName": "my-neighbourhood/A3/hotel-le-canard/hotel-west-hall",
+    "src": "Generic_Room_A_Tile_Set.png",
+    "music": "game-jam-2.mp3",
+    "outdoors": false,
+    "rows":3,
+    "columns":23,
+    "uniqueTiles": 79,
+    "grid": [
+        [11,11,11,60,11,11,11,11,11,11,11,60,11,11,11,11,11,11,11,60,11,11,11,11],
+        [15,15,15,64,15,15,15,15,15,15,15,64,15,15,15,15,15,15,15,64,15,15,15,15],
+        [10,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,63],
+        [14,62,62,62,62,67,62,62,62,67,62,62,62,67,62,62,62,67,62,62,62,67,62,62]
+    ],
+    "doors": [
+        {
+            "row": 2, 
+            "col": 23,
+            "to"  : "my-neighbourhood/A3/hotel-le-canard/le-canard-lobby",
+            "directionIn": "FACING_RIGHT",
+            "directionOut": "FACING_LEFT",
+            "locked": false
+        },
+        {
+            "row": 0, 
+            "col": 3,
+            "to"  : "my-neighbourhood/A3/hotel-le-canard/west-hall/room-large-1",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        }
+    ]
+    }

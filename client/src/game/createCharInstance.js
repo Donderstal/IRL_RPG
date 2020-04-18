@@ -2,14 +2,11 @@ const CharacterBlueprint      = require('./character/character-init/characterBlu
 const initMapSprite = require('./map/map-init/mapSprite')
 
 const getCharacter = ( className, name, playerStart, typeOfStart ) => {
-    return {
-        
-        // entry point for creating a character
-        // is called from GfxContainer.svelte
-        // posssible third property for usage in story state?
-        
+    let mapSpritesFolder = '/static/sprites/';
+    let spriteSrc = mapSpritesFolder + className.toLowerCase() + '.png'
+    return {      
         stats : new CharacterBlueprint( name, className ),
-        sprite : new initMapSprite.MapSprite( playerStart, '/static/sprites/neckbeard.png', typeOfStart )               
+        sprite : new initMapSprite.MapSprite( playerStart, spriteSrc, typeOfStart )               
     }
  
 }
