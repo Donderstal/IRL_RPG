@@ -34,12 +34,12 @@ const generateAction = ( type, actionSource, newXy = null ) => {
         const actionCellXy = mapHelpers.getXYOfCell( actionSource.row, actionSource.col )
         switch ( actionSource.direction || actionSource.directionIn ) {
             case ( 'FACING_LEFT' ) :
-                actionSource.x = actionCellXy.x + globals.GRID_BLOCK_PX
+                actionSource.x = actionCellXy.x 
                 actionSource.top = actionCellXy.y
                 actionSource.bottom = actionCellXy.y + globals.GRID_BLOCK_PX
                 break
             case ( 'FACING_RIGHT' ) :
-                actionSource.x = actionCellXy.x 
+                actionSource.x = actionCellXy.x + globals.GRID_BLOCK_PX
                 actionSource.top = actionCellXy.y
                 actionSource.bottom = actionCellXy.y + globals.GRID_BLOCK_PX
                 break
@@ -48,7 +48,7 @@ const generateAction = ( type, actionSource, newXy = null ) => {
                 actionSource.left = actionCellXy.x
                 actionSource.right = actionCellXy.x + globals.GRID_BLOCK_PX
             case ( 'FACING_UP' ) :
-                actionSource.y = actionCellXy.y
+                actionSource.y = actionCellXy.y + globals.GRID_BLOCK_PX
                 actionSource.left = actionCellXy.x
                 actionSource.right = actionCellXy.x + globals.GRID_BLOCK_PX
         }

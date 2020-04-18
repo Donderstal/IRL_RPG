@@ -43,8 +43,11 @@ const initBattleMapAndSprites = ( ) => {
 
     
     setTimeout( ( ) => {
-        text.initTextContainer( true ) // real text
-        text.initTextContainer() // debug
+        text.initTextContainer( ) // real text
+        if ( state.debug.battle == true ) {
+            text.initTextContainer(state.debug.battle)   
+        }
+
     }, 2000) 
 
     setTimeout( ( ) => {
