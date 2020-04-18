@@ -13,13 +13,7 @@ let initializingMap = false;
 const initMap = ( json, BOOT_STATUS ) =>{
     initializingMap = true
 
-    if ( BOOT_STATUS == "FROM_BATTLE" ) {
-        initMapFromBattle( )
-    }
-    else {
-        getMap( json, BOOT_STATUS )        
-    }
-
+    ( BOOT_STATUS == "FROM_BATTLE" ) ? initMapFromBattle( ) : getMap( json, BOOT_STATUS )        
 
     setTimeout( ( ) => {
         initializingMap = false;
@@ -31,15 +25,14 @@ const switchMap = ( transition ) => {
     const oldMapName    = transition.oldMapName    
 
     if ( !initializingMap ) {
+        state.currentMap = { blockedXyValues: [] }
         canvasHelpers.clearBothCanvases();
         initNewMapAfterClearingOld(urlToNewMap, oldMapName)        
     }
 }
 
 const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
-    initializingMap = true;
-    state.currentMap.NPCs = []
-    state.paused = true;
+    initializingMap, state.paused = true;
     utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap, "MAP_TO_MAP" )
 
     setTimeout( () => {

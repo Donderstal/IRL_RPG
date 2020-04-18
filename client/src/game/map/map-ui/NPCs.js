@@ -33,9 +33,7 @@ const handleStaticNPCAnimation = ( NPC ) => {
         else if ( NPC.sprite.animIterator === 1 ) {
             NPC.sprite.animIterator = 0
         }
-
-    }
-       
+    }   
 }
 
 const handleDynamicNPCAnimation = ( NPC ) => {
