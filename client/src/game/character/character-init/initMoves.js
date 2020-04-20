@@ -10,7 +10,8 @@ const initMoves = ( className ) => {
         moves._2_ = "Two" 
         moves._3_ = "Three"
         moves._4_ = "Four"
-    }               
+    }   
+    return moves;            
 }
 
 module.exports = {

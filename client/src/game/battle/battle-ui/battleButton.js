@@ -11,6 +11,7 @@ class battleButton {
         this.text       = buttonText,
         this.toolTip    = toolTipText,
         this.hint       = hintText
+        this.isMenuButton = false;
 
         this.textColor  = "black"
         this.active     = false
@@ -27,7 +28,7 @@ class battleButton {
     drawButton( ) {
         canvas.drawCircle( this.centralX, this.centralY, this.range, this.text )
         canvas.writeTextLine( this.text, this.textX, this.textY, "LARGE", this.textColor )
-        if ( this.active ) {
+        if ( this.active || this.isMenuButton ) {
             canvas.writeTextLine( this.toolTip, this.toolTipX, this.toolTipY, "LARGE" )            
         }
     }

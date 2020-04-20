@@ -97,7 +97,8 @@ const passPhase = ( battleState, battleText ) => {
 
 const setMoveMenu = ( battleState, battleText ) => {
     battleState.menuIsActive = true;
-    battleText.setMoveMenu(  )
+    battleText.setMoveMenu( )
+    battleState.player.sprite.initBattleMovesMenu( battleState.player.character.moves )
 }
 
 const unsetMoveMenu = ( battleState, battleText ) => {
