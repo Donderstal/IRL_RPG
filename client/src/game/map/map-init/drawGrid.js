@@ -83,7 +83,7 @@ const drawGrid = ( startingPosition, currentMap ) => {
 
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
     let borderObject = { 
-        top     : gridStartingPosition.y + ( globals.GRID_BLOCK_PX * .5 ),
+        top     : gridStartingPosition.y,
         left    : gridStartingPosition.x,
         bottom  : gridStartingPosition.y + ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * .5 ,
         right   : gridStartingPosition.x + ( mapColumns * globals.GRID_BLOCK_PX )
@@ -108,9 +108,8 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
             }
 
             state.currentMap.blockedXyValues.push( blockedXy )
-        })
+        } )
     }
-
 }
 
 /** 
@@ -136,27 +135,21 @@ const drawRow = ( currentMap, currentRow, position ) => {
 // The blocked tiles system is shitty and needs to change
 const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas ) => {
     if ( currentMap.mapData.blocked ) {
+        let blockedTile = {
+            "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
+            "LEFT": startPositionInCanvas.x,
+            "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
+            "TOP": startPositionInCanvas.y
+        }    
+
         currentMap.mapData.blocked.forEach( ( e ) => {
             if ( !e.id ) {
                 if ( tile === e ) {
-                    currentMap.blockedXyValues.push( { 
-                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                        "LEFT": startPositionInCanvas.x,
-                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                        "TOP": startPositionInCanvas.y
-                    } )
-
+                    currentMap.blockedXyValues.push( blockedTile )
                 }                   
             }
             else {
                 if ( tile === e.id ) {
-                    let blockedTile = {
-                        "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-                        "LEFT": startPositionInCanvas.x,
-                        "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-                        "TOP": startPositionInCanvas.y
-                    }
-
                     if ( e.top ) {
                         blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
                     }

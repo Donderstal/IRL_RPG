@@ -1,25 +1,22 @@
 const state         = require('../../../game-data/state')
 const globals = require('../../../game-data/globals')
 
-/**
- * 
- */
 const NPCController = () => {
     if ( state.currentMap.NPCs ) {
         state.currentMap.NPCs.forEach( ( NPC) => {
-            pushJsonNPCToState(NPC)
+            handleNPCAnimation(NPC)
+            state.currentMap.layeredSprites.push( NPC.sprite ) 
         })        
     }
 }
 
-const pushJsonNPCToState = ( NPC ) => {
+const handleNPCAnimation = ( NPC ) => {
     if ( NPC.type === "static" ) {
         handleStaticNPCAnimation( NPC )
     }
     if ( NPC.type === "dynamic" ) {
         handleDynamicNPCAnimation( NPC )
     }
-    state.currentMap.layeredSprites.push( NPC.sprite )   
 }
 
 const handleStaticNPCAnimation = ( NPC ) => {
@@ -39,11 +36,10 @@ const handleStaticNPCAnimation = ( NPC ) => {
 const handleDynamicNPCAnimation = ( NPC ) => {
     getNextNPCPosition( NPC )
     countFrame( NPC )
-
     checkForAnimationPath( NPC )
 
     NPC.blocked = NPC.sprite.updateBlockedXy( )
-    NPC.sprite.updateActionXy( NPC.action )
+    NPC.action = NPC.sprite.updateActionXy( NPC.action )
 }
 
 const checkForAnimationPath =  ( NPC ) => {
