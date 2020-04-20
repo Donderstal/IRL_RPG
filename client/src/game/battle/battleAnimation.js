@@ -68,7 +68,7 @@ const handlePhase = ( battleText, playerSprite, opponentSprite ) => {
                     opponentSprite.animateAttack( "PUNCH" )
                     opponentSprite.setShout( res.getBattleShout(opponentCharacter.className, "FIGHT") )
                     playerSprite.animateHit( )
-                    opponentCharacter.moves.attack( opponentCharacter, playerCharacter )
+                    opponentCharacter.standardAttack( opponentCharacter, playerCharacter )
                     battleState.moveResultText = playerCharacter.name + " takes "+ battleState.currentMoveDamage +" damage!!!"                    
                 }
             }

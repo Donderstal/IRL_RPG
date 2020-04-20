@@ -139,7 +139,7 @@ const handlePunch = ( battleState, battleText ) => {
         battleState.player.sprite.animateAttack( "PUNCH" )
         battleState.opponent.sprite.animateHit( )
         battleState.player.sprite.setShout( res.getBattleShout( battleState.player.character.className, "FIGHT" ) )
-        battleState.player.character.moves.attack( battleState.player.character, battleState.opponent.character )
+        battleState.player.character.standardAttack( battleState.player.character, battleState.opponent.character )
     }, 500 )
 }
 

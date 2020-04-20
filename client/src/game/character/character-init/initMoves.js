@@ -1,15 +1,16 @@
-const initMoves = ( ) => {
-    return {
-        attack : (attacker, defender) => {
-            let damage = attacker.stats.Attack * 2
-            damage = ( Math.random() > 0.5 ) ? damage : ( Math.random() > 0.5 ) ? damage - 1 : damage + 1
-            defender.receiveDamage(damage)
-        },
-        sing : (attacker, defender) => {
-            const damage = attacker.stats.Sp_Attack
-            defender.receiveSpDamage(damage)
-        }            
-    }                
+const initMoves = ( className ) => {
+    let moves = {
+        _1_: null,
+        _2_: null,
+        _3_: null,
+        _4_: null
+    }
+    if ( className ) {
+        moves._1_ = "One"
+        moves._2_ = "Two" 
+        moves._3_ = "Three"
+        moves._4_ = "Four"
+    }               
 }
 
 module.exports = {

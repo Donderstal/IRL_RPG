@@ -15,7 +15,13 @@ class CharacterBlueprint {
 
         this.traits         = initTraits( this.className, this.gender )
         this.stats          = initStats.calcStats(this.traits),
-        this.moves          = initMoves.initMoves(this.classFocus);
+        this.moves          = initMoves.initMoves(this.className);
+    }
+
+    standardAttack(attacker, defender) {
+        let damage = attacker.stats.Attack * 2
+        damage = ( Math.random() > 0.5 ) ? damage : ( Math.random() > 0.5 ) ? damage - 1 : damage + 1
+        defender.receiveDamage(damage)
     }
 
     receiveDamage(damage) {
