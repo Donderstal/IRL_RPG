@@ -14,10 +14,11 @@ class Sprite {
             this.height  = globals.BATTLE_SPRITE_HEIGHT;   
         }
 
-        this.left, this.right, this.top, this.bottom  = 0
+        this.left, this.right, this.top, this.bottom;
 
         this.animLoop      = [ 0, 1, 2, 3]
-        this.animIterator, this.frameCount    = 0
+        this.animIterator  = 0
+        this.frameCount    = 0
         this.direction     = spriteDirection;
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();

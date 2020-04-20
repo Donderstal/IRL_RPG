@@ -52,11 +52,9 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
  */
 
 const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
-
     const gridStartingPosition = {}
 
     gridStartingPosition.x = Math.ceil( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
-
     gridStartingPosition.y = Math.ceil( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
 
     return gridStartingPosition 
@@ -71,12 +69,10 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  */
 
 const drawGrid = ( startingPosition, currentMap ) => {
-
     const position = startingPosition
 
     for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
-
         drawRow( currentMap, currentRow, position )
 
         position.y += globals.GRID_BLOCK_PX
@@ -99,7 +95,6 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
 
         state.currentMap.mapData.inaccessible.forEach( (e) => {
             const topLeftXy = mapHelpers.getXYOfCell( e.topLeft.row, e.topLeft.col )
-            
             let bottomRightXy = mapHelpers.getXYOfCell( e.bottomRight.row, e.bottomRight.col );
 
             bottomRightXy.x += globals.GRID_BLOCK_PX
@@ -127,27 +122,19 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
  */
 
 const drawRow = ( currentMap, currentRow, position ) => {
-    for ( var j = 0; j <= currentMap.mapData.columns; j++) {
+    for ( var j = 0; j <= currentMap.mapData.columns; j++ ) {
         const currentTile = currentRow[j]
 
+        setBlockedXyIfNeeded( currentMap, currentTile, position )
         drawTileInGridBlock( currentMap, currentTile, position )
 
         position.x += globals.GRID_BLOCK_PX
     }
-
 }
 
-/** 
- * Add block to BlockedXyValues if necessary
- * Handle non-numeric tile if necessary
- * Get blocksize and current tile xy in sheet from globals
- * Then draw the tile in block
- * 
- * @param {object} currentMap - Object containing all the data needed to draw Grid
- * @param {integer} tile - number representing position of the tile in a tilesheet
- * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
- */
-const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
+
+// The blocked tiles system is shitty and needs to change
+const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas ) => {
     if ( currentMap.mapData.blocked ) {
         currentMap.mapData.blocked.forEach( ( e ) => {
             if ( !e.id ) {
@@ -185,18 +172,29 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
                     currentMap.blockedXyValues.push( blockedTile )
 
                     if ( state.debug.map == true ) {
-                        const rectCtx = canvasHelpers.getBackCanvasContext()
+                        const rectCtx = canvasHelpers.getBackCanvasContext( );
                         rectCtx.rect( blockedTile["LEFT"], blockedTile["TOP"], 
                         blockedTile["RIGHT"] - blockedTile["LEFT"], blockedTile["BOTTOM"] - blockedTile["TOP"] )
                         rectCtx.strokeStyle = "red";
-                        rectCtx.stroke()
+                        rectCtx.stroke( );
                     }
                 }    
             }
-        })        
-    }        
+        } )        
+    } 
+}
 
-
+/** 
+ * Add block to BlockedXyValues if necessary
+ * Handle non-numeric tile if necessary
+ * Get blocksize and current tile xy in sheet from globals
+ * Then draw the tile in block
+ * 
+ * @param {object} currentMap - Object containing all the data needed to draw Grid
+ * @param {integer} tile - number representing position of the tile in a tilesheet
+ * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
+ */
+const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
     // if tile is E - empty...
     if ( tile === "E" || tile === null) {
         return 

@@ -55,14 +55,12 @@ const generateAction = ( type, actionSource, newXy = null ) => {
 
         if ( state.debug.map == true ) {
             if ( actionSource.x ) {
-                console.log( 'actionX: ' + actionSource.x )
                 canvasHelpers.drawLineOnYAxis( 
                     actionSource.top, actionSource.x, 
                     actionSource.bottom, 'red', 'BACK'
                 )                
             }
             else {
-                console.log( 'actionY: ' + actionSource.y )
                 canvasHelpers.drawLineOnXAxis( 
                     actionSource.left, actionSource.y, 
                     actionSource.right, 'red', 'BACK'
