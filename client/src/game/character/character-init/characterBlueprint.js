@@ -1,5 +1,3 @@
-const randomNameGen = require('../../../helpers/randomNameGen')
-const mathHelpers = require('../../../helpers/mathHelpers')
 const initStats = require('./initStats')
 const initMoves = require('./initMoves')
 

@@ -6,7 +6,6 @@ const soundHelper = require('../../interfaces/I_Sound')
 const handleActionButton = ( ) => {
     const sprite = state.playerCharacter.sprite
     const direction = sprite.direction
-
     const npcActions = []
 
     if ( state.currentMap.bubbleIsActive ) {

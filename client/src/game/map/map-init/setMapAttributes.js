@@ -2,19 +2,16 @@ const state         = require('../../../game-data/state')
 const actionHelpers = require('../../../helpers/actionHelpers')
 
 const setMapAttributes = ( ) => {
-    setDoorsAndDetectEntryPoint( )
+    setDoors( )
     setActions( )
 }
 
 /**
-  * @param {string} previousMap - string representing relative path to previous map
-  * 
   * Get doors in current map from mapData json in state
   * Loop over them, calc their xy values
   * Push them to doors array in currentMap
-  * If player entered from a door, call setSpritePositionForNewMap
   */
- const setDoorsAndDetectEntryPoint = ( previousMap ) => {
+ const setDoors = () => {
     state.currentMap.doors = []
      if ( state.currentMap.mapData.doors ) {
         const mapDoors = state.currentMap.mapData.doors

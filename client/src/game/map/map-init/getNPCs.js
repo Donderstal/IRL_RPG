@@ -92,7 +92,7 @@ class NPC extends MapSprite {
             actionDirection = 'FACING_DOWN'
         }
 
-        NPCAction = actionHelpers.generateAction( 
+        return actionHelpers.generateAction( 
             'UPDATE_NPC', 
             NPCAction, 
             { 'x': this.cell.x, 'y': this.cell.y }, 
@@ -101,14 +101,12 @@ class NPC extends MapSprite {
     }
 
     updateBlockedXy( ) {
-        const newBlockedTile = { 
+        return { 
             "BOTTOM": this.bottom,
             "LEFT": this.left,
             "RIGHT": this.right,
             "TOP": this.cell.y              
         }
-        
-        return newBlockedTile
     }
 }
 

@@ -14,10 +14,7 @@ class Sprite {
             this.height  = globals.BATTLE_SPRITE_HEIGHT;   
         }
 
-        this.left    = 0
-        this.right   = 0
-        this.top     = 0
-        this.bottom  = 0
+        this.left, this.right, this.top, this.bottom;
 
         this.animLoop      = [ 0, 1, 2, 3]
         this.animIterator  = 0
@@ -69,7 +66,6 @@ class Sprite {
 
     calcXyFromCell( ) {
         const xy = mapHelpers.getXYOfCell(this.row, this.col)
-        
         this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
         this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
 
@@ -80,9 +76,9 @@ class Sprite {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.animLoop[this.animIterator] * 37, 
-            this.direction * 37, 
-            37, 37,
+            this.animLoop[this.animIterator] * globals.MAP_SPRITE_WIDTH_IN_SHEET, 
+            this.direction * globals.MAP_SPRITE_HEIGHT_IN_SHEET, 
+            globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
             this.x, this.y, this.width, this.height
         )
 
