@@ -33,10 +33,13 @@ const switchMap = ( transition ) => {
 
 const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
     let BOOT_STATUS = "DOOR";
-    for ( neighbour in newMap.neighbours ) {
-        if ( neighbour == previousMapName ) {
-            BOOT_STATUS = "NEIGHBOUR";
-        }
+    let prevMapArray = previousMapName.split('/')
+    let newMapArray = newMap.split('/')
+    const sameArea = ( newMapArray[0] == prevMapArray[0] )
+    const sameName = newMapArray[2].split('-')[0] == prevMapArray[2].split('-')[0]
+
+    if  ( sameArea == sameName ) {
+        BOOT_STATUS = "NEIGHBOUR";
     }
 
     initializingMap, state.paused = true;
