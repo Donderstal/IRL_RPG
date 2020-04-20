@@ -76,9 +76,9 @@ class Sprite {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.animLoop[this.animIterator] * 30, 
-            this.direction * 54, 
-            30, 54,
+            this.animLoop[this.animIterator] * globals.MAP_SPRITE_WIDTH_IN_SHEET, 
+            this.direction * globals.MAP_SPRITE_HEIGHT_IN_SHEET, 
+            globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
             this.x, this.y, this.width, this.height
         )
 

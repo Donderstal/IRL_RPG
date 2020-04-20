@@ -22,6 +22,10 @@ module.exports = {
     CANVAS_COLUMNS : 23,
     CANVAS_ROWS    : 15,
 
+    // sheet dimensions
+    MAP_SPRITE_WIDTH_IN_SHEET: 30,
+    MAP_SPRITE_HEIGHT_IN_SHEET: 54,
+
     // sprite dimensions
     STRD_SPRITE_WIDTH : 54,
     STRD_SPRITE_HEIGHT : 81,
