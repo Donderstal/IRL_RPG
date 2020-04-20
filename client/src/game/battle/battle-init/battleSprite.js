@@ -146,7 +146,7 @@ class BattleSprite extends I_Sprite {
             'x': this.x - ( this.width * 0.25 ), 
             'y': this.y, 
             'text' : res.BATTLE_BUTTON_1, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
-            'hint': res.toolTip
+            'hint': res.BATTLE_PUNCH_HINT
         }
         this.buttons.topMiddleCircle = { 
             'x': this.x - ( this.width * 0.375 ),
@@ -185,6 +185,7 @@ class BattleSprite extends I_Sprite {
     }
 
     initBattleMovesMenu( characterMoves ) {
+        console.log(this.buttons)
         Object.keys(this.buttons).forEach( (key) => {
             switch ( this.buttons[key].text ) {
                 case ( res.BATTLE_BUTTON_1 ) :

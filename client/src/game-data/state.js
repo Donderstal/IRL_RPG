@@ -12,10 +12,8 @@ module.exports = {
     },
     battleState 	: {
         player  : {
-            hasTurn : false
         },
         opponent   : {
-            hasTurn : false
         },
         battlePhase : null
     },

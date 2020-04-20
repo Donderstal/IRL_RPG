@@ -18,8 +18,8 @@ class CharacterBlueprint {
         this.moves          = initMoves.initMoves(this.className);
     }
 
-    standardAttack(attacker, defender) {
-        let damage = attacker.stats.Attack * 2
+    standardAttack( defender ) {
+        let damage = this.stats.Attack * 2
         damage = ( Math.random() > 0.5 ) ? damage : ( Math.random() > 0.5 ) ? damage - 1 : damage + 1
         defender.receiveDamage(damage)
     }

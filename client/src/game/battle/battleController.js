@@ -2,11 +2,9 @@ const init          = require('./battle-init/initBattle')
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
 const Sound         = require('./../interfaces/I_Sound').Sound
-const CharacterBlueprint  = require('./../character/character-init/characterBlueprint').CharacterBlueprint
-const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
 const text          = require('./battle-ui/battleText')
 const canvas        = require('./../../helpers/canvasHelpers')
-const BattleStats      = require('./battle-ui/battleStats').BattleStats
+const BattleChar    = require('./BattleChar').BattleChar
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
@@ -30,9 +28,6 @@ const startBattle = (  ) => {
 const initBattleMapAndSprites = ( ) => {
     let battleMap;
 
-    let player = state.battleState.player;
-    let opponent = state.battleState.opponent;
-
     setTimeout( ( ) => {
         battleMap = new Image();    
         battleMap.src = '/static/battlemaps/city_fight_level.png'
@@ -51,9 +46,9 @@ const initBattleMapAndSprites = ( ) => {
     }, 2000) 
 
     setTimeout( ( ) => {
-        initializeBattleCharacter( player, opponent )
+        initializeBattleCharacter( state.battleState.opponent )
 
-        decideWhoStarts( player, opponent )
+        decideWhoStarts( state.battleState.player, state.battleState.opponent )
     }, 2400)
 }
 
@@ -71,7 +66,7 @@ const decideWhoStarts = ( player, opponent ) => {
     state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
 }
 
-const initializeBattleCharacter = ( player, opponent ) => {
+const initializeBattleCharacter = ( opponent ) => {
     const mapBattleAction = opponent.action
 
     let playerXy = {
@@ -84,13 +79,8 @@ const initializeBattleCharacter = ( player, opponent ) => {
         'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
 
-    player.sprite       = new BattleSprite( playerXy, '/static/battlesprites/' + state.playerCharacter.stats.className.toLowerCase() + '_fight.png', true )
-    player.character    = new CharacterBlueprint( state.playerCharacter.stats.name, state.playerCharacter.stats.className )
-    player.statsBar     = new BattleStats( player.character, true )
-
-    opponent.sprite     = new BattleSprite( opponentXy, '/static/battlesprites/' + mapBattleAction.character.class + '_fight_L.png' )
-    opponent.character  = new CharacterBlueprint( mapBattleAction.name, mapBattleAction.character.class )
-    opponent.statsBar   = new BattleStats( opponent.character, false )
+    state.battleState.player = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy )
+    state.battleState.opponent = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy )
 }
 
 const stopBattle = ( ) => {

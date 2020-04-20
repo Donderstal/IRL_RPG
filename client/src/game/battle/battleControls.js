@@ -15,7 +15,7 @@ const handleBattleKeyPress = ( event ) => {
         state.battleState.battleMusic.stop()
         changeMode.requestModeChange( 'OVERWORLD' )
     }
-    if ( keyIsNumberInMenu && playerCanChooseMove && !battleState.menuIsActive ) {
+    if ( keyIsNumberInMenu && playerCanChooseMove ) {
         battleState.player.sprite.setButtonAsActive( event.key )
     }
     if ( event.key == "q" ) {
@@ -50,7 +50,7 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
                 handlePunch( battleState, battleText )
             }
             if ( button.text.includes("2") ) {
-                setMoveMenu( battleState, battleText )
+                battleState.player.setMoveMenu( )
             }
             if ( button.text.includes("3") ) {
           
@@ -137,10 +137,8 @@ const handlePunch = ( battleState, battleText ) => {
     sfx.play()
     passPhase( battleState )
     setTimeout( ( ) => {
-        battleState.player.sprite.animateAttack( "PUNCH" )
-        battleState.opponent.sprite.animateHit( )
-        battleState.player.sprite.setShout( res.getBattleShout( battleState.player.character.className, "FIGHT" ) )
-        battleState.player.character.standardAttack( battleState.player.character, battleState.opponent.character )
+        battleState.player.standardAttack( )
+        battleState.opponent.animateHit( )
     }, 500 )
 }
 
