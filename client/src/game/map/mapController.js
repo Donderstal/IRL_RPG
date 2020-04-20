@@ -11,7 +11,7 @@ const initMapFromBattle = require('./map-init/initMap').initMapFromBattle
 let initializingMap = false;
 
 const initMap = ( json, BOOT_STATUS ) =>{
-    initializingMap = true
+    initializingMap = true;
 
     ( BOOT_STATUS == "FROM_BATTLE" ) ? initMapFromBattle( ) : getMap( json, BOOT_STATUS )        
 

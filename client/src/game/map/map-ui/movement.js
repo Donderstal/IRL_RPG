@@ -15,26 +15,10 @@ let doorFrameCount = 0;
  * Call @function countFrame to update animationIterator and framecount
  * Draw sprite in new location and/or pose
  */
-const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
-    sprite.clearSprite()
-
+const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
     countFrame( sprite )
-
-    if ( continueAnimating ) {
-        sprite.player = true 
-        
-        let playerInArray 
-        state.currentMap.layeredSprites.forEach((e) => {
-            if ( e.player === true ) {
-                playerInArray = true 
-            }
-        })
-        if ( !playerInArray ) {
-            state.currentMap.layeredSprites.push(sprite)            
-        }
-    }
-
+    state.currentMap.layeredSprites.push(sprite)
 }
 
 /**
@@ -46,7 +30,6 @@ const handleMovementOfSprite = ( sprite, continueAnimating, direction ) => {
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( sprite, direction ) => {
-
     const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
     let urlToNewMap = checkForDoorIfNeeded(sprite, direction)
 

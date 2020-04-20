@@ -29,16 +29,16 @@ const handleMovementKeys = ( ) => {
 
     if ( state.playerCharacter.sprite != undefined ) {
         if ( state.pressedKeys.w || state.pressedKeys.ArrowUp ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, true, 'FACING_UP')
+            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
         }
         if ( state.pressedKeys.a || state.pressedKeys.ArrowLeft ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, true, 'FACING_LEFT')
+            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
         }
         if ( state.pressedKeys.s || state.pressedKeys.ArrowDown ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, true, 'FACING_DOWN')
+            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
         }
         if ( state.pressedKeys.d || state.pressedKeys.ArrowRight ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, true, 'FACING_RIGHT')
+            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
         }    
         
         state.currentMap.layeredSprites.push(state.playerCharacter.sprite)
