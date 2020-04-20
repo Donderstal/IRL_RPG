@@ -25,15 +25,22 @@ const switchMap = ( transition ) => {
     const oldMapName    = transition.oldMapName    
 
     if ( !initializingMap ) {
-        state.currentMap = { blockedXyValues: [] }
+        state.currentMap = { blockedXyValues: [], mapMusic: state.currentMap.mapMusic }
         canvasHelpers.clearBothCanvases();
         initNewMapAfterClearingOld(urlToNewMap, oldMapName)        
     }
 }
 
 const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
+    let BOOT_STATUS = "DOOR";
+    for ( neighbour in newMap.neighbours ) {
+        if ( neighbour == previousMapName ) {
+            BOOT_STATUS = "NEIGHBOUR";
+        }
+    }
+
     initializingMap, state.paused = true;
-    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap, "MAP_TO_MAP" )
+    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap, BOOT_STATUS )
 
     setTimeout( () => {
         initPlayerSpriteInNewMap( previousMapName )
@@ -92,7 +99,7 @@ const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName
 
 const stopMap = ( ) => {
     state.battleState.requestingBattle = false
-    state.currentMap.mapMusic.pause()     
+    state.currentMap.mapMusic.stop()     
 }
 
 module.exports = {

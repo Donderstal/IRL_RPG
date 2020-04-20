@@ -5,14 +5,16 @@ const getNPCs           = require('./getNPCs')
 const setMapAttributes  = require('./setMapAttributes')
 const drawGrid          = require('./drawGrid')
 
-const getMapMusic = ( ) => {
-    if ( state.currentMap.mapMusic && !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
-        state.currentMap.mapMusic.stop()  
-    }
-    if ( !state.currentMap.mapMusic || !state.currentMap.mapMusic.sound.src.includes(state.currentMap.mapData.music) ) {
+const getMapMusic = ( BOOT_STATUS ) => {
+    if ( BOOT_STATUS == "NEW_GAME" || BOOT_STATUS == "SAVE_GAME" ) {
         state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
         state.currentMap.mapMusic.play()  
     }        
+    else if ( BOOT_STATUS == "DOOR" ) {
+        state.currentMap.mapMusic.stop() 
+        state.currentMap.mapMusic = new Sound(state.currentMap.mapData.music)     
+        state.currentMap.mapMusic.play()      
+    }
 }
 
 const getMapAttributesFromSave = ( ) => {
