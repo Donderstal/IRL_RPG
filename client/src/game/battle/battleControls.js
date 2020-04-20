@@ -15,13 +15,15 @@ const handleBattleKeyPress = ( event ) => {
         state.battleState.battleMusic.stop()
         changeMode.requestModeChange( 'OVERWORLD' )
     }
-    if ( keyIsNumberInMenu && playerCanChooseMove ) {
+    if ( keyIsNumberInMenu && playerCanChooseMove && !battleState.menuIsActive ) {
         battleState.player.sprite.setButtonAsActive( event.key )
     }
     if ( event.key == "q" ) {
         handleActionButton( playerCanChooseMove, battleState, battleText )
     }
-
+    if ( event.key == "e" && battleState.menuIsActive ) {
+        unsetMoveMenu( battleState, battleText )
+    }
     else {
         state.pressedKeys[event.key] = true        
     }
@@ -30,6 +32,9 @@ const handleBattleKeyPress = ( event ) => {
 const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
     if ( playerCanChooseMove ) {
         handleBattleMenuClick( battleState, battleText )
+    }
+    else if ( battleState.menuIsActive ) {
+        
     }
     else {
         passPhase( battleState, battleText )
@@ -45,7 +50,7 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
                 handlePunch( battleState, battleText )
             }
             if ( button.text.includes("2") ) {
-  
+                setMoveMenu( battleState, battleText )
             }
             if ( button.text.includes("3") ) {
           
@@ -88,6 +93,16 @@ const passPhase = ( battleState, battleText ) => {
             battleState.battleMusic.stop()
             changeMode.requestModeChange( 'OVERWORLD' )
     }
+}
+
+const setMoveMenu = ( battleState, battleText ) => {
+    battleState.menuIsActive = true;
+    battleText.setMoveMenu(  )
+}
+
+const unsetMoveMenu = ( battleState, battleText ) => {
+    battleState.menuIsActive = false;;
+    battleText.unsetMoveMenu(  )
 }
 
 const checkForDeath = ( battleState, battleText ) => {

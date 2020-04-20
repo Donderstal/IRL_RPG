@@ -12,7 +12,7 @@ class battleButton {
         this.toolTip    = toolTipText,
         this.hint       = hintText
 
-        this.textColor      = "black"
+        this.textColor  = "black"
         this.active     = false
 
         canvas.setFont( "LARGE" )

@@ -20,7 +20,8 @@ class TextContainer {
             this.width  = globals.CANVAS_WIDTH / 2
             this.height = globals.CANVAS_HEIGHT / 6
             this.x      = globals.CANVAS_WIDTH / 4
-            this.y      = globals.CANVAS_HEIGHT * .80            
+            this.y      = globals.CANVAS_HEIGHT * .80     
+            this.isMoveMenu = false;       
         }
         else {
             this.width  = globals.CANVAS_WIDTH / 3
@@ -44,11 +45,18 @@ class TextContainer {
             this.animationFrame = 0
         }
 
-        if ( !this.isDebug ) {
+        if ( !this.isDebug && !this.isMoveMenu ) {
             canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
             canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
             canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
             canvas.writeTextLine( "(Q) Ok", this.x + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor )                  
+        }
+        else if ( this.isMoveMenu ) {
+            canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
+            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
+            canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
+            canvas.writeTextLine("(Q) Ok", this.x + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor)                  
+            canvas.writeTextLine("(E) Back",  this.x + ( this.width / 2 ) + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor) 
         }
         else {
             var turn = ( state.battleState.player.hasTurn ) ? "Player" : "Computer"
@@ -67,6 +75,14 @@ class TextContainer {
             canvas.writeTextLine( "Turn: " + turn, this.x + globals.LARGE_FONT_SIZE, this.y + globals.LARGE_FONT_SIZE * 4, 'LARGE', "black" )  
         }
       
+    }
+    
+    setMoveMenu( ) {
+        this.isMoveMenu = true;
+    }
+
+    unsetMoveMenu( ) {
+        this.isMoveMenu = false
     }
 
     switchButtonColor( ) {

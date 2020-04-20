@@ -29,6 +29,9 @@ const handleBattleAnimations = ( ) => {
     if ( debugText != undefined ) {
         debugText.drawContainer()    
     }
+    if ( state.battleState.menuIsActive ) {
+        
+    }
 
     handlePhase( battleText, playerSprite, opponentSprite )
 
