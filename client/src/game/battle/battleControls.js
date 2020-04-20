@@ -66,7 +66,8 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
 }
 
 const passPhase = ( battleState, battleText ) => {
-    const playerHasTurn = battleState.player.hasTurn
+    const player    = battleState.player
+    const opponent  = battleState.opponent
 
     switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_TURN'] :
@@ -74,7 +75,7 @@ const passPhase = ( battleState, battleText ) => {
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
-            battleState.player.sprite.activateUI( false )
+            player.activateUI( false )
             break;
         case globals['PHASE_DO_MOVE'] :
             battleState.battlePhase = globals['PHASE_STAT_CHECK'];
@@ -84,8 +85,8 @@ const passPhase = ( battleState, battleText ) => {
                 battleState.battlePhase = "END"
             }
             else {
-                battleState.player.hasTurn = ( playerHasTurn ) ? false : true
-                battleState.opponent.hasTurn = ( playerHasTurn ) ? false : true
+                player.hasTurn = ( player.hasTurn ) ? false : true
+                opponent.hasTurn = ( player.hasTurn ) ? false : true
                 battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
             }
             break;

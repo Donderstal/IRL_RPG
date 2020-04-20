@@ -1,5 +1,6 @@
 const res           = require('../../resources/resourceStrings')
 const state         = require('../../game-data/state')
+const Sound         = require('./../interfaces/I_Sound').Sound
 const BattleStats      = require('./battle-ui/battleStats').BattleStats
 const CharacterBlueprint  = require('./../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite  = require('./battle-init/battleSprite').BattleSprite
@@ -16,14 +17,15 @@ class BattleChar {
         this.hasTurn    = false;
         this.isPlayer   = isPlayer;
     }
-
     animateHit( ) {
         this.sprite.animateHit()
     }
 
     standardAttack( ) {
+        const sfx = new Sound( "battle-baba.mp3", true )
+        sfx.play()
         this.sprite.animateAttack( "PUNCH" )
-        this.character.standardAttack( isplayer ? state.battleState.opponent.character : state.battleState.player.character )
+        this.character.standardAttack( this.isPlayer ? state.battleState.opponent.character : state.battleState.player.character )
         this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
     }
 
@@ -36,6 +38,20 @@ class BattleChar {
     unsetMoveMenu( ) {
         state.battleState.menuIsActive = false;;
         state.battleState.textContainer.unsetMoveMenu(  )        
+    }
+
+    activateUI( par = false ) {
+        this.sprite.activateUI( par )
+    }
+
+    deActivateUi( ) {
+        this.sprite.hasActiveButton = false;
+        this.sprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
+    }
+
+    draw( ) {
+        this.sprite.drawSprite();
+        this.statsBar.drawStats();
     }
 }
 
