@@ -22,9 +22,20 @@ Wait until all Node packages are installed.
 
 Open a new terminal window and run ```server.py``` to get the Flask server running. This will serve the game on localhost:5000
 
-If refresh the game while working on it, run ```npm run autobuild``` in the client folder. This will start the svelte compiler and watch for changes.
-
 ### LOG
+
+#### APR 20, 2020
+* Checking and cleaning old code in map
+* New map sprites ( looking sharp!! )
+
+#### APR 18, 2020
+* New Start menu
+* Adding 'debug mode' to game
+* Reducing frequency of some func calls by requestAnimationFrame()
+
+#### APR 8, 2020
+* Battle shouts
+* Cleaning up some battle code
 
 #### APR 3, 2020
 * Battle phase system is now functioning
