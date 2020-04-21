@@ -140,7 +140,7 @@ class BattleSprite extends I_Sprite {
     }
 
     initBattleUI( ) {
-        this.buttons = {}
+        this.buttonSprites = []
 
         this.buttons.topCircle = { 
             'x': this.x - ( this.width * 0.25 ), 
@@ -185,22 +185,11 @@ class BattleSprite extends I_Sprite {
     }
 
     initBattleMovesMenu( characterMoves ) {
-        console.log(this.buttons)
-        Object.keys(this.buttons).forEach( (key) => {
-            switch ( this.buttons[key].text ) {
-                case ( res.BATTLE_BUTTON_1 ) :
-                    this.buttons[key].toolTip = characterMoves._1_
-                case ( res.BATTLE_BUTTON_2 ) :
-                    this.buttons[key].toolTip = characterMoves._2_
-                case ( res.BATTLE_BUTTON_3 ) :
-                    this.buttons[key].toolTip = characterMoves._3_
-                case ( res.BATTLE_BUTTON_4 ) :
-                    this.buttons[key].toolTip = characterMoves._4_
-                case ( res.BATTLE_BUTTON_5 ) :
-                    this.buttons[key].toolTip = "BACK"
-            }
-            this.buttons[key].isMenuButton = true;    
-        } )
+        this.buttonSprites.forEach( (buttonSprite, index) => {
+            buttonSprite.setToolTip( characterMoves[index] )
+            buttonSprite.hint = characterMoves[index]
+            buttonSprite.isMenuButton = true;    
+        })
     }
 }
 

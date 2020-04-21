@@ -16,13 +16,19 @@ class battleButton {
         this.textColor  = "black"
         this.active     = false
 
-        canvas.setFont( "LARGE" )
+        canvas.setFont( "LARGE" );
         this.textX      = x - ( this.ctx.measureText(buttonText).width * .5 ),
         this.textY      = y + ( globals.SMALL_FONT_SIZE * .75 )
         this.toolTipX   = x - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(toolTipText).width )
         this.toolTipY   = y + ( globals.SMALL_FONT_SIZE * .5 )
 
-        this.drawButton( )
+        this.drawButton( );
+    }
+
+    setToolTip( toolTipText ) {
+        canvas.setFont( "LARGE" );
+        this.toolTip    = toolTipText,
+        this.toolTipX   = this.centralX - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(this.toolTip).width ) 
     }
 
     drawButton( ) {

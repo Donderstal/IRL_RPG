@@ -37,7 +37,9 @@ class BattleChar {
     
     unsetMoveMenu( ) {
         state.battleState.menuIsActive = false;;
-        state.battleState.textContainer.unsetMoveMenu(  )        
+        state.battleState.textContainer.unsetMoveMenu(  )    
+        this.sprite.initBattleUI( )     
+        this.sprite.setButtonAsActive( "2" )
     }
 
     activateUI( par = false ) {

@@ -22,7 +22,7 @@ const handleBattleKeyPress = ( event ) => {
         handleActionButton( playerCanChooseMove, battleState, battleText )
     }
     if ( event.key == "e" && battleState.menuIsActive ) {
-        unsetMoveMenu( battleState, battleText )
+        battleState.player.unsetMoveMenu( );
     }
     else {
         state.pressedKeys[event.key] = true        
@@ -50,7 +50,8 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
                 handlePunch( battleState, battleText )
             }
             if ( button.text.includes("2") ) {
-                battleState.player.setMoveMenu( )
+                battleState.player.setMoveMenu( );
+                button.setActive(false);
             }
             if ( button.text.includes("3") ) {
           
@@ -96,17 +97,6 @@ const passPhase = ( battleState, battleText ) => {
     }
 }
 
-const setMoveMenu = ( battleState, battleText ) => {
-    battleState.menuIsActive = true;
-    battleText.setMoveMenu( )
-    battleState.player.sprite.initBattleMovesMenu( battleState.player.character.moves )
-}
-
-const unsetMoveMenu = ( battleState, battleText ) => {
-    battleState.menuIsActive = false;;
-    battleText.unsetMoveMenu(  )
-}
-
 const checkForDeath = ( battleState, battleText ) => {
     if ( battleState.player.character.stats.Health <= 0 ) {
         return handleBattleDeath( battleState.player, battleState.opponent, battleText )
@@ -135,12 +125,12 @@ const handlePunch = ( battleState, battleText ) => {
         res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
     )
     const sfx = new Sound( "battle-baba.mp3", true )
-    sfx.play()
-    passPhase( battleState )
+    sfx.play( );
+    passPhase( battleState );
     setTimeout( ( ) => {
         battleState.player.standardAttack( )
         battleState.opponent.animateHit( )
-    }, 500 )
+    }, 500 );
 }
 
 module.exports = {
