@@ -1,17 +1,37 @@
+const getMovesByClass = require('../character-resources/moves').getMovesByClass 
+
 const initMoves = ( className ) => {
-    let moves = {
-        _1_: null,
-        _2_: null,
-        _3_: null,
-        _4_: null
+    return getMovesByClass(className)
+    /* switch( className ) {
+        case "Chad":
+            return 
+        case "Influencer":
+            break;
+        case "Neckbeard":
+            break;
+        case "Tumblr_Girl":
+            break;
+        default:
+            throw console.error("Classname " + className + " not found");
+    }   */      
+}
+
+
+class Move {
+    constructor( ) {
+        // Name
+
+        // Description
+
+        // Type ??
+
+        // DamageType
+
+        // BaseDamage
+
+        // DoMove()
+
     }
-    if ( className ) {
-        moves._1_ = "One"
-        moves._2_ = "Two" 
-        moves._3_ = "Three"
-        moves._4_ = "Four"
-    }   
-    return moves;            
 }
 
 module.exports = {

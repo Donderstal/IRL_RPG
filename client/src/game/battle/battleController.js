@@ -70,12 +70,12 @@ const initializeBattleCharacter = ( opponent ) => {
     const mapBattleAction = opponent.action
 
     let playerXy = {
-        'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+        'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
         'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
 
     let opponentXy = {
-        'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+        'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
         'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
 

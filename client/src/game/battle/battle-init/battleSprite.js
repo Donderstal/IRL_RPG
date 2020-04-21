@@ -186,8 +186,8 @@ class BattleSprite extends I_Sprite {
 
     initBattleMovesMenu( characterMoves ) {
         this.buttonSprites.forEach( (buttonSprite, index) => {
-            buttonSprite.setToolTip( characterMoves[index] )
-            buttonSprite.hint = characterMoves[index]
+            buttonSprite.setToolTip( characterMoves[index].name )
+            buttonSprite.hint = characterMoves[index].desc
             buttonSprite.isMenuButton = true;    
         })
     }

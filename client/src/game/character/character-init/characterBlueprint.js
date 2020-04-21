@@ -24,7 +24,7 @@ class CharacterBlueprint {
         defender.receiveDamage(damage)
     }
 
-    receiveDamage(damage) {
+    receiveDamage( damage ) {
         damage -= this.stats.Defense
         if ( damage > 0 ) {
             const sfx = new Sound( "misc/random6.wav", true )
@@ -37,7 +37,7 @@ class CharacterBlueprint {
         }
     }
 
-    receiveSpDamage(damage) {
+    receiveSpDamage( damage ) {
         damage -= this.stats.Defense
         if ( damage > 0 ) {
             state.battleState.currentMoveDamage = damage
@@ -45,11 +45,11 @@ class CharacterBlueprint {
         }
     }
 
-    changeStats (stat, num) {
+    changeStats ( stat, num ) {
 
     }
 
-    changeTraits () {
+    changeTraits ( ) {
         
     }
 

@@ -19,6 +19,8 @@ class battleButton {
         canvas.setFont( "LARGE" );
         this.textX      = x - ( this.ctx.measureText(buttonText).width * .5 ),
         this.textY      = y + ( globals.SMALL_FONT_SIZE * .75 )
+
+        canvas.setFont( "SMALL" );
         this.toolTipX   = x - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(toolTipText).width )
         this.toolTipY   = y + ( globals.SMALL_FONT_SIZE * .5 )
 
@@ -26,7 +28,7 @@ class battleButton {
     }
 
     setToolTip( toolTipText ) {
-        canvas.setFont( "LARGE" );
+        canvas.setFont( "SMALL" );
         this.toolTip    = toolTipText,
         this.toolTipX   = this.centralX - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(this.toolTip).width ) 
     }
@@ -35,7 +37,7 @@ class battleButton {
         canvas.drawCircle( this.centralX, this.centralY, this.range, this.text )
         canvas.writeTextLine( this.text, this.textX, this.textY, "LARGE", this.textColor )
         if ( this.active || this.isMenuButton ) {
-            canvas.writeTextLine( this.toolTip, this.toolTipX, this.toolTipY, "LARGE" )            
+            canvas.writeTextLine( this.toolTip, this.toolTipX, this.toolTipY, "SMALL" )            
         }
     }
 
