@@ -61,6 +61,16 @@
         border-color:  #defff2;
         cursor: pointer;
     }
+    div {
+        margin-bottom: 0;
+    }
+
+    h4 {
+        margin-bottom: 0;
+    }
+    #checkbox {
+        display: none;
+    }
 </style>
 
 <div class="Modal">
@@ -84,7 +94,7 @@
         <label>Battle</label>
         <input type="radio" name="modeChoice" id="battle">
     </div>
-    <div>
+    <div id="checkbox">
         <h4>Battle test or normal?</h4>
         <label>Battle debug</label>
         <input type="checkbox" id="battle-debug">
