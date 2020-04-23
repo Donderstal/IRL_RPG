@@ -21,7 +21,9 @@ const handleBattleKeyPress = ( event ) => {
     if ( event.key == "q" ) {
         handleActionButton( playerCanChooseMove, battleState, battleText )
     }
-
+    if ( event.key == "e" && battleState.menuIsActive ) {
+        battleState.player.unsetMoveMenu( );
+    }
     else {
         state.pressedKeys[event.key] = true        
     }
@@ -30,6 +32,9 @@ const handleBattleKeyPress = ( event ) => {
 const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
     if ( playerCanChooseMove ) {
         handleBattleMenuClick( battleState, battleText )
+    }
+    else if ( battleState.menuIsActive ) {
+        
     }
     else {
         passPhase( battleState, battleText )
@@ -45,7 +50,8 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
                 handlePunch( battleState, battleText )
             }
             if ( button.text.includes("2") ) {
-  
+                battleState.player.setMoveMenu( );
+                button.setActive(false);
             }
             if ( button.text.includes("3") ) {
           
@@ -61,7 +67,8 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
 }
 
 const passPhase = ( battleState, battleText ) => {
-    const playerHasTurn = battleState.player.hasTurn
+    const player    = battleState.player
+    const opponent  = battleState.opponent
 
     switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_TURN'] :
@@ -69,7 +76,7 @@ const passPhase = ( battleState, battleText ) => {
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
-            battleState.player.sprite.activateUI( false )
+            player.activateUI( false )
             break;
         case globals['PHASE_DO_MOVE'] :
             battleState.battlePhase = globals['PHASE_STAT_CHECK'];
@@ -79,8 +86,8 @@ const passPhase = ( battleState, battleText ) => {
                 battleState.battlePhase = "END"
             }
             else {
-                battleState.player.hasTurn = ( playerHasTurn ) ? false : true
-                battleState.opponent.hasTurn = ( playerHasTurn ) ? false : true
+                player.hasTurn = ( player.hasTurn ) ? false : true
+                opponent.hasTurn = ( player.hasTurn ) ? false : true
                 battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
             }
             break;
@@ -118,14 +125,12 @@ const handlePunch = ( battleState, battleText ) => {
         res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
     )
     const sfx = new Sound( "battle-baba.mp3", true )
-    sfx.play()
-    passPhase( battleState )
+    sfx.play( );
+    passPhase( battleState );
     setTimeout( ( ) => {
-        battleState.player.sprite.animateAttack( "PUNCH" )
-        battleState.opponent.sprite.animateHit( )
-        battleState.player.sprite.setShout( res.getBattleShout( battleState.player.character.className, "FIGHT" ) )
-        battleState.player.character.moves.attack( battleState.player.character, battleState.opponent.character )
-    }, 500 )
+        battleState.player.standardAttack( )
+        battleState.opponent.animateHit( )
+    }, 500 );
 }
 
 module.exports = {

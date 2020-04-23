@@ -22,7 +22,7 @@ class BattleStats {
 
         this.setPosition( )
         this.setContents( )
-        this.drawStats( )
+        this.drawStats( true )
     }
 
     setPosition( ) {
@@ -56,8 +56,11 @@ class BattleStats {
         }
     }
 
-    drawStats( ) {
-        this.refresh( )
+    drawStats( isNew = false ) {
+        if ( !isNew ) {
+            this.refresh( )            
+        }
+
         canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, 'rgba(255,255,255, 0.66)' );
 
         canvas.writeTextLine( this.name, this.x, this.y - globals.SMALL_FONT_SIZE, "LARGE" )

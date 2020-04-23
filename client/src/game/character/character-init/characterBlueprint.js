@@ -15,10 +15,16 @@ class CharacterBlueprint {
 
         this.traits         = initTraits( this.className, this.gender )
         this.stats          = initStats.calcStats(this.traits),
-        this.moves          = initMoves.initMoves(this.classFocus);
+        this.moves          = initMoves.initMoves(this.className);
     }
 
-    receiveDamage(damage) {
+    standardAttack( defender ) {
+        let damage = this.stats.Attack * 2
+        damage = ( Math.random() > 0.5 ) ? damage : ( Math.random() > 0.5 ) ? damage - 1 : damage + 1
+        defender.receiveDamage(damage)
+    }
+
+    receiveDamage( damage ) {
         damage -= this.stats.Defense
         if ( damage > 0 ) {
             const sfx = new Sound( "misc/random6.wav", true )
@@ -31,7 +37,7 @@ class CharacterBlueprint {
         }
     }
 
-    receiveSpDamage(damage) {
+    receiveSpDamage( damage ) {
         damage -= this.stats.Defense
         if ( damage > 0 ) {
             state.battleState.currentMoveDamage = damage
@@ -39,11 +45,11 @@ class CharacterBlueprint {
         }
     }
 
-    changeStats (stat, num) {
+    changeStats ( stat, num ) {
 
     }
 
-    changeTraits () {
+    changeTraits ( ) {
         
     }
 

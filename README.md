@@ -24,6 +24,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### APR 23, 2020
+* New system for selecting a move in Battle
+* New 'wrapper' class for BattleSprite, BattleStats etc
+* Removing some old character Gen code
+
 #### APR 20, 2020
 * Checking and cleaning old code in map
 * New map sprites ( looking sharp!! )
