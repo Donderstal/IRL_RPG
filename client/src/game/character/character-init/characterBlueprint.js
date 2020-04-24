@@ -4,6 +4,25 @@ const initMoves = require('./initMoves')
 const state = require('../../../game-data/state')
 const Sound = require('../../interfaces/I_Sound').Sound
 
+//////////////////// --- STATISTICS --- ///////////////////////
+//_____________________________________________________________
+//  PHYSICAL  /////////////////////////////////////////////////
+// * Strength       //  5   //  Base attack                                      
+// * Athletics      //  5   //                                  
+// * Endurance      //  5   //  HP                                    
+//                                                          //
+//  MENTAL  //////////////////////////////////////////////////
+// * Intelligence   //  5   //                                       
+// * Wisdom         //  5   //  PP                             
+// * Perception     //  5   //                                       
+//                                                          
+//  SOCIAL  //////////////////////////////////////////////////
+// * Mysticism      //  5   //                                       
+// * Charisma       //  5   //                                       
+// * Finance        //  5   //
+//____________________________________________________________
+//////////////////////////////////////////////////////////////
+
 class CharacterBlueprint {
     constructor( name, className ) {
         this.name           = name,
@@ -13,8 +32,25 @@ class CharacterBlueprint {
         this.level          = 1,
         this.experience     = 0
 
-        this.traits         = initTraits( this.className, this.gender )
-        this.stats          = initStats.calcStats(this.traits),
+        this.traits         = {
+            Strength        : 5,
+            Athletics	    : 5,
+            Endurance       : 5,
+        
+            Wisdom          : 5,
+            Intelligence    : 5,
+            Perception      : 5,
+        
+            Mysticism       : 5,
+            Charisma        : 5,
+            Finance         : 5
+        }
+        this.stats          = {
+            HP:     Math.round( traits.Endurance * 5 ),
+            PP:     Math.round( traits.Intelligence * 5 ),
+            Attack: getAttack( ( traits.Strength + traits.Athletics ) / 2 ),
+            Defense: getDefense( ( traits.Strength + traits.Endurance ) / 2 ),
+        },
         this.moves          = initMoves.initMoves(this.className);
     }
 

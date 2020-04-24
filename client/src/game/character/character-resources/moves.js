@@ -1,47 +1,47 @@
 const moves = {
     "Influencer": [
         {
-            name        : "Get sponsorship",
-            desc        : "Get sponsored by a company attempting to hide their human rights abuses.",
-            damage_type : "Status up"
+            name        : "INF A",
+            desc        : "INF A description.",
+            damage_type : "STAT_UP"
         },
         {
-            name        : "Twitter block",
-            desc        : "Punish your opponent by blocking them on twitter and reducing their Sp. Attack.",
-            damage_type : "Status up"
+            name        : "INF B",
+            desc        : "INF B description.",
+            damage_type : "HEAL"
         },
         {
-            name        : "Call fuckboy",
-            desc        : "Check if one of your Chad fuckboys can beat your opponents up.",
-            damage_type : "Attack"
+            name        : "INF C",
+            desc        : "INF C description.",
+            damage_type : "ATTACK"
         },
         {
-            name        : "Fitgirl workout",
-            desc        : "Do a #workout to increase your attack.",
-            damage_type : "Status up"
+            name        : "INF D",
+            desc        : "INF D description.",
+            damage_type : "SP_ATTACK"
         }     
     ],
     "Neckbeard": [
         {
-            name        : "Doxx opponent",
-            desc        : "Share your opponents personal information with some weird anons on 4Chan.",
-            damage_type : "Sp Damage"
+            name        : "NEC A",
+            desc        : "NEC A description.",
+            damage_type : "STAT_DOWN"
         },
         {
-            name        : "Dorito farts",
-            desc        : "Everything that goes in must come back out again.",
-            damage_type : "Sp Damage"
+            name        : "NEC B",
+            desc        : "NEC B description.",
+            damage_type : "ATTR_UP"
         },
         {
-            name        : "Induce cringe",
-            desc        : "Discuss one of your interests, like My Little Pony fanfics",
-            damage_type : "Sp Damage"
+            name        : "NEC C",
+            desc        : "NEC C description.",
+            damage_type : "ATTR_DOWN"
         },
         {
-            name        : "Edgy commentary",
-            desc        : "DESTROY the libtards using LOGIC and FACTS and decrease your opponents Sp Defense.",
-            damage_type : "Status down"
-        }
+            name        : "INF D",
+            desc        : "INF D description.",
+            damage_type : "STATUS_EFFECT"
+        }     
     ],
     "Chad": [
         {
