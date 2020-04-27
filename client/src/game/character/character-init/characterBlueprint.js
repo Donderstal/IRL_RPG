@@ -1,160 +1,115 @@
-const initStats = require('./initStats')
 const initMoves = require('./initMoves')
-
-const state = require('../../../game-data/state')
-const Sound = require('../../interfaces/I_Sound').Sound
-
-//////////////////// --- STATISTICS --- ///////////////////////
-//_____________________________________________________________
-//  PHYSICAL  /////////////////////////////////////////////////
-// * Strength       //  5   //  Base attack                                      
-// * Athletics      //  5   //                                  
-// * Endurance      //  5   //  HP                                    
-//                                                          //
-//  MENTAL  //////////////////////////////////////////////////
-// * Intelligence   //  5   //                                       
-// * Wisdom         //  5   //  PP                             
-// * Perception     //  5   //                                       
-//                                                          
-//  SOCIAL  //////////////////////////////////////////////////
-// * Mysticism      //  5   //                                       
-// * Charisma       //  5   //                                       
-// * Finance        //  5   //
-//____________________________________________________________
-//////////////////////////////////////////////////////////////
 
 class CharacterBlueprint {
     constructor( name, className ) {
+        
         this.name           = name,
         this.gender         = ( className == "Influencer" || className == "Tumblr girl" ) ? "F" : "M",
+
         this.className      = className,
+        this.job            = className
         
         this.level          = 1,
         this.experience     = 0
-
-        this.traits         = {
-            Strength        : 5,
-            Athletics	    : 5,
-            Endurance       : 5,
-        
-            Wisdom          : 5,
-            Intelligence    : 5,
-            Perception      : 5,
-        
-            Mysticism       : 5,
-            Charisma        : 5,
-            Finance         : 5
+        this.attributes     = {
+            STR     : 5,
+            ATH	    : 5,
+            END     : 5,
+            WIS     : 5,
+            INT     : 5,
+            PER     : 5,
+            MYS     : 5,
+            CHA     : 5,
+            FIN     : 5
         }
+
+        this.attributeGroupTotals = { };
+        this.getClassAttributes( );
+        this.getAttributeGrouptotals( );
+        
         this.stats          = {
-            HP:     Math.round( traits.Endurance * 5 ),
-            PP:     Math.round( traits.Intelligence * 5 ),
-            Attack: getAttack( ( traits.Strength + traits.Athletics ) / 2 ),
-            Defense: getDefense( ( traits.Strength + traits.Endurance ) / 2 ),
+            // Health determines how many blows you can take before you fall
+            // Mana points give you the power to use special moves
+            Health      : ( this.attributes.FIN * 2 ) + this.attributeGroupTotals.Physical,
+            Mana        : ( this.attributes.MYS * 2 ) + this.attributeGroupTotals.Mental,
+
+            // Attack is the base attack modifier for attacks from the Physical group
+            // Defense is the base defence modifier for attacks from the Physical group
+            Attack      : this.attributes.STR,
+            Defense     : this.attributes.END,
+
+            // Sp. Attack is the base attack modifier for attacks from the Mental group
+            // Defense is the base defence modifier for attacks from the Mental group
+            Sp_Attack   : this.attributes.INT,
+            Sp_Defense  : this.attributes.WIS,
+            
+            // Speed determines who begins a battle or turn and your chance of fleeing
+            // Evasion heightens the chance of evading enemy moves
+            Speed       : this.attributes.ATH,
+            Eva     	: this.attributes.PER,
+
+            // Luck will help your character with all kinds of things, like critical hits
+            Luck        : ( this.attributes.CHA * 2 ) + this.attributeGroupTotals.Social
         },
+
         this.moves          = initMoves.initMoves(this.className);
+
+        console.log(this)
     }
 
-    standardAttack( defender ) {
-        let damage = this.stats.Attack * 2
-        damage = ( Math.random() > 0.5 ) ? damage : ( Math.random() > 0.5 ) ? damage - 1 : damage + 1
-        defender.receiveDamage(damage)
-    }
-
-    receiveDamage( damage ) {
-        damage -= this.stats.Defense
-        if ( damage > 0 ) {
-            const sfx = new Sound( "misc/random6.wav", true )
-            sfx.play()
-            state.battleState.currentMoveDamage = damage
-            this.stats.Health -= damage     
-            if ( this.stats.Health < 0 ) {
-                this.stats.Health = 0
-            }            
+    getAttributeGrouptotals( ) {
+        this.attributeGroupTotals = {
+            Physical: this.attributes.STR + this.attributes.ATH + this.attributes.END,
+            Mental  : this.attributes.INT + this.attributes.WIS + this.attributes.PER,
+            Social  : this.attributes.MYS + this.attributes.CHA + this.attributes.FIN
         }
     }
 
-    receiveSpDamage( damage ) {
-        damage -= this.stats.Defense
-        if ( damage > 0 ) {
-            state.battleState.currentMoveDamage = damage
-            this.stats.Health -= damage                
+    getClassAttributes( ) {
+        let params = []
+        switch ( this.className ) {
+            case "Neckbeard":
+                params = [ { 
+                    INT: 3, MYS: 2, WIS: 1, 
+                    CHA: -3, END: -1, ATH: -2 
+                } ];
+                break;
+            case "Influencer":
+                params = [ { 
+                    ATH: 2, CHA: 2, END: 1, 
+                    WIS: -2, INT: -2, MYS: -1 
+                } ];
+                break;    
+            case "Tumblr_Girl":
+                params = [ { 
+                    INT: 2, PER: 2, MYS: 1, 
+                    STR: -2, ATH: -1, CHA: -1, FIN: -1 
+                } ];
+                break;           
+            case "Chad":
+                params = [ { 
+                    STR: 3, END: 2, ATH: 2, 
+                    WIS: -3, INT: -2, PER: -1, MYS: -1 
+                } ];                    
+                break;
         }
+
+        this.updateAttributes( params )
     }
 
-    changeStats ( stat, num ) {
-
-    }
-
-    changeTraits ( ) {
-        
+    updateAttributes ( valuesToUpdate ) {
+        Object.entries(valuesToUpdate).forEach( (e) => {
+            this.attributes[e.key] += e.value
+        } )
     }
 
     setLevel ( level ) {
         this.level = level
     }
-}
 
-const initTraits = ( className, gender ) => {
-    let rawTraits = getRawTraits( gender )
-
-    if ( className == "Influencer" ) {
-        return {
-            STR : rawTraits.STR + 2,
-            END : rawTraits.END - 1,
-            INT : rawTraits.INT - 2,
-            AGI : rawTraits.AGI,
-            CHA : rawTraits.CHA + 2,
-            FIN : rawTraits.FIN - 1
-        }
+    setExperience ( xp ) {
+        this.experience += xp
     }
-    if ( className == "Chad" ) {
-        return {
-            STR : rawTraits.STR + 2,
-            END : rawTraits.END + 2,
-            INT : rawTraits.INT - 3,
-            AGI : rawTraits.AGI + 2,
-            CHA : rawTraits.CHA,
-            FIN : rawTraits.FIN - 3
-        }
-    }
-    if ( className == "Tumblr_Girl" ) {
-        return {
-            STR : rawTraits.STR - 2,
-            END : rawTraits.END + 2,
-            INT : rawTraits.INT + 3,
-            AGI : rawTraits.AGI - 1,
-            CHA : rawTraits.CHA - 2,
-            FIN : rawTraits.FIN
-        }
-    }
-    if ( className == "Neckbeard" ) {
-        return {
-            STR : rawTraits.STR,
-            END : rawTraits.END - 1,
-            INT : rawTraits.INT + 3,
-            AGI : rawTraits.AGI - 1,
-            CHA : rawTraits.CHA - 5,
-            FIN : rawTraits.FIN
-        }
-    }
-}
-
-const getRawTraits = ( gender ) => {
-    let rawTraits = {
-        STR : 5, END : 5, INT : 5,
-        AGI : 5, CHA : 5, FIN : 5,
-    }
-
-    if ( gender === 'Female' ) {
-        rawTraits.STR - 1
-        rawTraits.AGI + 1
-    }
-    if ( gender === 'Male' ) {
-        rawTraits.STR + 1
-        rawTraits.AGI - 1
-    }
-
-    return rawTraits
 }
 
 module.exports = {
