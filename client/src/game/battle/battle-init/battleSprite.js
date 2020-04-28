@@ -105,7 +105,6 @@ class BattleSprite extends I_Sprite {
 
     setAnimationPosition( index, sheetPositions ) {
         setTimeout( () => {
-            console.log(sheetPositions[index])
             this.position = sheetPositions[index];
         }, ( 250 ) + ( 250 * index ) )        
     }

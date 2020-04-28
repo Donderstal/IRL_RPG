@@ -12,8 +12,8 @@ const handleBattleAnimations = ( ) => {
     const debugText     = state.battleState.debugText
 
     if ( player.sprite != undefined && opponent.sprite  != undefined ) {
-        opponent.draw( );
-        player.draw( );
+        state.battleState.playerParty.forEach( (e) => { e.draw() })
+        state.battleState.opponentParty.forEach( (e) => { e.draw() })
     }
 
     if ( battleText != undefined ) {
