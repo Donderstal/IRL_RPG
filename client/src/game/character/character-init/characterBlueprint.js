@@ -56,7 +56,7 @@ class CharacterBlueprint {
 
         console.log(this)
     }
-
+    
     getAttributeGrouptotals( ) {
         this.attributeGroupTotals = {
             Physical: this.attributes.STR + this.attributes.ATH + this.attributes.END,

@@ -22,11 +22,20 @@ class BattleChar {
     }
 
     standardAttack( ) {
+        const battleState = state.battleState
         const sfx = new Sound( "battle-baba.mp3", true )
         sfx.play()
-        this.sprite.animateAttack( "PUNCH" )
-        this.character.standardAttack( this.isPlayer ? state.battleState.opponent.character : state.battleState.player.character )
+        this.animateAttack( )
+
+        let attacker = this.isPlayer ? battleState.player.character : battleState.opponent.character;
+        let defender = this.isPlayer ? battleState.opponent.character : battleState.player.character;
+         
+        defender.stats.Health -= ( attacker.stats.Attack - defender.stats.Defence )
         this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
+    }
+
+    animateAttack( tilesheetPositionArray ) {
+        this.sprite.animateAttack( tilesheetPositionArray )
     }
 
     setMoveMenu( ) {

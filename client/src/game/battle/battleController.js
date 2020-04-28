@@ -53,13 +53,13 @@ const initBattleMapAndSprites = ( ) => {
 }
 
 const decideWhoStarts = ( player, opponent ) => {
-    if ( opponent.character.traits.AGI > player.character.traits.AGI ) { 
+    if ( opponent.character.stats.Speed > player.character.stats.Speed ) { 
         opponent.hasTurn = true;
     }
-    else if ( opponent.character.traits.AGI < player.character.traits.AGI ) {
+    else if ( opponent.character.stats.Speed < player.character.stats.Speed ) {
         player.hasTurn = true;
     }
-    else if ( opponent.character.traits.AGI == player.character.traits.AGI ) {
+    else if ( opponent.character.stats.Speed == player.character.stats.Speed ) {
         ( Math.random( ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
     }
 
