@@ -43,8 +43,14 @@ class Move {
     }
 
     // doStatusEffect( string moveAttribute, string statusEffect, int duration )
+
+
     // doAttrOrStatChange( string moveAttribute, string targetValue, bool isAttribute, int duration )
+
+
     // doHeal( string moveAttribute, int duration = null )
+    
+
 }
 
 module.exports = {

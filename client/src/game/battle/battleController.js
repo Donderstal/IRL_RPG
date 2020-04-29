@@ -71,7 +71,7 @@ const initializeBattleCharacter = ( opponent ) => {
 
     let playerXy = {
         'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .33) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+        'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
     let playerXy2 = {
         'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
@@ -79,12 +79,12 @@ const initializeBattleCharacter = ( opponent ) => {
     }
     let playerXy3 = {
         'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .66) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+        'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
 
     let opponentXy = {
         'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .33) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+        'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
     let opponentXy2 = {
         'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
@@ -92,7 +92,7 @@ const initializeBattleCharacter = ( opponent ) => {
     }
     let opponentXy3 = {
         'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .66) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+        'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
 
     state.battleState.player = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy )
