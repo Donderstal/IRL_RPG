@@ -4,7 +4,33 @@ const globals       = require('../../game-data/globals')
 const Sound         = require('./../interfaces/I_Sound').Sound
 const text          = require('./battle-ui/battleText')
 const canvas        = require('./../../helpers/canvasHelpers')
-const BattleChar    = require('./BattleChar').BattleChar
+const Party         = require('./Party').Party
+
+const playerTopXy = {
+    'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+    'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+}
+const playerMiddleXy = {
+    'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+    'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+}
+const playerBottomXy = {
+    'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+    'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+}
+
+const opponentTopXy = {
+    'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+    'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+}
+const opponentMiddleXy = {
+    'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+    'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+}
+const opponentBottomXy = {
+    'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+    'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+}
 
 const startBattle = (  ) => {
     state.battleState.requestingBattle = false
@@ -48,64 +74,26 @@ const initBattleMapAndSprites = ( ) => {
     setTimeout( ( ) => {
         initializeBattleCharacter( state.battleState.opponent )
 
-        decideWhoStarts( state.battleState.player, state.battleState.opponent )
+        state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
     }, 2400)
-}
-
-const decideWhoStarts = ( player, opponent ) => {
-    if ( opponent.character.stats.Speed > player.character.stats.Speed ) { 
-        opponent.hasTurn = true;
-    }
-    else if ( opponent.character.stats.Speed < player.character.stats.Speed ) {
-        player.hasTurn = true;
-    }
-    else if ( opponent.character.stats.Speed == player.character.stats.Speed ) {
-        ( Math.random( ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
-    }
-
-    state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
 }
 
 const initializeBattleCharacter = ( opponent ) => {
     const mapBattleAction = opponent.action
+    const playerParty = [ 
+        [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerTopXy ],
+        [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerMiddleXy ],
+        [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerBottomXy ]
+    ]
 
-    let playerXy = {
-        'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-    }
-    let playerXy2 = {
-        'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-    }
-    let playerXy3 = {
-        'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-    }
+    const opponentParty = [ 
+        [ false, mapBattleAction.name, mapBattleAction.character.class, opponentTopXy ],
+        [ false, mapBattleAction.name, mapBattleAction.character.class, opponentMiddleXy ],
+        [ false, mapBattleAction.name, mapBattleAction.character.class, opponentBottomXy ]
+    ]
 
-    let opponentXy = {
-        'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-    }
-    let opponentXy2 = {
-        'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-    }
-    let opponentXy3 = {
-        'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
-        'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
-    }
-
-    state.battleState.player = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy )
-    state.battleState.player2 = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy2 )
-    state.battleState.player3 = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy3 )
-
-    state.battleState.playerParty = [ state.battleState.player, state.battleState.player2, state.battleState.player3 ]
-
-    state.battleState.opponent = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy )
-    state.battleState.opponent2 = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy2 )
-    state.battleState.opponent3 = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy3 )
-
-    state.battleState.opponentParty = [ state.battleState.opponent, state.battleState.opponent2, state.battleState.opponent3 ]
+    state.battleState.playerParty   = new Party( playerParty, "PLAYER" )
+    state.battleState.opponentParty = new Party( opponentParty )
 }
 
 const stopBattle = ( ) => {
