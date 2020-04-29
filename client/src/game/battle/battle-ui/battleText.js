@@ -20,7 +20,7 @@ class TextContainer {
             this.width  = globals.CANVAS_WIDTH / 2
             this.height = globals.CANVAS_HEIGHT / 6
             this.x      = globals.CANVAS_WIDTH / 4
-            this.y      = globals.CANVAS_HEIGHT * .80     
+            this.y      = (globals.CANVAS_HEIGHT / 6) * 5     
             this.isMoveMenu = false;       
         }
         else {

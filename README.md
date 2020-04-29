@@ -24,6 +24,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### APR 28, 2020
+* Experimental storing and retrieving of battle attacks and animations
+* Experimental setup for a PartyvParty battle instead of 1v1
+* Character attibutes and stats restructured
+
 #### APR 23, 2020
 * New system for selecting a move in Battle
 * New 'wrapper' class for BattleSprite, BattleStats etc

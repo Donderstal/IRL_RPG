@@ -46,7 +46,7 @@ class BattleSprite extends I_Sprite {
             this.frameCount = 0;
         }
 
-        let tilesheetX = this.animLoop[this.position] * 285
+        let tilesheetX = this.position * 285
 
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
@@ -84,14 +84,29 @@ class BattleSprite extends I_Sprite {
         }, timer )
     }
 
-    animateAttack( type ) {
-        if ( type == "PUNCH" ) {
+    animateAttack( sheetPositions = null ) {
+        if ( sheetPositions == null ) {
             this.moving = true;
             this.position = globals.B_SHEETPOS_ATTACK;
             setTimeout(() => {
                 this.position = globals.B_SHEETPOS_IDLE;
             }, 500 )                
         }
+        else {
+            this.moving = true;
+            for ( var i = 0; i < sheetPositions.length; i++ ) {
+                this.setAnimationPosition( i, sheetPositions )
+            }
+            setTimeout(() => {
+                this.position = globals.B_SHEETPOS_IDLE;
+            }, ( 250 + ( 250 * sheetPositions.length ) ) )
+        }
+    }
+
+    setAnimationPosition( index, sheetPositions ) {
+        setTimeout( () => {
+            this.position = sheetPositions[index];
+        }, ( 250 ) + ( 250 * index ) )        
     }
 
     animateHit( ) {

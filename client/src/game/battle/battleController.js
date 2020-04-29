@@ -53,13 +53,13 @@ const initBattleMapAndSprites = ( ) => {
 }
 
 const decideWhoStarts = ( player, opponent ) => {
-    if ( opponent.character.traits.AGI > player.character.traits.AGI ) { 
+    if ( opponent.character.stats.Speed > player.character.stats.Speed ) { 
         opponent.hasTurn = true;
     }
-    else if ( opponent.character.traits.AGI < player.character.traits.AGI ) {
+    else if ( opponent.character.stats.Speed < player.character.stats.Speed ) {
         player.hasTurn = true;
     }
-    else if ( opponent.character.traits.AGI == player.character.traits.AGI ) {
+    else if ( opponent.character.stats.Speed == player.character.stats.Speed ) {
         ( Math.random( ) > .5 ) ? opponent.hasTurn = true : player.hasTurn = true;
     }
 
@@ -70,17 +70,42 @@ const initializeBattleCharacter = ( opponent ) => {
     const mapBattleAction = opponent.action
 
     let playerXy = {
+        'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+        'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+    }
+    let playerXy2 = {
         'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
         'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
+    let playerXy3 = {
+        'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+        'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+    }
 
     let opponentXy = {
+        'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+        'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+    }
+    let opponentXy2 = {
         'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
         'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
     }
+    let opponentXy3 = {
+        'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+        'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
+    }
 
     state.battleState.player = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy )
+    state.battleState.player2 = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy2 )
+    state.battleState.player3 = new BattleChar( true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerXy3 )
+
+    state.battleState.playerParty = [ state.battleState.player, state.battleState.player2, state.battleState.player3 ]
+
     state.battleState.opponent = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy )
+    state.battleState.opponent2 = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy2 )
+    state.battleState.opponent3 = new BattleChar( false, mapBattleAction.name, mapBattleAction.character.class, opponentXy3 )
+
+    state.battleState.opponentParty = [ state.battleState.opponent, state.battleState.opponent2, state.battleState.opponent3 ]
 }
 
 const stopBattle = ( ) => {

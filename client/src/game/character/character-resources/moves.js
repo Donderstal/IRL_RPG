@@ -1,97 +1,127 @@
 const moves = {
     "Influencer": [
         {
-            name        : "Get sponsorship",
-            desc        : "Get sponsored by a company attempting to hide their human rights abuses.",
-            damage_type : "Status up"
+            name        : "INF A",
+            desc        : "INF A description.",
+            type        : "STAT_UP",
+            attribute   : "CHA",
+            turns       : 3,
+            animation   : [ 3, 4, 5, 6, 7 ]
         },
         {
-            name        : "Twitter block",
-            desc        : "Punish your opponent by blocking them on twitter and reducing their Sp. Attack.",
-            damage_type : "Status up"
+            name        : "INF B",
+            desc        : "INF B description.",
+            type        : "HEAL",
+            attribute   : "END",
+            animation   : [ 3, 4, 5, 6, 7, 6, 7, 6, 7 ]
         },
         {
-            name        : "Call fuckboy",
-            desc        : "Check if one of your Chad fuckboys can beat your opponents up.",
-            damage_type : "Attack"
+            name        : "INF C",
+            desc        : "INF C description.",
+            type        : "ATTACK",
+            attribute   : "ATH",
+            animation   : [ 4, 5, 3 ]
         },
         {
-            name        : "Fitgirl workout",
-            desc        : "Do a #workout to increase your attack.",
-            damage_type : "Status up"
+            name        : "INF D",
+            desc        : "INF D description.",
+            type        : "SP_ATTACK",
+            attribute   : "CHA",
+            animation   : [ 2, 3, 2, 3, 2 ]
         }     
     ],
     "Neckbeard": [
         {
-            name        : "Doxx opponent",
-            desc        : "Share your opponents personal information with some weird anons on 4Chan.",
-            damage_type : "Sp Damage"
+            name        : "NEC A",
+            desc        : "NEC A description.",
+            type        : "STAT_DOWN",
+            attribute   : "MYS",
+            turns       : 3,
+            animation   : [ 3, 4, 5, 6, 7, 8 ]
         },
         {
-            name        : "Dorito farts",
-            desc        : "Everything that goes in must come back out again.",
-            damage_type : "Sp Damage"
+            name        : "NEC B",
+            desc        : "NEC B description.",
+            type        : "ATR_UP",
+            attribute   : "INT",
+            turns       : 2,
+            animation   : [ 3, 1, 3, 1, 2 ]
         },
         {
-            name        : "Induce cringe",
-            desc        : "Discuss one of your interests, like My Little Pony fanfics",
-            damage_type : "Sp Damage"
+            name        : "NEC C",
+            desc        : "NEC C description.",
+            type        : "ATR_DOWN",
+            attribute   : "WIS",
+            turns       : 3,
+            animation   : [ 8, 7, 6, 5, 4, 3 ]
         },
         {
-            name        : "Edgy commentary",
-            desc        : "DESTROY the libtards using LOGIC and FACTS and decrease your opponents Sp Defense.",
-            damage_type : "Status down"
-        }
+            name        : "NEC D",
+            desc        : "NEC D description.",
+            type        : "STATUS_EFFECT",
+            attribute   : 5,
+            animation   : [ 1, 2, 1, 2, 1, 2 ]
+        }     
     ],
     "Chad": [
         {
-            name        : "Protein powder",
-            desc        : "Boost your attack for the next two turns with some tasty Banana flavord protein shakes.",
-            damage_type : "Status up"
+            name        : "CHA A",
+            desc        : "CHA A description.",
+            type        : "STAT_UP",
+            attribute   : "CHA",
+            turns       : 3
         },
         {
-            name        : "Roid rage",
-            desc        : "Sometimes I just get so angry!! Angry attack with varying effects",
-            damage_type : "Attack"
+            name        : "CHA B",
+            desc        : "CHA B description.",
+            type        : "HEAL",
+            attribute   : "END"
         },
         {
-            name        : "Skip leg day",
-            desc        : "Punch twice next turn, with a boost to Attack. Your Defense will decrease afterwards",
-            damage_type : "Attack"
+            name        : "CHA C",
+            desc        : "CHA C description.",
+            type        : "ATTACK",
+            attribute   : "ATH"
         },
         {
-            name        : "Steal girlfriend",
-            desc        : "Break your opponents heart by seducing their special ladyfriend.",
-            damage_type : "Status down"
-        }     
+            name        : "CHA D",
+            desc        : "CHA D description.",
+            type        : "SP_ATTACK",
+            attribute   : "CHA"
+        }        
     ],
     "Tumblr_Girl": [
         {
-            name        : "Rally twitter crowd",
-            desc        : "Expose your opponents microaggressions and mobilize support online.",
-            damage_type : "Sp Damage"
+            name        : "TUM A",
+            desc        : "TUM A description.",
+            type        : "SP_ATTACK",
+            attribute   : "INT"
         },
         {
-            name        : "Hairspray",
-            desc        : "How much hairspray can a person possibly need? Let's find out and cause Sp. Damage.",
-            damage_type : "Sp Damage"
+            name        : "TUM B",
+            desc        : "TUM B description",
+            type        : "SP_ATTACK",
+            attribute   : "INT"
         },
         {
-            name        : "Weird poetry",
-            desc        : "Confuse your opponent with an intersectional autoethnography in rhyme",
-            damage_type : "Sp Damage"
+            name        : "TUM C",
+            desc        : "TUM C description",
+            type        : "Sp Damage"
         },
         {
-            name        : "Edgy commentary",
-            desc        : "DESTROY the bigots using LOGIC and FACTS and decrease your opponents Sp Defense.",
-            damage_type : "Status down"
+            name        : "TUM D",
+            desc        : "TUM D description",
+            type        : "Status down"
         }
     ]
 }
 
 const getMovesByClass = ( className ) => {
     var classMoves = moves[className]
-    classMoves.push({ name: "Return", desc: "Return to main menu" })
+    if ( classMoves.length < 5 ) {
+        classMoves.push({ name: "Return", desc: "Return to main menu" })        
+    }
+
     return classMoves
 }
 

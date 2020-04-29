@@ -30,14 +30,14 @@ const handleBattleKeyPress = ( event ) => {
 }
 
 const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
-    if ( playerCanChooseMove ) {
-        handleBattleMenuClick( battleState, battleText )
+    if ( playerCanChooseMove && !battleState.menuIsActive ) {
+        handleBattleMenuClick( battleState, battleText );
     }
     else if ( battleState.menuIsActive ) {
-        
+        selectMove( battleState, battleText );
     }
     else {
-        passPhase( battleState, battleText )
+        passPhase( battleState, battleText );
     }
 }
 
@@ -62,6 +62,18 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
             if ( button.text.includes("5") ) {
             
             }
+        }
+    } )
+}
+
+const selectMove = ( battleState, battleText ) => {
+    const playerUiButtons = battleState.player.sprite.buttonSprites
+
+    playerUiButtons.forEach( (button, index) => {
+        if ( button.active ) {
+            console.log(button, battleState.player.moves[index])   
+            console.log(battleState.player.moves[index].animation)
+            battleState.player.animateAttack( battleState.player.moves[index].animation )         
         }
     } )
 }
