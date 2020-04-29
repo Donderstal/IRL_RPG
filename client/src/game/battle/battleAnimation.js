@@ -11,9 +11,9 @@ const handleBattleAnimations = ( ) => {
     const battleText    = state.battleState.textContainer
     const debugText     = state.battleState.debugText
 
-    if ( player.sprite != undefined && opponent.sprite  != undefined ) {
-        state.battleState.playerParty.forEach( (e) => { e.draw() })
-        state.battleState.opponentParty.forEach( (e) => { e.draw() })
+    if ( state.battleState.playerParty != undefined && state.battleState.opponentParty != undefined ) {
+        state.battleState.playerParty.members.forEach( (e) => { e.draw() })
+        state.battleState.opponentParty.members.forEach( (e) => { e.draw() })
     }
 
     if ( battleText != undefined ) {
