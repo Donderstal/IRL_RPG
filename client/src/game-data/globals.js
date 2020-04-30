@@ -17,8 +17,8 @@ module.exports = {
     FRAME_LIMIT    : 12,
     
     GRID_BLOCK_PX  : 54,
-    CANVAS_WIDTH   : 1296,
-    CANVAS_HEIGHT  : 864,
+    CANVAS_WIDTH   : 54 * 24,
+    CANVAS_HEIGHT  : 54 * 16,
     CANVAS_COLUMNS : 23,
     CANVAS_ROWS    : 15,
 
@@ -28,11 +28,11 @@ module.exports = {
 
     // sprite dimensions
     STRD_SPRITE_WIDTH : 54,
-    STRD_SPRITE_HEIGHT : 81,
+    STRD_SPRITE_HEIGHT : 54 * 1.5,
 
     //
-    BATTLE_SPRITE_WIDTH : 180,
-    BATTLE_SPRITE_HEIGHT : 270,
+    BATTLE_SPRITE_WIDTH : 285,
+    BATTLE_SPRITE_HEIGHT : 285,
 
     // speech bubbles 
     MIN_BUBBLE_WIDTH: 250,
