@@ -16,6 +16,7 @@ class BattleChar {
         this.moves      = this.character.moves
         this.hasTurn    = false;
         this.isPlayer   = isPlayer;
+        this.nextMove, this.nextMoveTarget
     }
     animateHit( ) {
         this.sprite.animateHit()
@@ -38,24 +39,38 @@ class BattleChar {
         this.sprite.animateAttack( tilesheetPositionArray )
     }
 
+    chooseMove( moveIndex, moveTarget ) {
+        this.nextMoveTarget = moveTarget;
+        this.nextMove       = this.moves[moveIndex].doDamage
+    }
+
+    doMove( moveTarget ) {
+        this.nextMove( this.character, moveTarget )
+    }
+
     setMoveMenu( ) {
         state.battleState.menuIsActive = true;
         state.battleState.textContainer.setMoveMenu( )
         this.sprite.initBattleMovesMenu( this.moves )
     }
     
-    unsetMoveMenu( ) {
+    unsetMoveMenu( newTurn = false ) {
         state.battleState.menuIsActive = false;;
         state.battleState.textContainer.unsetMoveMenu(  )    
         this.sprite.initBattleUI( )     
         this.sprite.setButtonAsActive( "2" )
     }
 
-    activateUI( par = false ) {
-        this.sprite.activateUI( par )
+    activateUI( ) {
+        state.battleState.textContainer.setText( "Choose your move with one of the number keys!" )
+        this.sprite.activateUI( )
     }
 
     deActivateUi( ) {
+        state.battleState.menuIsActive = false;;
+        state.battleState.textContainer.unsetMoveMenu(  ) 
+        this.sprite.initBattleUI( )   
+        this.sprite.deActivateUI()
         this.sprite.hasActiveButton = false;
         this.sprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
     }

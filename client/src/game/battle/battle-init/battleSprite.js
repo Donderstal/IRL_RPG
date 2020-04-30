@@ -31,8 +31,12 @@ class BattleSprite extends I_Sprite {
         }
     }
     
-    activateUI( activate ) {
-        this.showUI = activate
+    activateUI( ) {
+        this.showUI = true;
+    }
+
+    deActivateUI( ) {
+        this.showUI = false;
     }
     
     drawSprite( ) {
