@@ -8,28 +8,28 @@ const Party         = require('./Party').Party
 const nameGen       = require('./../../helpers/randomNameGen')
 
 const playerTopXy = {
-    'x': (globals.CANVAS_WIDTH * .35) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+    'x': (globals.CANVAS_WIDTH * .40 - ( globals.BATTLE_SPRITE_WIDTH  * .5 ) ),
     'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
 }
 const playerMiddleXy = {
-    'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+    'x': (globals.CANVAS_WIDTH * .35) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
     'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
 }
 const playerBottomXy = {
-    'x': (globals.CANVAS_WIDTH * .25) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
+    'x': (globals.CANVAS_WIDTH * .30) - ( globals.BATTLE_SPRITE_WIDTH  * .5 ),
     'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
 }
 
 const opponentTopXy = {
-    'x': (globals.CANVAS_WIDTH * .65) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+    'x': (globals.CANVAS_WIDTH * .60) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
     'y': (globals.CANVAS_HEIGHT * .35) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
 }
 const opponentMiddleXy = {
-    'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+    'x': (globals.CANVAS_WIDTH * .65) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
     'y': (globals.CANVAS_HEIGHT * .5) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
 }
 const opponentBottomXy = {
-    'x': (globals.CANVAS_WIDTH * .75) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
+    'x': (globals.CANVAS_WIDTH * .70) - ( globals.BATTLE_SPRITE_WIDTH * .5 ),
     'y': (globals.CANVAS_HEIGHT * .65) - ( globals.BATTLE_SPRITE_HEIGHT * .5 )
 }
 

@@ -32,9 +32,8 @@ const handleBattleKeyPress = ( event ) => {
 const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
     let isSelectionPhase = ( battleState.battlePhase == globals['PHASE_SELECT_MOVE'] )
     let isAttackPhase = ( battleState.battlePhase == globals['PHASE_DO_MOVE'] )
-    let allMovesAreDone = battleState.currentMoveIndex == battleState.charactersInField.length
 
-    if ( isAttackPhase && !allMovesAreDone ) {
+    if ( isAttackPhase && battleState.currentMoveIndex !== battleState.charactersInField.length ) {
         doMove( battleState, battleText );
     }
     else if ( playerCanChooseMove && !battleState.menuIsActive && isSelectionPhase ) {
