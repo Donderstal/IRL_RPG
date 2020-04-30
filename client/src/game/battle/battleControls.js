@@ -9,23 +9,23 @@ const handleBattleKeyPress = ( event ) => {
     const battleText    = battleState.textContainer
 
     const keyIsNumberInMenu = event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5"
-    const playerCanChooseMove = battleState.player.hasTurn && battleState.battlePhase == globals['PHASE_SELECT_MOVE']
+    const playerCanChooseMove = battleState.playerParty.inMoveSelection && battleState.battlePhase == globals['PHASE_SELECT_MOVE']
 
     if ( event.key == "Escape" || event.key == "Esc" ) {
         state.battleState.battleMusic.stop()
         changeMode.requestModeChange( 'OVERWORLD' )
     }
     if ( keyIsNumberInMenu && playerCanChooseMove ) {
-        battleState.player.sprite.setButtonAsActive( event.key )
+        battleState.playerParty.activeMember.sprite.setButtonAsActive( event.key )
     }
     if ( event.key == "q" ) {
         handleActionButton( playerCanChooseMove, battleState, battleText )
     }
     if ( event.key == "e" && battleState.menuIsActive ) {
-        battleState.player.unsetMoveMenu( );
+        battleState.playerParty.activeMember.unsetMoveMenu( );
     }
     else {
-        state.pressedKeys[event.key] = true        
+        state.pressedKeys[event.key] = true;        
     }
 }
 
@@ -42,7 +42,7 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
 }
 
 const handleBattleMenuClick = ( battleState, battleText ) => {
-    const playerUiButtons = battleState.player.sprite.buttonSprites
+    const playerUiButtons = battleState.playerParty.activeMember.sprite.buttonSprites
 
     playerUiButtons.forEach( (button) => {
         if ( button.active ) {
@@ -50,8 +50,8 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
                 handlePunch( battleState, battleText )
             }
             if ( button.text.includes("2") ) {
-                battleState.player.setMoveMenu( );
-                button.setActive(false);
+                battleState.playerParty.activeMember.setMoveMenu( );
+                button.setActive( false );
             }
             if ( button.text.includes("3") ) {
           
@@ -67,15 +67,17 @@ const handleBattleMenuClick = ( battleState, battleText ) => {
 }
 
 const selectMove = ( battleState, battleText ) => {
-    const playerUiButtons = battleState.player.sprite.buttonSprites
+    const activeUiButtons = battleState.playerParty.activeMember.sprite.buttonSprites
+    const activePartyMember = battleState.playerParty.activeMember
 
-    playerUiButtons.forEach( (button, index) => {
+    activeUiButtons.forEach( (button, index) => {
         if ( button.active ) {
-            console.log(button, battleState.player.moves[index])   
-            console.log(battleState.player.moves[index].animation)
-            battleState.player.animateAttack( battleState.player.moves[index].animation )         
+            activePartyMember.nextMove = activePartyMember.moves[index];
         }
     } )
+
+    battleState.menuIsActive = false;
+    battleState.playerParty.getNextPartyMember( )
 }
 
 const passPhase = ( battleState, battleText ) => {
@@ -83,8 +85,10 @@ const passPhase = ( battleState, battleText ) => {
     const opponent  = battleState.opponent
 
     switch ( battleState.battlePhase ) {
-        case globals['PHASE_BEGIN_TURN'] :
+        case globals['PHASE_BEGIN_BATTLE'] :
             battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
+            battleState.playerParty.inMoveSelection = true;
+            battleState.playerParty.activeMember.activateUI( true )
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
@@ -104,7 +108,7 @@ const passPhase = ( battleState, battleText ) => {
             }
             break;
         case "END":
-            battleState.battleMusic.stop()
+            battleState.battleMusic.stop( )
             changeMode.requestModeChange( 'OVERWORLD' )
     }
 }
@@ -125,7 +129,7 @@ const handleBattleDeath = ( loser, winner, battleText ) => {
     battleText.setText( 
         loser.character.name + " has been wrecked..." 
     )
-    loser.sprite.fadeOut()
+    loser.sprite.fadeOut( );
     winner.sprite.setShout( 
         res.getBattleShout( winner.character.className, "VICTORY"), true 
     );
@@ -136,12 +140,12 @@ const handlePunch = ( battleState, battleText ) => {
     battleText.setText( 
         res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
     )
-    const sfx = new Sound( "battle-baba.mp3", true )
+    const sfx = new Sound( "battle-baba.mp3", true );
     sfx.play( );
     passPhase( battleState );
     setTimeout( ( ) => {
-        battleState.player.standardAttack( )
-        battleState.opponent.animateHit( )
+        battleState.player.standardAttack( );
+        battleState.opponent.animateHit( );
     }, 500 );
 }
 

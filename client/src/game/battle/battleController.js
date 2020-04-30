@@ -74,7 +74,7 @@ const initBattleMapAndSprites = ( ) => {
     setTimeout( ( ) => {
         initializeBattleCharacter( state.battleState.opponent )
 
-        state.battleState.battlePhase = globals['PHASE_BEGIN_TURN']
+        state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']
     }, 2400)
 }
 
