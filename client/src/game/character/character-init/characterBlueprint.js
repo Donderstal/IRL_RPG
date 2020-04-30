@@ -53,8 +53,6 @@ class CharacterBlueprint {
         },
 
         this.moves          = initMoves.initMoves(this.className);
-
-        console.log(this)
     }
     
     getAttributeGrouptotals( ) {
@@ -69,28 +67,28 @@ class CharacterBlueprint {
         let params = []
         switch ( this.className ) {
             case "Neckbeard":
-                params = [ { 
+                params = { 
                     INT: 3, MYS: 2, WIS: 1, 
                     CHA: -3, END: -1, ATH: -2 
-                } ];
+                };
                 break;
             case "Influencer":
-                params = [ { 
+                params = { 
                     ATH: 2, CHA: 2, END: 1, 
                     WIS: -2, INT: -2, MYS: -1 
-                } ];
+                };
                 break;    
             case "Tumblr_Girl":
-                params = [ { 
+                params = { 
                     INT: 2, PER: 2, MYS: 1, 
                     STR: -2, ATH: -1, CHA: -1, FIN: -1 
-                } ];
+                };
                 break;           
             case "Chad":
-                params = [ { 
+                params = { 
                     STR: 3, END: 2, ATH: 2, 
                     WIS: -3, INT: -2, PER: -1, MYS: -1 
-                } ];                    
+                };                    
                 break;
         }
 
@@ -98,9 +96,11 @@ class CharacterBlueprint {
     }
 
     updateAttributes ( valuesToUpdate ) {
-        Object.entries(valuesToUpdate).forEach( (e) => {
-            this.attributes[e.key] += e.value
-        } )
+        for ( var key in valuesToUpdate ) {
+            if ( this.attributes.hasOwnProperty(key) ){
+                this.attributes[key] += valuesToUpdate[key]
+            }
+        }
     }
 
     setLevel ( level ) {
