@@ -1,8 +1,8 @@
-const res           = require('../../resources/resourceStrings')
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
 const changeMode    = require('../../game-data/changeMode')
-const Sound         = require('./../interfaces/I_Sound').Sound
+
+let actionButtonAllowed = true;
 
 const handleBattleKeyPress = ( event ) => {
     const battleState   = state.battleState
@@ -18,7 +18,7 @@ const handleBattleKeyPress = ( event ) => {
     if ( keyIsNumberInMenu && playerCanChooseMove ) {
         battleState.playerParty.activeMember.sprite.setButtonAsActive( event.key )
     }
-    if ( event.key == "q" ) {
+    if ( event.key == "q" && actionButtonAllowed ) {
         handleActionButton( playerCanChooseMove, battleState, battleText )
     }
     if ( event.key == "e" && battleState.menuIsActive ) {
@@ -30,10 +30,17 @@ const handleBattleKeyPress = ( event ) => {
 }
 
 const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
-    if ( playerCanChooseMove && !battleState.menuIsActive ) {
+    let isSelectionPhase = ( battleState.battlePhase == globals['PHASE_SELECT_MOVE'] )
+    let isAttackPhase = ( battleState.battlePhase == globals['PHASE_DO_MOVE'] )
+    let allMovesAreDone = battleState.currentMoveIndex == battleState.charactersInField.length
+
+    if ( isAttackPhase && !allMovesAreDone ) {
+        doMove( battleState, battleText );
+    }
+    else if ( playerCanChooseMove && !battleState.menuIsActive && isSelectionPhase ) {
         handleBattleMenuClick( battleState, battleText );
     }
-    else if ( battleState.menuIsActive ) {
+    else if ( battleState.menuIsActive && isSelectionPhase ) {
         selectMove( battleState, battleText );
     }
     else {
@@ -78,34 +85,34 @@ const selectMove = ( battleState, battleText ) => {
 
     battleState.menuIsActive = false;
     battleState.playerParty.getNextPartyMember( )
+
+    if ( !battleState.playerParty.inMoveSelection ) {
+        passPhase( battleState, battleText ) 
+    }
+}
+
+const doMove = ( battleState, battleText ) => {
+    battleState.currentMoveIndex += 1
+    let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex]
+    currentCharacter.animateAttack( currentCharacter.nextMove.animation )
+    actionButtonAllowed = false
+    setTimeout(() => {
+        battleText.setText( currentCharacter.name + " uses " + currentCharacter.nextMove.name )
+        actionButtonAllowed = true
+    }, 500 );
 }
 
 const passPhase = ( battleState, battleText ) => {
-    const player    = battleState.player
-    const opponent  = battleState.opponent
-
     switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_BATTLE'] :
-            battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
-            battleState.playerParty.inMoveSelection = true;
-            battleState.playerParty.activeMember.activateUI( true )
+            beginNewTurn( battleState );
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
-            player.activateUI( false )
+            prepareMovesForExecution( battleState, battleText );
             break;
         case globals['PHASE_DO_MOVE'] :
-            battleState.battlePhase = globals['PHASE_STAT_CHECK'];
-            break;
-        case globals['PHASE_STAT_CHECK'] :
-            if ( checkForDeath(battleState, battleText) ) {
-                battleState.battlePhase = "END"
-            }
-            else {
-                player.hasTurn = ( player.hasTurn ) ? false : true
-                opponent.hasTurn = ( player.hasTurn ) ? false : true
-                battleState.battlePhase = globals['PHASE_BEGIN_TURN'];
-            }
+            beginNewTurn( battleState )
             break;
         case "END":
             battleState.battleMusic.stop( )
@@ -113,41 +120,41 @@ const passPhase = ( battleState, battleText ) => {
     }
 }
 
-const checkForDeath = ( battleState, battleText ) => {
-    if ( battleState.player.character.stats.Health <= 0 ) {
-        return handleBattleDeath( battleState.player, battleState.opponent, battleText )
-    }
-    else if ( battleState.opponent.character.stats.Health <= 0 ) {
-        return handleBattleDeath( battleState.opponent, battleState.player, battleText )
-    }
-    else {
-        return false        
-    }
+const beginNewTurn = ( battleState ) => {
+    battleState.battlePhase = globals['PHASE_SELECT_MOVE'];
+    battleState.playerParty.prepareMoveSelection( );
+    battleState.opponentParty.selectMoves( );
 }
 
-const handleBattleDeath = ( loser, winner, battleText ) => {
-    battleText.setText( 
-        loser.character.name + " has been wrecked..." 
-    )
-    loser.sprite.fadeOut( );
-    winner.sprite.setShout( 
-        res.getBattleShout( winner.character.className, "VICTORY"), true 
-    );
-    return true
-}
+const prepareMovesForExecution = ( battleState, battleText ) => {
+    battleState.charactersInField = [ ...battleState.playerParty.members, ...battleState.opponentParty.members ]
+    battleState.currentMoveIndex = 0;
 
-const handlePunch = ( battleState, battleText ) => {
-    battleText.setText( 
-        res.getBattleResString('BATTLE_USE_MOVE', { name: battleState.player.character.name, move: "punch" } ) 
-    )
-    const sfx = new Sound( "battle-baba.mp3", true );
-    sfx.play( );
-    passPhase( battleState );
-    setTimeout( ( ) => {
-        battleState.player.standardAttack( );
-        battleState.opponent.animateHit( );
+    battleState.charactersInField.sort( ( a, b ) => {
+        let aATH = a.character.attributes.ATH
+        let bATH = b.character.attributes.ATH
+        if ( aATH > bATH ) {
+            return -1 
+        }
+        else if ( bATH > aATH ) {
+            return 1
+        }
+        else {
+            return 0
+        }          
+    } )
+    
+    actionButtonAllowed = false;
+    let firstCharacter = battleState.charactersInField[0]
+    setTimeout(() => {
+        firstCharacter.animateAttack( firstCharacter.nextMove.animation )
     }, 500 );
+    setTimeout(() => {
+        battleText.setText( firstCharacter.name + " uses " + firstCharacter.nextMove.name )
+        actionButtonAllowed = true;
+    }, 1000);
 }
+
 
 module.exports = {
     handleBattleKeyPress

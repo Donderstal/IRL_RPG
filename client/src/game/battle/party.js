@@ -24,20 +24,21 @@ class Party {
             this.activeMember.activateUI()
         }
         else {
-
-            this.members.forEach( ( e ) => {
-                console.log(e)
-                setTimeout( ( ) => {
-                    e.animateAttack( e.nextMove.animation )
-                }, 500 )
-            })            
-            
-            setTimeout( ( ) => {
-                this.activeMemberIndex = 0;                
-                this.activeMember = this.members[this.activeMemberIndex];
-                this.activeMember.activateUI( true )
-            }, 2000 )
+            this.inMoveSelection = false;
         }
+    }
+
+    prepareMoveSelection( ) {
+        this.inMoveSelection = true;
+        this.activeMemberIndex = 0;
+        this.activeMember = this.members[this.activeMemberIndex]
+        this.activeMember.activateUI( true );
+    }
+
+    selectMoves( ) {
+        this.members.forEach( ( e ) => {
+            e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
+        } )
     }
 }
 
