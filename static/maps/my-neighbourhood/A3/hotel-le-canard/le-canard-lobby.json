@@ -60,7 +60,7 @@
     "characters" : [
         {
             "type": "static",
-            "sprite": "chad.png",
+            "sprite": "business_man.png",
             "direction": "FACING_RIGHT",
             "row": 10,
             "col": 3,

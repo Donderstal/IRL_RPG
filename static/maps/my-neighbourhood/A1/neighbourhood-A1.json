@@ -230,6 +230,20 @@
                 "direction": "FACING_DOWN",
                 "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
             }
+        },
+        {
+            "type": "static",
+            "sprite": "business_man.png",
+            "direction": "FACING_DOWN",
+            "row": 4,
+            "col": 13,
+            "action": {
+                "type": "TEXT",
+                "name": "Mr. Business",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "I'm Mr. Business!'"
+            }
         }
     ],
     "actions" : [
