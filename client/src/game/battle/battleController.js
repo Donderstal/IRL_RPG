@@ -62,14 +62,12 @@ const initBattleMapAndSprites = ( ) => {
             canvas.drawFromImageToCanvas( "BACK", battleMap, 0, 0, 1296, 846, 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT )
         }
     }, 800)
-
     
     setTimeout( ( ) => {
         text.initTextContainer( ) // real text
         if ( state.debug.battle == true ) {
             text.initTextContainer(state.debug.battle)   
         }
-
     }, 2000) 
 
     setTimeout( ( ) => {
