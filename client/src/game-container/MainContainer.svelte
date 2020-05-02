@@ -3,6 +3,7 @@
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import MainUiButton from './svelte-partials/main-ui-button.svelte'
     import startGame from '../game/startGame.js';
+    import globals from '../game-data/globals.js';
     import StartGameModal from './svelte-partials/StartGameModal.svelte'
 
     let buttonsAreHidden = false;
@@ -48,7 +49,6 @@
     .main-container {
         display: flex;
         flex-direction: column;
-        width: 1296px;
         margin: 0 auto;
         height: 100vh;
         box-shadow: -15px 0 15px -15px inset;
@@ -61,10 +61,10 @@
 
 </style>
 
-<div class="main-container">
+<div class="main-container" style="width: {globals.CANVAS_WIDTH}" >
     <StartGameModal/>
     <input type="file" id="JSON_input" name="JSON_file">
-    <GfxContainer/>
+    <GfxContainer style="width: {globals.CANVAS_WIDTH}; height: {globals.CANVAS_HEIGHT}" />
     { #each buttons as button }
         <MainUiButton vwFromLeft={button.vw} elementId={button.id} on:buttonPress={ button.action } buttonText={button.text} />
     {/each}
