@@ -30,7 +30,6 @@ class TextContainer {
             this.y      = globals.CANVAS_HEIGHT * .05           
         }
 
-
         this.text           = text
         this.waiting        = false;
         this.buttonColor    = "black"

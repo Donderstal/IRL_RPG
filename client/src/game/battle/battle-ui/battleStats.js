@@ -7,18 +7,18 @@ class BattleStats {
         this.owner          = owner
         this.isPlayer       = isPlayer
 
-        this.startingHP     = owner.stats.Health
-        this.startingMP     = owner.stats.Mana
+        this.startingHP     = owner.character.stats.Health
+        this.startingMP     = owner.character.stats.Mana
 
         this.HPBarWidth,
         this.MPBarWidth,
-        this.width          = globals.CANVAS_WIDTH * .20
+        this.width          = globals.CANVAS_WIDTH * .15
         
         canvas.setFont("SMALL")
         this.manalabelWidth = canvas.getFrontCanvasContext().measureText("MP: " + this.startingMP).width
 
         this.height         = globals.CANVAS_HEIGHT * .05
-        this.y              = globals.CANVAS_HEIGHT * .25
+        this.y              = owner.sprite.y - globals.CANVAS_HEIGHT * .05
 
         this.setPosition( )
         this.setContents( )
@@ -27,40 +27,33 @@ class BattleStats {
 
     setPosition( ) {
         if ( this.isPlayer ) {
-            this.x      = globals.CANVAS_WIDTH * .05
+            this.x      = this.owner.sprite.x - ( this.width * 1.25 ) 
         }
         else {
-            this.x      = globals.CANVAS_WIDTH * .75
+            this.x      = this.owner.sprite.x + this.owner.sprite.width + ( this.width * .25 ) 
         }
     }
 
     setContents( ) {
-        this.name       = this.owner.name
-        this.className  = this.owner.className
-        this.HP         = this.owner.stats.Health
-        this.MP         = this.owner.stats.Mana
-        this.level      = this.owner.level
+        this.name       = this.owner.character.name
+        this.className  = this.owner.character.className
+        this.HP         = this.owner.character.stats.Health
+        this.MP         = this.owner.character.stats.Mana
+        this.level      = this.owner.character.level
 
         this.HPBarWidth = (this.width - this.manalabelWidth) * ( this.HP / this.startingHP )
         this.MPBarWidth = (this.width - this.manalabelWidth) * ( this.MP / this.startingMP  )
     }
 
     refresh( ) {
-        if ( this.isPlayer ) {
-            this.owner = state.battleState.player.character
-            this.setContents( )
-        }
-        else {
-            this.owner = state.battleState.opponent.character
-            this.setContents( )
-        }
+        state.battleState.charactersInField.forEach( ( e ) => {
+            if ( e.name == this.owner.name ) {
+                this.owner = e
+            }
+        } )
     }
 
-    drawStats( isNew = false ) {
-        if ( !isNew ) {
-            this.refresh( )            
-        }
-
+    drawStats( ) {
         canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, 'rgba(255,255,255, 0.66)' );
 
         canvas.writeTextLine( this.name, this.x, this.y - globals.SMALL_FONT_SIZE, "LARGE" )

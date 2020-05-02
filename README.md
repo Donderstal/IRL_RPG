@@ -24,6 +24,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+### MAY 2, 2020
+* New Party setup in battles now works properly
+* Attacks are now executed in order based on ATH
+* Move selection for multiple player chars
+
 #### APR 28, 2020
 * Experimental storing and retrieving of battle attacks and animations
 * Experimental setup for a PartyvParty battle instead of 1v1
