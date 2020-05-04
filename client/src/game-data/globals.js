@@ -3,23 +3,10 @@
 
 const getBasePixelBlockSize = ( ) => {
     const screenWidth = window.screen.width
-    console.log(window.screen)
-    if ( screenWidth <= 375 ) {
-        return 15;
+    if ( screenWidth < 1920 ) {
+        return (Math.floor(window.screen.height / 16));
     }
-    if ( screenWidth > 375 && screenWidth <= 414 ) {
-        return 17;
-    }
-    if ( screenWidth >= 768 && screenWidth < 1280 ) {
-        return 30;
-    }
-    if ( screenWidth >= 1280 && screenWidth < 1440 ) {
-        return 37;
-    }
-    if ( screenWidth >= 1440 && screenWidth < 1920 ) {
-        return 46;
-    }
-    if ( screenWidth >= 1920 ) {
+    else if ( screenWidth >= 1920 ) {
         return 54;
     }
 }
