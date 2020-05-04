@@ -2,9 +2,6 @@
     import StartGameModal from './svelte-partials/StartGameModal.svelte'
     import GfxContainer from './game-gfx-container/GfxContainer.svelte'
     import Header from './header/Header.svelte'
-
-
-
 </script>
 
 <style>

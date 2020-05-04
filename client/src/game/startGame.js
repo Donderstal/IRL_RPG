@@ -37,10 +37,7 @@ const initMapFromSave = ( savedGame ) => {
     const mapData = savedGame.currentMap.mapData
     controller.startMap( "SAVE_GAME", mapData, savedGame )
 
-    setTimeout( () => {
-        controls.listenForKeyPress();     
-        animationFrameController.startRequestingFrame( );
-    }, 500 );
+    setTimeout( initControlsAndAnimation, 500 );
 }
 
 const loadGame = ( ) => {
@@ -58,10 +55,13 @@ const loadGame = ( ) => {
 
 const startNewGame = ( json ) => {
     controller.startMap( "NEW_GAME", json )
-    setTimeout( () => {
-        controls.listenForKeyPress();  
-        animationFrameController.startRequestingFrame( );
-    }, 1000 );
+    setTimeout( initControlsAndAnimation, 1000 );
+}
+
+const initControlsAndAnimation = ( ) => {
+    controls.initTouchControls( );
+    controls.listenForKeyPress();  
+    animationFrameController.startRequestingFrame( );
 }
 
 /**
@@ -79,6 +79,8 @@ const startGame = ( name, className, mode ) => {
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
+
+    document.documentElement.requestFullscreen();
 
     let mapUrl = ( mode == 'normal' ) ? firstMapUrl : battleMapUrl;
     state.playerCharacter.name      = name;
