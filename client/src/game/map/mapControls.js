@@ -29,7 +29,7 @@ const handleMovementKeys = ( touch = false, event = false ) => {
     let touchUp = false;
     let touchDown = false;
 
-    if ( touch ) {
+    if ( touch && state.playerCharacter.sprite != undefined ) {
         var rect = document.getElementById('game-front-canvas').getBoundingClientRect();
         const touch = event.touches[0]
     

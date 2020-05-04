@@ -81,6 +81,7 @@ const startGame = ( name, className, mode ) => {
     } );
 
     document.documentElement.requestFullscreen();
+    utility.hideButtons( );
 
     let mapUrl = ( mode == 'normal' ) ? firstMapUrl : battleMapUrl;
     state.playerCharacter.name      = name;

@@ -52,9 +52,6 @@ const initTouchControls = ( ) => {
 
     frontCanvas.addEventListener("touchstart", handleStart);
     frontCanvas.addEventListener("touchmove", handleMove);
-    frontCanvas.addEventListener("touchend", handleEnd);
-    frontCanvas.addEventListener("touchcancel", handleCancel);
-    
 }
 
 const handleStart = ( event ) => {
@@ -63,16 +60,6 @@ const handleStart = ( event ) => {
 
 const handleMove = ( event ) => {
     handleMovementKeys(true, event)
-}
-
-const handleEnd = ( ) => {
-    console.log(event)
-    console.log('handle end touch...')
-}
-
-const handleCancel = ( ) => {
-    console.log(event)
-    console.log('handle cancel touch...')
 }
 
 module.exports = {
