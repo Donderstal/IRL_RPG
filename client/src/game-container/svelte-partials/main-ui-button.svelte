@@ -3,7 +3,7 @@
 
     const dispatch = createEventDispatcher();
     
-    export let vwFromLeft;
+    export let vhFromTop;
     export let buttonText;
     export let elementId;
 </script>
@@ -15,8 +15,9 @@
         border: 1px groove #D68Fd6;
         border-radius: 5px;
         width: 7vw;
+        height: 12.5vh;
         position: fixed;
-        top: 1vw;
+        left: 0;
     }
 
     button:hover {
@@ -26,4 +27,7 @@
     }
 </style>
 
-<button style="left: {vwFromLeft}" on:click={() => dispatch('buttonPress')} id={elementId} >  {buttonText} </button>
+<button style="top: {vhFromTop}" on:click={() => dispatch('buttonPress')} 
+        id={elementId} class="main-menu-button" >  
+    {buttonText} 
+</button>

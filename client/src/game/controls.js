@@ -1,4 +1,5 @@
 const state = require('../game-data/state')
+const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
 
@@ -23,7 +24,7 @@ const stopListenForKeyPress = () => {
     clearstate.PressedKeys()
 }
 
-const addKeyToPressed = () => {
+const addKeyToPressed = ( ) => {
     if ( state.overworldMode ) {
         handleMapKeyPress( event )
     }
@@ -46,8 +47,24 @@ const clearPressedKeys = () => {
     })
 }
 
+const initTouchControls = ( ) => {
+    const frontCanvas = document.getElementById('game-front-canvas')
+
+    frontCanvas.addEventListener("touchstart", handleStart);
+    frontCanvas.addEventListener("touchmove", handleMove);
+}
+
+const handleStart = ( event ) => {
+    handleMovementKeys(true, event)
+}
+
+const handleMove = ( event ) => {
+    handleMovementKeys(true, event)
+}
+
 module.exports = {
     listenForKeyPress,
     stopListenForKeyPress,
-    clearPressedKeys
+    clearPressedKeys,
+    initTouchControls
 }

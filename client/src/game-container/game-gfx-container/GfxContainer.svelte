@@ -1,18 +1,20 @@
+<script>
+    import globals from '../../game-data/globals.js';
+</script>
+
 <style>
     .game-gfx-container {
-        display: flex;
-        flex-direction: column;
-        flex: 75%;
-        height: 864px;
-        width: 1296px;
         background-color: black;
-        justify-content: center;
         text-align: center;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    canvas {
+        position: absolute;
     }
 
     .game-background-body {
-        height: 864px;
-        width: 1296px;
         background-color: transparent;
         background-size: cover;
         margin: 0 auto;
@@ -20,9 +22,6 @@
     }
 
     .game-front-body {
-        position: absolute;
-        height: 864px;
-        width: 1296px;
         background-color: transparent;
         margin: 0 auto;
         z-index: 5
@@ -32,20 +31,22 @@
         display: none;
     }
 
+    .canvas-wrapper {
+        margin: 0 auto;
+        display: block;
+    }
+
 
 </style>
 
 <div class="game-gfx-container">
 
-    <div id="intro-screen">
-        <div>
-            <h3>Neckbeard's nightmare</h3>
-        </div>
+    <div class="canvas-wrapper" style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px">
+        <canvas id='game-background-canvas' class="game-background-body do-not-display" 
+        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>
+
+        <canvas id='game-front-canvas' class="game-front-body do-not-display" 
+        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
     </div>
-
-    <canvas id='game-background-canvas' class="game-background-body do-not-display" ></canvas>
-
-    <canvas id='game-front-canvas' class="game-front-body do-not-display" ></canvas>
-
 
 </div>
