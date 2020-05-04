@@ -24,7 +24,12 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
-### MAY 2, 2020
+#### MAY 4, 2020
+* Dynamic globals based on screen height allow for responsive sizing
+* Rearranging the main UI buttons
+* Rudimentary touch controls
+
+#### MAY 2, 2020
 * New Party setup in battles now works properly
 * Attacks are now executed in order based on ATH
 * Move selection for multiple player chars
