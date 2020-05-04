@@ -44,8 +44,6 @@ const initMapFromSave = ( savedGame ) => {
 }
 
 const loadGame = ( ) => {
-    document.getElementById('intro-screen').style.display = 'none';
-
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
@@ -78,8 +76,6 @@ const initCanvas = ( canvas ) => {
 }
 
 const startGame = ( name, className, mode ) => {
-    document.getElementById('intro-screen').style.display = 'none';
-
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
