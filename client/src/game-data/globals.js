@@ -1,5 +1,3 @@
-// This file should store all global constants
-
 
 const getBasePixelBlockSize = ( ) => {
     const screenWidth = window.screen.width
@@ -66,54 +64,32 @@ const PHASE_STAT_CHECK              = 3
 
 module.exports = {
     MOVEMENT_SPEED,
-
-    // for use in movement animation
-    // first row of a spritesheet will always face down
-    // second row is always left etc...
     FACING_DOWN,
     FACING_LEFT,
     FACING_RIGHT,
     FACING_UP,
-    // animation frame limit
     FRAME_LIMIT,
-    
     GRID_BLOCK_PX,
     CANVAS_WIDTH,
     CANVAS_HEIGHT,
     CANVAS_COLUMNS,
     CANVAS_ROWS,
-
-    // sheet dimensions
     MAP_SPRITE_WIDTH_IN_SHEET,
     MAP_SPRITE_HEIGHT_IN_SHEET,
-
-    // sprite dimensions
     STRD_SPRITE_WIDTH,
     STRD_SPRITE_HEIGHT,
-
-    //
     BATTLE_SPRITE_WIDTH,
     BATTLE_SPRITE_HEIGHT,
-
-    // speech bubbles 
     MIN_BUBBLE_WIDTH,
     MAX_BUBBLE_WIDTH,
-
-    // canvas font sizes
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,
     FONT_STYLE,
-
-    // Length of some animations in milliseconds
     BATTLE_INTRO_ANIM_MS,
-
-    // battle spritesheet positions
     B_SHEETPOS_NONE,
     B_SHEETPOS_IDLE,
     B_SHEETPOS_IDLE2,
     B_SHEETPOS_ATTACK,
-
-    // battle phases
     PHASE_BEGIN_TURN,
     PHASE_SELECT_MOVE,
     PHASE_DO_MOVE,
