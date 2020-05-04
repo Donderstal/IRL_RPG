@@ -71,28 +71,37 @@
     #checkbox {
         display: none;
     }
+
+    .modal-inner-div {
+        display: inline-block;
+        width: 45%;
+    }
 </style>
 
 <div class="Modal">
     <div>
-        <h4>Name</h4>
-        <input type="text" id="charName">
-    </div>
-    <div>
-        <h4>Class</h4>
-        <select id="charClass">
-            <option value="Influencer">Influencer</option>
-            <option value="Neckbeard">Neckbeard</option>
-            <option value="Chad">Chad</option>
-            <option value="Tumblr girl">Tumblr girl</option>
-        </select>
-    </div>
-    <div>
-        <h4>Battle test or normal?</h4>
-        <label>Normal mode</label>
-        <input type="radio" name="modeChoice" id="normal" checked>
-        <label>Battle</label>
-        <input type="radio" name="modeChoice" id="battle">
+        <div class="modal-inner-div">
+            <h4>Name</h4>
+            <input type="text" id="charName">    
+        </div>
+        <div class="modal-inner-div">
+            <h4>Class</h4>
+            <select id="charClass">
+                <option value="Influencer">Influencer</option>
+                <option value="Neckbeard">Neckbeard</option>
+                <option value="Chad">Chad</option>
+                <option value="Tumblr girl">Tumblr girl</option>
+            </select>        
+        </div>
+        <div class="modal-inner-div">
+            <label>Normal mode</label>
+            <input type="radio" name="modeChoice" id="normal" checked>
+        </div>
+        <div class="modal-inner-div">
+            <label>Battle</label>
+            <input type="radio" name="modeChoice" id="battle">
+        </div>
+        <button on:click={ startGameWithParams }>Start!!</button>
     </div>
     <div id="checkbox">
         <h4>Battle test or normal?</h4>
@@ -100,8 +109,5 @@
         <input type="checkbox" id="battle-debug">
         <label>Map debug</label>
         <input type="checkbox" id="map-debug">
-    </div>
-    <div>
-        <button on:click={ startGameWithParams }>Start!!</button>
     </div>
 </div>
