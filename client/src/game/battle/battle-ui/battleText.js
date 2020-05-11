@@ -1,5 +1,6 @@
 const state = require( '../../../game-data/state' )
 const globals = require( '../../../game-data/globals' )
+const canvas = require( '../../../helpers/canvasHelpers' )
 
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 
@@ -36,6 +37,11 @@ class TextContainer extends I_TextBox {
 
     getBattleTextDimensions( ) {
         return { "width": lobals.CANVAS_WIDTH / 2, "height": globals.CANVAS_HEIGHT / 6}
+    }
+
+    setText(text) {
+        this.text = canvas.breakTextIntoLines( text, 'LARGE', this.width )  
+        super.setText(this.text)
     }
 }
 

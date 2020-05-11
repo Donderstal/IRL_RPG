@@ -1,12 +1,10 @@
 
 const getBasePixelBlockSize = ( ) => {
-    const screenWidth = window.screen.width
-    if ( screenWidth < 1920 ) {
-        return (Math.floor(window.screen.height / 16));
-    }
-    else if ( screenWidth >= 1920 ) {
-        return 54;
-    }
+    let blockSize = Math.floor(window.screen.height / 16)
+    if ( blockSize > 64 ) {
+        blockSize = 64;
+    } 
+    return blockSize;
 }
 
 // for use in movement animation
@@ -39,7 +37,7 @@ const BATTLE_SPRITE_WIDTH           = 285
 const BATTLE_SPRITE_HEIGHT          = 285
 
 // speech bubbles 
-const MIN_BUBBLE_WIDTH              = GRID_BLOCK_PX * 4
+const MIN_BUBBLE_WIDTH              = GRID_BLOCK_PX * 5
 const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
 
 // canvas font sizes

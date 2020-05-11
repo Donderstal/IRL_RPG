@@ -65,10 +65,9 @@ class I_TextBox {
     }
 
     writeHeader( ) {
-        canvas.setFont("SMALL");
         canvas.writeTextLine( 
             this.headerText, this.x + this.fontSize, 
-            this.y + globals.SMALL_FONT_LINE_HEIGHT, this.fontType
+            this.y + globals.SMALL_FONT_LINE_HEIGHT, "SMALL"
         );
     }
 
