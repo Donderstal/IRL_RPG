@@ -3,7 +3,6 @@ const globals = require('../game-data/globals')
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
-
     let ctx = canv.getContext('2d')
 
     return ctx
@@ -12,7 +11,6 @@ const getFrontCanvasContext = () => {
 //Return back Canvas ctx
 const getBackCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[0]
-
     let ctx = canv.getContext('2d')
 
     return ctx
@@ -123,12 +121,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
 
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
-    if ( size === "LARGE") {
-        ctx.font = globals.LARGE_FONT_SIZE + "px " + "GameFont";
-    }
-    else if ( size === "SMALL" ) {
-        ctx.font = globals.SMALL_FONT_SIZE + "px " + "GameFont";
-    }
+    ctx.font = ( ( size === "LARGE") ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE ) + "px " + "GameFont";
 }
 
 const writeTextLine = ( text, x, y, size, color = null ) => {

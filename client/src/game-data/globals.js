@@ -31,8 +31,8 @@ const MAP_SPRITE_WIDTH_IN_SHEET     = 30
 const MAP_SPRITE_HEIGHT_IN_SHEET    = 54
 
 // sprite dimensions
-const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
-const STRD_SPRITE_HEIGHT            = GRID_BLOCK_PX * 1.5
+const STRD_SPRITE_WIDTH             = ( GRID_BLOCK_PX * 0.81081081081 )
+const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.8
 
 //
 const BATTLE_SPRITE_WIDTH           = 285
@@ -45,7 +45,6 @@ const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
 // canvas font sizes
 const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
 const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.375
-const FONT_STYLE                    = 'Times New Roman '
 
 // Length of some animations in milliseconds
 const BATTLE_INTRO_ANIM_MS          = 2100
@@ -84,7 +83,6 @@ module.exports = {
     MAX_BUBBLE_WIDTH,
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,
-    FONT_STYLE,
     BATTLE_INTRO_ANIM_MS,
     B_SHEETPOS_NONE,
     B_SHEETPOS_IDLE,

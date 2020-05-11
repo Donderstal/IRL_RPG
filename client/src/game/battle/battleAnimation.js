@@ -16,9 +16,6 @@ const handleBattleAnimations = ( ) => {
     if ( battleText != undefined ) {
         battleText.drawContainer()    
     }
-    if ( debugText != undefined ) {
-        debugText.drawContainer()    
-    }
 }
 
 module.exports = {
