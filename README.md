@@ -24,6 +24,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### MAY 11, 2020
+* New interface for textboxes in game
+* Improved dynamic textbox sizing
+* Removing the awfully complex old speechbubble code
+
 #### MAY 4, 2020
 * Dynamic globals based on screen height allow for responsive sizing
 * Rearranging the main UI buttons
