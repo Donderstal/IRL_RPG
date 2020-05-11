@@ -1,13 +1,14 @@
 const canvas = require( '../../helpers/canvasHelpers' )
 const globals = require( '../../game-data/globals' )
 
-class TextBox {
+class I_TextBox {
     constructor( xy, dimensions, fontSize, text, buttonsText = null ) {
         this.x              = xy.x;
         this.y              = xy.y;
         this.width          = dimensions.width;
         this.height         = dimensions.height;
 
+        this.fontType       = fontSize 
         this.fontSize       = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE;
         this.lineHeight     = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_LINE_HEIGHT : SMALL_FONT_LINE_HEIGHT;
 
@@ -16,12 +17,13 @@ class TextBox {
         this.innerBoxWidth  = dimensions.width + ( globals.LARGE_FONT_SIZE * .25 );
         this.innerBoxHeight = dimensions.height + ( globals.LARGE_FONT_SIZE * .25 );
 
-        this.text           = this.setText( text )
+        this.text           = text
         this.buttonsText    = ( buttonsText == null ) ? [ "(Q) Continue", "(E) Back"] : buttonsText;
         this.buttonColor    = "black";
         this.animationFrame = 0
 
-        drawTextBox( )
+        canvas.setFont(fontSize)
+        this.drawTextBox( )
     }
 
     drawTextBox( ) {
@@ -43,17 +45,18 @@ class TextBox {
         );
     }
 
-    drawText( ) {
+    writeText( ) {
+        canvas.setFont(this.fontType)
         canvas.writeTextLine( 
             this.text, this.x + this.fontSize, 
-            this.y + this.lineHeight, this.fontSize 
+            this.y + this.lineHeight, this.fontType 
         )
     }
 
     drawButtons( ) {
         let buttonX     = this.x + globals.LARGE_FONT_SIZE;
         let buttonsY    = this.y + this.height - globals.SMALL_FONT_LINE_HEIGHT;
-        
+
         this.buttonsText.forEach( (buttonText) => {
             canvas.writeTextLine(
                 buttonText, buttonX, buttonsY, "SMALL", this.buttonColor
@@ -68,4 +71,12 @@ class TextBox {
             this.animationFrame = 0
         }
     }
+
+    setText( text ) {
+        this.text = text
+    }
+}
+
+module.exports = {
+    I_TextBox
 }
