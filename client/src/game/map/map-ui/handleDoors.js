@@ -27,28 +27,28 @@ const checkIfDoor = ( sprite, direction ) => {
         const currentDoor = doors[i]
 
         if ( direction === 'FACING_LEFT' ) {
-            if ( direction == currentDoor.directionIn && currentDoor.x >= sprite.left ) {
+            if ( direction == currentDoor.directionIn && currentDoor.x >= ( sprite.left - 1 ) ) {
                 if ( sprite.cell.y > currentDoor.top && sprite.cell.y < currentDoor.bottom)
                 facingDoor = true
             }
         }
 
         if ( direction === 'FACING_RIGHT' ) {
-            if ( direction == currentDoor.directionIn && currentDoor.x <= sprite.right ) {
+            if ( direction == currentDoor.directionIn && currentDoor.x <= ( sprite.right + 1 ) ) {
                 if ( sprite.cell.y > currentDoor.top && sprite.cell.y < currentDoor.bottom)
                 facingDoor = true
             }
         }
 
         if ( direction === 'FACING_UP' ) {
-            if ( direction == currentDoor.directionIn && currentDoor.y >= sprite.y ) {
+            if ( direction == currentDoor.directionIn && currentDoor.y >= ( sprite.y - 1 ) ) {
                 if ( sprite.cell.x > currentDoor.left && sprite.cell.x < currentDoor.right)
                 facingDoor = true
             }
         }
 
         if ( direction === 'FACING_DOWN' ) {
-            if ( direction == currentDoor.directionIn && currentDoor.y <= sprite.bottom ) {
+            if ( direction == currentDoor.directionIn && currentDoor.y <= ( sprite.bottom + 1) ) {
                 if ( sprite.cell.x > currentDoor.left && sprite.cell.x < currentDoor.right)
                 facingDoor = true
             }

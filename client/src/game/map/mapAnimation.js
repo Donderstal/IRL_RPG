@@ -19,7 +19,7 @@ const handleMapAnimations = ( ) => {
     }
     
     if ( state.currentMap.bubbleIsActive ) {
-        state.currentMap.activeBubble.drawBubble( )
+        state.currentMap.activeBubble.drawTextBox( )
     }
 }
 

@@ -1,12 +1,10 @@
 
 const getBasePixelBlockSize = ( ) => {
-    const screenWidth = window.screen.width
-    if ( screenWidth < 1920 ) {
-        return (Math.floor(window.screen.height / 16));
-    }
-    else if ( screenWidth >= 1920 ) {
-        return 54;
-    }
+    let blockSize = Math.floor(window.screen.height / 16)
+    if ( blockSize > 64 ) {
+        blockSize = 64;
+    } 
+    return blockSize;
 }
 
 // for use in movement animation
@@ -31,21 +29,29 @@ const MAP_SPRITE_WIDTH_IN_SHEET     = 30
 const MAP_SPRITE_HEIGHT_IN_SHEET    = 54
 
 // sprite dimensions
-const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
-const STRD_SPRITE_HEIGHT            = GRID_BLOCK_PX * 1.5
+const STRD_SPRITE_WIDTH             = ( GRID_BLOCK_PX * 0.81081081081 )
+const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.8
 
 //
 const BATTLE_SPRITE_WIDTH           = 285
 const BATTLE_SPRITE_HEIGHT          = 285
 
 // speech bubbles 
-const MIN_BUBBLE_WIDTH              = GRID_BLOCK_PX * 4
+const MIN_BUBBLE_WIDTH              = GRID_BLOCK_PX * 5
 const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
 
 // canvas font sizes
 const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
 const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.375
-const FONT_STYLE                    = 'Times New Roman '
+
+// in-game textbox color and opacity
+const INNER_TEXTBOX_RGBA            = "rgba(255,255,255, 0.66)";
+const OUTER_TEXTBOX_RGBA            = "rgba(0,0,0, 0.66)";
+
+// apparently this is the golden ratio
+const GOLDEN_FONT_RATIO             = 1.618;
+const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
+const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 
 // Length of some animations in milliseconds
 const BATTLE_INTRO_ANIM_MS          = 2100
@@ -84,7 +90,10 @@ module.exports = {
     MAX_BUBBLE_WIDTH,
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,
-    FONT_STYLE,
+    INNER_TEXTBOX_RGBA,
+    OUTER_TEXTBOX_RGBA,
+    SMALL_FONT_LINE_HEIGHT,
+    LARGE_FONT_LINE_HEIGHT,
     BATTLE_INTRO_ANIM_MS,
     B_SHEETPOS_NONE,
     B_SHEETPOS_IDLE,

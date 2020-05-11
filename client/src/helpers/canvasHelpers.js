@@ -3,7 +3,6 @@ const globals = require('../game-data/globals')
 //Return front Canvas ctx
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
-
     let ctx = canv.getContext('2d')
 
     return ctx
@@ -12,13 +11,12 @@ const getFrontCanvasContext = () => {
 //Return back Canvas ctx
 const getBackCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[0]
-
     let ctx = canv.getContext('2d')
 
     return ctx
 }
 
-const drawCircle = ( canvasX, canvasY, radius, text = null ) => {
+const drawCircle = ( canvasX, canvasY, radius ) => {
     let ctx = getFrontCanvasContext()
     ctx.beginPath();
     ctx.arc( canvasX, canvasY, radius, 0, 2 * Math.PI );
@@ -45,7 +43,6 @@ const drawFromImageToCanvas = (
         canvasX, canvasY,
         widthInCanvas, heightInCanvas 
     )
-
 }
 
 const clearCanvasRectangle = (
@@ -62,28 +59,33 @@ const clearCanvasRectangle = (
     )
 }
 
-const breakTextIntoLines = ( text, fontSize ) => {
+const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE_WIDTH ) => {
     let ctx = getFrontCanvasContext() 
     setFont(fontSize)
-    if ( ctx.measureText( text ).width > globals.MAX_BUBBLE_WIDTH ) {
-        const lolarray = text.split(' ')
-        let accumulator = 0;
-        let textLine = "";
-        let textLineArray = [ ];
+    if ( ctx.measureText( text ).width > maxBubbleWidth ) {
+        const textArray         = text.split(' ');
+        let currentLineWidth    = 0;
+        let textLine            = "";
+        let textLineArray       = [ ];
 
-        for ( var i = 0; i < lolarray.length; i++ ) {
-            let newWord = lolarray[i] + " "            
-            let wordOverflowsTextbox = ( ( accumulator + ctx.measureText(newWord).width ) > ( globals.MAX_BUBBLE_WIDTH - 10 ) )
+        for ( var i = 0; i < textArray.length; i++ ) {
+            setFont(fontSize);
+            let newWord = textArray[i] + " "            
+            let wordOverflowsTextbox = ( ( currentLineWidth + ctx.measureText(newWord + " ").width ) > ( maxBubbleWidth - globals.LARGE_FONT_SIZE ) )
+            let lastWordIsNext = i == textArray.length - 1
 
             if ( wordOverflowsTextbox ) {
-                textLineArray.push(textLine)
+                textLineArray.push( textLine )
                 textLine = newWord
-                accumulator = 0
+                currentLineWidth = 0
+                if ( lastWordIsNext ) {
+                    textLineArray.push(textLine)
+                }
             }
             else {
-                accumulator += ctx.measureText(newWord).width
+                currentLineWidth += ctx.measureText(newWord).width
                 textLine += newWord
-                if ( i == lolarray.length - 1 ) {
+                if ( lastWordIsNext ) {
                     textLineArray.push(textLine)
                 }
             }
@@ -91,7 +93,7 @@ const breakTextIntoLines = ( text, fontSize ) => {
         return textLineArray      
     }
 
-    return text
+    return [ text ]
 }
 
 const drawLineOnXAxis = (oldX, y, newX, color = null, canvas = null) => {
@@ -123,12 +125,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
 
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
-    if ( size === "LARGE") {
-        ctx.font = globals.LARGE_FONT_SIZE + "px " + "GameFont";
-    }
-    else if ( size === "SMALL" ) {
-        ctx.font = globals.SMALL_FONT_SIZE + "px " + "GameFont";
-    }
+    ctx.font = ( ( size === "LARGE") ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE ) + "px " + "GameFont";
 }
 
 const writeTextLine = ( text, x, y, size, color = null ) => {
