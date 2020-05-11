@@ -10,27 +10,33 @@ const getSpeechBubble = ( action ) => {
 }
 
 const getSpeechBubbleXy = ( action, dimensions ) => {
-    return {
+    let xy = {
         'x': getSpeechBubbleX( action, dimensions ),
         'y': getSpeechBubbleY( action, dimensions )
     }
+
+    return xy
 }
 
 const getSpeechBubbleX = ( action, dimensions ) => {
-    if ( ( action.left ? action.left : action.x ) - dimensions.width < 0 ) {
+    let x = ( action.left ? action.left : action.x );
+
+    if ( x - dimensions.width < 0 ) {
         return ( action.right ? action.right : action.x )
     }
     else {
-        return ( action.left ? action.left : action.x ) - dimensions.width
+        return x - dimensions.width 
     }
 }
 
 const getSpeechBubbleY = ( action, dimensions ) => {
-    if ( ( action.top ? action.top : action.y ) - dimensions.height < 0 ) {
+    let y = ( action.top ? action.top : action.y );
+
+    if ( y - dimensions.height < 0 ) {
         return ( action.bottom ? action.bottom : action.y )
     }
     else {
-        return ( action.top ? action.top : action.y ) - dimensions.height
+        return y - dimensions.height
     }
 }
 
