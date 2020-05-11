@@ -16,7 +16,7 @@ const getBackCanvasContext = () => {
     return ctx
 }
 
-const drawCircle = ( canvasX, canvasY, radius, text = null ) => {
+const drawCircle = ( canvasX, canvasY, radius ) => {
     let ctx = getFrontCanvasContext()
     ctx.beginPath();
     ctx.arc( canvasX, canvasY, radius, 0, 2 * Math.PI );
@@ -43,7 +43,6 @@ const drawFromImageToCanvas = (
         canvasX, canvasY,
         widthInCanvas, heightInCanvas 
     )
-
 }
 
 const clearCanvasRectangle = (
@@ -62,31 +61,31 @@ const clearCanvasRectangle = (
 
 const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE_WIDTH ) => {
     let ctx = getFrontCanvasContext() 
-
     setFont(fontSize)
     if ( ctx.measureText( text ).width > maxBubbleWidth ) {
-        const lolarray = text.split(' ')
-        let accumulator = 0;
-        let textLine = "";
-        let textLineArray = [ ];
+        const textArray         = text.split(' ');
+        let currentLineWidth    = 0;
+        let textLine            = "";
+        let textLineArray       = [ ];
 
-        for ( var i = 0; i < lolarray.length; i++ ) {
-            setFont(fontSize)
-            let newWord = lolarray[i] + " "            
-            let wordOverflowsTextbox = ( ( accumulator + ctx.measureText(newWord + " ").width ) > ( maxBubbleWidth - globals.LARGE_FONT_SIZE) )
+        for ( var i = 0; i < textArray.length; i++ ) {
+            setFont(fontSize);
+            let newWord = textArray[i] + " "            
+            let wordOverflowsTextbox = ( ( currentLineWidth + ctx.measureText(newWord + " ").width ) > ( maxBubbleWidth - globals.LARGE_FONT_SIZE ) )
+            let lastWordIsNext = i == textArray.length - 1
 
             if ( wordOverflowsTextbox ) {
                 textLineArray.push( textLine )
                 textLine = newWord
-                accumulator = 0
-                if ( i == lolarray.length - 1 ) {
+                currentLineWidth = 0
+                if ( lastWordIsNext ) {
                     textLineArray.push(textLine)
                 }
             }
             else {
-                accumulator += ctx.measureText(newWord).width
+                currentLineWidth += ctx.measureText(newWord).width
                 textLine += newWord
-                if ( i == lolarray.length - 1 ) {
+                if ( lastWordIsNext ) {
                     textLineArray.push(textLine)
                 }
             }
@@ -94,7 +93,7 @@ const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE
         return textLineArray      
     }
 
-    return text
+    return [ text ]
 }
 
 const drawLineOnXAxis = (oldX, y, newX, color = null, canvas = null) => {

@@ -20,18 +20,21 @@ class I_TextBox {
         this.text           = canvas.breakTextIntoLines( text, 'LARGE' )
         this.buttonsText    = ( buttonsText == null ) ? [ "(Q) Continue", "(E) Back"] : buttonsText;
         this.buttonColor    = "black";
-        this.animationFrame = 0
+        this.animationFrame = 0;
 
-        canvas.setFont(fontSize)
-        this.drawTextBox( )
+        canvas.setFont(fontSize);
+        this.drawTextBox( );
     }
 
     drawTextBox( ) {
-        this.animationFrame++
+        this.animationFrame++;
 
         this.drawBox( );
+        if ( this.hasHeader ) {
+            this.writeHeader( );
+        }
         this.writeText( );
-        this.drawButtons( ) 
+        this.drawButtons( );
     }
     
     drawBox( ) {
@@ -46,34 +49,55 @@ class I_TextBox {
     }
 
     writeText( ) {
-        canvas.setFont(this.fontType)
+        canvas.setFont(this.fontType);
+        let yPositionInBox = this.y + this.lineHeight;
+
+        if ( this.hasHeader ) {
+            yPositionInBox += globals.SMALL_FONT_LINE_HEIGHT;
+        }
+
+        for ( var i = 0; i < this.text.length; i++ ) {
+            canvas.writeTextLine( 
+                this.text[i], this.x + this.fontSize, 
+                yPositionInBox + ( this.lineHeight * i ), this.fontType
+            );
+        }
+    }
+
+    writeHeader( ) {
+        canvas.setFont("SMALL");
         canvas.writeTextLine( 
-            this.text, this.x + this.fontSize, 
-            this.y + this.lineHeight, this.fontType 
-        )
+            this.headerText, this.x + this.fontSize, 
+            this.y + globals.SMALL_FONT_LINE_HEIGHT, this.fontType
+        );
     }
 
     drawButtons( ) {
         let buttonX     = this.x + globals.LARGE_FONT_SIZE;
-        let buttonsY    = this.y + this.height - globals.SMALL_FONT_LINE_HEIGHT;
+        let buttonsY    = this.y + this.height;
 
         this.buttonsText.forEach( (buttonText) => {
             canvas.writeTextLine(
                 buttonText, buttonX, buttonsY, "SMALL", this.buttonColor
             )
-            buttonX += ( this.width / 2 ) 
-        })
+            buttonX += ( this.width / 2 ) ;
+        });
     }
 
     doButtonAnimation( ) {
         if ( this.animationFrame > ( globals.FRAME_LIMIT * 2 ) ) {
-            this.buttonColor = ( this.buttonColor == "black" ) ? "#800020" : "black"
-            this.animationFrame = 0
+            this.buttonColor = ( this.buttonColor == "black" ) ? "#800020" : "black";
+            this.animationFrame = 0;
         }
     }
 
     setText( text ) {
-        this.text = text
+        this.text = text;
+    }
+
+    setHeader( text ) {
+        this.hasHeader  = true;
+        this.headerText = text;
     }
 }
 
