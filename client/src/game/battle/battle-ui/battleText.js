@@ -7,14 +7,13 @@ const initTextContainer = ( ) => {
 }
 
 class TextContainer {
-    constructor( text = "", showUI = true, isDebug = false ) {
-        this.isDebug = isDebug        
+    constructor( text = "", showUI = true ) {
         this.animationFrame = 0
 
-        this.width  = globals.CANVAS_WIDTH / 2
-        this.height = globals.CANVAS_HEIGHT / 6
-        this.x      = globals.CANVAS_WIDTH / 4
-        this.y      = (globals.CANVAS_HEIGHT / 6) * 5     
+        this.width      = globals.CANVAS_WIDTH / 2
+        this.height     = globals.CANVAS_HEIGHT / 6
+        this.x          = globals.CANVAS_WIDTH / 4
+        this.y          = (globals.CANVAS_HEIGHT / 6) * 5     
         this.isMoveMenu = false;       
 
         this.text           = text
@@ -31,19 +30,11 @@ class TextContainer {
             this.animationFrame = 0
         }
 
-        if ( !this.isDebug && !this.isMoveMenu ) {
-            canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
-            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
-            canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
-            canvas.writeTextLine( "(Q) Ok", this.x + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor )                  
-        }
-        else if ( this.isMoveMenu ) {
-            canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
-            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
-            canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
-            canvas.writeTextLine("(Q) Ok", this.x + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor)                  
-            canvas.writeTextLine("(E) Back",  this.x + ( this.width / 2 ) + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor) 
-        }     
+        canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, "rgba(0,0,0, 0.66)" );
+        canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(255,255,255, 0.66)' );
+        canvas.writeTextLine( this.text, this.x + globals.LARGE_FONT_SIZE, this.y + ( globals.LARGE_FONT_SIZE * 2 ), 'LARGE', "black" )  
+        canvas.writeTextLine("(Q) Ok", this.x + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor)                  
+        canvas.writeTextLine("(E) Back",  this.x + ( this.width / 2 ) + globals.LARGE_FONT_SIZE, this.y + this.height - globals.SMALL_FONT_SIZE, "SMALL", this.buttonColor) 
     }
     
     setMoveMenu( ) {

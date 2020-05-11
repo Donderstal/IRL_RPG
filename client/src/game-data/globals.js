@@ -46,6 +46,15 @@ const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
 const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
 const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.375
 
+// in-game textbox color and opacity
+const INNER_TEXTBOX_RGBA            = "rgba(255,255,255, 0.66)";
+const OUTER_TEXTBOX_RGBA            = "rgba(0,0,0, 0.66)";
+
+// apparently this is the golden ratio
+const GOLDEN_FONT_RATIO             = 1.618;
+const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
+const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
+
 // Length of some animations in milliseconds
 const BATTLE_INTRO_ANIM_MS          = 2100
 
@@ -83,6 +92,10 @@ module.exports = {
     MAX_BUBBLE_WIDTH,
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,
+    INNER_TEXTBOX_RGBA,
+    OUTER_TEXTBOX_RGBA,
+    SMALL_FONT_LINE_HEIGHT,
+    LARGE_FONT_LINE_HEIGHT,
     BATTLE_INTRO_ANIM_MS,
     B_SHEETPOS_NONE,
     B_SHEETPOS_IDLE,
