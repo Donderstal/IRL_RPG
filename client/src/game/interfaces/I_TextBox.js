@@ -17,7 +17,7 @@ class I_TextBox {
         this.innerBoxWidth  = dimensions.width + ( globals.LARGE_FONT_SIZE * .25 );
         this.innerBoxHeight = dimensions.height + ( globals.LARGE_FONT_SIZE * .25 );
 
-        this.text           = text
+        this.text           = canvas.breakTextIntoLines( text, 'LARGE' )
         this.buttonsText    = ( buttonsText == null ) ? [ "(Q) Continue", "(E) Back"] : buttonsText;
         this.buttonColor    = "black";
         this.animationFrame = 0

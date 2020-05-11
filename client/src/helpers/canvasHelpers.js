@@ -60,23 +60,28 @@ const clearCanvasRectangle = (
     )
 }
 
-const breakTextIntoLines = ( text, fontSize ) => {
+const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE_WIDTH ) => {
     let ctx = getFrontCanvasContext() 
+
     setFont(fontSize)
-    if ( ctx.measureText( text ).width > globals.MAX_BUBBLE_WIDTH ) {
+    if ( ctx.measureText( text ).width > maxBubbleWidth ) {
         const lolarray = text.split(' ')
         let accumulator = 0;
         let textLine = "";
         let textLineArray = [ ];
 
         for ( var i = 0; i < lolarray.length; i++ ) {
+            setFont(fontSize)
             let newWord = lolarray[i] + " "            
-            let wordOverflowsTextbox = ( ( accumulator + ctx.measureText(newWord).width ) > ( globals.MAX_BUBBLE_WIDTH - 10 ) )
+            let wordOverflowsTextbox = ( ( accumulator + ctx.measureText(newWord + " ").width ) > ( maxBubbleWidth - globals.LARGE_FONT_SIZE) )
 
             if ( wordOverflowsTextbox ) {
-                textLineArray.push(textLine)
+                textLineArray.push( textLine )
                 textLine = newWord
                 accumulator = 0
+                if ( i == lolarray.length - 1 ) {
+                    textLineArray.push(textLine)
+                }
             }
             else {
                 accumulator += ctx.measureText(newWord).width
