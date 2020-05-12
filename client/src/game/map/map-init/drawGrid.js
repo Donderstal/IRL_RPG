@@ -35,10 +35,10 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
 
     for ( var i = 0; i <= tilesInSheet; i++ ) {
         tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
-        tileX += 37
+        tileX += globals.GRID_BLOCK_IN_SHEET_PX
         if ( i % 4 == 3 ) {
             tileX = 0
-            tileY += 37
+            tileY += globals.GRID_BLOCK_IN_SHEET_PX
         }
     }
 }
@@ -204,7 +204,7 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         "BACK",
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
-        37, 37,
+        globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        

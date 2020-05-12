@@ -17,6 +17,7 @@ const FACING_UP                     = 3
 
 // animation frame limit
 const FRAME_LIMIT                   = 12
+const GRID_BLOCK_IN_SHEET_PX        = 64
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
 const MOVEMENT_SPEED                = GRID_BLOCK_PX  / 15
 const CANVAS_COLUMNS                = 23
@@ -25,12 +26,12 @@ const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS + 1)
 const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS + 1)
 
 // sheet dimensions
-const MAP_SPRITE_WIDTH_IN_SHEET     = 30
-const MAP_SPRITE_HEIGHT_IN_SHEET    = 54
+const MAP_SPRITE_WIDTH_IN_SHEET     = 64
+const MAP_SPRITE_HEIGHT_IN_SHEET    = 112
 
 // sprite dimensions
-const STRD_SPRITE_WIDTH             = ( GRID_BLOCK_PX * 0.81081081081 )
-const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.8
+const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
+const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
 //
 const BATTLE_SPRITE_WIDTH           = 285
@@ -76,6 +77,7 @@ module.exports = {
     FACING_UP,
     FRAME_LIMIT,
     GRID_BLOCK_PX,
+    GRID_BLOCK_IN_SHEET_PX,
     CANVAS_WIDTH,
     CANVAS_HEIGHT,
     CANVAS_COLUMNS,

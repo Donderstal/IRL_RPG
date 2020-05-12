@@ -9,7 +9,7 @@ const fetchJson = utility.fetchJSONWithCallback
 
 const mapJSONFolder = '/static/maps/'
 const battleMapUrl = mapJSONFolder + 'battle-maps/battle_map1.json';
-const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
+const firstMapUrl = mapJSONFolder + 'newMap.json'; //'my-neighbourhood/A1/my-house.json';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
