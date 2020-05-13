@@ -1,14 +1,12 @@
 {    
     "mapName": "my-neighbourhood/A3/neighbourhood-A3",
-    "tileSet": "neighbourhood-A3",
-    "src": "city1big_tiles.png",
+    "tileSet": "my_neighbourhood",
     "outdoors": true,
     "music": "game-jam.mp3",
     "neighbours": {
         "left": "my-neighbourhood/A2/neighbourhood-A2",
         "right": "my-neighbourhood/A4/neighbourhood-A4"
     },
-    "uniqueTiles": 519,
     "columns": 23,
     "rows": 9,
     "grid": [
@@ -35,118 +33,6 @@
         { 
             "topLeft": { "row": 0, "col": 22 },
             "bottomRight": { "row": 3, "col": 23 }
-        }
-    ],
-    "blocked": [
-        93, 94, 95, 96, 97, 98, 188, 359, 360,
-
-        { 
-            "id": 185, 
-            "left": { "factor": 0.7 }, 
-            "bottom": { "factor": 0.5 } 
-        },
-        { 
-            "id": 328, 
-            "left": { "factor": 0.7 }, 
-            "top": { "factor": 0.2 },
-            "bottom": { "factor": 0.1 } 
-        },
-        { 
-            "id": 397, 
-            "left": { "factor": 0.7 }, 
-            "top": { "factor": 0.6 } 
-        },
-        { 
-            "id": 433, 
-            "left": { "factor": 0.7 }, 
-            "bottom": { "factor": 0.8 } 
-        },
-
-        { "id": 187, "left": { "factor": 0.5 } },
-
-        { 
-            "id": 272, 
-            "left": { "factor": 0.5 }, 
-            "bottom": { "factor": 0.8 } 
-        },
-        { 
-            "id": 273, 
-            "bottom": { "factor": 0.8 }, 
-            "left": { "factor": 0.8 } 
-        },
-
-        { 
-            "id": 283, 
-            "left": { "factor": 0.7 } ,
-            "bottom": { "factor": 0.5 } 
-        },
-
-        { "id": 284, "bottom": { "factor": 0.5 } },
-        { "id": 285, "bottom": { "factor": 0.5 } },
-
-        {
-            "id": 361, 
-            "left": { "factor": 0.8 }, 
-            "top": { "factor": 0.2 }
-        },
-        {
-            "id": 362, 
-            "right": { "factor": 0.5 }, 
-            "top": { "factor": 0.2 }
-        },
-
-        {
-            "id": 399,
-            "left": { "factor": 0.8 },
-            "top": { "factor": 0.6 } 
-        },
-        {
-            "id": 400,
-            "right": { "factor": 0.7 },
-            "top": { "factor": 0.6 } 
-        },
-        {
-            "id": 404,
-            "left": { "factor": 0.9 },
-            "top": { "factor": 0.6 } 
-        },
-        {
-            "id": 405,
-            "right": { "factor": 0.6 },
-            "top": { "factor": 0.6 } 
-        },
-        
-        {
-            "id": 435,
-            "left": { "factor": 0.8 },
-            "bottom": { "factor": 0.8 }
-        },
-        {
-            "id": 436,
-            "right": { "factor": 0.7 },
-            "bottom": { "factor": 0.8 }
-        },
-        {
-            "id": 438,
-            "left": { "factor": 0.9 },
-            "bottom": { "factor": 0.8 }
-        },
-        {
-            "id": 439,
-            "right": { "factor": 0.6 },
-            "bottom": { "factor": 0.8 }
-        },
-        {
-            "id": 403, 
-            "right": { "factor": 0.1 }, 
-            "left": { "factor": 0.4 },
-            "top": { "factor": 0.8 }
-        },
-        {
-            "id": 437, 
-            "right": { "factor": 0.1 }, 
-            "left": { "factor": 0.4 },
-            "bottom": { "factor": 0.5 }
         }
     ],
     "characters": [

@@ -1,14 +1,12 @@
 {
     "mapName": "my-neighbourhood/A2/neighbourhood-A2",
-    "tileSet": "neighbourhood-A2",
-    "src": "city1big_tiles.png",
+    "tileSet": "my_neighbourhood",
     "outdoors": true,
     "music": "game-jam.mp3",
     "neighbours": {
         "left": "my-neighbourhood/A1/neighbourhood-A1",
         "right": "my-neighbourhood/A3/neighbourhood-A3"
     },
-    "uniqueTiles":519,
     "columns":23,
     "rows":9,
     "grid":[
@@ -22,78 +20,6 @@
         [449,450,449,450,449,443,444,450,449,450,449,450,449,450,449,448,449,427,449,429,430,450,432,309],
         [309,309,309,309,468,309,469,470,471,472,309,494,309,309,495,475,476,477,309,499,309,500,309,309],
         [309,512,309,309,309,309,309,513,309,309,309,309,309,309,309,309,309,309,514,515,516,309,309,309]
-    ],
-    "blocked": [ 
-        1, 89, 90, 91, 92,
-        { 
-            "id": 79, 
-            "right": { "factor": 0.8 }
-        },
-        { 
-            "id": 164, 
-            "right": { "factor": 0.8 }
-        },
-        { 
-            "id": 251, 
-            "right": { "factor": 0.8 }
-        },
-
-        { 
-            "id": 168, 
-            "top": { "factor": 0.8 }, 
-            "left": { "factor": 0.1 },
-            "right": { "factor": 0.1 }
-        },
-        { 
-            "id": 255, 
-            "bottom": { "factor": 0.5 }, 
-            "left": { "factor": 0.1 },
-            "right": { "factor": 0.1 }
-        },
-
-        { 
-            "id": 350, 
-            "top": { "factor": 0.5 }, 
-            "right": { "factor": 0.1 }
-        }, 
-
-        { "id": 351, "top": { "factor": 0.5 } }, 
-        { "id": 352, "top": { "factor": 0.5 } },
-
-        { 
-            "id": 388, 
-            "bottom": { "factor": 0.8 },
-            "right": { "factor": 0.1 }
-        },
-        
-        { "id": 389, "bottom": { "factor": 0.8 } },
-        { "id": 390, "bottom": { "factor": 0.8 } },
-
-        { 
-            "id": 392, 
-            "top": { "factor": 0.5 }, 
-            "left": { "factor": 0.2 },
-            "right": { "factor": 0.2 }
-        },
-        { 
-            "id": 427, 
-            "bottom": { "factor": 0.8 }, 
-            "left": { "factor": 0.2 },
-            "right": { "factor": 0.2 }
-        },
-
-        { 
-            "id": 393, 
-            "top": { "factor": 0.5 }, 
-            "left": { "factor": 0.1 },
-            "right": { "factor": 0.1 }
-        },
-        { 
-            "id": 430, 
-            "bottom": { "factor": 0.8 }, 
-            "left": { "factor": 0.1 },
-            "right": { "factor": 0.1 }
-        }
     ],
     "inaccessible": [ 
         { 

@@ -1,13 +1,11 @@
 {
     "mapName": "my-neighbourhood/A1/neighbourhood-A1",
-    "tileSet": "neighbourhood-A1",
-    "src": "city1big_tiles.png",
+    "tileSet": "my_neighbourhood",
     "outdoors": true,
     "music": "game-jam.mp3",
     "neighbours": {
         "right": "my-neighbourhood/A2/neighbourhood-A2"
     },
-    "uniqueTiles":519,
     "columns":23,
     "rows": 9,
     "grid": [
