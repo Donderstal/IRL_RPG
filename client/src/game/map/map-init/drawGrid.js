@@ -13,11 +13,15 @@ let tilesheetXyValues = [ ]
  */
 
 const generateMap = ( currentMap, sheetJson ) => {
-    console.log('/static/tilesets/' + sheetJson.src)
+    if ( state.debug.map == true ) {
+        console.log( "Loading map: " + currentMap.mapData.mapName )
+        console.log( "With tileset: " + currentMap.mapData.tileSet )
+        console.log( "Getting tilesheet at: " + '/static/tilesets/' + sheetJson.src )
+    }
+
     currentMap.tileSheet = new Image();    
     currentMap.tileSheet.src = '/static/tilesets/' + sheetJson.src
     currentMap.tileSheet.onload = ( ) => {    
-        console.log('hi')
         drawGrid( startingPosition, currentMap, sheetJson )
     }
 
@@ -110,6 +114,13 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
             }
 
             state.currentMap.blockedXyValues.push( blockedXy )
+            if ( state.debug.map == true ) {
+                const rectCtx = canvasHelpers.getBackCanvasContext( );
+                rectCtx.rect( blockedXy["LEFT"], blockedXy["TOP"], 
+                blockedXy["RIGHT"] - blockedXy["LEFT"], blockedXy["BOTTOM"] - blockedXy["TOP"] )
+                rectCtx.strokeStyle = "red";
+                rectCtx.stroke( );
+            }
         } )
     }
 }
@@ -136,7 +147,7 @@ const drawRow = ( currentMap, currentRow, position, sheetJson ) => {
 
 // The blocked tiles system is shitty and needs to change
 const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJson ) => {
-    if ( currentMap.mapData.blocked ) {
+    if ( sheetJson.blocked ) {
         let blockedTile = {
             "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
             "LEFT": startPositionInCanvas.x,
@@ -210,19 +221,6 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        
-
-    if ( state.debug.map == 'pie' ) {
-        const rectCtx = canvasHelpers.getBackCanvasContext()
-        rectCtx.rect( startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize ) 
-        rectCtx.strokeStyle = "black";        
-        rectCtx.stroke()
-
-        rectCtx.font = "20px Times New Roman";
-        rectCtx.fillText(
-            tile,
-            startPositionInCanvas.x, startPositionInCanvas.y + 17.5
-        )
-    }
     
 }
 
