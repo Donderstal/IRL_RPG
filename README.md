@@ -24,6 +24,9 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### MAY 13, 2020
+* Seperated storage of map and tilesheet data
+
 #### MAY 11, 2020
 * New interface for textboxes in game
 * Improved dynamic textbox sizing
