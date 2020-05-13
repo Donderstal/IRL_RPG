@@ -1,11 +1,4 @@
-ReadMe last updated on April 2nd, 2020
-
-### IRL-RPG
-
-Online RPG Game in Flask, Svelte and HTML5 Canvas
-
-NOTE: as of now the project is mostly experimental. You can download it, but it will only have limited functionalities.
-
+Browser RPG Game in Flask, Svelte and HTML5 Canvas
 The latest working version of IRL_RPG can be found on the Next branch
 When we get to that point, the Master branch will contain the latest stable release
 
