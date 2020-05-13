@@ -1,0 +1,7 @@
+{
+    "src": "Generic_Room_C_Tile_Set/Generic_Room_C_Tile_Set.png",
+    "uniqueTiles": 51,
+    "blocked": [
+        0, 1, 2, 3, 10, 11, 12, 13, 16, 17, 18, 19, 22, 23, 44
+    ]
+}

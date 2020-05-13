@@ -13,7 +13,7 @@ const getInputVal = (id) => {
     return document.getElementById(id).value
 }   
 
-const fetchJSONWithCallback = ( url, callback, callbackParams = null ) => {
+const fetchJSONWithCallback = ( url, callback, callbackParams = [] ) => {
     fetch(url)
         .then( (response) => {
             if (!response.ok) {

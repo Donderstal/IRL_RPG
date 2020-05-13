@@ -12,11 +12,17 @@ let tilesheetXyValues = [ ]
  * @param {Object} currentMap - JSON containing data on the Map
  */
 
-const generateMap = ( currentMap ) => {
+const generateMap = ( currentMap, sheetJson ) => {
+    if ( state.debug.map == true ) {
+        console.log( "Loading map: " + currentMap.mapData.mapName )
+        console.log( "With tileset: " + currentMap.mapData.tileSet )
+        console.log( "Getting tilesheet at: " + '/static/tilesets/' + sheetJson.src )
+    }
+
     currentMap.tileSheet = new Image();    
-    currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
+    currentMap.tileSheet.src = '/static/tilesets/' + sheetJson.src
     currentMap.tileSheet.onload = ( ) => {    
-        drawGrid( startingPosition, currentMap )
+        drawGrid( startingPosition, currentMap, sheetJson )
     }
 
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
@@ -25,7 +31,7 @@ const generateMap = ( currentMap ) => {
         setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
     }
     
-    calcTilesheetXyPositions( currentMap.mapData.uniqueTiles )
+    calcTilesheetXyPositions( sheetJson.uniqueTiles )
 }
 
 const calcTilesheetXyPositions = ( tilesInSheet ) => {
@@ -35,10 +41,10 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
 
     for ( var i = 0; i <= tilesInSheet; i++ ) {
         tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
-        tileX += 37
+        tileX += globals.GRID_BLOCK_IN_SHEET_PX
         if ( i % 4 == 3 ) {
             tileX = 0
-            tileY += 37
+            tileY += globals.GRID_BLOCK_IN_SHEET_PX
         }
     }
 }
@@ -68,12 +74,12 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * @param {object} currentMap - Object containing all the data needed to draw Grid
  */
 
-const drawGrid = ( startingPosition, currentMap ) => {
+const drawGrid = ( startingPosition, currentMap, sheetJson ) => {
     const position = startingPosition
 
     for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
-        drawRow( currentMap, currentRow, position )
+        drawRow( currentMap, currentRow, position, sheetJson )
 
         position.y += globals.GRID_BLOCK_PX
         position.x = Math.ceil( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
@@ -108,6 +114,13 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
             }
 
             state.currentMap.blockedXyValues.push( blockedXy )
+            if ( state.debug.map == true ) {
+                const rectCtx = canvasHelpers.getBackCanvasContext( );
+                rectCtx.rect( blockedXy["LEFT"], blockedXy["TOP"], 
+                blockedXy["RIGHT"] - blockedXy["LEFT"], blockedXy["BOTTOM"] - blockedXy["TOP"] )
+                rectCtx.strokeStyle = "red";
+                rectCtx.stroke( );
+            }
         } )
     }
 }
@@ -120,11 +133,11 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
  * @param {array} currentRow - Array with numbers representing a row
  */
 
-const drawRow = ( currentMap, currentRow, position ) => {
+const drawRow = ( currentMap, currentRow, position, sheetJson ) => {
     for ( var j = 0; j <= currentMap.mapData.columns; j++ ) {
         const currentTile = currentRow[j]
 
-        setBlockedXyIfNeeded( currentMap, currentTile, position )
+        setBlockedXyIfNeeded( currentMap, currentTile, position, sheetJson )
         drawTileInGridBlock( currentMap, currentTile, position )
 
         position.x += globals.GRID_BLOCK_PX
@@ -133,8 +146,8 @@ const drawRow = ( currentMap, currentRow, position ) => {
 
 
 // The blocked tiles system is shitty and needs to change
-const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas ) => {
-    if ( currentMap.mapData.blocked ) {
+const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJson ) => {
+    if ( sheetJson.blocked ) {
         let blockedTile = {
             "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
             "LEFT": startPositionInCanvas.x,
@@ -142,7 +155,7 @@ const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas ) => {
             "TOP": startPositionInCanvas.y
         }    
 
-        currentMap.mapData.blocked.forEach( ( e ) => {
+        sheetJson.blocked.forEach( ( e ) => {
             if ( !e.id ) {
                 if ( tile === e ) {
                     currentMap.blockedXyValues.push( blockedTile )
@@ -204,23 +217,10 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         "BACK",
         currentMap.tileSheet, 
         tilePositionInSheet.x, tilePositionInSheet.y,
-        37, 37,
+        globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
     )        
-
-    if ( state.debug.map == 'pie' ) {
-        const rectCtx = canvasHelpers.getBackCanvasContext()
-        rectCtx.rect( startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize ) 
-        rectCtx.strokeStyle = "black";        
-        rectCtx.stroke()
-
-        rectCtx.font = "20px Times New Roman";
-        rectCtx.fillText(
-            tile,
-            startPositionInCanvas.x, startPositionInCanvas.y + 17.5
-        )
-    }
     
 }
 

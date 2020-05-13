@@ -1,0 +1,16 @@
+{
+    "name": "my-house",
+    "src": "my-house/Bed_Room.png",
+    "uniqueTiles": 31,
+    "blocked": [
+        8, 11, 15, 20, 27,
+        {
+            "id": 4,
+            "top": { "factor": 0.25 }
+        },
+        {
+            "id": 23,
+            "top": { "factor": 0.15 }
+        }
+    ]
+}
