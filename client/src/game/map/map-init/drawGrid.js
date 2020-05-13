@@ -12,11 +12,13 @@ let tilesheetXyValues = [ ]
  * @param {Object} currentMap - JSON containing data on the Map
  */
 
-const generateMap = ( currentMap ) => {
+const generateMap = ( currentMap, sheetJson ) => {
+    console.log('/static/tilesets/' + sheetJson.src)
     currentMap.tileSheet = new Image();    
-    currentMap.tileSheet.src = '/static/tilesets/' + currentMap.mapData.src
+    currentMap.tileSheet.src = '/static/tilesets/' + sheetJson.src
     currentMap.tileSheet.onload = ( ) => {    
-        drawGrid( startingPosition, currentMap )
+        console.log('hi')
+        drawGrid( startingPosition, currentMap, sheetJson )
     }
 
     let startingPosition = getStartingPositionOfGridInCanvas( currentMap.mapData.columns, currentMap.mapData.rows )
@@ -25,7 +27,7 @@ const generateMap = ( currentMap ) => {
         setMapBorders( startingPosition, currentMap.mapData.rows, currentMap.mapData.columns)
     }
     
-    calcTilesheetXyPositions( currentMap.mapData.uniqueTiles )
+    calcTilesheetXyPositions( sheetJson.uniqueTiles )
 }
 
 const calcTilesheetXyPositions = ( tilesInSheet ) => {
@@ -68,12 +70,12 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * @param {object} currentMap - Object containing all the data needed to draw Grid
  */
 
-const drawGrid = ( startingPosition, currentMap ) => {
+const drawGrid = ( startingPosition, currentMap, sheetJson ) => {
     const position = startingPosition
 
     for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
-        drawRow( currentMap, currentRow, position )
+        drawRow( currentMap, currentRow, position, sheetJson )
 
         position.y += globals.GRID_BLOCK_PX
         position.x = Math.ceil( ( globals.CANVAS_COLUMNS - currentMap.mapData.columns ) / 2 ) * globals.GRID_BLOCK_PX
@@ -120,11 +122,11 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
  * @param {array} currentRow - Array with numbers representing a row
  */
 
-const drawRow = ( currentMap, currentRow, position ) => {
+const drawRow = ( currentMap, currentRow, position, sheetJson ) => {
     for ( var j = 0; j <= currentMap.mapData.columns; j++ ) {
         const currentTile = currentRow[j]
 
-        setBlockedXyIfNeeded( currentMap, currentTile, position )
+        setBlockedXyIfNeeded( currentMap, currentTile, position, sheetJson )
         drawTileInGridBlock( currentMap, currentTile, position )
 
         position.x += globals.GRID_BLOCK_PX
@@ -133,7 +135,7 @@ const drawRow = ( currentMap, currentRow, position ) => {
 
 
 // The blocked tiles system is shitty and needs to change
-const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas ) => {
+const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJson ) => {
     if ( currentMap.mapData.blocked ) {
         let blockedTile = {
             "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
@@ -142,7 +144,7 @@ const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas ) => {
             "TOP": startPositionInCanvas.y
         }    
 
-        currentMap.mapData.blocked.forEach( ( e ) => {
+        sheetJson.blocked.forEach( ( e ) => {
             if ( !e.id ) {
                 if ( tile === e ) {
                     currentMap.blockedXyValues.push( blockedTile )
