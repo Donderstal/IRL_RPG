@@ -6,6 +6,8 @@ const controls                  = require('./controls')
 const controller                = require('./gameController')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 
+let lastDateNow, newDateNow;
+
 const startRequestingFrame = () => {
     startOverworldAnimation()
     animationFrameController()
@@ -32,24 +34,32 @@ const startCinematicAnimation = ( ) =>{
 /**
  * Controller for all animation duties in front-context
  */
-const animationFrameController = () => {
-    if ( !state.paused ) {
-        checkForModeChangeRequest()
-
-        if ( !state.listeningForPress ) {
-            controls.listenForKeyPress()
-        }
-        
-        if ( state.overworldMode ) {
-            handleMapAnimations()
-        }
-        else if ( state.battleMode ) {
-            handleBattleAnimations()
-        }
+const animationFrameController = ( ) => {
+    newDateNow = Date.now();
+    if ( !document.hasFocus() ) {
+        controls.clearPressedKeys( );
     }
-    else {
-        canvasHelpers.clearEntireCanvas('FRONT')
-        canvasHelpers.drawRect('FRONT', 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT, "#800020");
+    
+    if ( newDateNow - lastDateNow > 1000 / globals.FRAMES_PER_SECOND || lastDateNow == undefined ) {
+        lastDateNow = newDateNow;
+        if ( !state.paused ) {
+            checkForModeChangeRequest()
+
+            if ( !state.listeningForPress ) {
+                controls.listenForKeyPress()
+            }
+            
+            if ( state.overworldMode ) {
+                handleMapAnimations()
+            }
+            else if ( state.battleMode ) {
+                handleBattleAnimations()
+            }
+        }
+        else {
+            canvasHelpers.clearEntireCanvas('FRONT')
+            canvasHelpers.drawRect('FRONT', 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT, "#800020");
+        }        
     }
 
     requestAnimationFrame(animationFrameController)
