@@ -68,9 +68,6 @@
     h4 {
         margin-bottom: 0;
     }
-    #checkbox {
-        display: none;
-    }
 
     .modal-inner-div {
         display: inline-block;

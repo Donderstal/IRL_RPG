@@ -3,7 +3,7 @@ const canvasHelpers = require('./canvasHelpers')
 const globals       = require('../game-data/globals')
 const state       = require('../game-data/state')
 
-const generateAction = ( type, actionSource, newXy = null ) => {
+const generateAction = ( type, actionSource, newXy = null, actionDirection = null ) => {
     if ( type === 'NPC' ) {
 
         const actionCellXy = mapHelpers.getXYOfCell( actionSource.row, actionSource.col )
@@ -27,6 +27,21 @@ const generateAction = ( type, actionSource, newXy = null ) => {
                 actionSource.y = actionCellXy.y - ( globals.GRID_BLOCK_PX * .5 )
                 actionSource.left = actionCellXy.x
                 actionSource.right = actionCellXy.x + globals.GRID_BLOCK_PX
+        }
+
+        if ( state.debug.map == true ) {
+            if ( actionSource.x ) {
+                canvasHelpers.drawLineOnYAxis( 
+                    actionSource.top, actionSource.x, 
+                    actionSource.bottom, 'red', 'BACK'
+                )                
+            }
+            else {
+                canvasHelpers.drawLineOnXAxis( 
+                    actionSource.left, actionSource.y, 
+                    actionSource.right, 'red', 'BACK'
+                )       
+            }
         }
     }
 
@@ -71,7 +86,7 @@ const generateAction = ( type, actionSource, newXy = null ) => {
 
     if ( type === 'UPDATE_NPC') {
 
-        switch ( actionSource.direction ) {
+        switch ( actionDirection ) {
             case ( 'FACING_LEFT' ) :
                 actionSource.x = newXy.x + globals.GRID_BLOCK_PX
                 actionSource.top = newXy.y - globals.GRID_BLOCK_PX
