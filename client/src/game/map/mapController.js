@@ -84,6 +84,9 @@ const setCharacterLocationInNewMap = ( previousMapName ) => {
 
 const setSpritePositionForNewMap = (door) => {
     const doorXy = mapHelpers.getXYOfCell(door.row, door.col)
+    if ( door.directionOut == "FACING_UP" ) {
+        doorXy.y -= globals.GRID_BLOCK_PX
+    }
     state.playerCharacter.sprite.initSpriteFromXy( doorXy )
     state.playerCharacter.sprite.direction = globals[door.directionOut]
  }

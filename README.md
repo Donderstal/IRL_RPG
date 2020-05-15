@@ -18,6 +18,10 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 ### LOG
 
 #### MAY 13, 2020
+* New setup with consistent FPS based on timestamps
+* Significant improvement of stability and performance
+
+#### MAY 13, 2020
 * Seperated storage of map and tilesheet data
 
 #### MAY 11, 2020
