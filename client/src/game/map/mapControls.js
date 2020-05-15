@@ -51,13 +51,13 @@ const handleMovementKeys = ( touch = false, event = false ) => {
         if ( state.pressedKeys.w || state.pressedKeys.ArrowUp || touchUp ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
         }
-        if ( state.pressedKeys.a || state.pressedKeys.ArrowLeft || touchLeft ) {
+        else if ( state.pressedKeys.a || state.pressedKeys.ArrowLeft || touchLeft ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
         }
-        if ( state.pressedKeys.s || state.pressedKeys.ArrowDown || touchDown ) {
+        else if ( state.pressedKeys.s || state.pressedKeys.ArrowDown || touchDown ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
         }
-        if ( state.pressedKeys.d || state.pressedKeys.ArrowRight || touchRight ) {
+        else if ( state.pressedKeys.d || state.pressedKeys.ArrowRight || touchRight ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
         }    
         

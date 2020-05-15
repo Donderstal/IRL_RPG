@@ -39,15 +39,15 @@ const moveInDirection = ( sprite, direction ) => {
             sprite.x += globals.MOVEMENT_SPEED        
         }
 
-        if ( direction == 'FACING_LEFT' ) {
+        else if ( direction == 'FACING_LEFT' ) {
             sprite.x -= globals.MOVEMENT_SPEED    
         }
         
-        if ( direction == 'FACING_DOWN' ) {
+        else if ( direction == 'FACING_DOWN' ) {
             sprite.y += globals.MOVEMENT_SPEED        
         }
 
-        if ( direction == 'FACING_UP' ){
+        else if ( direction == 'FACING_UP' ){
             sprite.y -= globals.MOVEMENT_SPEED        
         }     
         

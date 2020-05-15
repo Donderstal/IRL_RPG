@@ -6,7 +6,6 @@ const soundHelper = require('../../interfaces/I_Sound')
 const handleActionButton = ( ) => {
     const sprite = state.playerCharacter.sprite
     const direction = sprite.direction
-    const npcActions = []
 
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
@@ -15,12 +14,14 @@ const handleActionButton = ( ) => {
     
     if ( state.currentMap.NPCs ) {
         state.currentMap.NPCs.forEach( ( NPC) => {
-            npcActions.push(NPC.action)
+            if ( NPC.sprite.hitbox.checkForActionRange( ) ) {
+                handleAction( NPC.action )
+                return;
+            }
         } )
     }
 
-    const allActions = [ ...state.currentMap.mapActions, ...npcActions ]
-    allActions.forEach( ( action ) => {
+    state.currentMap.mapActions.forEach( ( action ) => {
         let fireAction;
 
         if ( direction === globals['FACING_LEFT'] && action.direction === 'FACING_LEFT' ) {

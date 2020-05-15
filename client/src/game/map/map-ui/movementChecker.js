@@ -15,16 +15,16 @@ const globals = require('../../../game-data/globals')
  */
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
-
-    const npcBlockedXy = []
         
-    if ( state.currentMap.NPCs ) {
-        state.currentMap.NPCs.forEach( ( NPC) => {
-            npcBlockedXy.push(NPC.blocked)
-        } )
+    if ( state.currentMap.NPCs ) {        
+        for( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
+            if ( state.currentMap.NPCs[i].sprite.hitbox.checkForBlockedRange( ) ) {
+                return false;
+            }
+        }
     }
 
-    const blockedXyValues = [ ...state.currentMap.blockedXyValues, ...npcBlockedXy ]
+    const blockedXyValues = state.currentMap.blockedXyValues
 
     if ( blockedXyValues === undefined ) {
         return true
