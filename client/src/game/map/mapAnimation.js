@@ -11,7 +11,7 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
 
-    if (state.currentMap.borders) {
+    if ( state.currentMap.borders ) {
         state.currentMap.layeredSprites = []            
         NPCs.NPCController()    
         mapControls.handleMovementKeys( )

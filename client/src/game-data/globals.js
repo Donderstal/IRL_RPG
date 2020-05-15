@@ -16,10 +16,12 @@ const FACING_RIGHT                  = 2
 const FACING_UP                     = 3
 
 // animation frame limit
-const FRAME_LIMIT                   = 12
+const FRAME_LIMIT                   = 8
+const FRAMES_PER_SECOND             = 60
+
 const GRID_BLOCK_IN_SHEET_PX        = 37
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
-const MOVEMENT_SPEED                = GRID_BLOCK_PX  / 15
+const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 5 )
 const CANVAS_COLUMNS                = 23
 const CANVAS_ROWS                   = 15
 const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS + 1)
@@ -75,6 +77,7 @@ module.exports = {
     FACING_RIGHT,
     FACING_UP,
     FRAME_LIMIT,
+    FRAMES_PER_SECOND,
     GRID_BLOCK_PX,
     GRID_BLOCK_IN_SHEET_PX,
     CANVAS_WIDTH,
