@@ -1,9 +1,15 @@
 const state         = require('../../../game-data/state')
 const actionHelpers = require('../../../helpers/actionHelpers')
+const globals       = require('../../../game-data/globals')
+const mapHelpers    = require('../../../helpers/mapHelpers')
+const actionRegistry= require('./actionRegistry')
+
+const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
 
 const setMapAttributes = ( ) => {
-    setDoors( )
-    setActions( )
+    actionRegistry.initNewActionRegistry( );
+    setDoors( );
+    setActions( );
 }
 
 /**
@@ -34,12 +40,23 @@ const setActions = (  ) => {
         var actionsInMap = state.currentMap.mapData.actions
 
         for ( var i = 0; i < actionsInMap.length; i++ ) {
+            let actionXy = mapHelpers.getXYOfCell( actionsInMap[i].row, actionsInMap[i].col )
+
             state.currentMap.mapActions.push(
-                actionHelpers.generateAction( 'NPC', actionsInMap[i] )
+                new MapAction( actionXy.x, actionXy.y, actionsInMap[i] )
             )
         }        
     }
+}
 
+class MapAction extends I_Hitbox {
+    constructor ( x, y, action ) {
+        let radius = globals.GRID_BLOCK_PX / 2;
+        super( x, y, radius )
+
+        this.id     = actionRegistry.getNewActionId( );
+        this.action = action
+    }
 }
 
 
