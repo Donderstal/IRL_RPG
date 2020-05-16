@@ -38,15 +38,12 @@ const moveInDirection = ( sprite, direction ) => {
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        
         }
-
         else if ( direction == 'FACING_LEFT' ) {
             sprite.x -= globals.MOVEMENT_SPEED    
         }
-        
         else if ( direction == 'FACING_DOWN' ) {
             sprite.y += globals.MOVEMENT_SPEED        
         }
-
         else if ( direction == 'FACING_UP' ){
             sprite.y -= globals.MOVEMENT_SPEED        
         }     
@@ -54,7 +51,6 @@ const moveInDirection = ( sprite, direction ) => {
         state.playerCharacter.sprite.calcCellFromXy( );
     }
 
-    
     if ( urlToNewMap && !state.transitioning ) {
         state.mapTransition = {
             urlToNewMap: urlToNewMap, 
@@ -62,7 +58,6 @@ const moveInDirection = ( sprite, direction ) => {
         }
         return
     }
-
 
     sprite.direction = globals[direction]        
 }

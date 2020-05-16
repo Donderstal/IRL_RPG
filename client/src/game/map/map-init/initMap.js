@@ -30,8 +30,8 @@ const getMapAttributesFromSave = ( ) => {
 
 const getMapAttributes = ( BOOT_STATUS ) => {
     setTimeout(() => {
+        setMapAttributes.setMapAttributes( );        
         getNPCs.generateCharacters( );
-        setMapAttributes.setMapAttributes( );
     }, 500)
 
     setTimeout(() => {

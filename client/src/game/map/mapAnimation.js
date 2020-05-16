@@ -21,6 +21,12 @@ const handleMapAnimations = ( ) => {
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }
+
+    if ( state.currentMap.mapActions ) {     
+        state.currentMap.mapActions.forEach( (action) => {
+            action.draw(action.x,action.y);
+        })
+    }
 }
 
 const drawSpritesInOrder = ( ) => {
@@ -42,8 +48,7 @@ const drawSpritesInOrder = ( ) => {
 
     layeredSprites.forEach( (e) => {
         e.drawSprite()
-    })        
-
+    })       
 }
 
 module.exports = {
