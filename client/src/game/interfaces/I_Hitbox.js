@@ -1,5 +1,4 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
-const mapHelpers = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 const state = require('../../game-data/state')
 
@@ -86,22 +85,22 @@ class I_Hitbox {
 
     //////////////
     playerIsInVerticalBlockedRange( playerHitBox ) {        
-        return ( playerHitBox.x - playerHitBox.innerRadius ) > ( this.left() - this.innerRadius ) 
-        && ( playerHitBox.x + playerHitBox.innerRadius ) < ( this.right() + this.innerRadius )
+        return ( playerHitBox.x - playerHitBox.innerRadius ) > ( this.left( ) - this.innerRadius ) 
+        && ( playerHitBox.x + playerHitBox.innerRadius ) < ( this.right( ) + this.innerRadius )
     }
 
     playerIsInHorizontalBlockedRange( playerHitBox ) {       
-        return ( playerHitBox.y - playerHitBox.innerRadius ) > ( this.top() - this.innerRadius )
-        && ( playerHitBox.y + playerHitBox.innerRadius ) < ( this.bottom() + this.innerRadius )
+        return ( playerHitBox.y - playerHitBox.innerRadius ) > ( this.top( ) - this.innerRadius )
+        && ( playerHitBox.y + playerHitBox.innerRadius ) < ( this.bottom( ) + this.innerRadius )
     }
 
     /////////////
     playerIsInVerticalActionRange( playerHitBox ) {        
-        return ( playerHitBox.x - playerHitBox.innerRadius ) > this.left() && ( playerHitBox.x + playerHitBox.innerRadius ) < this.right()
+        return ( playerHitBox.x - playerHitBox.innerRadius ) > this.left( ) && ( playerHitBox.x + playerHitBox.innerRadius ) < this.right( )
     }
 
     playerIsInHorizontalActionRange( playerHitBox ) {       
-        return ( playerHitBox.y - playerHitBox.innerRadius ) > this.top() && ( playerHitBox.y + playerHitBox.innerRadius ) < this.bottom()
+        return ( playerHitBox.y - playerHitBox.innerRadius ) > this.top( ) && ( playerHitBox.y + playerHitBox.innerRadius ) < this.bottom( )
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -122,14 +121,14 @@ class I_Hitbox {
     leftFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) {
         const playerIsFacingLeft    = playerDirection == globals.FACING_LEFT
 
-        return playerIsFacingLeft && ( playerHitBox.left() <= this.right( ) ) 
+        return playerIsFacingLeft && ( playerHitBox.left( ) <= this.right( ) ) 
         && playerHitBox.left( ) <= this.innerRight( ) && playerHitBox.left( ) > this.left( )
     }
 
     rightFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ){
         const playerIsFacingRight    = playerDirection == globals.FACING_RIGHT
 
-        return playerIsFacingRight && ( playerHitBox.right() >= this.left( ) ) 
+        return playerIsFacingRight && ( playerHitBox.right( ) >= this.left( ) ) 
         && playerHitBox.right( ) >= this.innerLeft( ) && playerHitBox.right( ) < this.right( )
     }
 
@@ -143,23 +142,19 @@ class I_Hitbox {
     downFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingDown    =  playerDirection == globals.FACING_DOWN
 
-        return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.innerTop( ) ) && playerHitBox.bottom( ) < this.innerBottom()
+        return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.innerTop( ) ) && playerHitBox.bottom( ) < this.innerBottom( )
     }
 
     leftFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingLeft    = playerDirection == globals.FACING_LEFT
 
-        return playerIsFacingLeft && ( playerHitBox.left() <= this.innerRight( ) ) && playerHitBox.left() > this.innerLeft()
+        return playerIsFacingLeft && ( playerHitBox.left( ) <= this.innerRight( ) ) && playerHitBox.left( ) > this.innerLeft( )
     }
 
     rightFacingPlayerIsInActionRadius( playerHitBox, playerDirection ){
         const playerIsFacingRight    = playerDirection == globals.FACING_RIGHT
 
-        return playerIsFacingRight && ( playerHitBox.right() >= this.innerLeft( ) ) && playerHitBox.right() < this.innerRight( )
-    }
-
-    dynamicRange(  ) {
-        return
+        return playerIsFacingRight && ( playerHitBox.right( ) >= this.innerLeft( ) ) && playerHitBox.right( ) < this.innerRight( )
     }
 }
 

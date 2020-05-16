@@ -18,7 +18,6 @@ const generateCharacters = ( ) => {
             character.sprite = sprite
             pushCharacterSpriteToMapState( character )
             sprite.calcXyFromCell( )
-            pushCharacterCollision( character )
         } )
     }
 }
@@ -36,15 +35,6 @@ const generateCharactersFromSave = ( savedNPCs ) => {
     } )
 
     return newNPCs
-}
-
-const pushCharacterCollision = ( character ) => {
-    character.blocked = { 
-        "BOTTOM": character.sprite.bottom,
-        "LEFT": character.sprite.left,
-        "RIGHT": character.sprite.right,
-        "TOP": character.sprite.cell.y              
-    }
 }
 
 const pushCharacterActions = ( character ) => {
@@ -76,38 +66,6 @@ class NPC extends MapSprite {
         super( startPos, src, typeOfStart, spriteDirection )        
     }
 
-    updateActionXy( NPCAction ) {
-        let actionDirection;
-
-        if ( this.direction === 0 ) {
-            actionDirection = 'FACING_UP'
-        }
-        if ( this.direction === 1 ) {
-            actionDirection = 'FACING_RIGHT'
-        }
-        if ( this.direction === 2 ) {
-            actionDirection = 'FACING_LEFT'
-        }
-        if ( this.direction === 3 ) {
-            actionDirection = 'FACING_DOWN'
-        }
-
-        return actionHelpers.generateAction( 
-            'UPDATE_NPC', 
-            NPCAction, 
-            { 'x': this.cell.x, 'y': this.cell.y }, 
-            actionDirection 
-        )
-    }
-
-    updateBlockedXy( ) {
-        return { 
-            "BOTTOM": this.bottom,
-            "LEFT": this.left,
-            "RIGHT": this.right,
-            "TOP": this.cell.y              
-        }
-    }
 }
 
 module.exports = {
