@@ -1,7 +1,6 @@
 const globals = require('../../../game-data/globals')
 const state = require('../../../game-data/state')
 const movementChecker = require('./movementChecker')
-const handleDoors = require('./handleDoors')
 
 let frameCount = 0;
 let doorFrameCount = 0; 
@@ -30,7 +29,7 @@ const handleMovementOfSprite = ( sprite, direction ) => {
  */
 const moveInDirection = ( sprite, direction ) => {
     const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
-    let urlToNewMap = checkForDoorIfNeeded(sprite, direction)
+    let urlToNewMap = checkForNeighbours(sprite)
 
     if ( movementIsAllowed && !urlToNewMap ) {
 
@@ -61,14 +60,16 @@ const moveInDirection = ( sprite, direction ) => {
     sprite.direction = globals[direction]        
 }
 
-const checkForDoorIfNeeded = (sprite, direction) => {
-    if ( doorFrameCount == 6 ) {
-        doorFrameCount = 0
-        return handleDoors.checkIfDoor(sprite, direction)
-    }
-    else {
-        doorFrameCount++
-        return false
+const checkForNeighbours = ( sprite ) => {
+    if (state.currentMap.mapData.outdoors ) {
+        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbours.right ) {
+            return state.currentMap.mapData.neighbours.right
+        }
+
+        if ( state.currentMap.borders.left > ( sprite.x + sprite.width ) && state.currentMap.mapData.neighbours.left ) {
+            return state.currentMap.mapData.neighbours.left
+        }
+
     }
 }
 
