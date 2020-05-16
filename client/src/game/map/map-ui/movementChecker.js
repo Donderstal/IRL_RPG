@@ -18,7 +18,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         
     if ( state.currentMap.NPCs ) {        
         for( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            if ( state.currentMap.NPCs[i].sprite.hitbox.checkForBlockedRange( ) ) {
+            if ( state.currentMap.NPCs[i].hitbox.checkForBlockedRange( ) ) {
                 return false;
             }
         }

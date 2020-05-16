@@ -7,22 +7,11 @@ const handleActionButton = ( ) => {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
     }
-    
-    if ( state.currentMap.NPCs ) {
-        state.currentMap.NPCs.forEach( ( NPC) => {
-            if ( NPC.sprite.hitbox.checkForActionRange( ) ) {
-                handleAction( NPC.action )
-                return;
-            }
-        } )
-    }
 
-    state.currentMap.mapActions.forEach( ( action ) => {
-        if ( action.checkForActionRange( ) ) {
-            handleAction( action.action )
-            return;
-        }
-    } )
+    if ( state.currentMap.availableAction != null ) {
+        handleAction( state.currentMap.availableAction )
+        return;
+    }
 }
 
 const handleAction = ( action ) => {

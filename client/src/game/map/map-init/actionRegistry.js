@@ -1,6 +1,8 @@
-let actionRegistry;
+const state         = require('../../../game-data/state')
+
 const idChars   = "abcdefghijklmnopqrstuvwxyz1234567890";
 const idLength  = 10;
+let actionRegistry;
 
 const getNewActionId = ( ) => {
     var actionId = getUniqueId( )
@@ -36,7 +38,26 @@ const generateId = ( ) => {
     }
     return id
 }
+
+const setActionAsAvailable = ( action ) => {
+    let availableAction = state.currentMap.availableAction
+    if ( availableAction == null || availableAction == undefined || !actionIsAvailable( action.id ) ) {
+        state.currentMap.availableAction = action;  
+    }
+}
+
+const actionIsAvailable = ( actionId ) => {
+    return state.currentMap.availableAction.id == actionId
+}
+
+const clearAvailableAction = ( actionId ) => {
+    if ( actionIsAvailable( actionId ) ) {
+        state.currentMap.availableAction = null      
+    }
+}
 module.exports = {
     getNewActionId,
+    setActionAsAvailable,
+    clearAvailableAction,
     initNewActionRegistry
 }
