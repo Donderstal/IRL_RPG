@@ -16,17 +16,17 @@ const handleMapAnimations = ( ) => {
         NPCs.NPCController()    
         mapControls.handleMovementKeys( )
         gatherSpritesInState( )
-        drawSpritesInOrder()                    
+        drawSpritesInOrder()     
+        if ( state.currentMap.mapActions ) {     
+            state.currentMap.mapActions.forEach( (action) => {
+                action.draw(action.x,action.y);
+                action.checkForActionRange( );
+            })
+        }               
     }
     
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
-    }
-
-    if ( state.currentMap.mapActions ) {     
-        state.currentMap.mapActions.forEach( (action) => {
-            action.draw(action.x,action.y);
-        })
     }
 }
 

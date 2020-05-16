@@ -19,6 +19,9 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 #### MAY 16, 2020
 * Hitbox Class for collision and action detection on map
+* Improving NPC Class
+* Implementing Hitbox for Actions, NPCs, Player
+
 
 #### MAY 14, 2020
 * New setup with consistent FPS based on timestamps

@@ -43,7 +43,7 @@ const setActions = (  ) => {
             let actionXy = mapHelpers.getXYOfCell( actionsInMap[i].row, actionsInMap[i].col )
 
             state.currentMap.mapActions.push(
-                new MapAction( actionXy.x, actionXy.y, actionsInMap[i] )
+                new MapAction( actionXy.x + globals.GRID_BLOCK_PX / 2, actionXy.y + globals.GRID_BLOCK_PX / 2, actionsInMap[i] )
             )
         }        
     }

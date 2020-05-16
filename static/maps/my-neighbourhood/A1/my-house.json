@@ -48,7 +48,7 @@
         },
         {
             "row": 3,
-            "col": 2,
+            "col": 3,
             "type": "TEXT",
             "direction": "FACING_RIGHT",
             "sfx": "typing.mp3",
