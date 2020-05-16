@@ -55,11 +55,31 @@ class MapAction extends I_Hitbox {
         super( x, y, radius )
 
         this.id     = actionRegistry.getNewActionId( );
-        this.action = action
+        if ( action.name ) {
+            this.name = action.name
+        }
+        if ( action.character ) {
+            this.characer = action.character
+        }
+        this.type       = action.type
+        this.text       = action.text
+        this.sfx        = action.sfx
+        this.direction  = action.direction
+        
+    }
+
+    checkForActionRange( ) {
+        if ( super.checkForActionRange( ) ) {
+            actionRegistry.setActionAsAvailable( this );
+        }
+        else if ( state.currentMap.availableAction != null && state.currentMap.availableAction != undefined ) {
+            actionRegistry.clearAvailableAction( this.id )
+        }
     }
 }
 
 
  module.exports = {
-    setMapAttributes
+    setMapAttributes,
+    MapAction
  }

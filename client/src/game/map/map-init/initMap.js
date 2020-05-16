@@ -1,7 +1,7 @@
 const state         = require('../../../game-data/state')
 const createCharInstance = require('../../createCharInstance')
 const Sound         = require('../../interfaces/I_Sound').Sound
-const getNPCs           = require('./getNPCs')
+const NPCController           = require('./NPCController')
 const setMapAttributes  = require('./setMapAttributes')
 const drawGrid          = require('./drawGrid')
 const util              = require('../../../helpers/utilFunctions')
@@ -21,7 +21,7 @@ const getMapMusic = ( BOOT_STATUS ) => {
 const getMapAttributesFromSave = ( ) => {
     const playerSpriteStart = { 'x' : state.playerCharacter.sprite.x, 'y' : state.playerCharacter.sprite.y }
     setTimeout( ( ) => {
-        state.currentMap.NPCs = getNPCs.generateCharactersFromSave( state.currentMap.NPCs )
+        state.currentMap.NPCs = NPCController.generateCharactersFromSave( state.currentMap.NPCs )
 
         state.playerCharacter = createCharInstance.getCharacter( state.playerCharacter.className, state.playerCharacter.name, playerSpriteStart, 'XY' )
     }, 500)
@@ -31,7 +31,7 @@ const getMapAttributesFromSave = ( ) => {
 const getMapAttributes = ( BOOT_STATUS ) => {
     setTimeout(() => {
         setMapAttributes.setMapAttributes( );        
-        getNPCs.generateCharacters( );
+        NPCController.generateCharacters( );
     }, 500)
 
     setTimeout(() => {
