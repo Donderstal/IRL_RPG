@@ -2,6 +2,7 @@ const mapHelpers    = require('../../../helpers/mapHelpers')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const state         = require('../../../game-data/state')
 const globals       = require('../../../game-data/globals')
+const BlockedTile   = require('./setMapAttributes').Blocked
 
 let tilesheetXyValues = [ ]
 
@@ -158,6 +159,12 @@ const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJso
         sheetJson.blocked.forEach( ( e ) => {
             if ( !e.id ) {
                 if ( tile === e ) {
+                    state.blocked.push( 
+                        new BlockedTile( 
+                            startPositionInCanvas.x + globals.GRID_BLOCK_PX / 2, 
+                            startPositionInCanvas.y + globals.GRID_BLOCK_PX / 2 
+                        ) 
+                    )
                     currentMap.blockedXyValues.push( blockedTile )
                 }                   
             }

@@ -21,5 +21,6 @@ module.exports = {
     debug : { 
         map: false,
         battle: false
-    }
+    },
+    blocked: []
 }

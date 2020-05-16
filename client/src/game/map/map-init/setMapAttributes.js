@@ -74,6 +74,8 @@ class Door extends I_Hitbox {
         this.directionIn    = door.directionIn
         this.directionOut   = door.directionOut
         this.locked         = door.locked
+        this.arcColor       = "#FFFFFF";
+
     }
 
     checkForActionRange( ) {
@@ -120,6 +122,7 @@ class MapAction extends I_Hitbox {
         this.text       = action.text
         this.sfx        = action.sfx
         this.direction  = action.direction
+        this.arcColor   = "#FF0000";
         
     }
 
@@ -133,8 +136,23 @@ class MapAction extends I_Hitbox {
     }
 }
 
+class Blocked extends I_Hitbox {
+    constructor( x, y, radius = globals.GRID_BLOCK_PX / 2 ) {
+        super( x, y, radius )
+        this.arcColor = "#000000";
+    }
+
+    checkForBlockedRange( ) {
+        this.draw(this.x, this.y)
+        if ( super.checkForBlockedRange( ) ) {
+            console.log('blocked!')
+        }
+    }
+}
+
 
  module.exports = {
     setMapAttributes,
-    MapAction
+    MapAction,
+    Blocked
  }
