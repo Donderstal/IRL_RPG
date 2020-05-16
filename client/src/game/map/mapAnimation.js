@@ -11,10 +11,11 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
 
-    if ( state.currentMap.borders ) {
-        state.currentMap.layeredSprites = []            
+    if ( state.currentMap.borders && state.playerCharacter.sprite ) {
+        state.currentMap.layeredSprites = []
         NPCs.NPCController()    
         mapControls.handleMovementKeys( )
+        gatherSpritesInState( )
         drawSpritesInOrder()                    
     }
     
@@ -29,9 +30,17 @@ const handleMapAnimations = ( ) => {
     }
 }
 
+const gatherSpritesInState = ( ) =>{
+    if ( state.currentMap.NPCs ) {
+        state.currentMap.NPCs.forEach( NPC => {
+            state.currentMap.layeredSprites.push( NPC )
+        })  
+    }  
+    state.currentMap.layeredSprites.push(state.playerCharacter.sprite)           
+}
+
 const drawSpritesInOrder = ( ) => {
     let layeredSprites = state.currentMap.layeredSprites
-
     layeredSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
             return 1 

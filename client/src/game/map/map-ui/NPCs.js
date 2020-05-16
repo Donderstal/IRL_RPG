@@ -5,7 +5,6 @@ const NPCController = () => {
     if ( state.currentMap.NPCs ) {
         state.currentMap.NPCs.forEach( ( NPC) => {
             handleNPCAnimation(NPC)
-            state.currentMap.layeredSprites.push( NPC.sprite ) 
         })        
     }
 }

@@ -60,8 +60,6 @@ const handleMovementKeys = ( touch = false, event = false ) => {
         else if ( state.pressedKeys.d || state.pressedKeys.ArrowRight || touchRight ) {
             movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
         }    
-        
-        state.currentMap.layeredSprites.push(state.playerCharacter.sprite)
     }
     
 }

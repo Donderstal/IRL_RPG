@@ -18,7 +18,6 @@ let doorFrameCount = 0;
 const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
     countFrame( sprite )
-    state.currentMap.layeredSprites.push(sprite)
 }
 
 /**
