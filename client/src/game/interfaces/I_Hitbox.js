@@ -9,6 +9,7 @@ class I_Hitbox {
         this.radius         = radius;
         this.innerRadius    = radius / 2 
         this.collision      = false;
+        this.arcColor       = "#3370d4";
         this.top            = ( ) => { return this.y - this.radius }
         this.left           = ( ) => { return this.x - this.radius }
         this.right          = ( ) => { return this.x + this.radius }
@@ -32,6 +33,7 @@ class I_Hitbox {
         frontCtx.beginPath( );
         frontCtx.arc( this.x, this.y, this.radius, 0, 2 * Math.PI );
         frontCtx.arc( this.x, this.y, this.innerRadius, 0, 2 * Math.PI );
+        frontCtx.strokeStyle = this.arcColor;
         frontCtx.stroke( );
     }
 

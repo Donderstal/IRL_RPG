@@ -22,7 +22,14 @@ const handleMapAnimations = ( ) => {
                 action.draw(action.x,action.y);
                 action.checkForActionRange( );
             })
-        }               
+        }  
+        
+        if ( state.currentMap.doors ) {     
+            state.currentMap.doors.forEach( (door) => {
+                door.draw(door.x, door.y);
+                door.checkForActionRange( );
+            })
+        }  
     }
     
     if ( state.currentMap.bubbleIsActive ) {

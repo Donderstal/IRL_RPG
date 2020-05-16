@@ -1,5 +1,5 @@
 const state         = require('../../../game-data/state')
-const actionHelpers = require('../../../helpers/actionHelpers')
+const Sound         = require('../../interfaces/I_Sound').Sound
 const globals       = require('../../../game-data/globals')
 const mapHelpers    = require('../../../helpers/mapHelpers')
 const actionRegistry= require('./actionRegistry')
@@ -24,13 +24,96 @@ const setMapAttributes = ( ) => {
 
         for ( var i = 0; i < mapDoors.length; i++ ) {
             const newDoor = mapDoors[i]
-            
-            state.currentMap.doors.push(
-                actionHelpers.generateAction( 'MAP', newDoor )
-            )
+            let doorXy = mapHelpers.getXYOfCell( newDoor.row, newDoor.col )
+            if ( newDoor.directionIn == 'FACING_UP' ) {
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x, 
+                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
+                        newDoor
+                    )
+                )
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x + globals.GRID_BLOCK_PX / 2, 
+                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
+                        newDoor
+                    )
+                )
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x + globals.GRID_BLOCK_PX, 
+                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
+                        newDoor
+                    )
+                )
+            }
+            if ( newDoor.directionIn == 'FACING_RIGHT' ) {
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x + globals.GRID_BLOCK_PX, 
+                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
+                        newDoor
+                    )
+                )                
+            }
+            if ( newDoor.directionIn == 'FACING_DOWN' ) {
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x, 
+                        doorXy.y + globals.GRID_BLOCK_PX, 
+                        newDoor
+                    )
+                )
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x + globals.GRID_BLOCK_PX / 2, 
+                        doorXy.y + globals.GRID_BLOCK_PX, 
+                        newDoor
+                    )
+                )
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x + globals.GRID_BLOCK_PX, 
+                        doorXy.y + globals.GRID_BLOCK_PX, 
+                        newDoor
+                    )
+                )
+            }           
+            if ( newDoor.directionIn == 'FACING_LEFT' ) {
+                state.currentMap.doors.push(
+                    new Door( 
+                        doorXy.x, 
+                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
+                        newDoor
+                    )
+                )
+            }           
         }
     }
 
+}
+
+class Door extends I_Hitbox {
+    constructor( x, y, door ) {
+        const radius = globals.GRID_BLOCK_PX / 2;
+        super( x, y, radius)
+        this.to             = door.to;
+        this.directionIn    = door.directionIn
+        this.directionOut   = door.directionOut
+        this.locked         = door.locked
+    }
+
+    checkForActionRange( ) {
+        if ( super.checkForActionRange( ) ) {
+            state.mapTransition = {
+                urlToNewMap: this.to, 
+                oldMapName: state.currentMap.mapData.mapName
+            }
+            const sfx = new Sound( "misc/random5.wav", true )
+            sfx.play()
+        }
+    }
 }
 
 const setActions = (  ) => {
