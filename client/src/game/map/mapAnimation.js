@@ -5,14 +5,14 @@ const mapControls = require('./mapControls')
 const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
+    state.currentMap.layeredSprites = [];
+
     if ( state.mapTransition != null ) {
         mapController.switchMap( state.mapTransition )
         state.transitioning = true;
         state.mapTransition = null
     }
-
     if ( state.currentMap.borders && state.playerCharacter.sprite ) {
-        state.currentMap.layeredSprites = []
         NPCs.NPCController()    
         mapControls.handleMovementKeys( )
         gatherSpritesInState( )
@@ -31,7 +31,7 @@ const handleMapAnimations = ( ) => {
             })
         }  
     }
-    
+
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }

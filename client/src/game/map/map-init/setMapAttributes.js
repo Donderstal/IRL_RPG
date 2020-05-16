@@ -28,22 +28,8 @@ const setMapAttributes = ( ) => {
             if ( newDoor.directionIn == 'FACING_UP' ) {
                 state.currentMap.doors.push(
                     new Door( 
-                        doorXy.x, 
-                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
-                        newDoor
-                    )
-                )
-                state.currentMap.doors.push(
-                    new Door( 
                         doorXy.x + globals.GRID_BLOCK_PX / 2, 
-                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
-                        newDoor
-                    )
-                )
-                state.currentMap.doors.push(
-                    new Door( 
-                        doorXy.x + globals.GRID_BLOCK_PX, 
-                        doorXy.y + globals.GRID_BLOCK_PX / 2, 
+                        doorXy.y, 
                         newDoor
                     )
                 )
@@ -60,21 +46,7 @@ const setMapAttributes = ( ) => {
             if ( newDoor.directionIn == 'FACING_DOWN' ) {
                 state.currentMap.doors.push(
                     new Door( 
-                        doorXy.x, 
-                        doorXy.y + globals.GRID_BLOCK_PX, 
-                        newDoor
-                    )
-                )
-                state.currentMap.doors.push(
-                    new Door( 
                         doorXy.x + globals.GRID_BLOCK_PX / 2, 
-                        doorXy.y + globals.GRID_BLOCK_PX, 
-                        newDoor
-                    )
-                )
-                state.currentMap.doors.push(
-                    new Door( 
-                        doorXy.x + globals.GRID_BLOCK_PX, 
                         doorXy.y + globals.GRID_BLOCK_PX, 
                         newDoor
                     )
@@ -88,7 +60,7 @@ const setMapAttributes = ( ) => {
                         newDoor
                     )
                 )
-            }           
+            }          
         }
     }
 
@@ -96,7 +68,7 @@ const setMapAttributes = ( ) => {
 
 class Door extends I_Hitbox {
     constructor( x, y, door ) {
-        const radius = globals.GRID_BLOCK_PX / 2;
+        const radius = globals.GRID_BLOCK_PX;
         super( x, y, radius)
         this.to             = door.to;
         this.directionIn    = door.directionIn
