@@ -18,7 +18,6 @@ let doorFrameCount = 0;
 const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
     countFrame( sprite )
-    state.currentMap.layeredSprites.push(sprite)
 }
 
 /**
@@ -38,23 +37,19 @@ const moveInDirection = ( sprite, direction ) => {
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        
         }
-
-        if ( direction == 'FACING_LEFT' ) {
+        else if ( direction == 'FACING_LEFT' ) {
             sprite.x -= globals.MOVEMENT_SPEED    
         }
-        
-        if ( direction == 'FACING_DOWN' ) {
+        else if ( direction == 'FACING_DOWN' ) {
             sprite.y += globals.MOVEMENT_SPEED        
         }
-
-        if ( direction == 'FACING_UP' ){
+        else if ( direction == 'FACING_UP' ){
             sprite.y -= globals.MOVEMENT_SPEED        
         }     
         
         state.playerCharacter.sprite.calcCellFromXy( );
     }
 
-    
     if ( urlToNewMap && !state.transitioning ) {
         state.mapTransition = {
             urlToNewMap: urlToNewMap, 
@@ -62,7 +57,6 @@ const moveInDirection = ( sprite, direction ) => {
         }
         return
     }
-
 
     sprite.direction = globals[direction]        
 }

@@ -5,7 +5,6 @@ const NPCController = () => {
     if ( state.currentMap.NPCs ) {
         state.currentMap.NPCs.forEach( ( NPC) => {
             handleNPCAnimation(NPC)
-            state.currentMap.layeredSprites.push( NPC.sprite ) 
         })        
     }
 }
@@ -37,9 +36,6 @@ const handleDynamicNPCAnimation = ( NPC ) => {
     getNextNPCPosition( NPC )
     countFrame( NPC )
     checkForAnimationPath( NPC )
-
-    NPC.blocked = NPC.sprite.updateBlockedXy( )
-    NPC.action = NPC.sprite.updateActionXy( NPC.action )
 }
 
 const checkForAnimationPath =  ( NPC ) => {
@@ -90,9 +86,6 @@ const countFrame = ( NPC ) => {
     if ( NPC.nextPosition.direction == 'FACING_UP' ){
         NPC.sprite.y -= NPC_speed        
     }    
-
-    NPC.sprite.updateSpriteBorders( )
-    NPC.sprite.updateSpriteCellXy( )
 
     if ( NPC.sprite.frameCount >= globals.FRAME_LIMIT) {
         NPC.sprite.frameCount = 0;

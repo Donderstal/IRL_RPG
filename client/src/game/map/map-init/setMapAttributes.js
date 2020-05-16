@@ -1,9 +1,15 @@
 const state         = require('../../../game-data/state')
 const actionHelpers = require('../../../helpers/actionHelpers')
+const globals       = require('../../../game-data/globals')
+const mapHelpers    = require('../../../helpers/mapHelpers')
+const actionRegistry= require('./actionRegistry')
+
+const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
 
 const setMapAttributes = ( ) => {
-    setDoors( )
-    setActions( )
+    actionRegistry.initNewActionRegistry( );
+    setDoors( );
+    setActions( );
 }
 
 /**
@@ -34,15 +40,46 @@ const setActions = (  ) => {
         var actionsInMap = state.currentMap.mapData.actions
 
         for ( var i = 0; i < actionsInMap.length; i++ ) {
+            let actionXy = mapHelpers.getXYOfCell( actionsInMap[i].row, actionsInMap[i].col )
+
             state.currentMap.mapActions.push(
-                actionHelpers.generateAction( 'NPC', actionsInMap[i] )
+                new MapAction( actionXy.x + globals.GRID_BLOCK_PX / 2, actionXy.y + globals.GRID_BLOCK_PX / 2, actionsInMap[i] )
             )
         }        
     }
+}
 
+class MapAction extends I_Hitbox {
+    constructor ( x, y, action ) {
+        let radius = globals.GRID_BLOCK_PX / 2;
+        super( x, y, radius )
+
+        this.id     = actionRegistry.getNewActionId( );
+        if ( action.name ) {
+            this.name = action.name
+        }
+        if ( action.character ) {
+            this.characer = action.character
+        }
+        this.type       = action.type
+        this.text       = action.text
+        this.sfx        = action.sfx
+        this.direction  = action.direction
+        
+    }
+
+    checkForActionRange( ) {
+        if ( super.checkForActionRange( ) ) {
+            actionRegistry.setActionAsAvailable( this );
+        }
+        else if ( state.currentMap.availableAction != null && state.currentMap.availableAction != undefined ) {
+            actionRegistry.clearAvailableAction( this.id )
+        }
+    }
 }
 
 
  module.exports = {
-    setMapAttributes
+    setMapAttributes,
+    MapAction
  }

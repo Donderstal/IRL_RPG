@@ -9,34 +9,10 @@ const getSpeechBubble = ( action ) => {
     state.currentMap.bubbleIsActive = true
 }
 
-const getSpeechBubbleXy = ( action, dimensions ) => {
-    let xy = {
-        'x': getSpeechBubbleX( action, dimensions ),
-        'y': getSpeechBubbleY( action, dimensions )
-    }
-
-    return xy
-}
-
-const getSpeechBubbleX = ( action, dimensions ) => {
-    let x = ( action.left ? action.left : action.x );
-
-    if ( x - dimensions.width < 0 ) {
-        return ( action.right ? action.right : action.x )
-    }
-    else {
-        return x - dimensions.width 
-    }
-}
-
-const getSpeechBubbleY = ( action, dimensions ) => {
-    let y = ( action.top ? action.top : action.y );
-
-    if ( y - dimensions.height < 0 ) {
-        return ( action.bottom ? action.bottom : action.y )
-    }
-    else {
-        return y - dimensions.height
+const getSpeechBubbleXy = ( x, y, dimensions ) => {
+    return {
+        'x': ( x - dimensions.width < 0 ) ? x : x - dimensions.width,
+        'y': ( y - dimensions.height < 0 ) ? y : y - dimensions.height
     }
 }
 
@@ -69,7 +45,7 @@ class SpeechBubble extends I_TextBox {
     constructor( action ) {
         const dimensions = getSpeechBubbleDimensions( action );
 
-        super( getSpeechBubbleXy( action, dimensions ), dimensions, 'LARGE', action.text )
+        super( getSpeechBubbleXy( action.x, action.y, dimensions ), dimensions, 'LARGE', action.text )
         this.action = action;
         if ( action.name ) {
             this.setHeader( action.name + ": " )
