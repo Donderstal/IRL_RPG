@@ -5,14 +5,14 @@ const mapControls = require('./mapControls')
 const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
+    state.currentMap.layeredSprites = [];
+
     if ( state.mapTransition != null ) {
         mapController.switchMap( state.mapTransition )
         state.transitioning = true;
         state.mapTransition = null
     }
-
     if ( state.currentMap.borders && state.playerCharacter.sprite ) {
-        state.currentMap.layeredSprites = []
         NPCs.NPCController()    
         mapControls.handleMovementKeys( )
         gatherSpritesInState( )
@@ -22,9 +22,16 @@ const handleMapAnimations = ( ) => {
                 action.draw(action.x,action.y);
                 action.checkForActionRange( );
             })
-        }               
+        }  
+        
+        if ( state.currentMap.doors ) {     
+            state.currentMap.doors.forEach( (door) => {
+                door.draw(door.x, door.y);
+                door.checkForActionRange( );
+            })
+        }  
     }
-    
+
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }

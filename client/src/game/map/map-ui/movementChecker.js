@@ -24,24 +24,16 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         }
     }
 
-    const blockedXyValues = state.currentMap.blockedXyValues
-
-    if ( blockedXyValues === undefined ) {
-        return true
+    if ( state.currentMap.blockedXyValues ) {
+        for( var i = 0; i < state.currentMap.blockedXyValues.length; i++ ) {
+            if ( state.currentMap.blockedXyValues[i].checkForBlockedRange( ) ) {
+                return false;
+            }
+        }
     }
 
     const activeMapData = state.currentMap.mapData
     const activeMapBorders = state.currentMap.borders
-
-    const spriteLeft = sprite.x + ( globals.GRID_BLOCK_PX * .25 )
-    const spriteRight = sprite.x + ( sprite.width - ( globals.GRID_BLOCK_PX * .25 ) )
-
-    // a sprite is higher than a grid block
-    // this needs to be corrected when calculating position
-    const spriteTop = sprite.y + globals.GRID_BLOCK_PX
-    const spriteBottom = sprite.y + sprite.height
-
-    const spriteVerticalMiddle = spriteBottom - ( globals.GRID_BLOCK_PX * .5 )
 
     if ( direction == 'FACING_LEFT' ) {
         if ( activeMapBorders.left >= sprite.x ) {
@@ -49,16 +41,6 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
                 return false
             }
             if ( !activeMapData.neighbours.left ) {
-                return false
-            }
-        }
-        for ( var i = 0; i < blockedXyValues.length; i++ ) {
-            const blockedTile = blockedXyValues[i]
-            if ( spriteLeft < blockedTile['RIGHT'] + 2
-                 && spriteRight > blockedTile['RIGHT']
-                 && spriteBottom >= blockedTile['TOP'] + 1
-                 && spriteVerticalMiddle <= blockedTile['BOTTOM']
-                ) {
                 return false
             }
         }
@@ -73,47 +55,17 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
                 return false
             }
         }
-        for ( var i = 0; i < blockedXyValues.length; i++ ) {
-            const blockedTile = blockedXyValues[i]
-            if ( spriteRight > blockedTile['LEFT'] - 2
-                && spriteLeft < blockedTile['LEFT']
-                && spriteBottom >= blockedTile['TOP'] + 1
-                && spriteVerticalMiddle <= blockedTile['BOTTOM']
-                ) {
-                return false
-            }
-        }
     }
 
     if ( direction == 'FACING_UP' ){
         if ( activeMapBorders.top >= sprite.y ) {
             return false
         }
-        for ( var i = 0; i < blockedXyValues.length; i++ ) {
-            const blockedTile = blockedXyValues[i]
-            if ( spriteTop <= blockedTile['BOTTOM'] + 2
-                && spriteBottom > blockedTile['BOTTOM'] 
-                && spriteLeft <= blockedTile['RIGHT']
-                && spriteRight >= blockedTile['LEFT']
-            ) {
-                return false
-            }
-        }
     }   
 
     if ( direction == 'FACING_DOWN' ) {
         if ( activeMapBorders.bottom <= sprite.y ) {
             return false
-        }
-        for ( var i = 0; i < blockedXyValues.length; i++ ) {
-            const blockedTile = blockedXyValues[i]
-            if ( spriteBottom >= blockedTile['TOP'] - 2 
-                && spriteTop < blockedTile['TOP']
-                && spriteLeft <= blockedTile['RIGHT']
-                && spriteRight >= blockedTile['LEFT']
-                ) {
-                return false
-            }
         }
     }
     

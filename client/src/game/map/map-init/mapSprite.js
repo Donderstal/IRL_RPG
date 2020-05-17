@@ -30,11 +30,6 @@ class MapSprite extends I_Sprite {
         this.cell.y = this.y + ( this.height - globals.GRID_BLOCK_PX)
     }
 
-    setCell( cell ) {
-        this.row = cell.row
-        this.col = cell.col
-    }
-        
     calcCellFromXy( ) {
         const cell = mapHelpers.getCellOfXY( this.cell.x, this.cell.y )
         this.row = cell.row
