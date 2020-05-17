@@ -1,9 +1,10 @@
 const state         = require('../../../game-data/state')
-const Sound         = require('../../interfaces/I_Sound').Sound
 const globals       = require('../../../game-data/globals')
 const mapHelpers    = require('../../../helpers/mapHelpers')
+const canvasHelpers = require('../../../helpers/canvasHelpers')
 const actionRegistry= require('./actionRegistry')
 
+const Sound         = require('../../interfaces/I_Sound').Sound
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
 
 const setMapAttributes = ( ) => {
@@ -136,17 +137,68 @@ class MapAction extends I_Hitbox {
     }
 }
 
-class Blocked extends I_Hitbox {
-    constructor( x, y, radius = globals.GRID_BLOCK_PX / 2 ) {
-        super( x, y, radius )
+class BlockedTile extends I_Hitbox {
+    constructor( x, y ) {
+        super( x, y, globals.GRID_BLOCK_PX / 2 )
         this.arcColor = "#000000";
     }
 
     checkForBlockedRange( ) {
         this.draw(this.x, this.y)
         if ( super.checkForBlockedRange( ) ) {
-            console.log('blocked!')
+            return true;
         }
+        return false;
+    }
+}
+
+class BlockedArea {
+    constructor(x, y, width, height) {
+        this.x          = x;
+        this.y          = y;
+        this.width      = width;
+        this.height     = height;   
+        this.draw( )  
+    }
+
+    draw( ) {
+        let backCtx = canvasHelpers.getBackCanvasContext()
+        backCtx.rect(this.x, this.y, this.width, this.height);
+        setTimeout( ( ) => {
+            backCtx.stroke();
+        }, globals.BATTLE_INTRO_ANIM_MS)
+    }
+
+    checkForBlockedRange( ) {
+        let playerDirection = state.playerCharacter.sprite.direction
+        let playerHitbox    = state.playerCharacter.sprite.hitbox
+        let inBlockedRange = false;
+        
+        const right = this.x + this.width;
+        const bottom = this.y + this.height
+
+        if ( playerHitbox.innerLeft( ) > this.x && playerHitbox.innerRight() < right ) {
+            if ( playerDirection == globals.FACING_UP && playerHitbox.innerTop( ) <= bottom && playerHitbox.innerBottom( ) > bottom ) {
+                inBlockedRange = true;
+            }
+
+            else if ( playerDirection == globals.FACING_DOWN && playerHitbox.innerBottom() >= this.y && playerHitbox.innerTop( ) < this.y ) {
+                inBlockedRange = true;
+            }
+            
+        }
+        else if ( playerHitbox.innerTop( ) > this.y && playerHitbox.innerBottom() < bottom ) {
+            if ( playerDirection == globals.FACING_LEFT && playerHitbox.innerLeft( ) <= right && playerHitbox.innerRight( ) > right ) {
+                inBlockedRange = true;
+            }
+
+            else if ( playerDirection == globals.FACING_RIGHT && playerHitbox.innerRight() >= this.x && playerHitbox.innerLeft( ) < this.x ) {
+                inBlockedRange = true;
+            }
+
+        }
+
+        return inBlockedRange
     }
 }
 
@@ -154,5 +206,6 @@ class Blocked extends I_Hitbox {
  module.exports = {
     setMapAttributes,
     MapAction,
-    Blocked
+    BlockedTile,
+    BlockedArea
  }

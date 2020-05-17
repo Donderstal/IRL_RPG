@@ -2,7 +2,9 @@ const mapHelpers    = require('../../../helpers/mapHelpers')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const state         = require('../../../game-data/state')
 const globals       = require('../../../game-data/globals')
-const BlockedTile   = require('./setMapAttributes').Blocked
+
+const BlockedTile   = require('./setMapAttributes').BlockedTile
+const BlockedArea   = require('./setMapAttributes').BlockedArea
 
 let tilesheetXyValues = [ ]
 
@@ -102,26 +104,15 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
 
         state.currentMap.mapData.inaccessible.forEach( (e) => {
             const topLeftXy = mapHelpers.getXYOfCell( e.topLeft.row, e.topLeft.col )
-            let bottomRightXy = mapHelpers.getXYOfCell( e.bottomRight.row, e.bottomRight.col );
+            const rows      = e.bottomRight.row - e.topLeft.row
+            const columns   = e.bottomRight.col - e.topLeft.col
 
-            bottomRightXy.x += globals.GRID_BLOCK_PX
-            bottomRightXy.y += globals.GRID_BLOCK_PX
-            
-            const blockedXy = { 
-                "BOTTOM": bottomRightXy.y,
-                "LEFT": topLeftXy.x,
-                "RIGHT": bottomRightXy.x,
-                "TOP": topLeftXy.y
-            }
-
-            state.currentMap.blockedXyValues.push( blockedXy )
-            if ( state.debug.map == true ) {
-                const rectCtx = canvasHelpers.getBackCanvasContext( );
-                rectCtx.rect( blockedXy["LEFT"], blockedXy["TOP"], 
-                blockedXy["RIGHT"] - blockedXy["LEFT"], blockedXy["BOTTOM"] - blockedXy["TOP"] )
-                rectCtx.strokeStyle = "red";
-                rectCtx.stroke( );
-            }
+            state.currentMap.blockedXyValues.push( 
+                new BlockedArea( 
+                    topLeftXy.x, topLeftXy.y,
+                    globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * columns ), globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * rows )
+                ) 
+            )
         } )
     }
 }
@@ -149,48 +140,48 @@ const drawRow = ( currentMap, currentRow, position, sheetJson ) => {
 // The blocked tiles system is shitty and needs to change
 const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJson ) => {
     if ( sheetJson.blocked ) {
-        let blockedTile = {
-            "BOTTOM": startPositionInCanvas.y + globals.GRID_BLOCK_PX,
-            "LEFT": startPositionInCanvas.x,
-            "RIGHT": startPositionInCanvas.x + globals.GRID_BLOCK_PX,
-            "TOP": startPositionInCanvas.y
-        }    
-
         sheetJson.blocked.forEach( ( e ) => {
             if ( !e.id ) {
                 if ( tile === e ) {
-                    state.blocked.push( 
+                    state.currentMap.blockedXyValues.push( 
                         new BlockedTile( 
                             startPositionInCanvas.x + globals.GRID_BLOCK_PX / 2, 
                             startPositionInCanvas.y + globals.GRID_BLOCK_PX / 2 
                         ) 
                     )
-                    currentMap.blockedXyValues.push( blockedTile )
                 }                   
             }
             else {
                 if ( tile === e.id ) {
+                    let width = globals.GRID_BLOCK_PX;
+                    let height = globals.GRID_BLOCK_PX;
+                    let x = startPositionInCanvas.x;
+                    let y = startPositionInCanvas.y;
                     if ( e.top ) {
-                        blockedTile["TOP"] += ( globals.GRID_BLOCK_PX * e.top.factor )
+                        y += ( globals.GRID_BLOCK_PX * e.top.factor )
                     }
                     if ( e.bottom ) {
-                        blockedTile["BOTTOM"] -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
+                        if ( e.top ) {
+                            width -= ( globals.GRID_BLOCK_PX * e.top.factor )
+                        }
+                        width -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
                     }
                     if ( e.left ) {
-                        blockedTile["LEFT"] += ( globals.GRID_BLOCK_PX * e.left.factor )
+                        x += ( globals.GRID_BLOCK_PX * e.left.factor )
                     }
                     if ( e.right ) {
-                        blockedTile["RIGHT"] -= ( globals.GRID_BLOCK_PX * e.right.factor )
+                        if ( e.left ) {
+                            height -= ( globals.GRID_BLOCK_PX * e.left.factor )
+                        }
+                        height -= ( globals.GRID_BLOCK_PX * e.right.factor )
                     }
-                    currentMap.blockedXyValues.push( blockedTile )
 
-                    if ( state.debug.map == true ) {
-                        const rectCtx = canvasHelpers.getBackCanvasContext( );
-                        rectCtx.rect( blockedTile["LEFT"], blockedTile["TOP"], 
-                        blockedTile["RIGHT"] - blockedTile["LEFT"], blockedTile["BOTTOM"] - blockedTile["TOP"] )
-                        rectCtx.strokeStyle = "red";
-                        rectCtx.stroke( );
-                    }
+                    state.currentMap.blockedXyValues.push( 
+                        new BlockedArea( 
+                            x, y,
+                            width, height
+                        ) 
+                    )
                 }    
             }
         } )        
