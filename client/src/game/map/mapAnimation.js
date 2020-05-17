@@ -30,8 +30,6 @@ const handleMapAnimations = ( ) => {
                 door.checkForActionRange( );
             })
         }  
-
-        state.blocked.forEach( e => e.checkForBlockedRange( ) )
     }
 
     if ( state.currentMap.bubbleIsActive ) {
