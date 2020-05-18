@@ -23,7 +23,7 @@ const GRID_BLOCK_IN_SHEET_PX        = 64
 const CANVAS_COLUMNS                = 23
 const CANVAS_ROWS                   = 15
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
-const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 5 )
+const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
 const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS + 1)
 const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS + 1)
 

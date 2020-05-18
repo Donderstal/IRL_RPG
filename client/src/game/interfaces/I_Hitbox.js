@@ -121,11 +121,11 @@ class I_Hitbox {
     }
 
     downFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingDown    =  playerDirection == globals.FACING_DOWN
-        const thisIsBelowPlayer    = playerHitBox.left( ) > this.innerLeft( )
+        const playerIsFacingDown   =  playerDirection == globals.FACING_DOWN
+        const thisIsBelowPlayer    = playerHitBox.bottom( ) < this.innerBottom( )
 
         return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.top( ) ) 
-        && playerHitBox.bottom( ) >= this.innerTop( ) && thisIsBelowPlayer
+        && playerHitBox.outerBottom( ) >= this.innerTop( ) && thisIsBelowPlayer
     }
 
     leftFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) {
@@ -154,7 +154,7 @@ class I_Hitbox {
 
     downFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingDown    =  playerDirection == globals.FACING_DOWN
-        const thisIsBelowPlayer    = playerHitBox.left( ) > this.innerLeft( )
+        const thisIsBelowPlayer    = playerHitBox.bottom( ) < this.innerBottom( )
 
         return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.innerTop( ) ) && thisIsBelowPlayer
     }

@@ -28,7 +28,7 @@
             "type": "static",
             "sprite": "chad.png",
             "direction": "FACING_DOWN",
-            "row": 7,
+            "row": 8,
             "col": 9,
             "action": {
                 "name": "Cocaine Johnny",
@@ -56,7 +56,7 @@
             "type": "static",
             "sprite": "influencer.png",
             "direction": "FACING_DOWN",
-            "row": 7,
+            "row": 8,
             "col": 10,
             "action": {
                 "name": "Ketamine Kate",
