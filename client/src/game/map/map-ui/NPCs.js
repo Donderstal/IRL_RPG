@@ -18,20 +18,6 @@ const handleNPCAnimation = ( NPC ) => {
     }
 }
 
-const handleStaticNPCAnimation = ( NPC ) => {
-    NPC.sprite.frameCount++
-    if ( NPC.sprite.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
-    
-        NPC.sprite.frameCount = 0;
-        if ( NPC.sprite.animIterator === 0 ) {
-            NPC.sprite.animIterator = 1
-        }
-        else if ( NPC.sprite.animIterator === 1 ) {
-            NPC.sprite.animIterator = 0
-        }
-    }   
-}
-
 const handleDynamicNPCAnimation = ( NPC ) => {
     getNextNPCPosition( NPC )
     countFrame( NPC )

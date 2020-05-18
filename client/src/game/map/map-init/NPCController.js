@@ -22,9 +22,9 @@ const generateCharactersFromSave = ( savedNPCs ) => {
     let newNPCs = []
     savedNPCs.forEach( ( savedNPC ) => {
         let toMapNPC = { ...savedNPC }  
-        toMapNPC.sprite = new NPC( 
-            { 'x': savedNPC.sprite.x, 'y': savedNPC.sprite.y }, 
-            savedNPC.sprite.sheetSrc, 'XY', savedNPC.sprite.direction 
+        toMapthis = new NPC( 
+            { 'x': savedthis.x, 'y': savedthis.y }, 
+            savedthis.sheetSrc, 'XY', savedthis.direction 
         )
 
         newNPCs.push(toMapNPC)
@@ -41,6 +41,7 @@ class NPC extends MapSprite {
         super( startPos, src, typeOfStart, spriteDirection, true )   
         
         this.hitbox = new MapAction( this.centerX( ), this.y, action );
+        this.type = action.type
         this.calcXyFromCell( )
 
         state.currentMap.NPCs.push( this )     
@@ -49,6 +50,25 @@ class NPC extends MapSprite {
     drawSprite( ) {
         super.drawSprite( )
         this.hitbox.checkForActionRange( )
+        this.handleNPCAnimation( )
+    }
+
+    handleNPCAnimation( ) {
+        this.handleStaticNPCAnimation( )
+    }
+
+    handleStaticNPCAnimation( ){
+        this.frameCount++
+        if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
+        
+            this.frameCount = 0;
+            if ( this.animIterator === 0 ) {
+                this.animIterator = 1
+            }
+            else if ( this.animIterator === 1 ) {
+                this.animIterator = 0
+            }
+        }   
     }
 }
 
