@@ -17,8 +17,12 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### MAY 18, 2020
+* Adjusted to new base size of tiles and sprites
+* Added new tilesheets and spritesheets
+
 #### MAY 17, 2020
-* Improving I_Hitbox implementation
+* Improvied I_Hitbox implementation
 * New class-based setup for blocked xy values in map
 
 #### MAY 16, 2020

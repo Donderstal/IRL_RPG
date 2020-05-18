@@ -182,7 +182,7 @@ class BlockedArea {
                 inBlockedRange = true;
             }
 
-            else if ( playerDirection == globals.FACING_DOWN && playerHitbox.innerBottom() >= this.y && playerHitbox.innerTop( ) < this.y ) {
+            else if ( playerDirection == globals.FACING_DOWN && playerHitbox.outerBottom() >= this.y && playerHitbox.innerTop( ) < this.y ) {
                 inBlockedRange = true;
             }
             

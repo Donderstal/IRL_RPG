@@ -1,0 +1,34 @@
+{
+    "mapName": "my-neighbourhood/A0/neighbourhood-A0",
+    "tileSet": "my_neighbourhood",
+    "outdoors": true,
+    "music": "game-jam.mp3",
+    "neighbours": {
+        "right": "my-neighbourhood/A1/neighbourhood-A1"
+    },
+    "rows": 4,
+    "columns": 11,
+    "grid": [
+        [294,267,267,267,262,262,262,294,308,308,308,308],
+        [294,267,267,267,262,262,262,294,308,308,308,308],
+        [294,267,267,267,262,262,262,294,308,308,308,308],
+        [383,383,383,383,383,383,383,383,383,383,383,383],
+        [313,313,313,356,356,313,313,356,356,313,313,313]
+    ],
+    "characters" : [
+        {
+            "type": "static",
+            "sprite": "chad.png",
+            "direction": "FACING_DOWN",
+            "row": 1,
+            "col": 20,
+            "action": {
+                "name": "Big Balls Bert",
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "direction": "FACING_UP",
+                "text": "Do you even lift, bro?"
+            }
+        }
+    ]
+}

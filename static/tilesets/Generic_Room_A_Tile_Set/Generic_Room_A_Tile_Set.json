@@ -1,7 +1,10 @@
 {
     "src": "Generic_Room_A_Tile_Set/Generic_Room_A_Tile_Set.png",
-    "uniqueTiles": 79,
+    "uniqueTiles": 83,
     "blocked": [ 
-        1
+        0, 1, 2, 3, 11, 13, 14, 16, 17, 18,
+       24, 32, 33, 34, 35, 40, 41, 42, 43, 44,
+       50, 51, 55, 59, 60, 61, 62, 63, 69, 70,
+       73, 74
     ]
 }
