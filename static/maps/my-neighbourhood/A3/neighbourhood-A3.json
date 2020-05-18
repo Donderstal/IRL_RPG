@@ -23,27 +23,13 @@
         [23,23,11,224,224,224,224,224,224,224,224,224,224,224,224,224,28,224,224,224,224,224,224,224],
         [23,23,23,224,224,224,224,224,224,224,224,70,224,224,224,224,224,224,224,224,224,224,28,224]
     ],
-    "inaccessible": [ 
-        { 
-            "topLeft": { "row": 0, "col": 7 },
-            "bottomRight": { "row": 3, "col": 14 }
-        },
-        { 
-            "topLeft": { "row": 0, "col": 15 },
-            "bottomRight": { "row": 2, "col": 21 }
-        },
-        { 
-            "topLeft": { "row": 0, "col": 22 },
-            "bottomRight": { "row": 3, "col": 23 }
-        }
-    ],
     "characters": [
         {
             "type": "static",
             "sprite": "chad.png",
             "direction": "FACING_DOWN",
-            "row": 5,
-            "col": 10,
+            "row": 7,
+            "col": 9,
             "action": {
                 "name": "Cocaine Johnny",
                 "type": "TEXT",
@@ -70,8 +56,8 @@
             "type": "static",
             "sprite": "influencer.png",
             "direction": "FACING_DOWN",
-            "row": 5,
-            "col": 11,
+            "row": 7,
+            "col": 10,
             "action": {
                 "name": "Ketamine Kate",
                 "type": "TEXT",
@@ -84,7 +70,15 @@
     "doors": [ 
         {
             "row": 3, 
-            "col": 8,
+            "col": 9,
+            "to"  : "my-neighbourhood/A3/hotel-le-canard/le-canard-lobby",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
+        },
+        {
+            "row": 3, 
+            "col": 10,
             "to"  : "my-neighbourhood/A3/hotel-le-canard/le-canard-lobby",
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",

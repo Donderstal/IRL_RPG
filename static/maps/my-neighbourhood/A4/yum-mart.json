@@ -28,22 +28,15 @@
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
-        },
-        {
-            "row": 12, 
-            "col": 6,
-            "to"  : "my-neighbourhood/A4/neighbourhood-A4",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP",
-            "locked": false
         }
+
     ],
     "characters": [
         {
             "type": "static",
             "sprite": "influencer.png",
             "direction": "FACING_LEFT",
-            "row": 11,
+            "row": 10,
             "col": 8,
             "action": {
                 "name": "TheFitGirlGoodLife",
@@ -85,22 +78,22 @@
             "type": "static",
             "sprite": "neckbeard.png",
             "direction": "FACING_DOWN",
-            "row": 8,
-            "col": 2,
+            "row": 9,
+            "col": 5,
             "action": {
                 "name": "Yum-mart branch manager",
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
                 "direction": "FACING_UP",
-                "text": "Welcome to Yum-mart, customer! I'm the manager and I do hope you have a great shopping experience."
+                "text": "Welcome to Yum-mart! I'm the manager and I do hope you have a great shopping experience."
             }
         },
         {
             "type": "static",
             "sprite": "Tumblr_girl.png",
             "direction": "FACING_LEFT",
-            "row": 1,
-            "col": 8,
+            "row": 2,
+            "col": 9,
             "action": {
                 "name": "Alana",
                 "type": "TEXT",
@@ -112,16 +105,16 @@
     ],
     "actions" : [
         {
-            "row": 2,
-            "col": 2,
+            "row": 3,
+            "col": 6,
             "type": "TEXT",
             "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
         },
         {
-            "row": 12,
-            "col": 2,
+            "row": 10,
+            "col": 0,
             "type": "TEXT",
             "direction": "FACING_UP",
             "sfx": "typing.mp3",
@@ -144,8 +137,8 @@
             "text": "These veggies don't look that fresh..."
         },
         {
-            "row": 5,
-            "col": 5,
+            "row": 4,
+            "col": 4,
             "type": "TEXT",
             "direction": "FACING_RIGHT",
             "sfx": "typing.mp3",

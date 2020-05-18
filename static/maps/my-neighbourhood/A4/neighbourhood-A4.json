@@ -22,16 +22,10 @@
         [224,224,23,23,224,23,28,23,23,23,23,23,23,23,23,23,23,23,23,23,28,224,224,224],
         [224,23,23,23,224,23,23,23,23,23,23,23,23,28,23,23,23,23,23,23,70,224,224,224]
     ],
-    "inaccessible": [ 
-        { 
-            "topLeft": { "row": 0, "col": 0 },
-            "bottomRight": { "row": 3, "col": 18 }
-        }
-    ],
     "doors": [ 
         {
             "row": 3, 
-            "col": 17,
+            "col": 14,
             "to"  : "my-neighbourhood/A4/yum-mart",
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",
