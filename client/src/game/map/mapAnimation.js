@@ -1,4 +1,3 @@
-const NPCs = require('./map-ui/NPCs')
 const state = require('../../game-data/state')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
@@ -13,7 +12,6 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
     if ( state.currentMap.borders && state.playerCharacter.sprite ) {
-        NPCs.NPCController()    
         mapControls.handleMovementKeys( )
         gatherSpritesInState( )
         drawSpritesInOrder()     
