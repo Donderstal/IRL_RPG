@@ -220,6 +220,11 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         blockSize, blockSize
     )        
     
+    canvasHelpers.drawRect( 
+        "BACK", startPositionInCanvas.x, startPositionInCanvas.y,
+        blockSize, blockSize, "black"
+    )
+    
 }
 
 module.exports = {

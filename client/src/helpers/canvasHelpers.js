@@ -119,8 +119,10 @@ const drawLineOnYAxis = (oldY, x, newY, color = null, canvas = null) => {
 const drawRect = ( canvas, x, y, width, height, color = null ) => {
     let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()
 
+    ctx.beginPath();
     ctx.fillStyle = (color != null) ? color : "white"
-    ctx.fillRect( x, y, width, height );
+    ctx.rect( x, y, width, height );
+    ctx.stroke();
 }
 
 const setFont = ( size ) => {
