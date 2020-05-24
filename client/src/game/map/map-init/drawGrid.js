@@ -38,7 +38,7 @@ const generateMap = ( currentMap, sheetJson ) => {
 }
 
 const calcTilesheetXyPositions = ( tilesInSheet ) => {
-    let tileX = 0
+    let tileX = 0 
     let tileY = 0
     tilesheetXyValues = []
 
@@ -61,12 +61,10 @@ const calcTilesheetXyPositions = ( tilesInSheet ) => {
  */
 
 const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
-    const gridStartingPosition = {}
-
-    gridStartingPosition.x = Math.ceil( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX
-    gridStartingPosition.y = Math.ceil( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
-
-    return gridStartingPosition 
+    return {
+        'x': Math.ceil( ( globals.CANVAS_COLUMNS - mapColumns ) / 2 ) * globals.GRID_BLOCK_PX,
+        'y': Math.ceil( ( globals.CANVAS_ROWS - mapRows ) / 2 )  * globals.GRID_BLOCK_PX
+    }
 }
 
 /** 
@@ -91,14 +89,12 @@ const drawGrid = ( startingPosition, currentMap, sheetJson ) => {
 }
 
 const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
-    let borderObject = { 
+    state.currentMap.borders = { 
         top     : gridStartingPosition.y,
         left    : gridStartingPosition.x,
         bottom  : gridStartingPosition.y + ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * .5 ,
         right   : gridStartingPosition.x + ( mapColumns * globals.GRID_BLOCK_PX )
     };
-
-    state.currentMap.borders = borderObject 
 
     if ( state.currentMap.mapData.inaccessible != null ) {
 
@@ -136,54 +132,17 @@ const drawRow = ( currentMap, currentRow, position, sheetJson ) => {
     }
 }
 
-
-// The blocked tiles system is shitty and needs to change
-const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJson ) => {
+const setBlockedXyIfNeeded = ( tile, startPositionInCanvas, sheetJson ) => {
     if ( sheetJson.blocked ) {
         sheetJson.blocked.forEach( ( e ) => {
-            if ( !e.id ) {
-                if ( tile === e ) {
-                    state.currentMap.blockedXyValues.push( 
-                        new BlockedTile( 
-                            startPositionInCanvas.x + globals.GRID_BLOCK_PX / 2, 
-                            startPositionInCanvas.y + globals.GRID_BLOCK_PX / 2 
-                        ) 
-                    )
-                }                   
-            }
-            else {
-                if ( tile === e.id ) {
-                    let width = globals.GRID_BLOCK_PX;
-                    let height = globals.GRID_BLOCK_PX;
-                    let x = startPositionInCanvas.x;
-                    let y = startPositionInCanvas.y;
-                    if ( e.top ) {
-                        y += ( globals.GRID_BLOCK_PX * e.top.factor )
-                    }
-                    if ( e.bottom ) {
-                        if ( e.top ) {
-                            width -= ( globals.GRID_BLOCK_PX * e.top.factor )
-                        }
-                        width -= ( globals.GRID_BLOCK_PX * e.bottom.factor )
-                    }
-                    if ( e.left ) {
-                        x += ( globals.GRID_BLOCK_PX * e.left.factor )
-                    }
-                    if ( e.right ) {
-                        if ( e.left ) {
-                            height -= ( globals.GRID_BLOCK_PX * e.left.factor )
-                        }
-                        height -= ( globals.GRID_BLOCK_PX * e.right.factor )
-                    }
-
-                    state.currentMap.blockedXyValues.push( 
-                        new BlockedArea( 
-                            x, y,
-                            width, height
-                        ) 
-                    )
-                }    
-            }
+            if ( tile === e ) {
+                state.currentMap.blockedXyValues.push( 
+                    new BlockedTile( 
+                        startPositionInCanvas.x + globals.GRID_BLOCK_PX / 2, 
+                        startPositionInCanvas.y + globals.GRID_BLOCK_PX / 2 
+                    ) 
+                )
+            }                   
         } )        
     } 
 }
@@ -199,14 +158,9 @@ const setBlockedXyIfNeeded = ( currentMap, tile, startPositionInCanvas, sheetJso
  * @param {columns} startPositionInCanvas - Starting x and y Canvas in pixels
  */
 const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
-    // if tile is E - empty...
+    // if tile is E - empty, nothing will be drawn
     if ( tile === "E" || tile === null) {
         return 
-    }
-
-    // if tile is F - filler...
-    if ( tile === "F" ) {
-        tile = currentMap.mapData.fillerTile
     }
 
     const blockSize = globals.GRID_BLOCK_PX  
@@ -220,8 +174,8 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         blockSize, blockSize
     )        
     
-    let backCtx = canvasHelpers.getBackCanvasContext();
-    backCtx.strokeRect(startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize)
+    /* let backCtx = canvasHelpers.getBackCanvasContext();
+    backCtx.strokeRect(startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize) */
     
 }
 
