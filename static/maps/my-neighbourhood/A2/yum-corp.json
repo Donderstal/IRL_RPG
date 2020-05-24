@@ -47,7 +47,6 @@
                 "name": "Hot Hannah",
                 "type": "TEXT",
                 "sfx": "poo-poo.mp3",
-                "direction": "FACING_UP",
                 "text": "There's this weird neckbeard in the back alley trying to connect my to my internet."
             }
         }
@@ -57,7 +56,6 @@
             "row": 5,
             "col": 0,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "Is there a used condom in this bin?"
         }

@@ -42,7 +42,6 @@
                 "name": "TheFitGirlGoodLife",
                 "type": "TEXT",
                 "sfx": "voice-3.mp3",
-                "direction": "FACING_DOWN",
                 "text": "I'm just here to make some money until my Instagram account takes off."
             }
         },
@@ -56,7 +55,6 @@
                 "name": "The Dealer",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_UP",
                 "text": "Wanna buy some cocaine, nerd?"
             }
         },
@@ -70,7 +68,7 @@
                 "name": "Small balled Steve",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_RIGHT",
+
                 "text": "The Yum-mart sells the best 'roid in town, man!"
             }
         },
@@ -84,7 +82,6 @@
                 "name": "Yum-mart branch manager",
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
-                "direction": "FACING_UP",
                 "text": "Welcome to Yum-mart! I'm the manager and I do hope you have a great shopping experience."
             }
         },
@@ -98,7 +95,6 @@
                 "name": "Alana",
                 "type": "TEXT",
                 "sfx": "voice-3.mp3",
-                "direction": "FACING_RIGHT",
                 "text": "I wish we had a better stores than Yum-mart in our neighbourhood."
             }
         }
@@ -108,7 +104,6 @@
             "row": 3,
             "col": 6,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
         },
@@ -116,7 +111,6 @@
             "row": 10,
             "col": 0,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
         },
@@ -124,7 +118,6 @@
             "row": 1,
             "col": 5,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "Now on sale: Jen and Berry's ice cream!'"
         },
@@ -132,7 +125,6 @@
             "row": 4,
             "col": 2,
             "type": "TEXT",
-            "direction": "FACING_RIGHT",
             "sfx": "typing.mp3",
             "text": "These veggies don't look that fresh..."
         },
@@ -140,7 +132,6 @@
             "row": 4,
             "col": 4,
             "type": "TEXT",
-            "direction": "FACING_RIGHT",
             "sfx": "typing.mp3",
             "text": "These veggies don't look that fresh..."
         },
@@ -148,7 +139,6 @@
             "row": 7,
             "col": 0,
             "type": "TEXT",
-            "direction": "FACING_LEFT",
             "sfx": "typing.mp3",
             "text": "They're all out of Doritos :("
         }
