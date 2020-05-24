@@ -220,10 +220,8 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         blockSize, blockSize
     )        
     
-    canvasHelpers.drawRect( 
-        "BACK", startPositionInCanvas.x, startPositionInCanvas.y,
-        blockSize, blockSize, "black"
-    )
+    let backCtx = canvasHelpers.getBackCanvasContext();
+    backCtx.strokeRect(startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize)
     
 }
 

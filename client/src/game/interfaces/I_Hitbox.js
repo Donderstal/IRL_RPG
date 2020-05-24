@@ -149,28 +149,28 @@ class I_Hitbox {
         const playerIsFacingUp  = playerDirection == globals.FACING_UP;
         const thisIsAbovePlayer = playerHitBox.top( ) > this.innerTop( );
 
-        return playerIsFacingUp && ( playerHitBox.top( ) <= this.innerBottom( ) ) && thisIsAbovePlayer
+        return playerIsFacingUp && ( playerHitBox.top( ) <= this.bottom( ) ) && thisIsAbovePlayer
     }
 
     downFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingDown    =  playerDirection == globals.FACING_DOWN
         const thisIsBelowPlayer    = playerHitBox.bottom( ) < this.innerBottom( )
 
-        return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.innerTop( ) ) && thisIsBelowPlayer
+        return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.top( ) ) && thisIsBelowPlayer
     }
 
     leftFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingLeft    = playerDirection == globals.FACING_LEFT
         const thisIsLeftOfPlayer    = playerHitBox.left( ) > this.innerLeft( )
 
-        return playerIsFacingLeft && ( playerHitBox.left( ) <= this.innerRight( ) ) && thisIsLeftOfPlayer
+        return playerIsFacingLeft && ( playerHitBox.left( ) <= this.right( ) ) && thisIsLeftOfPlayer
     }
 
     rightFacingPlayerIsInActionRadius( playerHitBox, playerDirection ){
         const playerIsFacingRight   = playerDirection == globals.FACING_RIGHT
         const thisIsRightOfPlayer   = playerHitBox.right( ) < this.innerRight( )
 
-        return playerIsFacingRight && ( playerHitBox.right( ) >= this.innerLeft( ) ) && thisIsRightOfPlayer
+        return playerIsFacingRight && ( playerHitBox.right( ) >= this.left( ) ) && thisIsRightOfPlayer
     }
 }
 

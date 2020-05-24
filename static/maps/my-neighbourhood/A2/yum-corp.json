@@ -26,6 +26,40 @@
             "directionIn": "FACING_DOWN",
             "directionOut": "FACING_UP",
             "locked": false
+        },
+        {
+            "row": 1, 
+            "col": 5,
+            "to"  : "my-neighbourhood/A2/back-alley",
+            "directionOut": "FACING_DOWN",           
+            "directionIn": "FACING_UP",
+            "locked": false
+        }
+    ],
+    "characters": [
+        {
+            "type": "static",
+            "sprite": "influencer.png",
+            "direction": "FACING_DOWN",
+            "row": 1,
+            "col": 4,
+            "action": {
+                "name": "Hot Hannah",
+                "type": "TEXT",
+                "sfx": "poo-poo.mp3",
+                "direction": "FACING_UP",
+                "text": "There's this weird neckbeard in the back alley trying to connect my to my internet."
+            }
+        }
+    ],
+    "actions" : [
+        {
+            "row": 5,
+            "col": 0,
+            "type": "TEXT",
+            "direction": "FACING_UP",
+            "sfx": "typing.mp3",
+            "text": "Is there a used condom in this bin?"
         }
     ]
 }

@@ -1,0 +1,50 @@
+{
+    "mapName": "my-neighbourhood/A2/back-alley",
+    "tileSet": "my_neighbourhood",
+    "outdoors": true,
+    "music": "game-jam.mp3",
+    "rows":5,
+    "columns":7,
+    "grid": [ 
+        [30,31,133,133,133,133,77,78],
+        [30,31,137,152,137,137,77,78],
+        [15,35,142,147,142,115,81,82],
+        [30,39,146,147,147,114,85,87],
+        [30,39,147,147,147,147,85,87],
+        [15,43,108,147,115,108,89,91]
+    ],
+    "characters" : [
+        {
+            "type": "static",
+            "sprite": "neckbeard.png",
+            "direction": "FACING_DOWN",
+            "row": 2,
+            "col": 4,
+            "action": {
+                "name": "Mortimer Richards III",
+                "type": "TEXT",
+                "sfx": "voice-3.mp3",
+                "direction": "FACING_UP",
+                "text": "The Wifi here sucks, man"
+            }
+        }
+    ],
+    "doors": [ 
+        {
+            "row": 5, 
+            "col": 3,
+            "to"  : "my-neighbourhood/A2/yum-corp",
+            "directionIn": "FACING_DOWN",
+            "directionOut": "FACING_UP",
+            "locked": false
+        },
+        {
+            "row": 5, 
+            "col": 4,
+            "to"  : "my-neighbourhood/A2/yum-corp",
+            "directionIn": "FACING_DOWN",
+            "directionOut": "FACING_UP",
+            "locked": false
+        }
+    ]
+}

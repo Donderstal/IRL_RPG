@@ -30,6 +30,14 @@
             "directionIn": "FACING_UP",
             "directionOut": "FACING_DOWN",
             "locked": false
+        },
+        {
+            "row": 3, 
+            "col": 2,
+            "to"  : "my-neighbourhood/A4/luxury-house",
+            "directionIn": "FACING_UP",
+            "directionOut": "FACING_DOWN",
+            "locked": false
         }
     ]
 }
