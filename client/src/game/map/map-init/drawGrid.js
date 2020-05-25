@@ -125,7 +125,7 @@ const drawRow = ( currentMap, currentRow, position, sheetJson ) => {
     for ( var j = 0; j <= currentMap.mapData.columns; j++ ) {
         const currentTile = currentRow[j]
 
-        setBlockedXyIfNeeded( currentMap, currentTile, position, sheetJson )
+        setBlockedXyIfNeeded( currentTile, position, sheetJson )
         drawTileInGridBlock( currentMap, currentTile, position )
 
         position.x += globals.GRID_BLOCK_PX

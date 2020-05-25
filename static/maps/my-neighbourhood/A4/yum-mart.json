@@ -74,7 +74,7 @@
         },
         {
             "type": "static",
-            "sprite": "neckbeard.png",
+            "sprite": "Manager.png",
             "direction": "FACING_DOWN",
             "row": 9,
             "col": 5,
