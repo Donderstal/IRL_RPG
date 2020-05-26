@@ -79,8 +79,8 @@ class Door extends I_Hitbox {
 
     }
 
-    checkForActionRange( ) {
-        if ( super.checkForActionRange( ) ) {
+    checkForBlockedRange( ) {
+        if ( super.checkForBlockedRange( ) ) {
             state.mapTransition = {
                 urlToNewMap: this.to, 
                 oldMapName: state.currentMap.mapData.mapName
@@ -137,28 +137,12 @@ class MapAction extends I_Hitbox {
     }
 }
 
-class BlockedTile extends I_Hitbox {
-    constructor( x, y ) {
-        super( x, y, globals.GRID_BLOCK_PX / 2 )
-        this.arcColor = "#000000";
-    }
-
-    checkForBlockedRange( ) {
-        this.draw(this.x, this.y)
-        if ( super.checkForBlockedRange( ) ) {
-            return true;
-        }
-        return false;
-    }
-}
-
 class BlockedArea {
     constructor(x, y, width, height) {
         this.x          = x;
         this.y          = y;
         this.width      = width;
         this.height     = height;   
-        this.draw( )  
     }
 
     draw( ) {
@@ -177,7 +161,7 @@ class BlockedArea {
         const right = this.x + this.width;
         const bottom = this.y + this.height
 
-        if ( playerHitbox.innerLeft( ) > this.x && playerHitbox.innerRight() < right ) {
+        if ( playerHitbox.x > this.x && playerHitbox.x < right ) {
             if ( playerDirection == globals.FACING_UP && playerHitbox.innerTop( ) <= bottom && playerHitbox.innerBottom( ) > bottom ) {
                 inBlockedRange = true;
             }
@@ -187,7 +171,7 @@ class BlockedArea {
             }
             
         }
-        else if ( playerHitbox.innerTop( ) > this.y && playerHitbox.innerBottom() < bottom ) {
+        else if ( playerHitbox.y > this.y - playerHitbox.outerRadius && playerHitbox.y < bottom ) {
             if ( playerDirection == globals.FACING_LEFT && playerHitbox.innerLeft( ) <= right && playerHitbox.innerRight( ) > right ) {
                 inBlockedRange = true;
             }
@@ -206,6 +190,5 @@ class BlockedArea {
  module.exports = {
     setMapAttributes,
     MapAction,
-    BlockedTile,
     BlockedArea
  }

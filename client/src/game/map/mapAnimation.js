@@ -17,15 +17,15 @@ const handleMapAnimations = ( ) => {
         drawSpritesInOrder()     
         if ( state.currentMap.mapActions ) {     
             state.currentMap.mapActions.forEach( (action) => {
-                action.draw(action.x,action.y);
+                //action.draw(action.x,action.y);
                 action.checkForActionRange( );
             })
         }  
         
         if ( state.currentMap.doors ) {     
             state.currentMap.doors.forEach( (door) => {
-                door.draw(door.x, door.y);
-                door.checkForActionRange( );
+                //door.draw(door.x, door.y);
+                door.checkForBlockedRange( );
             })
         }  
     }

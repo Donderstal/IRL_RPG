@@ -95,22 +95,6 @@ const setMapBorders = (gridStartingPosition, mapRows, mapColumns) => {
         bottom  : gridStartingPosition.y + ( mapRows * globals.GRID_BLOCK_PX ) - globals.GRID_BLOCK_PX * .5 ,
         right   : gridStartingPosition.x + ( mapColumns * globals.GRID_BLOCK_PX )
     };
-
-    if ( state.currentMap.mapData.inaccessible != null ) {
-
-        state.currentMap.mapData.inaccessible.forEach( (e) => {
-            const topLeftXy = mapHelpers.getXYOfCell( e.topLeft.row, e.topLeft.col )
-            const rows      = e.bottomRight.row - e.topLeft.row
-            const columns   = e.bottomRight.col - e.topLeft.col
-
-            state.currentMap.blockedXyValues.push( 
-                new BlockedArea( 
-                    topLeftXy.x, topLeftXy.y,
-                    globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * columns ), globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * rows )
-                ) 
-            )
-        } )
-    }
 }
 
 /** 
@@ -137,9 +121,11 @@ const setBlockedXyIfNeeded = ( tile, startPositionInCanvas, sheetJson ) => {
         sheetJson.blocked.forEach( ( e ) => {
             if ( tile === e ) {
                 state.currentMap.blockedXyValues.push( 
-                    new BlockedTile( 
-                        startPositionInCanvas.x + globals.GRID_BLOCK_PX / 2, 
-                        startPositionInCanvas.y + globals.GRID_BLOCK_PX / 2 
+                    new BlockedArea( 
+                        startPositionInCanvas.x, 
+                        startPositionInCanvas.y,
+                        globals.GRID_BLOCK_PX,
+                        globals.GRID_BLOCK_PX
                     ) 
                 )
             }                   
