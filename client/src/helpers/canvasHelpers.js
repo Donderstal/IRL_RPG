@@ -121,6 +121,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
 
     ctx.beginPath();
     ctx.fillStyle = (color != null) ? color : "white"
+    ctx.fillRect( x, y, width, height );
     ctx.rect( x, y, width, height );
     ctx.stroke();
 }

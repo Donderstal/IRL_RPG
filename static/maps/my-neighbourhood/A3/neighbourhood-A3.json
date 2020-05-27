@@ -34,7 +34,6 @@
                 "name": "Cocaine Johnny",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_UP",
                 "text": "I sold my kidneys to pay for my new house."
             }
         },
@@ -48,7 +47,6 @@
                 "name": "N3rdPWNerS00pr33m",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_UP",
                 "text": "Bronies are so 2016"
             }
         },
@@ -62,7 +60,6 @@
                 "name": "Ketamine Kate",
                 "type": "TEXT",
                 "sfx": "voice-3.mp3",
-                "direction": "FACING_UP",
                 "text": "I sold my house to pay for a new pair of kidneys."
             }
         }

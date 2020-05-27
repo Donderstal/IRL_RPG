@@ -97,13 +97,11 @@
                 { "id": 2, "row": 3, "col": 10, "direction": "FACING_LEFT" },
                 { "id": 3, "row": 5, "col": 10, "direction": "FACING_DOWN" }
             ],
-            "actionid": 1,
             "action": {
                 "id": 1,
                 "name": "Paulie",
                 "type": "TEXT",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_DOWN",
                 "text": "Gamers, rise up!"
             }
         },
@@ -117,7 +115,6 @@
                 "type": "TEXT",
                 "name": "Jennifer",
                 "sfx": "voice-2.mp3",
-                "direction": "FACING_LEFT",
                 "text": "What's up, nerd?"
             }
         },
@@ -131,7 +128,6 @@
                 "type": "TEXT",
                 "name": "Lisa",
                 "sfx": "voice-2.mp3",
-                "direction": "FACING_DOWN",
                 "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
             }
         },
@@ -145,7 +141,6 @@
                 "type": "TEXT",
                 "name": "Mr. Business",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_UP",
                 "text": "I'm Mr. Business!'"
             }
         }
@@ -173,7 +168,6 @@
             "row": 3,
             "col": 14,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "Who still uses these things anyway?"
         }

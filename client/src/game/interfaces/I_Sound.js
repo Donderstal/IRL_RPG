@@ -1,6 +1,6 @@
 class Sound {
     constructor ( src, sfx = false, battle = false ) {
-      this.sound = document.createElement("audio");
+      /* this.sound = document.createElement("audio");
       this.sound.volume = 0.5;
         if ( sfx ) {
           this.sound.src = "/static/sfx/" + src;      
@@ -18,18 +18,18 @@ class Sound {
         this.src = src
         this.sound.setAttribute("id", src);
         this.sound.style.display = "none";
-        document.body.appendChild(this.sound);        
+        document.body.appendChild(this.sound);      */   
     }
 
     play( ) {
-      this.sound.play();
+      /* this.sound.play(); */
     }
     pause( ) {
-      this.sound.pause();
+      /* this.sound.pause(); */
     }
     stop ( ) {
-      this.sound.pause();
-      document.getElementById(this.src).remove()
+      /* this.sound.pause();
+      document.getElementById(this.src).remove() */
     }
   }
 

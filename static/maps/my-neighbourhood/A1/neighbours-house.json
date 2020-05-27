@@ -36,7 +36,6 @@
                 "name": "N00bpwner",
                 "type": "BATTLE",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_UP",
                 "text": "Alloweth me to kick thine arse!",
                 "character": {
                     "class": "Influencer",
@@ -55,7 +54,6 @@
                 "name": "R0x4NN3G4M3RG0D355",
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
-                "direction": "FACING_UP",
                 "text": "This dump is not fitting for a woman of my stature! I'll have you know I'm a level 30 Warlock."
             }
         }
@@ -65,7 +63,6 @@
             "row": 0,
             "col": 6,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "The fridge is filled with... Doritos?"
         },
@@ -73,7 +70,6 @@
             "row": 5,
             "col": 0,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "Looks like they're playing Guild of Warcraft!"
         },
@@ -81,7 +77,6 @@
             "row": 3,
             "col": 5,
             "type": "TEXT",
-            "direction": "FACING_RIGHT",
             "sfx": "typing.mp3",
             "text": "The neighbours' stove is much cleaner than mine..."
         }

@@ -18,6 +18,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 ### LOG
 
 #### MAY 18, 2020
+* All Tilesheet are now updated
+* Small fixes to collision detection
+* Cleaning old NPC funcs
+
+#### MAY 18, 2020
 * Adjusted to new base size of tiles and sprites
 * Added new tilesheets and spritesheets
 

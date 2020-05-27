@@ -34,7 +34,6 @@
             "row": 0,
             "col": 3,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "This is my fridge. Sadly, there's nothing in it..."
         },
@@ -42,7 +41,6 @@
             "row": 5,
             "col": 0,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "I <3 my computer"
         },
@@ -50,7 +48,6 @@
             "row": 3,
             "col": 3,
             "type": "TEXT",
-            "direction": "FACING_RIGHT",
             "sfx": "typing.mp3",
             "text": "I should clean this stove sometime"
         }

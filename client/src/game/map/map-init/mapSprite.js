@@ -22,7 +22,7 @@ class MapSprite extends I_Sprite {
     drawSprite( ) {
         super.drawSprite( )
         this.updateSpriteCellXy( )
-        this.hitbox.draw( this.centerX( ), this.centerY( ) );
+        this.hitbox.updateXy( this.centerX( ), this.centerY( ) );
     }
 
     updateSpriteCellXy( ) {

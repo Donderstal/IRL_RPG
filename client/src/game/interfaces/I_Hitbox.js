@@ -12,7 +12,7 @@ class I_Hitbox {
         this.collision      = false;
         this.arcColor       = "#3370d4";
         this.outerTop       = ( ) => { return this.y - this.outerRadius }
-        this.outerLeft      = ( ) => { return this.x - this.outerrRadius }
+        this.outerLeft      = ( ) => { return this.x - this.outerRadius }
         this.outerRight     = ( ) => { return this.x + this.outerRadius }
         this.outerBottom    = ( ) => { return this.y + this.outerRadius }       
         this.top            = ( ) => { return this.y - this.radius }
@@ -149,28 +149,28 @@ class I_Hitbox {
         const playerIsFacingUp  = playerDirection == globals.FACING_UP;
         const thisIsAbovePlayer = playerHitBox.top( ) > this.innerTop( );
 
-        return playerIsFacingUp && ( playerHitBox.top( ) <= this.innerBottom( ) ) && thisIsAbovePlayer
+        return playerIsFacingUp && ( playerHitBox.outerTop( ) <= this.bottom( ) ) && thisIsAbovePlayer
     }
 
     downFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingDown    =  playerDirection == globals.FACING_DOWN
         const thisIsBelowPlayer    = playerHitBox.bottom( ) < this.innerBottom( )
 
-        return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.innerTop( ) ) && thisIsBelowPlayer
+        return playerIsFacingDown && ( playerHitBox.outerBottom( ) >= this.top( ) ) && thisIsBelowPlayer
     }
 
     leftFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
         const playerIsFacingLeft    = playerDirection == globals.FACING_LEFT
         const thisIsLeftOfPlayer    = playerHitBox.left( ) > this.innerLeft( )
 
-        return playerIsFacingLeft && ( playerHitBox.left( ) <= this.innerRight( ) ) && thisIsLeftOfPlayer
+        return playerIsFacingLeft && ( playerHitBox.outerLeft( ) <= this.right( ) ) && thisIsLeftOfPlayer
     }
 
     rightFacingPlayerIsInActionRadius( playerHitBox, playerDirection ){
         const playerIsFacingRight   = playerDirection == globals.FACING_RIGHT
         const thisIsRightOfPlayer   = playerHitBox.right( ) < this.innerRight( )
 
-        return playerIsFacingRight && ( playerHitBox.right( ) >= this.innerLeft( ) ) && thisIsRightOfPlayer
+        return playerIsFacingRight && ( playerHitBox.outerRight( ) >= this.left( ) ) && thisIsRightOfPlayer
     }
 }
 

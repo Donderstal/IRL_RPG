@@ -50,7 +50,6 @@
             "action": {
                 "type": "BATTLE",
                 "sfx": "voice-1.mp3",
-                "direction": "FACING_UP",
                 "text": "I'll kick your ass, NERD!"
             }
         },
@@ -63,7 +62,6 @@
             "action": {
                 "type": "TEXT",
                 "sfx": "poo-poo.mp3",
-                "direction": "FACING_UP",
                 "text": "I used to date a level 24 Darkmage."
             }
         },
@@ -76,7 +74,6 @@
             "action": {
                 "type": "TEXT",
                 "sfx": "mauww.mp3",
-                "direction": "FACING_RIGHT",
                 "text": "I'm an aspiring ninja, m'lady."
             }
         },
@@ -100,7 +97,6 @@
             "action": {
                 "type": "TEXT",
                 "sfx": "voice-2.mp3",
-                "direction": "FACING_DOWN",
                 "text": "Gamers, rise up!"
             }
         }
@@ -110,7 +106,6 @@
             "row": 3,
             "col": 9,
             "type": "TEXT",
-            "direction": "FACING_UP",
             "sfx": "typing.mp3",
             "text": "Who still uses these things anyway?"
         }
