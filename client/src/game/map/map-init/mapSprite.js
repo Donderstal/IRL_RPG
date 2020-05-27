@@ -42,3 +42,4 @@ class MapSprite extends I_Sprite {
 
 module.exports = {
     MapSprite
+}
