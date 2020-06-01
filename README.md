@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUN 1, 2020,
+* Experimental setup for story progression
+* Added scripted events tied to story state
+* Experimenting with triggering scripted events
+
 #### MAY 18, 2020
 * All Tilesheet are now updated
 * Small fixes to collision detection
