@@ -47,6 +47,7 @@ const progressStory = ( ) => {
         state.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
     console.log(state.currentChapter)
+    getScriptedEventsForMap(state.currentMap.mapData.mapName)
 }
 
 const startNewStory = ( ) => {
@@ -59,7 +60,23 @@ const startNewStory = ( ) => {
     console.log(state.currentChapter)
 }
 
+const getScriptedEventsForMap = ( mapName ) => {
+    state.currentMap.scriptedEvents = []
+
+    state.currentChapter.scriptedEvents.forEach( (e) => {
+        if ( e.mapName == mapName ) {
+            state.currentMap.scriptedEvents.push( e )
+        }
+    })
+
+    console.log("Events for current map... ")
+    console.log(mapName)
+    console.log(state.currentMap.scriptedEvents)
+}
+
+
 module.exports = {
     progressStory,
+    getScriptedEventsForMap,
     startNewStory 
 }

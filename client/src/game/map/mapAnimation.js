@@ -12,7 +12,7 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
     if ( state.currentMap.borders && state.playerCharacter.sprite ) {
-        mapControls.handleMovementKeys( )
+        mapControls.handleMovementKeys( );
         gatherSpritesInState( )
         drawSpritesInOrder()     
         if ( state.currentMap.mapActions ) {     

@@ -1,16 +1,19 @@
-const state         = require('../../game-data/state')
-const globals       = require('../../game-data/globals')
-const mapHelpers = require('../../helpers/mapHelpers')
-const utility       = require('../../helpers/utilFunctions')
-const canvasHelpers = require('../../helpers/canvasHelpers')
-const Sound         = require('./../interfaces/I_Sound').Sound
+const state             = require('../../game-data/state')
+const globals           = require('../../game-data/globals')
+const mapHelpers        = require('../../helpers/mapHelpers')
+const utility           = require('../../helpers/utilFunctions')
+const canvasHelpers     = require('../../helpers/canvasHelpers')
 
-const getMap = require('./map-init/initMap').initializeMap
+const Sound             = require('./../interfaces/I_Sound').Sound
+const getMap            = require('./map-init/initMap').initializeMap
 const initMapFromBattle = require('./map-init/initMap').initMapFromBattle
+const getScriptedEventsForMap  = require('../../game-data/storyProgression').getScriptedEventsForMap
 
 let initializingMap = false;
 
 const initMap = ( json, BOOT_STATUS ) =>{
+    getScriptedEventsForMap(json.mapName)
+
     initializingMap = true;
 
     ( BOOT_STATUS == "FROM_BATTLE" ) ? initMapFromBattle( ) : getMap( json, BOOT_STATUS )        
@@ -25,7 +28,10 @@ const switchMap = ( transition ) => {
     const oldMapName    = transition.oldMapName    
 
     if ( !initializingMap ) {
-        state.currentMap = { blockedXyValues: [], mapMusic: state.currentMap.mapMusic }
+        state.currentMap = { 
+            blockedXyValues: [], 
+            mapMusic: state.currentMap.mapMusic
+        }
         canvasHelpers.clearBothCanvases();
         initNewMapAfterClearingOld(urlToNewMap, oldMapName)        
     }
