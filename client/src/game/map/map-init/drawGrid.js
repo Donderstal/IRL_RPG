@@ -2,8 +2,6 @@ const mapHelpers    = require('../../../helpers/mapHelpers')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const state         = require('../../../game-data/state')
 const globals       = require('../../../game-data/globals')
-
-const BlockedTile   = require('./setMapAttributes').BlockedTile
 const BlockedArea   = require('./setMapAttributes').BlockedArea
 
 let tilesheetXyValues = [ ]

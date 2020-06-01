@@ -1,10 +1,10 @@
 const state             = require('../../game-data/state')
 const globals           = require('../../game-data/globals')
 const mapHelpers        = require('../../helpers/mapHelpers')
-const utility           = require('../../helpers/utilFunctions')
 const canvasHelpers     = require('../../helpers/canvasHelpers')
+const getMapData        = require('../../resources/mapResources').getMapData
 
-const triggerEvent         = require('../../game-data/triggerEvents').triggerEvent
+const triggerEvent      = require('../../game-data/triggerEvents').triggerEvent
 const Sound             = require('./../interfaces/I_Sound').Sound
 const getMap            = require('./map-init/initMap').initializeMap
 const initMapFromBattle = require('./map-init/initMap').initMapFromBattle
@@ -51,7 +51,9 @@ const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
     }
 
     initializingMap, state.paused = true;
-    utility.fetchJSONWithCallback( '/static/maps/' + newMap +'.json', initMap, BOOT_STATUS )
+
+    const newMapdata = getMapData(newMap)
+    initMap( newMapdata, BOOT_STATUS )
 
     setTimeout( () => {
         initPlayerSpriteInNewMap( previousMapName )

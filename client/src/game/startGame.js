@@ -7,10 +7,9 @@ const storyProgression  = require('../game-data/storyProgression')
 
 const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
+const getMapData = require('../resources/mapResources').getMapData
 
-const mapJSONFolder = '/static/maps/'
-const battleMapUrl = mapJSONFolder + 'battle-maps/battle_map1.json';
-const firstMapUrl = mapJSONFolder + 'my-neighbourhood/A1/my-house.json';
+const firstMapUrl = 'my-neighbourhood/A1/my-house';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
@@ -77,7 +76,7 @@ const initCanvas = ( canvas ) => {
     canvas.width = globals.CANVAS_WIDTH   
 }
 
-const startGame = ( name, className, mode ) => {
+const startGame = ( name, className ) => {
     [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
         initCanvas( canvas );
     } );
@@ -85,11 +84,11 @@ const startGame = ( name, className, mode ) => {
     document.documentElement.requestFullscreen();
     utility.hideButtons( );
 
-    let mapUrl = ( mode == 'normal' ) ? firstMapUrl : battleMapUrl;
     state.playerCharacter.name      = name;
     state.playerCharacter.className = className;
 
-    fetchJson( mapUrl, startNewGame );
+    const mapData = getMapData(firstMapUrl)
+    startNewGame( mapData )
 }
 
 module.exports = {
