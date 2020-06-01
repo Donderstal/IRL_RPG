@@ -1,7 +1,7 @@
 module.exports = {
     sheets : {
         "my-house" : {
-            "src": "my-house/Bed_Room.png",
+            "src": "Bed_Room.png",
             "uniqueTiles": 31,
             "blocked": [
                 0, 1, 2, 3, 8, 11, 15, 16, 19, 20, 
@@ -9,7 +9,7 @@ module.exports = {
             ]
         },
         "Generic_Room_C_Tile_Set" : {
-            "src": "Generic_Room_C_Tile_Set/Generic_Room_C_Tile_Set.png",
+            "src": "Generic_Room_C_Tile_Set.png",
             "uniqueTiles": 63,
             "blocked": [
                 0, 1, 2, 3, 8, 11, 12, 13, 16, 17, 
@@ -18,7 +18,7 @@ module.exports = {
             ]
         },
         "Generic_Room_A_Tile_Set" : {
-            "src": "Generic_Room_A_Tile_Set/Generic_Room_A_Tile_Set.png",
+            "src": "Generic_Room_A_Tile_Set.png",
             "uniqueTiles": 83,
             "blocked": [ 
                 0, 1, 2, 3, 11, 13, 14, 16, 17, 18,
@@ -28,7 +28,7 @@ module.exports = {
             ]
         },
         "Interior_Yum_Mart_tiles" : {
-            "src": "Interior_Yum_Mart_tiles/Interior_Yum_Mart_tiles.png",    
+            "src": "Interior_Yum_Mart_tiles.png",    
             "uniqueTiles": 79,
             "blocked": [
                 0, 2, 3, 6, 7, 14, 15, 18, 19, 22, 
@@ -40,7 +40,7 @@ module.exports = {
             ]
         },
         "Generic_Room_B_Tile_Set" : {
-            "src": "Generic_Room_B_Tile_Set/Generic_Room_B_Tile_Set.png",
+            "src": "Generic_Room_B_Tile_Set.png",
             "uniqueTiles": 112,
             "blocked": [
                 0, 1, 2, 3, 10, 11, 16, 17, 18, 19,
@@ -52,7 +52,7 @@ module.exports = {
             ]
         },
         "my_neighbourhood" : {
-            "src": "my_neighbourhood/city1big_tiles.png",
+            "src": "city1big_tiles.png",
             "uniqueTiles": 419,
             "blocked": [ 
                 1, 2, 3, 5, 6, 9, 10, 13, 14, 15,
