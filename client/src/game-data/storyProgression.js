@@ -1,5 +1,7 @@
 const state = require('./state')
 const chapterEvents = require('./eventResources').chapterEvents
+const eventScripts = require('./eventScripts').eventScripts
+
 const I_ScriptedEvent = require('../game/interfaces/I_ScriptedEvent').I_ScriptedEvent
 
 const chapters = [
@@ -40,9 +42,9 @@ const progressStory = ( ) => {
         console.log( 'next scene!' )
         state.currentChapter.activeScene++
     }
-    state.currentChapter.scriptedEvents = []
+    state.currentChapter.scriptedEvents = [];
     chapterEvents[state.currentChapter.id][state.currentChapter.activeScene].forEach( (e) => {
-        state.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e ) )
+        state.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
     console.log(state.currentChapter)
 }
@@ -50,7 +52,10 @@ const progressStory = ( ) => {
 const startNewStory = ( ) => {
     state.currentChapter = chapters[0];
     state.currentChapter.activeScene = 0 
-    state.currentChapter.scriptedEvents = chapterEvents[state.currentChapter.id][state.currentChapter.activeScene]
+    state.currentChapter.scriptedEvents = [];
+    chapterEvents[state.currentChapter.id][state.currentChapter.activeScene].forEach( (e) => {
+        state.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
+    })
     console.log(state.currentChapter)
 }
 
