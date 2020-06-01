@@ -5,7 +5,7 @@ const canvasHelpers = require('../../../helpers/canvasHelpers')
 const actionRegistry= require('./actionRegistry')
 
 const Sound         = require('../../interfaces/I_Sound').Sound
-const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
+const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
 
 const setMapAttributes = ( ) => {
     actionRegistry.initNewActionRegistry( );

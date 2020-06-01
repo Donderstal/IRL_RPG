@@ -3,6 +3,7 @@ const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const controls = require('./controls')
 const controller = require('./gameController')
+const storyProgression  = require('../game-data/storyProgression')
 
 const utility = require('../helpers/utilFunctions')
 const fetchJson = utility.fetchJSONWithCallback
@@ -54,6 +55,7 @@ const loadGame = ( ) => {
 }
 
 const startNewGame = ( json ) => {
+    storyProgression.startNewStory( );
     controller.startMap( "NEW_GAME", json )
     setTimeout( initControlsAndAnimation, 1000 );
 }

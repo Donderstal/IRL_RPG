@@ -10,7 +10,7 @@ class I_TextBox {
 
         this.fontType       = fontSize 
         this.fontSize       = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE;
-        this.lineHeight     = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_LINE_HEIGHT : SMALL_FONT_LINE_HEIGHT;
+        this.lineHeight     = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_LINE_HEIGHT : globals.SMALL_FONT_LINE_HEIGHT;
 
         this.innerBoxX      = xy.x - ( globals.LARGE_FONT_SIZE * .125 );
         this.innerBoxY      = xy.y - ( globals.LARGE_FONT_SIZE * .125 );
