@@ -1,4 +1,5 @@
 const state         = require('../../../game-data/state')
+const triggerEvent         = require('../../../game-data/triggerEvents').triggerEvent
 const createCharInstance = require('../../createCharInstance')
 const Sound         = require('../../interfaces/I_Sound').Sound
 const NPCController           = require('./NPCController')
@@ -63,7 +64,11 @@ const passTilesheet = ( sheetJson, BOOT_STATUS ) => {
 
     getMapMusic( BOOT_STATUS );
     
-    ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS )
+    ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS );
+
+    setTimeout(() => {
+        triggerEvent("ON_ENTER")
+    }, 1000)
 }
 
 

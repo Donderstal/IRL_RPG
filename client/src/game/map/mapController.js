@@ -4,6 +4,7 @@ const mapHelpers        = require('../../helpers/mapHelpers')
 const utility           = require('../../helpers/utilFunctions')
 const canvasHelpers     = require('../../helpers/canvasHelpers')
 
+const triggerEvent         = require('../../game-data/triggerEvents').triggerEvent
 const Sound             = require('./../interfaces/I_Sound').Sound
 const getMap            = require('./map-init/initMap').initializeMap
 const initMapFromBattle = require('./map-init/initMap').initMapFromBattle
@@ -28,6 +29,7 @@ const switchMap = ( transition ) => {
     const oldMapName    = transition.oldMapName    
 
     if ( !initializingMap ) {
+        triggerEvent("ON_LEAVE")
         state.currentMap = { 
             blockedXyValues: [], 
             mapMusic: state.currentMap.mapMusic

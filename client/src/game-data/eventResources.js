@@ -39,7 +39,7 @@ const chapterEvents = [
             }
         ],
         // C 0, Scene 3
-        [
+        [ 
             {
                 mapName: "my-neighbourhood/A4/yum-mart",
                 trigger: "ON_EVENT",

@@ -6,6 +6,11 @@ class I_ScriptedEvent {
 
         this.eventScript    = eventScript;
         this.fired          = false;
+
+        if ( scriptedEventData.trigger == "ON_POSITION" ) {
+            this.position = scriptedEventData.position
+        }
+
         console.log(typeof this)
     }
 
