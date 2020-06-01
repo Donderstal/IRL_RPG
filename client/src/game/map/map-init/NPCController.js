@@ -39,7 +39,6 @@ class NPC extends MapSprite {
             src = '/static/sprites/'+ src
         }
         super( startPos, src, typeOfStart, spriteDirection, true )   
-        console.log(character)
         this.hitbox = new MapAction( this.centerX( ), this.y, character.action );
         this.type = character.type
         this.action = character.action
