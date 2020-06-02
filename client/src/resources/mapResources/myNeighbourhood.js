@@ -8,15 +8,19 @@ module.exports = {
             "neighbours": {
                 "right": "my-neighbourhood/A1/neighbourhood-A1"
             },
-            "rows": 4,
-            "columns": 11,
-            "grid": [
-                [294,267,267,267,262,262,262,294,308,308,308,308],
-                [294,267,267,267,262,262,262,294,308,308,308,308],
-                [294,267,267,267,262,262,262,294,308,308,308,308],
-                [383,383,383,383,383,383,383,383,383,383,383,383],
-                [313,313,313,356,356,313,313,356,356,313,313,313]
-            ],
+            "rows":11,"columns":23,"grid":[
+                [40,41,6,14,6,1,3,2,39,9,9,9,9,9,9,9,9,2,3,30,29,2,29,29],
+                [36,37,3,10,30,1,3,2,39,9,9,9,9,9,9,9,9,29,30,29,36,37,36,37],
+                [40,41,6,14,6,9,3,2,39,9,13,13,13,13,13,13,13,6,6,6,40,41,40,41],
+                [36,37,30,10,30,9,10,10,39,9,10,10,10,10,10,10,10,30,30,2,29,3,10,2],
+                [40,41,6,14,6,5,14,14,43,5,14,14,14,14,14,14,14,6,6,6,6,6,14,15],
+                [36,37,29,3,2,10,10,10,10,10,10,10,10,36,10,37,38,36,10,37,10,10,10,10],
+                [40,41,15,15,15,14,14,14,14,14,14,14,14,40,14,41,42,40,14,41,14,14,14,14],
+                [17,17,17,17,68,17,17,17,17,17,17,17,17,17,66,17,17,17,17,17,99,25,17,17],
+                [17,17,17,17,17,17,17,67,17,17,17,17,17,17,17,17,17,25,17,17,17,17,110,17],
+                [17,67,17,17,17,17,17,17,17,64,17,25,17,17,17,17,17,17,17,17,25,17,17,17],
+                [17,17,46,17,17,47,17,17,17,17,17,17,17,67,17,17,17,17,92,94,92,94,92,94],
+                [17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,109,17,96,98,96,98,96,98]],
             "characters" : [
                 {
                     "type": "static",
@@ -32,8 +36,113 @@ module.exports = {
                         "text": "Do you even lift, bro?"
                     }
                 }
+            ],
+            "doors": [ 
+                {
+                    "row": 7, 
+                    "col": 17,
+                    "to"  : "my-neighbourhood/A0/yum-corp",
+                    "directionIn": "FACING_UP",
+                    "directionOut": "FACING_DOWN",
+                    "locked": false
+                }
             ]
-        }
+        },
+        "yum-corp" : {   
+            "mapName": "my-neighbourhood/A0/yum-corp",
+            "tileSet": "Generic_Room_C_Tile_Set",
+            "music": "game-jam-2.mp3",
+            "outdoors": false,
+            "rows":9,"columns":15,"grid":[
+                [49,61,61,61,61,61,61,61,61,61,61,61,61,61,61,48],
+                [61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,10,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,14,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61],
+                [61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61],
+                [45,61,61,61,61,61,61,61,61,61,61,62,61,61,61,44]
+        ],
+            "doors": [ 
+                {
+                    "row": 9, 
+                    "col": 11,
+                    "to"  : "my-neighbourhood/A0/neighbourhood-A0",
+                    "directionIn": "FACING_DOWN",
+                    "directionOut": "FACING_UP",
+                    "locked": false
+                },
+                {
+                    "row": 5, 
+                    "col": 6,
+                    "to"  : "my-neighbourhood/A0/yum-corp-b",
+                    "directionIn": "FACING_UP",
+                    "directionOut": "FACING_DOWN",
+                    "locked": false
+                }
+            ]
+        },
+        "yum-corp-b" : {   
+            "mapName": "my-neighbourhood/A0/yum-corp-b",
+            "tileSet": "Generic_Room_C_Tile_Set",
+            "music": "game-jam-2.mp3",
+            "outdoors": false,
+            "rows":7,
+            "columns":15,
+            "grid":[
+                [49,42,42,42,42,42,42,42,42,42,42,42,42,42,42,48],
+                [42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42],
+                [42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42],
+                [42,42,42,42,42,10,42,42,42,42,42,42,42,42,42,42],
+                [42,42,42,42,42,14,42,42,42,42,42,42,42,42,42,42],
+                [42,42,42,42,42,42,42,42,42,42,42,42,58,42,42,42],
+                [42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42],
+                [45,42,42,42,42,42,42,42,42,42,42,62,42,42,42,44]
+            ],
+            "doors": [ 
+                {
+                    "row": 4, 
+                    "col": 5,
+                    "to"  : "my-neighbourhood/A0/yum-corp-c",
+                    "directionIn": "FACING_UP",
+                    "directionOut": "FACING_DOWN",
+                    "locked": false
+                },
+                {
+                    "row": 7, 
+                    "col": 11,
+                    "to"  : "my-neighbourhood/A0/yum-corp",
+                    "directionIn": "FACING_DOWN",
+                    "directionOut": "FACING_UP",
+                    "locked": false
+                },
+            ]
+        },
+        "yum-corp-c" : {   
+            "mapName": "my-neighbourhood/A0/yum-corp-c",
+            "tileSet": "Generic_Room_C_Tile_Set",
+            "music": "game-jam-2.mp3",
+            "outdoors": false,
+            "rows":3,
+            "columns":9,
+            "grid":[
+                [0,1,1,1,1,1,1,2,3,10],
+                [4,5,5,5,5,5,5,5,7,14],
+                [61,24,8,9,61,61,61,61,61,61],
+                [45,28,61,61,61,61,62,61,61,44]],
+            "doors": [ 
+                {
+                    "row": 1, 
+                    "col": 9,
+                    "to"  : "my-neighbourhood/A0/yum-corp-b",
+                    "directionIn": "FACING_UP",
+                    "directionOut": "FACING_DOWN",
+                    "locked": false
+                }
+            ]
+        },
     },
     "A1" : {
         "my-house" : {   
@@ -174,49 +283,11 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "dynamic",
-                    "sprite": "chad.png",
-                    "row": 8,
-                    "col": 14 ,
-                    "lastPosition" : { 
-                        "id": 0,
-                        "row": 8, 
-                        "col": 14, 
-                        "direction": "FACING_UP" 
-                    },
-                    "path" : [                     
-                        { "id": 0, "row": 5, "col": 14, "direction": "FACING_RIGHT" },
-                        { "id": 1, "row": 3, "col": 14, "direction": "FACING_UP" },
-                        { "id": 2, "row": 3, "col": 10, "direction": "FACING_LEFT" },
-                        { "id": 3, "row": 5, "col": 10, "direction": "FACING_DOWN" }
-                    ],
-                    "action": {
-                        "id": 1,
-                        "name": "Paulie",
-                        "type": "TEXT",
-                        "sfx": "voice-1.mp3",
-                        "text": "Gamers, rise up!"
-                    }
-                },
-                {
-                    "type": "static",
-                    "sprite": "influencer.png",
-                    "direction": "FACING_RIGHT",
-                    "row": 5,
-                    "col": 1,
-                    "action": {
-                        "type": "TEXT",
-                        "name": "Jennifer",
-                        "sfx": "voice-2.mp3",
-                        "text": "What's up, nerd?"
-                    }
-                },
-                {
                     "type": "static",
                     "sprite": "tumblr_girl.png",
                     "direction": "FACING_UP",
-                    "row": 6,
-                    "col": 2,
+                    "row": 5,
+                    "col": 8,
                     "action": {
                         "type": "TEXT",
                         "name": "Lisa",
@@ -433,25 +504,52 @@ module.exports = {
                 },
                 {
                     "type": "dynamic",
-                    "sprite": "tumblr_girl.png",
-                    "row": 7,
-                    "col": 10 ,
+                    "sprite": "manager.png",
+                    "row": 10, 
+                    "col": 10, 
                     "lastPosition" : { 
                         "id": 0,
-                        "row": 8, 
-                        "col": 14, 
+                        "row": 10, 
+                        "col": 10, 
                         "direction": "FACING_UP" 
                     },
                     "path" : [                     
-                        { "id": 0, "row": 6, "col": 14, "direction": "FACING_RIGHT" },
-                        { "id": 1, "row": 4, "col": 14, "direction": "FACING_UP" },
-                        { "id": 2, "row": 4, "col": 10, "direction": "FACING_LEFT" },
-                        { "id": 3, "row": 6, "col": 10, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 7, "col": 10, "direction": "FACING_RIGHT" },
+                        { "id": 1, "row": 5, "col": 10, "direction": "FACING_UP" },
+                        { "id": 2, "row": 5, "col": 6, "direction": "FACING_LEFT" },
+                        { "id": 3, "row": 7, "col": 6, "direction": "FACING_DOWN" }
                     ],
                     "action": {
+                        "id": 1,
+                        "name": "Yum-mart manager",
                         "type": "TEXT",
-                        "sfx": "voice-2.mp3",
-                        "text": "Gamers, rise up!"
+                        "sfx": "voice-1.mp3",
+                        "text": "Greetings, possible patron!"
+                    }
+                },
+                {
+                    "type": "dynamic",
+                    "sprite": "robot.png",
+                    "row": 8, 
+                    "col": 10, 
+                    "lastPosition" : { 
+                        "id": 0,
+                        "row": 8, 
+                        "col": 10, 
+                        "direction": "FACING_UP" 
+                    },
+                    "path" : [                     
+                        { "id": 0, "row": 7, "col": 10, "direction": "FACING_RIGHT" },
+                        { "id": 1, "row": 5, "col": 10, "direction": "FACING_UP" },
+                        { "id": 2, "row": 5, "col": 6, "direction": "FACING_LEFT" },
+                        { "id": 3, "row": 7, "col": 6, "direction": "FACING_DOWN" }
+                    ],
+                    "action": {
+                        "id": 1,
+                        "name": "Consoombot",
+                        "type": "TEXT",
+                        "sfx": "voice-1.mp3",
+                        "text": "Hello, potential customer!"
                     }
                 }
             ],
