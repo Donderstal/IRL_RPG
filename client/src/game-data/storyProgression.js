@@ -1,6 +1,6 @@
 const state = require('./state')
-const chapterEvents = require('./eventResources').chapterEvents
-const eventScripts = require('./eventScripts').eventScripts
+const chapterEvents = require('../resources/eventResources').chapterEvents
+const eventScripts = require('../resources/eventScripts').eventScripts
 
 const I_ScriptedEvent = require('../game/interfaces/I_ScriptedEvent').I_ScriptedEvent
 
