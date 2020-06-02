@@ -35,7 +35,9 @@ const handleMapAnimations = ( ) => {
     }
 }
 
-const gatherSpritesInState = ( ) =>{
+const gatherSpritesInState = ( ) => {
+    state.currentMap.layeredSprites = ( state.currentMap.layeredSprites ) ? state.currentMap.layeredSprites : []
+
     if ( state.currentMap.NPCs ) {
         state.currentMap.NPCs.forEach( NPC => {
             state.currentMap.layeredSprites.push( NPC )

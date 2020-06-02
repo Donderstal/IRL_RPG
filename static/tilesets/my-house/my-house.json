@@ -1,9 +1,0 @@
-{
-    "name": "my-house",
-    "src": "my-house/Bed_Room.png",
-    "uniqueTiles": 31,
-    "blocked": [
-        0, 1, 2, 3, 8, 11, 15, 16, 19, 20, 
-        23, 26, 27
-    ]
-}

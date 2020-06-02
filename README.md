@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUN 2, 2020
+* Moving map & sheet data to client JS to reduce HTTP requests
+* Cleaning up some NPC's from maps
+* Adding a new Robot sprite
+
 #### JUN 1, 2020,
 * Experimental setup for story progression
 * Added scripted events tied to story state

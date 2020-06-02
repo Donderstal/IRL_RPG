@@ -1,11 +1,11 @@
 const state         = require('../../../game-data/state')
 const triggerEvent         = require('../../../game-data/triggerEvents').triggerEvent
+const tilesheets        = require('../../../resources/tilesheetResources').sheets
 const createCharInstance = require('../../createCharInstance')
 const Sound         = require('../../interfaces/I_Sound').Sound
 const NPCController           = require('./NPCController')
 const setMapAttributes  = require('./setMapAttributes')
 const drawGrid          = require('./drawGrid')
-const util              = require('../../../helpers/utilFunctions')
 
 const getMapMusic = ( BOOT_STATUS ) => {
     if ( BOOT_STATUS == "NEW_GAME" || BOOT_STATUS == "SAVE_GAME" ) {
@@ -55,12 +55,7 @@ const initMapFromBattle = ( ) => {
 const initializeMap = ( mapJson, BOOT_STATUS ) => {    
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
-    util.fetchJSONWithCallback( '/static/tilesets/' + mapJson.tileSet + '/' + mapJson.tileSet + '.json', passTilesheet, BOOT_STATUS)
-}
-
-const passTilesheet = ( sheetJson, BOOT_STATUS ) => {
-    console.log(BOOT_STATUS)
-    drawGrid.generateMap( state.currentMap, sheetJson )    
+    drawGrid.generateMap( state.currentMap, tilesheets[mapJson.tileSet] )    
 
     getMapMusic( BOOT_STATUS );
     
