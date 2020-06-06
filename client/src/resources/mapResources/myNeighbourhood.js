@@ -230,17 +230,17 @@ module.exports = {
                     "type": "dynamic",
                     "sprite": "neckbeard.png",
                     "direction": "FACING_DOWN",
-                    "row": 4,
+                    "row": 5,
                     "col": 17,
-                    "lastPosition" : { 
+
+                    "lastPosition" : {                   
                         "id": 0,
                         "row": 5, 
                         "col": 17, 
-                        "direction": "FACING_DOWN" 
                     },
                     "path" : [                     
-                        { "id": 0, "row": 3, "col": 17, "direction": "FACING_UP" },
-                        { "id": 1, "row": 7, "col": 17, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 3, "col": 17 },
+                        { "id": 1, "row": 7, "col": 17 }
                     ],
                     "action": {
                         "type": "TEXT",
@@ -507,17 +507,17 @@ module.exports = {
                     "sprite": "manager.png",
                     "row": 10, 
                     "col": 10, 
+                    "direction": "FACING_UP",
                     "lastPosition" : { 
                         "id": 0,
                         "row": 10, 
-                        "col": 10, 
-                        "direction": "FACING_UP" 
+                        "col": 10
                     },
                     "path" : [                     
-                        { "id": 0, "row": 7, "col": 10, "direction": "FACING_RIGHT" },
-                        { "id": 1, "row": 5, "col": 10, "direction": "FACING_UP" },
-                        { "id": 2, "row": 5, "col": 6, "direction": "FACING_LEFT" },
-                        { "id": 3, "row": 7, "col": 6, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 7, "col": 10 },
+                        { "id": 1, "row": 5, "col": 10 },
+                        { "id": 2, "row": 5, "col": 6 },
+                        { "id": 3, "row": 7, "col": 6 }
                     ],
                     "action": {
                         "id": 1,
@@ -532,17 +532,17 @@ module.exports = {
                     "sprite": "robot.png",
                     "row": 8, 
                     "col": 10, 
+                    "direction": "FACING_UP",
                     "lastPosition" : { 
                         "id": 0,
                         "row": 8, 
-                        "col": 10, 
-                        "direction": "FACING_UP" 
+                        "col": 10,  
                     },
                     "path" : [                     
-                        { "id": 0, "row": 7, "col": 10, "direction": "FACING_RIGHT" },
-                        { "id": 1, "row": 5, "col": 10, "direction": "FACING_UP" },
-                        { "id": 2, "row": 5, "col": 6, "direction": "FACING_LEFT" },
-                        { "id": 3, "row": 7, "col": 6, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 7, "col": 10 },
+                        { "id": 1, "row": 5, "col": 10 },
+                        { "id": 2, "row": 5, "col": 6 },
+                        { "id": 3, "row": 7, "col": 6 }
                     ],
                     "action": {
                         "id": 1,

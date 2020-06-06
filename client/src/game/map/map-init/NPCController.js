@@ -13,7 +13,10 @@ const generateCharacters = ( ) => {
 
     if ( characters ) {
         characters.forEach( ( character ) => {
-            new NPC( { 'row': character.row, 'col': character.col }, character.sprite, 'CELL', globals[character.direction], character )
+            new NPC( { 'row': character.row, 'col': character.col }, 
+                character.sprite, 'CELL', 
+                globals[character.direction], character 
+            )
         } )
     }
 }
@@ -82,6 +85,7 @@ class NPC extends MapSprite {
 
     handleDynamicNPCAnimation() {
         this.getNextNPCPosition( )
+        this.gotToNextDirection()
         this.countFrame( )
         this.checkForAnimationPath( )
     }
@@ -103,8 +107,26 @@ class NPC extends MapSprite {
                 }
             }
         }
-    
-        this.direction = globals[this.nextPosition.direction]
+    }
+
+    gotToNextDirection( ) {
+        const NPC_speed = globals.MOVEMENT_SPEED * 0.5
+        if ( this.nextPosition.row > this.row && this.nextPosition.col === this.col ) {
+            this.y += NPC_speed  
+            this.direction = globals["FACING_DOWN"]
+        }
+        if ( this.nextPosition.row < this.row && this.nextPosition.col === this.col ) {
+            this.y -= NPC_speed    
+            this.direction = globals["FACING_UP"]
+        }
+        if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
+            this.x += NPC_speed    
+            this.direction = globals["FACING_RIGHT"]
+        }
+        if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
+            this.x -= NPC_speed   
+            this.direction = globals["FACING_LEFT"]
+        }
     }
 
     checkForAnimationPath ( ) {
@@ -117,23 +139,7 @@ class NPC extends MapSprite {
     }
 
     countFrame ( ) {
-        this.frameCount++;
-        const NPC_speed = globals.MOVEMENT_SPEED * 0.5
-        if ( this.nextPosition.direction == 'FACING_RIGHT' ) {
-            this.x += NPC_speed        
-        }
-    
-        if ( this.nextPosition.direction == 'FACING_LEFT' ) {
-            this.x -= NPC_speed    
-        }
-        
-        if ( this.nextPosition.direction == 'FACING_DOWN' ) {
-            this.y += NPC_speed        
-        }
-    
-        if ( this.nextPosition.direction == 'FACING_UP' ){
-            this.y -= NPC_speed        
-        }    
+        this.frameCount++;  
     
         if ( this.frameCount >= globals.FRAME_LIMIT) {
             this.frameCount = 0;
