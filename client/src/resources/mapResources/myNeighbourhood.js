@@ -1013,7 +1013,7 @@ module.exports = {
         },
         "yum-mart" : {
             "mapName": "my-neighbourhood/A4/yum-mart",
-            "tileSet": "Interior_Yum_Mart_tiles",    
+            "tileSet": "Interior_Yum_Mart_Tiles",    
             "music": "yum-mart-theme.mp3",
             "outdoors": false,
             "rows":12,
@@ -1087,7 +1087,7 @@ module.exports = {
                 },
                 {
                     "type": "static",
-                    "sprite": "Manager.png",
+                    "sprite": "manager.png",
                     "direction": "FACING_DOWN",
                     "row": 9,
                     "col": 5,
