@@ -8,6 +8,7 @@ class MapSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0, noHitbox = false ) {       
         super ( start, spriteSheetSrc, typeOfStart, "STRD", spriteDirection )
         this.cell = {}
+        this.animationScript = {};
         this.centerX = () => { return this.x + ( this.width / 2 ) };
         this.centerY = () => { return this.y + ( this.height / 2 ) };
         if ( noHitbox ) {
@@ -38,7 +39,60 @@ class MapSprite extends I_Sprite {
         this.updateSpriteBorders( )
         this.updateSpriteCellXy( )
     }
-}
+
+    setScriptedAnimation( animationData, isLoop, frameRate, numberOfLoops = null ) {
+        this.storePosition( )
+        this.inScriptedAnimation    = true;     
+
+        this.animationScript.loop           = isLoop;
+        this.animationScript.data           = animationData;     
+        this.animationScript.index          = 0;           
+        this.animationScript.scenes         = this.animationScript.data.length;      
+        this.animationScript.frameRate      = frameRate;
+        this.animationScript.numberOfLoops  = numberOfLoops;
+    }
+
+    doScriptedAnimation( ) {
+        this.frameCount++;  
+    
+        if ( this.frameCount >= this.animationScript.frameRate ) {
+            this.frameCount = 0;
+            this.updateAnimationIndex( );
+
+            let currentScene = this.animationScript.data[this.animationScript.index];
+
+            this.sheetPosition  = currentScene.position;
+            this.direction      = currentScene.direction
+        }
+    }
+
+    updateAnimationIndex( ) {
+        if ( this.animationScript.index + 1 == this.animationScript.scenes ) {
+
+        }
+        else if ( this.animationScript.index + 1 == this.animationScript.scenes && !this.animationScript.loop ) {
+
+        }
+        else {
+            this.animationScript.index++                
+        }        
+    }
+
+    unsetScriptedAnimation( ) {
+        this.inScriptedAnimation    = false;       
+        this.animationScript        = {}
+    }
+
+    storePosition( ) {
+        this.storedPosition.direction       = this.direction;
+        this.storedPosition.sheetPosition   = this.sheetPosition
+    }
+
+    restorePosition( ) {
+        this.sheetPosition  = this.storedPosition.sheetPosition;
+        this.direction      = this.storedPosition.direction
+    }
+} 
 
 module.exports = {
     MapSprite

@@ -3,39 +3,6 @@ const globals       = require('../../../game-data/globals');
 const state         = require('../../../game-data/state')
 const MapAction     = require('./setMapAttributes').MapAction
 
-/** 
- * Iterate over characters if they are present
- * 
- */
-const generateCharacters = ( ) => {
-    const characters = state.currentMap.mapData.characters
-    state.currentMap.NPCs = []
-
-    if ( characters ) {
-        characters.forEach( ( character ) => {
-            new NPC( { 'row': character.row, 'col': character.col }, 
-                character.sprite, 'CELL', 
-                globals[character.direction], character 
-            )
-        } )
-    }
-}
-
-const generateCharactersFromSave = ( savedNPCs ) => {
-    let newNPCs = []
-    savedNPCs.forEach( ( savedNPC ) => {
-        let toMapNPC = { ...savedNPC }  
-        toMapthis = new NPC( 
-            { 'x': savedthis.x, 'y': savedthis.y }, 
-            savedthis.sheetSrc, 'XY', savedthis.direction 
-        )
-
-        newNPCs.push(toMapNPC)
-    } )
-
-    return newNPCs
-}
-
 class NPC extends MapSprite {
     constructor( startPos, src, typeOfStart, spriteDirection = 0, character ) {
         if( src[0] != '/' ) {
@@ -56,8 +23,11 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( )
-        this.hitbox.checkForActionRange( )
-        this.handleNPCAnimation( )
+        this.hitbox.checkForActionRange( );
+        
+        ( this.inScriptedAnimation ) 
+            ? this.doScriptedAnimation( ) 
+            : this.handleNPCAnimation( )            
     }
 
     handleNPCAnimation( ) {
@@ -74,12 +44,7 @@ class NPC extends MapSprite {
         if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
         
             this.frameCount = 0;
-            if ( this.animIterator === 0 ) {
-                this.animIterator = 1
-            }
-            else if ( this.animIterator === 1 ) {
-                this.animIterator = 0
-            }
+            this.sheetPosition = ( this.sheetPosition === 0 ) ? 1 : 0
         }   
     }
 
@@ -98,13 +63,8 @@ class NPC extends MapSprite {
                 let index = i
                 let pathIterator = i + 1
                 let pathLength = this.path.length -1
-    
-                if ( index == pathLength ) {
-                    this.nextPosition = this.path[0] 
-                }
-                else {
-                    this.nextPosition = this.path[pathIterator]
-                }
+
+                this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
             }
         }
     }
@@ -143,13 +103,46 @@ class NPC extends MapSprite {
     
         if ( this.frameCount >= globals.FRAME_LIMIT) {
             this.frameCount = 0;
-            this.animIterator++;
+            this.sheetPosition++;
     
-            if (this.animIterator >= this.animLoop.length) {
-                this.animIterator = 0;
+            if (this.sheetPosition >= 4) {
+                this.sheetPosition = 0;
             }
         }
     }
+}
+
+/** 
+ * Iterate over characters if they are present
+ * 
+ */
+const generateCharacters = ( ) => {
+    const characters = state.currentMap.mapData.characters
+    state.currentMap.NPCs = []
+
+    if ( characters ) {
+        characters.forEach( ( character ) => {
+            new NPC( { 'row': character.row, 'col': character.col }, 
+                character.sprite, 'CELL', 
+                globals[character.direction], character 
+            )
+        } )
+    }
+}
+
+const generateCharactersFromSave = ( savedNPCs ) => {
+    let newNPCs = []
+    savedNPCs.forEach( ( savedNPC ) => {
+        let toMapNPC = { ...savedNPC }  
+        toMapthis = new NPC( 
+            { 'x': savedthis.x, 'y': savedthis.y }, 
+            savedthis.sheetSrc, 'XY', savedthis.direction 
+        )
+
+        newNPCs.push(toMapNPC)
+    } )
+
+    return newNPCs
 }
 
 module.exports = {
