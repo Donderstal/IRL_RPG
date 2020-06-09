@@ -75,8 +75,8 @@ const checkForNeighbours = ( sprite ) => {
 
 /**
  * Update frame count every time requestAnimationFrame fires callback
- * Update sprite's animIterator every time FRAME_LIMIT is equal to framecount 
- * Reset animIterator to zero if necessary
+ * Update sprite's sheetPosition every time FRAME_LIMIT is equal to framecount 
+ * Reset sheetPosition to zero if necessary
  * 
  * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
  */
@@ -86,10 +86,10 @@ const countFrame = ( sprite ) => {
     
     if (frameCount >= globals.FRAME_LIMIT) {
         frameCount = 0;
-        sprite.animIterator++;
+        sprite.sheetPosition++;
 
-        if (sprite.animIterator >= sprite.animLoop.length) {
-            sprite.animIterator = 0;
+        if (sprite.sheetPosition >= 4) {
+            sprite.sheetPosition = 0;
         }
     }
 }

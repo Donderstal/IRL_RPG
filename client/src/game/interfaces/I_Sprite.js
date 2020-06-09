@@ -16,8 +16,7 @@ class Sprite {
 
         this.left, this.right, this.top, this.bottom;
 
-        this.animLoop      = [ 0, 1, 2, 3]
-        this.animIterator  = 0
+        this.sheetPosition  = 0
         this.frameCount    = 0
         this.direction     = spriteDirection;
         this.sheetSrc      = spriteSheetSrc
@@ -76,7 +75,7 @@ class Sprite {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.animLoop[this.animIterator] * globals.MAP_SPRITE_WIDTH_IN_SHEET, 
+            this.sheetPosition * globals.MAP_SPRITE_WIDTH_IN_SHEET, 
             this.direction * globals.MAP_SPRITE_HEIGHT_IN_SHEET, 
             globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
             this.x, this.y, this.width, this.height
