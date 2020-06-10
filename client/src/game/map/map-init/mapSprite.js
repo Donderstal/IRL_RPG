@@ -40,16 +40,17 @@ class MapSprite extends I_Sprite {
         this.updateSpriteCellXy( )
     }
 
-    setScriptedAnimation( animationData, isLoop, frameRate, numberOfLoops = null ) {
+    setScriptedAnimation( animationData, isLoop, frameRate, numberOfLoops = false ) {
         this.storePosition( )
         this.inScriptedAnimation    = true;     
 
         this.animationScript.loop           = isLoop;
         this.animationScript.data           = animationData;     
         this.animationScript.index          = 0;           
-        this.animationScript.scenes         = this.animationScript.data.length;      
+        this.animationScript.sceneLength    = this.animationScript.data.length;      
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;
+        this.animationScript.currentLoop    = 0;
     }
 
     doScriptedAnimation( ) {
@@ -59,23 +60,32 @@ class MapSprite extends I_Sprite {
             this.frameCount = 0;
             this.updateAnimationIndex( );
 
-            let currentScene = this.animationScript.data[this.animationScript.index];
+            if ( this.inScriptedAnimation ) {
+                let currentScene = this.animationScript.data[this.animationScript.index];
 
-            this.sheetPosition  = currentScene.position;
-            this.direction      = currentScene.direction
+                this.sheetPosition  = currentScene.position;
+                this.direction      = currentScene.direction                
+            }
         }
     }
 
     updateAnimationIndex( ) {
-        if ( this.animationScript.index + 1 == this.animationScript.scenes ) {
+        ( this.animationScript.index + 1 == this.animationScript.sceneLength )
+            ? this.checkForLoop()
+            : this.animationScript.index++                       
+    }
 
-        }
-        else if ( this.animationScript.index + 1 == this.animationScript.scenes && !this.animationScript.loop ) {
+    checkForLoop( ) {
+        const currentLoopIsLast = this.animationScript.numberOfLoops == this.animationScript.currentLoop
 
+        if ( this.animationScript.loop && ( !this.animationScript.numberOfLoops || !currentLoopIsLast ) ) {
+            this.animationScript.currentLoop++
+            this.animationScript.index = 0;
         }
         else {
-            this.animationScript.index++                
-        }        
+            this.unsetScriptedAnimation( );
+            this.restorePosition( );
+        }
     }
 
     unsetScriptedAnimation( ) {
@@ -84,6 +94,7 @@ class MapSprite extends I_Sprite {
     }
 
     storePosition( ) {
+        this.storedPosition = {}
         this.storedPosition.direction       = this.direction;
         this.storedPosition.sheetPosition   = this.sheetPosition
     }

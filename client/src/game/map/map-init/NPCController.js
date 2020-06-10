@@ -1,6 +1,7 @@
 const MapSprite     = require('./mapSprite').MapSprite
 const globals       = require('../../../game-data/globals');
 const state         = require('../../../game-data/state')
+const  anim         = require('../../../resources/animationResources')
 const MapAction     = require('./setMapAttributes').MapAction
 
 class NPC extends MapSprite {
@@ -35,7 +36,8 @@ class NPC extends MapSprite {
             this.handleStaticNPCAnimation( )
         }
         if ( this.type === "dynamic" ) {
-            this.handleDynamicNPCAnimation( )
+            this.setScriptedAnimation( anim.TURN_SINGLE_CIRCLE, true, globals.FRAME_LIMIT * .5, 4 )
+            //this.handleDynamicNPCAnimation( )
         }
     }
 
