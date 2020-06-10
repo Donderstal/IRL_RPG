@@ -108,14 +108,13 @@ const setActions = (  ) => {
 }
 
 class MapAction extends I_Hitbox {
-    constructor ( x, y, action ) {
+    constructor ( x, y, action, speaker = null ) {
         let radius = globals.GRID_BLOCK_PX / 2;
         super( x, y, radius )
 
-        this.id     = actionRegistry.getNewActionId( );
-        if ( action.name ) {
-            this.name = action.name
-        }
+        this.id   = actionRegistry.getNewActionId( );
+        this.name = speaker
+
         if ( action.character ) {
             this.characer = action.character
         }

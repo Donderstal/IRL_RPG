@@ -103,6 +103,48 @@ class MapSprite extends I_Sprite {
         this.sheetPosition  = this.storedPosition.sheetPosition;
         this.direction      = this.storedPosition.direction
     }
+
+    gotToNextDirection( ) {
+        const NPC_speed = globals.MOVEMENT_SPEED * 0.5
+        if ( this.nextPosition.row > this.row && this.nextPosition.col === this.col ) {
+            this.y += NPC_speed  
+            this.direction = globals["FACING_DOWN"]
+        }
+        if ( this.nextPosition.row < this.row && this.nextPosition.col === this.col ) {
+            this.y -= NPC_speed    
+            this.direction = globals["FACING_UP"]
+        }
+        if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
+            this.x += NPC_speed    
+            this.direction = globals["FACING_RIGHT"]
+        }
+        if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
+            this.x -= NPC_speed   
+            this.direction = globals["FACING_LEFT"]
+        }
+    }
+
+    checkForAnimationPath ( ) {
+        this.calcCellFromXy()
+    
+        if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
+            this.lastPosition = this.nextPosition
+            this.getNextNPCPosition( )
+        }
+    }
+
+    countFrame ( ) {
+        this.frameCount++;  
+    
+        if ( this.frameCount >= globals.FRAME_LIMIT) {
+            this.frameCount = 0;
+            this.sheetPosition++;
+    
+            if (this.sheetPosition >= 4) {
+                this.sheetPosition = 0;
+            }
+        }
+    }
 } 
 
 module.exports = {

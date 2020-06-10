@@ -10,10 +10,12 @@ class NPC extends MapSprite {
             src = '/static/sprites/'+ src
         }
         super( startPos, src, typeOfStart, spriteDirection, true )   
-        this.hitbox = new MapAction( this.centerX( ), this.y, character.action );
+        this.hitbox = new MapAction( this.centerX( ), this.y, character.action, character.name );
         this.type = character.type
+        this.name = character.name
         this.action = character.action
-        if ( character.type == "dynamic" ) {
+        this.action.name = this.name
+        if ( character.type == "walking" ) {
             this.path = character.path
             this.lastPosition = character.lastPosition
         }
@@ -25,23 +27,23 @@ class NPC extends MapSprite {
     drawSprite( ) {
         super.drawSprite( )
         this.hitbox.checkForActionRange( );
-        
-        ( this.inScriptedAnimation ) 
-            ? this.doScriptedAnimation( ) 
-            : this.handleNPCAnimation( )            
+        this.handleNPCAnimation( )  ;          
     }
 
     handleNPCAnimation( ) {
-        if ( this.type === "static" ) {
-            this.handleStaticNPCAnimation( )
+        if ( this.inScriptedAnimation ) {
+            this.doScriptedAnimation( );
+            return
         }
-        if ( this.type === "dynamic" ) {
-            this.setScriptedAnimation( anim.TURN_SINGLE_CIRCLE, true, globals.FRAME_LIMIT * .5, 4 )
-            //this.handleDynamicNPCAnimation( )
+        if ( this.type === "idle" ) {
+            this.handleIdleNPCAnimation( )
+        }
+        if ( this.type === "walking" ) {
+            this.handleWalkingNPCAnimation( )
         }
     }
 
-    handleStaticNPCAnimation( ){
+    handleIdleNPCAnimation( ){
         this.frameCount++
         if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
         
@@ -50,7 +52,7 @@ class NPC extends MapSprite {
         }   
     }
 
-    handleDynamicNPCAnimation() {
+    handleWalkingNPCAnimation() {
         this.getNextNPCPosition( )
         this.gotToNextDirection()
         this.countFrame( )
@@ -67,48 +69,6 @@ class NPC extends MapSprite {
                 let pathLength = this.path.length -1
 
                 this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
-            }
-        }
-    }
-
-    gotToNextDirection( ) {
-        const NPC_speed = globals.MOVEMENT_SPEED * 0.5
-        if ( this.nextPosition.row > this.row && this.nextPosition.col === this.col ) {
-            this.y += NPC_speed  
-            this.direction = globals["FACING_DOWN"]
-        }
-        if ( this.nextPosition.row < this.row && this.nextPosition.col === this.col ) {
-            this.y -= NPC_speed    
-            this.direction = globals["FACING_UP"]
-        }
-        if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
-            this.x += NPC_speed    
-            this.direction = globals["FACING_RIGHT"]
-        }
-        if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
-            this.x -= NPC_speed   
-            this.direction = globals["FACING_LEFT"]
-        }
-    }
-
-    checkForAnimationPath ( ) {
-        this.calcCellFromXy()
-    
-        if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
-            this.lastPosition = this.nextPosition
-            this.getNextNPCPosition( )
-        }
-    }
-
-    countFrame ( ) {
-        this.frameCount++;  
-    
-        if ( this.frameCount >= globals.FRAME_LIMIT) {
-            this.frameCount = 0;
-            this.sheetPosition++;
-    
-            if (this.sheetPosition >= 4) {
-                this.sheetPosition = 0;
             }
         }
     }
