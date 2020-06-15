@@ -17,7 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
-#### JUN 2, 2020
+#### JUN 15, 2020
+* Added some new maps, a new tilesheet
+* Adding MapObject class for non-player sprites on map
+
+#### JUN 14, 2020
 * Reordering some sprite animation functionalities
 * Making some Sprite funcs more generic for use in cinematics
 
