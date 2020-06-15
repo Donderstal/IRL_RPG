@@ -13,6 +13,10 @@ class Sprite {
             this.width   = globals.BATTLE_SPRITE_WIDTH;
             this.height  = globals.BATTLE_SPRITE_HEIGHT;   
         }
+        else {
+            this.width  = spriteSize.width;
+            this.height = spriteSize.height;
+        }
 
         this.left, this.right, this.top, this.bottom;
 

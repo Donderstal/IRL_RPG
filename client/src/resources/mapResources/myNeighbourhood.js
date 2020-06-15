@@ -207,7 +207,8 @@ module.exports = {
             "music": "game-jam.mp3",
             "neighbours": {
                 "right": "my-neighbourhood/A2/neighbourhood-A2",
-                "left": "my-neighbourhood/A0/neighbourhood-A0"
+                "left": "my-neighbourhood/A0/neighbourhood-A0",
+                "bottom": "downtown/A1/downtown-A1"
             },
             "rows":11,
             "columns":23,
@@ -224,6 +225,18 @@ module.exports = {
                 [23,23,28,7,32,33,34,70,74,75,75,75,75,7,23,23,23,23,27,72,73,70,23,23],
                 [23,23,23,23,23,23,23,23,23,23,28,23,23,23,23,23,23,23,23,23,23,23,23,23],
                 [23,23,23,23,23,23,28,23,23,23,23,23,23,23,23,28,23,23,23,23,23,23,23,23]
+            ],
+            "mapObjects" : [
+                {  
+                    "type"  : "Lamppost_1",
+                    "row"   : 7,
+                    "col"   : 8
+                },
+                {
+                    "type"  : "Lamppost_1",
+                    "row"   : 7,
+                    "col"   : 18
+                }
             ],
             "characters" : [
                 {

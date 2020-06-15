@@ -43,6 +43,13 @@ const gatherSpritesInState = ( ) => {
             state.currentMap.layeredSprites.push( NPC )
         })  
     }  
+
+    if ( state.currentMap.mapObjects ) {
+        state.currentMap.mapObjects.forEach( mapObject => {
+            state.currentMap.layeredSprites.push( mapObject )
+        })  
+    }  
+
     state.currentMap.layeredSprites.push(state.playerCharacter.sprite)           
 }
 
