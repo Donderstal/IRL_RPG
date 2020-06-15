@@ -207,7 +207,8 @@ module.exports = {
             "music": "game-jam.mp3",
             "neighbours": {
                 "right": "my-neighbourhood/A2/neighbourhood-A2",
-                "left": "my-neighbourhood/A0/neighbourhood-A0"
+                "left": "my-neighbourhood/A0/neighbourhood-A0",
+                "bottom": "downtown/A1/downtown-A1"
             },
             "rows":11,
             "columns":23,

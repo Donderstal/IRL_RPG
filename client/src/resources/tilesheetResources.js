@@ -84,6 +84,10 @@ module.exports = {
                 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 
                 414, 416, 417
             ]
+        },
+        "downtown" : {
+            "src": "city2_modern.png",
+            "uniqueTiles": 608
         }
     }
 }

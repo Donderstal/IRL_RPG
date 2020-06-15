@@ -1,7 +1,9 @@
-const myNeigbourhood = require( './mapResources/myNeighbourhood' )
+const myNeigbourhood    = require( './mapResources/myNeighbourhood' )
+const downtown          = require( './mapResources/downtown' )
 
 const mapResources = {
-    "my-neighbourhood" : myNeigbourhood
+    "my-neighbourhood" : myNeigbourhood,
+    "downtown": downtown
 }
 
 const getMapData = ( mapName ) => {
