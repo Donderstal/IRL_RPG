@@ -18,6 +18,10 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 ### LOG
 
 #### JUN 2, 2020
+* Reordering some sprite animation functionalities
+* Making some Sprite funcs more generic for use in cinematics
+
+#### JUN 2, 2020
 * Moving map & sheet data to client JS to reduce HTTP requests
 * Cleaning up some NPC's from maps
 * Adding a new Robot sprite
