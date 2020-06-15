@@ -57,7 +57,6 @@ const animationFrameController = ( ) => {
         }
         else {
             canvasHelpers.clearEntireCanvas('FRONT')
-            canvasHelpers.drawRect('FRONT', 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT, "#800020");
         }        
     }
 

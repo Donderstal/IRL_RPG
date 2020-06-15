@@ -110,6 +110,14 @@ const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName
         if ( adjacentMap == "left") {
             playerSprite.initSpriteFromXy( { 'y': playerSprite.y, 'x': ( state.currentMap.borders.left - ( playerSprite.width * .5 ) ) } )          
         }
+
+        if ( adjacentMap == "top") {
+            playerSprite.initSpriteFromXy( { 'y': ( state.currentMap.borders.top + ( playerSprite.height * .5 ) ), 'x': playerSprite.x } )               
+        }
+
+        if ( adjacentMap == "bottom") {
+            playerSprite.initSpriteFromXy( { 'y': ( state.currentMap.borders.bottom - ( playerSprite.height * .5 ) ), 'x': playerSprite.x } )          
+        }
     } 
 }
 

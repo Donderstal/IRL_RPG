@@ -59,13 +59,23 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
     if ( direction == 'FACING_UP' ){
         if ( activeMapBorders.top >= sprite.y ) {
-            return false
+            if ( !activeMapData.outdoors ) {
+                return false
+            }
+            if ( !activeMapData.neighbours.up ) {
+                return false
+            }
         }
     }   
 
     if ( direction == 'FACING_DOWN' ) {
         if ( activeMapBorders.bottom <= sprite.y ) {
-            return false
+            if ( !activeMapData.outdoors ) {
+                return false
+            }
+            if ( !activeMapData.neighbours.down ) {
+                return false
+            }
         }
     }
     

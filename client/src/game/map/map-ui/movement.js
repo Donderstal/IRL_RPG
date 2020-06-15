@@ -61,15 +61,22 @@ const moveInDirection = ( sprite, direction ) => {
 }
 
 const checkForNeighbours = ( sprite ) => {
-    if (state.currentMap.mapData.outdoors ) {
-        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbours.right ) {
-            return state.currentMap.mapData.neighbours.right
-        }
-
+    if ( state.currentMap.mapData.outdoors ) {
         if ( state.currentMap.borders.left > ( sprite.x + sprite.width ) && state.currentMap.mapData.neighbours.left ) {
             return state.currentMap.mapData.neighbours.left
         }
 
+        if ( state.currentMap.borders.right < ( sprite.x - sprite.width ) && state.currentMap.mapData.neighbours.right ) {
+            return state.currentMap.mapData.neighbours.right
+        }
+
+        if ( state.currentMap.borders.top > ( sprite.y + sprite.height ) && state.currentMap.mapData.neighbours.top ) {
+            return state.currentMap.mapData.neighbours.top
+        }
+
+        if ( state.currentMap.borders.bottom < ( sprite.y ) && state.currentMap.mapData.neighbours.bottom ) {
+            return state.currentMap.mapData.neighbours.bottom
+        }
     }
 }
 
