@@ -3,13 +3,16 @@ const globals       = require('../../../game-data/globals')
 const mapHelpers    = require('../../../helpers/mapHelpers')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const actionRegistry= require('./actionRegistry')
+const mapObjectResources = require('../../../resources/mapObjectResources')
 
 const Sound         = require('../../interfaces/I_Sound').Sound
 const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
+const I_Sprite      = require('../../interfaces/I_Sprite').Sprite
 
 const setMapAttributes = ( ) => {
     actionRegistry.initNewActionRegistry( );
     setDoors( );
+    setMapObjects( );
     setActions( );
 }
 
@@ -88,6 +91,50 @@ class Door extends I_Hitbox {
             const sfx = new Sound( "misc/random5.wav", true )
             sfx.play()
         }
+    }
+}
+
+const setMapObjects = ( ) => {
+    state.currentMap.mapObjects = [ ];
+
+    if  ( state.currentMap.mapData.mapObjects ) {
+        var objectsInMap = state.currentMap.mapData.mapObjects
+
+        for ( var i = 0; i <  objectsInMap.length; i++ ) {
+            state.currentMap.mapObjects.push(
+                new MapObject( objectsInMap[i] )
+            )
+        }   
+    }
+}
+
+class MapObject extends I_Sprite {
+    constructor ( mapObject ) {
+        const objectResource = mapObjectResources[mapObject.type]
+        const src = "/static/sprite-assets/" + objectResource.src
+        const startingCell = { "row": mapObject.row , "col": mapObject.col }
+        const dimensions = {
+            "width": objectResource.width_blocks * globals.GRID_BLOCK_PX,
+            "height": objectResource.height_blocks * globals.GRID_BLOCK_PX 
+        }
+
+        super( startingCell, src, "CELL", dimensions )
+
+        this.widthInSheet   = objectResource.width_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
+        this.heightInSheet  = objectResource.height_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
+    }
+
+    drawSprite( ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT",
+            this.sheet,
+            this.sheetPosition * this.widthInSheet, 
+            this.direction * this.heightInSheet, 
+            this.widthInSheet, this.heightInSheet,
+            this.x, this.y, this.width, this.height
+        )
+
+        this.updateSpriteBorders( )
     }
 }
 
