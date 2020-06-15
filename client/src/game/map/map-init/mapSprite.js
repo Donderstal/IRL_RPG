@@ -104,7 +104,7 @@ class MapSprite extends I_Sprite {
         this.direction      = this.storedPosition.direction
     }
 
-    gotToNextDirection( ) {
+    gotToNextDirection( countFrame = true) {
         const NPC_speed = globals.MOVEMENT_SPEED * 0.5
         if ( this.nextPosition.row > this.row && this.nextPosition.col === this.col ) {
             this.y += NPC_speed  
@@ -121,6 +121,10 @@ class MapSprite extends I_Sprite {
         if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
             this.x -= NPC_speed   
             this.direction = globals["FACING_LEFT"]
+        }
+
+        if ( countFrame ) {
+            this.countFrame( );
         }
     }
 

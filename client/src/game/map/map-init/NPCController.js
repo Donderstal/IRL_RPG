@@ -54,8 +54,7 @@ class NPC extends MapSprite {
 
     handleWalkingNPCAnimation() {
         this.getNextNPCPosition( )
-        this.gotToNextDirection()
-        this.countFrame( )
+        this.gotToNextDirection( )
         this.checkForAnimationPath( )
     }
 
