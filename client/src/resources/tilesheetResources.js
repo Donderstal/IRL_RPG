@@ -27,8 +27,8 @@ module.exports = {
                73, 74
             ]
         },
-        "Interior_Yum_Mart_tiles" : {
-            "src": "Interior_Yum_Mart_tiles.png",    
+        "Interior_Yum_Mart_Tiles" : {
+            "src": "Interior_Yum_Mart_Tiles.png",    
             "uniqueTiles": 79,
             "blocked": [
                 0, 2, 3, 6, 7, 14, 15, 18, 19, 22, 

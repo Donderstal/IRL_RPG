@@ -23,17 +23,17 @@ module.exports = {
                 [17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,109,17,96,98,96,98,96,98]],
             "characters" : [
                 {
-                    "type": "static",
+                    "type": "idle",
+                    "name": "Bodyguard Bill",
                     "sprite": "chad.png",
                     "direction": "FACING_DOWN",
-                    "row": 1,
-                    "col": 20,
+                    "row": 8,
+                    "col": 18,
                     "action": {
-                        "name": "Big Balls Bert",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "direction": "FACING_UP",
-                        "text": "Do you even lift, bro?"
+                        "text": "Sometimes the 'roids just make me so angry..."
                     }
                 }
             ],
@@ -227,20 +227,21 @@ module.exports = {
             ],
             "characters" : [
                 {
-                    "type": "dynamic",
+                    "type": "walking",
                     "sprite": "neckbeard.png",
                     "direction": "FACING_DOWN",
-                    "row": 4,
+                    "name": "Darkwing Dork",    
+                    "row": 5,
                     "col": 17,
-                    "lastPosition" : { 
+
+                    "lastPosition" : {                   
                         "id": 0,
                         "row": 5, 
                         "col": 17, 
-                        "direction": "FACING_DOWN" 
                     },
                     "path" : [                     
-                        { "id": 0, "row": 3, "col": 17, "direction": "FACING_UP" },
-                        { "id": 1, "row": 7, "col": 17, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 3, "col": 17 },
+                        { "id": 1, "row": 7, "col": 17 }
                     ],
                     "action": {
                         "type": "TEXT",
@@ -250,13 +251,13 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "chad.png",
                     "direction": "FACING_DOWN",
                     "row": 1,
                     "col": 20,
+                    "name": "Big Balls Bert",                    
                     "action": {
-                        "name": "Big Balls Bert",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "direction": "FACING_UP",
@@ -264,13 +265,13 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "influencer.png",
                     "direction": "FACING_DOWN",
                     "row": 4,
                     "col": 8,
+                    "name": "Pauline",                    
                     "action": {
-                        "name": "Pauline",
                         "type": "BATTLE",
                         "sfx": "voice-3.mp3",
                         "direction": "FACING_UP",
@@ -283,27 +284,36 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "tumblr_girl.png",
                     "direction": "FACING_UP",
+                    "name": "Lisa",                    
                     "row": 5,
                     "col": 8,
                     "action": {
                         "type": "TEXT",
-                        "name": "Lisa",
                         "sfx": "voice-2.mp3",
                         "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "walking",
                     "sprite": "business_man.png",
-                    "direction": "FACING_DOWN",
-                    "row": 4,
-                    "col": 13,
+                    "direction": "FACING_LEFT",
+                    "name": "Sir Bik Bax",                    
+                    "row": 5,
+                    "col": 25,
+                    "lastPosition" : {                   
+                        "id": 0,
+                        "row": 5,
+                        "col": 25,
+                    },
+                    "path" : [                     
+                        { "id": 0, "row": 5, "col": 20 },
+                        { "id": 1, "row": 5, "col": 25 }
+                    ],                    
                     "action": {
                         "type": "TEXT",
-                        "name": "Mr. Business",
                         "sfx": "voice-1.mp3",
                         "text": "I'm Mr. Business!'"
                     }
@@ -366,13 +376,13 @@ module.exports = {
             ],
             "characters" : [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "neckbeard.png",
                     "direction": "FACING_DOWN",
+                    "name": "N00bpwner",
                     "row": 1,
                     "col": 2,
                     "action": {
-                        "name": "N00bpwner",
                         "type": "BATTLE",
                         "sfx": "voice-1.mp3",
                         "text": "Alloweth me to kick thine arse!",
@@ -384,13 +394,13 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "tumblr_girl.png",
                     "direction": "FACING_DOWN",
+                    "name": "R0x4NN3G4M3RG0D355",
                     "row": 1,
                     "col": 4,
                     "action": {
-                        "name": "R0x4NN3G4M3RG0D355",
                         "type": "TEXT",
                         "sfx": "voice-2.mp3",
                         "text": "This dump is not fitting for a woman of my stature! I'll have you know I'm a level 30 Warlock."
@@ -467,9 +477,10 @@ module.exports = {
             ],
             "characters" : [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "chad.png",
                     "direction": "FACING_DOWN",
+                    "name": "Chaddy Chandler",
                     "row": 2,
                     "col": 4,
                     "action": {
@@ -479,11 +490,12 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "tumblr_girl.png",
                     "direction": "FACING_DOWN",
                     "row": 5,
                     "col": 17,
+                    "name": "Patty",
                     "action": {
                         "type": "TEXT",
                         "sfx": "poo-poo.mp3",
@@ -491,9 +503,10 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "neckbeard.png",
                     "direction": "FACING_LEFT",
+                    "name": "Yung Edgelord",
                     "row": 6,
                     "col": 18,
                     "action": {
@@ -503,50 +516,48 @@ module.exports = {
                     }
                 },
                 {
-                    "type": "dynamic",
+                    "type": "walking",
                     "sprite": "manager.png",
                     "row": 10, 
                     "col": 10, 
+                    "direction": "FACING_UP",
+                    "name": "Manager Bob",
                     "lastPosition" : { 
                         "id": 0,
                         "row": 10, 
-                        "col": 10, 
-                        "direction": "FACING_UP" 
+                        "col": 10
                     },
                     "path" : [                     
-                        { "id": 0, "row": 7, "col": 10, "direction": "FACING_RIGHT" },
-                        { "id": 1, "row": 5, "col": 10, "direction": "FACING_UP" },
-                        { "id": 2, "row": 5, "col": 6, "direction": "FACING_LEFT" },
-                        { "id": 3, "row": 7, "col": 6, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 7, "col": 10 },
+                        { "id": 1, "row": 5, "col": 10 },
+                        { "id": 2, "row": 5, "col": 6 },
+                        { "id": 3, "row": 7, "col": 6 }
                     ],
                     "action": {
-                        "id": 1,
-                        "name": "Yum-mart manager",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "Greetings, possible patron!"
                     }
                 },
                 {
-                    "type": "dynamic",
+                    "type": "walking",
                     "sprite": "robot.png",
                     "row": 8, 
                     "col": 10, 
+                    "name": "Consoombot",                    
+                    "direction": "FACING_UP",
                     "lastPosition" : { 
                         "id": 0,
                         "row": 8, 
-                        "col": 10, 
-                        "direction": "FACING_UP" 
+                        "col": 10,  
                     },
                     "path" : [                     
-                        { "id": 0, "row": 7, "col": 10, "direction": "FACING_RIGHT" },
-                        { "id": 1, "row": 5, "col": 10, "direction": "FACING_UP" },
-                        { "id": 2, "row": 5, "col": 6, "direction": "FACING_LEFT" },
-                        { "id": 3, "row": 7, "col": 6, "direction": "FACING_DOWN" }
+                        { "id": 0, "row": 7, "col": 10 },
+                        { "id": 1, "row": 5, "col": 10 },
+                        { "id": 2, "row": 5, "col": 6 },
+                        { "id": 3, "row": 7, "col": 6 }
                     ],
                     "action": {
-                        "id": 1,
-                        "name": "Consoombot",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "Hello, potential customer!"
@@ -603,13 +614,13 @@ module.exports = {
             ],
             "characters": [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "influencer.png",
                     "direction": "FACING_DOWN",
                     "row": 1,
                     "col": 4,
+                    "name": "Hot Hannah",
                     "action": {
-                        "name": "Hot Hannah",
                         "type": "TEXT",
                         "sfx": "poo-poo.mp3",
                         "text": "There's this weird neckbeard in the back alley trying to connect my to my internet."
@@ -663,13 +674,13 @@ module.exports = {
             ],
             "characters": [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "chad.png",
                     "direction": "FACING_RIGHT",
                     "row": 3,
                     "col": 3,
+                    "name": "Strange Pete",
                     "action": {
-                        "name": "Strange Pete",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "Do you even lift, bro?"
@@ -694,13 +705,13 @@ module.exports = {
             ],
             "characters" : [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "neckbeard.png",
                     "direction": "FACING_DOWN",
                     "row": 2,
                     "col": 4,
+                    "name": "Mortimer Richards III",
                     "action": {
-                        "name": "Mortimer Richards III",
                         "type": "TEXT",
                         "sfx": "voice-3.mp3",
                         "text": "The Wifi here sucks, man"
@@ -755,39 +766,39 @@ module.exports = {
             ],
             "characters": [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "chad.png",
                     "direction": "FACING_DOWN",
                     "row": 8,
                     "col": 9,
+                    "name": "Cocaine Johnny",
                     "action": {
-                        "name": "Cocaine Johnny",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "I sold my kidneys to pay for my new house."
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "neckbeard.png",
                     "direction": "FACING_DOWN",
                     "row": 3,
                     "col": 19,
+                    "name": "N3rdPWNerS00pr33m",
                     "action": {
-                        "name": "N3rdPWNerS00pr33m",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "Bronies are so 2016"
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "influencer.png",
                     "direction": "FACING_DOWN",
                     "row": 8,
                     "col": 10,
+                    "name": "Ketamine Kate",
                     "action": {
-                        "name": "Ketamine Kate",
                         "type": "TEXT",
                         "sfx": "voice-3.mp3",
                         "text": "I sold my house to pay for a new pair of kidneys."
@@ -871,26 +882,26 @@ module.exports = {
                 ],
                 "characters" : [
                     {
-                        "type": "static",
+                        "type": "idle",
                         "sprite": "business_man.png",
                         "direction": "FACING_RIGHT",
                         "row": 10,
                         "col": 3,
+                        "name": "Monsieur Des Combes",
                         "action": {
-                            "name": "Monsieur Des Combes",
                             "type": "TEXT",
                             "sfx": "voice-1.mp3",
                             "text": "Welcome to Hotel Le Canard. May I see your credit rating, please?"
                         }
                     },
                     {
-                        "type": "static",
+                        "type": "idle",
                         "sprite": "influencer.png",
                         "direction": "FACING_DOWN",
                         "row": 6,
                         "col": 6,
+                        "name": "Receptionist",
                         "action": {
-                            "name": "Receptionist",
                             "type": "TEXT",
                             "sfx": "voice-3.mp3",
                             "text": "Are you sure you're in the right place sir? You look like a hobo."
@@ -997,13 +1008,13 @@ module.exports = {
             ],
             "characters": [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "influencer.png",
                     "direction": "FACING_DOWN",
                     "row": 2,
                     "col": 2,
+                    "name": "Hot Hannah",
                     "action": {
-                        "name": "Hot Hannah",
                         "type": "TEXT",
                         "sfx": "poo-poo.mp3",
                         "text": "I'll send you nudes if you donate to my patreon."
@@ -1013,7 +1024,7 @@ module.exports = {
         },
         "yum-mart" : {
             "mapName": "my-neighbourhood/A4/yum-mart",
-            "tileSet": "Interior_Yum_Mart_tiles",    
+            "tileSet": "Interior_Yum_Mart_Tiles",    
             "music": "yum-mart-theme.mp3",
             "outdoors": false,
             "rows":12,
@@ -1046,66 +1057,65 @@ module.exports = {
             ],
             "characters": [
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "influencer.png",
                     "direction": "FACING_LEFT",
                     "row": 10,
                     "col": 8,
+                    "name": "@TheFitGirlGoodLife",
                     "action": {
-                        "name": "TheFitGirlGoodLife",
                         "type": "TEXT",
                         "sfx": "voice-3.mp3",
                         "text": "I'm just here to make some money until my Instagram account takes off."
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "chad.png",
                     "direction": "FACING_DOWN",
                     "row": 1,
                     "col": 1,
+                    "name": "The Dealer",
                     "action": {
-                        "name": "The Dealer",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "Wanna buy some cocaine, nerd?"
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "chad.png",
                     "direction": "FACING_UP",
                     "row": 5,
                     "col": 7,
+                    "name": "Small balled Steve",
                     "action": {
-                        "name": "Small balled Steve",
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
-        
                         "text": "The Yum-mart sells the best 'roid in town, man!"
                     }
                 },
                 {
-                    "type": "static",
-                    "sprite": "Manager.png",
+                    "type": "idle",
+                    "sprite": "manager.png",
                     "direction": "FACING_DOWN",
                     "row": 9,
                     "col": 5,
+                    "name": "Pjotr, the manager",
                     "action": {
-                        "name": "Yum-mart branch manager",
                         "type": "TEXT",
                         "sfx": "voice-2.mp3",
                         "text": "Welcome to Yum-mart! I'm the manager and I do hope you have a great shopping experience."
                     }
                 },
                 {
-                    "type": "static",
+                    "type": "idle",
                     "sprite": "tumblr_girl.png",
                     "direction": "FACING_LEFT",
                     "row": 2,
                     "col": 9,
+                    "name": "Alana",
                     "action": {
-                        "name": "Alana",
                         "type": "TEXT",
                         "sfx": "voice-3.mp3",
                         "text": "I wish we had a better stores than Yum-mart in our neighbourhood."

@@ -22,7 +22,12 @@ const triggerEvent = ( TRIGGER ) => {
             }
         }
         else if ( TRIGGER == e.trigger && TRIGGER == "ON_POSITION" ) {
-            triggerOnPosition( e );
+            if ( triggerOnPosition( e ) ) {
+                e.fireEvent( );
+                if ( e.passScene ) {
+                    progressStory( );                
+                }
+            }
         }
     })
 }
@@ -32,30 +37,20 @@ const triggerOnPosition = ( e ) => {
     const player  = state.playerCharacter.sprite
     if ( globals[position.direction] == player.direction ) {
         if ( position.direction == "FACING_RIGHT" && player.col >= position.col ) {
-            e.fireEvent( );
-            if ( e.passScene ) {
-                progressStory( );                
-            }
+            return true;
         }
         if ( position.direction == "FACING_LEFT" && player.col <= position.col ) {
-            e.fireEvent( );
-            if ( e.passScene ) {
-                progressStory( );                
-            }
+            return true;
         }
         if ( position.direction == "FACING_UP" && player.row >= position.row) {
-            e.fireEvent( );
-            if ( e.passScene ) {
-                progressStory( );                
-            }
+            return true;
         }
         if ( position.direction == "FACING_DOWN" && player.row <= position.row) {
-            e.fireEvent( );
-            if ( e.passScene ) {
-                progressStory( );                
-            }
+            return true;
         }
     }
+
+    return false;
 }
 
 module.exports = {

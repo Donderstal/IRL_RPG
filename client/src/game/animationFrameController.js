@@ -48,7 +48,6 @@ const animationFrameController = ( ) => {
             if ( !state.listeningForPress ) {
                 controls.listenForKeyPress()
             }
-            
             if ( state.overworldMode ) {
                 handleMapAnimations()
             }

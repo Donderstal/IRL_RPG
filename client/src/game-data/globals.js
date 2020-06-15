@@ -15,10 +15,17 @@ const FACING_LEFT                   = 1
 const FACING_RIGHT                  = 2
 const FACING_UP                     = 3
 
+//
+const STATIC1                       = 0
+const STEP1                         = 1
+const STATIC2                       = 2
+const STEP2                         = 3
+
 // animation frame limit
 const FRAME_LIMIT                   = 8
 const FRAMES_PER_SECOND             = 60
 
+// dynamic measurements for canvas
 const GRID_BLOCK_IN_SHEET_PX        = 64
 const CANVAS_COLUMNS                = 23
 const CANVAS_ROWS                   = 15
@@ -76,6 +83,11 @@ module.exports = {
     FACING_LEFT,
     FACING_RIGHT,
     FACING_UP,
+    STATIC1,
+    STEP1,
+    STATIC2,
+    STEP2,
+
     FRAME_LIMIT,
     FRAMES_PER_SECOND,
     GRID_BLOCK_PX,
