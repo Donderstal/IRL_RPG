@@ -1,3 +1,5 @@
+const Cinematic = require('./I_Cinematic').Cinematic
+
 class I_ScriptedEvent {
     constructor( scriptedEventData, eventScript ) {
         this.mapName        = scriptedEventData.mapName;
@@ -16,7 +18,7 @@ class I_ScriptedEvent {
 
     fireEvent() {
         if ( !this.fired ) {
-            console.log(this.eventScript)
+            new Cinematic(this.eventScript)
             this.fired = true;            
         }
     }
