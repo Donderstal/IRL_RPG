@@ -40,6 +40,10 @@ const animationFrameController = ( ) => {
             if ( !state.listeningForPress ) {
                 controls.listenForKeyPress()
             }
+
+            if  ( state.cinematicMode && state.activeCinematic ) {
+                state.activeCinematic.checkForScenePass( )
+            }
             
             if ( state.overworldMode ) {
                 handleMapAnimations( )

@@ -5,9 +5,7 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Sir Bik Bax",
-                text: [
-                    "Hey!",
-                ]
+                text: "Hey!"
             },
             { 
                 type: "MOVE",
@@ -17,10 +15,12 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Sir Bik Bax",
-                text: [
-                    "Aren't you excited about your job at Yum-Mart?",
-                    "I sure am. Thanks for paying my bonus!",
-                ]
+                text: "Aren't you excited about your job at Yum-Mart?"
+            },
+            { 
+                type: "SPEAK",
+                spriteName: "Sir Bik Bax",
+                text: "I sure am. Thanks for paying my bonus!"
             },
             { 
                 type: "ANIM",
@@ -31,9 +31,7 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Sir Bik Bax",
-                text: [
-                    "See ya later, wage cuck!"
-                ]
+                text: "See ya later, wage cuck!"
             },
             { 
                 type: "MOVE",

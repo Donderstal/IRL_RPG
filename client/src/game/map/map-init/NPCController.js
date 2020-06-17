@@ -26,7 +26,9 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( )
-        this.hitbox.checkForActionRange( );
+        if ( !state.cinematicMode ) {
+            this.hitbox.checkForActionRange( );            
+        }
         this.handleNPCAnimation( )  ;          
     }
 
@@ -34,6 +36,9 @@ class NPC extends MapSprite {
         if ( this.inScriptedAnimation ) {
             this.doScriptedAnimation( );
             return
+        }
+        if ( this.inMovementAnimation ) {
+            this.handleWalkingNPCAnimation( )
         }
         if ( this.type === "idle" ) {
             this.handleIdleNPCAnimation( )
@@ -52,24 +57,17 @@ class NPC extends MapSprite {
         }   
     }
 
-    handleWalkingNPCAnimation() {
-        this.getNextNPCPosition( )
-        this.gotToNextDirection( )
-        this.checkForAnimationPath( )
-    }
-
-    getNextNPCPosition( ) {
-        for ( var i = 0; i < this.path.length; i++ ) {
-            let currentPath = this.path[i]
+    handleWalkingNPCAnimation( ) {
+        if ( this.inMovementAnimation && this.col == this.nextPosition.col && this.row == this.nextPosition.row ) {
+            state.activeCinematic.activeScene.walkingToDestination = false;
             
-            if ( this.lastPosition.id == currentPath.id ) {
-                let index = i
-                let pathIterator = i + 1
-                let pathLength = this.path.length -1
-
-                this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
-            }
+            this.inMovementAnimation = false;
+            return;
         }
+
+        this.getNextNPCPosition( );
+        this.gotToNextDirection( );
+        this.checkForAnimationPath( );
     }
 }
 
