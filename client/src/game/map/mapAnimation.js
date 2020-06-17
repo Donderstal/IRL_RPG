@@ -11,20 +11,21 @@ const handleMapAnimations = ( ) => {
         state.transitioning = true;
         state.mapTransition = null
     }
-    if ( state.currentMap.borders && state.playerCharacter.sprite ) {
-        mapControls.handleMovementKeys( );
-        gatherSpritesInState( )
-        drawSpritesInOrder()     
+
+    gatherSpritesInState( )
+    drawSpritesInOrder( ) 
+
+    if ( state.playerCharacter.sprite ) {
+        mapControls.handleMovementKeys( );   
+         
         if ( state.currentMap.mapActions ) {     
             state.currentMap.mapActions.forEach( (action) => {
-                //action.draw(action.x,action.y);
                 action.checkForActionRange( );
             })
         }  
         
         if ( state.currentMap.doors ) {     
             state.currentMap.doors.forEach( (door) => {
-                //door.draw(door.x, door.y);
                 door.checkForBlockedRange( );
             })
         }  
