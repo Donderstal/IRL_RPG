@@ -3,6 +3,7 @@ module.exports = {
     battleMode : false,
     cinematicMode : false,
     paused : false,
+    activeCinematic : null,
     listeningForPress : false,
     changeRequest : "NO",
     pressedKeys: { },

@@ -12,8 +12,6 @@ class I_ScriptedEvent {
         if ( scriptedEventData.trigger == "ON_POSITION" ) {
             this.position = scriptedEventData.position
         }
-
-        console.log(typeof this)
     }
 
     fireEvent() {

@@ -10,6 +10,8 @@ class Cinematic {
 
         state.activeCinematic = this;
         requestModeChange('CINEMATIC')
+        
+        console.log(this)
     }
 }
 
@@ -17,7 +19,7 @@ class Scene {
     constructor( data ) {
         this.type   = data.type;
         this.spriteName = data.spriteName;
-        this.sprite = this.cfindSpriteByName( )
+        this.sprite = this.findSpriteByName( )
         if ( this.type == "SPEAK" ) {
             this.text = data.text;
         }
