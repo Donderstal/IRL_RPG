@@ -1,6 +1,7 @@
 const mapHelpers = require('../../../helpers/mapHelpers')
 const globals = require('../../../game-data/globals')
 const state = require('../../../game-data/state')
+const anim = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
@@ -51,7 +52,7 @@ class MapSprite extends I_Sprite {
             this.goToCell( scene.destination );
         }
         if ( scene.type == "ANIM" ) {
-            this.setScriptedAnimation( scene.animName, scene.loop, globals.FRAME_LIMIT )
+            this.setScriptedAnimation( anim[scene.animName], scene.loop, globals.FRAME_LIMIT )
         }
     }
 
@@ -67,7 +68,6 @@ class MapSprite extends I_Sprite {
     }
 
     goToCell( cell ) {
-        console.log(cell)
         this.path = [ { id: 0, row: cell.row + 1, col: cell.col } ]
         this.nextPosition = { id: 0, row: cell.row + 1, col: cell.col }
         this.inMovementAnimation = true;
@@ -197,31 +197,8 @@ class MapSprite extends I_Sprite {
             }
         }
     }
-
-    /* getNextNPCPosition( loop ) {
-        for ( var i = 0; i < this.path.length; i++ ) {
-            let currentPath = this.path[i]
-            
-            if ( this.lastPosition.id == currentPath.id ) {
-                let index = i
-                let pathIterator = i + 1
-                let pathLength = this.path.length -1
-
-                if ( index == pathLength && loop ) {
-                    this.nextPosition = this.path[0];
-                }
-                else if ( index == pathLength && !loop ) {
-                    console.log( 'lok')
-                    this.nextPosition = null;
-                }
-                else {
-                    this.nextPosition = this.path[pathIterator];
-                }
-            }
-        }
-    } */
 } 
 
 module.exports = {
     MapSprite
-}
+} 

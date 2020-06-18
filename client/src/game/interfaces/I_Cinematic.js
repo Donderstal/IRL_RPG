@@ -13,10 +13,6 @@ class Cinematic {
 
         state.activeCinematic = this;
         requestModeChange('CINEMATIC')
-
-        /* data.scenes.forEach( scene => {
-            this.scenes.push( new Scene( scene ) );
-        } ) */
     }
 
     checkForScenePass( ) {
@@ -37,13 +33,30 @@ class Cinematic {
             }
         }
         if ( this.activeScene.type == "ANIM" ) {
-            
+            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
+                const currentNPC = state.currentMap.NPCs[i]
+                if ( this.activeScene.spriteName == currentNPC.name ) {
+                    if ( currentNPC.inScriptedAnimation ) {
+                        return 
+                    }          
+                    else {
+                        this.activateNextScene( )
+                    }
+                }
+
+            }        
         }
     }
 
     activateNextScene( ) {
         this.iterator++
-        this.activeScene = new Scene( this.scenes[this.iterator] );
+        if ( this.scenes[this.iterator] ) {
+            this.activeScene = new Scene( this.scenes[this.iterator] );            
+        }
+        else {
+            requestModeChange('CINEMATIC_END')
+            state.activeCinematic = null;
+        }
     }
 }
 
@@ -52,8 +65,6 @@ class Scene {
         this.type   = data.type;
         this.spriteName = data.spriteName;
         this.setAction( data )
-
-        console.log(this)
     }
 
 
@@ -70,6 +81,15 @@ class Scene {
             }
             else {
                 this.destination = data.destination;
+                if ( this.destination.row == 'current' || this.destination.col == 'current' ) {
+                    const sceneSpriteCell = this.getSpriteCell( );
+                    this.destination.row = ( this.destination.row == 'current' ) 
+                        ? sceneSpriteCell.row 
+                        : this.destination.row;
+                    this.destination.col = ( this.destination.col == 'current' ) 
+                        ? sceneSpriteCell.cell 
+                        : this.destination.col;
+                }
             }
             this.walkingToDestination = true;            
         }
@@ -79,6 +99,16 @@ class Scene {
         }
 
         this.setAnimToSprite( );
+    }
+
+    getSpriteCell( ) {
+        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
+            const currentNPC = state.currentMap.NPCs[i]
+            currentNPC.calcCellFromXy( );
+            if ( this.spriteName == currentNPC.name ) {
+                return { 'row': currentNPC.row, 'cell': currentNPC.cell }
+            }
+        } 
     }
 
     setAnimToSprite( ) {
