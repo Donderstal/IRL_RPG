@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUN 18, 2020
+* Added Cinematic and Scene Classes
+* Scripted gameplay based on scripted event triggers
+* Adjusting controllers and animationcontrollers to cinematic mode
+
 #### JUN 15, 2020
 * Added some new maps, a new tilesheet
 * Adding MapObject class for non-player sprites on map
