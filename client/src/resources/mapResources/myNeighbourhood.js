@@ -497,7 +497,7 @@ module.exports = {
                     "row": 2,
                     "col": 4,
                     "action": {
-                        "type": "BATTLE",
+                        "type": "TEXT",
                         "sfx": "voice-1.mp3",
                         "text": "I'll kick your ass, NERD!"
                     }
@@ -797,7 +797,7 @@ module.exports = {
                     "direction": "FACING_DOWN",
                     "row": 3,
                     "col": 19,
-                    "name": "N3rdPWNerS00pr33m",
+                    "name": "Dirk Chan",
                     "action": {
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",

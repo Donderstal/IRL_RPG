@@ -37,18 +37,19 @@ const stopCinematic = ( ) => {
 }
 
 const switchMode = ( ) => {
-    const previousMode = stopCurrentMode()
-
     if ( state.changeRequest == 'OVERWORLD' ) {
-        if ( previousMode == 'BATTLE' ) {
-            startMap("FROM_BATTLE")            
-        }
+        stopCurrentMode( );
+        startMap( "FROM_BATTLE" );
     }
     else if ( state.changeRequest == 'BATTLE' ) {
-        startBattle()
+        stopCurrentMode( );
+        startBattle( );
     }
     else if ( state.changeRequest == 'CINEMATIC' ) {
-        startCinematic()
+        startCinematic( );
+    }
+    else if ( state.changeRequest == 'CINEMATIC_END' ) {
+        stopCinematic( );
     }
 }
 
@@ -60,10 +61,6 @@ const stopCurrentMode = ( ) => {
     else if ( state.battleMode ) {
         stopBattle()
         return "BATTLE"
-    }
-    else if ( state.cinematicMode ) {
-        stopCinematic()
-        return "CINEMATIC"
     }
 }
 

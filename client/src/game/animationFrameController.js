@@ -16,19 +16,11 @@ const startRequestingFrame = () => {
 const startBattleAnimation = ( ) => {
     state.battleMode = true;
     state.overworldMode = false;
-    state.cinematicMode = false;
 }
 
 const startOverworldAnimation = ( ) => {
     state.overworldMode = true
     state.battleMode = false;
-    state.cinematicMode = false;
-}
-
-const startCinematicAnimation = ( ) =>{
-    state.overworldMode = false
-    state.battleMode = false;
-    state.cinematicMode = true;
 }
 
 /**
@@ -48,11 +40,16 @@ const animationFrameController = ( ) => {
             if ( !state.listeningForPress ) {
                 controls.listenForKeyPress()
             }
+
+            if  ( state.cinematicMode && state.activeCinematic ) {
+                state.activeCinematic.checkForScenePass( )
+            }
+            
             if ( state.overworldMode ) {
-                handleMapAnimations()
+                handleMapAnimations( )
             }
             else if ( state.battleMode ) {
-                handleBattleAnimations()
+                handleBattleAnimations( )
             }
         }
         else {
@@ -68,18 +65,15 @@ const checkForModeChangeRequest = ( ) => {
         controller.switchMode()
 
         if ( state.changeRequest == 'OVERWORLD' ) {
-            setTimeout(() => {
-                startOverworldAnimation()         
-            }, globals.BATTLE_INTRO_ANIM_MS )
+            setTimeout( ( ) => {
+                startOverworldAnimation( )         
+            }, globals.BATTLE_INTRO_ANIM_MS );
         }
         else if ( state.changeRequest == 'BATTLE' ) {
-            setTimeout(() => {
-                startBattleAnimation()            
-            }, globals.BATTLE_INTRO_ANIM_MS )
-        }
-        else if ( state.changeRequest == 'CINEMATIC' ) {
-            startCinematicAnimation()
-        }        
+            setTimeout( ( ) => {
+                startBattleAnimation( )            
+            }, globals.BATTLE_INTRO_ANIM_MS );
+        }   
     }
 
     state.changeRequest = "NO"
@@ -89,5 +83,4 @@ module.exports = {
     startRequestingFrame,
     startOverworldAnimation,
     startBattleAnimation,
-    startCinematicAnimation
 }
