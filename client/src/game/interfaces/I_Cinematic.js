@@ -1,12 +1,12 @@
 const state = require('../../game-data/state')
-const anim = require('../../resources/animationResources')
 const requestModeChange = require('../../game-data/changeMode').requestModeChange
-const globals = require('../../game-data/globals')
 
 class Cinematic {
-    constructor( data ) {
+    constructor( data, trigger, args ) {
         this.scenes = [];
         this.scenes = data.scenes;
+        this.trigger = trigger;
+        this.args   = args;
         this.numberOfScenes = this.scenes.length
         this.iterator = 0;
         this.activeScene = new Scene( this.scenes[this.iterator] );
@@ -56,6 +56,12 @@ class Cinematic {
         else {
             requestModeChange('CINEMATIC_END')
             state.activeCinematic = null;
+            if ( this.trigger == "ON_LEAVE" ) {
+                state.mapTransition = {
+                    urlToNewMap: this.args[0],
+                    oldMapName: this.args[1]
+                }
+            }
         }
     }
 }

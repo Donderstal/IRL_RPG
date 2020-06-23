@@ -13,10 +13,10 @@ const progressStory = require('./storyProgression').progressStory
  * "ON_EVENT" - After event in map;
  */
 
-const triggerEvent = ( TRIGGER ) => {
+const triggerEvent = ( TRIGGER, args = null ) => {
     state.currentMap.scriptedEvents.forEach( (e) => {
         if ( TRIGGER == e.trigger && TRIGGER != "ON_POSITION" ) {
-            e.fireEvent( );
+            e.fireEvent( args );
             if ( e.passScene ) {
                 progressStory( );                
             }

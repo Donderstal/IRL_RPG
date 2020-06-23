@@ -38,17 +38,51 @@ const eventScripts = {
                 spriteName: "Sir Bik Bax",
                 destination: {
                     row: "current",
-                    col: -1
+                    col: -2
                 }
             }
         ]
     },
     "C0_S0_E1" : {
-        type: "test C0_S0_E1"
+        scenes: [
+            { 
+                type: "SPEAK",
+                spriteName: "Chaddy Chandler",
+                text: "Hey Nerd!"
+            },
+            { 
+                type: "SPEAK",
+                spriteName: "Chaddy Chandler",
+                text: "Come over here, will ya?"
+            },
+            { 
+                type: "ANIM",
+                spriteName: "Chaddy Chandler",
+                animName: "TURN_SINGLE_CIRCLE",
+                loop: false
+            }
+        ]
     },
     // Chapter 1, Scene 0
     "C0_S1_E0" : {
-        type: "test C0_S1_E0"
+        scenes: [
+            { 
+                type: "SPEAK",
+                spriteName: "Dirk Chan",
+                text: "I'm so alpha!!'"
+            },
+            {    
+                type: "ANIM",
+                spriteName: "Dirk Chan",
+                animName: "TURN_SINGLE_CIRCLE",
+                loop: false
+            },
+            { 
+                type: "SPEAK",
+                spriteName: "Dirk Chan",
+                text: "BOOBIES AND VAGINAS GIVE ME MY ERECTIONS!"
+            }
+        ]
     },
     // Chapter 2, Scene 0
     "C0_S2_E0" : {

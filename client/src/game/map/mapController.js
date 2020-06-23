@@ -29,14 +29,21 @@ const switchMap = ( transition ) => {
     const oldMapName    = transition.oldMapName    
 
     if ( !initializingMap ) {
-        triggerEvent("ON_LEAVE")
-        state.currentMap = { 
-            blockedXyValues: [], 
-            mapMusic: state.currentMap.mapMusic
+        triggerEvent("ON_LEAVE", [ urlToNewMap, oldMapName ] )
+
+        if ( state.activeCinematic == null ) {
+            clearStateAndCanvasBeforeNewMap(urlToNewMap, oldMapName)                 
         }
-        canvasHelpers.clearBothCanvases();
-        initNewMapAfterClearingOld(urlToNewMap, oldMapName)        
     }
+}
+
+const clearStateAndCanvasBeforeNewMap = (urlToNewMap, oldMapName)  => {
+    state.currentMap = { 
+        blockedXyValues: [], 
+        mapMusic: state.currentMap.mapMusic
+    }
+    canvasHelpers.clearBothCanvases();
+    initNewMapAfterClearingOld(urlToNewMap, oldMapName)      
 }
 
 const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
