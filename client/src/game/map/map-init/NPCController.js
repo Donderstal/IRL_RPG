@@ -47,7 +47,7 @@ class NPC extends MapSprite {
             this.handleIdleNPCAnimation( )
         }
         if ( this.type === "walking" ) {
-            this.handleWalkingAnimation( )
+            this.handleWalkingNPCAnimation( )
         }
     }
 
@@ -58,6 +58,59 @@ class NPC extends MapSprite {
             this.frameCount = 0;
             this.sheetPosition = ( this.sheetPosition === 0 ) ? 1 : 0
         }   
+    }
+
+    gotToNextDirection( countFrame = true) {
+        const NPC_speed = globals.MOVEMENT_SPEED
+        if ( this.nextPosition.row > this.row ) {
+            this.y += NPC_speed  
+            this.direction = globals["FACING_DOWN"]
+        }
+        if ( this.nextPosition.row < this.row ) {
+            this.y -= NPC_speed    
+            this.direction = globals["FACING_UP"]
+        }
+        if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
+            this.x += NPC_speed    
+            this.direction = globals["FACING_RIGHT"]
+        }
+        if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
+            this.x -= NPC_speed   
+            this.direction = globals["FACING_LEFT"]
+        }
+
+        if ( countFrame ) {
+            this.countFrame( );
+        }
+    }
+
+    checkForAnimationPath ( ) {
+        this.calcCellFromXy()
+    
+        if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
+            this.lastPosition = this.nextPosition
+            this.getNextNPCPosition( )
+        }
+    }
+
+    getNextNPCPosition( ) {
+        for ( var i = 0; i < this.path.length; i++ ) {
+            let currentPath = this.path[i]
+            
+            if ( this.lastPosition.id == currentPath.id ) {
+                let index = i
+                let pathIterator = i + 1
+                let pathLength = this.path.length -1
+
+                this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
+            }
+        }
+    }
+
+    handleWalkingNPCAnimation( ) {
+        this.getNextNPCPosition( );
+        this.gotToNextDirection( );
+        this.checkForAnimationPath( );
     }
 }
 
