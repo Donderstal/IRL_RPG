@@ -1,5 +1,6 @@
 const state     = require('../game-data/state')
 const battle    = require('./battle/battleController')
+const controls  = require('./controls')
 const map       = require('./map/mapController')
 
 const startBattle = ( ) => {
@@ -28,7 +29,7 @@ const stopMap = ( ) => {
 
 const startCinematic = ( ) => {
     state.cinematicMode = true;
-
+    controls.clearPressedKeys();
 }
 
 const stopCinematic = ( ) => {

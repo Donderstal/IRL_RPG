@@ -1,5 +1,5 @@
 const state         = require('../../../game-data/state')
-const triggerEvent         = require('../../../game-data/triggerEvents').triggerEvent
+const triggerEvent  = require('../../../game-data/triggerEvents').triggerEvent
 const tilesheets        = require('../../../resources/tilesheetResources').sheets
 const createCharInstance = require('../../createCharInstance')
 const Sound         = require('../../interfaces/I_Sound').Sound

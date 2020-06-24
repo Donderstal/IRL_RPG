@@ -14,9 +14,9 @@ class I_ScriptedEvent {
         }
     }
 
-    fireEvent() {
+    fireEvent( args = null ) {
         if ( !this.fired ) {
-            new Cinematic(this.eventScript)
+            new Cinematic( this.eventScript, this.trigger, args );
             this.fired = true;            
         }
     }

@@ -42,8 +42,8 @@ const chapterEvents = [
         [ 
             {
                 mapName: "my-neighbourhood/A4/yum-mart",
-                trigger: "ON_EVENT",
-                passScene: true,
+                trigger: "ON_ENTER",
+                passScene: false,
                 scriptId: "C0_S3_E0"
             }
         ]         

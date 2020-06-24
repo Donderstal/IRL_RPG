@@ -11,16 +11,11 @@ const globals = require('../game-data/globals')
  */
 
 const getTopLeftCellOfGridInCanvas = ( x, y ) => {
-
-    // if map is not larger than canvas, row and col are always 0
-    let row = 0
-    let col = 0
-
     return {
         x: x,
         y: y,
-        row: row,
-        col: col
+        row: 0,
+        col: 0
     }
 }
 
@@ -78,8 +73,32 @@ const getTileIdOfCell = ( row, col ) => {
     return gridRow[col]
 }
 
+/**
+ * @function findNamedCharacterOnMap
+ * 
+ * @param {string} nameToFind
+ *      Check if nameToFind is 'Player'
+ *      If not, loop through NPCs for nameToFind
+ * 
+ * @return {MapSprite}
+ */
+const findNamedCharacterOnMap = ( nameToFind ) => {
+    if ( nameToFind != 'Player' ) {
+        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
+            const currentNPC = state.currentMap.NPCs[i]
+            if ( nameToFind == currentNPC.name ) {
+                return currentNPC
+            }
+        }             
+    }
+    else {
+        return state.playerCharacter.sprite
+    }
+}
+
 module.exports = {
     getTopLeftCellOfGridInCanvas,
+    findNamedCharacterOnMap,
     getCellOfXY, 
     getXYOfCell,
     getTileIdOfCell

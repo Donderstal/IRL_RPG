@@ -19,7 +19,7 @@ const handleMapKeyPress = ( event ) => {
         state.currentMap.bubbleIsActive = false
         changeMode.requestModeChange( 'BATTLE' )
     }
-    else {
+    else if ( !state.cinematicMode ) {
         state.pressedKeys[event.key] = true        
     }
 }
@@ -30,7 +30,7 @@ const handleMovementKeys = ( touch = false, event = false ) => {
     let touchUp = false;
     let touchDown = false;
 
-    if ( touch && state.playerCharacter.sprite != undefined ) {
+    if ( touch && state.playerCharacter.sprite != undefined && !state.cinematicMode ) {
         var rect = document.getElementById('game-front-canvas').getBoundingClientRect();
         const touch = event.touches[0]
     

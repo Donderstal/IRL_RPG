@@ -28,6 +28,21 @@ class MapSprite extends I_Sprite {
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.centerY( ) );        
         }
+        else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
+            console.log('handleAnimation!')
+            this.handleAnimation( )
+        }
+    }
+
+    handleAnimation( ) {
+        if ( this.inScriptedAnimation ) {
+            this.doScriptedAnimation( );
+            return
+        }
+        else if ( this.inMovementAnimation ) {
+            this.handleWalkingAnimation( )
+            return
+        }
     }
 
     updateSpriteCellXy( ) {
@@ -68,8 +83,10 @@ class MapSprite extends I_Sprite {
     }
 
     goToCell( cell ) {
-        this.path = [ { id: 0, row: cell.row + 1, col: cell.col } ]
-        this.nextPosition = { id: 0, row: cell.row + 1, col: cell.col }
+        console.log('start moving animation!')
+        this.path = [ { id: 1, row: cell.row, col: cell.col } ]
+        this.nextPosition = { id: 1, row: cell.row, col: cell.col }
+        this.lastPosition = { id: 0, row: this.row, col: this.col }
         this.inMovementAnimation = true;
         state.activeCinematic.activeScene.walkingToDestination = true;
     }
@@ -196,6 +213,23 @@ class MapSprite extends I_Sprite {
                 this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
             }
         }
+    }
+
+    handleWalkingAnimation( ) {
+        if ( this.inMovementAnimation && this.col == this.nextPosition.col && this.row == this.nextPosition.row ) {
+            console.log(state.activeCinematic.activeScene.endDirection)
+            this.direction = ( state.activeCinematic.activeScene.endDirection ) 
+                ? globals[state.activeCinematic.activeScene.endDirection] 
+                : this.direction;
+                
+            state.activeCinematic.activeScene.walkingToDestination = false;            
+            this.inMovementAnimation = false;
+            return;
+        }
+
+        this.getNextNPCPosition( );
+        this.gotToNextDirection( );
+        this.checkForAnimationPath( );
     }
 } 
 

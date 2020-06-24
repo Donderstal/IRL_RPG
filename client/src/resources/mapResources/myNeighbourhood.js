@@ -313,7 +313,7 @@ module.exports = {
                     "type": "walking",
                     "sprite": "business_man.png",
                     "direction": "FACING_LEFT",
-                    "name": "Sir Bik Bax",                    
+                    "name": "Yum-mart Exec",                    
                     "row": 5,
                     "col": 25,
                     "lastPosition" : {                   
@@ -324,12 +324,7 @@ module.exports = {
                     "path" : [                     
                         { "id": 0, "row": 5, "col": 20 },
                         { "id": 1, "row": 5, "col": 25 }
-                    ],                    
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-1.mp3",
-                        "text": "I'm Mr. Business!'"
-                    }
+                    ]
                 }
             ],
             "doors": [ 
@@ -499,7 +494,7 @@ module.exports = {
                     "action": {
                         "type": "TEXT",
                         "sfx": "voice-1.mp3",
-                        "text": "I'll kick your ass, NERD!"
+                        "text": "What's the definition of insanity?"
                     }
                 },
                 {
@@ -1114,11 +1109,11 @@ module.exports = {
                     "direction": "FACING_DOWN",
                     "row": 9,
                     "col": 5,
-                    "name": "Pjotr, the manager",
+                    "name": "Manager Bob",
                     "action": {
                         "type": "TEXT",
                         "sfx": "voice-2.mp3",
-                        "text": "Welcome to Yum-mart! I'm the manager and I do hope you have a great shopping experience."
+                        "text": "What could be better than seeing all these happy customers trust our high quality products?"
                     }
                 },
                 {

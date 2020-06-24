@@ -1,12 +1,13 @@
 const state = require('../../game-data/state')
-const anim = require('../../resources/animationResources')
+const findSprite = require('../../helpers/mapHelpers').findNamedCharacterOnMap
 const requestModeChange = require('../../game-data/changeMode').requestModeChange
-const globals = require('../../game-data/globals')
 
 class Cinematic {
-    constructor( data ) {
+    constructor( data, trigger, args ) {
         this.scenes = [];
         this.scenes = data.scenes;
+        this.trigger = trigger;
+        this.args   = args;
         this.numberOfScenes = this.scenes.length
         this.iterator = 0;
         this.activeScene = new Scene( this.scenes[this.iterator] );
@@ -33,18 +34,13 @@ class Cinematic {
             }
         }
         if ( this.activeScene.type == "ANIM" ) {
-            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-                const currentNPC = state.currentMap.NPCs[i]
-                if ( this.activeScene.spriteName == currentNPC.name ) {
-                    if ( currentNPC.inScriptedAnimation ) {
-                        return 
-                    }          
-                    else {
-                        this.activateNextScene( )
-                    }
-                }
-
-            }        
+            const sprite = findSprite( this.activeScene.spriteName );
+            if ( sprite.inScriptedAnimation ) {
+                return 
+            }          
+            else {
+                this.activateNextScene( )
+            }      
         }
     }
 
@@ -56,6 +52,12 @@ class Cinematic {
         else {
             requestModeChange('CINEMATIC_END')
             state.activeCinematic = null;
+            if ( this.trigger == "ON_LEAVE" ) {
+                state.mapTransition = {
+                    urlToNewMap: this.args[0],
+                    oldMapName: this.args[1]
+                }
+            }
         }
     }
 }
@@ -91,6 +93,7 @@ class Scene {
                         : this.destination.col;
                 }
             }
+            this.endDirection = ( data.endDirection ) ? data.endDirection : false; 
             this.walkingToDestination = true;            
         }
         if ( this.type == "ANIM" ) {
@@ -102,22 +105,13 @@ class Scene {
     }
 
     getSpriteCell( ) {
-        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            const currentNPC = state.currentMap.NPCs[i]
-            currentNPC.calcCellFromXy( );
-            if ( this.spriteName == currentNPC.name ) {
-                return { 'row': currentNPC.row, 'cell': currentNPC.cell }
-            }
-        } 
+        const sprite = findSprite( this.spriteName );
+        return { 'row': sprite.row, 'col': sprite.col }
     }
 
     setAnimToSprite( ) {
-        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            const currentNPC = state.currentMap.NPCs[i]
-            if ( this.spriteName == currentNPC.name ) {
-                return currentNPC.setAnimation(this)
-            }
-        }        
+        const sprite = findSprite( this.spriteName );
+        sprite.setAnimation(this)      
     }
 }
 
