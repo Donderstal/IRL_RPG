@@ -36,22 +36,18 @@ class NPC extends MapSprite {
         if ( !state.cinematicMode ) {
             this.hitbox.checkForActionRange( );            
         }
-        this.handleNPCAnimation( )  ;          
+        
+        if ( !this.inScriptedAnimation && !this.inMovementAnimation ) {
+            this.handleNPCAnimation( );                      
+        }
     }
 
     handleNPCAnimation( ) {
-        if ( this.inScriptedAnimation ) {
-            this.doScriptedAnimation( );
-            return
-        }
-        if ( this.inMovementAnimation ) {
-            this.handleWalkingNPCAnimation( )
-        }
         if ( this.type === "idle" ) {
             this.handleIdleNPCAnimation( )
         }
         if ( this.type === "walking" ) {
-            this.handleWalkingNPCAnimation( )
+            this.handleWalkingAnimation( )
         }
     }
 
@@ -62,19 +58,6 @@ class NPC extends MapSprite {
             this.frameCount = 0;
             this.sheetPosition = ( this.sheetPosition === 0 ) ? 1 : 0
         }   
-    }
-
-    handleWalkingNPCAnimation( ) {
-        if ( this.inMovementAnimation && this.col == this.nextPosition.col && this.row == this.nextPosition.row ) {
-            state.activeCinematic.activeScene.walkingToDestination = false;
-            
-            this.inMovementAnimation = false;
-            return;
-        }
-
-        this.getNextNPCPosition( );
-        this.gotToNextDirection( );
-        this.checkForAnimationPath( );
     }
 }
 
