@@ -6,19 +6,26 @@ const MapAction     = require('./setMapAttributes').MapAction
 
 class NPC extends MapSprite {
     constructor( startPos, src, typeOfStart, spriteDirection = 0, character ) {
+        const hasAction = ( character.action !== undefined );
         if( src[0] != '/' ) {
             src = '/static/sprites/'+ src
         }
-        super( startPos, src, typeOfStart, spriteDirection, true )   
-        this.hitbox = new MapAction( this.centerX( ), this.y, character.action, character.name );
+
+        super( startPos, src, typeOfStart, spriteDirection, hasAction )   
         this.type = character.type
         this.name = character.name
-        this.action = character.action
-        this.action.name = this.name
+
+        if ( hasAction ) {
+            this.hitbox = new MapAction( this.centerX( ), this.y, character.action, character.name );
+            this.action = character.action
+            this.action.name = this.name
+        }
+
         if ( character.type == "walking" ) {
             this.path = character.path
             this.lastPosition = character.lastPosition
         }
+
         this.calcXyFromCell( )
 
         state.currentMap.NPCs.push( this )     

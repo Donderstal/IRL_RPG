@@ -108,21 +108,32 @@ class Scene {
     }
 
     getSpriteCell( ) {
-        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            const currentNPC = state.currentMap.NPCs[i]
-            currentNPC.calcCellFromXy( );
-            if ( this.spriteName == currentNPC.name ) {
-                return { 'row': currentNPC.row, 'cell': currentNPC.cell }
-            }
-        } 
+        if ( this.spriteName != 'Player' ) {
+            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
+                const currentNPC = state.currentMap.NPCs[i]
+                currentNPC.calcCellFromXy( );
+                if ( this.spriteName == currentNPC.name ) {
+                    return { 'row': currentNPC.row, 'cell': currentNPC.cell }
+                }
+            }             
+        }
+        else {
+            return { 'row': state.playerCharacter.sprite.row, 'cell': state.playerCharacter.sprite.cell }
+        }
+
     }
 
     setAnimToSprite( ) {
-        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            const currentNPC = state.currentMap.NPCs[i]
-            if ( this.spriteName == currentNPC.name ) {
-                return currentNPC.setAnimation(this)
+        if ( this.spriteName != 'Player' ) {
+            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
+                const currentNPC = state.currentMap.NPCs[i]
+                if ( this.spriteName == currentNPC.name ) {
+                    return currentNPC.setAnimation(this)
+                }
             }
+        }
+        else {
+            return state.playerCharacter.sprite.setAnimation(this)
         }        
     }
 }
