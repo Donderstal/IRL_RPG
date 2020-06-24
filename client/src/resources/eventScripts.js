@@ -51,15 +51,46 @@ const eventScripts = {
                 spriteName: "Chaddy Chandler",
                 text: "Hey Nerd!"
             },
+            {
+                type: "MOVE",
+                spriteName: "Chaddy Chandler",
+                destination: {
+                    "row": 5,
+                    "col": 4
+                }
+            },
+            { 
+                type: "MOVE",
+                spriteName: "Chaddy Chandler",
+                destination: "Player",
+            },
             { 
                 type: "SPEAK",
                 spriteName: "Chaddy Chandler",
                 text: "Come over here, will ya?"
             },
+            {
+                type: "MOVE",
+                spriteName: "Chaddy Chandler",
+                destination: {
+                    "row": 5,
+                    "col": 4
+                }
+            },
+            { 
+                type: "MOVE",
+                spriteName: "Chaddy Chandler",
+                destination: {
+                    "row": 2,
+                    "col": 4
+                },
+                endDirection: "FACING_DOWN"
+            },
             { 
                 type: "ANIM",
                 spriteName: "Chaddy Chandler",
                 animName: "TURN_SINGLE_CIRCLE",
+                endDirection: "FACING_DOWN",
                 loop: false
             }
         ]
@@ -124,6 +155,15 @@ const eventScripts = {
             { 
                 type: "MOVE",
                 spriteName: "Manager Bob",
+                destination: {
+                    row: 12,
+                    col: 'current'
+                },
+                endDirection: "FACING_DOWN"
+            },
+            { 
+                type: "MOVE",
+                spriteName: "Manager Bob",
                 destination: "Player",
                 endDirection: "FACING_LEFT"
             },
@@ -146,6 +186,15 @@ const eventScripts = {
                 type: "SPEAK",
                 spriteName: "Manager Bob",
                 text: "Please do, because I'm happy to have you. Now let's stock those shelves!"
+            },
+            { 
+                type: "MOVE",
+                spriteName: "Manager Bob",
+                destination: {
+                    row: 8,
+                    col: 'current'
+                },
+                endDirection: "FACING_DOWN"
             },
             { 
                 type: "MOVE",
