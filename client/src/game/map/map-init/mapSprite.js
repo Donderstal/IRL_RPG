@@ -64,10 +64,10 @@ class MapSprite extends I_Sprite {
             this.speak( scene.text )
         }
         if ( scene.type == "MOVE" ) {
-            this.setDestination( scene.destination, scene.endDirection );
+            this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
         }
         if ( scene.type == "ANIM" ) {
-            this.setScriptedAnimation( anim[scene.animName], scene.loop, globals.FRAME_LIMIT )
+            this.setScriptedAnimation( scene, globals.FRAME_LIMIT )
         }
     }
 
@@ -93,7 +93,6 @@ class MapSprite extends I_Sprite {
     }
 
     goToDestination( ) {
-        const speed = globals.MOVEMENT_SPEED
         const destIsLeftOfSprite = this.destination.left <= this.x;
         const destIsRightOfSprite = this.destination.right >= this.x + this.width;
         const destIsBelowSprite = this.destination.bottom >= this.y + this.height;
@@ -102,41 +101,41 @@ class MapSprite extends I_Sprite {
         let moving = false;
 
         if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-            this.x -= speed;
+            this.x -= globals.MOVEMENT_SPEED;
             moving = true;
             this.direction = globals["FACING_LEFT"]
         }
         else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
-            this.y -= speed    
+            this.y -= globals.MOVEMENT_SPEED;
             moving = true;
             this.direction = globals["FACING_UP"]
         }
         else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-            this.x += speed    
+            this.x += globals.MOVEMENT_SPEED;
             moving = true;
             this.direction = globals["FACING_RIGHT"];
         }
         else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
-            this.y += speed  
+            this.y += globals.MOVEMENT_SPEED  
             moving = true;
             this.direction = globals["FACING_DOWN"]
         }
 
         if ( !moving ) {
             state.activeCinematic.activeScene.walkingToDestination = false;
-            this.direction = (this.destination.endDirection) ? globals[this.destination.endDirection] : this.direction;
+            this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
             this.inMovementAnimation = false;
+            this.destination = {}
         }
 
         this.countFrame( );
     }
 
-    setScriptedAnimation( animationData, isLoop, frameRate, numberOfLoops = false ) {
-        this.storePosition( )
+    setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
         this.inScriptedAnimation    = true;     
 
-        this.animationScript.loop           = isLoop;
-        this.animationScript.data           = animationData;     
+        this.animationScript.loop           = scene.loop;
+        this.animationScript.data           = anim[scene.animName];      
         this.animationScript.index          = 0;           
         this.animationScript.sceneLength    = this.animationScript.data.length;      
         this.animationScript.frameRate      = frameRate;
@@ -174,25 +173,17 @@ class MapSprite extends I_Sprite {
             this.animationScript.index = 0;
         }
         else {
+  
             this.unsetScriptedAnimation( );
-            this.restorePosition( );
         }
     }
 
     unsetScriptedAnimation( ) {
-        this.inScriptedAnimation    = false;       
+        if ( Number.isInteger(state.activeCinematic.activeScene.endDirection)) {
+            this.direction = state.activeCinematic.activeScene.endDirection
+        }   
+        this.inScriptedAnimation    = false;  
         this.animationScript        = {}
-    }
-
-    storePosition( ) {
-        this.storedPosition = {}
-        this.storedPosition.direction       = this.direction;
-        this.storedPosition.sheetPosition   = this.sheetPosition
-    }
-
-    restorePosition( ) {
-        this.sheetPosition  = this.storedPosition.sheetPosition;
-        this.direction      = this.storedPosition.direction
     }
 
     countFrame ( ) {
