@@ -10,7 +10,8 @@ const eventScripts = {
             { 
                 type: "MOVE",
                 spriteName: "Yum-mart Exec",
-                destination: "Player"
+                destination: "Player",
+                endDirection: "FACING_UP"
             },
             { 
                 type: "SPEAK",
@@ -112,17 +113,19 @@ const eventScripts = {
                 text: "Sure...!"
             },
             { 
-                type: "Move",
+                type: "MOVE",
                 spriteName: "Player",
                 destination: {
                     row: 12,
                     col: 0
-                }
+                },
+                endDirection: "FACING_RIGHT"
             },
             { 
                 type: "MOVE",
                 spriteName: "Manager Bob",
-                destination: "Player"
+                destination: "Player",
+                endDirection: "FACING_LEFT"
             },
             { 
                 type: "SPEAK",
@@ -142,15 +145,16 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Manager Bob",
-                text: "Please do, because you're a great guy all the rest. Now let's stock those shelves!"
+                text: "Please do, because I'm happy to have you. Now let's stock those shelves!"
             },
             { 
-                type: "Move",
-                spriteName: "Player",
+                type: "MOVE",
+                spriteName: "Manager Bob",
                 destination: {
-                    row: 9,
-                    col: 5
-                }
+                    row: 8,
+                    col: 4
+                },
+                endDirection: "FACING_DOWN"
             }
         ]
     },

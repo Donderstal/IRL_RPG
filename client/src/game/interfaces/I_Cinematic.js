@@ -97,6 +97,7 @@ class Scene {
                         : this.destination.col;
                 }
             }
+            this.endDirection = ( data.endDirection ) ? data.endDirection : false; 
             this.walkingToDestination = true;            
         }
         if ( this.type == "ANIM" ) {
