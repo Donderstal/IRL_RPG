@@ -40,7 +40,7 @@ class MapSprite extends I_Sprite {
             return
         }
         else if ( this.inMovementAnimation ) {
-            this.handleWalkingAnimation( )
+            this.goToDestination( )
             return
         }
     }
@@ -64,39 +64,78 @@ class MapSprite extends I_Sprite {
             this.speak( scene.text )
         }
         if ( scene.type == "MOVE" ) {
-            this.goToCell( scene.destination );
+            this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
         }
         if ( scene.type == "ANIM" ) {
-            this.setScriptedAnimation( anim[scene.animName], scene.loop, globals.FRAME_LIMIT )
+            this.setScriptedAnimation( scene, globals.FRAME_LIMIT )
         }
     }
 
-    speak( text ) {
-        const bubbleData = {
+    speak( text ) {        
+        getSpeechBubble( {
             'x'     : this.x,
             'y'     : this.y,
             'text'  : text,
             'name'  : this.name
-        };
-        
-        getSpeechBubble( bubbleData );
+        } );
     }
 
-    goToCell( cell ) {
+    setDestination( destination, endDirection ) {
         console.log('start moving animation!')
-        this.path = [ { id: 1, row: cell.row, col: cell.col } ]
-        this.nextPosition = { id: 1, row: cell.row, col: cell.col }
-        this.lastPosition = { id: 0, row: this.row, col: this.col }
+        this.destination = destination
+        this.type = "idle"
+        this.destination.endDirection = endDirection
+        this.destination.horizontal = ( this.x > destination.right ) ? "FACING_LEFT" : "FACING_RIGHT";
+        this.destination.vertical = ( this.y > destination.bottom ) ? "FACING_UP" : "FACING_DOWN";
+
         this.inMovementAnimation = true;
         state.activeCinematic.activeScene.walkingToDestination = true;
     }
 
-    setScriptedAnimation( animationData, isLoop, frameRate, numberOfLoops = false ) {
-        this.storePosition( )
+    goToDestination( ) {
+        const destIsLeftOfSprite = this.destination.left <= this.x;
+        const destIsRightOfSprite = this.destination.right >= this.x + this.width;
+        const destIsBelowSprite = this.destination.bottom >= this.y + this.height;
+        const destIsAboveSprite = this.destination.top <= this.y;
+
+        let moving = false;
+
+        if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
+            this.x -= globals.MOVEMENT_SPEED;
+            moving = true;
+            this.direction = globals["FACING_LEFT"]
+        }
+        else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
+            this.y -= globals.MOVEMENT_SPEED;
+            moving = true;
+            this.direction = globals["FACING_UP"]
+        }
+        else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
+            this.x += globals.MOVEMENT_SPEED;
+            moving = true;
+            this.direction = globals["FACING_RIGHT"];
+        }
+        else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
+            this.y += globals.MOVEMENT_SPEED  
+            moving = true;
+            this.direction = globals["FACING_DOWN"]
+        }
+
+        if ( !moving ) {
+            state.activeCinematic.activeScene.walkingToDestination = false;
+            this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
+            this.inMovementAnimation = false;
+            this.destination = {}
+        }
+
+        this.countFrame( );
+    }
+
+    setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
         this.inScriptedAnimation    = true;     
 
-        this.animationScript.loop           = isLoop;
-        this.animationScript.data           = animationData;     
+        this.animationScript.loop           = scene.loop;
+        this.animationScript.data           = anim[scene.animName];      
         this.animationScript.index          = 0;           
         this.animationScript.sceneLength    = this.animationScript.data.length;      
         this.animationScript.frameRate      = frameRate;
@@ -134,58 +173,17 @@ class MapSprite extends I_Sprite {
             this.animationScript.index = 0;
         }
         else {
+  
             this.unsetScriptedAnimation( );
-            this.restorePosition( );
         }
     }
 
     unsetScriptedAnimation( ) {
-        this.inScriptedAnimation    = false;       
+        if ( Number.isInteger(state.activeCinematic.activeScene.endDirection)) {
+            this.direction = state.activeCinematic.activeScene.endDirection
+        }   
+        this.inScriptedAnimation    = false;  
         this.animationScript        = {}
-    }
-
-    storePosition( ) {
-        this.storedPosition = {}
-        this.storedPosition.direction       = this.direction;
-        this.storedPosition.sheetPosition   = this.sheetPosition
-    }
-
-    restorePosition( ) {
-        this.sheetPosition  = this.storedPosition.sheetPosition;
-        this.direction      = this.storedPosition.direction
-    }
-
-    gotToNextDirection( countFrame = true) {
-        const NPC_speed = globals.MOVEMENT_SPEED * 0.5
-        if ( this.nextPosition.row > this.row ) {
-            this.y += NPC_speed  
-            this.direction = globals["FACING_DOWN"]
-        }
-        if ( this.nextPosition.row < this.row ) {
-            this.y -= NPC_speed    
-            this.direction = globals["FACING_UP"]
-        }
-        if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
-            this.x += NPC_speed    
-            this.direction = globals["FACING_RIGHT"]
-        }
-        if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
-            this.x -= NPC_speed   
-            this.direction = globals["FACING_LEFT"]
-        }
-
-        if ( countFrame ) {
-            this.countFrame( );
-        }
-    }
-
-    checkForAnimationPath ( ) {
-        this.calcCellFromXy()
-    
-        if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
-            this.lastPosition = this.nextPosition
-            this.getNextNPCPosition( )
-        }
     }
 
     countFrame ( ) {
@@ -199,37 +197,6 @@ class MapSprite extends I_Sprite {
                 this.sheetPosition = 0;
             }
         }
-    }
-
-    getNextNPCPosition( ) {
-        for ( var i = 0; i < this.path.length; i++ ) {
-            let currentPath = this.path[i]
-            
-            if ( this.lastPosition.id == currentPath.id ) {
-                let index = i
-                let pathIterator = i + 1
-                let pathLength = this.path.length -1
-
-                this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
-            }
-        }
-    }
-
-    handleWalkingAnimation( ) {
-        if ( this.inMovementAnimation && this.col == this.nextPosition.col && this.row == this.nextPosition.row ) {
-            console.log(state.activeCinematic.activeScene.endDirection)
-            this.direction = ( state.activeCinematic.activeScene.endDirection ) 
-                ? globals[state.activeCinematic.activeScene.endDirection] 
-                : this.direction;
-                
-            state.activeCinematic.activeScene.walkingToDestination = false;            
-            this.inMovementAnimation = false;
-            return;
-        }
-
-        this.getNextNPCPosition( );
-        this.gotToNextDirection( );
-        this.checkForAnimationPath( );
     }
 } 
 

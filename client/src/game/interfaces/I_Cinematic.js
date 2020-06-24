@@ -1,6 +1,9 @@
-const state = require('../../game-data/state')
-const findSprite = require('../../helpers/mapHelpers').findNamedCharacterOnMap
-const requestModeChange = require('../../game-data/changeMode').requestModeChange
+const state                 = require('../../game-data/state')
+const globals               = require('../../game-data/globals')
+const findSprite            = require('../../helpers/mapHelpers').findNamedCharacterOnMap
+const getXYOfCell           = require('../../helpers/mapHelpers').getXYOfCell
+const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOppositeDirection
+const requestModeChange     = require('../../game-data/changeMode').requestModeChange
 
 class Cinematic {
     constructor( data, trigger, args ) {
@@ -69,35 +72,62 @@ class Scene {
         this.setAction( data )
     }
 
-
     setAction( data ) {
         if ( this.type == "SPEAK" ) {
             this.text = data.text;
         }
+
         if ( this.type == "MOVE" ) {
             if ( typeof data.destination === 'string' || data.destination instanceof String ) {
-                if ( data.destination == 'Player' ) {
-                    state.playerCharacter.sprite.calcCellFromXy( )
-                    this.destination = { 'row': state.playerCharacter.sprite.row, 'col': state.playerCharacter.sprite.col }
+                const sprite = findSprite( data.destination );
+                this.endDirection = getOppositeDirection( sprite.direction );
+                
+                this.destination = { 
+                    'left': sprite.x, 'right': sprite.x + sprite.width, 
+                    'top': sprite.y + ( sprite.height / 2), 'bottom': sprite.y + ( sprite.height / 2) 
+                };
+
+                if ( this.endDirection == globals["FACING_LEFT"] ) {
+                    this.destination.left += globals["GRID_BLOCK_PX"];
+                    this.destination.right += globals["GRID_BLOCK_PX"];
+
+                    this.destination.top = sprite.y;
+                    this.destination.bottom = sprite.y + sprite.height;
+                }
+                else if ( this.endDirection == globals["FACING_RIGHT"] ) {
+                    this.destination.left -= globals["GRID_BLOCK_PX"];
+                    this.destination.right -= globals["GRID_BLOCK_PX"];
+
+                    this.destination.top = sprite.y;
+                    this.destination.bottom = sprite.y + sprite.height;
                 }
             }
+
             else {
-                this.destination = data.destination;
-                if ( this.destination.row == 'current' || this.destination.col == 'current' ) {
+                this.endDirection = ( data.endDirection ) ? globals[data.endDirection] : false; 
+                
+                if ( data.destination.row == 'current' || data.destination.col == 'current' ) {
                     const sceneSpriteCell = this.getSpriteCell( );
-                    this.destination.row = ( this.destination.row == 'current' ) 
+                    data.destination.row = ( data.destination.row == 'current' ) 
                         ? sceneSpriteCell.row 
-                        : this.destination.row;
-                    this.destination.col = ( this.destination.col == 'current' ) 
+                        : data.destination.row;
+                    data.destination.col = ( data.destination.col == 'current' ) 
                         ? sceneSpriteCell.cell 
-                        : this.destination.col;
+                        : data.destination.col;
+                }
+
+                const xy = getXYOfCell( data.destination.row, data.destination.col )
+                this.destination = { 
+                    'left': xy.x, 'right': xy.x + globals.GRID_BLOCK_PX,
+                    'top': xy.y, 'bottom': xy.y + globals.GRID_BLOCK_PX
                 }
             }
-            this.endDirection = ( data.endDirection ) ? data.endDirection : false; 
             this.walkingToDestination = true;            
         }
+
         if ( this.type == "ANIM" ) {
             this.animName = data.animName;
+            this.endDirection = ( data.endDirection ) ? globals[data.endDirection] : false;
             this.loop = data.loop;
         }
 

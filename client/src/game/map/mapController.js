@@ -71,7 +71,8 @@ const initNewMapAfterClearingOld = ( newMap, previousMapName ) => {
 const initPlayerSpriteInNewMap = ( previousMapName ) => {
     setCharacterLocationInNewMap( previousMapName )
     state.playerCharacter.sprite.drawSprite() 
-    
+    state.playerCharacter.sprite.calcCellFromXy()
+
     state.paused = false;
 }
 

@@ -1068,7 +1068,7 @@ module.exports = {
                     "type": "idle",
                     "sprite": "influencer.png",
                     "direction": "FACING_LEFT",
-                    "row": 10,
+                    "row": 11,
                     "col": 8,
                     "name": "@TheFitGirlGoodLife",
                     "action": {
