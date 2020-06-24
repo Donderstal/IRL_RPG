@@ -17,10 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
-#### JUN 18, 2020
+#### JUN 24, 2020
 * Added Cinematic and Scene Classes
 * Scripted gameplay based on scripted event triggers
 * Adjusting controllers and animationcontrollers to cinematic mode
+* Added Xy pathfinding for Sprites in cinematics
 
 #### JUN 15, 2020
 * Added some new maps, a new tilesheet
@@ -32,7 +33,7 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 #### JUN 2, 2020
 * Moving map & sheet data to client JS to reduce HTTP requests
-* Cleaning up some NPC's from maps
+* Cleaning up some NPCs from maps
 * Adding a new Robot sprite
 
 #### JUN 1, 2020,
