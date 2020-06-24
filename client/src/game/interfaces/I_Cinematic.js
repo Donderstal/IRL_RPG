@@ -1,4 +1,5 @@
 const state = require('../../game-data/state')
+const findSprite = require('../../helpers/mapHelpers').findNamedCharacterOnMap
 const requestModeChange = require('../../game-data/changeMode').requestModeChange
 
 class Cinematic {
@@ -33,18 +34,13 @@ class Cinematic {
             }
         }
         if ( this.activeScene.type == "ANIM" ) {
-            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-                const currentNPC = state.currentMap.NPCs[i]
-                if ( this.activeScene.spriteName == currentNPC.name ) {
-                    if ( currentNPC.inScriptedAnimation ) {
-                        return 
-                    }          
-                    else {
-                        this.activateNextScene( )
-                    }
-                }
-
-            }        
+            const sprite = findSprite( this.activeScene.spriteName );
+            if ( sprite.inScriptedAnimation ) {
+                return 
+            }          
+            else {
+                this.activateNextScene( )
+            }      
         }
     }
 
@@ -109,33 +105,13 @@ class Scene {
     }
 
     getSpriteCell( ) {
-        if ( this.spriteName != 'Player' ) {
-            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-                const currentNPC = state.currentMap.NPCs[i]
-                currentNPC.calcCellFromXy( );
-                if ( this.spriteName == currentNPC.name ) {
-                    return { 'row': currentNPC.row, 'cell': currentNPC.cell }
-                }
-            }             
-        }
-        else {
-            return { 'row': state.playerCharacter.sprite.row, 'cell': state.playerCharacter.sprite.cell }
-        }
-
+        const sprite = findSprite( this.spriteName );
+        return { 'row': sprite.row, 'col': sprite.col }
     }
 
     setAnimToSprite( ) {
-        if ( this.spriteName != 'Player' ) {
-            for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-                const currentNPC = state.currentMap.NPCs[i]
-                if ( this.spriteName == currentNPC.name ) {
-                    return currentNPC.setAnimation(this)
-                }
-            }
-        }
-        else {
-            return state.playerCharacter.sprite.setAnimation(this)
-        }        
+        const sprite = findSprite( this.spriteName );
+        sprite.setAnimation(this)      
     }
 }
 
