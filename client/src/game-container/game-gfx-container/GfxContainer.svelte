@@ -4,8 +4,7 @@
 
 <style>
     .game-gfx-container {
-        background-color: black;
-        text-align: center;
+        opacity: 0;
         height: 100vh;
         width: 100vw;
     }
