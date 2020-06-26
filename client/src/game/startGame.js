@@ -71,7 +71,6 @@ const initControlsAndAnimation = ( ) => {
  * Prepare canvas for game
  */
 const initCanvas = ( canvas ) => {
-    canvas.style.display = 'block'
     canvas.height = globals.CANVAS_HEIGHT 
     canvas.width = globals.CANVAS_WIDTH   
 }
@@ -82,8 +81,6 @@ const startGame = ( name, className ) => {
     } );
 
     document.documentElement.requestFullscreen();
-    utility.hideButtons( );
-
     state.playerCharacter.name      = name;
     state.playerCharacter.className = className;
 

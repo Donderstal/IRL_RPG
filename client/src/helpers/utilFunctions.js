@@ -37,55 +37,9 @@ const downloadObjectAsJson = ( exportObj, exportName ) => {
     downloadAnchorNode.remove();
 }
 
-
-let buttonsAreHidden = false;
-
-const hideButtons = ( ) => {
-    switchHideButtonStyle( buttonsAreHidden )    
-    const allButtons = Array.from( document.getElementsByTagName('button') );
-
-    allButtons.forEach( ( e ) => {
-        if ( e.id !== 'hide-buttons-button' ) {
-            if ( buttonsAreHidden ) {
-                e.style.visibility = 'visible'
-                document.getElementById('hide-buttons-button').innerText = "HIDE BUTTONS"
-            }
-            else {
-                e.style.visibility =  'hidden'
-                document.getElementById('hide-buttons-button').innerText = "SHOW"                    
-            }
-
-        }
-    })
-
-
-    buttonsAreHidden = !buttonsAreHidden;
-}
-
-const switchHideButtonStyle = ( buttonsAreHidden ) => {
-    const hideUiButton = document.getElementById('hide-buttons-button')
-    if ( !buttonsAreHidden ) {
-        hideUiButton.style.border = "1px groove white";
-        hideUiButton.style.borderRadius = "6.25vh";
-        hideUiButton.style.backgroundColor = "black";
-        hideUiButton.style.color = "white";
-        hideUiButton.style.opacity = "0.5";        
-    }
-    else {
-        hideUiButton.style.border = "1px groove #D68Fd6;";
-        hideUiButton.style.borderRadius = "5px;"
-        hideUiButton.style.backgroundColor = "#464F51;";
-        hideUiButton.style.color = "w#defff2";
-        hideUiButton.style.opacity = "1";        
-    }
-
-}
-
 module.exports = {
     docReady,
     getInputVal,
     fetchJSONWithCallback,
     downloadObjectAsJson,
-    hideButtons,
-    switchHideButtonStyle
 }
