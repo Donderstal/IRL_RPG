@@ -6,6 +6,7 @@
     export let vhFromTop;
     export let buttonText;
     export let elementId;
+    export let action;
 </script>
 
 <style>
@@ -42,7 +43,7 @@
 </style>
 
 <div>
-    <button style="top: {vhFromTop}" on:click={() => dispatch('buttonPress')} 
+    <button style="top: {vhFromTop}" on:click={action} 
             id={elementId} class="main-menu-button" >  
         {buttonText} 
     </button>
