@@ -1,5 +1,5 @@
 <script>
-    import globals from '../../game-data/globals.js';
+    import globals from '../game-data/globals.js';
 </script>
 
 <style>
