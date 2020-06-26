@@ -83,7 +83,7 @@
     { #if currentScreen != "NEW_GAME"}
         <Header/>
     { :else }        
-        <SelectCharacter/>
+        <SelectCharacter returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
     {/if}
     { #each menuScreens[currentScreen] as buttonText }
         <MainUiButton 

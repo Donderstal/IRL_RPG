@@ -20,7 +20,7 @@
         width: 100vw;
         text-align: center;
 		font-family: 'Retro Gaming', Fallback, sans-serif;
-		font-size: 36px;
+		font-size: 3.33vh;
 	}
 	
 
