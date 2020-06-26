@@ -15,9 +15,7 @@
         color: #defff2;
         width: 13.7vw;
         height: 8.14vh;
-        font-family: 'Retro Gaming', Fallback, sans-serif;
         margin: 0 auto;
-        font-size: 36px;
         border: none;
         z-index: 5;
         box-shadow: .5vh .5vh .25vh #64005380;

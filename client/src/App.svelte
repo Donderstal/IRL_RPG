@@ -19,6 +19,8 @@
 		height: 100vh;
         width: 100vw;
         text-align: center;
+		font-family: 'Retro Gaming', Fallback, sans-serif;
+		font-size: 36px;
 	}
 	
 

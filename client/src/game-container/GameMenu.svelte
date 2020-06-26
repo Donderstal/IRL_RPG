@@ -5,6 +5,7 @@
     import utilFunctions from './../helpers/utilFunctions.js'
 
     import MainUiButton from './svelte-partials/main-ui-button.svelte'
+    import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
     import Header from './header/Header.svelte'
 
     let currentScreen = "LOG_IN";
@@ -79,7 +80,11 @@
 </script>
 
 <div>
-    <Header/>
+    { #if currentScreen != "NEW_GAME"}
+        <Header/>
+    { :else }        
+        <SelectCharacter/>
+    {/if}
     { #each menuScreens[currentScreen] as buttonText }
         <MainUiButton 
             elementId={buttonText.replace(" ", "_") + "_button"} 
