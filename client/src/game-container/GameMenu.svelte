@@ -17,88 +17,15 @@
     }
 
     let menuScreens = {
-        "LOG_IN" : [
-            {
-                "text": "Log in",
-                'vh': 27,
-            },
-            {
-                "text": "Sign up",
-                "vh": 69.8,
-            }
-        ],
-
-        "MAIN_MENU" : [
-            {
-                "text": "New game",
-                'vh': 27,
-            },
-            {
-                "text": "Load game",
-                'vh': 37.7,
-            },
-            {
-                "text": "Options",
-                'vh': 48.4,
-            },
-            {
-                "text": "Help",
-                "vh": 59.1,
-            },
-            {
-                "text": "Quit",
-                'vh': 69.8,
-            }
-        ],
-
-        "NEW_GAME" : [
-            {
-                "text": "Let's go!",
-                'vh': 84.8,
-            }
-        ],
-
-        "OPTIONS" : [
-            {
-                "text": "Audio",
-                'vh': 27,            
-            },
-            {
-                "text": "Cinematics",
-                'vh': 37.7,
-            },
-            {
-                "text": "Difficulty",
-                'vh': 48.4,
-            },
-            {
-                "text": "Back",
-                "vh": 59.1,
-            }
-        ],
-
-        "HELP" : [
-            {
-                "text": "About",
-                'vh': 27,           
-            },
-            {
-                "text": "Controls",
-                'vh': 37.7,
-            },
-            {
-                "text": "Credits",
-                'vh': 48.4,
-            },
-            {
-                "text": "Back",
-                "vh": 59.1,
-            }
-        ]
+        "LOG_IN" : [ "Log in", "Sign up" ],
+        "MAIN_MENU" : [ "New game", "Load game", "Options", "Help", "Quit" ],
+        "NEW_GAME" : [ "Let's go!" ],
+        "OPTIONS" : [ "Audio", "Cinematics", "Difficulty", "Back" ],
+        "HELP" : [ "About", "Controls", "Credits", "Back" ]
     }
 
     const getButtonAction = ( buttonId ) => {
-        switch(buttonId) {
+        switch( buttonId ) {
             case 'Log_in_button': 
                 currentScreen = "MAIN_MENU";
                 break;
@@ -153,14 +80,13 @@
 
 <div>
     <Header/>
-    { #each menuScreens[currentScreen] as button }
+    { #each menuScreens[currentScreen] as buttonText }
         <MainUiButton 
-            vhFromTop={button.vh+'vh'} 
-            elementId={button.text.replace(" ", "_") + "_button"} 
+            elementId={buttonText.replace(" ", "_") + "_button"} 
             action={ ( ) => {
-                getButtonAction( button.text.replace(" ", "_") + "_button" )
+                getButtonAction( buttonText.replace(" ", "_") + "_button" )
             } } 
-            buttonText={button.text} 
+            buttonText={buttonText} 
         />
     {/each}
 </div>
