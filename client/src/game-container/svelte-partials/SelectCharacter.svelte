@@ -3,7 +3,6 @@
     import GoBackButton from './GoBackButton.svelte'
 
     export let returnToPreviousScreen;
-
     let introSpriteWidth = globals.MAP_SPRITE_WIDTH_IN_SHEET * 3;
     let introSpriteHeight = globals.MAP_SPRITE_HEIGHT_IN_SHEET * 3;
 
@@ -18,7 +17,6 @@
     let activeClassIndex = availableClasses.indexOf(activeClass);
 
     const handleArrowClick = ( direction ) => {
-        console.log(direction)
         if ( direction == "L" || direction == "R" ) {
             let newIndex = ( direction == "L" ) ? activeClassIndex - 1 : activeClassIndex + 1
             if ( newIndex < 0 ) {
@@ -40,7 +38,6 @@
 
     const getSpriteAndDrawToCanvas = ( ) => {
         let currentSprite = new Image( );
-        console.log(activeClass.toLowerCase().replace(" ", "_"))
         currentSprite.src = "/static/" + activeClass.toLowerCase().replace(" ", "_") + ".v3.png";
         currentSprite.onload = ( ) => {
             let canvas = document.getElementById("select-character-canvas")
@@ -55,7 +52,6 @@
             )
         }
     }
-
     
     getSpriteAndDrawToCanvas( )
 </script>
@@ -113,10 +109,10 @@
     <GoBackButton on:click={returnToPreviousScreen}/>
     <div class="select-character-inner">
         <h2>Enter your name</h2>
-        <input type="text" placeholder="Player Name"/>
+        <input id="name-input" type="text" placeholder="Player Name"/>
     </div>
     <div class="select-character-inner">
-        <h2>{activeClass}</h2>
+        <h2 id="active-class">{activeClass}</h2>
         <img id="left-arrow" class="arrow" src="/static/arrow-left@2x.png" alt="Left arrow" on:click={() => handleArrowClick("L")}>
         <canvas id="select-character-canvas"></canvas>
         <img id="right-arrow" class="arrow" src="/static/arrow-right@2x.png" alt="Right arrow"on:click={() => handleArrowClick("R")} >

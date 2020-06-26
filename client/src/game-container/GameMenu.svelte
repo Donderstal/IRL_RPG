@@ -8,14 +8,7 @@
     import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
     import Header from './header/Header.svelte'
 
-    let currentScreen = "LOG_IN";
-
-    let settingsAndData = {
-        'playerName': "",
-        'playerClass': " ",
-        'showCinematics': true,
-        'fullScreen': true
-    }
+    export let closeMainMenu;
 
     let menuScreens = {
         "LOG_IN" : [ "Log in", "Sign up" ],
@@ -24,7 +17,17 @@
         "OPTIONS" : [ "Audio", "Cinematics", "Difficulty", "Back" ],
         "HELP" : [ "About", "Controls", "Credits", "Back" ]
     }
+    let currentScreen = "LOG_IN";
 
+    const startGameWithParams = ( ) => {
+        const characterName = document.getElementById('name-input').value;
+        const characterClass = document.getElementById('active-class').innerText.toLowerCase();
+        let mode = 'normal';
+        closeMainMenu()
+        setTimeout( ( ) => {
+            startGame.startGame( characterName, characterClass, mode );
+        }, 1000)
+    }
     const getButtonAction = ( buttonId ) => {
         switch( buttonId ) {
             case 'Log_in_button': 
@@ -49,7 +52,7 @@
                 currentScreen ="LOG_IN";
                 break;
             case "Let's_go!_button" :
-                console.log("Let's go!");
+                startGameWithParams();
                 break;
             case "Audio_button" :
                 console.log("Audio");
