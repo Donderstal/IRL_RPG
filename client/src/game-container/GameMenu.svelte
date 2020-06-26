@@ -4,12 +4,13 @@
     import globals from './../game-data/globals.js';
     import utilFunctions from './../helpers/utilFunctions.js'
 
-    import MainUiButton from './svelte-partials/main-ui-button.svelte'
+    import MainUiButton from './svelte-partials/MainUiButton.svelte'
     import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
     import Header from './header/Header.svelte'
 
     export let closeMainMenu;
 
+    let currentScreen = "LOG_IN";
     let menuScreens = {
         "LOG_IN" : [ "Log in", "Sign up" ],
         "MAIN_MENU" : [ "New game", "Load game", "Options", "Help", "Quit" ],
@@ -17,13 +18,12 @@
         "OPTIONS" : [ "Audio", "Cinematics", "Difficulty", "Back" ],
         "HELP" : [ "About", "Controls", "Credits", "Back" ]
     }
-    let currentScreen = "LOG_IN";
 
     const startGameWithParams = ( ) => {
         const characterName = document.getElementById('name-input').value;
         const characterClass = document.getElementById('active-class').innerText.toLowerCase();
         let mode = 'normal';
-        closeMainMenu()
+        closeMainMenu( )
         setTimeout( ( ) => {
             startGame.startGame( characterName, characterClass, mode );
         }, 1000)
@@ -31,6 +31,8 @@
     const getButtonAction = ( buttonId ) => {
         switch( buttonId ) {
             case 'Log_in_button': 
+                document.getElementsByClassName("background-large")[0].style.display = "block";
+                document.getElementsByClassName("background-small")[0].style.display = "none";
                 currentScreen = "MAIN_MENU";
                 break;
             case 'Sign_up_button':
@@ -49,6 +51,8 @@
                 currentScreen = "HELP";
                 break;
             case 'Quit_button':
+                document.getElementsByClassName("background-small")[0].style.display = "block";
+                document.getElementsByClassName("background-large")[0].style.display = "none";
                 currentScreen ="LOG_IN";
                 break;
             case "Let's_go!_button" :
@@ -82,6 +86,24 @@
     }
 </script>
 
+<style>
+    div {
+        z-index: 2;
+        color: white;
+    }
+
+    .dont-have-account {
+        font-family: "Lucida Console", Courier, monospace;
+        font-size: 24px;
+        margin-top: 5vh;
+    }
+
+    .or-div {
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+    }
+</style>
+
 <div>
     { #if currentScreen != "NEW_GAME"}
         <Header/>
@@ -89,6 +111,18 @@
         <SelectCharacter returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
     {/if}
     { #each menuScreens[currentScreen] as buttonText }
+        { #if buttonText == "Sign up"}
+        <div class="or-div">
+            <p>
+            Or
+            </p>
+        </div>
+        <div>
+            <p class='dont-have-account'>
+            Dont have an account?
+            </p>
+        </div>
+        {/if}
         <MainUiButton 
             elementId={buttonText.replace(" ", "_") + "_button"} 
             action={ ( ) => {

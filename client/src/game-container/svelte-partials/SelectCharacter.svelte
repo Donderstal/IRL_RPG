@@ -52,7 +52,7 @@
             )
         }
     }
-    
+
     getSpriteAndDrawToCanvas( )
 </script>
 
@@ -106,7 +106,7 @@
 </style>
 
 <div class="select-character">
-    <GoBackButton on:click={returnToPreviousScreen}/>
+    <GoBackButton returnToPreviousScreen={returnToPreviousScreen}/>
     <div class="select-character-inner">
         <h2>Enter your name</h2>
         <input id="name-input" type="text" placeholder="Player Name"/>

@@ -18,8 +18,8 @@
     }
 
     .shadow-header {
-        left: -6px;
-        top: -6px;
+        left: -1vh;
+        top: 4vh;
         color: #00FF9E;
         position: absolute;
         z-index: 3;
@@ -28,6 +28,7 @@
 
     div {        
         background-color: transparent;
+        margin-top: 5vh;
     }
 </style>
 

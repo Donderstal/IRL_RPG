@@ -1,4 +1,5 @@
 <script>
+export let returnToPreviousScreen
 </script>
 
 <style>
@@ -36,6 +37,6 @@
     }
 </style>
 
-<button>
+<button on:click={returnToPreviousScreen}>
     <img id="left-arrow" class="arrow" src="/static/arrow-left@2x.png" alt="Left arrow">
 </button>
