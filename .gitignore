@@ -1,8 +1,6 @@
 .DS_Store
 node_modules
-public/bundle.*
-public/game
-junk.js
-static/music
-static/sfx
-static/savegames
+client/node_modules
+client/public/out
+client/public/bundle.*
+static

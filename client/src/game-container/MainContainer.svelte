@@ -31,7 +31,7 @@
         left: 2.5vw;        
         z-index: auto;
         position: absolute;
-        background-image: url("/static/neckbeard-background@2x.png");    
+        background-image: url("/static/site_assets/neckbeard-background@2x.png");    
         z-index:1;
     }
 

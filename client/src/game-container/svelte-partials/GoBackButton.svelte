@@ -38,5 +38,5 @@ export let returnToPreviousScreen
 </style>
 
 <button on:click={returnToPreviousScreen}>
-    <img id="left-arrow" class="arrow" src="/static/arrow-left@2x.png" alt="Left arrow">
+    <img id="left-arrow" class="arrow" src="/static/site_assets/arrow-left@2x.png" alt="Left arrow">
 </button>

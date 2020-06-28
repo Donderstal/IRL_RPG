@@ -38,7 +38,7 @@
 
     const getSpriteAndDrawToCanvas = ( ) => {
         let currentSprite = new Image( );
-        currentSprite.src = "/static/" + activeClass.toLowerCase().replace(" ", "_") + ".v3.png";
+        currentSprite.src = "/static/site_assets/" + activeClass.toLowerCase().replace(" ", "_") + ".v3.png";
         currentSprite.onload = ( ) => {
             let canvas = document.getElementById("select-character-canvas")
             let ctx = canvas.getContext('2d')
@@ -113,9 +113,9 @@
     </div>
     <div class="select-character-inner">
         <h2 id="active-class">{activeClass}</h2>
-        <img id="left-arrow" class="arrow" src="/static/arrow-left@2x.png" alt="Left arrow" on:click={() => handleArrowClick("L")}>
+        <img id="left-arrow" class="arrow" src="/static/site_assets/arrow-left@2x.png" alt="Left arrow" on:click={() => handleArrowClick("L")}>
         <canvas id="select-character-canvas"></canvas>
-        <img id="right-arrow" class="arrow" src="/static/arrow-right@2x.png" alt="Right arrow"on:click={() => handleArrowClick("R")} >
+        <img id="right-arrow" class="arrow" src="/static/site_assets/arrow-right@2x.png" alt="Right arrow"on:click={() => handleArrowClick("R")} >
     </div>
     <div class="select-character-inner">
         <p>{descriptions[activeClass]}</p>
