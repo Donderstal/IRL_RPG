@@ -1,5 +1,5 @@
 class Sound {
-    constructor ( src, sfx = false, battle = false ) {
+    constructor ( src, sfx = false, battle = false, isMainMenu = false ) {
       this.sound = document.createElement("audio");
         if ( sfx ) {
           this.sound.volume = 0.66;          
@@ -10,7 +10,7 @@ class Sound {
           this.sound.setAttribute("loop", true);
         }
         else {
-          this.sound.volume = 0.50;
+          this.sound.volume = isMainMenu ? 0.25 : 0.50;
           this.sound.src = "/static/music/" + src;     
           this.sound.setAttribute("loop", true);
         }

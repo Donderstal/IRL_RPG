@@ -8,10 +8,10 @@
 
     const availableClasses = [ "NECKBEARD", "INFLUENCER", "CHAD", "TUMBLR_GIRL" ]
     const descriptions = { 
-        "NECKBEARD": "Aren't nice guys like me known for their superior intelligence, m'lady? Discover your inner neckbeard and fight your opponents with snidy remarks and social mishaps.", 
-        "INFLUENCER": "The #Influencer is always looking #Great in her online #GoodLife! Choose her and rob your opponents of their attention, money and self-esteem!", 
+        "NECKBEARD": "Aren't nice guys like me known for their superior intelligence, m'lady? Discover your inner Neckbeard and fight your opponents with snidy remarks and social awkwardness.", 
+        "INFLUENCER": "The #Influencer is always looking #Great in her online #GoodLife! Choose her and rob your opponents of their attention, money and self-esteem.", 
         "CHAD": "The Chad loves kicking ass, bruh! In fact he's kicking so much ass, that he's hardly good for anything else. Choose him if you like to overwhelm your opponents with brute force.", 
-        "TUMBLR_GIRL": "The Tumblr Girl has many different feelings and they're always valid. Release your many identities upon the world and use your sense of entitlement to make your foes tremble!"
+        "TUMBLR_GIRL": "The Tumblr Girl has many different feelings and they're always valid. Release your many identities upon the world and summon the Twitter mobs to make your foes tremble!"
     }
     let activeClass = "NECKBEARD";
     let activeClassIndex = availableClasses.indexOf(activeClass);

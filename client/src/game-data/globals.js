@@ -54,7 +54,7 @@ const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
 const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.375
 
 // in-game textbox color and opacity
-const INNER_TEXTBOX_RGBA            = "rgba(100, 0, 83, 0.502";
+const INNER_TEXTBOX_RGBA            = "rgb(0, 56, 77)";
 const OUTER_TEXTBOX_RGBA            = "rgba(216, 44, 188, 0.66)";
 
 // apparently this is the golden ratio
