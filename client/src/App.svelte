@@ -5,12 +5,12 @@
 <style>
 	@font-face {
 		font-family: 'Stormfaze';
-		src: URL('/static/stormfaze.ttf') format('truetype');
+		src: URL('/static/site_assets/stormfaze.ttf') format('truetype');
 	}
 
 	@font-face {
 		font-family: 'Retro Gaming';
-		src: URL('/static/Retro_Gaming.ttf') format('truetype');
+		src: URL('/static/site_assets/Retro_Gaming.ttf') format('truetype');
 	}
 	div {
 		text-align: center;
