@@ -17,6 +17,10 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUN 28, 2020
+* Adding music to main menu, sfx to cinematics
+* Added animated sprites to main menu
+
 #### JUN 26, 2020
 * Implementing new front-end designs
 * New front end with a proper Svelte set up

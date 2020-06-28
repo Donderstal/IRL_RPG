@@ -19,7 +19,7 @@ class I_TextBox {
 
         this.text           = canvas.breakTextIntoLines( text, 'LARGE' )
         this.buttonsText    = ( buttonsText == null ) ? [ "(Q) Continue", "(E) Back"] : buttonsText;
-        this.buttonColor    = "black";
+        this.buttonColor    = "white";
         this.animationFrame = 0;
 
         canvas.setFont(fontSize);
