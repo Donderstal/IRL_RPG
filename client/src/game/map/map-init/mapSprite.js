@@ -61,7 +61,7 @@ class MapSprite extends I_Sprite {
 
     setAnimation( scene ) {
         if ( scene.type == "SPEAK" ) {
-            this.speak( scene.text )
+            this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
         }
         if ( scene.type == "MOVE" ) {
             this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
@@ -71,12 +71,13 @@ class MapSprite extends I_Sprite {
         }
     }
 
-    speak( text ) {        
+    speak( text, sfx ) {        
         getSpeechBubble( {
             'x'     : this.x,
             'y'     : this.y,
             'text'  : text,
-            'name'  : this.name
+            'name'  : this.name,
+            'sfx'   : ( sfx ) ? sfx : false
         } );
     }
 

@@ -5,7 +5,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Yum-mart Exec",
-                text: "Hey!"
+                text: "Hey!",
+                sfx: "voice-2.mp3"
             },
             { 
                 type: "MOVE",
@@ -16,12 +17,14 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Yum-mart Exec",
-                text: "Don't you work at our branch a few blocks down the street?"
+                text: "Don't you work at our branch a few blocks down the street?",
+                sfx: "voice-2.mp3"
             },
             { 
                 type: "SPEAK",
                 spriteName: "Yum-mart Exec",
-                text: "You better hurry up! Your shift's already begun..."
+                text: "You better hurry up! Your shift's already begun...",
+                sfx: "voice-2.mp3"
             },
             { 
                 type: "ANIM",
@@ -32,7 +35,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Yum-mart Exec",
-                text: "See ya later, wage cuck!"
+                text: "See ya later, wage cuck!",
+                sfx: "lala.mp3"
             },
             { 
                 type: "MOVE",
@@ -49,7 +53,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Chaddy Chandler",
-                text: "Hey Nerd!"
+                text: "Hey Nerd!",
+                sfx: "battle-baba.mp3"
             },
             {
                 type: "MOVE",
@@ -67,7 +72,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Chaddy Chandler",
-                text: "Come over here, will ya?"
+                text: "Come over here, will ya?",
+                sfx: "voice-1.mp3"
             },
             {
                 type: "MOVE",
@@ -101,12 +107,14 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Dirk Chan",
-                text: "Why would you want to work at Yum-Mart?"
+                text: "Why would you want to work at Yum-Mart?",
+                sfx: "mauww.mp3"
             },
             { 
                 type: "SPEAK",
                 spriteName: "Dirk Chan",
-                text: "My Universal Basic Income covers most of my expenses..."
+                text: "My Universal Basic Income covers most of my expenses...",
+                sfx: "mauww.mp3"
             }
         ]
     },
@@ -126,7 +134,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Manager Bob",
-                text: "Better late than never!"
+                text: "Better late than never!",
+                sfx: "battle-baba.mp3"
             },
             { 
                 type: "MOVE",
@@ -136,7 +145,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Manager Bob",
-                text: "Can we talk in the corner for a sec?"
+                text: "Can we talk in the corner for a sec?",
+                sfx: "voice-1.mp3"
             },
             { 
                 type: "SPEAK",
@@ -170,12 +180,14 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Manager Bob",
-                text: "I know you've been going through some things lately..."
+                text: "I know you've been going through some things lately...",
+                sfx: "voice-1.mp3"
             },
             { 
                 type: "SPEAK",
                 spriteName: "Manager Bob",
-                text: "But you can't keep coming late. I'm sorry but it just wouldn't be fair to the other employees."
+                text: "But you can't keep coming late. I'm sorry but it just wouldn't be fair to the other employees.",
+                sfx: "battle-baba.mp3"
             },
             { 
                 type: "SPEAK",
@@ -185,7 +197,8 @@ const eventScripts = {
             { 
                 type: "SPEAK",
                 spriteName: "Manager Bob",
-                text: "Please do, because I'm happy to have you. Now let's stock those shelves!"
+                text: "Please do, because I'm happy to have you. Now let's stock those shelves!",
+                sfx: "voice-1.mp3"
             },
             { 
                 type: "MOVE",

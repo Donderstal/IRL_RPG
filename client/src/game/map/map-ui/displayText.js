@@ -3,6 +3,7 @@ const state = require( '../../../game-data/state' )
 const globals = require( '../../../game-data/globals' )
 
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
+const Sound = require( '../../interfaces/I_Sound' ).Sound
 
 const getSpeechBubble = ( action ) => {
     state.currentMap.activeBubble = new SpeechBubble( action )
@@ -46,6 +47,11 @@ class SpeechBubble extends I_TextBox {
         const dimensions = getSpeechBubbleDimensions( action );
 
         super( getSpeechBubbleXy( action.x, action.y, dimensions ), dimensions, 'LARGE', action.text )
+        if ( action.sfx ) {
+            const sfx = new Sound(action.sfx, true)
+            sfx.play()
+        }
+
         this.action = action;
         if ( action.name ) {
             this.setHeader( action.name + ": " )
