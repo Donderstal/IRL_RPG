@@ -1,6 +1,5 @@
 from flask import Flask, request, send_from_directory
 import json
-
 app = Flask(__name__)
 
 # Path for our main Svelte page
