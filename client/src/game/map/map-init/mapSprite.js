@@ -71,7 +71,7 @@ class MapSprite extends I_Sprite {
         }
     }
 
-    speak( text, sfx ) {        
+    speak( text, sfx ) {    
         getSpeechBubble( {
             'x'     : this.x,
             'y'     : this.y,
@@ -82,7 +82,6 @@ class MapSprite extends I_Sprite {
     }
 
     setDestination( destination, endDirection ) {
-        console.log('start moving animation!')
         this.destination = destination
         this.type = "idle"
         this.destination.endDirection = endDirection
