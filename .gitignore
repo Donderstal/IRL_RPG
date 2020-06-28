@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-public/bundle.*
-public/game
-junk.js
+client/node_modules
+client/public/out
+client/public/bundle.*
 static
