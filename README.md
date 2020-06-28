@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUN 26, 2020
+* Implementing new front-end designs
+* New front end with a proper Svelte set up
+* Connecting new Front end inputs to game, updating StartGame funcs
+
 #### JUN 24, 2020
 * Added Cinematic and Scene Classes
 * Scripted gameplay based on scripted event triggers

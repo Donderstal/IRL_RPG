@@ -1,5 +1,5 @@
 const moves = {
-    "Influencer": [
+    "influencer": [
         {
             name        : "INF A",
             desc        : "INF A description.",
@@ -30,7 +30,7 @@ const moves = {
             animation   : [ 2, 3, 2, 3, 2 ]
         }     
     ],
-    "Neckbeard": [
+    "neckbeard": [
         {
             name        : "NEC A",
             desc        : "NEC A description.",
@@ -63,7 +63,7 @@ const moves = {
             animation   : [ 1, 2, 1, 2, 1, 2 ]
         }     
     ],
-    "Chad": [
+    "chad": [
         {
             name        : "CHA A",
             desc        : "CHA A description.",
@@ -90,7 +90,7 @@ const moves = {
             attribute   : "CHA"
         }        
     ],
-    "Tumblr_Girl": [
+    "tumblr_girl": [
         {
             name        : "TUM A",
             desc        : "TUM A description.",
