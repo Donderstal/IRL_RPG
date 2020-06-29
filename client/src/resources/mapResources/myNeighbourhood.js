@@ -483,6 +483,23 @@ module.exports = {
                     "locked": false
                 }
             ],
+            "mapObjects" : [
+                {  
+                    "type"  : "Lamppost_1",
+                    "row"   : 7,
+                    "col"   : 8
+                },
+                {
+                    "type"  : "Bus_Stop",
+                    "row"   : 7,
+                    "col"   : 19,
+                    "hasAction" : true,
+                    "action" : {
+                        "type": "BUS",
+                        "to": "downtown/A3/downtown-A3"
+                    }
+                }
+            ],
             "characters" : [
                 {
                     "type": "idle",
