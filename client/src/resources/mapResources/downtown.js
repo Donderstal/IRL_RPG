@@ -6,7 +6,6 @@ module.exports = {
             "outdoors": true,
             "music": "game-jam.mp3",
             "neighbours": {
-                "top": "my-neighbourhood/A1/neighbourhood-A1",
                 "right": "downtown/A2/downtown-A2"
             },
             "rows":11,
