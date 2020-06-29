@@ -17,6 +17,10 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUN 29, 2020
+* Added new maps for Downtown neighbourhood
+* Adding a Bus stop for travel between neighbourhoods
+
 #### JUN 28, 2020
 * Adding music to main menu, sfx to cinematics
 * Added animated sprites to main menu
