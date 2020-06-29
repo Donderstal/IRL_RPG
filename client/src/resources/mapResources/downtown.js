@@ -89,7 +89,9 @@ module.exports = {
                     "hasAction" : true,
                     "action" : {
                         "type": "BUS",
-                        "to": "my-neighbourhood/A2/neighbourhood-A2"
+                        "sfx": "typing.mp3",
+                        "to": "my-neighbourhood/A2/neighbourhood-A2",
+                        "text": "Take the bus to your neighbourhood?"
                     }
                 }
             ],

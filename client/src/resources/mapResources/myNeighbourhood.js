@@ -496,7 +496,9 @@ module.exports = {
                     "hasAction" : true,
                     "action" : {
                         "type": "BUS",
-                        "to": "downtown/A3/downtown-A3"
+                        "to": "downtown/A3/downtown-A3",
+                        "sfx": "typing.mp3",
+                        "text": "Take the bus downtown?"
                     }
                 }
             ],
