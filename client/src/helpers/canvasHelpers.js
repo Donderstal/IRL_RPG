@@ -128,13 +128,13 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
 
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
-    ctx.font = ( ( size === "LARGE") ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE ) + "px " + "GameFont";
+    ctx.font = ( ( size === "LARGE") ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE ) + "px " + "Stormfaze";
 }
 
 const writeTextLine = ( text, x, y, size, color = null ) => {
     let ctx = getFrontCanvasContext()
     setFont( size )
-    ctx.fillStyle = (color != null) ? color : "black"
+    ctx.fillStyle = (color != null) ? color : "white"
     ctx.fillText( text, x, y )
 }
 

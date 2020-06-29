@@ -88,6 +88,7 @@ class Door extends I_Hitbox {
                 urlToNewMap: this.to, 
                 oldMapName: state.currentMap.mapData.mapName
             }
+            
             const sfx = new Sound( "misc/random5.wav", true )
             sfx.play()
         }

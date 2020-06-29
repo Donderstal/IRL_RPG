@@ -4,7 +4,7 @@ export let returnToPreviousScreen
 
 <style>
     button {
-        background: #D82BBA 0% 0% no-repeat padding-box;
+        background: #d82bba 0% 0% no-repeat padding-box;
         opacity: 1;
         color: #defff2;
         width: 2vw;

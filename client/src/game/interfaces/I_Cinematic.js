@@ -69,6 +69,7 @@ class Scene {
     constructor( data ) {
         this.type   = data.type;
         this.spriteName = data.spriteName;
+        this.sfx = ( data.sfx ) ? data.sfx : false;
         this.setAction( data )
     }
 

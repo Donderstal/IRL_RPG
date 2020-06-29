@@ -1,20 +1,35 @@
 <script>
     import globals from '../../game-data/globals.js';
+    import anim from '../../resources/animationResources.js';
     import GoBackButton from './GoBackButton.svelte'
+    import { onMount } from 'svelte';
 
     export let returnToPreviousScreen;
-    let introSpriteWidth = globals.MAP_SPRITE_WIDTH_IN_SHEET * 3;
-    let introSpriteHeight = globals.MAP_SPRITE_HEIGHT_IN_SHEET * 3;
 
     const availableClasses = [ "NECKBEARD", "INFLUENCER", "CHAD", "TUMBLR_GIRL" ]
     const descriptions = { 
-        "NECKBEARD": "Aren't nice guys like me known for their superior intelligence, m'lady? Discover your inner neckbeard and fight your opponents with snidy remarks and social mishaps.", 
-        "INFLUENCER": "The #Influencer is always looking #Great in her online #GoodLife! Choose her and rob your opponents of their attention, money and self-esteem!", 
+        "NECKBEARD": "Aren't nice guys like me known for their superior intelligence, m'lady? Discover your inner Neckbeard and fight your opponents with edgy 'jokes' and social awkwardness.", 
+        "INFLUENCER": "The #Influencer is always looking #Great in her online #GoodLife! Choose her and rob your opponents of their attention, money and self-esteem.", 
         "CHAD": "The Chad loves kicking ass, bruh! In fact he's kicking so much ass, that he's hardly good for anything else. Choose him if you like to overwhelm your opponents with brute force.", 
-        "TUMBLR_GIRL": "The Tumblr Girl has many different feelings and they're always valid. Release your many identities upon the world and use your sense of entitlement to make your foes tremble!"
+        "TUMBLR_GIRL": "The Tumblr Girl is always online and she's always right. Release your many identities upon the world and summon the Twitter mobs to make your foes tremble!"
     }
     let activeClass = "NECKBEARD";
     let activeClassIndex = availableClasses.indexOf(activeClass);
+    let spriteWidth  = globals.MAP_SPRITE_WIDTH_IN_SHEET * 3
+    let spriteHeight = globals.MAP_SPRITE_HEIGHT_IN_SHEET * 3
+
+    let inAnimation = false;
+    let frameCount = 0;
+    let sheetPosition = 0;
+    let direction = 0;
+
+    let canvas;
+    let ctx;
+    let animationFrames;
+    let lastDateNow, newDateNow, animationDateNow;
+    let currentSprite;
+    let animationIndex = 0;
+    let animationType;
 
     const handleArrowClick = ( direction ) => {
         if ( direction == "L" || direction == "R" ) {
@@ -37,23 +52,143 @@
     }
 
     const getSpriteAndDrawToCanvas = ( ) => {
-        let currentSprite = new Image( );
+        clearFrameCount( )
+        currentSprite = new Image( );
         currentSprite.src = "/static/site_assets/" + activeClass.toLowerCase().replace(" ", "_") + ".v3.png";
         currentSprite.onload = ( ) => {
-            let canvas = document.getElementById("select-character-canvas")
-            let ctx = canvas.getContext('2d')
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(
                 currentSprite, 
-                0, 0, 
-                globals.MAP_SPRITE_WIDTH_IN_SHEET * 3, globals.MAP_SPRITE_HEIGHT_IN_SHEET * 3,
+                spriteWidth * sheetPosition, spriteHeight * direction, 
+                spriteWidth, spriteHeight,
                 0, 0,
                 canvas.width, canvas.height
             )
         }
     }
 
-    getSpriteAndDrawToCanvas( )
+    const animationFrameController = ( ) => {
+        newDateNow = Date.now();
+
+        if ( animationDateNow == undefined && !inAnimation ) {
+            animationDateNow = newDateNow;
+        }
+
+        if ( newDateNow - animationDateNow > 2000 && !inAnimation ) {
+            animationDateNow = newDateNow;
+            getAnimation( )
+        }
+
+        if ( newDateNow - lastDateNow > 1000 / globals.FRAMES_PER_SECOND || lastDateNow == undefined && inAnimation ) {
+            lastDateNow = newDateNow;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            frameCount++;  
+    
+            if ( frameCount >= globals.FRAME_LIMIT ) {
+                frameCount = 0;
+                doAnimation( )
+            }
+
+            ctx.drawImage(
+                currentSprite, 
+                spriteWidth * sheetPosition, spriteHeight * direction, 
+                spriteWidth, spriteHeight,
+                0, 0,
+                canvas.width, canvas.height
+            )
+        }
+        requestAnimationFrame(animationFrameController)
+    }
+
+    const doAnimation = ( ) => {
+        switch ( animationType) {
+            case "WALK" : 
+                sheetPosition++;
+                if (sheetPosition >= 4) {
+                    clearAnimationVariables()
+                }
+                break;
+            case "ANIM" : 
+                if ( animationIndex >= animationFrames.length ) {
+                    clearAnimationVariables()
+                }
+                else {
+                    const frame = animationFrames[animationIndex];
+                    sheetPosition = frame.position;
+                    direction = frame.direction
+                    animationIndex++
+                }
+        }
+    }
+    
+    const getAnimation = ( ) => {
+        switch ( Math.floor( Math.random( ) * 8 ) ) {
+            case 0 : 
+                animationFrames = anim["BACK_AND_FORTH"];
+                animationType = "ANIM"
+            break;
+            case 1 :
+                direction = 1;
+                animationType = "WALK"
+            break;
+            case 2 :
+                animationFrames = anim["TURN_SINGLE_CIRCLE"];
+                animationType = "ANIM"
+            break;
+            case 3 :
+                direction = 3;
+                animationType = "WALK"
+            break;
+            case 4 :
+                direction = 0;
+                animationType = "WALK"
+            break;
+            case 5 :
+                direction = 2;
+                animationType = "WALK"
+            break;
+            case 6 : 
+                animationFrames = anim["LEFT_AND_RIGHT"];
+                animationType = "ANIM"
+            break;
+            case 7 : 
+                animationFrames = anim["LEFT_AND_RIGHT_STEP"];
+                animationType = "ANIM"
+            break;
+            case 8 : 
+                animationFrames = anim["BACK_AND_FORTH_STEP"];
+                animationType = "ANIM"
+            break;
+        }
+
+        inAnimation = true;
+    }
+
+    const clearAnimationVariables = ( ) => {
+        animationIndex = 0;
+        animationFrames = 0;
+        sheetPosition = 0;
+        direction = 0;
+        inAnimation = false;
+        animationType = ""
+    }
+
+    const clearFrameCount = ( ) => {
+        clearAnimationVariables( )
+        frameCount = 0;
+        lastDateNow = undefined, 
+        animationDateNow = undefined;
+    }
+
+    onMount(async () => {
+        canvas = document.getElementById("select-character-canvas")
+        ctx = canvas.getContext('2d')
+        getSpriteAndDrawToCanvas( )
+        animationFrameController()
+	});
+
 </script>
 
 <style>
