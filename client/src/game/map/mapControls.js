@@ -5,7 +5,7 @@ const triggerEvent      = require('../../game-data/triggerEvents').triggerEvent
 const actionController  = require('./map-ui/actionController')
 
 const handleMapKeyPress = ( event ) => {
-    if ( event.key == "q" && !state.battleState.requestingBattle ) {
+    if ( event.key == "q" && !state.battleState.requestingBattle && !state.requestingBus ) {
         event.preventDefault()
         actionController.handleActionButton( )        
     }
@@ -13,6 +13,11 @@ const handleMapKeyPress = ( event ) => {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
         state.battleState.requestingBattle = false
+        state.requestingBus = false;
+    }
+    else if ( event.key == "q" && state.currentMap.bubbleIsActive && state.requestingBus ) {
+        state.mapTransition = state.requestingBus;
+        state.requestingBus = false;
     }
     else if ( event.key == "q" && state.currentMap.bubbleIsActive && state.battleState.requestingBattle ) {
         state.currentMap.activeBubble = {}
