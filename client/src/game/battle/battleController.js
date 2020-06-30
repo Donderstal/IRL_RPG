@@ -77,15 +77,15 @@ const initBattleMapAndSprites = ( ) => {
 const initializeBattleCharacter = ( opponent ) => {
     const mapBattleAction = opponent.action
     const playerParty = [ 
-        [ true, nameGen.getRandomName(), "Neckbeard", playerTopXy ],
+        [ true, nameGen.getRandomName(), state.playerCharacter.stats.className, playerTopXy ],
         [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerMiddleXy ],
-        [ true, nameGen.getRandomName(), "Chad", playerBottomXy ]
+        [ true, nameGen.getRandomName(), state.playerCharacter.stats.className, playerBottomXy ]
     ]
 
     const opponentParty = [ 
         [ false, nameGen.getRandomName(), mapBattleAction.character.class, opponentTopXy ],
         [ false, mapBattleAction.name, mapBattleAction.character.class, opponentMiddleXy ],
-        [ false, nameGen.getRandomName(), "Chad", opponentBottomXy ]
+        [ false, nameGen.getRandomName(), mapBattleAction.character.class, opponentBottomXy ]
     ]
 
     state.battleState.playerParty   = new Party( playerParty, "PLAYER" )
