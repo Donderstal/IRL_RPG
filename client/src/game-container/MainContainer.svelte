@@ -61,9 +61,9 @@
         <GfxContainer/>
     {:else if inMainMenu}
         <GameMenu closeMainMenu={() => { startGame() }}/>
+        <div class="background-div background-small">
+        </div>
+        <div class="background-div background-large">
+        </div>
     {/if}
-</div>
-<div class="background-div background-small">
-</div>
-<div class="background-div background-large">
 </div>

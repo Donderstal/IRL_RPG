@@ -9,7 +9,7 @@ const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, isPlayer = false ) {
-        super ( start, spriteSheetSrc, "XY", "LARG", 0 ) 
+        super ( start, spriteSheetSrc, "XY", "STRD", isPlayer ? 5 : 4 ) 
 
         this.isPlayer       = isPlayer
         this.buttons        = {}
@@ -45,19 +45,23 @@ class BattleSprite extends I_Sprite {
             battleText = state.battleState.textContainer
         }
 
-        if ( this.frameCount > ( globals.FRAME_LIMIT * 3 ) && ( this.position == globals.B_SHEETPOS_IDLE2 || this.position == globals.B_SHEETPOS_IDLE ) ) {
-            this.position = ( this.position == globals.B_SHEETPOS_IDLE ) ? globals.B_SHEETPOS_IDLE2 : globals.B_SHEETPOS_IDLE
-            this.frameCount = 0;
+        if ( this.frameCount > globals.FRAME_LIMIT ) {
+            if ( this.position + 1 < 4 ) {
+                this.position++ ;
+                this.frameCount = 0;
+            }
+            else {
+                this.position = 0;
+                this.frameCount = 0;
+            }
         }
 
-        let tilesheetX = this.position * 285
-
         canvasHelpers.drawFromImageToCanvas(
-            "FRONT",
-            this.sheet,
-            tilesheetX, 0, 
-            285, 285,
-            this.x, this.y, this.width, this.height
+            "FRONT", this.sheet,
+            ( globals.MAP_SPRITE_WIDTH_IN_SHEET * this.position ), ( globals.MAP_SPRITE_HEIGHT_IN_SHEET * this.direction ),
+            globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
+            this.x, this.y, 
+            this.width, this.height
         )
 
         this.updateSpriteBorders( )

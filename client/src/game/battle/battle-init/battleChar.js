@@ -7,10 +7,10 @@ const BattleSprite  = require('./battleSprite').BattleSprite
 
 class BattleChar {
     constructor( isPlayer, name, className, xy ) {
-        const spriteSrc = '/static/battlesprites/' + className.toLowerCase() + ( ( isPlayer ) ? '_fight.png' : '_fight_L.png' ) 
-        this.sprite     = new BattleSprite( xy, spriteSrc, true )
+        const spriteSrc = '/static/sprites/' + className.toLowerCase() + '.png' 
+        this.sprite     = new BattleSprite( xy, spriteSrc, isPlayer )
         this.character  = new CharacterBlueprint( name, className )
-        this.statsBar   = new BattleStats( this, isPlayer )
+        //this.statsBar   = new BattleStats( this, isPlayer )
         this.name       = name,
         this.className  = className,
         this.moves      = this.character.moves
@@ -77,7 +77,7 @@ class BattleChar {
 
     draw( ) {
         this.sprite.drawSprite();
-        this.statsBar.drawStats();
+        //this.statsBar.drawStats();
     }
 }
 
