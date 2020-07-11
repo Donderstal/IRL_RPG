@@ -9,7 +9,7 @@ const initTextContainer = ( ) => {
 }
 
 const getBattleTextXy = ( ) => {
-    return { "x": 0, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
+    return { "x": globals.CANVAS_WIDTH * .25, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
 }
 
 const getBattleTextDimensions = ( ) => {
@@ -31,17 +31,13 @@ class TextContainer extends I_TextBox {
         this.isMoveMenu = false
     }
 
-    getBattleTextXy( ) {
-        return { "x": 0, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
-    }
-
-    getBattleTextDimensions( ) {
-        return { "width": lobals.CANVAS_WIDTH / 2, "height": globals.CANVAS_HEIGHT / 6}
-    }
-
     setText(text) {
         this.text = canvas.breakTextIntoLines( text, 'LARGE', this.width )  
         super.setText(this.text)
+    }
+
+    drawTextBox( ) {
+        this.writeText( );
     }
 }
 
