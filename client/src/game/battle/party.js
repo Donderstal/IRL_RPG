@@ -8,8 +8,8 @@ class Party {
         this.inMoveSelection    = false;
         this.members            = [ ];
         this.partySize          = partyMembers.length
-        partyMembers.forEach( ( newMember ) => {
-            this.members.push( new BattleChar( newMember[0], newMember[1], newMember[2], newMember[3] ) )
+        partyMembers.forEach( ( newMember, index ) => {
+            this.members.push( new BattleChar( newMember[0], newMember[1], newMember[2], newMember[3], index ) )
         } )
 
         this.activeMember       = this.members[0]

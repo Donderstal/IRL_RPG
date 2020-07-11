@@ -3,7 +3,7 @@ const globals   = require('../../../game-data/globals');
 const state     = require('../../../game-data/state')
 
 class BattleStats { 
-    constructor ( owner, isPlayer ) {
+    constructor ( owner, isPlayer, index ) {
         this.owner          = owner
         this.isPlayer       = isPlayer
 
@@ -17,20 +17,21 @@ class BattleStats {
         canvas.setFont("SMALL")
         this.manalabelWidth = canvas.getFrontCanvasContext().measureText("MP: " + this.startingMP).width
 
-        this.height         = globals.CANVAS_HEIGHT * .05
-        this.y              = owner.sprite.y - globals.CANVAS_HEIGHT * .05
+        this.height         = globals.CANVAS_HEIGHT * .1
 
-        this.setPosition( )
+        this.setPosition( index )
         this.setContents( )
         this.drawStats( true )
     }
 
-    setPosition( ) {
+    setPosition( index ) {
         if ( this.isPlayer ) {
-            this.x      = this.owner.sprite.x - ( this.width * 1.25 ) 
+            this.x      = 0 + ( this.width * index )
+            this.y      = 0
         }
         else {
-            this.x      = this.owner.sprite.x + this.owner.sprite.width + ( this.width * .25 ) 
+            this.x      = globals.CANVAS_WIDTH - this.width - ( this.width * index );
+            this.y      = globals.CANVAS_HEIGHT - this.height
         }
     }
 
@@ -54,22 +55,32 @@ class BattleStats {
     }
 
     drawStats( ) {
-        canvas.drawRect( "FRONT", this.x - 2, this.y - 2, this.width + 4, this.height + 4, 'rgba(255,255,255, 0.66)' );
+        canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, 'rgba(100, 0, 83)' );
 
-        canvas.writeTextLine( this.name, this.x, this.y - globals.SMALL_FONT_SIZE, "LARGE" )
+        canvas.writeTextLine( this.name, this.x + (globals.LARGE_FONT_SIZE / 2), this.y + globals.SMALL_FONT_LINE_HEIGHT, "LARGE" )
         const nameWidth = canvas.getFrontCanvasContext().measureText(this.name).width
-        canvas.writeTextLine( " the " + this.className, this.x + nameWidth, this.y - globals.SMALL_FONT_SIZE, "SMALL" )
+        canvas.writeTextLine( " the " + this.className, this.x + nameWidth + (globals.LARGE_FONT_SIZE / 2), this.y + globals.SMALL_FONT_LINE_HEIGHT, "SMALL" )
 
         const manalabelWidth = canvas.getFrontCanvasContext().measureText("MP: " + this.MP).width     
-        const statBarX = this.x + manalabelWidth + globals.SMALL_FONT_SIZE / 4
+        const statBarX = this.x + manalabelWidth + globals.SMALL_FONT_SIZE / 2
 
-        canvas.drawRect( "FRONT", statBarX, this.y, this.HPBarWidth, globals.LARGE_FONT_SIZE, 'green' );
+        canvas.drawFromImageToCanvas( 
+            "FRONT", this.owner.sprite.sheet, 
+            0, 0, globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET * .66,
+            this.x + globals.LARGE_FONT_SIZE / 2, this.y + globals.LARGE_FONT_LINE_HEIGHT,
+            globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
+        )
+
+        canvas.writeTextLine( "HP: " + this.HP, this.x + globals.GRID_BLOCK_PX + (globals.SMALL_FONT_SIZE / 2), this.y + globals.LARGE_FONT_LINE_HEIGHT + globals.LARGE_FONT_SIZE, "SMALL" )
+        canvas.writeTextLine( "MP: " + this.MP, this.x + globals.GRID_BLOCK_PX + (globals.SMALL_FONT_SIZE / 2), this.y + globals.LARGE_FONT_LINE_HEIGHT + (globals.LARGE_FONT_SIZE * 2), "SMALL" )
+
+        /* canvas.drawRect( "FRONT", statBarX, this.y, this.HPBarWidth, globals.LARGE_FONT_SIZE, 'green' );
         canvas.drawRect( "FRONT", this.x, this.y + globals.LARGE_FONT_SIZE, this.width, 1, '#800020' );
-        canvas.writeTextLine( "HP: " + this.HP, this.x + globals.SMALL_FONT_SIZE / 4, this.y + globals.LARGE_FONT_SIZE, "SMALL" )
+        
 
         canvas.drawRect( "FRONT", statBarX, this.y + globals.LARGE_FONT_SIZE + 1, this.MPBarWidth, globals.LARGE_FONT_SIZE, 'blue' )
         canvas.drawRect( "FRONT", this.x, this.y + ( globals.LARGE_FONT_SIZE * 2), this.width, 1, '#800020' );
-        canvas.writeTextLine( "MP: " + this.MP, this.x + globals.SMALL_FONT_SIZE / 4, this.y + (globals.LARGE_FONT_SIZE * 2), "SMALL" )
+         */
     }
 }
 

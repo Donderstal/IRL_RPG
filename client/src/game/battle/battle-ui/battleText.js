@@ -9,7 +9,7 @@ const initTextContainer = ( ) => {
 }
 
 const getBattleTextXy = ( ) => {
-    return { "x": globals.CANVAS_WIDTH / 4, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
+    return { "x": 0, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
 }
 
 const getBattleTextDimensions = ( ) => {
@@ -32,7 +32,7 @@ class TextContainer extends I_TextBox {
     }
 
     getBattleTextXy( ) {
-        return { "x": globals.CANVAS_WIDTH / 4, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
+        return { "x": 0, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
     }
 
     getBattleTextDimensions( ) {
