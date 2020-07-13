@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUL 13, 2020
+* Restored some battle functionalities with new look
+* New spritesheets for battles
+* New setup for doing animations in a battle
+
 #### JUN 29, 2020
 * Added new maps for Downtown neighbourhood
 * Adding a Bus stop for travel between neighbourhoods
