@@ -1,7 +1,9 @@
 const res                   = require('../../../resources/resourceStrings')
 const state                 = require('../../../game-data/state')
+const globals               = require('../../../game-data/globals')
 const Sound                 = require('../../interfaces/I_Sound').Sound
 const BattleStats           = require('../battle-ui/battleStats').BattleStats
+const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite          = require('./battleSprite').BattleSprite
 
@@ -17,7 +19,27 @@ class BattleChar {
         this.hasTurn    = false;
         this.isPlayer   = isPlayer;
         this.nextMove, this.nextMoveTarget
+
+        this.getMoves( )
     }
+
+    getMoves( ) {
+        console.log(moveAnimationScripts)
+        let directionSuffix;
+        if ( this.sprite.initialRow == globals.SHEET_ROW_BATTLE_LEFT ) {
+            directionSuffix = "_L";
+        }
+        else {
+            directionSuffix = "_R";
+        }
+
+        for ( var i = 0; i < this.moves.length; i++ ) {
+            console.log(this.className)
+            let classAnimations = moveAnimationScripts[this.className]
+            this.moves[i].animation = classAnimations[this.moves[i].animation + directionSuffix]
+        }
+    }
+
     animateHit( ) {
         this.sprite.animateHit()
     }

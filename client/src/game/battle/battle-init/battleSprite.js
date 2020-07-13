@@ -9,17 +9,19 @@ const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, isPlayer = false ) {
-        super ( start, spriteSheetSrc, "XY", "STRD", isPlayer ? 5 : 4 ) 
+        super ( start, spriteSheetSrc, "XY", "STRD", isPlayer ? globals.SHEET_ROW_BATTLE_RIGHT : globals.SHEET_ROW_BATTLE_LEFT ) 
 
         this.isPlayer       = isPlayer
         this.buttons        = {}
         this.buttonSprites  = []
         this.animating      = false;
-        
+
         this.initialX       = this.x;
         this.destinationX   = null;
-        this.position       = globals.B_SHEETPOS_IDLE;
-        this.initialDir     = this.position;
+        this.columnInSheet  = globals.B_SHEETPOS_IDLE;
+        this.rowInSheet     = isPlayer ? 5 : 4
+
+        this.initialRow     = this.rowInSheet;
         this.showUI         = false;
         this.hasActiveButton= false;
         this.moving         = false;
@@ -46,19 +48,19 @@ class BattleSprite extends I_Sprite {
         }
 
         if ( this.frameCount > globals.FRAME_LIMIT ) {
-            if ( this.position + 1 < 4 ) {
-                this.position++ ;
+            if ( this.columnInSheet + 1 < 4 ) {
+                this.columnInSheet++ ;
                 this.frameCount = 0;
             }
             else {
-                this.position = 0;
+                this.columnInSheet = 0;
                 this.frameCount = 0;
             }
         }
 
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
-            ( globals.MAP_SPRITE_WIDTH_IN_SHEET * this.position ), ( globals.MAP_SPRITE_HEIGHT_IN_SHEET * this.direction ),
+            ( globals.MAP_SPRITE_WIDTH_IN_SHEET * this.columnInSheet ), ( globals.MAP_SPRITE_HEIGHT_IN_SHEET * this.rowInSheet ),
             globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
             this.x, this.y, 
             this.width, this.height
@@ -95,9 +97,9 @@ class BattleSprite extends I_Sprite {
     animateAttack( sheetPositions = null ) {
         if ( sheetPositions == null ) {
             this.moving = true;
-            this.position = globals.B_SHEETPOS_ATTACK;
+            this.columnInSheet = globals.B_SHEETPOS_ATTACK;
             setTimeout(() => {
-                this.position = globals.B_SHEETPOS_IDLE;
+                this.columnInSheet = globals.B_SHEETPOS_IDLE;
             }, 500 )                
         }
         else {
@@ -106,43 +108,47 @@ class BattleSprite extends I_Sprite {
                 this.setAnimationPosition( i, sheetPositions )
             }
             setTimeout(() => {
-                this.position = globals.B_SHEETPOS_IDLE;
+                this.columnInSheet = globals.B_SHEETPOS_IDLE;
+                this.rowInSheet = this.initialRow;
             }, ( 250 + ( 250 * sheetPositions.length ) ) )
         }
     }
 
     setAnimationPosition( index, sheetPositions ) {
+        console.log(this.className)
+        console.log(sheetPositions[index])
         setTimeout( () => {
-            this.position = sheetPositions[index];
+            this.columnInSheet = sheetPositions[index].columnInSheet;
+            this.rowInSheet = sheetPositions[index].rowInSheet;
         }, ( 250 ) + ( 250 * index ) )        
     }
 
     animateHit( ) {
-        this.position = globals.B_SHEETPOS_NONE;
+        this.columnInSheet = globals.B_SHEETPOS_NONE;
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = globals.B_SHEETPOS_IDLE;
         }, 175 )        
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = globals.B_SHEETPOS_NONE;
         }, 350 )     
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = globals.B_SHEETPOS_IDLE;
         }, 500 )             
     }
 
     fadeOut( ) {
-        this.position = globals.B_SHEETPOS_NONE;
+        this.columnInSheet = globals.B_SHEETPOS_NONE;
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = globals.B_SHEETPOS_IDLE;
         }, 250 )        
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = globals.B_SHEETPOS_NONE;
         }, 500 )     
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = globals.B_SHEETPOS_IDLE;
         }, 750 ) 
         setTimeout(() => {
-            this.position = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = globals.B_SHEETPOS_NONE;
         }, 1000 )               
     }
 
