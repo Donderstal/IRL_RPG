@@ -123,6 +123,11 @@ class MapObject extends I_Sprite {
 
         this.widthInSheet   = objectResource.width_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = objectResource.height_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
+        this.hasAction  = mapObject.hasAction;
+
+        if ( this.hasAction ) {
+            this.hitbox = new MapAction( this.x + (globals.GRID_BLOCK_PX * .25), this.y + (this.height - globals.GRID_BLOCK_PX) , mapObject.action )
+        }
     }
 
     drawSprite( ) {
@@ -136,6 +141,10 @@ class MapObject extends I_Sprite {
         )
 
         this.updateSpriteBorders( )
+
+        if ( this.hasAction ) {
+            this.hitbox.checkForActionRange( );        
+        }
     }
 }
 
@@ -170,6 +179,7 @@ class MapAction extends I_Hitbox {
         this.text       = action.text
         this.sfx        = action.sfx
         this.direction  = action.direction
+        this.to         = action.to
         this.arcColor   = "#FF0000";
         
     }

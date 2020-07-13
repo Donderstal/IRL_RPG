@@ -6,6 +6,7 @@ const handleActionButton = ( ) => {
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
+        return;
     }
 
     if ( state.currentMap.availableAction != null ) {
@@ -18,12 +19,19 @@ const handleAction = ( action ) => {
     switch ( action.type ) {
         case "TEXT" :
             displayActionText( action )
-            break            
+            break;   
+        case "BUS" :
+            displayActionText( action )
+            state.requestingBus = { 
+                'urlToNewMap': action.to,
+                'oldMapName': state.currentMap.mapData.mapName
+             };
+            break;
         case "BATTLE" :
             displayActionText( action )
             state.battleState.opponent.action = action
             state.battleState.requestingBattle = true
-            break            
+            break;            
         }
 }
 

@@ -207,8 +207,7 @@ module.exports = {
             "music": "game-jam.mp3",
             "neighbours": {
                 "right": "my-neighbourhood/A2/neighbourhood-A2",
-                "left": "my-neighbourhood/A0/neighbourhood-A0",
-                "bottom": "downtown/A1/downtown-A1"
+                "left": "my-neighbourhood/A0/neighbourhood-A0"
             },
             "rows":11,
             "columns":23,
@@ -481,6 +480,25 @@ module.exports = {
                     "directionIn": "FACING_UP",
                     "directionOut": "FACING_DOWN",
                     "locked": false
+                }
+            ],
+            "mapObjects" : [
+                {  
+                    "type"  : "Lamppost_1",
+                    "row"   : 7,
+                    "col"   : 8
+                },
+                {
+                    "type"  : "Bus_Stop",
+                    "row"   : 7,
+                    "col"   : 19,
+                    "hasAction" : true,
+                    "action" : {
+                        "type": "BUS",
+                        "to": "downtown/A3/downtown-A3",
+                        "sfx": "typing.mp3",
+                        "text": "Take the bus downtown?"
+                    }
                 }
             ],
             "characters" : [
