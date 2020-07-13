@@ -3,7 +3,9 @@ const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
 const Sound         = require('./../interfaces/I_Sound').Sound
 const text          = require('./battle-ui/battleText')
-const canvas        = require('./../../helpers/canvasHelpers')
+const grid          = require('../map/map-init/drawGrid')
+const tilesheets    = require('../../resources/tilesheetResources').sheets
+const maps          = require('../../resources/mapResources')
 const Party         = require('./Party').Party
 const nameGen       = require('./../../helpers/randomNameGen')
 
@@ -48,30 +50,30 @@ const startBattle = (  ) => {
         state.battleState.battleMusic.play()
     }
 
-    init.getBattleStartScreen( )
     initBattleMapAndSprites()
 }
 
 const initBattleMapAndSprites = ( ) => {
-    let battleMap;
+    let battleMap = {};
+    battleMap.mapData = maps.getMapData( "battle/downtown" );
+    let tileSheetData = tilesheets[battleMap.mapData.tileSet];
+    battleMap.tileSheet = new Image();
+    battleMap.tileSheet.src = '/static/tilesets/' + tileSheetData.src;
+    battleMap.tileSheet.onload = ( ) => {
+        grid.drawGrid( {"x": 0, "y": 0}, battleMap, tileSheetData, true );        
+    }
 
-    setTimeout( ( ) => {
-        battleMap = new Image();    
-        battleMap.src = '/static/battlemaps/city_fight_level.png'
-        battleMap.onload = ( ) => {    
-            canvas.drawFromImageToCanvas( "BACK", battleMap, 0, 0, 1296, 846, 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT )
-        }
-    }, 800)
+
     
     setTimeout( ( ) => {
         text.initTextContainer( ) // real text
-    }, 2000) 
+        state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
+    }, 600) 
 
     setTimeout( ( ) => {
         initializeBattleCharacter( state.battleState.opponent )
         state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
-        state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']
-    }, 2400)
+    }, 1200)
 }
 
 const initializeBattleCharacter = ( opponent ) => {
