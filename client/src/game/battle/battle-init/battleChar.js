@@ -1,9 +1,9 @@
-const res           = require('../../../resources/resourceStrings')
-const state         = require('../../../game-data/state')
-const Sound         = require('../../interfaces/I_Sound').Sound
-const BattleStats      = require('../battle-ui/battleStats').BattleStats
-const CharacterBlueprint  = require('../../character/character-init/characterBlueprint').CharacterBlueprint
-const BattleSprite  = require('./battleSprite').BattleSprite
+const res                   = require('../../../resources/resourceStrings')
+const state                 = require('../../../game-data/state')
+const Sound                 = require('../../interfaces/I_Sound').Sound
+const BattleStats           = require('../battle-ui/battleStats').BattleStats
+const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
+const BattleSprite          = require('./battleSprite').BattleSprite
 
 class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {

@@ -166,32 +166,32 @@ class BattleSprite extends I_Sprite {
         this.buttonSprites = []
 
         this.buttons.topCircle = { 
-            'x': this.x + ( this.width * 0.5 ), 
-            'y': this.y - ( this.height * 0.25 ), 
+            'x': this.x - ( this.width * 0.66 ), 
+            'y': this.y + ( this.height * 0.25 ), 
             'text' : res.BATTLE_BUTTON_1, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
             'hint': res.BATTLE_PUNCH_HINT
         }
         this.buttons.topMiddleCircle = { 
-            'x': this.x + ( this.width * 0.375 ),
-            'y': this.y - ( this.height * 0.125 ), 
+            'x': this.x,
+            'y': this.y,
             'text' : res.BATTLE_BUTTON_2, 'toolTip': res.BATTLE_MOVES_TOOLTIP,
             'hint': res.BATTLE_MOVES_HINT
         }
         this.buttons.middleCircle = { 
-            'x': this.x + ( this.width * 0.25 ),
-            'y': this.y, 
+            'x': this.x + ( this.width * 0.66 ),
+            'y': this.y - ( this.height * 0.25 ), 
             'text' : res.BATTLE_BUTTON_3, 'toolTip': res.BATTLE_DEFEND_TOOLTIP,
             'hint': res.BATTLE_DEFEND_HINT
         }
         this.buttons.bottomMiddleCircle = { 
-            'x': this.x + ( this.width * 0.125 ),
-            'y': this.y + ( this.height * 0.125 ), 
+            'x': this.x + this.width + ( this.width * 0.33 ),
+            'y': this.y - ( this.height * 0.25 ), 
             'text' : res.BATTLE_BUTTON_4, 'toolTip': res.BATTLE_ITEM_TOOLTIP,
             'hint': res.BATTLE_ITEM_HINT
         }
         this.buttons.bottomCircle = { 
-            'x': this.x,
-            'y': this.y + ( this.height * 0.25 ), 
+            'x': this.x + ( this.width * 2 ),
+            'y': this.y - ( this.height * 0.25 ), 
             'text' : res.BATTLE_BUTTON_5, 'toolTip': res.BATTLE_FLEE_TOOLTIP,
             'hint': res.BATTLE_FLEE_HINT
         }
