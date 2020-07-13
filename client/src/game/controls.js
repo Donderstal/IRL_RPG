@@ -25,6 +25,9 @@ const stopListenForKeyPress = () => {
 }
 
 const addKeyToPressed = ( ) => {
+    if ( event.key == "l" ) {
+        console.log(state)
+    }
     if ( state.overworldMode ) {
         handleMapKeyPress( event )
     }
