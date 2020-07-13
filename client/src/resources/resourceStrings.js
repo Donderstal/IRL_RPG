@@ -72,18 +72,18 @@ const NECKBEARD_FIGHT_SHOUTS = [
 ]
 
 const NECKBEARD_VICTORY_SHOUTS = [
-    "My victory was worthy and righteous!",
     "That'll teach you not to mess with a Darkmage",
     "Your paladin, m'lady",
     "That was way more exhausting than WoW...",
-    "Can I go home now?"
+    "Can I go home now? Mom made me dinner"
 ]
 
 const INFLUENCER_FIGHT_SHOUTS = [
     "Creep!",
     "#Damage",
     "Stop following me!",
-    "Oh. My. God."
+    "Oh. My. God.",
+    "#BossBabe"
 ]
 
 const INFLUENCER_VICTORY_SHOUTS = [
@@ -102,7 +102,7 @@ const CHAD_FIGHT_SHOUTS = [
 
 const CHAD_VICTORY_SHOUTS = [
     "Sarah conner get to da chopper",
-    "Incel bitches",
+    "Incel bitches...",
     "Who's your chaddy?"
 ]
 
@@ -122,11 +122,11 @@ const TUMBLR_GIRL_VICTORY_SHOUTS = [
 
 module.exports = {
 
-    BATTLE_BUTTON_1     : "( 1 )",
-    BATTLE_BUTTON_2     : "( 2 )",
-    BATTLE_BUTTON_3     : "( 3 )",    
-    BATTLE_BUTTON_4     : "( 4 )",
-    BATTLE_BUTTON_5     : "( 5 )",
+    BATTLE_BUTTON_1     : "1",
+    BATTLE_BUTTON_2     : "2",
+    BATTLE_BUTTON_3     : "3",    
+    BATTLE_BUTTON_4     : "4",
+    BATTLE_BUTTON_5     : "5",
 
     BATTLE_PUNCH_TOOLTIP    : "Punch",
     BATTLE_PUNCH_HINT       : "A standard punching attack, available to all characters",

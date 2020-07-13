@@ -6,28 +6,28 @@ const moves = {
             type        : "STAT_UP",
             attribute   : "CHA",
             turns       : 3,
-            animation   : [ 3, 4, 5, 6, 7 ]
+            animation   : "PUNCH"
         },
         {
             name        : "INF B",
             desc        : "INF B description.",
             type        : "HEAL",
             attribute   : "END",
-            animation   : [ 3, 4, 5, 6, 7, 6, 7, 6, 7 ]
+            animation   : "PUNCH"
         },
         {
             name        : "INF C",
             desc        : "INF C description.",
             type        : "ATTACK",
             attribute   : "ATH",
-            animation   : [ 4, 5, 3 ]
+            animation   : "PUNCH"
         },
         {
             name        : "INF D",
             desc        : "INF D description.",
             type        : "SP_ATTACK",
             attribute   : "CHA",
-            animation   : [ 2, 3, 2, 3, 2 ]
+            animation   : "PUNCH"
         }     
     ],
     "neckbeard": [
@@ -37,7 +37,7 @@ const moves = {
             type        : "STAT_DOWN",
             attribute   : "MYS",
             turns       : 3,
-            animation   : [ 3, 4, 5, 6, 7, 8 ]
+            animation   : "PUNCH"
         },
         {
             name        : "NEC B",
@@ -45,7 +45,7 @@ const moves = {
             type        : "ATR_UP",
             attribute   : "INT",
             turns       : 2,
-            animation   : [ 3, 1, 3, 1, 2 ]
+            animation   : "NECKBEARD_HACK"
         },
         {
             name        : "NEC C",
@@ -53,14 +53,14 @@ const moves = {
             type        : "ATR_DOWN",
             attribute   : "WIS",
             turns       : 3,
-            animation   : [ 8, 7, 6, 5, 4, 3 ]
+            animation   : "NECKBEARD_HACK"
         },
         {
             name        : "NEC D",
             desc        : "NEC D description.",
             type        : "STATUS_EFFECT",
             attribute   : 5,
-            animation   : [ 1, 2, 1, 2, 1, 2 ]
+            animation   : "NECKBEARD_HACK"
         }     
     ],
     "chad": [
@@ -69,25 +69,29 @@ const moves = {
             desc        : "CHA A description.",
             type        : "STAT_UP",
             attribute   : "CHA",
-            turns       : 3
+            turns       : 3,
+            animation   : "PUNCH"
         },
         {
             name        : "CHA B",
             desc        : "CHA B description.",
             type        : "HEAL",
-            attribute   : "END"
+            attribute   : "END",
+            animation   : "PUNCH"
         },
         {
             name        : "CHA C",
             desc        : "CHA C description.",
             type        : "ATTACK",
-            attribute   : "ATH"
+            attribute   : "ATH",
+            animation   : "PUNCH"
         },
         {
             name        : "CHA D",
             desc        : "CHA D description.",
             type        : "SP_ATTACK",
-            attribute   : "CHA"
+            attribute   : "CHA",
+            animation   : "PUNCH"
         }        
     ],
     "tumblr_girl": [
@@ -95,23 +99,27 @@ const moves = {
             name        : "TUM A",
             desc        : "TUM A description.",
             type        : "SP_ATTACK",
-            attribute   : "INT"
+            attribute   : "INT",
+            animation   : "PUNCH"
         },
         {
             name        : "TUM B",
             desc        : "TUM B description",
             type        : "SP_ATTACK",
-            attribute   : "INT"
+            attribute   : "INT",
+            animation   : "PUNCH"
         },
         {
             name        : "TUM C",
             desc        : "TUM C description",
-            type        : "Sp Damage"
+            type        : "Sp Damage",
+            animation   : "PUNCH"
         },
         {
             name        : "TUM D",
             desc        : "TUM D description",
-            type        : "Status down"
+            type        : "Status down",
+            animation   : "PUNCH"
         }
     ]
 }

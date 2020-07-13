@@ -46,24 +46,26 @@ const getMapAttributes = ( BOOT_STATUS ) => {
 }
 
 const initMapFromBattle = ( ) => {
-    drawGrid.generateMap( state.currentMap )
+    drawGrid.generateMap( state.currentMap, tilesheets[state.currentMap.mapData.tileSet] )
     setTimeout(() => {
         state.currentMap.mapMusic.play() 
     }, 1000)
 }
 
-const initializeMap = ( mapJson, BOOT_STATUS ) => {    
+const initializeMap = ( mapJson, BOOT_STATUS, setAttributes = true ) => {    
     state.currentMap.mapData = mapJson;
     state.currentMap.blockedXyValues = []    
     drawGrid.generateMap( state.currentMap, tilesheets[mapJson.tileSet] )    
 
-    getMapMusic( BOOT_STATUS );
-    
-    ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS );
-
-    setTimeout(() => {
-        triggerEvent("ON_ENTER")
-    }, 1000)
+    if ( setAttributes ) {
+        getMapMusic( BOOT_STATUS );
+        
+        ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS );   
+        
+        setTimeout(() => {
+            triggerEvent("ON_ENTER")
+        }, 1000)
+    }
 }
 
 

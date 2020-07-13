@@ -34,7 +34,6 @@ class Sound {
   }
   stop ( ) {
     this.sound.pause();
-    document.getElementById(this.src).remove()
   }
 }
 

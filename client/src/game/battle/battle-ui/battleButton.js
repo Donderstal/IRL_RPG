@@ -7,7 +7,7 @@ class battleButton {
         this.ctx        = canvas.getFrontCanvasContext()
         this.centralX   = x,
         this.centralY   = y,
-        this.range      = globals.GRID_BLOCK_PX * .5
+        this.range      = globals.GRID_BLOCK_PX * .25
         this.text       = buttonText,
         this.toolTip    = toolTipText,
         this.hint       = hintText
@@ -21,16 +21,14 @@ class battleButton {
         this.textY      = y + ( globals.SMALL_FONT_SIZE * .75 )
 
         canvas.setFont( "SMALL" );
-        this.toolTipX   = x - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(toolTipText).width )
-        this.toolTipY   = y + ( globals.SMALL_FONT_SIZE * .5 )
-
-        this.drawButton( );
+        this.toolTipX   = x - this.ctx.measureText(toolTipText).width 
+        this.toolTipY   = y - globals.SMALL_FONT_SIZE
     }
 
     setToolTip( toolTipText ) {
         canvas.setFont( "SMALL" );
         this.toolTip    = toolTipText,
-        this.toolTipX   = this.centralX - ( ( globals.GRID_BLOCK_PX * .75 ) + this.ctx.measureText(this.toolTip).width ) 
+        this.toolTipX   = this.centralX -  this.ctx.measureText(this.toolTip).width 
     }
 
     drawButton( ) {

@@ -176,6 +176,27 @@ module.exports = {
                     "locked": false
                 }
             ],
+            "characters" : [
+                {
+                    "type": "idle",
+                    "sprite": "chad.png",
+                    "direction": "FACING_DOWN",
+                    "row": 1,
+                    "col": 2,
+                    "name": "Boze Bert",                    
+                    "action": {
+                        "type": "BATTLE",
+                        "sfx": "voice-1.mp3",
+                        "direction": "FACING_UP",
+                        "text": "I'm in your house, about to kick your ass!",
+                        "character": {
+                            "class": "chad",
+                            "level": 5,
+                            "battleSprite": "chad.png"
+                        }
+                    }
+                }
+            ],
             "actions" : [
                 {
                     "row": 0,

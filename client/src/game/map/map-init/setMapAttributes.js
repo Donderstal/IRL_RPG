@@ -173,7 +173,7 @@ class MapAction extends I_Hitbox {
         this.name = speaker
 
         if ( action.character ) {
-            this.characer = action.character
+            this.character = action.character
         }
         this.type       = action.type
         this.text       = action.text

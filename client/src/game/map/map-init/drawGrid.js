@@ -73,8 +73,12 @@ const getStartingPositionOfGridInCanvas = ( mapColumns, mapRows ) => {
  * @param {object} currentMap - Object containing all the data needed to draw Grid
  */
 
-const drawGrid = ( startingPosition, currentMap, sheetJson ) => {
+const drawGrid = ( startingPosition, currentMap, sheetJson, battleMap = false ) => {
     const position = startingPosition
+
+    if ( battleMap ) {
+        calcTilesheetXyPositions( sheetJson.uniqueTiles )
+    }
 
     for ( var i = 0; i <= currentMap.mapData.rows; i++ ) {
         const currentRow = currentMap.mapData.grid[i]
@@ -156,13 +160,10 @@ const drawTileInGridBlock = ( currentMap, tile, startPositionInCanvas ) => {
         globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
         startPositionInCanvas.x, startPositionInCanvas.y,
         blockSize, blockSize
-    )        
-    
-    /* let backCtx = canvasHelpers.getBackCanvasContext();
-    backCtx.strokeRect(startPositionInCanvas.x, startPositionInCanvas.y, blockSize, blockSize) */
-    
+    )           
 }
 
 module.exports = {
-    generateMap
+    generateMap,
+    drawGrid
 }
