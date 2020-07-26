@@ -7,6 +7,7 @@ const grid          = require('../map/map-init/drawGrid')
 const tilesheets    = require('../../resources/tilesheetResources').sheets
 const maps          = require('../../resources/mapResources')
 const Party         = require('./Party').Party
+const BattleMenu    = require('./battle-ui/battleMenu').BattleMenu
 const nameGen       = require('./../../helpers/randomNameGen')
 
 const playerTopXy = {
@@ -51,6 +52,11 @@ const startBattle = (  ) => {
     }
 
     initBattleMapAndSprites()
+    initBattleMenu()
+}
+
+const initBattleMenu = ( ) => {
+    state.battleState.battleMenu = new BattleMenu() 
 }
 
 const initBattleMapAndSprites = ( ) => {
