@@ -4,7 +4,7 @@ const canvas = require('../../../helpers/canvasHelpers')
 class BattleMenu {
     constructor( ) {
         this.width          = globals.CANVAS_WIDTH / 8;
-        this.height         = globals.BATTLE_FONT_LINE_HEIGHT * 4.5;
+        this.height         = globals.BATTLE_FONT_LINE_HEIGHT * 5.5;
         this.x              = 0;
         this.y              = globals.CANVAS_HEIGHT - this.height
         this.textStartingY  = this.y + globals.BATTLE_FONT_LINE_HEIGHT
@@ -22,6 +22,8 @@ class BattleMenu {
         canvas.writeTextLine( "ITEMS", this.textStartingX, this.textStartingY + lineHeightAcc, "BATTLE" )
         lineHeightAcc += globals.BATTLE_FONT_LINE_HEIGHT
         canvas.writeTextLine( "FLEE", this.textStartingX, this.textStartingY + lineHeightAcc, "BATTLE" )
+        lineHeightAcc += globals.BATTLE_FONT_LINE_HEIGHT
+        canvas.writeTextLine( "OPTIONS", this.textStartingX, this.textStartingY + lineHeightAcc, "BATTLE" )
     }
 } 
 

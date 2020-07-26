@@ -6,6 +6,7 @@ const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite          = require('./battleSprite').BattleSprite
+const canvas                = require('../../../helpers/canvasHelpers')
 
 class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {
