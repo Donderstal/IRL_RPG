@@ -15,6 +15,7 @@ class BattleChar {
         this.character  = new CharacterBlueprint( name, className )
         this.statsBar   = new BattleStats( this, isPlayer, index )
         this.name       = name,
+        this.index      = index
         this.className  = className,
         this.moves      = this.character.moves
         this.hasTurn    = false;
@@ -69,6 +70,19 @@ class BattleChar {
 
     doMove( moveTarget ) {
         this.nextMove( this.character, moveTarget )
+    }
+
+    target( ) {
+        this.targeted = true;
+        const moveName = state.battleState.playerParty.activeMember.nextMove.name
+        state.battleState.targetedCharacter = this
+        state.battleState.textContainer.setText( "Use  " + moveName + " on " + this.name )
+        this.sprite.target()
+    }
+
+    deTarget( ) {
+        this.targeted = false;
+        this.sprite.deTarget()
     }
 
     activateUI( ) {

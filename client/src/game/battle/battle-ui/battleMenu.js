@@ -41,6 +41,10 @@ class BattleMenu {
         }
     }
 
+    resetMenu( ) {
+        this.activateButtonAtIndex( 0 )
+    }
+
     activateButtonAtIndex( buttonIndex ) {
         if ( this.activeButton != null ) {
             this.activeButton.deActivate( );            

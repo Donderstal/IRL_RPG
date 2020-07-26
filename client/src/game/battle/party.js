@@ -14,11 +14,12 @@ class Party {
         this.activeMember       = this.members[0]
         state.battleState.battleMenu.activeCharacter = this.activeMember;
         this.activeMemberIndex  = 0;
+        this.targetIndex        = 0;
     }
 
     getNextPartyMember( ) {
         this.activeMember.deActivateUi( );
-        if ( this.activeMemberIndex + 1 < this.partySize ) {
+        if ( this.activeMemberIndex < this.partySize - 1 ) {
             this.activeMemberIndex += 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
@@ -27,6 +28,12 @@ class Party {
         else {
             this.inMoveSelection = false;
         }
+    }
+
+    activateTarget( newTargetIndex ) {
+        this.members[this.targetIndex].deTarget( );
+        this.targetIndex = newTargetIndex
+        this.members[this.targetIndex].target( );
     }
 
     prepareMoveSelection( ) {

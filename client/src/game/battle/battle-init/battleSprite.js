@@ -23,11 +23,18 @@ class BattleSprite extends I_Sprite {
         this.moving         = false;
         this.active         = false;
 
-        this.arrowPNG       = new Image( )
-        this.arrowLoaded    = false;
-        this.arrowPNG.src   = "/static/ui/green_arrow.png"
-        this.arrowPNG.onload = ( ) => {
-            this.arrowLoaded = true;
+        this.greenArrowPNG       = new Image( )
+        this.greenArrowLoaded    = false;
+        this.greenArrowPNG.src   = "/static/ui/green_arrow.png"
+        this.greenArrowPNG.onload = ( ) => {
+            this.greenArrowLoaded = true;
+        }
+
+        this.redArrowPNG       = new Image( )
+        this.redArrowLoaded    = false;
+        this.redArrowPNG.src   = "/static/ui/red_arrow.png"
+        this.redArrowPNG.onload = ( ) => {
+            this.redArrowLoaded = true;
         }
 
         this.shout          = null;
@@ -39,6 +46,14 @@ class BattleSprite extends I_Sprite {
 
     deActivateUI( ) {
         this.active         = false;
+    }
+
+    target( ) {
+        this.targeted = true;
+    }
+
+    deTarget( ) {
+        this.targeted = false;
     }
     
     drawSprite( ) {
@@ -68,12 +83,21 @@ class BattleSprite extends I_Sprite {
             this.drawShout( )
         }
 
-        if ( this.active && this.arrowLoaded ) {
-            console.log('drawing arrow...')
+        if ( this.active && this.greenArrowLoaded ) {
             canvasHelpers.drawFromImageToCanvas(
-                "FRONT", this.arrowPNG,
+                "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
                 0, 0,
                 860, 900,
+                this.x, this.y - globals.GRID_BLOCK_PX, 
+                globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
+            )
+        }
+
+        if ( this.targeted && this.redArrowLoaded ) {
+            canvasHelpers.drawFromImageToCanvas(
+                "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
+                0, 0,
+                1200, 1200,
                 this.x, this.y - globals.GRID_BLOCK_PX, 
                 globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
             )
@@ -129,7 +153,6 @@ class BattleSprite extends I_Sprite {
     }
 
     setAnimationPosition( index, sheetPositions ) {
-        console.log(sheetPositions[index])
         setTimeout( () => {
             this.columnInSheet = sheetPositions[index].columnInSheet;
             this.rowInSheet = sheetPositions[index].rowInSheet;
@@ -140,13 +163,16 @@ class BattleSprite extends I_Sprite {
         this.columnInSheet = globals.B_SHEETPOS_NONE;
         setTimeout(() => {
             this.columnInSheet = globals.B_SHEETPOS_IDLE;
-        }, 175 )        
+        }, 250 )        
         setTimeout(() => {
             this.columnInSheet = globals.B_SHEETPOS_NONE;
-        }, 350 )     
+        }, 500 )     
         setTimeout(() => {
             this.columnInSheet = globals.B_SHEETPOS_IDLE;
-        }, 500 )             
+        }, 750 ) 
+        setTimeout(() => {
+            this.columnInSheet = globals.B_SHEETPOS_NONE;
+        }, 1000 )             
     }
 
     fadeOut( ) {
