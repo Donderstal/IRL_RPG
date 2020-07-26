@@ -82,6 +82,9 @@ const PHASE_STAT_CHECK              = 3
 const SHEET_ROW_BATTLE_LEFT         = 4
 const SHEET_ROW_BATTLE_RIGHT        = 5
 
+const BATTLE_UI_CHAR_WIDTH          = CANVAS_WIDTH * .10
+const BATTLE_UI_CHAR_HEIGHT         = BATTLE_UI_CHAR_WIDTH * 1.33
+
 module.exports = {
     MOVEMENT_SPEED,
     FACING_DOWN,
@@ -126,5 +129,7 @@ module.exports = {
     PHASE_DO_MOVE,
     PHASE_STAT_CHECK,
     SHEET_ROW_BATTLE_LEFT,
-    SHEET_ROW_BATTLE_RIGHT
+    SHEET_ROW_BATTLE_RIGHT,
+    BATTLE_UI_CHAR_WIDTH,
+    BATTLE_UI_CHAR_HEIGHT
 }
