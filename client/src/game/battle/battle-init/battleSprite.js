@@ -1,10 +1,6 @@
 const globals = require('../../../game-data/globals')
-const battleButton = require('../battle-ui/battleButton').battleButton
-const res   = require('../../../resources/resourceStrings')
 const state = require('../../../game-data/state')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
-let battleText;
-
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
 class BattleSprite extends I_Sprite {
@@ -25,20 +21,26 @@ class BattleSprite extends I_Sprite {
         this.showUI         = false;
         this.hasActiveButton= false;
         this.moving         = false;
+        this.active         = false;
+
+        this.arrowPNG       = new Image( )
+        this.arrowLoaded    = false;
+        this.arrowPNG.src   = "/static/ui/green_arrow.png"
+        this.arrowPNG.onload = ( ) => {
+            
+        }
 
         this.shout          = null;
-
-        if ( this.isPlayer ) {
-            this.initBattleUI( )            
-        }
     }
     
     activateUI( ) {
-        this.showUI = true;
+        this.active         = true;
+        state.battleState.battleMenu.activeCharacter = this;
+        console.log(state.battleState.battleMenu.activeCharacter);
     }
 
     deActivateUI( ) {
-        this.showUI = false;
+        this.active         = false;
     }
     
     drawSprite( ) {
@@ -72,11 +74,29 @@ class BattleSprite extends I_Sprite {
             this.drawShout( )
         }
 
-        if ( this.showUI ) {
-            this.buttonSprites.forEach((e) => {
-                e.drawButton( )
-            })            
-        }    
+        if ( this.active && this.arrowLoaded ) {
+            console.log('drawing arrow...')
+            canvasHelpers.drawFromImageToCanvas(
+                "FRONT", this.arrowPNG.src,
+                0, 0,
+                860, 900,
+                this.x + globals.GRID_BLOCK_PX, this.y + globals.GRID_BLOCK_PX, 
+                globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
+            )
+        }
+    }
+
+    drawArrow( ) {
+        if ( !this.arrowLoaded ) {
+            this.arrowLoaded = true;
+        }
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", this.arrowPNG.src,
+            0, 0,
+            860, 900,
+            this.x + globals.GRID_BLOCK_PX, this.y + globals.GRID_BLOCK_PX, 
+            globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
+        )
     }
 
     drawShout( ) {
@@ -115,7 +135,6 @@ class BattleSprite extends I_Sprite {
     }
 
     setAnimationPosition( index, sheetPositions ) {
-        console.log(this.className)
         console.log(sheetPositions[index])
         setTimeout( () => {
             this.columnInSheet = sheetPositions[index].columnInSheet;
@@ -150,75 +169,6 @@ class BattleSprite extends I_Sprite {
         setTimeout(() => {
             this.columnInSheet = globals.B_SHEETPOS_NONE;
         }, 1000 )               
-    }
-
-    setButtonAsActive( buttonKey ) {
-        this.hasActiveButton = true;
-
-        let index = parseInt( buttonKey ) - 1
-        let spriteAtIndex = this.buttonSprites[index]
-        
-        battleText.setText( spriteAtIndex.hint )
-        spriteAtIndex.setActive( true )
-
-        this.buttonSprites.forEach( (e) => {
-            if ( e != spriteAtIndex ) {
-                e.setActive( false )                
-            }
-        })
-    }
-
-    initBattleUI( ) {
-        this.buttonSprites = []
-
-        this.buttons.topCircle = { 
-            'x': this.x - ( this.width * 0.66 ), 
-            'y': this.y + ( this.height * 0.25 ), 
-            'text' : res.BATTLE_BUTTON_1, 'toolTip': res.BATTLE_PUNCH_TOOLTIP,
-            'hint': res.BATTLE_PUNCH_HINT
-        }
-        this.buttons.topMiddleCircle = { 
-            'x': this.x,
-            'y': this.y,
-            'text' : res.BATTLE_BUTTON_2, 'toolTip': res.BATTLE_MOVES_TOOLTIP,
-            'hint': res.BATTLE_MOVES_HINT
-        }
-        this.buttons.middleCircle = { 
-            'x': this.x + ( this.width * 0.66 ),
-            'y': this.y - ( this.height * 0.25 ), 
-            'text' : res.BATTLE_BUTTON_3, 'toolTip': res.BATTLE_DEFEND_TOOLTIP,
-            'hint': res.BATTLE_DEFEND_HINT
-        }
-        this.buttons.bottomMiddleCircle = { 
-            'x': this.x + this.width + ( this.width * 0.33 ),
-            'y': this.y - ( this.height * 0.25 ), 
-            'text' : res.BATTLE_BUTTON_4, 'toolTip': res.BATTLE_ITEM_TOOLTIP,
-            'hint': res.BATTLE_ITEM_HINT
-        }
-        this.buttons.bottomCircle = { 
-            'x': this.x + ( this.width * 2 ),
-            'y': this.y - ( this.height * 0.25 ), 
-            'text' : res.BATTLE_BUTTON_5, 'toolTip': res.BATTLE_FLEE_TOOLTIP,
-            'hint': res.BATTLE_FLEE_HINT
-        }
-
-        Object.keys(this.buttons).forEach( ( key ) => {
-            this.buttonSprites.push(
-                new battleButton( 
-                    this.buttons[key].x, this.buttons[key].y, 
-                    this.buttons[key].text, this.buttons[key].toolTip,
-                    this.buttons[key].hint
-                ) 
-            ) 
-        } )
-    }
-
-    initBattleMovesMenu( characterMoves ) {
-        this.buttonSprites.forEach( (buttonSprite, index) => {
-            buttonSprite.setToolTip( characterMoves[index].name )
-            buttonSprite.hint = characterMoves[index].desc
-            buttonSprite.isMenuButton = true;    
-        })
     }
 }
 
