@@ -51,8 +51,9 @@ const startBattle = (  ) => {
         state.battleState.battleMusic.play()
     }
 
-    initBattleMapAndSprites()
     initBattleMenu()
+    initBattleMapAndSprites()
+
 }
 
 const initBattleMenu = ( ) => {

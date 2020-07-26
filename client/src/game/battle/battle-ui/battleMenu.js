@@ -1,5 +1,6 @@
 const globals = require('../../../game-data/globals')
 const canvas = require('../../../helpers/canvasHelpers')
+const state = require('../../../game-data/state')
 
 class BattleMenu {
     constructor( ) {
@@ -47,6 +48,9 @@ class BattleMenu {
 
         this.buttons[buttonIndex].activate( );
         this.activeButton       = this.buttons[buttonIndex];
+        if ( this.inMoveMenu ) {
+            state.battleState.textContainer.setText( this.activeCharacter.moves[buttonIndex].desc )
+        }
     }
 
     drawMenu( ) {

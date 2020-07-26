@@ -27,7 +27,7 @@ class BattleSprite extends I_Sprite {
         this.arrowLoaded    = false;
         this.arrowPNG.src   = "/static/ui/green_arrow.png"
         this.arrowPNG.onload = ( ) => {
-            
+            this.arrowLoaded = true;
         }
 
         this.shout          = null;
@@ -35,8 +35,6 @@ class BattleSprite extends I_Sprite {
     
     activateUI( ) {
         this.active         = true;
-        state.battleState.battleMenu.activeCharacter = this;
-        console.log(state.battleState.battleMenu.activeCharacter);
     }
 
     deActivateUI( ) {
@@ -45,10 +43,6 @@ class BattleSprite extends I_Sprite {
     
     drawSprite( ) {
         this.frameCount++;
-        if ( state.battleState.textContainer ) {
-            battleText = state.battleState.textContainer
-        }
-
         if ( this.frameCount > globals.FRAME_LIMIT ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
@@ -77,10 +71,10 @@ class BattleSprite extends I_Sprite {
         if ( this.active && this.arrowLoaded ) {
             console.log('drawing arrow...')
             canvasHelpers.drawFromImageToCanvas(
-                "FRONT", this.arrowPNG.src,
+                "FRONT", this.arrowPNG,
                 0, 0,
                 860, 900,
-                this.x + globals.GRID_BLOCK_PX, this.y + globals.GRID_BLOCK_PX, 
+                this.x, this.y - globals.GRID_BLOCK_PX, 
                 globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
             )
         }

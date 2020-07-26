@@ -23,14 +23,6 @@ class TextContainer extends I_TextBox {
         this.waiting    = false;        
     }
     
-    setMoveMenu( ) {
-        this.isMoveMenu = true;
-    }
-
-    unsetMoveMenu( ) {
-        this.isMoveMenu = false
-    }
-
     setText(text) {
         this.text = canvas.breakTextIntoLines( text, 'LARGE', this.width )  
         super.setText(this.text)
