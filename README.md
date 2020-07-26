@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUL 25, 2020
+* Setting up a new system for characters stats
+* New Attributes class for use in characters
+* New Tilesheet for first neighbourhood
+
 #### JUL 13, 2020
 * Restored some battle functionalities with new look
 * New spritesheets for battles

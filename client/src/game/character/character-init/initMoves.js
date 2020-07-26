@@ -39,7 +39,7 @@ class Move {
         damage += attacker.attributes[this.attribute];
 
         let baseDefence = ( this.isSpAttack ) ? defender.stats.Sp_Defense : defender.stats.Defense;
-        defender.stats.Health ( ( damage - baseDefence ) > 0 ) ? damage - baseDefence : 0;
+        defender.stats.HP ( ( damage - baseDefence ) > 0 ) ? damage - baseDefence : 0;
     }
 
     // doStatusEffect( string moveAttribute, string statusEffect, int duration )
