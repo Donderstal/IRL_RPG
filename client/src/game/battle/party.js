@@ -1,6 +1,5 @@
 const BattleChar = require('./battle-init/battleChar').BattleChar
-
-const maxPartySize = 3
+const state = require('../../game-data/state')
 
 class Party {
     constructor( partyMembers, isPlayerParty ) {
@@ -13,6 +12,7 @@ class Party {
         } )
 
         this.activeMember       = this.members[0]
+        state.battleState.battleMenu.activeCharacter = this.activeMember;
         this.activeMemberIndex  = 0;
     }
 
@@ -21,6 +21,7 @@ class Party {
         if ( this.activeMemberIndex + 1 < this.partySize ) {
             this.activeMemberIndex += 1
             this.activeMember = this.members[this.activeMemberIndex]
+            state.battleState.battleMenu.activeCharacter = this.activeMember;
             this.activeMember.activateUI()
         }
         else {

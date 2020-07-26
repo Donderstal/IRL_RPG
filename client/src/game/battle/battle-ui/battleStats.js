@@ -12,12 +12,11 @@ class BattleStats {
 
         this.HPBarWidth,
         this.MPBarWidth,
-        this.width          = globals.CANVAS_WIDTH * .10
-        
+        this.width          = globals.BATTLE_UI_CHAR_WIDTH
+        this.height         = globals.BATTLE_UI_CHAR_HEIGHT    
+
         canvas.setFont("SMALL")
         this.labelWidth = canvas.getFrontCanvasContext().measureText("MP: ").width
-
-        this.height         = this.width * 1.33
 
         this.setPosition( index )
         this.setContents( )
