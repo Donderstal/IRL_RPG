@@ -1,8 +1,14 @@
 const PUNCH_L = [
+    { 'rowInSheet': 6,'columnInSheet': 0 },
+    { 'rowInSheet': 6,'columnInSheet': 0 },
+    { 'rowInSheet': 6,'columnInSheet': 0 },
     { 'rowInSheet': 6,'columnInSheet': 0 }
 ]
 
 const PUNCH_R = [
+    { 'rowInSheet': 6,'columnInSheet': 1 },
+    { 'rowInSheet': 6,'columnInSheet': 1 },
+    { 'rowInSheet': 6,'columnInSheet': 1 },
     { 'rowInSheet': 6,'columnInSheet': 1 }
 ]
 

@@ -53,7 +53,7 @@ module.exports = {
         },
         "my_neighbourhood" : {
             "src": "city1big_tiles.png",
-            "uniqueTiles": 419,
+            "uniqueTiles": 535/* ,
             "blocked": [ 
                 1, 2, 3, 5, 6, 9, 10, 13, 14, 15,
                 29, 30, 31, 35, 36, 37, 38, 39, 40, 41, 
@@ -83,7 +83,7 @@ module.exports = {
                 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 
                 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 
                 414, 416, 417
-            ]
+            ] */
         },
         "downtown" : {
             "src": "city2_modern.png",

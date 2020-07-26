@@ -7,8 +7,8 @@ class BattleStats {
         this.owner          = owner
         this.isPlayer       = isPlayer
 
-        this.startingHP     = owner.character.stats.Health
-        this.startingMP     = owner.character.stats.Mana
+        this.startingHP     = owner.character.HP
+        this.startingMP     = owner.character.AP
 
         this.HPBarWidth,
         this.MPBarWidth,
@@ -37,8 +37,8 @@ class BattleStats {
     setContents( ) {
         this.name       = this.owner.character.name
         this.className  = this.owner.character.className
-        this.HP         = this.owner.character.stats.Health
-        this.MP         = this.owner.character.stats.Mana
+        this.HP         = this.owner.character.HP
+        this.MP         = this.owner.character.AP
         this.level      = this.owner.character.level
 
         this.HPBarWidth = (this.width - this.labelWidth) * ( this.HP / this.startingHP )

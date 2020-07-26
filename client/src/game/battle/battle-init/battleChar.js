@@ -54,7 +54,7 @@ class BattleChar {
         let attacker = this.isPlayer ? battleState.player.character : battleState.opponent.character;
         let defender = this.isPlayer ? battleState.opponent.character : battleState.player.character;
          
-        defender.stats.Health -= ( attacker.stats.Attack - defender.stats.Defence )
+        defender.stats.HP -= ( attacker.stats.Attack - defender.stats.Defence )
         this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
     }
 
