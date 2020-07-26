@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUL 25, 2020
+* Setting up a new system for characters stats
+* New Attributes class for use in characters
+* New Tilesheet for first neighbourhood
+
 #### JUL 13, 2020
 * Restored some battle functionalities with new look
 * New spritesheets for battles
@@ -261,3 +266,5 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 * User is able to select a class, gender and character name
 * Basic controls are present, player can move and 
 * Movement is animated with spritesheet
+
+<canvas id="game-background-canvas" class="game-background-body svelte-al44su" style="width: 1536px; height: 1024px;" height="1024" width="1536"></canvas> <canvas id="game-front-canvas" class="game-front-body svelte-al44su" style="width: 1536px; height: 1024px;" height="1024" width="1536"></canvas><div style="z-index: 20;position: absolute;width: 197px;height: 256px;background-color: black;bottom: 0;left: 0;/*! padding-top: 1vh; */"><div style="margin-top: 2vh;">Punch</div><div style="margin-top: 1vh;">Moves</div><div style="margin-top: 1vh;">Items</div><div style="margin-top: 1vh;">Flee</div></div>
