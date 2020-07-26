@@ -91,8 +91,10 @@ const selectMove = ( battleState, battleText ) => {
 }
 
 const doMove = ( battleState, battleText ) => {
+
     battleState.currentMoveIndex += 1
     let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex]
+    console.log(currentCharacter)    
     currentCharacter.animateAttack( currentCharacter.nextMove.animation )
     actionButtonAllowed = false
     setTimeout(() => {

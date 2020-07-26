@@ -77,6 +77,9 @@ const PHASE_SELECT_MOVE             = 1
 const PHASE_DO_MOVE                 = 2
 const PHASE_STAT_CHECK              = 3
 
+const SHEET_ROW_BATTLE_LEFT         = 4
+const SHEET_ROW_BATTLE_RIGHT        = 5
+
 module.exports = {
     MOVEMENT_SPEED,
     FACING_DOWN,
@@ -87,7 +90,6 @@ module.exports = {
     STEP1,
     STATIC2,
     STEP2,
-
     FRAME_LIMIT,
     FRAMES_PER_SECOND,
     GRID_BLOCK_PX,
@@ -118,5 +120,7 @@ module.exports = {
     PHASE_BEGIN_TURN,
     PHASE_SELECT_MOVE,
     PHASE_DO_MOVE,
-    PHASE_STAT_CHECK
+    PHASE_STAT_CHECK,
+    SHEET_ROW_BATTLE_LEFT,
+    SHEET_ROW_BATTLE_RIGHT
 }
