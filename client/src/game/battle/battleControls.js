@@ -5,83 +5,79 @@ const changeMode    = require('../../game-data/changeMode')
 let actionButtonAllowed = true;
 
 const handleBattleKeyPress = ( event ) => {
+    state.pressedKeys[event.key] = true;
     const battleState   = state.battleState
     const battleText    = battleState.textContainer
-
-    const keyIsNumberInMenu = event.key == "1" || event.key == "2" || event.key == "3" || event.key == "4" || event.key == "5"
-    const playerCanChooseMove = battleState.playerParty.inMoveSelection && battleState.battlePhase == globals['PHASE_SELECT_MOVE']
+    const playerCanChooseMove = battleState.battlePhase == globals['PHASE_SELECT_MOVE'];
 
     if ( event.key == "Escape" || event.key == "Esc" ) {
         state.battleState.battleMusic.stop()
         changeMode.requestModeChange( 'OVERWORLD' )
     }
-    if ( keyIsNumberInMenu && playerCanChooseMove ) {
-        battleState.playerParty.activeMember.sprite.setButtonAsActive( event.key )
+    if ( playerCanChooseMove ) {
+        handleDirectionKey( )
     }
-    if ( event.key == "q" && actionButtonAllowed ) {
+    if ( event.key == " " && actionButtonAllowed ) {
         handleActionButton( playerCanChooseMove, battleState, battleText )
-    }
-    if ( event.key == "e" && battleState.menuIsActive ) {
-        battleState.playerParty.activeMember.unsetMoveMenu( );
-    }
-    else {
-        state.pressedKeys[event.key] = true;        
     }
 }
 
+const handleDirectionKey = ( ) => {
+    const battleMenu = state.battleState.battleMenu; 
+
+    if ( state.pressedKeys.w || state.pressedKeys.ArrowUp ) {
+        let newButtonIndex = battleMenu.activeButton.index - 1;
+        if ( newButtonIndex < 0 ) {
+            newButtonIndex = battleMenu.buttons.length - 1;
+        }
+
+        battleMenu.activateButtonAtIndex( newButtonIndex );
+    }
+    else if ( state.pressedKeys.a || state.pressedKeys.ArrowLeft ) {
+        if  ( battleMenu.inMoveMenu ) {
+            battleMenu.getStandardMenu( );            
+        }
+    }
+    else if ( state.pressedKeys.s || state.pressedKeys.ArrowDown ) {
+        let newButtonIndex = battleMenu.activeButton.index + 1;
+
+        if ( newButtonIndex > ( battleMenu.buttons.length - 1 ) ) {
+            newButtonIndex = 0;
+        }
+
+        battleMenu.activateButtonAtIndex( newButtonIndex );
+    }
+    else if ( state.pressedKeys.d || state.pressedKeys.ArrowRight ) {
+        if ( battleMenu.activeButton.text == "MOVES" ) {
+            battleMenu.getMoveMenu( );            
+        }
+    }    
+}
+ 
 const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
-    let isSelectionPhase = ( battleState.battlePhase == globals['PHASE_SELECT_MOVE'] )
     let isAttackPhase = ( battleState.battlePhase == globals['PHASE_DO_MOVE'] )
+
+    const battleMenu = battleState.battleMenu;
 
     if ( isAttackPhase && battleState.currentMoveIndex !== battleState.charactersInField.length ) {
         doMove( battleState, battleText );
     }
-    else if ( playerCanChooseMove && !battleState.menuIsActive && isSelectionPhase ) {
-        handleBattleMenuClick( battleState, battleText );
+    else if ( playerCanChooseMove && !battleMenu.inMoveMenu ) {
+        //
     }
-    else if ( battleState.menuIsActive && isSelectionPhase ) {
+    else if ( playerCanChooseMove && battleMenu.inMoveMenu ) {
+
         selectMove( battleState, battleText );
+        battleMenu.getStandardMenu( );
     }
     else {
         passPhase( battleState, battleText );
     }
 }
 
-const handleBattleMenuClick = ( battleState, battleText ) => {
-    const playerUiButtons = battleState.playerParty.activeMember.sprite.buttonSprites
-
-    playerUiButtons.forEach( (button) => {
-        if ( button.active ) {
-            if ( button.text.includes("1") ) {
-                handlePunch( battleState, battleText )
-            }
-            if ( button.text.includes("2") ) {
-                battleState.playerParty.activeMember.setMoveMenu( );
-                button.setActive( false );
-            }
-            if ( button.text.includes("3") ) {
-          
-            }
-            if ( button.text.includes("4") ) {
-        
-            }
-            if ( button.text.includes("5") ) {
-            
-            }
-        }
-    } )
-}
-
 const selectMove = ( battleState, battleText ) => {
-    const activeUiButtons = battleState.playerParty.activeMember.sprite.buttonSprites
     const activePartyMember = battleState.playerParty.activeMember
-
-    activeUiButtons.forEach( (button, index) => {
-        if ( button.active ) {
-            activePartyMember.nextMove = activePartyMember.moves[index];
-        }
-    } )
-
+    activePartyMember.nextMove = battleState.battleMenu.activeButton.move;
     battleState.menuIsActive = false;
     battleState.playerParty.getNextPartyMember( )
 

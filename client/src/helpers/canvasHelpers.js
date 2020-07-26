@@ -128,7 +128,20 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
 
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
-    ctx.font = ( ( size === "LARGE") ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE ) + "px " + "Stormfaze";
+    let fontSize;
+    switch ( size ) {
+        case "SMALL" : 
+            fontSize = globals.SMALL_FONT_SIZE; 
+            break;
+        case "LARGE" : 
+            fontSize = globals.LARGE_FONT_SIZE
+            break;
+        case "BATTLE" : 
+            fontSize = globals.BATTLE_FONT_SIZE
+            break;        
+    }
+
+    ctx.font = fontSize + "px " + "Stormfaze";
 }
 
 const writeTextLine = ( text, x, y, size, color = null ) => {

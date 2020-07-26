@@ -52,6 +52,7 @@ const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
 // canvas font sizes
 const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
 const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.375
+const BATTLE_FONT_SIZE              = GRID_BLOCK_PX / 2
 
 // in-game textbox color and opacity
 const INNER_TEXTBOX_RGBA            = "rgb(0, 56, 77)";
@@ -61,6 +62,7 @@ const OUTER_TEXTBOX_RGBA            = "rgba(216, 44, 188, 0.66)";
 const GOLDEN_FONT_RATIO             = 1.618;
 const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
 const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
+const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
 
 // Length of some animations in milliseconds
 const BATTLE_INTRO_ANIM_MS          = 2100
@@ -79,6 +81,9 @@ const PHASE_STAT_CHECK              = 3
 
 const SHEET_ROW_BATTLE_LEFT         = 4
 const SHEET_ROW_BATTLE_RIGHT        = 5
+
+const BATTLE_UI_CHAR_WIDTH          = CANVAS_WIDTH * .10
+const BATTLE_UI_CHAR_HEIGHT         = BATTLE_UI_CHAR_WIDTH * 1.33
 
 module.exports = {
     MOVEMENT_SPEED,
@@ -108,10 +113,12 @@ module.exports = {
     MAX_BUBBLE_WIDTH,
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,
+    BATTLE_FONT_SIZE,
     INNER_TEXTBOX_RGBA,
     OUTER_TEXTBOX_RGBA,
     SMALL_FONT_LINE_HEIGHT,
     LARGE_FONT_LINE_HEIGHT,
+    BATTLE_FONT_LINE_HEIGHT,
     BATTLE_INTRO_ANIM_MS,
     B_SHEETPOS_NONE,
     B_SHEETPOS_IDLE,
@@ -122,5 +129,7 @@ module.exports = {
     PHASE_DO_MOVE,
     PHASE_STAT_CHECK,
     SHEET_ROW_BATTLE_LEFT,
-    SHEET_ROW_BATTLE_RIGHT
+    SHEET_ROW_BATTLE_RIGHT,
+    BATTLE_UI_CHAR_WIDTH,
+    BATTLE_UI_CHAR_HEIGHT
 }

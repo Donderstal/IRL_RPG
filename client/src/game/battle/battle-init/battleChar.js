@@ -6,6 +6,7 @@ const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite          = require('./battleSprite').BattleSprite
+const canvas                = require('../../../helpers/canvasHelpers')
 
 class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {
@@ -70,31 +71,14 @@ class BattleChar {
         this.nextMove( this.character, moveTarget )
     }
 
-    setMoveMenu( ) {
-        state.battleState.menuIsActive = true;
-        state.battleState.textContainer.setMoveMenu( )
-        this.sprite.initBattleMovesMenu( this.moves )
-    }
-    
-    unsetMoveMenu( newTurn = false ) {
-        state.battleState.menuIsActive = false;;
-        state.battleState.textContainer.unsetMoveMenu(  )    
-        this.sprite.initBattleUI( )     
-        this.sprite.setButtonAsActive( "2" )
-    }
-
     activateUI( ) {
-        state.battleState.textContainer.setText( "Choose your move with one of the number keys!" )
+        state.battleState.textContainer.setText( "Choose your move!" )
+        state.battleState.battleMenu.activeCharacter = this;
         this.sprite.activateUI( )
     }
 
     deActivateUi( ) {
-        state.battleState.menuIsActive = false;;
-        state.battleState.textContainer.unsetMoveMenu(  ) 
-        this.sprite.initBattleUI( )   
-        this.sprite.deActivateUI()
-        this.sprite.hasActiveButton = false;
-        this.sprite.buttonSprites.forEach( (e) => { e.setActive( false ) } )
+        this.sprite.deActivateUI( )
     }
 
     draw( ) {
