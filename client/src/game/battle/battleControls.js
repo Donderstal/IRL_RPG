@@ -99,10 +99,8 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
         state.battleState.selectingTarget = false;
         battleMenu.getStandardMenu( );
     }
-    else if ( battleState.menuIsActive ) {
-        console.log(battleState.battleMenu.activateButton)
-    }
     else {
+        console.log(battleState)
         passPhase( battleState, battleText );
     }
 }
@@ -127,9 +125,7 @@ const selectMove = ( battleState, battleText, targetCharacter ) => {
 }
 
 const doMove = ( battleState, battleText ) => {
-    battleState.currentMoveIndex += 1
-    let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex]
-    console.log(currentCharacter)    
+    let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex] 
     currentCharacter.animateAttack( currentCharacter.nextMove.animation )
     actionButtonAllowed = false
     setTimeout(() => {
@@ -137,6 +133,7 @@ const doMove = ( battleState, battleText ) => {
         let targetCharacter =  targetParty.members[currentCharacter.nextMove.targetIndex]
         targetCharacter.animateHit( );
         battleText.setText( currentCharacter.name + " uses " + currentCharacter.nextMove.name + " on " + targetCharacter.name )
+        battleState.currentMoveIndex += 1
         actionButtonAllowed = true
     }, 500 );
 }
@@ -171,12 +168,12 @@ const prepareMovesForExecution = ( battleState, battleText ) => {
     battleState.currentMoveIndex = 0;
 
     battleState.charactersInField.sort( ( a, b ) => {
-        let aATH = a.character.attributes.ATH
-        let bATH = b.character.attributes.ATH
-        if ( aATH > bATH ) {
+        let aAGI = a.character.attributes["AGILITY"]
+        let bAGI = b.character.attributes["AGILITY"]
+        if ( aAGI > bAGI ) {
             return -1 
         }
-        else if ( bATH > aATH ) {
+        else if ( bAGI > aAGI ) {
             return 1
         }
         else {
@@ -185,14 +182,12 @@ const prepareMovesForExecution = ( battleState, battleText ) => {
     } )
     
     actionButtonAllowed = false;
-    let firstCharacter = battleState.charactersInField[0]
     setTimeout(() => {
-        firstCharacter.animateAttack( firstCharacter.nextMove.animation )
-    }, 500 );
+        doMove( battleState, battleText )
+    }, 1000 );
     setTimeout(() => {
-        battleText.setText( firstCharacter.name + " uses " + firstCharacter.nextMove.name )
         actionButtonAllowed = true;
-    }, 1000);
+    }, 15000);
 }
 
 

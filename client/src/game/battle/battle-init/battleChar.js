@@ -6,7 +6,6 @@ const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite          = require('./battleSprite').BattleSprite
-const canvas                = require('../../../helpers/canvasHelpers')
 
 class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {
@@ -88,7 +87,7 @@ class BattleChar {
     activateUI( ) {
         state.battleState.textContainer.setText( "Choose your move!" )
         state.battleState.battleMenu.activeCharacter = this;
-        this.sprite.activateUI( )
+        this.sprite.activateUI( );
     }
 
     deActivateUi( ) {
@@ -97,7 +96,6 @@ class BattleChar {
 
     draw( ) {
         this.sprite.drawSprite();
-        this.statsBar.drawStats();
     }
 }
 
