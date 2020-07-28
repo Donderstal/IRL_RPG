@@ -8,9 +8,6 @@ class BattleMenu {
         this.height         = globals.BATTLE_UI_CHAR_HEIGHT;
         this.x              = globals.CANVAS_WIDTH - ( 4 * globals.BATTLE_UI_CHAR_WIDTH );
         this.y              = globals.CANVAS_HEIGHT - this.height;
-        
-        this.textStartingY  = this.y + globals.BATTLE_FONT_LINE_HEIGHT
-        this.textStartingX  = this.x + globals.BATTLE_FONT_LINE_HEIGHT / 2
 
         this.standardOptions = [
             "ATTACK",
@@ -25,20 +22,29 @@ class BattleMenu {
         this.inMoveMenu = false;
         this.activeCharacter;
 
-        this.initializeMenuSlots( );
+        this.initializeMenuButtons( );
         this.activateButtonAtIndex( 0 );
-        this.drawMenu( );
+        this.draw( );
     }
 
-    initializeMenuSlots( ) {
+    initializeMenuButtons( ) {
         for ( var i = 0; i < this.standardOptions.length; i++ ) {
             let index = i
             this.buttons.push( 
                 new BattleMenuButton( 
-                    this.standardOptions[index], this.textStartingX, this.textStartingY + ( globals.LARGE_FONT_LINE_HEIGHT * index ), index
+                    this.standardOptions[index], 
+                    (this.x + globals.BATTLE_FONT_LINE_HEIGHT / 2), 
+                    (this.y + globals.BATTLE_FONT_LINE_HEIGHT) + ( globals.LARGE_FONT_LINE_HEIGHT * index ), 
+                    index
                 )
             );
         }
+        state.battleState.battleUI.slots.push(this);
+    }
+
+    setXy( x, y ) {
+        this.x = x;
+        this.y = y;
     }
 
     resetMenu( ) {
@@ -57,7 +63,7 @@ class BattleMenu {
         }
     }
 
-    drawMenu( ) {
+    draw( ) {
         canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
 
         for ( var i = 0; i < this.buttons.length; i++ ) {

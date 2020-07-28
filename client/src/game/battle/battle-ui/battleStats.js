@@ -19,8 +19,11 @@ class BattleStats {
         this.labelWidth = canvas.getFrontCanvasContext().measureText("MP: ").width
 
         this.setPosition( index )
-        this.setContents( )
-        this.drawStats( )
+        this.setContents( );
+        this.draw( );
+        if ( this.isPlayer ) {
+            state.battleState.battleUI.slots.push(this);
+        }
     }
 
     setPosition( index ) {
@@ -53,8 +56,13 @@ class BattleStats {
         } )
     }
 
-    drawStats( ) {
+    draw( ) {
         this.isPlayer ? this.drawPlayerCharacterStats() : this.drawOpponentStats();
+    }
+
+    setXy( x, y ) {
+        this.x = x;
+        this.y = y;
     }
 
     drawPlayerCharacterStats( ) {

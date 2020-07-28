@@ -8,6 +8,7 @@ const handleBattleAnimations = ( ) => {
     const opponentParty   = state.battleState.opponentParty
     const battleText      = state.battleState.textContainer
     const battleMenu      = state.battleState.battleMenu
+    const battleUI        = state.battleState.battleUI;
 
     if ( playerParty != undefined && opponentParty != undefined ) {
         playerParty.members.forEach( (e) => { e.draw() })
@@ -16,8 +17,9 @@ const handleBattleAnimations = ( ) => {
     if ( battleText != undefined ) {
         battleText.drawTextBox( )    
     }
-    if ( battleMenu != undefined ) {
-        battleMenu.drawMenu()
+
+    if ( battleMenu != undefined && battleUI != undefined ) {
+        state.battleState.battleUI.draw( );
     }
 }
 

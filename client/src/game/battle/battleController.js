@@ -9,6 +9,7 @@ const maps          = require('../../resources/mapResources')
 const Party         = require('./Party').Party
 const BattleMenu    = require('./battle-ui/battleMenu').BattleMenu
 const nameGen       = require('./../../helpers/randomNameGen')
+const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 
 const playerTopXy = {
     'x': (globals.CANVAS_WIDTH * .40 - ( globals.STRD_SPRITE_WIDTH  * .5 ) ),
@@ -51,13 +52,15 @@ const startBattle = (  ) => {
         state.battleState.battleMusic.play()
     }
 
+
     initBattleMenu()
     initBattleMapAndSprites()
 
 }
 
 const initBattleMenu = ( ) => {
-    state.battleState.battleMenu = new BattleMenu() 
+    state.battleState.battleUI = new BattleUI( );
+    state.battleState.battleMenu = new BattleMenu( ); 
 }
 
 const initBattleMapAndSprites = ( ) => {
