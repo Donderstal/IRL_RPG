@@ -20,6 +20,7 @@ class BattleMenu {
         this.buttons        = []
         this.activeButton   = null;
         this.inMoveMenu = false;
+        this.playerPartySize = 3
         this.activeCharacter;
 
         this.initializeMenuButtons( );
@@ -39,12 +40,15 @@ class BattleMenu {
                 )
             );
         }
-        state.battleState.battleUI.slots.push(this);
     }
 
     setXy( x, y ) {
+        console.log(x, y)
         this.x = x;
         this.y = y;
+        for ( var i = 0; i < this.buttons.length; i++ ) {
+            this.buttons[i].x = x + globals.BATTLE_FONT_LINE_HEIGHT / 2;
+        }             
     }
 
     resetMenu( ) {
@@ -64,11 +68,13 @@ class BattleMenu {
     }
 
     draw( ) {
-        canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
+        if ( state.battleState.battlePhase == globals['PHASE_SELECT_MOVE'] ) {
+            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
 
-        for ( var i = 0; i < this.buttons.length; i++ ) {
-            this.buttons[i].drawButton( );
-        } 
+            for ( var i = 0; i < this.buttons.length; i++ ) {
+                this.buttons[i].drawButton( );
+            }             
+        }
     }
 
     getMoveMenu( ) {

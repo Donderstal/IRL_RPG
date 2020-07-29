@@ -20,7 +20,8 @@ class Party {
 
     getNextPartyMember( ) {
         if ( this.activeMemberIndex != -1 ) {
-            this.activeMember.deActivateUi( );            
+            this.activeMember.deActivateUi( );      
+            state.battleState.battleUI.switchSlots( );      
         }
 
         if ( this.activeMemberIndex < this.partySize - 1 ) {

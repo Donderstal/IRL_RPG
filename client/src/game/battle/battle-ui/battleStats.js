@@ -21,9 +21,6 @@ class BattleStats {
         this.setPosition( index )
         this.setContents( );
         this.draw( );
-        if ( this.isPlayer ) {
-            state.battleState.battleUI.slots.push(this);
-        }
     }
 
     setPosition( index ) {

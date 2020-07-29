@@ -96,6 +96,7 @@ class BattleChar {
 
     draw( ) {
         this.sprite.drawSprite();
+        this.statsBar.draw( );
     }
 }
 

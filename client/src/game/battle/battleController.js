@@ -52,14 +52,11 @@ const startBattle = (  ) => {
         state.battleState.battleMusic.play()
     }
 
-
     initBattleMenu()
     initBattleMapAndSprites()
-
 }
 
 const initBattleMenu = ( ) => {
-    state.battleState.battleUI = new BattleUI( );
     state.battleState.battleMenu = new BattleMenu( ); 
 }
 
@@ -73,17 +70,12 @@ const initBattleMapAndSprites = ( ) => {
         grid.drawGrid( {"x": 0, "y": 0}, battleMap, tileSheetData, true );        
     }
 
+    text.initTextContainer( ) // real text
+    state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
+    initializeBattleCharacter( state.battleState.opponent )
+    state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
 
-    
-    setTimeout( ( ) => {
-        text.initTextContainer( ) // real text
-        state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
-    }, 600) 
-
-    setTimeout( ( ) => {
-        initializeBattleCharacter( state.battleState.opponent )
-        state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
-    }, 1200)
+    state.battleState.battleUI = new BattleUI( );
 }
 
 const initializeBattleCharacter = ( opponent ) => {
