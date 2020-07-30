@@ -58,7 +58,7 @@ class BattleSprite extends I_Sprite {
     
     drawSprite( ) {
         this.frameCount++;
-        if ( this.frameCount > globals.FRAME_LIMIT ) {
+        if ( this.frameCount * .5 > globals.FRAME_LIMIT ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
                 this.frameCount = 0;

@@ -59,8 +59,8 @@ class BattleChar {
         this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
     }
 
-    animateAttack( tilesheetPositionArray ) {
-        this.sprite.animateAttack( tilesheetPositionArray )
+    animateAttack( ) {
+        this.sprite.animateAttack( this.nextMove.animation )
     }
 
     chooseMove( moveIndex, moveTarget ) {
@@ -68,8 +68,11 @@ class BattleChar {
         this.nextMove       = this.moves[moveIndex].doDamage
     }
 
-    doMove( moveTarget ) {
-        this.nextMove( this.character, moveTarget )
+    doMove( targetCharacter ) {
+        this.animateAttack(  );
+        
+
+        targetCharacter.animateHit( );
     }
 
     target( ) {
