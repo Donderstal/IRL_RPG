@@ -83,32 +83,48 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
     let isAttackPhase = ( battleState.battlePhase == globals['PHASE_DO_MOVE'] )
 
     const battleMenu = battleState.battleMenu;
+    const activeButton = battleMenu.activeButton.text
 
     if ( isAttackPhase && battleState.currentMoveIndex !== battleState.charactersInField.length ) {
         doMove( battleState, battleText );
     }
-    else if ( playerCanChooseMove && battleMenu.inMoveMenu && !state.battleState.selectingTarget ) {
-        
-        initTargetSelection( );
-        state.battleState.selectingTarget = true;
-    }
-    else if ( playerCanChooseMove && battleMenu.inMoveMenu && state.battleState.selectingTarget ) {
-        let targetCharacter = state.battleState.targetedCharacter;
+    else if ( playerCanChooseMove && ( battleMenu.inMoveMenu || activeButton == "ATTACK") && activeButton != "RETURN" ) {
+        if ( battleState.selectingTarget ) {
+            let targetCharacter = battleState.targetedCharacter;
 
-        selectMove( battleState, battleText, targetCharacter );
-        state.battleState.selectingTarget = false;
+            selectMove( battleState, battleText, targetCharacter );
+            battleState.selectingTarget = false;
+            battleMenu.getStandardMenu( );
+        }
+        else {
+            initTargetSelection( battleState );
+            battleState.selectingTarget = true;
+        }
+    }
+    else if ( playerCanChooseMove && battleMenu.inItemMenu ) {
+        //
+    }
+    else if ( playerCanChooseMove && activeButton == "RETURN" && battleMenu.inMoveMenu ) {
         battleMenu.getStandardMenu( );
     }
-    else {
-        console.log(battleState)
+    else if ( playerCanChooseMove && activeButton == "RETURN" && battleState.playerParty.activeMemberIndex != 0 ) {
+        battleState.playerParty.getPreviousPartyMember( ); 
+    }
+    else if ( battleState.battlePhase != globals['PHASE_SELECT_MOVE']  ) {
         passPhase( battleState, battleText );
+    }
+    else {
+        console.log(battleState);
     }
 }
 
-const initTargetSelection = ( ) => {
-    const activePartyMember = state.battleState.playerParty.activeMember
-    activePartyMember.nextMove = state.battleState.battleMenu.activeButton.move;
-    state.battleState.opponentParty.activateTarget( 0 );
+const initTargetSelection = ( battleState ) => {
+    const activePartyMember = battleState.playerParty.activeMember;
+    const activeButtonMove = battleState.battleMenu.activeButton.move;
+    const standardAttack = activePartyMember.standardAttack;
+
+    activePartyMember.nextMove = ( activeButtonMove != undefined ) ? activeButtonMove : standardAttack
+    battleState.opponentParty.activateTarget( 0 );
 }
 
 const selectMove = ( battleState, battleText, targetCharacter ) => {
@@ -116,7 +132,6 @@ const selectMove = ( battleState, battleText, targetCharacter ) => {
     activePartyMember.nextMove.targetIndex = targetCharacter.index;
     battleState.battleMenu.resetMenu( );
     targetCharacter.deTarget( );
-    battleState.menuIsActive = false;
     battleState.playerParty.getNextPartyMember( )
 
     if ( !battleState.playerParty.inMoveSelection ) {
@@ -145,7 +160,6 @@ const passPhase = ( battleState, battleText ) => {
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
-            battleState.menuIsActive = true;
             prepareMovesForExecution( battleState, battleText );
             break;
         case globals['PHASE_DO_MOVE'] :

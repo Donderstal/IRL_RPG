@@ -21,11 +21,28 @@ class Party {
     getNextPartyMember( ) {
         if ( this.activeMemberIndex != -1 ) {
             this.activeMember.deActivateUi( );      
-            state.battleState.battleUI.switchSlots( );      
+            state.battleState.battleUI.switchSlot( "NEXT" );      
         }
 
         if ( this.activeMemberIndex < this.partySize - 1 ) {
             this.activeMemberIndex += 1
+            this.members[this.activeMemberIndex].active = true;
+            this.activeMember = this.members[this.activeMemberIndex]
+            this.activeMember.activateUI();
+        }
+        else {
+            this.activeMember.deActivateUi( );
+            this.inMoveSelection = false;
+        }
+    }
+
+    getPreviousPartyMember( ) {
+        this.activeMember.nextMove = null;
+        this.activeMember.deActivateUi( );      
+        state.battleState.battleUI.switchSlot( "PREV" );  
+
+        if ( this.activeMemberIndex -1 != -1 ) {
+            this.activeMemberIndex -= 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
             this.activeMember.activateUI();

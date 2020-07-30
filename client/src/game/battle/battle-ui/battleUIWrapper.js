@@ -12,32 +12,42 @@ class BattleUIWrapper {
         this.y = globals.CANVAS_HEIGHT - globals.BATTLE_UI_CHAR_HEIGHT;
     }
 
-    switchSlots( ) {
+    switchSlot( modifier ) {
         const battleMenu = state.battleState.battleMenu;
         const playerParty = state.battleState.playerParty
-        let activeIndex = playerParty.activeMemberIndex;  
+        const activeIndex = ( modifier == "NEXT" ) ? playerParty.activeMemberIndex : -playerParty.activeMemberIndex;
+        const partyMembers = playerParty.members
+        const slotItemsArray = this.goToNextSlot( activeIndex, partyMembers, battleMenu );
+
+        this.setSlots( slotItemsArray )
+    }
+
+    goToNextSlot( activeIndex, partyMembers, battleMenu ) {
         switch ( activeIndex ) {
-            case 0: 
-                playerParty.members[0].statsBar.setXy(this.slotXValues[0], this.y)
-                battleMenu.setXy(this.slotXValues[1], this.y)
-                playerParty.members[1].statsBar.setXy(this.slotXValues[2], this.y)
-                playerParty.members[2].statsBar.setXy(this.slotXValues[3], this.y)
-                break;
-            case 1: 
-                playerParty.members[0].statsBar.setXy(this.slotXValues[0], this.y)
-                playerParty.members[1].statsBar.setXy(this.slotXValues[1], this.y)
-                battleMenu.setXy(this.slotXValues[2], this.y)
-                playerParty.members[2].statsBar.setXy(this.slotXValues[3], this.y)
-                break;
-            case 2:
-                battleMenu.setXy(this.slotXValues[0], this.y)
-                playerParty.members[0].statsBar.setXy(this.slotXValues[1], this.y)
-                playerParty.members[1].statsBar.setXy(this.slotXValues[2], this.y)
-                playerParty.members[2].statsBar.setXy(this.slotXValues[3], this.y)
-                break; 
+            case  0: 
+            case -2:
+                return [ 
+                    partyMembers[0].statsBar, battleMenu, partyMembers[1].statsBar, partyMembers[2].statsBar 
+                ];
+            case  1: 
+                return [ 
+                    partyMembers[0].statsBar, partyMembers[1].statsBar, battleMenu, partyMembers[2].statsBar 
+                ];
+            case  2:
+            case -1: 
+                return [ 
+                    battleMenu, partyMembers[0].statsBar, partyMembers[1].statsBar, partyMembers[2].statsBar 
+                ];
             default:
                 console.log('huilie')
                 break;
+        }
+    }
+
+    setSlots( slotItemsArray ) {
+        for ( var i = 0; i < slotItemsArray.length; i++ ) {
+            console.log(slotItemsArray[i])
+            slotItemsArray[i].setXy(this.slotXValues[i], this.y)
         }
     }
 }
