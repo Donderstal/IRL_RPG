@@ -4,11 +4,12 @@ const state     = require('../../../game-data/state')
 
 class BattleStats { 
     constructor ( owner, isPlayer, index ) {
+        console.log(owner)
         this.owner          = owner
         this.isPlayer       = isPlayer
 
         this.startingHP     = owner.character.HP
-        this.startingMP     = owner.character.AP
+        this.startingAP     = owner.character.AP
 
         this.HPBarWidth,
         this.MPBarWidth,
@@ -29,8 +30,9 @@ class BattleStats {
             this.y      = globals.CANVAS_HEIGHT - this.height
         }
         else {
-            this.x      = this.owner.x 
-            this.y      = this.owner.y - globals.SMALL_FONT_LINE_HEIGHT
+            console.log("x: " + this.owner.sprite.x + ", y: " + this.owner.sprite.y)
+            this.x      = this.owner.sprite.x 
+            this.y      = this.owner.sprite.y - globals.SMALL_FONT_LINE_HEIGHT
         }
     }
 
@@ -38,7 +40,7 @@ class BattleStats {
         this.name       = this.owner.character.name
         this.className  = this.owner.character.className
         this.HP         = this.owner.character.HP
-        this.MP         = this.owner.character.AP
+        this.AP         = this.owner.character.AP
         this.level      = this.owner.character.level
 
         this.HPBarWidth = (this.width - this.labelWidth) * ( this.HP / this.startingHP )
@@ -86,9 +88,12 @@ class BattleStats {
             "green"
         )
         
+        let HPText = "HP: " + this.HP + " / " + this.startingHP
+        canvas.setFont("SMALL")
         canvas.writeTextLine( 
-            "HP: " + this.HP + " / " + this.startingHP, 
-            this.x, this.y + globals.SMALL_FONT_LINE_HEIGHT, 
+            HPText, 
+            this.x + (canvas.getFrontCanvasContext().measureText(HPText).width * .5), 
+            this.y + globals.SMALL_FONT_LINE_HEIGHT, 
             "SMALL" 
         );
 
@@ -96,22 +101,38 @@ class BattleStats {
             "FONT",
             this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
             this.width, globals.LARGE_FONT_LINE_HEIGHT,
-            "red"
+            "blue"
         )
 
+        let APText = "AP: " + this.AP + " / " + this.startingAP
+        canvas.setFont("SMALL")
         canvas.writeTextLine( 
-            "MP: " + this.MP + " / " + this.startingMP, 
-            this.x, this.y + globals.SMALL_FONT_LINE_HEIGHT + globals.LARGE_FONT_LINE_HEIGHT, 
+            APText, 
+            this.x + (canvas.getFrontCanvasContext().measureText(HPText).width * .5), 
+            this.y + globals.SMALL_FONT_LINE_HEIGHT + globals.LARGE_FONT_LINE_HEIGHT, 
             "SMALL" 
         );
     }
 
     drawOpponentStats( ) {
+        canvas.setFont("SMALL")
+        canvas.drawRect(
+            "FONT",
+            (this.x  - (this.width * .5)) + (canvas.getFrontCanvasContext().measureText("HP: " + this.HP + "/" + this.startingHP).width * .5), this.y,
+            this.width, globals.SMALL_FONT_LINE_HEIGHT,
+            "green"
+        );
         canvas.writeTextLine( 
-            "HP: " + this.HP, 
-            this.x, 
-            this.y, 
-        "SMALL" );
+            "HP: " + this.HP + "/" + this.startingHP, 
+            this.x, this.y + globals.SMALL_FONT_SIZE, 
+            "SMALL" 
+        );
+
+        canvas.writeTextLine( 
+            this.name, 
+            (this.x  - (this.width * .5)) + (canvas.getFrontCanvasContext().measureText("HP: " + this.HP + "/" + this.startingHP).width * .5), this.y, 
+            "LARGE" 
+        );
     }
 }
 

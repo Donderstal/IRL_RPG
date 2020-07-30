@@ -15,7 +15,7 @@ class BattleSprite extends I_Sprite {
         this.initialX       = this.x;
         this.destinationX   = null;
         this.columnInSheet  = globals.B_SHEETPOS_IDLE;
-        this.rowInSheet     = isPlayer ? 5 : 4
+        this.rowInSheet     = isPlayer ? 4 : 5
 
         this.initialRow     = this.rowInSheet;
         this.showUI         = false;
@@ -98,7 +98,7 @@ class BattleSprite extends I_Sprite {
                 "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
                 0, 0,
                 1200, 1200,
-                this.x, this.y - globals.GRID_BLOCK_PX, 
+                this.x + this.width, this.y + (this.height / 2) - (globals.GRID_BLOCK_PX / 2), 
                 globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
             )
         }
