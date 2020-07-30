@@ -1,6 +1,5 @@
 const BattleChar = require('./battle-init/battleChar').BattleChar
-
-const maxPartySize = 3
+const state = require('../../game-data/state')
 
 class Party {
     constructor( partyMembers, isPlayerParty ) {
@@ -13,6 +12,7 @@ class Party {
         } )
 
         this.activeMember       = this.members[0]
+        state.battleState.battleMenu.activeCharacter = this.activeMember;
         this.activeMemberIndex  = 0;
     }
 
@@ -20,8 +20,9 @@ class Party {
         this.activeMember.deActivateUi( );
         if ( this.activeMemberIndex + 1 < this.partySize ) {
             this.activeMemberIndex += 1
+            this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
-            this.activeMember.activateUI()
+            this.activeMember.activateUI();
         }
         else {
             this.inMoveSelection = false;
@@ -31,8 +32,8 @@ class Party {
     prepareMoveSelection( ) {
         this.inMoveSelection = true;
         this.activeMemberIndex = 0;
-        this.activeMember = this.members[this.activeMemberIndex]
-        this.activeMember.activateUI( true );
+        this.activeMember = this.members[this.activeMemberIndex];
+        this.activeMember.activateUI();
     }
 
     selectMoves( ) {
