@@ -92,6 +92,13 @@ class BattleStats {
             "FONT",
             this.x, this.y,
             this.width, globals.LARGE_FONT_LINE_HEIGHT,
+            "black"
+        )
+
+        canvas.drawRect(
+            "FONT",
+            this.x, this.y,
+            this.width * ( this.HP / this.startingHP ), globals.LARGE_FONT_LINE_HEIGHT,
             "green"
         )
         
@@ -108,6 +115,12 @@ class BattleStats {
             "FONT",
             this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
             this.width, globals.LARGE_FONT_LINE_HEIGHT,
+            "black"
+        )
+        canvas.drawRect(
+            "FONT",
+            this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
+            this.width * ( this.AP / this.startingAP ), globals.LARGE_FONT_LINE_HEIGHT,
             "blue"
         )
 
@@ -127,8 +140,16 @@ class BattleStats {
             "FONT",
             (this.x  - (this.width * .5)) + (canvas.getFrontCanvasContext().measureText("HP: " + this.HP + "/" + this.startingHP).width * .5), this.y,
             this.width, globals.SMALL_FONT_LINE_HEIGHT,
+            "black"
+        )
+
+        canvas.drawRect(
+            "FONT",
+            (this.x  - (this.width * .5)) + (canvas.getFrontCanvasContext().measureText("HP: " + this.HP + "/" + this.startingHP).width * .5), this.y,
+            this.width * ( this.HP / this.startingHP ), globals.SMALL_FONT_LINE_HEIGHT,
             "green"
-        );
+        )
+
         canvas.writeTextLine( 
             "HP: " + this.HP + "/" + this.startingHP, 
             this.x, this.y + globals.SMALL_FONT_SIZE, 

@@ -11,7 +11,7 @@ class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {
         const spriteSrc     = '/static/sprites/' + className.toLowerCase() + '.png' 
         this.sprite         = new BattleSprite( xy, spriteSrc, isPlayer )
-        this.character      = new CharacterBlueprint( name, className )
+        this.character      = new CharacterBlueprint( name, className, 10 )
         this.statsBar       = new BattleStats( this, isPlayer, index )
         this.name           = name,
         this.index          = index
@@ -61,6 +61,7 @@ class BattleChar {
 
     animateAttack( ) {
         this.sprite.animateAttack( this.nextMove.animation )
+        this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }
 
     chooseMove( moveIndex, moveTarget ) {

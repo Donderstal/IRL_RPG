@@ -38,7 +38,7 @@ class CharacterBlueprint {
                 name        : "Attack",
                 desc        : "Attack the fools!.",
                 type        : "BlablaLorem",
-                attribute   : "STRENGTH",
+                attribute   : this.attributes.attributeGroup,
                 animation   : "PUNCH",
                 moveTo      : true,
                 factor      : 30
@@ -51,8 +51,8 @@ class CharacterBlueprint {
     getMoveResult( move, targetCharacter ) {
         console.log(' do move! ')
         console.log(targetCharacter) 
-        let moveResult;
-        moveResult = this.attackWithAttribute( move.attribute, move.factor );
+        console.log(move)
+        let moveResult = this.attackWithAttribute( move.attribute, move.factor );
         return targetCharacter.defendAndTakeDamage( move.attribute, moveResult )
     }
 
@@ -91,6 +91,9 @@ class characterAttributes {
         this[characterGlobals.CHARISMA]        = 5;
         this[characterGlobals.APPEARANCE]     = 5;
         this[characterGlobals.SOCIALISATION]  = 5;
+
+        this.mainAttribute      = classProfile.main;
+        this.attributeGroup = classProfile.attributeGroup
 
         this.setClassProfileParams( classProfile )
         this.setLevel( 5 )

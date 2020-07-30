@@ -72,7 +72,7 @@ class BattleMenu {
         this.buttons[buttonIndex].activate( );
         this.activeButton       = this.buttons[buttonIndex];
 
-        if ( this.inMoveMenu ) {
+        if ( this.inMoveMenu || this.activeButton.text == "ATTACK") {
             let attribute = this.activeCharacter.moves[buttonIndex].attribute;
             if ( attribute != undefined ) {
                 state.battleState.textContainer.setHeader( 

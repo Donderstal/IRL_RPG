@@ -120,7 +120,7 @@ class BattleSprite extends I_Sprite {
     drawShout( ) {
         canvasHelpers.setFont("LARGE")
         let shoutX = ( this.isPlayer ) ? this.x + this.width : this.x - canvasHelpers.getFrontCanvasContext().measureText(this.shout).width;
-        canvasHelpers.writeTextLine( this.shout, shoutX, this.y, globals.LARGE_FONT_SIZE )
+        canvasHelpers.writeTextLine( this.shout, shoutX, this.y + globals.LARGE_FONT_LINE_HEIGHT, globals.LARGE_FONT_SIZE )
     }
 
     setShout( shout, endOfBattle = false ) {

@@ -23,7 +23,7 @@ const getBattleResString = ( template, literals = null ) => {
 }
 
 const getBattleShout = ( className, type ) => {
-    if ( className == "Neckbeard" ) {
+    if ( className == "neckbeard" ) {
         if ( type == "FIGHT" ) {
             return NECKBEARD_FIGHT_SHOUTS[ Math.floor(Math.random() * NECKBEARD_FIGHT_SHOUTS.length) ];
         }
@@ -32,7 +32,7 @@ const getBattleShout = ( className, type ) => {
         }
     }
 
-    if ( className == "Influencer" ) {
+    if ( className == "influencer" ) {
         if ( type == "FIGHT" ) {
             return INFLUENCER_FIGHT_SHOUTS[ Math.floor(Math.random() * INFLUENCER_FIGHT_SHOUTS.length) ];
         }
@@ -41,7 +41,7 @@ const getBattleShout = ( className, type ) => {
         }
     }
 
-    if ( className == "Chad" ) {
+    if ( className == "chad" ) {
         if ( type == "FIGHT" ) {
             return CHAD_FIGHT_SHOUTS[ Math.floor(Math.random() * CHAD_FIGHT_SHOUTS.length) ];
         }
@@ -50,7 +50,7 @@ const getBattleShout = ( className, type ) => {
         }
     }
 
-    if ( className == "Tumblr girl" ) {
+    if ( className == "tumblr_girl" ) {
         if ( type == "FIGHT" ) {
             return TUMBLR_GIRL_FIGHT_SHOUTS[ Math.floor(Math.random() * TUMBLR_GIRL_FIGHT_SHOUTS.length) ];
         }
