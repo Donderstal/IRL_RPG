@@ -8,7 +8,7 @@ const moves = {
             turns       : 3,
             animation   : "PUNCH",
             moveTo      : true,
-            factor      : .20,
+            factor      : 20,
         },
         {
             name        : "Lorem ipsum",
@@ -17,7 +17,7 @@ const moves = {
             attribute   : "CHARISMA",
             animation   : "PUNCH",
             moveTo      : true,
-            factor      : .20,
+            factor      : 20,
         },
         {
             name        : "Totam",
@@ -25,7 +25,7 @@ const moves = {
             type        : "ATTACK",
             attribute   : "APPEARANCE",
             animation   : "PUNCH",
-            factor      : .10,
+            factor      : 10,
             moveTo      : false
         },
         {
@@ -35,7 +35,7 @@ const moves = {
             attribute   : "SOCIALISATION",
             animation   : "PUNCH",
             moveTo      : false,
-            factor      : .05
+            factor      : 5
         }     
     ],
     "neckbeard": [
@@ -47,7 +47,7 @@ const moves = {
             turns       : 3,
             animation   : "PUNCH",
             moveTo      : true,
-            factor      : .05
+            factor      : 5
         },
         {
             name        : "ipsum",
@@ -56,7 +56,7 @@ const moves = {
             attribute   : "WILLPOWER",
             turns       : 2,
             animation   : "NECKBEARD_HACK",
-            factor      : .10,
+            factor      : 10,
             moveTo      : false
         },
         {
@@ -66,7 +66,7 @@ const moves = {
             attribute   : "INTELLIGENCE",
             turns       : 3,
             animation   : "NECKBEARD_HACK",
-            factor      : .20,
+            factor      : 20,
             moveTo      : false
         },
         {
@@ -75,7 +75,7 @@ const moves = {
             type        : "STATUS_EFFECT",
             attribute   : "INTELLIGENCE",
             animation   : "NECKBEARD_HACK",
-            factor      : .20,
+            factor      : 20,
             moveTo      : false
         }     
     ],
@@ -88,7 +88,7 @@ const moves = {
             turns       : 3,
             animation   : "PUNCH",
             moveTo      : true,           
-            factor      : .35
+            factor      : 35
         },
         {
             name        : "Neque sodales",
@@ -97,7 +97,7 @@ const moves = {
             attribute   : "ENDURANCE",
             animation   : "CHAD_RAGE",
             moveTo      : true,
-            factor      : .10
+            factor      : 10
         },
         {
             name        : "Pellentesque",
@@ -106,7 +106,7 @@ const moves = {
             attribute   : "STRENGTH",
             animation   : "CHAD_RAGE",
             moveTo      : true,
-            factor      : .05
+            factor      : 5
         },
         {
             name        : "Risus at",
@@ -115,7 +115,7 @@ const moves = {
             attribute   : "AGILITY",
             animation   : "PUNCH", 
             moveTo      : true,          
-            factor      : .20
+            factor      : 20
         }        
     ],
     "tumblr_girl": [
@@ -126,7 +126,7 @@ const moves = {
             attribute   : "WILLPOWER",
             animation   : "PUNCH", 
             moveTo      : true,          
-            factor      : .20
+            factor      : 20
         },
         {
             name        : "TUM B",
@@ -135,7 +135,7 @@ const moves = {
             attribute   : "SELF_AWARENESS",
             animation   : "PUNCH", 
             moveTo      : true,          
-            factor      : .05
+            factor      : 5
         },
         {
             name        : "TUM C",
@@ -143,7 +143,7 @@ const moves = {
             type        : "Sp Damage",
             animation   : "INTELLIGENCE", 
             moveTo      : true,          
-            factor      : .50
+            factor      : 50
         },
         {
             name        : "TUM D",
@@ -152,7 +152,7 @@ const moves = {
             attribute   : "WILLPOWER",
             animation   : "PUNCH", 
             moveTo      : true,          
-            factor      : .20
+            factor      : 20
         }
     ]
 }
