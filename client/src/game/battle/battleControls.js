@@ -60,7 +60,8 @@ const handleDirectionKey = ( ) => {
     }
     else if ( state.pressedKeys.a || state.pressedKeys.ArrowLeft ) {
         if  ( battleMenu.inMoveMenu ) {
-            battleMenu.getStandardMenu( );            
+            battleMenu.getStandardMenu( );     
+            battleMenu.activateButtonAtIndex( battleMenu.activeButton.index );           
         }
     }
     else if ( state.pressedKeys.s || state.pressedKeys.ArrowDown ) {
@@ -74,7 +75,8 @@ const handleDirectionKey = ( ) => {
     }
     else if ( state.pressedKeys.d || state.pressedKeys.ArrowRight ) {
         if ( battleMenu.activeButton.text == "MOVES" ) {
-            battleMenu.getMoveMenu( );            
+            battleMenu.getMoveMenu( );  
+            battleMenu.activateButtonAtIndex( battleMenu.activeButton.index );          
         }
     }    
 }
@@ -160,6 +162,7 @@ const passPhase = ( battleState, battleText ) => {
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
+            battleText.setHeader( " " )
             prepareMovesForExecution( battleState, battleText );
             break;
         case globals['PHASE_DO_MOVE'] :

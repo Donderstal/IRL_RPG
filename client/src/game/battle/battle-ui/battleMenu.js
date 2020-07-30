@@ -17,6 +17,14 @@ class BattleMenu {
             "RETURN"
         ];
 
+        this.standardDescriptions = [
+            "Attack your opponents with a basic attack",
+            "Choose one of your special moves",
+            "Use or equip an item",
+            "Check out your characters stats and attributes",            
+            "Return to the previous character"
+        ];
+
         this.buttons        = []
         this.activeButton   = null;
         this.inMoveMenu = false;
@@ -37,7 +45,7 @@ class BattleMenu {
                     this.standardOptions[index], 
                     (this.x + globals.BATTLE_FONT_LINE_HEIGHT / 2), 
                     (this.y + globals.BATTLE_FONT_LINE_HEIGHT) + ( globals.LARGE_FONT_LINE_HEIGHT * index ), 
-                    index
+                    index, this.standardDescriptions[index]
                 )
             );
         }
@@ -63,8 +71,21 @@ class BattleMenu {
 
         this.buttons[buttonIndex].activate( );
         this.activeButton       = this.buttons[buttonIndex];
+
         if ( this.inMoveMenu ) {
+            let attribute = this.activeCharacter.moves[buttonIndex].attribute;
+            if ( attribute != undefined ) {
+                state.battleState.textContainer.setHeader( 
+                    "Attribute: " + attribute, " Skill: " + this.activeCharacter.character.attributes[attribute]
+                );  
+                attribute = undefined              
+            }
+
             state.battleState.textContainer.setText( this.activeCharacter.moves[buttonIndex].desc )
+        }
+        else {
+            state.battleState.textContainer.setHeader( " " );  
+            state.battleState.textContainer.setText( this.activeButton.description )
         }
     }
 
@@ -88,14 +109,15 @@ class BattleMenu {
     getStandardMenu( ) {
         this.inMoveMenu = false;
         for ( var i = 0; i < this.buttons.length; i++ ) {
-            this.buttons[i].setText( this.standardOptions[i] );
+            this.buttons[i].setText( this.standardOptions[i], this.standardDescriptions[i] );
         }   
     }
 }
 
 class BattleMenuButton {
-    constructor( text, x, y, index ) {
+    constructor( text, x, y, index, description) {
         this.text       = text;
+        this.description= description
         this.x          = x;
         this.y          = y;
         this.isActive   = false;
@@ -108,7 +130,7 @@ class BattleMenuButton {
 
     setMove( move ) {
         this.move = move
-        this.setText( this.move.name )
+        this.setText( this.move.name, this.move.desc )
     }
 
     drawButton( ) {
@@ -124,8 +146,9 @@ class BattleMenuButton {
         }
     }
 
-    setText( text ) {
-        this.text = text
+    setText( text, description ) {
+        this.text           = text;
+        this.description    = description;
     }
 
     activate( ) {

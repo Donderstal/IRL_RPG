@@ -68,7 +68,8 @@ class CharacterBlueprint {
         const defendingAttributeGroup = characterGlobals.getAttributeGroup( attribute );
         console.log("Defending with: ")
         console.log(defendingAttributeGroup, this.attributes[defendingAttributeGroup])
-        return ( amount - this.attributes[defendingAttributeGroup] );
+        let defenceResult = ( amount - this.attributes[defendingAttributeGroup] ) 
+        return ( defenceResult < 0 ) ? 0 : defenceResult;
     }
 
     getNumberInRange( factor ) {

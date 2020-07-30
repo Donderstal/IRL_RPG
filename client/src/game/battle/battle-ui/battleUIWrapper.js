@@ -10,6 +10,14 @@ class BattleUIWrapper {
             globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 1 ) 
         ];
         this.y = globals.CANVAS_HEIGHT - globals.BATTLE_UI_CHAR_HEIGHT;
+        
+        const battleMenu = state.battleState.battleMenu;
+        const playerParty = state.battleState.playerParty
+        const partyMembers = playerParty.members
+        let slotItemsArray = [ 
+            battleMenu, partyMembers[0].statsBar, partyMembers[1].statsBar, partyMembers[2].statsBar 
+        ];
+        this.setSlots( slotItemsArray )
     }
 
     switchSlot( modifier ) {
