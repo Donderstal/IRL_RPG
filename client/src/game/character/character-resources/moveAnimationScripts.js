@@ -12,6 +12,28 @@ const PUNCH_R = [
     { 'rowInSheet': 6,'columnInSheet': 1 }
 ]
 
+const CHAD_RAGE_L = [
+    { 'rowInSheet': 1,'columnInSheet': 1 },
+    { 'rowInSheet': 1,'columnInSheet': 3 },
+    { 'rowInSheet': 1,'columnInSheet': 1 },
+    { 'rowInSheet': 1,'columnInSheet': 3 },
+    { 'rowInSheet': 6,'columnInSheet': 0 },
+    { 'rowInSheet': 6,'columnInSheet': 0 },
+    { 'rowInSheet': 4,'columnInSheet': 0 },
+    { 'rowInSheet': 6,'columnInSheet': 0 },
+];
+
+const CHAD_RAGE_R = [
+    { 'rowInSheet': 2,'columnInSheet': 1 },
+    { 'rowInSheet': 2,'columnInSheet': 3 },
+    { 'rowInSheet': 2,'columnInSheet': 1 },
+    { 'rowInSheet': 2,'columnInSheet': 3 },
+    { 'rowInSheet': 6,'columnInSheet': 1 },
+    { 'rowInSheet': 6,'columnInSheet': 1 },
+    { 'rowInSheet': 5,'columnInSheet': 0 },
+    { 'rowInSheet': 6,'columnInSheet': 1 },
+]
+
 const NECKBEARD_HACK_L = [
     { 'rowInSheet': 9,'columnInSheet': 0 },
     { 'rowInSheet': 9,'columnInSheet': 1 },
@@ -41,7 +63,7 @@ module.exports = {
         "NECKBEARD_HACK_L" : NECKBEARD_HACK_L,
         "NECKBEARD_HACK_R" : NECKBEARD_HACK_R
     },
-    "innfluencer" : {
+    "influencer" : {
         "PUNCH_L" : PUNCH_L,
         "PUNCH_R" : PUNCH_R,
         "NECKBEARD_HACK_L" : NECKBEARD_HACK_L,
@@ -50,8 +72,8 @@ module.exports = {
     "chad" : {
         "PUNCH_L" : PUNCH_L,
         "PUNCH_R" : PUNCH_R,
-        "NECKBEARD_HACK_L" : NECKBEARD_HACK_L,
-        "NECKBEARD_HACK_R" : NECKBEARD_HACK_R
+        "CHAD_RAGE_L" : CHAD_RAGE_L,
+        "CHAD_RAGE_R" : CHAD_RAGE_R
     },    
     "tumblr_girl" : {
         "PUNCH_L" : PUNCH_L,

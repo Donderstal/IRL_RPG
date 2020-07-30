@@ -46,6 +46,12 @@ class CharacterBlueprint {
         this.moves          = initMoves.initMoves(this.className);
     }
 
+    doMove( move ) {
+        switch ( move.type ) {
+            default:
+                attackWithStat( );
+        }
+    }
 }
 
 class characterAttributes {

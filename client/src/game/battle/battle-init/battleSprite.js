@@ -58,7 +58,7 @@ class BattleSprite extends I_Sprite {
     
     drawSprite( ) {
         this.frameCount++;
-        if ( this.frameCount * .5 > globals.FRAME_LIMIT ) {
+        if ( this.frameCount * .5 > globals.FRAME_LIMIT && !this.moving ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
                 this.frameCount = 0;
@@ -138,6 +138,7 @@ class BattleSprite extends I_Sprite {
             this.columnInSheet = globals.B_SHEETPOS_ATTACK;
             setTimeout(() => {
                 this.columnInSheet = globals.B_SHEETPOS_IDLE;
+                this.moving = false;
             }, 500 )                
         }
         else {
@@ -148,6 +149,7 @@ class BattleSprite extends I_Sprite {
             setTimeout(() => {
                 this.columnInSheet = globals.B_SHEETPOS_IDLE;
                 this.rowInSheet = this.initialRow;
+                this.moving = false;
             }, ( 250 + ( 250 * sheetPositions.length ) ) )
         }
     }
@@ -172,7 +174,10 @@ class BattleSprite extends I_Sprite {
         }, 750 ) 
         setTimeout(() => {
             this.columnInSheet = globals.B_SHEETPOS_NONE;
-        }, 1000 )             
+        }, 1000 ) 
+        setTimeout(() => {
+            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+        }, 1250 )             
     }
 
     fadeOut( ) {
