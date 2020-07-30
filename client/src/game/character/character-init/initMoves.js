@@ -17,6 +17,8 @@ class Move {
         this.desc       = move.desc
 
         this.type       = move.type
+        this.factor     = move.factor
+        this.moveTo     = move.moveTo
         this.attribute  = move.attribute
         this.animation  = move.animation
     }

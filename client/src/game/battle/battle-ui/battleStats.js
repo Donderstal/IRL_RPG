@@ -59,6 +59,13 @@ class BattleStats {
         this.isPlayer ? this.drawPlayerCharacterStats() : this.drawOpponentStats();
     }
 
+    update( newHP, newAP ) {
+        console.log( " HP damage: " + (newHP == null ? 0 : newHP))
+        console.log( " SP damage: " + (newAP == null ? 0 : newAP))
+        this.HP = newHP == null ? this.HP : this.HP - newHP;
+        this.AP = newAP == null ? this.AP : newAP;
+    }
+
     setXy( x, y ) {
         this.x = x;
         this.y = y;

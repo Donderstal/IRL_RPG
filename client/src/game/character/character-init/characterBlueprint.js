@@ -39,18 +39,40 @@ class CharacterBlueprint {
                 desc        : "Attack the fools!.",
                 type        : "BlablaLorem",
                 attribute   : "STRENGTH",
-                animation   : "PUNCH"
+                animation   : "PUNCH",
+                moveTo      : true,
+                factor      : 30
             } 
         )
 
         this.moves          = initMoves.initMoves(this.className);
     }
 
-    doMove( move ) {
-        switch ( move.type ) {
-            default:
-                attackWithStat( );
-        }
+    getMoveResult( move, targetCharacter ) {
+        console.log(' do move! ')
+        console.log(targetCharacter) 
+        let moveResult;
+        moveResult = this.attackWithAttribute( move.attribute, move.factor );
+        return targetCharacter.defendAndTakeDamage( move.attribute, moveResult )
+    }
+
+    attackWithAttribute( attribute, factor ) {
+        console.log("Attakcing with: ")
+        console.log(attribute, this.attributes[attribute], factor)
+        const attackingAttribute = this.attributes[attribute];
+        return attackingAttribute + ( Math.round( ( attackingAttribute / 100 )  * this.getNumberInRange( factor ) ) )
+    }
+
+
+    defendAndTakeDamage( attribute, amount ) {
+        const defendingAttributeGroup = characterGlobals.getAttributeGroup( attribute );
+        console.log("Defending with: ")
+        console.log(defendingAttributeGroup, this.attributes[defendingAttributeGroup])
+        return ( amount - this.attributes[defendingAttributeGroup] );
+    }
+
+    getNumberInRange( factor ) {
+        return ( Math.floor( Math.random( ) * ( factor * 2 ) ) - factor );
     }
 }
 

@@ -141,14 +141,13 @@ const selectMove = ( battleState, battleText, targetCharacter ) => {
 
 const doMove = ( battleState, battleText ) => {
     actionButtonAllowed = false
-    setTimeout( ( ) => {
-        let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex]
-        let targetParty = ( currentCharacter.isPlayer ? battleState.opponentParty : battleState.playerParty )
-        let targetCharacter =  targetParty.members[currentCharacter.nextMove.targetIndex]; 
+    let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex]
+    let targetParty = ( currentCharacter.isPlayer ? battleState.opponentParty : battleState.playerParty )
+    let targetCharacter =  targetParty.members[currentCharacter.nextMove.targetIndex]; 
+    battleText.setText( currentCharacter.name + " uses " + currentCharacter.nextMove.name + " on " + targetCharacter.name )
 
-        currentCharacter.animateAttack( targetCharacter );
-        targetCharacter.animateHit( );
-        battleText.setText( currentCharacter.name + " uses " + currentCharacter.nextMove.name + " on " + targetCharacter.name )
+    setTimeout( ( ) => {
+        currentCharacter.doMove( targetCharacter );
         battleState.currentMoveIndex += 1
         actionButtonAllowed = true
     }, 500 );

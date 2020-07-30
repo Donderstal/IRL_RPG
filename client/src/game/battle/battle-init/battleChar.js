@@ -70,9 +70,14 @@ class BattleChar {
 
     doMove( targetCharacter ) {
         this.animateAttack(  );
-        
-
+        let moveResult = this.character.getMoveResult( this.nextMove, targetCharacter.character )
         targetCharacter.animateHit( );
+        setTimeout( ( ) => {
+            targetCharacter.statsBar.update( moveResult, null );
+            state.battleState.textContainer.setText( 
+                this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
+            );
+        }, 500 );
     }
 
     target( ) {
