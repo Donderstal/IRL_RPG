@@ -54,5 +54,6 @@ class Move {
 }
 
 module.exports = {
-    initMoves
+    initMoves,
+    Move
 }

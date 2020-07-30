@@ -8,37 +8,52 @@ class BattleMenu {
         this.height         = globals.BATTLE_UI_CHAR_HEIGHT;
         this.x              = globals.CANVAS_WIDTH - ( 4 * globals.BATTLE_UI_CHAR_WIDTH );
         this.y              = globals.CANVAS_HEIGHT - this.height;
-        
-        this.textStartingY  = this.y + globals.BATTLE_FONT_LINE_HEIGHT
-        this.textStartingX  = this.x + globals.BATTLE_FONT_LINE_HEIGHT / 2
 
         this.standardOptions = [
             "ATTACK",
             "MOVES",
             "ITEMS",
             "STATS",            
-            "FLEE"
+            "RETURN"
         ];
 
         this.buttons        = []
         this.activeButton   = null;
         this.inMoveMenu = false;
+        this.playerPartySize = 3
         this.activeCharacter;
 
-        this.initializeMenuSlots( );
-        this.activateButtonAtIndex( 0 );
-        this.drawMenu( );
+        this.initializeMenuButtons( );
+        this.activateButtonAtIndex( 1 );
+        this.getStandardMenu( );
+        this.draw( );
     }
 
-    initializeMenuSlots( ) {
+    initializeMenuButtons( ) {
         for ( var i = 0; i < this.standardOptions.length; i++ ) {
             let index = i
             this.buttons.push( 
                 new BattleMenuButton( 
-                    this.standardOptions[index], this.textStartingX, this.textStartingY + ( globals.LARGE_FONT_LINE_HEIGHT * index ), index
+                    this.standardOptions[index], 
+                    (this.x + globals.BATTLE_FONT_LINE_HEIGHT / 2), 
+                    (this.y + globals.BATTLE_FONT_LINE_HEIGHT) + ( globals.LARGE_FONT_LINE_HEIGHT * index ), 
+                    index
                 )
             );
         }
+    }
+
+    setXy( x, y ) {
+        console.log(x, y)
+        this.x = x;
+        this.y = y;
+        for ( var i = 0; i < this.buttons.length; i++ ) {
+            this.buttons[i].x = x + globals.BATTLE_FONT_LINE_HEIGHT / 2;
+        }             
+    }
+
+    resetMenu( ) {
+        this.activateButtonAtIndex( 0 )
     }
 
     activateButtonAtIndex( buttonIndex ) {
@@ -53,12 +68,14 @@ class BattleMenu {
         }
     }
 
-    drawMenu( ) {
-        canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
+    draw( ) {
+        if ( state.battleState.battlePhase == globals['PHASE_SELECT_MOVE'] ) {
+            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
 
-        for ( var i = 0; i < this.buttons.length; i++ ) {
-            this.buttons[i].drawButton( );
-        } 
+            for ( var i = 0; i < this.buttons.length; i++ ) {
+                this.buttons[i].drawButton( );
+            }             
+        }
     }
 
     getMoveMenu( ) {
@@ -85,6 +102,7 @@ class BattleMenuButton {
         this.index      = index
         this.color      = "white";
         this.fontSize   = "LARGE";
+        this.move       = false;
         this.iterator = 0;
     }
 
@@ -113,6 +131,17 @@ class BattleMenuButton {
     activate( ) {
         this.isActive   = true;
         this.color      = "purple";
+
+        if ( this.text == "ATTACK" ) {
+            this.move = state.battleState.playerParty.activeMember.standardAttack;
+        }
+        else if ( this.move.name == "Attack" && this.text != "ATTACK"  ) {
+            this.move = false;
+        }
+
+        if ( this.text == "RETURN" ) {
+            state.battleState.playerParty.activeMember.nextMove = false;
+        }
     }
 
     deActivate( ) {

@@ -1,4 +1,5 @@
 const initMoves = require('./initMoves')
+const Move = require('./initMoves').Move
 const characterGlobals = require('../characterGlobals')
 
 const getClassProfile = ( className ) => {
@@ -31,6 +32,16 @@ class CharacterBlueprint {
 
         this.HP = this.attributes.HP,
         this.AP = this.attributes.AP,
+
+        this.standardAttack = new Move(
+            {
+                name        : "Attack",
+                desc        : "Attack the fools!.",
+                type        : "BlablaLorem",
+                attribute   : "STRENGTH",
+                animation   : "PUNCH"
+            } 
+        )
 
         this.moves          = initMoves.initMoves(this.className);
     }

@@ -71,7 +71,8 @@ const checkForModeChangeRequest = ( ) => {
         }
         else if ( state.changeRequest == 'BATTLE' ) {
             setTimeout( ( ) => {
-                startBattleAnimation( )            
+                startBattleAnimation( )    
+                canvasHelpers.clearEntireCanvas('FRONT')        
             }, globals.BATTLE_INTRO_ANIM_MS );
         }   
     }

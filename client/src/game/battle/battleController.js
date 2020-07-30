@@ -9,30 +9,31 @@ const maps          = require('../../resources/mapResources')
 const Party         = require('./Party').Party
 const BattleMenu    = require('./battle-ui/battleMenu').BattleMenu
 const nameGen       = require('./../../helpers/randomNameGen')
+const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 
 const playerTopXy = {
-    'x': (globals.CANVAS_WIDTH * .40 - ( globals.STRD_SPRITE_WIDTH  * .5 ) ),
+    'x': (globals.CANVAS_WIDTH * .65) - ( globals.STRD_SPRITE_WIDTH * .5 ),
     'y': (globals.CANVAS_HEIGHT * .35) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 const playerMiddleXy = {
-    'x': (globals.CANVAS_WIDTH * .30) - ( globals.STRD_SPRITE_WIDTH  * .5 ),
+    'x': (globals.CANVAS_WIDTH * .70) - ( globals.STRD_SPRITE_WIDTH * .5 ),
     'y': (globals.CANVAS_HEIGHT * .5) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 const playerBottomXy = {
-    'x': (globals.CANVAS_WIDTH * .35) - ( globals.STRD_SPRITE_WIDTH  * .5 ),
+    'x': (globals.CANVAS_WIDTH * .60) - ( globals.STRD_SPRITE_WIDTH  * .5 ),
     'y': (globals.CANVAS_HEIGHT * .65) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 
 const opponentTopXy = {
-    'x': (globals.CANVAS_WIDTH * .65) - ( globals.STRD_SPRITE_WIDTH * .5 ),
+    'x': (globals.CANVAS_WIDTH * .40 - ( globals.STRD_SPRITE_WIDTH  * .5 ) ),
     'y': (globals.CANVAS_HEIGHT * .35) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 const opponentMiddleXy = {
-    'x': (globals.CANVAS_WIDTH * .70) - ( globals.STRD_SPRITE_WIDTH * .5 ),
+    'x': (globals.CANVAS_WIDTH * .30) - ( globals.STRD_SPRITE_WIDTH  * .5 ),
     'y': (globals.CANVAS_HEIGHT * .5) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 const opponentBottomXy = {
-    'x': (globals.CANVAS_WIDTH * .60) - ( globals.STRD_SPRITE_WIDTH * .5 ),
+    'x': (globals.CANVAS_WIDTH * .35) - ( globals.STRD_SPRITE_WIDTH  * .5 ),
     'y': (globals.CANVAS_HEIGHT * .65) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 
@@ -53,11 +54,10 @@ const startBattle = (  ) => {
 
     initBattleMenu()
     initBattleMapAndSprites()
-
 }
 
 const initBattleMenu = ( ) => {
-    state.battleState.battleMenu = new BattleMenu() 
+    state.battleState.battleMenu = new BattleMenu( ); 
 }
 
 const initBattleMapAndSprites = ( ) => {
@@ -70,17 +70,12 @@ const initBattleMapAndSprites = ( ) => {
         grid.drawGrid( {"x": 0, "y": 0}, battleMap, tileSheetData, true );        
     }
 
+    text.initTextContainer( ) // real text
+    state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
+    initializeBattleCharacter( state.battleState.opponent )
+    state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
 
-    
-    setTimeout( ( ) => {
-        text.initTextContainer( ) // real text
-        state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
-    }, 600) 
-
-    setTimeout( ( ) => {
-        initializeBattleCharacter( state.battleState.opponent )
-        state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
-    }, 1200)
+    state.battleState.battleUI = new BattleUI( );
 }
 
 const initializeBattleCharacter = ( opponent ) => {

@@ -6,19 +6,20 @@ const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite          = require('./battleSprite').BattleSprite
-const canvas                = require('../../../helpers/canvasHelpers')
 
 class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {
-        const spriteSrc = '/static/sprites/' + className.toLowerCase() + '.png' 
-        this.sprite     = new BattleSprite( xy, spriteSrc, isPlayer )
-        this.character  = new CharacterBlueprint( name, className )
-        this.statsBar   = new BattleStats( this, isPlayer, index )
-        this.name       = name,
-        this.className  = className,
-        this.moves      = this.character.moves
-        this.hasTurn    = false;
-        this.isPlayer   = isPlayer;
+        const spriteSrc     = '/static/sprites/' + className.toLowerCase() + '.png' 
+        this.sprite         = new BattleSprite( xy, spriteSrc, isPlayer )
+        this.character      = new CharacterBlueprint( name, className )
+        this.statsBar       = new BattleStats( this, isPlayer, index )
+        this.name           = name,
+        this.index          = index
+        this.className      = className,
+        this.moves          = this.character.moves
+        this.hasTurn        = false;
+        this.isPlayer       = isPlayer;
+        this.standardAttack = this.character.standardAttack
         this.nextMove, this.nextMoveTarget
 
         this.getMoves( )
@@ -71,10 +72,23 @@ class BattleChar {
         this.nextMove( this.character, moveTarget )
     }
 
+    target( ) {
+        this.targeted = true;
+        const moveName = state.battleState.playerParty.activeMember.nextMove.name
+        state.battleState.targetedCharacter = this
+        state.battleState.textContainer.setText( "Use  " + moveName + " on " + this.name )
+        this.sprite.target()
+    }
+
+    deTarget( ) {
+        this.targeted = false;
+        this.sprite.deTarget()
+    }
+
     activateUI( ) {
         state.battleState.textContainer.setText( "Choose your move!" )
         state.battleState.battleMenu.activeCharacter = this;
-        this.sprite.activateUI( )
+        this.sprite.activateUI( );
     }
 
     deActivateUi( ) {
@@ -83,7 +97,7 @@ class BattleChar {
 
     draw( ) {
         this.sprite.drawSprite();
-        this.statsBar.drawStats();
+        this.statsBar.draw( );
     }
 }
 
