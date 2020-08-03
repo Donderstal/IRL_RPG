@@ -32,7 +32,6 @@ class BattleMenu {
         this.activeCharacter;
 
         this.initializeMenuButtons( );
-        this.activateButtonAtIndex( 1 );
         this.getStandardMenu( );
         this.draw( );
     }
@@ -64,9 +63,16 @@ class BattleMenu {
         this.activateButtonAtIndex( 0 )
     }
 
-    activateButtonAtIndex( buttonIndex ) {
+    activateButtonAtIndex( buttonIndex, UI ) {
         if ( this.activeButton != null ) {
             this.activeButton.deActivate( );            
+        }
+
+        if ( buttonIndex < 0 ) {
+            buttonIndex = this.buttons.length - 1;
+        }
+        else if ( buttonIndex > ( this.buttons.length - 1 ) ) {
+            buttonIndex = 0;
         }
 
         this.buttons[buttonIndex].activate( );
@@ -75,17 +81,17 @@ class BattleMenu {
         if ( this.inMoveMenu || this.activeButton.text == "ATTACK") {
             let attribute = this.activeCharacter.moves[buttonIndex].attribute;
             if ( attribute != undefined ) {
-                state.battleState.textContainer.setHeader( 
+                UI.setHeader( 
                     "Attribute: " + attribute, " Skill: " + this.activeCharacter.character.attributes[attribute]
                 );  
                 attribute = undefined              
             }
 
-            state.battleState.textContainer.setText( this.activeCharacter.moves[buttonIndex].desc )
+            UI.setText( this.activeCharacter.moves[buttonIndex].desc )
         }
         else {
-            state.battleState.textContainer.setHeader( " " );  
-            state.battleState.textContainer.setText( this.activeButton.description )
+            UI.setHeader( " " );  
+            UI.setText( this.activeButton.description )
         }
     }
 
