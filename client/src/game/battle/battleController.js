@@ -39,30 +39,32 @@ const opponentBottomXy = {
 }
 
 const startBattle = (  ) => {
-    state.battleState.requestingBattle = false
+    const battleState = state.battleState
+
+    battleState.requestingBattle = false
     state.currentMap.mapMusic.pause()     
 
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
 
-    if ( state.battleState.battleMusic ) {
-        state.battleState.battleMusic.play()  
+    if ( battleState.battleMusic ) {
+        battleState.battleMusic.play()  
     }
     else {
-        state.battleState.battleMusic = new Sound( "Rydeen.mp3", false, true )
-        state.battleState.battleMusic.play()
+        battleState.battleMusic = new Sound( "Rydeen.mp3", false, true )
+        battleState.battleMusic.play()
     }
 
-    initBattleMenu()
-    initBattleMapAndSprites()
+    initBattleMenu( battleState ); 
+    initBattleMapAndSprites( battleState );
 }
 
-const initBattleMenu = ( ) => {
+const initBattleMenu = ( battleState ) => {
     text.initTextContainer( )
-    state.battleState.battleMenu = new BattleMenu( ); 
+    battleState.battleMenu = new BattleMenu( ); 
 }
 
-const initBattleMapAndSprites = ( ) => {
+const initBattleMapAndSprites = ( battleState ) => {
     let battleMap = {};
     battleMap.mapData = maps.getMapData( "battle/downtown" );
     let tileSheetData = tilesheets[battleMap.mapData.tileSet];
@@ -72,11 +74,11 @@ const initBattleMapAndSprites = ( ) => {
         grid.drawGrid( {"x": 0, "y": 0}, battleMap, tileSheetData, true );        
     }
 
-    state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
-    initializeBattleCharacter( state.battleState.opponent )
-    state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
+    battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
+    initializeBattleCharacter( battleState.opponent )
+    battleState.textContainer.setText( "A fight breaks out in the streets!" )
 
-    state.battleState.battleUI = new BattleUI( );
+    battleState.battleUI = new BattleUI( battleState );
 }
 
 const initializeBattleCharacter = ( opponent ) => {

@@ -105,8 +105,9 @@ class BattleChar {
     }
 
     activateUI( ) {
-        state.battleState.textContainer.setText( "Choose your move!" )
-        state.battleState.battleMenu.activeCharacter = this;
+        const battleUI = state.battleState.battleUI
+        battleUI.setText( "Choose your move!" )
+        battleUI.setCharacterAsActive( this );
         this.sprite.activateUI( );
     }
 

@@ -43,7 +43,6 @@ class Party {
     getNextPartyMember( ) {
         if ( this.activeMemberIndex != -1 ) {
             this.activeMember.deActivateUi( );      
-            state.battleState.battleUI.switchSlot( "NEXT" );      
         }
 
         if ( this.activeMemberIndex < this.partySize - 1 ) {
@@ -56,12 +55,15 @@ class Party {
             this.activeMember.deActivateUi( );
             this.inMoveSelection = false;
         }
+
+        if ( this.activeMemberIndex != -1 ) {   
+            state.battleState.battleUI.switchSlot( "NEXT" );      
+        }
     }
 
     getPreviousPartyMember( ) {
         this.activeMember.nextMove = null;
         this.activeMember.deActivateUi( );      
-        state.battleState.battleUI.switchSlot( "PREV" );  
 
         if ( this.activeMemberIndex - 1 != -1 ) {
             this.activeMemberIndex -= 1
@@ -73,6 +75,8 @@ class Party {
             this.activeMember.deActivateUi( );
             this.inMoveSelection = false;
         }
+
+        state.battleState.battleUI.switchSlot( "PREV" );  
     }
 
     activateTarget( newTargetIndex ) {

@@ -142,7 +142,6 @@ const initTargetSelection = ( battleState ) => {
 const selectMove = ( battleState, battleText, targetCharacter ) => {
     const activePartyMember = battleState.playerParty.activeMember
     activePartyMember.nextMove.targetIndex = targetCharacter.index;
-    battleState.battleMenu.resetMenu( );
     targetCharacter.deTarget( );
     battleState.playerParty.getNextPartyMember( )
 
