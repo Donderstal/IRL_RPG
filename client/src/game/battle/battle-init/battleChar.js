@@ -19,10 +19,12 @@ class BattleChar {
         this.moves          = this.character.moves
         this.hasTurn        = false;
         this.isPlayer       = isPlayer;
+        this.isDefeated     = this.character.HP > 0 ? false : true;
         this.standardAttack = this.character.standardAttack
+        this.startingAttrs  = Object.assign( {}, this.character.attributes );
         this.nextMove, this.nextMoveTarget
 
-        this.getMoves( )
+        this.getMoves( );
     }
 
     getMoves( ) {
@@ -74,11 +76,19 @@ class BattleChar {
         let moveResult = this.character.getMoveResult( this.nextMove, targetCharacter.character )
         targetCharacter.animateHit( );
         setTimeout( ( ) => {
-            targetCharacter.statsBar.update( moveResult, null );
-            state.battleState.textContainer.setText( 
-                this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
-            );
+            this.updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter )
         }, 500 );
+    }
+
+    updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter ) {
+        targetCharacter.statsBar.update( moveResult, null );
+        state.battleState.textContainer.setText( 
+            this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
+        );
+
+        if ( targetCharacter.isDefeated ) {
+            targetCharacter.sprite.fadeOut( );
+        }
     }
 
     target( ) {
@@ -105,8 +115,10 @@ class BattleChar {
     }
 
     draw( ) {
-        this.sprite.drawSprite();
-        this.statsBar.draw( );
+        if ( !this.isDefeated ) {
+            this.sprite.drawSprite();
+            this.statsBar.draw( );            
+        }
     }
 }
 

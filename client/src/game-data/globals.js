@@ -78,6 +78,7 @@ const PHASE_BEGIN_TURN              = 0
 const PHASE_SELECT_MOVE             = 1
 const PHASE_DO_MOVE                 = 2
 const PHASE_STAT_CHECK              = 3
+const PHASE_END_BATTLE              = 4
 
 const SHEET_ROW_BATTLE_LEFT         = 4
 const SHEET_ROW_BATTLE_RIGHT        = 5
@@ -128,6 +129,7 @@ module.exports = {
     PHASE_SELECT_MOVE,
     PHASE_DO_MOVE,
     PHASE_STAT_CHECK,
+    PHASE_END_BATTLE,
     SHEET_ROW_BATTLE_LEFT,
     SHEET_ROW_BATTLE_RIGHT,
     BATTLE_UI_CHAR_WIDTH,

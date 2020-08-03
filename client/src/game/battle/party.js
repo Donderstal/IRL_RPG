@@ -8,14 +8,36 @@ class Party {
         this.members            = [ ];
         this.partySize          = partyMembers.length
         partyMembers.forEach( ( newMember, index ) => {
-            this.members.push( new BattleChar( newMember[0], newMember[1], newMember[2], newMember[3], index ) )
-        } )
+            this.members.push( new BattleChar( newMember[0], newMember[1], newMember[2], newMember[3], index ) );
+        } );
 
-        this.activeMemberIndex = -1
+        this.activeMemberIndex  = -1;
         this.targetIndex        = 0;
+
         if ( this.isPlayer ) {
             this.getNextPartyMember( );
         }
+    }
+
+    get isDefeated( ) {
+        console.log( 'is party defeated?' )
+        for ( var i = 0; i < this.partySize; i++ ) {
+            if ( !this.members[i].isDefeated ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    get isMemberAtNextIndex( ) {
+        const nextIndex = ( this.activeMemberIndex + 1 ) == this.partySize ? 0 : this.activeMemberIndex + 1;
+        return  ( this.members[nextIndex].isDefeated == false )
+    }
+
+    get isMemberAtPreviousIndex( ) {
+        const previousIndex = ( this.activeMemberIndex - 1 ) < 0 ? this.partySize - 1 : this.activeMemberIndex - 1;
+        return  ( this.members[previousIndex].isDefeated == false  )
     }
 
     getNextPartyMember( ) {
@@ -41,7 +63,7 @@ class Party {
         this.activeMember.deActivateUi( );      
         state.battleState.battleUI.switchSlot( "PREV" );  
 
-        if ( this.activeMemberIndex -1 != -1 ) {
+        if ( this.activeMemberIndex - 1 != -1 ) {
             this.activeMemberIndex -= 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
@@ -59,6 +81,15 @@ class Party {
         this.members[this.targetIndex].target( );
     }
 
+    getFirstUndefeatedCharacterIndex( ) {
+        for ( var i = 0; i < this.partySize; i++ ) {
+            if ( !this.members[i].isDefeated ) {
+                console.log( "First undefeated character: " + i )
+                return i
+            }
+        }
+    }
+
     prepareMoveSelection( ) {
         this.activeMemberIndex = -1;
         this.inMoveSelection = true;
@@ -67,11 +98,13 @@ class Party {
 
     selectMoves( ) {
         this.members.forEach( ( e ) => {
-            let movesArray = e.moves;
-            movesArray[4] = e.standardAttack;
+            if ( !e.isDefeated ) {
+                let movesArray = e.moves;
+                movesArray[4] = e.standardAttack;
 
-            e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
-            e.nextMove.targetIndex = Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length))
+                e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
+                e.nextMove.targetIndex = Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length))                
+            }
         } )
     }
 }
