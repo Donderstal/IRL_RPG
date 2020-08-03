@@ -16,8 +16,9 @@ const handleBattleAnimations = ( ) => {
     if ( battleText != undefined ) {
         battleText.drawTextBox( )    
     }
+
     if ( battleMenu != undefined ) {
-        battleMenu.drawMenu()
+        state.battleState.battleMenu.draw( );
     }
 }
 

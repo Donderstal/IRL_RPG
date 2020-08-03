@@ -127,7 +127,7 @@ const moves = {
 const getMovesByClass = ( className ) => {
     var classMoves = moves[className]
     if ( classMoves.length < 5 ) {
-        classMoves.push({ name: "Return", desc: "Return to main menu" })        
+        classMoves.push({ name: "RETURN", desc: "Return to main menu" })        
     }
 
     return classMoves

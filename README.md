@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### JUL 29, 2020
+* Cleaned up some regression bugs in battle code
+* Implementing Barts ideas for the battle menu
+* Restoring battle turn structure
+
 #### JUL 26, 2020
 * Removing old move selection
 * New battleMenu class for all menu logic

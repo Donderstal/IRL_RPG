@@ -11,34 +11,64 @@ class Party {
             this.members.push( new BattleChar( newMember[0], newMember[1], newMember[2], newMember[3], index ) )
         } )
 
-        this.activeMember       = this.members[0]
-        state.battleState.battleMenu.activeCharacter = this.activeMember;
-        this.activeMemberIndex  = 0;
+        this.activeMemberIndex = -1
+        this.targetIndex        = 0;
+        if ( this.isPlayer ) {
+            this.getNextPartyMember( );
+        }
     }
 
     getNextPartyMember( ) {
-        this.activeMember.deActivateUi( );
-        if ( this.activeMemberIndex + 1 < this.partySize ) {
+        if ( this.activeMemberIndex != -1 ) {
+            this.activeMember.deActivateUi( );      
+            state.battleState.battleUI.switchSlot( "NEXT" );      
+        }
+
+        if ( this.activeMemberIndex < this.partySize - 1 ) {
             this.activeMemberIndex += 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
             this.activeMember.activateUI();
         }
         else {
+            this.activeMember.deActivateUi( );
             this.inMoveSelection = false;
         }
     }
 
+    getPreviousPartyMember( ) {
+        this.activeMember.nextMove = null;
+        this.activeMember.deActivateUi( );      
+        state.battleState.battleUI.switchSlot( "PREV" );  
+
+        if ( this.activeMemberIndex -1 != -1 ) {
+            this.activeMemberIndex -= 1
+            this.members[this.activeMemberIndex].active = true;
+            this.activeMember = this.members[this.activeMemberIndex]
+            this.activeMember.activateUI();
+        }
+        else {
+            this.activeMember.deActivateUi( );
+            this.inMoveSelection = false;
+        }
+    }
+
+    activateTarget( newTargetIndex ) {
+        this.members[this.targetIndex].deTarget( );
+        this.targetIndex = newTargetIndex
+        this.members[this.targetIndex].target( );
+    }
+
     prepareMoveSelection( ) {
+        this.activeMemberIndex = -1;
         this.inMoveSelection = true;
-        this.activeMemberIndex = 0;
-        this.activeMember = this.members[this.activeMemberIndex];
-        this.activeMember.activateUI();
+        this.getNextPartyMember( );
     }
 
     selectMoves( ) {
         this.members.forEach( ( e ) => {
             e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
+            e.nextMove.targetIndex = Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length))
         } )
     }
 }
