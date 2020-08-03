@@ -59,6 +59,18 @@ class BattleStats {
         this.isPlayer ? this.drawPlayerCharacterStats() : this.drawOpponentStats();
     }
 
+    update( newHP, newAP ) {
+        console.log( " HP damage: " + (newHP == null ? 0 : newHP))
+        console.log( " SP damage: " + (newAP == null ? 0 : newAP))
+        this.HP = newHP == null ? this.HP : this.HP - newHP;
+        this.AP = newAP == null ? this.AP : newAP;
+
+        if ( this.HP < 1 ) {
+            this.owner.isDefeated = true;
+            console.log( this.owner.name + " has been knocked out!")
+        }
+    }
+
     setXy( x, y ) {
         this.x = x;
         this.y = y;
@@ -85,6 +97,13 @@ class BattleStats {
             "FONT",
             this.x, this.y,
             this.width, globals.LARGE_FONT_LINE_HEIGHT,
+            "black"
+        )
+
+        canvas.drawRect(
+            "FONT",
+            this.x, this.y,
+            this.width * ( this.HP / this.startingHP ), globals.LARGE_FONT_LINE_HEIGHT,
             "green"
         )
         
@@ -101,6 +120,12 @@ class BattleStats {
             "FONT",
             this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
             this.width, globals.LARGE_FONT_LINE_HEIGHT,
+            "black"
+        )
+        canvas.drawRect(
+            "FONT",
+            this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
+            this.width * ( this.AP / this.startingAP ), globals.LARGE_FONT_LINE_HEIGHT,
             "blue"
         )
 
@@ -120,8 +145,16 @@ class BattleStats {
             "FONT",
             (this.x  - (this.width * .5)) + (canvas.getFrontCanvasContext().measureText("HP: " + this.HP + "/" + this.startingHP).width * .5), this.y,
             this.width, globals.SMALL_FONT_LINE_HEIGHT,
+            "black"
+        )
+
+        canvas.drawRect(
+            "FONT",
+            (this.x  - (this.width * .5)) + (canvas.getFrontCanvasContext().measureText("HP: " + this.HP + "/" + this.startingHP).width * .5), this.y,
+            this.width * ( this.HP / this.startingHP ), globals.SMALL_FONT_LINE_HEIGHT,
             "green"
-        );
+        )
+
         canvas.writeTextLine( 
             "HP: " + this.HP + "/" + this.startingHP, 
             this.x, this.y + globals.SMALL_FONT_SIZE, 

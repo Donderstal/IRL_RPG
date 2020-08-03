@@ -13,7 +13,7 @@ const getBattleTextXy = ( ) => {
 }
 
 const getBattleTextDimensions = ( ) => {
-    return { "width": globals.CANVAS_WIDTH / 2, "height": globals.CANVAS_HEIGHT / 6}
+    return { "width": globals.CANVAS_WIDTH * .35, "height": globals.CANVAS_HEIGHT / 6}
 }
 
 class TextContainer extends I_TextBox {
@@ -21,15 +21,20 @@ class TextContainer extends I_TextBox {
         super( getBattleTextXy( ), getBattleTextDimensions( ), "LARGE", text )  
         this.isMoveMenu = false;       
         this.waiting    = false;        
+        this.header     = false;
     }
     
-    setText(text) {
+    setText( text ) {
         this.text = canvas.breakTextIntoLines( text, 'LARGE', this.width )  
         super.setText(this.text)
     }
 
     drawTextBox( ) {
+        this.drawBox( );
         this.writeText( );
+        if ( this.hasHeader ) {
+            this.writeHeader( );
+        }
     }
 }
 

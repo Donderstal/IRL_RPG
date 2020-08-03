@@ -1,97 +1,121 @@
 const moves = {
     "influencer": [
         {
-            name        : "INF A",
-            desc        : "INF A description.",
+            name        : "Sic",
+            desc        : "Quis autem vel eum iure.",
             type        : "STAT_UP",
-            attribute   : "CHA",
+            attribute   : "APPEARANCE",
             turns       : 3,
-            animation   : "PUNCH"
+            animation   : "PUNCH",
+            moveTo      : true,
+            factor      : 20,
         },
         {
-            name        : "INF B",
-            desc        : "INF B description.",
+            name        : "Lorem ipsum",
+            desc        : "ipsum lorem totam rem.",
             type        : "HEAL",
-            attribute   : "END",
-            animation   : "PUNCH"
+            attribute   : "CHARISMA",
+            animation   : "PUNCH",
+            moveTo      : true,
+            factor      : 20,
         },
         {
-            name        : "INF C",
-            desc        : "INF C description.",
+            name        : "Totam",
+            desc        : "totam rem aperiam!",
             type        : "ATTACK",
-            attribute   : "ATH",
-            animation   : "PUNCH"
+            attribute   : "APPEARANCE",
+            animation   : "PUNCH",
+            factor      : 10,
+            moveTo      : false
         },
         {
-            name        : "INF D",
-            desc        : "INF D description.",
-            type        : "SP_ATTACK",
-            attribute   : "CHA",
-            animation   : "PUNCH"
+            name        : "occaecat",
+            desc        : "Excepteur sint occaecat cupidatat",
+            type        : "ATTACK",
+            attribute   : "SOCIALISATION",
+            animation   : "PUNCH",
+            moveTo      : false,
+            factor      : 5
         }     
     ],
     "neckbeard": [
         {
-            name        : "NEC A",
-            desc        : "NEC A description.",
+            name        : "Lorem",
+            desc        : "Duis aute irure dolor in reprehenderit.",
             type        : "STAT_DOWN",
-            attribute   : "MYS",
+            attribute   : "SELF_AWARENESS",
             turns       : 3,
-            animation   : "PUNCH"
+            animation   : "PUNCH",
+            moveTo      : true,
+            factor      : 5
         },
         {
-            name        : "NEC B",
-            desc        : "NEC B description.",
+            name        : "ipsum",
+            desc        : "Bibendum at varius vel pharetra!",
             type        : "ATR_UP",
-            attribute   : "INT",
+            attribute   : "WILLPOWER",
             turns       : 2,
-            animation   : "NECKBEARD_HACK"
+            animation   : "NECKBEARD_HACK",
+            factor      : 10,
+            moveTo      : false
         },
         {
-            name        : "NEC C",
-            desc        : "NEC C description.",
+            name        : "dolor sit amet",
+            desc        : "Duis aute irure dolor.",
             type        : "ATR_DOWN",
-            attribute   : "WIS",
+            attribute   : "INTELLIGENCE",
             turns       : 3,
-            animation   : "NECKBEARD_HACK"
+            animation   : "NECKBEARD_HACK",
+            factor      : 20,
+            moveTo      : false
         },
         {
-            name        : "NEC D",
-            desc        : "NEC D description.",
+            name        : "consectetur",
+            desc        : "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
             type        : "STATUS_EFFECT",
-            attribute   : 5,
-            animation   : "NECKBEARD_HACK"
+            attribute   : "INTELLIGENCE",
+            animation   : "NECKBEARD_HACK",
+            factor      : 20,
+            moveTo      : false
         }     
     ],
     "chad": [
         {
-            name        : "CHA A",
-            desc        : "CHA A description.",
+            name        : "Mattis",
+            desc        : "tempor incididunt ut labore et dolore magna.",
             type        : "STAT_UP",
-            attribute   : "CHA",
+            attribute   : "STRENGTH",
             turns       : 3,
-            animation   : "PUNCH"
+            animation   : "PUNCH",
+            moveTo      : true,           
+            factor      : 35
         },
         {
-            name        : "CHA B",
-            desc        : "CHA B description.",
+            name        : "Neque sodales",
+            desc        : "Tellus cras adipiscing enim eu turpis.",
             type        : "HEAL",
-            attribute   : "END",
-            animation   : "PUNCH"
+            attribute   : "ENDURANCE",
+            animation   : "CHAD_RAGE",
+            moveTo      : true,
+            factor      : 10
         },
         {
-            name        : "CHA C",
+            name        : "Pellentesque",
             desc        : "CHA C description.",
             type        : "ATTACK",
-            attribute   : "ATH",
-            animation   : "PUNCH"
+            attribute   : "STRENGTH",
+            animation   : "CHAD_RAGE",
+            moveTo      : true,
+            factor      : 5
         },
         {
-            name        : "CHA D",
-            desc        : "CHA D description.",
+            name        : "Risus at",
+            desc        : "voluptatem accusantium doloremque.",
             type        : "SP_ATTACK",
-            attribute   : "CHA",
-            animation   : "PUNCH"
+            attribute   : "AGILITY",
+            animation   : "PUNCH", 
+            moveTo      : true,          
+            factor      : 20
         }        
     ],
     "tumblr_girl": [
@@ -99,27 +123,36 @@ const moves = {
             name        : "TUM A",
             desc        : "TUM A description.",
             type        : "SP_ATTACK",
-            attribute   : "INT",
-            animation   : "PUNCH"
+            attribute   : "WILLPOWER",
+            animation   : "PUNCH", 
+            moveTo      : true,          
+            factor      : 20
         },
         {
             name        : "TUM B",
             desc        : "TUM B description",
             type        : "SP_ATTACK",
-            attribute   : "INT",
-            animation   : "PUNCH"
+            attribute   : "SELF_AWARENESS",
+            animation   : "PUNCH", 
+            moveTo      : true,          
+            factor      : 5
         },
         {
             name        : "TUM C",
             desc        : "TUM C description",
             type        : "Sp Damage",
-            animation   : "PUNCH"
+            animation   : "INTELLIGENCE", 
+            moveTo      : true,          
+            factor      : 50
         },
         {
             name        : "TUM D",
             desc        : "TUM D description",
             type        : "Status down",
-            animation   : "PUNCH"
+            attribute   : "WILLPOWER",
+            animation   : "PUNCH", 
+            moveTo      : true,          
+            factor      : 20
         }
     ]
 }

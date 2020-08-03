@@ -11,7 +11,7 @@ class BattleChar {
     constructor( isPlayer, name, className, xy, index ) {
         const spriteSrc     = '/static/sprites/' + className.toLowerCase() + '.png' 
         this.sprite         = new BattleSprite( xy, spriteSrc, isPlayer )
-        this.character      = new CharacterBlueprint( name, className )
+        this.character      = new CharacterBlueprint( name, className, 10 )
         this.statsBar       = new BattleStats( this, isPlayer, index )
         this.name           = name,
         this.index          = index
@@ -19,10 +19,12 @@ class BattleChar {
         this.moves          = this.character.moves
         this.hasTurn        = false;
         this.isPlayer       = isPlayer;
+        this.isDefeated     = this.character.HP > 0 ? false : true;
         this.standardAttack = this.character.standardAttack
+        this.startingAttrs  = Object.assign( {}, this.character.attributes );
         this.nextMove, this.nextMoveTarget
 
-        this.getMoves( )
+        this.getMoves( );
     }
 
     getMoves( ) {
@@ -59,8 +61,9 @@ class BattleChar {
         this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
     }
 
-    animateAttack( tilesheetPositionArray ) {
-        this.sprite.animateAttack( tilesheetPositionArray )
+    animateAttack( ) {
+        this.sprite.animateAttack( this.nextMove.animation )
+        this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }
 
     chooseMove( moveIndex, moveTarget ) {
@@ -68,8 +71,24 @@ class BattleChar {
         this.nextMove       = this.moves[moveIndex].doDamage
     }
 
-    doMove( moveTarget ) {
-        this.nextMove( this.character, moveTarget )
+    doMove( targetCharacter ) {
+        this.animateAttack(  );
+        let moveResult = this.character.getMoveResult( this.nextMove, targetCharacter.character )
+        targetCharacter.animateHit( );
+        setTimeout( ( ) => {
+            this.updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter )
+        }, 500 );
+    }
+
+    updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter ) {
+        targetCharacter.statsBar.update( moveResult, null );
+        state.battleState.textContainer.setText( 
+            this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
+        );
+
+        if ( targetCharacter.isDefeated ) {
+            targetCharacter.sprite.fadeOut( );
+        }
     }
 
     target( ) {
@@ -96,8 +115,10 @@ class BattleChar {
     }
 
     draw( ) {
-        this.sprite.drawSprite();
-        this.statsBar.draw( );
+        if ( !this.isDefeated ) {
+            this.sprite.drawSprite();
+            this.statsBar.draw( );            
+        }
     }
 }
 

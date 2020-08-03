@@ -10,6 +10,7 @@ const Party         = require('./Party').Party
 const BattleMenu    = require('./battle-ui/battleMenu').BattleMenu
 const nameGen       = require('./../../helpers/randomNameGen')
 const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
+const charGlobals   = require('../character/characterGlobals')
 
 const playerTopXy = {
     'x': (globals.CANVAS_WIDTH * .65) - ( globals.STRD_SPRITE_WIDTH * .5 ),
@@ -57,6 +58,7 @@ const startBattle = (  ) => {
 }
 
 const initBattleMenu = ( ) => {
+    text.initTextContainer( )
     state.battleState.battleMenu = new BattleMenu( ); 
 }
 
@@ -70,7 +72,6 @@ const initBattleMapAndSprites = ( ) => {
         grid.drawGrid( {"x": 0, "y": 0}, battleMap, tileSheetData, true );        
     }
 
-    text.initTextContainer( ) // real text
     state.battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
     initializeBattleCharacter( state.battleState.opponent )
     state.battleState.textContainer.setText( "A fight breaks out in the streets!" )
@@ -81,15 +82,15 @@ const initBattleMapAndSprites = ( ) => {
 const initializeBattleCharacter = ( opponent ) => {
     const mapBattleAction = opponent.action
     const playerParty = [ 
-        [ true, nameGen.getRandomName(), state.playerCharacter.stats.className, playerTopXy ],
+        [ true, nameGen.getRandomName(), charGlobals["CHAD"], playerTopXy ],
         [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerMiddleXy ],
-        [ true, nameGen.getRandomName(), state.playerCharacter.stats.className, playerBottomXy ]
+        [ true, nameGen.getRandomName(), charGlobals["NECKBEARD"], playerBottomXy ]
     ]
 
     const opponentParty = [ 
-        [ false, nameGen.getRandomName(), mapBattleAction.character.class, opponentTopXy ],
+        [ false, nameGen.getRandomName(), charGlobals["NECKBEARD"], opponentTopXy ],
         [ false, mapBattleAction.name, mapBattleAction.character.class, opponentMiddleXy ],
-        [ false, nameGen.getRandomName(), mapBattleAction.character.class, opponentBottomXy ]
+        [ false, nameGen.getRandomName(), charGlobals["CHAD"], opponentBottomXy ]
     ]
 
     state.battleState.playerParty   = new Party( playerParty, "PLAYER" )
