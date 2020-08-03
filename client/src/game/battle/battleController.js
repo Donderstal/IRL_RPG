@@ -55,13 +55,7 @@ const startBattle = (  ) => {
         battleState.battleMusic.play()
     }
 
-    initBattleMenu( battleState ); 
     initBattleMapAndSprites( battleState );
-}
-
-const initBattleMenu = ( battleState ) => {
-    text.initTextContainer( )
-    battleState.battleMenu = new BattleMenu( ); 
 }
 
 const initBattleMapAndSprites = ( battleState ) => {
@@ -76,9 +70,11 @@ const initBattleMapAndSprites = ( battleState ) => {
 
     battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
     initializeBattleCharacter( battleState.opponent )
-    battleState.textContainer.setText( "A fight breaks out in the streets!" )
 
-    battleState.battleUI = new BattleUI( battleState );
+    battleState.battleUI = new BattleUI( battleState );  
+    battleState.battleUI.activateButtonAtIndex( 1 );
+    battleState.playerParty.getNextPartyMember( );  
+    battleState.battleUI.activateMenu( );
 }
 
 const initializeBattleCharacter = ( opponent ) => {

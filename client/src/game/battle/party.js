@@ -13,10 +13,6 @@ class Party {
 
         this.activeMemberIndex  = -1;
         this.targetIndex        = 0;
-
-        if ( this.isPlayer ) {
-            this.getNextPartyMember( );
-        }
     }
 
     get isDefeated( ) {
@@ -56,7 +52,7 @@ class Party {
             this.inMoveSelection = false;
         }
 
-        if ( this.activeMemberIndex != -1 ) {   
+        if ( this.activeMemberIndex != 0 ) {   
             state.battleState.battleUI.switchSlot( "NEXT" );      
         }
     }

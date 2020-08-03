@@ -6,7 +6,7 @@ const handleBattleAnimations = ( ) => {
 
     const playerParty     = state.battleState.playerParty
     const opponentParty   = state.battleState.opponentParty
-    const battleUI      = state.battleState.textContainer
+    const battleUI        = state.battleState.battleUI;
 
     if ( playerParty != undefined && opponentParty != undefined ) {
         playerParty.members.forEach( (e) => { e.draw() })

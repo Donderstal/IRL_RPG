@@ -82,7 +82,7 @@ class BattleChar {
 
     updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter ) {
         targetCharacter.statsBar.update( moveResult, null );
-        state.battleState.textContainer.setText( 
+        state.battleState.battleUI.setText( 
             this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
         );
 
@@ -95,7 +95,7 @@ class BattleChar {
         this.targeted = true;
         const moveName = state.battleState.playerParty.activeMember.nextMove.name
         state.battleState.targetedCharacter = this
-        state.battleState.textContainer.setText( "Use  " + moveName + " on " + this.name )
+        state.battleState.battleUI.setText( "Use  " + moveName + " on " + this.name )
         this.sprite.target()
     }
 
