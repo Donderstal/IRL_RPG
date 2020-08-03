@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### AUG 3, 2020
+* Refactoring attacks, now based on new attr system
+* Dynamic stat bars now react to HP/AP changes
+* Restoring mechanics for defeating characters and parties
+
 #### JUL 29, 2020
 * Cleaned up some regression bugs in battle code
 * Implementing Barts ideas for the battle menu
