@@ -24,6 +24,8 @@ class BattleUIWrapper {
             this.playerParty.members
         );
 
+        this.activeContentArray = []
+
         this.totalSlots = this.initialContentArray.length;
         this.activeCharIndex = 1;
         this.battleMenuIndex = 0;
@@ -58,9 +60,6 @@ class BattleUIWrapper {
         this.slots.forEach( ( element, index ) => {
             element.setContent( this.initialContentArray[index], index );
         } );
-
-        this.activeCharIndex = 1;
-        this.battleMenuIndex = 0;
     }
 
     setCharacterAsActive( character ) {
@@ -72,25 +71,20 @@ class BattleUIWrapper {
         this.battleMenu.activeCharacter = character
     }
 
-    switchSlot( modifier ) {
-        modifier == "NEXT" ? this.switchToNextSlot( ) : this.switchToPreviousSlot( );
-        //this.battleMenu.resetMenu( );
+    switchSlot( newMenuIndex, party ) {
+        this.activeContentArray = Object.assign( [], party );
+        this.activeContentArray.splice( newMenuIndex, 0, this.battleMenu );
 
-        console.log(this.slots)
-        console.log(this.activeCharIndex)
+        console.log("ACTIVE CONTENT ARRAY");
+        console.log(this.activeContentArray);
 
-        this.slots[this.battleMenuIndex].setContent( this.battleMenu, this.battleMenuIndex );
-        this.slots[this.activeCharIndex].setContent( this.activeCharacter.statsBar, this.activeCharIndex );
-    }
+        this.slots.forEach( ( element, index ) => {
+            const newContent = index == newMenuIndex ? this.activeContentArray[index] : this.activeContentArray[index].statsBar;
+            element.setContent( newContent, index );
+        } );
 
-    switchToNextSlot( ) {
-        this.activeCharIndex -= 1;
-        this.battleMenuIndex += 1;
-    }
+        this.activateMenu( );
 
-    switchToPreviousSlot( ) {
-        this.activeCharIndex += 1;
-        this.battleMenuIndex -= 1;        
     }
 
     setText( text ) {

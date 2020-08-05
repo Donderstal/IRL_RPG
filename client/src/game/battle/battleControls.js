@@ -1,6 +1,7 @@
 const state         = require('../../game-data/state')
 const globals       = require('../../game-data/globals')
-const changeMode    = require('../../game-data/changeMode')
+const changeMode    = require('../../game-data/changeMode');
+const battleStats = require('./battle-ui/battleStats');
 
 let actionButtonAllowed = true;
 
@@ -13,12 +14,28 @@ const handleBattleKeyPress = ( event ) => {
         state.battleState.battleMusic.stop()
         changeMode.requestModeChange( 'OVERWORLD' )
     }
+
+    if ( event.key == "l" ) {
+        console.log(" Logging battlestate... ")
+        console.log(battleState)
+        console.log("Phase: ")
+        console.log(battleState.battlePhase)
+        console.log("Playerparty: ")
+        console.log(battleState.playerParty)
+        console.log("Opponentparty: ")
+        console.log(battleState.opponentParty)
+        console.log("UI: ")
+        console.log(battleState.battleUI)
+        console.log(" End of battlestate log... ")
+    }
+
     if ( playerCanChooseMove && !state.battleState.selectingTarget ) {
         handleDirectionKey( )
     }
     else if ( playerCanChooseMove && state.battleState.selectingTarget ) {
         scrollBattleTargets( )
     }
+
     if ( event.key == " " && actionButtonAllowed ) {
         handleActionButton( playerCanChooseMove, battleState )
     }
