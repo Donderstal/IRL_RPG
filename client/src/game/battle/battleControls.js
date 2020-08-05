@@ -90,22 +90,24 @@ const handleDirectionKey = ( ) => {
     }    
 }
  
-const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
+const handleActionButton = ( playerCanChooseMove, battleState ) => {
     let isAttackPhase = ( battleState.battlePhase == globals['PHASE_DO_MOVE'] )
 
-    const battleMenu = battleState.battleUI.battleMenu;
+    const UI = battleState.battleUI
+    const battleMenu = UI.battleMenu;
     const activeButton = battleMenu.activeButton.text
+
 
     const battleIsOver = ( battleState.playerParty.isDefeated || battleState.opponentParty.isDefeated );
 
     if ( isAttackPhase && battleState.currentMoveIndex !== battleState.charactersInField.length && !battleIsOver ) {
-        doMove( battleState, battleText );
+        doMove( battleState, UI );
     }
     else if ( playerCanChooseMove && ( battleMenu.inMoveMenu || activeButton == "ATTACK") && activeButton != "RETURN" ) {
         if ( battleState.selectingTarget ) {
             let targetCharacter = battleState.targetedCharacter;
 
-            selectMove( battleState, battleText, targetCharacter );
+            selectMove( battleState, UI, targetCharacter );
             battleState.selectingTarget = false;
             battleMenu.getStandardMenu( );
         }
@@ -124,7 +126,7 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
         battleState.playerParty.getPreviousPartyMember( ); 
     }
     else if ( battleState.battlePhase != globals['PHASE_SELECT_MOVE'] ) {
-        passPhase( battleState, battleText, battleIsOver );
+        passPhase( battleState, UI, battleIsOver );
     }
 }
 
@@ -138,18 +140,18 @@ const initTargetSelection = ( battleState ) => {
     battleState.opponentParty.activateTarget( firstCharacterIndex );
 }
 
-const selectMove = ( battleState, battleText, targetCharacter ) => {
+const selectMove = ( battleState, UI, targetCharacter ) => {
     const activePartyMember = battleState.playerParty.activeMember
     activePartyMember.nextMove.targetIndex = targetCharacter.index;
     targetCharacter.deTarget( );
     battleState.playerParty.getNextPartyMember( )
 
     if ( !battleState.playerParty.inMoveSelection ) {
-        passPhase( battleState, battleText ) 
+        passPhase( battleState, UI ) 
     }
 }
 
-const doMove = ( battleState, battleText ) => {
+const doMove = ( battleState, UI ) => {
 
     let currentCharacter = battleState.charactersInField[battleState.currentMoveIndex]
     let targetParty = ( currentCharacter.isPlayer ? battleState.opponentParty : battleState.playerParty )    
@@ -160,7 +162,7 @@ const doMove = ( battleState, battleText ) => {
     }
     else {
         actionButtonAllowed = false
-        battleText.setText( currentCharacter.name + " uses " + currentCharacter.nextMove.name + " on " + targetCharacter.name )
+        UI.setText( currentCharacter.name + " uses " + currentCharacter.nextMove.name + " on " + targetCharacter.name )
 
         setTimeout( ( ) => {
             currentCharacter.doMove( targetCharacter );
@@ -171,38 +173,42 @@ const doMove = ( battleState, battleText ) => {
 
 }
 
-const passPhase = ( battleState, battleText, battleIsOver ) => {
+const passPhase = ( battleState, UI, battleIsOver ) => {
     switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_BATTLE'] :
             beginNewTurn( battleState );
             break;
         case globals['PHASE_SELECT_MOVE'] :
             battleState.battlePhase = globals['PHASE_DO_MOVE'];
-            battleText.setHeader( " " )
-            prepareMovesForExecution( battleState, battleText );
+            UI.setHeader( " " );
+            UI.resetSlots( );
+            prepareMovesForExecution( battleState, UI );
             break;
         case globals['PHASE_DO_MOVE'] :
-            battleIsOver ? endBattle( battleState, battleText ) : beginNewTurn( battleState );
+            battleIsOver ? endBattle( battleState, UI ) : beginNewTurn( battleState );
             break;
         case globals['PHASE_STAT_CHECK'] : 
             battleState.battlePhase = globals['PHASE_END_BATTLE'];
             break;
         case globals['PHASE_END_BATTLE']:
+            if ( battleState.battleMusic ) {
+                changeMode.requestModeChange( 'OVERWORLD' )                
+            } 
             battleState.battleMusic.stop( )
-            changeMode.requestModeChange( 'OVERWORLD' )
+
             break;
         default : 
             console.log("Phase " + battleState.battlePhase + " is not a valid battle phase")
     }
 }
 
-const endBattle = ( battleState, battleText ) => {
+const endBattle = ( battleState, UI ) => {
     battleState.battlePhase = globals['PHASE_STAT_CHECK']
     if ( battleState.playerParty.isDefeated ) {
-        battleText.setText( "Your party has been defeated..." )
+        UI.setText( "Your party has been defeated..." )
     }
     else {
-        battleText.setText( "Your party has defeated their enemies!" )
+        UI.setText( "Your party has defeated their enemies!" )
     }
 }
 
@@ -212,7 +218,7 @@ const beginNewTurn = ( battleState ) => {
     battleState.opponentParty.selectMoves( );
 }
 
-const prepareMovesForExecution = ( battleState, battleText ) => {
+const prepareMovesForExecution = ( battleState, UI ) => {
     battleState.charactersInField = getActiveCharactersInField( battleState );
 
     battleState.currentMoveIndex = 0;
@@ -233,7 +239,7 @@ const prepareMovesForExecution = ( battleState, battleText ) => {
     
     actionButtonAllowed = false;
     setTimeout(() => {
-        doMove( battleState, battleText )
+        doMove( battleState, UI )
     }, 1000 );
     setTimeout(() => {
         actionButtonAllowed = true;
