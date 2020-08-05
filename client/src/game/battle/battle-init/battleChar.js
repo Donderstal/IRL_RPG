@@ -28,7 +28,6 @@ class BattleChar {
     }
 
     getMoves( ) {
-        console.log(moveAnimationScripts)
         let directionSuffix;
         if ( this.sprite.initialRow == globals.SHEET_ROW_BATTLE_LEFT ) {
             directionSuffix = "_L";

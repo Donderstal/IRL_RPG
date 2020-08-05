@@ -7,7 +7,6 @@ const grid          = require('../map/map-init/drawGrid')
 const tilesheets    = require('../../resources/tilesheetResources').sheets
 const maps          = require('../../resources/mapResources')
 const Party         = require('./Party').Party
-const BattleMenu    = require('./battle-ui/battleMenu').BattleMenu
 const nameGen       = require('./../../helpers/randomNameGen')
 const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 const charGlobals   = require('../character/characterGlobals')
@@ -42,17 +41,12 @@ const startBattle = (  ) => {
     const battleState = state.battleState
 
     battleState.requestingBattle = false
-    state.currentMap.mapMusic.pause()     
-
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
 
     if ( battleState.battleMusic ) {
+        state.currentMap.mapMusic.pause()   
         battleState.battleMusic.play()  
-    }
-    else {
-        battleState.battleMusic = new Sound( "Rydeen.mp3", false, true )
-        battleState.battleMusic.play()
     }
 
     initBattleMapAndSprites( battleState );

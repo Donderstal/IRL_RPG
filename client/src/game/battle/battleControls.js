@@ -97,8 +97,6 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
     const activeButton = battleMenu.activeButton.text
 
     const battleIsOver = ( battleState.playerParty.isDefeated || battleState.opponentParty.isDefeated );
-    
-    console.log("Battle is over: " + battleIsOver)
 
     if ( isAttackPhase && battleState.currentMoveIndex !== battleState.charactersInField.length && !battleIsOver ) {
         doMove( battleState, battleText );
@@ -126,11 +124,7 @@ const handleActionButton = ( playerCanChooseMove, battleState, battleText ) => {
         battleState.playerParty.getPreviousPartyMember( ); 
     }
     else if ( battleState.battlePhase != globals['PHASE_SELECT_MOVE'] ) {
-        console.log( "pass phase....")
         passPhase( battleState, battleText, battleIsOver );
-    }
-    else {
-        console.log(battleState);
     }
 }
 
@@ -178,7 +172,6 @@ const doMove = ( battleState, battleText ) => {
 }
 
 const passPhase = ( battleState, battleText, battleIsOver ) => {
-    console.log( 'current phase: ' + battleState.battlePhase )
     switch ( battleState.battlePhase ) {
         case globals['PHASE_BEGIN_BATTLE'] :
             beginNewTurn( battleState );
@@ -205,14 +198,11 @@ const passPhase = ( battleState, battleText, battleIsOver ) => {
 
 const endBattle = ( battleState, battleText ) => {
     battleState.battlePhase = globals['PHASE_STAT_CHECK']
-    console.log('checking for defeat...')
     if ( battleState.playerParty.isDefeated ) {
-        console.log('player defeated!')
         battleText.setText( "Your party has been defeated..." )
     }
     else {
         battleText.setText( "Your party has defeated their enemies!" )
-        console.log('opponent defeated!')
     }
 }
 
@@ -264,9 +254,6 @@ const getActiveCharactersInField = ( battleState ) => {
             returnArray.push(member)
         }
     });    
-
-    console.log("activechars for this turn...")
-    console.log(returnArray) 
 
     return returnArray
 }

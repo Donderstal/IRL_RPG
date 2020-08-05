@@ -63,10 +63,6 @@ class BattleUIWrapper {
     }
 
     setCharacterAsActive( character ) {
-        if ( !character instanceof BattleChar ) {
-            console.log("Error: character name " + character.name + " is not an instance of BattleChar")
-        }
-
         this.activeCharacter = character
         this.battleMenu.activeCharacter = character
     }
@@ -74,9 +70,6 @@ class BattleUIWrapper {
     switchSlot( newMenuIndex, party ) {
         this.activeContentArray = Object.assign( [], party );
         this.activeContentArray.splice( newMenuIndex, 0, this.battleMenu );
-
-        console.log("ACTIVE CONTENT ARRAY");
-        console.log(this.activeContentArray);
 
         this.slots.forEach( ( element, index ) => {
             const newContent = index == newMenuIndex ? this.activeContentArray[index] : this.activeContentArray[index].statsBar;
@@ -122,9 +115,6 @@ class UISLot {
     }
 
     setContent( content, index ) {
-        console.log( "new slot content!" )
-        console.log(content)
-        console.log(index)
         this.content    = content;
         this.isMenu     = content instanceof BattleMenu;
         this.content.setXy( slotXValues[index], this.y );
