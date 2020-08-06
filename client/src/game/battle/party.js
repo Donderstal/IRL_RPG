@@ -36,12 +36,72 @@ class Party {
         return  ( this.members[previousIndex].isDefeated == false  )
     }
 
+
+    getMemberStatuses( ) {
+        const memberStatuses = { };
+        this.members.forEach( ( member, index ) => {
+            memberStatuses[index] = member.isDefeated;
+        } );
+
+        return memberStatuses;
+    }
+
+    findNextActiveMemberIndex( modifier, loop, currentIndex = this.activeMemberIndex ) {
+        const memberStatuses = this.getMemberStatuses( );
+        console.log(memberStatuses)
+        
+        if ( this.partySize != 1 ) {
+            if ( modifier == "NEXT" ) {
+                console.log('... count to next')
+                for ( var i = currentIndex; i < Object.keys(memberStatuses).length; i++  ) { 
+                    console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
+                    if ( i != currentIndex && !memberStatuses[i] ) {
+                        return i;                
+                    }
+                }
+                
+                if ( loop ) {
+                    console.log('... count to next (loop) ')
+                    for ( var i = 0; i <= currentIndex; i++  ) { 
+                        console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
+                        if ( i != currentIndex && !memberStatuses[i] ) {
+                            return i;                
+                        }
+                    }
+                }
+            }
+            else if ( modifier == "PREV" ) {
+                console.log('... count to prev')
+                for ( var i = currentIndex; i >= 0; i-- ) { 
+                    console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
+                    if ( i != currentIndex && !memberStatuses[i] ) {
+                        return i;                
+                    }
+                } 
+
+                if ( loop ) {
+                    console.log('... count to prev (loop)')
+                    for ( var i = Object.keys(memberStatuses).length - 1; i >= currentIndex; i-- ) { 
+                        console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
+                        if ( i != currentIndex && !memberStatuses[i] ) {
+                            return i;                
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     getNextPartyMember( ) {
         if ( this.activeMemberIndex != -1 ) {
             this.activeMember.deActivateUi( );      
         }
 
-        if ( this.activeMemberIndex < this.partySize - 1 ) {
+        const newIndex = this.findNextActiveMemberIndex( "NEXT", false )
+
+        if ( this.activeMemberIndex < this.partySize - 1 && newIndex !== false ) {
             this.activeMemberIndex += 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
@@ -58,9 +118,11 @@ class Party {
 
     getPreviousPartyMember( ) {
         this.activeMember.nextMove = null;
-        this.activeMember.deActivateUi( );      
+        this.activeMember.deActivateUi( );    
+        
+        const newIndex = this.findNextActiveMemberIndex( "PREV", false )
 
-        if ( this.activeMemberIndex - 1 != -1 ) {
+        if ( this.activeMemberIndex - 1 != -1 && newIndex !== false ) {
             this.activeMemberIndex -= 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
@@ -78,7 +140,6 @@ class Party {
     getFirstUndefeatedCharacterIndex( ) {
         for ( var i = 0; i < this.partySize; i++ ) {
             if ( !this.members[i].isDefeated ) {
-                console.log( "First undefeated character: " + i )
                 return i
             }
         }

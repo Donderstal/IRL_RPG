@@ -29,6 +29,23 @@ const handleBattleKeyPress = ( event ) => {
         console.log(" End of battlestate log... ")
     }
 
+    if ( event.key == "1" ) {
+        console.log(" party member statuses, NEXT loop ")
+        console.log( battleState.playerParty.findNextActiveMemberIndex( "NEXT", true ) )
+    }
+    if ( event.key == "2" ) {
+        console.log(" party member statuses, PREV loop ")
+        console.log( battleState.playerParty.findNextActiveMemberIndex( "PREV", true ) )
+    }
+    if ( event.key == "3" ) {
+        console.log(" party member statuses, NEXT no loop ")
+        console.log( battleState.playerParty.findNextActiveMemberIndex( "NEXT", false ) )
+    }
+    if ( event.key == "4" ) {
+        console.log(" party member statuses, PREV no loop ")
+        console.log( battleState.playerParty.findNextActiveMemberIndex( "PREV", false ) )
+    }
+
     if ( playerCanChooseMove && !state.battleState.selectingTarget ) {
         handleDirectionKey( )
     }
@@ -44,26 +61,21 @@ const handleBattleKeyPress = ( event ) => {
 const scrollBattleTargets = ( ) => {
     const opponentParty = state.battleState.opponentParty;
 
-    if ( ( state.pressedKeys.w || state.pressedKeys.ArrowUp ) && opponentParty.isMemberAtPreviousIndex ) {
-        let newTargetIndex = opponentParty.targetIndex - 1;
-        if ( newTargetIndex < 0 ) {
-            newTargetIndex = opponentParty.members.length - 1;
-        }        
+    if ( state.pressedKeys.w || state.pressedKeys.ArrowUp ) {
+        console.log("to PREV; current target: " + opponentParty.targetIndex )
+        let newTargetIndex = opponentParty.findNextActiveMemberIndex( "PREV", true, opponentParty.targetIndex );
 
-        if ( !opponentParty.members[newTargetIndex].isDefeated ) {
-            opponentParty.activateTarget( newTargetIndex );
-        }
-    }
-    else if ( (state.pressedKeys.s || state.pressedKeys.ArrowDown) && opponentParty.isMemberAtNextIndex ) {
-
-        let newTargetIndex = opponentParty.targetIndex + 1;
-        if ( newTargetIndex > ( opponentParty.members.length - 1 ) ) {
-            newTargetIndex = 0;
-        }
-
-        if ( !opponentParty.members[newTargetIndex].isDefeated ) {
+        if ( newTargetIndex !== false ) {
             opponentParty.activateTarget( newTargetIndex );            
-        }
+        } 
+    }
+    else if ( state.pressedKeys.s || state.pressedKeys.ArrowDown ) {
+        console.log("to NEXT; current target: " + opponentParty.targetIndex )
+        let newTargetIndex = opponentParty.findNextActiveMemberIndex( "NEXT", true, opponentParty.targetIndex ); 
+
+        if ( newTargetIndex !== false ) {
+            opponentParty.activateTarget( newTargetIndex );            
+        } 
     }
 }
 

@@ -134,6 +134,10 @@ class BattleStats {
             this.y + globals.SMALL_FONT_LINE_HEIGHT + globals.LARGE_FONT_LINE_HEIGHT, 
             "SMALL" 
         );
+
+        if ( this.HP <= 0 ) {
+            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "rgba(46,49,49,0.5);" )
+        }
     }
 
     drawOpponentStats( ) {
