@@ -16,7 +16,6 @@ class Party {
     }
 
     get isDefeated( ) {
-        console.log( 'is party defeated?' )
         for ( var i = 0; i < this.partySize; i++ ) {
             if ( !this.members[i].isDefeated ) {
                 return false;
@@ -25,17 +24,6 @@ class Party {
 
         return true;
     }
-
-    get isMemberAtNextIndex( ) {
-        const nextIndex = ( this.activeMemberIndex + 1 ) == this.partySize ? 0 : this.activeMemberIndex + 1;
-        return  ( this.members[nextIndex].isDefeated == false )
-    }
-
-    get isMemberAtPreviousIndex( ) {
-        const previousIndex = ( this.activeMemberIndex - 1 ) < 0 ? this.partySize - 1 : this.activeMemberIndex - 1;
-        return  ( this.members[previousIndex].isDefeated == false  )
-    }
-
 
     getMemberStatuses( ) {
         const memberStatuses = { };
@@ -48,22 +36,16 @@ class Party {
 
     findNextActiveMemberIndex( modifier, loop, currentIndex = this.activeMemberIndex ) {
         const memberStatuses = this.getMemberStatuses( );
-        console.log(memberStatuses)
         
         if ( this.partySize != 1 ) {
             if ( modifier == "NEXT" ) {
-                console.log('... count to next')
                 for ( var i = currentIndex; i < Object.keys(memberStatuses).length; i++  ) { 
-                    console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
                     if ( i != currentIndex && !memberStatuses[i] ) {
                         return i;                
                     }
                 }
-                
                 if ( loop ) {
-                    console.log('... count to next (loop) ')
                     for ( var i = 0; i <= currentIndex; i++  ) { 
-                        console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
                         if ( i != currentIndex && !memberStatuses[i] ) {
                             return i;                
                         }
@@ -71,18 +53,13 @@ class Party {
                 }
             }
             else if ( modifier == "PREV" ) {
-                console.log('... count to prev')
                 for ( var i = currentIndex; i >= 0; i-- ) { 
-                    console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
                     if ( i != currentIndex && !memberStatuses[i] ) {
                         return i;                
                     }
                 } 
-
                 if ( loop ) {
-                    console.log('... count to prev (loop)')
                     for ( var i = Object.keys(memberStatuses).length - 1; i >= currentIndex; i-- ) { 
-                        console.log( 'index: ' + i + ", isDefeatedAtIndex: " + memberStatuses[i] )
                         if ( i != currentIndex && !memberStatuses[i] ) {
                             return i;                
                         }
@@ -135,14 +112,6 @@ class Party {
         this.members[this.targetIndex].deTarget( );
         this.targetIndex = newTargetIndex
         this.members[this.targetIndex].target( );
-    }
-
-    getFirstUndefeatedCharacterIndex( ) {
-        for ( var i = 0; i < this.partySize; i++ ) {
-            if ( !this.members[i].isDefeated ) {
-                return i
-            }
-        }
     }
 
     prepareMoveSelection( ) {

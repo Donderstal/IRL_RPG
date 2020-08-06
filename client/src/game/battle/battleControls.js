@@ -16,34 +16,7 @@ const handleBattleKeyPress = ( event ) => {
     }
 
     if ( event.key == "l" ) {
-        console.log(" Logging battlestate... ")
-        console.log(battleState)
-        console.log("Phase: ")
-        console.log(battleState.battlePhase)
-        console.log("Playerparty: ")
-        console.log(battleState.playerParty)
-        console.log("Opponentparty: ")
-        console.log(battleState.opponentParty)
-        console.log("UI: ")
-        console.log(battleState.battleUI)
-        console.log(" End of battlestate log... ")
-    }
-
-    if ( event.key == "1" ) {
-        console.log(" party member statuses, NEXT loop ")
-        console.log( battleState.playerParty.findNextActiveMemberIndex( "NEXT", true ) )
-    }
-    if ( event.key == "2" ) {
-        console.log(" party member statuses, PREV loop ")
-        console.log( battleState.playerParty.findNextActiveMemberIndex( "PREV", true ) )
-    }
-    if ( event.key == "3" ) {
-        console.log(" party member statuses, NEXT no loop ")
-        console.log( battleState.playerParty.findNextActiveMemberIndex( "NEXT", false ) )
-    }
-    if ( event.key == "4" ) {
-        console.log(" party member statuses, PREV no loop ")
-        console.log( battleState.playerParty.findNextActiveMemberIndex( "PREV", false ) )
+        logBattleState( battleState );
     }
 
     if ( playerCanChooseMove && !state.battleState.selectingTarget ) {
@@ -148,7 +121,7 @@ const initTargetSelection = ( battleState ) => {
     const standardAttack = activePartyMember.standardAttack;
 
     activePartyMember.nextMove = ( activeButtonMove != undefined ) ? activeButtonMove : standardAttack
-    let firstCharacterIndex = battleState.opponentParty.getFirstUndefeatedCharacterIndex( );
+    let firstCharacterIndex = battleState.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
     battleState.opponentParty.activateTarget( firstCharacterIndex );
 }
 
@@ -204,10 +177,9 @@ const passPhase = ( battleState, UI, battleIsOver ) => {
             break;
         case globals['PHASE_END_BATTLE']:
             if ( battleState.battleMusic ) {
-                changeMode.requestModeChange( 'OVERWORLD' )                
+                battleState.battleMusic.stop( )                
             } 
-            battleState.battleMusic.stop( )
-
+            changeMode.requestModeChange( 'OVERWORLD' ) 
             break;
         default : 
             console.log("Phase " + battleState.battlePhase + " is not a valid battle phase")
@@ -216,8 +188,9 @@ const passPhase = ( battleState, UI, battleIsOver ) => {
 
 const endBattle = ( battleState, UI ) => {
     battleState.battlePhase = globals['PHASE_STAT_CHECK']
+    const endText = battleState.playerParty.isDefeated ? "Your party has been defeated..." : "Your party has defeated their enemies!";
     if ( battleState.playerParty.isDefeated ) {
-        UI.setText( "Your party has been defeated..." )
+        UI.setText( endText )
     }
     else {
         UI.setText( "Your party has defeated their enemies!" )
@@ -274,6 +247,21 @@ const getActiveCharactersInField = ( battleState ) => {
     });    
 
     return returnArray
+}
+
+const logBattleState = ( battleState ) => {
+    console.log(" Beginning of battlestate log... ")
+    console.log("Battlestate... ")
+    console.log(battleState)
+    console.log("Phase: ")
+    console.log(battleState.battlePhase)
+    console.log("Playerparty: ")
+    console.log(battleState.playerParty)
+    console.log("Opponentparty: ")
+    console.log(battleState.opponentParty)
+    console.log("UI: ")
+    console.log(battleState.battleUI)
+    console.log(" End of battlestate log... ")
 }
 
 
