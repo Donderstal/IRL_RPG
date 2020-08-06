@@ -12,41 +12,41 @@ const AGILITY = "AGILITY"
 const ENDURANCE = "ENDURANCE"
 const INTELLIGENCE = "INTELLIGENCE"
 const WILLPOWER = "WILLPOWER"
-const SELF_AWARENESS = "SELF AWARENESS"
+const SELF_AWARENESS = "SELF_AWARENESS"
 const CHARISMA = "CHARISMA"
 const APPEARANCE = "APPEARANCE"
 const SOCIALISATION = "SOCIALISATION"
 
 const getAttributeGroup = ( skillName ) => {
-    if ( skillName == SELF_AWARENESS || skillName == INTELLIGENCE || skillName == WILLPOWER ) {
+    if ( skillName == SELF_AWARENESS || skillName == INTELLIGENCE || skillName == WILLPOWER || skillName == MENTAL ) {
         return MENTAL
     }
-    if ( skillName == STRENGTH || skillName == AGILITY || skillName == ENDURANCE ) {
+    if ( skillName == STRENGTH || skillName == AGILITY || skillName == ENDURANCE | skillName == PHYSICAL ) {
         return PHYSICAL
     }
-    if ( skillName == APPEARANCE || skillName == CHARISMA || skillName == SOCIALISATION ) {
+    if ( skillName == APPEARANCE || skillName == CHARISMA || skillName == SOCIALISATION || skillName == SOCIAL) {
         return SOCIAL
     }
 }
 
 const CLASSPROFILE_INFLUENCER = {
     main: APPEARANCE,
-    attributeGroup  : getAttributeGroup(APPEARANCE) 
+    attributeGroup  : getAttributeGroup("APPEARANCE") 
 }
 
 const CLASSPROFILE_NECKBEARD = {
     main: INTELLIGENCE,
-    attributeGroup  : getAttributeGroup(INTELLIGENCE) 
+    attributeGroup  : getAttributeGroup("INTELLIGENCE") 
 }
 
 const CLASSPROFILE_CHAD = {
     main: STRENGTH,
-    attributeGroup  : getAttributeGroup(STRENGTH) 
+    attributeGroup  : getAttributeGroup("STRENGTH") 
 }
 
 const CLASSPROFILE_TUMBLR_GIRL = {
     main            : WILLPOWER,
-    attributeGroup  : getAttributeGroup(WILLPOWER) 
+    attributeGroup  : getAttributeGroup("WILLPOWER") 
 }
 
 const BASE_TP_AND_HP = 20;
@@ -72,5 +72,6 @@ module.exports = {
     CLASSPROFILE_NECKBEARD,
     CLASSPROFILE_CHAD,
     CLASSPROFILE_TUMBLR_GIRL,
-    BASE_TP_AND_HP
+    BASE_TP_AND_HP,
+    getAttributeGroup
 }

@@ -58,7 +58,7 @@ class BattleSprite extends I_Sprite {
     
     drawSprite( ) {
         this.frameCount++;
-        if ( this.frameCount > globals.FRAME_LIMIT ) {
+        if ( this.frameCount * .5 > globals.FRAME_LIMIT && !this.moving ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
                 this.frameCount = 0;
@@ -120,7 +120,7 @@ class BattleSprite extends I_Sprite {
     drawShout( ) {
         canvasHelpers.setFont("LARGE")
         let shoutX = ( this.isPlayer ) ? this.x + this.width : this.x - canvasHelpers.getFrontCanvasContext().measureText(this.shout).width;
-        canvasHelpers.writeTextLine( this.shout, shoutX, this.y, globals.LARGE_FONT_SIZE )
+        canvasHelpers.writeTextLine( this.shout, shoutX, this.y + globals.LARGE_FONT_LINE_HEIGHT, globals.LARGE_FONT_SIZE )
     }
 
     setShout( shout, endOfBattle = false ) {
@@ -138,6 +138,7 @@ class BattleSprite extends I_Sprite {
             this.columnInSheet = globals.B_SHEETPOS_ATTACK;
             setTimeout(() => {
                 this.columnInSheet = globals.B_SHEETPOS_IDLE;
+                this.moving = false;
             }, 500 )                
         }
         else {
@@ -148,6 +149,7 @@ class BattleSprite extends I_Sprite {
             setTimeout(() => {
                 this.columnInSheet = globals.B_SHEETPOS_IDLE;
                 this.rowInSheet = this.initialRow;
+                this.moving = false;
             }, ( 250 + ( 250 * sheetPositions.length ) ) )
         }
     }
@@ -172,7 +174,10 @@ class BattleSprite extends I_Sprite {
         }, 750 ) 
         setTimeout(() => {
             this.columnInSheet = globals.B_SHEETPOS_NONE;
-        }, 1000 )             
+        }, 1000 ) 
+        setTimeout(() => {
+            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+        }, 1250 )             
     }
 
     fadeOut( ) {
