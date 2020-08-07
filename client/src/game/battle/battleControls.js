@@ -3,31 +3,30 @@ const globals       = require('../../game-data/globals')
 const changeMode    = require('../../game-data/changeMode');
 const battleStats = require('./battle-ui/battleStats');
 
-let actionButtonAllowed = true;
-
 const handleBattleKeyPress = ( event ) => {
+    const battle = state.battleState;
     state.pressedKeys[event.key] = true;
-    const battleState   = state.battleState
-    const playerCanChooseMove = battleState.battlePhase == globals['PHASE_SELECT_MOVE'];
 
     if ( event.key == "Escape" || event.key == "Esc" ) {
-        state.battleState.battleMusic.stop()
+        battle.battleMusic.stop()
         changeMode.requestModeChange( 'OVERWORLD' )
     }
 
     if ( event.key == "l" ) {
-        logBattleState( battleState );
+        logBattleState( battle );
     }
 
-    if ( playerCanChooseMove && !state.battleState.selectingTarget ) {
-        handleDirectionKey( )
-    }
-    else if ( playerCanChooseMove && state.battleState.selectingTarget ) {
-        scrollBattleTargets( )
+    if ( battle.inSelectMovePhase ) {
+        if ( state.battleState.selectingTarget ) {
+            scrollBattleTargets( )
+        }
+        else {
+            handleDirectionKey( )
+        }
     }
 
-    if ( event.key == " " && actionButtonAllowed ) {
-        handleActionButton( playerCanChooseMove, battleState )
+    if ( event.key == " " && battle.actionButtonAllowed ) {
+        state.battleState.handleActionButton( )
     }
 }
 
@@ -53,7 +52,7 @@ const scrollBattleTargets = ( ) => {
 }
 
 const handleDirectionKey = ( ) => {
-    const UI = state.battleState.battleUI; 
+    const UI = state.battleState.UI; 
 
     if ( state.pressedKeys.w || state.pressedKeys.ArrowUp ) {
         UI.activateButtonAtIndex( UI.battleMenu.activeButton.index - 1 );
@@ -260,7 +259,7 @@ const logBattleState = ( battleState ) => {
     console.log("Opponentparty: ")
     console.log(battleState.opponentParty)
     console.log("UI: ")
-    console.log(battleState.battleUI)
+    console.log(battleState.UI)
     console.log(" End of battlestate log... ")
 }
 

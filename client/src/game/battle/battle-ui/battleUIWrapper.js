@@ -14,14 +14,13 @@ const slotXValues = [
 const slotY = globals.CANVAS_HEIGHT - globals.BATTLE_UI_CHAR_HEIGHT;
 
 class BattleUIWrapper {
-    constructor(  ) {
-        this.playerParty    = state.battleState.playerParty;
+    constructor( playerPartyMembers, oppoPartyMembers ) {
         this.textbox        = initTextContainer( );
         this.battleMenu     = new BattleMenu( );
 
         this.getInitialSlotContent( 
             this.battleMenu,
-            this.playerParty.members
+            playerPartyMembers
         );
 
         this.activeContentArray = []
@@ -31,6 +30,11 @@ class BattleUIWrapper {
         this.battleMenuIndex = 0;
         this.initializeSlots( );
     }
+
+    get activeButtonText( ) { return this.battleMenu.activeButton.text; }
+    get activeButtonMove( ) { return this.battleMenu.activeButton.move; }
+    get inMoveMenu( ) { return this.battleMenu.inMoveMenu; }
+    get inItemMenu( ) { return this.battleMenu.inItemMenu; }
 
     getInitialSlotContent( battleMenu, partyMembers ) {
         this.initialContentArray = [ 
