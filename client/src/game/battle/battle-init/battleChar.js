@@ -28,7 +28,6 @@ class BattleChar {
     }
 
     getMoves( ) {
-        console.log(moveAnimationScripts)
         let directionSuffix;
         if ( this.sprite.initialRow == globals.SHEET_ROW_BATTLE_LEFT ) {
             directionSuffix = "_L";
@@ -82,7 +81,7 @@ class BattleChar {
 
     updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter ) {
         targetCharacter.statsBar.update( moveResult, null );
-        state.battleState.textContainer.setText( 
+        state.battleState.battleUI.setText( 
             this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
         );
 
@@ -95,7 +94,7 @@ class BattleChar {
         this.targeted = true;
         const moveName = state.battleState.playerParty.activeMember.nextMove.name
         state.battleState.targetedCharacter = this
-        state.battleState.textContainer.setText( "Use  " + moveName + " on " + this.name )
+        state.battleState.battleUI.setText( "Use  " + moveName + " on " + this.name )
         this.sprite.target()
     }
 
@@ -105,8 +104,9 @@ class BattleChar {
     }
 
     activateUI( ) {
-        state.battleState.textContainer.setText( "Choose your move!" )
-        state.battleState.battleMenu.activeCharacter = this;
+        const battleUI = state.battleState.battleUI
+        battleUI.setText( "Choose your move!" )
+        battleUI.setCharacterAsActive( this );
         this.sprite.activateUI( );
     }
 

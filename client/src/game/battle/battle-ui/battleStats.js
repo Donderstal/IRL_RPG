@@ -60,14 +60,11 @@ class BattleStats {
     }
 
     update( newHP, newAP ) {
-        console.log( " HP damage: " + (newHP == null ? 0 : newHP))
-        console.log( " SP damage: " + (newAP == null ? 0 : newAP))
         this.HP = newHP == null ? this.HP : this.HP - newHP;
         this.AP = newAP == null ? this.AP : newAP;
 
         if ( this.HP < 1 ) {
             this.owner.isDefeated = true;
-            console.log( this.owner.name + " has been knocked out!")
         }
     }
 
@@ -137,6 +134,10 @@ class BattleStats {
             this.y + globals.SMALL_FONT_LINE_HEIGHT + globals.LARGE_FONT_LINE_HEIGHT, 
             "SMALL" 
         );
+
+        if ( this.HP <= 0 ) {
+            canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "rgba(46,49,49,0.5);" )
+        }
     }
 
     drawOpponentStats( ) {

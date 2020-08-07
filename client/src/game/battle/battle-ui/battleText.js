@@ -5,7 +5,7 @@ const canvas = require( '../../../helpers/canvasHelpers' )
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 
 const initTextContainer = ( ) => {
-    state.battleState.textContainer = new TextContainer( )        
+    return new TextContainer( )        
 }
 
 const getBattleTextXy = ( ) => {
@@ -22,6 +22,8 @@ class TextContainer extends I_TextBox {
         this.isMoveMenu = false;       
         this.waiting    = false;        
         this.header     = false;
+
+        this.setText( "A fight breaks out in the streets!" )
     }
     
     setText( text ) {

@@ -13,14 +13,9 @@ class Party {
 
         this.activeMemberIndex  = -1;
         this.targetIndex        = 0;
-
-        if ( this.isPlayer ) {
-            this.getNextPartyMember( );
-        }
     }
 
     get isDefeated( ) {
-        console.log( 'is party defeated?' )
         for ( var i = 0; i < this.partySize; i++ ) {
             if ( !this.members[i].isDefeated ) {
                 return false;
@@ -30,26 +25,66 @@ class Party {
         return true;
     }
 
-    get isMemberAtNextIndex( ) {
-        const nextIndex = ( this.activeMemberIndex + 1 ) == this.partySize ? 0 : this.activeMemberIndex + 1;
-        return  ( this.members[nextIndex].isDefeated == false )
+    getMemberStatuses( ) {
+        const memberStatuses = { };
+        this.members.forEach( ( member, index ) => {
+            memberStatuses[index] = member.isDefeated;
+        } );
+
+        return memberStatuses;
     }
 
-    get isMemberAtPreviousIndex( ) {
-        const previousIndex = ( this.activeMemberIndex - 1 ) < 0 ? this.partySize - 1 : this.activeMemberIndex - 1;
-        return  ( this.members[previousIndex].isDefeated == false  )
+    findNextActiveMemberIndex( modifier, loop, currentIndex = this.activeMemberIndex ) {
+        const memberStatuses = this.getMemberStatuses( );
+        
+        if ( this.partySize != 1 ) {
+            if ( modifier == "NEXT" ) {
+                for ( var i = currentIndex; i < Object.keys(memberStatuses).length; i++  ) { 
+                    if ( i != currentIndex && !memberStatuses[i] ) {
+                        return i;                
+                    }
+                }
+                if ( loop ) {
+                    for ( var i = 0; i <= currentIndex; i++  ) { 
+                        if ( i != currentIndex && !memberStatuses[i] ) {
+                            return i;                
+                        }
+                    }
+                }
+            }
+            else if ( modifier == "PREV" ) {
+                for ( var i = currentIndex; i >= 0; i-- ) { 
+                    if ( i != currentIndex && !memberStatuses[i] ) {
+                        return i;                
+                    }
+                } 
+                if ( loop ) {
+                    for ( var i = Object.keys(memberStatuses).length - 1; i >= currentIndex; i-- ) { 
+                        if ( i != currentIndex && !memberStatuses[i] ) {
+                            return i;                
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     getNextPartyMember( ) {
         if ( this.activeMemberIndex != -1 ) {
             this.activeMember.deActivateUi( );      
-            state.battleState.battleUI.switchSlot( "NEXT" );      
         }
 
-        if ( this.activeMemberIndex < this.partySize - 1 ) {
+        const newIndex = this.findNextActiveMemberIndex( "NEXT", false )
+
+        if ( this.activeMemberIndex < this.partySize - 1 && newIndex !== false ) {
             this.activeMemberIndex += 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
+            if ( this.activeMemberIndex != 0 ) {   
+                state.battleState.battleUI.switchSlot( this.activeMemberIndex, this.members );      
+            }
             this.activeMember.activateUI();
         }
         else {
@@ -60,34 +95,23 @@ class Party {
 
     getPreviousPartyMember( ) {
         this.activeMember.nextMove = null;
-        this.activeMember.deActivateUi( );      
-        state.battleState.battleUI.switchSlot( "PREV" );  
+        this.activeMember.deActivateUi( );    
+        
+        const newIndex = this.findNextActiveMemberIndex( "PREV", false )
 
-        if ( this.activeMemberIndex - 1 != -1 ) {
+        if ( this.activeMemberIndex - 1 != -1 && newIndex !== false ) {
             this.activeMemberIndex -= 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
+            state.battleState.battleUI.switchSlot( this.activeMemberIndex, this.members ); 
             this.activeMember.activateUI();
-        }
-        else {
-            this.activeMember.deActivateUi( );
-            this.inMoveSelection = false;
-        }
+        } 
     }
 
     activateTarget( newTargetIndex ) {
         this.members[this.targetIndex].deTarget( );
         this.targetIndex = newTargetIndex
         this.members[this.targetIndex].target( );
-    }
-
-    getFirstUndefeatedCharacterIndex( ) {
-        for ( var i = 0; i < this.partySize; i++ ) {
-            if ( !this.members[i].isDefeated ) {
-                console.log( "First undefeated character: " + i )
-                return i
-            }
-        }
     }
 
     prepareMoveSelection( ) {

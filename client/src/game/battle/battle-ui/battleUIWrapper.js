@@ -1,62 +1,127 @@
 const globals   = require('../../../game-data/globals');
 const state     = require('../../../game-data/state');
+const { BattleChar } = require('../battle-init/battleChar');
+const { BattleMenu } = require('./battleMenu');
+const initTextContainer = require('./battleText').initTextContainer;
+
+const slotXValues = [
+    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 4 ),
+    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 3 ),
+    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 2 ),
+    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 1 ) 
+];
+
+const slotY = globals.CANVAS_HEIGHT - globals.BATTLE_UI_CHAR_HEIGHT;
 
 class BattleUIWrapper {
     constructor(  ) {
-        this.slotXValues = [
-            globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 4 ),
-            globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 3 ),
-            globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 2 ),
-            globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 1 ) 
+        this.playerParty    = state.battleState.playerParty;
+        this.textbox        = initTextContainer( );
+        this.battleMenu     = new BattleMenu( );
+
+        this.getInitialSlotContent( 
+            this.battleMenu,
+            this.playerParty.members
+        );
+
+        this.activeContentArray = []
+
+        this.totalSlots = this.initialContentArray.length;
+        this.activeCharIndex = 1;
+        this.battleMenuIndex = 0;
+        this.initializeSlots( );
+    }
+
+    getInitialSlotContent( battleMenu, partyMembers ) {
+        this.initialContentArray = [ 
+            battleMenu
         ];
-        this.y = globals.CANVAS_HEIGHT - globals.BATTLE_UI_CHAR_HEIGHT;
-        
-        const battleMenu = state.battleState.battleMenu;
-        const playerParty = state.battleState.playerParty
-        const partyMembers = playerParty.members
-        let slotItemsArray = [ 
-            battleMenu, partyMembers[0].statsBar, partyMembers[1].statsBar, partyMembers[2].statsBar 
-        ];
-        this.setSlots( slotItemsArray )
+
+        partyMembers.forEach( ( member ) => {
+            this.initialContentArray.push( member.statsBar )
+        } );
     }
 
-    switchSlot( modifier ) {
-        const battleMenu = state.battleState.battleMenu;
-        const playerParty = state.battleState.playerParty
-        const activeIndex = ( modifier == "NEXT" ) ? playerParty.activeMemberIndex : -playerParty.activeMemberIndex;
-        const partyMembers = playerParty.members
-        const slotItemsArray = this.goToNextSlot( activeIndex, partyMembers, battleMenu );
-
-        this.setSlots( slotItemsArray )
+    initializeSlots( ) {
+        this.slots = [] 
+        this.initialContentArray.forEach( ( element, index ) => {
+            this.slots.push( new UISLot(  element, index ) )
+        } );
     }
 
-    goToNextSlot( activeIndex, partyMembers, battleMenu ) {
-        switch ( activeIndex ) {
-            case  0: 
-            case -2:
-                return [ 
-                    partyMembers[0].statsBar, battleMenu, partyMembers[1].statsBar, partyMembers[2].statsBar 
-                ];
-            case  1: 
-                return [ 
-                    partyMembers[0].statsBar, partyMembers[1].statsBar, battleMenu, partyMembers[2].statsBar 
-                ];
-            case  2:
-            case -1: 
-                return [ 
-                    battleMenu, partyMembers[0].statsBar, partyMembers[1].statsBar, partyMembers[2].statsBar 
-                ];
-            default:
-                console.log('huilie')
-                break;
-        }
+    drawUI(  ) {
+        this.textbox.drawTextBox( );
+        this.slots.forEach( ( element ) => {
+            element.draw( );
+        } );
     }
 
-    setSlots( slotItemsArray ) {
-        for ( var i = 0; i < slotItemsArray.length; i++ ) {
-            console.log(slotItemsArray[i])
-            slotItemsArray[i].setXy(this.slotXValues[i], this.y)
-        }
+    resetSlots( ) {
+        this.slots.forEach( ( element, index ) => {
+            element.setContent( this.initialContentArray[index], index );
+        } );
+    }
+
+    setCharacterAsActive( character ) {
+        this.activeCharacter = character
+        this.battleMenu.activeCharacter = character
+    }
+
+    switchSlot( newMenuIndex, party ) {
+        this.activeContentArray = Object.assign( [], party );
+        this.activeContentArray.splice( newMenuIndex, 0, this.battleMenu );
+
+        this.slots.forEach( ( element, index ) => {
+            const newContent = index == newMenuIndex ? this.activeContentArray[index] : this.activeContentArray[index].statsBar;
+            element.setContent( newContent, index );
+        } );
+
+        this.activateMenu( );
+
+    }
+
+    setText( text ) {
+        this.textbox.setText( text );
+    }
+
+    setHeader( text ) {
+        this.textbox.setHeader( text );
+    }
+
+    getMoveMenu( ) {
+        this.battleMenu.getMoveMenu( );
+    }
+
+    getStandardMenu( ) {
+        this.battleMenu.getStandardMenu( );
+    }
+
+    activateMenu( ) {
+        this.activateButtonAtIndex( 1 );
+    }
+
+    activateButtonAtIndex( index ) {
+        this.battleMenu.activateButtonAtIndex( index, this )
+    }
+}
+
+class UISLot {
+    constructor( content, index ) {
+        this.x          = slotXValues[index];
+        this.y          = slotY;
+        this.isActive   = index == 1;
+
+        this.setContent( content, index )
+    }
+
+    setContent( content, index ) {
+        this.content    = content;
+        this.isMenu     = content instanceof BattleMenu;
+        this.content.setXy( slotXValues[index], this.y );
+    }
+
+    draw( ) {
+        this.content.draw( );
     }
 }
 
