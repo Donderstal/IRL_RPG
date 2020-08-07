@@ -33,6 +33,7 @@ class BattleUIWrapper {
 
     get activeButtonText( ) { return this.battleMenu.activeButton.text; }
     get activeButtonMove( ) { return this.battleMenu.activeButton.move; }
+    get activeButtonIndex( ) { return this.battleMenu.activeButton.index }
     get inMoveMenu( ) { return this.battleMenu.inMoveMenu; }
     get inItemMenu( ) { return this.battleMenu.inItemMenu; }
 
