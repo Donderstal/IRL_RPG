@@ -17,6 +17,11 @@ Open a new terminal window and run ```server.py``` to get the Flask server runni
 
 ### LOG
 
+#### AUG 7, 2020
+* New Battle class is instantiated on each battle
+* New battleStaging state prop
+* Adding some getters to UiWrapper and Battle Class
+
 #### AUG 6, 2020
 * Grouping all UI elements in BattleUIWrapper
 * Improving scrolling through parties for target & move selection
