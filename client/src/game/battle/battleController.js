@@ -39,8 +39,7 @@ const opponentBottomXy = {
 
 const startBattle = (  ) => {
     const battleState = state.battleState
-
-    battleState.requestingBattle = false
+    state.battleStaging.requestingBattle = false
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
 
@@ -63,7 +62,7 @@ const initBattleMapAndSprites = ( battleState ) => {
     }
 
     battleState.battlePhase = globals['PHASE_BEGIN_BATTLE']        
-    initializeBattleCharacter( battleState.opponent )
+    initializeBattleCharacter( )
 
     battleState.battleUI = new BattleUI( battleState );  
     battleState.battleUI.activateButtonAtIndex( 1 );
@@ -71,8 +70,8 @@ const initBattleMapAndSprites = ( battleState ) => {
     battleState.battleUI.activateMenu( );
 }
 
-const initializeBattleCharacter = ( opponent ) => {
-    const mapBattleAction = opponent.action
+const initializeBattleCharacter = ( ) => {
+    const mapBattleAction = state.battleStaging.action
     const playerParty = [ 
         [ true, nameGen.getRandomName(), charGlobals["CHAD"], playerTopXy ],
         [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, playerMiddleXy ],
@@ -93,10 +92,11 @@ const stopBattle = ( ) => {
     init.getBattleStopScreen()
     let sfx = new Sound( "battle-march.wav", true )
     sfx.play()
-    state.battleState = {
-        player  : { hasTurn : false },
-        opponent   : { hasTurn : false },
-        battlePhase : null
+    state.battleState = { };
+    state.battleStaging = {
+        player              : [],
+        opponent            : [],
+        requestingBattle    : false
     }
 }
 

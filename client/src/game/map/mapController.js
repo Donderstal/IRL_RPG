@@ -130,7 +130,7 @@ const setPositionFromNeighbour = ( playerSprite, currentMapData, previousMapName
 }
 
 const stopMap = ( ) => {
-    state.battleState.requestingBattle = false
+    state.battleStaging.requestingBattle = false
     state.currentMap.mapMusic.stop()     
 }
 

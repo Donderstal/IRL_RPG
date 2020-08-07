@@ -7,20 +7,20 @@ const actionController  = require('./map-ui/actionController')
 const handleMapKeyPress = ( event ) => {
     event.preventDefault()    
 
-    if ( event.key == " " && !state.battleState.requestingBattle && !state.requestingBus ) {
+    if ( event.key == " " && !state.battleStaging.requestingBattle && !state.requestingBus ) {
         actionController.handleActionButton( )        
     }
     else if ( event.key == "e" && state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
-        state.battleState.requestingBattle = false
+        state.battleStaging.requestingBattle = false
         state.requestingBus = false;
     }
     else if ( event.key == " " && state.currentMap.bubbleIsActive && state.requestingBus ) {
         state.mapTransition = state.requestingBus;
         state.requestingBus = false;
     }
-    else if ( event.key == " " && state.currentMap.bubbleIsActive && state.battleState.requestingBattle ) {
+    else if ( event.key == " " && state.currentMap.bubbleIsActive && state.battleStaging.requestingBattle ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
         changeMode.requestModeChange( 'BATTLE' )
