@@ -81,7 +81,7 @@ class BattleChar {
 
     updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter ) {
         targetCharacter.statsBar.update( moveResult, null );
-        state.battleState.battleUI.setText( 
+        state.battleState.UI.setText( 
             this.name + " does " + moveResult + " damage to " + targetCharacter.name + "!" 
         );
 
@@ -94,7 +94,7 @@ class BattleChar {
         this.targeted = true;
         const moveName = state.battleState.playerParty.activeMember.nextMove.name
         state.battleState.targetedCharacter = this
-        state.battleState.battleUI.setText( "Use  " + moveName + " on " + this.name )
+        state.battleState.UI.setText( "Use  " + moveName + " on " + this.name )
         this.sprite.target()
     }
 
@@ -104,9 +104,9 @@ class BattleChar {
     }
 
     activateUI( ) {
-        const battleUI = state.battleState.battleUI
-        battleUI.setText( "Choose your move!" )
-        battleUI.setCharacterAsActive( this );
+        const UI = state.battleState.UI
+        UI.setText( "Choose your move!" )
+        UI.setCharacterAsActive( this );
         this.sprite.activateUI( );
     }
 
