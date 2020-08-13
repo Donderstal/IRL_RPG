@@ -37,7 +37,6 @@ class BattleChar {
         }
 
         for ( var i = 0; i < this.moves.length; i++ ) {
-            console.log(this.className)
             let classAnimations = moveAnimationScripts[this.className]
             this.moves[i].animation = classAnimations[this.moves[i].animation + directionSuffix]
         }
@@ -47,20 +46,9 @@ class BattleChar {
         this.sprite.animateHit()
     }
 
-    standardAttack( ) {
-        const battleState = state.battleState
+    animateAttack( ) {
         const sfx = new Sound( "battle-baba.mp3", true )
         sfx.play()
-        this.animateAttack( )
-
-        let attacker = this.isPlayer ? battleState.player.character : battleState.opponent.character;
-        let defender = this.isPlayer ? battleState.opponent.character : battleState.player.character;
-         
-        defender.stats.HP -= ( attacker.stats.Attack - defender.stats.Defence )
-        this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
-    }
-
-    animateAttack( ) {
         this.sprite.animateAttack( this.nextMove.animation )
         this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }

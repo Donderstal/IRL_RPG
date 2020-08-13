@@ -1,12 +1,13 @@
-const globals = require('../../../game-data/globals')
-const canvas = require('../../../helpers/canvasHelpers')
-const state = require('../../../game-data/state')
+const globals       = require('../../../game-data/globals')
+const canvas        = require('../../../helpers/canvasHelpers')
+const state         = require('../../../game-data/state')
+const battleGlobals = require('../battleGlobals');
 
 class BattleMenu {
     constructor( ) {
-        this.width          = globals.BATTLE_UI_CHAR_WIDTH;
-        this.height         = globals.BATTLE_UI_CHAR_HEIGHT;
-        this.x              = globals.CANVAS_WIDTH - ( 4 * globals.BATTLE_UI_CHAR_WIDTH );
+        this.width          = battleGlobals.BATTLE_UI_CHAR_WIDTH
+        this.height         = battleGlobals.BATTLE_UI_CHAR_HEIGHT  
+        this.x              = globals.CANVAS_WIDTH - ( 4 * battleGlobals.BATTLE_UI_CHAR_WIDTH );
         this.y              = globals.CANVAS_HEIGHT - this.height;
 
         this.standardOptions = [
@@ -96,7 +97,7 @@ class BattleMenu {
     }
 
     draw( ) {
-        if ( state.battleState.battlePhase == globals['PHASE_SELECT_MOVE'] ) {
+        if ( state.battleState.battlePhase == battleGlobals['PHASE_SELECT_MOVE'] ) {
             canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
 
             for ( var i = 0; i < this.buttons.length; i++ ) {

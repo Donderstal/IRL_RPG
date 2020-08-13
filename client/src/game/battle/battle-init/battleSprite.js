@@ -1,5 +1,4 @@
 const globals = require('../../../game-data/globals')
-const state = require('../../../game-data/state')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 
