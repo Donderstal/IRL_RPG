@@ -13,6 +13,8 @@ const startBattle = (  ) => {
     state.battleStaging.requestingBattle = false
     state.battleState = new Battle( prepareStagingDataForBattle( state.battleStaging ) );
     initializeBattleMap( );
+    let sfx = new Sound( 'boxing-bell.wav', true );
+    sfx.play( );
     state.battleState.initUI( );
 }
 
