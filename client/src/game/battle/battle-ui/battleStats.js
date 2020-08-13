@@ -1,10 +1,10 @@
-const canvas    = require('../../../helpers/canvasHelpers');
-const globals   = require('../../../game-data/globals');
-const state     = require('../../../game-data/state')
+const canvas        = require('../../../helpers/canvasHelpers');
+const globals       = require('../../../game-data/globals');
+const battleGlobals = require('../battleGlobals');
+const state         = require('../../../game-data/state')
 
 class BattleStats { 
     constructor ( owner, isPlayer, index ) {
-        console.log(owner)
         this.owner          = owner
         this.isPlayer       = isPlayer
 
@@ -13,8 +13,8 @@ class BattleStats {
 
         this.HPBarWidth,
         this.MPBarWidth,
-        this.width          = globals.BATTLE_UI_CHAR_WIDTH
-        this.height         = globals.BATTLE_UI_CHAR_HEIGHT    
+        this.width          = battleGlobals.BATTLE_UI_CHAR_WIDTH
+        this.height         = battleGlobals.BATTLE_UI_CHAR_HEIGHT    
 
         canvas.setFont("SMALL")
         this.labelWidth = canvas.getFrontCanvasContext().measureText("MP: ").width
@@ -30,7 +30,6 @@ class BattleStats {
             this.y      = globals.CANVAS_HEIGHT - this.height
         }
         else {
-            console.log("x: " + this.owner.sprite.x + ", y: " + this.owner.sprite.y)
             this.x      = this.owner.sprite.x 
             this.y      = this.owner.sprite.y - globals.SMALL_FONT_LINE_HEIGHT
         }

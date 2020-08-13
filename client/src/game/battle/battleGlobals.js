@@ -56,6 +56,9 @@ const MAP_SLOT_OPP_3 = {
     'y': (globals.CANVAS_HEIGHT * .65) - ( globals.STRD_SPRITE_HEIGHT * .5 )
 }
 
+const TEXTBOX_XY = { "x": globals.CANVAS_WIDTH * .25, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
+const TEXTBOX_DIMENSIONS = { "width": globals.CANVAS_WIDTH * .35, "height": globals.CANVAS_HEIGHT / 6}
+
 module.exports = {
     BATTLE_INTRO_ANIM_MS,
 
@@ -84,5 +87,8 @@ module.exports = {
     MAP_SLOT_PLA_3,
     MAP_SLOT_OPP_1,
     MAP_SLOT_OPP_2,
-    MAP_SLOT_OPP_3
+    MAP_SLOT_OPP_3,
+
+    TEXTBOX_XY,
+    TEXTBOX_DIMENSIONS
 }

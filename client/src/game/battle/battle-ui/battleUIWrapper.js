@@ -1,21 +1,10 @@
-const globals   = require('../../../game-data/globals');
-const state     = require('../../../game-data/state');
-const { BattleChar } = require('../battle-init/battleChar');
+const battleGlobals   = require('../battleGlobals');
 const { BattleMenu } = require('./battleMenu');
-const initTextContainer = require('./battleText').initTextContainer;
-
-const slotXValues = [
-    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 4 ),
-    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 3 ),
-    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 2 ),
-    globals.CANVAS_WIDTH - ( globals.BATTLE_UI_CHAR_WIDTH * 1 ) 
-];
-
-const slotY = globals.CANVAS_HEIGHT - globals.BATTLE_UI_CHAR_HEIGHT;
+const TextContainer = require('./battleText').TextContainer;
 
 class BattleUIWrapper {
     constructor( playerPartyMembers, oppoPartyMembers ) {
-        this.textbox        = initTextContainer( );
+        this.textbox        = new TextContainer( );
         this.battleMenu     = new BattleMenu( );
 
         this.getInitialSlotContent( 
@@ -112,8 +101,8 @@ class BattleUIWrapper {
 
 class UISLot {
     constructor( content, index ) {
-        this.x          = slotXValues[index];
-        this.y          = slotY;
+        this.x          = battleGlobals.UI_SLOT_X_ARRAY[index];
+        this.y          = battleGlobals.UI_SLOT_Y;
         this.isActive   = index == 1;
 
         this.setContent( content, index )
@@ -122,7 +111,7 @@ class UISLot {
     setContent( content, index ) {
         this.content    = content;
         this.isMenu     = content instanceof BattleMenu;
-        this.content.setXy( slotXValues[index], this.y );
+        this.content.setXy( battleGlobals.UI_SLOT_X_ARRAY[index], this.y );
     }
 
     draw( ) {
