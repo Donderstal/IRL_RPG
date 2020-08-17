@@ -130,12 +130,12 @@ class Battle {
         this.charactersInField = [ ]
         this.playerMembers.forEach(member => {
             if ( !member.isDefeated ) {
-                this.charactersInField.push(member)
+                this.charactersInField.push( member )
             }
         });
         this.opponentMembers.forEach(member => {
             if ( !member.isDefeated ) {
-                this.charactersInField.push(member)
+                this.charactersInField.push( member )
             }
         });    
     }

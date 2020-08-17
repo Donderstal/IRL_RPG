@@ -38,6 +38,7 @@ class Party {
         const memberStatuses = this.getMemberStatuses( );
         
         if ( this.partySize != 1 ) {
+
             if ( modifier == "NEXT" ) {
                 for ( var i = currentIndex; i < Object.keys(memberStatuses).length; i++  ) { 
                     if ( i != currentIndex && !memberStatuses[i] ) {
@@ -52,6 +53,7 @@ class Party {
                     }
                 }
             }
+            
             else if ( modifier == "PREV" ) {
                 for ( var i = currentIndex; i >= 0; i-- ) { 
                     if ( i != currentIndex && !memberStatuses[i] ) {
@@ -66,6 +68,7 @@ class Party {
                     }
                 }
             }
+
         }
 
         return false;

@@ -1,6 +1,8 @@
 const state         = require('../../game-data/state')
 const battleGlobals = require('./battleGlobals')
+
 const Battle        = require('./battle').Battle;
+const Sound         = require('../interfaces/I_Sound').Sound
 
 const grid          = require('../map/map-init/drawGrid')
 const tilesheets    = require('../../resources/tilesheetResources').sheets
@@ -8,6 +10,7 @@ const maps          = require('../../resources/mapResources')
 
 const nameGen       = require('./../../helpers/randomNameGen')
 const charGlobals   = require('../character/characterGlobals')
+
 
 const startBattle = (  ) => {
     state.battleStaging.requestingBattle = false
