@@ -1,30 +1,15 @@
-const globals       = require('../../../game-data/globals')
 const canvas        = require('../../../helpers/canvasHelpers')
 const state         = require('../../../game-data/state')
 const battleGlobals = require('../battleGlobals');
 
 class BattleMenu {
     constructor( ) {
-        this.width          = battleGlobals.BATTLE_UI_CHAR_WIDTH
-        this.height         = battleGlobals.BATTLE_UI_CHAR_HEIGHT  
-        this.x              = globals.CANVAS_WIDTH - ( 4 * battleGlobals.BATTLE_UI_CHAR_WIDTH );
-        this.y              = globals.CANVAS_HEIGHT - this.height;
-
-        this.standardOptions = [
-            "ATTACK",
-            "MOVES",
-            "ITEMS",
-            "STATS",            
-            "RETURN"
-        ];
-
-        this.standardDescriptions = [
-            "Attack your opponents with a basic attack",
-            "Choose one of your special moves",
-            "Use or equip an item",
-            "Check out your characters stats and attributes",            
-            "Return to the previous character"
-        ];
+        this.width                  = battleGlobals.BATTLE_UI_CHAR_WIDTH
+        this.height                 = battleGlobals.BATTLE_UI_CHAR_HEIGHT  
+        this.x                      = battleGlobals.BATTLE_MENU_X
+        this.y                      = battleGlobals.BATTLE_MENU_Y
+        this.standardOptions        = battleGlobals.BATTLE_MENU_STRD_LABELS;
+        this.standardDescriptions   = battleGlobals.BATTLE_MENU_STRD_DESC;
 
         this.buttons        = []
         this.activeButton   = null;
@@ -43,8 +28,8 @@ class BattleMenu {
             this.buttons.push( 
                 new BattleMenuButton( 
                     this.standardOptions[index], 
-                    (this.x + globals.BATTLE_FONT_LINE_HEIGHT / 2), 
-                    (this.y + globals.BATTLE_FONT_LINE_HEIGHT) + ( globals.LARGE_FONT_LINE_HEIGHT * index ), 
+                    (this.x + battleGlobalss.BATTLE_FONT_LINE_HEIGHT / 2), 
+                    (this.y + battleGlobals.BATTLE_FONT_LINE_HEIGHT) + ( battleGlobals.LARGE_FONT_LINE_HEIGHT * index ), 
                     index, this.standardDescriptions[index]
                 )
             );
@@ -56,7 +41,7 @@ class BattleMenu {
         this.x = x;
         this.y = y;
         for ( var i = 0; i < this.buttons.length; i++ ) {
-            this.buttons[i].x = x + globals.BATTLE_FONT_LINE_HEIGHT / 2;
+            this.buttons[i].x = x + battleGlobals.BATTLE_FONT_LINE_HEIGHT / 2;
         }             
     }
 
@@ -145,9 +130,9 @@ class BattleMenuButton {
         if ( this.isActive ) {
             canvas.drawRect( 
                 "FRONT", 
-                this.x - ( globals.GRID_BLOCK_PX / 2 ), 
-                this.y + ( ( globals.GRID_BLOCK_PX / 2 ) - this.height ) / 2 , 
-                globals.GRID_BLOCK_PX / 2, globals.GRID_BLOCK_PX / 2,
+                this.x - ( battleGlobals.BATTLE_MENU_BUTTON_MARGIN ), 
+                this.y + ( ( battleGlobals.BATTLE_MENU_BUTTON_MARGIN ) - this.height ) / 2 , 
+                battleGlobals.BATTLE_MENU_BUTTON_MARGIN, battleGlobals.BATTLE_MENU_BUTTON_MARGIN,
                 this.color
             );            
         }

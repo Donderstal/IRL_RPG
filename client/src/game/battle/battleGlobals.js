@@ -59,6 +59,27 @@ const MAP_SLOT_OPP_3 = {
 const TEXTBOX_XY = { "x": globals.CANVAS_WIDTH * .25, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
 const TEXTBOX_DIMENSIONS = { "width": globals.CANVAS_WIDTH * .35, "height": globals.CANVAS_HEIGHT / 6}
 
+const BATTLE_MENU_X = globals.CANVAS_WIDTH - ( 4 * BATTLE_UI_CHAR_WIDTH )
+const BATTLE_MENU_Y = globals.CANVAS_HEIGHT - battleGlobals.BATTLE_UI_CHAR_HEIGHT
+
+const BATTLE_MENU_STRD_DESC = [
+    "Attack your opponents with a basic attack",
+    "Choose one of your special moves",
+    "Use or equip an item",
+    "Check out your characters stats and attributes",            
+    "Return to the previous character"
+];
+const BATTLE_MENU_STRD_LABELS = [
+    "ATTACK",
+    "MOVES",
+    "ITEMS",
+    "STATS",            
+    "RETURN"
+];
+
+const BATTLE_MENU_BUTTON_MARGIN = (globals.GRID_BLOCK_PX / 2);
+const BATTLE_FONT_LINE_HEIGHT = globals.BATTLE_FONT_LINE_HEIGHT 
+
 module.exports = {
     BATTLE_INTRO_ANIM_MS,
 
@@ -90,5 +111,12 @@ module.exports = {
     MAP_SLOT_OPP_3,
 
     TEXTBOX_XY,
-    TEXTBOX_DIMENSIONS
+    TEXTBOX_DIMENSIONS,
+
+    BATTLE_MENU_X,
+    BATTLE_MENU_Y,
+    BATTLE_MENU_STRD_DESC,
+    BATTLE_MENU_STRD_LABELS,
+    BATTLE_MENU_BUTTON_MARGIN,
+    BATTLE_FONT_LINE_HEIGHT
 }
