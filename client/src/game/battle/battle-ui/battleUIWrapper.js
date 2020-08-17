@@ -7,10 +7,7 @@ class BattleUIWrapper {
         this.textbox        = new TextContainer( );
         this.battleMenu     = new BattleMenu( );
 
-        this.getInitialSlotContent( 
-            this.battleMenu,
-            playerPartyMembers
-        );
+        this.getInitialSlotContent( playerPartyMembers );
 
         this.activeContentArray = []
 
@@ -26,11 +23,23 @@ class BattleUIWrapper {
     get inMoveMenu( ) { return this.battleMenu.inMoveMenu; }
     get inItemMenu( ) { return this.battleMenu.inItemMenu; }
 
-    getInitialSlotContent( battleMenu, partyMembers ) {
-        this.initialContentArray = [ 
-            battleMenu
-        ];
+    setText( text ) 
+        { this.textbox.setText( text ); };
+    setHeader( text ) 
+        { this.textbox.setHeader( text ); };
+    getMoveMenu( ) 
+        { this.battleMenu.getMoveMenu( ); };
+    getStandardMenu( ) 
+        { this.battleMenu.getStandardMenu( ); };
+    activateMenu( ) 
+        { this.activateButtonAtIndex( 1 ); };
+    activateButtonAtIndex( index ) 
+        { this.battleMenu.activateButtonAtIndex( index, this ); };
+    setCharacterAsActive( character ) 
+        { this.battleMenu.activeCharacter = character; };
 
+    getInitialSlotContent( partyMembers ) {
+        this.initialContentArray = [ this.battleMenu ];
         partyMembers.forEach( ( member ) => {
             this.initialContentArray.push( member.statsBar )
         } );
@@ -56,11 +65,6 @@ class BattleUIWrapper {
         } );
     }
 
-    setCharacterAsActive( character ) {
-        this.activeCharacter = character
-        this.battleMenu.activeCharacter = character
-    }
-
     switchSlot( newMenuIndex, party ) {
         this.activeContentArray = Object.assign( [], party );
         this.activeContentArray.splice( newMenuIndex, 0, this.battleMenu );
@@ -71,32 +75,8 @@ class BattleUIWrapper {
         } );
 
         this.activateMenu( );
-
     }
 
-    setText( text ) {
-        this.textbox.setText( text );
-    }
-
-    setHeader( text ) {
-        this.textbox.setHeader( text );
-    }
-
-    getMoveMenu( ) {
-        this.battleMenu.getMoveMenu( );
-    }
-
-    getStandardMenu( ) {
-        this.battleMenu.getStandardMenu( );
-    }
-
-    activateMenu( ) {
-        this.activateButtonAtIndex( 1 );
-    }
-
-    activateButtonAtIndex( index ) {
-        this.battleMenu.activateButtonAtIndex( index, this )
-    }
 }
 
 class UISLot {
