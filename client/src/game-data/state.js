@@ -18,6 +18,11 @@ module.exports = {
         },
         battlePhase : null
     },
+    battleStaging : {
+        player              : [],
+        opponent            : [],
+        requestingBattle    : false
+    },
     playerCharacter : {},
     debug : { 
         map: false,

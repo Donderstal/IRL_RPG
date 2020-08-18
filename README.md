@@ -1,21 +1,20 @@
-Browser RPG Game in Flask, Svelte and HTML5 Canvas
-The latest working version of IRL_RPG can be found on the Next branch
-When we get to that point, the Master branch will contain the latest stable release
+As of yet untitled browser RPG game.
 
-#### INSTALLATION
+Game written in 'vanilla' HTML Canvas.
+Python Flask back end.
+Svelte 3 front end.
 
-Clone the repo to a folder on your machine
+The *master* branch contains the previous stable version.
+The *next* branch contains the latest stable version.
 
-You will need Python 3. You will also need to install Flask by running ```pip install flask```
-
-Cd to the ```client``` folder
-Then run ```npm install```
-
-Wait until all Node packages are installed.
-
-Open a new terminal window and run ```server.py``` to get the Flask server running. This will serve the game on localhost:5000
+The *latest-build* branch contains the latest build that has been deployed online.
+Try the latest the game at: http://34.90.228.47/
 
 ### LOG
+#### AUG 7, 2020
+* New Battle class is instantiated on each battle
+* New battleStaging state prop
+* Adding some getters to UiWrapper and Battle Class
 
 #### AUG 6, 2020
 * Grouping all UI elements in BattleUIWrapper

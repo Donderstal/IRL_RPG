@@ -29,8 +29,8 @@ const handleAction = ( action ) => {
             break;
         case "BATTLE" :
             displayActionText( action )
-            state.battleState.opponent.action = action
-            state.battleState.requestingBattle = true
+            state.battleStaging.action = action
+            state.battleStaging.requestingBattle = true
             break;            
         }
 }
