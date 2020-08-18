@@ -40,11 +40,11 @@ class BattleSprite extends I_Sprite {
     }
     
     activateUI( ) {
-        this.active         = true;
+        this.active = true;
     }
 
     deActivateUI( ) {
-        this.active         = false;
+        this.active = false;
     }
 
     target( ) {
@@ -54,10 +54,31 @@ class BattleSprite extends I_Sprite {
     deTarget( ) {
         this.targeted = false;
     }
-    
-    drawSprite( ) {
+
+    draw( ) {
         this.frameCount++;
-        if ( this.frameCount * .5 > globals.FRAME_LIMIT && !this.moving ) {
+        if ( !this.moving ) {
+            this.doIdleAnimation( );
+        }
+
+        this.drawSprite( );
+        this.updateSpriteBorders( );
+
+        if ( this.shout != null ) {
+            this.drawShout( )
+        }
+
+        if ( this.active && this.greenArrowLoaded ) {
+            this.drawGreenArrow( );
+        }
+
+        if ( this.targeted && this.redArrowLoaded ) {
+            this.drawRedArrow( );
+        }
+    }
+    
+    doIdleAnimation( ) {
+        if ( this.frameCount * .5 > globals.FRAME_LIMIT ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
                 this.frameCount = 0;
@@ -66,53 +87,36 @@ class BattleSprite extends I_Sprite {
                 this.columnInSheet = 0;
                 this.frameCount = 0;
             }
-        }
+        } 
+    }
 
+    drawRedArrow( ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
+            0, 0,
+            1200, 1200,
+            this.x + this.width, this.y + (this.height / 2) - (globals.GRID_BLOCK_PX / 2), 
+            globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
+        )
+    }
+
+    drawGreenArrow( ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
+            0, 0,
+            860, 900,
+            this.x, this.y - globals.GRID_BLOCK_PX, 
+            globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
+        )
+    }
+
+    drawSprite( ) {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
             ( globals.MAP_SPRITE_WIDTH_IN_SHEET * this.columnInSheet ), ( globals.MAP_SPRITE_HEIGHT_IN_SHEET * this.rowInSheet ),
             globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
             this.x, this.y, 
             this.width, this.height
-        )
-
-        this.updateSpriteBorders( )
-
-        if ( this.shout != null ) {
-            this.drawShout( )
-        }
-
-        if ( this.active && this.greenArrowLoaded ) {
-            canvasHelpers.drawFromImageToCanvas(
-                "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
-                0, 0,
-                860, 900,
-                this.x, this.y - globals.GRID_BLOCK_PX, 
-                globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
-            )
-        }
-
-        if ( this.targeted && this.redArrowLoaded ) {
-            canvasHelpers.drawFromImageToCanvas(
-                "FRONT", this.targeted ? this.redArrowPNG : this.greenArrowPNG,
-                0, 0,
-                1200, 1200,
-                this.x + this.width, this.y + (this.height / 2) - (globals.GRID_BLOCK_PX / 2), 
-                globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
-            )
-        }
-    }
-
-    drawArrow( ) {
-        if ( !this.arrowLoaded ) {
-            this.arrowLoaded = true;
-        }
-        canvasHelpers.drawFromImageToCanvas(
-            "FRONT", this.arrowPNG.src,
-            0, 0,
-            860, 900,
-            this.x + globals.GRID_BLOCK_PX, this.y + globals.GRID_BLOCK_PX, 
-            globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
         )
     }
 

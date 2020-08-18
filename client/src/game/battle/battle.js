@@ -106,12 +106,10 @@ class Battle {
         this.currentMoveIndex = 0;
     
         this.charactersInField.sort( ( a, b ) => {
-            let aAGI = a.character.attributes["AGILITY"]
-            let bAGI = b.character.attributes["AGILITY"]
-            if ( aAGI > bAGI ) {
+            if ( a.character.attributes["AGILITY"] > b.character.attributes["AGILITY"] ) {
                 return -1; 
             }
-            else if ( bAGI > aAGI ) {
+            else if ( b.character.attributes["AGILITY"] > a.character.attributes["AGILITY"] ) {
                 return 1;
             }
             return 0;     
@@ -128,16 +126,12 @@ class Battle {
     
     setActiveCharactersInField( ) {
         this.charactersInField = [ ]
-        this.playerMembers.forEach(member => {
+        let allCharacters = [ ...this.playerMembers, ...this.opponentMembers]
+        allCharacters.forEach(member => {
             if ( !member.isDefeated ) {
                 this.charactersInField.push( member )
             }
-        });
-        this.opponentMembers.forEach(member => {
-            if ( !member.isDefeated ) {
-                this.charactersInField.push( member )
-            }
-        });    
+        });   
     }
 
     handleActionButtonInSelectionPhase( ) {

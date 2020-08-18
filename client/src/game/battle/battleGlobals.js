@@ -60,7 +60,7 @@ const TEXTBOX_XY = { "x": globals.CANVAS_WIDTH * .25, "y": (globals.CANVAS_HEIGH
 const TEXTBOX_DIMENSIONS = { "width": globals.CANVAS_WIDTH * .35, "height": globals.CANVAS_HEIGHT / 6}
 
 const BATTLE_MENU_X = globals.CANVAS_WIDTH - ( 4 * BATTLE_UI_CHAR_WIDTH )
-const BATTLE_MENU_Y = globals.CANVAS_HEIGHT - battleGlobals.BATTLE_UI_CHAR_HEIGHT
+const BATTLE_MENU_Y = globals.CANVAS_HEIGHT - BATTLE_UI_CHAR_HEIGHT
 
 const BATTLE_MENU_STRD_DESC = [
     "Attack your opponents with a basic attack",
