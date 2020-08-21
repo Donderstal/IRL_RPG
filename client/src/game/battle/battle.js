@@ -1,6 +1,7 @@
 const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 const changeMode    = require('../../game-data/changeMode');
 const battleGlobals = require('./battleGlobals')
+const Move          = require('./battle-moves/Move').Move
 const Party         = require('./Party').Party
 
 class Battle {
@@ -155,7 +156,7 @@ class Battle {
     }
 
     initTargetSelection( ) {
-        this.selectedCharacter.nextMove = this.currentButtonText == "ATTACK" ? this.currentStandardAttack : this.currentSelectedMove;
+        this.selectedCharacter.nextMove = new Move( this.currentButtonText == "ATTACK" ? this.currentStandardAttack : this.currentSelectedMove );
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
     }
