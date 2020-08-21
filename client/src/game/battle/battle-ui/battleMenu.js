@@ -29,7 +29,7 @@ class BattleMenu {
             this.buttons.push( 
                 new BattleMenuButton( 
                     this.standardOptions[index], 
-                    (this.x + battleGlobalss.BATTLE_FONT_LINE_HEIGHT / 2), 
+                    (this.x + battleGlobals.BATTLE_FONT_LINE_HEIGHT / 2), 
                     (this.y + battleGlobals.BATTLE_FONT_LINE_HEIGHT) + ( battleGlobals.LARGE_FONT_LINE_HEIGHT * index ), 
                     index, this.standardDescriptions[index]
                 )

@@ -1,10 +1,11 @@
 const globals = require('../../../game-data/globals')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
+const battleGlobals = require('../battleGlobals')
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, isPlayer = false ) {
-        super ( start, spriteSheetSrc, "XY", "STRD", isPlayer ? globals.SHEET_ROW_BATTLE_RIGHT : globals.SHEET_ROW_BATTLE_LEFT ) 
+        super ( start, spriteSheetSrc, "XY", "STRD", isPlayer ? battleGlobals.SHEET_ROW_BATTLE_RIGHT : battleGlobals.SHEET_ROW_BATTLE_LEFT ) 
 
         this.isPlayer       = isPlayer
         this.buttons        = {}
@@ -13,7 +14,7 @@ class BattleSprite extends I_Sprite {
 
         this.initialX       = this.x;
         this.destinationX   = null;
-        this.columnInSheet  = globals.B_SHEETPOS_IDLE;
+        this.columnInSheet  = battleGlobals.B_SHEETPOS_IDLE;
         this.rowInSheet     = isPlayer ? 4 : 5
 
         this.initialRow     = this.rowInSheet;
@@ -138,9 +139,9 @@ class BattleSprite extends I_Sprite {
     animateAttack( sheetPositions = null ) {
         if ( sheetPositions == null ) {
             this.moving = true;
-            this.columnInSheet = globals.B_SHEETPOS_ATTACK;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_ATTACK;
             setTimeout(() => {
-                this.columnInSheet = globals.B_SHEETPOS_IDLE;
+                this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
                 this.moving = false;
             }, 500 )                
         }
@@ -150,7 +151,7 @@ class BattleSprite extends I_Sprite {
                 this.setAnimationPosition( i, sheetPositions )
             }
             setTimeout(() => {
-                this.columnInSheet = globals.B_SHEETPOS_IDLE;
+                this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
                 this.rowInSheet = this.initialRow;
                 this.moving = false;
             }, ( 250 + ( 250 * sheetPositions.length ) ) )
@@ -165,37 +166,37 @@ class BattleSprite extends I_Sprite {
     }
 
     animateHit( ) {
-        this.columnInSheet = globals.B_SHEETPOS_NONE;
+        this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
         }, 250 )        
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
         }, 500 )     
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
         }, 750 ) 
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
         }, 1000 ) 
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
         }, 1250 )             
     }
 
     fadeOut( ) {
-        this.columnInSheet = globals.B_SHEETPOS_NONE;
+        this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
         }, 250 )        
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
         }, 500 )     
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_IDLE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
         }, 750 ) 
         setTimeout(() => {
-            this.columnInSheet = globals.B_SHEETPOS_NONE;
+            this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
         }, 1000 )               
     }
 }
