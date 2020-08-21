@@ -1,8 +1,9 @@
+const moveAnimations = require('./moveAnimations')
+
 class Move {
     constructor( moveData ) {
-        console.log( "new move! ")
+        console.log( "new move " +  moveData.name + "!")
         console.log(moveData)
-        console.log('..end of new move')
 
         this.name       = moveData.name;
         this.desc       = moveData.desc;
@@ -14,10 +15,15 @@ class Move {
         this.target = null;
         this.steps = [ ];
 
-        this.initSteps( moveData.animation );
+        let animationData = moveAnimations[ moveData.animation ]
+
+        this.initSteps( animationData );
+        console.log(this)
+        console.log('..end of move '  +  moveData.name)
     }
 
     initSteps( animationSteps ) {
+        console.log(animationSteps)
         animationSteps.forEach( (step) => {
             this.steps.push( new AnimationStep( step ) )
         } );
@@ -32,7 +38,6 @@ class AnimationStep {
     constructor( stepData ) {
         console.log( "new step! ")
         console.log(stepData)
-        console.log('..end of new move')
 
         this.type = stepData.type;
         this.damage = stepData.damage;
@@ -41,6 +46,8 @@ class AnimationStep {
 
         this.done = false;
         this.target, this.targetStep;
+        console.log(this)
+        console.log('..end of new step')
     }
 }
 

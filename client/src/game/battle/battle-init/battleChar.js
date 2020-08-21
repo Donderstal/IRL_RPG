@@ -23,17 +23,6 @@ class BattleChar {
         this.standardAttack = this.character.standardAttack
         this.startingAttrs  = Object.assign( {}, this.character.attributes );
         this.nextMove, this.nextMoveTarget
-
-        this.getMoves( );
-    }
-
-    getMoves( ) {
-        let directionSuffix = ( this.sprite.initialRow == battleGlobals.SHEET_ROW_BATTLE_LEFT ) ? "_L" : "_R";
-
-        for ( var i = 0; i < this.moves.length; i++ ) {
-            let classAnimations = moveAnimationScripts[this.className]
-            this.moves[i].animation = classAnimations[this.moves[i].animation + directionSuffix]
-        }
     }
 
     animateHit( ) {
