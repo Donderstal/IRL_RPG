@@ -82,53 +82,15 @@ class MapSprite extends I_Sprite {
     }
 
     setDestination( destination, endDirection ) {
-        this.destination = destination
-        this.type = "idle"
-        this.destination.endDirection = endDirection
-        this.destination.horizontal = ( this.x > destination.right ) ? "FACING_LEFT" : "FACING_RIGHT";
-        this.destination.vertical = ( this.y > destination.bottom ) ? "FACING_UP" : "FACING_DOWN";
-
-        this.inMovementAnimation = true;
+        super.goToDestination( destination, endDirection );
         state.activeCinematic.activeScene.walkingToDestination = true;
     }
 
     goToDestination( ) {
-        const destIsLeftOfSprite = this.destination.left <= this.x;
-        const destIsRightOfSprite = this.destination.right >= this.x + this.width;
-        const destIsBelowSprite = this.destination.bottom >= this.y + this.height;
-        const destIsAboveSprite = this.destination.top <= this.y;
-
-        let moving = false;
-
-        if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-            this.x -= globals.MOVEMENT_SPEED;
-            moving = true;
-            this.direction = globals["FACING_LEFT"]
-        }
-        else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
-            this.y -= globals.MOVEMENT_SPEED;
-            moving = true;
-            this.direction = globals["FACING_UP"]
-        }
-        else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-            this.x += globals.MOVEMENT_SPEED;
-            moving = true;
-            this.direction = globals["FACING_RIGHT"];
-        }
-        else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
-            this.y += globals.MOVEMENT_SPEED  
-            moving = true;
-            this.direction = globals["FACING_DOWN"]
-        }
-
+        super.goToDestination( );
         if ( !moving ) {
             state.activeCinematic.activeScene.walkingToDestination = false;
-            this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
-            this.inMovementAnimation = false;
-            this.destination = {}
         }
-
-        this.countFrame( );
     }
 
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
@@ -184,19 +146,6 @@ class MapSprite extends I_Sprite {
         }   
         this.inScriptedAnimation    = false;  
         this.animationScript        = {}
-    }
-
-    countFrame ( ) {
-        this.frameCount++;  
-    
-        if ( this.frameCount >= globals.FRAME_LIMIT) {
-            this.frameCount = 0;
-            this.sheetPosition++;
-    
-            if (this.sheetPosition >= 4) {
-                this.sheetPosition = 0;
-            }
-        }
     }
 } 
 

@@ -13,6 +13,7 @@ class BattleSprite extends I_Sprite {
         this.animating      = false;
 
         this.initialX       = this.x;
+        this.initialY       = this.y;
         this.destinationX   = null;
         this.columnInSheet  = battleGlobals.B_SHEETPOS_IDLE;
         this.rowInSheet     = isPlayer ? 4 : 5
@@ -58,8 +59,12 @@ class BattleSprite extends I_Sprite {
 
     draw( ) {
         this.frameCount++;
+
         if ( !this.moving ) {
             this.doIdleAnimation( );
+        }
+        else {
+            this.goToDestination( );
         }
 
         this.drawSprite( );
@@ -134,6 +139,15 @@ class BattleSprite extends I_Sprite {
         setTimeout( ( ) => {
             this.shout = null
         }, timer )
+    }
+
+    setDestination( destination, endDirection ) {
+        super.goToDestination( destination, endDirection );
+    }
+
+    goToDestination( ) {
+        super.goToDestination( );
+        this.rowInSheet = this.isPlayer ? 1 : 2;
     }
 
     animateAttack( sheetPositions = null ) {
