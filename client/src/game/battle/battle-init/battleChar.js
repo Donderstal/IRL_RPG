@@ -1,9 +1,8 @@
 const res                   = require('../../../resources/resourceStrings')
 const state                 = require('../../../game-data/state')
-const battleGlobals         = require('../battleGlobals')
 const Sound                 = require('../../interfaces/I_Sound').Sound
 const BattleStats           = require('../battle-ui/battleStats').BattleStats
-const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
+const Move                  = require('../battle-moves/Move').Move
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
 const BattleSprite          = require('./battleSprite').BattleSprite
 
@@ -16,13 +15,21 @@ class BattleChar {
         this.name           = name,
         this.index          = index
         this.className      = className,
-        this.moves          = this.character.moves
+        this.moves          = []
         this.hasTurn        = false;
         this.isPlayer       = isPlayer;
         this.isDefeated     = this.character.HP > 0 ? false : true;
-        this.standardAttack = this.character.standardAttack
+        this.standardAttack = new Move( this.character.standardAttack )
         this.startingAttrs  = Object.assign( {}, this.character.attributes );
         this.nextMove, this.nextMoveTarget
+
+        this.initMoves( )
+    }
+
+    initMoves( ) {
+        this.character.moves.forEach( ( move ) => {
+            this.moves.push( new Move( move ) )
+        } )
     }
 
     animateHit( ) {

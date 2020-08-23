@@ -4,7 +4,7 @@ const battleGlobals     = require('../battleGlobals');
 const BattleMenuButton  = require('./battleMenuButton').BattleMenuButton
 
 class BattleMenu {
-    constructor( ) {
+    constructor( firstCharacter ) {
         this.width                  = battleGlobals.BATTLE_UI_CHAR_WIDTH
         this.height                 = battleGlobals.BATTLE_UI_CHAR_HEIGHT  
         this.x                      = battleGlobals.BATTLE_MENU_X
@@ -16,7 +16,7 @@ class BattleMenu {
         this.activeButton   = null;
         this.inMoveMenu = false;
         this.playerPartySize = 3
-        this.activeCharacter;
+        this.activeCharacter = firstCharacter;
 
         this.initializeMenuButtons( );
         this.getStandardMenu( );
@@ -60,7 +60,7 @@ class BattleMenu {
         this.buttons[buttonIndex].activate( );
         this.activeButton       = this.buttons[buttonIndex];
 
-        if ( this.inMoveMenu || this.activeButton.text == "ATTACK") {
+        if ( ( this.inMoveMenu && this.activeButton.text != "RETURN" ) || this.activeButton.text == "ATTACK") {
             let attribute = this.activeCharacter.moves[buttonIndex].attribute;
             if ( attribute != undefined ) {
                 UI.setHeader( 
@@ -90,13 +90,20 @@ class BattleMenu {
     getMoveMenu( ) {
         this.inMoveMenu = true;
         for ( var i = 0; i < this.buttons.length; i++ ) {
-            this.buttons[i].setMove( this.activeCharacter.moves[i] );
+            if ( this.activeCharacter.moves[i] != undefined ) {
+                this.buttons[i].setMove( this.activeCharacter.moves[i] );                
+            } else {
+                this.buttons[i].setText( "RETURN", "Return to main battle menu" );                
+            }
         } 
     }
 
     getStandardMenu( ) {
         this.inMoveMenu = false;
         for ( var i = 0; i < this.buttons.length; i++ ) {
+            if ( this.standardOptions[i] == "ATTACK" ) {
+                this.buttons[i].setMove( this.activeCharacter.standardAttack );
+            }
             this.buttons[i].setText( this.standardOptions[i], this.standardDescriptions[i] );
         }   
     }

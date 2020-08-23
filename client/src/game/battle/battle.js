@@ -156,7 +156,7 @@ class Battle {
     }
 
     initTargetSelection( ) {
-        this.selectedCharacter.nextMove = new Move( this.currentButtonText == "ATTACK" ? this.currentStandardAttack : this.currentSelectedMove );
+        this.selectedCharacter.nextMove = this.currentSelectedMove;
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
     }
