@@ -16,7 +16,7 @@ module.exports = {
         },
         {
             type: "MOVE",
-            destination: "STARTING_POS",
+            destination: "START",
             damage: false,
             effects: false,
             targetStep: false
@@ -39,7 +39,7 @@ module.exports = {
         },
         {
             type: "MOVE",
-            destination: "STARTING_POS",
+            destination: "START",
             damage: false,
             effects: false,
             targetStep: false

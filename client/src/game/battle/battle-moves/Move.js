@@ -34,11 +34,13 @@ class Move {
     setTarget( targetIndex ) {
         const opponentAtIndex = state.battleState.opponentParty.members[targetIndex] 
         const playerAtIndex = state.battleState.playerParty.members[targetIndex];
-        this.target = this.isPlayer ? opponentAtIndex : playerAtIndex;
-        this.steps.forEach( ( e ) => {
-            e.target = this.target;
-        })
-        console.log('chose ' + this.target.name + ' target for move: ' + this.name);
+        if ( this.target == null || this.target.index != targetIndex ) {
+            this.target = this.isPlayer ? opponentAtIndex : playerAtIndex;
+            this.steps.forEach( ( e ) => {
+                e.setTarget( this.target, this.owner );
+            })       
+            console.log('chose ' + this.target.name + ' as target for move: ' + this.name + ' to be used by ' + this.owner.name);     
+        }
     }
 
     startAnimation( ) {
@@ -50,8 +52,6 @@ class Move {
     
     getNewTargetIfCurrentIsDead( ) {
         if ( this.target.isDefeated ) {
-            console.log( 'target of move is dead... ')
-            console.log('getting new target for ' +  this.owner.name + "'s move named " + this.name)
             const battle =  state.battleState;
             const targetParty = this.isPlayer ? battle.opponentParty: battle.playerParty
             this.setTarget( 
@@ -95,32 +95,27 @@ class Move {
 
 class AnimationStep {
     constructor( stepData, isPlayer ) {
-        console.log( "new step! ")
-        console.log(stepData)
-
         this.type       = stepData.type;
         this.damage     = stepData.damage;
         this.effects    = stepData.effects;
+        this.isPlayer   = isPlayer
         this.targetStep = stepData.targetStep;
 
         this.done = false;
         this.target,
 
         this.initializeAnimationStep( stepData, isPlayer  );
-
-        console.log(this)
-        console.log('..end of new step')
     }
 
     initializeAnimationStep( stepData, isPlayer ) {
         switch( this.type ) {
             case "MOVE" :
+                this.destinationType = stepData.destination;
+                this.destination = { };
                 break;
             case "ANIM" :
                 this.animationName = stepData.animationName + ( isPlayer ? "_L" : "_R" );
                 this.animation = animationRes[this.animationName];
-                console.log('setting animation..')
-                console.log(this.animation)
                 break;
             case "SHOUT" :
                 break;
@@ -129,23 +124,56 @@ class AnimationStep {
         }
     }
 
+    setDestination( target, owner ) {
+        switch( this.destinationType ) {
+            case "TARGET" :
+                this.destination = { 
+                    'left': target.sprite.right, 
+                    'right': target.sprite.left, 
+                    'top': target.sprite.top, 
+                    'bottom': target.sprite.bottom
+                };
+                break;
+            case "START" :
+                this.destination = { 
+                    'left': owner.sprite.initialX, 
+                    'right': owner.sprite.initialX + owner.sprite.width, 
+                    'top': owner.sprite.initialY, 
+                    'bottom': owner.sprite.initialY + owner.sprite.height
+                };
+                this.destination.endDirection = owner.sprite.initialRow;
+                break;
+        }
+    }
+
+    setTarget( target, owner ) {
+        this.target = target
+        if ( this.type == "MOVE" ) {
+            this.setDestination( target, owner )
+        } 
+    }
+
     resetStep( ) {
         this.target = null;
         this.done = false;
+
+        if ( this.type == "MOVE" ) {
+            this.destination = null;
+        }
     }
 
     animate( character ) {
         switch( this.type ) {
             case "MOVE" :
-                console.log('move')
-                state.battleState.activeMove.continueAnimationIfPossible( );
+                console.log('MOVE STEP')
+                character.setDestinationAndStartWalking( this.destination, this.isPlayer ? 4 : 5 )
                 break;
             case "ANIM" :
-                console.log('anim')
+                console.log('ANIM STEP')
                 character.animateAttack( this.animation );
                 break;
             case "SHOUT" :
-                console.log('shout')
+                console.log('SHOUT STEP')
                 break;
             default :
                 console.log("animationType " + this.type + " is not valid");
