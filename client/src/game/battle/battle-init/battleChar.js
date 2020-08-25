@@ -19,7 +19,7 @@ class BattleChar {
         this.hasTurn        = false;
         this.isPlayer       = isPlayer;
         this.isDefeated     = this.character.HP > 0 ? false : true;
-        this.standardAttack = new Move( this.character.standardAttack )
+        this.standardAttack = new Move( this.character.standardAttack, isPlayer )
         this.startingAttrs  = Object.assign( {}, this.character.attributes );
         this.nextMove, this.nextMoveTarget
 
@@ -28,7 +28,7 @@ class BattleChar {
 
     initMoves( ) {
         this.character.moves.forEach( ( move ) => {
-            this.moves.push( new Move( move ) )
+            this.moves.push( new Move( move, this.isPlayer ) )
         } )
     }
 
@@ -36,10 +36,10 @@ class BattleChar {
         this.sprite.animateHit()
     }
 
-    animateAttack( ) {
+    animateAttack( animation ) {
         const sfx = new Sound( "battle-baba.mp3", true )
         sfx.play()
-        this.sprite.animateAttack( this.nextMove.animation )
+        this.sprite.animateAttack( animation )
         this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }
 
@@ -51,6 +51,7 @@ class BattleChar {
     doMove( targetCharacter ) {
         this.animateAttack(  );
         let moveResult = this.character.getMoveResult( this.nextMove, targetCharacter.character )
+        this.nextMove.activateStep( );
         targetCharacter.animateHit( );
         setTimeout( ( ) => {
             this.updateStatsBarAndCheckIfDefeated ( moveResult, targetCharacter )

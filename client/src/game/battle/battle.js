@@ -30,13 +30,7 @@ class Battle {
     get currentButtonText( ) { return this.UI.activeButtonText; }
     get currentSelectedMove( ) { return this.UI.activeButtonMove };
     get currentStandardAttack( ) { return this.playerParty.activeMember.standardAttack };
-
     get currentAttacker( ) { return this.charactersInField[this.currentMoveIndex] };
-    get currentDefender( ) { 
-        let attacker = this.currentAttacker;
-        let targetPartyMembers = ( attacker.isPlayer ? this.opponentMembers : this.playerMembers );
-        return targetPartyMembers[attacker.nextMove.targetIndex];
-    };
 
     initUI( ) {
         this.UI.activateButtonAtIndex( 1 );
@@ -156,13 +150,19 @@ class Battle {
     }
 
     initTargetSelection( ) {
+        console.log('selecting move...')
+        console.log(this.currentSelectedMove)
         this.selectedCharacter.nextMove = this.currentSelectedMove;
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
     }
 
     selectMove( ) {
-        this.selectedCharacter.nextMove.targetIndex = this.targetedCharacter.index;
+        console.log('selecting target...')
+        console.log(this.targetedCharacter.index)
+        //this.selectedCharacter.nextMove.targetIndex = this.targetedCharacter.index;
+
+        this.selectedCharacter.nextMove.setTarget( this.targetedCharacter.index );
         this.targetedCharacter.deTarget( );
         this.playerParty.getNextPartyMember( );
 
@@ -182,20 +182,18 @@ class Battle {
 
     doCurrentMove( ) {
         const attacker = this.currentAttacker;
-        const defender = this.currentDefender;
 
-        if ( defender.isDefeated || attacker.isDefeated ) {
+        if ( attacker.isDefeated ) {
             this.currentMoveIndex += 1
         }
         else {
             this.actionButtonAllowed = false
-            this.UI.setText( attacker.name + " uses " + attacker.nextMove.name + " on " + defender.name )
-    
+            attacker.nextMove.startAnimation( attacker );
+
             setTimeout( ( ) => {
-                attacker.doMove( defender );
                 this.currentMoveIndex += 1
                 this.actionButtonAllowed = true
-            }, 500 );
+            }, 1000 );
         }
     }
 }
