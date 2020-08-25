@@ -1,7 +1,7 @@
 module.exports = {
     "PUNCH" : [
         {
-            type: "MOVE_TO",
+            type: "MOVE",
             destination: "TARGET",
             damage: false,
             effects: false,
@@ -15,7 +15,7 @@ module.exports = {
             targetStep: "HIT"
         },
         {
-            type: "MOVE_TO",
+            type: "MOVE",
             destination: "STARTING_POS",
             damage: false,
             effects: false,
@@ -24,7 +24,7 @@ module.exports = {
     ],
     "CHAD_RAGE" : [
         {
-            type: "MOVE_TO",
+            type: "MOVE",
             destination: "TARGET",
             damage: false,
             effects: false,
@@ -38,7 +38,7 @@ module.exports = {
             targetStep: "HIT"
         },
         {
-            type: "MOVE_TO",
+            type: "MOVE",
             destination: "STARTING_POS",
             damage: false,
             effects: false,

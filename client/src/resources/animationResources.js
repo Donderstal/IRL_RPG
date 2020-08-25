@@ -89,6 +89,24 @@ const NECKBEARD_HACK_R = [
     { 'rowInSheet': 8,'columnInSheet': 3 }
 ]
 
+const HIT_L = [
+    { 'rowInSheet': 5,'columnInSheet': -1 },
+    { 'rowInSheet': 5,'columnInSheet': 0 },
+    { 'rowInSheet': 5,'columnInSheet': -1 },
+    { 'rowInSheet': 5,'columnInSheet': 0 },
+    { 'rowInSheet': 5,'columnInSheet': -1 },
+    { 'rowInSheet': 5,'columnInSheet': 0 }
+]
+
+const HIT_R = [
+    { 'rowInSheet': 4,'columnInSheet': -1 },
+    { 'rowInSheet': 4,'columnInSheet': 0 },
+    { 'rowInSheet': 4,'columnInSheet': -1 },
+    { 'rowInSheet': 4,'columnInSheet': 0 },
+    { 'rowInSheet': 4,'columnInSheet': -1 },
+    { 'rowInSheet': 4,'columnInSheet': 0 }
+]
+
 module.exports = {
     TURN_SINGLE_CIRCLE,
     BACK_AND_FORTH,
@@ -101,5 +119,7 @@ module.exports = {
     PUNCH_L,
     PUNCH_R,
     NECKBEARD_HACK_L,
-    NECKBEARD_HACK_R
+    NECKBEARD_HACK_R,
+    HIT_L,
+    HIT_R
 }
