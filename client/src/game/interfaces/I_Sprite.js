@@ -136,12 +136,16 @@ class Sprite {
         }
 
         if ( !moving ) {
-            this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
-            this.inMovementAnimation = false;
-            this.destination = {}
+            this.endGoToAnimation( );
         }
 
         this.countFrame( );
+    }
+
+    endGoToAnimation( ) {
+        this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
+        this.inMovementAnimation = false;
+        this.destination = {}
     }
 
     countFrame ( ) {

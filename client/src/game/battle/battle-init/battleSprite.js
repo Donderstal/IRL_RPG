@@ -2,6 +2,7 @@ const globals = require('../../../game-data/globals')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const battleGlobals = require('../battleGlobals')
+const state = require('../../../game-data/state')
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, isPlayer = false ) {
@@ -155,8 +156,7 @@ class BattleSprite extends I_Sprite {
             this.moving = true;
             this.columnInSheet = battleGlobals.B_SHEETPOS_ATTACK;
             setTimeout(() => {
-                this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
-                this.moving = false;
+                this.endAnimation( );
             }, 500 )                
         }
         else {
@@ -165,10 +165,18 @@ class BattleSprite extends I_Sprite {
                 this.setAnimationPosition( i, sheetPositions )
             }
             setTimeout(() => {
-                this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
-                this.rowInSheet = this.initialRow;
-                this.moving = false;
+                this.endAnimation( );
             }, ( 250 + ( 250 * sheetPositions.length ) ) )
+        }
+    }
+
+    endAnimation( ) {
+        this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
+        this.rowInSheet = this.initialRow;
+        this.moving = false;
+
+        if ( state.battleState.activeMove ) {
+            state.battleState.activeMove.continueAnimationIfPossible( );
         }
     }
 
@@ -177,25 +185,6 @@ class BattleSprite extends I_Sprite {
             this.columnInSheet = sheetPositions[index].columnInSheet;
             this.rowInSheet = sheetPositions[index].rowInSheet;
         }, ( 250 ) + ( 250 * index ) )        
-    }
-
-    animateHit( ) {
-        this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
-        setTimeout(() => {
-            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
-        }, 250 )        
-        setTimeout(() => {
-            this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
-        }, 500 )     
-        setTimeout(() => {
-            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
-        }, 750 ) 
-        setTimeout(() => {
-            this.columnInSheet = battleGlobals.B_SHEETPOS_NONE;
-        }, 1000 ) 
-        setTimeout(() => {
-            this.columnInSheet = battleGlobals.B_SHEETPOS_IDLE;
-        }, 1250 )             
     }
 
     fadeOut( ) {

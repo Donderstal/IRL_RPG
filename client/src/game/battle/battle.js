@@ -8,6 +8,7 @@ class Battle {
     constructor( staging ) {
         this.battlePhase        = battleGlobals['PHASE_BEGIN_TURN'];
         this.actionButtonAllowed= true;
+        this.inMoveAnimation    = false;
 
         this.playerParty        = new Party( staging.playerChars, "PLAYER" );
         this.playerMembers      = this.playerParty.members;  
@@ -150,18 +151,12 @@ class Battle {
     }
 
     initTargetSelection( ) {
-        console.log('selecting move...')
-        console.log(this.currentSelectedMove)
         this.selectedCharacter.nextMove = this.currentSelectedMove;
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
     }
 
     selectMove( ) {
-        console.log('selecting target...')
-        console.log(this.targetedCharacter.index)
-        //this.selectedCharacter.nextMove.targetIndex = this.targetedCharacter.index;
-
         this.selectedCharacter.nextMove.setTarget( this.targetedCharacter.index );
         this.targetedCharacter.deTarget( );
         this.playerParty.getNextPartyMember( );
@@ -188,7 +183,8 @@ class Battle {
         }
         else {
             this.actionButtonAllowed = false
-            attacker.nextMove.startAnimation( attacker );
+            this.inMoveAnimation = true;
+            attacker.nextMove.startAnimation( );
 
             setTimeout( ( ) => {
                 this.currentMoveIndex += 1

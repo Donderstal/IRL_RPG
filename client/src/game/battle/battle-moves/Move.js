@@ -3,31 +3,29 @@ const animationRes      = require('../../../resources/animationResources')
 const state             = require('../../../game-data/state');
 
 class Move {
-    constructor( moveData, isPlayer ) {
-        console.log( "new move " +  moveData.name + "!")
-        console.log(moveData)
-
+    constructor( moveData, moveOwner ) {
         this.name       = moveData.name;
         this.desc       = moveData.desc;
         this.type       = moveData.type;
         this.attribute  = moveData.attribute;
         this.turns      = moveData.turns;
         this.factor     = moveData.factor;
-        this.isPlayer   = isPlayer;
+
+        this.owner      = moveOwner
+        this.isPlayer   = moveOwner.isPlayer;
 
         this.activeStep = 0;
-        this.target = null;
-        this.steps = [ ];
+        this.target     = null;
+        this.steps      = [ ];
 
         let animationData = moveAnimations[ moveData.animation ]
 
         this.initSteps( animationData );
-        console.log(this)
-        console.log('..end of move '  +  moveData.name)
     }
 
+    get isLastStep( ) { return ( this.activeStep + 1 == this.steps.length ) }
+
     initSteps( animationSteps ) {
-        console.log(animationSteps)
         animationSteps.forEach( (step) => {
             this.steps.push( new AnimationStep( step, this.isPlayer ) )
         } );
@@ -40,19 +38,20 @@ class Move {
         this.steps.forEach( ( e ) => {
             e.target = this.target;
         })
-        console.log('chose target for move: ' + this.name);
-        console.log(this.target)
+        console.log('chose ' + this.target.name + ' target for move: ' + this.name);
     }
 
-    startAnimation( attacker ) {
+    startAnimation( ) {
+        state.battleState.activeMove = this;
         this.getNewTargetIfCurrentIsDead( );
-        state.battleState.UI.setText( attacker.name + " uses " + attacker.nextMove.name + " on " + this.target.name )
-        this.activateStep( attacker );
+        state.battleState.UI.setText( this.owner.name + " uses " + this.name + " on " + this.target.name )
+        this.activateStep( );
     }
     
     getNewTargetIfCurrentIsDead( ) {
-        console.log(this.target)
         if ( this.target.isDefeated ) {
+            console.log( 'target of move is dead... ')
+            console.log('getting new target for ' +  this.owner.name + "'s move named " + this.name)
             const battle =  state.battleState;
             const targetParty = this.isPlayer ? battle.opponentParty: battle.playerParty
             this.setTarget( 
@@ -61,17 +60,36 @@ class Move {
         }
     }
 
-    activateStep( attacker ) {
-        this.steps.forEach( ( e ) => {
-            e.animate( attacker );
-            if ( e.damage == true ) {
-                
-            }
-        })
+    activateStep( ) {
+        this.steps[this.activeStep].animate( this.owner );
+        if ( this.steps[this.activeStep].damage == true ) {
+            this.owner.doMove( this.target );
+        }
+    }
+
+    continueAnimationIfPossible( ) {
+        if ( this.isLastStep ) {
+            this.resetMove( );
+        }
+        else {
+            this.goToNextAnimationStep( );
+        }
     }
 
     goToNextAnimationStep( ) {
+        this.activeStep += 1;
+        this.activateStep( );
+    }
 
+    resetMove( ) {
+        state.battleState.inMoveAnimation = false;
+        state.battleState.activeMove = null;
+
+        this.activeStep = 0;
+        this.target = null;
+        this.steps.forEach( ( e ) => {
+            e.resetStep( );
+        } )
     }
 }
 
@@ -86,7 +104,7 @@ class AnimationStep {
         this.targetStep = stepData.targetStep;
 
         this.done = false;
-        this.target, this.targetStep;
+        this.target,
 
         this.initializeAnimationStep( stepData, isPlayer  );
 
@@ -111,10 +129,16 @@ class AnimationStep {
         }
     }
 
+    resetStep( ) {
+        this.target = null;
+        this.done = false;
+    }
+
     animate( character ) {
         switch( this.type ) {
             case "MOVE" :
                 console.log('move')
+                state.battleState.activeMove.continueAnimationIfPossible( );
                 break;
             case "ANIM" :
                 console.log('anim')
