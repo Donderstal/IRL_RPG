@@ -34,13 +34,10 @@ class Move {
     setTarget( targetIndex ) {
         const opponentAtIndex = state.battleState.opponentParty.members[targetIndex] 
         const playerAtIndex = state.battleState.playerParty.members[targetIndex];
-        if ( this.target == null || this.target.index != targetIndex ) {
-            this.target = this.isPlayer ? opponentAtIndex : playerAtIndex;
-            this.steps.forEach( ( e ) => {
-                e.setTarget( this.target, this.owner );
-            })       
-            console.log('chose ' + this.target.name + ' as target for move: ' + this.name + ' to be used by ' + this.owner.name);     
-        }
+        this.target = this.isPlayer ? opponentAtIndex : playerAtIndex;
+        this.steps.forEach( ( e ) => {
+            e.setTarget( this.target, this.owner );
+        })       
     }
 
     startAnimation( ) {
@@ -62,13 +59,15 @@ class Move {
 
     activateStep( ) {
         this.steps[this.activeStep].animate( this.owner );
-        if ( this.steps[this.activeStep].damage == true ) {
+        if ( this.steps[this.activeStep].damage == true ) {-
             this.owner.doMove( this.target );
         }
     }
 
     continueAnimationIfPossible( ) {
+        console.log('hi...')
         if ( this.isLastStep ) {
+            state.battleState.actionButtonAllowed = true;
             this.resetMove( );
         }
         else {
@@ -105,6 +104,27 @@ class AnimationStep {
         this.target,
 
         this.initializeAnimationStep( stepData, isPlayer  );
+    }
+
+    isDone( battleSprite ) {
+        switch( this.type ) {
+            case "MOVE" :
+                if ( battleSprite.inMovementAnimation ) {
+                    return false;
+                }
+                break;
+            case "ANIM" :
+                if ( battleSprite.moving ) {
+                    return false;
+                }
+                break;
+            case "SHOUT" :
+                break;
+            default :
+                console.log("animationType " + this.type + " is not valid");
+        }
+
+        return true;
     }
 
     initializeAnimationStep( stepData, isPlayer ) {
@@ -144,10 +164,17 @@ class AnimationStep {
                 this.destination.endDirection = owner.sprite.initialRow;
                 break;
         }
+
+        console.log('setting destination')
+        console.log(this.destination)
+        console.log('______________')
     }
 
     setTarget( target, owner ) {
         this.target = target
+        console.log('new target for animationStep')
+        console.log(this.target)
+        console.log('______________')
         if ( this.type == "MOVE" ) {
             this.setDestination( target, owner )
         } 
@@ -166,10 +193,12 @@ class AnimationStep {
         switch( this.type ) {
             case "MOVE" :
                 console.log('MOVE STEP')
+                console.log('________________________')
                 character.setDestinationAndStartWalking( this.destination, this.isPlayer ? 4 : 5 )
                 break;
             case "ANIM" :
                 console.log('ANIM STEP')
+                console.log('________________________')
                 character.animateAttack( this.animation );
                 break;
             case "SHOUT" :

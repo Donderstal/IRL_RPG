@@ -17,6 +17,7 @@ class Battle {
         this.opponentMembers    = this.opponentParty.members;  
 
         this.charactersInField  = [ ];
+        this.activeMove         = null;
         
         this.UI                 = new BattleUI( this.playerMembers, this.opponentMembers ); 
         this.selectingTarget    = false;
@@ -110,24 +111,27 @@ class Battle {
             }
             return 0;     
         } )
-        
-        this.actionButtonAllowed = false;
-        setTimeout(() => {
+
+        setTimeout( ( ) => {
             this.doCurrentMove( )
-        }, 1000 );
-        setTimeout(() => {
-            this.actionButtonAllowed = true;
-        }, 1500);
+        }, 100);
     }
     
     setActiveCharactersInField( ) {
         this.charactersInField = [ ]
         let allCharacters = [ ...this.playerMembers, ...this.opponentMembers]
-        allCharacters.forEach(member => {
+        allCharacters.forEach( ( member ) => {
             if ( !member.isDefeated ) {
+                console.log('character ' + member.name + 'next target is... ')
+                console.log(member.nextMove.target)
+                console.log('___________________________')
                 this.charactersInField.push( member )
+                console.log(this.charactersInField)
             }
         });   
+        console.log('characters in field for new round!')
+        console.log(this.charactersInField)
+        console.log('________________________')
     }
 
     handleActionButtonInSelectionPhase( ) {
@@ -167,29 +171,31 @@ class Battle {
     }
 
     handleActionButtonInExecutionPhase( ) {
-        if ( this.currentMoveIndex !== this.charactersInField.length && !this.battleIsOver ) {
-            this.doCurrentMove( );
-        }
-        else {
+        const phaseIsOver = this.currentMoveIndex == this.charactersInField.length || this.battleIsOver
+        if ( phaseIsOver ) {
+            this.currentMoveIndex = 0;
             this.passPhase( );
+        }
+        else if ( this.activeMove == null || !this.inMoveAnimation ) {
+            this.actionButtonAllowed = false;
+            this.doCurrentMove( );
         }
     }
 
     doCurrentMove( ) {
-        const attacker = this.currentAttacker;
-
-        if ( attacker.isDefeated ) {
+        if ( this.charactersInField[this.currentMoveIndex].isDefeated ) {
             this.currentMoveIndex += 1
+            this.actionButtonAllowed = true;
         }
         else {
-            this.actionButtonAllowed = false
             this.inMoveAnimation = true;
-            attacker.nextMove.startAnimation( );
-
-            setTimeout( ( ) => {
-                this.currentMoveIndex += 1
-                this.actionButtonAllowed = true
-            }, 1000 );
+            console.log("Next char ")
+            console.log(this.charactersInField[this.currentMoveIndex])
+            console.log("next char move")
+            console.log(this.charactersInField[this.currentMoveIndex].nextMove)
+            console.log('________________________')
+            this.charactersInField[this.currentMoveIndex].nextMove.startAnimation( );
+            this.currentMoveIndex += 1
         }
     }
 }

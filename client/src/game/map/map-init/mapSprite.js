@@ -29,7 +29,6 @@ class MapSprite extends I_Sprite {
             this.hitbox.updateXy( this.centerX( ), this.centerY( ) );        
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
-            console.log('handleAnimation!')
             this.handleAnimation( )
         }
     }

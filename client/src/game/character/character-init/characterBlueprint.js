@@ -46,16 +46,11 @@ class CharacterBlueprint {
     }
 
     getMoveResult( move, targetCharacter ) {
-        console.log(' do move! ')
-        console.log(targetCharacter) 
-        console.log(move)
         let moveResult = this.attackWithAttribute( move.attribute, move.factor );
         return targetCharacter.defendAndTakeDamage( move.attribute, moveResult )
     }
 
     attackWithAttribute( attribute, factor ) {
-        console.log("Attakcing with: ")
-        console.log(attribute, this.attributes[attribute], factor)
         const attackingAttribute = this.attributes[attribute];
         return attackingAttribute + ( Math.round( ( attackingAttribute / 100 )  * this.getNumberInRange( factor ) ) )
     }
@@ -63,8 +58,6 @@ class CharacterBlueprint {
 
     defendAndTakeDamage( attribute, amount ) {
         const defendingAttributeGroup = characterGlobals.getAttributeGroup( attribute );
-        console.log("Defending with: ")
-        console.log(defendingAttributeGroup, this.attributes[defendingAttributeGroup])
         let defenceResult = ( amount - this.attributes[defendingAttributeGroup] ) 
         return ( defenceResult < 0 ) ? 0 : defenceResult;
     }
