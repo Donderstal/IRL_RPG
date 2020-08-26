@@ -1,6 +1,6 @@
 const res                   = require('../../../resources/resourceStrings')
 const state                 = require('../../../game-data/state')
-const globals               = require('../../../game-data/globals')
+const battleGlobals         = require('../battleGlobals')
 const Sound                 = require('../../interfaces/I_Sound').Sound
 const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const moveAnimationScripts  = require('../../character/character-resources/moveAnimationScripts')
@@ -28,16 +28,9 @@ class BattleChar {
     }
 
     getMoves( ) {
-        let directionSuffix;
-        if ( this.sprite.initialRow == globals.SHEET_ROW_BATTLE_LEFT ) {
-            directionSuffix = "_L";
-        }
-        else {
-            directionSuffix = "_R";
-        }
+        let directionSuffix = ( this.sprite.initialRow == battleGlobals.SHEET_ROW_BATTLE_LEFT ) ? "_L" : "_R";
 
         for ( var i = 0; i < this.moves.length; i++ ) {
-            console.log(this.className)
             let classAnimations = moveAnimationScripts[this.className]
             this.moves[i].animation = classAnimations[this.moves[i].animation + directionSuffix]
         }
@@ -47,20 +40,9 @@ class BattleChar {
         this.sprite.animateHit()
     }
 
-    standardAttack( ) {
-        const battleState = state.battleState
+    animateAttack( ) {
         const sfx = new Sound( "battle-baba.mp3", true )
         sfx.play()
-        this.animateAttack( )
-
-        let attacker = this.isPlayer ? battleState.player.character : battleState.opponent.character;
-        let defender = this.isPlayer ? battleState.opponent.character : battleState.player.character;
-         
-        defender.stats.HP -= ( attacker.stats.Attack - defender.stats.Defence )
-        this.sprite.setShout( res.getBattleShout( this.className, "FIGHT" ) )
-    }
-
-    animateAttack( ) {
         this.sprite.animateAttack( this.nextMove.animation )
         this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }

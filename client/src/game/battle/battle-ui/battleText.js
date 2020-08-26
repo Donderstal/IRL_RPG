@@ -1,24 +1,10 @@
-const state = require( '../../../game-data/state' )
-const globals = require( '../../../game-data/globals' )
+const battleGlobals = require( '../battleGlobals' )
 const canvas = require( '../../../helpers/canvasHelpers' )
-
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
-
-const initTextContainer = ( ) => {
-    return new TextContainer( )        
-}
-
-const getBattleTextXy = ( ) => {
-    return { "x": globals.CANVAS_WIDTH * .25, "y": (globals.CANVAS_HEIGHT / 6) * 5 }
-}
-
-const getBattleTextDimensions = ( ) => {
-    return { "width": globals.CANVAS_WIDTH * .35, "height": globals.CANVAS_HEIGHT / 6}
-}
 
 class TextContainer extends I_TextBox {
     constructor( text = "" ) {
-        super( getBattleTextXy( ), getBattleTextDimensions( ), "LARGE", text )  
+        super( battleGlobals.TEXTBOX_XY, battleGlobals.TEXTBOX_DIMENSIONS, "LARGE", text )  
         this.isMoveMenu = false;       
         this.waiting    = false;        
         this.header     = false;
@@ -41,5 +27,5 @@ class TextContainer extends I_TextBox {
 }
 
 module.exports = {
-    initTextContainer
+    TextContainer
 }
