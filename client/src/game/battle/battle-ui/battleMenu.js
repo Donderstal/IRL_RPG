@@ -64,7 +64,7 @@ class BattleMenu {
             let attribute = this.activeCharacter.moves[buttonIndex].attribute;
             if ( attribute != undefined ) {
                 UI.setHeader( 
-                    "Attribute: " + attribute, " Skill: " + this.activeCharacter.character.attributes[attribute]
+                    "Skill: " + attribute + ", Value: " + this.activeCharacter.character.attributes[attribute]
                 );  
                 attribute = undefined              
             }

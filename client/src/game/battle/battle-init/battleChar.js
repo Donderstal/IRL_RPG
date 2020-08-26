@@ -72,6 +72,7 @@ class BattleChar {
 
     deTarget( ) {
         this.targeted = false;
+        state.battleState.targetedCharacter = null;
         this.sprite.deTarget()
     }
 
