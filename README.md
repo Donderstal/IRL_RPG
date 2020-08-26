@@ -11,6 +11,11 @@ The *latest-build* branch contains the latest build that has been deployed onlin
 Try the latest the game at: http://34.90.228.47/
 
 ### LOG
+#### AUG 28, 2020
+* New system for battle moves and animations
+* New classes Move, AnimationStep
+* New moveAnimations file for storing Move data
+
 #### AUG 17, 2020
 * Battle code cleanup and reorganization
 * Expanding battleGlobals file

@@ -158,12 +158,7 @@ const moves = {
 }
 
 const getMovesByClass = ( className ) => {
-    var classMoves = moves[className]
-    if ( classMoves.length < 5 ) {
-        classMoves.push({ name: "RETURN", desc: "Return to main menu" })        
-    }
-
-    return classMoves
+    return moves[className]
 }
 
 module.exports = {
