@@ -41,10 +41,6 @@ const MAP_SPRITE_HEIGHT_IN_SHEET    = 112
 const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
 const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
-//
-const BATTLE_SPRITE_WIDTH           = 285
-const BATTLE_SPRITE_HEIGHT          = 285
-
 // speech bubbles 
 const MIN_BUBBLE_WIDTH              = GRID_BLOCK_PX * 5
 const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
@@ -86,8 +82,6 @@ module.exports = {
     MAP_SPRITE_HEIGHT_IN_SHEET,
     STRD_SPRITE_WIDTH,
     STRD_SPRITE_HEIGHT,
-    BATTLE_SPRITE_WIDTH,
-    BATTLE_SPRITE_HEIGHT,
     MIN_BUBBLE_WIDTH,
     MAX_BUBBLE_WIDTH,
     SMALL_FONT_SIZE,
