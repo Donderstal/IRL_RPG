@@ -61,11 +61,11 @@ class BattleSprite extends I_Sprite {
     draw( ) {
         this.frameCount++;
 
-        if ( !this.moving ) {
-            this.doIdleAnimation( );
+        if ( this.inMovementAnimation ) {
+            this.goToDestination( true );
         }
         else {
-            this.goToDestination( );
+            this.doIdleAnimation( );
         }
 
         this.drawSprite( );
@@ -143,12 +143,24 @@ class BattleSprite extends I_Sprite {
     }
 
     setDestination( destination, endDirection ) {
-        super.goToDestination( destination, endDirection );
+        super.setDestination( destination, endDirection );
     }
 
     goToDestination( ) {
+        if ( this.frameCount >= globals.FRAME_LIMIT) {
+            this.frameCount = 0;
+            this.columnInSheet++;
+    
+            if (this.columnInSheet >= 4) {
+                this.columnInSheet = 0;
+            }
+        }
+
         super.goToDestination( );
-        this.rowInSheet = this.isPlayer ? 1 : 2;
+        this.rowInSheet = this.direction;
+        if ( !this.inMovementAnimation ) {
+            this.endAnimation( );
+        }
     }
 
     animateAttack( sheetPositions = null ) {

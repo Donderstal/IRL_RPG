@@ -33,8 +33,11 @@ class BattleChar {
         } )
     }
 
+    setDestinationAndStartWalking( destination ) {
+        this.sprite.setDestination( destination, this.isPlayer ? 4 : 5 )
+    }
+
     animateAttack( animation ) {
-        console.log( 'in animateAttack yo ')
         const sfx = new Sound( "battle-baba.mp3", true )
         sfx.play()
         this.sprite.animateAttack( animation )
@@ -85,7 +88,7 @@ class BattleChar {
 
     draw( ) {
         if ( !this.isDefeated ) {
-            this.sprite.drawSprite();
+            this.sprite.draw();
             this.statsBar.draw( );            
         }
     }

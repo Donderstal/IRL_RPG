@@ -25,6 +25,7 @@ class Sprite {
         this.direction     = spriteDirection;
         this.sheetSrc      = spriteSheetSrc
         this.sheet         = new Image();
+        this.moving        = false;
 
        ( typeOfStart === 'CELL' ) ? this.initSpriteFromCell( start ) : this.initSpriteFromXy( start )
 
@@ -103,39 +104,59 @@ class Sprite {
         this.destination.vertical = ( this.y > destination.bottom ) ? "FACING_UP" : "FACING_DOWN";
 
         this.inMovementAnimation = true;
-        state.activeCinematic.activeScene.walkingToDestination = true;
     }
 
-    goToDestination( ) {
-        const destIsLeftOfSprite = this.destination.left <= this.x;
-        const destIsRightOfSprite = this.destination.right >= this.x + this.width;
-        const destIsBelowSprite = this.destination.bottom >= this.y + this.height;
-        const destIsAboveSprite = this.destination.top <= this.y;
+    goToDestination( isBattle = false ) {
+        const destIsLeftOfSprite = this.destination.left < this.left;
+        const destIsRightOfSprite = this.destination.right > this.right;
+        const destIsAboveSprite = this.destination.top < this.top;
+        const destIsBelowSprite = this.destination.bottom > this.bottom;
 
-        let moving = false;
+        this.moving = false;
 
-        if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-            this.x -= globals.MOVEMENT_SPEED;
-            moving = true;
-            this.direction = globals["FACING_LEFT"]
+        if ( isBattle ) {
+            if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
+                this.x -= globals.MOVEMENT_SPEED;
+                this.moving = true;
+                this.direction = globals["FACING_LEFT"]
+            }
+            else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
+                this.x += globals.MOVEMENT_SPEED;
+                this.moving = true;
+                this.direction = globals["FACING_RIGHT"];
+            }
+                 
+            if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
+                this.y -= globals.MOVEMENT_SPEED;
+            }
+            else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
+                this.y += globals.MOVEMENT_SPEED  
+            }
         }
-        else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
-            this.y -= globals.MOVEMENT_SPEED;
-            moving = true;
-            this.direction = globals["FACING_UP"]
-        }
-        else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-            this.x += globals.MOVEMENT_SPEED;
-            moving = true;
-            this.direction = globals["FACING_RIGHT"];
-        }
-        else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
-            this.y += globals.MOVEMENT_SPEED  
-            moving = true;
-            this.direction = globals["FACING_DOWN"]
+        else {
+            if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
+                this.x -= globals.MOVEMENT_SPEED;
+                this.moving = true;
+                this.direction = globals["FACING_LEFT"]
+            }
+            else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
+                this.y -= globals.MOVEMENT_SPEED;
+                this.moving = true;
+                this.direction = globals["FACING_UP"]
+            }
+            else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
+                this.x += globals.MOVEMENT_SPEED;
+                this.moving = true;
+                this.direction = globals["FACING_RIGHT"];
+            }
+            else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
+                this.y += globals.MOVEMENT_SPEED  
+                this.moving = true;
+                this.direction = globals["FACING_DOWN"]
+            }            
         }
 
-        if ( !moving ) {
+        if ( !this.moving ) {
             this.endGoToAnimation( );
         }
 

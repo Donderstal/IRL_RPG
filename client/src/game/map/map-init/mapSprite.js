@@ -82,13 +82,13 @@ class MapSprite extends I_Sprite {
     }
 
     setDestination( destination, endDirection ) {
-        super.goToDestination( destination, endDirection );
+        super.setDestination( destination, endDirection );
         state.activeCinematic.activeScene.walkingToDestination = true;
     }
 
     goToDestination( ) {
         super.goToDestination( );
-        if ( !moving ) {
+        if ( !this.moving ) {
             state.activeCinematic.activeScene.walkingToDestination = false;
         }
     }
