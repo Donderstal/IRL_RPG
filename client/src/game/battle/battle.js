@@ -18,10 +18,10 @@ class Battle {
 
         this.charactersInField  = [ ];
         this.activeMove         = null;
-        
-        this.UI                 = new BattleUI( this.playerMembers, this.opponentMembers ); 
         this.selectingTarget    = false;
         this.currentMoveIndex   = 0;
+        
+        this.UI                 = new BattleUI( this.playerMembers, this.opponentMembers ); 
     }
 
     get inSelectMovePhase( ) { return this.battlePhase == battleGlobals['PHASE_SELECT_MOVE']; };
@@ -146,7 +146,6 @@ class Battle {
             }
             else {
                 this.initTargetSelection( );
-                this.selectingTarget = true;
             }
         }
         else if ( this.UI.inItemMenu ) {
@@ -156,8 +155,15 @@ class Battle {
 
     initTargetSelection( ) {
         this.selectedCharacter.nextMove = this.currentSelectedMove;
+        this.selectingTarget = true;
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
+    }
+
+    deTarget( ) {
+        this.selectingTarget = false;
+        this.targetedCharacter.deTarget( ); 
+        this.selectedCharacter.nextMove = null;
     }
 
     selectMove( ) {

@@ -15,7 +15,7 @@ const handleBattleKeyPress = ( event ) => {
     }
 
     if ( battle.inSelectMovePhase ) {
-        if ( state.battleState.selectingTarget ) {
+        if ( battle.selectingTarget ) {
             scrollBattleTargets( battle.opponentParty, state.pressedKeys )
         }
         else {
@@ -23,8 +23,12 @@ const handleBattleKeyPress = ( event ) => {
         }
     }
 
+    if ( event.key == "z" && battle.selectingTarget ) {
+        battle.deTarget( );
+    }
+
     if ( event.key == " " && battle.actionButtonAllowed ) {
-        state.battleState.handleActionButton( )
+        battle.handleActionButton( );
     }
 }
 
