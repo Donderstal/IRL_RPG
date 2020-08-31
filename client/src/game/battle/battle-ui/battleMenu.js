@@ -83,7 +83,35 @@ class BattleMenu {
 
             for ( var i = 0; i < this.buttons.length; i++ ) {
                 this.buttons[i].drawButton( );
-            }             
+            }
+
+            canvas.drawRect(
+                "FONT",
+                this.x, this.y,
+                ( this.width * 2 ), 2,
+                "red"
+            )
+
+            canvas.drawRect(
+                "FONT",
+                this.x + ( this.width * 2 ), this.y,
+                2, this.height,
+                "red"
+            )
+
+            canvas.drawRect(
+                "FONT",
+                this.x, this.y + this.height,
+                ( this.width * 2 ), 2,
+                "red"
+            )
+
+            canvas.drawRect(
+                "FONT",
+                this.x + ( this.width * 2 ), this.y + this.height,
+                2, this.height,
+                "red"
+            )
         }
     }
 
