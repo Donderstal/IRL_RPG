@@ -34,13 +34,13 @@ const initializeBattleMap = ( ) => {
 
 const prepareStagingDataForBattle = ( staging ) => {
     staging.playerChars = [ 
-        [ true, nameGen.getRandomName(), charGlobals["CHAD"], battleGlobals.MAP_SLOT_PLA_1 ],
+        [ true, nameGen.getRandomName(), charGlobals["INFLUENCER"], battleGlobals.MAP_SLOT_PLA_1 ],
         [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, battleGlobals.MAP_SLOT_PLA_2 ],
         [ true, nameGen.getRandomName(), charGlobals["NECKBEARD"], battleGlobals.MAP_SLOT_PLA_3 ]
     ]
 
     staging.oppoChars = [ 
-        [ false, nameGen.getRandomName(), charGlobals["NECKBEARD"], battleGlobals.MAP_SLOT_OPP_1 ],
+        [ false, nameGen.getRandomName(), charGlobals["TUMBLR_GIRL"], battleGlobals.MAP_SLOT_OPP_1 ],
         [ false, staging.action.name, staging.action.character.class, battleGlobals.MAP_SLOT_OPP_2 ],
         [ false, nameGen.getRandomName(), charGlobals["CHAD"], battleGlobals.MAP_SLOT_OPP_3 ]
     ]
