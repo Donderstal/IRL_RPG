@@ -30,8 +30,10 @@ class BattleSprite extends I_Sprite {
         this.effectLoaded    = false;
         this.effectPNG.src   = "/static/sprite-assets/fire_circle.png"
         this.effectPNG.onload = ( ) => {
-            this.effectRow = 0
-            this.effectCol = 0
+            this.effectRowFront = 0
+            this.effectColFront = 0
+            this.effectRowBack = 4
+            this.effectColBack = 0
             this.effectLoaded = true;
         }
 
@@ -74,15 +76,20 @@ class BattleSprite extends I_Sprite {
         if ( this.inMovementAnimation ) {
             this.goToDestination( );
         }
-        else {
+        else if ( !this.moving ) {
             this.doIdleAnimation( );
         }
 
         if  ( this.effectLoaded && this.effectsActive ) {
-            this.drawEffect( )
+            this.drawEffectFront( )
         }
 
         this.drawSprite( );
+
+        if  ( this.effectLoaded && this.effectsActive ) {
+            this.drawEffectBack( )
+        }
+
         this.updateSpriteBorders( );
 
         if ( this.shout != null ) {
@@ -100,7 +107,7 @@ class BattleSprite extends I_Sprite {
     }
     
     doIdleAnimation( ) {
-        if ( this.frameCount * .5 > globals.FRAME_LIMIT ) {
+        if ( this.frameCount * .66 > globals.FRAME_LIMIT ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
                 this.frameCount = 0;
@@ -112,24 +119,46 @@ class BattleSprite extends I_Sprite {
         } 
     }
 
-    drawEffect( ) {
+    drawEffectFront( ) {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.effectPNG,
-            this.effectCol * 128, this.effectRow * 128,
+            this.effectColFront * 128, this.effectRowFront * 128,
             128, 128,
             this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ), 
             this.width * 2, this.width * 2
         )
 
         if ( this.frameCount > globals.FRAME_LIMIT) {
-            this.effectCol += 1
-            if ( this.effectCol > 1 ) {
-                this.effectCol = 0
-                this.effectRow += 1
+            this.effectColFront += 1
+            if ( this.effectColFront > 1 ) {
+                this.effectColFront = 0
+                this.effectRowFront += 1
             }
-            if ( this.effectRow >= 3 ) {
-                this.effectCol = 0
-                this.effectRow = 0
+            if ( this.effectRowFront >= 3 ) {
+                this.effectColFront = 0
+                this.effectRowFront = 0
+            }
+        }
+    }
+
+    drawEffectBack( ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", this.effectPNG,
+            this.effectColBack * 128, this.effectRowBack * 128,
+            128, 128,
+            this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ), 
+            this.width * 2, this.width * 2
+        )
+
+        if ( this.frameCount > globals.FRAME_LIMIT) {
+            this.effectColBack += 1
+            if ( this.effectColBack > 1 ) {
+                this.effectColBack = 0
+                this.effectRowBack += 1
+            }
+            if ( this.effectRowBack >= 7 ) {
+                this.effectColBack = 0
+                this.effectRowBack = 4
             }
         }
     }
