@@ -1,5 +1,6 @@
 const state         = require('../../game-data/state')
 const changeMode    = require('../../game-data/changeMode');
+const battleGlobals = require('./battleGlobals')
 
 const handleBattleKeyPress = ( event ) => {
     const battle = state.battleState;
@@ -23,15 +24,12 @@ const handleBattleKeyPress = ( event ) => {
         }
     }
 
-    if ( event.key == "z" && battle.selectingTarget ) {
-        battle.deTarget( );
-    } else if ( event.key == "z" && battle.UI.inMoveMenu ) {
-        battle.UI.getStandardMenu( );     
-        battle.UI.activateButtonAtIndex( battle.UI.activeButtonIndex );             
+    if ( event.key == "z" ) {
+        handleReturnButton( );         
     }
 
     if ( event.key == " " && battle.actionButtonAllowed ) {
-        battle.handleActionButton( );
+        handleActionButton( );
     }
 }
 
@@ -59,6 +57,44 @@ const handleDirectionKey = ( UI, keys ) => {
     else if ( keys.s || keys.ArrowDown ) {
         UI.activateButtonAtIndex( UI.activeButtonIndex + 1 );
     }    
+}
+
+const handleActionButton = ( ) => {
+    const battle = state.battleState;    
+    switch( battle.battlePhase ) {
+        case battleGlobals['PHASE_SELECT_MOVE']:
+            battle.handleActionButtonInSelectionPhase( );
+            break;
+        case battleGlobals['PHASE_DO_MOVE']:
+            battle.handleActionButtonInExecutionPhase( );
+            break;            
+        case battleGlobals['PHASE_BEGIN_TURN']:
+        case battleGlobals['PHASE_STAT_CHECK']:
+        case battleGlobals['PHASE_END_BATTLE']:
+            battle.passPhase( );
+            break;
+        default:
+            console.log('Invalid battlephase with id: ' + battle.battlePhase );    
+    }
+}
+
+const handleReturnButton = ( ) => {
+    const battle = state.battleState;    
+    if ( battle.battlePhase == battleGlobals['PHASE_SELECT_MOVE'] ) {
+        if ( battle.selectingTarget ) {
+            battle.deTarget( );
+        } 
+        else if ( battle.UI.inMoveMenu ) {
+            battle.UI.getStandardMenu( );     
+            battle.UI.activateButtonAtIndex( battle.UI.activeButtonIndex );             
+        }
+        else if ( battle.UI.inItemMenu ) {
+
+        }
+        else {
+            battle.playerParty.getPreviousPartyMember( );
+        }
+    }
 }
 
 const logBattleState = ( battleState ) => {

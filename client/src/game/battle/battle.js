@@ -40,24 +40,6 @@ class Battle {
         this.UI.activateMenu( );
     }
 
-    handleActionButton( ) {
-        switch( this.battlePhase ) {
-            case battleGlobals['PHASE_SELECT_MOVE']:
-                this.handleActionButtonInSelectionPhase( );
-                break;
-            case battleGlobals['PHASE_DO_MOVE']:
-                this.handleActionButtonInExecutionPhase( );
-                break;            
-            case battleGlobals['PHASE_BEGIN_TURN']:
-            case battleGlobals['PHASE_STAT_CHECK']:
-            case battleGlobals['PHASE_END_BATTLE']:
-                this.passPhase( );
-                break;
-            default:
-                console.log('Invalid battlephase with id: ' + this.battlePhase );    
-        }
-    }
-
     passPhase( ) {
         switch ( this.battlePhase ) {
             case battleGlobals['PHASE_BEGIN_TURN'] :
