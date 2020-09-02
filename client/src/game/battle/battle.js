@@ -138,6 +138,10 @@ class Battle {
         if ( this.UI.activeButtonText == "RETURN" ) {
             this.UI.inMoveMenu ? this.UI.getStandardMenu( ) : this.playerParty.getPreviousPartyMember( );
         }
+        else if ( this.UI.activeButtonText == "MOVES" ) {
+            this.UI.getMoveMenu( );  
+            this.UI.activateButtonAtIndex( this.UI.activeButtonIndex );          
+        }
         else if ( this.UI.inMoveMenu || this.UI.activeButtonText == "ATTACK" ) {
             if ( this.selectingTarget ) {  
                 this.selectMove( );

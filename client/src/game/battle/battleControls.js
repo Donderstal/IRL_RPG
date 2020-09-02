@@ -25,6 +25,9 @@ const handleBattleKeyPress = ( event ) => {
 
     if ( event.key == "z" && battle.selectingTarget ) {
         battle.deTarget( );
+    } else if ( event.key == "z" && battle.UI.inMoveMenu ) {
+        battle.UI.getStandardMenu( );     
+        battle.UI.activateButtonAtIndex( battle.UI.activeButtonIndex );             
     }
 
     if ( event.key == " " && battle.actionButtonAllowed ) {
@@ -53,20 +56,8 @@ const handleDirectionKey = ( UI, keys ) => {
     if ( keys.w || keys.ArrowUp ) {
         UI.activateButtonAtIndex( UI.activeButtonIndex - 1 );
     }
-    else if ( keys.a || keys.ArrowLeft ) {
-        if  ( UI.inMoveMenu ) {
-            UI.getStandardMenu( );     
-            UI.activateButtonAtIndex( UI.activeButtonIndex );             
-        }
-    }
     else if ( keys.s || keys.ArrowDown ) {
         UI.activateButtonAtIndex( UI.activeButtonIndex + 1 );
-    }
-    else if ( keys.d || keys.ArrowRight ) {
-        if ( UI.activeButtonText == "MOVES" ) {
-            UI.getMoveMenu( );  
-            UI.activateButtonAtIndex( UI.activeButtonIndex );          
-        }
     }    
 }
 

@@ -100,7 +100,7 @@ class BattleStats {
         canvas.drawRect(
             "FONT",
             this.x, this.bottom - globals.SMALL_FONT_LINE_HEIGHT,
-            this.width * ( this.HP / this.startingHP ), globals.SMALL_FONT_LINE_HEIGHT,
+            this.width * ( this.AP / this.startingAP ), globals.SMALL_FONT_LINE_HEIGHT,
             "blue"
         )
         
@@ -122,7 +122,7 @@ class BattleStats {
         canvas.drawRect(
             "FONT",
             this.x, this.bottom - ( globals.SMALL_FONT_LINE_HEIGHT * 2 ),
-            this.width * ( this.AP / this.startingAP ), globals.SMALL_FONT_LINE_HEIGHT,
+            this.width * ( this.HP / this.startingHP ), globals.SMALL_FONT_LINE_HEIGHT,
             "green"
         )
 

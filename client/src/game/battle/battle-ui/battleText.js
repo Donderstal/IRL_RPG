@@ -7,7 +7,6 @@ const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 class TextContainer extends I_TextBox {
     constructor( text = "" ) {
         super( battleGlobals.TEXTBOX_XY, battleGlobals.TEXTBOX_DIMENSIONS, "LARGE", text )  
-        this.isMoveMenu = false;       
         this.waiting    = false;        
         this.header     = false;
 
@@ -28,15 +27,15 @@ class TextContainer extends I_TextBox {
         }
         if ( battle.actionButtonAllowed ) {
             canvas.writeTextLine( 
-                "Press [ space ] to confirm", 
+                "Press [ space ] to select", 
                 this.x + this.fontSize, 
                 ( this.y + this.height ) - globals.SMALL_FONT_LINE_HEIGHT, 
                 "SMALL"
             );
         }
-        if ( battle.selectingTarget ) {
+        if ( battle.selectingTarget || ( state.battleState.UI != undefined && state.battleState.UI.inMoveMenu ) ) {
             canvas.writeTextLine( 
-                "Press [ z ] to return", 
+                battle.selectingTarget ? "Press [ z ] to untarget" : "Press [ z ] to return", 
                 ( this.x + ( this.width / 2 ) ) + this.fontSize, 
                 ( this.y + this.height ) - globals.SMALL_FONT_LINE_HEIGHT, 
                 "SMALL"
