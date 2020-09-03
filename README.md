@@ -11,6 +11,11 @@ The *latest-build* branch contains the latest build that has been deployed onlin
 Try the latest the game at: http://34.90.228.47/
 
 ### LOG
+
+#### SEP 3, 2020
+* Readded collision detection for map tiles
+* Added Sam's new map design
+
 #### SEP 3, 2020
 * Adding basic special effects in battles
 * Updating some ui elements
