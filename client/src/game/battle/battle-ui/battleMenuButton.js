@@ -42,17 +42,6 @@ class BattleMenuButton {
     activate( ) {
         this.isActive   = true;
         this.color      = "purple";
-
-        if ( this.text == "ATTACK" ) {
-            this.move = state.battleState.playerParty.activeMember.standardAttack;
-        }
-        else if ( this.move.name == "Attack" && this.text != "ATTACK"  ) {
-            this.move = false;
-        }
-
-        if ( this.text == "RETURN" ) {
-            state.battleState.playerParty.activeMember.nextMove = false;
-        }
     }
 
     deActivate( ) {

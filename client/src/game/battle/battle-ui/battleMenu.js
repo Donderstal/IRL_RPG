@@ -60,7 +60,7 @@ class BattleMenu {
         this.buttons[buttonIndex].activate( );
         this.activeButton       = this.buttons[buttonIndex];
 
-        if ( ( this.inMoveMenu && this.activeButton.text != "RETURN" ) || this.activeButton.text == "ATTACK") {
+        if ( this.inMoveMenu ) {
             let attribute = this.activeCharacter.moves[buttonIndex].attribute;
             if ( attribute != undefined ) {
                 UI.setHeader( 
@@ -118,20 +118,13 @@ class BattleMenu {
     getMoveMenu( ) {
         this.inMoveMenu = true;
         for ( var i = 0; i < this.buttons.length; i++ ) {
-            if ( this.activeCharacter.moves[i] != undefined ) {
-                this.buttons[i].setMove( this.activeCharacter.moves[i] );                
-            } else {
-                this.buttons[i].setText( "RETURN", "Return to main battle menu" );                
-            }
+            this.buttons[i].setMove( this.activeCharacter.moves[i] );    
         } 
     }
 
     getStandardMenu( ) {
         this.inMoveMenu = false;
         for ( var i = 0; i < this.buttons.length; i++ ) {
-            if ( this.standardOptions[i] == "ATTACK" ) {
-                this.buttons[i].setMove( this.activeCharacter.standardAttack );
-            }
             this.buttons[i].setText( this.standardOptions[i], this.standardDescriptions[i] );
         }   
     }

@@ -31,7 +31,6 @@ class Battle {
     get selectedCharacter( ) { return this.playerParty.activeMember };
     get currentButtonText( ) { return this.UI.activeButtonText; }
     get currentSelectedMove( ) { return this.UI.activeButtonMove };
-    get currentStandardAttack( ) { return this.playerParty.activeMember.standardAttack };
     get currentAttacker( ) { return this.charactersInField[this.currentMoveIndex] };
 
     initUI( ) {
@@ -117,14 +116,11 @@ class Battle {
     }
 
     handleActionButtonInSelectionPhase( ) {
-        if ( this.UI.activeButtonText == "RETURN" ) {
-            this.UI.inMoveMenu ? this.UI.getStandardMenu( ) : this.playerParty.getPreviousPartyMember( );
-        }
-        else if ( this.UI.activeButtonText == "MOVES" ) {
+        if ( this.UI.activeButtonText == "MOVES" ) {
             this.UI.getMoveMenu( );  
             this.UI.activateButtonAtIndex( this.UI.activeButtonIndex );          
         }
-        else if ( this.UI.inMoveMenu || this.UI.activeButtonText == "ATTACK" ) {
+        else if ( this.UI.inMoveMenu ) {
             if ( this.selectingTarget ) {  
                 this.selectMove( );
                 this.selectingTarget = false;

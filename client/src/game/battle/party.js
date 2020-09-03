@@ -126,9 +126,6 @@ class Party {
     selectMoves( ) {
         this.members.forEach( ( e ) => {
             if ( !e.isDefeated ) {
-                let movesArray = e.moves;
-                movesArray[4] = e.standardAttack;
-
                 e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
                 e.nextMove.setTarget(Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length)))             
             }
