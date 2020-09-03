@@ -15,7 +15,7 @@ const moves = {
             desc        : "ipsum lorem totam rem.",
             type        : "HEAL",
             attribute   : "CHARISMA",
-            animation   : "PUNCH",
+            animation   : "CHAD_RAGE",
             moveTo      : true,
             factor      : 20,
         },
@@ -33,7 +33,7 @@ const moves = {
             desc        : "Excepteur sint occaecat cupidatat",
             type        : "ATTACK",
             attribute   : "SOCIALISATION",
-            animation   : "PUNCH",
+            animation   : "CHAD_RAGE",
             moveTo      : false,
             factor      : 5
         }     
@@ -141,7 +141,8 @@ const moves = {
             name        : "TUM C",
             desc        : "TUM C description",
             type        : "Sp Damage",
-            animation   : "INTELLIGENCE", 
+            attribute   : "INTELLIGENCE", 
+            animation   : "CHAD_RAGE", 
             moveTo      : true,          
             factor      : 50
         },

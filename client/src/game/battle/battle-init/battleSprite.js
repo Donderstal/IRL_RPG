@@ -25,6 +25,18 @@ class BattleSprite extends I_Sprite {
         this.moving         = false;
         this.active         = false;
 
+        this.effectsActive   = false;
+        this.effectPNG       = new Image( )
+        this.effectLoaded    = false;
+        this.effectPNG.src   = "/static/sprite-assets/fire_circle.png"
+        this.effectPNG.onload = ( ) => {
+            this.effectRowFront = 0
+            this.effectColFront = 0
+            this.effectRowBack = 4
+            this.effectColBack = 0
+            this.effectLoaded = true;
+        }
+
         this.greenArrowPNG       = new Image( )
         this.greenArrowLoaded    = false;
         this.greenArrowPNG.src   = "/static/ui/green_arrow.png"
@@ -62,18 +74,28 @@ class BattleSprite extends I_Sprite {
         this.frameCount++;
 
         if ( this.inMovementAnimation ) {
-            this.goToDestination( true );
+            this.goToDestination( );
         }
-        else {
+        else if ( !this.moving ) {
             this.doIdleAnimation( );
         }
 
+        if  ( this.effectLoaded && this.effectsActive ) {
+            this.drawEffectFront( )
+        }
+
         this.drawSprite( );
+
+        if  ( this.effectLoaded && this.effectsActive ) {
+            this.drawEffectBack( )
+        }
+
         this.updateSpriteBorders( );
 
         if ( this.shout != null ) {
             this.drawShout( )
         }
+
 
         if ( this.active && this.greenArrowLoaded ) {
             this.drawGreenArrow( );
@@ -85,7 +107,7 @@ class BattleSprite extends I_Sprite {
     }
     
     doIdleAnimation( ) {
-        if ( this.frameCount * .5 > globals.FRAME_LIMIT ) {
+        if ( this.frameCount * .66 > globals.FRAME_LIMIT ) {
             if ( this.columnInSheet + 1 < 4 ) {
                 this.columnInSheet++ ;
                 this.frameCount = 0;
@@ -95,6 +117,50 @@ class BattleSprite extends I_Sprite {
                 this.frameCount = 0;
             }
         } 
+    }
+
+    drawEffectFront( ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", this.effectPNG,
+            this.effectColFront * 128, this.effectRowFront * 128,
+            128, 128,
+            this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ), 
+            this.width * 2, this.width * 2
+        )
+
+        if ( this.frameCount > globals.FRAME_LIMIT) {
+            this.effectColFront += 1
+            if ( this.effectColFront > 1 ) {
+                this.effectColFront = 0
+                this.effectRowFront += 1
+            }
+            if ( this.effectRowFront >= 3 ) {
+                this.effectColFront = 0
+                this.effectRowFront = 0
+            }
+        }
+    }
+
+    drawEffectBack( ) {
+        canvasHelpers.drawFromImageToCanvas(
+            "FRONT", this.effectPNG,
+            this.effectColBack * 128, this.effectRowBack * 128,
+            128, 128,
+            this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ), 
+            this.width * 2, this.width * 2
+        )
+
+        if ( this.frameCount > globals.FRAME_LIMIT) {
+            this.effectColBack += 1
+            if ( this.effectColBack > 1 ) {
+                this.effectColBack = 0
+                this.effectRowBack += 1
+            }
+            if ( this.effectRowBack >= 7 ) {
+                this.effectColBack = 0
+                this.effectRowBack = 4
+            }
+        }
     }
 
     drawRedArrow( ) {
@@ -156,7 +222,7 @@ class BattleSprite extends I_Sprite {
             }
         }
 
-        super.goToDestination( );
+        super.goToDestination( true );
         this.rowInSheet = this.direction;
         if ( !this.inMovementAnimation ) {
             this.endAnimation( );

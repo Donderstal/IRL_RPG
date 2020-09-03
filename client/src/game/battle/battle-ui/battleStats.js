@@ -33,6 +33,7 @@ class BattleStats {
             this.x      = this.owner.sprite.x 
             this.y      = this.owner.sprite.y - globals.SMALL_FONT_LINE_HEIGHT
         }
+        this.bottom = this.y + this.height
     }
 
     setContents( ) {
@@ -85,52 +86,52 @@ class BattleStats {
         canvas.writeTextLine( 
             this.name, 
             this.x + ( ( this.width - nameWidth ) / 2), 
-            ( this.y + this.height ) - globals.LARGE_FONT_LINE_HEIGHT, 
+            this.y + globals.LARGE_FONT_LINE_HEIGHT, 
             "LARGE" 
         );
 
         canvas.drawRect(
             "FONT",
-            this.x, this.y,
-            this.width, globals.LARGE_FONT_LINE_HEIGHT,
+            this.x, this.bottom - globals.SMALL_FONT_LINE_HEIGHT,
+            this.width, globals.SMALL_FONT_LINE_HEIGHT,
             "black"
         )
 
         canvas.drawRect(
             "FONT",
-            this.x, this.y,
-            this.width * ( this.HP / this.startingHP ), globals.LARGE_FONT_LINE_HEIGHT,
-            "green"
+            this.x, this.bottom - globals.SMALL_FONT_LINE_HEIGHT,
+            this.width * ( this.AP / this.startingAP ), globals.SMALL_FONT_LINE_HEIGHT,
+            "blue"
         )
         
-        let HPText = "HP: " + this.HP + " / " + this.startingHP
+        let APText = "AP: " + this.AP + " / " + this.startingAP
         canvas.setFont("SMALL")
         canvas.writeTextLine( 
-            HPText, 
-            this.x + (canvas.getFrontCanvasContext().measureText(HPText).width * .5), 
-            this.y + globals.SMALL_FONT_LINE_HEIGHT, 
+            APText, 
+            this.x + (canvas.getFrontCanvasContext().measureText(APText).width * .5), 
+            this.bottom - ( globals.SMALL_FONT_LINE_HEIGHT * .25 ), 
             "SMALL" 
         );
 
         canvas.drawRect(
             "FONT",
-            this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
-            this.width, globals.LARGE_FONT_LINE_HEIGHT,
+            this.x, this.bottom - ( globals.SMALL_FONT_LINE_HEIGHT * 2 ),
+            this.width, globals.SMALL_FONT_LINE_HEIGHT,
             "black"
         )
         canvas.drawRect(
             "FONT",
-            this.x, this.y  + globals.LARGE_FONT_LINE_HEIGHT,
-            this.width * ( this.AP / this.startingAP ), globals.LARGE_FONT_LINE_HEIGHT,
-            "blue"
+            this.x, this.bottom - ( globals.SMALL_FONT_LINE_HEIGHT * 2 ),
+            this.width * ( this.HP / this.startingHP ), globals.SMALL_FONT_LINE_HEIGHT,
+            "green"
         )
 
-        let APText = "AP: " + this.AP + " / " + this.startingAP
+        let HPText = "HP: " + this.HP + " / " + this.startingHP
         canvas.setFont("SMALL")
         canvas.writeTextLine( 
-            APText, 
+            HPText, 
             this.x + (canvas.getFrontCanvasContext().measureText(HPText).width * .5), 
-            this.y + globals.SMALL_FONT_LINE_HEIGHT + globals.LARGE_FONT_LINE_HEIGHT, 
+            this.bottom - ( globals.SMALL_FONT_LINE_HEIGHT + ( globals.SMALL_FONT_LINE_HEIGHT * .25 ) ), 
             "SMALL" 
         );
 

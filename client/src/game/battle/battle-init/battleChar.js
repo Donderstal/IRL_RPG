@@ -27,7 +27,7 @@ class BattleChar {
     }
 
     initMoves( ) {
-        this.standardAttack = new Move( this.character.standardAttack, this )
+        this.moves.push( new Move( this.character.standardAttack, this ) );
         this.character.moves.forEach( ( move ) => {
             this.moves.push( new Move( move, this ) )
         } )
@@ -72,6 +72,7 @@ class BattleChar {
 
     deTarget( ) {
         this.targeted = false;
+        state.battleState.targetedCharacter = null;
         this.sprite.deTarget()
     }
 

@@ -11,7 +11,7 @@ module.exports = {
             type: "ANIM",
             animationName: "PUNCH",
             damage: true,
-            effects: false,
+            effects: true,
             targetStep: "HIT"
         },
         {
@@ -34,7 +34,7 @@ module.exports = {
             type: "ANIM",
             animationName: "CHAD_RAGE",
             damage: true,
-            effects: false,
+            effects: true,
             targetStep: "HIT"
         },
         {
@@ -50,7 +50,7 @@ module.exports = {
             type: "ANIM",
             animationName: "NECKBEARD_HACK",
             damage: true,
-            effects: false,
+            effects: true,
             targetStep: "HIT"
         }        
     ]
