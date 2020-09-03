@@ -78,7 +78,7 @@ const logBattleState = ( battleState ) => {
     console.log(battleState.opponentParty)
     console.log("UI: ")
     console.log(battleState.UI)
-    console.log(" End of battlestate log... ")
+    console.log('________________________')
 }
 
 

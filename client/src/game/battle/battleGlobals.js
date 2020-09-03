@@ -60,7 +60,7 @@ const TEXTBOX_XY = { "x": globals.CANVAS_WIDTH * .25, "y": (globals.CANVAS_HEIGH
 const TEXTBOX_DIMENSIONS = { "width": globals.CANVAS_WIDTH * .35, "height": globals.CANVAS_HEIGHT / 6}
 
 const BATTLE_MENU_X = globals.CANVAS_WIDTH - ( 4 * BATTLE_UI_CHAR_WIDTH )
-const BATTLE_MENU_Y = globals.CANVAS_HEIGHT - battleGlobals.BATTLE_UI_CHAR_HEIGHT
+const BATTLE_MENU_Y = globals.CANVAS_HEIGHT - BATTLE_UI_CHAR_HEIGHT
 
 const BATTLE_MENU_STRD_DESC = [
     "Attack your opponents with a basic attack",
@@ -79,6 +79,7 @@ const BATTLE_MENU_STRD_LABELS = [
 
 const BATTLE_MENU_BUTTON_MARGIN = (globals.GRID_BLOCK_PX / 2);
 const BATTLE_FONT_LINE_HEIGHT = globals.BATTLE_FONT_LINE_HEIGHT 
+const LARGE_FONT_LINE_HEIGHT = globals.LARGE_FONT_LINE_HEIGHT
 
 module.exports = {
     BATTLE_INTRO_ANIM_MS,
@@ -118,5 +119,6 @@ module.exports = {
     BATTLE_MENU_STRD_DESC,
     BATTLE_MENU_STRD_LABELS,
     BATTLE_MENU_BUTTON_MARGIN,
-    BATTLE_FONT_LINE_HEIGHT
+    BATTLE_FONT_LINE_HEIGHT,
+    LARGE_FONT_LINE_HEIGHT
 }

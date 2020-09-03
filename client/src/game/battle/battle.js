@@ -1,12 +1,14 @@
 const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 const changeMode    = require('../../game-data/changeMode');
 const battleGlobals = require('./battleGlobals')
+const Move          = require('./battle-moves/Move').Move
 const Party         = require('./Party').Party
 
 class Battle {
     constructor( staging ) {
         this.battlePhase        = battleGlobals['PHASE_BEGIN_TURN'];
         this.actionButtonAllowed= true;
+        this.inMoveAnimation    = false;
 
         this.playerParty        = new Party( staging.playerChars, "PLAYER" );
         this.playerMembers      = this.playerParty.members;  
@@ -15,6 +17,7 @@ class Battle {
         this.opponentMembers    = this.opponentParty.members;  
 
         this.charactersInField  = [ ];
+        this.activeMove         = null;
         
         this.UI                 = new BattleUI( this.playerMembers, this.opponentMembers ); 
         this.selectingTarget    = false;
@@ -29,13 +32,7 @@ class Battle {
     get currentButtonText( ) { return this.UI.activeButtonText; }
     get currentSelectedMove( ) { return this.UI.activeButtonMove };
     get currentStandardAttack( ) { return this.playerParty.activeMember.standardAttack };
-
     get currentAttacker( ) { return this.charactersInField[this.currentMoveIndex] };
-    get currentDefender( ) { 
-        let attacker = this.currentAttacker;
-        let targetPartyMembers = ( attacker.isPlayer ? this.opponentMembers : this.playerMembers );
-        return targetPartyMembers[attacker.nextMove.targetIndex];
-    };
 
     initUI( ) {
         this.UI.activateButtonAtIndex( 1 );
@@ -106,38 +103,35 @@ class Battle {
         this.currentMoveIndex = 0;
     
         this.charactersInField.sort( ( a, b ) => {
-            let aAGI = a.character.attributes["AGILITY"]
-            let bAGI = b.character.attributes["AGILITY"]
-            if ( aAGI > bAGI ) {
+            if ( a.character.attributes["AGILITY"] > b.character.attributes["AGILITY"] ) {
                 return -1; 
             }
-            else if ( bAGI > aAGI ) {
+            else if ( b.character.attributes["AGILITY"] > a.character.attributes["AGILITY"] ) {
                 return 1;
             }
             return 0;     
         } )
-        
-        this.actionButtonAllowed = false;
-        setTimeout(() => {
+
+        setTimeout( ( ) => {
             this.doCurrentMove( )
-        }, 1000 );
-        setTimeout(() => {
-            this.actionButtonAllowed = true;
-        }, 1500);
+        }, 100);
     }
     
     setActiveCharactersInField( ) {
         this.charactersInField = [ ]
-        this.playerMembers.forEach(member => {
+        let allCharacters = [ ...this.playerMembers, ...this.opponentMembers]
+        allCharacters.forEach( ( member ) => {
             if ( !member.isDefeated ) {
+                console.log('character ' + member.name + 'next target is... ')
+                console.log(member.nextMove.target)
+                console.log('___________________________')
                 this.charactersInField.push( member )
+                console.log(this.charactersInField)
             }
-        });
-        this.opponentMembers.forEach(member => {
-            if ( !member.isDefeated ) {
-                this.charactersInField.push( member )
-            }
-        });    
+        });   
+        console.log('characters in field for new round!')
+        console.log(this.charactersInField)
+        console.log('________________________')
     }
 
     handleActionButtonInSelectionPhase( ) {
@@ -161,13 +155,13 @@ class Battle {
     }
 
     initTargetSelection( ) {
-        this.selectedCharacter.nextMove = this.currentButtonText == "ATTACK" ? this.currentStandardAttack : this.currentSelectedMove;
+        this.selectedCharacter.nextMove = this.currentSelectedMove;
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
     }
 
     selectMove( ) {
-        this.selectedCharacter.nextMove.targetIndex = this.targetedCharacter.index;
+        this.selectedCharacter.nextMove.setTarget( this.targetedCharacter.index );
         this.targetedCharacter.deTarget( );
         this.playerParty.getNextPartyMember( );
 
@@ -177,30 +171,31 @@ class Battle {
     }
 
     handleActionButtonInExecutionPhase( ) {
-        if ( this.currentMoveIndex !== this.charactersInField.length && !this.battleIsOver ) {
-            this.doCurrentMove( );
-        }
-        else {
+        const phaseIsOver = this.currentMoveIndex == this.charactersInField.length || this.battleIsOver
+        if ( phaseIsOver ) {
+            this.currentMoveIndex = 0;
             this.passPhase( );
+        }
+        else if ( this.activeMove == null || !this.inMoveAnimation ) {
+            this.actionButtonAllowed = false;
+            this.doCurrentMove( );
         }
     }
 
     doCurrentMove( ) {
-        const attacker = this.currentAttacker;
-        const defender = this.currentDefender;
-
-        if ( defender.isDefeated || attacker.isDefeated ) {
+        if ( this.charactersInField[this.currentMoveIndex].isDefeated ) {
             this.currentMoveIndex += 1
+            this.actionButtonAllowed = true;
         }
         else {
-            this.actionButtonAllowed = false
-            this.UI.setText( attacker.name + " uses " + attacker.nextMove.name + " on " + defender.name )
-    
-            setTimeout( ( ) => {
-                attacker.doMove( defender );
-                this.currentMoveIndex += 1
-                this.actionButtonAllowed = true
-            }, 500 );
+            this.inMoveAnimation = true;
+            console.log("Next char ")
+            console.log(this.charactersInField[this.currentMoveIndex])
+            console.log("next char move")
+            console.log(this.charactersInField[this.currentMoveIndex].nextMove)
+            console.log('________________________')
+            this.charactersInField[this.currentMoveIndex].nextMove.startAnimation( );
+            this.currentMoveIndex += 1
         }
     }
 }

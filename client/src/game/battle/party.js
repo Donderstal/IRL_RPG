@@ -130,7 +130,7 @@ class Party {
                 movesArray[4] = e.standardAttack;
 
                 e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
-                e.nextMove.targetIndex = Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length))                
+                e.nextMove.setTarget(Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length)))             
             }
         } )
     }

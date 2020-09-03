@@ -5,7 +5,7 @@ const TextContainer = require('./battleText').TextContainer;
 class BattleUIWrapper {
     constructor( playerPartyMembers, oppoPartyMembers ) {
         this.textbox        = new TextContainer( );
-        this.battleMenu     = new BattleMenu( );
+        this.battleMenu     = new BattleMenu( playerPartyMembers[0] );
 
         this.getInitialSlotContent( playerPartyMembers );
 
