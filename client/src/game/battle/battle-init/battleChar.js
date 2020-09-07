@@ -38,10 +38,7 @@ class BattleChar {
     }
 
     animateAttack( animation ) {
-        const sfx = new Sound( "battle-baba.mp3", true )
-        sfx.play()
         this.sprite.animateAttack( animation )
-        this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }
 
     doMove( targetCharacter ) {
