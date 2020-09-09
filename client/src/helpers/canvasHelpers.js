@@ -45,20 +45,6 @@ const drawFromImageToCanvas = (
     )
 }
 
-const clearCanvasRectangle = (
-        canvas,
-        canvasX, canvasY,
-        widthInCanvas, heightInCanvas
-    ) => {
-
-    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()   
-        
-    ctx.clearRect( 
-        canvasX, canvasY,
-        widthInCanvas, heightInCanvas 
-    )
-}
-
 const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE_WIDTH ) => {
     let ctx = getFrontCanvasContext() 
     setFont(fontSize)
@@ -94,26 +80,6 @@ const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE
     }
 
     return [ text ]
-}
-
-const drawLineOnXAxis = (oldX, y, newX, color = null, canvas = null) => {
-    let ctx = ( canvas == null ) ? getFrontCanvasContext() : getBackCanvasContext()
-
-    ctx.beginPath( )
-    ctx.moveTo( oldX, y ); 
-    ctx.lineTo( newX, y ); 
-    ctx.strokeStyle = (color != null) ? color : "white"
-    ctx.stroke( );
-}
-
-const drawLineOnYAxis = (oldY, x, newY, color = null, canvas = null) => {
-    let ctx = ( canvas == null ) ? getFrontCanvasContext() : getBackCanvasContext()
-
-    ctx.beginPath( )
-    ctx.moveTo( x, oldY ); 
-    ctx.lineTo( x, newY ); 
-    ctx.strokeStyle = (color != null) ? color : "white"
-    ctx.stroke( );
 }
 
 const drawRect = ( canvas, x, y, width, height, color = null ) => {
@@ -179,11 +145,8 @@ const clearBothCanvases = ( ) => {
 
 module.exports = {
     drawFromImageToCanvas,
-    clearCanvasRectangle,
     clearEntireCanvas,
     clearBothCanvases,
-    drawLineOnYAxis,
-    drawLineOnXAxis,
     getFrontCanvasContext,
     getBackCanvasContext,
     setFont,
