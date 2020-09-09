@@ -1,6 +1,4 @@
-const res                   = require('../../../resources/resourceStrings')
 const state                 = require('../../../game-data/state')
-const Sound                 = require('../../interfaces/I_Sound').Sound
 const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const Move                  = require('../battle-moves/Move').Move
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint

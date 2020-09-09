@@ -1,7 +1,6 @@
 const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 const changeMode    = require('../../game-data/changeMode');
 const battleGlobals = require('./battleGlobals')
-const Move          = require('./battle-moves/Move').Move
 const Party         = require('./Party').Party
 
 class Battle {
