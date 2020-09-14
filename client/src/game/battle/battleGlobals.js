@@ -63,18 +63,18 @@ const BATTLE_MENU_X = globals.CANVAS_WIDTH - ( 4 * BATTLE_UI_CHAR_WIDTH )
 const BATTLE_MENU_Y = globals.CANVAS_HEIGHT - BATTLE_UI_CHAR_HEIGHT
 
 const BATTLE_MENU_STRD_DESC = [
-    "Attack your opponents with a basic attack",
-    "Choose one of your special moves",
-    "Use or equip an item",
-    "Check out your characters stats and attributes",            
-    "Return to the previous character"
+    "Attack your enemies or use power-ups",
+    "Brace for your opponents attack to reduce damage",
+    "Use or equip an item. Might include guns or alcohol",
+    "Check out your characters' stats and attributes",            
+    "Attempt to flee the battle like the hero you are"
 ];
 const BATTLE_MENU_STRD_LABELS = [
-    "ATTACK",
     "MOVES",
+    "DEFEND",
     "ITEMS",
     "STATS",            
-    "RETURN"
+    "FLEE"
 ];
 
 const BATTLE_MENU_BUTTON_MARGIN = (globals.GRID_BLOCK_PX / 2);

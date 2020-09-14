@@ -27,10 +27,12 @@ class BattleUIWrapper {
         { this.textbox.setText( text ); };
     setHeader( text ) 
         { this.textbox.setHeader( text ); };
-    getMoveMenu( ) 
-        { this.battleMenu.getMoveMenu( ); };
-    getStandardMenu( ) 
-        { this.battleMenu.getStandardMenu( ); };
+    getMoveMenu( ) { 
+        this.battleMenu.getMoveMenu( ); 
+    };
+    getStandardMenu( ) { 
+        this.battleMenu.getStandardMenu( ); 
+    };
     activateMenu( ) 
         { this.activateButtonAtIndex( 1 ); };
     activateButtonAtIndex( index ) 

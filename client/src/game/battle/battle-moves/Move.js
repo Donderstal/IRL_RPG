@@ -76,6 +76,7 @@ class Move {
     }
 
     goToNextAnimationStep( ) {
+        this.steps[this.activeStep].deActivate( this.owner );
         this.activeStep += 1;
         this.activateStep( );
     }
@@ -88,6 +89,7 @@ class Move {
         this.target = null;
         this.steps.forEach( ( e ) => {
             e.resetStep( );
+            e.deActivate( this.owner );
         } )
     }
 }
@@ -180,6 +182,12 @@ class AnimationStep {
         } 
     }
 
+    deActivate( character ) {
+        if ( this.effects ) {
+            character.sprite.effectsActive = false;
+        }
+    }
+
     resetStep( ) {
         this.target = null;
         this.done = false;
@@ -215,7 +223,7 @@ class AnimationStep {
         }
 
         if ( this.effects ) {
-
+            character.sprite.effectsActive = true;
         }
     }
 }

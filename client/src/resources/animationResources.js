@@ -75,6 +75,10 @@ const NECKBEARD_HACK_L = [
     { 'rowInSheet': 10,'columnInSheet': 0 },
     { 'rowInSheet': 10,'columnInSheet': 1 },
     { 'rowInSheet': 10,'columnInSheet': 2 },
+    { 'rowInSheet': 10,'columnInSheet': 3 },
+    { 'rowInSheet': 10,'columnInSheet': 2 },
+    { 'rowInSheet': 10,'columnInSheet': 3 },
+    { 'rowInSheet': 10,'columnInSheet': 2 },
     { 'rowInSheet': 10,'columnInSheet': 3 }
 ]
 
@@ -85,6 +89,10 @@ const NECKBEARD_HACK_R = [
     { 'rowInSheet': 7,'columnInSheet': 3 },
     { 'rowInSheet': 8,'columnInSheet': 0 },
     { 'rowInSheet': 8,'columnInSheet': 1 },
+    { 'rowInSheet': 8,'columnInSheet': 2 },
+    { 'rowInSheet': 8,'columnInSheet': 3 },
+    { 'rowInSheet': 8,'columnInSheet': 2 },
+    { 'rowInSheet': 8,'columnInSheet': 3 },
     { 'rowInSheet': 8,'columnInSheet': 2 },
     { 'rowInSheet': 8,'columnInSheet': 3 }
 ]
@@ -107,6 +115,22 @@ const HIT_R = [
     { 'rowInSheet': 4,'columnInSheet': 0 }
 ]
 
+const FADE_L = [
+    { 'rowInSheet': 5,'columnInSheet': -1 },
+    { 'rowInSheet': 5,'columnInSheet': 0 },
+    { 'rowInSheet': 5,'columnInSheet': -1 },
+    { 'rowInSheet': 5,'columnInSheet': 0 },
+    { 'rowInSheet': 5,'columnInSheet': -1 }
+]
+
+const FADE_R = [
+    { 'rowInSheet': 4,'columnInSheet': -1 },
+    { 'rowInSheet': 4,'columnInSheet': 0 },
+    { 'rowInSheet': 4,'columnInSheet': -1 },
+    { 'rowInSheet': 4,'columnInSheet': 0 },
+    { 'rowInSheet': 4,'columnInSheet': -1 }
+]
+
 module.exports = {
     TURN_SINGLE_CIRCLE,
     BACK_AND_FORTH,
@@ -120,6 +144,10 @@ module.exports = {
     PUNCH_R,
     NECKBEARD_HACK_L,
     NECKBEARD_HACK_R,
+
     HIT_L,
-    HIT_R
+    HIT_R,
+
+    FADE_L,
+    FADE_R
 }

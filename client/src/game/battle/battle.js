@@ -18,10 +18,10 @@ class Battle {
 
         this.charactersInField  = [ ];
         this.activeMove         = null;
-        
-        this.UI                 = new BattleUI( this.playerMembers, this.opponentMembers ); 
         this.selectingTarget    = false;
         this.currentMoveIndex   = 0;
+        
+        this.UI                 = new BattleUI( this.playerMembers, this.opponentMembers ); 
     }
 
     get inSelectMovePhase( ) { return this.battlePhase == battleGlobals['PHASE_SELECT_MOVE']; };
@@ -31,31 +31,12 @@ class Battle {
     get selectedCharacter( ) { return this.playerParty.activeMember };
     get currentButtonText( ) { return this.UI.activeButtonText; }
     get currentSelectedMove( ) { return this.UI.activeButtonMove };
-    get currentStandardAttack( ) { return this.playerParty.activeMember.standardAttack };
     get currentAttacker( ) { return this.charactersInField[this.currentMoveIndex] };
 
     initUI( ) {
         this.UI.activateButtonAtIndex( 1 );
         this.playerParty.getNextPartyMember( );  
         this.UI.activateMenu( );
-    }
-
-    handleActionButton( ) {
-        switch( this.battlePhase ) {
-            case battleGlobals['PHASE_SELECT_MOVE']:
-                this.handleActionButtonInSelectionPhase( );
-                break;
-            case battleGlobals['PHASE_DO_MOVE']:
-                this.handleActionButtonInExecutionPhase( );
-                break;            
-            case battleGlobals['PHASE_BEGIN_TURN']:
-            case battleGlobals['PHASE_STAT_CHECK']:
-            case battleGlobals['PHASE_END_BATTLE']:
-                this.passPhase( );
-                break;
-            default:
-                console.log('Invalid battlephase with id: ' + this.battlePhase );    
-        }
     }
 
     passPhase( ) {
@@ -135,10 +116,11 @@ class Battle {
     }
 
     handleActionButtonInSelectionPhase( ) {
-        if ( this.UI.activeButtonText == "RETURN" ) {
-            this.UI.inMoveMenu ? this.UI.getStandardMenu( ) : this.playerParty.getPreviousPartyMember( );
+        if ( this.UI.activeButtonText == "MOVES" ) {
+            this.UI.getMoveMenu( );  
+            this.UI.activateButtonAtIndex( this.UI.activeButtonIndex );          
         }
-        else if ( this.UI.inMoveMenu || this.UI.activeButtonText == "ATTACK" ) {
+        else if ( this.UI.inMoveMenu ) {
             if ( this.selectingTarget ) {  
                 this.selectMove( );
                 this.selectingTarget = false;
@@ -146,7 +128,6 @@ class Battle {
             }
             else {
                 this.initTargetSelection( );
-                this.selectingTarget = true;
             }
         }
         else if ( this.UI.inItemMenu ) {
@@ -156,8 +137,15 @@ class Battle {
 
     initTargetSelection( ) {
         this.selectedCharacter.nextMove = this.currentSelectedMove;
+        this.selectingTarget = true;
         const targetIndex = this.opponentParty.findNextActiveMemberIndex( "NEXT", false, -1 );
         this.opponentParty.activateTarget( targetIndex );
+    }
+
+    deTarget( ) {
+        this.selectingTarget = false;
+        this.targetedCharacter.deTarget( ); 
+        this.selectedCharacter.nextMove = null;
     }
 
     selectMove( ) {
