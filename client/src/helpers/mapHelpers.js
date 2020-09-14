@@ -59,21 +59,6 @@ const getXYOfCell = (row, col) => {
 }
 
 /**
- * @function getTileIdOfCell
- * 
- * @param {integer} row - row of map grid
- * @param {integer} col - col of map grid
- * Get Id of Tile displayed in requested cell..
- * within the map grid stored in the map state
- *  
- * @return {integer} - tile id
- */
-const getTileIdOfCell = ( row, col ) => {
-    const gridRow = state.currentMap.mapData.grid[row]
-    return gridRow[col]
-}
-
-/**
  * @function findNamedCharacterOnMap
  * 
  * @param {string} nameToFind
@@ -100,6 +85,5 @@ module.exports = {
     getTopLeftCellOfGridInCanvas,
     findNamedCharacterOnMap,
     getCellOfXY, 
-    getXYOfCell,
-    getTileIdOfCell
+    getXYOfCell
 }

@@ -1,4 +1,4 @@
-const initMoves = require('./initMoves')
+const getMoves = require('./initMoves').getMovesByClassName
 const characterGlobals = require('../characterGlobals')
 
 const getClassProfile = ( className ) => {
@@ -42,7 +42,7 @@ class CharacterBlueprint {
             factor      : 30
         }
 
-        this.moves          = initMoves.initMoves(this.className);
+        this.moves          = getMoves(this.className);
     }
 
     getMoveResult( move, targetCharacter ) {

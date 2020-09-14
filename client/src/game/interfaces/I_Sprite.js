@@ -89,13 +89,6 @@ class Sprite {
         this.updateSpriteBorders( )
     }
 
-    clearSprite( ) {
-        canvasHelpers.clearCanvasRectangle(
-            "FRONT",
-            this.x, this.y, this.width, this.height
-        )
-    } 
-
     setDestination( destination, endDirection ) {
         this.destination = destination
         this.type = "idle"
