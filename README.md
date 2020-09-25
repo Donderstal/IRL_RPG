@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### SEP 17
+* Added 'letterbox' perspective to cinematics
+
 #### SEP 14, 2020
 * Scrapping redundant code
 * Removing unused imports and exports
