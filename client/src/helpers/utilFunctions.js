@@ -22,7 +22,24 @@ const downloadObjectAsJson = ( exportObj, exportName ) => {
     downloadAnchorNode.remove();
 }
 
+const toggleLetterBoxDivs = ( ) => {
+    const topDiv = document.getElementById('letterbox-top')
+    const bottomDiv = document.getElementById('letterbox-bottom')
+    const letterBoxDivHeight = topDiv.style.height;
+
+    if ( topDiv.style.top == '0px' && bottomDiv.style.bottom == '0px' ) {
+        topDiv.style.top = '-' + letterBoxDivHeight
+        bottomDiv.style.bottom = '-' + letterBoxDivHeight
+    }
+    else {
+        topDiv.style.top = '0px'
+        bottomDiv.style.bottom = '0px'
+    }
+
+}
+
 module.exports = {
     fetchJSONWithCallback,
-    downloadObjectAsJson
+    downloadObjectAsJson,
+    toggleLetterBoxDivs
 }
