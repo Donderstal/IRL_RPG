@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### SEP 25
+* Added a 'master room' with all sprites in the game
+
 #### SEP 17
 * Added 'letterbox' perspective to cinematics
 
