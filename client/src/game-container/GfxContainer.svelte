@@ -1,5 +1,6 @@
 <script>
     import globals from '../game-data/globals.js';
+    import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
 </script>
 
 <style>
@@ -37,6 +38,7 @@
 </style>
 
 <div class="game-gfx-container">
+    <LetterBoxDiv isTop={true} height={globals.GRID_BLOCK_PX * 2}/>
 
     <div class="canvas-wrapper" style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px">
         <canvas id='game-background-canvas' class="game-background-body" 
@@ -46,4 +48,5 @@
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
     </div>
 
+    <LetterBoxDiv isTop={false} height={globals.GRID_BLOCK_PX * 2}/>
 </div>

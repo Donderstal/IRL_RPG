@@ -39,17 +39,15 @@ const animationFrameController = ( ) => {
 
             if ( !state.listeningForPress ) {
                 controls.listenForKeyPress()
-            }
-
-            if  ( state.cinematicMode && state.activeCinematic ) {
-                state.activeCinematic.checkForScenePass( )
-            }
-            
+            }            
             if ( state.overworldMode ) {
                 handleMapAnimations( )
             }
             else if ( state.battleMode ) {
                 handleBattleAnimations( )
+            }
+            if  ( state.cinematicMode && state.activeCinematic ) {
+                state.activeCinematic.checkForScenePass( )
             }
         }
         else {
