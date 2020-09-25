@@ -1,6 +1,4 @@
-const res                   = require('../../../resources/resourceStrings')
 const state                 = require('../../../game-data/state')
-const Sound                 = require('../../interfaces/I_Sound').Sound
 const BattleStats           = require('../battle-ui/battleStats').BattleStats
 const Move                  = require('../battle-moves/Move').Move
 const CharacterBlueprint    = require('../../character/character-init/characterBlueprint').CharacterBlueprint
@@ -38,10 +36,7 @@ class BattleChar {
     }
 
     animateAttack( animation ) {
-        const sfx = new Sound( "battle-baba.mp3", true )
-        sfx.play()
         this.sprite.animateAttack( animation )
-        this.sprite.setShout(res.getBattleShout( this.className, "FIGHT" ))
     }
 
     doMove( targetCharacter ) {

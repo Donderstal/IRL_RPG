@@ -1,5 +1,4 @@
 const state = require('../../../game-data/state')
-const globals = require('../../../game-data/globals')
 
 /**
  * @param {string} direction - string representing direction

@@ -1,7 +1,6 @@
 const MapSprite     = require('./mapSprite').MapSprite
 const globals       = require('../../../game-data/globals');
 const state         = require('../../../game-data/state')
-const  anim         = require('../../../resources/animationResources')
 const MapAction     = require('./setMapAttributes').MapAction
 
 class NPC extends MapSprite {
