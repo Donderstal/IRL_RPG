@@ -1,3 +1,5 @@
+const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, UTILITY_CANVAS, UTILITY_CTX, SHEET_XY_VALUES } = require('../../game-data/globals')
+
 class I_Tile {
     constructor( index, x, y, ctx, row, col ) {
         this.x = x;
@@ -118,3 +120,7 @@ class I_Tile {
         this.ID = "E"
     };
 };
+
+module.exports = {
+    I_Tile
+}

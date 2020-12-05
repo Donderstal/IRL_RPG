@@ -1,4 +1,7 @@
-class ForegroundCanvas extends CanvasWithGrid {
+const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
+const { FOREGROUND_CANVAS, GRID_BLOCK_PX, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT } = require('../game-data/globals')
+
+class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.characters = false;
@@ -16,7 +19,7 @@ class ForegroundCanvas extends CanvasWithGrid {
                         document.getElementById(currentSprite).image,
                         0, 0,
                         document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, ( tile.y + TILE_SIZE ) - (document.getElementById(currentSprite).height / 2),
+                        tile.x, ( tile.y + GRID_BLOCK_PX ) - (document.getElementById(currentSprite).height / 2),
                         document.getElementById(currentSprite).width / 2, document.getElementById(currentSprite).height / 2
                     )
                 }
@@ -41,8 +44,8 @@ class ForegroundCanvas extends CanvasWithGrid {
                         document.getElementById(currentSprite).image,
                         0, sourceY,
                         document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, tile.y - ( TILE_SIZE * 0.75 ),
-                        STRD_SPRITE_WIDTH / 2, STRD_SPRITE_HEIGHT / 2
+                        tile.x, tile.y - ( GRID_BLOCK_PX * 0.75 ),
+                        STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT
                     )
                 }
             }
@@ -53,4 +56,8 @@ class ForegroundCanvas extends CanvasWithGrid {
         tile.clearSpriteData( );
         this.drawSpritesInGrid( );
     }
+}
+
+module.exports = { 
+    ForegroundCanvas
 }

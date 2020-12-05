@@ -1,4 +1,7 @@
-class BackgroundCanvas extends CanvasWithGrid {
+const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
+const { BACKGROUND_CANVAS, UTILITY_CANVAS, GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../game-data/globals')
+
+class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         console.log("initializing map!")
@@ -18,10 +21,18 @@ class BackgroundCanvas extends CanvasWithGrid {
         this.neighbourhood = neighbourhood
     }
 
-    drawTileAtXY( x, y ) {
+    drawTileAtXY( x, y, tile ) {
         const tile = super.getTileAtXY( x, y );
-        tile.setTileID( SHEET.activeTile.index )
-        tile.setSettings( SHEET.activeTileSettings );
-        this.ctx.drawImage( SELECTED_TILE_CANVAS, 0, 0, TILE_SIZE * 2, TILE_SIZE * 2, tile.x, tile.y, TILE_SIZE, TILE_SIZE )
+        tile.setTileID( tile.index )
+        tile.setSettings( tile.settings );
+        this.ctx.drawImage( 
+            UTILITY_CANVAS, 
+            0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, 
+            tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX
+        );
     }
 };
+
+module.exports = { 
+    BackgroundCanvas
+}

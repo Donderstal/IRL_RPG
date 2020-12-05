@@ -1,3 +1,6 @@
+const { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS } = require('../../game-data/globals')
+const { I_Tile } = require('./I_Tile');
+
 class I_Grid {
     constructor( x, y, rows, cols, ctx ) {
         this.x = x;
@@ -18,7 +21,7 @@ class I_Grid {
         let col = 1;
 
         for( var i = 0; i < limit; i++ ) {
-            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col ) )
+            this.array.push( new I_Tile( i, tileX, tileY, this.ctx, row, col ) )
 
             if ( ( i + 1 ) % this.cols == 0 ) {
                 tileX = this.getXOffset( );
@@ -80,4 +83,8 @@ class I_Grid {
             }
         })
     }
+}
+
+module.exports = {
+    I_Grid
 }

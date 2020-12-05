@@ -1,3 +1,5 @@
+const { I_Grid } = require('./I_Grid');
+
 class I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         this.x = x;
@@ -11,7 +13,7 @@ class I_CanvasWithGrid {
     };
 
     initGrid( rows, cols ) {
-        this.grid       = new Grid( this.x, this.y, rows, cols, this.ctx );
+        this.grid       = new I_Grid( this.x, this.y, rows, cols, this.ctx );
     };
 
     setTileGrid( gridToSet ) {
@@ -40,3 +42,7 @@ class I_CanvasWithGrid {
         return this.grid.getTileAtXY( x, y );
     };
 };
+
+module.exports = {
+    I_CanvasWithGrid
+}
