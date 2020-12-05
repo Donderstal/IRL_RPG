@@ -81,6 +81,8 @@ const startGame = ( name, className ) => {
     } );
 
     globals.FOREGROUND_CANVAS = document.getElementById( 'game-front-canvas' );
+    globals.FOREGROUND_CANVAS.width = globals.GRID_BLOCK_IN_SHEET_PX;
+    globals.FOREGROUND_CANVAS.height = globals.GRID_BLOCK_IN_SHEET_PX;
     globals.BACKGROUND_CANVAS = document.getElementById( 'game-background-canvas' );
     globals.UTILITY_CANVAS = document.getElementById( 'game-utility-canvas' );
 
