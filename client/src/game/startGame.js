@@ -80,6 +80,14 @@ const startGame = ( name, className ) => {
         initCanvas( canvas );
     } );
 
+    globals.FOREGROUND_CANVAS = document.getElementById( 'game-front-canvas' );
+    globals.BACKGROUND_CANVAS = document.getElementById( 'game-background-canvas' );
+    globals.UTILITY_CANVAS = document.getElementById( 'game-utility-canvas' );
+
+    globals.FOREGROUND_CTX = globals.FOREGROUND_CANVAS.getContext( '2d' );
+    globals.BACKGROUND_CTX = globals.BACKGROUND_CANVAS.getContext( '2d' );
+    globals.UTILITY_CTX = globals.UTILITY_CANVAS.getContext( '2d' );
+
     document.documentElement.requestFullscreen();
     state.playerCharacter.name      = name;
     state.playerCharacter.className = className;

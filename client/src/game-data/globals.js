@@ -27,12 +27,12 @@ const FRAMES_PER_SECOND             = 60
 
 // dynamic measurements for canvas
 const GRID_BLOCK_IN_SHEET_PX        = 64
-const CANVAS_COLUMNS                = 23
-const CANVAS_ROWS                   = 15
+const CANVAS_COLUMNS                = 24
+const CANVAS_ROWS                   = 16
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
 const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
 const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS + 1)
-const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS + 1)
+const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS + 1) 
 
 // sheet dimensions
 const MAP_SPRITE_WIDTH_IN_SHEET     = 64
@@ -59,6 +59,13 @@ const GOLDEN_FONT_RATIO             = 1.618;
 const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
 const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
+
+let FOREGROUND_CANVAS;
+let FOREGROUND_CTX;
+let BACKGROUND_CANVAS;
+let BACKGROUND_CTX;
+let UTILITY_CANVAS;
+let UTILITY_CTX;
 
 module.exports = {
     MOVEMENT_SPEED,
@@ -92,4 +99,10 @@ module.exports = {
     SMALL_FONT_LINE_HEIGHT,
     LARGE_FONT_LINE_HEIGHT,
     BATTLE_FONT_LINE_HEIGHT,
+    FOREGROUND_CANVAS,
+    FOREGROUND_CTX,
+    BACKGROUND_CANVAS,
+    BACKGROUND_CTX,
+    UTILITY_CANVAS,
+    UTILITY_CTX
 }

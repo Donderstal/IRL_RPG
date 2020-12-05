@@ -49,4 +49,8 @@
     </div>
 
     <LetterBoxDiv isTop={false} height={globals.GRID_BLOCK_PX * 2}/>
+
+    <div style="visibility:hidden; display:none;">
+        <canvas id='game-utility-canvas'></canvas>
+    </div>
 </div>
