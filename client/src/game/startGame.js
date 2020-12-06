@@ -6,8 +6,12 @@ const controller = require('./gameController')
 const storyProgression  = require('../game-data/storyProgression')
 
 const utility = require('../helpers/utilFunctions')
+
 const fetchJson = utility.fetchJSONWithCallback
 const getMapData = require('../resources/mapResources').getMapData
+
+const { ForegroundCanvas } = require('./ForegroundCanvas');
+const { BackgroundCanvas } = require('./BackgroundCanvas');
 
 const firstMapUrl = 'my-neighbourhood/A1/my-house';
 
@@ -70,24 +74,26 @@ const initControlsAndAnimation = ( ) => {
  * 
  * Prepare canvas for game
  */
-const initCanvas = ( canvas ) => {
+const initGameCanvas = ( canvas ) => {
     canvas.height = globals.CANVAS_HEIGHT 
     canvas.width = globals.CANVAS_WIDTH   
 }
 
+
 const startGame = ( name, className ) => {
-    [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
-        initCanvas( canvas );
-    } );
-
-    globals.FOREGROUND_CANVAS = document.getElementById( 'game-front-canvas' );
-    globals.FOREGROUND_CANVAS.width = globals.GRID_BLOCK_IN_SHEET_PX;
-    globals.FOREGROUND_CANVAS.height = globals.GRID_BLOCK_IN_SHEET_PX;
     globals.BACKGROUND_CANVAS = document.getElementById( 'game-background-canvas' );
-    globals.UTILITY_CANVAS = document.getElementById( 'game-utility-canvas' );
-
-    globals.FOREGROUND_CTX = globals.FOREGROUND_CANVAS.getContext( '2d' );
+    initGameCanvas( globals.BACKGROUND_CANVAS );
+    const Back_Xy = globals.BACKGROUND_CANVAS.getBoundingClientRect();
     globals.BACKGROUND_CTX = globals.BACKGROUND_CANVAS.getContext( '2d' );
+    globals.BACKGROUND = new BackgroundCanvas( Back_Xy.x, Back_Xy.y, globals.BACKGROUND_CTX );
+    
+    globals.FOREGROUND_CANVAS = document.getElementById( 'game-front-canvas' );
+    initGameCanvas( globals.FOREGROUND_CANVAS );
+    const Front_Xy = globals.FOREGROUND_CANVAS.getBoundingClientRect();
+    globals.FOREGROUND_CTX = globals.FOREGROUND_CANVAS.getContext( '2d' );
+    globals.FOREGROUND = new ForegroundCanvas( Front_Xy.x, Front_Xy.y, globals.FOREGROUND_CTX );
+
+    globals.UTILITY_CANVAS = document.getElementById( 'game-utility-canvas' );
     globals.UTILITY_CTX = globals.UTILITY_CANVAS.getContext( '2d' );
 
     document.documentElement.requestFullscreen();
