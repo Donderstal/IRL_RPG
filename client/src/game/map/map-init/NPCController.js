@@ -148,5 +148,6 @@ const generateCharactersFromSave = ( savedNPCs ) => {
 
 module.exports = {
     generateCharacters,
-    generateCharactersFromSave
+    generateCharactersFromSave,
+    NPC
 }

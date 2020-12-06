@@ -247,5 +247,6 @@ class BlockedArea {
  module.exports = {
     setMapAttributes,
     MapAction,
-    BlockedArea
+    BlockedArea,
+    MapObject
  }

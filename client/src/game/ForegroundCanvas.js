@@ -1,61 +1,81 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
-const { FOREGROUND_CANVAS, GRID_BLOCK_PX, STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT } = require('../game-data/globals')
+const { NPC } = require('./map/map-init/NPCController')
+const { MapObject } = require('./map/map-init/setMapAttributes')
+const { globals } = require('svelte/internal');
 
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.characters = false;
         this.objects = false;
+        this.allSprites = [ ];
         console.log("initializing foreground!")
     };
-    drawSpritesInGrid( ) {
-        this.ctx.clearRect(0, 0, FOREGROUND_CANVAS.width, FOREGROUND_CANVAS.height);
+
+    setForegroundData( mapData ) {
+        if ( mapData.characters )
+            this.setCharacters( mapData.characters );
+        if ( mapData.mapObjects )
+            this.setObjects( mapData.mapObjects );
+    }
+
+    setCharacters( characters ) {
+        characters.forEach( ( character ) => {
+            const col = character.type == 'walking' ? character.lastPosition.col : character.col; 
+            const row = character.type == 'walking' ? character.lastPosition.row : character.row; 
+            this.grid.array.forEach( ( tile ) => {
+                if ( tile.row == row && tile.col == col ) {
+                    tile.setSpriteData( "character", character )
+                }
+            })
+        })
+    };
+
+    setObjects( objects ) {
+        objects.forEach( ( object ) => {
+            this.grid.array.forEach( ( tile ) => {
+                if ( tile.row == object.row && tile.col == object.col ) {
+                    tile.setSpriteData( "object", object )
+                }
+            })
+        })
+    };
+
+    clearForegroundData( ) {
+        this.grid = [ ];
+        this.allSprites = [ ];
+    }
+
+    setSpritesToGrid( ) {
         this.grid.array.forEach( ( tile ) => {
-            tile.drawTileBorders( )
             if ( tile.hasSprite ) {
                 if ( tile.spriteType == 'object' ) {
-                    const currentSprite = tile.spriteData.type + '.png'
-                    this.ctx.drawImage(
-                        document.getElementById(currentSprite).image,
-                        0, 0,
-                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, ( tile.y + GRID_BLOCK_PX ) - (document.getElementById(currentSprite).height / 2),
-                        document.getElementById(currentSprite).width / 2, document.getElementById(currentSprite).height / 2
-                    )
+                    this.setObjectSprite( tile )
                 }
                 else if ( tile.spriteType == 'character' ) {
-                    const currentSprite = tile.spriteData.sprite
-                    let sourceY;
-                    switch( tile.spriteData.direction ) {
-                        case 'FACING_DOWN':
-                            sourceY = 0;
-                            break;
-                        case 'FACING_LEFT':
-                            sourceY = STRD_SPRITE_HEIGHT
-                            break;
-                        case 'FACING_RIGHT':
-                            sourceY = STRD_SPRITE_HEIGHT *  2
-                            break;
-                        case 'FACING_UP':
-                            sourceY = STRD_SPRITE_HEIGHT * 3
-                            break;
-                    }
-                    this.ctx.drawImage(
-                        document.getElementById(currentSprite).image,
-                        0, sourceY,
-                        document.getElementById(currentSprite).width, document.getElementById(currentSprite).height,
-                        tile.x, tile.y - ( GRID_BLOCK_PX * 0.75 ),
-                        STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT
-                    )
+                    this.setCharacterSprite( tile )
                 }
             }
         })
+    };
+    
+    setCharacterSprite( tile ) {
+        this.allSprites.push( new NPC( 
+            { 'row': tile.row, 'col': tile.col }, 
+            tile.spriteData.sprite, 'CELL', 
+            globals[tile.spriteData.direction], tile.spriteData 
+        ) )
     }
+
+    setObjectSprite( tile ) {
+        this.allSprites.push( new MapObject( tile.spriteData ) )
+    }
+
     clearSpriteFromTile(x, y) {
         const tile = super.getTileAtXY(x,y);
         tile.clearSpriteData( );
         this.drawSpritesInGrid( );
-    }
+    };
 }
 
 module.exports = { 

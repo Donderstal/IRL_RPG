@@ -53,14 +53,23 @@ const initMapFromBattle = ( ) => {
     }, 1000)
 }
 
-const initializeMap = ( mapData, BOOT_STATUS, setAttributes = true ) => {    
+/**
+ * @param {object} mapData mapObject from /resources/mapResources.js
+ * @param {string} BOOT_STATUS 
+ * 
+ * load the new map data to the BACKGROND and FOREGROUND classes
+ */
+const initializeMap = ( mapData, BOOT_STATUS ) => {    
     globals.BACKGROUND.initGrid( mapData.rows, mapData.columns );
     globals.FOREGROUND.initGrid( mapData.rows, mapData.columns );
 
     const sheetData = tilesheets[mapData.tileSet];
 
-    globals.BACKGROUND.setBackgroundData( mapData )
+    globals.BACKGROUND.setBackgroundData( mapData );
     globals.BACKGROUND.loadImageWithCallback( '/static/tilesets/' + sheetData.src, globals.BACKGROUND.drawMapFromGridData );
+
+    globals.FOREGROUND.setForegroundData( mapData );
+    globals.FOREGROUND.setSpritesToGrid( );
 }
 
 
