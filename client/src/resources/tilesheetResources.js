@@ -1,6 +1,6 @@
 module.exports = {
     sheets : {
-        "my-house" : {
+        "my_house" : {
             "src": "Bed_Room.png",
             "uniqueTiles": 31,
             "blocked": [
