@@ -3,7 +3,6 @@ const globals = require('../../game-data/globals')
 
 class Sprite {
     constructor ( tile, spriteSize, src ) {   
-        console.log(tile)
         if ( spriteSize == "STRD" ) {
             this.width   = globals.STRD_SPRITE_WIDTH;
             this.height  = globals.STRD_SPRITE_HEIGHT;            

@@ -59,7 +59,7 @@ const initMapFromBattle = ( ) => {
  * 
  * load the new map data to the BACKGROND and FOREGROUND classes
  */
-const initializeMap = ( mapData, BOOT_STATUS ) => {    
+const initializeMap = ( mapData ) => {    
     globals.BACKGROUND.initGrid( mapData.rows, mapData.columns );
     globals.FOREGROUND.initGrid( mapData.rows, mapData.columns );
 

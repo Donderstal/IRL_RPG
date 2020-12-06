@@ -1,7 +1,7 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { NPC } = require('./map/map-init/NPCController')
 const { MapObject } = require('./map/map-init/setMapAttributes')
-const { globals } = require('svelte/internal');
+const { MapSprite } = require('./map/map-init/mapSprite')
 
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
@@ -9,6 +9,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.characters = false;
         this.objects = false;
         this.allSprites = [ ];
+        this.playerSprite = { };
         console.log("initializing foreground!")
     };
 
@@ -17,6 +18,18 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.setCharacters( mapData.characters );
         if ( mapData.mapObjects )
             this.setObjects( mapData.mapObjects );
+        if ( mapData.playerStart )
+            this.setPlayerCharacter( mapData.playerStart );
+    }
+
+    setPlayerCharacter( start ) {
+        const startingTile = this.grid.array.filter( tile => {
+            return tile.row == start.row && tile.col == start.col
+          })
+        let mapSpritesFolder = '/static/sprites/';
+        let spriteSrc = mapSpritesFolder + start.playerClass.toLowerCase() + '.png'
+        this.playerSprite = new MapSprite( startingTile[0], 'STRD', spriteSrc )
+        this.allSprites.push( this.playerSprite )
     }
 
     setCharacters( characters ) {
