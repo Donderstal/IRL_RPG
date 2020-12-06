@@ -3,10 +3,11 @@ const { I_Tile } = require('./I_Tile');
 
 class I_Grid {
     constructor( x, y, rows, cols, ctx ) {
-        this.x = x;
-        this.y = y;
+
         this.rows = rows;
-        this.cols = cols;
+        this.cols = cols;        
+        this.x = this.getXOffset( );
+        this.y = this.getYOffset( );
         this.array = [];
         this.ctx = ctx;
 
@@ -64,8 +65,8 @@ class I_Grid {
     }
 
     getTileAtXY( x, y ) {
-        const column = Math.floor(event.offsetX / GRID_BLOCK_PX);
-        const row = Math.floor(event.offsetY / GRID_BLOCK_PX);
+        const column = Math.floor( ( x - this.x ) / GRID_BLOCK_PX);
+        const row = Math.floor( ( y - this.y )  / GRID_BLOCK_PX);
 
         const tileIndex = (row * this.cols) + column;
 

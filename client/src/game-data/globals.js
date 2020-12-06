@@ -1,6 +1,6 @@
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSize = Math.floor(window.screen.height / CANVAS_ROWS + 1)
+    let blockSize = Math.floor(window.innerHeight / CANVAS_ROWS)
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
     } 
@@ -31,8 +31,8 @@ const CANVAS_COLUMNS                = 24
 const CANVAS_ROWS                   = 16
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
 const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
-const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS + 1)
-const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS + 1) 
+const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS)
+const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS) 
 
 // sheet dimensions
 const MAP_SPRITE_WIDTH_IN_SHEET     = 64

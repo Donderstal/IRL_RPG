@@ -16,7 +16,9 @@ const handleMapAnimations = ( ) => {
     drawSpritesInOrder( )
 
     if ( globals.FOREGROUND.playerSprite != undefined ) {
-        mapControls.handleMovementKeys( );   
+        setActiveTile( );
+        mapControls.handleMovementKeys( );  
+
         if ( state.currentMap.mapActions ) {     
             state.currentMap.mapActions.forEach( (action) => {
                 action.checkForActionRange( );
@@ -33,6 +35,12 @@ const handleMapAnimations = ( ) => {
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }
+}
+
+const setActiveTile = ( ) => {
+    globals.BACKGROUND.setActiveTile( globals.FOREGROUND.playerSprite.centerX( ), globals.FOREGROUND.playerSprite.centerY( ) )
+    globals.FOREGROUND.playerSprite.row = globals.BACKGROUND.activeTile.row;
+    globals.FOREGROUND.playerSprite.col = globals.BACKGROUND.activeTile.col;
 }
 
 const drawSpritesInOrder = ( ) => {

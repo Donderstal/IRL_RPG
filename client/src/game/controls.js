@@ -1,4 +1,5 @@
 const state = require('../game-data/state')
+const globals = require('../game-data/globals')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
@@ -26,7 +27,8 @@ const stopListenForKeyPress = () => {
 
 const addKeyToPressed = ( ) => {
     if ( event.key == "l" ) {
-        console.log(state.battleState.battleMenu)
+        console.log(globals.FOREGROUND.playerSprite)
+        console.log(globals.BACKGROUND.activeTile)
     }
     if ( state.overworldMode ) {
         handleMapKeyPress( event )
