@@ -59,7 +59,7 @@ const initializeMap = ( mapData, BOOT_STATUS, setAttributes = true ) => {
 
     const sheetData = tilesheets[mapData.tileSet];
 
-    globals.BACKGROUND.setTileGrid(mapData.grid.flat(1));
+    globals.BACKGROUND.setBackgroundData( mapData )
     globals.BACKGROUND.loadImageWithCallback( '/static/tilesets/' + sheetData.src, globals.BACKGROUND.drawMapFromGridData );
 }
 

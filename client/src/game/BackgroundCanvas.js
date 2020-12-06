@@ -31,6 +31,33 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX
         );
     }
+
+    setActions( actions ) {
+        this.actions = actions;
+    }
+
+    setDoors( doors ) {
+        this.doors = doors;
+    }
+
+    setBackgroundData( mapData ) {
+        this.setDoors( mapData.doors );
+        this.setActions( mapData.actions );
+        this.setTileGrid( mapData.grid.flat(1) )
+
+        this.grid.array.forEach( ( tile ) => {
+            this.doors.forEach( ( door ) => {
+                if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
+                    tile.setEventData( "DOOR", door );
+                }
+            })
+            this.actions.forEach( ( action ) => {
+                if ( tile.row == action.row && tile.col == action.col && !action.isSet ) {
+                    tile.setEventData( "ACTION", action );
+                }
+            })
+        } );
+    }
     
     drawMapFromGridData( ) {
         this.grid.drawMap( this.sheetImage )

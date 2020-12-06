@@ -11,9 +11,14 @@ class I_Tile {
         this.mirrored = false;
         this.row = row;
         this.col = col;
+
         this.hasSprite = false;
         this.spriteType;
         this.spriteData = {};
+
+        this.hasEvent = false;
+        this.eventType;
+        this.eventData;
 
         this.clearTileID( );
     };
@@ -82,6 +87,20 @@ class I_Tile {
             default:
                 alert('Error in flipping tile. Call the police!')
         }
+    }
+
+    setEventData( type, data ) {
+        console.log('new ' + type + ' event!')
+        console.log(data)
+        this.hasEvent = true;
+        this.eventType = type
+        this.eventData = data;
+    }
+
+    clearEventData( ) {
+        this.hasEvent = false;
+        this.eventType = null;
+        this.eventData = null;
     }
 
     setSpriteData( type, data ) {
