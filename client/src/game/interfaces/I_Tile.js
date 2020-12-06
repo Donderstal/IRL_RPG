@@ -1,4 +1,5 @@
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, UTILITY_CANVAS, UTILITY_CTX, SHEET_XY_VALUES } = require('../../game-data/globals')
+const globals = require('../../game-data/globals')
 
 class I_Tile {
     constructor( index, x, y, ctx, row, col ) {
@@ -38,7 +39,7 @@ class I_Tile {
         this.flipTileBeforeDrawing( sheetImage, tilesheetXy );
     
         this.ctx.drawImage(
-            UTILITY_CANVAS, 
+            globals.UTILITY_CANVAS, 
             0, 0,
             GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.x, this.y,
@@ -47,7 +48,7 @@ class I_Tile {
     }
 
     flipTileBeforeDrawing( sheetImage, tilesheetXy ) {
-        const ctx = UTILITY_CTX;
+        const ctx = globals.UTILITY_CTX;
         this.mirrored ? ctx.setTransform( -1, 0, 0, 1, GRID_BLOCK_IN_SHEET_PX, 0 ) : ctx.setTransform(1,0,0,1,0,0);
         switch( this.angle ) {
             case 0: 
