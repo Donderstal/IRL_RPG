@@ -38,7 +38,7 @@ const handleMapAnimations = ( ) => {
 }
 
 const setActiveTile = ( ) => {
-    globals.BACKGROUND.setActiveTile( globals.FOREGROUND.playerSprite.centerX( ), globals.FOREGROUND.playerSprite.centerY( ) )
+    globals.BACKGROUND.setActiveTile( globals.FOREGROUND.playerSprite.centerX( ), globals.FOREGROUND.playerSprite.baseY( ) )
     globals.FOREGROUND.playerSprite.row = globals.BACKGROUND.activeTile.row;
     globals.FOREGROUND.playerSprite.col = globals.BACKGROUND.activeTile.col;
 }

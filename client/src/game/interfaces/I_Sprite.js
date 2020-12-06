@@ -128,6 +128,7 @@ class Sprite {
             }
         }
         else {
+            this.hasMoved = true;
             if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
                 this.x -= globals.MOVEMENT_SPEED;
                 this.moving = true;

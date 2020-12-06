@@ -12,18 +12,47 @@ class MapSprite extends I_Sprite {
         this.cell = {}
         this.animationScript = {};
         this.centerX = () => { return this.x + ( this.width / 2 ) };
-        this.centerY = () => { return this.y + ( this.height / 2 ) };
-        this.hitbox = new I_Hitbox( this.centerX( ), this.y, this.width / 2 );      
+        this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
+        this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
+        
+        this.hasMoved = false;
+        this.activeTileIndex;
+        this.nextTileIndex;
+        this.setActiveTileIndex( );
     }
 
     drawSprite( ) {
         super.drawSprite( )
-        this.updateSpriteCellXy( )
+
+        if ( this.hasMoved ) {
+            this.setActiveTileIndex( )
+            this.hasMoved = false;            
+        }
+
         if ( !state.cinematicMode ) {
-            this.hitbox.updateXy( this.centerX( ), this.centerY( ) );        
+            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );        
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
+        }
+    }
+
+    setActiveTileIndex( ) {
+        const tile = globals.BACKGROUND.getTileAtXY( this.centerX( ), this.baseY( ) );
+        this.activeTileIndex = tile.index;
+        switch ( this.direction ) {
+            case globals["FACING_UP"] :
+                this.nextTileIndex = this.activeTileIndex - globals.BACKGROUND.grid.cols;
+                break;
+            case globals["FACING_RIGHT"] :
+                this.nextTileIndex = this.activeTileIndex + 1;
+                break;
+            case globals["FACING_DOWN"] :
+                this.nextTileIndex = this.activeTileIndex + globals.BACKGROUND.grid.cols;
+                break;
+            case globals["FACING_LEFT"] :
+                this.nextTileIndex = this.activeTileIndex - 1;
+                break;
         }
     }
 

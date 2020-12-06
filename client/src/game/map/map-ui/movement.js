@@ -32,6 +32,7 @@ const moveInDirection = ( sprite, direction ) => {
     let urlToNewMap = checkForNeighbours(sprite)
 
     if ( movementIsAllowed && !urlToNewMap ) {
+        sprite.hasMoved = true;
 
         if ( direction == 'FACING_RIGHT' ) {
             sprite.x += globals.MOVEMENT_SPEED        
