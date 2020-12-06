@@ -30,10 +30,6 @@ class I_CanvasWithGrid {
         };
     }
 
-    drawMapFromGridData( ) {
-        this.grid.drawMap( this.sheetImage )
-    }
-
     clearGrid( ) {
         this.grid.clearGrid( );
     };

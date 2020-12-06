@@ -21,7 +21,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.neighbourhood = neighbourhood
     }
 
-    drawTileAtXY( x, y, tile ) {
+    drawTileAtXY( x, y ) {
         const tile = super.getTileAtXY( x, y );
         tile.setTileID( tile.index )
         tile.setSettings( tile.settings );
@@ -30,6 +30,10 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, 
             tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX
         );
+    }
+    
+    drawMapFromGridData( ) {
+        this.grid.drawMap( this.sheetImage )
     }
 };
 
