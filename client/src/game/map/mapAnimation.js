@@ -1,4 +1,5 @@
 const state = require('../../game-data/state')
+const globals = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
 const mapController = require('./mapController')
@@ -12,12 +13,10 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
 
-    gatherSpritesInState( )
-    drawSpritesInOrder( ) 
+    drawSpritesInOrder( )
 
     if ( state.playerCharacter.sprite ) {
         mapControls.handleMovementKeys( );   
-         
         if ( state.currentMap.mapActions ) {     
             state.currentMap.mapActions.forEach( (action) => {
                 action.checkForActionRange( );
@@ -36,27 +35,8 @@ const handleMapAnimations = ( ) => {
     }
 }
 
-const gatherSpritesInState = ( ) => {
-    state.currentMap.layeredSprites = ( state.currentMap.layeredSprites ) ? state.currentMap.layeredSprites : []
-
-    if ( state.currentMap.NPCs ) {
-        state.currentMap.NPCs.forEach( NPC => {
-            state.currentMap.layeredSprites.push( NPC )
-        })  
-    }  
-
-    if ( state.currentMap.mapObjects ) {
-        state.currentMap.mapObjects.forEach( mapObject => {
-            state.currentMap.layeredSprites.push( mapObject )
-        })  
-    }  
-
-    state.currentMap.layeredSprites.push(state.playerCharacter.sprite)           
-}
-
 const drawSpritesInOrder = ( ) => {
-    let layeredSprites = state.currentMap.layeredSprites
-    layeredSprites.sort( ( a, b ) => {
+    globals.FOREGROUND.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
             return 1 
         }
@@ -70,7 +50,7 @@ const drawSpritesInOrder = ( ) => {
 
     canvas.clearEntireCanvas("FRONT")
 
-    layeredSprites.forEach( (e) => {
+    globals.FOREGROUND.allSprites.forEach( (e) => {
         e.drawSprite()
     })       
 }

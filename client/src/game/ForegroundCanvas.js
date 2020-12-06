@@ -61,9 +61,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     
     setCharacterSprite( tile ) {
         this.allSprites.push( new NPC( 
-            { 'row': tile.row, 'col': tile.col }, 
-            tile.spriteData.sprite, 'CELL', 
-            globals[tile.spriteData.direction], tile.spriteData 
+            tile, "STRD"
         ) )
     }
 

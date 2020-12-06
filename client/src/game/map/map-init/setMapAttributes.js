@@ -169,7 +169,6 @@ class MapAction extends I_Hitbox {
         let radius = globals.GRID_BLOCK_PX / 2;
         super( x, y, radius )
 
-        this.id   = actionRegistry.getNewActionId( );
         this.name = speaker
 
         if ( action.character ) {
@@ -185,12 +184,7 @@ class MapAction extends I_Hitbox {
     }
 
     checkForActionRange( ) {
-        if ( super.checkForActionRange( ) ) {
-            actionRegistry.setActionAsAvailable( this );
-        }
-        else if ( state.currentMap.availableAction != null && state.currentMap.availableAction != undefined ) {
-            actionRegistry.clearAvailableAction( this.id )
-        }
+
     }
 }
 
