@@ -96,7 +96,7 @@ const startGame = ( name, className ) => {
     globals.UTILITY_CANVAS = document.getElementById( 'game-utility-canvas' );
     globals.UTILITY_CTX = globals.UTILITY_CANVAS.getContext( '2d' );
 
-    document.documentElement.requestFullscreen();
+    //document.documentElement.requestFullscreen();
     state.playerCharacter.name      = name;
     state.playerCharacter.className = className;
 

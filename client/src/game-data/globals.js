@@ -78,10 +78,10 @@ const setSheetXyValues = ( tilesInSheet ) => {
 
     for ( var i = 0; i <= tilesInSheet; i++ ) {
         tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
-        tileX += GRID_BLOCK_PX * 2
+        tileX += GRID_BLOCK_IN_SHEET_PX
         if ( i % 4 == 3 ) {
             tileX = 0
-            tileY += GRID_BLOCK_PX * 2
+            tileY += GRID_BLOCK_IN_SHEET_PX
         }
     }
 

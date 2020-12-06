@@ -1,4 +1,4 @@
-const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, UTILITY_CANVAS, UTILITY_CTX, SHEET_XY_VALUES } = require('../../game-data/globals')
+const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } = require('../../game-data/globals')
 const globals = require('../../game-data/globals')
 
 class I_Tile {
@@ -16,18 +16,7 @@ class I_Tile {
         this.spriteData = {};
 
         this.clearTileID( );
-        this.drawTileBorders( );
     };
-
-    drawTileBorders( ) {
-        this.ctx.beginPath();
-        this.ctx.lineWidth = .5
-        this.ctx.moveTo( this.x, this.y );
-        this.ctx.lineTo( this.x, this.y + GRID_BLOCK_PX );
-        this.ctx.moveTo( this.x, this.y );
-        this.ctx.lineTo( this.x + GRID_BLOCK_PX, this.y );
-        this.ctx.stroke( );
-    }
 
     drawTileInMap( sheetImage ) {
         if ( this.ID === "E" || this.ID === null) {
@@ -35,7 +24,6 @@ class I_Tile {
         }
 
         const tilesheetXy = SHEET_XY_VALUES[this.ID]
-
         this.flipTileBeforeDrawing( sheetImage, tilesheetXy );
     
         this.ctx.drawImage(

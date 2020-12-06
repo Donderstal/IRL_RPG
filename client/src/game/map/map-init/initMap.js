@@ -54,8 +54,8 @@ const initMapFromBattle = ( ) => {
 }
 
 const initializeMap = ( mapData, BOOT_STATUS, setAttributes = true ) => {    
-    globals.BACKGROUND.initGrid( mapData.rows + 1, mapData.columns + 1 );
-    globals.FOREGROUND.initGrid( mapData.rows + 1, mapData.columns + 1 );
+    globals.BACKGROUND.initGrid( mapData.rows, mapData.columns );
+    globals.FOREGROUND.initGrid( mapData.rows, mapData.columns );
 
     const sheetData = tilesheets[mapData.tileSet];
 
