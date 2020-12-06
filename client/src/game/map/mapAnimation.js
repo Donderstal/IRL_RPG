@@ -15,7 +15,7 @@ const handleMapAnimations = ( ) => {
 
     drawSpritesInOrder( )
 
-    if ( state.playerCharacter.sprite ) {
+    if ( globals.FOREGROUND.playerSprite != undefined ) {
         mapControls.handleMovementKeys( );   
         if ( state.currentMap.mapActions ) {     
             state.currentMap.mapActions.forEach( (action) => {

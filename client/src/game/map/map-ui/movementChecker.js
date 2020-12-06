@@ -31,51 +31,51 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         }
     }
 
-    const activeMapData = state.currentMap.mapData
-    const activeMapBorders = state.currentMap.borders
+/*     const activeMapData = state.currentMap.mapData
+    const activeMapBorders = state.currentMap.borders */
 
     if ( direction == 'FACING_LEFT' ) {
-        if ( activeMapBorders.left >= sprite.x ) {
+/*         if ( activeMapBorders.left >= sprite.x ) {
             if ( !activeMapData.outdoors ) {
                 return false
             }
             if ( !activeMapData.neighbours.left ) {
                 return false
             }
-        }
+        } */
     }    
 
     if ( direction == 'FACING_RIGHT' ) {
-        if ( activeMapBorders.right <= sprite.x ) {
+/*         if ( activeMapBorders.right <= sprite.x ) {
             if ( !activeMapData.outdoors ) {
                 return false
             }
             if ( !activeMapData.neighbours.right ) {
                 return false
             }
-        }
+        } */
     }
 
     if ( direction == 'FACING_UP' ){
-        if ( activeMapBorders.top >= sprite.y ) {
+/*         if ( activeMapBorders.top >= sprite.y ) {
             if ( !activeMapData.outdoors ) {
                 return false
             }
             if ( !activeMapData.neighbours.up ) {
                 return false
             }
-        }
+        } */
     }   
 
     if ( direction == 'FACING_DOWN' ) {
-        if ( activeMapBorders.bottom <= sprite.y ) {
+/*         if ( activeMapBorders.bottom <= sprite.y ) {
             if ( !activeMapData.outdoors ) {
                 return false
             }
             if ( !activeMapData.neighbours.down ) {
                 return false
             }
-        }
+        } */
     }
     
     return true
