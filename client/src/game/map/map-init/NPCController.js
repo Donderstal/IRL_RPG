@@ -4,30 +4,24 @@ const state         = require('../../../game-data/state')
 const MapAction     = require('./setMapAttributes').MapAction
 
 class NPC extends MapSprite {
-    constructor( startPos, src, typeOfStart, spriteDirection = 0, character ) {
-        const hasAction = ( character.action !== undefined );
-        if( src[0] != '/' ) {
-            src = '/static/sprites/'+ src
-        }
-
-        super( startPos, src, typeOfStart, spriteDirection, hasAction )   
-        this.type = character.type
-        this.name = character.name
+    constructor( tile ) {
+        const hasAction = ( tile.spriteData.action !== undefined );
+        let src = '/static/sprites/'+ tile.spriteData.sprite;
+        super( tile, "STRD", src )   
+        
+        this.type = tile.spriteData.type
+        this.name = tile.spriteData.name
 
         if ( hasAction ) {
-            this.hitbox = new MapAction( this.centerX( ), this.y, character.action, character.name );
-            this.action = character.action
+            this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, tile.spriteData.name );
+            this.action = tile.spriteData.action
             this.action.name = this.name
         }
 
-        if ( character.type == "walking" ) {
-            this.path = character.path
-            this.lastPosition = character.lastPosition
+        if ( tile.spriteData.type == "walking" ) {
+            this.path = tile.spriteData.path
+            this.lastPosition = tile.spriteData.lastPosition
         }
-
-        this.calcXyFromCell( )
-
-        state.currentMap.NPCs.push( this )     
     }
 
     drawSprite( ) {

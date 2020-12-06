@@ -7,19 +7,13 @@ const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
 
 class MapSprite extends I_Sprite {
-    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0, noHitbox = false ) {       
-        super ( start, spriteSheetSrc, typeOfStart, "STRD", spriteDirection )
+    constructor ( tile, spriteSize, src ) {       
+        super( tile, spriteSize, src )   
         this.cell = {}
         this.animationScript = {};
         this.centerX = () => { return this.x + ( this.width / 2 ) };
         this.centerY = () => { return this.y + ( this.height / 2 ) };
-        if ( noHitbox ) {
-            this.hitbox;
-        }
-        else {
-            this.hitbox = new I_Hitbox( this.centerX( ), this.y, this.width / 2 );            
-        }
-
+        this.hitbox = new I_Hitbox( this.centerX( ), this.y, this.width / 2 );      
     }
 
     drawSprite( ) {
