@@ -5,6 +5,9 @@ const mapControls = require('./mapControls')
 const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
+    const foreground = globals.FOREGROUND;
+    const background = globals.BACKGROUND;
+    const player     = foreground.playerSprite
     state.currentMap.layeredSprites = [];
 
     if ( state.mapTransition != null ) {
@@ -15,7 +18,7 @@ const handleMapAnimations = ( ) => {
 
     drawSpritesInOrder( )
 
-    if ( globals.FOREGROUND.playerSprite != undefined ) {
+    if ( player != undefined ) {
         setActiveTile( );
         mapControls.handleMovementKeys( );  
 
@@ -25,10 +28,9 @@ const handleMapAnimations = ( ) => {
             })
         }  
         
-        if ( state.currentMap.doors ) {     
-            state.currentMap.doors.forEach( (door) => {
-                door.checkForBlockedRange( );
-            })
+        if ( background.activePlayerTile.hasEvent && background.activePlayerTile.eventType == "DOOR" ) {     
+            console.log('on door!')
+            background.activePlayerTile.event.checkForBlockedRange( );
         }  
     }
 

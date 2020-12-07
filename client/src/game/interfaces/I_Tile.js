@@ -19,7 +19,7 @@ class I_Tile {
 
         this.hasEvent = false;
         this.eventType;
-        this.eventData;
+        this.event;
 
         this.clearTileID( );
     };
@@ -91,9 +91,8 @@ class I_Tile {
     }
 
     setEventData( type, eventData ) {
-        console.log('new ' + type + ' event!')
-        console.log(eventData)
         this.hasEvent = true;
+        this.eventType = type;
         switch ( type ) {
             case 'DOOR' :
                 this.setDoor( eventData )
@@ -125,11 +124,13 @@ class I_Tile {
                 xy.y = this.y + ( GRID_BLOCK_PX / 2 )
                 break;
         }
-        this.event = new Door( xy.x, xy.y, doorData )
+        this.event = new Door( xy.x, xy.y, doorData );
+        setTimeout( ( ) => { this.event.draw( xy.x, xy.y ); }, 1000)
     }
 
     setAction( actionData ) {
-        this.event = new MapAction( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData )
+        this.event = new MapAction( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData );
+        setTimeout( ( ) => { this.event.draw( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ) ); }, 1000)
     }
 
     clearEventData( ) {

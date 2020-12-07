@@ -34,7 +34,7 @@ class I_Hitbox {
 
     draw( x, y ) {
         this.updateXy( x, y )
-        let frontCtx = canvasHelpers.getFrontCanvasContext( );
+        let frontCtx = canvasHelpers.getBackCanvasContext( );
         frontCtx.beginPath( );
         frontCtx.arc( this.x, this.y, this.outerRadius, 0, 2 * Math.PI );
         frontCtx.arc( this.x, this.y, this.radius, 0, 2 * Math.PI );
