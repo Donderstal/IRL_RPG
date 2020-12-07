@@ -12,7 +12,13 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### SEP 17
+#### DEC 7, 2020,
+* New data structure for game canvases imported from mapmaker tool
+* Foreground and Background classes extend I_CanvasWithGrid
+* Grid is now initialized with I_Grid and I_Tile classes
+* Basic interactivity in new system
+
+#### SEP 17, 2020
 * Added 'letterbox' perspective to cinematics
 
 #### SEP 14, 2020
