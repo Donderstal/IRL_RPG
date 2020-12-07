@@ -364,25 +364,24 @@ module.exports = {
         },
         "neighbours-house" : {   
             "mapName": "my-neighbourhood/A1/neighbours-house",
-            "tileSet": "my-house",
+            "tileSet": "Interior_Yum_Mart_Tiles",
             "music": "game-jam-2.mp3",
             "outdoors": false,
-            "columns": 6,
-            "rows": 7,
-            "grid": [
-                [ 0,  1,  1,  1,  1,  2,  3  ],
-                [ 4,  5,  5,  5,  5,  6,  7  ],
-                [ 8,  9,  10, 25, 25, 25, 11 ],
-                [ 12, 13, 14, 25, 25, 25, 15 ],
-                [ 16, 17, 18, 25, 25, 25, 19 ],
-                [ 20, 21, 22, 25, 25, 25, 23 ],
-                [ 24, 25, 26, 25, 25, 25, 27 ],
-                [ 28, 25, 25, 29, 30, 25, 31 ]
-            ],
+            "rows": 15,
+            "columns": 23,
+            "grid":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],[8,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[8,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74],[12,75,75,75,75,75,75,75,75,75,75,79,79,75,75,75,75,75,75,75,75,75,75,74]],
             "doors": [ 
                 {
-                    "row": 7, 
-                    "col": 3,
+                    "row": 15, 
+                    "col": 11,
+                    "to"  : "my-neighbourhood/A1/neighbourhood-A1",
+                    "directionIn": "FACING_DOWN",
+                    "directionOut": "FACING_UP",
+                    "locked": false
+                },
+                {
+                    "row": 15, 
+                    "col": 12,
                     "to"  : "my-neighbourhood/A1/neighbourhood-A1",
                     "directionIn": "FACING_DOWN",
                     "directionOut": "FACING_UP",
@@ -392,57 +391,139 @@ module.exports = {
             "characters" : [
                 {
                     "type": "idle",
-                    "sprite": "neckbeard.png",
+                    "sprite": "business_man.png",
                     "direction": "FACING_DOWN",
-                    "name": "N00bpwner",
+                    "name": "business_man.png",
+                    "row": 1,
+                    "col": 1,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "chad.png",
+                    "direction": "FACING_DOWN",
+                    "name": "chad.png",
                     "row": 1,
                     "col": 2,
-                    "action": {
-                        "type": "BATTLE",
-                        "sfx": "voice-1.mp3",
-                        "text": "Alloweth me to kick thine arse!",
-                        "character": {
-                            "class": "Influencer",
-                            "level": 5,
-                            "battleSprite": "influencer.png"
-                        }
-                    }
+                },
+                {
+                    "type": "idle",
+                    "sprite": "chad_recolour01.png",
+                    "direction": "FACING_DOWN",
+                    "name": "chad_recolour01.png",
+                    "row": 1,
+                    "col": 3,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "chad_recolour02.png",
+                    "direction": "FACING_DOWN",
+                    "name": "chad_recolour02.png",
+                    "row": 1,
+                    "col": 4,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "chad_recolour03.png",
+                    "direction": "FACING_DOWN",
+                    "name": "chad_recolour03.png",
+                    "row": 1,
+                    "col": 5,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "character_x1_recolour01.png",
+                    "direction": "FACING_DOWN",
+                    "name": "character_x1_recolour01.png",
+                    "row": 1,
+                    "col": 6,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "characterx3.png",
+                    "direction": "FACING_DOWN",
+                    "name": "characterx3.png",
+                    "row": 1,
+                    "col": 7,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "generic_balding_guy.png",
+                    "direction": "FACING_DOWN",
+                    "name": "generic_balding_guy.png",
+                    "row": 1,
+                    "col": 8,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "generic_blonde_guy.png",
+                    "direction": "FACING_DOWN",
+                    "name": "generic_blonde_guy.png",
+                    "row": 1,
+                    "col": 9,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "influencer.png",
+                    "direction": "FACING_DOWN",
+                    "name": "influencer.png",
+                    "row": 1,
+                    "col": 10,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "manager.png",
+                    "direction": "FACING_DOWN",
+                    "name": "manager.png",
+                    "row": 1,
+                    "col": 11,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "monkey_ceo.png",
+                    "direction": "FACING_DOWN",
+                    "name": "monkey_ceo.png",
+                    "row": 1,
+                    "col": 12,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "neckbeard.png",
+                    "direction": "FACING_DOWN",
+                    "name": "neckbeard.png",
+                    "row": 1,
+                    "col": 13,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "robot.png",
+                    "direction": "FACING_DOWN",
+                    "name": "robot.png",
+                    "row": 1,
+                    "col": 14,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "tumbler_girl_recolour01.png",
+                    "direction": "FACING_DOWN",
+                    "name": "tumbler_girl_recolour01.png",
+                    "row": 1,
+                    "col": 15,
+                },
+                {
+                    "type": "idle",
+                    "sprite": "tumbler_girl_recolour02.png",
+                    "direction": "FACING_DOWN",
+                    "name": "tumbler_girl_recolour02.png",
+                    "row": 1,
+                    "col": 16,
                 },
                 {
                     "type": "idle",
                     "sprite": "tumblr_girl.png",
                     "direction": "FACING_DOWN",
-                    "name": "R0x4NN3G4M3RG0D355",
+                    "name": "tumblr_girl.png",
                     "row": 1,
-                    "col": 4,
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-2.mp3",
-                        "text": "This dump is not fitting for a woman of my stature! I'll have you know I'm a level 30 Warlock."
-                    }
-                }
-            ],
-            "actions" : [
-                {
-                    "row": 0,
-                    "col": 6,
-                    "type": "TEXT",
-                    "sfx": "typing.mp3",
-                    "text": "The fridge is filled with... Doritos?"
-                },
-                {
-                    "row": 5,
-                    "col": 0,
-                    "type": "TEXT",
-                    "sfx": "typing.mp3",
-                    "text": "Looks like they're playing Guild of Warcraft!"
-                },
-                {
-                    "row": 3,
-                    "col": 5,
-                    "type": "TEXT",
-                    "sfx": "typing.mp3",
-                    "text": "The neighbours' stove is much cleaner than mine..."
+                    "col": 17,
                 }
             ]
         }
