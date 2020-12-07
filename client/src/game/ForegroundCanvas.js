@@ -2,6 +2,7 @@ const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { NPC } = require('./map/map-init/NPCController')
 const { MapObject } = require('./map/map-init/setMapAttributes')
 const { MapSprite } = require('./map/map-init/mapSprite')
+const { getUniqueId } = require('../helpers/utilFunctions')
 
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
@@ -9,6 +10,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.characters = false;
         this.objects = false;
         this.allSprites = [ ];
+        this.spriteDictionary = { };
         this.playerSprite = { };
         console.log("initializing foreground!")
     };
@@ -76,9 +78,12 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     };
     
     setCharacterSprite( tile ) {
-        this.allSprites.push( new NPC( 
-            tile, "STRD"
-        ) )
+        const newNPC = new NPC( tile, "STRD" );
+        const newId = getUniqueId( Object.keys(this.spriteDictionary) );
+        this.allSprites.push( newNPC )
+        this.spriteDictionary[newId] = newNPC
+        tile.spriteId = newId;
+        console.log(this.NPC_Dictionary);
     }
 
     setObjectSprite( tile ) {
