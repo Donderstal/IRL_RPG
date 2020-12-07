@@ -1,4 +1,5 @@
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } = require('../../game-data/globals')
+const { MapAction, BlockedArea, Door } = require('../map/map-init/setMapAttributes')
 const globals = require('../../game-data/globals')
 
 class I_Tile {
@@ -89,18 +90,51 @@ class I_Tile {
         }
     }
 
-    setEventData( type, data ) {
+    setEventData( type, eventData ) {
         console.log('new ' + type + ' event!')
-        console.log(data)
+        console.log(eventData)
         this.hasEvent = true;
-        this.eventType = type
-        this.eventData = data;
+        switch ( type ) {
+            case 'DOOR' :
+                this.setDoor( eventData )
+                break;
+            case 'ACTION' :
+                this.setAction( eventData )
+                break;
+        }
+    }
+
+    setDoor( doorData ) {
+        const directionIn = doorData.directionIn
+        let xy = { };
+        switch ( directionIn ) {
+            case 'FACING_UP' :
+                xy.x = this.x + ( GRID_BLOCK_PX / 2 )
+                xy.y = this.y
+                break;
+            case 'FACING_RIGHT' :
+                xy.x = this.x + GRID_BLOCK_PX
+                xy.y = this.y + ( GRID_BLOCK_PX / 2 )
+                break;
+            case 'FACING_DOWN' :
+                xy.x = this.x + ( GRID_BLOCK_PX / 2 )
+                xy.y = this.y + GRID_BLOCK_PX
+                break;
+            case 'FACING_LEFT' :
+                xy.x = this.x
+                xy.y = this.y + ( GRID_BLOCK_PX / 2 )
+                break;
+        }
+        this.event = new Door( xy.x, xy.y, doorData )
+    }
+
+    setAction( actionData ) {
+        this.event = new MapAction( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData )
     }
 
     clearEventData( ) {
         this.hasEvent = false;
-        this.eventType = null;
-        this.eventData = null;
+        this.event = null;
     }
 
     setSpriteData( type, data ) {

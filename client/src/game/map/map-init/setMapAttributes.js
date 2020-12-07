@@ -242,5 +242,6 @@ class BlockedArea {
     setMapAttributes,
     MapAction,
     BlockedArea,
-    MapObject
+    MapObject,
+    Door
  }

@@ -27,8 +27,10 @@ const stopListenForKeyPress = () => {
 
 const addKeyToPressed = ( ) => {
     if ( event.key == "l" ) {
-        console.log(globals.FOREGROUND.playerSprite)
-        console.log(globals.BACKGROUND.activeTile)
+        console.log( globals.FOREGROUND.playerSprite )
+        console.log( globals.BACKGROUND.activeTile )
+        console.log( globals.FOREGROUND.playerSprite.centerX(), globals.FOREGROUND.playerSprite.baseY() )
+        console.log(globals.BACKGROUND.grid.array)
     }
     if ( state.overworldMode ) {
         handleMapKeyPress( event )

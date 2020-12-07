@@ -1,5 +1,7 @@
 const state = require('../../../game-data/state')
 
+const globals = require('../../../game-data/globals')
+
 /**
  * @param {string} direction - string representing direction
  * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
@@ -14,68 +16,51 @@ const state = require('../../../game-data/state')
  */
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
-        
-    if ( state.currentMap.NPCs ) {        
-        for( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            if ( state.currentMap.NPCs[i].hitbox.checkForBlockedRange( ) ) {
-                return false;
-            }
-        }
+    const activeBackgroundTile = globals.BACKGROUND.grid.array[sprite.activeTileIndex];
+    const activeForegroundTile = globals.FOREGROUND.grid.array[sprite.activeTileIndex];
+    sprite.hasMoved = false;
+
+    if ( sprite.nextTileIndex >= globals.BACKGROUND.grid.array.length || sprite.nextTileIndex < 0 ) {
+        console.log('stop!')
+        return false;
     }
 
-    if ( state.currentMap.blockedXyValues ) {
-        for( var i = 0; i < state.currentMap.blockedXyValues.length; i++ ) {
-            if ( state.currentMap.blockedXyValues[i].checkForBlockedRange( ) ) {
-                return false;
-            }
-        }
-    }
-
-/*     const activeMapData = state.currentMap.mapData
-    const activeMapBorders = state.currentMap.borders */
-
-    if ( direction == 'FACING_LEFT' ) {
-/*         if ( activeMapBorders.left >= sprite.x ) {
-            if ( !activeMapData.outdoors ) {
-                return false
-            }
-            if ( !activeMapData.neighbours.left ) {
-                return false
-            }
-        } */
-    }    
-
-    if ( direction == 'FACING_RIGHT' ) {
-/*         if ( activeMapBorders.right <= sprite.x ) {
-            if ( !activeMapData.outdoors ) {
-                return false
-            }
-            if ( !activeMapData.neighbours.right ) {
-                return false
-            }
-        } */
-    }
-
-    if ( direction == 'FACING_UP' ){
-/*         if ( activeMapBorders.top >= sprite.y ) {
-            if ( !activeMapData.outdoors ) {
-                return false
-            }
-            if ( !activeMapData.neighbours.up ) {
-                return false
-            }
-        } */
+    if ( direction == 'FACING_UP' && activeBackgroundTile.row == 1 ){
+        console.log('stop!')
+        return false;
     }   
 
-    if ( direction == 'FACING_DOWN' ) {
-/*         if ( activeMapBorders.bottom <= sprite.y ) {
-            if ( !activeMapData.outdoors ) {
-                return false
-            }
-            if ( !activeMapData.neighbours.down ) {
-                return false
-            }
-        } */
+    if ( direction == 'FACING_DOWN' && activeBackgroundTile.row == globals.BACKGROUND.grid.rows ) {
+        console.log('stop!')
+        return false;
+    }
+    
+    const nextBackgroundTile = globals.BACKGROUND.grid.array[sprite.nextTileIndex];
+    const nextForegroundTile = globals.FOREGROUND.grid.array[sprite.nextTileIndex];
+
+    if ( direction == 'FACING_LEFT' && nextBackgroundTile.row != activeBackgroundTile.row ) {
+        console.log('stop!')
+        return false;
+    }    
+
+    if ( direction == 'FACING_RIGHT'&& nextBackgroundTile.row != activeBackgroundTile.row  ) {
+        console.log('stop!')
+        return false;
+    }
+
+    if ( nextBackgroundTile.blocked || nextForegroundTile.hasSprite ) {
+        console.log('stop!')
+        return false;
+    }
+
+    if ( nextBackgroundTile.hasEvent && nextBackgroundTile.eventType == "DOOR" ) {
+        console.log("DOOR!")
+        console.log(nextBackgroundTile.eventData)
+    }
+
+    if ( nextBackgroundTile.hasEvent && nextBackgroundTile.eventType == "ACTION" ) {
+        console.log("ACTION!")
+        console.log(nextBackgroundTile.eventData)
     }
     
     return true

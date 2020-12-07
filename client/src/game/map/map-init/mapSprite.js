@@ -23,12 +23,7 @@ class MapSprite extends I_Sprite {
 
     drawSprite( ) {
         super.drawSprite( )
-
-        if ( this.hasMoved ) {
-            this.setActiveTileIndex( )
-            this.hasMoved = false;            
-        }
-
+        this.setActiveTileIndex( )
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );        
         }
@@ -39,7 +34,7 @@ class MapSprite extends I_Sprite {
 
     setActiveTileIndex( ) {
         const tile = globals.BACKGROUND.getTileAtXY( this.centerX( ), this.baseY( ) );
-        this.activeTileIndex = tile.index;
+        this.activeTileIndex = ( tile.index >= globals.BACKGROUND.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
         switch ( this.direction ) {
             case globals["FACING_UP"] :
                 this.nextTileIndex = this.activeTileIndex - globals.BACKGROUND.grid.cols;
