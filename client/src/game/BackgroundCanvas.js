@@ -1,5 +1,6 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { BACKGROUND_CANVAS, UTILITY_CANVAS, GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../game-data/globals')
+const globals = require('../game-data/globals')
 
 class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
@@ -7,6 +8,9 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         console.log("initializing map!")
         this.activeTile = { }
     };
+    
+    get activePlayerTile( ) { return this.grid.array[ globals.FOREGROUND.activePlayerTile.index ] }
+    get nextPlayerTile( ) { return this.grid.array[ globals.FOREGROUND.nextPlayerTile.index ] }
 
     setMapName( mapName ) {
         this.mapName = mapName;

@@ -1,4 +1,5 @@
 const state = require('../../../game-data/state')
+const globals = require('../../../game-data/globals')
 const displayText   = require('./displayText')
 const soundHelper = require('../../interfaces/I_Sound')
 
@@ -9,8 +10,20 @@ const handleActionButton = ( ) => {
         return;
     }
 
-    if ( state.currentMap.availableAction != null ) {
-        handleAction( state.currentMap.availableAction )
+    const currentPlayerTileFront = globals.FOREGROUND.activePlayerTile;
+    const nextPlayerTileFront = globals.FOREGROUND.nextPlayerTile;
+
+    const currentPlayerTileBack = globals.BACKGROUND.activePlayerTile;
+    const nextPlayerTileBack = globals.BACKGROUND.nextPlayerTile;
+
+    if ( currentPlayerTileBack.hasEvent ) {
+        console.log( 'handle current tile evneT! ')
+        handleAction( currentPlayerTileBack.event )
+        return;
+    }
+    else if ( nextPlayerTileBack.hasEvent ) {
+        console.log( 'handle next tile evneT! ')
+        handleAction( nextPlayerTileBack.event )
         return;
     }
 }

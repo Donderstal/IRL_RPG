@@ -13,6 +13,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         console.log("initializing foreground!")
     };
 
+    get activePlayerTile( ) { return this.grid.array[ this.playerSprite.activeTileIndex ] }
+    get nextPlayerTile( ) { return this.grid.array[ this.playerSprite.nextTileIndex ] }
+
     setForegroundData( mapData ) {
         if ( mapData.characters )
             this.setCharacters( mapData.characters );
