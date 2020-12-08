@@ -2,7 +2,7 @@ const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const controls = require('./controls')
-const controller = require('./gameController')
+const { Game } = require('./Game')
 const storyProgression  = require('../game-data/storyProgression')
 
 const utility = require('../helpers/utilFunctions')
@@ -81,24 +81,8 @@ const initGameCanvas = ( canvas ) => {
 
 
 const startGame = ( name, className ) => {
-    globals.BACKGROUND_CANVAS = document.getElementById( 'game-background-canvas' );
-    initGameCanvas( globals.BACKGROUND_CANVAS );
-    const Back_Xy = globals.BACKGROUND_CANVAS.getBoundingClientRect();
-    globals.BACKGROUND_CTX = globals.BACKGROUND_CANVAS.getContext( '2d' );
-    globals.BACKGROUND = new BackgroundCanvas( Back_Xy.x, Back_Xy.y, globals.BACKGROUND_CTX );
-    
-    globals.FOREGROUND_CANVAS = document.getElementById( 'game-front-canvas' );
-    initGameCanvas( globals.FOREGROUND_CANVAS );
-    const Front_Xy = globals.FOREGROUND_CANVAS.getBoundingClientRect();
-    globals.FOREGROUND_CTX = globals.FOREGROUND_CANVAS.getContext( '2d' );
-    globals.FOREGROUND = new ForegroundCanvas( Front_Xy.x, Front_Xy.y, globals.FOREGROUND_CTX );
-
-    globals.UTILITY_CANVAS = document.getElementById( 'game-utility-canvas' );
-    globals.UTILITY_CTX = globals.UTILITY_CANVAS.getContext( '2d' );
-
-    const mapData = getMapData(firstMapUrl)
-    mapData.playerStart.playerClass   = className;
-    startNewGame( mapData )
+    globals.GAME = new Game( );
+    globals.GAME.startNewGame( name, className );
 }
 
 module.exports = {
