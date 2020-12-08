@@ -106,20 +106,20 @@ const setMapObjects = ( ) => {
 }
 
 class MapObject extends I_Sprite {
-    constructor ( mapObject ) {
-        const objectResource = mapObjectResources[mapObject.type]
+    constructor ( tile ){
+        const objectResource = mapObjectResources[tile.spriteData.type]
         const src = "/static/sprite-assets/" + objectResource.src
-        const startingCell = { "row": mapObject.row , "col": mapObject.col }
+        const startingCell = { "row": tile.spriteData.row , "col": tile.spriteData.col }
         const dimensions = {
             "width": objectResource.width_blocks * globals.GRID_BLOCK_PX,
             "height": objectResource.height_blocks * globals.GRID_BLOCK_PX 
         }
 
-        super( startingCell, src, "CELL", dimensions )
+        super( tile, dimensions, src )
 
         this.widthInSheet   = objectResource.width_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = objectResource.height_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
-        this.hasAction  = mapObject.hasAction;
+        this.hasAction  = tile.spriteData.hasAction;
 
         if ( this.hasAction ) {
             this.hitbox = new MapAction( this.x + (globals.GRID_BLOCK_PX * .25), this.y + (this.height - globals.GRID_BLOCK_PX) , mapObject.action )

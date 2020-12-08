@@ -86,7 +86,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
 
     setObjectSprite( tile ) {
-        this.allSprites.push( new MapObject( tile.spriteData ) )
+        this.allSprites.push( new MapObject( tile ) )
     }
 
     clearSpriteFromTile(x, y) {
