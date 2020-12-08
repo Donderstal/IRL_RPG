@@ -1,5 +1,5 @@
 const animationFrameController = require('./animationFrameController')
-const globals       = require('../game-data/globals')
+const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const controls      = require('./controls')
 const getMapData    = require('../resources/mapResources').getMapData
 const tilesheets    = require('../resources/tilesheetResources').sheets
@@ -23,7 +23,8 @@ class Game {
         this.battle; // class Battle
         this.party; // class Party
 
-        this.activeMap; // string
+        this.activeMap; 
+        this.activeMapName; // string
 
         this.initGameCanvases( );
     }
@@ -40,16 +41,17 @@ class Game {
         object.ctx = object.canvas.getContext( '2d' );
         
         if ( type != 'UTIL' ) {
-            object.canvas.width = globals.CANVAS_WIDTH;
-            object.canvas.height = globals.CANVAS_HEIGHT;
+            object.canvas.width = CANVAS_WIDTH;
+            object.canvas.height = CANVAS_HEIGHT;
             const xy = object.canvas.getBoundingClientRect( );
             object.class = type == 'FRONT' ?  new ForegroundCanvas( xy.x, xy.y, object.ctx ) : new BackgroundCanvas( xy.x, xy.y, object.ctx );
         }
     }
 
     startNewGame( name, className ) {
-        this.activeMap = firstMapUrl;
-        const mapData = getMapData(this.activeMap)
+        this.activeMapName = firstMapUrl;
+        this.activeMap = getMapData(this.activeMapName)
+        const mapData = getMapData(this.activeMapName)
         mapData.playerStart.playerClass = className;
         mapData.playerStart.name = name;
         this.loadMapToCanvases( mapData )
@@ -73,6 +75,24 @@ class Game {
     
         this.front.class.setForegroundData( mapData );
         this.front.class.setSpritesToGrid( );
+    }
+
+    clearMapFromCanvases( ) {
+        this.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+        this.front.class.clearMap( );
+
+        this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+        this.back.class.clearMap( );
+    }
+
+    switchMap ( destination, type ) {
+        controls.clearPressedKeys( );
+        controls.stopListenForKeyPress( );
+
+        this.clearMapFromCanvases( );
+        this.loadMapToCanvases( getMapData( destination ) );
+
+        controls.listenForKeyPress(); 
     }
 }
 

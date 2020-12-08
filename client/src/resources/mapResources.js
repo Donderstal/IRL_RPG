@@ -20,6 +20,8 @@ const getMapData = ( fullMapName ) => {
         console.log(mapData.subMaps[mapNameArray[2]])
         console.log('_____')
         return mapData.subMaps[mapNameArray[2]];
+    } else {
+        return mapData
     }
 }
 

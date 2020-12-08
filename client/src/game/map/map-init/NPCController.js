@@ -78,7 +78,9 @@ class NPC extends MapSprite {
     }
 
     checkForAnimationPath ( ) {
-        this.calcCellFromXy()
+        const cell = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+        this.row = cell.row;
+        this.col = cell.col
     
         if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
             this.lastPosition = this.nextPosition
