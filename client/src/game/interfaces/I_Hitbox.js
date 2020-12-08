@@ -44,9 +44,9 @@ class I_Hitbox {
     }
 
     checkForActionRange( ) {
-        let playerHitBox = state.playerCharacter.sprite.hitbox;
+        let playerHitBox = globals.GAME.front.class.playerSprite.hitbox;
         if ( !Object.is(this, playerHitBox) ) {
-            let playerDirection = state.playerCharacter.sprite.direction
+            let playerDirection = globals.GAME.front.class.playerSprite.direction
             if ( this.playerIsInVerticalActionRange( playerHitBox ) ) {
                 if ( this.upFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) ) {
                     return true;
@@ -68,9 +68,9 @@ class I_Hitbox {
     }
 
     checkForBlockedRange( ) {
-        let playerHitBox = state.playerCharacter.sprite.hitbox;
+        let playerHitBox = globals.GAME.front.class.playerSprite.hitbox;
         if ( !Object.is(this, playerHitBox) ) {
-            let playerDirection = state.playerCharacter.sprite.direction
+            let playerDirection = globals.GAME.front.class.playerSprite.direction
             if ( this.playerIsInVerticalBlockedRange( playerHitBox ) ) {
                 if ( this.upFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) ) {
                     return true;

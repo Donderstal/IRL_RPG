@@ -84,11 +84,7 @@ class Door extends I_Hitbox {
 
     checkForBlockedRange( ) {
         if ( super.checkForBlockedRange( ) ) {
-            state.mapTransition = {
-                urlToNewMap: this.to, 
-                oldMapName: state.currentMap.mapData.mapName
-            }
-            
+            globals.GAME.switchMap( this.to,"DOOR" );
             const sfx = new Sound( "misc/random5.wav", true )
             sfx.play()
         }
