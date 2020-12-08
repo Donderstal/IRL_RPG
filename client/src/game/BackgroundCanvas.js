@@ -71,6 +71,11 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     drawMapFromGridData( ) {
         this.grid.drawMap( this.sheetImage )
     }
+
+    clearMap( ) {
+        this.doors = [ ];
+        this.actions = { };
+    }
 };
 
 module.exports = { 

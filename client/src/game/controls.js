@@ -22,7 +22,6 @@ const stopListenForKeyPress = () => {
     window.removeEventListener('keydown', addKeyToPressed)
     window.removeEventListener('keyup', removeKeyFromPressed)
     state.listeningForPress = false;
-    clearstate.PressedKeys()
 }
 
 const addKeyToPressed = ( ) => {

@@ -83,7 +83,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites.push( newNPC )
         this.spriteDictionary[newId] = newNPC
         tile.spriteId = newId;
-        console.log(this.NPC_Dictionary);
     }
 
     setObjectSprite( tile ) {
@@ -95,6 +94,11 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         tile.clearSpriteData( );
         this.drawSpritesInGrid( );
     };
+
+    clearMap( ) {
+        this.allSprites = [ ];
+        this.spriteDictionary = { };
+    }
 }
 
 module.exports = { 
