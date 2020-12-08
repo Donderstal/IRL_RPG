@@ -16,11 +16,11 @@ const globals = require('../../../game-data/globals')
  */
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
-    const activeBackgroundTile = globals.BACKGROUND.grid.array[sprite.activeTileIndex];
-    const activeForegroundTile = globals.FOREGROUND.grid.array[sprite.activeTileIndex];
+    const activeBackgroundTile = globals.GAME.back.class.grid.array[sprite.activeTileIndex];
+    const activeForegroundTile = globals.GAME.front.class.grid.array[sprite.activeTileIndex];
     sprite.hasMoved = false;
 
-    if ( sprite.nextTileIndex >= globals.BACKGROUND.grid.array.length || sprite.nextTileIndex < 0 ) {
+    if ( sprite.nextTileIndex >= globals.GAME.back.class.grid.array.length || sprite.nextTileIndex < 0 ) {
         console.log('stop!')
         return false;
     }
@@ -30,13 +30,13 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return false;
     }   
 
-    if ( direction == 'FACING_DOWN' && activeBackgroundTile.row == globals.BACKGROUND.grid.rows ) {
+    if ( direction == 'FACING_DOWN' && activeBackgroundTile.row == globals.GAME.back.class.grid.rows ) {
         console.log('stop!')
         return false;
     }
     
-    const nextBackgroundTile = globals.BACKGROUND.grid.array[sprite.nextTileIndex];
-    const nextForegroundTile = globals.FOREGROUND.grid.array[sprite.nextTileIndex];
+    const nextBackgroundTile = globals.GAME.back.class.grid.array[sprite.nextTileIndex];
+    const nextForegroundTile = globals.GAME.front.class.grid.array[sprite.nextTileIndex];
 
     if ( direction == 'FACING_LEFT' && nextBackgroundTile.row != activeBackgroundTile.row ) {
         console.log('stop!')

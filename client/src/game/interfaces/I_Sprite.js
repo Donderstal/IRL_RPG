@@ -70,7 +70,7 @@ class Sprite {
     }
 
     calcXyFromCell( ) {
-        const xy = globals.FOREGROUND.getXYOfCell(this.row, this.col)
+        const xy = globals.GAME.front.class.getXYOfCell(this.row, this.col)
         this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
         this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
 

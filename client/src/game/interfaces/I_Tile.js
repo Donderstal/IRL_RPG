@@ -33,7 +33,7 @@ class I_Tile {
         this.flipTileBeforeDrawing( sheetImage, tilesheetXy );
     
         this.ctx.drawImage(
-            globals.UTILITY_CANVAS, 
+            globals.GAME.util.canvas, 
             0, 0,
             GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.x, this.y,
@@ -42,7 +42,7 @@ class I_Tile {
     }
 
     flipTileBeforeDrawing( sheetImage, tilesheetXy ) {
-        const ctx = globals.UTILITY_CTX;
+        const ctx = globals.GAME.util.ctx;
         this.mirrored ? ctx.setTransform( -1, 0, 0, 1, GRID_BLOCK_IN_SHEET_PX, 0 ) : ctx.setTransform(1,0,0,1,0,0);
         switch( this.angle ) {
             case 0: 

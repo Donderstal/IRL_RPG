@@ -5,8 +5,8 @@ const mapControls = require('./mapControls')
 const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
-    const foreground = globals.FOREGROUND;
-    const background = globals.BACKGROUND;
+    const foreground = globals.GAME.front.class;
+    const background = globals.GAME.back.class;
     const player     = foreground.playerSprite
     state.currentMap.layeredSprites = [];
 
@@ -40,13 +40,13 @@ const handleMapAnimations = ( ) => {
 }
 
 const setActiveTile = ( ) => {
-    globals.BACKGROUND.setActiveTile( globals.FOREGROUND.playerSprite.centerX( ), globals.FOREGROUND.playerSprite.baseY( ) )
-    globals.FOREGROUND.playerSprite.row = globals.BACKGROUND.activeTile.row;
-    globals.FOREGROUND.playerSprite.col = globals.BACKGROUND.activeTile.col;
+    globals.GAME.back.class.setActiveTile( globals.GAME.front.class.playerSprite.centerX( ), globals.GAME.front.class.playerSprite.baseY( ) )
+    globals.GAME.front.class.playerSprite.row = globals.GAME.back.class.activeTile.row;
+    globals.GAME.front.class.playerSprite.col = globals.GAME.back.class.activeTile.col;
 }
 
 const drawSpritesInOrder = ( ) => {
-    globals.FOREGROUND.allSprites.sort( ( a, b ) => {
+    globals.GAME.front.class.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
             return 1 
         }
@@ -60,7 +60,7 @@ const drawSpritesInOrder = ( ) => {
 
     canvas.clearEntireCanvas("FRONT")
 
-    globals.FOREGROUND.allSprites.forEach( (e) => {
+    globals.GAME.front.class.allSprites.forEach( (e) => {
         e.drawSprite()
     })       
 }

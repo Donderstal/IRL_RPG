@@ -9,8 +9,8 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.activeTile = { }
     };
     
-    get activePlayerTile( ) { return this.grid.array[ globals.FOREGROUND.activePlayerTile.index ] }
-    get nextPlayerTile( ) { return this.grid.array[ globals.FOREGROUND.nextPlayerTile.index ] }
+    get activePlayerTile( ) { return this.grid.array[ globals.GAME.front.class.activePlayerTile.index ] }
+    get nextPlayerTile( ) { return this.grid.array[ globals.GAME.front.class.nextPlayerTile.index ] }
 
     setMapName( mapName ) {
         this.mapName = mapName;

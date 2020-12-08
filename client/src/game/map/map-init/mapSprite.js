@@ -33,17 +33,17 @@ class MapSprite extends I_Sprite {
     }
 
     setActiveTileIndex( ) {
-        const tile = globals.BACKGROUND.getTileAtXY( this.centerX( ), this.baseY( ) );
-        this.activeTileIndex = ( tile.index >= globals.BACKGROUND.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
+        const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+        this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
         switch ( this.direction ) {
             case globals["FACING_UP"] :
-                this.nextTileIndex = this.activeTileIndex - globals.BACKGROUND.grid.cols;
+                this.nextTileIndex = this.activeTileIndex - globals.GAME.back.class.grid.cols;
                 break;
             case globals["FACING_RIGHT"] :
                 this.nextTileIndex = this.activeTileIndex + 1;
                 break;
             case globals["FACING_DOWN"] :
-                this.nextTileIndex = this.activeTileIndex + globals.BACKGROUND.grid.cols;
+                this.nextTileIndex = this.activeTileIndex + globals.GAME.back.class.grid.cols;
                 break;
             case globals["FACING_LEFT"] :
                 this.nextTileIndex = this.activeTileIndex - 1;

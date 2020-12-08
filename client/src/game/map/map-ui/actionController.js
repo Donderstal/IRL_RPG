@@ -10,13 +10,13 @@ const handleActionButton = ( ) => {
         return;
     }
 
-    const currentPlayerTileFront = globals.FOREGROUND.activePlayerTile;
-    const nextPlayerTileFront = globals.FOREGROUND.nextPlayerTile;
+    const currentPlayerTileFront = globals.GAME.front.class.activePlayerTile;
+    const nextPlayerTileFront = globals.GAME.front.class.nextPlayerTile;
 
-    const currentPlayerTileBack = globals.BACKGROUND.activePlayerTile;
-    const nextPlayerTileBack = globals.BACKGROUND.nextPlayerTile;
+    const currentPlayerTileBack = globals.GAME.back.class.activePlayerTile;
+    const nextPlayerTileBack = globals.GAME.back.class.nextPlayerTile;
 
-    const spritesById = globals.FOREGROUND.spriteDictionary
+    const spritesById = globals.GAME.front.class.spriteDictionary
 
     if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
         console.log( 'handle current tile sprite evneT! ')

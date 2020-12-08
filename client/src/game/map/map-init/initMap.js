@@ -60,16 +60,16 @@ const initMapFromBattle = ( ) => {
  * load the new map data to the BACKGROND and FOREGROUND classes
  */
 const initializeMap = ( mapData ) => {    
-    globals.BACKGROUND.initGrid( mapData.rows, mapData.columns );
-    globals.FOREGROUND.initGrid( mapData.rows, mapData.columns );
+    globals.GAME.back.class.initGrid( mapData.rows, mapData.columns );
+    globals.GAME.front.class.initGrid( mapData.rows, mapData.columns );
 
     const sheetData = tilesheets[mapData.tileSet];
 
-    globals.BACKGROUND.setBackgroundData( mapData );
-    globals.BACKGROUND.loadImageWithCallback( '/static/tilesets/' + sheetData.src, globals.BACKGROUND.drawMapFromGridData );
+    globals.GAME.back.class.setBackgroundData( mapData );
+    globals.GAME.back.class.loadImageWithCallback( '/static/tilesets/' + sheetData.src, globals.GAME.back.class.drawMapFromGridData );
 
-    globals.FOREGROUND.setForegroundData( mapData );
-    globals.FOREGROUND.setSpritesToGrid( );
+    globals.GAME.front.class.setForegroundData( mapData );
+    globals.GAME.front.class.setSpritesToGrid( );
 }
 
 

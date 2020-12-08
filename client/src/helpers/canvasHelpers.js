@@ -35,7 +35,7 @@ const drawFromImageToCanvas = (
         widthInCanvas, heightInCanvas 
     ) => {
 
-    let ctx = canvas === "BACK" ? globals.BACKGROUND_CTX : globals.FOREGROUND_CTX   
+    let ctx = canvas === "BACK" ? globals.GAME.back.ctx : globals.GAME.front.ctx  
     ctx.drawImage(
         image, 
         imageX, imageY, 
