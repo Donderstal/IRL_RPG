@@ -40,6 +40,7 @@ class Sprite {
     }
 
     setNewLocationInGrid( cell, direction ) {
+        console.log(cell)
         let newTile = globals.GAME.front.class.grid.getTileAtCell( cell.row, cell.col )
         this.direction = globals[direction] != undefined ? globals[direction] : this.direction;
         this.setSpriteToGrid( newTile );

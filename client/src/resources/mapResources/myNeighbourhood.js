@@ -528,7 +528,7 @@ module.exports = {
             }
         }
     },
-    "neighbourhood-A2" : {
+    "A2" : {
         "mapName": "my-neighbourhood/A2",
         "tileSet": "my_neighbourhood",
         "outdoors": true,
@@ -1060,7 +1060,7 @@ module.exports = {
             }
         }
     },
-    "neighbourhood-A4" : {
+    "A4" : {
         "mapName": "my-neighbourhood/A4",
         "tileSet": "my_neighbourhood",
         "outdoors": true,

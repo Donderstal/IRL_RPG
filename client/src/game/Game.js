@@ -49,9 +49,8 @@ class Game {
     }
 
     startNewGame( name, className ) {
-        this.activeMapName = firstMapUrl;
-        this.activeMap = getMapData(this.activeMapName)
-        const mapData = getMapData(this.activeMapName)
+        const mapData = getMapData(firstMapUrl);
+        this.storeMapData( mapData, firstMapUrl );
         mapData.playerStart.playerClass = className;
         mapData.playerStart.name = name;
         this.loadMapToCanvases( mapData )
@@ -78,11 +77,10 @@ class Game {
     }
 
     clearMapFromCanvases( ) {
-        this.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-        this.front.class.clearMap( );
-
-        this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-        this.back.class.clearMap( );
+        [ this.back, this.front ].forEach( ( canvasWrapper ) => {
+            canvasWrapper.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+            canvasWrapper.class.clearMap( );
+        })
     }
 
     switchMap ( destination, type ) {
@@ -90,11 +88,19 @@ class Game {
         controls.stopListenForKeyPress( );
 
         const newMapData = getMapData( destination );
+        console.log('new map data')
+        console.log(newMapData)
         this.clearMapFromCanvases( );
 
         this.loadMapToCanvases( newMapData );
-        this.setPlayerInNewMap( newMapData, type )
+        this.setPlayerInNewMap( newMapData, type );
+        this.storeMapData( newMapData, destination );
         controls.listenForKeyPress(); 
+    }
+
+    storeMapData( mapData, mapName ) {
+        this.activeMapName = mapName;
+        this.activeMap = mapData;
     }
 
     setPlayerInNewMap( mapData, type ) {
@@ -112,6 +118,26 @@ class Game {
                 } )
                 break;
             case 'NEIGHBOUR' :
+                Object.keys( mapData.neighbours ).forEach( ( key ) => {
+                    if ( this.activeMapName == mapData.neighbours[key] ) {
+                        console.log(key)
+                        switch ( key ) {
+                            case 'up' : 
+                                break;
+                            case 'right' :
+                                newPlayerCell.row = this.front.class.playerSprite.row;
+                                newPlayerCell.col = mapData.columns;
+                                break;
+                            case 'down' :
+                                break;
+                            case 'left' :
+                                newPlayerCell.row = this.front.class.playerSprite.row;
+                                newPlayerCell.col = 0;
+                                break;
+                            
+                        }
+                    }
+                })
                 break;
             case 'BUS' :
                 break;

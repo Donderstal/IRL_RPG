@@ -122,7 +122,7 @@ class MapObject extends I_Sprite {
         this.hasAction  = tile.spriteData.hasAction;
 
         if ( this.hasAction ) {
-            this.hitbox = new MapAction( this.x + (globals.GRID_BLOCK_PX * .25), this.y + (this.height - globals.GRID_BLOCK_PX) , mapObject.action )
+            this.hitbox = new MapAction( this.x + (globals.GRID_BLOCK_PX * .25), this.y + (this.height - globals.GRID_BLOCK_PX) , tile.spriteData.action )
         }
     }
 
