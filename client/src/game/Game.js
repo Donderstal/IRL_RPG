@@ -89,10 +89,36 @@ class Game {
         controls.clearPressedKeys( );
         controls.stopListenForKeyPress( );
 
+        const newMapData = getMapData( destination );
         this.clearMapFromCanvases( );
-        this.loadMapToCanvases( getMapData( destination ) );
 
+        this.loadMapToCanvases( newMapData );
+        this.setPlayerInNewMap( newMapData, type )
         controls.listenForKeyPress(); 
+    }
+
+    setPlayerInNewMap( mapData, type ) {
+        const newPlayerCell = {};
+        let direction;
+
+        switch ( type ) {
+            case 'DOOR' :
+                mapData.doors.forEach( ( door ) => {
+                    if ( this.activeMapName == door.to ) {
+                        newPlayerCell.row = door.row;
+                        newPlayerCell.col = door.col;
+                        direction = door.directionOut;
+                    }
+                } )
+                break;
+            case 'NEIGHBOUR' :
+                break;
+            case 'BUS' :
+                break;
+        }
+
+        this.front.class.playerSprite.setNewLocationInGrid( newPlayerCell, direction );
+        this.front.class.allSprites.push( this.front.class.playerSprite );
     }
 }
 

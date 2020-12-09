@@ -268,7 +268,7 @@ module.exports = {
             },
             {
                 "row": 4, 
-                "col": 7,
+                "col": 10,
                 "to"  : "my-neighbourhood/A1/neighbours-house",
                 "directionIn": "FACING_UP",
                 "directionOut": "FACING_DOWN",

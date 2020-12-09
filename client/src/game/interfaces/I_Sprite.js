@@ -25,13 +25,24 @@ class Sprite {
         this.sheet         = new Image();
         this.moving        = false;
 
-        this.row = tile.row;
-        this.col = tile.col;
-        this.x = tile.x;
-        this.y = tile.y - ( this.height - globals.GRID_BLOCK_PX )
+        this.setSpriteToGrid( tile )
 
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
+    }
+
+    setSpriteToGrid( tile ) {
+        this.row = tile.row;
+        this.col = tile.col;
+        this.x = tile.x;
+        
+        this.y = tile.y - ( this.height - globals.GRID_BLOCK_PX )
+    }
+
+    setNewLocationInGrid( cell, direction ) {
+        let newTile = globals.GAME.front.class.grid.getTileAtCell( cell.row, cell.col )
+        this.direction = globals[direction] != undefined ? globals[direction] : this.direction;
+        this.setSpriteToGrid( newTile );
     }
 
     initSpriteFromCell( start ) {

@@ -73,6 +73,12 @@ class I_Grid {
         return this.array[tileIndex]
     }
 
+    getTileAtCell( row, column ) {
+        const tileIndex = (row * this.cols) + column;
+
+        return this.array[tileIndex]
+    }
+
     setTileGridToArray( tileGrid ) {
         this.array.forEach( ( e, index ) => {
             if ( typeof tileGrid[index] == 'string' || typeof tileGrid[index] == 'number' ) {
