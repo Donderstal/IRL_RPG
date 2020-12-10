@@ -132,7 +132,7 @@ class Game {
                                 break;
                             case 'left' :
                                 newPlayerCell.row = this.front.class.playerSprite.row;
-                                newPlayerCell.col = 0;
+                                newPlayerCell.col = 1;
                                 break;
                             
                         }

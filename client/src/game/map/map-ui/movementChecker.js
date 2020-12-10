@@ -38,12 +38,12 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const nextBackgroundTile = globals.GAME.back.class.grid.array[sprite.nextTileIndex];
     const nextForegroundTile = globals.GAME.front.class.grid.array[sprite.nextTileIndex];
 
-    if ( direction == 'FACING_LEFT' && nextBackgroundTile.row != activeBackgroundTile.row && !globals.GAME.activeMap.neighbours.left ) {
+    if ( direction == 'FACING_LEFT' && nextBackgroundTile.row != activeBackgroundTile.row && globals.GAME.activeMap.outdoors && !globals.GAME.activeMap.neighbours.left ) {
         console.log('stop!')
         return false;
     }    
 
-    if ( direction == 'FACING_RIGHT'&& nextBackgroundTile.row != activeBackgroundTile.row && !globals.GAME.activeMap.neighbours.right ) {
+    if ( direction == 'FACING_RIGHT'&& nextBackgroundTile.row != activeBackgroundTile.row && globals.GAME.activeMap.outdoors && !globals.GAME.activeMap.neighbours.right ) {
         console.log('stop!')
         return false;
     }

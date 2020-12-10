@@ -505,7 +505,7 @@ module.exports = {
                 "actions" : [
                     {
                         "row": 1,
-                        "col": 2,
+                        "col": 4,
                         "type": "TEXT",
                         "sfx": "typing.mp3",
                         "text": "This is my fridge. Sadly, there's nothing in it..."

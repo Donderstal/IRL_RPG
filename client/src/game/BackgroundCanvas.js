@@ -50,21 +50,27 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     }
 
     setBackgroundData( mapData ) {
-        this.setDoors( mapData.doors );
-        this.setActions( mapData.actions );
+        if ( mapData.doors )
+            this.setDoors( mapData.doors );
+        if ( mapData.actions )
+            this.setActions( mapData.actions );
         this.setTileGrid( mapData.grid.flat(1) )
 
         this.grid.array.forEach( ( tile ) => {
-            this.doors.forEach( ( door ) => {
-                if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
-                    tile.setEventData( "DOOR", door );
-                }
-            })
-            this.actions.forEach( ( action ) => {
-                if ( tile.row == action.row && tile.col == action.col && !action.isSet ) {
-                    tile.setEventData( "ACTION", action );
-                }
-            })
+            if ( this.doors.length > 0 ) {
+                this.doors.forEach( ( door ) => {
+                    if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
+                        tile.setEventData( "DOOR", door );
+                    }
+                })                
+            }
+            if ( Object.keys( this.actions ).length > 0 ) {
+                this.actions.forEach( ( action ) => {
+                    if ( tile.row == action.row && tile.col == action.col && !action.isSet ) {
+                        tile.setEventData( "ACTION", action );
+                    }
+                })                
+            }
         } );
     }
     
