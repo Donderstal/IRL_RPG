@@ -12,6 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC 10, 2020
+* New Game class which wraps both Canvas classes
+* Fixed doors, neighbours
+* Fixed positioning calc bug
+
 #### DEC 7, 2020,
 * New data structure for game canvases imported from mapmaker tool
 * Foreground and Background classes extend I_CanvasWithGrid
