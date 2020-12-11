@@ -13,6 +13,8 @@ class I_Tile {
         this.row = row;
         this.col = col;
 
+        this.blocked = false;
+
         this.hasSprite = false;
         this.spriteType;
         this.spriteData = {};
