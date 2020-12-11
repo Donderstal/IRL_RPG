@@ -29,10 +29,13 @@ const handleMovementOfSprite = ( sprite, direction ) => {
  * Update sprite direction prop based on direction globals
  */
 const moveInDirection = ( sprite, direction ) => {
+    const changedDirection = sprite.direction != globals[direction] ;
+    sprite.direction = globals[direction]   
+
     const movementIsAllowed = movementChecker.checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
 
-    if ( movementIsAllowed && !movingToNeighbour ) {
+    if ( movementIsAllowed && !movingToNeighbour && !changedDirection ) {
         sprite.hasMoved = true;
 
         if ( direction == 'FACING_RIGHT' ) {
@@ -48,8 +51,6 @@ const moveInDirection = ( sprite, direction ) => {
             sprite.y -= globals.MOVEMENT_SPEED        
         }     
     }
-
-    sprite.direction = globals[direction]        
 }
 
 const checkForNeighbours = ( sprite ) => {

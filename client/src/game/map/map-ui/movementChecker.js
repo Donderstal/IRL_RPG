@@ -49,8 +49,16 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     }
 
     if ( nextBackgroundTile.blocked || nextForegroundTile.hasSprite ) {
-        console.log('stop!')
-        return false;
+        switch ( direction ) {
+            case 'FACING_RIGHT' :
+                return !sprite.isInCenterFacingRight;
+            case 'FACING_LEFT' :
+                return !sprite.isInCenterFacingLeft;
+            case 'FACING_UP' :
+                return !sprite.isInCenterFacingUp;
+            case 'FACING_DOWN' :
+                return !sprite.isInCenterFacingDown;
+        }
     }
 
     if ( nextBackgroundTile.hasEvent && nextBackgroundTile.eventType == "DOOR" ) {

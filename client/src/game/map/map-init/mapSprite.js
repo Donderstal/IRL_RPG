@@ -21,6 +21,28 @@ class MapSprite extends I_Sprite {
         this.setActiveTileIndex( );
     }
 
+    get currentTileBack( ) { return globals.GAME.back.class.grid.array[this.activeTileIndex] };
+    get nextTileBack( ) { return globals.GAME.back.class.grid.array[this.nextTileIndex] };
+
+    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndex] };
+    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+
+    get isInCenterFacingLeft( ) {
+        return this.centerX( ) < ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .55 ) );
+    }
+
+    get isInCenterFacingRight( ) {
+        return this.centerX( ) > ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .45 ) ); 
+    }
+
+    get isInCenterFacingUp( ) {
+        return this.baseY( ) < ( this.currentTileBack.y + ( globals.GRID_BLOCK_PX * .55 ) );
+    }
+
+    get isInCenterFacingDown( ) {
+        return this.baseY( ) > ( this.currentTileBack.y + ( globals.GRID_BLOCK_PX * .45 ) ); 
+    }
+
     drawSprite( ) {
         super.drawSprite( )
         this.setActiveTileIndex( )
