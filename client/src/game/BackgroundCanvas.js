@@ -49,12 +49,19 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.doors = doors;
     }
 
-    setBackgroundData( mapData ) {
+    setBlockedTiles( sheetData ) {
+        this.blockedTiles = sheetData.blocked
+    }
+
+    setBackgroundData( mapData, sheetData ) {
         if ( mapData.doors )
             this.setDoors( mapData.doors );
         if ( mapData.actions )
             this.setActions( mapData.actions );
+        if ( sheetData.blocked ) 
+            this.setBlockedTiles( sheetData )
         this.setTileGrid( mapData.grid.flat(1) )
+
 
         this.grid.array.forEach( ( tile ) => {
             if ( this.doors.length > 0 ) {
@@ -71,6 +78,11 @@ class BackgroundCanvas extends I_CanvasWithGrid {
                     }
                 })                
             }
+            this.blockedTiles.forEach( blockedId => {
+                if ( tile.ID == blockedId ) {
+                    tile.blocked = true;
+                }
+            })
         } );
     }
     
@@ -81,6 +93,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     clearMap( ) {
         this.doors = [ ];
         this.actions = { };
+        this.blockedTiles = [ ];
     }
 };
 

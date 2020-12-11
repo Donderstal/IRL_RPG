@@ -12,6 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC 11, 2020
+* Solved bug that made it possible for player to enter blocked tiles
+* Fixed positioning problems
+* Restored proper border collision 
+
 #### DEC 10, 2020
 * New Game class which wraps both Canvas classes
 * Fixed doors, neighbours

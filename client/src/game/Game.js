@@ -69,7 +69,7 @@ class Game {
     
         const sheetData = tilesheets[mapData.tileSet];
     
-        this.back.class.setBackgroundData( mapData );
+        this.back.class.setBackgroundData( mapData, sheetData );
         this.back.class.loadImageWithCallback( '/static/tilesets/' + sheetData.src, this.back.class.drawMapFromGridData );
     
         this.front.class.setForegroundData( mapData );
