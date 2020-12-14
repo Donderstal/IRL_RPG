@@ -174,17 +174,17 @@ module.exports = {
                 "sprite": "neckbeard.png",
                 "direction": "FACING_DOWN",
                 "name": "Darkwing Dork",    
-                "row": 6,
-                "col": 18,
+                "row": 8,
+                "col": 13,
 
                 "lastPosition" : {                   
                     "id": 0,
-                    "row": 6, 
-                    "col": 18
+                    "row": 8, 
+                    "col": 13
                 },
                 "path" : [                     
-                    { "id": 0, "row": 4, "col": 18 },
-                    { "id": 1, "row": 8, "col": 18 }
+                    { "id": 0, "row": 6, "col": 13 },
+                    { "id": 1, "row": 10, "col": 13 }
                 ],
                 "action": {
                     "type": "TEXT",
@@ -661,19 +661,19 @@ module.exports = {
                 "type": "walking",
                 "sprite": "manager.png",
                 "row": 11, 
-                "col": 11, 
+                "col": 12, 
                 "direction": "FACING_UP",
                 "name": "Manager Bob",
                 "lastPosition" : { 
                     "id": 0,
                     "row": 11, 
-                    "col": 11
+                    "col": 12
                 },
                 "path" : [                     
-                    { "id": 0, "row": 8, "col": 11 },
-                    { "id": 1, "row": 6, "col": 11 },
-                    { "id": 2, "row": 6, "col": 7 },
-                    { "id": 3, "row": 8, "col": 7 }
+                    { "id": 0, "row": 9, "col": 12 },
+                    { "id": 1, "row": 5, "col": 12 },
+                    { "id": 2, "row": 5, "col": 7 },
+                    { "id": 3, "row": 9, "col": 7 }
                 ],
                 "action": {
                     "type": "TEXT",
@@ -685,19 +685,19 @@ module.exports = {
                 "type": "walking",
                 "sprite": "robot.png",
                 "row": 9, 
-                "col": 11, 
+                "col": 12, 
                 "name": "Consoombot",                    
                 "direction": "FACING_UP",
                 "lastPosition" : { 
                     "id": 0,
                     "row": 9, 
-                    "col": 11 
+                    "col": 12
                 },
                 "path" : [                     
-                    { "id": 0, "row": 8, "col": 11 },
-                    { "id": 1, "row": 6, "col": 11 },
-                    { "id": 2, "row": 6, "col": 7 },
-                    { "id": 3, "row": 8, "col": 7 }
+                    { "id": 0, "row": 9, "col": 12 },
+                    { "id": 1, "row": 5, "col": 12 },
+                    { "id": 2, "row": 5, "col": 7 },
+                    { "id": 3, "row": 9, "col": 7 }
                 ],
                 "action": {
                     "type": "TEXT",

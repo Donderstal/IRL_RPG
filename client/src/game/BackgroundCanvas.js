@@ -94,7 +94,9 @@ class BackgroundCanvas extends I_CanvasWithGrid {
 
     clearMap( ) {
         this.doors = [ ];
+        this.hasDoors = false;
         this.actions = { };
+        this.hasActions = false;
         this.blockedTiles = [ ];
     }
 };
