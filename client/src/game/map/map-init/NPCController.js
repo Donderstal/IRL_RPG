@@ -54,7 +54,7 @@ class NPC extends MapSprite {
     }
 
     gotToNextDirection( countFrame = true) {
-        const NPC_speed = globals.MOVEMENT_SPEED
+        const NPC_speed = globals.MOVEMENT_SPEED * .5;
         if ( this.nextPosition.row > this.row ) {
             this.y += NPC_speed  
             this.direction = globals["FACING_DOWN"]

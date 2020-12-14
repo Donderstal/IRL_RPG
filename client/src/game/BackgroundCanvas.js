@@ -43,10 +43,12 @@ class BackgroundCanvas extends I_CanvasWithGrid {
 
     setActions( actions ) {
         this.actions = actions;
+        this.hasActions = true;
     }
 
     setDoors( doors ) {
         this.doors = doors;
+        this.hasDoors = true;
     }
 
     setBlockedTiles( sheetData ) {
@@ -64,14 +66,14 @@ class BackgroundCanvas extends I_CanvasWithGrid {
 
 
         this.grid.array.forEach( ( tile ) => {
-            if ( this.doors.length > 0 ) {
+            if ( this.hasDoors ) {
                 this.doors.forEach( ( door ) => {
                     if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
                         tile.setEventData( "DOOR", door );
                     }
                 })                
             }
-            if ( Object.keys( this.actions ).length > 0 ) {
+            if ( this.hasActions ) {
                 this.actions.forEach( ( action ) => {
                     if ( tile.row == action.row && tile.col == action.col && !action.isSet ) {
                         tile.setEventData( "ACTION", action );
