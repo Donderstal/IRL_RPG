@@ -16,14 +16,17 @@ class MapSprite extends I_Sprite {
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.hasMoved = false;
+
+        this.previousTileIndex;
         this.activeTileIndex;
         this.nextTileIndex;
-        this.setActiveTileIndex( );
     }
 
+    get previousTileBack( ) { return globals.GAME.back.class.grid.array[this.previousTileIndex] };
     get currentTileBack( ) { return globals.GAME.back.class.grid.array[this.activeTileIndex] };
     get nextTileBack( ) { return globals.GAME.back.class.grid.array[this.nextTileIndex] };
 
+    get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndex] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
 
@@ -45,7 +48,7 @@ class MapSprite extends I_Sprite {
 
     drawSprite( ) {
         super.drawSprite( )
-        this.setActiveTileIndex( )
+        this.updateTileIndexes( )
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );        
         }
@@ -54,9 +57,34 @@ class MapSprite extends I_Sprite {
         }
     }
 
-    setActiveTileIndex( ) {
+    updateTileIndexes( ) {
         const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+
+        if ( this.activeTileIndex == null ) {
+            this.setActiveTileIndex( tile );
+            this.setNextTileIndex( );
+        }
+        else if ( this.activeTileIndex != tile.index ) {
+            this.setPreviousTileIndex( );
+            this.setActiveTileIndex( tile );
+            this.setNextTileIndex( );
+        } 
+        else if ( this.direction != this.nextTileDirection ) {
+            this.setNextTileIndex( );
+        } 
+    }
+
+    setPreviousTileIndex( ) {
+        this.previousTileIndex = this.activeTileIndex
+        this.previousTileFront.clearSpriteData( )
+    }
+
+    setActiveTileIndex( tile ) {
         this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
+        this.currentTileFront.setSpriteData( 'character', null )
+    }
+
+    setNextTileIndex( ) {
         switch ( this.direction ) {
             case globals["FACING_UP"] :
                 this.nextTileIndex = this.activeTileIndex - globals.GAME.back.class.grid.cols;
@@ -71,9 +99,11 @@ class MapSprite extends I_Sprite {
                 this.nextTileIndex = this.activeTileIndex - 1;
                 break;
         }
+
+        this.nextTileDirection = this.direction;
     }
 
-    handleAnimation( ) {
+    handleAnimation(  ) {
         if ( this.inScriptedAnimation ) {
             this.doScriptedAnimation( );
             return

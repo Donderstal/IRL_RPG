@@ -26,8 +26,12 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( )
-        if ( !state.cinematicMode ) {
-            this.hitbox.checkForActionRange( );            
+
+        if ( this.nextTileFront.hasSprite || this.nextTileBack.isBlocked ) {
+            this.pathIsBlocked = true;
+        }
+        else {
+            this.pathIsBlocked = false;
         }
         
         if ( !this.inScriptedAnimation && !this.inMovementAnimation ) {
@@ -104,7 +108,13 @@ class NPC extends MapSprite {
 
     handleWalkingNPCAnimation( ) {
         this.getNextNPCPosition( );
-        this.gotToNextDirection( );
+
+        if ( !this.pathIsBlocked ) {
+            this.gotToNextDirection( );            
+        } else {
+            this.sheetPosition = 0;
+        }
+
         this.checkForAnimationPath( );
     }
 }
