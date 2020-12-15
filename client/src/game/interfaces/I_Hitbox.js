@@ -43,134 +43,126 @@ class I_Hitbox {
         frontCtx.stroke( );
     }
 
-    checkForActionRange( ) {
-        let playerHitBox = globals.GAME.front.class.playerSprite.hitbox;
-        if ( !Object.is(this, playerHitBox) ) {
-            let playerDirection = globals.GAME.front.class.playerSprite.direction
-            if ( this.playerIsInVerticalActionRange( playerHitBox ) ) {
-                if ( this.upFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
-                else if ( this.downFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
+    checkForActionRange( targetHitbox, targetDirection ) {
+        if ( this.targetIsInVerticalActionRange( targetHitbox ) ) {
+            if ( this.upFacingTargetIsInActionRadius( targetHitbox, targetDirection ) ) {
+                return true;
             }
-            else if ( this.playerIsInHorizontalActionRange( playerHitBox ) ) {
-                if ( this.leftFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
-                else if ( this.rightFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
+            else if ( this.downFacingTargetIsInActionRadius( targetHitbox, targetDirection ) ) {
+                return true;
             }
-            return false;
         }
+        else if ( this.targetIsInHorizontalActionRange( targetHitbox ) ) {
+            if ( this.leftFacingTargetIsInActionRadius( targetHitbox, targetDirection ) ) {
+                return true;
+            }
+            else if ( this.rightFacingTargetIsInActionRadius( targetHitbox, targetDirection ) ) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    checkForBlockedRange( ) {
-        let playerHitBox = globals.GAME.front.class.playerSprite.hitbox;
-        if ( !Object.is(this, playerHitBox) ) {
-            let playerDirection = globals.GAME.front.class.playerSprite.direction
-            if ( this.playerIsInVerticalBlockedRange( playerHitBox ) ) {
-                if ( this.upFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
-                else if ( this.downFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
+    checkForBlockedRange( targetHitbox, targetDirection ) {
+        if ( this.targetIsInVerticalBlockedRange( targetHitbox ) ) {
+            if ( this.upFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
+                return true;
             }
-            else if ( this.playerIsInHorizontalBlockedRange( playerHitBox ) ) {
-                if ( this.leftFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
-                else if ( this.rightFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) ) {
-                    return true;
-                }
+            else if ( this.downFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
+                return true;
             }
-            return false;
         }
+        else if ( this.targetIsInHorizontalBlockedRange( targetHitbox ) ) {
+            if ( this.leftFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
+                return true;
+            }
+            else if ( this.rightFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //////////////
-    playerIsInVerticalBlockedRange( playerHitBox ) {        
-        return ( playerHitBox.x - playerHitBox.innerRadius ) > ( this.left( ) - this.innerRadius ) 
-        && ( playerHitBox.x + playerHitBox.innerRadius ) < ( this.right( ) + this.innerRadius )
+    targetIsInVerticalBlockedRange( targetHitbox ) {        
+        return ( targetHitbox.x - targetHitbox.innerRadius ) > ( this.left( ) - this.innerRadius ) 
+        && ( targetHitbox.x + targetHitbox.innerRadius ) < ( this.right( ) + this.innerRadius )
     }
 
-    playerIsInHorizontalBlockedRange( playerHitBox ) {       
-        return ( playerHitBox.y - playerHitBox.innerRadius ) > ( this.top( ) - this.innerRadius )
-        && ( playerHitBox.y + playerHitBox.innerRadius ) < ( this.bottom( ) + this.innerRadius )
+    targetIsInHorizontalBlockedRange( targetHitbox ) {       
+        return ( targetHitbox.y - targetHitbox.innerRadius ) > ( this.top( ) - this.innerRadius )
+        && ( targetHitbox.y + targetHitbox.innerRadius ) < ( this.bottom( ) + this.innerRadius )
     }
 
     /////////////
-    playerIsInVerticalActionRange( playerHitBox ) {        
-        return ( playerHitBox.x - playerHitBox.innerRadius ) > this.left( ) && ( playerHitBox.x + playerHitBox.innerRadius ) < this.right( )
+    targetIsInVerticalActionRange( targetHitbox ) {        
+        return ( targetHitbox.x - targetHitbox.innerRadius ) > this.left( ) && ( targetHitbox.x + targetHitbox.innerRadius ) < this.right( )
     }
 
-    playerIsInHorizontalActionRange( playerHitBox ) {       
-        return ( playerHitBox.y - playerHitBox.innerRadius ) > this.top( ) && ( playerHitBox.y + playerHitBox.innerRadius ) < this.bottom( )
+    targetIsInHorizontalActionRange( targetHitbox ) {       
+        return ( targetHitbox.y - targetHitbox.innerRadius ) > this.top( ) && ( targetHitbox.y + targetHitbox.innerRadius ) < this.bottom( )
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
-    upFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingUp  =  playerDirection == globals.FACING_UP
-        const thisIsAbovePlayer = playerHitBox.top( ) > this.innerTop( );
+    upFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
+        const targetIsFacingUp  = targetDirection == globals.FACING_UP
+        const thisIsAboveTarget = targetHitbox.top( ) > this.innerTop( );
 
-        return playerIsFacingUp && ( playerHitBox.top( ) <= this.bottom( ) ) 
-        && playerHitBox.top( ) <= this.innerBottom( ) && thisIsAbovePlayer
+        return targetIsFacingUp && ( targetHitbox.top( ) <= this.bottom( ) ) 
+        && targetHitbox.top( ) <= this.innerBottom( ) && thisIsAboveTarget
     }
 
-    downFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingDown   =  playerDirection == globals.FACING_DOWN
-        const thisIsBelowPlayer    = playerHitBox.bottom( ) < this.innerBottom( )
+    downFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
+        const targetIsFacingDown   = targetDirection == globals.FACING_DOWN
+        const thisIsBelowTarget    = targetHitbox.bottom( ) < this.innerBottom( )
 
-        return playerIsFacingDown && ( playerHitBox.bottom( ) >= this.top( ) ) 
-        && playerHitBox.outerBottom( ) >= this.innerTop( ) && thisIsBelowPlayer
+        return targetIsFacingDown && ( targetHitbox.bottom( ) >= this.top( ) ) 
+        && targetHitbox.outerBottom( ) >= this.innerTop( ) && thisIsBelowTarget
     }
 
-    leftFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingLeft    = playerDirection == globals.FACING_LEFT
-        const thisIsLeftOfPlayer    = playerHitBox.left( ) > this.innerLeft( )
+    leftFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
+        const targetIsFacingLeft    = targetDirection == globals.FACING_LEFT
+        const thisIsLeftOfTarget    = targetHitbox.left( ) > this.innerLeft( )
 
-        return playerIsFacingLeft && ( playerHitBox.left( ) <= this.right( ) ) 
-        && playerHitBox.left( ) <= this.innerRight( ) && thisIsLeftOfPlayer
+        return targetIsFacingLeft && ( targetHitbox.left( ) <= this.right( ) ) 
+        && targetHitbox.left( ) <= this.innerRight( ) && thisIsLeftOfTarget
     }
 
-    rightFacingPlayerIsInBlockedRadius( playerHitBox, playerDirection ){
-        const playerIsFacingRight    = playerDirection == globals.FACING_RIGHT;
-        const thisIsRightOfPlayer   = playerHitBox.right( ) < this.innerRight( )
+    rightFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ){
+        const targetIsFacingRight   = targetDirection == globals.FACING_RIGHT;
+        const thisIsRightOfTarget   = targetHitbox.right( ) < this.innerRight( )
 
-        return playerIsFacingRight && ( playerHitBox.right( ) >= this.left( ) ) 
-        && playerHitBox.right( ) >= this.innerLeft( ) && thisIsRightOfPlayer
+        return targetIsFacingRight && ( targetHitbox.right( ) >= this.left( ) ) 
+        && targetHitbox.right( ) >= this.innerLeft( ) && thisIsRightOfTarget
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    upFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingUp  = playerDirection == globals.FACING_UP;
-        const thisIsAbovePlayer = playerHitBox.top( ) > this.innerTop( );
+    upFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
+        const targetIsFacingUp  = targetDirection == globals.FACING_UP;
+        const thisIsAboveTarget = targetHitbox.top( ) > this.innerTop( );
 
-        return playerIsFacingUp && ( playerHitBox.outerTop( ) <= this.bottom( ) ) && thisIsAbovePlayer
+        return targetIsFacingUp && ( targetHitbox.outerTop( ) <= this.bottom( ) ) && thisIsAboveTarget
     }
 
-    downFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingDown    =  playerDirection == globals.FACING_DOWN
-        const thisIsBelowPlayer    = playerHitBox.bottom( ) < this.innerBottom( )
+    downFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
+        const targetIsFacingDown    =  targetDirection == globals.FACING_DOWN
+        const thisIsBelowTarget    = targetHitbox.bottom( ) < this.innerBottom( )
 
-        return playerIsFacingDown && ( playerHitBox.outerBottom( ) >= this.top( ) ) && thisIsBelowPlayer
+        return targetIsFacingDown && ( targetHitbox.outerBottom( ) >= this.top( ) ) && thisIsBelowTarget
     }
 
-    leftFacingPlayerIsInActionRadius( playerHitBox, playerDirection ) {
-        const playerIsFacingLeft    = playerDirection == globals.FACING_LEFT
-        const thisIsLeftOfPlayer    = playerHitBox.left( ) > this.innerLeft( )
+    leftFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
+        const targetIsFacingLeft    = targetDirection == globals.FACING_LEFT
+        const thisIsLeftOfTarget    = targetHitbox.left( ) > this.innerLeft( )
 
-        return playerIsFacingLeft && ( playerHitBox.outerLeft( ) <= this.right( ) ) && thisIsLeftOfPlayer
+        return targetIsFacingLeft && ( targetHitbox.outerLeft( ) <= this.right( ) ) && thisIsLeftOfTarget
     }
 
-    rightFacingPlayerIsInActionRadius( playerHitBox, playerDirection ){
-        const playerIsFacingRight   = playerDirection == globals.FACING_RIGHT
-        const thisIsRightOfPlayer   = playerHitBox.right( ) < this.innerRight( )
+    rightFacingTargetIsInActionRadius( targetHitbox, targetDirection ){
+        const targetIsFacingRight   = targetDirection == globals.FACING_RIGHT
+        const thisIsRightOfTarget   = targetHitbox.right( ) < this.innerRight( )
 
-        return playerIsFacingRight && ( playerHitBox.outerRight( ) >= this.left( ) ) && thisIsRightOfPlayer
+        return targetIsFacingRight && ( targetHitbox.outerRight( ) >= this.left( ) ) && thisIsRightOfTarget
     }
 }
 
