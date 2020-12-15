@@ -50,7 +50,8 @@ class MapSprite extends I_Sprite {
         super.drawSprite( )
         this.updateTileIndexes( )
         if ( !state.cinematicMode ) {
-            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );        
+            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
+            this.hitbox.draw( this.centerX( ), this.baseY( ) )    
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
