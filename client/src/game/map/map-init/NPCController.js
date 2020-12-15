@@ -26,8 +26,12 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( )
-        if ( !state.cinematicMode ) {
-            this.hitbox.checkForActionRange( );            
+
+        if ( this.nextTileFront.hasSprite || this.nextTileBack.blocked ) {
+            this.pathIsBlocked = true;
+        }
+        else {
+            this.pathIsBlocked = false;
         }
         
         if ( !this.inScriptedAnimation && !this.inMovementAnimation ) {
@@ -54,7 +58,7 @@ class NPC extends MapSprite {
     }
 
     gotToNextDirection( countFrame = true) {
-        const NPC_speed = globals.MOVEMENT_SPEED
+        const NPC_speed = globals.MOVEMENT_SPEED * .5;
         if ( this.nextPosition.row > this.row ) {
             this.y += NPC_speed  
             this.direction = globals["FACING_DOWN"]
@@ -104,7 +108,13 @@ class NPC extends MapSprite {
 
     handleWalkingNPCAnimation( ) {
         this.getNextNPCPosition( );
-        this.gotToNextDirection( );
+
+        if ( !this.pathIsBlocked ) {
+            this.gotToNextDirection( );            
+        } else {
+            this.sheetPosition = 0;
+        }
+
         this.checkForAnimationPath( );
     }
 }

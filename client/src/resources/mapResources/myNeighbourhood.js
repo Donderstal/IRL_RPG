@@ -174,17 +174,17 @@ module.exports = {
                 "sprite": "neckbeard.png",
                 "direction": "FACING_DOWN",
                 "name": "Darkwing Dork",    
-                "row": 6,
-                "col": 18,
+                "row": 8,
+                "col": 13,
 
                 "lastPosition" : {                   
                     "id": 0,
-                    "row": 6, 
-                    "col": 18
+                    "row": 8, 
+                    "col": 13
                 },
                 "path" : [                     
-                    { "id": 0, "row": 4, "col": 18 },
-                    { "id": 1, "row": 8, "col": 18 }
+                    { "id": 0, "row": 6, "col": 13 },
+                    { "id": 1, "row": 10, "col": 13 }
                 ],
                 "action": {
                     "type": "TEXT",
@@ -285,6 +285,46 @@ module.exports = {
             }
         ],
         "subMaps": {
+            "testmap" : {   
+                "mapName": "my-neighbourhood/A1/testmap",
+                "tileSet": "Interior_Yum_Mart_Tiles",
+                "music": "game-jam-2.mp3",
+                "outdoors": false,
+                "rows": 16,
+                "columns": 24,
+                "grid":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],[8,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[8,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74],[12,75,75,75,75,75,75,75,75,75,75,79,79,75,75,75,75,75,75,75,75,75,75,74]],
+                "playerStart":{ 
+                    "row": 3,
+                    "col": 2
+                },
+                "characters" : [
+                    {
+                        "type": "idle",
+                        "sprite": "chad_recolour01.png",
+                        "direction": "FACING_DOWN",
+                        "name": "chad_recolour01.png",
+                        "row": 2,
+                        "col": 4
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "characterx3.png",
+                        "direction": "FACING_DOWN",
+                        "name": "characterx3.png",
+                        "row": 2,
+                        "col": 18,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 6, 
+                            "col": 18
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 4, "col": 18 },
+                            { "id": 1, "row": 8, "col": 18 }
+                        ],
+                    }
+                ]
+            },
             "neighbours-house" : {   
                 "mapName": "my-neighbourhood/A1/neighbours-house",
                 "tileSet": "Interior_Yum_Mart_Tiles",
@@ -621,19 +661,19 @@ module.exports = {
                 "type": "walking",
                 "sprite": "manager.png",
                 "row": 11, 
-                "col": 11, 
+                "col": 12, 
                 "direction": "FACING_UP",
                 "name": "Manager Bob",
                 "lastPosition" : { 
                     "id": 0,
                     "row": 11, 
-                    "col": 11
+                    "col": 12
                 },
                 "path" : [                     
-                    { "id": 0, "row": 8, "col": 11 },
-                    { "id": 1, "row": 6, "col": 11 },
-                    { "id": 2, "row": 6, "col": 7 },
-                    { "id": 3, "row": 8, "col": 7 }
+                    { "id": 0, "row": 9, "col": 12 },
+                    { "id": 1, "row": 5, "col": 12 },
+                    { "id": 2, "row": 5, "col": 7 },
+                    { "id": 3, "row": 9, "col": 7 }
                 ],
                 "action": {
                     "type": "TEXT",
@@ -645,19 +685,19 @@ module.exports = {
                 "type": "walking",
                 "sprite": "robot.png",
                 "row": 9, 
-                "col": 11, 
+                "col": 12, 
                 "name": "Consoombot",                    
                 "direction": "FACING_UP",
                 "lastPosition" : { 
                     "id": 0,
                     "row": 9, 
-                    "col": 11 
+                    "col": 12
                 },
                 "path" : [                     
-                    { "id": 0, "row": 8, "col": 11 },
-                    { "id": 1, "row": 6, "col": 11 },
-                    { "id": 2, "row": 6, "col": 7 },
-                    { "id": 3, "row": 8, "col": 7 }
+                    { "id": 0, "row": 9, "col": 12 },
+                    { "id": 1, "row": 5, "col": 12 },
+                    { "id": 2, "row": 5, "col": 7 },
+                    { "id": 3, "row": 9, "col": 7 }
                 ],
                 "action": {
                     "type": "TEXT",
