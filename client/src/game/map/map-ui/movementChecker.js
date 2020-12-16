@@ -59,14 +59,14 @@ const checkForCollision = ( sprite, isPlayer ) => {
 
     if ( currFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontTile.spriteId];
-        if ( targetSprite.checkForBlockedRange( sprite.hitbox, sprite.direction ) ) {
+        if ( targetSprite.hitbox.checkForActionRange( sprite.hitbox, sprite.direction ) ) {
             console.log(currFrontTile.spriteId + ' in blocked range!')            
         }
     }
     else if ( nextFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
-        if ( targetSprite.checkForBlockedRange( sprite.hitbox, sprite.direction ) ) {
-            console.log(nextFrontTile.spriteId + ' in blocked range?')
+        if ( targetSprite.hitbox.checkForActionRange( sprite.hitbox, sprite.direction ) ) {
+            console.log(nextFrontTile.spriteId + ' in blocked range!')
         }
     }
 }

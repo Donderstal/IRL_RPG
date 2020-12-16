@@ -17,6 +17,7 @@ class MapSprite extends I_Sprite {
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.hasMoved = false;
+        this.spriteId;
 
         this.previousTileIndex;
         this.activeTileIndex;
@@ -80,11 +81,13 @@ class MapSprite extends I_Sprite {
     setPreviousTileIndex( ) {
         this.previousTileIndex = this.activeTileIndex
         this.previousTileFront.clearSpriteData( )
+        this.previousTileFront.spriteId = null;
     }
 
     setActiveTileIndex( tile ) {
         this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
         this.currentTileFront.setSpriteData( 'character', null )
+        this.currentTileFront.spriteId = this.spriteId;
     }
 
     setNextTileIndex( ) {

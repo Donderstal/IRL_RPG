@@ -34,6 +34,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         let mapSpritesFolder = '/static/sprites/';
         let spriteSrc = mapSpritesFolder + start.playerClass.toLowerCase() + '.png'
         this.playerSprite = new MapSprite( startingTile[0], 'STRD', spriteSrc )
+        startingTile[0].setSpriteData( 'character', null )
+        startingTile[0].spriteId = "PLAYER"
+        this.playerSprite.spriteId = "PLAYER"
         this.allSprites.push( this.playerSprite )
     }
 
@@ -70,7 +73,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
                 if ( tile.spriteType == 'object' ) {
                     this.setObjectSprite( tile )
                 }
-                else if ( tile.spriteType == 'character' ) {
+                else if ( tile.spriteType == 'character' && tile.spriteId != "PLAYER" ) {
                     this.setCharacterSprite( tile )
                 }
             }
@@ -80,6 +83,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     setCharacterSprite( tile ) {
         const newNPC = new NPC( tile, "STRD" );
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );
+        newNPC.spriteId = newId;
         this.allSprites.push( newNPC )
         this.spriteDictionary[newId] = newNPC
         tile.spriteId = newId;
