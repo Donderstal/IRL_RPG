@@ -27,11 +27,6 @@ const handleMapAnimations = ( ) => {
                 action.checkForActionRange( );
             })
         }  
-        
-        if ( background.activePlayerTile.hasEvent && background.activePlayerTile.eventType == "DOOR" ) {     
-            console.log('on door!')
-            background.activePlayerTile.event.checkForBlockedRange( );
-        }  
     }
 
     if ( state.currentMap.bubbleIsActive ) {

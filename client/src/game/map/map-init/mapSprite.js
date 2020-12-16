@@ -5,6 +5,7 @@ const anim = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
+const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
 class MapSprite extends I_Sprite {
     constructor ( tile, spriteSize, src ) {       
@@ -51,7 +52,8 @@ class MapSprite extends I_Sprite {
         this.updateTileIndexes( )
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
-            this.hitbox.draw( this.centerX( ), this.baseY( ) )    
+            this.hitbox.draw( this.centerX( ), this.baseY( ) )
+            checkForCollision( this, this == globals.GAME.front.class.playerSprite );    
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )

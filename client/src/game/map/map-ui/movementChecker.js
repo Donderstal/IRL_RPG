@@ -41,6 +41,37 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     return true
 }
 
+const checkForCollision = ( sprite, isPlayer ) => {
+    const currBackTile = sprite.currentTileBack;
+    const currFrontTile = sprite.currentTileFront;
+
+    const nextBackTile = sprite.nextTileBack;
+    const nextFrontTile = sprite.nextTileFront;
+
+    if ( isPlayer ) {
+        if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
+            currBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
+        }
+        else if  ( nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
+            nextBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
+        }
+    }
+
+    if ( currFrontTile.hasSprite ) {
+        const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontTile.spriteId];
+        if ( targetSprite.checkForBlockedRange( sprite.hitbox, sprite.direction ) ) {
+            console.log(currFrontTile.spriteId + ' in blocked range!')            
+        }
+    }
+    else if ( nextFrontTile.hasSprite ) {
+        const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
+        if ( targetSprite.checkForBlockedRange( sprite.hitbox, sprite.direction ) ) {
+            console.log(nextFrontTile.spriteId + ' in blocked range?')
+        }
+    }
+}
+
 module.exports = {
-    checkIfMovementAllowed
+    checkIfMovementAllowed,
+    checkForCollision
 }
