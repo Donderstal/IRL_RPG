@@ -96,11 +96,13 @@ class I_Hitbox {
 
     /////////////
     targetIsInVerticalActionRange( targetHitbox ) {        
-        return ( targetHitbox.x - targetHitbox.innerRadius ) > this.left( ) && ( targetHitbox.x + targetHitbox.innerRadius ) < this.right( )
+        return targetHitbox.x > this.outerLeft( ) 
+        && targetHitbox.x < this.outerRight( )
     }
 
     targetIsInHorizontalActionRange( targetHitbox ) {       
-        return ( targetHitbox.y - targetHitbox.innerRadius ) > this.top( ) && ( targetHitbox.y + targetHitbox.innerRadius ) < this.bottom( )
+        return ( targetHitbox.y - targetHitbox.innerRadius ) > this.top( ) 
+        && ( targetHitbox.y + targetHitbox.innerRadius ) < this.bottom( )
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -152,17 +154,19 @@ class I_Hitbox {
     }
 
     leftFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingLeft    = targetDirection == globals.FACING_LEFT
-        const thisIsLeftOfTarget    = targetHitbox.left( ) > this.innerLeft( )
+        const targetIsFacingLeft        = targetDirection == globals.FACING_LEFT
+        const thisIsLeftOfTarget        = targetHitbox.left( ) > this.innerLeft( )
+        const leftIsInTargetOuterRight  = targetHitbox.left( ) < this.outerRight( )
 
-        return targetIsFacingLeft && ( targetHitbox.outerLeft( ) <= this.right( ) ) && thisIsLeftOfTarget
+        return targetIsFacingLeft && leftIsInTargetOuterRight  && thisIsLeftOfTarget
     }
 
     rightFacingTargetIsInActionRadius( targetHitbox, targetDirection ){
-        const targetIsFacingRight   = targetDirection == globals.FACING_RIGHT
-        const thisIsRightOfTarget   = targetHitbox.right( ) < this.innerRight( )
+        const targetIsFacingRight       = targetDirection == globals.FACING_RIGHT
+        const thisIsRightOfTarget       = targetHitbox.right( ) < this.innerRight( )
+        const rightIsInTargetOuterLeft  = targetHitbox.right( ) > this.outerLeft( )
 
-        return targetIsFacingRight && ( targetHitbox.outerRight( ) >= this.left( ) ) && thisIsRightOfTarget
+        return targetIsFacingRight && rightIsInTargetOuterLeft && thisIsRightOfTarget
     }
 }
 

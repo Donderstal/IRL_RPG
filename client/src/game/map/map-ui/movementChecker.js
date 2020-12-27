@@ -42,11 +42,19 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 }
 
 const checkForCollision = ( sprite, isPlayer ) => {
+    const spriteIsFacingUpOrDown =  ( sprite.direction == globals["FACING_UP"] || sprite.direction == globals["FACING_DOWN"] )
+
     const currBackTile = sprite.currentTileBack;
     const currFrontTile = sprite.currentTileFront;
 
+    const currFrontNeighbourPrev = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex - 1 : sprite.activeTileIndex - 24];
+    const currFrontNeighbourNext = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex + 1 : sprite.activeTileIndex + 24];
+
     const nextBackTile = sprite.nextTileBack;
     const nextFrontTile = sprite.nextTileFront;
+
+    const nextFrontNeighbourPrev = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex - 1 : sprite.nextTileIndex - 24];
+    const nextFrontNeighbourNext = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex + 1 : sprite.nextTileIndex + 24];
 
     if ( isPlayer ) {
         if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
@@ -58,17 +66,41 @@ const checkForCollision = ( sprite, isPlayer ) => {
             return true;
         }
     }
-
+    
     if ( currFrontTile.hasSprite && currFrontTile.spriteId != sprite.spriteId ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontTile.spriteId];
-        if ( targetSprite.hitbox.checkForActionRange( sprite.hitbox, sprite.direction ) ) {
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
+            return true;         
+        }
+    }
+    else if ( currFrontNeighbourPrev.hasSprite ) {
+        const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourPrev.spriteId];
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
+            return true;         
+        }
+    }
+    else if ( currFrontNeighbourNext.hasSprite ) {
+        const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourNext.spriteId];
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;         
         }
     }
     else if ( nextFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
-        if ( targetSprite.hitbox.checkForActionRange( sprite.hitbox, sprite.direction ) ) {
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;
+        }
+    }
+    else if ( nextFrontNeighbourPrev.hasSprite ) {
+        const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourPrev.spriteId];
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
+            return true;         
+        }
+    }
+    else if ( nextFrontNeighbourNext.hasSprite ) {
+        const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourNext.spriteId];
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
+            return true;         
         }
     }
 
