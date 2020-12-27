@@ -59,11 +59,9 @@ const checkForCollision = ( sprite, isPlayer ) => {
     if ( isPlayer ) {
         if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
             currBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
-            return true;
         }
         else if  ( nextBackTile != undefined && nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
             nextBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
-            return true;
         }
     }
     
