@@ -19,22 +19,18 @@ const handleActionButton = ( ) => {
     const spritesById = globals.GAME.front.class.spriteDictionary
 
     if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
-        console.log( 'handle current tile sprite evneT! ')
         handleAction( spritesById[currentPlayerTileFront.spriteId].hitbox )
         return;
     }
     else if ( nextPlayerTileFront.hasSprite && spritesById[nextPlayerTileFront.spriteId].action != undefined ) {
-        console.log( 'handle next tile sprite evneT! ')
         handleAction( spritesById[nextPlayerTileFront.spriteId].hitbox )
         return;
     }
     else if ( currentPlayerTileBack.hasEvent ) {
-        console.log( 'handle current tile evneT! ')
         handleAction( currentPlayerTileBack.event )
         return;
     }
     else if ( nextPlayerTileBack.hasEvent ) {
-        console.log( 'handle next tile evneT! ')
         handleAction( nextPlayerTileBack.event )
         return;
     }
