@@ -29,6 +29,8 @@ const handleMapAnimations = ( ) => {
         }  
     }
 
+    player.pathIsBlocked = false;
+
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }

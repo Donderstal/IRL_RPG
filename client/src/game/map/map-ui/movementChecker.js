@@ -51,24 +51,28 @@ const checkForCollision = ( sprite, isPlayer ) => {
     if ( isPlayer ) {
         if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
             currBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
+            return true;
         }
         else if  ( nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
             nextBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
+            return true;
         }
     }
 
-    if ( currFrontTile.hasSprite ) {
+    if ( currFrontTile.hasSprite && currFrontTile.spriteId != sprite.spriteId ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontTile.spriteId];
         if ( targetSprite.hitbox.checkForActionRange( sprite.hitbox, sprite.direction ) ) {
-            console.log(currFrontTile.spriteId + ' in blocked range!')            
+            return true;         
         }
     }
     else if ( nextFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
         if ( targetSprite.hitbox.checkForActionRange( sprite.hitbox, sprite.direction ) ) {
-            console.log(nextFrontTile.spriteId + ' in blocked range!')
+            return true;
         }
     }
+
+    return false;
 }
 
 module.exports = {
