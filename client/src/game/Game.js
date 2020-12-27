@@ -7,7 +7,7 @@ const tilesheets    = require('../resources/tilesheetResources').sheets
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 
-const firstMapUrl = 'my-neighbourhood/A1/my-house';
+const firstMapUrl = "my-neighbourhood/A1/testmap"; //'my-neighbourhood/A1/my-house';
 
 class Game {
     constructor( ) {
@@ -74,6 +74,8 @@ class Game {
     
         this.front.class.setForegroundData( mapData );
         this.front.class.setSpritesToGrid( );
+        
+        this.front.class.spriteDictionary["PLAYER"] = this.front.class.playerSprite
     }
 
     clearMapFromCanvases( ) {
@@ -145,6 +147,7 @@ class Game {
 
         this.front.class.playerSprite.setNewLocationInGrid( newPlayerCell, direction );
         this.front.class.allSprites.push( this.front.class.playerSprite );
+        this.front.class.spriteDictionary["PLAYER"] = this.front.class.playerSprite
     }
 }
 

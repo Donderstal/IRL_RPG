@@ -35,7 +35,7 @@ const moveInDirection = ( sprite, direction ) => {
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
 
-    if ( movementIsAllowed && !movingToNeighbour && !changedDirection ) {
+    if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
         sprite.hasMoved = true;
 
         if ( direction == 'FACING_RIGHT' ) {
@@ -76,7 +76,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return !sprite.isInCenterFacingRight;
     }
 
-    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.blocked || nextForegroundTile.hasSprite ) ) {
+    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.blocked  || ( nextForegroundTile.hasSprite && globals.GAME.front.class.spriteDictionary[nextForegroundTile.spriteId].type == "idle" ) ) ) {
         switch ( direction ) {
             case 'FACING_RIGHT' :
                 return !sprite.isInCenterFacingRight;

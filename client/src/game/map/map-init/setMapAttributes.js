@@ -82,8 +82,8 @@ class Door extends I_Hitbox {
 
     }
 
-    checkForBlockedRange( ) {
-        if ( super.checkForBlockedRange( ) ) {
+    checkForBlockedRange( targetHitbox, targetDirection ) {
+        if ( super.checkForBlockedRange( targetHitbox, targetDirection ) ) {
             globals.GAME.switchMap( this.to,"DOOR" );
             const sfx = new Sound( "misc/random5.wav", true )
             sfx.play()

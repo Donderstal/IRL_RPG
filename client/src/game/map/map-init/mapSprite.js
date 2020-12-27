@@ -5,6 +5,7 @@ const anim = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
+const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
 class MapSprite extends I_Sprite {
     constructor ( tile, spriteSize, src ) {       
@@ -16,6 +17,7 @@ class MapSprite extends I_Sprite {
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.hasMoved = false;
+        this.spriteId;
 
         this.previousTileIndex;
         this.activeTileIndex;
@@ -51,7 +53,8 @@ class MapSprite extends I_Sprite {
         this.updateTileIndexes( )
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
-            this.hitbox.draw( this.centerX( ), this.baseY( ) )    
+            this.hitbox.draw( this.centerX( ), this.baseY( ) )
+            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.front.class.playerSprite );    
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
@@ -78,11 +81,13 @@ class MapSprite extends I_Sprite {
     setPreviousTileIndex( ) {
         this.previousTileIndex = this.activeTileIndex
         this.previousTileFront.clearSpriteData( )
+        this.previousTileFront.spriteId = null;
     }
 
     setActiveTileIndex( tile ) {
         this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
         this.currentTileFront.setSpriteData( 'character', null )
+        this.currentTileFront.spriteId = this.spriteId;
     }
 
     setNextTileIndex( ) {

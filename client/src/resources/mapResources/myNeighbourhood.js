@@ -303,8 +303,49 @@ module.exports = {
                         "sprite": "chad_recolour01.png",
                         "direction": "FACING_DOWN",
                         "name": "chad_recolour01.png",
-                        "row": 2,
+                        "row": 3,
+                        "col": 3
+                    },
+                    {
+                        "type": "idle",
+                        "sprite": "chad_recolour01.png",
+                        "direction": "FACING_DOWN",
+                        "name": "chad_recolour01.png",
+                        "row": 3,
                         "col": 4
+                    },
+                    {
+                        "type": "idle",
+                        "sprite": "chad_recolour01.png",
+                        "direction": "FACING_DOWN",
+                        "name": "chad_recolour01.png",
+                        "row": 3,
+                        "col": 5
+                    },                    
+                    {
+                        "type": "idle",
+                        "sprite": "chad_recolour01.png",
+                        "direction": "FACING_DOWN",
+                        "name": "chad_recolour01.png",
+                        "row": 3,
+                        "col": 6
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "characterx3.png",
+                        "direction": "FACING_DOWN",
+                        "name": "characterx3.png",
+                        "row": 2,
+                        "col": 17,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 6, 
+                            "col": 17
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 4, "col": 17 },
+                            { "id": 1, "row": 8, "col": 17 }
+                        ],
                     },
                     {
                         "type": "walking",
@@ -321,6 +362,142 @@ module.exports = {
                         "path" : [                     
                             { "id": 0, "row": 4, "col": 18 },
                             { "id": 1, "row": 8, "col": 18 }
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "characterx3.png",
+                        "direction": "FACING_DOWN",
+                        "name": "characterx3.png",
+                        "row": 2,
+                        "col": 19,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 6, 
+                            "col": 19
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 4, "col": 19 },
+                            { "id": 1, "row": 8, "col": 19 }
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "characterx3.png",
+                        "direction": "FACING_DOWN",
+                        "name": "characterx3.png",
+                        "row": 2,
+                        "col": 20,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 6, 
+                            "col": 20
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 4, "col": 20 },
+                            { "id": 1, "row": 8, "col": 20 }
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "characterx3.png",
+                        "direction": "FACING_DOWN",
+                        "name": "characterx3.png",
+                        "row": 2,
+                        "col": 21,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 6, 
+                            "col": 21
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 4, "col": 21 },
+                            { "id": 1, "row": 8, "col": 21 }
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "characterx3.png",
+                        "direction": "FACING_DOWN",
+                        "name": "characterx3.png",
+                        "row": 2,
+                        "col": 22,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 6, 
+                            "col": 22
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 4, "col": 22 },
+                            { "id": 1, "row": 8, "col": 22 }
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "new_girl_recolour.png",
+                        "direction": "FACING_RIGHT",
+                        "name": "new_girl_recolour.png",
+                        "row": 7,
+                        "col": 2,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 7,
+                            "col": 6,
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 7, "col": 4 },
+                            { "id": 1, "row": 7, "col": 8 },
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "new_girl_recolour.png",
+                        "direction": "FACING_RIGHT",
+                        "name": "new_girl_recolour.png",
+                        "row": 8,
+                        "col": 2,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 8,
+                            "col": 6,
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 8, "col": 4 },
+                            { "id": 1, "row": 8, "col": 8 },
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "new_girl_recolour.png",
+                        "direction": "FACING_RIGHT",
+                        "name": "new_girl_recolour.png",
+                        "row": 9,
+                        "col": 2,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 9,
+                            "col": 6,
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 9, "col": 4 },
+                            { "id": 1, "row": 9, "col": 8 },
+                        ],
+                    },
+                    {
+                        "type": "walking",
+                        "sprite": "new_girl_recolour.png",
+                        "direction": "FACING_RIGHT",
+                        "name": "new_girl_recolour.png",
+                        "row": 10,
+                        "col": 2,
+                        "lastPosition" : {                   
+                            "id": 0,
+                            "row": 10,
+                            "col": 6,
+                        },
+                        "path" : [                     
+                            { "id": 0, "row": 10, "col": 4 },
+                            { "id": 1, "row": 10, "col": 8 },
                         ],
                     }
                 ]
