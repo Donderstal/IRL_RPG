@@ -26,16 +26,10 @@ const stopListenForKeyPress = () => {
 
 const addKeyToPressed = ( ) => {
     if ( event.key == "l" ) {
-        console.log( globals.GAME.front.class )
-        console.log( globals.GAME.back.class )
-        console.log("___active tile___")
-        console.log( globals.GAME.back.class.grid.array[globals.GAME.front.class.playerSprite.activeTileIndex] )
-        console.log("___next tile___")
-        console.log( globals.GAME.back.class.grid.array[globals.GAME.front.class.playerSprite.nextTileIndex] )
-        console.log("___get tile at xy___")
-        console.log( globals.GAME.front.class.getTileAtXY( globals.GAME.front.class.playerSprite.centerX( ), globals.GAME.front.class.playerSprite.baseY( ) ) )
-        console.log( Math.ceil( ( globals.GAME.front.class.playerSprite.centerX( ) - globals.GAME.front.class.grid.x ) / globals.GRID_BLOCK_PX) )
-        console.log( Math.ceil( ( globals.GAME.front.class.playerSprite.baseY( ) - globals.GAME.front.class.grid.y )  / globals.GRID_BLOCK_PX) )
+        console.log("___active tile front___")
+        console.log( globals.GAME.front.class.grid.array[globals.GAME.front.class.playerSprite.activeTileIndex] )
+        console.log("___next tile front___")
+        console.log( globals.GAME.front.class.grid.array[globals.GAME.front.class.playerSprite.nextTileIndex] )
     }
     if ( state.overworldMode ) {
         handleMapKeyPress( event )

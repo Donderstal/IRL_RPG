@@ -7,7 +7,7 @@ const tilesheets    = require('../resources/tilesheetResources').sheets
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 
-const firstMapUrl = 'my-neighbourhood/A1/my-house';
+const firstMapUrl = "my-neighbourhood/A1/testmap"; //'my-neighbourhood/A1/my-house';
 
 class Game {
     constructor( ) {
