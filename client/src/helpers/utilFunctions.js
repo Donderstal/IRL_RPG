@@ -38,7 +38,34 @@ const toggleLetterBoxDivs = ( ) => {
 
 }
 
+const idChars   = "abcdefghijklmnopqrstuvwxyz1234567890";
+const idLength  = 10;
+
+const getUniqueId = ( idList ) => {
+    const newId         = generateId( )
+    const isUniqueId    = true;
+
+    for( var i = 0; i < idList.length; i++ ) {
+        if ( idList[i] == newId ) {
+            isUniqueId = false;
+        }
+    }
+
+    return ( isUniqueId ) ? newId : getUniqueId( );
+}
+
+const generateId = ( ) => {
+    let id = "";
+
+    for( var i = 0; i < idLength; i++ ) {
+        let randomPosition =  Math.floor( Math.random( ) * idChars.length );
+        id += idChars.slice( randomPosition, randomPosition + 1 )
+    }
+    return id
+}
+
 module.exports = {
+    getUniqueId,
     fetchJSONWithCallback,
     downloadObjectAsJson,
     toggleLetterBoxDivs

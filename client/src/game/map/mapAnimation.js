@@ -1,9 +1,13 @@
 const state = require('../../game-data/state')
+const globals = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
 const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
+    const foreground = globals.GAME.front.class;
+    const background = globals.GAME.back.class;
+    const player     = foreground.playerSprite
     state.currentMap.layeredSprites = [];
 
     if ( state.mapTransition != null ) {
@@ -12,51 +16,34 @@ const handleMapAnimations = ( ) => {
         state.mapTransition = null
     }
 
-    gatherSpritesInState( )
-    drawSpritesInOrder( ) 
+    drawSpritesInOrder( )
 
-    if ( state.playerCharacter.sprite ) {
-        mapControls.handleMovementKeys( );   
-         
+    if ( player != undefined ) {
+        setActiveTile( );
+        mapControls.handleMovementKeys( );  
+
         if ( state.currentMap.mapActions ) {     
             state.currentMap.mapActions.forEach( (action) => {
                 action.checkForActionRange( );
             })
         }  
-        
-        if ( state.currentMap.doors ) {     
-            state.currentMap.doors.forEach( (door) => {
-                door.checkForBlockedRange( );
-            })
-        }  
     }
+
+    player.pathIsBlocked = false;
 
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }
 }
 
-const gatherSpritesInState = ( ) => {
-    state.currentMap.layeredSprites = ( state.currentMap.layeredSprites ) ? state.currentMap.layeredSprites : []
-
-    if ( state.currentMap.NPCs ) {
-        state.currentMap.NPCs.forEach( NPC => {
-            state.currentMap.layeredSprites.push( NPC )
-        })  
-    }  
-
-    if ( state.currentMap.mapObjects ) {
-        state.currentMap.mapObjects.forEach( mapObject => {
-            state.currentMap.layeredSprites.push( mapObject )
-        })  
-    }  
-
-    state.currentMap.layeredSprites.push(state.playerCharacter.sprite)           
+const setActiveTile = ( ) => {
+    globals.GAME.back.class.setActiveTile( globals.GAME.front.class.playerSprite.centerX( ), globals.GAME.front.class.playerSprite.baseY( ) )
+    globals.GAME.front.class.playerSprite.row = globals.GAME.back.class.activeTile.row;
+    globals.GAME.front.class.playerSprite.col = globals.GAME.back.class.activeTile.col;
 }
 
 const drawSpritesInOrder = ( ) => {
-    let layeredSprites = state.currentMap.layeredSprites
-    layeredSprites.sort( ( a, b ) => {
+    globals.GAME.front.class.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
             return 1 
         }
@@ -70,7 +57,7 @@ const drawSpritesInOrder = ( ) => {
 
     canvas.clearEntireCanvas("FRONT")
 
-    layeredSprites.forEach( (e) => {
+    globals.GAME.front.class.allSprites.forEach( (e) => {
         e.drawSprite()
     })       
 }

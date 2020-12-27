@@ -14,7 +14,7 @@ const progressStory = require('./storyProgression').progressStory
  */
 
 const triggerEvent = ( TRIGGER, args = null ) => {
-    state.currentMap.scriptedEvents.forEach( (e) => {
+    /* state.currentMap.scriptedEvents.forEach( (e) => {
         if ( TRIGGER == e.trigger && TRIGGER != "ON_POSITION" ) {
             e.fireEvent( args );
             if ( e.passScene ) {
@@ -29,7 +29,7 @@ const triggerEvent = ( TRIGGER, args = null ) => {
                 }
             }
         }
-    })
+    }) */
 }
 
 const triggerOnPosition = ( e ) => {

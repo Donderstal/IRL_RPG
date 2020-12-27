@@ -1,4 +1,5 @@
 const state = require('../../../game-data/state')
+const globals = require('../../../game-data/globals')
 const displayText   = require('./displayText')
 const soundHelper = require('../../interfaces/I_Sound')
 
@@ -9,8 +10,32 @@ const handleActionButton = ( ) => {
         return;
     }
 
-    if ( state.currentMap.availableAction != null ) {
-        handleAction( state.currentMap.availableAction )
+    const currentPlayerTileFront = globals.GAME.front.class.activePlayerTile;
+    const nextPlayerTileFront = globals.GAME.front.class.nextPlayerTile;
+
+    const currentPlayerTileBack = globals.GAME.back.class.activePlayerTile;
+    const nextPlayerTileBack = globals.GAME.back.class.nextPlayerTile;
+
+    const spritesById = globals.GAME.front.class.spriteDictionary
+
+    if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
+        console.log( 'handle current tile sprite evneT! ')
+        handleAction( spritesById[currentPlayerTileFront.spriteId].hitbox )
+        return;
+    }
+    else if ( nextPlayerTileFront.hasSprite && spritesById[nextPlayerTileFront.spriteId].action != undefined ) {
+        console.log( 'handle next tile sprite evneT! ')
+        handleAction( spritesById[nextPlayerTileFront.spriteId].hitbox )
+        return;
+    }
+    else if ( currentPlayerTileBack.hasEvent ) {
+        console.log( 'handle current tile evneT! ')
+        handleAction( currentPlayerTileBack.event )
+        return;
+    }
+    else if ( nextPlayerTileBack.hasEvent ) {
+        console.log( 'handle next tile evneT! ')
+        handleAction( nextPlayerTileBack.event )
         return;
     }
 }

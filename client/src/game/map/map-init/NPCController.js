@@ -4,37 +4,28 @@ const state         = require('../../../game-data/state')
 const MapAction     = require('./setMapAttributes').MapAction
 
 class NPC extends MapSprite {
-    constructor( startPos, src, typeOfStart, spriteDirection = 0, character ) {
-        const hasAction = ( character.action !== undefined );
-        if( src[0] != '/' ) {
-            src = '/static/sprites/'+ src
-        }
-
-        super( startPos, src, typeOfStart, spriteDirection, hasAction )   
-        this.type = character.type
-        this.name = character.name
+    constructor( tile ) {
+        const hasAction = ( tile.spriteData.action !== undefined );
+        let src = '/static/sprites/'+ tile.spriteData.sprite;
+        super( tile, "STRD", src )   
+        
+        this.type = tile.spriteData.type
+        this.name = tile.spriteData.name
 
         if ( hasAction ) {
-            this.hitbox = new MapAction( this.centerX( ), this.y, character.action, character.name );
-            this.action = character.action
+            this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, tile.spriteData.name );
+            this.action = tile.spriteData.action
             this.action.name = this.name
         }
 
-        if ( character.type == "walking" ) {
-            this.path = character.path
-            this.lastPosition = character.lastPosition
+        if ( tile.spriteData.type == "walking" ) {
+            this.path = tile.spriteData.path
+            this.lastPosition = tile.spriteData.lastPosition
         }
-
-        this.calcXyFromCell( )
-
-        state.currentMap.NPCs.push( this )     
     }
 
     drawSprite( ) {
         super.drawSprite( )
-        if ( !state.cinematicMode ) {
-            this.hitbox.checkForActionRange( );            
-        }
         
         if ( !this.inScriptedAnimation && !this.inMovementAnimation ) {
             this.handleNPCAnimation( );                      
@@ -60,7 +51,7 @@ class NPC extends MapSprite {
     }
 
     gotToNextDirection( countFrame = true) {
-        const NPC_speed = globals.MOVEMENT_SPEED
+        const NPC_speed = globals.MOVEMENT_SPEED * .5;
         if ( this.nextPosition.row > this.row ) {
             this.y += NPC_speed  
             this.direction = globals["FACING_DOWN"]
@@ -84,7 +75,9 @@ class NPC extends MapSprite {
     }
 
     checkForAnimationPath ( ) {
-        this.calcCellFromXy()
+        const cell = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+        this.row = cell.row;
+        this.col = cell.col
     
         if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
             this.lastPosition = this.nextPosition
@@ -108,7 +101,13 @@ class NPC extends MapSprite {
 
     handleWalkingNPCAnimation( ) {
         this.getNextNPCPosition( );
-        this.gotToNextDirection( );
+
+        if ( !this.pathIsBlocked ) {
+            this.gotToNextDirection( );            
+        } else {
+            this.sheetPosition = 0;
+        }
+
         this.checkForAnimationPath( );
     }
 }
@@ -148,5 +147,6 @@ const generateCharactersFromSave = ( savedNPCs ) => {
 
 module.exports = {
     generateCharacters,
-    generateCharactersFromSave
+    generateCharactersFromSave,
+    NPC
 }

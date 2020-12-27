@@ -5,35 +5,111 @@ const anim = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
+const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
 class MapSprite extends I_Sprite {
-    constructor ( start, spriteSheetSrc, typeOfStart, spriteDirection = 0, noHitbox = false ) {       
-        super ( start, spriteSheetSrc, typeOfStart, "STRD", spriteDirection )
+    constructor ( tile, spriteSize, src ) {       
+        super( tile, spriteSize, src )   
         this.cell = {}
         this.animationScript = {};
         this.centerX = () => { return this.x + ( this.width / 2 ) };
-        this.centerY = () => { return this.y + ( this.height / 2 ) };
-        if ( noHitbox ) {
-            this.hitbox;
-        }
-        else {
-            this.hitbox = new I_Hitbox( this.centerX( ), this.y, this.width / 2 );            
-        }
+        this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
+        this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
+        
+        this.hasMoved = false;
+        this.spriteId;
 
+        this.previousTileIndex;
+        this.activeTileIndex;
+        this.nextTileIndex;
+    }
+
+    get previousTileBack( ) { return globals.GAME.back.class.grid.array[this.previousTileIndex] };
+    get currentTileBack( ) { return globals.GAME.back.class.grid.array[this.activeTileIndex] };
+    get nextTileBack( ) { return globals.GAME.back.class.grid.array[this.nextTileIndex] };
+
+    get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
+    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndex] };
+    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+
+    get isInCenterFacingLeft( ) {
+        return this.centerX( ) < ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .55 ) );
+    }
+
+    get isInCenterFacingRight( ) {
+        return this.centerX( ) > ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .45 ) ); 
+    }
+
+    get isInCenterFacingUp( ) {
+        return this.baseY( ) < ( this.currentTileBack.y + ( globals.GRID_BLOCK_PX * .55 ) );
+    }
+
+    get isInCenterFacingDown( ) {
+        return this.baseY( ) > ( this.currentTileBack.y + ( globals.GRID_BLOCK_PX * .45 ) ); 
     }
 
     drawSprite( ) {
         super.drawSprite( )
-        this.updateSpriteCellXy( )
+        this.updateTileIndexes( )
         if ( !state.cinematicMode ) {
-            this.hitbox.updateXy( this.centerX( ), this.centerY( ) );        
+            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
+            this.hitbox.draw( this.centerX( ), this.baseY( ) )
+            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.front.class.playerSprite );    
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
         }
     }
 
-    handleAnimation( ) {
+    updateTileIndexes( ) {
+        const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+
+        if ( this.activeTileIndex == null ) {
+            this.setActiveTileIndex( tile );
+            this.setNextTileIndex( );
+        }
+        else if ( this.activeTileIndex != tile.index ) {
+            this.setPreviousTileIndex( );
+            this.setActiveTileIndex( tile );
+            this.setNextTileIndex( );
+        } 
+        else if ( this.direction != this.nextTileDirection ) {
+            this.setNextTileIndex( );
+        } 
+    }
+
+    setPreviousTileIndex( ) {
+        this.previousTileIndex = this.activeTileIndex
+        this.previousTileFront.clearSpriteData( )
+        this.previousTileFront.spriteId = null;
+    }
+
+    setActiveTileIndex( tile ) {
+        this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
+        this.currentTileFront.setSpriteData( 'character', null )
+        this.currentTileFront.spriteId = this.spriteId;
+    }
+
+    setNextTileIndex( ) {
+        switch ( this.direction ) {
+            case globals["FACING_UP"] :
+                this.nextTileIndex = this.activeTileIndex - globals.GAME.back.class.grid.cols;
+                break;
+            case globals["FACING_RIGHT"] :
+                this.nextTileIndex = this.activeTileIndex + 1;
+                break;
+            case globals["FACING_DOWN"] :
+                this.nextTileIndex = this.activeTileIndex + globals.GAME.back.class.grid.cols;
+                break;
+            case globals["FACING_LEFT"] :
+                this.nextTileIndex = this.activeTileIndex - 1;
+                break;
+        }
+
+        this.nextTileDirection = this.direction;
+    }
+
+    handleAnimation(  ) {
         if ( this.inScriptedAnimation ) {
             this.doScriptedAnimation( );
             return

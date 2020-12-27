@@ -12,6 +12,22 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC 11, 2020
+* Solved bug that made it possible for player to enter blocked tiles
+* Fixed positioning problems
+* Restored proper border collision 
+
+#### DEC 10, 2020
+* New Game class which wraps both Canvas classes
+* Fixed doors, neighbours
+* Fixed positioning calc bug
+
+#### DEC 7, 2020,
+* New data structure for game canvases imported from mapmaker tool
+* Foreground and Background classes extend I_CanvasWithGrid
+* Grid is now initialized with I_Grid and I_Tile classes
+* Basic interactivity in new system
+
 #### SEP 25
 * Added a 'master room' with all sprites in the game
 

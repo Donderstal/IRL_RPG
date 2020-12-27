@@ -1,4 +1,5 @@
 const state         = require('../../../game-data/state')
+const globals = require('../../../game-data/globals')
 const triggerEvent  = require('../../../game-data/triggerEvents').triggerEvent
 const tilesheets        = require('../../../resources/tilesheetResources').sheets
 const createCharInstance = require('../../createCharInstance')
@@ -52,20 +53,23 @@ const initMapFromBattle = ( ) => {
     }, 1000)
 }
 
-const initializeMap = ( mapJson, BOOT_STATUS, setAttributes = true ) => {    
-    state.currentMap.mapData = mapJson;
-    state.currentMap.blockedXyValues = []    
-    drawGrid.generateMap( state.currentMap, tilesheets[mapJson.tileSet] )    
+/**
+ * @param {object} mapData mapObject from /resources/mapResources.js
+ * @param {string} BOOT_STATUS 
+ * 
+ * load the new map data to the BACKGROND and FOREGROUND classes
+ */
+const initializeMap = ( mapData ) => {    
+    globals.GAME.back.class.initGrid( mapData.rows, mapData.columns );
+    globals.GAME.front.class.initGrid( mapData.rows, mapData.columns );
 
-    if ( setAttributes ) {
-        getMapMusic( BOOT_STATUS );
-        
-        ( BOOT_STATUS === "SAVE_GAME" ) ? getMapAttributesFromSave( BOOT_STATUS ) : getMapAttributes( BOOT_STATUS );   
-        
-        setTimeout(() => {
-            triggerEvent("ON_ENTER")
-        }, 1000)
-    }
+    const sheetData = tilesheets[mapData.tileSet];
+
+    globals.GAME.back.class.setBackgroundData( mapData );
+    globals.GAME.back.class.loadImageWithCallback( '/static/tilesets/' + sheetData.src, globals.GAME.back.class.drawMapFromGridData );
+
+    globals.GAME.front.class.setForegroundData( mapData );
+    globals.GAME.front.class.setSpritesToGrid( );
 }
 
 

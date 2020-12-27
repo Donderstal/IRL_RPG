@@ -4,6 +4,8 @@ const state             = require('../../game-data/state')
 const triggerEvent      = require('../../game-data/triggerEvents').triggerEvent   
 const actionController  = require('./map-ui/actionController')
 
+const globals           = require('../../game-data/globals')
+
 const handleMapKeyPress = ( event ) => {
     event.preventDefault()    
 
@@ -54,18 +56,18 @@ const handleMovementKeys = ( touch = false, event = false ) => {
         touchDown = ( touchY > playerBottom )
     }
 
-    if ( state.playerCharacter.sprite != undefined ) {
+    if ( globals.GAME.front.class.playerSprite != undefined ) {
         if ( state.pressedKeys.w || state.pressedKeys.ArrowUp || touchUp ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_UP')
+            movement.handleMovementOfSprite( globals.GAME.front.class.playerSprite, 'FACING_UP')
         }
         else if ( state.pressedKeys.a || state.pressedKeys.ArrowLeft || touchLeft ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_LEFT')
+            movement.handleMovementOfSprite( globals.GAME.front.class.playerSprite, 'FACING_LEFT')
         }
         else if ( state.pressedKeys.s || state.pressedKeys.ArrowDown || touchDown ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_DOWN')
+            movement.handleMovementOfSprite( globals.GAME.front.class.playerSprite, 'FACING_DOWN')
         }
         else if ( state.pressedKeys.d || state.pressedKeys.ArrowRight || touchRight ) {
-            movement.handleMovementOfSprite(state.playerCharacter.sprite, 'FACING_RIGHT')
+            movement.handleMovementOfSprite( globals.GAME.front.class.playerSprite, 'FACING_RIGHT')
         }    
         triggerEvent("ON_POSITION")
     }

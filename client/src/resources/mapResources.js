@@ -8,23 +8,21 @@ const mapResources = {
     "battle":               battle,
 }
 
-const getMapData = ( mapName ) => {
-    const world = mapName.split('/')[0]
-    const subWorld = mapName.split('/')[1]
+const getMapData = ( fullMapName ) => {
+    const mapNameArray = fullMapName.split('/');
 
-    if ( world != "battle" ) {
-        const map = mapName.split('/')[2]
-        if ( mapName.split('/')[3] ) {
-            const subMap = mapName.split('/')[3]
+    const neighbourhoodName = mapNameArray[0]
+    const mapName = mapNameArray[1]
 
-            return mapResources[world][subWorld][map][subMap]        
-        }
-        else {
-            return mapResources[world][subWorld][map]   
-        }
+    const mapData = mapResources[neighbourhoodName][mapName]
+    if ( mapNameArray[2] ) {
+        console.log(fullMapName)
+        console.log(mapData.subMaps[mapNameArray[2]])
+        console.log('_____')
+        return mapData.subMaps[mapNameArray[2]];
+    } else {
+        return mapData
     }
-    
-    return mapResources[world][subWorld]
 }
 
 module.exports = {

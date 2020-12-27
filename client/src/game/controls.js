@@ -1,4 +1,5 @@
 const state = require('../game-data/state')
+const globals = require('../game-data/globals')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
@@ -21,12 +22,14 @@ const stopListenForKeyPress = () => {
     window.removeEventListener('keydown', addKeyToPressed)
     window.removeEventListener('keyup', removeKeyFromPressed)
     state.listeningForPress = false;
-    clearstate.PressedKeys()
 }
 
 const addKeyToPressed = ( ) => {
     if ( event.key == "l" ) {
-        console.log(state.battleState.battleMenu)
+        console.log("___active tile front___")
+        console.log( globals.GAME.front.class.grid.array[globals.GAME.front.class.playerSprite.activeTileIndex] )
+        console.log("___next tile front___")
+        console.log( globals.GAME.front.class.grid.array[globals.GAME.front.class.playerSprite.nextTileIndex] )
     }
     if ( state.overworldMode ) {
         handleMapKeyPress( event )

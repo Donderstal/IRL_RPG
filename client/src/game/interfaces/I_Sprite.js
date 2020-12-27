@@ -1,10 +1,8 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
-const mapHelpers = require('../../helpers/mapHelpers')
 const globals = require('../../game-data/globals')
 
 class Sprite {
-
-    constructor ( start, spriteSheetSrc, typeOfStart, spriteSize, spriteDirection = 0 ) {   
+    constructor ( tile, spriteSize, src ) {   
         if ( spriteSize == "STRD" ) {
             this.width   = globals.STRD_SPRITE_WIDTH;
             this.height  = globals.STRD_SPRITE_HEIGHT;            
@@ -20,17 +18,33 @@ class Sprite {
 
         this.left, this.right, this.top, this.bottom;
 
-        this.sheetPosition  = 0
+        this.sheetPosition = 0
         this.frameCount    = 0
-        this.direction     = spriteDirection;
-        this.sheetSrc      = spriteSheetSrc
+        this.direction     = tile.spriteData.direction ? globals[tile.spriteData.direction] : 0;
+        this.sheetSrc      = src
         this.sheet         = new Image();
         this.moving        = false;
 
-       ( typeOfStart === 'CELL' ) ? this.initSpriteFromCell( start ) : this.initSpriteFromXy( start )
+        this.setSpriteToGrid( tile )
 
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
+    }
+
+    setSpriteToGrid( tile ) {
+        this.row = tile.row;
+        this.col = tile.col;
+        this.x = tile.x;
+        
+        this.y = tile.y - ( this.height - globals.GRID_BLOCK_PX )
+    }
+
+    setNewLocationInGrid( cell, direction ) {
+        let newTile = globals.GAME.front.class.grid.getTileAtCell( cell.row, cell.col )
+        this.direction = globals[direction] != undefined ? globals[direction] : this.direction;
+        newTile.setSpriteData( 'character', null )
+        newTile.spriteId = "PLAYER"
+        this.setSpriteToGrid( newTile );
     }
 
     initSpriteFromCell( start ) {
@@ -69,7 +83,7 @@ class Sprite {
     }
 
     calcXyFromCell( ) {
-        const xy = mapHelpers.getXYOfCell(this.row, this.col)
+        const xy = globals.GAME.front.class.getXYOfCell(this.row, this.col)
         this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
         this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
 
@@ -127,6 +141,7 @@ class Sprite {
             }
         }
         else {
+            this.hasMoved = true;
             if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
                 this.x -= globals.MOVEMENT_SPEED;
                 this.moving = true;

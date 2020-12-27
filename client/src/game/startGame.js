@@ -2,12 +2,16 @@ const animationFrameController = require('./animationFrameController')
 const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const controls = require('./controls')
-const controller = require('./gameController')
+const { Game } = require('./Game')
 const storyProgression  = require('../game-data/storyProgression')
 
 const utility = require('../helpers/utilFunctions')
+
 const fetchJson = utility.fetchJSONWithCallback
 const getMapData = require('../resources/mapResources').getMapData
+
+const { ForegroundCanvas } = require('./ForegroundCanvas');
+const { BackgroundCanvas } = require('./BackgroundCanvas');
 
 const firstMapUrl = 'my-neighbourhood/A1/my-house';
 
@@ -70,22 +74,15 @@ const initControlsAndAnimation = ( ) => {
  * 
  * Prepare canvas for game
  */
-const initCanvas = ( canvas ) => {
+const initGameCanvas = ( canvas ) => {
     canvas.height = globals.CANVAS_HEIGHT 
     canvas.width = globals.CANVAS_WIDTH   
 }
 
+
 const startGame = ( name, className ) => {
-    [...document.getElementsByTagName('canvas')].forEach( ( canvas ) => {
-        initCanvas( canvas );
-    } );
-
-    document.documentElement.requestFullscreen();
-    state.playerCharacter.name      = name;
-    state.playerCharacter.className = className;
-
-    const mapData = getMapData(firstMapUrl)
-    startNewGame( mapData )
+    globals.GAME = new Game( );
+    globals.GAME.startNewGame( name, className );
 }
 
 module.exports = {

@@ -1,6 +1,6 @@
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSize = Math.floor(window.screen.height / CANVAS_ROWS + 1)
+    let blockSize = Math.floor(window.innerHeight / CANVAS_ROWS)
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
     } 
@@ -27,12 +27,12 @@ const FRAMES_PER_SECOND             = 60
 
 // dynamic measurements for canvas
 const GRID_BLOCK_IN_SHEET_PX        = 64
-const CANVAS_COLUMNS                = 23
-const CANVAS_ROWS                   = 15
+const CANVAS_COLUMNS                = 24
+const CANVAS_ROWS                   = 16
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
 const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
-const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS + 1)
-const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS + 1)
+const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS)
+const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS) 
 
 // sheet dimensions
 const MAP_SPRITE_WIDTH_IN_SHEET     = 64
@@ -59,6 +59,27 @@ const GOLDEN_FONT_RATIO             = 1.618;
 const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
 const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
+
+let GAME = null;
+
+const setSheetXyValues = ( tilesInSheet ) => {
+    let tileX = 0; let tileY = 0;
+    let tilesheetXyValues = []
+
+    for ( var i = 0; i <= tilesInSheet; i++ ) {
+        tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
+        tileX += GRID_BLOCK_IN_SHEET_PX
+        if ( i % 4 == 3 ) {
+            tileX = 0
+            tileY += GRID_BLOCK_IN_SHEET_PX
+        }
+    }
+
+    return tilesheetXyValues;
+}
+
+const SHEET_XY_VALUES = setSheetXyValues( 608 );
+
 
 module.exports = {
     MOVEMENT_SPEED,
@@ -92,4 +113,6 @@ module.exports = {
     SMALL_FONT_LINE_HEIGHT,
     LARGE_FONT_LINE_HEIGHT,
     BATTLE_FONT_LINE_HEIGHT,
+    SHEET_XY_VALUES,
+    GAME
 }
