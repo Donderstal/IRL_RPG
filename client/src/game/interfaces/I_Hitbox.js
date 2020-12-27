@@ -44,6 +44,9 @@ class I_Hitbox {
     }
 
     checkForActionRange( targetHitbox, targetDirection ) {
+        if ( targetHitbox == undefined ) {
+            return false;
+        }
         if ( this.targetIsInVerticalActionRange( targetHitbox ) ) {
             if ( this.upFacingTargetIsInActionRadius( targetHitbox, targetDirection ) ) {
                 return true;
@@ -64,6 +67,9 @@ class I_Hitbox {
     }
 
     checkForBlockedRange( targetHitbox, targetDirection ) {
+        if ( targetHitbox == undefined ) {
+            return false;
+        }
         if ( this.targetIsInVerticalBlockedRange( targetHitbox ) ) {
             if ( this.upFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
                 return true;
