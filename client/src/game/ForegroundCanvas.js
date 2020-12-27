@@ -90,7 +90,12 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
 
     setObjectSprite( tile ) {
-        this.allSprites.push( new MapObject( tile ) )
+        const newObject = new MapObject( tile )
+        const newId = getUniqueId( Object.keys(this.spriteDictionary) );
+        newObject.spriteId = newId;
+        this.allSprites.push( newObject )
+        this.spriteDictionary[newId] = newObject
+        tile.spriteId = newId;
     }
 
     clearSpriteFromTile(x, y) {
