@@ -101,8 +101,8 @@ class I_Hitbox {
     }
 
     targetIsInHorizontalActionRange( targetHitbox ) {       
-        return ( targetHitbox.y - targetHitbox.innerRadius ) > this.top( ) 
-        && ( targetHitbox.y + targetHitbox.innerRadius ) < this.bottom( )
+        return targetHitbox.y > this.outerTop( ) 
+        && targetHitbox.y < this.outerBottom( )
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -139,30 +139,32 @@ class I_Hitbox {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    upFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingUp  = targetDirection == globals.FACING_UP;
-        const thisIsAboveTarget = targetHitbox.top( ) > this.innerTop( );
+    upFacingTargetIsInActionRadius( targetHitbox, direction ) {
+        const targetIsFacingUp          = direction == globals.FACING_DOWN;
+        const thisIsAboveTarget         = targetHitbox.top( ) > this.innerTop( );
+        const topIsInTargetOuterBottom  = targetHitbox.top( ) <= this.outerBottom( )
 
-        return targetIsFacingUp && ( targetHitbox.outerTop( ) <= this.bottom( ) ) && thisIsAboveTarget
+        return targetIsFacingUp && topIsInTargetOuterBottom && thisIsAboveTarget
     }
 
-    downFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingDown    =  targetDirection == globals.FACING_DOWN
-        const thisIsBelowTarget    = targetHitbox.bottom( ) < this.innerBottom( )
+    downFacingTargetIsInActionRadius( targetHitbox, direction ) {
+        const targetIsFacingDown        = direction == globals.FACING_UP
+        const thisIsBelowTarget         = targetHitbox.bottom( ) < this.innerBottom( )
+        const bottomIsInTargetOuterTop  = targetHitbox.bottom( ) > this.outerTop( )
 
-        return targetIsFacingDown && ( targetHitbox.outerBottom( ) >= this.top( ) ) && thisIsBelowTarget
+        return targetIsFacingDown && bottomIsInTargetOuterTop && thisIsBelowTarget
     }
 
-    leftFacingTargetIsInActionRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingLeft        = targetDirection == globals.FACING_LEFT
+    leftFacingTargetIsInActionRadius( targetHitbox, direction ) {
+        const targetIsFacingLeft        = direction == globals.FACING_RIGHT
         const thisIsLeftOfTarget        = targetHitbox.left( ) > this.innerLeft( )
         const leftIsInTargetOuterRight  = targetHitbox.left( ) < this.outerRight( )
 
         return targetIsFacingLeft && leftIsInTargetOuterRight  && thisIsLeftOfTarget
     }
 
-    rightFacingTargetIsInActionRadius( targetHitbox, targetDirection ){
-        const targetIsFacingRight       = targetDirection == globals.FACING_RIGHT
+    rightFacingTargetIsInActionRadius( targetHitbox, direction ){
+        const targetIsFacingRight       = direction == globals.FACING_LEFT
         const thisIsRightOfTarget       = targetHitbox.right( ) < this.innerRight( )
         const rightIsInTargetOuterLeft  = targetHitbox.right( ) > this.outerLeft( )
 
