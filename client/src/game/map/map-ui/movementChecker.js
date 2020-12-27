@@ -25,7 +25,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return !sprite.isInCenterFacingRight;
     }
 
-    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.blocked || nextForegroundTile.hasSprite ) ) {
+    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.blocked || ( nextForegroundTile.hasSprite && globals.GAME.front.class.spriteDictionary[nextForegroundTile.spriteId].type == 'idle') ) ) {
         switch ( direction ) {
             case 'FACING_RIGHT' :
                 return !sprite.isInCenterFacingRight;
@@ -73,31 +73,31 @@ const checkForCollision = ( sprite, isPlayer ) => {
             return true;         
         }
     }
-    else if ( currFrontNeighbourPrev.hasSprite ) {
+    if ( currFrontNeighbourPrev.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourPrev.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;         
         }
     }
-    else if ( currFrontNeighbourNext.hasSprite ) {
+    if ( currFrontNeighbourNext.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourNext.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;         
         }
     }
-    else if ( nextFrontTile.hasSprite ) {
+    if ( nextFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;
         }
     }
-    else if ( nextFrontNeighbourPrev.hasSprite ) {
+    if ( nextFrontNeighbourPrev.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourPrev.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;         
         }
     }
-    else if ( nextFrontNeighbourNext.hasSprite ) {
+    if ( nextFrontNeighbourNext.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourNext.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, targetSprite.direction ) ) {
             return true;         

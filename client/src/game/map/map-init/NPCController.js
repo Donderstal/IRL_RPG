@@ -26,13 +26,6 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( )
-
-        if ( this.nextTileFront.hasSprite || this.nextTileBack.blocked ) {
-            this.pathIsBlocked = true;
-        }
-        else {
-            this.pathIsBlocked = false;
-        }
         
         if ( !this.inScriptedAnimation && !this.inMovementAnimation ) {
             this.handleNPCAnimation( );                      
