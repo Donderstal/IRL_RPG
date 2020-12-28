@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### DEC 28, 2020
 * Cleaning old map system code
+* New file structure for map classes
 
 #### DEC 27, 2020
 * New sprite-based collision detection for player and NPCs
