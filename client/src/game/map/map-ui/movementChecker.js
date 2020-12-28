@@ -47,23 +47,21 @@ const checkForCollision = ( sprite, isPlayer ) => {
     const currBackTile = sprite.currentTileBack;
     const currFrontTile = sprite.currentTileFront;
 
-    const currFrontNeighbourPrev = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex - 1 : sprite.activeTileIndex - 24];
-    const currFrontNeighbourNext = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex + 1 : sprite.activeTileIndex + 24];
+    const currFrontNeighbourPrev = setCurrFrontNeighbourPrev( sprite, spriteIsFacingUpOrDown );
+    const currFrontNeighbourNext = setCurrFrontNeighbourNext( sprite, spriteIsFacingUpOrDown );
 
     const nextBackTile = sprite.nextTileBack;
     const nextFrontTile = sprite.nextTileFront;
 
-    const nextFrontNeighbourPrev = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex - 1 : sprite.nextTileIndex - 24];
-    const nextFrontNeighbourNext = globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex + 1 : sprite.nextTileIndex + 24];
+    const nextFrontNeighbourPrev = setNextFrontNeighbourPrev( sprite, spriteIsFacingUpOrDown );
+    const nextFrontNeighbourNext = setNextFrontNeighbourNext( sprite, spriteIsFacingUpOrDown );
 
     if ( isPlayer ) {
         if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
             currBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
-            return true;
         }
-        else if  ( nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
+        else if  ( nextBackTile != undefined && nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
             nextBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
-            return true;
         }
     }
     
@@ -73,31 +71,31 @@ const checkForCollision = ( sprite, isPlayer ) => {
             return true;         
         }
     }
-    if ( currFrontNeighbourPrev.hasSprite ) {
+    if ( currFrontNeighbourPrev != undefined && currFrontNeighbourPrev.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourPrev.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
             return true;         
         }
     }
-    if ( currFrontNeighbourNext.hasSprite ) {
+    if ( currFrontNeighbourNext != undefined && currFrontNeighbourNext.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourNext.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
             return true;         
         }
     }
-    if ( nextFrontTile.hasSprite ) {
+    if ( nextFrontTile != undefined && nextFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
             return true;
         }
     }
-    if ( nextFrontNeighbourPrev.hasSprite ) {
+    if ( nextFrontNeighbourPrev != undefined && nextFrontNeighbourPrev.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourPrev.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
             return true;         
         }
     }
-    if ( nextFrontNeighbourNext.hasSprite ) {
+    if ( nextFrontNeighbourNext != undefined && nextFrontNeighbourNext.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourNext.spriteId];
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
             return true;         
@@ -105,6 +103,52 @@ const checkForCollision = ( sprite, isPlayer ) => {
     }
 
     return false;
+}
+
+const setCurrFrontNeighbourPrev = ( sprite, spriteIsFacingUpOrDown ) => {
+    if ( sprite.currentTileFront.row == 1 && spriteIsFacingUpOrDown) {
+        return { hasSprite: false};
+    }
+    if ( sprite.currentTileFront.col == 1 && !spriteIsFacingUpOrDown ) {
+        return { hasSprite: false};
+    }
+    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex - 1 : sprite.activeTileIndex - globals.GAME.activeMap.columns];
+}
+
+const setCurrFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
+    if ( sprite.currentTileFront.row == globals.GAME.activeMap.rows && spriteIsFacingUpOrDown ) {
+        return { hasSprite: false};
+    }
+    if ( sprite.currentTileFront.col == globals.GAME.activeMap.columns && !spriteIsFacingUpOrDown  ) {
+        return { hasSprite: false};
+    }
+    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex + 1 : sprite.activeTileIndex + globals.GAME.activeMap.columns];
+}
+
+const setNextFrontNeighbourPrev = ( sprite, spriteIsFacingUpOrDown ) => {
+    if ( sprite.nextTileFront == undefined ) {
+        return { hasSprite: false};
+    }
+    if ( sprite.nextTileFront.row == 1 && spriteIsFacingUpOrDown ) {
+        return { hasSprite: false};
+    }
+    if ( sprite.nextTileFront.col == 1 && !spriteIsFacingUpOrDown ) {
+        return { hasSprite: false};
+    }
+    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex - 1 : sprite.nextTileIndex - globals.GAME.activeMap.columns];
+}
+
+const setNextFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
+    if ( sprite.nextTileFront == undefined ) {
+        return { hasSprite: false};
+    }
+    if ( sprite.nextTileFront.row == globals.GAME.activeMap.rows && spriteIsFacingUpOrDown ) {
+        return { hasSprite: false};
+    }
+    if ( sprite.nextTileFront.col == globals.GAME.activeMap.columns && !spriteIsFacingUpOrDown ) {
+        return { hasSprite: false};
+    }
+    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex + 1 : sprite.nextTileIndex + globals.GAME.activeMap.columns];
 }
 
 module.exports = {

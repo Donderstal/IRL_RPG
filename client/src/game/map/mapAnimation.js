@@ -2,31 +2,16 @@ const state = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
-const mapController = require('./mapController')
 
 const handleMapAnimations = ( ) => {
     const foreground = globals.GAME.front.class;
-    const background = globals.GAME.back.class;
     const player     = foreground.playerSprite
-    state.currentMap.layeredSprites = [];
-
-    if ( state.mapTransition != null ) {
-        mapController.switchMap( state.mapTransition )
-        state.transitioning = true;
-        state.mapTransition = null
-    }
 
     drawSpritesInOrder( )
 
     if ( player != undefined ) {
         setActiveTile( );
         mapControls.handleMovementKeys( );  
-
-        if ( state.currentMap.mapActions ) {     
-            state.currentMap.mapActions.forEach( (action) => {
-                action.checkForActionRange( );
-            })
-        }  
     }
 
     player.pathIsBlocked = false;

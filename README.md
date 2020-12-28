@@ -12,6 +12,15 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC 28, 2020
+* Cleaning old map system code
+
+#### DEC 27, 2020
+* New sprite-based collision detection for player and NPCs
+* Fixed collision bugs in characters. Collision is now consistent
+* NPC movement now reacts to environment changes
+* E.g. they stop walking if you cross their path
+
 #### DEC 11, 2020
 * Solved bug that made it possible for player to enter blocked tiles
 * Fixed positioning problems

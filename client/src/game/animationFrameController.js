@@ -3,7 +3,6 @@ const handleBattleAnimations    = require('./battle/battleAnimation').handleBatt
 const state                     = require('../game-data/state')
 const globals                   = require('../game-data/globals')
 const controls                  = require('./controls')
-const controller                = require('./gameController')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 
 let lastDateNow, newDateNow;
@@ -35,8 +34,6 @@ const animationFrameController = ( ) => {
     if ( newDateNow - lastDateNow > 1000 / globals.FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
         if ( !state.paused ) {
-            checkForModeChangeRequest()
-
             if ( !state.listeningForPress ) {
                 controls.listenForKeyPress()
             }            
@@ -56,26 +53,6 @@ const animationFrameController = ( ) => {
     }
 
     requestAnimationFrame(animationFrameController)
-}
-
-const checkForModeChangeRequest = ( ) => {
-    if ( state.changeRequest != "NO" ) {
-        controller.switchMode()
-
-        if ( state.changeRequest == 'OVERWORLD' ) {
-            setTimeout( ( ) => {
-                startOverworldAnimation( )         
-            }, globals.BATTLE_INTRO_ANIM_MS );
-        }
-        else if ( state.changeRequest == 'BATTLE' ) {
-            setTimeout( ( ) => {
-                startBattleAnimation( )    
-                canvasHelpers.clearEntireCanvas('FRONT')        
-            }, globals.BATTLE_INTRO_ANIM_MS );
-        }   
-    }
-
-    state.changeRequest = "NO"
 }
 
 module.exports = {

@@ -93,16 +93,16 @@ class MapSprite extends I_Sprite {
     setNextTileIndex( ) {
         switch ( this.direction ) {
             case globals["FACING_UP"] :
-                this.nextTileIndex = this.activeTileIndex - globals.GAME.back.class.grid.cols;
+                this.nextTileIndex = this.currentTileFront.row != 1 ? this.activeTileIndex - globals.GAME.back.class.grid.cols : undefined;
                 break;
             case globals["FACING_RIGHT"] :
-                this.nextTileIndex = this.activeTileIndex + 1;
+                this.nextTileIndex = this.currentTileFront.col != globals.GAME.activeMap.columns ? this.activeTileIndex + 1 : undefined;
                 break;
             case globals["FACING_DOWN"] :
-                this.nextTileIndex = this.activeTileIndex + globals.GAME.back.class.grid.cols;
+                this.nextTileIndex = this.currentTileFront.row != globals.GAME.activeMap.rows ? this.activeTileIndex + globals.GAME.back.class.grid.cols : undefined;
                 break;
             case globals["FACING_LEFT"] :
-                this.nextTileIndex = this.activeTileIndex - 1;
+                this.nextTileIndex = this.currentTileFront.col != 1 ? this.activeTileIndex - 1 : undefined;
                 break;
         }
 
