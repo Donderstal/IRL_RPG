@@ -1,5 +1,6 @@
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } = require('../../game-data/globals')
-const { MapAction, BlockedArea, Door } = require('../map/map-init/setMapAttributes')
+const { MapAction } = require('../map/map-classes/MapAction')
+const { Door } = require('../map/map-classes/Door')
 const globals = require('../../game-data/globals')
 
 class I_Tile {
