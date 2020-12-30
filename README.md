@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC 30, 2020
+* Replacing some menu contents with dummy text
+
 #### DEC 28, 2020
 * Cleaning old map system code
 * New file structure for map classes
