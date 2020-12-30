@@ -6,14 +6,17 @@
 
     export let returnToPreviousScreen;
 
-    const availableClasses = [ "NECKBEARD", "INFLUENCER", "CHAD", "TUMBLR_GIRL" ]
+    const availableClasses = [ "LOREM", "IPSUM", "DOLOR", "SIT AMET" ]
     const descriptions = { 
-        "NECKBEARD": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
-        "INFLUENCER": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
-        "CHAD": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
-        "TUMBLR_GIRL": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+        "LOREM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+        "IPSUM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+        "DOLOR": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+        "SIT AMET": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
     }
-    let activeClass = "NECKBEARD";
+    const classNames = {
+        "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
+    };
+    let activeClass = "LOREM";
     let activeClassIndex = availableClasses.indexOf(activeClass);
     let spriteWidth  = globals.MAP_SPRITE_WIDTH_IN_SHEET * 3
     let spriteHeight = globals.MAP_SPRITE_HEIGHT_IN_SHEET * 3
@@ -54,7 +57,7 @@
     const getSpriteAndDrawToCanvas = ( ) => {
         clearFrameCount( )
         currentSprite = new Image( );
-        currentSprite.src = "/static/site_assets/" + activeClass.toLowerCase().replace(" ", "_") + ".v3.png";
+        currentSprite.src = "/static/site_assets/" + classNames[activeClass].toLowerCase().replace(" ", "_") + ".v3.png";
         currentSprite.onload = ( ) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(
