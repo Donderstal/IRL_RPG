@@ -79,25 +79,28 @@ class Game {
     }
 
     clearMapFromCanvases( ) {
-        [ this.back, this.front ].forEach( ( canvasWrapper ) => {
-            canvasWrapper.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-            canvasWrapper.class.clearMap( );
-        })
+        this.front.class.clearMap( );
+        this.back.class.clearMap( );
+
+        this.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+        this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
     }
 
     switchMap ( destination, type ) {
+        this.paused = true;
         controls.clearPressedKeys( );
         controls.stopListenForKeyPress( );
 
         const newMapData = getMapData( destination );
-        console.log('new map data')
-        console.log(newMapData)
         this.clearMapFromCanvases( );
-
         this.loadMapToCanvases( newMapData );
         this.setPlayerInNewMap( newMapData, type );
         this.storeMapData( newMapData, destination );
         controls.listenForKeyPress(); 
+
+        setTimeout( ( ) => {
+            this.paused = false;   
+        }, 100 )
     }
 
     storeMapData( mapData, mapName ) {

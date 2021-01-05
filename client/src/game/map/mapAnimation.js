@@ -9,7 +9,7 @@ const handleMapAnimations = ( ) => {
 
     drawSpritesInOrder( )
 
-    if ( player != undefined ) {
+    if ( player != undefined && !globals.GAME.paused ) {
         setActiveTile( );
         mapControls.handleMovementKeys( );  
     }
@@ -43,7 +43,13 @@ const drawSpritesInOrder = ( ) => {
     canvas.clearEntireCanvas("FRONT")
 
     globals.GAME.front.class.allSprites.forEach( (e) => {
-        e.drawSprite()
+        if ( !globals.GAME.paused ) {
+            e.drawSprite()            
+        }
+        else {
+            console.log('paused')
+        }
+
     })       
 }
 
