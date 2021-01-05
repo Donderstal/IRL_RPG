@@ -19,6 +19,9 @@ const handleActionButton = ( ) => {
 
     if ( globals.GAME.activeAction != null && globals.GAME.activeAction.needsConfirmation ) {
         globals.GAME.activeAction.confirm( );
+        state.currentMap.activeBubble = {}
+        state.currentMap.bubbleIsActive = false
+        return;
     }
 
     if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
