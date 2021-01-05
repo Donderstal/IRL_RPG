@@ -88,7 +88,6 @@ class Game {
 
     switchMap ( destination, type ) {
         this.paused = true;
-        controls.clearPressedKeys( );
         controls.stopListenForKeyPress( );
 
         const newMapData = getMapData( destination );
@@ -96,9 +95,9 @@ class Game {
         this.loadMapToCanvases( newMapData );
         this.setPlayerInNewMap( newMapData, type );
         this.storeMapData( newMapData, destination );
-        controls.listenForKeyPress(); 
 
         setTimeout( ( ) => {
+            controls.listenForKeyPress(); 
             this.paused = false;   
         }, 100 )
     }
@@ -125,7 +124,6 @@ class Game {
             case 'NEIGHBOUR' :
                 Object.keys( mapData.neighbours ).forEach( ( key ) => {
                     if ( this.activeMapName == mapData.neighbours[key] ) {
-                        console.log(key)
                         switch ( key ) {
                             case 'up' : 
                                 break;
