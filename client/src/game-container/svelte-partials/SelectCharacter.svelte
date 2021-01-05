@@ -6,14 +6,17 @@
 
     export let returnToPreviousScreen;
 
-    const availableClasses = [ "NECKBEARD", "INFLUENCER", "CHAD", "TUMBLR_GIRL" ]
+    const availableClasses = [ "LOREM", "IPSUM", "DOLOR", "SIT AMET" ]
     const descriptions = { 
-        "NECKBEARD": "Aren't nice guys like me known for their superior intelligence, m'lady? Discover your inner Neckbeard and fight your opponents with edgy 'jokes' and social awkwardness.", 
-        "INFLUENCER": "The #Influencer is always looking #Great in her online #GoodLife! Choose her and rob your opponents of their attention, money and self-esteem.", 
-        "CHAD": "The Chad loves kicking ass, bruh! In fact he's kicking so much ass, that he's hardly good for anything else. Choose him if you like to overwhelm your opponents with brute force.", 
-        "TUMBLR_GIRL": "The Tumblr Girl is always online and she's always right. Release your many identities upon the world and summon the Twitter mobs to make your foes tremble!"
+        "LOREM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+        "IPSUM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+        "DOLOR": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
+        "SIT AMET": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
     }
-    let activeClass = "NECKBEARD";
+    const classNames = {
+        "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
+    };
+    let activeClass = "LOREM";
     let activeClassIndex = availableClasses.indexOf(activeClass);
     let spriteWidth  = globals.MAP_SPRITE_WIDTH_IN_SHEET * 3
     let spriteHeight = globals.MAP_SPRITE_HEIGHT_IN_SHEET * 3
@@ -54,7 +57,7 @@
     const getSpriteAndDrawToCanvas = ( ) => {
         clearFrameCount( )
         currentSprite = new Image( );
-        currentSprite.src = "/static/site_assets/" + activeClass.toLowerCase().replace(" ", "_") + ".v3.png";
+        currentSprite.src = "/static/site_assets/" + classNames[activeClass].toLowerCase().replace(" ", "_") + ".v3.png";
         currentSprite.onload = ( ) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(

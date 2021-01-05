@@ -1,7 +1,7 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
-const { NPC } = require('./map/map-init/NPCController')
-const { MapObject } = require('./map/map-init/setMapAttributes')
-const { MapSprite } = require('./map/map-init/mapSprite')
+const { NPC } = require('./map/map-classes/NPC')
+const { MapObject } = require('./map/map-classes/MapObject')
+const { MapSprite } = require('./map/map-classes/MapSprite')
 const { getUniqueId } = require('../helpers/utilFunctions')
 
 class ForegroundCanvas extends I_CanvasWithGrid {

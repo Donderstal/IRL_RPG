@@ -1,7 +1,6 @@
-const MapSprite     = require('./mapSprite').MapSprite
+const MapSprite     = require('./MapSprite').MapSprite
 const globals       = require('../../../game-data/globals');
-const state         = require('../../../game-data/state')
-const MapAction     = require('./setMapAttributes').MapAction
+const MapAction     = require('./MapAction').MapAction
 
 class NPC extends MapSprite {
     constructor( tile ) {
@@ -112,41 +111,6 @@ class NPC extends MapSprite {
     }
 }
 
-/** 
- * Iterate over characters if they are present
- * 
- */
-const generateCharacters = ( ) => {
-    const characters = state.currentMap.mapData.characters
-    state.currentMap.NPCs = []
-
-    if ( characters ) {
-        characters.forEach( ( character ) => {
-            new NPC( { 'row': character.row, 'col': character.col }, 
-                character.sprite, 'CELL', 
-                globals[character.direction], character 
-            )
-        } )
-    }
-}
-
-const generateCharactersFromSave = ( savedNPCs ) => {
-    let newNPCs = []
-    savedNPCs.forEach( ( savedNPC ) => {
-        let toMapNPC = { ...savedNPC }  
-        toMapthis = new NPC( 
-            { 'x': savedthis.x, 'y': savedthis.y }, 
-            savedthis.sheetSrc, 'XY', savedthis.direction 
-        )
-
-        newNPCs.push(toMapNPC)
-    } )
-
-    return newNPCs
-}
-
 module.exports = {
-    generateCharacters,
-    generateCharactersFromSave,
     NPC
 }

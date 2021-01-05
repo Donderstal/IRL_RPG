@@ -33,6 +33,6 @@
 </style>
 
 <div> 
-    <h1 class="main-header"> NECKBEARD 2020 </h1> 
-    <h1 class="shadow-header"> NECKBEARD 2020 </h1> 
+    <h1 class="main-header"> WORKING TITLE </h1> 
+    <h1 class="shadow-header"> WORKING TITLE </h1> 
 </div>

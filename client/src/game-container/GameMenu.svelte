@@ -22,10 +22,14 @@
 
     let mainMenuMusic;
 
+    const classNames = {
+        "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
+    };
+
     const startGameWithParams = ( ) => {
         mainMenuMusic.stop()
         const characterName = document.getElementById('name-input').value;
-        const characterClass = document.getElementById('active-class').innerText.toLowerCase();
+        const characterClass = classNames[document.getElementById('active-class').innerText].toLowerCase();
         let mode = 'normal';
         closeMainMenu( )
         setTimeout( ( ) => {
