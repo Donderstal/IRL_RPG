@@ -166,6 +166,22 @@ module.exports = {
                 "type"  : "Lamppost_1",
                 "row"   : 8,
                 "col"   : 19
+            },
+            {
+                "type"  : "Car_A",
+                "row"   : 10,
+                "col"   : 24,
+                "moving": true,
+                "direction": "FACING_LEFT",
+                "destination": { "row": 10, "col": 1 },
+            },
+            {
+                "type"  : "Car_A",
+                "row"   : 11,
+                "col"   : 1,
+                "moving": true,
+                "direction": "FACING_RIGHT",
+                "destination": { "row": 11, "col": 24 },
             }
         ],
         "characters" : [
@@ -191,6 +207,20 @@ module.exports = {
                     "sfx": "voice-1.mp3",
                     "direction": "FACING_UP",
                     "text": "I'm a level 24 Darkmage."
+                }
+            },
+            {
+                "type": "idle",
+                "sprite": "CharacterX5.png",
+                "direction": "FACING_DOWN",
+                "row": 4,
+                "col": 1,
+                "name": "Big Balls Bert",                    
+                "action": {
+                    "type": "TEXT",
+                    "sfx": "voice-1.mp3",
+                    "direction": "FACING_UP",
+                    "text": "Do you even lift, bro?"
                 }
             },
             {
@@ -792,6 +822,14 @@ module.exports = {
                     "sfx": "typing.mp3",
                     "text": "Take the bus downtown?"
                 }
+            },
+            {
+                "type"  : "Car_A",
+                "row"   : 1,
+                "col"   : 22,
+                "moving": true,
+                "direction": "FACING_DOWN",
+                "destination": { "row": 12, "col": 22 },
             }
         ],
         "characters" : [
@@ -1109,6 +1147,16 @@ module.exports = {
                     "sfx": "voice-3.mp3",
                     "text": "I sold my house to pay for a new pair of kidneys."
                 }
+            }
+        ],
+        "mapObjects" : [
+            {
+                "type"  : "Car_A",
+                "row"   : 12,
+                "col"   : 1,
+                "moving": true,
+                "direction": "FACING_UP",
+                "destination": { "row": 1, "col": 1 },
             }
         ],
         "doors": [ 
