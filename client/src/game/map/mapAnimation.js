@@ -9,6 +9,8 @@ const handleMapAnimations = ( ) => {
 
     drawSpritesInOrder( )
 
+    clearMargins( foreground );        
+
     if ( player != undefined && !globals.GAME.paused ) {
         setActiveTile( );
         mapControls.handleMovementKeys( );  
@@ -19,6 +21,28 @@ const handleMapAnimations = ( ) => {
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
     }
+}
+
+const clearMargins = ( foreground ) => {
+    let grid = foreground.grid;
+    const overflowX = ( grid.overflowColumns * globals.GRID_BLOCK_PX ) / 2
+    const overflowY = ( grid.overflowRows * globals.GRID_BLOCK_PX ) / 2 
+    globals.GAME.front.ctx.clearRect( 
+        0, 0, 
+        overflowX, globals.CANVAS_HEIGHT 
+        );
+    globals.GAME.front.ctx.clearRect( 
+        overflowX + ( grid.columns * globals.GRID_BLOCK_PX ), 0, 
+        overflowX, globals.CANVAS_HEIGHT 
+    );
+    globals.GAME.front.ctx.clearRect( 
+        0, 0, 
+        globals.CANVAS_WIDTH, overflowY 
+    );
+    globals.GAME.front.ctx.clearRect( 
+        0, overflowY + ( grid.rows * globals.GRID_BLOCK_PX ), 
+        globals.CANVAS_WIDTH, overflowY
+    );
 }
 
 const setActiveTile = ( ) => {
