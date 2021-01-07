@@ -10,15 +10,37 @@ class MapObject extends I_Sprite {
     constructor ( tile ){
         const objectResource = mapObjectResources[tile.spriteData.type]
         const src = "/static/sprite-assets/" + objectResource.src
-        const dimensions = {
-            "width": objectResource.width_blocks * globals.GRID_BLOCK_PX,
-            "height": objectResource.height_blocks * globals.GRID_BLOCK_PX 
+
+        const spriteDimensionsInBlocks = { "hori": 0, "vert": 0 };
+        
+        if ( objectResource.dimensional_alignment == "STANDARD" ) {
+            spriteDimensionsInBlocks.hori = objectResource.width_blocks;
+            spriteDimensionsInBlocks.vert = objectResource.height_blocks
+        } 
+        else if ( objectResource.dimensional_alignment == "HORI_VERT" ) {
+            if ( tile.spriteData.direction == "FACING_LEFT" || tile.spriteData.direction == "FACING_RIGHT" ) {
+                spriteDimensionsInBlocks.hori = objectResource.hori_width_blocks;
+                spriteDimensionsInBlocks.vert = objectResource.hori_height_blocks
+            }
+            else if ( tile.spriteData.direction == "FACING_UP" || tile.spriteData.direction == "FACING_DOWN" ) {
+                spriteDimensionsInBlocks.hori = objectResource.vert_width_blocks;
+                spriteDimensionsInBlocks.vert = objectResource.vert_height_blocks
+            }
+        } 
+
+        const dimensionsInMap = {
+            "width": spriteDimensionsInBlocks.hori * globals.GRID_BLOCK_PX,
+            "height": spriteDimensionsInBlocks.vert * globals.GRID_BLOCK_PX 
+        }
+        const dimensionsInSheet = { 
+            'width': spriteDimensionsInBlocks.hori * globals.GRID_BLOCK_IN_SHEET_PX,
+            'height': spriteDimensionsInBlocks.vert * globals.GRID_BLOCK_IN_SHEET_PX 
         }
 
-        super( tile, dimensions, src )
+        super( tile, dimensionsInMap, src )
 
-        this.widthInSheet   = objectResource.width_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
-        this.heightInSheet  = objectResource.height_blocks * globals.GRID_BLOCK_IN_SHEET_PX;
+        this.widthInSheet   = dimensionsInSheet.width;
+        this.heightInSheet  = dimensionsInSheet.height;
         this.hasAction  = tile.spriteData.hasAction;
 
         if ( this.hasAction ) {
@@ -71,7 +93,6 @@ class MapObject extends I_Sprite {
         const destIsBelowSprite = this.destinationTile.y + globals.GRID_BLOCK_PX + this.height > this.bottom;
 
         this.moving = false
-        this.hasMoved = true;
         if ( destIsLeftOfSprite && this.direction == globals["FACING_LEFT"] ) {
             this.x -= globals.MOVEMENT_SPEED * 2;
             this.moving = true;
@@ -88,7 +109,7 @@ class MapObject extends I_Sprite {
             this.direction = globals["FACING_RIGHT"];
         }
         else if ( destIsBelowSprite && this.direction == globals["FACING_DOWN"]  ) {
-            this.y += globals.MOVEMENT_SPEED * 2;  
+            this.y += globals.MOVEMENT_SPEED * 2; 
             this.moving = true;
             this.direction = globals["FACING_DOWN"]
         }
