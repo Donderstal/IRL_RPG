@@ -67,37 +67,43 @@ const checkForCollision = ( sprite, isPlayer ) => {
     
     if ( currFrontTile.hasSprite && currFrontTile.spriteId != sprite.spriteId ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontTile.spriteId];
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;         
         }
     }
     if ( currFrontNeighbourPrev != undefined && currFrontNeighbourPrev.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourPrev.spriteId];
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;         
         }
     }
     if ( currFrontNeighbourNext != undefined && currFrontNeighbourNext.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourNext.spriteId];
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;         
         }
     }
     if ( nextFrontTile != undefined && nextFrontTile.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;
         }
     }
     if ( nextFrontNeighbourPrev != undefined && nextFrontNeighbourPrev.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourPrev.spriteId];
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;         
         }
     }
     if ( nextFrontNeighbourNext != undefined && nextFrontNeighbourNext.hasSprite ) {
         const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourNext.spriteId];
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;         
         }
     }
