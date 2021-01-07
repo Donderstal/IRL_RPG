@@ -78,7 +78,7 @@ const setSheetXyValues = ( tilesInSheet ) => {
     return tilesheetXyValues;
 }
 
-const SHEET_XY_VALUES = setSheetXyValues( 608 );
+const SHEET_XY_VALUES = setSheetXyValues( 10000 );
 
 
 module.exports = {

@@ -116,6 +116,15 @@ module.exports = {
 
             ]
         },
+        "my_neighbourhood_2" : {
+            "src": "City4_Tiles.png",
+            "uniqueTiles": 800,
+            "blocked": [
+                1, 2, 3, 4, 5, 6,
+                7, 8, 9, 10, 11, 13, 
+                14, 15, 16, 17, 18
+            ]
+        },
         "downtown" : {
             "src": "city2_modern.png",
             "uniqueTiles": 608,
