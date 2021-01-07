@@ -88,6 +88,56 @@ module.exports = {
                     "text": "Take the bus to your neighbourhood?"
                 }
             }
+        ],
+        "characters" : [
+            {
+                "type": "flying",
+                "sprite": "pigeon.png",
+                "direction": "FACING_DOWN",
+                "name": "Darkwing Dork",    
+                "row": 6,
+                "col": 8,
+
+                "lastPosition" : {                   
+                    "id": 0,
+                    "row": 6, 
+                    "col": 8
+                },
+                "path" : [                     
+                    { "id": 0, "row": 6, "col": 8 },
+                    { "id": 1, "row": 10, "col": 12 }
+                ],
+                "action": {
+                    "type": "TEXT",
+                    "sfx": "voice-1.mp3",
+                    "direction": "FACING_UP",
+                    "text": "I'm a level 24 Darkmage."
+                }
+            },
+            {
+                "type": "flying",
+                "sprite": "pigeon.png",
+                "direction": "FACING_DOWN",
+                "name": "Darkwing Dork",    
+                "row": 1,
+                "col": 14,
+
+                "lastPosition" : {                   
+                    "id": 0,
+                    "row": 1, 
+                    "col": 14
+                },
+                "path" : [                     
+                    { "id": 0, "row": 1, "col": 14 },
+                    { "id": 1, "row": 6, "col": 17 }
+                ],
+                "action": {
+                    "type": "TEXT",
+                    "sfx": "voice-1.mp3",
+                    "direction": "FACING_UP",
+                    "text": "I'm a level 24 Darkmage."
+                }
+            }
         ]
     },
     "A4": {
