@@ -6,6 +6,8 @@ class I_Grid {
 
         this.rows = rows;
         this.cols = cols;        
+        this.overflowColumns = CANVAS_COLUMNS - this.cols;
+        this.overflowRows = CANVAS_ROWS - this.rows;
         this.x = this.getXOffset( );
         this.y = this.getYOffset( );
         this.array = [];
@@ -37,13 +39,11 @@ class I_Grid {
     };
 
     getXOffset( ) {
-        const overflowColumns = CANVAS_COLUMNS - this.cols;
-        return ( overflowColumns * GRID_BLOCK_PX ) / 2;
+        return ( this.overflowColumns * GRID_BLOCK_PX ) / 2;
     }
 
     getYOffset( ) {
-        const overflowRows = CANVAS_ROWS - this.rows;
-        return ( overflowRows * GRID_BLOCK_PX ) / 2;
+        return ( this.overflowRows * GRID_BLOCK_PX ) / 2;
     }
 
     clearGrid( ) {
