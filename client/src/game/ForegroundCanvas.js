@@ -7,8 +7,6 @@ const { getUniqueId } = require('../helpers/utilFunctions')
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
-        this.characters = false;
-        this.objects = false;
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = { };
@@ -62,11 +60,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         })
     };
 
-    clearForegroundData( ) {
-        this.grid = [ ];
-        this.allSprites = [ ];
-    }
-
     setSpritesToGrid( ) {
         this.grid.array.forEach( ( tile ) => {
             if ( tile.hasSprite ) {
@@ -107,6 +100,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     clearMap( ) {
         this.allSprites = [ ];
         this.spriteDictionary = { };
+        this.playerSprite.clearTileIndexes( );
+        super.clearGrid( );
     }
 }
 

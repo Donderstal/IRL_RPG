@@ -79,25 +79,27 @@ class Game {
     }
 
     clearMapFromCanvases( ) {
-        [ this.back, this.front ].forEach( ( canvasWrapper ) => {
-            canvasWrapper.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-            canvasWrapper.class.clearMap( );
-        })
+        this.front.class.clearMap( );
+        this.back.class.clearMap( );
+
+        this.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+        this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
     }
 
     switchMap ( destination, type ) {
-        controls.clearPressedKeys( );
+        this.paused = true;
         controls.stopListenForKeyPress( );
 
         const newMapData = getMapData( destination );
-        console.log('new map data')
-        console.log(newMapData)
         this.clearMapFromCanvases( );
-
         this.loadMapToCanvases( newMapData );
         this.setPlayerInNewMap( newMapData, type );
         this.storeMapData( newMapData, destination );
-        controls.listenForKeyPress(); 
+
+        setTimeout( ( ) => {
+            controls.listenForKeyPress(); 
+            this.paused = false;   
+        }, 100 )
     }
 
     storeMapData( mapData, mapName ) {
@@ -122,7 +124,6 @@ class Game {
             case 'NEIGHBOUR' :
                 Object.keys( mapData.neighbours ).forEach( ( key ) => {
                     if ( this.activeMapName == mapData.neighbours[key] ) {
-                        console.log(key)
                         switch ( key ) {
                             case 'up' : 
                                 break;
@@ -142,6 +143,12 @@ class Game {
                 })
                 break;
             case 'BUS' :
+                mapData.mapObjects.forEach( ( object ) => {
+                    if ( object.action != undefined && object.action.type == "BUS" ) {
+                        newPlayerCell.row = object.row;
+                        newPlayerCell.col = object.col;
+                    }
+                } )
                 break;
         }
 

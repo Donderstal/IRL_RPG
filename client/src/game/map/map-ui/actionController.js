@@ -7,7 +7,6 @@ const handleActionButton = ( ) => {
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble = {}
         state.currentMap.bubbleIsActive = false
-        return;
     }
 
     const currentPlayerTileFront = globals.GAME.front.class.activePlayerTile;
@@ -18,54 +17,31 @@ const handleActionButton = ( ) => {
 
     const spritesById = globals.GAME.front.class.spriteDictionary
 
-    if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
-        handleAction( spritesById[currentPlayerTileFront.spriteId].hitbox )
+    if ( globals.GAME.activeAction != null && globals.GAME.activeAction.needsConfirmation ) {
+        globals.GAME.activeAction.confirm( );
+        state.currentMap.activeBubble = {}
+        state.currentMap.bubbleIsActive = false
         return;
+    }
+
+    if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
+        globals.GAME.activeAction = spritesById[currentPlayerTileFront.spriteId].hitbox
     }
     else if ( nextPlayerTileFront.hasSprite && spritesById[nextPlayerTileFront.spriteId].action != undefined ) {
-        handleAction( spritesById[nextPlayerTileFront.spriteId].hitbox )
-        return;
+        globals.GAME.activeAction = spritesById[nextPlayerTileFront.spriteId].hitbox
     }
     else if ( currentPlayerTileBack.hasEvent ) {
-        handleAction( currentPlayerTileBack.event )
-        return;
+        globals.GAME.activeAction =  currentPlayerTileBack.event
     }
     else if ( nextPlayerTileBack.hasEvent ) {
-        handleAction( nextPlayerTileBack.event )
-        return;
+        globals.GAME.activeAction =  nextPlayerTileBack.event
+    }
+
+    if ( globals.GAME.activeAction != null ) {
+        globals.GAME.activeAction.handle( );        
     }
 }
 
-const handleAction = ( action ) => {
-    switch ( action.type ) {
-        case "TEXT" :
-            displayActionText( action )
-            break;   
-        case "BUS" :
-            displayActionText( action )
-            state.requestingBus = { 
-                'urlToNewMap': action.to,
-                'oldMapName': state.currentMap.mapData.mapName
-             };
-            break;
-        case "BATTLE" :
-            displayActionText( action )
-            state.battleStaging.action = action
-            state.battleStaging.requestingBattle = true
-            break;            
-        }
-}
-
-const displayActionText = ( action ) => {
-    if ( !document.getElementById(action.sfx) ) {
-        const sfx = new soundHelper.Sound( action.sfx, true )
-        sfx.play()
-        setTimeout( () => {
-            document.getElementById(action.sfx).remove()                    
-        }, 1500)
-    } 
-    displayText.getSpeechBubble( action )
-}
 module.exports = {
     handleActionButton
 }

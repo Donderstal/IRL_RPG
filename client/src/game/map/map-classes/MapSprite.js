@@ -109,6 +109,12 @@ class MapSprite extends I_Sprite {
         this.nextTileDirection = this.direction;
     }
 
+    clearTileIndexes( ) {
+        this.previousTileIndex = null;
+        this.activeTileIndex = null;
+        this.nextTileIndex = null;
+    }
+
     handleAnimation(  ) {
         if ( this.inScriptedAnimation ) {
             this.doScriptedAnimation( );

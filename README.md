@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 5, 2021
+* Fixing bug in map-to-map travel
+* Restored bus functionality with action confirm method
+
 #### DEC 30, 2020
 * Replacing some menu contents with dummy text
 
