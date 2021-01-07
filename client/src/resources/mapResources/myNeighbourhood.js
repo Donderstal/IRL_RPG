@@ -190,37 +190,23 @@ module.exports = {
                 "sprite": "neckbeard.png",
                 "direction": "FACING_DOWN",
                 "name": "Darkwing Dork",    
-                "row": 8,
-                "col": 13,
+                "row": 6,
+                "col": 8,
 
                 "lastPosition" : {                   
                     "id": 0,
-                    "row": 8, 
-                    "col": 13
+                    "row": 6, 
+                    "col": 8
                 },
                 "path" : [                     
-                    { "id": 0, "row": 6, "col": 13 },
-                    { "id": 1, "row": 10, "col": 13 }
+                    { "id": 0, "row": 6, "col": 8 },
+                    { "id": 1, "row": 6, "col": 12 }
                 ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
                     "direction": "FACING_UP",
                     "text": "I'm a level 24 Darkmage."
-                }
-            },
-            {
-                "type": "idle",
-                "sprite": "CharacterX5.png",
-                "direction": "FACING_DOWN",
-                "row": 4,
-                "col": 1,
-                "name": "Big Balls Bert",                    
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "Do you even lift, bro?"
                 }
             },
             {

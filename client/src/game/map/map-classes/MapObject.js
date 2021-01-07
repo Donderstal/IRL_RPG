@@ -11,22 +11,7 @@ class MapObject extends I_Sprite {
         const objectResource = mapObjectResources[tile.spriteData.type]
         const src = "/static/sprite-assets/" + objectResource.src
 
-        const spriteDimensionsInBlocks = { "hori": 0, "vert": 0 };
-        
-        if ( objectResource.dimensional_alignment == "STANDARD" ) {
-            spriteDimensionsInBlocks.hori = objectResource.width_blocks;
-            spriteDimensionsInBlocks.vert = objectResource.height_blocks
-        } 
-        else if ( objectResource.dimensional_alignment == "HORI_VERT" ) {
-            if ( tile.spriteData.direction == "FACING_LEFT" || tile.spriteData.direction == "FACING_RIGHT" ) {
-                spriteDimensionsInBlocks.hori = objectResource.hori_width_blocks;
-                spriteDimensionsInBlocks.vert = objectResource.hori_height_blocks
-            }
-            else if ( tile.spriteData.direction == "FACING_UP" || tile.spriteData.direction == "FACING_DOWN" ) {
-                spriteDimensionsInBlocks.hori = objectResource.vert_width_blocks;
-                spriteDimensionsInBlocks.vert = objectResource.vert_height_blocks
-            }
-        } 
+        const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, tile.spriteData.direction );
 
         const dimensionsInMap = {
             "width": spriteDimensionsInBlocks.hori * globals.GRID_BLOCK_PX,
@@ -116,6 +101,7 @@ class MapObject extends I_Sprite {
         
         if ( !this.moving ) {
             super.endGoToAnimation( );
+            this.movingToDestination = false;
         }
     }
 
@@ -150,6 +136,27 @@ class MapObject extends I_Sprite {
             }
         }
     }
+}
+
+const getSpriteDimensions = ( objectResource, spriteDirection ) => {
+    const spriteDimensionsInBlocks = { "hori": 0, "vert": 0 };
+
+    if ( objectResource.dimensional_alignment == "STANDARD" ) {
+        spriteDimensionsInBlocks.hori = objectResource.width_blocks;
+        spriteDimensionsInBlocks.vert = objectResource.height_blocks
+    } 
+    else if ( objectResource.dimensional_alignment == "HORI_VERT" ) {
+        if ( spriteDirection == "FACING_LEFT" || spriteDirection == "FACING_RIGHT" ) {
+            spriteDimensionsInBlocks.hori = objectResource.hori_width_blocks;
+            spriteDimensionsInBlocks.vert = objectResource.hori_height_blocks
+        }
+        else if ( spriteDirection == "FACING_UP" || spriteDirection == "FACING_DOWN" ) {
+            spriteDimensionsInBlocks.hori = objectResource.vert_width_blocks;
+            spriteDimensionsInBlocks.vert = objectResource.vert_height_blocks
+        }
+    } 
+
+    return spriteDimensionsInBlocks;
 }
 
 module.exports = {

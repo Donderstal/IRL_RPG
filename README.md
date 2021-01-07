@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### JAN 7, 2021
 * Adding basic animations for car sprites
+* Adding basic animations for pigeon sprites
 
 #### JAN 5, 2021
 * Fixing bug in map-to-map travel
