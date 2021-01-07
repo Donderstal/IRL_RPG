@@ -128,12 +128,12 @@ class I_Tile {
                 break;
         }
         this.event = new Door( xy.x, xy.y, doorData );
-        setTimeout( ( ) => { this.event.draw( xy.x, xy.y ); }, 1000)
+        //setTimeout( ( ) => { this.event.draw( xy.x, xy.y ); }, 1000)
     }
 
     setAction( actionData ) {
         this.event = new MapAction( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData );
-        setTimeout( ( ) => { this.event.draw( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ) ); }, 1000)
+        //setTimeout( ( ) => { this.event.draw( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ) ); }, 1000)
     }
 
     clearEventData( ) {
