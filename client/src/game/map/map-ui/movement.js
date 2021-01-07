@@ -112,13 +112,19 @@ const checkForNeighbours = ( sprite ) => {
             return true
         }
 
-        /* if ( activeMap.borders.top > ( sprite.y + sprite.height ) && activeMap.neighbours.top ) {
-            return activeMap.neighbours.top
+        if ( activeGrid.y > sprite.baseY( ) && activeMap.neighbours.up ) {
+            console.log('neighbour!')
+            console.log(activeMap.neighbours.up)
+            globals.GAME.switchMap( activeMap.neighbours.up, 'NEIGHBOUR' )
+            return activeMap.neighbours.up
         }
 
-        if ( activeMap.borders.bottom < ( sprite.y ) && activeMap.neighbours.bottom ) {
-            return activeMap.neighbours.bottom
-        } */
+        if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY( ) && activeMap.neighbours.down ) {
+            console.log('neighbour!')
+            console.log(activeMap.neighbours.down)
+            globals.GAME.switchMap( activeMap.neighbours.down, 'NEIGHBOUR' )
+            return activeMap.neighbours.down
+        }
     }
 
     return false;

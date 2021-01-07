@@ -126,12 +126,16 @@ class Game {
                     if ( this.activeMapName == mapData.neighbours[key] ) {
                         switch ( key ) {
                             case 'up' : 
+                                newPlayerCell.row = mapData.rows;
+                                newPlayerCell.col = this.front.class.playerSprite.col;
                                 break;
                             case 'right' :
                                 newPlayerCell.row = this.front.class.playerSprite.row;
                                 newPlayerCell.col = mapData.columns;
                                 break;
                             case 'down' :
+                                newPlayerCell.row = 1;
+                                newPlayerCell.col = this.front.class.playerSprite.col;
                                 break;
                             case 'left' :
                                 newPlayerCell.row = this.front.class.playerSprite.row;
