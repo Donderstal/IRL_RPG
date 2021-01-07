@@ -66,15 +66,24 @@ const drawSpritesInOrder = ( ) => {
 
     canvas.clearEntireCanvas("FRONT")
 
-    globals.GAME.front.class.allSprites.forEach( (e) => {
-        if ( !globals.GAME.paused ) {
-            e.drawSprite()            
-        }
-        else {
-            console.log('paused')
-        }
+    const flyingSprites = []
+    if ( !globals.GAME.paused ) {
+        globals.GAME.front.class.allSprites.forEach( (e) => {
+            if ( e.spriteId == 'PLAYER' || e.type != 'flying' ) {
+                e.drawSprite( );
+            } else if ( e.type == 'flying' ) {
+                flyingSprites.push( e );     
+            }
+        })      
 
-    })       
+        flyingSprites.forEach( ( e ) => {
+            e.drawSprite( );
+        })
+    } 
+    else {
+        console.log('paused')
+    }
+
 }
 
 module.exports = {
