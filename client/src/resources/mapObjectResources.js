@@ -1,6 +1,7 @@
 module.exports = {
     "Lamppost_1" : {
         "src": "lamppost.png",
+        "dimensional_alignment": "STANDARD",
         "height_blocks": 5,
         "width_blocks": 1,
         "alignment": "BOTTOM_LEFT" ,
@@ -8,6 +9,7 @@ module.exports = {
     },
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
+        "dimensional_alignment": "STANDARD",
         "height_blocks": 4,
         "width_blocks": 1,
         "alignment": "BOTTOM_LEFT" ,
@@ -15,8 +17,11 @@ module.exports = {
     },
     "Car_A" : {
         "src": "car_a.png",
-        "height_blocks": 3,
-        "width_blocks": 4,
+        "dimensional_alignment": "HORI_VERT",
+        "hori_height_blocks": 3,
+        "hori_width_blocks": 4,
+        "vert_height_blocks": 3,
+        "vert_width_blocks": 2,
         "alignment": "BOTTOM_LEFT",
         "movement_frames" : { 
             "FACING_LEFT" : [

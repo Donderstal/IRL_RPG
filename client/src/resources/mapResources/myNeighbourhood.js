@@ -826,10 +826,10 @@ module.exports = {
             {
                 "type"  : "Car_A",
                 "row"   : 1,
-                "col"   : 22,
+                "col"   : 23,
                 "moving": true,
                 "direction": "FACING_DOWN",
-                "destination": { "row": 12, "col": 22 },
+                "destination": { "row": 12, "col": 23 },
             }
         ],
         "characters" : [
