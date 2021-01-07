@@ -64,7 +64,12 @@ class MapSprite extends I_Sprite {
     updateTileIndexes( ) {
         const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
 
-        if ( this.activeTileIndex == null ) {
+        if ( tile == undefined ) {
+            this.setActiveTileIndex( this.previousTileFront );
+            return;
+        } 
+
+        if ( this.activeTileIndex == null && tile != undefined ) {
             this.setActiveTileIndex( tile );
             this.setNextTileIndex( );
         }
@@ -86,6 +91,8 @@ class MapSprite extends I_Sprite {
 
     setActiveTileIndex( tile ) {
         this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
+        this.row = globals.GAME.back.class.grid.array[this.activeTileIndex].row;
+        this.col = globals.GAME.back.class.grid.array[this.activeTileIndex].col;
         this.currentTileFront.setSpriteData( 'character', null )
         this.currentTileFront.spriteId = this.spriteId;
     }

@@ -1547,7 +1547,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "neighbours": {
-            "top": "my-neighbourhood/A1",
+            "up": "my-neighbourhood/A1",
             "right": "my-neighbourhood/B2"
         },
         "rows": 12,
@@ -3005,7 +3005,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "neighbours": {
-            "top": "my-neighbourhood/A2",
+            "up": "my-neighbourhood/A2",
             "left": "my-neighbourhood/B1",
             "right": "my-neighbourhood/B3"
         },
@@ -3312,7 +3312,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "neighbours": {
-            "top": "my-neighbourhood/A3",
+            "up": "my-neighbourhood/A3",
             "left": "my-neighbourhood/B2",
             "right": "my-neighbourhood/B4"
         },
@@ -3619,7 +3619,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "neighbours": {
-            "top": "my-neighbourhood/A4",
+            "up": "my-neighbourhood/A4",
             "left": "my-neighbourhood/B3",
         },
         "rows": 12,
