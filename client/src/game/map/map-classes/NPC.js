@@ -17,7 +17,7 @@ class NPC extends MapSprite {
             this.action.name = this.name
         }
 
-        if ( tile.spriteData.type == "walking" ) {
+        if ( tile.spriteData.type == "walking" || tile.spriteData.type == "flying" ) {
             this.path = tile.spriteData.path
             this.lastPosition = tile.spriteData.lastPosition
         }
@@ -35,7 +35,7 @@ class NPC extends MapSprite {
         if ( this.type === "idle" ) {
             this.handleIdleNPCAnimation( )
         }
-        if ( this.type === "walking" ) {
+        if ( this.type === "walking" || this.type == "flying" ) {
             this.handleWalkingNPCAnimation( )
         }
     }
@@ -50,22 +50,22 @@ class NPC extends MapSprite {
     }
 
     gotToNextDirection( countFrame = true) {
-        const NPC_speed = globals.MOVEMENT_SPEED * .5;
+        const NPC_speed = this.type == "flying" ? globals.MOVEMENT_SPEED : globals.MOVEMENT_SPEED * .5;
         if ( this.nextPosition.row > this.row ) {
-            this.y += NPC_speed  
-            this.direction = globals["FACING_DOWN"]
+            this.y += NPC_speed
+            this.direction = this.type == "flying" ? 7 : globals["FACING_DOWN"]
         }
         if ( this.nextPosition.row < this.row ) {
             this.y -= NPC_speed    
-            this.direction = globals["FACING_UP"]
+            this.direction = this.type == "flying" ? 6: globals["FACING_UP"]
         }
         if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
             this.x += NPC_speed    
-            this.direction = globals["FACING_RIGHT"]
+            this.direction = this.type == "flying" ? 5 : globals["FACING_RIGHT"]
         }
         if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
             this.x -= NPC_speed   
-            this.direction = globals["FACING_LEFT"]
+            this.direction = this.type == "flying" ? 4 : globals["FACING_LEFT"]
         }
 
         if ( countFrame ) {
@@ -101,7 +101,7 @@ class NPC extends MapSprite {
     handleWalkingNPCAnimation( ) {
         this.getNextNPCPosition( );
 
-        if ( !this.pathIsBlocked ) {
+        if ( !this.pathIsBlocked || this.type == "flying" ) {
             this.gotToNextDirection( );            
         } else {
             this.sheetPosition = 0;
