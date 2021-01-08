@@ -101,7 +101,42 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     };
 
     setCarGenerator( roads ) {
-        this.roads = roads;
+        roads.forEach( ( roadData ) => {
+            this.roads.push( roadData )
+        } )
+    }
+
+    generateCar( ) {
+        const activeRoad = this.roads[ Math.floor(Math.random() * this.roads.length) ];
+        const carData = { "direction": activeRoad.direction, "moving": true, "type": "Car_A" };
+        switch( activeRoad.direction ) {
+            case "FACING_LEFT" :
+                carData["row"]  = activeRoad.row;
+                carData["col"]  = this.grid.cols
+                carData.destination = { "row": activeRoad.row, "col": 1 }
+                break;
+            case "FACING_UP" :
+                carData["row"]  = this.grid.rows
+                carData["col"]  = activeRoad.col;
+                carData.destination = { "row": 1, "col": activeRoad.col }
+                break;
+            case "FACING_RIGHT" :
+                carData["row"]  = activeRoad.row;
+                carData["col"]  = 1
+                carData.destination = { "row": activeRoad.row, "col": this.grid.cols }
+                break;
+            case "FACING_DOWN" :
+                carData["row"]  = 1
+                carData["col"]  = activeRoad.col;
+                carData.destination = { "row": this.grid.rows, "col": activeRoad.col }
+                break;
+            default:
+                console.log("error! Direction " + activeRoad.direction + " not recognized")
+        }
+
+        const tile = this.grid.getTileAtCell( carData.row, carData.col );
+        tile.setSpriteData( "object", carData )
+        this.setObjectSprite( tile )
     }
 
     clearMap( ) {

@@ -150,7 +150,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 10, "direction": "FACING_LEFT" }
+          { "row": 11, "direction": "FACING_LEFT" }
         ],
         "neighbours": {
             "right": "my-neighbourhood/A2",
@@ -170,22 +170,6 @@ module.exports = {
                 "type"  : "Lamppost_1",
                 "row"   : 8,
                 "col"   : 19
-            },
-            {
-                "type"  : "Car_A",
-                "row"   : 10,
-                "col"   : 24,
-                "moving": true,
-                "direction": "FACING_LEFT",
-                "destination": { "row": 10, "col": 1 },
-            },
-            {
-                "type"  : "Car_A",
-                "row"   : 11,
-                "col"   : 1,
-                "moving": true,
-                "direction": "FACING_RIGHT",
-                "destination": { "row": 11, "col": 24 },
             }
         ],
         "characters" : [
@@ -770,6 +754,10 @@ module.exports = {
         "tileSet": "my_neighbourhood",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" },
+          { "col": 23, "direction": "FACING_DOWN"  }
+        ],
         "neighbours": {
             "left": "my-neighbourhood/A1",
             "right": "my-neighbourhood/A3",
@@ -813,14 +801,6 @@ module.exports = {
                     "sfx": "typing.mp3",
                     "text": "Take the bus downtown?"
                 }
-            },
-            {
-                "type"  : "Car_A",
-                "row"   : 1,
-                "col"   : 23,
-                "moving": true,
-                "direction": "FACING_DOWN",
-                "destination": { "row": 12, "col": 23 },
             }
         ],
         "characters" : [
@@ -1092,6 +1072,10 @@ module.exports = {
         "tileSet": "my_neighbourhood",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" },
+          { "col": 1, "direction": "FACING_UP"  }
+        ],
         "neighbours": {
             "left": "my-neighbourhood/A2",
             "right": "my-neighbourhood/A4",
@@ -1322,6 +1306,10 @@ module.exports = {
         "tileSet": "my_neighbourhood",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" },
+          { "col": 23, "direction": "FACING_DOWN"  }
+        ],
         "neighbours": {
             "left": "my-neighbourhood/A3",
             "down": "my-neighbourhood/B4"
