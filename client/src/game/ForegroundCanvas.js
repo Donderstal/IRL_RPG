@@ -7,6 +7,7 @@ const { getUniqueId } = require('../helpers/utilFunctions')
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
+        this.roads = [ ];
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = { };
@@ -23,6 +24,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.setObjects( mapData.mapObjects );
         if ( mapData.playerStart )
             this.setPlayerCharacter( mapData.playerStart );
+        if ( mapData.roads ) 
+            this.setCarGenerator( mapData.roads );
     }
 
     setPlayerCharacter( start ) {
@@ -97,8 +100,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.drawSpritesInGrid( );
     };
 
+    setCarGenerator( roads ) {
+        this.roads = roads;
+    }
+
     clearMap( ) {
         this.allSprites = [ ];
+        this.roads = [ ];
         this.spriteDictionary = { };
         this.playerSprite.clearTileIndexes( );
         super.clearGrid( );

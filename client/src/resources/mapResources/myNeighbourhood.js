@@ -149,6 +149,9 @@ module.exports = {
         "tileSet": "my_neighbourhood",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 10, "direction": "FACING_LEFT" }
+        ],
         "neighbours": {
             "right": "my-neighbourhood/A2",
             "left": "my-neighbourhood/A0",
