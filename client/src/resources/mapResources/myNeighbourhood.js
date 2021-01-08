@@ -1537,10 +1537,14 @@ module.exports = {
         "tileSet": "my_neighbourhood_2",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" }
+        ],
         "neighbours": {
             "up": "my-neighbourhood/A1",
             "right": "my-neighbourhood/B2"
         },
+        
         "rows": 12,
         "columns": 24,
         "grid": [
@@ -2995,6 +2999,10 @@ module.exports = {
         "tileSet": "my_neighbourhood_2",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" },
+          { "col": 23, "direction": "FACING_DOWN" }
+        ],
         "neighbours": {
             "up": "my-neighbourhood/A2",
             "left": "my-neighbourhood/B1",
@@ -3302,6 +3310,10 @@ module.exports = {
         "tileSet": "my_neighbourhood_2",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" },
+          { "col":  1, "direction": "FACING_UP"  }
+        ],
         "neighbours": {
             "up": "my-neighbourhood/A3",
             "left": "my-neighbourhood/B2",
@@ -3609,6 +3621,10 @@ module.exports = {
         "tileSet": "my_neighbourhood_2",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+          { "row": 11, "direction": "FACING_LEFT" },
+          { "col": 23, "direction": "FACING_DOWN"  }
+        ],
         "neighbours": {
             "up": "my-neighbourhood/A4",
             "left": "my-neighbourhood/B3",
