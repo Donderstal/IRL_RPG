@@ -44,19 +44,18 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 const checkForCollision = ( sprite, isPlayer ) => {
     const spriteIsFacingUpOrDown =  ( sprite.direction == globals["FACING_UP"] || sprite.direction == globals["FACING_DOWN"] )
 
-    const currBackTile = sprite.currentTileBack;
     const currFrontTile = sprite.currentTileFront;
-
     const currFrontNeighbourPrev = setCurrFrontNeighbourPrev( sprite, spriteIsFacingUpOrDown );
     const currFrontNeighbourNext = setCurrFrontNeighbourNext( sprite, spriteIsFacingUpOrDown );
 
-    const nextBackTile = sprite.nextTileBack;
     const nextFrontTile = sprite.nextTileFront;
-
     const nextFrontNeighbourPrev = setNextFrontNeighbourPrev( sprite, spriteIsFacingUpOrDown );
     const nextFrontNeighbourNext = setNextFrontNeighbourNext( sprite, spriteIsFacingUpOrDown );
 
     if ( isPlayer ) {
+        const currBackTile = sprite.currentTileBack;
+        const nextBackTile = sprite.nextTileBack;
+
         if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
             currBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
@@ -66,44 +65,49 @@ const checkForCollision = ( sprite, isPlayer ) => {
     }
     
     if ( currFrontTile.hasSprite && currFrontTile.spriteId != sprite.spriteId ) {
-        const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontTile.spriteId];
-        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
-            return true;         
+        if ( checkIfSpritesCollide( sprite, currFrontTile.spriteId) ) {
+            return true;
         }
     }
     if ( currFrontNeighbourPrev != undefined && currFrontNeighbourPrev.hasSprite ) {
-        const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourPrev.spriteId];
-        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
-            return true;         
+        if ( checkIfSpritesCollide( sprite, currFrontNeighbourPrev.spriteId) ) {
+            return true;
         }
     }
     if ( currFrontNeighbourNext != undefined && currFrontNeighbourNext.hasSprite ) {
-        const targetSprite = globals.GAME.front.class.spriteDictionary[currFrontNeighbourNext.spriteId];
-        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
-            return true;         
+        if ( checkIfSpritesCollide( sprite, currFrontNeighbourNext.spriteId) ) {
+            return true;
         }
     }
     if ( nextFrontTile != undefined && nextFrontTile.hasSprite ) {
-        const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontTile.spriteId];
-        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
+        if ( checkIfSpritesCollide( sprite, nextFrontTile.spriteId) ) {
             return true;
         }
     }
     if ( nextFrontNeighbourPrev != undefined && nextFrontNeighbourPrev.hasSprite ) {
-        const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourPrev.spriteId];
-        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
+        if ( checkIfSpritesCollide( sprite, nextFrontNeighbourPrev.spriteId) ) {
+            return true;
+        }
+    }
+    if ( nextFrontNeighbourNext != undefined && nextFrontNeighbourNext.hasSprite ) {
+        if ( checkIfSpritesCollide( sprite, nextFrontNeighbourNext.spriteId ) ) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
+    const targetSprite = globals.GAME.front.class.spriteDictionary[targetSpriteId];
+    const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' )
+    if ( targetSprite.type != 'object' && sprite.type  != 'object' ) {
         if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
             return true;         
         }
     }
-    if ( nextFrontNeighbourNext != undefined && nextFrontNeighbourNext.hasSprite ) {
-        const targetSprite = globals.GAME.front.class.spriteDictionary[nextFrontNeighbourNext.spriteId];
-        const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' ) ;
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
+    else {
+        if ( sprite.hitbox.checkForSquareRange( targetSprite, sprite.direction ) ) {
             return true;         
         }
     }
