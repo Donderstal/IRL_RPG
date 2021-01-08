@@ -5,6 +5,7 @@ const canvasHelpers = require('../../../helpers/canvasHelpers')
 const MapAction     = require('./MapAction').MapAction
 
 const mapObjectResources = require('../../../resources/mapObjectResources')
+const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
 class MapObject extends I_Sprite {
     constructor ( tile ){
@@ -26,14 +27,16 @@ class MapObject extends I_Sprite {
 
         this.widthInSheet   = dimensionsInSheet.width;
         this.heightInSheet  = dimensionsInSheet.height;
+        this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
         this.hasAction  = tile.spriteData.hasAction;
+        this.type = "object"
 
         if ( this.hasAction ) {
-            this.hitbox = new MapAction( this.x + (globals.GRID_BLOCK_PX * .25), this.y + (this.height - globals.GRID_BLOCK_PX), tile.spriteData.action )
+            this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height  *  .5  ), tile.spriteData.action )
             this.action = tile.spriteData.action
         }
         else {
-            this.hitbox = new I_Hitbox( this.x + (globals.GRID_BLOCK_PX * .25), this.y + (this.height - globals.GRID_BLOCK_PX), this.width / 2 );
+            this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height  * .5 ), this.width / 2 );
         }
 
         if ( tile.spriteData.moving ) {
@@ -42,11 +45,19 @@ class MapObject extends I_Sprite {
             this.frames = objectResource["movement_frames"];
             this.direction = globals[tile.spriteData.direction]
             this.destinationTile = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col )
+            this.activeTileIndexes = [ ];
+            this.previousTileIndex;
+            this.nextTileIndex
         }
     }
 
+    get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
+    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
+    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+
     drawSprite( ) {
         if ( this.movingToDestination ) {
+            this.blocked = false;
             this.setActiveFrames( );
         }
 
@@ -62,16 +73,87 @@ class MapObject extends I_Sprite {
         this.updateSpriteBorders( )
 
         if ( this.hasAction ) {
-            this.hitbox.checkForActionRange( );        
+            this.hitbox.checkForActionRange( );          
         }
 
         if ( this.movingToDestination ) {
-            this.goToDestination( );
+            this.hitbox.draw( this.x  + ( this.width * .5 ), this.y + ( this.height  * .5 ) );
+            globals.GAME.front.class.allSprites.forEach( ( e ) => {
+                if ( !e.deleted && this.hitbox.checkForWideRange( e.hitbox, this.direction )  ) {
+                    console.log('omg blocked!')
+                    this.blocked = checkForCollision( this, false );  
+                }
+            } )     
+
+            if ( !this.blocked ) {
+                this.goToDestination( );  
+                this.updateTileIndexes( );              
+            }
         }
 
         if ( this.movingToDestination ) {
             this.countFrame( );
         }
+    }
+
+    updateTileIndexes( ) {
+        const tile = this.getLeftCornerTileBasedOnDirection( );
+        if ( tile == undefined ) {
+            return;
+        }
+        if ( ( this.activeTileIndexes.length < 1 && tile != undefined ) || tile.index != this.activeTileIndexes[0] ) {
+            this.activeTileIndexes.unshift( tile.index )
+            this.setActiveTileIndex( tile );
+        }
+
+        if ( this.activeTileIndexes.length > this.spriteDimensionsInBlocks.hori ) {
+            let previousTile = globals.GAME.back.class.grid.array[this.activeTileIndexes.pop( )]
+            previousTile.clearSpriteData( )
+            previousTile.spriteId = null;
+        }
+    }
+
+    getLeftCornerTileBasedOnDirection( ) {
+        switch ( this.direction ) {
+            case globals["FACING_UP"] :
+                return globals.GAME.front.class.getTileAtXY( this.x, this.y );
+            case globals["FACING_RIGHT"] :
+                return globals.GAME.front.class.getTileAtXY( this.x + this.width, this.y + ( this.height / 2 ) );
+            case globals["FACING_DOWN"] :
+                return globals.GAME.front.class.getTileAtXY( this.x + this.width, this.y + this.height );
+            case globals["FACING_LEFT"] :
+                return globals.GAME.front.class.getTileAtXY( this.x, this.y + ( this.height / 2 ) );
+            default:
+                console.log('error! Direction + ' + this.direction + ' is not recognized')
+        }
+    }
+
+    setActiveTileIndex( tile ) {
+        this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
+        this.row = tile.row;
+        this.col = tile.col;
+        tile.setSpriteData( 'object', null )
+        tile.spriteId = this.spriteId;
+        this.setNextTileIndex( tile )
+    }
+
+    setNextTileIndex( activeTile ) {
+        switch ( this.direction ) {
+            case globals["FACING_UP"] :
+                this.nextTileIndex = activeTile.row != 1 ? activeTile.index - globals.GAME.back.class.grid.cols : undefined;
+                break;
+            case globals["FACING_RIGHT"] :
+                this.nextTileIndex = activeTile.col != globals.GAME.activeMap.columns ? activeTile.index + 1 : undefined;
+                break;
+            case globals["FACING_DOWN"] :
+                this.nextTileIndex = activeTile.row != globals.GAME.activeMap.rows ? activeTile.index + globals.GAME.back.class.grid.cols : undefined;
+                break;
+            case globals["FACING_LEFT"] :
+                this.nextTileIndex = activeTile.col != 1 ? activeTile.index - 1 : undefined;
+                break;
+        }
+
+        this.nextTileDirection = this.direction;
     }
 
     goToDestination( ) {
