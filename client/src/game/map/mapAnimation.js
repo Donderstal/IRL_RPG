@@ -97,7 +97,7 @@ const drawSpritesInOrder = ( ) => {
     const flyingSprites = []
     if ( !globals.GAME.paused ) {
         globals.GAME.front.class.allSprites.forEach( (e) => {
-            if ( globals.GAME.paused ) {
+            if ( globals.GAME.paused || e.deleted ) {
                 return;
             }
             if ( e.spriteId == 'PLAYER' || e.type != 'flying' ) {

@@ -67,6 +67,9 @@ class MapObject extends I_Sprite {
 
         if ( this.movingToDestination ) {
             this.goToDestination( );
+        }
+
+        if ( this.movingToDestination ) {
             this.countFrame( );
         }
     }
@@ -102,6 +105,7 @@ class MapObject extends I_Sprite {
         if ( !this.moving ) {
             super.endGoToAnimation( );
             this.movingToDestination = false;
+            this.deleted = true;
         }
     }
 

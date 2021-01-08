@@ -24,6 +24,7 @@ class Sprite {
         this.sheetSrc      = src
         this.sheet         = new Image();
         this.moving        = false;
+        this.deleted       = false;
 
         this.setSpriteToGrid( tile )
 
