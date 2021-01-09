@@ -5,6 +5,7 @@ const canvasHelpers = require('../../../helpers/canvasHelpers')
 const MapAction     = require('./MapAction').MapAction
 
 const mapObjectResources = require('../../../resources/mapObjectResources')
+const { GRID_BLOCK_PX } = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
 class MapObject extends I_Sprite {
@@ -35,8 +36,11 @@ class MapObject extends I_Sprite {
             this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height  *  .5  ), tile.spriteData.action )
             this.action = tile.spriteData.action
         }
-        else {
+        else if ( this.width == globals.GRID_BLOCK_PX ) {
             this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height  * .5 ), this.width / 2 );
+        }
+        else {
+            this.initHitboxes( ) 
         }
 
         if ( tile.spriteData.moving ) {
@@ -77,22 +81,53 @@ class MapObject extends I_Sprite {
         }
 
         if ( this.movingToDestination ) {
-            this.hitbox.draw( this.x  + ( this.width * .5 ), this.y + ( this.height  * .5 ) );
-            globals.GAME.front.class.allSprites.forEach( ( e ) => {
-                if ( !e.deleted && this.hitbox.checkForWideRange( e.hitbox, this.direction )  ) {
-                    console.log('omg blocked!')
-                    this.blocked = checkForCollision( this, false );  
+            let startingX = this.x + ( globals.GRID_BLOCK_PX * .5 );
+            let startingY = this.y + globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * .5 );
+    
+            const radius = globals.GRID_BLOCK_PX / 2;
+            let xyCounter = { 'x': startingX, 'y': startingY };
+
+            let xyValues = []
+    
+            for ( var i = 1; i < this.spriteDimensionsInBlocks.vert; i++) {
+                for ( var j = 0; j < this.spriteDimensionsInBlocks.hori; j++) {
+                    xyValues.push( { 'x' : xyCounter.x, 'y': xyCounter.y } );
+                    xyCounter.x += globals.GRID_BLOCK_PX;
                 }
-            } )     
+                xyCounter.y += globals.GRID_BLOCK_PX;
+                xyCounter.x = startingX;
+            }
+            
+            this.hitboxes.forEach( ( hitbox, index ) => {
+                hitbox.draw( xyValues[index].x, xyValues[index].y, radius )
+            } )
 
             if ( !this.blocked ) {
-                this.goToDestination( );  
-                this.updateTileIndexes( );              
+                this.goToDestination( );     
             }
         }
 
         if ( this.movingToDestination ) {
             this.countFrame( );
+        }
+    }
+    
+    initHitboxes( ) {
+        this.hitboxes = [];
+
+        let startingX = this.x + ( globals.GRID_BLOCK_PX * .5 );
+        let startingY = this.y + globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * .5 );
+
+        const radius = globals.GRID_BLOCK_PX / 2;
+        let xyCounter = { 'x': startingX, 'y': startingY };
+
+        for ( var i = 1; i < this.spriteDimensionsInBlocks.vert; i++) {
+            for ( var j = 0; j < this.spriteDimensionsInBlocks.hori; j++) {
+                this.hitboxes.push( new I_Hitbox( xyCounter.x, xyCounter.y, radius ) );
+                xyCounter.x += globals.GRID_BLOCK_PX;
+            }
+            xyCounter.y += globals.GRID_BLOCK_PX;
+            xyCounter.x = startingX;
         }
     }
 
@@ -118,9 +153,9 @@ class MapObject extends I_Sprite {
             case globals["FACING_UP"] :
                 return globals.GAME.front.class.getTileAtXY( this.x, this.y );
             case globals["FACING_RIGHT"] :
-                return globals.GAME.front.class.getTileAtXY( this.x + this.width, this.y + ( this.height / 2 ) );
+                return globals.GAME.front.class.getTileAtXY( this.x + ( this.width - GRID_BLOCK_PX), this.y + ( this.height / 2 ) );
             case globals["FACING_DOWN"] :
-                return globals.GAME.front.class.getTileAtXY( this.x + this.width, this.y + this.height );
+                return globals.GAME.front.class.getTileAtXY( this.x + ( this.width - GRID_BLOCK_PX), this.y + (this.height - GRID_BLOCK_PX) );
             case globals["FACING_LEFT"] :
                 return globals.GAME.front.class.getTileAtXY( this.x, this.y + ( this.height / 2 ) );
             default:
