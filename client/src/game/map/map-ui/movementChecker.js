@@ -99,20 +99,44 @@ const checkForCollision = ( sprite, isPlayer ) => {
 }
 
 const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
+    let colliding = false;
     const targetSprite = globals.GAME.front.class.spriteDictionary[targetSpriteId];
-    const spriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' )
-    if ( targetSprite.type != 'object' && sprite.type  != 'object' ) {
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) && !spriteIsFlying ) {
-            return true;         
-        }
+    const targetSpriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' )
+
+    if ( targetSprite.deleted || targetSpriteIsFlying ) {
+        return colliding;
+    }
+
+    if ( 'hitboxes' in targetSprite && targetSprite.hitboxes.length > 0 && 'hitboxes' in sprite &&  sprite.hitboxes.length > 0 ) {
+        sprite.hitboxes.forEach( ( hitbox ) => {
+            targetSprite.hitboxes.forEach( ( targetHitbox ) => {
+                if ( hitbox.checkForActionRange( targetHitbox, sprite.direction ) ) {
+                    colliding = true;
+                }
+            })
+        })
+    }
+    else if ( 'hitboxes' in targetSprite && targetSprite.hitboxes.length > 0 ) {
+        targetSprite.hitboxes.forEach( ( targetHitbox ) => {
+            if (  sprite.hitbox.checkForActionRange( targetHitbox, sprite.direction ) ) {
+                colliding = true;
+            }
+        })
+    }
+    else if ( 'hitboxes' in sprite && sprite.hitboxes.length > 0 ) {
+        sprite.hitboxes.forEach( ( hitbox ) => {
+            if ( hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+                colliding = true;
+            }
+        })
     }
     else {
-        if ( sprite.hitbox.checkForSquareRange( targetSprite, sprite.direction ) ) {
-            return true;         
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+            colliding = true;         
         }
     }
 
-    return false;
+    return colliding ;
 }
 
 const setCurrFrontNeighbourPrev = ( sprite, spriteIsFacingUpOrDown ) => {
