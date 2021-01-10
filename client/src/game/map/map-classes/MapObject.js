@@ -111,12 +111,21 @@ class MapObject extends I_Sprite {
         if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
             this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks ) )
         }
+        else {
+            this.hitboxGroups.push( new HitboxGroup( this.x, this.y + GRID_BLOCK_PX, this.direction, this.spriteDimensionsInBlocks ) )
+        }
     }
 
     updateHitboxes( ) {
         this.hitboxes = []
         this.hitboxGroups.forEach( ( group, index ) => {
-            group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
+            if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
+                group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
+            }
+            else {
+                group.updateHitboxes( this.x, this.y + GRID_BLOCK_PX * index )
+            }
+
             group.hitboxes.forEach( ( hitbox ) => {
                 this.hitboxes.push( hitbox )
             } );
@@ -131,11 +140,11 @@ class MapObject extends I_Sprite {
     }
 
     checkForIntersection( ) {
-        this.hitboxGroups.forEach( ( group ) => {
-            if ( group.isAtIntersection ) {
-                console.log( group.currentTileFront )
+          this.hitboxGroups.forEach( ( group ) => {
+            if ( group.isAtIntersection && !this.turning ) {
                 group.currentTileFront.intersectingDirections.forEach( ( direction ) => {
-                    if ( direction != this.direction ) {
+                    if ( globals[direction] != this.direction && !this.turning ) {
+                        this.turning = true;
                         this.switchDirections( direction, group.currentTileFront );
                     }
                 })
