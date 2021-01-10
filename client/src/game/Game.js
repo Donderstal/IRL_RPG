@@ -126,15 +126,19 @@ class Game {
                     if ( this.activeMapName == mapData.neighbours[key] ) {
                         switch ( key ) {
                             case 'up' : 
+                                newPlayerCell.row = 1;
+                                newPlayerCell.col = this.front.class.playerSprite.col;
                                 break;
                             case 'right' :
-                                newPlayerCell.row = this.front.class.playerSprite.row;
+                                newPlayerCell.row = this.front.class.playerSprite.row + 1;
                                 newPlayerCell.col = mapData.columns;
                                 break;
                             case 'down' :
+                                newPlayerCell.row = mapData.rows;
+                                newPlayerCell.col = this.front.class.playerSprite.col;
                                 break;
                             case 'left' :
-                                newPlayerCell.row = this.front.class.playerSprite.row;
+                                newPlayerCell.row = this.front.class.playerSprite.row - 1;
                                 newPlayerCell.col = 1;
                                 break;
                             
@@ -151,6 +155,8 @@ class Game {
                 } )
                 break;
         }
+
+        console.log(newPlayerCell)
 
         this.front.class.playerSprite.setNewLocationInGrid( newPlayerCell, direction );
         this.front.class.allSprites.push( this.front.class.playerSprite );

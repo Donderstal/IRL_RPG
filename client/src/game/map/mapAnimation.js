@@ -12,7 +12,6 @@ const handleMapAnimations = ( ) => {
     clearMargins( foreground );        
 
     if ( player != undefined && !globals.GAME.paused ) {
-        setActiveTile( );
         mapControls.handleMovementKeys( );  
     }
 
@@ -45,12 +44,6 @@ const clearMargins = ( foreground ) => {
     );
 }
 
-const setActiveTile = ( ) => {
-    globals.GAME.back.class.setActiveTile( globals.GAME.front.class.playerSprite.centerX( ), globals.GAME.front.class.playerSprite.baseY( ) )
-    globals.GAME.front.class.playerSprite.row = globals.GAME.back.class.activeTile.row;
-    globals.GAME.front.class.playerSprite.col = globals.GAME.back.class.activeTile.col;
-}
-
 const drawSpritesInOrder = ( ) => {
     globals.GAME.front.class.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
@@ -69,6 +62,9 @@ const drawSpritesInOrder = ( ) => {
     const flyingSprites = []
     if ( !globals.GAME.paused ) {
         globals.GAME.front.class.allSprites.forEach( (e) => {
+            if ( globals.GAME.paused ) {
+                return;
+            }
             if ( e.spriteId == 'PLAYER' || e.type != 'flying' ) {
                 e.drawSprite( );
             } else if ( e.type == 'flying' ) {

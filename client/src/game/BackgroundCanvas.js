@@ -6,7 +6,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         console.log("initializing map!")
-        this.activeTile = { }
     };
     
     get activePlayerTile( ) { return this.grid.array[ globals.GAME.front.class.activePlayerTile.index ] }
@@ -35,10 +34,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, 
             tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX
         );
-    }
-
-    setActiveTile( x, y ) {
-        this.activeTile = super.getTileAtXY( x, y )
     }
 
     setActions( actions ) {
