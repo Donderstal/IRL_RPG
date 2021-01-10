@@ -22,6 +22,8 @@ class HitboxGroup {
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
 
+    get isAtIntersection( ) { return this.currentTileFront && this.currentTileFront.hasIntersection }
+
     initHitboxes( ) {
         this.hitboxes = [];
         let xyValues = this.getHitboxXYValues( );
@@ -42,10 +44,6 @@ class HitboxGroup {
         } )
 
         this.updateTileIndexes( xyValues );
-        
-        if ( this.currentTileFront && this.currentTileFront.hasIntersection ) {
-            console.log(' at intersection!!' )
-        }
     }
 
     getHitboxXYValues( ) {

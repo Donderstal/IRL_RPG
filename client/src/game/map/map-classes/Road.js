@@ -60,15 +60,15 @@ class Road {
             if ( index != this.index ) { 
                 if  ( this.isHorizontal && !road.isHorizontal ) {
                     const cell = { 'row': this.startCell.row, 'col': road.startCell.col }
-                    console.log(cell)
                     const tile = activeGrid.getTileAtCell( cell.row, cell.col )
                     tile.hasIntersection = true;
+                    tile.intersectingDirections = [ this.direction, road.direction ]
                 }
                 else if ( !this.isHorizontal && road.isHorizontal ) {
                     const cell = { 'row': road.startCell.row, 'col': this.startCell.col }
-                    console.log(cell)
                     const tile = activeGrid.getTileAtCell( cell.row, cell.col )
                     tile.hasIntersection = true;
+                    tile.intersectingDirections = [ this.direction, road.direction ]
                 }
             }
         } )
