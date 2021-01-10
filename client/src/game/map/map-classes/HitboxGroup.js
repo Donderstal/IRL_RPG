@@ -41,7 +41,11 @@ class HitboxGroup {
             hitbox.draw( xyValues[index].x, xyValues[index].y, radius )
         } )
 
-        this.updateTileIndexes( xyValues )
+        this.updateTileIndexes( xyValues );
+        
+        if ( this.currentTileFront && this.currentTileFront.hasIntersection ) {
+            console.log(' at intersection!!' )
+        }
     }
 
     getHitboxXYValues( ) {

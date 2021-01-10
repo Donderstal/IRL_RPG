@@ -3623,7 +3623,7 @@ module.exports = {
         "music": "game-jam.mp3",
         "roads" : [
           { "row": 11, "direction": "FACING_LEFT" },
-          { "col": 23, "direction": "FACING_DOWN"  }
+          { "col": 23, "direction": "FACING_DOWN" }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A4",

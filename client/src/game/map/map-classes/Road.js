@@ -5,6 +5,8 @@ class Road {
         this.index = index;
         this.direction = roadData.direction;
 
+        this.isHorizontal = this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT";
+
         this.startCell = {};
         this.endCell = {};
 
@@ -13,7 +15,7 @@ class Road {
 
     get startCellIsBlocked( ) { 
         return globals.GAME.front.class.grid.getTileAtCell( 
-            this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT" ? this.startCell.row - 1 : this.startCell.row, 
+            this.isHorizontal ? this.startCell.row - 1 : this.startCell.row, 
             this.startCell.col
         ).hasSprite 
     }
@@ -49,6 +51,27 @@ class Road {
             default:
                 console.log("error! Direction " + roadData.direction + " not recognized")
         }
+    }
+
+    checkForIntersections( roads ) {
+        const activeGrid = globals.GAME.front.class.grid;
+
+        roads.forEach( ( road, index ) => { 
+            if ( index != this.index ) { 
+                if  ( this.isHorizontal && !road.isHorizontal ) {
+                    const cell = { 'row': this.startCell.row, 'col': road.startCell.col }
+                    console.log(cell)
+                    const tile = activeGrid.getTileAtCell( cell.row, cell.col )
+                    tile.hasIntersection = true;
+                }
+                else if ( !this.isHorizontal && road.isHorizontal ) {
+                    const cell = { 'row': road.startCell.row, 'col': this.startCell.col }
+                    console.log(cell)
+                    const tile = activeGrid.getTileAtCell( cell.row, cell.col )
+                    tile.hasIntersection = true;
+                }
+            }
+        } )
     }
 
     getCarDataForTile( ) {

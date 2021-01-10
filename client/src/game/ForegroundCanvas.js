@@ -105,6 +105,12 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         roads.forEach( ( roadData, index ) => {
             this.roads.push( new Road( roadData, index ) )
         } )
+
+        if ( roads.length > 1 ) {
+            this.roads.forEach( ( road ) => {
+                road.checkForIntersections( this.roads )
+            })
+        }
     }
 
     generateCar( ) {
