@@ -5,7 +5,7 @@ const canvasHelpers = require('../../../helpers/canvasHelpers')
 const MapAction     = require('./MapAction').MapAction
 
 const mapObjectResources = require('../../../resources/mapObjectResources')
-const { GRID_BLOCK_PX } = require('../../../game-data/globals')
+const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../../../game-data/globals')
 const { HitboxGroup } = require('./HitboxGroup')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
@@ -27,6 +27,7 @@ class MapObject extends I_Sprite {
 
         super( tile, dimensionsInMap, src, true )
 
+        this.objectResource = objectResource;
         this.widthInSheet   = dimensionsInSheet.width;
         this.heightInSheet  = dimensionsInSheet.height;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
@@ -41,31 +42,26 @@ class MapObject extends I_Sprite {
             this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height  * .5 ), this.width / 2 );
         }
         else {
-            this.hitboxGroups = [
-                new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks )
-            ]
-
-            if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
-                this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks ) )
-            }
+            this.initHitboxGroups( );
         }
 
         if ( tile.spriteData.moving ) {
-            this.movingToDestination = true;
-            this.movementSpeed = globals.MOVEMENT_SPEED * ( Math.random( ) + 1 );
-            this.destination = tile.spriteData.destination;
-            this.frames = objectResource["movement_frames"];
-            this.direction = globals[tile.spriteData.direction]
-            this.destinationTile = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col )
-            this.activeTileIndexes = [ ];
-            this.previousTileIndex;
-            this.nextTileIndex;
+            this.initMovingSprite( tile.spriteData )
         }
     }
 
     get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+
+    initMovingSprite( spriteData ) {
+        this.movingToDestination = true;
+        this.movementSpeed = globals.MOVEMENT_SPEED * ( Math.random( ) + 1 );
+        this.destination = spriteData.destination;
+        this.frames = this.objectResource["movement_frames"];
+        this.direction = globals[spriteData.direction]
+        this.destinationTile = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col )
+    }
 
     drawSprite( ) {
         if ( this.movingToDestination ) {
@@ -92,18 +88,9 @@ class MapObject extends I_Sprite {
         }
 
         if ( this.movingToDestination ) {
-            this.hitboxes = []
-            this.hitboxGroups.forEach( ( group, index ) => {
-                group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
-                group.hitboxes.forEach( ( hitbox ) => {
-                    this.hitboxes.push( hitbox )
-                } );
-            })
-
-            this.blocked = checkForCollision( this.hitboxGroups[0], false )
-            if ( !this.blocked && this.hitboxGroups.length > 1 ) {
-                this.blocked = checkForCollision( this.hitboxGroups[1], false )
-            }
+            this.updateHitboxes( );
+            this.checkForCollision( );
+            this.checkForIntersection( );
 
             if ( !this.blocked ) {
                 this.goToDestination( );     
@@ -113,6 +100,69 @@ class MapObject extends I_Sprite {
         if ( this.movingToDestination ) {
             this.countFrame( );
         }
+    }
+    
+    initHitboxGroups( ) {
+        this.hitboxGroups = [ ]
+
+        this.hitboxGroups = [
+            new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks )
+        ]
+        if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
+            this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks ) )
+        }
+    }
+
+    updateHitboxes( ) {
+        this.hitboxes = []
+        this.hitboxGroups.forEach( ( group, index ) => {
+            group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
+            group.hitboxes.forEach( ( hitbox ) => {
+                this.hitboxes.push( hitbox )
+            } );
+        })
+    }
+    
+    checkForCollision( ) {
+        this.blocked = checkForCollision( this.hitboxGroups[0], false )
+        if ( !this.blocked && this.hitboxGroups.length > 1 ) {
+            this.blocked = checkForCollision( this.hitboxGroups[1], false )
+        }        
+    }
+
+    checkForIntersection( ) {
+        this.hitboxGroups.forEach( ( group ) => {
+            if ( group.isAtIntersection ) {
+                console.log( group.currentTileFront )
+                group.currentTileFront.intersectingDirections.forEach( ( direction ) => {
+                    if ( direction != this.direction ) {
+                        this.switchDirections( direction, group.currentTileFront );
+                    }
+                })
+            }
+        })
+    }
+
+    switchDirections( newDirection, intersectionTile ) {
+        super.setSpriteToGrid( intersectionTile, true ) 
+        this.direction = globals[newDirection];
+        const spriteDimensionsInBlocks = getSpriteDimensions( this.objectResource, newDirection );      
+        this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;  
+        this.width = spriteDimensionsInBlocks.hori * GRID_BLOCK_PX;
+        this.height = spriteDimensionsInBlocks.vert * GRID_BLOCK_PX; 
+        this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
+        this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
+
+        this.initHitboxGroups( );
+
+        globals.GAME.front.class.roads.forEach( ( road ) => {
+            if ( road.direction == newDirection) {
+                this.destination = road.endCell;
+
+            }
+        })
+
+        this.destinationTile    = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col );
     }
 
     goToDestination( ) {
