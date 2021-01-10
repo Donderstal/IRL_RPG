@@ -51,7 +51,7 @@ class MapObject extends I_Sprite {
             this.destinationTile = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col )
             this.activeTileIndexes = [ ];
             this.previousTileIndex;
-            this.nextTileIndex
+            this.nextTileIndex;
         }
     }
 
@@ -81,23 +81,9 @@ class MapObject extends I_Sprite {
         }
 
         if ( this.movingToDestination ) {
-            let startingX = this.x + ( globals.GRID_BLOCK_PX * .5 );
-            let startingY = this.y + globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * .5 );
-    
             const radius = globals.GRID_BLOCK_PX / 2;
-            let xyCounter = { 'x': startingX, 'y': startingY };
-
-            let xyValues = []
+            let xyValues = this.getHitboxXYValues( );
     
-            for ( var i = 2; i < this.spriteDimensionsInBlocks.vert; i++) {
-                for ( var j = 0; j < this.spriteDimensionsInBlocks.hori; j++) {
-                    xyValues.push( { 'x' : xyCounter.x, 'y': xyCounter.y } );
-                    xyCounter.x += globals.GRID_BLOCK_PX;
-                }
-                xyCounter.y += globals.GRID_BLOCK_PX;
-                xyCounter.x = startingX;
-            }
-            
             this.hitboxes.forEach( ( hitbox, index ) => {
                 hitbox.draw( xyValues[index].x, xyValues[index].y, radius )
             } )
@@ -118,32 +104,74 @@ class MapObject extends I_Sprite {
     
     initHitboxes( ) {
         this.hitboxes = [];
+        const radius = globals.GRID_BLOCK_PX / 2;
+        let xyValues = this.getHitboxXYValues( );
+
+        xyValues.forEach( ( xy ) => {
+            this.hitboxes.push( new I_Hitbox( xy.x, xy.y, radius ) );
+        })
+    }
+
+    getHitboxXYValues( ) {
+        const spriteIsAlignedVertically = this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"]
 
         let startingX = this.x + ( globals.GRID_BLOCK_PX * .5 );
-        let startingY = this.y + globals.GRID_BLOCK_PX + ( globals.GRID_BLOCK_PX * .5 );
-
-        const radius = globals.GRID_BLOCK_PX / 2;
+        let startingY = this.y + ( globals.GRID_BLOCK_PX * .5 );
         let xyCounter = { 'x': startingX, 'y': startingY };
 
-        for ( var i = 2; i < this.spriteDimensionsInBlocks.vert; i++) {
-            for ( var j = 0; j < this.spriteDimensionsInBlocks.hori; j++) {
-                this.hitboxes.push( new I_Hitbox( xyCounter.x, xyCounter.y, radius ) );
-                xyCounter.x += globals.GRID_BLOCK_PX;
-            }
+        if ( !spriteIsAlignedVertically ) {
             xyCounter.y += globals.GRID_BLOCK_PX;
-            xyCounter.x = startingX;
         }
+
+        let xyValues = spriteIsAlignedVertically ? this.getVerticalXYValues( xyCounter, startingY ) : this.getHorizontalXYValues( xyCounter, startingX );
+        
+        if ( this.direction == globals["FACING_DOWN"] || this.direction == globals["FACING_RIGHT"] ) {
+            xyValues = xyValues.reverse( );
+        }
+
+        return xyValues;
+    }
+
+    getHorizontalXYValues( xyCounter, startingX ) {
+        let xyValues = [];
+
+        for ( var j = 0; j < this.spriteDimensionsInBlocks.hori; j++) {
+            xyValues.push( { 'x' : xyCounter.x, 'y': xyCounter.y } );
+            xyCounter.x += globals.GRID_BLOCK_PX;
+        }
+        
+        return xyValues;
+    }
+
+    getVerticalXYValues( xyCounter, startingY ) {
+        let xyValues = []
+
+        for ( var j = 0; j < this.spriteDimensionsInBlocks.vert; j++) {
+            xyValues.push( { 'x' : xyCounter.x, 'y': xyCounter.y } );
+            xyCounter.y += globals.GRID_BLOCK_PX;
+        }
+
+        return xyValues;
     }
 
     updateTileIndexes( hitboxesXY ) {
-        const previousTile = globals.GAME.front.class.getTileAtXY( hitboxesXY[hitboxesXY.length - 1].x + GRID_BLOCK_PX, hitboxesXY[0].y  );
-        this.previousTileIndex = previousTile.index;
-        this.previousTileFront.clearSpriteData( )
-        this.previousTileFront.spriteId = null;
+        const frontClass = globals.GAME.front.class
+        const previousTile = this.getPreviousTile( hitboxesXY, frontClass )
+        if ( previousTile != undefined ) {
+            this.previousTileIndex = previousTile.index;
+            this.previousTileFront.clearSpriteData( )
+            this.previousTileFront.spriteId = null;            
+        }
 
         let activeTiles = [];
         hitboxesXY.forEach( ( hitboxXY ) => {
-            activeTiles.push( globals.GAME.front.class.getTileAtXY( hitboxXY.x, hitboxXY.y ) )
+            let tileAtHitbox = frontClass.getTileAtXY( hitboxXY.x, hitboxXY.y )
+            if ( tileAtHitbox != undefined ) {
+                activeTiles.push( tileAtHitbox )                
+            }
+            if ( activeTiles.length < 1 ) {
+                activeTiles.push( previousTile )    
+            }
         })
 
         this.activeTileIndexes = [ ]
@@ -153,8 +181,47 @@ class MapObject extends I_Sprite {
             activeTile.spriteId = this.spriteId;
         })
 
-        const nextTile = globals.GAME.front.class.getTileAtXY( hitboxesXY[0].x - GRID_BLOCK_PX, hitboxesXY[0].y );
-        this.nextTileIndex = nextTile.index;
+        const nextTile = this.getNextTile( hitboxesXY, frontClass )
+
+        this.nextTileIndex = nextTile == undefined ? undefined : nextTile.index;
+    }
+
+    getPreviousTile( hitboxesXY, frontClass  ) {
+        let previousTile;
+        switch ( this.direction ) {
+            case globals["FACING_LEFT"]:
+                previousTile = frontClass.getTileAtXY( hitboxesXY[hitboxesXY.length - 1].x + GRID_BLOCK_PX, hitboxesXY[0].y );
+                break;
+            case globals["FACING_UP"]:
+                previousTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[hitboxesXY.length - 1].y + GRID_BLOCK_PX );
+                break;
+            case globals["FACING_RIGHT"]: 
+            previousTile = frontClass.getTileAtXY( hitboxesXY[hitboxesXY.length - 1].x - GRID_BLOCK_PX, hitboxesXY[0].y );
+                break;
+            case globals["FACING_DOWN"]:
+                previousTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[hitboxesXY.length - 1].y - GRID_BLOCK_PX );
+                break;
+        }
+        return previousTile
+    }
+
+    getNextTile( hitboxesXY, frontClass  ) {
+        let nextTile;
+        switch ( this.direction ) {
+            case globals["FACING_LEFT"]:
+                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x - GRID_BLOCK_PX, hitboxesXY[0].y );
+                break;
+            case globals["FACING_UP"]:
+                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[0].y - GRID_BLOCK_PX );
+                break;
+            case globals["FACING_RIGHT"]: 
+                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x + GRID_BLOCK_PX, hitboxesXY[0].y );
+                break;
+            case globals["FACING_DOWN"]:
+                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[0].y + GRID_BLOCK_PX );
+                break;
+        }
+        return nextTile;
     }
 
     goToDestination( ) {

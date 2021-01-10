@@ -11,7 +11,12 @@ class Road {
         this.setRoadCoordinates( roadData )
     }
 
-    get startCellIsBlocked( ) { return globals.GAME.front.class.grid.getTileAtCell( this.startCell.row - 1, this.startCell.col ).hasSprite }
+    get startCellIsBlocked( ) { 
+        return globals.GAME.front.class.grid.getTileAtCell( 
+            this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT" ? this.startCell.row - 1 : this.startCell.row, 
+            this.startCell.col
+        ).hasSprite 
+    }
 
     setRoadCoordinates( roadData ) {
         const activeGrid = globals.GAME.front.class.grid;
