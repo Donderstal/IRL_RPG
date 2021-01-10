@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### JAN 10, 2021
 * Added collision detection for cars
+* HitboxGroup class for large MapObjects
 
 #### JAN 7, 2021
 * Adding basic animations for car sprites
