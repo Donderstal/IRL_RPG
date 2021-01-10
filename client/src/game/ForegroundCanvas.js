@@ -2,11 +2,13 @@ const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { NPC } = require('./map/map-classes/NPC')
 const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
-const { getUniqueId } = require('../helpers/utilFunctions')
+const { getUniqueId } = require('../helpers/utilFunctions');
+const { Road } = require('./map/map-classes/Road');
 
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
+        this.roads = [ ];
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = { };
@@ -23,6 +25,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.setObjects( mapData.mapObjects );
         if ( mapData.playerStart )
             this.setPlayerCharacter( mapData.playerStart );
+        if ( mapData.roads ) 
+            this.setCarGenerator( mapData.roads );
     }
 
     setPlayerCharacter( start ) {
@@ -97,8 +101,28 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.drawSpritesInGrid( );
     };
 
+    setCarGenerator( roads ) {
+        roads.forEach( ( roadData, index ) => {
+            this.roads.push( new Road( roadData, index ) )
+        } )
+    }
+
+    generateCar( ) {
+        const activeRoad = this.roads[ Math.floor(Math.random() * this.roads.length) ];
+        console.log( activeRoad.startCellIsBlocked )
+        if ( activeRoad.startCellIsBlocked ) {
+            return;
+        }
+        const carData = activeRoad.getCarDataForTile( )
+        const tile = this.grid.getTileAtCell( carData.row, carData.col );
+        tile.setSpriteData( "object", carData )
+        this.setObjectSprite( tile )   
+        tile.clearSpriteData( );   
+    }
+
     clearMap( ) {
         this.allSprites = [ ];
+        this.roads = [ ];
         this.spriteDictionary = { };
         this.playerSprite.clearTileIndexes( );
         super.clearGrid( );

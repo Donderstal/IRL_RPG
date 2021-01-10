@@ -4,6 +4,9 @@ module.exports = {
         "tileSet": "downtown",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+            { "row": 11, "direction": "FACING_LEFT" }
+          ],
         "neighbours": {
             "right": "downtown/A2"
         },
@@ -29,6 +32,9 @@ module.exports = {
         "tileSet": "downtown",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+            { "row": 11, "direction": "FACING_LEFT" }
+          ],
         "neighbours": {
             "left": "downtown/A1",
             "right": "downtown/A3"
@@ -55,6 +61,9 @@ module.exports = {
         "tileSet": "downtown",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+            { "row": 11, "direction": "FACING_LEFT" }
+          ],
         "neighbours": {
             "left": "downtown/A2",
             "right": "downtown/A4"
@@ -145,6 +154,9 @@ module.exports = {
         "tileSet": "downtown",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+            { "row": 11, "direction": "FACING_LEFT" }
+          ],
         "neighbours": {
             "left": "downtown/A3",
             "right": "downtown/A5"
@@ -158,6 +170,9 @@ module.exports = {
         "tileSet": "downtown",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+            { "row": 11, "direction": "FACING_LEFT" }
+          ],
         "neighbours": {
             "left": "downtown/A4",
             "right": "downtown/A6"
@@ -171,6 +186,10 @@ module.exports = {
         "tileSet": "downtown",
         "outdoors": true,
         "music": "game-jam.mp3",
+        "roads" : [
+            { "row": 11, "direction": "FACING_LEFT" },
+            { "col": 23, "direction": "FACING_DOWN" }
+          ],
         "neighbours": {
             "left": "downtown/A5"
         },

@@ -3,13 +3,24 @@ const globals = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
 
+let carGenerationLimit = 5000;
+let randomCarLimit = 0;
+let millisecondCounter = 0;
+
+let lastTimeStamp = 0;
+let newTimeStamp = 0;
+
 const handleMapAnimations = ( ) => {
     const foreground = globals.GAME.front.class;
     const player     = foreground.playerSprite
 
     drawSpritesInOrder( )
 
-    clearMargins( foreground );        
+    clearMargins( foreground );      
+    
+    if ( foreground.roads.length > 0 ) {
+        handleCarGeneration( foreground.roads );
+    }
 
     if ( player != undefined && !globals.GAME.paused ) {
         mapControls.handleMovementKeys( );  
@@ -19,6 +30,31 @@ const handleMapAnimations = ( ) => {
 
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
+    }
+}
+
+const handleCarGeneration = ( roads ) => {
+    let addDifferenceToCounter = false;
+
+    if ( randomCarLimit == 0 ) {
+        randomCarLimit = Math.ceil(Math.random( ) * carGenerationLimit )
+    }
+
+    if ( newTimeStamp != 0 ) {
+        lastTimeStamp = newTimeStamp
+        addDifferenceToCounter = true
+    }
+
+    newTimeStamp = Date.now( );
+
+    if ( addDifferenceToCounter ) {
+        millisecondCounter += ( newTimeStamp - lastTimeStamp );
+    }
+
+    if ( millisecondCounter > randomCarLimit ) {
+        globals.GAME.front.class.generateCar( );
+        millisecondCounter = 0;
+        randomCarLimit = 0;
     }
 }
 
@@ -62,7 +98,7 @@ const drawSpritesInOrder = ( ) => {
     const flyingSprites = []
     if ( !globals.GAME.paused ) {
         globals.GAME.front.class.allSprites.forEach( (e) => {
-            if ( globals.GAME.paused ) {
+            if ( globals.GAME.paused || e.deleted ) {
                 return;
             }
             if ( e.spriteId == 'PLAYER' || e.type != 'flying' ) {

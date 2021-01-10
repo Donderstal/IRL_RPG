@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 10, 2021
+* Added collision detection for cars
+
 #### JAN 7, 2021
 * Adding basic animations for car sprites
 * Adding basic animations for pigeon sprites
