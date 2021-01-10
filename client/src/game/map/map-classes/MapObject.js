@@ -41,8 +41,13 @@ class MapObject extends I_Sprite {
             this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height  * .5 ), this.width / 2 );
         }
         else {
-            this.hitbox = new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks );
-            //this.initHitboxes( ) 
+            this.hitboxGroups = [
+                new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks )
+            ]
+
+            if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
+                this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks ) )
+            }
         }
 
         if ( tile.spriteData.moving ) {
@@ -63,7 +68,9 @@ class MapObject extends I_Sprite {
 
     drawSprite( ) {
         if ( this.movingToDestination ) {
-            this.hitbox.spriteId = this.spriteId
+            this.hitboxGroups.forEach( ( group ) => {
+                group.spriteId = this.spriteId
+            })
             this.blocked = false;
             this.setActiveFrames( );
         }
@@ -84,10 +91,18 @@ class MapObject extends I_Sprite {
         }
 
         if ( this.movingToDestination ) {
-            this.hitbox.updateHitboxes( this.x, this.y )
-            this.hitboxes = this.hitbox.hitboxes;
+            this.hitboxes = []
+            this.hitboxGroups.forEach( ( group, index ) => {
+                group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
+                group.hitboxes.forEach( ( hitbox ) => {
+                    this.hitboxes.push( hitbox )
+                } );
+            })
 
-            this.blocked = checkForCollision( this.hitbox, false );
+            this.blocked = checkForCollision( this.hitboxGroups[0], false )
+            if ( !this.blocked && this.hitboxGroups.length > 1 ) {
+                this.blocked = checkForCollision( this.hitboxGroups[1], false )
+            }
 
             if ( !this.blocked ) {
                 this.goToDestination( );     
