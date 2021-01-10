@@ -52,6 +52,7 @@ class MapObject extends I_Sprite {
 
         if ( tile.spriteData.moving ) {
             this.movingToDestination = true;
+            this.movementSpeed = globals.MOVEMENT_SPEED * ( Math.random( ) + 1 );
             this.destination = tile.spriteData.destination;
             this.frames = objectResource["movement_frames"];
             this.direction = globals[tile.spriteData.direction]
@@ -122,22 +123,22 @@ class MapObject extends I_Sprite {
 
         this.moving = false
         if ( destIsLeftOfSprite && this.direction == globals["FACING_LEFT"] ) {
-            this.x -= globals.MOVEMENT_SPEED * 2;
+            this.x -= this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_LEFT"]
         }
         else if ( destIsAboveSprite && this.direction == globals["FACING_UP"] ) {
-            this.y -= globals.MOVEMENT_SPEED * 2;
+            this.y -= this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_UP"]
         }
         else if ( destIsRightOfSprite  && this.direction == globals["FACING_RIGHT"]  ) {
-            this.x += globals.MOVEMENT_SPEED * 2;
+            this.x += this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_RIGHT"];
         }
         else if ( destIsBelowSprite && this.direction == globals["FACING_DOWN"]  ) {
-            this.y += globals.MOVEMENT_SPEED * 2; 
+            this.y += this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_DOWN"]
         }
