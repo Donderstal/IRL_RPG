@@ -2,7 +2,7 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const globals = require('../../game-data/globals')
 
 class Sprite {
-    constructor ( tile, spriteSize, src ) {   
+    constructor ( tile, spriteSize, src, isCar = false ) {   
         if ( spriteSize == "STRD" ) {
             this.width   = globals.STRD_SPRITE_WIDTH;
             this.height  = globals.STRD_SPRITE_HEIGHT;            
@@ -26,18 +26,18 @@ class Sprite {
         this.moving        = false;
         this.deleted       = false;
 
-        this.setSpriteToGrid( tile )
+        this.setSpriteToGrid( tile, isCar )
 
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
     }
 
-    setSpriteToGrid( tile ) {
+    setSpriteToGrid( tile, isCar ) {
         this.row = tile.row;
         this.col = tile.col;
         this.x = tile.x;
         
-        this.y = tile.y - ( this.height - globals.GRID_BLOCK_PX )
+        this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + globals.GRID_BLOCK_PX + this.height : tile.y - ( this.height - globals.GRID_BLOCK_PX )
     }
 
     setNewLocationInGrid( cell, direction ) {

@@ -45,6 +45,9 @@ const checkForCollision = ( sprite, isPlayer ) => {
     const spriteIsFacingUpOrDown =  ( sprite.direction == globals["FACING_UP"] || sprite.direction == globals["FACING_DOWN"] )
 
     const currFrontTile = sprite.currentTileFront;
+    if ( currFrontTile == undefined ) {
+        return false;
+    }
     const currFrontNeighbourPrev = setCurrFrontNeighbourPrev( sprite, spriteIsFacingUpOrDown );
     const currFrontNeighbourNext = setCurrFrontNeighbourNext( sprite, spriteIsFacingUpOrDown );
 

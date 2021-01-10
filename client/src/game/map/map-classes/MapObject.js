@@ -24,7 +24,7 @@ class MapObject extends I_Sprite {
             'height': spriteDimensionsInBlocks.vert * globals.GRID_BLOCK_IN_SHEET_PX 
         }
 
-        super( tile, dimensionsInMap, src )
+        super( tile, dimensionsInMap, src, true )
 
         this.widthInSheet   = dimensionsInSheet.width;
         this.heightInSheet  = dimensionsInSheet.height;
@@ -169,7 +169,7 @@ class MapObject extends I_Sprite {
             if ( tileAtHitbox != undefined ) {
                 activeTiles.push( tileAtHitbox )                
             }
-            if ( activeTiles.length < 1 ) {
+            if ( activeTiles.length < 1 && previousTile != undefined ) {
                 activeTiles.push( previousTile )    
             }
         })
