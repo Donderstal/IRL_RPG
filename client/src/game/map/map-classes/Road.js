@@ -5,6 +5,9 @@ class Road {
         this.index = index;
         this.direction = roadData.direction;
 
+        this.hasStart = roadData.hasStart == undefined;
+        this.endOfRoad = roadData.endOfRoa != undefined;
+
         this.isHorizontal = this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT";
 
         this.startCell = {};

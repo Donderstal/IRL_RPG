@@ -3312,7 +3312,7 @@ module.exports = {
         "music": "game-jam.mp3",
         "roads" : [
           { "row": 11, "direction": "FACING_LEFT" },
-          { "col":  1, "direction": "FACING_UP"  }
+          { "col":  1, "direction": "FACING_UP", "hasStart": false }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A3",
