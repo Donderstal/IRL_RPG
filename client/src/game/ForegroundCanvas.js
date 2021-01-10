@@ -2,7 +2,8 @@ const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { NPC } = require('./map/map-classes/NPC')
 const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
-const { getUniqueId } = require('../helpers/utilFunctions')
+const { getUniqueId } = require('../helpers/utilFunctions');
+const { Road } = require('./map/map-classes/Road');
 
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
@@ -101,45 +102,22 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     };
 
     setCarGenerator( roads ) {
-        roads.forEach( ( roadData ) => {
-            this.roads.push( roadData )
+        roads.forEach( ( roadData, index ) => {
+            this.roads.push( new Road( roadData, index ) )
         } )
     }
 
     generateCar( ) {
         const activeRoad = this.roads[ Math.floor(Math.random() * this.roads.length) ];
-        const carData = { "direction": activeRoad.direction, "moving": true, "type": "Car_A" };
-        switch( activeRoad.direction ) {
-            case "FACING_LEFT" :
-                carData["row"]  = activeRoad.row;
-                carData["col"]  = this.grid.cols
-                carData.destination = { "row": activeRoad.row, "col": 1 }
-                break;
-            case "FACING_UP" :
-                carData["row"]  = this.grid.rows
-                carData["col"]  = activeRoad.col;
-                carData.destination = { "row": 1, "col": activeRoad.col }
-                break;
-            case "FACING_RIGHT" :
-                carData["row"]  = activeRoad.row;
-                carData["col"]  = 1
-                carData.destination = { "row": activeRoad.row, "col": this.grid.cols }
-                break;
-            case "FACING_DOWN" :
-                carData["row"]  = 1
-                carData["col"]  = activeRoad.col;
-                carData.destination = { "row": this.grid.rows, "col": activeRoad.col }
-                break;
-            default:
-                console.log("error! Direction " + activeRoad.direction + " not recognized")
+        console.log( activeRoad.startCellIsBlocked )
+        if ( activeRoad.startCellIsBlocked ) {
+            return;
         }
-
+        const carData = activeRoad.getCarDataForTile( )
         const tile = this.grid.getTileAtCell( carData.row, carData.col );
-        if ( !tile.hasSprite ) {
-            tile.setSpriteData( "object", carData )
-            this.setObjectSprite( tile )   
-            tile.clearSpriteData( );         
-        }
+        tile.setSpriteData( "object", carData )
+        this.setObjectSprite( tile )   
+        tile.clearSpriteData( );   
     }
 
     clearMap( ) {
