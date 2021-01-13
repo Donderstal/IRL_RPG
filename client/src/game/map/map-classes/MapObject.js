@@ -140,8 +140,9 @@ class MapObject extends I_Sprite {
     }
 
     checkForIntersection( ) {
+        const isFacingUp = this.direction == globals["FACING_UP"]
           this.hitboxGroups.forEach( ( group ) => {
-            if ( group.isAtIntersection && !this.turning ) {
+            if ( !isFacingUp && group.isAtIntersection && !this.turning ) {
                 group.currentTileFront.intersectingDirections.forEach( ( direction ) => {
                     if ( globals[direction] != this.direction && !this.turning ) {
                         this.turning = true;
@@ -149,12 +150,23 @@ class MapObject extends I_Sprite {
                     }
                 })
             }
+            else if ( isFacingUp && group.isOnIntersection  && !this.turning ) {
+                group.middleTileFront.intersectingDirections.forEach( ( direction ) => {
+                    if ( globals[direction] != this.direction && !this.turning ) {
+                        this.turning = true;
+                        this.switchDirections( direction, group.middleTileFront );
+                    }
+                })
+            }
         })
     }
 
     switchDirections( newDirection, intersectionTile ) {
-        super.setSpriteToGrid( intersectionTile, true ) 
+        this.hitboxGroups.forEach( ( group ) => {
+            group.clearTileIndexes( )
+        })
         this.direction = globals[newDirection];
+        super.setSpriteToGrid( intersectionTile, true ) 
         const spriteDimensionsInBlocks = getSpriteDimensions( this.objectResource, newDirection );      
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;  
         this.width = spriteDimensionsInBlocks.hori * GRID_BLOCK_PX;
@@ -203,6 +215,7 @@ class MapObject extends I_Sprite {
         }
         
         if ( !this.moving ) {
+            console.log(' reached destination! ')
             super.endGoToAnimation( );
             this.movingToDestination = false;
             this.deleted = true;
