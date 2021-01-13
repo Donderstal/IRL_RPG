@@ -116,7 +116,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     generateCar( ) {
         const spawnableRoads = this.roads.filter( ( road ) => { return road.hasStart })
         const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
-        console.log( activeRoad.startCellIsBlocked )
         if ( activeRoad.startCellIsBlocked ) {
             return;
         }
