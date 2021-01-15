@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 15, 2021
+* Improving car collission with HitboxGroup
+* Fixing intersections and end of road detection
+
 #### JAN 10, 2021
 * Added collision detection for cars
 * HitboxGroup class for large MapObjects

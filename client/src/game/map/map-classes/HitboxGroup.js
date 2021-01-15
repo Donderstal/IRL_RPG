@@ -42,7 +42,7 @@ class HitboxGroup {
         let xyValues = this.getHitboxXYValues( );
     
         this.hitboxes.forEach( ( hitbox, index ) => {
-            hitbox.draw( xyValues[index].x, xyValues[index].y, radius )
+            hitbox.updateXy( xyValues[index].x, xyValues[index].y )
         } )
 
         this.updateTileIndexes( xyValues );
