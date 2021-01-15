@@ -89,10 +89,12 @@ class Road {
     }
 
     getCarDataForTile( ) {
+        const carNames = [ "car_a", "car_b", "car_c", "car_d" ]
+        let randomIndex = Math.floor(Math.random() * carNames.length);
         return {
             "direction": this.direction,
             "moving": true,
-            "type": "Car_A",
+            "type": carNames[randomIndex],
             "col": this.startCell.col,
             "row": this.startCell.row,
             "destination": this.endCell

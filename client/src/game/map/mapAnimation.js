@@ -3,7 +3,7 @@ const globals = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
 
-let carGenerationLimit = 5000;
+let carGenerationLimit = 10000;
 let randomCarLimit = 0;
 let millisecondCounter = 0;
 
