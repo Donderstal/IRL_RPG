@@ -6,7 +6,7 @@ class Road {
         this.direction = roadData.direction;
 
         this.hasStart = roadData.hasStart == undefined;
-        this.endOfRoad = roadData.endOfRoa != undefined;
+        this.endsAtIntersection = roadData.endsAtIntersection;
 
         this.isHorizontal = this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT";
 
@@ -64,17 +64,28 @@ class Road {
                 if  ( this.isHorizontal && !road.isHorizontal ) {
                     const cell = { 'row': this.startCell.row, 'col': road.startCell.col }
                     const tile = activeGrid.getTileAtCell( cell.row, cell.col )
-                    tile.hasIntersection = true;
-                    tile.intersectingDirections = [ this.direction, road.direction ]
+                    this.setIntersection( tile, road )
                 }
                 else if ( !this.isHorizontal && road.isHorizontal ) {
                     const cell = { 'row': road.startCell.row, 'col': this.startCell.col }
                     const tile = activeGrid.getTileAtCell( cell.row, cell.col )
-                    tile.hasIntersection = true;
-                    tile.intersectingDirections = [ this.direction, road.direction ]
+                    this.setIntersection( tile, road )
                 }
             }
         } )
+    }
+
+    setIntersection( tile, road ) {
+        tile.hasIntersection        = true;
+        tile.intersectingDirections = [ ];
+
+        if ( !road.endsAtIntersection ) {
+            tile.intersectingDirections.push( road.direction );
+        }
+
+        if ( !this.endsAtIntersection ) {
+            tile.intersectingDirections.push( this.direction );
+        }
     }
 
     getCarDataForTile( ) {

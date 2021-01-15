@@ -2991,7 +2991,7 @@ module.exports = {
         "music": "game-jam.mp3",
         "roads" : [
           { "row": 11, "direction": "FACING_RIGHT" },
-          { "col": 23, "direction": "FACING_DOWN" }
+          { "col": 23, "direction": "FACING_DOWN", "endsAtIntersection" : true }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A2",
@@ -3613,7 +3613,7 @@ module.exports = {
         "music": "game-jam.mp3",
         "roads" : [
           { "row": 11, "direction": "FACING_RIGHT" },
-          { "col": 23, "direction": "FACING_DOWN" }
+          { "col": 23, "direction": "FACING_DOWN", "endsAtIntersection" : true }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A4",
