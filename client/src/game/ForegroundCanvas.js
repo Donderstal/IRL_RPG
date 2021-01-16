@@ -105,11 +105,17 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         roads.forEach( ( roadData, index ) => {
             this.roads.push( new Road( roadData, index ) )
         } )
+
+        if ( roads.length > 1 ) {
+            this.roads.forEach( ( road ) => {
+                road.checkForIntersections( this.roads )
+            })
+        }
     }
 
     generateCar( ) {
-        const activeRoad = this.roads[ Math.floor(Math.random() * this.roads.length) ];
-        console.log( activeRoad.startCellIsBlocked )
+        const spawnableRoads = this.roads.filter( ( road ) => { return road.hasStart })
+        const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
         if ( activeRoad.startCellIsBlocked ) {
             return;
         }

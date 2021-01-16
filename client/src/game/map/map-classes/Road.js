@@ -5,6 +5,11 @@ class Road {
         this.index = index;
         this.direction = roadData.direction;
 
+        this.hasStart = roadData.hasStart == undefined;
+        this.endsAtIntersection = roadData.endsAtIntersection;
+
+        this.isHorizontal = this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT";
+
         this.startCell = {};
         this.endCell = {};
 
@@ -13,7 +18,7 @@ class Road {
 
     get startCellIsBlocked( ) { 
         return globals.GAME.front.class.grid.getTileAtCell( 
-            this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT" ? this.startCell.row - 1 : this.startCell.row, 
+            this.isHorizontal ? this.startCell.row - 1 : this.startCell.row, 
             this.startCell.col
         ).hasSprite 
     }
@@ -51,11 +56,45 @@ class Road {
         }
     }
 
+    checkForIntersections( roads ) {
+        const activeGrid = globals.GAME.front.class.grid;
+
+        roads.forEach( ( road, index ) => { 
+            if ( index != this.index ) { 
+                if  ( this.isHorizontal && !road.isHorizontal ) {
+                    const cell = { 'row': this.startCell.row, 'col': road.startCell.col }
+                    const tile = activeGrid.getTileAtCell( cell.row, cell.col )
+                    this.setIntersection( tile, road )
+                }
+                else if ( !this.isHorizontal && road.isHorizontal ) {
+                    const cell = { 'row': road.startCell.row, 'col': this.startCell.col }
+                    const tile = activeGrid.getTileAtCell( cell.row, cell.col )
+                    this.setIntersection( tile, road )
+                }
+            }
+        } )
+    }
+
+    setIntersection( tile, road ) {
+        tile.hasIntersection        = true;
+        tile.intersectingDirections = [ ];
+
+        if ( !road.endsAtIntersection ) {
+            tile.intersectingDirections.push( road.direction );
+        }
+
+        if ( !this.endsAtIntersection ) {
+            tile.intersectingDirections.push( this.direction );
+        }
+    }
+
     getCarDataForTile( ) {
+        const carNames = [ "car_a", "car_b", "car_c", "car_d" ]
+        let randomIndex = Math.floor(Math.random() * carNames.length);
         return {
             "direction": this.direction,
             "moving": true,
-            "type": "Car_A",
+            "type": carNames[randomIndex],
             "col": this.startCell.col,
             "row": this.startCell.row,
             "destination": this.endCell

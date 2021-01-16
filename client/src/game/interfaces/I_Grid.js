@@ -65,6 +65,9 @@ class I_Grid {
     }
 
     getTileAtXY( x, y ) {
+        if ( x > this.x + this.cols * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x < this.x || y < this.y ) {
+            return undefined;
+        }
         const column = Math.ceil( ( x - this.x ) / GRID_BLOCK_PX);
         const row = Math.ceil( ( y - this.y )  / GRID_BLOCK_PX);
 

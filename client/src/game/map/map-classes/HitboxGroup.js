@@ -20,7 +20,11 @@ class HitboxGroup {
     
     get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
+    get middleTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[1]] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+
+    get isAtIntersection( ) { return this.currentTileFront && this.currentTileFront.hasIntersection }
+    get isOnIntersection( ) { return this.middleTileFront && this.middleTileFront.hasIntersection; }
 
     initHitboxes( ) {
         this.hitboxes = [];
@@ -38,10 +42,10 @@ class HitboxGroup {
         let xyValues = this.getHitboxXYValues( );
     
         this.hitboxes.forEach( ( hitbox, index ) => {
-            hitbox.draw( xyValues[index].x, xyValues[index].y, radius )
+            hitbox.updateXy( xyValues[index].x, xyValues[index].y )
         } )
 
-        this.updateTileIndexes( xyValues )
+        this.updateTileIndexes( xyValues );
     }
 
     getHitboxXYValues( ) {
@@ -84,6 +88,17 @@ class HitboxGroup {
         }
 
         return xyValues;
+    }
+
+    clearTileIndexes( ) {
+        let hitboxesXY = this.getHitboxXYValues( );
+        hitboxesXY.forEach( ( hitboxXY ) => {
+            let tileAtHitbox = globals.GAME.front.class.grid.getTileAtXY( hitboxXY.x, hitboxXY.y )
+            if ( tileAtHitbox != undefined ) {
+                tileAtHitbox.clearSpriteData( )
+                tileAtHitbox.spriteId = null;                   
+            }
+        })
     }
 
     updateTileIndexes( hitboxesXY ) {

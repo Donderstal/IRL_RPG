@@ -25,6 +25,7 @@ class Sprite {
         this.sheet         = new Image();
         this.moving        = false;
         this.deleted       = false;
+        this.isCar         = isCar
 
         this.setSpriteToGrid( tile, isCar )
 

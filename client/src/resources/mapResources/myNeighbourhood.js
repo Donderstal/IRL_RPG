@@ -1073,7 +1073,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" },
+          { "row": 11, "direction": "FACING_RIGHT" },
           { "col": 1, "direction": "FACING_UP"  }
         ],
         "neighbours": {
@@ -1123,16 +1123,6 @@ module.exports = {
                     "sfx": "voice-3.mp3",
                     "text": "I sold my house to pay for a new pair of kidneys."
                 }
-            }
-        ],
-        "mapObjects" : [
-            {
-                "type"  : "Car_A",
-                "row"   : 12,
-                "col"   : 1,
-                "moving": true,
-                "direction": "FACING_UP",
-                "destination": { "row": 1, "col": 1 },
             }
         ],
         "doors": [ 
@@ -1538,7 +1528,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" }
+          { "row": 11, "direction": "FACING_RIGHT" }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A1",
@@ -3000,8 +2990,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" },
-          { "col": 23, "direction": "FACING_DOWN" }
+          { "row": 11, "direction": "FACING_RIGHT" },
+          { "col": 23, "direction": "FACING_DOWN", "endsAtIntersection" : true }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A2",
@@ -3311,8 +3301,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" },
-          { "col":  1, "direction": "FACING_UP"  }
+          { "row": 11, "direction": "FACING_RIGHT" },
+          { "col":  1, "direction": "FACING_UP", "hasStart": false }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A3",
@@ -3622,8 +3612,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" },
-          { "col": 23, "direction": "FACING_DOWN"  }
+          { "row": 11, "direction": "FACING_RIGHT" },
+          { "col": 23, "direction": "FACING_DOWN", "endsAtIntersection" : true }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A4",

@@ -10,7 +10,7 @@ class I_Hitbox {
         this.radius         = radius;
         this.innerRadius    = radius / 2 
         this.collision      = false;
-        this.arcColor       = "#3370d4";
+        this.arcColor       = "#FFFFFF";
         this.outerTop       = ( ) => { return this.y - this.outerRadius }
         this.outerLeft      = ( ) => { return this.x - this.outerRadius }
         this.outerRight     = ( ) => { return this.x + this.outerRadius }
