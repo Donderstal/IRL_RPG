@@ -50,7 +50,6 @@ class MapObject extends I_Sprite {
         }
     }
 
-    get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
 

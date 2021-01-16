@@ -12,13 +12,11 @@ class HitboxGroup {
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks
 
         this.activeTileIndexes = [ ];
-        this.previousTileIndex;
         this.nextTileIndex;
 
         this.initHitboxes( );
     }
     
-    get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
     get middleTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[1]] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
@@ -103,21 +101,15 @@ class HitboxGroup {
 
     updateTileIndexes( hitboxesXY ) {
         const frontClass = globals.GAME.front.class
-        const previousTile = this.getPreviousTile( hitboxesXY, frontClass )
-        if ( previousTile != undefined ) {
-            this.previousTileIndex = previousTile.index;
-            this.previousTileFront.clearSpriteData( )
-            this.previousTileFront.spriteId = null;            
-        }
+        this.activeTileIndexes.forEach( ( tileIndex ) => {
+            globals.GAME.front.class.grid.array[tileIndex].clearSpriteData( );
+        } )
 
         let activeTiles = [];
         hitboxesXY.forEach( ( hitboxXY ) => {
             let tileAtHitbox = frontClass.getTileAtXY( hitboxXY.x, hitboxXY.y )
             if ( tileAtHitbox != undefined ) {
                 activeTiles.push( tileAtHitbox )                
-            }
-            if ( activeTiles.length < 1 && previousTile != undefined ) {
-                activeTiles.push( previousTile )    
             }
         })
 
@@ -131,25 +123,6 @@ class HitboxGroup {
         const nextTile = this.getNextTile( hitboxesXY, frontClass )
 
         this.nextTileIndex = nextTile == undefined ? undefined : nextTile.index;
-    }
-
-    getPreviousTile( hitboxesXY, frontClass  ) {
-        let previousTile;
-        switch ( this.direction ) {
-            case globals["FACING_LEFT"]:
-                previousTile = frontClass.getTileAtXY( hitboxesXY[hitboxesXY.length - 1].x + GRID_BLOCK_PX, hitboxesXY[0].y );
-                break;
-            case globals["FACING_UP"]:
-                previousTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[hitboxesXY.length - 1].y + GRID_BLOCK_PX );
-                break;
-            case globals["FACING_RIGHT"]: 
-            previousTile = frontClass.getTileAtXY( hitboxesXY[hitboxesXY.length - 1].x - GRID_BLOCK_PX, hitboxesXY[0].y );
-                break;
-            case globals["FACING_DOWN"]:
-                previousTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[hitboxesXY.length - 1].y - GRID_BLOCK_PX );
-                break;
-        }
-        return previousTile
     }
 
     getNextTile( hitboxesXY, frontClass  ) {

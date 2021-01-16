@@ -19,16 +19,13 @@ class MapSprite extends I_Sprite {
         this.hasMoved = false;
         this.spriteId;
 
-        this.previousTileIndex;
         this.activeTileIndex;
         this.nextTileIndex;
     }
 
-    get previousTileBack( ) { return globals.GAME.back.class.grid.array[this.previousTileIndex] };
     get currentTileBack( ) { return globals.GAME.back.class.grid.array[this.activeTileIndex] };
     get nextTileBack( ) { return globals.GAME.back.class.grid.array[this.nextTileIndex] };
 
-    get previousTileFront( ) { return globals.GAME.front.class.grid.array[this.previousTileIndex] };
     get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndex] };
     get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
 
@@ -61,32 +58,28 @@ class MapSprite extends I_Sprite {
         }
     }
 
+    unsetActiveTile( ) {
+        if ( this.currentTileFront ) {
+            this.currentTileFront.clearSpriteData( );            
+        }
+    }
+
     updateTileIndexes( ) {
+        this.unsetActiveTile( );
+
         const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
 
         if ( tile == undefined ) {
-            this.setActiveTileIndex( this.previousTileFront );
+            this.activeTileIndex = null;
             return;
         } 
 
-        if ( this.activeTileIndex == null && tile != undefined ) {
-            this.setActiveTileIndex( tile );
-            this.setNextTileIndex( );
-        }
-        else if ( this.activeTileIndex != tile.index ) {
-            this.setPreviousTileIndex( );
-            this.setActiveTileIndex( tile );
-            this.setNextTileIndex( );
-        } 
-        else if ( this.direction != this.nextTileDirection ) {
-            this.setNextTileIndex( );
-        } 
-    }
+        this.setActiveTileIndex( tile );
+        this.setNextTileIndex( );
 
-    setPreviousTileIndex( ) {
-        this.previousTileIndex = this.activeTileIndex
-        this.previousTileFront.clearSpriteData( )
-        this.previousTileFront.spriteId = null;
+        if ( this.direction != this.nextTileDirection ) {
+            this.setNextTileIndex( );
+        } 
     }
 
     setActiveTileIndex( tile ) {
@@ -117,7 +110,6 @@ class MapSprite extends I_Sprite {
     }
 
     clearTileIndexes( ) {
-        this.previousTileIndex = null;
         this.activeTileIndex = null;
         this.nextTileIndex = null;
     }

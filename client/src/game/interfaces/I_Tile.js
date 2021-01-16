@@ -151,6 +151,7 @@ class I_Tile {
         this.hasSprite = false;
         this.spriteType = null;
         this.spriteData = null;
+        this.spriteId = null;
     }
 
     setSettings( settings ) {
