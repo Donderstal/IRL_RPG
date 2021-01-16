@@ -104,6 +104,10 @@ const checkForCollision = ( sprite, isPlayer ) => {
 const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
     let colliding = false;
     const targetSprite = globals.GAME.front.class.spriteDictionary[targetSpriteId];
+    if ( targetSprite == undefined ) {
+        return colliding;
+    }
+
     const targetSpriteIsFlying = ( targetSprite.type !== undefined && targetSprite.type == 'flying' )
 
     if ( targetSprite.deleted || targetSpriteIsFlying ) {
