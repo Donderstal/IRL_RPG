@@ -173,11 +173,9 @@ class Game {
                 break;
         }
 
-        console.log(newPlayerCell)
-
         this.PLAYER.setNewLocationInGrid( newPlayerCell, direction );
         this.front.class.allSprites.push( this.PLAYER );
-        this.front.class.spriteDictionary["PLAYER"] = PLAYER
+        this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
     }
 }
 

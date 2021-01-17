@@ -11,6 +11,10 @@ The *latest-build* branch contains the latest build that has been deployed onlin
 Try the latest the game at: http://34.90.228.47/
 
 ### LOG
+
+#### JAN 17, 2021
+* Adding some shorthands + getters to Game class
+
 #### JAN 16, 2021
 * Fixed inconsistencies in active tile logging
 

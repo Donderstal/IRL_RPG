@@ -21,11 +21,11 @@ const handleMapAnimations = ( ) => {
         handleCarGeneration( foreground.roads );
     }
 
-    if ( GAME.PLAYER != undefined && !globals.GAME.paused ) {
+    if ( globals.GAME.PLAYER != undefined && !globals.GAME.paused ) {
         mapControls.handleMovementKeys( );  
     }
 
-    GAME.PLAYER.pathIsBlocked = false;
+    globals.GAME.PLAYER.pathIsBlocked = false;
 
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )
