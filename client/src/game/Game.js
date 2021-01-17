@@ -130,7 +130,7 @@ class Game {
                                 newPlayerCell.col = this.front.class.playerSprite.col;
                                 break;
                             case 'right' :
-                                newPlayerCell.row = this.front.class.playerSprite.row + 1;
+                                newPlayerCell.row = this.front.class.playerSprite.row;
                                 newPlayerCell.col = mapData.columns;
                                 break;
                             case 'down' :
@@ -138,7 +138,7 @@ class Game {
                                 newPlayerCell.col = this.front.class.playerSprite.col;
                                 break;
                             case 'left' :
-                                newPlayerCell.row = this.front.class.playerSprite.row - 1;
+                                newPlayerCell.row = this.front.class.playerSprite.row;
                                 newPlayerCell.col = 1;
                                 break;
                             

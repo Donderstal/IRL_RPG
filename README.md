@@ -11,6 +11,8 @@ The *latest-build* branch contains the latest build that has been deployed onlin
 Try the latest the game at: http://34.90.228.47/
 
 ### LOG
+#### JAN 16, 2021
+* Fixed inconsistencies in active tile logging
 
 #### JAN 15, 2021
 * Improving car collission with HitboxGroup

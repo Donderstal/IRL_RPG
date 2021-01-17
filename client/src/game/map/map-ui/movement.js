@@ -59,6 +59,10 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     const nextBackgroundTile = globals.GAME.back.class.grid.array[sprite.nextTileIndex];
     const nextForegroundTile = globals.GAME.front.class.grid.array[sprite.nextTileIndex];
 
+    if ( activeBackgroundTile == undefined ) {
+        return true;
+    }
+
     if ( activeBackgroundTile.row == 1 && direction == 'FACING_UP' 
     && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
         return !sprite.isInCenterFacingUp;
