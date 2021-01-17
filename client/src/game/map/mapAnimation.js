@@ -1,4 +1,3 @@
-const state = require('../../game-data/state')
 const globals = require('../../game-data/globals')
 const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
@@ -28,8 +27,8 @@ const handleMapAnimations = ( ) => {
 
     globals.GAME.PLAYER.pathIsBlocked = false;
 
-    if ( state.currentMap.bubbleIsActive ) {
-        state.currentMap.activeBubble.drawTextBox( )
+    if ( globals.GAME.bubbleIsActive ) {
+        globals.GAME.activeBubble.drawTextBox( )
     }
 }
 

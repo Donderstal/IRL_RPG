@@ -18,6 +18,9 @@ class Game {
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
 
+        this.activeBubble = { }
+        this.bubbleIsActive;
+
         this.front = { }; // class Foreground
         this.back  = { };  // class Background
         this.util  = { };
