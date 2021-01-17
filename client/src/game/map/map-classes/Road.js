@@ -17,9 +17,10 @@ class Road {
     }
 
     get startCellIsBlocked( ) { 
-        return globals.GAME.front.class.grid.getTileAtCell( 
-            this.isHorizontal ? this.startCell.row - 1 : this.startCell.row, 
-            this.startCell.col
+        return globals.GAME.getTileOnCanvasAtCell( 
+            "FRONT",
+            this.startCell.col,
+            this.isHorizontal ? this.startCell.row - 1 : this.startCell.row
         ).hasSprite 
     }
 
@@ -57,18 +58,16 @@ class Road {
     }
 
     checkForIntersections( roads ) {
-        const activeGrid = globals.GAME.front.class.grid;
-
         roads.forEach( ( road, index ) => { 
             if ( index != this.index ) { 
                 if  ( this.isHorizontal && !road.isHorizontal ) {
                     const cell = { 'row': this.startCell.row, 'col': road.startCell.col }
-                    const tile = activeGrid.getTileAtCell( cell.row, cell.col )
+                    const tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", cell.col, cell.row )
                     this.setIntersection( tile, road )
                 }
                 else if ( !this.isHorizontal && road.isHorizontal ) {
                     const cell = { 'row': road.startCell.row, 'col': this.startCell.col }
-                    const tile = activeGrid.getTileAtCell( cell.row, cell.col )
+                    const tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", cell.col, cell.row )
                     this.setIntersection( tile, road )
                 }
             }

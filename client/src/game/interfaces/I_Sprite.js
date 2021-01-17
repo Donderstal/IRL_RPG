@@ -42,7 +42,7 @@ class Sprite {
     }
 
     setNewLocationInGrid( cell, direction ) {
-        let newTile = globals.GAME.front.class.grid.getTileAtCell( cell.row, cell.col )
+        let newTile = globals.GAME.getTileOnCanvasAtCell( 'FRONT', cell.col, cell.row )
         this.direction = globals[direction] != undefined ? globals[direction] : this.direction;
         newTile.setSpriteData( 'character', null )
         newTile.spriteId = "PLAYER"

@@ -59,7 +59,7 @@ class MapObject extends I_Sprite {
         this.destination = spriteData.destination;
         this.frames = this.objectResource["movement_frames"];
         this.direction = globals[spriteData.direction]
-        this.destinationTile = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col )
+        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
     }
 
     drawSprite( ) {
@@ -182,7 +182,7 @@ class MapObject extends I_Sprite {
             }
         })
 
-        this.destinationTile    = globals.GAME.front.class.grid.getTileAtCell( this.destination.row, this.destination.col );
+        this.destinationTile    = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
     }
 
     goToDestination( ) {

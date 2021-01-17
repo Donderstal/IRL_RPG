@@ -120,7 +120,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             return;
         }
         const carData = activeRoad.getCarDataForTile( )
-        const tile = this.grid.getTileAtCell( carData.row, carData.col );
+        const tile = super.getTileAtCell( carData.col, carData.row );
         tile.setSpriteData( "object", carData )
         this.setObjectSprite( tile )   
         tile.clearSpriteData( );   
