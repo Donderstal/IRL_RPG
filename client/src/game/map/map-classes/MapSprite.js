@@ -49,12 +49,12 @@ class MapSprite extends I_Sprite {
     drawSprite( ) {
         super.drawSprite( )
         this.updateTileIndexes( )
-        if ( !state.cinematicMode ) {
+        if ( !globals.GAME.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
             //this.hitbox.draw( this.centerX( ), this.baseY( ) )
             this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );    
         }
-        else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
+        else if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
         }
     }
@@ -164,13 +164,13 @@ class MapSprite extends I_Sprite {
 
     setDestination( destination, endDirection ) {
         super.setDestination( destination, endDirection );
-        state.activeCinematic.activeScene.walkingToDestination = true;
+        globals.GAME.activeCinematic.activeScene.walkingToDestination = true;
     }
 
     goToDestination( ) {
         super.goToDestination( );
         if ( !this.moving ) {
-            state.activeCinematic.activeScene.walkingToDestination = false;
+            globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
         }
     }
 
@@ -222,8 +222,8 @@ class MapSprite extends I_Sprite {
     }
 
     unsetScriptedAnimation( ) {
-        if ( Number.isInteger(state.activeCinematic.activeScene.endDirection)) {
-            this.direction = state.activeCinematic.activeScene.endDirection
+        if ( Number.isInteger(globals.GAME.activeCinematic.activeScene.endDirection)) {
+            this.direction = globals.GAME.activeCinematic.activeScene.endDirection
         }   
         this.inScriptedAnimation    = false;  
         this.animationScript        = {}

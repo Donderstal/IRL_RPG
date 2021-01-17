@@ -1,4 +1,4 @@
-const state                 = require('../../game-data/state')
+const globals               = require('../../game-data/globals')
 const { GRID_BLOCK_PX }     = require('../../game-data/globals')
 const findSprite            = require('../../helpers/mapHelpers').findNamedCharacterOnMap
 const getXYOfCell           = require('../../helpers/mapHelpers').getXYOfCell
@@ -15,13 +15,13 @@ class Cinematic {
         this.iterator = 0;
         this.activeScene = new Scene( this.scenes[this.iterator] );
 
-        state.activeCinematic = this;
+        globals.GAME.activeCinematic = this;
         requestModeChange('CINEMATIC')
     }
 
     checkForScenePass( ) {
         if ( this.activeScene.type == "SPEAK" ) {
-            if ( !state.currentMap.bubbleIsActive ) {
+            if ( !globals.GAME.bubbleIsActive ) {
                 this.activateNextScene( )
             }
             else {
@@ -54,9 +54,9 @@ class Cinematic {
         }
         else {
             requestModeChange('CINEMATIC_END')
-            state.activeCinematic = null;
+            globals.GAME.activeCinematic = null;
             if ( this.trigger == "ON_LEAVE" ) {
-                state.mapTransition = {
+                globals.GAME.mapTransition = {
                     urlToNewMap: this.args[0],
                     oldMapName: this.args[1]
                 }

@@ -2,9 +2,9 @@ const state = require('../../../game-data/state')
 const globals = require('../../../game-data/globals')
 
 const handleActionButton = ( ) => {
-    if ( state.currentMap.bubbleIsActive ) {
-        state.currentMap.activeBubble = {}
-        state.currentMap.bubbleIsActive = false
+    if ( globals.GAME.currentMap.bubbleIsActive ) {
+        globals.GAME.currentMap.activeBubble = {}
+        globals.GAME.currentMap.bubbleIsActive = false
     }
 
     const currentPlayerTileFront = globals.GAME.front.class.activePlayerTile;
@@ -17,8 +17,8 @@ const handleActionButton = ( ) => {
 
     if ( globals.GAME.activeAction != null && globals.GAME.activeAction.needsConfirmation ) {
         globals.GAME.activeAction.confirm( );
-        state.currentMap.activeBubble = {}
-        state.currentMap.bubbleIsActive = false
+        globals.GAME.currentMap.activeBubble = {}
+        globals.GAME.currentMap.bubbleIsActive = false
         return;
     }
 
