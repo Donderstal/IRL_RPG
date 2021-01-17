@@ -3,17 +3,9 @@ const globals = require('../game-data/globals')
 const state = require('../game-data/state')
 const controls = require('./controls')
 const { Game } = require('./Game')
-const storyProgression  = require('../game-data/storyProgression')
-
 const utility = require('../helpers/utilFunctions')
 
 const fetchJson = utility.fetchJSONWithCallback
-const getMapData = require('../resources/mapResources').getMapData
-
-const { ForegroundCanvas } = require('./ForegroundCanvas');
-const { BackgroundCanvas } = require('./BackgroundCanvas');
-
-const firstMapUrl = 'my-neighbourhood/A1/my-house';
 
 const stopGame = () => {
     document.getElementsByTagName('canvas')[0].style.display = 'none'
@@ -22,14 +14,7 @@ const stopGame = () => {
     controls.stopListenForKeyPress();
 }
 
-/**
- * @param {object} savedGameState saved game state object from a previous session
- * 
- * Run drawgrid function based on saved mapdata.
- */
-
 const saveGame = ( ) => {
-    state.playerCharacter.sprite.calcCellFromXy( );
     utility.downloadObjectAsJson( state, 'Neckbeard_save_game' + Date.now().toString() )
 }
 
@@ -57,28 +42,11 @@ const loadGame = ( ) => {
     } 
 }
 
-const startNewGame = ( json ) => {
-    storyProgression.startNewStory( );
-    controller.startMap( "NEW_GAME", json )
-    setTimeout( initControlsAndAnimation, 1000 );
-}
-
 const initControlsAndAnimation = ( ) => {
     controls.initTouchControls( );
     controls.listenForKeyPress();  
     animationFrameController.startRequestingFrame( );
 }
-
-/**
- * @param {HTMLElement} canvas
- * 
- * Prepare canvas for game
- */
-const initGameCanvas = ( canvas ) => {
-    canvas.height = globals.CANVAS_HEIGHT 
-    canvas.width = globals.CANVAS_WIDTH   
-}
-
 
 const startGame = ( name, className ) => {
     globals.GAME = new Game( );
