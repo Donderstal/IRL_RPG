@@ -50,8 +50,8 @@ class MapObject extends I_Sprite {
         }
     }
 
-    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
-    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
+    get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     initMovingSprite( spriteData ) {
         this.movingToDestination = true;

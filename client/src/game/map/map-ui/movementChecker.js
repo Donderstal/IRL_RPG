@@ -4,9 +4,9 @@ const globals = require('../../../game-data/globals')
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
     const activeMap = globals.GAME.activeMap;
-    const activeBackgroundTile = globals.GAME.back.class.grid.array[sprite.activeTileIndex];
-    const nextBackgroundTile = globals.GAME.back.class.grid.array[sprite.nextTileIndex];
-    const nextForegroundTile = globals.GAME.front.class.grid.array[sprite.nextTileIndex];
+    const activeBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.activeTileIndex);
+    const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
+    const nextForegroundTile = globals.GAME.getTileOnCanvasAtIndex( "FRONT", sprite.nextTileIndex);
 
     if ( activeBackgroundTile.row == 1 && direction == 'FACING_UP' 
     && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
@@ -153,7 +153,9 @@ const setCurrFrontNeighbourPrev = ( sprite, spriteIsFacingUpOrDown ) => {
     if ( sprite.currentTileFront.col == 1 && !spriteIsFacingUpOrDown ) {
         return { hasSprite: false};
     }
-    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex - 1 : sprite.activeTileIndex - globals.GAME.activeMap.columns];
+
+    let index = spriteIsFacingUpOrDown ? sprite.activeTileIndex - 1 : sprite.activeTileIndex - globals.GAME.activeMap.columns;
+    return globals.GAME.getTileOnCanvasAtIndex( "FRONT", index );
 }
 
 const setCurrFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
@@ -163,7 +165,9 @@ const setCurrFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
     if ( sprite.currentTileFront.col == globals.GAME.activeMap.columns && !spriteIsFacingUpOrDown  ) {
         return { hasSprite: false};
     }
-    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.activeTileIndex + 1 : sprite.activeTileIndex + globals.GAME.activeMap.columns];
+
+    let index = spriteIsFacingUpOrDown ? sprite.activeTileIndex + 1 : sprite.activeTileIndex + globals.GAME.activeMap.columns;
+    return globals.GAME.getTileOnCanvasAtIndex( "FRONT", index );
 }
 
 const setNextFrontNeighbourPrev = ( sprite, spriteIsFacingUpOrDown ) => {
@@ -176,7 +180,9 @@ const setNextFrontNeighbourPrev = ( sprite, spriteIsFacingUpOrDown ) => {
     if ( sprite.nextTileFront.col == 1 && !spriteIsFacingUpOrDown ) {
         return { hasSprite: false};
     }
-    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex - 1 : sprite.nextTileIndex - globals.GAME.activeMap.columns];
+
+    let index = spriteIsFacingUpOrDown ? sprite.nextTileIndex - 1 : sprite.nextTileIndex - globals.GAME.activeMap.columns;
+    return globals.GAME.getTileOnCanvasAtIndex( "FRONT", index );
 }
 
 const setNextFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
@@ -189,7 +195,9 @@ const setNextFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
     if ( sprite.nextTileFront.col == globals.GAME.activeMap.columns && !spriteIsFacingUpOrDown ) {
         return { hasSprite: false};
     }
-    return globals.GAME.front.class.grid.array[spriteIsFacingUpOrDown ? sprite.nextTileIndex + 1 : sprite.nextTileIndex + globals.GAME.activeMap.columns];
+
+    let index = spriteIsFacingUpOrDown ? sprite.nextTileIndex + 1 : sprite.nextTileIndex + globals.GAME.activeMap.columns
+    return globals.GAME.getTileOnCanvasAtIndex( "FRONT", index );
 }
 
 module.exports = {

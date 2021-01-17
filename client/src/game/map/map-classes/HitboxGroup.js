@@ -17,9 +17,9 @@ class HitboxGroup {
         this.initHitboxes( );
     }
     
-    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
-    get middleTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[1]] };
-    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
+    get middleTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[1]) };
+    get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     get isAtIntersection( ) { return this.currentTileFront && this.currentTileFront.hasIntersection }
     get isOnIntersection( ) { return this.middleTileFront && this.middleTileFront.hasIntersection; }
@@ -102,7 +102,7 @@ class HitboxGroup {
     updateTileIndexes( hitboxesXY ) {
         const frontClass = globals.GAME.front.class
         this.activeTileIndexes.forEach( ( tileIndex ) => {
-            globals.GAME.front.class.grid.array[tileIndex].clearSpriteData( );
+            globals.GAME.getTileOnCanvasAtIndex( "FRONT", tileIndex ).clearSpriteData( );
         } )
 
         let activeTiles = [];
