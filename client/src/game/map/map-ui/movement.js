@@ -1,10 +1,7 @@
 const globals = require('../../../game-data/globals')
-const state = require('../../../game-data/state')
-const movementChecker = require('./movementChecker');
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } = require('../../../game-data/globals');
 
 let frameCount = 0;
-let doorFrameCount = 0; 
 
 /**
  * Call functions in order to move sprite
@@ -103,29 +100,21 @@ const checkForNeighbours = ( sprite ) => {
 
     if ( activeMap.outdoors ) {
         if ( activeGrid.x > sprite.centerX( ) && activeMap.neighbours.left ) {
-            console.log('neighbour!')
-            console.log(activeMap.neighbours.left)
             globals.GAME.switchMap( activeMap.neighbours.left, 'NEIGHBOUR' )
             return true
         }
 
         if ( activeGrid.x + ( activeGrid.cols * GRID_BLOCK_PX ) < sprite.centerX( ) && activeMap.neighbours.right ) {
-            console.log('neighbour!')
-            console.log(activeMap.neighbours.right)
             globals.GAME.switchMap( activeMap.neighbours.right, 'NEIGHBOUR' )
             return true
         }
 
         if ( activeGrid.y > sprite.baseY( ) && activeMap.neighbours.up ) {
-            console.log('neighbour!')
-            console.log(activeMap.neighbours.up)
             globals.GAME.switchMap( activeMap.neighbours.up, 'NEIGHBOUR' )
             return activeMap.neighbours.up
         }
 
         if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY( ) && activeMap.neighbours.down ) {
-            console.log('neighbour!')
-            console.log(activeMap.neighbours.down)
             globals.GAME.switchMap( activeMap.neighbours.down, 'NEIGHBOUR' )
             return activeMap.neighbours.down
         }
