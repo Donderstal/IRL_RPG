@@ -51,7 +51,7 @@ class MapSprite extends I_Sprite {
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
             //this.hitbox.draw( this.centerX( ), this.baseY( ) )
-            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.front.class.playerSprite );    
+            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );    
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
