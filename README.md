@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### JAN 17, 2021
 * Adding some shorthands + getters to Game class
+* Now importing globals as vars instead of props
 
 #### JAN 16, 2021
 * Fixed inconsistencies in active tile logging
