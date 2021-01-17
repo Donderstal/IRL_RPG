@@ -1,7 +1,7 @@
 const globals = require('../../../game-data/globals')
 const state = require('../../../game-data/state')
 const movementChecker = require('./movementChecker');
-const { GRID_BLOCK_PX } = require('../../../game-data/globals');
+const { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } = require('../../../game-data/globals');
 
 let frameCount = 0;
 let doorFrameCount = 0; 
@@ -39,16 +39,16 @@ const moveInDirection = ( sprite, direction ) => {
         sprite.hasMoved = true;
 
         if ( direction == 'FACING_RIGHT' ) {
-            sprite.x += globals.MOVEMENT_SPEED        
+            sprite.x += MOVEMENT_SPEED        
         }
         else if ( direction == 'FACING_LEFT' ) {
-            sprite.x -= globals.MOVEMENT_SPEED    
+            sprite.x -= MOVEMENT_SPEED    
         }
         else if ( direction == 'FACING_DOWN' ) {
-            sprite.y += globals.MOVEMENT_SPEED        
+            sprite.y += MOVEMENT_SPEED        
         }
         else if ( direction == 'FACING_UP' ){
-            sprite.y -= globals.MOVEMENT_SPEED        
+            sprite.y -= MOVEMENT_SPEED        
         }     
     }
 }
@@ -145,7 +145,7 @@ const countFrame = ( sprite ) => {
     
     frameCount++;
     
-    if (frameCount >= globals.FRAME_LIMIT) {
+    if (frameCount >= FRAME_LIMIT) {
         frameCount = 0;
         sprite.sheetPosition++;
 
