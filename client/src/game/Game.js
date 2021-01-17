@@ -29,6 +29,23 @@ class Game {
         this.initGameCanvases( );
     }
 
+    get PLAYER( ) { return this.front.class.playerSprite }
+
+    getTileOnCanvasAtIndex( canvasName, index) {
+        const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
+        return canvasClass.getTileAtIndex( index );
+    }
+
+    getTileOnCanvasAtXY( canvasName, x, y ) {
+        const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
+        return canvasClass.getTileAtXY( x, y );
+    }
+
+    getTileOnCanvasAtCell( canvasName, column, row ) {
+        const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
+        return canvasClass.getTileAtCell( column, row );
+    }
+
     initGameCanvases( ) {
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
@@ -75,7 +92,7 @@ class Game {
         this.front.class.setForegroundData( mapData );
         this.front.class.setSpritesToGrid( );
         
-        this.front.class.spriteDictionary["PLAYER"] = this.front.class.playerSprite
+        this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
     }
 
     clearMapFromCanvases( ) {
@@ -127,18 +144,18 @@ class Game {
                         switch ( key ) {
                             case 'up' : 
                                 newPlayerCell.row = 1;
-                                newPlayerCell.col = this.front.class.playerSprite.col;
+                                newPlayerCell.col = this.PLAYER.col;
                                 break;
                             case 'right' :
-                                newPlayerCell.row = this.front.class.playerSprite.row;
+                                newPlayerCell.row = this.PLAYER.row;
                                 newPlayerCell.col = mapData.columns;
                                 break;
                             case 'down' :
                                 newPlayerCell.row = mapData.rows;
-                                newPlayerCell.col = this.front.class.playerSprite.col;
+                                newPlayerCell.col = this.PLAYER.col;
                                 break;
                             case 'left' :
-                                newPlayerCell.row = this.front.class.playerSprite.row;
+                                newPlayerCell.row = this.PLAYER.row;
                                 newPlayerCell.col = 1;
                                 break;
                             
@@ -156,11 +173,9 @@ class Game {
                 break;
         }
 
-        console.log(newPlayerCell)
-
-        this.front.class.playerSprite.setNewLocationInGrid( newPlayerCell, direction );
-        this.front.class.allSprites.push( this.front.class.playerSprite );
-        this.front.class.spriteDictionary["PLAYER"] = this.front.class.playerSprite
+        this.PLAYER.setNewLocationInGrid( newPlayerCell, direction );
+        this.front.class.allSprites.push( this.PLAYER );
+        this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
     }
 }
 

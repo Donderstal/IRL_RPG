@@ -55,9 +55,9 @@ const moveInDirection = ( sprite, direction ) => {
 
 const checkIfMovementAllowed = ( sprite, direction ) => {
     const activeMap = globals.GAME.activeMap;
-    const activeBackgroundTile = globals.GAME.back.class.grid.array[sprite.activeTileIndex];
-    const nextBackgroundTile = globals.GAME.back.class.grid.array[sprite.nextTileIndex];
-    const nextForegroundTile = globals.GAME.front.class.grid.array[sprite.nextTileIndex];
+    const activeBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.activeTileIndex);
+    const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
+    const nextForegroundTile = globals.GAME.getTileOnCanvasAtIndex( "FRONT", sprite.nextTileIndex);
 
     if ( activeBackgroundTile == undefined ) {
         return true;

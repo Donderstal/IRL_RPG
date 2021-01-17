@@ -12,7 +12,6 @@ let newTimeStamp = 0;
 
 const handleMapAnimations = ( ) => {
     const foreground = globals.GAME.front.class;
-    const player     = foreground.playerSprite
 
     drawSpritesInOrder( )
 
@@ -22,11 +21,11 @@ const handleMapAnimations = ( ) => {
         handleCarGeneration( foreground.roads );
     }
 
-    if ( player != undefined && !globals.GAME.paused ) {
+    if ( globals.GAME.PLAYER != undefined && !globals.GAME.paused ) {
         mapControls.handleMovementKeys( );  
     }
 
-    player.pathIsBlocked = false;
+    globals.GAME.PLAYER.pathIsBlocked = false;
 
     if ( state.currentMap.bubbleIsActive ) {
         state.currentMap.activeBubble.drawTextBox( )

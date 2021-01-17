@@ -17,9 +17,9 @@ class HitboxGroup {
         this.initHitboxes( );
     }
     
-    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[0]] };
-    get middleTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndexes[1]] };
-    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
+    get middleTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[1]) };
+    get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     get isAtIntersection( ) { return this.currentTileFront && this.currentTileFront.hasIntersection }
     get isOnIntersection( ) { return this.middleTileFront && this.middleTileFront.hasIntersection; }
@@ -91,7 +91,7 @@ class HitboxGroup {
     clearTileIndexes( ) {
         let hitboxesXY = this.getHitboxXYValues( );
         hitboxesXY.forEach( ( hitboxXY ) => {
-            let tileAtHitbox = globals.GAME.front.class.grid.getTileAtXY( hitboxXY.x, hitboxXY.y )
+            let tileAtHitbox = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxXY.x, hitboxXY.y )
             if ( tileAtHitbox != undefined ) {
                 tileAtHitbox.clearSpriteData( )
                 tileAtHitbox.spriteId = null;                   
@@ -102,12 +102,12 @@ class HitboxGroup {
     updateTileIndexes( hitboxesXY ) {
         const frontClass = globals.GAME.front.class
         this.activeTileIndexes.forEach( ( tileIndex ) => {
-            globals.GAME.front.class.grid.array[tileIndex].clearSpriteData( );
+            globals.GAME.getTileOnCanvasAtIndex( "FRONT", tileIndex ).clearSpriteData( );
         } )
 
         let activeTiles = [];
         hitboxesXY.forEach( ( hitboxXY ) => {
-            let tileAtHitbox = frontClass.getTileAtXY( hitboxXY.x, hitboxXY.y )
+            let tileAtHitbox = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxXY.x, hitboxXY.y )
             if ( tileAtHitbox != undefined ) {
                 activeTiles.push( tileAtHitbox )                
             }
@@ -129,16 +129,16 @@ class HitboxGroup {
         let nextTile;
         switch ( this.direction ) {
             case globals["FACING_LEFT"]:
-                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x - GRID_BLOCK_PX, hitboxesXY[0].y );
+                nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxesXY[0].x - GRID_BLOCK_PX, hitboxesXY[0].y );
                 break;
             case globals["FACING_UP"]:
-                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[0].y - GRID_BLOCK_PX );
+                nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxesXY[0].x, hitboxesXY[0].y - GRID_BLOCK_PX );
                 break;
             case globals["FACING_RIGHT"]: 
-                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x + GRID_BLOCK_PX, hitboxesXY[0].y );
+                nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxesXY[0].x + GRID_BLOCK_PX, hitboxesXY[0].y );
                 break;
             case globals["FACING_DOWN"]:
-                nextTile = frontClass.getTileAtXY( hitboxesXY[0].x, hitboxesXY[0].y + GRID_BLOCK_PX );
+                nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxesXY[0].x, hitboxesXY[0].y + GRID_BLOCK_PX );
                 break;
         }
         return nextTile;

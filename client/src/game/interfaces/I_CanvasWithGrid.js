@@ -34,8 +34,16 @@ class I_CanvasWithGrid {
         this.grid.clearGrid( );
     };
 
+    getTileAtIndex( index ) {
+        return this.grid.array[index];
+    }
+
     getTileAtXY( x, y ) {
         return this.grid.getTileAtXY( x, y );
+    };
+
+    getTileAtCell( column, row ) {
+        return this.grid.getTileAtCell( column, row );
     };
 };
 

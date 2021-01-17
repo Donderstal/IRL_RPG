@@ -71,10 +71,10 @@ class I_Grid {
         const column = Math.ceil( ( x - this.x ) / GRID_BLOCK_PX);
         const row = Math.ceil( ( y - this.y )  / GRID_BLOCK_PX);
 
-        return this.getTileAtCell( row, column )
+        return this.getTileAtCell( column, row )
     }
 
-    getTileAtCell( row, column ) {
+    getTileAtCell( column, row ) {
         const tileIndex = ( ( row * this.cols ) - ( this.cols - column ) ) - 1
         return this.array[tileIndex]
     }

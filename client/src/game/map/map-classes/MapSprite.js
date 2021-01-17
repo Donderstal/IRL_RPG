@@ -23,11 +23,11 @@ class MapSprite extends I_Sprite {
         this.nextTileIndex;
     }
 
-    get currentTileBack( ) { return globals.GAME.back.class.grid.array[this.activeTileIndex] };
-    get nextTileBack( ) { return globals.GAME.back.class.grid.array[this.nextTileIndex] };
+    get currentTileBack( ) { return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex )  };
+    get nextTileBack( ) { return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.nextTileIndex ) };
 
-    get currentTileFront( ) { return globals.GAME.front.class.grid.array[this.activeTileIndex] };
-    get nextTileFront( ) { return globals.GAME.front.class.grid.array[this.nextTileIndex] };
+    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndex )  };
+    get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     get isInCenterFacingLeft( ) {
         return this.centerX( ) < ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .55 ) );
@@ -51,7 +51,7 @@ class MapSprite extends I_Sprite {
         if ( !state.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
             //this.hitbox.draw( this.centerX( ), this.baseY( ) )
-            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.front.class.playerSprite );    
+            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );    
         }
         else if ( state.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )
@@ -67,7 +67,7 @@ class MapSprite extends I_Sprite {
     updateTileIndexes( ) {
         this.unsetActiveTile( );
 
-        const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+        const tile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', this.centerX( ), this.baseY( ) );
 
         if ( tile == undefined ) {
             this.activeTileIndex = null;
@@ -84,8 +84,8 @@ class MapSprite extends I_Sprite {
 
     setActiveTileIndex( tile ) {
         this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
-        this.row = globals.GAME.back.class.grid.array[this.activeTileIndex].row;
-        this.col = globals.GAME.back.class.grid.array[this.activeTileIndex].col;
+        this.row = globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex ).row;
+        this.col = globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex ).col;
         this.currentTileFront.setSpriteData( 'character', null )
         this.currentTileFront.spriteId = this.spriteId;
     }
