@@ -86,7 +86,7 @@ class Party {
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
             if ( this.activeMemberIndex != 0 ) {   
-                state.battleState.UI.switchSlot( this.activeMemberIndex, this.members );      
+                globals.GAME.BATTLE.UI.switchSlot( this.activeMemberIndex, this.members );      
             }
             this.activeMember.activateUI();
         }
@@ -106,7 +106,7 @@ class Party {
             this.activeMemberIndex -= 1
             this.members[this.activeMemberIndex].active = true;
             this.activeMember = this.members[this.activeMemberIndex]
-            state.battleState.UI.switchSlot( this.activeMemberIndex, this.members ); 
+            globals.GAME.BATTLE.UI.switchSlot( this.activeMemberIndex, this.members ); 
             this.activeMember.activateUI();
         } 
     }
@@ -127,7 +127,7 @@ class Party {
         this.members.forEach( ( e ) => {
             if ( !e.isDefeated ) {
                 e.nextMove = e.moves[Math.floor(Math.random() * Math.floor(e.moves.length))]
-                e.nextMove.setTarget(Math.floor(Math.random() * Math.floor(state.battleState.opponentParty.members.length)))             
+                e.nextMove.setTarget(Math.floor(Math.random() * Math.floor(globals.GAME.BATTLE.opponentParty.members.length)))             
             }
         } )
     }

@@ -14,11 +14,11 @@ const charGlobals   = require('../character/characterGlobals')
 
 const startBattle = (  ) => {
     state.battleStaging.requestingBattle = false
-    state.battleState = new Battle( prepareStagingDataForBattle( state.battleStaging ) );
+    globals.GAME.BATTLE = new Battle( prepareStagingDataForBattle( state.battleStaging ) );
     initializeBattleMap( );
     let sfx = new Sound( 'boxing-bell.wav', true );
     sfx.play( );
-    state.battleState.initUI( );
+    globals.GAME.BATTLE.initUI( );
 }
 
 const initializeBattleMap = ( ) => {
@@ -49,12 +49,7 @@ const prepareStagingDataForBattle = ( staging ) => {
 }
 
 const stopBattle = ( ) => {
-    state.battleState = { };
-    state.battleStaging = {
-        player              : [],
-        opponent            : [],
-        requestingBattle    : false
-    }
+    globals.GAME.BATTLE = { };
 }
 
 module.exports = {

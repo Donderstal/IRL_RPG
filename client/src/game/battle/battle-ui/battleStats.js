@@ -48,7 +48,7 @@ class BattleStats {
     }
 
     refresh( ) {
-        state.battleState.charactersInField.forEach( ( e ) => {
+        globals.GAME.BATTLE.charactersInField.forEach( ( e ) => {
             if ( e.name == this.owner.name ) {
                 this.owner = e
             }

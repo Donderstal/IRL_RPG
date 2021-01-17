@@ -253,8 +253,8 @@ class BattleSprite extends I_Sprite {
         this.rowInSheet = this.initialRow;
         this.moving = false;
 
-        if ( state.battleState.activeMove ) {
-            state.battleState.activeMove.continueAnimationIfPossible( );
+        if ( globals.GAME.BATTLE.activeMove ) {
+            globals.GAME.BATTLE.activeMove.continueAnimationIfPossible( );
         }
     }
 
