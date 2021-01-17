@@ -1,14 +1,12 @@
 const state         = require('../../game-data/state')
-const changeMode    = require('../../game-data/changeMode');
 const battleGlobals = require('./battleGlobals')
 
 const handleBattleKeyPress = ( event ) => {
-    const battle = state.battleState;
+    const battle = globals.GAME.BATTLE;
     state.pressedKeys[event.key] = true;
 
     if ( event.key == "Escape" || event.key == "Esc" ) {
         battle.battleMusic.stop()
-        changeMode.requestModeChange( 'OVERWORLD' )
     }
 
     if ( event.key == "l" ) {
@@ -60,7 +58,7 @@ const handleDirectionKey = ( UI, keys ) => {
 }
 
 const handleActionButton = ( ) => {
-    const battle = state.battleState;    
+    const battle = globals.GAME.BATTLE;    
     switch( battle.battlePhase ) {
         case battleGlobals['PHASE_SELECT_MOVE']:
             battle.handleActionButtonInSelectionPhase( );
@@ -79,7 +77,7 @@ const handleActionButton = ( ) => {
 }
 
 const handleReturnButton = ( ) => {
-    const battle = state.battleState;    
+    const battle = globals.GAME.BATTLE;    
     if ( battle.battlePhase == battleGlobals['PHASE_SELECT_MOVE'] ) {
         if ( battle.selectingTarget ) {
             battle.deTarget( );

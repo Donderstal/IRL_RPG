@@ -3,7 +3,6 @@ const { GRID_BLOCK_PX }     = require('../../game-data/globals')
 const findSprite            = require('../../helpers/mapHelpers').findNamedCharacterOnMap
 const getXYOfCell           = require('../../helpers/mapHelpers').getXYOfCell
 const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOppositeDirection
-const requestModeChange     = require('../../game-data/changeMode').requestModeChange
 
 class Cinematic {
     constructor( data, trigger, args ) {
