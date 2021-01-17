@@ -1,11 +1,11 @@
-const globals       = require('../../../game-data/globals')
-const Sound         = require('../../interfaces/I_Sound').Sound
-const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
+const globals           = require('../../../game-data/globals')
+const { GRID_BLOCK_PX } = require('../../../game-data/globals')
+const Sound             = require('../../interfaces/I_Sound').Sound
+const I_Hitbox          = require('../../interfaces/I_Hitbox').I_Hitbox
 
 class Door extends I_Hitbox {
     constructor( x, y, door ) {
-        const radius = globals.GRID_BLOCK_PX;
-        super( x, y, radius)
+        super( x, y, GRID_BLOCK_PX)
         this.to             = door.to;
         this.directionIn    = door.directionIn
         this.directionOut   = door.directionOut

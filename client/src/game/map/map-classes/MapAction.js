@@ -1,4 +1,5 @@
 const globals       = require('../../../game-data/globals')
+const { GRID_BLOCK_PX }       = require('../../../game-data/globals')
 const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
 const Sound         = require('../../interfaces/I_Sound').Sound
 const displayText   = require('../map-ui/displayText')

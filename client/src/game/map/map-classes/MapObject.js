@@ -5,7 +5,7 @@ const canvasHelpers = require('../../../helpers/canvasHelpers')
 const MapAction     = require('./MapAction').MapAction
 
 const mapObjectResources = require('../../../resources/mapObjectResources')
-const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../../../game-data/globals')
+const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, MOVEMENT_SPEED, FRAME_LIMIT } = require('../../../game-data/globals')
 const { HitboxGroup } = require('./HitboxGroup')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 
@@ -17,12 +17,12 @@ class MapObject extends I_Sprite {
         const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, tile.spriteData.direction );
 
         const dimensionsInMap = {
-            "width": spriteDimensionsInBlocks.hori * globals.GRID_BLOCK_PX,
-            "height": spriteDimensionsInBlocks.vert * globals.GRID_BLOCK_PX 
+            "width": spriteDimensionsInBlocks.hori * GRID_BLOCK_PX,
+            "height": spriteDimensionsInBlocks.vert * GRID_BLOCK_PX 
         }
         const dimensionsInSheet = { 
-            'width': spriteDimensionsInBlocks.hori * globals.GRID_BLOCK_IN_SHEET_PX,
-            'height': spriteDimensionsInBlocks.vert * globals.GRID_BLOCK_IN_SHEET_PX 
+            'width': spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX,
+            'height': spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX 
         }
 
         super( tile, dimensionsInMap, src, true )
@@ -55,7 +55,7 @@ class MapObject extends I_Sprite {
 
     initMovingSprite( spriteData ) {
         this.movingToDestination = true;
-        this.movementSpeed = globals.MOVEMENT_SPEED * ( Math.random( ) + 1 );
+        this.movementSpeed = MOVEMENT_SPEED * ( Math.random( ) + 1 );
         this.destination = spriteData.destination;
         this.frames = this.objectResource["movement_frames"];
         this.direction = globals[spriteData.direction]
@@ -187,9 +187,9 @@ class MapObject extends I_Sprite {
 
     goToDestination( ) {
         const destIsLeftOfSprite = (this.destinationTile.x - this.width) < this.left;
-        const destIsRightOfSprite = ( this.destinationTile.x + globals.GRID_BLOCK_PX + this.width ) > this.right;
+        const destIsRightOfSprite = ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) > this.right;
         const destIsAboveSprite = this.destinationTile.y - this.height < this.top;
-        const destIsBelowSprite = this.destinationTile.y + globals.GRID_BLOCK_PX + this.height > this.bottom;
+        const destIsBelowSprite = this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom;
 
         this.moving = false
         if ( destIsLeftOfSprite && this.direction == globals["FACING_LEFT"] ) {
@@ -243,7 +243,7 @@ class MapObject extends I_Sprite {
     countFrame( ) {
         this.frameCount++;
 
-        if ( this.frameCount >= globals.FRAME_LIMIT) {
+        if ( this.frameCount >= FRAME_LIMIT) {
             this.frameCount = 0;
             this.sheetPosition++;
 
