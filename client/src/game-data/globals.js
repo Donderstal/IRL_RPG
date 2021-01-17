@@ -61,6 +61,8 @@ const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
 
 let GAME = null;
+const BATTLE_MODE = "BATTLE";
+const MAP_MODE = "MAP";
 
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
@@ -114,5 +116,7 @@ module.exports = {
     LARGE_FONT_LINE_HEIGHT,
     BATTLE_FONT_LINE_HEIGHT,
     SHEET_XY_VALUES,
-    GAME
+    GAME,
+    BATTLE_MODE,
+    MAP_MODE
 }

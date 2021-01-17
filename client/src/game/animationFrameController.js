@@ -1,7 +1,7 @@
 const handleMapAnimations       = require('./map/mapAnimation').handleMapAnimations
 const handleBattleAnimations    = require('./battle/battleAnimation').handleBattleAnimations
-const state                     = require('../game-data/state')
-const { FRAMES_PER_SECOND }     = require('../game-data/globals')
+const globals     = require('../game-data/globals')
+const { FRAMES_PER_SECOND, BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 
@@ -13,13 +13,11 @@ const startRequestingFrame = () => {
 }
 
 const startBattleAnimation = ( ) => {
-    state.battleMode = true;
-    state.overworldMode = false;
+    globals.GAME.mode = BATTLE_MODE;
 }
 
 const startOverworldAnimation = ( ) => {
-    state.overworldMode = true
-    state.battleMode = false;
+    globals.GAME.mode = MAP_MODE;
 }
 
 /**
@@ -33,18 +31,18 @@ const animationFrameController = ( ) => {
     
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
-        if ( !state.paused ) {
-            if ( !state.listeningForPress ) {
+        if ( !globals.GAME.paused ) {
+            if ( !globals.GAME.listeningForPress ) {
                 controls.listenForKeyPress()
             }            
-            if ( state.overworldMode ) {
+            if ( globals.GAME.mode == MAP_MODE ) {
                 handleMapAnimations( )
             }
-            else if ( state.battleMode ) {
+            else if ( globals.GAME.mode == BATTLE_MODE ) {
                 handleBattleAnimations( )
             }
-            if  ( state.cinematicMode && state.activeCinematic ) {
-                state.activeCinematic.checkForScenePass( )
+            if  ( globals.GAME.cinematicMode && globals.GAME.activeCinematic ) {
+                globals.GAME.activeCinematic.checkForScenePass( )
             }
         }
         else {

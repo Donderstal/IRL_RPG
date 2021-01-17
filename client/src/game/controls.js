@@ -1,27 +1,19 @@
-const state = require('../game-data/state')
 const globals = require('../game-data/globals')
+const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
 
-/**
- * Listen for keypresses
- * and pass them to state.pressedKeys variable
- */
 const listenForKeyPress = () => {
     window.addEventListener('keydown', addKeyToPressed)
     window.addEventListener('keyup', removeKeyFromPressed)
-    state.listeningForPress = true;
+    globals.GAME.listeningForPress = true;
 }
 
-/**
- * Listen for keypresses
- * and pass them to state.pressedKeys variable
- */
 const stopListenForKeyPress = () => {
     window.removeEventListener('keydown', addKeyToPressed)
     window.removeEventListener('keyup', removeKeyFromPressed)
-    state.listeningForPress = false;
+    globals.GAME.listeningForPress = false;
 }
 
 const addKeyToPressed = ( ) => {
@@ -31,25 +23,21 @@ const addKeyToPressed = ( ) => {
         console.log("___next tile front___")
         console.log( globals.GAME.front.class.grid.array[globals.GAME.PLAYER.nextTileIndex] )
     }
-    if ( state.overworldMode ) {
+    if ( globals.GAME.mode == MAP_MODE ) {
         handleMapKeyPress( event )
     }
-    else if ( state.battleMode ) { 
+    else if ( globals.GAME.mode == BATTLE_MODE ) { 
         handleBattleKeyPress( event )
     }
 }
 
 const removeKeyFromPressed = () => {
-    state.pressedKeys[event.key] = false
+    globals.GAME.pressedKeys[event.key] = false
 }
 
-/**
- * set all state.pressedKeys to false
- * Use when loading a new map or in cinematic
- */ 
 const clearPressedKeys = () => {
-    Object.keys(state.pressedKeys).forEach( (key) => {
-        state.pressedKeys[key] = false
+    Object.keys(globals.GAME.pressedKeys).forEach( (key) => {
+        globals.GAME.pressedKeys[key] = false
     })
 }
 

@@ -13,9 +13,10 @@ class Game {
     constructor( ) {
         console.log('initializing game!')
         this.mode; // 'MAP' || 'BATTLE'        
-        this.inCinematic; // bool
+        this.cinematicMode; // bool
         this.paused; // bool
         this.listeningForPress; // bool
+        this.pressedKeys = { }; //
 
         this.front = { }; // class Foreground
         this.back  = { };  // class Background
