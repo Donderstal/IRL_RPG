@@ -29,6 +29,21 @@ class Game {
         this.initGameCanvases( );
     }
 
+    getTileOnCanvasAtIndex( canvasName, index) {
+        const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
+        return canvasClass.getTileAtIndex( index );
+    }
+
+    getTileOnCanvasAtXY( canvasName, x, y) {
+        const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
+        return canvasClass.getTileAtXY( x, y );
+    }
+
+    getTileOnCanvasAtCell( canvasName, column, row ) {
+        const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
+        return canvasClass.getTileAtCell( column, row );
+    }
+
     initGameCanvases( ) {
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
