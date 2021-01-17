@@ -1,5 +1,5 @@
 const state                 = require('../../game-data/state')
-const globals               = require('../../game-data/globals')
+const { GRID_BLOCK_PX }     = require('../../game-data/globals')
 const findSprite            = require('../../helpers/mapHelpers').findNamedCharacterOnMap
 const getXYOfCell           = require('../../helpers/mapHelpers').getXYOfCell
 const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOppositeDirection
@@ -89,15 +89,15 @@ class Scene {
                 };
 
                 if ( this.endDirection == globals["FACING_LEFT"] ) {
-                    this.destination.left += globals["GRID_BLOCK_PX"];
-                    this.destination.right += globals["GRID_BLOCK_PX"];
+                    this.destination.left += GRID_BLOCK_PX;
+                    this.destination.right += GRID_BLOCK_PX;
 
                     this.destination.top = sprite.y;
                     this.destination.bottom = sprite.y + sprite.height;
                 }
                 else if ( this.endDirection == globals["FACING_RIGHT"] ) {
-                    this.destination.left -= globals["GRID_BLOCK_PX"];
-                    this.destination.right -= globals["GRID_BLOCK_PX"];
+                    this.destination.left -= GRID_BLOCK_PX;
+                    this.destination.right -= gGRID_BLOCK_PX;
 
                     this.destination.top = sprite.y;
                     this.destination.bottom = sprite.y + sprite.height;
@@ -119,8 +119,8 @@ class Scene {
 
                 const xy = getXYOfCell( data.destination.row, data.destination.col )
                 this.destination = { 
-                    'left': xy.x, 'right': xy.x + globals.GRID_BLOCK_PX,
-                    'top': xy.y, 'bottom': xy.y + globals.GRID_BLOCK_PX
+                    'left': xy.x, 'right': xy.x + GRID_BLOCK_PX,
+                    'top': xy.y, 'bottom': xy.y + GRID_BLOCK_PX
                 }
             }
             this.walkingToDestination = true;            

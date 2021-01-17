@@ -1,6 +1,7 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
-const globals = require('../../game-data/globals')
-const state = require('../../game-data/state')
+const { 
+    FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN
+} = require( '../../game-data/globals' )
 
 class I_Hitbox {
     constructor( x, y, radius ) {
@@ -113,7 +114,7 @@ class I_Hitbox {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
     upFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingUp  = targetDirection == globals.FACING_UP
+        const targetIsFacingUp  = targetDirection == FACING_UP
         const thisIsAboveTarget = targetHitbox.top( ) > this.innerTop( );
 
         return targetIsFacingUp && ( targetHitbox.top( ) <= this.bottom( ) ) 
@@ -121,7 +122,7 @@ class I_Hitbox {
     }
 
     downFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingDown   = targetDirection == globals.FACING_DOWN
+        const targetIsFacingDown   = targetDirection == FACING_DOWN
         const thisIsBelowTarget    = targetHitbox.bottom( ) < this.innerBottom( )
 
         return targetIsFacingDown && ( targetHitbox.bottom( ) >= this.top( ) ) 
@@ -129,7 +130,7 @@ class I_Hitbox {
     }
 
     leftFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingLeft    = targetDirection == globals.FACING_LEFT
+        const targetIsFacingLeft    = targetDirection == FACING_LEFT
         const thisIsLeftOfTarget    = targetHitbox.left( ) > this.innerLeft( )
 
         return targetIsFacingLeft && ( targetHitbox.left( ) <= this.right( ) ) 
@@ -137,7 +138,7 @@ class I_Hitbox {
     }
 
     rightFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ){
-        const targetIsFacingRight   = targetDirection == globals.FACING_RIGHT;
+        const targetIsFacingRight   = targetDirection == FACING_RIGHT;
         const thisIsRightOfTarget   = targetHitbox.right( ) < this.innerRight( )
 
         return targetIsFacingRight && ( targetHitbox.right( ) >= this.left( ) ) 
@@ -146,7 +147,7 @@ class I_Hitbox {
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     upFacingTargetIsInActionRadius( targetHitbox, direction ) {
-        const targetIsFacingUp          = direction == globals.FACING_DOWN;
+        const targetIsFacingUp          = direction == FACING_DOWN;
         const thisIsAboveTarget         = targetHitbox.top( ) > this.innerTop( );
         const topIsInTargetOuterBottom  = targetHitbox.top( ) <= this.outerBottom( )
 
@@ -154,7 +155,7 @@ class I_Hitbox {
     }
 
     downFacingTargetIsInActionRadius( targetHitbox, direction ) {
-        const targetIsFacingDown        = direction == globals.FACING_UP
+        const targetIsFacingDown        = direction == FACING_UP
         const thisIsBelowTarget         = targetHitbox.bottom( ) < this.innerBottom( )
         const bottomIsInTargetOuterTop  = targetHitbox.bottom( ) > this.outerTop( )
 
@@ -162,7 +163,7 @@ class I_Hitbox {
     }
 
     leftFacingTargetIsInActionRadius( targetHitbox, direction ) {
-        const targetIsFacingLeft        = direction == globals.FACING_RIGHT
+        const targetIsFacingLeft        = direction == FACING_RIGHT
         const thisIsLeftOfTarget        = targetHitbox.left( ) > this.innerLeft( )
         const leftIsInTargetOuterRight  = targetHitbox.left( ) < this.outerRight( )
 
@@ -170,7 +171,7 @@ class I_Hitbox {
     }
 
     rightFacingTargetIsInActionRadius( targetHitbox, direction ){
-        const targetIsFacingRight       = direction == globals.FACING_LEFT
+        const targetIsFacingRight       = direction == FACING_LEFT
         const thisIsRightOfTarget       = targetHitbox.right( ) < this.innerRight( )
         const rightIsInTargetOuterLeft  = targetHitbox.right( ) > this.outerLeft( )
 

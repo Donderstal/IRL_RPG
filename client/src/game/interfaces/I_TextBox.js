@@ -1,5 +1,8 @@
 const canvas = require( '../../helpers/canvasHelpers' )
-const globals = require( '../../game-data/globals' )
+const { 
+    LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
+    SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT
+} = require( '../../game-data/globals' )
 
 class I_TextBox {
     constructor( xy, dimensions, fontSize, text, buttonsText = null ) {
@@ -9,13 +12,13 @@ class I_TextBox {
         this.height         = dimensions.height;
 
         this.fontType       = fontSize 
-        this.fontSize       = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_SIZE : globals.SMALL_FONT_SIZE;
-        this.lineHeight     = ( fontSize == "LARGE" ) ? globals.LARGE_FONT_LINE_HEIGHT : globals.SMALL_FONT_LINE_HEIGHT;
+        this.fontSize       = ( fontSize == "LARGE" ) ? LARGE_FONT_SIZE : SMALL_FONT_SIZE;
+        this.lineHeight     = ( fontSize == "LARGE" ) ? LARGE_FONT_LINE_HEIGHT : SMALL_FONT_LINE_HEIGHT;
 
-        this.innerBoxX      = xy.x - ( globals.LARGE_FONT_SIZE * .125 );
-        this.innerBoxY      = xy.y - ( globals.LARGE_FONT_SIZE * .125 );
-        this.innerBoxWidth  = dimensions.width + ( globals.LARGE_FONT_SIZE * .25 );
-        this.innerBoxHeight = dimensions.height + ( globals.LARGE_FONT_SIZE * .25 );
+        this.innerBoxX      = xy.x - ( LARGE_FONT_SIZE * .125 );
+        this.innerBoxY      = xy.y - ( LARGE_FONT_SIZE * .125 );
+        this.innerBoxWidth  = dimensions.width + ( LARGE_FONT_SIZE * .25 );
+        this.innerBoxHeight = dimensions.height + ( LARGE_FONT_SIZE * .25 );
 
         this.text           = canvas.breakTextIntoLines( text, 'LARGE' )
         this.buttonsText    = ( buttonsText == null ) ? [ "(Q) Continue", "(E) Back"] : buttonsText;
@@ -40,11 +43,11 @@ class I_TextBox {
     drawBox( ) {
         canvas.drawRect( 
             "FRONT", this.x, this.y, 
-            this.width, this.height, globals.OUTER_TEXTBOX_RGBA
+            this.width, this.height, OUTER_TEXTBOX_RGBA
         );
         canvas.drawRect( 
             "FRONT", this.innerBoxX, this.innerBoxY, 
-            this.innerBoxWidth, this.innerBoxHeight, globals.INNER_TEXTBOX_RGBA
+            this.innerBoxWidth, this.innerBoxHeight, INNER_TEXTBOX_RGBA
         );
     }
 
@@ -53,7 +56,7 @@ class I_TextBox {
         let yPositionInBox = this.y + this.lineHeight;
 
         if ( this.hasHeader ) {
-            yPositionInBox += globals.SMALL_FONT_LINE_HEIGHT;
+            yPositionInBox += SMALL_FONT_LINE_HEIGHT;
         }
 
         for ( var i = 0; i < this.text.length; i++ ) {
@@ -67,12 +70,12 @@ class I_TextBox {
     writeHeader( ) {
         canvas.writeTextLine( 
             this.headerText, this.x + this.fontSize, 
-            this.y + globals.SMALL_FONT_LINE_HEIGHT, "SMALL"
+            this.y + SMALL_FONT_LINE_HEIGHT, "SMALL"
         );
     }
 
     drawButtons( ) {
-        let buttonX     = this.x + globals.LARGE_FONT_SIZE;
+        let buttonX     = this.x + LARGE_FONT_SIZE;
         let buttonsY    = this.y + this.height;
 
         this.buttonsText.forEach( (buttonText) => {
@@ -84,7 +87,7 @@ class I_TextBox {
     }
 
     doButtonAnimation( ) {
-        if ( this.animationFrame > ( globals.FRAME_LIMIT * 2 ) ) {
+        if ( this.animationFrame > ( FRAME_LIMIT * 2 ) ) {
             this.buttonColor = ( this.buttonColor == "black" ) ? "#800020" : "black";
             this.animationFrame = 0;
         }
