@@ -67,7 +67,7 @@ class MapSprite extends I_Sprite {
     updateTileIndexes( ) {
         this.unsetActiveTile( );
 
-        const tile = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+        const tile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', this.centerX( ), this.baseY( ) );
 
         if ( tile == undefined ) {
             this.activeTileIndex = null;

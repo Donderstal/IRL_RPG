@@ -34,7 +34,7 @@ class Game {
         return canvasClass.getTileAtIndex( index );
     }
 
-    getTileOnCanvasAtXY( canvasName, x, y) {
+    getTileOnCanvasAtXY( canvasName, x, y ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtXY( x, y );
     }

@@ -74,7 +74,7 @@ class NPC extends MapSprite {
     }
 
     checkForAnimationPath ( ) {
-        const cell = globals.GAME.front.class.getTileAtXY( this.centerX( ), this.baseY( ) );
+        const cell = globals.GAME.getTileOnCanvasAtXY( 'FRONT', this.centerX( ), this.baseY( ) );
         this.row = cell.row;
         this.col = cell.col
     
