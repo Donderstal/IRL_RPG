@@ -15,9 +15,7 @@ class MapSprite extends I_Sprite {
         this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
-        this.hasMoved = false;
         this.spriteId;
-
         this.activeTileIndex;
         this.nextTileIndex;
     }
