@@ -106,7 +106,11 @@ class Sprite {
 
         this.updateSpriteBorders( )
     }
-
+     /**
+     * @function setDestination set destination data as prop to Sprite
+     * @param destination object containing destination cell
+     * @param {string} endDirection direction sprite should face at destination
+     */
     setDestination( destination, endDirection ) {
         this.destination = destination
         this.type = "idle"
@@ -117,6 +121,12 @@ class Sprite {
         this.inMovementAnimation = true;
     }
 
+    /**
+     * @function goToDestination decide where to go based on sprites position compared to destination prop
+     * @param {boolean} isBattle determines how y axis anims should be handled
+     * call this.goEndToAnimation() if sprite has reached destination
+     * call this.countFrame()
+     */
     goToDestination( isBattle = false ) {
         const destIsLeftOfSprite = this.destination.left < this.left;
         const destIsRightOfSprite = this.destination.right > this.right;
@@ -147,7 +157,7 @@ class Sprite {
                 this.y += MOVEMENT_SPEED  
             }
         }
-        else if ( !isBattle && !hasMoved ) {
+        else if ( !hasMoved ) {
             if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
@@ -167,12 +177,18 @@ class Sprite {
         this.countFrame( );
     }
 
+    /**
+     * @function endGoToAnimation unset this.destination, this.inMovementAnimation
+     */
     endGoToAnimation( ) {
         this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
         this.inMovementAnimation = false;
         this.destination = {}
     }
 
+    /**
+     * @function countFrame increments this.frameCount. Change this.sheetPosition if over FRAME_LIMIT
+     */
     countFrame ( ) {
         this.frameCount++;  
     
