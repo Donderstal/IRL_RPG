@@ -533,142 +533,223 @@ module.exports = {
                     }
                 ],
                 "characters" : [
-                    {
-                        "type": "idle",
-                        "sprite": "business_man.png",
-                        "direction": "FACING_DOWN",
-                        "name": "business_man.png",
-                        "row": 2,
-                        "col": 2
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "chad.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad.png",
-                        "row": 2,
-                        "col": 3
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "chad_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour01.png",
-                        "row": 2,
-                        "col": 4
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "chad_recolour02.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour02.png",
-                        "row": 2,
-                        "col": 5
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "chad_recolour03.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour03.png",
-                        "row": 2,
-                        "col": 6
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "character_x1_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "character_x1_recolour01.png",
-                        "row": 2,
-                        "col": 7
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 8
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "generic_balding_guy.png",
-                        "direction": "FACING_DOWN",
-                        "name": "generic_balding_guy.png",
-                        "row": 2,
-                        "col": 9
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "generic_blonde_guy.png",
-                        "direction": "FACING_DOWN",
-                        "name": "generic_blonde_guy.png",
-                        "row": 2,
-                        "col": 10
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "influencer.png",
-                        "direction": "FACING_DOWN",
-                        "name": "influencer.png",
-                        "row": 2,
-                        "col": 11
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "manager.png",
-                        "direction": "FACING_DOWN",
-                        "name": "manager.png",
-                        "row": 2,
-                        "col": 12
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "monkey_ceo.png",
-                        "direction": "FACING_DOWN",
-                        "name": "monkey_ceo.png",
-                        "row": 2,
-                        "col": 13
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "neckbeard.png",
-                        "direction": "FACING_DOWN",
-                        "name": "neckbeard.png",
-                        "row": 2,
-                        "col": 14
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "robot.png",
-                        "direction": "FACING_DOWN",
-                        "name": "robot.png",
-                        "row": 2,
-                        "col": 15
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "tumbler_girl_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "tumbler_girl_recolour01.png",
-                        "row": 2,
-                        "col": 16
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "tumbler_girl_recolour02.png",
-                        "direction": "FACING_DOWN",
-                        "name": "tumbler_girl_recolour02.png",
-                        "row": 2,
-                        "col": 17
-                    },
-                    {
-                        "type": "idle",
-                        "sprite": "tumblr_girl.png",
-                        "direction": "FACING_DOWN",
-                        "name": "tumblr_girl.png",
-                        "row": 2,
-                        "col": 18
-                    }
+                  {
+                      "type": "idle",
+                      "sprite": "business_man.png",
+                      "direction": "FACING_DOWN",
+                      "name": "business_man.png",
+                      "row": 2,
+                      "col": 2
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "chad.png",
+                      "direction": "FACING_DOWN",
+                      "name": "chad.png",
+                      "row": 2,
+                      "col": 3
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "chad_recolour01.png",
+                      "direction": "FACING_DOWN",
+                      "name": "chad_recolour01.png",
+                      "row": 2,
+                      "col": 4
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "chad_recolour02.png",
+                      "direction": "FACING_DOWN",
+                      "name": "chad_recolour02.png",
+                      "row": 2,
+                      "col": 5
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "chad_recolour03.png",
+                      "direction": "FACING_DOWN",
+                      "name": "chad_recolour03.png",
+                      "row": 2,
+                      "col": 6
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "character_x1_recolour01.png",
+                      "direction": "FACING_DOWN",
+                      "name": "character_x1_recolour01.png",
+                      "row": 2,
+                      "col": 7
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "characterx3.png",
+                      "direction": "FACING_DOWN",
+                      "name": "characterx3.png",
+                      "row": 2,
+                      "col": 8
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "generic_balding_guy.png",
+                      "direction": "FACING_DOWN",
+                      "name": "generic_balding_guy.png",
+                      "row": 2,
+                      "col": 9
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "generic_blonde_guy.png",
+                      "direction": "FACING_DOWN",
+                      "name": "generic_blonde_guy.png",
+                      "row": 2,
+                      "col": 10
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "influencer.png",
+                      "direction": "FACING_DOWN",
+                      "name": "influencer.png",
+                      "row": 2,
+                      "col": 11
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "manager.png",
+                      "direction": "FACING_DOWN",
+                      "name": "manager.png",
+                      "row": 2,
+                      "col": 12
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "monkey_ceo.png",
+                      "direction": "FACING_DOWN",
+                      "name": "monkey_ceo.png",
+                      "row": 2,
+                      "col": 13
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "neckbeard.png",
+                      "direction": "FACING_DOWN",
+                      "name": "neckbeard.png",
+                      "row": 2,
+                      "col": 14
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "robot.png",
+                      "direction": "FACING_DOWN",
+                      "name": "robot.png",
+                      "row": 2,
+                      "col": 15
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "tumbler_girl_recolour01.png",
+                      "direction": "FACING_DOWN",
+                      "name": "tumbler_girl_recolour01.png",
+                      "row": 2,
+                      "col": 16
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "tumbler_girl_recolour02.png",
+                      "direction": "FACING_DOWN",
+                      "name": "tumbler_girl_recolour02.png",
+                      "row": 2,
+                      "col": 17
+                  },
+                  {
+                      "type": "idle",
+                      "sprite": "tumblr_girl.png",
+                      "direction": "FACING_DOWN",
+                      "name": "tumblr_girl.png",
+                      "row": 2,
+                      "col": 18
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "CharacterX4.png",
+                    "direction": "FACING_DOWN",
+                    "name": "CharacterX4.png",
+                    "row": 2,
+                    "col": 19
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "CharacterX5.png",
+                    "direction": "FACING_DOWN",
+                    "name": "CharacterX5.png",
+                    "row": 2,
+                    "col": 20
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "CharacterX5_recolour.png",
+                    "direction": "FACING_DOWN",
+                    "name": "CharacterX5_recolour.png",
+                    "row": 2,
+                    "col": 21
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "fats.png",
+                    "direction": "FACING_DOWN",
+                    "name": "fats.png",
+                    "row": 2,
+                    "col": 22
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "fats_recolour.png",
+                    "direction": "FACING_DOWN",
+                    "name": "fats_recolour.png",
+                    "row": 2,
+                    "col": 23
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "new_girl.png",
+                    "direction": "FACING_DOWN",
+                    "name": "new_girl.png",
+                    "row": 4,
+                    "col": 2
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "new_girl_recolour.png",
+                    "direction": "FACING_DOWN",
+                    "name": "new_girl_recolour.png",
+                    "row": 4,
+                    "col": 3
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "pigeon.png",
+                    "direction": "FACING_DOWN",
+                    "name": "pigeon.png",
+                    "row": 4,
+                    "col": 4
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "pony_tail.png",
+                    "direction": "FACING_DOWN",
+                    "name": "pony_tail.png",
+                    "row": 4,
+                    "col": 5
+                  },
+                  {
+                    "type": "idle",
+                    "sprite": "pony_tail_recolour.png",
+                    "direction": "FACING_DOWN",
+                    "name": "pony_tail_recolour.png",
+                    "row": 4,
+                    "col": 6
+                  },
+                  
                 ]
             },
             "my-house" : {   
