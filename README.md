@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### JAN 18, 2021
 * Removing state file and associated imports
+* Cleaning up helpers files, removing obsolete funcs
 
 #### JAN 17, 2021
 * Adding some shorthands + getters to Game class
