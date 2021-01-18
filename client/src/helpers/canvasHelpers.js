@@ -16,16 +16,6 @@ const getBackCanvasContext = () => {
     return ctx
 }
 
-const drawCircle = ( canvasX, canvasY, radius ) => {
-    let ctx = getFrontCanvasContext()
-    ctx.beginPath();
-    ctx.arc( canvasX, canvasY, radius, 0, 2 * Math.PI );
-    ctx.fillStyle = "#800020"
-    ctx.fill(); 
-    ctx.strokeStyle = '#11001C';
-    ctx.stroke()
-}
-
 const drawFromImageToCanvas = ( 
         canvas,
         image, 
@@ -127,31 +117,13 @@ const clearEntireCanvas = ( canvas ) => {
     )
 }
 
-const clearBothCanvases = ( ) => {
-    let front = getFrontCanvasContext()
-    let back = getBackCanvasContext()
-
-    back.clearRect( 
-        0, 0,
-        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
-    )
-
-    front.clearRect( 
-        0, 0,
-        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
-    )
-}
-
-
 module.exports = {
     drawFromImageToCanvas,
     clearEntireCanvas,
-    clearBothCanvases,
     getFrontCanvasContext,
     getBackCanvasContext,
     setFont,
     drawRect,
-    drawCircle,
     breakTextIntoLines,
     writeTextLine
 }
