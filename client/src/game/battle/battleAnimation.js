@@ -1,4 +1,3 @@
-const state         = require('../../game-data/state')
 const canvas        = require('../../helpers/canvasHelpers')
 
 const handleBattleAnimations = ( ) => {

@@ -1,6 +1,5 @@
 const moveAnimations    = require('./moveAnimations');
 const animationRes      = require('../../../resources/animationResources')
-const state             = require('../../../game-data/state');
 
 class Move {
     constructor( moveData, moveOwner ) {

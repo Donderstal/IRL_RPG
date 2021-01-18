@@ -1,4 +1,3 @@
-const state = require('../../../game-data/state')
 const globals = require('../../../game-data/globals')
 
 const handleActionButton = ( ) => {

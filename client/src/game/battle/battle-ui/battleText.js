@@ -1,6 +1,5 @@
 const battleGlobals = require( '../battleGlobals' )
 const canvas = require( '../../../helpers/canvasHelpers' )
-const state = require( '../../../game-data/state' )
 const globals = require( '../../../game-data/globals' )
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 

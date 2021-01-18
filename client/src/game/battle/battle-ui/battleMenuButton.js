@@ -1,5 +1,4 @@
 const canvas        = require('../../../helpers/canvasHelpers')
-const state         = require('../../../game-data/state')
 const battleGlobals = require('../battleGlobals');
 
 class BattleMenuButton {

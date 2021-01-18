@@ -1,7 +1,6 @@
 const mapHelpers = require('../../../helpers/mapHelpers')
 const globals = require('../../../game-data/globals')
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../../game-data/globals');
-const state = require('../../../game-data/state')
 const anim = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite

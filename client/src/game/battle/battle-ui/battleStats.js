@@ -1,7 +1,6 @@
 const canvas        = require('../../../helpers/canvasHelpers');
 const globals       = require('../../../game-data/globals');
 const battleGlobals = require('../battleGlobals');
-const state         = require('../../../game-data/state')
 
 class BattleStats { 
     constructor ( owner, isPlayer, index ) {

@@ -1,5 +1,4 @@
 const BattleChar = require('./battle-init/battleChar').BattleChar
-const state = require('../../game-data/state')
 
 class Party {
     constructor( partyMembers, isPlayerParty ) {

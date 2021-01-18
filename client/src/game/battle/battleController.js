@@ -1,4 +1,3 @@
-const state         = require('../../game-data/state')
 const battleGlobals = require('./battleGlobals')
 
 const Battle        = require('./battle').Battle;
