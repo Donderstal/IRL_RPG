@@ -1,4 +1,6 @@
-const mathHelpers = require('./mathHelpers')
+const getRandomInteger = ( limit ) => {
+    return Math.floor( Math.random() * Math.floor( limit ) )
+}
 
 const getRandomName = () => {
 
@@ -19,7 +21,7 @@ const getRandomName = () => {
         oddConsonants: false
     }
 
-    let nameLength = mathHelpers.getRandomInteger(12)
+    let nameLength = getRandomInteger(12)
 
     nameLength = checkNameLength ( nameLength )
 
@@ -77,14 +79,14 @@ const getLetterTypeFromCollection = ( collection, type ) => {
         (letterType == 'V' ) ? letterType = 0 : letterType = 1
     }
     else {
-        letterType = mathHelpers.getRandomInteger(2)
+        letterType = getRandomInteger(2)
     }
 
     return collection[letterType]
 }
 
 const getRandomEntryFromArray = function  ( array ) {
-    return array[ mathHelpers.getRandomInteger( array.length ) ]
+    return array[ getRandomInteger( array.length ) ]
 }
 
 // small 'algorithm' to somewhat mirror the structure of a normal English word
@@ -92,7 +94,7 @@ const getLetterType = ( letterCounter ) => {
 
     if ( letterCounter.oddConsonants !== true ) {
         if ( letterCounter.vowels <= 1 && letterCounter.consonants <= 1 ) {
-            return ( mathHelpers.getRandomInteger(2) == 1 ) ? 'V' : 'C'
+            return ( getRandomInteger(2) == 1 ) ? 'V' : 'C'
         }
 
         if ( letterCounter.vowels === 2 ) {
@@ -101,7 +103,7 @@ const getLetterType = ( letterCounter ) => {
         }
 
         if ( letterCounter.consonants === 2 ) {
-            if ( mathHelpers.getRandomInteger(10) == 9 ) {
+            if ( getRandomInteger(10) == 9 ) {
                 return 'C'
             }
             letterCounter.consonants = 0
@@ -113,7 +115,7 @@ const getLetterType = ( letterCounter ) => {
             return 'V'
         }
 
-        return mathHelpers.getRandomInteger(2)
+        return getRandomInteger(2)
     }
 
     else {
