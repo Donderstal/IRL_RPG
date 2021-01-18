@@ -1,4 +1,3 @@
-const state = require('../game-data/state')
 const globals = require('../game-data/globals')
 
 /**
@@ -28,7 +27,6 @@ const getTopLeftCellOfGridInCanvas = ( x, y ) => {
  * @return {object} - with row and column as props
  */
 const getCellOfXY = (x, y) => {
-    const topLeftCell = state.currentMap.topLeftCell    
     let col = topLeftCell.col + Math.floor( (x - topLeftCell.x) / globals.GRID_BLOCK_PX )
     let row = topLeftCell.row + Math.floor( (y - topLeftCell.y) / globals.GRID_BLOCK_PX )
     
@@ -47,7 +45,6 @@ const getCellOfXY = (x, y) => {
  * @return {object} - with x and y as props
  */
 const getXYOfCell = (row, col) => {
-    const topLeftCell = state.currentMap.topLeftCell
     const x = topLeftCell.x + ( ( col - topLeftCell.col ) * globals.GRID_BLOCK_PX )
     const y = topLeftCell.y + ( ( row - topLeftCell.row ) * globals.GRID_BLOCK_PX )
 
@@ -68,17 +65,7 @@ const getXYOfCell = (row, col) => {
  * @return {MapSprite}
  */
 const findNamedCharacterOnMap = ( nameToFind ) => {
-    if ( nameToFind != 'Player' ) {
-        for ( var i = 0; i < state.currentMap.NPCs.length; i++ ) {
-            const currentNPC = state.currentMap.NPCs[i]
-            if ( nameToFind == currentNPC.name ) {
-                return currentNPC
-            }
-        }             
-    }
-    else {
-        return state.playerCharacter.sprite
-    }
+    return { }
 }
 
 module.exports = {
