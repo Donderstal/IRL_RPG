@@ -1,9 +1,9 @@
-const state         = require('../../game-data/state')
+const globals       = require('../../game-data/globals')
 const battleGlobals = require('./battleGlobals')
 
 const handleBattleKeyPress = ( event ) => {
     const battle = globals.GAME.BATTLE;
-    state.pressedKeys[event.key] = true;
+    globals.GAME.pressedKeys[event.key] = true;
 
     if ( event.key == "Escape" || event.key == "Esc" ) {
         battle.battleMusic.stop()
@@ -15,10 +15,10 @@ const handleBattleKeyPress = ( event ) => {
 
     if ( battle.inSelectMovePhase ) {
         if ( battle.selectingTarget ) {
-            scrollBattleTargets( battle.opponentParty, state.pressedKeys )
+            scrollBattleTargets( battle.opponentParty, globals.GAME.pressedKeys )
         }
         else {
-            handleDirectionKey( battle.UI, state.pressedKeys )
+            handleDirectionKey( battle.UI, globals.GAME.pressedKeys )
         }
     }
 

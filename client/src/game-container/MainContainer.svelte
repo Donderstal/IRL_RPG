@@ -1,7 +1,6 @@
 <script>
     import GameMenu from './GameMenu.svelte'
     import GfxContainer from './GfxContainer.svelte'
-    import state from '../game-data/state.js'
 
     let inGame = false;
     let inMainMenu = true;
