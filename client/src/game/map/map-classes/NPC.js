@@ -1,5 +1,6 @@
 const MapSprite     = require('./MapSprite').MapSprite
 const globals       = require('../../../game-data/globals');
+const { MOVEMENT_SPEED, FRAME_LIMIT } = require('../../../game-data/globals');
 const MapAction     = require('./MapAction').MapAction
 
 class NPC extends MapSprite {
@@ -42,7 +43,7 @@ class NPC extends MapSprite {
 
     handleIdleNPCAnimation( ){
         this.frameCount++
-        if ( this.frameCount >= ( globals.FRAME_LIMIT * 2 ) ) {
+        if ( this.frameCount >= ( FRAME_LIMIT * 2 ) ) {
         
             this.frameCount = 0;
             this.sheetPosition = ( this.sheetPosition === 0 ) ? 1 : 0
@@ -50,7 +51,7 @@ class NPC extends MapSprite {
     }
 
     gotToNextDirection( countFrame = true) {
-        const NPC_speed = this.type == "flying" ? globals.MOVEMENT_SPEED : globals.MOVEMENT_SPEED * .5;
+        const NPC_speed = this.type == "flying" ? MOVEMENT_SPEED : MOVEMENT_SPEED * .5;
         if ( this.nextPosition.row > this.row ) {
             this.y += NPC_speed
             this.direction = this.type == "flying" ? 7 : globals["FACING_DOWN"]

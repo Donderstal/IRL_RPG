@@ -1,6 +1,7 @@
 const canvas = require( '../../../helpers/canvasHelpers' )
 const state = require( '../../../game-data/state' )
-const globals = require( '../../../game-data/globals' )
+
+const { MAX_BUBBLE_WIDTH, MIN_BUBBLE_WIDTH, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT} = require( '../../../game-data/globals' )
 
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 const Sound = require( '../../interfaces/I_Sound' ).Sound
@@ -24,21 +25,21 @@ const getSpeechBubbleDimensions = ( action ) => {
     if ( action.name ) {
         return {
             'width' : ( text.length != 1 ) 
-                ? globals.MAX_BUBBLE_WIDTH 
-                : ( textWidth < globals.MIN_BUBBLE_WIDTH ) 
-                    ? globals.MIN_BUBBLE_WIDTH 
-                    : textWidth + globals.LARGE_FONT_LINE_HEIGHT,
-            'height': globals.LARGE_FONT_LINE_HEIGHT + ( text.length * globals.LARGE_FONT_LINE_HEIGHT ) + globals.SMALL_FONT_LINE_HEIGHT
+                ? MAX_BUBBLE_WIDTH 
+                : ( textWidth < MIN_BUBBLE_WIDTH ) 
+                    ? MIN_BUBBLE_WIDTH 
+                    : textWidth + LARGE_FONT_LINE_HEIGHT,
+            'height': LARGE_FONT_LINE_HEIGHT + ( text.length * LARGE_FONT_LINE_HEIGHT ) + SMALL_FONT_LINE_HEIGHT
         }
     }
 
     return {
         'width' : ( text.length != 1 ) 
-            ? globals.MAX_BUBBLE_WIDTH 
-            : ( textWidth < globals.MIN_BUBBLE_WIDTH ) 
-                ? globals.MIN_BUBBLE_WIDTH 
-                : textWidth + globals.LARGE_FONT_LINE_HEIGHT,
-        'height': globals.LARGE_FONT_LINE_HEIGHT + ( text.length * globals.LARGE_FONT_LINE_HEIGHT )
+            ? MAX_BUBBLE_WIDTH 
+            : ( textWidth < MIN_BUBBLE_WIDTH ) 
+                ? MIN_BUBBLE_WIDTH 
+                : textWidth + LARGE_FONT_LINE_HEIGHT,
+        'height': LARGE_FONT_LINE_HEIGHT + ( text.length * LARGE_FONT_LINE_HEIGHT )
     }
 }
 

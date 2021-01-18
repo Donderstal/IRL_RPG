@@ -1,5 +1,6 @@
 const state = require('../../game-data/state')
 const globals = require('../../game-data/globals')
+const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
 
@@ -59,23 +60,23 @@ const handleCarGeneration = ( roads ) => {
 
 const clearMargins = ( foreground ) => {
     let grid = foreground.grid;
-    const overflowX = ( grid.overflowColumns * globals.GRID_BLOCK_PX ) / 2
-    const overflowY = ( grid.overflowRows * globals.GRID_BLOCK_PX ) / 2 
+    const overflowX = ( grid.overflowColumns * GRID_BLOCK_PX ) / 2
+    const overflowY = ( grid.overflowRows * GRID_BLOCK_PX ) / 2 
     globals.GAME.front.ctx.clearRect( 
         0, 0, 
-        overflowX, globals.CANVAS_HEIGHT 
+        overflowX, CANVAS_HEIGHT 
         );
     globals.GAME.front.ctx.clearRect( 
-        overflowX + ( grid.columns * globals.GRID_BLOCK_PX ), 0, 
-        overflowX, globals.CANVAS_HEIGHT 
+        overflowX + ( grid.columns * GRID_BLOCK_PX ), 0, 
+        overflowX, CANVAS_HEIGHT 
     );
     globals.GAME.front.ctx.clearRect( 
         0, 0, 
-        globals.CANVAS_WIDTH, overflowY 
+        CANVAS_WIDTH, overflowY 
     );
     globals.GAME.front.ctx.clearRect( 
-        0, overflowY + ( grid.rows * globals.GRID_BLOCK_PX ), 
-        globals.CANVAS_WIDTH, overflowY
+        0, overflowY + ( grid.rows * GRID_BLOCK_PX ), 
+        CANVAS_WIDTH, overflowY
     );
 }
 

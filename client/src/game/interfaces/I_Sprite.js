@@ -1,15 +1,21 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const globals = require('../../game-data/globals')
+const { 
+    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
+    GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
+    MOVEMENT_SPEED, FRAME_LIMIT
+} = require( '../../game-data/globals' )
+
 
 class Sprite {
     constructor ( tile, spriteSize, src, isCar = false ) {   
         if ( spriteSize == "STRD" ) {
-            this.width   = globals.STRD_SPRITE_WIDTH;
-            this.height  = globals.STRD_SPRITE_HEIGHT;            
+            this.width   = STRD_SPRITE_WIDTH;
+            this.height  = STRD_SPRITE_HEIGHT;            
         }
         else if ( spriteSize == "LARG" ) {
-            this.width   = globals.BATTLE_SPRITE_WIDTH;
-            this.height  = globals.BATTLE_SPRITE_HEIGHT;   
+            this.width   = BATTLE_SPRITE_WIDTH;
+            this.height  = BATTLE_SPRITE_HEIGHT;   
         }
         else {
             this.width  = spriteSize.width;
@@ -38,7 +44,7 @@ class Sprite {
         this.col = tile.col;
         this.x = tile.x;
         
-        this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + globals.GRID_BLOCK_PX + this.height : tile.y - ( this.height - globals.GRID_BLOCK_PX )
+        this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
     }
 
     setNewLocationInGrid( cell, direction ) {
@@ -85,9 +91,9 @@ class Sprite {
     }
 
     calcXyFromCell( ) {
-        const xy = globals.GAME.front.class.getXYOfCell(this.row, this.col)
-        this.x = ( xy.x - (this.width - globals.GRID_BLOCK_PX) )
-        this.y = ( xy.y - (this.height - globals.GRID_BLOCK_PX) )
+        const xy = GAME.front.class.getXYOfCell(this.row, this.col)
+        this.x = ( xy.x - (this.width - GRID_BLOCK_PX) )
+        this.y = ( xy.y - (this.height - GRID_BLOCK_PX) )
 
         this.updateSpriteBorders( )
     }
@@ -96,9 +102,9 @@ class Sprite {
         canvasHelpers.drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.sheetPosition * globals.MAP_SPRITE_WIDTH_IN_SHEET, 
-            this.direction * globals.MAP_SPRITE_HEIGHT_IN_SHEET, 
-            globals.MAP_SPRITE_WIDTH_IN_SHEET, globals.MAP_SPRITE_HEIGHT_IN_SHEET,
+            this.sheetPosition * MAP_SPRITE_WIDTH_IN_SHEET, 
+            this.direction * MAP_SPRITE_HEIGHT_IN_SHEET, 
+            MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
             this.x, this.y, this.width, this.height
         )
 
@@ -125,42 +131,42 @@ class Sprite {
 
         if ( isBattle ) {
             if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-                this.x -= globals.MOVEMENT_SPEED;
+                this.x -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_LEFT"]
             }
             else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-                this.x += globals.MOVEMENT_SPEED;
+                this.x += MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_RIGHT"];
             }
                  
             if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
-                this.y -= globals.MOVEMENT_SPEED;
+                this.y -= MOVEMENT_SPEED;
             }
             else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
-                this.y += globals.MOVEMENT_SPEED  
+                this.y += MOVEMENT_SPEED  
             }
         }
         else {
             this.hasMoved = true;
             if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-                this.x -= globals.MOVEMENT_SPEED;
+                this.x -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_LEFT"]
             }
             else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
-                this.y -= globals.MOVEMENT_SPEED;
+                this.y -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_UP"]
             }
             else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-                this.x += globals.MOVEMENT_SPEED;
+                this.x += MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_RIGHT"];
             }
             else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
-                this.y += globals.MOVEMENT_SPEED  
+                this.y += MOVEMENT_SPEED  
                 this.moving = true;
                 this.direction = globals["FACING_DOWN"]
             }            
@@ -182,7 +188,7 @@ class Sprite {
     countFrame ( ) {
         this.frameCount++;  
     
-        if ( this.frameCount >= globals.FRAME_LIMIT) {
+        if ( this.frameCount >= FRAME_LIMIT) {
             this.frameCount = 0;
             this.sheetPosition++;
     

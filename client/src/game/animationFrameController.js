@@ -1,7 +1,7 @@
 const handleMapAnimations       = require('./map/mapAnimation').handleMapAnimations
 const handleBattleAnimations    = require('./battle/battleAnimation').handleBattleAnimations
 const state                     = require('../game-data/state')
-const globals                   = require('../game-data/globals')
+const { FRAMES_PER_SECOND }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 
@@ -31,7 +31,7 @@ const animationFrameController = ( ) => {
         controls.clearPressedKeys( );
     }
     
-    if ( newDateNow - lastDateNow > 1000 / globals.FRAMES_PER_SECOND || lastDateNow == undefined ) {
+    if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
         if ( !state.paused ) {
             if ( !state.listeningForPress ) {

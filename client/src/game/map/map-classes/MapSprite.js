@@ -1,5 +1,6 @@
 const mapHelpers = require('../../../helpers/mapHelpers')
 const globals = require('../../../game-data/globals')
+const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../../game-data/globals');
 const state = require('../../../game-data/state')
 const anim = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
@@ -30,19 +31,19 @@ class MapSprite extends I_Sprite {
     get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     get isInCenterFacingLeft( ) {
-        return this.centerX( ) < ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .55 ) );
+        return this.centerX( ) < ( this.currentTileBack.x + ( GRID_BLOCK_PX * .55 ) );
     }
 
     get isInCenterFacingRight( ) {
-        return this.centerX( ) > ( this.currentTileBack.x + ( globals.GRID_BLOCK_PX * .45 ) ); 
+        return this.centerX( ) > ( this.currentTileBack.x + ( GRID_BLOCK_PX * .45 ) ); 
     }
 
     get isInCenterFacingUp( ) {
-        return this.baseY( ) < ( this.currentTileBack.y + ( globals.GRID_BLOCK_PX * .55 ) );
+        return this.baseY( ) < ( this.currentTileBack.y + ( GRID_BLOCK_PX * .55 ) );
     }
 
     get isInCenterFacingDown( ) {
-        return this.baseY( ) > ( this.currentTileBack.y + ( globals.GRID_BLOCK_PX * .45 ) ); 
+        return this.baseY( ) > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); 
     }
 
     drawSprite( ) {
@@ -127,7 +128,7 @@ class MapSprite extends I_Sprite {
 
     updateSpriteCellXy( ) {
         this.cell.x = this.x + ( this.width * .5 ),
-        this.cell.y = this.y + ( this.height - globals.GRID_BLOCK_PX)
+        this.cell.y = this.y + ( this.height - GRID_BLOCK_PX)
     }
 
     calcCellFromXy( ) {
@@ -147,7 +148,7 @@ class MapSprite extends I_Sprite {
             this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
         }
         if ( scene.type == "ANIM" ) {
-            this.setScriptedAnimation( scene, globals.FRAME_LIMIT )
+            this.setScriptedAnimation( scene, FRAME_LIMIT )
         }
     }
 

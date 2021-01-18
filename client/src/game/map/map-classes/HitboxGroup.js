@@ -2,7 +2,7 @@ const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox;
 const globals       = require('../../../game-data/globals');
 const { GRID_BLOCK_PX } = require('../../../game-data/globals');
 
-const radius = globals.GRID_BLOCK_PX / 2;
+const radius = GRID_BLOCK_PX / 2;
 
 class HitboxGroup {
     constructor ( x, y, direction, spriteDimensionsInBlocks ) {
@@ -49,12 +49,12 @@ class HitboxGroup {
     getHitboxXYValues( ) {
         const spriteIsAlignedVertically = this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"]
 
-        let startingX = this.x + ( globals.GRID_BLOCK_PX * .5 );
-        let startingY = this.y + ( globals.GRID_BLOCK_PX * .5 );
+        let startingX = this.x + ( GRID_BLOCK_PX * .5 );
+        let startingY = this.y + ( GRID_BLOCK_PX * .5 );
         let xyCounter = { 'x': startingX, 'y': startingY };
 
         if ( !spriteIsAlignedVertically ) {
-            xyCounter.y += globals.GRID_BLOCK_PX;
+            xyCounter.y += GRID_BLOCK_PX;
         }
 
         let xyValues = spriteIsAlignedVertically ? this.getVerticalXYValues( xyCounter, startingY ) : this.getHorizontalXYValues( xyCounter, startingX );
@@ -71,7 +71,7 @@ class HitboxGroup {
 
         for ( var j = 0; j < this.spriteDimensionsInBlocks.hori; j++) {
             xyValues.push( { 'x' : xyCounter.x, 'y': xyCounter.y } );
-            xyCounter.x += globals.GRID_BLOCK_PX;
+            xyCounter.x += GRID_BLOCK_PX;
         }
         
         return xyValues;
@@ -82,7 +82,7 @@ class HitboxGroup {
 
         for ( var j = 0; j < this.spriteDimensionsInBlocks.vert; j++) {
             xyValues.push( { 'x' : xyCounter.x, 'y': xyCounter.y } );
-            xyCounter.y += globals.GRID_BLOCK_PX;
+            xyCounter.y += GRID_BLOCK_PX;
         }
 
         return xyValues;
