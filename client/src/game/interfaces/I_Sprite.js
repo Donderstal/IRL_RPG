@@ -123,20 +123,23 @@ class Sprite {
         const destIsAboveSprite = this.destination.top < this.top;
         const destIsBelowSprite = this.destination.bottom > this.bottom;
 
+        let hasMoved = false;
         this.moving = false;
 
+        if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
+            this.x -= MOVEMENT_SPEED;
+            this.moving = true;
+            hasMoved = true
+            this.direction = globals["FACING_LEFT"]
+        }
+        else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
+            this.x += MOVEMENT_SPEED;
+            this.moving = true;
+            hasMoved = true
+            this.direction = globals["FACING_RIGHT"];
+        }
+
         if ( isBattle ) {
-            if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-                this.x -= MOVEMENT_SPEED;
-                this.moving = true;
-                this.direction = globals["FACING_LEFT"]
-            }
-            else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-                this.x += MOVEMENT_SPEED;
-                this.moving = true;
-                this.direction = globals["FACING_RIGHT"];
-            }
-                 
             if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
                 this.y -= MOVEMENT_SPEED;
             }
@@ -144,21 +147,11 @@ class Sprite {
                 this.y += MOVEMENT_SPEED  
             }
         }
-        else {
-            if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
-                this.x -= MOVEMENT_SPEED;
-                this.moving = true;
-                this.direction = globals["FACING_LEFT"]
-            }
-            else if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
+        else if ( !isBattle && !hasMoved ) {
+            if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_UP"]
-            }
-            else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
-                this.x += MOVEMENT_SPEED;
-                this.moving = true;
-                this.direction = globals["FACING_RIGHT"];
             }
             else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
                 this.y += MOVEMENT_SPEED  
