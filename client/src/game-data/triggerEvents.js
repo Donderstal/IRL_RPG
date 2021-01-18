@@ -33,7 +33,6 @@ const triggerEvent = ( TRIGGER, args = null ) => {
 }
 
 const triggerOnPosition = ( e ) => {
-    globals.GAME.PLAYER.calcCellFromXy();
     const position = e.position;
     if ( globals[position.direction] == globals.GAME.PLAYER.direction ) {
         if ( position.direction == "FACING_RIGHT" && globals.GAME.PLAYER.col == position.col ) {

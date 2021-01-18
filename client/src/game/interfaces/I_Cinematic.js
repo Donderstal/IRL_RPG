@@ -1,7 +1,5 @@
 const globals               = require('../../game-data/globals')
 const { GRID_BLOCK_PX }     = require('../../game-data/globals')
-const findSprite            = require('../../helpers/mapHelpers').findNamedCharacterOnMap
-const getXYOfCell           = require('../../helpers/mapHelpers').getXYOfCell
 const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOppositeDirection
 
 class Cinematic {
@@ -79,7 +77,7 @@ class Scene {
 
         if ( this.type == "MOVE" ) {
             if ( typeof data.destination === 'string' || data.destination instanceof String ) {
-                const sprite = findSprite( data.destination );
+                //TODO: find sprite on map
                 this.endDirection = getOppositeDirection( sprite.direction );
                 
                 this.destination = { 
@@ -116,7 +114,7 @@ class Scene {
                         : data.destination.col;
                 }
 
-                const xy = getXYOfCell( data.destination.row, data.destination.col )
+                const xy = GAME.getTileOnCanvasAtCell( "BACK", data.destination.col, data.destination.row )
                 this.destination = { 
                     'left': xy.x, 'right': xy.x + GRID_BLOCK_PX,
                     'top': xy.y, 'bottom': xy.y + GRID_BLOCK_PX
@@ -135,12 +133,12 @@ class Scene {
     }
 
     getSpriteCell( ) {
-        const sprite = findSprite( this.spriteName );
+        //TODO: find sprite on map
         return { 'row': sprite.row, 'col': sprite.col }
     }
 
     setAnimToSprite( ) {
-        const sprite = findSprite( this.spriteName );
+        //TODO: find sprite on map
         sprite.setAnimation(this)      
     }
 }

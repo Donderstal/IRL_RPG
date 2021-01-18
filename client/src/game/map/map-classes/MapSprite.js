@@ -1,4 +1,3 @@
-const mapHelpers = require('../../../helpers/mapHelpers')
 const globals = require('../../../game-data/globals')
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../../game-data/globals');
 const anim = require('../../../resources/animationResources')
@@ -128,15 +127,6 @@ class MapSprite extends I_Sprite {
     updateSpriteCellXy( ) {
         this.cell.x = this.x + ( this.width * .5 ),
         this.cell.y = this.y + ( this.height - GRID_BLOCK_PX)
-    }
-
-    calcCellFromXy( ) {
-        const cell = mapHelpers.getCellOfXY( this.cell.x, this.cell.y )
-        this.row = cell.row
-        this.col = cell.col
-
-        this.updateSpriteBorders( )
-        this.updateSpriteCellXy( )
     }
 
     setAnimation( scene ) {
