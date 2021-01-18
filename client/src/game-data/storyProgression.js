@@ -1,4 +1,4 @@
-const state = require('./state')
+const globals   = require('./globals')
 const chapterEvents = require('../resources/eventResources').chapterEvents
 const eventScripts = require('../resources/eventScripts').eventScripts
 
@@ -32,46 +32,46 @@ const chapters = [
 ]
 
 const progressStory = ( ) => {
-    const currentChapter = state.currentChapter;
+    const currentChapter = globals.GAME.currentChapter;
     if  ( currentChapter.activeScene == currentChapter.scenes.length ) {
         console.log( 'next chapter!' )
-        state.currentChapter = chapters[currentChapter.id + 1]
-        state.currentChapter.activeScene = 0 
+        globals.GAME.currentChapter = chapters[currentChapter.id + 1]
+        globals.GAME.currentChapter.activeScene = 0 
     }
     else {
         console.log( 'next scene!' )
-        state.currentChapter.activeScene++
+        globals.GAME.currentChapter.activeScene++
     }
-    state.currentChapter.scriptedEvents = [];
-    chapterEvents[state.currentChapter.id][state.currentChapter.activeScene].forEach( (e) => {
-        state.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
+    globals.GAME.currentChapter.scriptedEvents = [];
+    chapterEvents[globals.GAME.currentChapter.id][globals.GAME.currentChapter.activeScene].forEach( (e) => {
+        globals.GAME.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
-    console.log(state.currentChapter)
-    getScriptedEventsForMap(state.currentMap.mapData.mapName)
+    console.log(globals.GAME.currentChapter)
+    getScriptedEventsForMap(globals.GAME.activeMapName)
 }
 
 const startNewStory = ( ) => {
-    state.currentChapter = chapters[0];
-    state.currentChapter.activeScene = 0 
-    state.currentChapter.scriptedEvents = [];
-    chapterEvents[state.currentChapter.id][state.currentChapter.activeScene].forEach( (e) => {
-        state.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
+    globals.GAME.currentChapter = chapters[0];
+    globals.GAME.currentChapter.activeScene = 0 
+    globals.GAME.currentChapter.scriptedEvents = [];
+    chapterEvents[globals.GAME.currentChapter.id][globals.GAME.currentChapter.activeScene].forEach( (e) => {
+        globals.GAME.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
-    console.log(state.currentChapter)
+    console.log(globals.GAME.currentChapter)
 }
 
 const getScriptedEventsForMap = ( mapName ) => {
-    state.currentMap.scriptedEvents = []
+    globals.GAME.activeMap.scriptedEvents = []
 
-    state.currentChapter.scriptedEvents.forEach( (e) => {
+    globals.GAME.currentChapter.scriptedEvents.forEach( (e) => {
         if ( e.mapName == mapName ) {
-            state.currentMap.scriptedEvents.push( e )
+            globals.GAME.activeMap.scriptedEvents.push( e )
         }
     })
 
     console.log("Events for current map... ")
     console.log(mapName)
-    console.log(state.currentMap.scriptedEvents)
+    console.log(globals.GAME.activeMap.scriptedEvents)
 }
 
 
