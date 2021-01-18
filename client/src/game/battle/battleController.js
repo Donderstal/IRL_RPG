@@ -1,4 +1,3 @@
-const state         = require('../../game-data/state')
 const battleGlobals = require('./battleGlobals')
 
 const Battle        = require('./battle').Battle;
@@ -13,12 +12,12 @@ const charGlobals   = require('../character/characterGlobals')
 
 
 const startBattle = (  ) => {
-    state.battleStaging.requestingBattle = false
-    state.battleState = new Battle( prepareStagingDataForBattle( state.battleStaging ) );
+    globals.GAME.requestingBattle = false
+    globals.GAME.BATTLE = new Battle( prepareStagingDataForBattle( globals.GAME.battleStaging, globals.GAME.PLAYER ) );
     initializeBattleMap( );
     let sfx = new Sound( 'boxing-bell.wav', true );
     sfx.play( );
-    state.battleState.initUI( );
+    globals.GAME.BATTLE.initUI( );
 }
 
 const initializeBattleMap = ( ) => {
@@ -32,10 +31,10 @@ const initializeBattleMap = ( ) => {
     }
 }
 
-const prepareStagingDataForBattle = ( staging ) => {
+const prepareStagingDataForBattle = ( staging, player ) => {
     staging.playerChars = [ 
         [ true, nameGen.getRandomName(), charGlobals["INFLUENCER"], battleGlobals.MAP_SLOT_PLA_1 ],
-        [ true, state.playerCharacter.stats.name, state.playerCharacter.stats.className, battleGlobals.MAP_SLOT_PLA_2 ],
+        [ true, player.stats.name, player.stats.className, battleGlobals.MAP_SLOT_PLA_2 ],
         [ true, nameGen.getRandomName(), charGlobals["NECKBEARD"], battleGlobals.MAP_SLOT_PLA_3 ]
     ]
 
@@ -49,12 +48,7 @@ const prepareStagingDataForBattle = ( staging ) => {
 }
 
 const stopBattle = ( ) => {
-    state.battleState = { };
-    state.battleStaging = {
-        player              : [],
-        opponent            : [],
-        requestingBattle    : false
-    }
+    globals.GAME.BATTLE = { };
 }
 
 module.exports = {

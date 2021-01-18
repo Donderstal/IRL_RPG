@@ -1,6 +1,5 @@
 const moveAnimations    = require('./moveAnimations');
 const animationRes      = require('../../../resources/animationResources')
-const state             = require('../../../game-data/state');
 
 class Move {
     constructor( moveData, moveOwner ) {
@@ -32,8 +31,8 @@ class Move {
     }
 
     setTarget( targetIndex ) {
-        const opponentAtIndex = state.battleState.opponentParty.members[targetIndex] 
-        const playerAtIndex = state.battleState.playerParty.members[targetIndex];
+        const opponentAtIndex = globals.GAME.BATTLE.opponentParty.members[targetIndex] 
+        const playerAtIndex = globals.GAME.BATTLE.playerParty.members[targetIndex];
         this.target = this.isPlayer ? opponentAtIndex : playerAtIndex;
         this.steps.forEach( ( e ) => {
             e.setTarget( this.target, this.owner );
@@ -41,15 +40,15 @@ class Move {
     }
 
     startAnimation( ) {
-        state.battleState.activeMove = this;
+        globals.GAME.BATTLE.activeMove = this;
         this.getNewTargetIfCurrentIsDead( );
-        state.battleState.UI.setText( this.owner.name + " uses " + this.name + " on " + this.target.name )
+        globals.GAME.BATTLE.UI.setText( this.owner.name + " uses " + this.name + " on " + this.target.name )
         this.activateStep( );
     }
     
     getNewTargetIfCurrentIsDead( ) {
         if ( this.target.isDefeated ) {
-            const battle =  state.battleState;
+            const battle =  globals.GAME.BATTLE;
             const targetParty = this.isPlayer ? battle.opponentParty: battle.playerParty
             this.setTarget( 
                 targetParty.findNextActiveMemberIndex( "NEXT", false )
@@ -67,7 +66,7 @@ class Move {
     continueAnimationIfPossible( ) {
         console.log('hi...')
         if ( this.isLastStep ) {
-            state.battleState.actionButtonAllowed = true;
+            globals.GAME.BATTLE.actionButtonAllowed = true;
             this.resetMove( );
         }
         else {
@@ -82,8 +81,8 @@ class Move {
     }
 
     resetMove( ) {
-        state.battleState.inMoveAnimation = false;
-        state.battleState.activeMove = null;
+        globals.GAME.BATTLE.inMoveAnimation = false;
+        globals.GAME.BATTLE.activeMove = null;
 
         this.activeStep = 0;
         this.target = null;

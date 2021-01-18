@@ -1,5 +1,4 @@
 const canvas            = require('../../../helpers/canvasHelpers')
-const state             = require('../../../game-data/state')
 const battleGlobals     = require('../battleGlobals');
 const BattleMenuButton  = require('./battleMenuButton').BattleMenuButton
 
@@ -78,7 +77,7 @@ class BattleMenu {
     }
 
     draw( ) {
-        if ( state.battleState.battlePhase == battleGlobals['PHASE_SELECT_MOVE'] ) {
+        if ( globals.GAME.BATTLE.battlePhase == battleGlobals['PHASE_SELECT_MOVE'] ) {
             canvas.drawRect( "FRONT", this.x, this.y, this.width, this.height, "black" )
 
             for ( var i = 0; i < this.buttons.length; i++ ) {

@@ -1,7 +1,6 @@
 const canvas        = require('../../../helpers/canvasHelpers');
 const globals       = require('../../../game-data/globals');
 const battleGlobals = require('../battleGlobals');
-const state         = require('../../../game-data/state')
 
 class BattleStats { 
     constructor ( owner, isPlayer, index ) {
@@ -48,7 +47,7 @@ class BattleStats {
     }
 
     refresh( ) {
-        state.battleState.charactersInField.forEach( ( e ) => {
+        globals.GAME.BATTLE.charactersInField.forEach( ( e ) => {
             if ( e.name == this.owner.name ) {
                 this.owner = e
             }

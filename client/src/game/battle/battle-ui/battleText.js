@@ -1,6 +1,5 @@
 const battleGlobals = require( '../battleGlobals' )
 const canvas = require( '../../../helpers/canvasHelpers' )
-const state = require( '../../../game-data/state' )
 const globals = require( '../../../game-data/globals' )
 const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 
@@ -19,7 +18,7 @@ class TextContainer extends I_TextBox {
     }
 
     drawTextBox( ) {
-        const battle = state.battleState
+        const battle = globals.GAME.BATTLE
         this.drawBox( );
         this.writeText( );
         if ( this.hasHeader ) {
@@ -33,7 +32,7 @@ class TextContainer extends I_TextBox {
                 "SMALL"
             );
         }
-        if ( battle.selectingTarget || ( state.battleState.UI != undefined && state.battleState.UI.inMoveMenu ) ) {
+        if ( battle.selectingTarget || ( globals.GAME.BATTLE.UI != undefined && globals.GAME.BATTLE.UI.inMoveMenu ) ) {
             canvas.writeTextLine( 
                 battle.selectingTarget ? "Press [ z ] to untarget" : "Press [ z ] to return", 
                 ( this.x + ( this.width / 2 ) ) + this.fontSize, 

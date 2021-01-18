@@ -1,5 +1,4 @@
 <script>
-    import stateLogger from './../game-data/saveState.js';
     import startGame from './../game/startGame.js';
     import globals from './../game-data/globals.js';
     import utilFunctions from './../helpers/utilFunctions.js'

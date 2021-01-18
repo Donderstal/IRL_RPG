@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 18, 2021
+* Removing state file and associated imports
+
 #### JAN 17, 2021
 * Adding some shorthands + getters to Game class
 * Now importing globals as vars instead of props

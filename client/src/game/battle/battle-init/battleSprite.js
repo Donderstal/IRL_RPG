@@ -2,7 +2,6 @@ const globals = require('../../../game-data/globals')
 const canvasHelpers = require('../../../helpers/canvasHelpers')
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const battleGlobals = require('../battleGlobals')
-const state = require('../../../game-data/state')
 
 class BattleSprite extends I_Sprite {
     constructor ( start, spriteSheetSrc, isPlayer = false ) {
@@ -253,8 +252,8 @@ class BattleSprite extends I_Sprite {
         this.rowInSheet = this.initialRow;
         this.moving = false;
 
-        if ( state.battleState.activeMove ) {
-            state.battleState.activeMove.continueAnimationIfPossible( );
+        if ( globals.GAME.BATTLE.activeMove ) {
+            globals.GAME.BATTLE.activeMove.continueAnimationIfPossible( );
         }
     }
 

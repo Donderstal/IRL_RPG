@@ -1,5 +1,5 @@
 const canvas = require( '../../../helpers/canvasHelpers' )
-const state = require( '../../../game-data/state' )
+const globals = require( '../../../game-data/globals' )
 
 const { MAX_BUBBLE_WIDTH, MIN_BUBBLE_WIDTH, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT} = require( '../../../game-data/globals' )
 
@@ -7,8 +7,8 @@ const I_TextBox = require( '../../interfaces/I_TextBox' ).I_TextBox
 const Sound = require( '../../interfaces/I_Sound' ).Sound
 
 const getSpeechBubble = ( action ) => {
-    state.currentMap.activeBubble = new SpeechBubble( action )
-    state.currentMap.bubbleIsActive = true
+    globals.GAME.activeBubble = new SpeechBubble( action )
+    globals.GAME.bubbleIsActive = true
 }
 
 const getSpeechBubbleXy = ( x, y, dimensions ) => {

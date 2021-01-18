@@ -1,4 +1,3 @@
-const state         = require('./state')
 const globals         = require('./globals')
 const progressStory = require('./storyProgression').progressStory
 
@@ -14,7 +13,8 @@ const progressStory = require('./storyProgression').progressStory
  */
 
 const triggerEvent = ( TRIGGER, args = null ) => {
-    /* state.currentMap.scriptedEvents.forEach( (e) => {
+    let events = [ ]
+    events.forEach( (e) => {
         if ( TRIGGER == e.trigger && TRIGGER != "ON_POSITION" ) {
             e.fireEvent( args );
             if ( e.passScene ) {
@@ -29,24 +29,23 @@ const triggerEvent = ( TRIGGER, args = null ) => {
                 }
             }
         }
-    }) */
+    })
 }
 
 const triggerOnPosition = ( e ) => {
-    state.playerCharacter.sprite.calcCellFromXy();
+    globals.GAME.PLAYER.calcCellFromXy();
     const position = e.position;
-    const player  = state.playerCharacter.sprite
-    if ( globals[position.direction] == player.direction ) {
-        if ( position.direction == "FACING_RIGHT" && player.col == position.col ) {
+    if ( globals[position.direction] == globals.GAME.PLAYER.direction ) {
+        if ( position.direction == "FACING_RIGHT" && globals.GAME.PLAYER.col == position.col ) {
             return true;
         }
-        if ( position.direction == "FACING_LEFT" && player.col == position.col ) {
+        if ( position.direction == "FACING_LEFT" && globals.GAME.PLAYER.col == position.col ) {
             return true;
         }
-        if ( position.direction == "FACING_UP" && player.row == position.row) {
+        if ( position.direction == "FACING_UP" && globals.GAME.PLAYER.row == position.row) {
             return true;
         }
-        if ( position.direction == "FACING_DOWN" && player.row == position.row) {
+        if ( position.direction == "FACING_DOWN" && globals.GAME.PLAYER.row == position.row) {
             return true;
         }
     }
