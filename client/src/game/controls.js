@@ -4,13 +4,13 @@ const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
 
-const listenForKeyPress = () => {
+const listenForKeyPress = ( ) => {
     window.addEventListener('keydown', addKeyToPressed)
     window.addEventListener('keyup', removeKeyFromPressed)
     globals.GAME.listeningForPress = true;
 }
 
-const stopListenForKeyPress = () => {
+const stopListenForKeyPress = ( ) => {
     window.removeEventListener('keydown', addKeyToPressed)
     window.removeEventListener('keyup', removeKeyFromPressed)
     globals.GAME.listeningForPress = false;
@@ -35,9 +35,9 @@ const removeKeyFromPressed = () => {
     globals.GAME.pressedKeys[event.key] = false
 }
 
-const clearPressedKeys = () => {
-    Object.keys(globals.GAME.pressedKeys).forEach( (key) => {
-        globals.GAME.pressedKeys[key] = false
+const clearPressedKeys = ( pressedKeys ) => {
+    Object.keys( pressedKeys ).forEach( (key) => {
+        pressedKeys[key] = false
     })
 }
 

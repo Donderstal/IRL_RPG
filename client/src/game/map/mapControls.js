@@ -5,37 +5,41 @@ const actionController  = require('./map-ui/actionController')
 const globals           = require('../../game-data/globals')
 
 const handleMapKeyPress = ( event ) => {
+    const GAME = globals.GAME;
+
     event.preventDefault()    
 
     if ( event.key == " " ) {
         actionController.handleActionButton( )        
     }
-    else if ( event.key == "e" && globals.GAME.bubbleIsActive ) {
-        globals.GAME.activeBubble = {}
-        globals.GAME.bubbleIsActive = false
+    else if ( event.key == "e" && GAME.bubbleIsActive ) {
+        GAME.activeBubble = {}
+        GAME.bubbleIsActive = false
     }
-    else if ( !globals.GAME.cinematicMode ) {
-        globals.GAME.pressedKeys[event.key] = true        
+    else if ( !GAME.cinematicMode ) {
+        GAME.pressedKeys[event.key] = true        
     }
 }
 
 const handleMovementKeys = ( touch = false, event = false ) => {   
+    const GAME = globals.GAME;
+    const PLAYER = GAME.PLAYER;
     let touchLeft = false;
     let touchRight = false;
     let touchUp = false;
     let touchDown = false;
 
-    if ( touch && globals.GAME.PLAYER != undefined && !globals.GAME.cinematicMode ) {
+    if ( touch && PLAYER != undefined && !GAME.cinematicMode ) {
         var rect = document.getElementById('game-front-canvas').getBoundingClientRect();
         const touch = event.touches[0]
     
         let touchX = touch.clientX - rect.left;
         let touchY = touch.clientY - rect.top;
     
-        let playerX = globals.GAME.PLAYER.x;
-        let playerY = globals.GAME.PLAYER.y;
-        let playerBottom = playerY + globals.GAME.PLAYER.height;
-        let playerRight = playerX + sglobals.GAME.PLAYER.width;
+        let playerX = PLAYER.x;
+        let playerY = PLAYER.y;
+        let playerBottom = playerY + PLAYER.height;
+        let playerRight = playerX + PLAYER.width;
     
         touchLeft = ( touchX < playerX )
         touchRight = ( touchX > playerRight )
@@ -43,18 +47,18 @@ const handleMovementKeys = ( touch = false, event = false ) => {
         touchDown = ( touchY > playerBottom )
     }
 
-    if ( globals.GAME.PLAYER != undefined ) {
-        if ( globals.GAME.pressedKeys.w || globals.GAME.pressedKeys.ArrowUp || touchUp ) {
-            movement.handleMovementOfSprite( globals.GAME.PLAYER, 'FACING_UP')
+    if ( PLAYER != undefined ) {
+        if ( GAME.pressedKeys.w || GAME.pressedKeys.ArrowUp || touchUp ) {
+            movement.handleMovementOfSprite( PLAYER, 'FACING_UP')
         }
-        else if ( globals.GAME.pressedKeys.a || globals.GAME.pressedKeys.ArrowLeft || touchLeft ) {
-            movement.handleMovementOfSprite( globals.GAME.PLAYER, 'FACING_LEFT')
+        else if ( GAME.pressedKeys.a || GAME.pressedKeys.ArrowLeft || touchLeft ) {
+            movement.handleMovementOfSprite( PLAYER, 'FACING_LEFT')
         }
-        else if ( globals.GAME.pressedKeys.s || globals.GAME.pressedKeys.ArrowDown || touchDown ) {
-            movement.handleMovementOfSprite( globals.GAME.PLAYER, 'FACING_DOWN')
+        else if ( GAME.pressedKeys.s || GAME.pressedKeys.ArrowDown || touchDown ) {
+            movement.handleMovementOfSprite( PLAYER, 'FACING_DOWN')
         }
-        else if ( globals.GAME.pressedKeys.d || globals.GAME.pressedKeys.ArrowRight || touchRight ) {
-            movement.handleMovementOfSprite( globals.GAME.PLAYER, 'FACING_RIGHT')
+        else if ( GAME.pressedKeys.d || GAME.pressedKeys.ArrowRight || touchRight ) {
+            movement.handleMovementOfSprite( PLAYER, 'FACING_RIGHT')
         }    
         triggerEvent("ON_POSITION")
     }

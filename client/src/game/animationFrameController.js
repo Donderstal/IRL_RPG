@@ -24,25 +24,27 @@ const startOverworldAnimation = ( ) => {
  * Controller for all animation duties in front-context
  */
 const animationFrameController = ( ) => {
+    const GAME = globals.GAME;
+
     newDateNow = Date.now();
     if ( !document.hasFocus() ) {
-        controls.clearPressedKeys( );
+        controls.clearPressedKeys( GAME.pressedKeys );
     }
     
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
-        if ( !globals.GAME.paused ) {
-            if ( !globals.GAME.listeningForPress ) {
+        if ( !GAME.paused ) {
+            if ( !GAME.listeningForPress ) {
                 controls.listenForKeyPress()
             }            
-            if ( globals.GAME.mode == MAP_MODE ) {
+            if ( GAME.mode == MAP_MODE ) {
                 handleMapAnimations( )
             }
-            else if ( globals.GAME.mode == BATTLE_MODE ) {
+            else if ( GAME.mode == BATTLE_MODE ) {
                 handleBattleAnimations( )
             }
-            if  ( globals.GAME.cinematicMode && globals.GAME.activeCinematic ) {
-                globals.GAME.activeCinematic.checkForScenePass( )
+            if  ( GAME.cinematicMode && GAME.activeCinematic ) {
+                GAME.activeCinematic.checkForScenePass( )
             }
         }
         else {
