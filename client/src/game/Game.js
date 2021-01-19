@@ -1,4 +1,5 @@
 const animationFrameController = require('./animationFrameController')
+const globals  = require('../game-data/globals')
 const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const controls      = require('./controls')
 const getMapData    = require('../resources/mapResources').getMapData
@@ -183,6 +184,12 @@ class Game {
     }
 }
 
+const startGame = ( name, className ) => {
+    globals.GAME = new Game( );
+    globals.GAME.startNewGame( name, className );
+}
+
 module.exports = {
-    Game
+    Game,
+    startGame
 }

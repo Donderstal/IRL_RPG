@@ -1,5 +1,5 @@
 <script>
-    import startGame from './../game/startGame.js';
+    import startGame from './../game/Game.js';
     import globals from './../game-data/globals.js';
     import utilFunctions from './../helpers/utilFunctions.js'
     import Sound from './../game/interfaces/I_Sound.js'
@@ -32,6 +32,7 @@
         let mode = 'normal';
         closeMainMenu( )
         setTimeout( ( ) => {
+            console.log(startGame)
             startGame.startGame( characterName, characterClass, mode );
         }, 1000)
     }
