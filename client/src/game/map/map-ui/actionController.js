@@ -1,41 +1,44 @@
 const globals = require('../../../game-data/globals')
 
 const handleActionButton = ( ) => {
-    if ( globals.GAME.currentMap.bubbleIsActive ) {
-        globals.GAME.currentMap.activeBubble = {}
-        globals.GAME.currentMap.bubbleIsActive = false
+    const GAME = globals.GAME;
+    const PLAYER = globals.PLAYER;
+
+    if ( GAME.currentMap.bubbleIsActive ) {
+        GAME.currentMap.activeBubble = {}
+        GAME.currentMap.bubbleIsActive = false
     }
 
-    const currentPlayerTileFront = globals.GAME.front.class.activePlayerTile;
-    const nextPlayerTileFront = globals.GAME.front.class.nextPlayerTile;
+    const currentPlayerTileFront = GAME.getTileOnCanvasAtIndex( "FRONT", PLAYER.activeTileIndex );
+    const nextPlayerTileFront = GAME.getTileOnCanvasAtIndex( "FRONT", PLAYER.nextTileIndex );
 
-    const currentPlayerTileBack = globals.GAME.back.class.activePlayerTile;
-    const nextPlayerTileBack = globals.GAME.back.class.nextPlayerTile;
+    const currentPlayerTileBack = GAME.getTileOnCanvasAtIndex( "BACK", PLAYER.activeTileIndex );
+    const nextPlayerTileBack = GAME.getTileOnCanvasAtIndex( "BACK", PLAYER.nextTileIndex );
 
-    const spritesById = globals.GAME.front.class.spriteDictionary
+    const spritesById = GAME.front.class.spriteDictionary
 
-    if ( globals.GAME.activeAction != null && globals.GAME.activeAction.needsConfirmation ) {
-        globals.GAME.activeAction.confirm( );
-        globals.GAME.currentMap.activeBubble = {}
-        globals.GAME.currentMap.bubbleIsActive = false
+    if ( GAME.activeAction != null && GAME.activeAction.needsConfirmation ) {
+        GAME.activeAction.confirm( );
+        GAME.currentMap.activeBubble = {}
+        GAME.currentMap.bubbleIsActive = false
         return;
     }
 
     if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
-        globals.GAME.activeAction = spritesById[currentPlayerTileFront.spriteId].hitbox
+        GAME.activeAction = spritesById[currentPlayerTileFront.spriteId].hitbox
     }
     else if ( nextPlayerTileFront.hasSprite && spritesById[nextPlayerTileFront.spriteId].action != undefined ) {
-        globals.GAME.activeAction = spritesById[nextPlayerTileFront.spriteId].hitbox
+        GAME.activeAction = spritesById[nextPlayerTileFront.spriteId].hitbox
     }
     else if ( currentPlayerTileBack.hasEvent ) {
-        globals.GAME.activeAction =  currentPlayerTileBack.event
+        GAME.activeAction =  currentPlayerTileBack.event
     }
     else if ( nextPlayerTileBack.hasEvent ) {
-        globals.GAME.activeAction =  nextPlayerTileBack.event
+        GAME.activeAction =  nextPlayerTileBack.event
     }
 
-    if ( globals.GAME.activeAction != null ) {
-        globals.GAME.activeAction.handle( );        
+    if ( GAME.activeAction != null ) {
+        GAME.activeAction.handle( );        
     }
 }
 

@@ -14,9 +14,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.playerSprite = { };
     };
 
-    get activePlayerTile( ) { return this.grid.array[ this.playerSprite.activeTileIndex ] }
-    get nextPlayerTile( ) { return this.grid.array[ this.playerSprite.nextTileIndex ] }
-
     setForegroundData( mapData ) {
         if ( mapData.characters )
             this.setCharacters( mapData.characters );
