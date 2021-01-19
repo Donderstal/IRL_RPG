@@ -12,7 +12,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = { };
-        console.log("initializing foreground!")
     };
 
     get activePlayerTile( ) { return this.grid.array[ this.playerSprite.activeTileIndex ] }

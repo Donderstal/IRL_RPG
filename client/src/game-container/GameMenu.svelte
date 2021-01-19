@@ -32,7 +32,6 @@
         let mode = 'normal';
         closeMainMenu( )
         setTimeout( ( ) => {
-            console.log(startGame)
             startGame.startGame( characterName, characterClass, mode );
         }, 1000)
     }

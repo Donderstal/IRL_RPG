@@ -16,9 +16,6 @@ const getMapData = ( fullMapName ) => {
 
     const mapData = mapResources[neighbourhoodName][mapName]
     if ( mapNameArray[2] ) {
-        console.log(fullMapName)
-        console.log(mapData.subMaps[mapNameArray[2]])
-        console.log('_____')
         return mapData.subMaps[mapNameArray[2]];
     } else {
         return mapData

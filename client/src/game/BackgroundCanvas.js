@@ -5,7 +5,6 @@ const globals = require('../game-data/globals')
 class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
-        console.log("initializing map!")
     };
     
     get activePlayerTile( ) { return this.grid.array[ globals.GAME.front.class.activePlayerTile.index ] }

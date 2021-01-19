@@ -111,10 +111,6 @@ const drawSpritesInOrder = ( ) => {
             e.drawSprite( );
         })
     } 
-    else {
-        console.log('paused')
-    }
-
 }
 
 module.exports = {

@@ -214,7 +214,6 @@ class MapObject extends I_Sprite {
         }
         
         if ( !this.moving ) {
-            console.log(' reached destination! ')
             super.endGoToAnimation( );
             this.movingToDestination = false;
             this.deleted = true;

@@ -12,7 +12,6 @@ const firstMapUrl =  'my-neighbourhood/A1/my-house';
 
 class Game {
     constructor( ) {
-        console.log('initializing game!')
         this.mode; // 'MAP' || 'BATTLE'        
         this.cinematicMode; // bool
         this.paused; // bool
