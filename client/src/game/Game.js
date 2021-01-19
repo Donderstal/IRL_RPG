@@ -33,6 +33,8 @@ class Game {
         this.initGameCanvases( );
     }
 
+    get FRONT( ) { return this.front.class }
+    get BACK( ) { return this.back.class }
     get PLAYER( ) { return this.front.class.playerSprite }
 
     getTileOnCanvasAtIndex( canvasName, index) {

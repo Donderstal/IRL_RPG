@@ -38,10 +38,10 @@ const animationFrameController = ( ) => {
                 controls.listenForKeyPress()
             }            
             if ( GAME.mode == MAP_MODE ) {
-                handleMapAnimations( )
+                handleMapAnimations(  GAME )
             }
             else if ( GAME.mode == BATTLE_MODE ) {
-                handleBattleAnimations( )
+                handleBattleAnimations( GAME )
             }
             if  ( GAME.cinematicMode && GAME.activeCinematic ) {
                 GAME.activeCinematic.checkForScenePass( )

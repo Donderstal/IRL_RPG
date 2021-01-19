@@ -10,29 +10,28 @@ let millisecondCounter = 0;
 let lastTimeStamp = 0;
 let newTimeStamp = 0;
 
-const handleMapAnimations = ( ) => {
-    const foreground = globals.GAME.front.class;
+const handleMapAnimations = ( GAME ) => {
 
-    drawSpritesInOrder( )
+    drawSpritesInOrder( GAME )
 
-    clearMargins( foreground );      
+    clearMargins( GAME );      
     
-    if ( foreground.roads.length > 0 ) {
-        handleCarGeneration( foreground.roads );
+    if ( GAME.FRONT.roads.length > 0 ) {
+        handleCarGeneration( GAME );
     }
 
-    if ( globals.GAME.PLAYER != undefined && !globals.GAME.paused ) {
+    if ( GAME.PLAYER != undefined && !GAME.paused ) {
         mapControls.handleMovementKeys( );  
     }
 
-    globals.GAME.PLAYER.pathIsBlocked = false;
+    GAME.PLAYER.pathIsBlocked = false;
 
-    if ( globals.GAME.bubbleIsActive ) {
-        globals.GAME.activeBubble.drawTextBox( )
+    if ( GAME.bubbleIsActive ) {
+        GAME.activeBubble.drawTextBox( )
     }
 }
 
-const handleCarGeneration = ( roads ) => {
+const handleCarGeneration = ( GAME ) => {
     let addDifferenceToCounter = false;
 
     if ( randomCarLimit == 0 ) {
@@ -51,36 +50,36 @@ const handleCarGeneration = ( roads ) => {
     }
 
     if ( millisecondCounter > randomCarLimit ) {
-        globals.GAME.front.class.generateCar( );
+        GAME.FRONT.generateCar( );
         millisecondCounter = 0;
         randomCarLimit = 0;
     }
 }
 
-const clearMargins = ( foreground ) => {
-    let grid = foreground.grid;
+const clearMargins = ( GAME ) => {
+    const grid = GAME.FRONT.grid;
     const overflowX = ( grid.overflowColumns * GRID_BLOCK_PX ) / 2
     const overflowY = ( grid.overflowRows * GRID_BLOCK_PX ) / 2 
-    globals.GAME.front.ctx.clearRect( 
+    GAME.front.ctx.clearRect( 
         0, 0, 
         overflowX, CANVAS_HEIGHT 
         );
-    globals.GAME.front.ctx.clearRect( 
+    GAME.front.ctx.clearRect( 
         overflowX + ( grid.columns * GRID_BLOCK_PX ), 0, 
         overflowX, CANVAS_HEIGHT 
     );
-    globals.GAME.front.ctx.clearRect( 
+    GAME.front.ctx.clearRect( 
         0, 0, 
         CANVAS_WIDTH, overflowY 
     );
-    globals.GAME.front.ctx.clearRect( 
+    GAME.front.ctx.clearRect( 
         0, overflowY + ( grid.rows * GRID_BLOCK_PX ), 
         CANVAS_WIDTH, overflowY
     );
 }
 
-const drawSpritesInOrder = ( ) => {
-    globals.GAME.front.class.allSprites.sort( ( a, b ) => {
+const drawSpritesInOrder = ( GAME ) => {
+    GAME.FRONT.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
             return 1 
         }
@@ -95,9 +94,9 @@ const drawSpritesInOrder = ( ) => {
     canvas.clearEntireCanvas("FRONT")
 
     const flyingSprites = []
-    if ( !globals.GAME.paused ) {
-        globals.GAME.front.class.allSprites.forEach( (e) => {
-            if ( globals.GAME.paused || e.deleted ) {
+    if ( !GAME.paused ) {
+        GAME.FRONT.allSprites.forEach( (e) => {
+            if ( GAME.paused || e.deleted ) {
                 return;
             }
             if ( e.spriteId == 'PLAYER' || e.type != 'flying' ) {
