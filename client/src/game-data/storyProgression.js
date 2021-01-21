@@ -47,7 +47,7 @@ const progressStory = ( ) => {
         globals.GAME.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
     console.log(globals.GAME.currentChapter)
-    getScriptedEventsForMap(globals.GAME.activeMapName)
+    //getScriptedEventsForMap(globals.GAME.activeMapName)
 }
 
 const startNewStory = ( ) => {

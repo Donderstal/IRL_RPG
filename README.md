@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 19, 2021
+* General code cleanup
+
 #### JAN 18, 2021
 * Removing state file and associated imports
 * Cleaning up helpers files, removing obsolete funcs
