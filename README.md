@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 29, 2021
+* Replacing I_Sound with new SoundController Class
+
 #### JAN 19, 2021
 * General code cleanup
 

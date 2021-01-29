@@ -36,6 +36,7 @@ class SoundController {
 
         this.activeSoundEffects[title] = this.allSoundEffects[title];
         this.activeSoundEffects[title].title = title;
+        this.activeSoundEffects[title].volume = 0.75
         this.activeSoundEffects[title].play( );
     }
 }
