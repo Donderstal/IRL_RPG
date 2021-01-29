@@ -49,8 +49,7 @@ class SpeechBubble extends I_TextBox {
 
         super( getSpeechBubbleXy( action.x, action.y, dimensions ), dimensions, 'LARGE', action.text )
         if ( action.sfx ) {
-            const sfx = new Sound(action.sfx, true)
-            sfx.play()
+            globals.GAME.sound.playEffect( action.sfx );
         }
 
         this.action = action;

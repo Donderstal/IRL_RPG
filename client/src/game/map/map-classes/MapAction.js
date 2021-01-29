@@ -42,8 +42,7 @@ class MapAction extends I_Hitbox {
         switch ( this.type ) {
             case "BUS" :
                 globals.GAME.switchMap( this.to, "BUS" );
-                const sfx = new Sound( "misc/random5.wav", true );
-                sfx.play( );
+                globals.GAME.sound.playEffect( "misc/random5.wav" );
                 break;
         }
 
@@ -51,13 +50,7 @@ class MapAction extends I_Hitbox {
     }
 
     displayActionText( ) {
-        if ( !document.getElementById(this.sfx) ) {
-            const sfx = new Sound( this.sfx, true )
-            sfx.play()
-            setTimeout( () => {
-                document.getElementById(this.sfx).remove()                    
-            }, 1500)
-        } 
+        globals.GAME.sound.playEffect( this.sfx );
         displayText.getSpeechBubble( this )
     } 
 }

@@ -15,8 +15,7 @@ const startBattle = (  ) => {
     globals.GAME.requestingBattle = false
     globals.GAME.BATTLE = new Battle( prepareStagingDataForBattle( globals.GAME.battleStaging, globals.GAME.PLAYER ) );
     initializeBattleMap( );
-    let sfx = new Sound( 'boxing-bell.wav', true );
-    sfx.play( );
+    globals.GAME.sound.playEffect( 'boxing-bell.wav' );
     globals.GAME.BATTLE.initUI( );
 }
 
