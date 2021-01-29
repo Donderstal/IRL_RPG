@@ -8,7 +8,6 @@ class SoundController {
         this.allMusic = {};
 
         this.activeSoundEffects = {};
-        this.soundEffectIsPlaying;
         this.allSoundEffects = {}
     }
 
@@ -27,6 +26,17 @@ class SoundController {
             this.activeMusic.volume = 0.5
             this.activeMusic.play( );            
         }
+    }
+
+    playEffect( title, loop = false ) {
+        if ( !(title in this.activeSoundEffects) ) {
+            const effect = new Audio( effectsFolder + title );
+            this.allSoundEffects[title] = effect;
+        }
+
+        this.activeSoundEffects[title] = this.allSoundEffects[title];
+        this.activeSoundEffects[title].title = title;
+        this.activeSoundEffects[title].play( );
     }
 }
 
