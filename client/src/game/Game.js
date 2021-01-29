@@ -1,10 +1,11 @@
 const animationFrameController = require('./animationFrameController')
 const globals  = require('../game-data/globals')
-const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const controls      = require('./controls')
 const getMapData    = require('../resources/mapResources').getMapData
 const tilesheets    = require('../resources/tilesheetResources').sheets
 
+const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
+const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 
@@ -17,6 +18,7 @@ class Game {
         this.paused; // bool
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
+        this.sound = new SoundController( );
 
         this.activeBubble = { }
         this.bubbleIsActive;
@@ -99,6 +101,7 @@ class Game {
         this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
+        this.sound.playMusic( mapData.music )
     }
 
     clearMapFromCanvases( ) {

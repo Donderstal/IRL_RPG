@@ -18,8 +18,13 @@ class SoundController {
         }
 
         if ( this.activeMusic != this.allMusic[title] ) {
+            if ( this.activeMusic != null && this.activeMusic != undefined ) {
+                this.activeMusic.pause( );
+                this.activeMusic.currentTime = 0;
+            }
             this.activeMusic = this.allMusic[title];
             this.activeMusic.loop = loopMusic;
+            this.activeMusic.volume = 0.5
             this.activeMusic.play( );            
         }
     }
