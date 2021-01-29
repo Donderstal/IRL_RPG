@@ -186,28 +186,23 @@ class MapObject extends I_Sprite {
     }
 
     goToDestination( ) {
-        const destIsLeftOfSprite = (this.destinationTile.x - this.width) < this.left;
-        const destIsRightOfSprite = ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) > this.right;
-        const destIsAboveSprite = this.destinationTile.y - this.height < this.top;
-        const destIsBelowSprite = this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom;
-
         this.moving = false
-        if ( destIsLeftOfSprite && this.direction == globals["FACING_LEFT"] ) {
+        if ( this.destinationIsLeft && this.direction == globals["FACING_LEFT"] ) {
             this.x -= this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_LEFT"]
         }
-        else if ( destIsAboveSprite && this.direction == globals["FACING_UP"] ) {
+        else if ( this.destinationIsUp && this.direction == globals["FACING_UP"] ) {
             this.y -= this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_UP"]
         }
-        else if ( destIsRightOfSprite  && this.direction == globals["FACING_RIGHT"]  ) {
+        else if ( this.destinationIsRight  && this.direction == globals["FACING_RIGHT"]  ) {
             this.x += this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_RIGHT"];
         }
-        else if ( destIsBelowSprite && this.direction == globals["FACING_DOWN"]  ) {
+        else if ( this.destinationIsDown && this.direction == globals["FACING_DOWN"]  ) {
             this.y += this.movementSpeed
             this.moving = true;
             this.direction = globals["FACING_DOWN"]

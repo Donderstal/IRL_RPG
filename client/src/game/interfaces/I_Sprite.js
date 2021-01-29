@@ -40,6 +40,19 @@ class Sprite {
         this.getSpriteAndDrawWhenLoaded( )
     }
 
+    get destinationIsLeft( ) { 
+        return (this.destinationTile.x - this.width) < this.left;
+    }
+    get destinationIsRight( ) { 
+        return ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) > this.right; 
+    }
+    get destinationIsUp( ) { 
+        return this.destinationTile.y - this.height < this.top;
+    }    
+    get destinationIsDown( ) { 
+        return this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom; 
+    }
+
      /**
      * @function setSpriteToGrid determine a sprite's XY on the grid
      * @param {I_TIle} tile instance of I_Tile Class
