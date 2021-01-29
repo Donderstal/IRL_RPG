@@ -236,20 +236,9 @@ class MapObject extends I_Sprite {
                 break;
             default :
                 break;
-        }  
-    }
-
-    countFrame( ) {
-        this.frameCount++;
-
-        if ( this.frameCount >= FRAME_LIMIT) {
-            this.frameCount = 0;
-            this.sheetPosition++;
-
-            if ( this.sheetPosition >= this.activeFrames.length ) {
-                this.sheetPosition = 0;
-            }
-        }
+        }                  
+        
+        this.sheetFrameLimit = this.activeFrames.length
     }
 }
 

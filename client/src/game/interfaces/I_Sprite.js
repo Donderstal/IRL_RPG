@@ -24,14 +24,15 @@ class Sprite {
 
         this.left, this.right, this.top, this.bottom;
 
-        this.sheetPosition = 0
-        this.frameCount    = 0
-        this.direction     = tile.spriteData.direction ? globals[tile.spriteData.direction] : 0;
-        this.sheetSrc      = src
-        this.sheet         = new Image();
-        this.moving        = false;
-        this.deleted       = false;
-        this.isCar         = isCar
+        this.sheetFrameLimit= 4
+        this.sheetPosition  = 0
+        this.frameCount     = 0
+        this.direction      = tile.spriteData.direction ? globals[tile.spriteData.direction] : 0;
+        this.sheetSrc       = src
+        this.sheet          = new Image();
+        this.moving         = false;
+        this.deleted        = false;
+        this.isCar          = isCar
 
         this.setSpriteToGrid( tile, isCar )
 
@@ -196,7 +197,7 @@ class Sprite {
             this.frameCount = 0;
             this.sheetPosition++;
     
-            if (this.sheetPosition >= 4) {
+            if (this.sheetPosition >= this.sheetFrameLimit) {
                 this.sheetPosition = 0;
             }
         }

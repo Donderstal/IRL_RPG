@@ -9,12 +9,12 @@ let frameCount = 0;
  * 
  * Clear old sprite
  * Call @function moveInDirection to update sprite xy and direction
- * Call @function countFrame to update animationIterator and framecount
+ * Call @method sprite.countFrame
  * Draw sprite in new location and/or pose
  */
 const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
-    countFrame( sprite )
+    sprite.countFrame( )
 }
 
 /**
@@ -119,27 +119,6 @@ const checkForNeighbours = ( sprite ) => {
     }
 
     return false;
-}
-
-/**
- * Update frame count every time requestAnimationFrame fires callback
- * Update sprite's sheetPosition every time FRAME_LIMIT is equal to framecount 
- * Reset sheetPosition to zero if necessary
- * 
- * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
- */
-const countFrame = ( sprite ) => {
-    
-    frameCount++;
-    
-    if (frameCount >= FRAME_LIMIT) {
-        frameCount = 0;
-        sprite.sheetPosition++;
-
-        if (sprite.sheetPosition >= 4) {
-            sprite.sheetPosition = 0;
-        }
-    }
 }
 
 module.exports = {
