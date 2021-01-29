@@ -2,7 +2,6 @@
     import startGame from './../game/Game.js';
     import globals from './../game-data/globals.js';
     import utilFunctions from './../helpers/utilFunctions.js'
-    import Sound from './../game/interfaces/I_Sound.js'
 
     import MainUiButton from './svelte-partials/MainUiButton.svelte'
     import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
@@ -19,14 +18,11 @@
         "HELP" : [ "About", "Controls", "Credits", "Back" ]
     }
 
-    let mainMenuMusic;
-
     const classNames = {
         "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
     };
 
     const startGameWithParams = ( ) => {
-        mainMenuMusic.stop()
         const characterName = document.getElementById('name-input').value;
         const characterClass = classNames[document.getElementById('active-class').innerText].toLowerCase();
         let mode = 'normal';
@@ -40,8 +36,6 @@
             case 'Log_in_button': 
                 document.getElementsByClassName("background-large")[0].style.display = "block";
                 document.getElementsByClassName("background-small")[0].style.display = "none";
-                mainMenuMusic = new Sound.Sound( "game-jam.mp3", false, false, true )
-                mainMenuMusic.play()
                 currentScreen = "MAIN_MENU";
                 break;
             case 'Sign_up_button':

@@ -1,7 +1,6 @@
 const battleGlobals = require('./battleGlobals')
 
 const Battle        = require('./battle').Battle;
-const Sound         = require('../interfaces/I_Sound').Sound
 
 const grid          = require('../map/map-init/drawGrid')
 const tilesheets    = require('../../resources/tilesheetResources').sheets

@@ -1,6 +1,5 @@
 const globals           = require('../../../game-data/globals')
 const { GRID_BLOCK_PX } = require('../../../game-data/globals')
-const Sound             = require('../../interfaces/I_Sound').Sound
 const I_Hitbox          = require('../../interfaces/I_Hitbox').I_Hitbox
 
 class Door extends I_Hitbox {
