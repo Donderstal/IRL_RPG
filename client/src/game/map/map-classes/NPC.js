@@ -1,6 +1,4 @@
 const MapSprite     = require('./MapSprite').MapSprite
-const globals       = require('../../../game-data/globals');
-const { MOVEMENT_SPEED, FRAME_LIMIT } = require('../../../game-data/globals');
 const MapAction     = require('./MapAction').MapAction
 
 class NPC extends MapSprite {
@@ -26,89 +24,6 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( )
-        
-        if ( !this.inScriptedAnimation && !this.inMovementAnimation ) {
-            this.handleNPCAnimation( );                      
-        }
-    }
-
-    handleNPCAnimation( ) {
-        if ( this.type === "idle" ) {
-            this.handleIdleNPCAnimation( )
-        }
-        if ( this.type === "walking" || this.type == "flying" ) {
-            this.handleWalkingNPCAnimation( )
-        }
-    }
-
-    handleIdleNPCAnimation( ){
-        this.frameCount++
-        if ( this.frameCount >= ( FRAME_LIMIT * 2 ) ) {
-        
-            this.frameCount = 0;
-            this.sheetPosition = ( this.sheetPosition === 0 ) ? 1 : 0
-        }   
-    }
-
-    gotToNextDirection( countFrame = true) {
-        const NPC_speed = this.type == "flying" ? MOVEMENT_SPEED : MOVEMENT_SPEED * .5;
-        if ( this.nextPosition.row > this.row ) {
-            this.y += NPC_speed
-            this.direction = this.type == "flying" ? 7 : globals["FACING_DOWN"]
-        }
-        if ( this.nextPosition.row < this.row ) {
-            this.y -= NPC_speed    
-            this.direction = this.type == "flying" ? 6: globals["FACING_UP"]
-        }
-        if (this.nextPosition.col > this.col && this.nextPosition.row === this.row ) {
-            this.x += NPC_speed    
-            this.direction = this.type == "flying" ? 5 : globals["FACING_RIGHT"]
-        }
-        if ( this.nextPosition.col < this.col && this.nextPosition.row === this.row ) {
-            this.x -= NPC_speed   
-            this.direction = this.type == "flying" ? 4 : globals["FACING_LEFT"]
-        }
-
-        if ( countFrame ) {
-            this.countFrame( );
-        }
-    }
-
-    checkForAnimationPath ( ) {
-        const cell = globals.GAME.getTileOnCanvasAtXY( 'FRONT', this.centerX( ), this.baseY( ) );
-        this.row = cell.row;
-        this.col = cell.col
-    
-        if ( this.nextPosition.row === this.row && this.nextPosition.col === this.col ) {
-            this.lastPosition = this.nextPosition
-            this.getNextNPCPosition( )
-        }
-    }
-
-    getNextNPCPosition( ) {
-        for ( var i = 0; i < this.path.length; i++ ) {
-            let currentPath = this.path[i]
-            
-            if ( this.lastPosition.id == currentPath.id ) {
-                let index = i
-                let pathIterator = i + 1
-                let pathLength = this.path.length -1
-
-                this.nextPosition = ( index == pathLength ) ? this.path[0] : this.path[pathIterator]
-            }
-        }
-    }
-
-    handleWalkingNPCAnimation( ) {
-        this.getNextNPCPosition( );
-
-        if ( !this.pathIsBlocked || this.type == "flying" ) {
-            this.gotToNextDirection( );            
-        } else {
-            this.sheetPosition = 0;
-        }
-
-        this.checkForAnimationPath( );
     }
 }
 

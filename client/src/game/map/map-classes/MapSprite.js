@@ -122,11 +122,6 @@ class MapSprite extends I_Sprite {
         }
     }
 
-    updateSpriteCellXy( ) {
-        this.cell.x = this.x + ( this.width * .5 ),
-        this.cell.y = this.y + ( this.height - GRID_BLOCK_PX)
-    }
-
     setAnimation( scene ) {
         if ( scene.type == "SPEAK" ) {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
@@ -147,18 +142,6 @@ class MapSprite extends I_Sprite {
             'name'  : this.name,
             'sfx'   : ( sfx ) ? sfx : false
         } );
-    }
-
-    setDestination( destination, endDirection ) {
-        super.setDestination( destination, endDirection );
-        globals.GAME.activeCinematic.activeScene.walkingToDestination = true;
-    }
-
-    goToDestination( ) {
-        super.goToDestination( );
-        if ( !this.moving ) {
-            globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
-        }
     }
 
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
