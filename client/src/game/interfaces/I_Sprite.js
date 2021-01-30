@@ -192,6 +192,41 @@ class Sprite {
     }
 
     /**
+     * @function initMovement set speed and direction of movement
+     * @param {string} direction direction string to use in globals
+     * @param {integer} speed optional speed param
+     */
+    initMovement( direction, speed = null ) {
+        this.movingToDestination = true;
+        this.movementSpeed = speed == null ? MOVEMENT_SPEED * ( Math.random( ) + 1 ) : speed;
+        this.direction = globals[direction];
+    }
+
+    /**
+     * @function stopMovement unset movingToDestination
+     */
+    stopMovement( ) {
+        this.movingToDestination = false;
+    }
+
+    /**
+     * @function setDestination set destination to class. determine destinatonTile
+     * @param {object} destination information about destination's grid location
+     */
+    setDestination( destination ) {
+        this.destination = destination;
+        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
+    }
+
+    /**
+     * @function unsetDestination set destination and destinationTile props to false
+     */
+    unsetDestination( ) {
+        this.destination = false;
+        this.destinationTile = false;
+    }
+
+    /**
      * @function endGoToAnimation unset this.destination, this.inMovementAnimation
      */
     endGoToAnimation( ) {

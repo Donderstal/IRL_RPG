@@ -54,12 +54,9 @@ class MapObject extends I_Sprite {
     get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     initMovingSprite( spriteData ) {
-        this.movingToDestination = true;
-        this.movementSpeed = MOVEMENT_SPEED * ( Math.random( ) + 1 );
-        this.destination = spriteData.destination;
+        this.initMovement( spriteData.direction );
         this.frames = this.objectResource["movement_frames"];
-        this.direction = globals[spriteData.direction]
-        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
+        this.setDestination( spriteData.destination );
     }
 
     drawSprite( ) {
