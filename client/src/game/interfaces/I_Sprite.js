@@ -121,20 +121,6 @@ class Sprite {
 
         this.updateSpriteBorders( )
     }
-     /**
-     * @function setDestination set destination data as prop to Sprite
-     * @param destination object containing destination cell
-     * @param {string} endDirection direction sprite should face at destination
-     */
-    /* setDestination( destination, endDirection ) {
-        this.destination = destination
-        this.type = "idle"
-        this.destination.endDirection = endDirection
-        this.destination.horizontal = ( this.x > destination.right ) ? "FACING_LEFT" : "FACING_RIGHT";
-        this.destination.vertical = ( this.y > destination.bottom ) ? "FACING_UP" : "FACING_DOWN";
-
-        this.inMovementAnimation = true;
-    } */
 
     /**
      * @function goToDestination decide where to go based on sprites position compared to destination prop
@@ -178,8 +164,14 @@ class Sprite {
         }
 
         if ( !this.moving ) {
-            this.stopMovement( );
-            this.unsetDestination( );
+            if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
+                this.activeDestinationIndex += 1; 
+                this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
+            }
+            else {
+                this.stopMovement( );
+                this.unsetDestination( );                
+            }
         }
     }
 
@@ -205,27 +197,35 @@ class Sprite {
      * @param {object} destination information about destination's grid location
      */
     setDestination( destination ) {
-        let destinationList;
         this.destinationTiles = [];
         this.activeDestinationIndex;
-
         this.destination = destination;
-        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
+
         if ( !this.isCar ) {
-            destinationList = pathFinder.determinePath( { 'col': this.col, 'row': this.row }, this.destinationTile );
-            destinationList.forEach( ( destinationInList ) => {
-                let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", destinationInList.col, destinationInList.row )
-                let direction = destinationInList.alignment == "horizontal" 
-                    ? tile.x < this.x ? "FACING_LEFT" : "FACING_RIGHT" 
-                    : tile.y < this.y ? "FACING_UP" : "FACING_DOWN" 
-                this.destinationTiles.push( { 
-                    'tile': tile,
-                    'direction': direction
-                } )
-            })
-            this.activeDestinationIndex = 0;
-            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;            
+            this.setDestinationList( )
         }
+        else {
+            this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
+        }
+    }
+
+    setDestinationList( ) {
+        let destinationList = pathFinder.determinePath( 
+            { 'col': this.col, 'row': this.row }, 
+            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ) 
+        );
+        destinationList.forEach( ( destinationInList ) => {
+            let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", destinationInList.col, destinationInList.row )
+            let direction = destinationInList.alignment == "horizontal" 
+                ? tile.x < this.x ? "FACING_LEFT" : "FACING_RIGHT" 
+                : tile.y < this.y ? "FACING_UP" : "FACING_DOWN" 
+            this.destinationTiles.push( { 
+                'tile': tile,
+                'direction': direction
+            } )
+        })
+        this.activeDestinationIndex = 0;
+        this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;           
     }
 
     /**
@@ -234,6 +234,8 @@ class Sprite {
     unsetDestination( ) {
         this.destination = false;
         this.destinationTile = false;
+        this.destinationTiles = [];
+        this.activeDestinationIndex = 0;
     }
 
     /**
