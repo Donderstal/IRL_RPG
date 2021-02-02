@@ -26,8 +26,7 @@ class NPC extends MapSprite {
         super.drawSprite( )
         const random = Math.random() < 0.1;
         if ( random && !this.inMovementAnimation && !this.hasDestinationSet ) {
-            this.initMovement( "FACING_RIGHT" );
-            console.log("let's move!")
+            this.initMovement( );
             this.hasDestinationSet = true;
             this.setDestination( { col: 4, row: 6 } );
         }

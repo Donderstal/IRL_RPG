@@ -143,21 +143,16 @@ class Sprite {
      * call this.countFrame()
      */
     goToDestination( isBattle = false ) {
-        let hasMoved = false;
         this.moving = false;
 
         if ( this.destinationIsLeft && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_LEFT" ) {
-            console.log('moving left!')
             this.x -= MOVEMENT_SPEED;
             this.moving = true;
-            hasMoved = true
             this.direction = globals["FACING_LEFT"]
         }
         else if ( this.destinationIsRight && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_RIGHT" ) {
-            console.log('moving right!')
             this.x += MOVEMENT_SPEED;
             this.moving = true;
-            hasMoved = true
             this.direction = globals["FACING_RIGHT"];
         }
 
@@ -169,15 +164,13 @@ class Sprite {
                 this.y += MOVEMENT_SPEED  
             }
         }
-        else if ( !hasMoved ) {
+        else if ( !this.moving ) {
             if ( this.destinationIsUp && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_UP" ) {
-                console.log('moving up!')
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_UP"]
             }
             else if ( this.destinationIsDown && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_DOWN" ) {
-                console.log('moving down!')
                 this.y += MOVEMENT_SPEED  
                 this.moving = true;
                 this.direction = globals["FACING_DOWN"]
@@ -198,7 +191,6 @@ class Sprite {
     initMovement( direction, speed = null ) {
         this.movingToDestination = true;
         this.movementSpeed = speed == null ? MOVEMENT_SPEED * ( Math.random( ) + 1 ) : speed;
-        this.direction = globals[direction];
     }
 
     /**
