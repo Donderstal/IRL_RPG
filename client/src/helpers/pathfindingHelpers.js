@@ -23,8 +23,28 @@ const getOppositeDirection = ( direction ) => {
     }
 }
 
+/**
+ * @function determinePath
+ */
+
+const determinePath = ( startingTile, destinationTile ) => {
+    const columnDifference = Math.abs(startingTile.col - destinationTile.col);
+    const rowDifference = Math.abs(startingTile.row - destinationTile.row);
+    let returnArray = [];    
+
+    if ( columnDifference > rowDifference ) {
+        returnArray.push( { 'row': startingTile.row, 'col': destinationTile.col, 'alignment': "horizontal" } )
+        returnArray.push( { 'row': destinationTile.row, 'col': destinationTile.col, 'alignment': "vertical" } )
+    }
+    else {
+        returnArray.push( { 'row': destinationTile.row, 'col': startingTile.col, 'alignment': "vertical" } )
+        returnArray.push( { 'row': destinationTile.row, 'col': destinationTile.col, 'alignment': "horizontal" } )
+    }
+
+    return returnArray;
+}
 
 module.exports = {
     getOppositeDirection,
-
+    determinePath
 }

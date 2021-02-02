@@ -1,4 +1,5 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
+const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
@@ -41,16 +42,16 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return (this.destinationTile.x - this.width) < this.left;
+        return this.isCar ? (this.destinationTile.x - this.width) : this.destinationTile.x <= this.left;
     }
     get destinationIsRight( ) { 
-        return ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) > this.right; 
+        return this.isCar ? ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) : this.destinationTile.x + this.width >= this.right; 
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y - this.height < this.top;
+        return this.isCar ? this.destinationTile.y - this.height : this.destinationTile.y <= this.top;
     }    
     get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom; 
+        return this.isCar ? this.destinationTile.y + GRID_BLOCK_PX + this.height : this.destinationTile.y + this.height >= this.bottom; 
     }
 
      /**
@@ -125,7 +126,7 @@ class Sprite {
      * @param destination object containing destination cell
      * @param {string} endDirection direction sprite should face at destination
      */
-    setDestination( destination, endDirection ) {
+    /* setDestination( destination, endDirection ) {
         this.destination = destination
         this.type = "idle"
         this.destination.endDirection = endDirection
@@ -133,7 +134,7 @@ class Sprite {
         this.destination.vertical = ( this.y > destination.bottom ) ? "FACING_UP" : "FACING_DOWN";
 
         this.inMovementAnimation = true;
-    }
+    } */
 
     /**
      * @function goToDestination decide where to go based on sprites position compared to destination prop
@@ -142,21 +143,18 @@ class Sprite {
      * call this.countFrame()
      */
     goToDestination( isBattle = false ) {
-        const destIsLeftOfSprite = this.destination.left < this.left;
-        const destIsRightOfSprite = this.destination.right > this.right;
-        const destIsAboveSprite = this.destination.top < this.top;
-        const destIsBelowSprite = this.destination.bottom > this.bottom;
-
         let hasMoved = false;
         this.moving = false;
 
-        if ( destIsLeftOfSprite && this.destination.horizontal == "FACING_LEFT" ) {
+        if ( this.destinationIsLeft && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_LEFT" ) {
+            console.log('moving left!')
             this.x -= MOVEMENT_SPEED;
             this.moving = true;
             hasMoved = true
             this.direction = globals["FACING_LEFT"]
         }
-        else if ( destIsRightOfSprite && this.destination.horizontal == "FACING_RIGHT" ) {
+        else if ( this.destinationIsRight && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_RIGHT" ) {
+            console.log('moving right!')
             this.x += MOVEMENT_SPEED;
             this.moving = true;
             hasMoved = true
@@ -164,20 +162,22 @@ class Sprite {
         }
 
         if ( isBattle ) {
-            if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
+            if ( this.destinationIsUp ) {
                 this.y -= MOVEMENT_SPEED;
             }
-            else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
+            else if ( this.destinationIsDown ) {
                 this.y += MOVEMENT_SPEED  
             }
         }
         else if ( !hasMoved ) {
-            if ( destIsAboveSprite && this.destination.vertical == "FACING_UP" ) {
+            if ( this.destinationIsUp && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_UP" ) {
+                console.log('moving up!')
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_UP"]
             }
-            else if ( destIsBelowSprite && this.destination.vertical == "FACING_DOWN" ) {
+            else if ( this.destinationIsDown && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_DOWN" ) {
+                console.log('moving down!')
                 this.y += MOVEMENT_SPEED  
                 this.moving = true;
                 this.direction = globals["FACING_DOWN"]
@@ -185,10 +185,9 @@ class Sprite {
         }
 
         if ( !this.moving ) {
-            this.endGoToAnimation( );
+            this.stopMovement( );
+            this.unsetDestination( );
         }
-
-        this.countFrame( );
     }
 
     /**
@@ -214,8 +213,27 @@ class Sprite {
      * @param {object} destination information about destination's grid location
      */
     setDestination( destination ) {
+        let destinationList;
+        this.destinationTiles = [];
+        this.activeDestinationIndex;
+
         this.destination = destination;
         this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
+        if ( !this.isCar ) {
+            destinationList = pathFinder.determinePath( { 'col': this.col, 'row': this.row }, this.destinationTile );
+            destinationList.forEach( ( destinationInList ) => {
+                let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", destinationInList.col, destinationInList.row )
+                let direction = destinationInList.alignment == "horizontal" 
+                    ? tile.x < this.x ? "FACING_LEFT" : "FACING_RIGHT" 
+                    : tile.y < this.y ? "FACING_UP" : "FACING_DOWN" 
+                this.destinationTiles.push( { 
+                    'tile': tile,
+                    'direction': direction
+                } )
+            })
+            this.activeDestinationIndex = 0;
+            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;            
+        }
     }
 
     /**
