@@ -1,44 +1,5 @@
 const globals = require('../../../game-data/globals')
 
-const checkIfMovementAllowed = ( sprite, direction ) => {
-    const activeMap = globals.GAME.activeMap;
-    const activeBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.activeTileIndex);
-    const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
-    const nextForegroundTile = globals.GAME.getTileOnCanvasAtIndex( "FRONT", sprite.nextTileIndex);
-
-    if ( activeBackgroundTile.row == 1 && direction == 'FACING_UP' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
-        return !sprite.isInCenterFacingUp;
-    }
-    else if ( activeBackgroundTile.row == globals.GAME.back.class.grid.rows && direction == 'FACING_DOWN' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.down ) ) {
-        return !sprite.isInCenterFacingDown;
-    }
-    else if ( activeBackgroundTile.col == 1 && direction == 'FACING_LEFT' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.left )  ) {
-        return !sprite.isInCenterFacingLeft;
-    }
-    else if ( activeBackgroundTile.col == globals.GAME.back.class.grid.cols && direction == 'FACING_RIGHT' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.right )  ) {
-        return !sprite.isInCenterFacingRight;
-    }
-
-    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.blocked || ( nextForegroundTile.hasSprite && globals.GAME.front.class.spriteDictionary[nextForegroundTile.spriteId].type == 'idle') ) ) {
-        switch ( direction ) {
-            case 'FACING_RIGHT' :
-                return !sprite.isInCenterFacingRight;
-            case 'FACING_LEFT' :
-                return !sprite.isInCenterFacingLeft;
-            case 'FACING_UP' :
-                return !sprite.isInCenterFacingUp;
-            case 'FACING_DOWN' :
-                return !sprite.isInCenterFacingDown;
-        }
-    }
-    
-    return true
-}
-
 const checkForCollision = ( sprite, isPlayer ) => {
     const spriteIsFacingUpOrDown =  ( sprite.direction == globals["FACING_UP"] || sprite.direction == globals["FACING_DOWN"] )
 
@@ -96,6 +57,20 @@ const checkForCollision = ( sprite, isPlayer ) => {
         }
     }
 
+    const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
+    if ( nextBackgroundTile != undefined && nextBackgroundTile.blocked ) {
+        switch ( sprite.direction ) {
+            case globals['FACING_RIGHT'] :
+                return sprite.isInCenterFacingRight;
+            case globals['FACING_LEFT'] :
+                return sprite.isInCenterFacingLeft;
+            case globals['FACING_UP'] :
+                return sprite.isInCenterFacingUp;
+            case globals['FACING_DOWN'] :
+                return sprite.isInCenterFacingDown;
+        }
+    }
+    
     return false;
 }
 
@@ -199,6 +174,5 @@ const setNextFrontNeighbourNext = ( sprite, spriteIsFacingUpOrDown ) => {
 }
 
 module.exports = {
-    checkIfMovementAllowed,
     checkForCollision
 }

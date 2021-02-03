@@ -32,7 +32,7 @@ class NPC extends MapSprite {
         }
 
         if ( this.movingToDestination ) {
-            if ( !this.blocked ) {
+            if ( !this.pathIsBlocked ) {
                 this.goToDestination( );     
             }
         }
