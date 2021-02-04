@@ -1,5 +1,6 @@
 const MapSprite     = require('./MapSprite').MapSprite
 const MapAction     = require('./MapAction').MapAction
+const globals       = require('../../../game-data/globals')
 
 class NPC extends MapSprite {
     constructor( tile ) {
@@ -28,7 +29,9 @@ class NPC extends MapSprite {
         if ( random && !this.inMovementAnimation && !this.hasDestinationSet ) {
             this.initMovement( );
             this.hasDestinationSet = true;
-            this.setDestination( { col: 4, row: 6 } );
+            let des = { col: Math.ceil( Math.random( ) * globals.GAME.activeMap.columns ), row: Math.ceil( Math.random( ) * globals.GAME.activeMap.rows ) }
+            console.log( des )
+            this.setDestination( des );
         }
 
         if ( this.movingToDestination ) {

@@ -75,7 +75,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return !sprite.isInCenterFacingRight;
     }
 
-    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.blocked  || ( nextForegroundTile.hasSprite && globals.GAME.front.class.spriteDictionary[nextForegroundTile.spriteId].type == "idle" ) ) ) {
+    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.isBlocked || nextForegroundTile.isBlocked ) ) {
         switch ( direction ) {
             case 'FACING_RIGHT' :
                 return !sprite.isInCenterFacingRight;

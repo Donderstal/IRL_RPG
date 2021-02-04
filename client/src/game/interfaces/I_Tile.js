@@ -27,6 +27,13 @@ class I_Tile {
         this.clearTileID( );
     };
 
+    get hasDoor( ) { 
+        return this.hasEvent && this.eventType == "DOOR"; 
+    };
+    get isBlocked( ) { 
+        return this.blocked || ( this.hasSprite && globals.GAME.front.class.spriteDictionary[this.spriteId].type == "idle" )
+    }
+
     drawTileInMap( sheetImage ) {
         if ( this.ID === "E" || this.ID === null) {
             return;
