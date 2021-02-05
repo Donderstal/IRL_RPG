@@ -146,8 +146,6 @@ const getLocationStatus = ( location, tileList ) => {
 
 const exploreInDirection = ( currentLocation, direction, tileList ) => {
     let newPath = currentLocation.path.slice( );
-    newPath.push(direction);
-
     let row = currentLocation.row;
     let col = currentLocation.column;
 
@@ -169,6 +167,7 @@ const exploreInDirection = ( currentLocation, direction, tileList ) => {
     }
 
     let index = getCellIndex( row, col )
+    newPath.push(index);
     const newLocation = new GridLocation( row, col, index );
     newLocation.path = newPath;
     newLocation.status = getLocationStatus( newLocation, tileList );

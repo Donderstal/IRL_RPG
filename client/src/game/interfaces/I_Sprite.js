@@ -42,16 +42,24 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.isCar ? (this.destinationTile.x - this.width) : this.destinationTile.x <= this.left;
+        return this.isCar 
+        ? (this.destinationTile.x - this.width) 
+        : this.destinationTile.x <= this.left && this.destinationTile.col == this.col;
     }
     get destinationIsRight( ) { 
-        return this.isCar ? ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) : this.destinationTile.x + this.width >= this.right; 
+        return this.isCar 
+        ? ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) 
+        : this.destinationTile.x + this.width >= this.right && this.destinationTile.row == this.row;
     }
     get destinationIsUp( ) { 
-        return this.isCar ? this.destinationTile.y - this.height : this.destinationTile.y <= this.top;
+        return this.isCar 
+        ? this.destinationTile.y - this.height 
+        : this.destinationTile.y <= this.top && this.destinationTile.col == this.col;
     }    
     get destinationIsDown( ) { 
-        return this.isCar ? this.destinationTile.y + GRID_BLOCK_PX + this.height : this.destinationTile.y + this.height >= this.bottom; 
+        return this.isCar 
+        ? this.destinationTile.y + GRID_BLOCK_PX + this.height 
+        : this.destinationTile.y + this.height >= this.bottom && this.destinationTile.col == this.col;
     }
 
      /**
@@ -131,12 +139,12 @@ class Sprite {
     goToDestination( isBattle = false ) {
         this.moving = false;
 
-        if ( this.destinationIsLeft && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_LEFT" ) {
+        if ( this.destinationIsLeft  ) {
             this.x -= MOVEMENT_SPEED;
             this.moving = true;
             this.direction = globals["FACING_LEFT"]
         }
-        else if ( this.destinationIsRight && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_RIGHT" ) {
+        else if ( this.destinationIsRight ) {
             this.x += MOVEMENT_SPEED;
             this.moving = true;
             this.direction = globals["FACING_RIGHT"];
@@ -151,12 +159,12 @@ class Sprite {
             }
         }
         else if ( !this.moving ) {
-            if ( this.destinationIsUp && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_UP" ) {
+            if ( this.destinationIsUp ) {
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
                 this.direction = globals["FACING_UP"]
             }
-            else if ( this.destinationIsDown && this.destinationTiles[this.activeDestinationIndex].direction == "FACING_DOWN" ) {
+            else if ( this.destinationIsDown ) {
                 this.y += MOVEMENT_SPEED  
                 this.moving = true;
                 this.direction = globals["FACING_DOWN"]
@@ -210,18 +218,15 @@ class Sprite {
     }
 
     setDestinationList( ) {
-        let destinationList = pathFinder.determinePath( 
-            { 'col': this.col, 'row': this.row }, 
-            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ) 
-        );
-        destinationList.forEach( ( destinationInList ) => {
-            let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", destinationInList.col, destinationInList.row )
-            let direction = destinationInList.alignment == "horizontal" 
-                ? tile.x < this.x ? "FACING_LEFT" : "FACING_RIGHT" 
-                : tile.y < this.y ? "FACING_UP" : "FACING_DOWN" 
+        const pathIndexes = pathFinder.determineShortestPath(
+            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row ),
+            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ),
+            globals.GAME.BACK.grid
+        ) 
+        pathIndexes.forEach( ( pathIndex ) => {
+            let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )
             this.destinationTiles.push( { 
-                'tile': tile,
-                'direction': direction
+                tile,
             } )
         })
         this.activeDestinationIndex = 0;
