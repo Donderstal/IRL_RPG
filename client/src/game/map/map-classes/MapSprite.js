@@ -45,8 +45,10 @@ class MapSprite extends I_Sprite {
         this.updateTileIndexes( )
         if ( !globals.GAME.cinematicMode ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
-            //this.hitbox.draw( this.centerX( ), this.baseY( ) )
-            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );    
+            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );  
+            if ( this.pathIsBlocked && this.destinationTile != undefined && this.destinationTile.index == this.activeTileIndex ) {
+                this.pathIsBlocked = !this.pathIsBlocked;
+            }  
         }
         else if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.inMovementAnimation ) ) {
             this.handleAnimation( )

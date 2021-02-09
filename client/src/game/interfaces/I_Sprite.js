@@ -44,28 +44,16 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.isCar 
-        ? ( this.destinationTile.x - this.width ) 
-        : this.destinationTile.x <= this.left
-        && this.destinationTile.direction == "FACING_LEFT";
+        return this.destinationTile.x < this.left + 1 && this.destinationTile.direction == "FACING_LEFT";
     }
     get destinationIsRight( ) { 
-        return this.isCar 
-        ? ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) 
-        : this.destinationTile.x + this.width >= this.right
-        && this.destinationTile.direction == "FACING_RIGHT";
+        return this.destinationTile.x + GRID_BLOCK_PX > this.right - 1 && this.destinationTile.direction == "FACING_RIGHT";
     }
     get destinationIsUp( ) { 
-        return this.isCar 
-        ? this.destinationTile.y - this.height 
-        : this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top
-        && this.destinationTile.direction == "FACING_UP";
+        return this.destinationTile.y < this.top + ( GRID_BLOCK_PX / 2 ) + 1 && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
-        return this.isCar 
-        ? this.destinationTile.y + GRID_BLOCK_PX + this.height 
-        : this.destinationTile.y + this.height >= this.bottom
-        && this.destinationTile.direction == "FACING_DOWN";
+        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom - 1 && this.destinationTile.direction == "FACING_DOWN";
     }
 
      /**
@@ -179,12 +167,8 @@ class Sprite {
 
         if ( !this.moving ) {
             if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
-                console.log('reacjhed destination!')
-                console.log(this.destinationTile)
                 this.activeDestinationIndex += 1; 
                 this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
-                console.log('next destination!')
-                console.log(this.destinationTile)
             }
             else {
                 this.stopMovement( );
@@ -229,8 +213,6 @@ class Sprite {
 
     setDestinationList( ) {
         const lastTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
-        console.log("starting tile")
-        console.log(lastTile)
         const pathIndexes = pathFinder.determineShortestPath(
             lastTile,
             globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ),
@@ -242,10 +224,7 @@ class Sprite {
             return;
         }
 
-        console.log(pathIndexes)
-
         let lastIndex = lastTile.index;
-        let columnsInMap = globals.GAME.activeMap.cols;
 
         pathIndexes.forEach( ( pathIndex ) => {
             let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )

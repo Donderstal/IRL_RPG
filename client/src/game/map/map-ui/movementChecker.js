@@ -24,6 +24,19 @@ const checkForCollision = ( sprite, isPlayer ) => {
         else if  ( nextBackTile != undefined && nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
             nextBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
+        const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
+        if ( nextBackgroundTile != undefined && nextBackgroundTile.blocked ) {
+            switch ( sprite.direction ) {
+                case globals['FACING_RIGHT'] :
+                    return sprite.isInCenterFacingRight;
+                case globals['FACING_LEFT'] :
+                    return sprite.isInCenterFacingLeft;
+                case globals['FACING_UP'] :
+                    return sprite.isInCenterFacingUp;
+                case globals['FACING_DOWN'] :
+                    return sprite.isInCenterFacingDown;
+            }
+        }
     }
     
     if ( currFrontTile.hasSprite && currFrontTile.spriteId != sprite.spriteId ) {
@@ -54,20 +67,6 @@ const checkForCollision = ( sprite, isPlayer ) => {
     if ( nextFrontNeighbourNext != undefined && nextFrontNeighbourNext.hasSprite ) {
         if ( checkIfSpritesCollide( sprite, nextFrontNeighbourNext.spriteId ) ) {
             return true;
-        }
-    }
-
-    const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
-    if ( nextBackgroundTile != undefined && nextBackgroundTile.blocked ) {
-        switch ( sprite.direction ) {
-            case globals['FACING_RIGHT'] :
-                return sprite.isInCenterFacingRight;
-            case globals['FACING_LEFT'] :
-                return sprite.isInCenterFacingLeft;
-            case globals['FACING_UP'] :
-                return sprite.isInCenterFacingUp;
-            case globals['FACING_DOWN'] :
-                return sprite.isInCenterFacingDown;
         }
     }
     

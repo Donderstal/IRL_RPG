@@ -331,12 +331,12 @@ module.exports = {
                       "sprite": "chad_recolour01.png",
                       "direction": "FACING_RIGHT",
                       "name": "chad_recolour02.png",
-                      "row": 21,
+                      "row": 14,
                       "col": 3
                     },
                     {
                       "type": "idle",
-                      "sprite": "chad_recolour01.png",
+                      "sprite": "chad.png",
                       "direction": "FACING_LEFT",
                       "name": "chad_recolour03.png",
                       "row": 3,
@@ -344,10 +344,10 @@ module.exports = {
                     },
                     {
                       "type": "idle",
-                      "sprite": "chad_recolour01.png",
+                      "sprite": "chad.png",
                       "direction": "FACING_UP",
                       "name": "chad_recolour04.png",
-                      "row": 21,
+                      "row": 14,
                       "col": 21
                     }
                 ]
