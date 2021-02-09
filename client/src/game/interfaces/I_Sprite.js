@@ -4,7 +4,7 @@ const globals = require('../../game-data/globals')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
-    MOVEMENT_SPEED, FRAME_LIMIT
+    MOVEMENT_SPEED, FRAME_LIMIT, GRID_BLOCK_IN_SHEET_PX
 } = require( '../../game-data/globals' )
 
 
@@ -24,6 +24,8 @@ class Sprite {
         }
 
         this.left, this.right, this.top, this.bottom;
+        this.centerX = () => { return this.x + ( this.width / 2 ) };
+        this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
 
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
@@ -43,23 +45,27 @@ class Sprite {
 
     get destinationIsLeft( ) { 
         return this.isCar 
-        ? (this.destinationTile.x - this.width) 
-        : this.destinationTile.x <= this.left && this.destinationTile.col == this.col;
+        ? ( this.destinationTile.x - this.width ) 
+        : this.destinationTile.x <= this.left
+        && this.destinationTile.direction == "FACING_LEFT";
     }
     get destinationIsRight( ) { 
         return this.isCar 
         ? ( this.destinationTile.x + GRID_BLOCK_PX + this.width ) 
-        : this.destinationTile.x + this.width >= this.right && this.destinationTile.row == this.row;
+        : this.destinationTile.x + this.width >= this.right
+        && this.destinationTile.direction == "FACING_RIGHT";
     }
     get destinationIsUp( ) { 
         return this.isCar 
         ? this.destinationTile.y - this.height 
-        : this.destinationTile.y <= this.top && this.destinationTile.col == this.col;
+        : this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top
+        && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
         return this.isCar 
         ? this.destinationTile.y + GRID_BLOCK_PX + this.height 
-        : this.destinationTile.y + this.height >= this.bottom && this.destinationTile.col == this.col;
+        : this.destinationTile.y + this.height >= this.bottom
+        && this.destinationTile.direction == "FACING_DOWN";
     }
 
      /**
@@ -173,8 +179,12 @@ class Sprite {
 
         if ( !this.moving ) {
             if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
+                console.log('reacjhed destination!')
+                console.log(this.destinationTile)
                 this.activeDestinationIndex += 1; 
                 this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
+                console.log('next destination!')
+                console.log(this.destinationTile)
             }
             else {
                 this.stopMovement( );
@@ -218,16 +228,34 @@ class Sprite {
     }
 
     setDestinationList( ) {
+        const lastTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
+        console.log("starting tile")
+        console.log(lastTile)
         const pathIndexes = pathFinder.determineShortestPath(
-            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row ),
+            lastTile,
             globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ),
             globals.GAME.BACK.grid
         ) 
+
+        if ( !pathIndexes ) {
+            this.unsetDestination( );
+            return;
+        }
+
+        console.log(pathIndexes)
+
+        let lastIndex = lastTile.index;
+        let columnsInMap = globals.GAME.activeMap.cols;
+
         pathIndexes.forEach( ( pathIndex ) => {
             let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )
+            tile.direction = pathIndex < lastIndex 
+            ? pathIndex == lastIndex - 1 ? "FACING_LEFT" : "FACING_UP" 
+            : pathIndex == lastIndex + 1 ? "FACING_RIGHT" : "FACING_DOWN" ;
             this.destinationTiles.push( { 
                 tile,
             } )
+            lastIndex = pathIndex;
         })
         this.activeDestinationIndex = 0;
         this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;           

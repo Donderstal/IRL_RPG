@@ -296,7 +296,23 @@ module.exports = {
                 "outdoors": false,
                 "rows": 16,
                 "columns": 24,
-                "grid":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],[8,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],[12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],[16,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,58],[8,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74],[12,75,75,75,75,75,75,75,75,75,75,79,79,75,75,75,75,75,75,75,75,75,75,74]],
+                "grid":[
+                  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                  [4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
+                  [ 8,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,44],
+                  [12,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,54],
+                  [16,74,41,41,41,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,41,41,41,58],
+                  [20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],
+                  [12,74,74,74,74,41,41,41,74,74,74,41,74,74,74,74,41,41,41,74,74,74,74,54],
+                  [16,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,58],
+                  [20,41,74,41,74,41,74,41,41,41,74,41,74,41,41,41,74,41,41,41,74,41,41,44],
+                  [12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],
+                  [16,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,58],
+                  [20,41,41,74,74,41,41,41,74,41,74,41,41,74,41,41,41,41,74,41,41,41,41,44],
+                  [12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],
+                  [16,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,58],
+                  [ 8,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,74],
+                  [12,75,75,75,75,75,75,75,75,75,75,79,79,75,75,75,75,75,75,75,75,75,75,74]],
                 "playerStart":{ 
                     "row": 3,
                     "col": 2
@@ -311,198 +327,28 @@ module.exports = {
                         "col": 3
                     },
                     {
-                        "type": "idle",
-                        "sprite": "chad_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour01.png",
-                        "row": 3,
-                        "col": 4
+                      "type": "idle",
+                      "sprite": "chad_recolour01.png",
+                      "direction": "FACING_RIGHT",
+                      "name": "chad_recolour02.png",
+                      "row": 21,
+                      "col": 3
                     },
                     {
-                        "type": "idle",
-                        "sprite": "chad_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour01.png",
-                        "row": 3,
-                        "col": 5
-                    },                    
-                    {
-                        "type": "idle",
-                        "sprite": "chad_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour01.png",
-                        "row": 3,
-                        "col": 6
+                      "type": "idle",
+                      "sprite": "chad_recolour01.png",
+                      "direction": "FACING_LEFT",
+                      "name": "chad_recolour03.png",
+                      "row": 3,
+                      "col": 21
                     },
                     {
-                        "type": "walking",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 17,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 6, 
-                            "col": 17
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 4, "col": 17 },
-                            { "id": 1, "row": 8, "col": 17 }
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 18,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 6, 
-                            "col": 18
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 4, "col": 18 },
-                            { "id": 1, "row": 8, "col": 18 }
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 19,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 6, 
-                            "col": 19
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 4, "col": 19 },
-                            { "id": 1, "row": 8, "col": 19 }
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 20,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 6, 
-                            "col": 20
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 4, "col": 20 },
-                            { "id": 1, "row": 8, "col": 20 }
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 21,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 6, 
-                            "col": 21
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 4, "col": 21 },
-                            { "id": 1, "row": 8, "col": 21 }
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "characterx3.png",
-                        "direction": "FACING_DOWN",
-                        "name": "characterx3.png",
-                        "row": 2,
-                        "col": 22,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 6, 
-                            "col": 22
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 4, "col": 22 },
-                            { "id": 1, "row": 8, "col": 22 }
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "new_girl_recolour.png",
-                        "direction": "FACING_RIGHT",
-                        "name": "new_girl_recolour.png",
-                        "row": 7,
-                        "col": 2,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 7,
-                            "col": 6,
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 7, "col": 4 },
-                            { "id": 1, "row": 7, "col": 8 },
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "new_girl_recolour.png",
-                        "direction": "FACING_RIGHT",
-                        "name": "new_girl_recolour.png",
-                        "row": 8,
-                        "col": 2,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 8,
-                            "col": 6,
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 8, "col": 4 },
-                            { "id": 1, "row": 8, "col": 8 },
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "new_girl_recolour.png",
-                        "direction": "FACING_RIGHT",
-                        "name": "new_girl_recolour.png",
-                        "row": 9,
-                        "col": 2,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 9,
-                            "col": 6,
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 9, "col": 4 },
-                            { "id": 1, "row": 9, "col": 8 },
-                        ],
-                    },
-                    {
-                        "type": "walking",
-                        "sprite": "new_girl_recolour.png",
-                        "direction": "FACING_RIGHT",
-                        "name": "new_girl_recolour.png",
-                        "row": 10,
-                        "col": 2,
-                        "lastPosition" : {                   
-                            "id": 0,
-                            "row": 10,
-                            "col": 6,
-                        },
-                        "path" : [                     
-                            { "id": 0, "row": 10, "col": 4 },
-                            { "id": 1, "row": 10, "col": 8 },
-                        ],
+                      "type": "idle",
+                      "sprite": "chad_recolour01.png",
+                      "direction": "FACING_UP",
+                      "name": "chad_recolour04.png",
+                      "row": 21,
+                      "col": 21
                     }
                 ]
             },

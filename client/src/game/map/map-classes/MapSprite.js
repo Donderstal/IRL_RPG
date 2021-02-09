@@ -11,8 +11,6 @@ class MapSprite extends I_Sprite {
         super( tile, spriteSize, src )   
         this.cell = {}
         this.animationScript = {};
-        this.centerX = () => { return this.x + ( this.width / 2 ) };
-        this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.spriteId;
