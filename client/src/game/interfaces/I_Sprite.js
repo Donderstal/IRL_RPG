@@ -4,7 +4,10 @@ const globals = require('../../game-data/globals')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
-    MOVEMENT_SPEED, FRAME_LIMIT
+    MOVEMENT_SPEED, FRAME_LIMIT, 
+    NPC_MOVE_TYPE_FLYING,
+    FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
+    FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
 
 
@@ -144,12 +147,12 @@ class Sprite {
         if ( this.destinationIsLeft  ) {
             this.x -= MOVEMENT_SPEED;
             this.moving = true;
-            this.direction = globals["FACING_LEFT"]
+            this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
         }
         else if ( this.destinationIsRight ) {
             this.x += MOVEMENT_SPEED;
             this.moving = true;
-            this.direction = globals["FACING_RIGHT"];
+            this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
         }
 
         if ( isBattle ) {
@@ -164,12 +167,12 @@ class Sprite {
             if ( this.destinationIsUp ) {
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
-                this.direction = globals["FACING_UP"]
+                this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
             }
             else if ( this.destinationIsDown ) {
                 this.y += MOVEMENT_SPEED  
                 this.moving = true;
-                this.direction = globals["FACING_DOWN"]
+                this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
             }            
         }
 
@@ -180,7 +183,8 @@ class Sprite {
             }
             else {
                 this.stopMovement( );
-                this.unsetDestination( );                
+                this.unsetDestination( );    
+                this.unsetScriptedAnimation( );
             }
         }
     }
@@ -208,10 +212,11 @@ class Sprite {
      * @param {object} destination information about destination's grid location
      */
     setDestination( destination ) {
-        this.destinationTiles = [];
+        this.originalDirection  = this.direction;
+        this.destinationTiles   = [];
+        this.destination        = destination;
         this.activeDestinationIndex;
-        this.destination = destination;
-
+        
         if ( !this.isCar ) {
             this.setDestinationList( )
         }

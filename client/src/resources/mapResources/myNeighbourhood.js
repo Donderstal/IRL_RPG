@@ -243,12 +243,17 @@ module.exports = {
               }
             },
             {
-              "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+              "anim_type": NPC_ANIM_TYPE_MOVING,
               "sprite": "business_man.png",
               "direction": "FACING_LEFT",
-              "name": "Yum-mart Exec",                    
+              "name": "Mr. Business",                    
               "row": 6,
-              "col": 26,
+              "col": 22,
+              "action": {
+                "type": "TEXT",
+                "sfx": "voice-1.mp3",
+                "text": "I'm working for the corporation. Business business business!"
+            }
             }
         ],
         "doors": [ 
@@ -762,21 +767,8 @@ module.exports = {
             },
             {
                 "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
-                "sprite": "manager.png",
-                "row": 11, 
-                "col": 12, 
-                "direction": "FACING_UP",
-                "name": "Manager Bob",
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "text": "Greetings, possible patron!"
-                }
-            },
-            {
-                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
                 "sprite": "robot.png",
-                "row": 9, 
+                "row": 8, 
                 "col": 12, 
                 "name": "Consoombot",                    
                 "direction": "FACING_UP",

@@ -15,10 +15,10 @@ const FACING_LEFT                   = 1
 const FACING_RIGHT                  = 2
 const FACING_UP                     = 3
 
-const FACING_DOWN_FLYING            = 4
-const FACING_LEFT_FLYING            = 5
-const FACING_RIGHT_FLYING           = 6
-const FACING_UP_FLYING              = 7
+const FACING_DOWN_FLYING            = 7
+const FACING_LEFT_FLYING            = 4
+const FACING_RIGHT_FLYING           = 5
+const FACING_UP_FLYING              = 6
 
 //
 const STATIC1                       = 0
