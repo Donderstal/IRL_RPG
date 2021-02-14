@@ -31,7 +31,7 @@ class I_Tile {
         return this.hasEvent && this.eventType == "DOOR"; 
     };
     get isBlocked( ) { 
-        return this.blocked || ( this.hasSprite && globals.GAME.front.class.spriteDictionary[this.spriteId].type == "idle" )
+        return this.blocked || this.hasSprite
     }
 
     drawTileInMap( sheetImage ) {

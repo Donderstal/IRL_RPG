@@ -4,8 +4,6 @@ const TILE_STATUS_INVALID = "INVALID";
 const TILE_STATUS_BLOCKED = "BLOCKED";
 const TILE_STATUS_VISITED = "VISITED";
 const TILE_STATUS_VALID = "VALID";
-const TILE_STATUS_EMPTY = "EMPTY";
-const TILE_STATUS_GOAL = "GOAL";
 
 const DIRECTION_NORTH = "NORTH";
 const DIRECTION_EAST = "EAST";
@@ -66,9 +64,8 @@ const determinePath = ( startingTile, destinationTile ) => {
 const determineShortestPath = ( startingTile, targetTile, grid ) => {
     colsInGrid = grid.cols;
     rowsInGrid = grid.rows;
+    goalIndex = targetTile.index;
     let tileList = grid.array;
-
-    grid.array[targetTile.index] = new GridLocation( targetTile.row, targetTile.col, targetTile.index, "GOAL" )
     let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, "START" )
     const queue = [ location ];
 
@@ -77,7 +74,7 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
 
         if ( currentLocation.row != 1 ) {
             var newLocation = exploreInDirection( currentLocation, DIRECTION_NORTH, tileList )
-            if ( newLocation.status == TILE_STATUS_GOAL ) {
+            if ( newLocation.index == targetTile.index ) {
                 return newLocation.path;
             }
             else if ( newLocation.status == TILE_STATUS_VALID ) {
@@ -87,7 +84,7 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
 
         if ( currentLocation.column != colsInGrid ) {
             var newLocation = exploreInDirection( currentLocation, DIRECTION_EAST, tileList )
-            if ( newLocation.status == TILE_STATUS_GOAL ) {
+            if ( newLocation.index == targetTile.index  ) {
                 return newLocation.path;
             }
             else if ( newLocation.status == TILE_STATUS_VALID ) {
@@ -98,7 +95,7 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
 
         if ( currentLocation.row != rowsInGrid ) {
             var newLocation = exploreInDirection( currentLocation, DIRECTION_SOUTH, tileList )
-            if ( newLocation.status == TILE_STATUS_GOAL ) {
+            if ( newLocation.index == targetTile.index ) {
                 return newLocation.path;
             }
             else if ( newLocation.status == TILE_STATUS_VALID ) {
@@ -108,12 +105,16 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
 
         if  ( currentLocation.column != 1 ) {
             var newLocation = exploreInDirection( currentLocation, DIRECTION_WEST, tileList )
-            if ( newLocation.status == TILE_STATUS_GOAL ) {
+            if ( newLocation.index == targetTile.index  ) {
                 return newLocation.path;
             }
             else if ( newLocation.status == TILE_STATUS_VALID ) {
                 queue.push(newLocation);
             }            
+        }
+
+        if ( queue.length == 0 ) {
+            console.log(currentLocation)
         }
     }
 
@@ -132,8 +133,6 @@ class GridLocation {
 const getLocationStatus = ( location, tileList ) => {
     if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
         return TILE_STATUS_INVALID;
-    } else if ( tileList[location.index].status == TILE_STATUS_GOAL ) {
-        return TILE_STATUS_GOAL;
     } else if ( 
         globals.GAME.getTileOnCanvasAtIndex( "FRONT", location.index ).isBlocked 
         || globals.GAME.getTileOnCanvasAtIndex( "BACK", location.index ).isBlocked 

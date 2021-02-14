@@ -44,16 +44,16 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.destinationTile.x < this.left + 1 && this.destinationTile.direction == "FACING_LEFT";
+        return this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
     }
     get destinationIsRight( ) { 
-        return this.destinationTile.x + GRID_BLOCK_PX > this.right - 1 && this.destinationTile.direction == "FACING_RIGHT";
+        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == "FACING_RIGHT";
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y < this.top + ( GRID_BLOCK_PX / 2 ) + 1 && this.destinationTile.direction == "FACING_UP";
+        return this.destinationTile.y <= this.top + ( GRID_BLOCK_PX / 2 ) && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom - 1 && this.destinationTile.direction == "FACING_DOWN";
+        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
     }
 
      /**
@@ -213,11 +213,8 @@ class Sprite {
 
     setDestinationList( ) {
         const lastTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
-        const pathIndexes = pathFinder.determineShortestPath(
-            lastTile,
-            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ),
-            globals.GAME.BACK.grid
-        ) 
+        const destination = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
+        const pathIndexes = pathFinder.determineShortestPath( lastTile, destination, globals.GAME.BACK.grid ) 
 
         if ( !pathIndexes ) {
             this.unsetDestination( );
@@ -236,6 +233,7 @@ class Sprite {
             } )
             lastIndex = pathIndex;
         })
+
         this.activeDestinationIndex = 0;
         this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;           
     }
