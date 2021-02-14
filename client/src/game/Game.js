@@ -9,7 +9,7 @@ const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 
-const firstMapUrl =  'my-neighbourhood/A1/testmap';
+const firstMapUrl =  'my-neighbourhood/A1/my-house';
 
 class Game {
     constructor( ) {

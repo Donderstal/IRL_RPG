@@ -64,7 +64,7 @@ const determinePath = ( startingTile, destinationTile ) => {
 const determineShortestPath = ( startingTile, targetTile, grid ) => {
     colsInGrid = grid.cols;
     rowsInGrid = grid.rows;
-    goalIndex = targetTile.index;
+    
     let tileList = grid.array;
     let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, "START" )
     const queue = [ location ];

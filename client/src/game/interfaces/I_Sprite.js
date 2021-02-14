@@ -4,7 +4,7 @@ const globals = require('../../game-data/globals')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
-    MOVEMENT_SPEED, FRAME_LIMIT, GRID_BLOCK_IN_SHEET_PX
+    MOVEMENT_SPEED, FRAME_LIMIT
 } = require( '../../game-data/globals' )
 
 
@@ -44,16 +44,24 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
+        return this.isCar 
+        ? this.destinationTile.x - this.width < this.left 
+        : this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
     }
     get destinationIsRight( ) { 
-        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == "FACING_RIGHT";
+        return this.isCar 
+        ? this.destinationTile.x + GRID_BLOCK_PX + this.width > this.right
+        : this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == "FACING_RIGHT";
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y <= this.top + ( GRID_BLOCK_PX / 2 ) && this.destinationTile.direction == "FACING_UP";
+        return this.isCar 
+        ? this.destinationTile.y - this.height < this.top 
+        : this.destinationTile.y <= this.top + ( GRID_BLOCK_PX / 2 ) && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
+        return this.isCar 
+        ? this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom 
+        : this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
     }
 
      /**

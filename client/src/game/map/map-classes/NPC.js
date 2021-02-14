@@ -24,14 +24,7 @@ class NPC extends MapSprite {
     }
 
     drawSprite( ) {
-        super.drawSprite( )
-        const random = Math.random() < 0.05;
-        if ( random && !this.inMovementAnimation && !this.hasDestinationSet ) {
-            this.initMovement( );
-            this.hasDestinationSet = true;
-            let des = { col: 8, row: 6 }
-            this.setDestination( des );
-        }
+        super.drawSprite( );
 
         if ( this.movingToDestination ) {
             if ( !this.pathIsBlocked ) {
