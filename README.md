@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+### FEB 14, 2021
+* Implementing new pathfinding algorithm
+
 ### FEB 2, 2021
 * Streamlining NPC movement and removing duplicate code
 
