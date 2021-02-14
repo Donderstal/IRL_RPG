@@ -1,3 +1,12 @@
+const { 
+  NPC_ANIM_TYPE_IDLE,
+  NPC_ANIM_TYPE_SEMI_IDLE,
+  NPC_ANIM_TYPE_MOVING,
+  NPC_ANIM_TYPE_MOVING_IN_LOOP,
+
+  NPC_MOVE_TYPE_FLYING
+} = require('../../game-data/globals')
+
 module.exports = {
     "A0" : {
         "mapName": "my-neighbourhood/A0",
@@ -22,7 +31,7 @@ module.exports = {
             [17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,109,17,96,98,96,98,96,98]],
         "characters" : [
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "name": "Bodyguard Bill",
                 "sprite": "chad.png",
                 "direction": "FACING_DOWN",
@@ -174,7 +183,7 @@ module.exports = {
         ],
         "characters" : [
             {
-                "type": "walking",
+                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
                 "sprite": "neckbeard.png",
                 "direction": "FACING_DOWN",
                 "name": "Darkwing Dork",    
@@ -198,7 +207,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "chad.png",
                 "direction": "FACING_DOWN",
                 "row": 2,
@@ -212,7 +221,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "influencer.png",
                 "direction": "FACING_RIGHT",
                 "row": 4,
@@ -231,7 +240,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "tumblr_girl.png",
                 "direction": "FACING_LEFT",
                 "name": "Lisa",                    
@@ -244,7 +253,7 @@ module.exports = {
                 }
             },
             {
-                "type": "walking",
+                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
                 "sprite": "business_man.png",
                 "direction": "FACING_LEFT",
                 "name": "Yum-mart Exec",                    
@@ -319,7 +328,7 @@ module.exports = {
                 },
                 "characters" : [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "chad_recolour01.png",
                         "direction": "FACING_DOWN",
                         "name": "chad_recolour01.png",
@@ -327,7 +336,7 @@ module.exports = {
                         "col": 3
                     },
                     {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad_recolour01.png",
                       "direction": "FACING_RIGHT",
                       "name": "chad_recolour02.png",
@@ -335,7 +344,7 @@ module.exports = {
                       "col": 3
                     },
                     {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad.png",
                       "direction": "FACING_LEFT",
                       "name": "chad_recolour03.png",
@@ -343,7 +352,7 @@ module.exports = {
                       "col": 21
                     },
                     {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad.png",
                       "direction": "FACING_UP",
                       "name": "chad_recolour04.png",
@@ -380,7 +389,7 @@ module.exports = {
                 ],
                 "characters" : [
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "business_man.png",
                       "direction": "FACING_DOWN",
                       "name": "business_man.png",
@@ -388,7 +397,7 @@ module.exports = {
                       "col": 2
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad.png",
                       "direction": "FACING_DOWN",
                       "name": "chad.png",
@@ -396,7 +405,7 @@ module.exports = {
                       "col": 3
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad_recolour01.png",
                       "direction": "FACING_DOWN",
                       "name": "chad_recolour01.png",
@@ -404,7 +413,7 @@ module.exports = {
                       "col": 4
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad_recolour02.png",
                       "direction": "FACING_DOWN",
                       "name": "chad_recolour02.png",
@@ -412,7 +421,7 @@ module.exports = {
                       "col": 5
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "chad_recolour03.png",
                       "direction": "FACING_DOWN",
                       "name": "chad_recolour03.png",
@@ -420,7 +429,7 @@ module.exports = {
                       "col": 6
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "character_x1_recolour01.png",
                       "direction": "FACING_DOWN",
                       "name": "character_x1_recolour01.png",
@@ -428,7 +437,7 @@ module.exports = {
                       "col": 7
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "characterx3.png",
                       "direction": "FACING_DOWN",
                       "name": "characterx3.png",
@@ -436,7 +445,7 @@ module.exports = {
                       "col": 8
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "generic_balding_guy.png",
                       "direction": "FACING_DOWN",
                       "name": "generic_balding_guy.png",
@@ -444,7 +453,7 @@ module.exports = {
                       "col": 9
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "generic_blonde_guy.png",
                       "direction": "FACING_DOWN",
                       "name": "generic_blonde_guy.png",
@@ -452,7 +461,7 @@ module.exports = {
                       "col": 10
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "influencer.png",
                       "direction": "FACING_DOWN",
                       "name": "influencer.png",
@@ -460,7 +469,7 @@ module.exports = {
                       "col": 11
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "manager.png",
                       "direction": "FACING_DOWN",
                       "name": "manager.png",
@@ -468,7 +477,7 @@ module.exports = {
                       "col": 12
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "monkey_ceo.png",
                       "direction": "FACING_DOWN",
                       "name": "monkey_ceo.png",
@@ -476,7 +485,7 @@ module.exports = {
                       "col": 13
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "neckbeard.png",
                       "direction": "FACING_DOWN",
                       "name": "neckbeard.png",
@@ -484,7 +493,7 @@ module.exports = {
                       "col": 14
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "robot.png",
                       "direction": "FACING_DOWN",
                       "name": "robot.png",
@@ -492,7 +501,7 @@ module.exports = {
                       "col": 15
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "tumbler_girl_recolour01.png",
                       "direction": "FACING_DOWN",
                       "name": "tumbler_girl_recolour01.png",
@@ -500,7 +509,7 @@ module.exports = {
                       "col": 16
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "tumbler_girl_recolour02.png",
                       "direction": "FACING_DOWN",
                       "name": "tumbler_girl_recolour02.png",
@@ -508,7 +517,7 @@ module.exports = {
                       "col": 17
                   },
                   {
-                      "type": "idle",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
                       "sprite": "tumblr_girl.png",
                       "direction": "FACING_DOWN",
                       "name": "tumblr_girl.png",
@@ -516,7 +525,7 @@ module.exports = {
                       "col": 18
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "CharacterX4.png",
                     "direction": "FACING_DOWN",
                     "name": "CharacterX4.png",
@@ -524,7 +533,7 @@ module.exports = {
                     "col": 19
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "CharacterX5.png",
                     "direction": "FACING_DOWN",
                     "name": "CharacterX5.png",
@@ -532,7 +541,7 @@ module.exports = {
                     "col": 20
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "CharacterX5_recolour.png",
                     "direction": "FACING_DOWN",
                     "name": "CharacterX5_recolour.png",
@@ -540,7 +549,7 @@ module.exports = {
                     "col": 21
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "fats.png",
                     "direction": "FACING_DOWN",
                     "name": "fats.png",
@@ -548,7 +557,7 @@ module.exports = {
                     "col": 22
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "fats_recolour.png",
                     "direction": "FACING_DOWN",
                     "name": "fats_recolour.png",
@@ -556,7 +565,7 @@ module.exports = {
                     "col": 23
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "new_girl.png",
                     "direction": "FACING_DOWN",
                     "name": "new_girl.png",
@@ -564,7 +573,7 @@ module.exports = {
                     "col": 2
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "new_girl_recolour.png",
                     "direction": "FACING_DOWN",
                     "name": "new_girl_recolour.png",
@@ -572,7 +581,7 @@ module.exports = {
                     "col": 3
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "pigeon.png",
                     "direction": "FACING_DOWN",
                     "name": "pigeon.png",
@@ -580,7 +589,7 @@ module.exports = {
                     "col": 4
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "pony_tail.png",
                     "direction": "FACING_DOWN",
                     "name": "pony_tail.png",
@@ -588,7 +597,7 @@ module.exports = {
                     "col": 5
                   },
                   {
-                    "type": "idle",
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "pony_tail_recolour.png",
                     "direction": "FACING_DOWN",
                     "name": "pony_tail_recolour.png",
@@ -631,7 +640,7 @@ module.exports = {
                 ],
                 "characters" : [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "chad.png",
                         "direction": "FACING_DOWN",
                         "row": 2,
@@ -732,7 +741,7 @@ module.exports = {
         ],
         "characters" : [
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "chad.png",
                 "direction": "FACING_DOWN",
                 "name": "Chaddy Chandler",
@@ -745,7 +754,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "tumblr_girl.png",
                 "direction": "FACING_DOWN",
                 "row": 6,
@@ -758,7 +767,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "neckbeard.png",
                 "direction": "FACING_LEFT",
                 "name": "Yung Edgelord",
@@ -771,7 +780,7 @@ module.exports = {
                 }
             },
             {
-                "type": "walking",
+                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
                 "sprite": "manager.png",
                 "row": 11, 
                 "col": 12, 
@@ -795,7 +804,7 @@ module.exports = {
                 }
             },
             {
-                "type": "walking",
+                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
                 "sprite": "robot.png",
                 "row": 9, 
                 "col": 12, 
@@ -869,7 +878,7 @@ module.exports = {
                 ],
                 "characters": [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "influencer.png",
                         "direction": "FACING_DOWN",
                         "row": 2,
@@ -929,7 +938,7 @@ module.exports = {
                 ],
                 "characters": [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "chad.png",
                         "direction": "FACING_RIGHT",
                         "row": 4,
@@ -960,7 +969,7 @@ module.exports = {
                 ],
                 "characters" : [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "neckbeard.png",
                         "direction": "FACING_DOWN",
                         "row": 3,
@@ -1013,7 +1022,7 @@ module.exports = {
         "grid":[[277,296,305,312,312,313,314,315,332,333,334,335,356,334,358,368,370,371,392,393,394,395,412,413],[277,296,305,294,354,316,318,319,336,337,342,339,338,338,338,372,374,375,396,397,398,399,416,417],[277,277,293,312,312,320,322,323,340,341,342,343,360,361,362,376,378,379,400,401,402,403,420,421],[277,296,297,312,312,321,326,327,344,345,346,347,364,365,366,380,312,312,313,405,406,407,424,425],[38,296,301,312,312,312,312,312,312,312,353,312,430,348,312,312,312,329,410,312,312,312,428,429],[277,300,305,294,312,312,312,312,312,313,354,313,312,312,354,382,312,312,312,330,295,312,312,312],[277,304,305,312,312,312,329,312,313,312,351,312,329,312,312,312,386,312,312,298,299,329,312,312],[277,277,305,312,312,312,312,355,359,312,312,312,312,312,312,312,388,384,312,312,303,312,329,312],[277,277,584,585,585,587,588,588,588,588,588,588,588,585,586,585,585,585,585,585,585,586,585,585],[277,277,277,277,277,68,277,277,277,277,277,277,277,277,277,277,277,277,277,42,277,277,277,277],[277,277,277,277,277,574,575,575,575,575,38,575,575,277,559,277,277,575,575,575,575,559,277,277],[42,277,540,541,541,541,542,543,543,543,543,543,543,543,543,543,543,543,537,545,546,546,546,547]],
         "characters": [
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "chad.png",
                 "direction": "FACING_DOWN",
                 "row": 9,
@@ -1026,7 +1035,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "neckbeard.png",
                 "direction": "FACING_DOWN",
                 "row": 4,
@@ -1039,7 +1048,7 @@ module.exports = {
                 }
             },
             {
-                "type": "idle",
+                "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "influencer.png",
                 "direction": "FACING_DOWN",
                 "row": 9,
@@ -1128,7 +1137,7 @@ module.exports = {
                 ],
                 "characters" : [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "business_man.png",
                         "direction": "FACING_RIGHT",
                         "row": 11,
@@ -1141,7 +1150,7 @@ module.exports = {
                         }
                     },
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "influencer.png",
                         "direction": "FACING_DOWN",
                         "row": 7,
@@ -1288,7 +1297,7 @@ module.exports = {
                 ],
                 "characters": [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "influencer.png",
                         "direction": "FACING_DOWN",
                         "row": 3,
@@ -1337,7 +1346,7 @@ module.exports = {
                 ],
                 "characters": [
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "influencer.png",
                         "direction": "FACING_LEFT",
                         "row": 12,
@@ -1350,7 +1359,7 @@ module.exports = {
                         }
                     },
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "chad.png",
                         "direction": "FACING_DOWN",
                         "row": 2,
@@ -1363,7 +1372,7 @@ module.exports = {
                         }
                     },
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "chad.png",
                         "direction": "FACING_UP",
                         "row": 6,
@@ -1376,7 +1385,7 @@ module.exports = {
                         }
                     },
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "manager.png",
                         "direction": "FACING_DOWN",
                         "row": 10,
@@ -1389,7 +1398,7 @@ module.exports = {
                         }
                     },
                     {
-                        "type": "idle",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
                         "sprite": "tumblr_girl.png",
                         "direction": "FACING_LEFT",
                         "row": 3,

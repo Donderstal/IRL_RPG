@@ -15,11 +15,26 @@ const FACING_LEFT                   = 1
 const FACING_RIGHT                  = 2
 const FACING_UP                     = 3
 
+const FACING_DOWN_FLYING            = 4
+const FACING_LEFT_FLYING            = 5
+const FACING_RIGHT_FLYING           = 6
+const FACING_UP_FLYING              = 7
+
 //
 const STATIC1                       = 0
 const STEP1                         = 1
 const STATIC2                       = 2
 const STEP2                         = 3
+
+// 'enum' values for NPC sprite animation availability
+const NPC_ANIM_TYPE_IDLE            = "IDLE";
+const NPC_ANIM_TYPE_SEMI_IDLE       = "SEMI-IDLE";
+const NPC_ANIM_TYPE_MOVING          = "MOVING";
+const NPC_ANIM_TYPE_MOVING_IN_LOOP  = "MOVING_IN_LOOP";
+
+// 'enum' to handle different movement anims in I_Sprite.drawSprite();
+const NPC_MOVE_TYPE_WALKING         = "WALKING";
+const NPC_MOVE_TYPE_FLYING          = "FLYING";
 
 // animation frame limit
 const FRAME_LIMIT                   = 8
@@ -60,6 +75,7 @@ const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
 const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
 
+// game Class holder and mode strings
 let GAME = {};
 const BATTLE_MODE = "BATTLE";
 const MAP_MODE = "MAP";
@@ -85,38 +101,64 @@ const SHEET_XY_VALUES = setSheetXyValues( 10000 );
 
 module.exports = {
     MOVEMENT_SPEED,
+
     FACING_DOWN,
     FACING_LEFT,
     FACING_RIGHT,
     FACING_UP,
+
+    FACING_DOWN_FLYING,
+    FACING_LEFT_FLYING,
+    FACING_RIGHT_FLYING,
+    FACING_UP_FLYING,
+
     STATIC1,
     STEP1,
     STATIC2,
     STEP2,
+
+    NPC_ANIM_TYPE_IDLE,
+    NPC_ANIM_TYPE_SEMI_IDLE,
+    NPC_ANIM_TYPE_MOVING,
+    NPC_ANIM_TYPE_MOVING_IN_LOOP,
+
+    NPC_MOVE_TYPE_WALKING,
+    NPC_MOVE_TYPE_FLYING,
+
+
     FRAME_LIMIT,
     FRAMES_PER_SECOND,
+
     GRID_BLOCK_PX,
     GRID_BLOCK_IN_SHEET_PX,
+
     CANVAS_WIDTH,
     CANVAS_HEIGHT,
     CANVAS_COLUMNS,
     CANVAS_ROWS,
+
     MAP_SPRITE_WIDTH_IN_SHEET,
     MAP_SPRITE_HEIGHT_IN_SHEET,
+    SHEET_XY_VALUES,
+
     STRD_SPRITE_WIDTH,
     STRD_SPRITE_HEIGHT,
+
     MIN_BUBBLE_WIDTH,
     MAX_BUBBLE_WIDTH,
+
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,
     BATTLE_FONT_SIZE,
+
     INNER_TEXTBOX_RGBA,
     OUTER_TEXTBOX_RGBA,
+
     SMALL_FONT_LINE_HEIGHT,
     LARGE_FONT_LINE_HEIGHT,
     BATTLE_FONT_LINE_HEIGHT,
-    SHEET_XY_VALUES,
-    GAME,
+
     BATTLE_MODE,
-    MAP_MODE
+    MAP_MODE,
+    GAME    
 }
