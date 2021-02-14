@@ -199,6 +199,7 @@ class Sprite {
      * @function stopMovement unset movingToDestination
      */
     stopMovement( ) {
+        this.sheetPosition = 0;
         this.movingToDestination = false;
     }
 

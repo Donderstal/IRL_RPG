@@ -116,16 +116,6 @@ module.exports = {
                 "name": "Darkwing Dork",    
                 "row": 6,
                 "col": 8,
-
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 6, 
-                    "col": 8
-                },
-                "path" : [                     
-                    { "id": 0, "row": 6, "col": 8 },
-                    { "id": 1, "row": 10, "col": 12 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
@@ -141,16 +131,6 @@ module.exports = {
                 "name": "Darkwing Dork",    
                 "row": 1,
                 "col": 14,
-
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 1, 
-                    "col": 14
-                },
-                "path" : [                     
-                    { "id": 0, "row": 1, "col": 14 },
-                    { "id": 1, "row": 6, "col": 17 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
@@ -257,16 +237,6 @@ module.exports = {
                 "name": "Marching pigeon",    
                 "row": 4,
                 "col": 17,
-
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 4, 
-                    "col": 17
-                },
-                "path" : [                     
-                    { "id": 0, "row": 4, "col": 17 },
-                    { "id": 1, "row": 4, "col": 11 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
@@ -281,16 +251,6 @@ module.exports = {
                 "name": "Marching pigeon",    
                 "row": 5,
                 "col": 17,
-
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 5, 
-                    "col": 17
-                },
-                "path" : [                     
-                    { "id": 0, "row": 5, "col": 17 },
-                    { "id": 1, "row": 5, "col": 11 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
@@ -305,16 +265,6 @@ module.exports = {
                 "name": "Marching pigeon",    
                 "row": 6,
                 "col": 17,
-
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 6, 
-                    "col": 17
-                },
-                "path" : [                     
-                    { "id": 0, "row": 6, "col": 17 },
-                    { "id": 1, "row": 6, "col": 11 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",

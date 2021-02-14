@@ -183,91 +183,72 @@ module.exports = {
         ],
         "characters" : [
             {
-                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
-                "sprite": "neckbeard.png",
-                "direction": "FACING_DOWN",
-                "name": "Darkwing Dork",    
-                "row": 6,
-                "col": 8,
-
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 6, 
-                    "col": 8
-                },
-                "path" : [                     
-                    { "id": 0, "row": 6, "col": 8 },
-                    { "id": 1, "row": 6, "col": 12 }
-                ],
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "I'm a level 24 Darkmage."
-                }
+              "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+              "sprite": "neckbeard.png",
+              "direction": "FACING_DOWN",
+              "name": "Darkwing Dork",    
+              "row": 6,
+              "col": 8,
+              "action": {
+                  "type": "TEXT",
+                  "sfx": "voice-1.mp3",
+                  "direction": "FACING_UP",
+                  "text": "I'm a level 24 Darkmage."
+              }
             },
             {
-                "anim_type": NPC_ANIM_TYPE_IDLE,
-                "sprite": "chad.png",
-                "direction": "FACING_DOWN",
-                "row": 2,
-                "col": 21,
-                "name": "Big Balls Bert",                    
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "Do you even lift, bro?"
-                }
+              "anim_type": NPC_ANIM_TYPE_IDLE,
+              "sprite": "chad.png",
+              "direction": "FACING_DOWN",
+              "row": 2,
+              "col": 21,
+              "name": "Big Balls Bert",                    
+              "action": {
+                  "type": "TEXT",
+                  "sfx": "voice-1.mp3",
+                  "direction": "FACING_UP",
+                  "text": "Do you even lift, bro?"
+              }
             },
             {
-                "anim_type": NPC_ANIM_TYPE_IDLE,
-                "sprite": "influencer.png",
-                "direction": "FACING_RIGHT",
-                "row": 4,
-                "col": 4,
-                "name": "Pauline",                    
-                "action": {
-                    "type": "BATTLE",
-                    "sfx": "voice-3.mp3",
-                    "direction": "FACING_LEFT",
-                    "text": "Ever had your ass kicked by a lady?",
-                    "character": {
-                        "class": "Influencer",
-                        "level": 5,
-                        "battleSprite": "influencer.png"
-                    }
-                }
+              "anim_type": NPC_ANIM_TYPE_IDLE,
+              "sprite": "influencer.png",
+              "direction": "FACING_RIGHT",
+              "row": 4,
+              "col": 4,
+              "name": "Pauline",                    
+              "action": {
+                  "type": "BATTLE",
+                  "sfx": "voice-3.mp3",
+                  "direction": "FACING_LEFT",
+                  "text": "Ever had your ass kicked by a lady?",
+                  "character": {
+                      "class": "Influencer",
+                      "level": 5,
+                      "battleSprite": "influencer.png"
+                  }
+              }
             },
             {
-                "anim_type": NPC_ANIM_TYPE_IDLE,
-                "sprite": "tumblr_girl.png",
-                "direction": "FACING_LEFT",
-                "name": "Lisa",                    
-                "row": 4,
-                "col": 5,
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-2.mp3",
-                    "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
-                }
+              "anim_type": NPC_ANIM_TYPE_IDLE,
+              "sprite": "tumblr_girl.png",
+              "direction": "FACING_LEFT",
+              "name": "Lisa",                    
+              "row": 4,
+              "col": 5,
+              "action": {
+                  "type": "TEXT",
+                  "sfx": "voice-2.mp3",
+                  "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
+              }
             },
             {
-                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
-                "sprite": "business_man.png",
-                "direction": "FACING_LEFT",
-                "name": "Yum-mart Exec",                    
-                "row": 6,
-                "col": 26,
-                "lastPosition" : {                   
-                    "id": 0,
-                    "row": 6,
-                    "col": 26
-                },
-                "path" : [                     
-                    { "id": 0, "row": 6, "col": 21 },
-                    { "id": 1, "row": 6, "col": 26 }
-                ]
+              "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+              "sprite": "business_man.png",
+              "direction": "FACING_LEFT",
+              "name": "Yum-mart Exec",                    
+              "row": 6,
+              "col": 26,
             }
         ],
         "doors": [ 
@@ -786,17 +767,6 @@ module.exports = {
                 "col": 12, 
                 "direction": "FACING_UP",
                 "name": "Manager Bob",
-                "lastPosition" : { 
-                    "id": 0,
-                    "row": 11, 
-                    "col": 12
-                },
-                "path" : [                     
-                    { "id": 0, "row": 9, "col": 12 },
-                    { "id": 1, "row": 5, "col": 12 },
-                    { "id": 2, "row": 5, "col": 7 },
-                    { "id": 3, "row": 9, "col": 7 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
@@ -810,17 +780,6 @@ module.exports = {
                 "col": 12, 
                 "name": "Consoombot",                    
                 "direction": "FACING_UP",
-                "lastPosition" : { 
-                    "id": 0,
-                    "row": 9, 
-                    "col": 12
-                },
-                "path" : [                     
-                    { "id": 0, "row": 9, "col": 12 },
-                    { "id": 1, "row": 5, "col": 12 },
-                    { "id": 2, "row": 5, "col": 7 },
-                    { "id": 3, "row": 9, "col": 7 }
-                ],
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",

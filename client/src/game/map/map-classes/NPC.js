@@ -2,13 +2,19 @@ const MapSprite     = require('./MapSprite').MapSprite
 const MapAction     = require('./MapAction').MapAction
 const { 
     NPC_MOVE_TYPE_WALKING
-}  = require('../../../game-data/globals')
+}  = require('../../../game-data/globals');
+const globals = require('../../../game-data/globals');
+
+const cellRadius = 3;
 
 class NPC extends MapSprite {
     constructor( tile ) {
         const hasAction = ( tile.spriteData.action !== undefined );
         let src = '/static/sprites/'+ tile.spriteData.sprite;
         super( tile, "STRD", src )   
+
+        this.initialCol = this.col;
+        this.initialRow = this.row;
         
         this.nonPlayerAnimation = tile.spriteData.anim_type
         this.movementAnimation = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
@@ -32,7 +38,7 @@ class NPC extends MapSprite {
 
         if ( !this.movingToDestination && !this.isInAnimation ) {
             if ( this.handleRandomAnimation( ) ) {
-                console.log('animate ' + this.nonPlayerAnimation + ' ' + this.movementAnimation + ' NPC!')               
+                this.getRandomDestinationInRadius( )          
             }
         }
         else if ( this.movingToDestination && !this.pathIsBlocked ) {
@@ -68,6 +74,21 @@ class NPC extends MapSprite {
         }
 
         return false;
+    }
+
+    getRandomDestinationInRadius( ) {
+        const colDistance = Math.floor( Math.random( ) * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
+        const rowDistance = Math.floor( Math.random( ) * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
+        const newColumn = this.initialCol + colDistance;
+        const newRow = this.initialRow + rowDistance;
+
+        if ( newRow > 0 && newRow < globals.GAME.activeMap.rows + 1 && newColumn > 0 && newColumn < globals.GAME.activeMap.columns + 1 ) {
+            this.setDestination( { "col": newColumn, "row": newRow }  )
+            this.initMovement( " ", globals.MOVEMENT_SPEED * .5 );
+        }
+        else {
+            this.getRandomDestinationInRadius( )
+        }
     }
 }
 
