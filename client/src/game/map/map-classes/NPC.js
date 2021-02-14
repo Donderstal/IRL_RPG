@@ -4,6 +4,8 @@ const {
     NPC_ANIM_TYPE_IDLE,
     NPC_ANIM_TYPE_SEMI_IDLE,
     NPC_ANIM_TYPE_MOVING,
+    NPC_ANIM_TYPE_MOVING_IN_LOOP,
+    NPC_ANIM_TYPE_ANIMATION_LOOP,
     NPC_MOVE_TYPE_WALKING
 }  = require('../../../game-data/globals');
 const globals = require('../../../game-data/globals');
@@ -13,8 +15,8 @@ const animationList = [
     "TURN_SINGLE_CIRCLE",
     "BACK_AND_FORTH",
     "LEFT_AND_RIGHT",
-    "PUNCH_L",
-    "PUNCH_R"
+    "BACK_AND_FORTH_STEP",
+    "LEFT_AND_RIGHT_STEP"
 ]
 
 class NPC extends MapSprite {
@@ -26,8 +28,9 @@ class NPC extends MapSprite {
         this.initialCol = this.col;
         this.initialRow = this.row;
         
-        this.nonPlayerAnimation = tile.spriteData.anim_type
+        this.nonPlayerAnimation = tile.spriteData.anim_type;
         this.movementAnimation = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
+        this.animationName = tile.spriteData.anim_name == undefined ? false : tile.spriteData.anim_name;
         this.name = tile.spriteData.name
 
         if ( hasAction ) {
@@ -36,11 +39,19 @@ class NPC extends MapSprite {
             this.action.name = this.name
         }
 
-        this.animationMillisecondsLimit = 10000;
-        this.currentAnimationLimit = 0;
-        this.milliSecondCounter = 0;
-        this.lastTimeStamp = 0;
-        this.newTimeStamp = 0;
+        if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
+            
+        }
+        else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_ANIMATION_LOOP ) {
+            this.setLoopedAnimation( )
+        }
+        else {
+            this.animationMillisecondsLimit = 10000;
+            this.currentAnimationLimit = 0;
+            this.milliSecondCounter = 0;
+            this.lastTimeStamp = 0;
+            this.newTimeStamp = 0;            
+        }
     }
 
     drawSprite( ) {
@@ -57,6 +68,9 @@ class NPC extends MapSprite {
                         break;
                     case NPC_ANIM_TYPE_MOVING:
                         this.setRandomDestinationInRadius( ) 
+                        break;
+                    case NPC_ANIM_TYPE_MOVING_IN_LOOP:
+                    case NPC_ANIM_TYPE_ANIMATION_LOOP:
                         break;
                     default : 
                         console.log("Animation of type " + this.nonPlayerAnimation + " is not recognized")
@@ -121,6 +135,12 @@ class NPC extends MapSprite {
         const animationName = animationList[ Math.floor( Math.random( ) * animationList.length )]
         this.setScriptedAnimation( 
             { "animName": animationName, "loop": false }, globals.FRAME_LIMIT
+        )
+    }
+    
+    setLoopedAnimation( ) {
+        this.setScriptedAnimation( 
+            { "animName": this.animationName, "loop": true }, globals.FRAME_LIMIT
         )
     }
 }

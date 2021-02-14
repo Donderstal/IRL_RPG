@@ -31,6 +31,7 @@ const NPC_ANIM_TYPE_IDLE            = "IDLE";
 const NPC_ANIM_TYPE_SEMI_IDLE       = "SEMI-IDLE";
 const NPC_ANIM_TYPE_MOVING          = "MOVING";
 const NPC_ANIM_TYPE_MOVING_IN_LOOP  = "MOVING_IN_LOOP";
+const NPC_ANIM_TYPE_ANIMATION_LOOP  = "ANIMATION_LOOP";
 
 // 'enum' to handle different movement anims in I_Sprite.drawSprite();
 const NPC_MOVE_TYPE_WALKING         = "WALKING";
@@ -121,6 +122,7 @@ module.exports = {
     NPC_ANIM_TYPE_SEMI_IDLE,
     NPC_ANIM_TYPE_MOVING,
     NPC_ANIM_TYPE_MOVING_IN_LOOP,
+    NPC_ANIM_TYPE_ANIMATION_LOOP,
 
     NPC_MOVE_TYPE_WALKING,
     NPC_MOVE_TYPE_FLYING,
