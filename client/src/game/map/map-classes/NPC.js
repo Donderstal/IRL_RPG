@@ -21,20 +21,57 @@ class NPC extends MapSprite {
             this.path = tile.spriteData.path
             this.lastPosition = tile.spriteData.lastPosition
         }
+
+        this.animationMillisecondsLimit = 10000;
+        this.currentAnimationLimit = 0;
+        this.milliSecondCounter = 0;
+        this.lastTimeStamp = 0;
+        this.newTimeStamp = 0;
     }
 
     drawSprite( ) {
         super.drawSprite( );
 
-        if ( this.movingToDestination ) {
+        if ( !this.movingToDestination && !this.isInAnimation ) {
+            if ( this.handleRandomAnimation( ) ) {
+                console.log('animate NPC!')               
+            }
+        }
+        else {
             if ( !this.pathIsBlocked ) {
                 this.goToDestination( );     
             }
         }
-
         if ( this.movingToDestination ) {
             this.countFrame( );
         }
+    }
+
+    handleRandomAnimation( ) {
+        let addDifferenceToCounter = false;
+
+        if ( this.currentAnimationLimit == 0 ) {
+            this.currentAnimationLimit = Math.ceil(Math.random( ) * this.animationMillisecondsLimit )
+        }
+
+        if ( this.newTimeStamp != 0 ) {
+            this.lastTimeStamp = this.newTimeStamp
+            addDifferenceToCounter = true
+        }
+
+        this.newTimeStamp = Date.now( );
+
+        if ( addDifferenceToCounter ) {
+            this.milliSecondCounter += ( this.newTimeStamp - this.lastTimeStamp );
+        }
+    
+        if ( this.milliSecondCounter > this.currentAnimationLimit ) {
+            this.milliSecondCounter = 0;
+            this.currentAnimationLimit = 0;
+            return true;
+        }
+
+        return false;
     }
 }
 
