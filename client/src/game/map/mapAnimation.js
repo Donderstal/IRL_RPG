@@ -1,5 +1,5 @@
 const globals = require('../../game-data/globals')
-const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } = require('../../game-data/globals')
+const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
 
@@ -99,9 +99,9 @@ const drawSpritesInOrder = ( GAME ) => {
             if ( GAME.paused || e.deleted ) {
                 return;
             }
-            if ( e.spriteId == 'PLAYER' || e.type != 'flying' ) {
+            if ( e.spriteId == 'PLAYER' || e.movementAnimation != NPC_MOVE_TYPE_FLYING ) {
                 e.drawSprite( );
-            } else if ( e.type == 'flying' ) {
+            } else if ( e.movementAnimation == NPC_MOVE_TYPE_FLYING ) {
                 flyingSprites.push( e );     
             }
         })      

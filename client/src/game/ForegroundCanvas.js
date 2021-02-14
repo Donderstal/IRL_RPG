@@ -40,10 +40,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
 
     setCharacters( characters ) {
         characters.forEach( ( character ) => {
-            const col = character.type == 'walking' || character.type == 'flying' ? character.lastPosition.col : character.col; 
-            const row = character.type == 'walking' || character.type == 'flying' ? character.lastPosition.row : character.row; 
             this.grid.array.forEach( ( tile ) => {
-                if ( tile.row == row && tile.col == col ) {
+                if ( tile.row == character.row && tile.col == character.col ) {
                     tile.setSpriteData( "character", character )
                 }
             })

@@ -1,6 +1,8 @@
 const MapSprite     = require('./MapSprite').MapSprite
 const MapAction     = require('./MapAction').MapAction
-const globals       = require('../../../game-data/globals')
+const { 
+    NPC_MOVE_TYPE_WALKING
+}  = require('../../../game-data/globals')
 
 class NPC extends MapSprite {
     constructor( tile ) {
@@ -8,18 +10,14 @@ class NPC extends MapSprite {
         let src = '/static/sprites/'+ tile.spriteData.sprite;
         super( tile, "STRD", src )   
         
-        this.type = tile.spriteData.type
+        this.nonPlayerAnimation = tile.spriteData.anim_type
+        this.movementAnimation = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
         this.name = tile.spriteData.name
 
         if ( hasAction ) {
             this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, tile.spriteData.name );
             this.action = tile.spriteData.action
             this.action.name = this.name
-        }
-
-        if ( tile.spriteData.type == "walking" || tile.spriteData.type == "flying" ) {
-            this.path = tile.spriteData.path
-            this.lastPosition = tile.spriteData.lastPosition
         }
 
         this.animationMillisecondsLimit = 10000;
@@ -34,13 +32,11 @@ class NPC extends MapSprite {
 
         if ( !this.movingToDestination && !this.isInAnimation ) {
             if ( this.handleRandomAnimation( ) ) {
-                console.log('animate NPC!')               
+                console.log('animate ' + this.nonPlayerAnimation + ' ' + this.movementAnimation + ' NPC!')               
             }
         }
-        else {
-            if ( !this.pathIsBlocked ) {
-                this.goToDestination( );     
-            }
+        else if ( this.movingToDestination && !this.pathIsBlocked ) {
+            this.goToDestination( );     
         }
         if ( this.movingToDestination ) {
             this.countFrame( );
