@@ -1,11 +1,21 @@
 const MapSprite     = require('./MapSprite').MapSprite
 const MapAction     = require('./MapAction').MapAction
 const { 
+    NPC_ANIM_TYPE_IDLE,
+    NPC_ANIM_TYPE_SEMI_IDLE,
+    NPC_ANIM_TYPE_MOVING,
     NPC_MOVE_TYPE_WALKING
 }  = require('../../../game-data/globals');
 const globals = require('../../../game-data/globals');
 
 const cellRadius = 3;
+const animationList = [
+    "TURN_SINGLE_CIRCLE",
+    "BACK_AND_FORTH",
+    "LEFT_AND_RIGHT",
+    "PUNCH_L",
+    "PUNCH_R"
+]
 
 class NPC extends MapSprite {
     constructor( tile ) {
@@ -36,14 +46,30 @@ class NPC extends MapSprite {
     drawSprite( ) {
         super.drawSprite( );
 
-        if ( !this.movingToDestination && !this.isInAnimation ) {
+        if ( !this.movingToDestination && !this.inScriptedAnimation ) {
             if ( this.handleRandomAnimation( ) ) {
-                this.getRandomDestinationInRadius( )          
+                switch( this.nonPlayerAnimation ) {
+                    case NPC_ANIM_TYPE_IDLE:
+                        this.setRandomAnimation( );
+                        break;
+                    case NPC_ANIM_TYPE_SEMI_IDLE:
+                        Math.random( ) < .33 ? this.setRandomDestinationInRadius( ) : this.setRandomAnimation( )
+                        break;
+                    case NPC_ANIM_TYPE_MOVING:
+                        this.setRandomDestinationInRadius( ) 
+                        break;
+                    default : 
+                        console.log("Animation of type " + this.nonPlayerAnimation + " is not recognized")
+                }
             }
         }
         else if ( this.movingToDestination && !this.pathIsBlocked ) {
             this.goToDestination( );     
         }
+        else if ( this.inScriptedAnimation ) {
+            this.doScriptedAnimation( );
+        }
+
         if ( this.movingToDestination ) {
             this.countFrame( );
         }
@@ -76,7 +102,7 @@ class NPC extends MapSprite {
         return false;
     }
 
-    getRandomDestinationInRadius( ) {
+    setRandomDestinationInRadius( ) {
         const colDistance = Math.floor( Math.random( ) * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
         const rowDistance = Math.floor( Math.random( ) * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
         const newColumn = this.initialCol + colDistance;
@@ -87,8 +113,15 @@ class NPC extends MapSprite {
             this.initMovement( " ", globals.MOVEMENT_SPEED * .5 );
         }
         else {
-            this.getRandomDestinationInRadius( )
+            this.setRandomDestinationInRadius( )
         }
+    }
+
+    setRandomAnimation( ) {
+        const animationName = animationList[ Math.floor( Math.random( ) * animationList.length )]
+        this.setScriptedAnimation( 
+            { "animName": animationName, "loop": false }, globals.FRAME_LIMIT
+        )
     }
 }
 

@@ -146,9 +146,10 @@ class MapSprite extends I_Sprite {
 
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
         this.inScriptedAnimation    = true;     
+        this.originalDirection      = this.direction;
 
         this.animationScript.loop           = scene.loop;
-        this.animationScript.data           = anim[scene.animName];      
+        this.animationScript.data           = anim[scene.animName];   
         this.animationScript.index          = 0;           
         this.animationScript.sceneLength    = this.animationScript.data.length;      
         this.animationScript.frameRate      = frameRate;
@@ -192,11 +193,10 @@ class MapSprite extends I_Sprite {
     }
 
     unsetScriptedAnimation( ) {
-        if ( Number.isInteger(globals.GAME.activeCinematic.activeScene.endDirection)) {
-            this.direction = globals.GAME.activeCinematic.activeScene.endDirection
-        }   
         this.inScriptedAnimation    = false;  
-        this.animationScript        = {}
+        this.animationScript        = { };
+        this.direction              = this.originalDirection;
+        this.sheetPosition          = 0;
     }
 } 
 
