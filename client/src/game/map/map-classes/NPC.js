@@ -100,7 +100,7 @@ class NPC extends MapSprite {
 
             if ( this.newBlockedTime != 0 ) {
                 this.oldBlockedTime = this.newBlockedTime
-                this.addDifferenceToCounter = true
+                addDifferenceToCounter = true
             }
     
             this.newBlockedTime = Date.now( );
