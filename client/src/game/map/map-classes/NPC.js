@@ -19,6 +19,7 @@ const animationList = [
     "LEFT_AND_RIGHT_STEP"
 ]
 
+
 class NPC extends MapSprite {
     constructor( tile ) {
         const hasAction = ( tile.spriteData.action !== undefined );
@@ -53,6 +54,12 @@ class NPC extends MapSprite {
             this.lastTimeStamp = 0;
             this.newTimeStamp = 0;            
         }
+
+        this.blockedMilliSecondsLimit = 10000;
+        this.blockedTimer = 0;
+
+        this.oldBlockedTime = 0;
+        this.newBlockedTime = 0;
     }
 
     drawSprite( ) {
@@ -87,6 +94,28 @@ class NPC extends MapSprite {
 
         if ( this.movingToDestination ) {
             this.countFrame( );
+        }
+        if ( this.pathIsBlocked ) {
+            let addDifferenceToCounter = false;
+
+            if ( this.newBlockedTime != 0 ) {
+                this.oldBlockedTime = this.newBlockedTime
+                this.addDifferenceToCounter = true
+            }
+    
+            this.newBlockedTime = Date.now( );
+    
+            if ( addDifferenceToCounter ) {
+                this.blockedTimer += ( this.newBlockedTime - this.oldBlockedTime );
+            }
+        
+            if ( this.blockedTimer > this.blockedMilliSecondsLimit ) {
+                this.blockedTimer = 0;
+                this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP );
+            }
+        }
+        else {
+            this.blockedTimer = 0;
         }
     }
 
