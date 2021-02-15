@@ -109,13 +109,17 @@ module.exports = {
         ],
         "characters" : [
             {
-                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+                "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                 "move_type": NPC_MOVE_TYPE_FLYING,
                 "sprite": "pigeon.png",
                 "direction": "FACING_DOWN",
                 "name": "Darkwing Dork",    
                 "row": 6,
                 "col": 8,
+                "destination" : {
+                    "row": 2,
+                    "col": 13,
+                },
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",
@@ -124,13 +128,17 @@ module.exports = {
                 }
             },
             {
-                "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+                "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                 "move_type": NPC_MOVE_TYPE_FLYING,
                 "sprite": "pigeon.png",
                 "direction": "FACING_DOWN",
                 "name": "Darkwing Dork",    
                 "row": 1,
                 "col": 14,
+                "destination" : {
+                    "row": 5,
+                    "col": 18,
+                },
                 "action": {
                     "type": "TEXT",
                     "sfx": "voice-1.mp3",

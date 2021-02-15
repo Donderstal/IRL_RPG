@@ -316,36 +316,52 @@ module.exports = {
                 },
                 "characters" : [
                     {
-                        "anim_type": NPC_ANIM_TYPE_IDLE,
+                        "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                         "sprite": "chad_recolour01.png",
                         "direction": "FACING_DOWN",
                         "name": "chad_recolour01.png",
                         "row": 3,
-                        "col": 3
+                        "col": 3,
+                        "destination" : {
+                          "row": 14,
+                          "col": 21
+                      },
                     },
                     {
-                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                       "sprite": "chad_recolour01.png",
                       "direction": "FACING_RIGHT",
                       "name": "chad_recolour02.png",
                       "row": 14,
-                      "col": 3
+                      "col": 3,
+                      "destination" : {
+                        "row": 3,
+                        "col": 21
+                      }
                     },
                     {
-                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                       "sprite": "chad.png",
                       "direction": "FACING_LEFT",
                       "name": "chad_recolour03.png",
                       "row": 3,
-                      "col": 21
+                      "col": 21,
+                      "destination" : {
+                        "row": 14,
+                        "col": 3
+                      }
                     },
                     {
-                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                       "sprite": "chad.png",
                       "direction": "FACING_UP",
                       "name": "chad_recolour04.png",
                       "row": 14,
-                      "col": 21
+                      "col": 21,
+                      "destination" : {
+                        "row": 3,
+                        "col": 3
+                      },
                     }
                 ]
             },
