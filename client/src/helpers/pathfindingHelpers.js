@@ -2,7 +2,6 @@ const globals = require('../game-data/globals')
 
 const TILE_STATUS_INVALID = "INVALID";
 const TILE_STATUS_BLOCKED = "BLOCKED";
-const TILE_STATUS_VISITED = "VISITED";
 const TILE_STATUS_VALID = "VALID";
 
 const DIRECTION_NORTH = "NORTH";
@@ -39,36 +38,29 @@ const getOppositeDirection = ( direction ) => {
 }
 
 /**
- * @function determinePath
+ * @class GridLocation
+ * Used in pathfinding algorithm
  */
-
-const determinePath = ( startingTile, destinationTile ) => {
-    const columnDifference = Math.abs(startingTile.col - destinationTile.col);
-    const rowDifference = Math.abs(startingTile.row - destinationTile.row);
-    let returnArray = [];    
-
-    if ( columnDifference > rowDifference ) {
-        returnArray.push( { 'row': startingTile.row, 'col': destinationTile.col, 'alignment': "horizontal" } )
-        returnArray.push( { 'row': destinationTile.row, 'col': destinationTile.col, 'alignment': "vertical" } )
+class GridLocation {
+    constructor( row, column, index, status = null ) {
+        this.row = row;
+        this.column = column;
+        this.path = [];
+        this.status = status;
+        this.index = index;
     }
-    else {
-        returnArray.push( { 'row': destinationTile.row, 'col': startingTile.col, 'alignment': "vertical" } )
-        returnArray.push( { 'row': destinationTile.row, 'col': destinationTile.col, 'alignment': "horizontal" } )
-    }
-
-    return returnArray;
 }
 
 /**
  * @function determineShortestPath
- * All props to gregtrowbridge.com for explaining and sharing this algorithm
+ * Check all tiles from the startingpoint to determine a viable path
+ * All props to gregtrowbridge.com for explaining the algorithm
  */
 const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
     visitedTilesList = [];
     colsInGrid = grid.cols;
     rowsInGrid = grid.rows;
-    
-    let tileList = grid.array.slice();
+
     let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, "START" )
     const queue = [ location ];
 
@@ -76,7 +68,7 @@ const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
         const currentLocation = queue.shift( );
 
         if ( currentLocation.row != 1 ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_NORTH, tileList, isFlying )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_NORTH, isFlying )
             if ( newLocation.index == targetTile.index ) {
                 return newLocation.path;
             }
@@ -86,7 +78,7 @@ const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
         }
 
         if ( currentLocation.column != colsInGrid ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_EAST, tileList, isFlying )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_EAST, isFlying )
             if ( newLocation.index == targetTile.index  ) {
                 return newLocation.path;
             }
@@ -97,7 +89,7 @@ const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
         }
 
         if ( currentLocation.row != rowsInGrid ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_SOUTH, tileList, isFlying )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_SOUTH, isFlying )
             if ( newLocation.index == targetTile.index ) {
                 return newLocation.path;
             }
@@ -107,7 +99,7 @@ const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
         }
 
         if  ( currentLocation.column != 1 ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_WEST, tileList, isFlying )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_WEST, isFlying )
             if ( newLocation.index == targetTile.index  ) {
                 return newLocation.path;
             }
@@ -120,19 +112,17 @@ const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
     return false;    
 }
 
-class GridLocation {
-    constructor( row, column, index, status = null ) {
-        this.row = row;
-        this.column = column;
-        this.path = [];
-        this.status = status;
-        this.index = index;
-    }
-}
-const getLocationStatus = ( location, tileList, isFlying  ) => {
+/**
+ * @function getLocationStatus 
+ * @param {GridLocation} location 
+ * @param {boolean} isFlying 
+ * Check if a location can be traversed. Used in pathfinding algorithm
+ */
+const getLocationStatus = ( location, isFlying  ) => {
     if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
         return TILE_STATUS_INVALID;
-    } else if ( ( !isFlying && ( globals.GAME.getTileOnCanvasAtIndex( "FRONT", location.index ).isBlocked || globals.GAME.getTileOnCanvasAtIndex( "BACK",location.index ).isBlocked ) )
+    } else if ( 
+        ( !isFlying && ( globals.GAME.getTileOnCanvasAtIndex( "FRONT", location.index ).isBlocked || globals.GAME.getTileOnCanvasAtIndex( "BACK",location.index ).isBlocked ) )
         || visitedTilesList.indexOf(location.index) > -1 ) {
         return TILE_STATUS_BLOCKED;
     } else {
@@ -140,7 +130,14 @@ const getLocationStatus = ( location, tileList, isFlying  ) => {
     }
 }
 
-const exploreInDirection = ( currentLocation, direction, tileList, isFlying  ) => {
+/**
+ * @function exploreInDirection
+ * @param {GridLocation} location 
+ * @param {string} direction 
+ * @param {boolean} isFlying 
+ * Get a tile in a direction from the currentLocation and check its status
+ */
+const exploreInDirection = ( currentLocation, direction, isFlying  ) => {
     let newPath = currentLocation.path.slice( );
     let row = currentLocation.row;
     let col = currentLocation.column;
@@ -166,7 +163,7 @@ const exploreInDirection = ( currentLocation, direction, tileList, isFlying  ) =
     newPath.push(index);
     const newLocation = new GridLocation( row, col, index );
     newLocation.path = newPath;
-    newLocation.status = getLocationStatus( newLocation, tileList, isFlying  );
+    newLocation.status = getLocationStatus( newLocation, isFlying  );
 
     if ( newLocation.status === TILE_STATUS_VALID ) {
         visitedTilesList.push( newLocation.index )
@@ -181,6 +178,5 @@ const getCellIndex = ( row, column ) => {
 
 module.exports = {
     getOppositeDirection,
-    determineShortestPath,
-    determinePath
+    determineShortestPath
 }
