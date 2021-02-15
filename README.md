@@ -15,6 +15,7 @@ Try the latest the game at: http://34.90.228.47/
 ### FEB 14, 2021
 * Implementing new pathfinding algorithm
 * Semi-random NPC movement and animations
+* New NPC types for generating different anims/movements
 
 ### FEB 2, 2021
 * Streamlining NPC movement and removing duplicate code

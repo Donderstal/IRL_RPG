@@ -61,19 +61,19 @@ const determinePath = ( startingTile, destinationTile ) => {
  * @function determineShortestPath
  * All props to gregtrowbridge.com for explaining and sharing this algorithm
  */
-const determineShortestPath = ( startingTile, targetTile, grid ) => {
+const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
     colsInGrid = grid.cols;
     rowsInGrid = grid.rows;
     
     let tileList = grid.array;
-    let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, "START" )
+    let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, TILE_STATUS_VISITED )
     const queue = [ location ];
 
     while ( queue.length > 0 ) {
         const currentLocation = queue.shift( );
 
         if ( currentLocation.row != 1 ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_NORTH, tileList )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_NORTH, tileList, isFlying )
             if ( newLocation.index == targetTile.index ) {
                 return newLocation.path;
             }
@@ -83,7 +83,7 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
         }
 
         if ( currentLocation.column != colsInGrid ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_EAST, tileList )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_EAST, tileList, isFlying )
             if ( newLocation.index == targetTile.index  ) {
                 return newLocation.path;
             }
@@ -94,7 +94,7 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
         }
 
         if ( currentLocation.row != rowsInGrid ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_SOUTH, tileList )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_SOUTH, tileList, isFlying )
             if ( newLocation.index == targetTile.index ) {
                 return newLocation.path;
             }
@@ -104,7 +104,7 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
         }
 
         if  ( currentLocation.column != 1 ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_WEST, tileList )
+            var newLocation = exploreInDirection( currentLocation, DIRECTION_WEST, tileList, isFlying )
             if ( newLocation.index == targetTile.index  ) {
                 return newLocation.path;
             }
@@ -114,7 +114,10 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
         }
 
         if ( queue.length == 0 ) {
+            console.log('end of queue')
             console.log(currentLocation)
+            console.log("blocked? " + globals.GAME.getTileOnCanvasAtIndex( "FRONT", currentLocation.index ).isBlocked 
+            || globals.GAME.getTileOnCanvasAtIndex( "BACK", currentLocation.index ).isBlocked )
         }
     }
 
@@ -130,12 +133,12 @@ class GridLocation {
         this.index = index;
     }
 }
-const getLocationStatus = ( location, tileList ) => {
+const getLocationStatus = ( location, tileList, isFlying  ) => {
     if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
         return TILE_STATUS_INVALID;
-    } else if ( 
-        globals.GAME.getTileOnCanvasAtIndex( "FRONT", location.index ).isBlocked 
-        || globals.GAME.getTileOnCanvasAtIndex( "BACK", location.index ).isBlocked 
+    } else if ( ( !isFlying &&
+        ( globals.GAME.getTileOnCanvasAtIndex( "FRONT", location.index ).isBlocked 
+        || globals.GAME.getTileOnCanvasAtIndex( "BACK", location.index ).isBlocked ))
         || tileList[location.index].status ==  TILE_STATUS_VISITED ) {
         return TILE_STATUS_BLOCKED;
     } else {
@@ -143,7 +146,7 @@ const getLocationStatus = ( location, tileList ) => {
     }
 }
 
-const exploreInDirection = ( currentLocation, direction, tileList ) => {
+const exploreInDirection = ( currentLocation, direction, tileList, isFlying  ) => {
     let newPath = currentLocation.path.slice( );
     let row = currentLocation.row;
     let col = currentLocation.column;
@@ -169,7 +172,7 @@ const exploreInDirection = ( currentLocation, direction, tileList ) => {
     newPath.push(index);
     const newLocation = new GridLocation( row, col, index );
     newLocation.path = newPath;
-    newLocation.status = getLocationStatus( newLocation, tileList );
+    newLocation.status = getLocationStatus( newLocation, tileList, isFlying  );
 
     if ( newLocation.status === TILE_STATUS_VALID ) {
         tileList[newLocation.index].status = TILE_STATUS_VISITED;

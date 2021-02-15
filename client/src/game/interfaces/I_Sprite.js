@@ -5,7 +5,7 @@ const {
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
     MOVEMENT_SPEED, FRAME_LIMIT, 
-    NPC_MOVE_TYPE_FLYING,
+    NPC_MOVE_TYPE_FLYING,  NPC_ANIM_TYPE_MOVING_IN_LOOP,
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
     FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
@@ -181,6 +181,9 @@ class Sprite {
                 this.activeDestinationIndex += 1; 
                 this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
             }
+            else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
+                this.activeDestinationIndex = 0;
+            }
             else {
                 this.stopMovement( );
                 this.unsetDestination( );    
@@ -211,45 +214,70 @@ class Sprite {
      * @function setDestination set destination to class. determine destinatonTile
      * @param {object} destination information about destination's grid location
      */
-    setDestination( destination ) {
+    setDestination( destination, isLoop = false ) {
         this.originalDirection  = this.direction;
         this.destinationTiles   = [];
         this.destination        = destination;
         this.activeDestinationIndex;
         
         if ( !this.isCar ) {
-            this.setDestinationList( )
+            this.setDestinationList( isLoop )
         }
         else {
             this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
         }
     }
 
-    setDestinationList( ) {
-        const lastTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
-        const destination = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
-        const pathIndexes = pathFinder.determineShortestPath( lastTile, destination, globals.GAME.BACK.grid ) 
+    setDestinationList( isLoop ) {
+        const startingTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
+        const destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
+        let pathIndexes = [ ]
+        if ( isLoop ) {
+            let goToIndexes = this.getPathIndexes( startingTile, destinationTile )
+            let loopIndexes = this.getPathIndexes( destinationTile, startingTile )
+            pathIndexes = [ ...goToIndexes, ...loopIndexes ]
+        } else {
+            pathIndexes = this.getPathIndexes( startingTile, destinationTile )
+        }
+        if ( pathIndexes != undefined || pathIndexes != false ) {
+            this.destinationTiles = this.getTileListFromIndexes( pathIndexes, startingTile )
+            this.activeDestinationIndex = 0;
+            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;              
+        }
+        else {
+            this.unsetDestination( )
+        }
+    }
 
+    getPathIndexes( startingTile, destinationTile ) {
+        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementAnimation == NPC_MOVE_TYPE_FLYING )   
+    }
+
+    getLoopIndexes( ) {
+
+    }
+
+    getTileListFromIndexes( pathIndexes, startingTile ) {
         if ( !pathIndexes ) {
             this.unsetDestination( );
             return;
         }
 
-        let lastIndex = lastTile.index;
+        let lastIndex = startingTile.index;
+        let tileList = []
 
         pathIndexes.forEach( ( pathIndex ) => {
             let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )
             tile.direction = pathIndex < lastIndex 
             ? pathIndex == lastIndex - 1 ? "FACING_LEFT" : "FACING_UP" 
             : pathIndex == lastIndex + 1 ? "FACING_RIGHT" : "FACING_DOWN" ;
-            this.destinationTiles.push( { 
+            tileList.push( { 
                 tile,
             } )
             lastIndex = pathIndex;
         })
 
-        this.activeDestinationIndex = 0;
-        this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;           
+        return tileList;
     }
 
     /**
