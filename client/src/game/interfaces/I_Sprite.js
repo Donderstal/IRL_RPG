@@ -67,6 +67,13 @@ class Sprite {
         : this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
     }
 
+    get destinationIsBlocked( ) {
+        return ( 
+            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ).isBlocked 
+            && globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row ).isBlocked 
+        )
+    }
+
      /**
      * @function setSpriteToGrid determine a sprite's XY on the grid
      * @param {I_TIle} tile instance of I_Tile Class
@@ -219,12 +226,17 @@ class Sprite {
         this.destinationTiles   = [];
         this.destination        = destination;
         this.activeDestinationIndex;
-        
-        if ( !this.isCar ) {
-            this.setDestinationList( isLoop )
+
+        if ( !this.destinationIsBlocked ) {
+            if ( !this.isCar ) {
+                this.setDestinationList( isLoop )
+            }
+            else {
+                this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
+            }
         }
         else {
-            this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
+            this.unsetDestination( );
         }
     }
 

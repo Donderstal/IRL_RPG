@@ -40,7 +40,8 @@ class NPC extends MapSprite {
         }
 
         if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
-            this.setDestination( tile.spriteData.destination, true )
+            this.setDestination( tile.spriteData.destination, true );
+            this.initMovement( );
         }
         else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             this.setLoopedAnimation( )
