@@ -48,7 +48,7 @@ class NPC extends MapSprite {
             this.setLoopedAnimation( )
         }
         else {
-            this.animationMillisecondsLimit = 10000;
+            this.animationMillisecondsLimit = 5000;
             this.currentAnimationLimit = 0;
             this.milliSecondCounter = 0;
             this.lastTimeStamp = 0;
@@ -95,7 +95,7 @@ class NPC extends MapSprite {
         if ( this.movingToDestination ) {
             this.countFrame( );
         }
-        if ( this.pathIsBlocked ) {
+        if ( this.pathIsBlocked && this.movingToDestination ) {
             let addDifferenceToCounter = false;
 
             if ( this.newBlockedTime != 0 ) {
@@ -162,7 +162,23 @@ class NPC extends MapSprite {
     }
 
     setRandomAnimation( ) {
-        const animationName = animationList[ Math.floor( Math.random( ) * animationList.length )]
+        const animation = animationList[ Math.floor( Math.random( ) * animationList.length )]
+        if ( animation == "BLINK" && this.direction == globals.FACING_UP ) {
+            return;
+        }
+        let animationName;
+
+        switch ( animation ) {
+            case "BOP":
+                animationName = this.direction == globals.FACING_UP ? "BOP_UP" : this.direction == globals.FACING_DOWN ? "BOP_DOWN" : this.direction == globals.FACING_LEFT ? "BOP_LEFT" : "BOP_RIGHT";
+                break;
+            case "BLINK":
+                animationName = this.direction == globals.FACING_DOWN ? "BLINK_DOWN" : this.direction == globals.FACING_LEFT ? "BLINK_LEFT" : "BLINK_RIGHT";
+                break;
+            default: 
+                animationName = animation
+        }
+        console.log(animationName)       
         this.setScriptedAnimation( 
             { "animName": animationName, "loop": false }, globals.FRAME_LIMIT
         )

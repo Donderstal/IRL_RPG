@@ -316,53 +316,37 @@ module.exports = {
                 },
                 "characters" : [
                     {
-                        "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
-                        "sprite": "chad_recolour01.png",
-                        "direction": "FACING_DOWN",
+                        "anim_type": NPC_ANIM_TYPE_IDLE,
+                        "sprite": "Chad.png",
+                        "direction": "FACING_LEFT",
                         "name": "chad_recolour01.png",
                         "row": 3,
                         "col": 3,
-                        "destination" : {
-                          "row": 3,
-                          "col": 7
-                      },
                     },
                     {
-                      "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
-                      "sprite": "chad_recolour01.png",
-                      "direction": "FACING_RIGHT",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "sprite": "Chad.png",
+                      "direction": "FACING_DOWN",
                       "name": "chad_recolour02.png",
                       "row": 3,
-                      "col": 7,
-                      "destination" : {
-                        "row": 3,
-                        "col": 3
-                      }
-                    },
-                      {
-                        "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
-                        "sprite": "chad_recolour01.png",
-                        "direction": "FACING_DOWN",
-                        "name": "chad_recolour01.png",
-                        "row": 15,
-                        "col": 1,
-                        "destination" : {
-                          "row": 15,
-                          "col": 8
-                      },
+                      "col": 4
                     },
                     {
-                      "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
-                      "sprite": "chad_recolour01.png",
-                      "direction": "FACING_RIGHT",
-                      "name": "chad_recolour02.png",
-                      "row": 15,
-                      "col": 8,
-                      "destination" : {
-                        "row": 15,
-                        "col": 1
-                      }
-                    }
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "sprite": "Chad.png",
+                      "direction": "FACING_UP",
+                      "name": "chad_recolour01.png",
+                      "row": 3,
+                      "col": 5
+                  },
+                  {
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
+                    "sprite": "Chad.png",
+                    "direction": "FACING_RIGHT",
+                    "name": "chad_recolour02.png",
+                    "row": 3,
+                    "col": 6,
+                  }
                 ]
             },
             "neighbours-house" : {   

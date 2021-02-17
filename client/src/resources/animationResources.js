@@ -156,14 +156,17 @@ const BOP_DOWN = [
 ]
 
 const BLINK_LEFT = [ 
+    { 'direction': 8,'position': 3 },
     { 'direction': 8,'position': 3 }
 ]
 
 const BLINK_RIGHT = [
+    { 'direction': 9,'position': 3 },
     { 'direction': 9,'position': 3 }
 ]
 
 const BLINK_DOWN = [
+    { 'direction': 7,'position': 3 },
     { 'direction': 7,'position': 3 }
 ]
 
