@@ -171,10 +171,10 @@ const BLINK_DOWN = [
 ]
 
 const CHAD_LIFT = [
-    { 'direction': 11,'position': 0 },
-    { 'direction': 11,'position': 1 },
-    { 'direction': 11,'position': 2 },
-    { 'direction': 11,'position': 1 },
+    { 'direction': 12,'position': 0 },
+    { 'direction': 12,'position': 1 },
+    { 'direction': 12,'position': 2 },
+    { 'direction': 12,'position': 1 },
 ]
 
 const STANDARD_LIFT = [
