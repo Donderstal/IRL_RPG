@@ -34,15 +34,27 @@ const LEFT_AND_RIGHT_STEP = [
 const PUNCH_L = [
     { 'direction': 6,'position': 0 },
     { 'direction': 6,'position': 0 },
+    { 'direction': 4,'position': 0 },
+    { 'direction': 4,'position': 1 },
+    { 'direction': 4,'position': 0 },
     { 'direction': 6,'position': 0 },
-    { 'direction': 6,'position': 0 }
+    { 'direction': 6,'position': 0 },
+    { 'direction': 6,'position': 0 },
+    { 'direction': 4,'position': 0 },
+    { 'direction': 4,'position': 1 }
 ]
 
 const PUNCH_R = [
     { 'direction': 6,'position': 1 },
     { 'direction': 6,'position': 1 },
+    { 'direction': 5,'position': 0 },
+    { 'direction': 5,'position': 1 },
+    { 'direction': 5,'position': 0 },
     { 'direction': 6,'position': 1 },
-    { 'direction': 6,'position': 1 }
+    { 'direction': 6,'position': 1 },
+    { 'direction': 6,'position': 1 },
+    { 'direction': 5,'position': 0 },
+    { 'direction': 5,'position': 1 }
 ]
 
 const CHAD_RAGE_L = [
@@ -68,12 +80,6 @@ const CHAD_RAGE_R = [
 ]
 
 const NECKBEARD_HACK_L = [
-    { 'direction': 9,'position': 0 },
-    { 'direction': 9,'position': 1 },
-    { 'direction': 9,'position': 2 },
-    { 'direction': 9,'position': 3 },
-    { 'direction': 10,'position': 0 },
-    { 'direction': 10,'position': 1 },
     { 'direction': 10,'position': 2 },
     { 'direction': 10,'position': 3 },
     { 'direction': 10,'position': 2 },
@@ -83,12 +89,6 @@ const NECKBEARD_HACK_L = [
 ]
 
 const NECKBEARD_HACK_R = [
-    { 'direction': 7,'position': 0 },
-    { 'direction': 7,'position': 1 },
-    { 'direction': 7,'position': 2 },
-    { 'direction': 7,'position': 3 },
-    { 'direction': 8,'position': 0 },
-    { 'direction': 8,'position': 1 },
     { 'direction': 8,'position': 2 },
     { 'direction': 8,'position': 3 },
     { 'direction': 8,'position': 2 },
@@ -170,6 +170,65 @@ const BLINK_DOWN = [
     { 'direction': 7,'position': 3 }
 ]
 
+const CHAD_LIFT = [
+    { 'direction': 11,'position': 0 },
+    { 'direction': 11,'position': 1 },
+    { 'direction': 11,'position': 2 },
+    { 'direction': 11,'position': 1 },
+]
+
+const STANDARD_LIFT = [
+    { 'direction': 7,'position': 0 },
+    { 'direction': 7,'position': 1 },
+    { 'direction': 7,'position': 2 },
+    { 'direction': 7,'position': 1 },
+]
+
+const CHAD_TALK_LEFT = [
+    { 'direction': 11,'position': 1 },
+    { 'direction': 11,'position': 1 },
+    { 'direction': 8,'position': 3 },
+    { 'direction': 8,'position': 3 },
+    { 'direction': 11,'position': 1 },
+    { 'direction': 11,'position': 1 },
+    { 'direction': 8,'position': 3 },
+    { 'direction': 8,'position': 3 },
+    { 'direction': 11,'position': 1 },
+    { 'direction': 8,'position': 0 },
+    { 'direction': 11,'position': 1 },
+    { 'direction': 8,'position': 0 }
+]
+
+const CHAD_TALK_RIGHT = [
+    { 'direction': 11,'position': 2 },
+    { 'direction': 11,'position': 2 },
+    { 'direction': 9,'position': 3 },
+    { 'direction': 9,'position': 3 },
+    { 'direction': 11,'position': 2 },
+    { 'direction': 11,'position': 2 },
+    { 'direction': 9,'position': 3 },
+    { 'direction': 9,'position': 3 },
+    { 'direction': 11,'position': 2 },
+    { 'direction': 9,'position': 0 },
+    { 'direction': 11,'position': 2 },
+    { 'direction': 9,'position': 0 }
+]
+
+const CHAD_TALK_DOWN = [
+    { 'direction': 11,'position': 0 },
+    { 'direction': 11,'position': 0 },
+    { 'direction': 7,'position': 0 },
+    { 'direction': 7,'position': 0 },
+    { 'direction': 11,'position': 0 },
+    { 'direction': 11,'position': 0 },
+    { 'direction': 7,'position': 3 },
+    { 'direction': 7,'position': 3 },
+    { 'direction': 11,'position': 0 },
+    { 'direction': 7,'position': 0 },
+    { 'direction': 11,'position': 0 },
+    { 'direction': 7,'position': 0 }
+]
+
 module.exports = {
     TURN_SINGLE_CIRCLE,
     BACK_AND_FORTH,
@@ -197,5 +256,12 @@ module.exports = {
 
     BLINK_LEFT,
     BLINK_RIGHT,
-    BLINK_DOWN
+    BLINK_DOWN,
+
+    CHAD_LIFT,
+    STANDARD_LIFT,
+
+    CHAD_TALK_DOWN,
+    CHAD_TALK_LEFT,
+    CHAD_TALK_RIGHT
 }
