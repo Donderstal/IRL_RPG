@@ -115,6 +115,7 @@ class Game {
     switchMap ( destination, type ) {
         this.paused = true;
         controls.stopListenForKeyPress( );
+        controls.clearPressedKeys( this.pressedKeys );
 
         const newMapData = getMapData( destination );
         this.clearMapFromCanvases( );

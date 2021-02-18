@@ -99,7 +99,7 @@ const drawSpritesInOrder = ( GAME ) => {
             if ( GAME.paused || e.deleted ) {
                 return;
             }
-            if ( e.spriteId == 'PLAYER' || e.movementAnimation != NPC_MOVE_TYPE_FLYING ) {
+            if ( e.spriteId == 'PLAYER' || !( e.movementAnimation == NPC_MOVE_TYPE_FLYING && e.movingToDestination && !e.pathIsBlocked ) ) {
                 e.drawSprite( );
             } else if ( e.movementAnimation == NPC_MOVE_TYPE_FLYING ) {
                 flyingSprites.push( e );     

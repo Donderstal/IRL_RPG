@@ -10,7 +10,7 @@ const {
 }  = require('../../../game-data/globals');
 const globals = require('../../../game-data/globals');
 
-const cellRadius = 3;
+const cellRadius = 2;
 const animationList = [
     "TURN_SINGLE_CIRCLE",
     "BACK_AND_FORTH",
@@ -48,7 +48,7 @@ class NPC extends MapSprite {
             this.setLoopedAnimation( )
         }
         else {
-            this.animationMillisecondsLimit = 5000;
+            this.animationMillisecondsLimit = 7500;
             this.currentAnimationLimit = 0;
             this.milliSecondCounter = 0;
             this.lastTimeStamp = 0;
@@ -178,7 +178,7 @@ class NPC extends MapSprite {
             default: 
                 animationName = animation
         }
-        console.log(animationName)       
+  
         this.setScriptedAnimation( 
             { "animName": animationName, "loop": false }, globals.FRAME_LIMIT
         )

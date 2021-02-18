@@ -251,7 +251,7 @@ class Sprite {
         } else {
             pathIndexes = this.getPathIndexes( startingTile, destinationTile )
         }
-        if ( pathIndexes != undefined || pathIndexes != false ) {
+        if ( pathIndexes != undefined && pathIndexes != false ) {
             this.destinationTiles = this.getTileListFromIndexes( pathIndexes, startingTile )
             this.activeDestinationIndex = 0;
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;              
@@ -263,10 +263,6 @@ class Sprite {
 
     getPathIndexes( startingTile, destinationTile ) {
         return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementAnimation == NPC_MOVE_TYPE_FLYING )   
-    }
-
-    getLoopIndexes( ) {
-
     }
 
     getTileListFromIndexes( pathIndexes, startingTile ) {
