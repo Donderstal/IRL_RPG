@@ -12,16 +12,19 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-### FEB 17, 2021
+#### FEB 26, 2021
+* New Party setup
+
+#### FEB 17, 2021
 * Minor bugfixes to animation
 * New maps for showcasing animation funcs
 
-### FEB 14, 2021
+#### FEB 14, 2021
 * Implementing new pathfinding algorithm
 * Semi-random NPC movement and animations
 * New NPC types for generating different anims/movements
 
-### FEB 2, 2021
+#### FEB 2, 2021
 * Streamlining NPC movement and removing duplicate code
 
 #### JAN 29, 2021
