@@ -1,17 +1,20 @@
 class BaseEntity {
-    constructor( name, maxHitpoints, attributes, level, weapon = null ) {
+    constructor( name, hitPointsModifier, attributes, level, weapon = null ) {
         // string
         this.Name = name;
         // int
-        this.MaximumHitpoints = maxHitpoints;
-        // int
-        this.CurrentHitpoints = this.MaximumHitpoints;
+        this.hitPointsModifier = hitPointsModifier;
+
         // int
         this.Level = level;
         // arr
         this.Attributes = attributes;
         // I_BaseItem
         this.Weapon = weapon
+
+        this.setMaximumHitpoints( )
+        // int
+        this.CurrentHitpoints = this.MaximumHitpoints;        
     }
 
     get isLiving( ) { return this.CurrentHitpoints > 0 };
@@ -27,6 +30,14 @@ class BaseEntity {
 
     handleDeath( ) {
         console.log(this.Name + " has died!")
+    }
+
+    setMaximumHitpoints( ) {
+        this.MaximumHitpoints = Level * this.hitPointsModifier;
+    }
+
+    setExperiencePointsFromLevel( ) {
+        this.ExperiencePoints = this.Level * 100;
     }
 
     heal( healingPoints ) {
@@ -48,4 +59,8 @@ class BaseEntity {
             console.log(this.weapon)
         }
     }
+}
+
+module.exports = {
+    BaseEntity
 }
