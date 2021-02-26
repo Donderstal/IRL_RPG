@@ -8,6 +8,7 @@ const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
+const { Character } = require('./character/Character');
 
 const firstMapUrl =  'my-neighbourhood/Chad-outer';
 
@@ -74,12 +75,17 @@ class Game {
     }
 
     startNewGame( name, className ) {
+        this.initializePlayerParty( name, className )
         const mapData = getMapData(firstMapUrl);
         this.storeMapData( mapData, firstMapUrl );
         mapData.playerStart.playerClass = className;
         mapData.playerStart.name = name;
         this.loadMapToCanvases( mapData )
         setTimeout( this.initControlsAndAnimation, 1000 );
+    }
+
+    initializePlayerParty( name, className ) {
+        this.party = new Character( name, 8, null, 5, className );
     }
 
     initControlsAndAnimation( ) {

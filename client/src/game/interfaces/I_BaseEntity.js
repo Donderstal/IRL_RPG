@@ -4,7 +4,6 @@ class BaseEntity {
         this.Name = name;
         // int
         this.hitPointsModifier = hitPointsModifier;
-
         // int
         this.Level = level;
         // arr
@@ -33,7 +32,7 @@ class BaseEntity {
     }
 
     setMaximumHitpoints( ) {
-        this.MaximumHitpoints = Level * this.hitPointsModifier;
+        this.MaximumHitpoints = this.Level * this.hitPointsModifier;
     }
 
     setExperiencePointsFromLevel( ) {

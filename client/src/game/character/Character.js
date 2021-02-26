@@ -4,6 +4,7 @@ class Character extends BaseEntity {
     constructor( name, hitPointsModifier, attributes, level, weapon = null ) { 
         super( name, hitPointsModifier, attributes, level, weapon ) 
         this.setExperiencePointsFromLevel( );
+        console.log(this)
     }
     
     addExperience( experiencePoints ) {

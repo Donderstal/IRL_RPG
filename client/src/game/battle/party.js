@@ -1,6 +1,6 @@
 const BattleChar = require('./battle-init/battleChar').BattleChar
 
-class Party {
+class BattleParty {
     constructor( partyMembers, isPlayerParty ) {
         this.isPlayer           = ( isPlayerParty == "PLAYER" ) ? true : false;
         this.inMoveSelection    = false;
@@ -133,5 +133,5 @@ class Party {
 }
 
 module.exports = {
-    Party
+    BattleParty
 }

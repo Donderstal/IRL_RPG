@@ -1,7 +1,7 @@
 const BattleUI      = require('./battle-ui/battleUIWrapper').BattleUIWrapper
 const changeMode    = require('../../game-data/changeMode');
 const battleGlobals = require('./battleGlobals')
-const Party         = require('./Party').Party
+const BattleParty         = require('./Party').BattleParty
 
 class Battle {
     constructor( staging ) {
@@ -9,10 +9,10 @@ class Battle {
         this.actionButtonAllowed= true;
         this.inMoveAnimation    = false;
 
-        this.playerParty        = new Party( staging.playerChars, "PLAYER" );
+        this.playerParty        = new BattleParty( staging.playerChars, "PLAYER" );
         this.playerMembers      = this.playerParty.members;  
 
-        this.opponentParty      = new Party( staging.oppoChars );
+        this.opponentParty      = new BattleParty( staging.oppoChars );
         this.opponentMembers    = this.opponentParty.members;  
 
         this.charactersInField  = [ ];
