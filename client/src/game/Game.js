@@ -8,7 +8,7 @@ const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
-const { Character } = require('./character/Character');
+const { Party } = require('./Party');
 
 const firstMapUrl =  'my-neighbourhood/Chad-outer';
 
@@ -85,7 +85,12 @@ class Game {
     }
 
     initializePlayerParty( name, className ) {
-        this.party = new Character( name, 8, null, 5, className );
+        let playerPartyData = {
+            name: name,
+            className: className,
+            level: 1
+        }
+        this.party = new Party( [ playerPartyData ], true ); //Character( name, 8, null, 5, className );
     }
 
     initControlsAndAnimation( ) {
