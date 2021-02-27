@@ -81,6 +81,12 @@ let GAME = {};
 const BATTLE_MODE = "BATTLE";
 const MAP_MODE = "MAP";
 
+// Item categories
+const ITEM_CATEGORY_WEAPON = "W";
+const ITEM_CATEGORY_CONSUMABLE = "C";
+const ITEM_CATEGORY_ARMOR = "A";
+const ITEM_CATEGORY_MISC = "M";
+
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
     let tilesheetXyValues = []
@@ -162,5 +168,10 @@ module.exports = {
 
     BATTLE_MODE,
     MAP_MODE,
-    GAME    
+    GAME,
+
+    ITEM_CATEGORY_WEAPON,
+    ITEM_CATEGORY_CONSUMABLE,
+    ITEM_CATEGORY_ARMOR,
+    ITEM_CATEGORY_MISC
 }
