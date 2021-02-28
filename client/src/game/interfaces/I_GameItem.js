@@ -10,7 +10,7 @@ class GameItem {
     }
 
     setItemData(  ) {
-        const data = getItemDataById( this.itemTypeId )
+        const data = getItemDataById( this.ItemTypeId )
         this.Name = data.name;
         this.Category = data.category;
         this.Price = data.price

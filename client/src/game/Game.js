@@ -11,6 +11,7 @@ const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 
 const firstMapUrl =  'my-neighbourhood/Chad-outer';
+const startingItemIDs = [ "hp_consumable_1", "shirt_armor_1", "phone_misc_1" ]
 
 class Game {
     constructor( ) {
@@ -90,7 +91,8 @@ class Game {
             className: className,
             level: 1
         }
-        this.party = new Party( [ playerPartyData ], true ); //Character( name, 8, null, 5, className );
+        this.party = new Party( [ playerPartyData ], true );
+        this.party.addItemsToInventory( startingItemIDs )
     }
 
     initControlsAndAnimation( ) {

@@ -7,7 +7,6 @@ class StackedItem {
         this.Quantity = 1;
     }
 
-    get Item( ) { return this.Item }
     get IsEmpty( ) { return this.Quantity < 1 }
 
     addItem( ) {

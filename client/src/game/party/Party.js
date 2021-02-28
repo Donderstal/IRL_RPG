@@ -12,7 +12,6 @@ class Party {
             this.members.push( new Character( newMember.name, 5, "no", 5, newMember.className ) );
         } );
         
-        console.log(this)
     }
 
     get isDefeated( ) {
@@ -23,6 +22,14 @@ class Party {
         }
 
         return true;
+    }
+
+    addItemsToInventory( itemIDList ) {
+        this.inventory.addItemsToInnerListByID( itemIDList );
+    }
+
+    removeItemsFromInventory( itemIDList ) {
+        this.inventory.removeItemsFromInnerListByID( itemIDList )
     }
 }
 
