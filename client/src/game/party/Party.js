@@ -1,4 +1,5 @@
-const { Character } = require('./character/Character')
+const { Character } = require('../character/Character');
+const { Inventory } = require('./Inventory');
 
 class Party {
     constructor( partyMembers, isPlayerParty ) {
@@ -6,6 +7,7 @@ class Party {
         this.inMoveSelection    = false;
         this.members            = [ ];
         this.partySize          = partyMembers.length
+        this.inventory          = new Inventory( );
         partyMembers.forEach( ( newMember, index ) => {
             this.members.push( new Character( newMember.name, 5, "no", 5, newMember.className ) );
         } );

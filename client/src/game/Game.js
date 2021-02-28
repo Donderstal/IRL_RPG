@@ -8,7 +8,7 @@ const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
-const { Party } = require('./Party');
+const { Party } = require('./party/Party');
 
 const firstMapUrl =  'my-neighbourhood/Chad-outer';
 

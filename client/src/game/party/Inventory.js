@@ -6,8 +6,9 @@ class Inventory {
         this.ActiveItemIDs = [];
     }
 
-    get hasItem( itemID ) { return this.ActiveItemIDs.includes( itemID ); }
-    get itemQuantity( itemID ) { return this.ItemList.filter( ) }
+    hasItem( itemID ) { 
+        return this.ActiveItemIDs.includes( itemID ); 
+    }
 
     addItemsToInnerListByID( newItemIDs ) {
         newItemIDs.forEach( ( itemID ) => {
