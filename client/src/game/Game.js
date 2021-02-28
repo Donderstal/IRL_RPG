@@ -42,6 +42,7 @@ class Game {
     get BACK( ) { return this.back.class }
 
     get PLAYER( ) { return this.front.class.playerSprite }
+    get PARTY_MEMBERS( ) { return this.party.members }
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
 

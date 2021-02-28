@@ -65,6 +65,8 @@ const drawMenuTextbox = ( ) => {
 }
 
 const switchTab = ( direction ) => {
+    ACTIVE_MENU_TAB.unsetButtons( )
+
     const currentTabIndex = tabs.indexOf( ACTIVE_MENU_TAB )
     let newIndex = direction == "LEFT" ? currentTabIndex - 1 : currentTabIndex + 1;
 
@@ -76,6 +78,7 @@ const switchTab = ( direction ) => {
     }
 
     ACTIVE_MENU_TAB = tabs[newIndex]
+    ACTIVE_MENU_TAB.setButtons( )
 }
 
 const handleMenuKeyPress = ( event ) => {
