@@ -1,10 +1,12 @@
-const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE } = require('../game-data/globals');
+const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_PX } = require('../../game-data/globals');
 const { writeTextLine } = require('../../helpers/canvasHelpers');
 
 class MenuTab {
     constructor( tabName, alignment ) {
         this.tabName = tabName;
         this.alignment = alignment;
+        this.height = CANVAS_HEIGHT - ( GRID_BLOCK_PX * 4 );
+        this.margin = GRID_BLOCK_PX * .25;
     }
 
     draw( ) {
