@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### FEB 28, 2021
+* New classes for Item, Inventory
+
 #### FEB 26, 2021
 * New Party setup
 

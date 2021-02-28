@@ -40,7 +40,7 @@ class Inventory {
         } ) 
 
         itemsToRemoveIndexes.forEach( ( itemIndex ) => {
-            this.subtractFromItemStackAndRemoveIfEmpty( itemIndex )
+            this.subtractItemFromStackAtIndex( itemIndex )
         } )
     }
 
