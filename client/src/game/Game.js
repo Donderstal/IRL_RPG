@@ -40,7 +40,10 @@ class Game {
 
     get FRONT( ) { return this.front.class }
     get BACK( ) { return this.back.class }
+
     get PLAYER( ) { return this.front.class.playerSprite }
+    get PLAYER_INVENTORY( ) { return this.party.inventory }
+    get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
 
     getTileOnCanvasAtIndex( canvasName, index) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class

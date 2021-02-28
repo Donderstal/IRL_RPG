@@ -19,8 +19,12 @@ const tabs = [
 ];
 
 let activeTab = MENU_TAB_MEMBERS;
+
 const tabWidth = CANVAS_WIDTH / tabs.length;
 const tabHeight = GRID_BLOCK_PX * 2;
+
+const mainScreenHeight = CANVAS_HEIGHT - tabHeight;
+const horizontalMiddle = CANVAS_WIDTH / 2;
 
 const initGameMenu = ( ) => {
     globals.GAME.inMenu = true;
@@ -35,6 +39,7 @@ const unsetGameMenu = ( ) => {
 const drawGameMenu = ( ) => {
     drawMenuUI( );
     drawActiveTab( );
+    drawMenuTextbox( );
 }
 
 const drawMenuUI = ( ) => {
@@ -50,7 +55,12 @@ const drawMenuUI = ( ) => {
 
         writeTextLine( tab, tabX + LARGE_FONT_LINE_HEIGHT, 0 + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE )
     })
-    drawRect( "FRONT", 0, tabHeight, CANVAS_WIDTH, CANVAS_HEIGHT - tabHeight, "#64005380"  )
+    drawRect( "FRONT", 0, tabHeight, CANVAS_WIDTH, mainScreenHeight, "#64005380"  )
+}
+
+const drawMenuTextbox = ( ) => {
+    drawRect( "FRONT", 0, CANVAS_HEIGHT - tabHeight, CANVAS_WIDTH, tabHeight, "#D82BBA" )
+    writeTextLine( "This is the " + activeTab + " tab.", 0 + LARGE_FONT_LINE_HEIGHT, ( CANVAS_HEIGHT - tabHeight ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE )
 }
 
 const drawActiveTab = ( ) => {
@@ -113,7 +123,21 @@ const handleMenuKeyPress = ( event ) => {
             switchTab( "LEFT" )
             break;
         case "e" :
-            switchTab( "RIGHt" )
+            switchTab( "RIGHT" )
+            break;
+        case "w":
+        case "ArrowUp":
+            break;
+        case "a":
+        case "ArrowLeft":
+            break;
+        case "s":
+        case "ArrowDown":
+            break;
+        case "d":
+        case "ArrowRight":
+            break;
+        case " ":
             break;
     }
 }
