@@ -92,6 +92,16 @@ const drawStatusTab = ( ) => {
 }
 
 const drawInventoryTab = ( ) => {
+    const inventoryButtonHeight = ( CANVAS_HEIGHT - ( tabHeight * 2 ) ) / 10;
+    globals.GAME.PLAYER_ITEMS.forEach( ( itemStack, index ) => {
+
+        let buttonX = index > 9 ? horizontalMiddle : 0;
+        let buttonY = ( tabHeight ) + ( index > 9 ? index - 10 : index * inventoryButtonHeight );
+
+        drawRect( "FRONT", buttonX, buttonY, horizontalMiddle, inventoryButtonHeight )  
+
+        writeTextLine( itemStack.Item.Name, buttonX, buttonY + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" )
+    } ) 
     writeTextLine( MENU_TAB_INVENTORY, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, LARGE_FONT_SIZE )
 }
 
