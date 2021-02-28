@@ -4,7 +4,7 @@ const { unsetGameMenu } = require('./Menu')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
-const initGameMenu = require('./Menu').initGameMenu
+const { initGameMenu,handleMenuKeyPress }  = require('./Menu')
 
 const listenForKeyPress = ( ) => {
     window.addEventListener('keydown', addKeyToPressed)
@@ -32,7 +32,7 @@ const addKeyToPressed = ( ) => {
         handleBattleKeyPress( event )
     }
     else if ( globals.GAME.inMenu ) {
-        handleMenuKeyPress( );
+        handleMenuKeyPress( event );
     }
 }
 
