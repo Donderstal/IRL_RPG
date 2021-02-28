@@ -1,7 +1,7 @@
 const globals  = require('../game-data/globals')
 
 const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } = require('../game-data/globals');
-const { drawRect, writeTextLine, breakTextIntoLines } = require('../helpers/canvasHelpers');
+const { drawRect, writeTextLine } = require('../helpers/canvasHelpers');
 
 const MENU_TAB_MEMBERS = "MEMBERS"
 const MENU_TAB_STATUS = "STATUS";
@@ -25,6 +25,12 @@ const tabHeight = GRID_BLOCK_PX * 2;
 
 const mainScreenHeight = CANVAS_HEIGHT - tabHeight;
 const horizontalMiddle = CANVAS_WIDTH / 2;
+
+const MEMBERS_TAB = new MemberMenuTab( );
+const STATUS_TAB = new StatusMenuTab( );
+const INVENTORY_TAB = new InventoryMenuTab( );
+const MAP_TAB = new MapMenuTab( );
+const GAME_TAB = new GameMenuTab( );
 
 const initGameMenu = ( ) => {
     globals.GAME.inMenu = true;
