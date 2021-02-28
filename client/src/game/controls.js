@@ -1,8 +1,10 @@
 const globals = require('../game-data/globals')
 const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
+const { unsetGameMenu } = require('./Menu')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
 const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
+const initGameMenu = require('./Menu').initGameMenu
 
 const listenForKeyPress = ( ) => {
     window.addEventListener('keydown', addKeyToPressed)
@@ -17,17 +19,20 @@ const stopListenForKeyPress = ( ) => {
 }
 
 const addKeyToPressed = ( ) => {
-    if ( event.key == "l" ) {
-        console.log("___active tile front___")
-        console.log( globals.GAME.front.class.grid.array[globals.GAME.PLAYER.activeTileIndex] )
-        console.log("___next tile front___")
-        console.log( globals.GAME.front.class.grid.array[globals.GAME.PLAYER.nextTileIndex] )
+    event.preventDefault( );
+    
+    if ( event.key == "Tab" ) {
+        globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }
-    if ( globals.GAME.mode == MAP_MODE ) {
+
+    if ( globals.GAME.mode == MAP_MODE && !globals.GAME.inMenu ) {
         handleMapKeyPress( event )
     }
-    else if ( globals.GAME.mode == BATTLE_MODE ) { 
+    else if ( globals.GAME.mode == BATTLE_MODE && !globals.GAME.inMenu ) { 
         handleBattleKeyPress( event )
+    }
+    else if ( globals.GAME.inMenu ) {
+        handleMenuKeyPress( );
     }
 }
 

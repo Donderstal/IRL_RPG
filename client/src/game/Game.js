@@ -18,6 +18,7 @@ class Game {
         this.mode; // 'MAP' || 'BATTLE'        
         this.cinematicMode; // bool
         this.paused; // bool
+        this.inMenu;
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
         this.sound = new SoundController( );

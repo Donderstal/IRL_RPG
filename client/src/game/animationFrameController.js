@@ -4,6 +4,7 @@ const globals     = require('../game-data/globals')
 const { FRAMES_PER_SECOND, BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
+const { drawGameMenu }          = require('./Menu')
 
 let lastDateNow, newDateNow;
 
@@ -37,12 +38,17 @@ const animationFrameController = ( ) => {
             if ( !GAME.listeningForPress ) {
                 controls.listenForKeyPress()
             }            
-            if ( GAME.mode == MAP_MODE ) {
+
+            if ( GAME.mode == MAP_MODE && !GAME.inMenu ) {
                 handleMapAnimations(  GAME )
             }
-            else if ( GAME.mode == BATTLE_MODE ) {
+            else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu ) {
                 handleBattleAnimations( GAME )
             }
+            else if ( GAME.inMenu ) {
+                drawGameMenu( );
+            }
+
             if  ( GAME.cinematicMode && GAME.activeCinematic ) {
                 GAME.activeCinematic.checkForScenePass( )
             }
