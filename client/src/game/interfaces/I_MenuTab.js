@@ -2,8 +2,9 @@ const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE } = require('../game-data/g
 const { writeTextLine } = require('../../helpers/canvasHelpers');
 
 class MenuTab {
-    constructor( tabName ) {
+    constructor( tabName, alignment ) {
         this.tabName = tabName;
+        this.alignment = alignment;
     }
 
     draw( ) {
