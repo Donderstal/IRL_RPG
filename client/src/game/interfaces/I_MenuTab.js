@@ -1,4 +1,4 @@
-const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
+const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
 const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
 
 class MenuTab {
@@ -109,7 +109,26 @@ class MenuButton {
             );            
         }
         else {
-            
+            writeTextLine( 
+                this.displayText, 
+                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT, 
+                BATTLE_FONT_SIZE
+            );    
+            writeTextLine( 
+                "Hitpoints: " + this.content.CurrentHitpoints +"/"+ this.content.MaximumHitpoints, 
+                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, 
+                LARGE_FONT_SIZE 
+            ); 
+            writeTextLine( 
+                "Level: " + this.content.Level, 
+                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * 2 ), 
+                LARGE_FONT_SIZE 
+            ); 
+            writeTextLine( 
+                "Experience: " + this.content.Experience, 
+                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * 3 ), 
+                LARGE_FONT_SIZE 
+            ); 
         }
     }
 
@@ -124,7 +143,7 @@ class MenuButton {
     setDisplayText( ) {
         switch( this.type ) {
             case "INVENTORY":
-                this.displayText = this.content.Item.Name 
+                this.displayText = this.content.Quantity + "x - " + this.content.Item.Name 
                 break;
             case "GAME":
                 this.displayText = this.content.title;
