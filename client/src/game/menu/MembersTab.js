@@ -10,7 +10,8 @@ class MembersMenuTab extends MenuTab {
     }
 
     setButtons( ) {
-        this.setButtonsInRow( GRID_BLOCK_PX * 2, globals.GAME.PARTY_MEMBERS )
+        this.setButtonsInRow( GRID_BLOCK_PX * 2, globals.GAME.PARTY_MEMBERS );
+        this.buttons[this.activeButton].activate( );
     }
 }
 

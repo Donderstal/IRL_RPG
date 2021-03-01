@@ -31,10 +31,13 @@ let ACTIVE_MENU_TAB = MEMBERS_TAB;
 
 const initGameMenu = ( ) => {
     globals.GAME.inMenu = true;
+    ACTIVE_MENU_TAB.setButtons( )
 }
 
 const unsetGameMenu = ( ) => {
     globals.GAME.inMenu = false;
+    ACTIVE_MENU_TAB.unsetButtons( )
+    ACTIVE_MENU_TAB = MEMBERS_TAB;
 }
 
 const drawGameMenu = ( ) => {
@@ -61,7 +64,7 @@ const drawMenuUI = ( ) => {
 
 const drawMenuTextbox = ( ) => {
     drawRect( "FRONT", 0, CANVAS_HEIGHT - tabHeight, CANVAS_WIDTH, tabHeight, "#D82BBA" )
-    writeTextLine( "This is the " + ACTIVE_MENU_TAB.tabName + " tab.", 0 + LARGE_FONT_LINE_HEIGHT, ( CANVAS_HEIGHT - tabHeight ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE )
+    writeTextLine( ACTIVE_MENU_TAB.description, 0 + LARGE_FONT_LINE_HEIGHT, ( CANVAS_HEIGHT - tabHeight ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE )
 }
 
 const switchTab = ( direction ) => {
@@ -81,6 +84,18 @@ const switchTab = ( direction ) => {
     ACTIVE_MENU_TAB.setButtons( )
 }
 
+const handleUp = ( ) => {
+    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" ) {
+        ACTIVE_MENU_TAB.activatePreviousButtonInList( );
+    }
+}
+
+const handleDown = ( ) => {
+    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" ) {
+        ACTIVE_MENU_TAB.activateNextButtonInList( );
+    }
+}
+
 const handleMenuKeyPress = ( event ) => {
     switch ( event.key ) {
         case "q" : 
@@ -91,12 +106,14 @@ const handleMenuKeyPress = ( event ) => {
             break;
         case "w":
         case "ArrowUp":
+            handleUp( )
             break;
         case "a":
         case "ArrowLeft":
             break;
         case "s":
         case "ArrowDown":
+            handleDown( )
             break;
         case "d":
         case "ArrowRight":

@@ -9,7 +9,18 @@ class InventoryMenuTab extends MenuTab {
     }
 
     setButtons( ) {
-        this.setButtonsInColumn( 0, globals.GAME.PLAYER_ITEMS )
+        this.setButtonsInColumn( 0, globals.GAME.PLAYER_ITEMS );
+        this.buttons[this.activeButton].activate( );
+    }
+
+    activateNextButtonInList( ) {
+        super.activateNextButtonInList( )
+        this.description = this.buttons[this.activeButton].content.Item.Description;
+    }
+
+    activatePreviousButtonInList( ) {
+        super.activatePreviousButtonInList( )
+        this.description = this.buttons[this.activeButton].content.Item.Description;
     }
 }
 
