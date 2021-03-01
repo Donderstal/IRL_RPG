@@ -1,4 +1,10 @@
-const { ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_CONSUMABLE, ITEM_CATEGORY_MISC, ITEM_CATEGORY_WEAPON } = require('../game-data/globals')
+const { 
+    ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_CONSUMABLE, 
+    ITEM_CATEGORY_MISC, ITEM_CATEGORY_WEAPON, 
+    ARMOR_TYPE_HEAD, ARMOR_TYPE_UPPER_BODY, 
+    ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY
+} = require('../game-data/globals')
+
 const itemData = {
     "melee_weapon_1" : {
         "name" : "Brass knuckles",
@@ -27,10 +33,38 @@ const itemData = {
     "shirt_armor_1" : {
         "name" : "Greasy shirt",
         "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_UPPER_BODY,
         "price": 10,
         "png": "test-item",
         "description":
             "Dude, shouldn't you have cleaned this shirt before wearing it outside?"
+    },
+    "old_sneakers_armor_2" : {
+        "name" : "Old sneaker",
+        "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_LOWER_BODY,
+        "price": 10,
+        "png": "test-item",
+        "description":
+            "Old sneaker with some stains on them. Is it coffee, dirt or something else?"
+    },
+    "dirty_beanie_armor_3" : {
+        "name" : "Dirty beanie",
+        "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_HEAD,
+        "price": 5,
+        "png": "test-item",
+        "description":
+            "There's some kind of logo on this thing, but it's so faded that it's hard to make out what it says."
+    },
+    "kitty_necklace_armor_3" : {
+        "name" : "Dirty beanie",
+        "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_ACCESSORY,
+        "price": 5,
+        "png": "test-item",
+        "description":
+            "A dingy plastic necklace. The kitty is pretty cute though!"
     },
     "phone_misc_1" : {
         "name" : "Tekphone 12 ( broken )",

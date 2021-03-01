@@ -87,6 +87,11 @@ const ITEM_CATEGORY_CONSUMABLE = "C";
 const ITEM_CATEGORY_ARMOR = "A";
 const ITEM_CATEGORY_MISC = "M";
 
+const ARMOR_TYPE_HEAD = "H";
+const ARMOR_TYPE_UPPER_BODY = "U"; 
+const ARMOR_TYPE_LOWER_BODY = "L"; 
+const ARMOR_TYPE_ACCESSORY = "A";
+
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
     let tilesheetXyValues = []
@@ -173,5 +178,10 @@ module.exports = {
     ITEM_CATEGORY_WEAPON,
     ITEM_CATEGORY_CONSUMABLE,
     ITEM_CATEGORY_ARMOR,
-    ITEM_CATEGORY_MISC
+    ITEM_CATEGORY_MISC,
+
+    ARMOR_TYPE_HEAD, 
+    ARMOR_TYPE_UPPER_BODY, 
+    ARMOR_TYPE_LOWER_BODY, 
+    ARMOR_TYPE_ACCESSORY
 }
