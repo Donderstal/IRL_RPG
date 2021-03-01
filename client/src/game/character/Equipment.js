@@ -53,7 +53,7 @@ class Equipment {
         this.Accessory = null;
     }
 
-    setItem( itemToSet ) {
+    equipItem( itemToSet ) {
         if ( itemToSet.Category == ITEM_CATEGORY_WEAPON ) {
             this.setWeapon( itemToSet );
         }
@@ -70,6 +70,28 @@ class Equipment {
                     break;
                 case ARMOR_TYPE_ACCESSORY: 
                     this.setAccessory( itemToSet );
+                    break;
+            }
+        }
+    }
+
+    unequipItem( ) {
+        if ( itemToSet.Category == ITEM_CATEGORY_WEAPON ) {
+            this.unsetWeapon( itemToSet );
+        }
+        else {
+            switch( itemToSet.Category ) {
+                case ARMOR_TYPE_HEAD:
+                    this.unsetHead( itemToSet );
+                    break;
+                case ARMOR_TYPE_UPPER_BODY: 
+                    this.unsetUpperBody( itemToSet );
+                    break;
+                case ARMOR_TYPE_LOWER_BODY:
+                    this.unsetLowerBody( itemToSet );
+                    break;
+                case ARMOR_TYPE_ACCESSORY: 
+                    this.unsetAccessory( itemToSet );
                     break;
             }
         }

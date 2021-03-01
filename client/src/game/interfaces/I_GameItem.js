@@ -15,7 +15,8 @@ class GameItem {
         this.Category = data.category;
         this.Price = data.price
         this.SpriteSrc = data.png;
-        this.Description = data.description
+        this.Description = data.description;
+        this.Type = data.type;
     }
 
     setImage( ) {
