@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAR 3, 2021
+* Added modal Class for usage in menu
+
 #### FEB 28, 2021
 * Adding tabs and selectable buttons to in-game menu
 
