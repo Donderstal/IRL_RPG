@@ -68,6 +68,10 @@ const drawMenuTextbox = ( ) => {
 }
 
 const switchTab = ( direction ) => {
+    if ( ACTIVE_MENU_TAB.modal ) {
+        return;
+    }
+
     ACTIVE_MENU_TAB.unsetButtons( )
 
     const currentTabIndex = tabs.indexOf( ACTIVE_MENU_TAB )
@@ -85,14 +89,26 @@ const switchTab = ( direction ) => {
 }
 
 const handleUp = ( ) => {
-    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" ) {
+    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" && !ACTIVE_MENU_TAB.modal ) {
         ACTIVE_MENU_TAB.activatePreviousButtonInList( );
     }
 }
 
 const handleDown = ( ) => {
-    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" ) {
+    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" && !ACTIVE_MENU_TAB.modal ) {
         ACTIVE_MENU_TAB.activateNextButtonInList( );
+    }
+}
+
+const handleLeft = ( ) => {
+    if ( ACTIVE_MENU_TAB.modal ) {
+        ACTIVE_MENU_TAB.modal.selectPreviousOption( );
+    }
+}
+
+const handleRight = ( ) => {
+    if ( ACTIVE_MENU_TAB.modal ) {
+        ACTIVE_MENU_TAB.modal.selectNextOption( );
     }
 }
 
@@ -116,6 +132,7 @@ const handleMenuKeyPress = ( event ) => {
             break;
         case "a":
         case "ArrowLeft":
+            handleLeft( );
             break;
         case "s":
         case "ArrowDown":
@@ -123,6 +140,7 @@ const handleMenuKeyPress = ( event ) => {
             break;
         case "d":
         case "ArrowRight":
+            handleRight( );
             break;
         case " ":
             handleActionButton( );

@@ -19,15 +19,40 @@ class Modal {
             const buttonY = this.y + (this.height - GRID_BLOCK_PX * 2);
             this.buttons.push( new ModalButton( buttonX, buttonY, option.text, options.type, option.png ? option.png : null ) )
         })
+        this.activeButtonIndex = 0;
 
-        this.buttons[0].activate( )
+        this.buttons[this.activeButtonIndex].activate( )
+    }
+
+    confirmSelection( ) {
+        this.buttons[this.activeButtonIndex].confirm( )
+    }
+
+    selectNextOption( ) {
+        this.buttons[this.activeButtonIndex].deactivate( )
+        this.activeButtonIndex += 1
+        if ( this.activeButtonIndex == this.buttons.length ) {
+            this.activeButtonIndex = 0;
+        }
+
+        this.buttons[this.activeButtonIndex].activate( )
+    }
+
+    selectPreviousOption( ) {
+        this.buttons[this.activeButtonIndex].deactivate( )
+        this.activeButtonIndex -= 1
+        if ( this.activeButtonIndex < 0 ) {
+            this.activeButtonIndex = this.buttons.length - 1;
+        }
+
+        this.buttons[this.activeButtonIndex].activate( )
     }
 
     draw( ) {
         drawRect("FRONT", this.x, this.y, this.width, this.height );
         drawRect("FRONT", 
         this.x + ( GRID_BLOCK_PX * .125 ), this.y + ( GRID_BLOCK_PX * .125 ), 
-        this.width - ( GRID_BLOCK_PX * .125 ), this.height - ( GRID_BLOCK_PX * .25 ), "#64005380");
+        this.width - ( GRID_BLOCK_PX * .25 ), this.height - ( GRID_BLOCK_PX * .25 ), "#64005380");
         writeTextLine( this.text, this.x + GRID_BLOCK_PX, this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE )
         this.buttons.forEach( e => e.draw() )
     }
@@ -55,9 +80,21 @@ class ModalButton {
         this.isActive = false;
     }
 
+    confirm( ) {
+        alert( this.type + " for " + this.text )
+    }
+
     draw( ) {
-        drawRect( "FRONT", this.x, this.y, this.width, this.height, this.isActive ? this.activeColor : this.standardColor );
-        writeTextLine( this.text, this.x + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE)
+        drawRect( "FRONT", this.x, this.y, this.width, this.height, this.standardColor );
+        if ( this.isActive ) {
+            drawRect( 
+                "FRONT", 
+                this.x + ( GRID_BLOCK_PX * .0625 ), this.y + ( GRID_BLOCK_PX * .0625 ), 
+                this.width - ( GRID_BLOCK_PX * .125 ), this.height - ( GRID_BLOCK_PX * .125 ), 
+                this.activeColor 
+            );
+        }
+        writeTextLine( this.text, this.x + (LARGE_FONT_LINE_HEIGHT / 2), this.y + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE)
     }
 }
 

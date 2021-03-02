@@ -30,7 +30,13 @@ class InventoryMenuTab extends MenuTab {
     }
 
     handleActionButton( ) {
-        this.setModal( "Do you want to equip " + this.activeItem.Name + " ?", uiResources["DIALOG_OPTIONS_YES_OR_NO"] )
+        if ( !this.modal ) {
+            this.setModal( "Do you want to equip " + this.activeItem.Name + " ?", uiResources["DIALOG_OPTIONS_YES_OR_NO"] )
+        }
+        else {
+            this.modal.confirmSelection( );
+            this.modal = false;
+        }
     }
 }
 
