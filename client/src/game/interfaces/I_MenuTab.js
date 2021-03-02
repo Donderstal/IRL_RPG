@@ -10,13 +10,25 @@ class MenuTab {
         this.margin = GRID_BLOCK_PX * .25;
         this.description = "This is the " + alignment + " tab.";
         this.activeButton = 0;
+        this.modal = false;
         this.buttons = [];
 
         this.maxButtons;
     }
 
     draw( ) {
-        this.buttons.forEach( ( button ) => { button.draw( ); } )
+        this.buttons.forEach( ( button ) => { button.draw( ); } );
+        if ( this.modal ) {
+            this.modal.draw( );
+        }
+    }
+
+    setModal( modal ) {
+        this.modal = modal;
+    }
+
+    unsetModal( ) {
+        this.modal = false;
     }
 
     setButtonHeight( height ) {
