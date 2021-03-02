@@ -4,10 +4,12 @@ class StackedItem {
     constructor( itemTypeId ) {
         this.ItemTypeID = itemTypeId;
         this.Item = new GameItem( itemTypeId );
-        this.Quantity = 1;
+        this.BaseQuantity = 1;
+        this.EquippedQuantity = 0;
     }
 
-    get IsEmpty( ) { return this.Quantity < 1 }
+    get Quantity( ) { return this.BaseQuantity - this.EquippedQuantity; }
+    get IsEmpty( ) { return this.Quantity < 1; }
 
     addItem( ) {
         this.Quantity += 1;
@@ -15,6 +17,16 @@ class StackedItem {
 
     subtractItem( ) {
         this.Quantity -= 1;
+    }
+
+    equipItem( character ) {
+        character.equipItem( this.Item );
+        this.EquippedQuantity += 1;
+    }
+
+    unequipItem( character ) {
+        character.unequipItem( this.Item );
+        this.EquippedQuantity -= 1;
     }
 }
 

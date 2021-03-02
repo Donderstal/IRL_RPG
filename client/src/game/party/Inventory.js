@@ -10,6 +10,26 @@ class Inventory {
         return this.ActiveItemIDs.includes( itemID ); 
     }
 
+    getItemStackById(  itemID) {
+        let ItemStack;
+        this.ItemList.forEach( ( e ) => {
+            if ( e.ItemTypeID == itemID ) {
+                ItemStack = e;
+            }
+        })
+        return ItemStack
+    }
+
+    equipItem( itemID ) {
+        let ItemStack = this.getItemStackById( itemID );
+        ItemStack.equipItem( );
+    }
+
+    unequipItem( itemID ) {
+        let ItemStack = this.getItemStackById( itemID );
+        ItemStack.equipItem( );
+    }
+
     addItemsToInnerListByID( newItemIDs ) {
         newItemIDs.forEach( ( itemID ) => {
             if ( this.hasItem( itemID ) ) {
