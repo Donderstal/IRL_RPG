@@ -1,6 +1,6 @@
 const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
 const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
-
+const { Modal } = require("./I_Modal")
 class MenuTab {
     constructor( tabName, alignment, maxButtons ) {
         this.tabName = tabName;
@@ -23,8 +23,8 @@ class MenuTab {
         }
     }
 
-    setModal( modal ) {
-        this.modal = modal;
+    setModal( modalText, modalOptions ) {
+        this.modal = new Modal( modalText, modalOptions );
     }
 
     unsetModal( ) {

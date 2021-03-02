@@ -96,6 +96,12 @@ const handleDown = ( ) => {
     }
 }
 
+const handleActionButton = ( ) => {
+    if ( ACTIVE_MENU_TAB.activeItem ) {
+        ACTIVE_MENU_TAB.handleActionButton( );
+    }
+}
+
 const handleMenuKeyPress = ( event ) => {
     switch ( event.key ) {
         case "q" : 
@@ -119,6 +125,7 @@ const handleMenuKeyPress = ( event ) => {
         case "ArrowRight":
             break;
         case " ":
+            handleActionButton( );
             break;
     }
 }
