@@ -22,19 +22,19 @@ class Equipment {
     }
 
     setUpperBody( itemToSet ) {
-        this.Shirt = itemToSet;
+        this.UpperBody = itemToSet;
     }
 
     unsetUpperBody( ) {
-        this.Shirt = null;
+        this.UpperBody = null;
     }
 
     setLowerBody( itemToSet ) {
-        this.Shirt = itemToSet;
+        this.LowerBody = itemToSet;
     }
 
     unsetLowerBody( ) {
-        this.Shirt = null;
+        this.LowerBody = null;
     }
 
     setHead( itemToSet ) {
@@ -58,7 +58,7 @@ class Equipment {
             this.setWeapon( itemToSet );
         }
         else {
-            switch( itemToSet.Category ) {
+            switch( itemToSet.Type ) {
                 case ARMOR_TYPE_HEAD:
                     this.setHead( itemToSet );
                     break;
@@ -75,12 +75,12 @@ class Equipment {
         }
     }
 
-    unequipItem( ) {
+    unequipItem( itemToSet ) {
         if ( itemToSet.Category == ITEM_CATEGORY_WEAPON ) {
             this.unsetWeapon( itemToSet );
         }
         else {
-            switch( itemToSet.Category ) {
+            switch( itemToSet.Type ) {
                 case ARMOR_TYPE_HEAD:
                     this.unsetHead( itemToSet );
                     break;

@@ -12,11 +12,11 @@ class StackedItem {
     get IsEmpty( ) { return this.Quantity < 1; }
 
     addItem( ) {
-        this.Quantity += 1;
+        this.BaseQuantity += 1;
     }
 
     subtractItem( ) {
-        this.Quantity -= 1;
+        this.BaseQuantity -= 1;
     }
 
     equipItem( character ) {

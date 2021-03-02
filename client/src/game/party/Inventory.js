@@ -20,14 +20,14 @@ class Inventory {
         return ItemStack
     }
 
-    equipItem( itemID ) {
+    equipItem( character, itemID ) {
         let ItemStack = this.getItemStackById( itemID );
-        ItemStack.equipItem( );
+        ItemStack.equipItem( character );
     }
 
-    unequipItem( itemID ) {
+    unequipItem( character, itemID ) {
         let ItemStack = this.getItemStackById( itemID );
-        ItemStack.equipItem( );
+        ItemStack.unequipItem( character );
     }
 
     addItemsToInnerListByID( newItemIDs ) {
