@@ -15,7 +15,9 @@ class Modal {
 
     initModalOptions( options ) {
         options.forEach( ( option, index ) => {
-            this.buttons.push( new ModalButton( x + ( index * ( GRID_BLOCK_PX * 2 ) ), this.y + (this.height - GRID_BLOCK_PX * 2), option.text, options.type, option.png ? option.png : null ) )
+            const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
+            const buttonY = this.y + (this.height - GRID_BLOCK_PX * 2);
+            this.buttons.push( new ModalButton( buttonX, buttonY, option.text, options.type, option.png ? option.png : null ) )
         })
 
         this.buttons[0].activate( )
@@ -23,8 +25,10 @@ class Modal {
 
     draw( ) {
         drawRect("FRONT", this.x, this.y, this.width, this.height );
-        drawRect("FRONT", this.x + ( GRID_BLOCK_PX * .125 ), this.y + ( GRID_BLOCK_PX * .125 ), this.width - ( GRID_BLOCK_PX * 125 ), this.height - ( GRID_BLOCK_PX * .25 ), "#64005380");
-        writeTextLine( this.text, this.x + LARGE_FONT_LINE_HEIGHT, this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE )
+        drawRect("FRONT", 
+        this.x + ( GRID_BLOCK_PX * .125 ), this.y + ( GRID_BLOCK_PX * .125 ), 
+        this.width - ( GRID_BLOCK_PX * .125 ), this.height - ( GRID_BLOCK_PX * .25 ), "#64005380");
+        writeTextLine( this.text, this.x + GRID_BLOCK_PX, this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE )
         this.buttons.forEach( e => e.draw() )
     }
 }
@@ -53,6 +57,7 @@ class ModalButton {
 
     draw( ) {
         drawRect( "FRONT", this.x, this.y, this.width, this.height, this.isActive ? this.activeColor : this.standardColor );
+        writeTextLine( this.text, this.x + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE)
     }
 }
 
