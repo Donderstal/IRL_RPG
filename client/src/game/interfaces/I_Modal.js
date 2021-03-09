@@ -9,6 +9,7 @@ class Modal {
         this.x          = ( CANVAS_WIDTH / 2 ) - ( this.width / 2 );
         this.y          = ( CANVAS_HEIGHT / 2 ) - ( this.height / 2 );
         this.text       = displayText;
+        this.activeItem = false;
         this.buttons    = [];
         this.initModalOptions( options );
     }
@@ -24,8 +25,8 @@ class Modal {
         this.buttons[this.activeButtonIndex].activate( )
     }
 
-    confirmSelection( ) {
-        this.buttons[this.activeButtonIndex].confirm( )
+    handleActionButton( ) {
+        this.buttons[this.activeButtonIndex].handleActionButton( )
     }
 
     selectNextOption( ) {
@@ -95,6 +96,11 @@ class ModalButton {
             );
         }
         writeTextLine( this.text, this.x + (LARGE_FONT_LINE_HEIGHT / 2), this.y + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE)
+    }
+
+    handleActionButton( activeMenuTab, activeMenuItem ) {
+        this.setAction( activeMenuTab, activeMenuItem );
+        this.doAction( );
     }
 }
 

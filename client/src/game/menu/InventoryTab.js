@@ -7,8 +7,6 @@ class InventoryMenuTab extends MenuTab {
         super( "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 2 );
-
-        this.activeItem = false;
     }
 
     setButtons( ) {
@@ -34,7 +32,7 @@ class InventoryMenuTab extends MenuTab {
             this.setModal( "Do you want to equip " + this.activeItem.Name + " ?", uiResources["DIALOG_OPTIONS_YES_OR_NO"] )
         }
         else {
-            this.modal.confirmSelection( );
+            this.modal.handleActionButton( );
             this.modal = false;
         }
     }
