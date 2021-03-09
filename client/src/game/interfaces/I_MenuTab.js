@@ -1,5 +1,5 @@
 const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
-const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const { writeTextLine, drawRect, drawFromImageToCanvas, getFrontCanvasContext } = require('../../helpers/canvasHelpers');
 const { Modal } = require("./I_Modal")
 class MenuTab {
     constructor( tabName, alignment, maxButtons ) {
@@ -19,6 +19,9 @@ class MenuTab {
 
     draw( ) {
         this.buttons.forEach( ( button ) => { button.draw( ); } );
+        if ( this.itemSubMenu.isActive ) {
+            this.itemSubMenu.draw( );
+        }
         if ( this.modal ) {
             this.modal.draw( );
         }
@@ -47,6 +50,7 @@ class MenuTab {
             this.activeButton = 0;
         }
         this.buttons[this.activeButton].activate( )
+        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
     }
 
     activatePreviousButtonInList( ) {
@@ -56,6 +60,7 @@ class MenuTab {
             this.activeButton = this.buttons.length - 1;
         }
         this.buttons[this.activeButton].activate( )
+        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
     }
 
     setButtonsInColumn( x, buttonContentList ) {
@@ -88,7 +93,7 @@ class ItemSubMenu {
     constructor( ) {
         this.x;
         this.y;
-        this.width = GRID_BLOCK_PX * 6;
+        this.width = GRID_BLOCK_PX * 3;
         this.height;
         this.options;
         this.isInitialized;
@@ -100,13 +105,13 @@ class ItemSubMenu {
         this.options.forEach( ( e, index ) => {
             writeTextLine( 
                 e, 
-                this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * index), 
+                this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_SIZE + ( LARGE_FONT_LINE_HEIGHT * index), 
                 LARGE_FONT_SIZE 
             );
             if ( index === this.activeOption && this.isActive ) {
-                globals.GAME.front.ctx.beginPath();
-                globals.GAME.front.ctx.rect(this.x, this.y, this.width, this.height);
-                globals.GAME.front.ctx.stroke();
+                getFrontCanvasContext().beginPath();
+                getFrontCanvasContext().rect(this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4);
+                getFrontCanvasContext().stroke();
             }
         } ) 
     }
@@ -142,6 +147,20 @@ class ItemSubMenu {
     deActivate( ) {
         this.activeOption = null;
         this.isActive = false;
+    }
+
+    setNextOption( ) {
+        this.activeOption += 1;
+        if ( this.activeOption >= this.options.length ) {
+            this.activeOption = 0;
+        }
+    }
+
+    setPreviousOption( ) {
+        this.activeOption -= 1;
+        if ( this.activeOption < 0 ) {
+            this.activeOption = this.options.length - 1;
+        }
     }
 }
 

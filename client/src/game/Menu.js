@@ -89,13 +89,19 @@ const switchTab = ( direction ) => {
 }
 
 const handleUp = ( ) => {
-    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" && !ACTIVE_MENU_TAB.modal ) {
+    if ( ACTIVE_MENU_TAB.itemSubMenu.isActive ) {
+        ACTIVE_MENU_TAB.itemSubMenu.setPreviousOption( )
+    }
+    else if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" && !ACTIVE_MENU_TAB.modal ) {
         ACTIVE_MENU_TAB.activatePreviousButtonInList( );
     }
 }
 
 const handleDown = ( ) => {
-    if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" && !ACTIVE_MENU_TAB.modal ) {
+    if ( ACTIVE_MENU_TAB.itemSubMenu.isActive ) {
+        ACTIVE_MENU_TAB.itemSubMenu.setNextOption( )
+    }
+    else if ( ACTIVE_MENU_TAB.tabName != "MEMBERS" && !ACTIVE_MENU_TAB.modal ) {
         ACTIVE_MENU_TAB.activateNextButtonInList( );
     }
 }
