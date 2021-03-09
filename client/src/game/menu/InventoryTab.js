@@ -7,12 +7,15 @@ class InventoryMenuTab extends MenuTab {
         super( "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 2 );
+        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISMISS"]
     }
 
     setButtons( ) {
         this.setButtonsInColumn( 0, globals.GAME.PLAYER_ITEMS );
         this.buttons[this.activeButton].activate( );
         this.activeItem = this.buttons[this.activeButton].content.Item
+        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
+        this.itemSubMenu.initOptions( this.itemSubMenuOptions );
     }
 
     activateNextButtonInList( ) {
@@ -28,12 +31,11 @@ class InventoryMenuTab extends MenuTab {
     }
 
     handleActionButton( ) {
-        if ( !this.modal ) {
-            this.setModal( "Do you want to equip " + this.activeItem.Name + " ?", uiResources["DIALOG_OPTIONS_YES_OR_NO"] )
+        if ( !this.itemSubMenu.isActive ) {
+            this.itemSubMenu.activate( );
         }
         else {
-            this.modal.handleActionButton( );
-            this.modal = false;
+            this.itemSubMenu.deActivate( );
         }
     }
 }

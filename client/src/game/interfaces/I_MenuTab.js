@@ -85,6 +85,8 @@ class MenuTab {
 
     unsetButtons( ) {
         this.buttons = [ ];
+        this.itemSubMenu.deActivate( );
+        this.itemSubMenu.clearSubMenu( );
     }
     
 }
