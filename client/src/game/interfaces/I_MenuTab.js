@@ -10,6 +10,7 @@ class MenuTab {
         this.margin = GRID_BLOCK_PX * .25;
         this.description = "This is the " + alignment + " tab.";
         this.activeButton = 0;
+        this.itemSubMenu = new ItemSubMenu( );
         this.modal = false;
         this.buttons = [];
 
@@ -79,6 +80,68 @@ class MenuTab {
 
     unsetButtons( ) {
         this.buttons = [ ];
+    }
+    
+}
+
+class ItemSubMenu {
+    constructor( ) {
+        this.x;
+        this.y;
+        this.width = GRID_BLOCK_PX * 6;
+        this.height;
+        this.options;
+        this.isInitialized;
+        this.isActive;
+    }
+
+    draw( ) {
+        drawRect( "FRONT", this.x, this.y, this.width, this.height, "#D82BBA");
+        this.options.forEach( ( e, index ) => {
+            writeTextLine( 
+                e, 
+                this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * index), 
+                LARGE_FONT_SIZE 
+            );
+            if ( index === this.activeOption && this.isActive ) {
+                globals.GAME.front.ctx.beginPath();
+                globals.GAME.front.ctx.rect(this.x, this.y, this.width, this.height);
+                globals.GAME.front.ctx.stroke();
+            }
+        } ) 
+    }
+
+    setXy( x, y ) {
+        this.x = x;
+        this.y = y;
+    }
+
+    initOptions( options ) {
+        this.options = [ ];
+        options.forEach( ( option ) => {
+            this.options.push( option )
+        })
+
+        this.height = options.length * LARGE_FONT_LINE_HEIGHT;
+        this.isInitialized = true;
+    }
+
+    clearSubMenu( ) {
+        this.x = null;
+        this.y = null;
+        this.height = null;
+        this.options = null;
+        this.isInitialized = false;
+    }
+
+    activate( ) {
+        this.activeOption = 0;
+        this.isActive = true;
+    }
+
+    deActivate( ) {
+        this.activeOption = null;
+        this.isActive = false;
     }
 }
 
