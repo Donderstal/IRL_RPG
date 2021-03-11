@@ -8,6 +8,7 @@ class InventoryMenuTab extends MenuTab {
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 2 );
         this.itemSubMenuOptions = [ "USE", "EQUIP", "DISMISS"]
+        this.activeOption;
     }
 
     setButtons( ) {
@@ -31,12 +32,65 @@ class InventoryMenuTab extends MenuTab {
     }
 
     handleActionButton( ) {
-        if ( !this.itemSubMenu.isActive ) {
+        if ( !this.itemSubMenu.isActive && !this.modal ) {
             this.itemSubMenu.activate( );
         }
-        else {
-            this.itemSubMenu.deActivate( );
+        else if ( this.itemSubMenu.isActive && !this.modal ) {
+            this.doActiveSubMenuOption( );
         }
+        else if ( this.modal ) {
+            this.doActiveModalOption( );
+        }
+    }
+
+    doActiveModalOption( ) {
+        alert( this.activeItem.Name, this.modal.activeButton.text )
+        this.unsetModal( );
+    }
+
+    doActiveSubMenuOption( ) {
+        const option = this.itemSubMenu.getActiveOption( );
+
+        switch( option ) {
+            case this.itemSubMenuOptions[0]: //USE
+                this.selectCharacterForItem( );
+                break;
+            case this.itemSubMenuOptions[1]: //EQUIP
+                this.selectCharacterForEquipment( );
+                break;
+            case this.itemSubMenuOptions[2]: //DISMISS
+                this.dismissItem( );
+                break;
+            default :
+                console.log( option );
+                break;
+        }
+
+        this.itemSubMenu.deActivate( );
+    }
+
+    selectCharacterForItem( ) {
+        this.activeOption = this.itemSubMenuOptions[0];
+        this.setModal(
+            "Who should use a " + this.activeItem.Name + "?",
+            uiResources["DIALOG_OPTIONS_YES_OR_NO"]
+        )
+    }
+
+    selectCharacterForEquipment( ) {
+        this.activeOption = this.itemSubMenuOptions[1];
+        this.setModal(
+            "Who should equip a " + this.activeItem.Name + "?",
+            uiResources["DIALOG_OPTIONS_YES_OR_NO"]
+        )
+    }
+
+    dismissItem( ) {
+        this.activeOption = this.itemSubMenuOptions[2];
+        this.setModal(
+            "Throw away a" + this.activeItem.Name + "? This action can not be reversed!",
+            uiResources["DIALOG_OPTIONS_YES_OR_NO"]
+        )
     }
 }
 
