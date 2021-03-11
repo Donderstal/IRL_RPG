@@ -48,8 +48,8 @@ class InventoryMenuTab extends MenuTab {
         this.unsetModal( );
     }
 
-    doActiveSubMenuOption( ) {
-        const option = this.itemSubMenu.getActiveOption( );
+    doActiveSubMenuOption( optionIndex = null ) {
+        const option = this.itemSubMenu.getActiveOption( optionIndex );
 
         switch( option ) {
             case this.itemSubMenuOptions[0]: //USE

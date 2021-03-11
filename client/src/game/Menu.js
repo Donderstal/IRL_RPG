@@ -1,6 +1,9 @@
 const globals  = require('../game-data/globals')
 
-const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } = require('../game-data/globals');
+const { 
+    CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, 
+    LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
+} = require('../game-data/globals');
 const { drawRect, writeTextLine } = require('../helpers/canvasHelpers');
 
 const { MembersMenuTab } = require('./menu/MembersTab');
@@ -63,8 +66,16 @@ const drawMenuUI = ( ) => {
 }
 
 const drawMenuTextbox = ( ) => {
+    const controlOptions = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ]
     drawRect( "FRONT", 0, CANVAS_HEIGHT - tabHeight, CANVAS_WIDTH, tabHeight, "#D82BBA" )
     writeTextLine( ACTIVE_MENU_TAB.description, 0 + LARGE_FONT_LINE_HEIGHT, ( CANVAS_HEIGHT - tabHeight ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE )
+
+    writeTextLine( "[ SPACEBAR ] - CONFIRM/SELECT", 0 + SMALL_FONT_LINE_HEIGHT, CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE )
+    if ( ACTIVE_MENU_TAB.itemSubMenu.options ) {
+        ACTIVE_MENU_TAB.itemSubMenu.options.forEach( ( e, index ) => {
+            writeTextLine( controlOptions[index] + " - " + e, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index + 1 )), CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE )
+        })        
+    }
 }
 
 const switchTab = ( direction ) => {
@@ -124,6 +135,23 @@ const handleActionButton = ( ) => {
     }
 }
 
+const handleSubMenuControls = ( key ) => {
+    if ( ACTIVE_MENU_TAB.itemSubMenu.options && ACTIVE_MENU_TAB.activeItem ) {
+        if ( key == "z" && ACTIVE_MENU_TAB.itemSubMenu.options[0] ) {
+            ACTIVE_MENU_TAB.doActiveSubMenuOption( 0 );
+        }
+        if ( key == "x" && ACTIVE_MENU_TAB.itemSubMenu.options[1] ) {
+            ACTIVE_MENU_TAB.doActiveSubMenuOption( 1 );
+        }
+        if ( key == "c" && ACTIVE_MENU_TAB.itemSubMenu.options[2] ) {
+            ACTIVE_MENU_TAB.doActiveSubMenuOption( 2 );
+        }
+        if ( key == "v" && ACTIVE_MENU_TAB.itemSubMenu.options[3] ) {
+            ACTIVE_MENU_TAB.doActiveSubMenuOption( 3 );
+        }
+    }
+}
+
 const handleMenuKeyPress = ( event ) => {
     switch ( event.key ) {
         case "q" : 
@@ -150,6 +178,12 @@ const handleMenuKeyPress = ( event ) => {
             break;
         case " ":
             handleActionButton( );
+            break;
+        case "z":
+        case "x":
+        case "c":
+        case "v":
+            handleSubMenuControls( event.key );
             break;
     }
 }

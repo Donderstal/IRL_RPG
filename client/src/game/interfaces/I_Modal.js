@@ -14,6 +14,8 @@ class Modal {
         this.initModalOptions( options );
     }
 
+    get activeButton( ) { return this.buttons[this.activeButtonIndex].text }
+
     initModalOptions( options ) {
         options.forEach( ( option, index ) => {
             const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );

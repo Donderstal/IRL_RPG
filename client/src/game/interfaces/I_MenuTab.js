@@ -164,6 +164,10 @@ class ItemSubMenu {
             this.activeOption = this.options.length - 1;
         }
     }
+
+    getActiveOption( index ) {
+        return this.options[index == null ? this.activeOption : index];
+    }
 }
 
 class MenuButton { 
