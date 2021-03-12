@@ -1,5 +1,4 @@
 const globals = require('../../game-data/globals');
-
 const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } = require('../../game-data/globals');
 const { writeTextLine, drawRect } = require('../../helpers/canvasHelpers');
 const { getModalContent } = require('../../resources/uiResources');
@@ -20,9 +19,10 @@ class Modal {
 
     get activeButton( ) { return this.buttons[this.activeButtonIndex].text }
     
+    /**
+     * Get the modal options from uiResources.js based on the modalType prop
+     */
     getOptionsForModalType( ) {
-        console.log(this.modalType);
-
         switch (this.modalType) {
             case "USE-INVENTORY":
             case "EQUIP-INVENTORY":
@@ -48,6 +48,9 @@ class Modal {
         }
     }
 
+    /**
+     * Get the modal options. Instantiate a ModalButton class for each of them and activate first button
+     */
     initModalOptions( ) {
         const options = this.getOptionsForModalType( );
         options.forEach( ( option, index ) => {
@@ -60,10 +63,9 @@ class Modal {
         this.buttons[this.activeButtonIndex].activate( )
     }
 
-    handleActionButton( ) {
-        this.buttons[this.activeButtonIndex].handleActionButton( )
-    }
-
+    /**
+     * Activate the next modal button. If this is not possible, activate the first modal button
+     */
     selectNextOption( ) {
         this.buttons[this.activeButtonIndex].deactivate( )
         this.activeButtonIndex += 1
@@ -74,6 +76,9 @@ class Modal {
         this.buttons[this.activeButtonIndex].activate( )
     }
 
+    /**
+     * Activate the previous modal button. If this is not possible, activate the last modal button
+     */
     selectPreviousOption( ) {
         this.buttons[this.activeButtonIndex].deactivate( )
         this.activeButtonIndex -= 1
@@ -84,6 +89,9 @@ class Modal {
         this.buttons[this.activeButtonIndex].activate( )
     }
 
+    /**
+     * Draw the modal, write the modal text and draw the modal buttons below that
+     */
     draw( ) {
         drawRect("FRONT", this.x, this.y, this.width, this.height );
         drawRect("FRONT", 
@@ -107,18 +115,23 @@ class ModalButton {
         this.standardColor  = "#00384D";
     }
 
+    /**
+     * Set ModalButton to active, altering its appearance in the draw() method
+     */
     activate( ) {
         this.isActive = true;
     }
 
+    /**
+     * Set ModalButton to inactive, altering its appearance in the draw() method
+     */
     deactivate( ) {
         this.isActive = false;
     }
 
-    confirm( ) {
-        alert( this.text )
-    }
-
+    /**
+     * Draw the modal button and its contents based on the isActive property
+     */
     draw( ) {
         drawRect( "FRONT", this.x, this.y, this.width, this.height, this.standardColor );
         if ( this.isActive ) {
@@ -130,11 +143,6 @@ class ModalButton {
             );
         }
         writeTextLine( this.text, this.x + (LARGE_FONT_LINE_HEIGHT / 2), this.y + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE)
-    }
-
-    handleActionButton( activeMenuTab, activeMenuItem ) {
-        this.setAction( activeMenuTab, activeMenuItem );
-        this.doAction( );
     }
 }
 
