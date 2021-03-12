@@ -1,9 +1,13 @@
+const globals = require('../../game-data/globals');
+
 const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } = require('../../game-data/globals');
-const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const { writeTextLine, drawRect } = require('../../helpers/canvasHelpers');
+const { getModalContent } = require('../../resources/uiResources');
 
 
 class Modal {
-    constructor( displayText, options ) {
+    constructor( displayText, modalType ) {
+        this.modalType  = modalType;
         this.width      = CANVAS_WIDTH / 3;
         this.height     = CANVAS_HEIGHT / 4;
         this.x          = ( CANVAS_WIDTH / 2 ) - ( this.width / 2 );
@@ -11,16 +15,45 @@ class Modal {
         this.text       = displayText;
         this.activeItem = false;
         this.buttons    = [];
-        this.initModalOptions( options );
+        this.initModalOptions( );
     }
 
     get activeButton( ) { return this.buttons[this.activeButtonIndex].text }
+    
+    getOptionsForModalType( ) {
+        console.log(this.modalType);
 
-    initModalOptions( options ) {
+        switch (this.modalType) {
+            case "USE-INVENTORY":
+            case "EQUIP-INVENTORY":
+                this.modalContentType = "SELECT_PARTY_MEMBER"
+                return getModalContent( this.modalContentType, globals.GAME.PARTY_MEMBERS );
+                break;
+            case "DISMISS-INVENTORY":
+            case "UNEQUIP-STATUS":
+                this.modalContentType = "YES_OR_NO"
+                return getModalContent( this.modalContentType );
+                break;
+            case "SHOW-INVENTORY":
+            case "SHOW-STATUS":
+                this.modalContentType = "SHOW_ITEM"
+                return getModalContent( this.modalContentType );
+                break;
+            case "EQUIP-STATUS":
+                this.modalContentType = "SELECT_ITEM"
+                return getModalContent( this.modalContentType );
+                break;
+            default:
+                break;
+        }
+    }
+
+    initModalOptions( ) {
+        const options = this.getOptionsForModalType( );
         options.forEach( ( option, index ) => {
             const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
             const buttonY = this.y + (this.height - GRID_BLOCK_PX * 2);
-            this.buttons.push( new ModalButton( buttonX, buttonY, option.text, options.type, option.png ? option.png : null ) )
+            this.buttons.push( new ModalButton( buttonX, buttonY, option.text, option.png ? option.png : null ) )
         })
         this.activeButtonIndex = 0;
 
@@ -62,9 +95,8 @@ class Modal {
 }
 
 class ModalButton {
-    constructor( x, y, text, type, png = null ) {
+    constructor( x, y, text, png = null ) {
         this.text       = text;
-        this.type       = type;
         this.png        = png;
         this.isActive   = false;
         this.x          = x;
@@ -84,7 +116,7 @@ class ModalButton {
     }
 
     confirm( ) {
-        alert( this.type + " for " + this.text )
+        alert( this.text )
     }
 
     draw( ) {

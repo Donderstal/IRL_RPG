@@ -1,5 +1,4 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
-const uiResources = require('../../resources/uiResources')
 const globals = require('../../game-data/globals')
 
 class InventoryMenuTab extends MenuTab {
@@ -73,7 +72,7 @@ class InventoryMenuTab extends MenuTab {
         this.activeOption = this.itemSubMenuOptions[0];
         this.setModal(
             "Who should use a " + this.activeItem.Name + "?",
-            uiResources["DIALOG_OPTIONS_YES_OR_NO"]
+            this.activeOption
         )
     }
 
@@ -81,7 +80,7 @@ class InventoryMenuTab extends MenuTab {
         this.activeOption = this.itemSubMenuOptions[1];
         this.setModal(
             "Who should equip a " + this.activeItem.Name + "?",
-            uiResources["DIALOG_OPTIONS_YES_OR_NO"]
+            this.activeOption
         )
     }
 
@@ -89,7 +88,7 @@ class InventoryMenuTab extends MenuTab {
         this.activeOption = this.itemSubMenuOptions[2];
         this.setModal(
             "Throw away a" + this.activeItem.Name + "? This action can not be reversed!",
-            uiResources["DIALOG_OPTIONS_YES_OR_NO"]
+            this.activeOption
         )
     }
 }

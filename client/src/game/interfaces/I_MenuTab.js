@@ -27,8 +27,8 @@ class MenuTab {
         }
     }
 
-    setModal( modalText, modalOptions ) {
-        this.modal = new Modal( modalText, modalOptions );
+    setModal( modalText, actionType ) {
+        this.modal = new Modal( modalText, actionType + "-" + this.tabName );
     }
 
     unsetModal( ) {
