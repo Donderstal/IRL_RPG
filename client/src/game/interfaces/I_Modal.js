@@ -7,8 +7,8 @@ const { getModalContent } = require('../../resources/uiResources');
 class Modal {
     constructor( displayText, modalType ) {
         this.modalType  = modalType;
-        this.width      = CANVAS_WIDTH / 3;
-        this.height     = CANVAS_HEIGHT / 4;
+        this.width      = CANVAS_WIDTH / 2;
+        this.height     = CANVAS_HEIGHT / 3;
         this.x          = ( CANVAS_WIDTH / 2 ) - ( this.width / 2 );
         this.y          = ( CANVAS_HEIGHT / 2 ) - ( this.height / 2 );
         this.text       = displayText;
@@ -28,22 +28,19 @@ class Modal {
             case "EQUIP-INVENTORY":
                 this.modalContentType = "SELECT_PARTY_MEMBER"
                 return getModalContent( this.modalContentType, globals.GAME.PARTY_MEMBERS );
-                break;
             case "DISMISS-INVENTORY":
             case "UNEQUIP-STATUS":
                 this.modalContentType = "YES_OR_NO"
                 return getModalContent( this.modalContentType );
-                break;
             case "SHOW-INVENTORY":
             case "SHOW-STATUS":
                 this.modalContentType = "SHOW_ITEM"
                 return getModalContent( this.modalContentType );
-                break;
             case "EQUIP-STATUS":
                 this.modalContentType = "SELECT_ITEM"
                 return getModalContent( this.modalContentType );
-                break;
             default:
+                console.log(" type " + this.modalType + " is not a valid modaltype")
                 break;
         }
     }
@@ -55,8 +52,8 @@ class Modal {
         const options = this.getOptionsForModalType( );
         options.forEach( ( option, index ) => {
             const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
-            const buttonY = this.y + (this.height - GRID_BLOCK_PX * 2);
-            this.buttons.push( new ModalButton( buttonX, buttonY, option.text, option.png ? option.png : null ) )
+            const buttonY = this.y + ( LARGE_FONT_LINE_HEIGHT * 3 );
+            this.buttons.push( new ModalButton( buttonX, buttonY, option, this.modalContentType ) )
         })
         this.activeButtonIndex = 0;
 
@@ -103,16 +100,36 @@ class Modal {
 }
 
 class ModalButton {
-    constructor( x, y, text, png = null ) {
-        this.text       = text;
-        this.png        = png;
+    constructor( x, y, option, modalType ) {
+        this.text       = option.text;
+        this.png        = option.png;
+        this.type       = modalType;
         this.isActive   = false;
+
         this.x          = x;
         this.y          = y;
-        this.height     = GRID_BLOCK_PX;
-        this.width      = GRID_BLOCK_PX;
         this.activeColor    = "#D82BBA";
         this.standardColor  = "#00384D";
+
+        this.setDimensions( )
+    }
+
+    /**
+     * Set modal button height and width based on the type of mmodal content
+     */
+    setDimensions( ) {
+        switch ( this.type ) {
+            case "SELECT_PARTY_MEMBER" : 
+                this.height     = GRID_BLOCK_PX * 3;
+                this.width      = GRID_BLOCK_PX * 2;
+                break;
+            case "YES_OR_NO" :
+                this.height     = GRID_BLOCK_PX;
+                this.width      = GRID_BLOCK_PX;
+                break;
+            default: 
+                console.log(this.type)
+        }
     }
 
     /**
