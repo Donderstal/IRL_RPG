@@ -96,7 +96,7 @@ class Game {
             className: className,
             level: 1
         }
-        this.party = new Party( [ playerPartyData ], true );
+        this.party = new Party( [ playerPartyData, { name: "Chad", className: "chad", level: 1 }, { name: "Influencer", className: "influencer", level: 1 } ], true );
         this.party.addItemsToInventory( startingItemIDs )
     }
 

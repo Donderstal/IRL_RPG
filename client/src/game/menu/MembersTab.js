@@ -18,6 +18,16 @@ class MembersMenuTab extends MenuTab {
         this.itemSubMenu.initOptions( this.itemSubMenuOptions );
     }
 
+    activateNextButtonInList( ) {
+        super.activateNextButtonInList( )
+        this.activeItem = this.buttons[this.activeButton].content
+    }
+
+    activatePreviousButtonInList( ) {
+        super.activatePreviousButtonInList( )
+        this.activeItem = this.buttons[this.activeButton].content
+    }
+
     handleActionButton( ) {
         if ( !this.itemSubMenu.isActive ) {
             this.itemSubMenu.activate( );

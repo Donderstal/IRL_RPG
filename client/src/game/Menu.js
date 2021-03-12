@@ -121,11 +121,17 @@ const handleLeft = ( ) => {
     if ( ACTIVE_MENU_TAB.modal ) {
         ACTIVE_MENU_TAB.modal.selectPreviousOption( );
     }
+    else if ( ACTIVE_MENU_TAB.tabName == "MEMBERS" ) {
+        ACTIVE_MENU_TAB.activatePreviousButtonInList( );
+    }
 }
 
 const handleRight = ( ) => {
     if ( ACTIVE_MENU_TAB.modal ) {
         ACTIVE_MENU_TAB.modal.selectNextOption( );
+    }
+    else if ( ACTIVE_MENU_TAB.tabName == "MEMBERS" ) {
+        ACTIVE_MENU_TAB.activateNextButtonInList( );
     }
 }
 
