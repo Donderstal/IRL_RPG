@@ -1,60 +1,72 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
-const { BACKGROUND_CANVAS, UTILITY_CANVAS, GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../game-data/globals')
-
+/**
+ * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
+ * The BackgroundCanvas will contain all static elements of the current map and draw them if necessary.
+ * For example, the background tiles, the doors and static actions
+ */
 class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
     };
-
+    /**
+     * Assign given string as value for the this.mapName prop
+     * @param {String} mapName 
+     */
     setMapName( mapName ) {
         this.mapName = mapName;
     }
-
-    clearGrid( ) {
-        super.clearGrid( );
-        this.ctx.clearRect( 0, 0, BACKGROUND_CANVAS.width, BACKGROUND_CANVAS.height )
-        this.grid.initializeGrid( );
-    }
-
+    /**
+     * Assign given string as value for the this.neighbourhood prop
+     * @param {String} neighbourhood 
+     */
     setNeighbourhood( neighbourhood ) {
         this.neighbourhood = neighbourhood
     }
-
-    drawTileAtXY( x, y ) {
-        const tile = super.getTileAtXY( x, y );
-        tile.setTileID( tile.index )
-        tile.setSettings( tile.settings );
-        this.ctx.drawImage( 
-            UTILITY_CANVAS, 
-            0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, 
-            tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX
-        );
-    }
-
+    /**
+     * Assign given array of actions to the this.actions prop. Set this.hasActions to true
+     * @param {Object[]} actions - array of actions to set
+     */
     setActions( actions ) {
         this.actions = actions;
         this.hasActions = true;
     }
-
+    /**
+     * Assign given array of doors to the this.doors prop. Set this.hasDoors to true
+     * @param {Object[]} doors - array of doors to set
+     */
     setDoors( doors ) {
         this.doors = doors;
         this.hasDoors = true;
     }
-
-    setBlockedTiles( sheetData ) {
-        this.blockedTiles = sheetData.blocked
+    /**
+     * Assign given array of  blocked tiles to the this.blockedTiles prop.
+     * @param {Number[]} blockedTiles - blocked Tiles in sheet represented by their index
+     */
+    setBlockedTiles( blockedTiles ) {
+        this.blockedTiles = blockedTiles
     }
-
+    /**
+     * Set tile grid and various data for a new map as class properties
+     * @param {Object} mapData - static data from mapResources to initialize map
+     * @param {Object} sheetData - static data from tilesheetResources to initialize sheet for map
+     */
     setBackgroundData( mapData, sheetData ) {
         if ( mapData.doors )
             this.setDoors( mapData.doors );
         if ( mapData.actions )
             this.setActions( mapData.actions );
         if ( sheetData.blocked ) 
-            this.setBlockedTiles( sheetData )
-        this.setTileGrid( mapData.grid.flat(1) )
+            this.setBlockedTiles( sheetData.blocked )
 
+        let oneDimensionalMapGrid = mapData.grid.flat(1);
+        this.setTileGrid( oneDimensionalMapGrid )
+    }
 
+    /**
+     * Loop through the inner I_Grid array.
+     * For each tile, check if a corresponding door, action or blocked tile is set in the BackgroundCanvas props
+     */
+    setEventsDoorsAndBlockedToTilesInGrid( ) {
         this.grid.array.forEach( ( tile ) => {
             if ( this.hasDoors ) {
                 this.doors.forEach( ( door ) => {
@@ -78,10 +90,16 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         } );
     }
     
+    /**
+     * Call the drawMap function of the inner I_Grid Class with this.sheetImage as parameter
+     */
     drawMapFromGridData( ) {
         this.grid.drawMap( this.sheetImage )
     }
 
+    /**
+     * Clear all data associated with the current map and the inner I_Grid
+     */
     clearMap( ) {
         this.doors = [ ];
         this.hasDoors = false;
