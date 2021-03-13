@@ -8,21 +8,32 @@ const { drawGameMenu }          = require('./Menu')
 
 let lastDateNow, newDateNow;
 
+/**
+ * Call startOverworldAnimation() and animationFrameController() to intialize the canvas animations
+ */
 const startRequestingFrame = () => {
     startOverworldAnimation()
     animationFrameController()
 }
-
+/**
+ * Set GAME.mode to BATTLE_MODE
+ */
 const startBattleAnimation = ( ) => {
     globals.GAME.mode = BATTLE_MODE;
 }
-
+/**
+ * Set GAME.mode to MAP_MODE
+ */
 const startOverworldAnimation = ( ) => {
     globals.GAME.mode = MAP_MODE;
 }
 
 /**
- * Controller for all animation duties in front-context
+ * Main channel for all interactivity in the game.
+ * Recursive function using the in-browser requestAnimationFrame function.
+ * Check if a new frame should be requested per FRAMES_PER_SECOND global.
+ * If so, register the players key presses. 
+ * Run animations for Map, Battle or Menu depending on GAME.mode and GAME.inMenu.
  */
 const animationFrameController = ( ) => {
     const GAME = globals.GAME;
