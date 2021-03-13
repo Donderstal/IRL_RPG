@@ -1,7 +1,9 @@
 const globals               = require('../../game-data/globals')
 const { GRID_BLOCK_PX }     = require('../../game-data/globals')
 const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOppositeDirection
-
+/**
+ * The Cinematic and Scene classes are no longer implemented and need to be reworked to the new Grid system
+ */
 class Cinematic {
     constructor( data, trigger, args ) {
         this.scenes = [];
