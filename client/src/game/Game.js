@@ -46,27 +46,52 @@ class Game {
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
 
+    /**
+     * Return the I_Tile instance at index on given canvas
+     * @param {String} canvasName FRONT or BACK to indicate the desired canvas
+     * @param {Number} index array index of the tile in the grid array
+     */
     getTileOnCanvasAtIndex( canvasName, index) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtIndex( index );
     }
 
+    /**
+     * Return the I_Tile instance at xy position on given canvas
+     * @param {String} canvasName FRONT or BACK to indicate the desired canvas
+     * @param {Number} x position of tile on X axis in canvas
+     * @param {Number} y position of tile on Y axis in canvas
+     */
     getTileOnCanvasAtXY( canvasName, x, y ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtXY( x, y );
     }
 
+    /**
+     * Return the I_Tile instance at column row position on given canvas
+     * @param {String} canvasName FRONT or BACK to indicate the desired canvas
+     * @param {Number} column column of tile in canvas
+     * @param {Number} row position of tile on Y axis in canvas
+     */
     getTileOnCanvasAtCell( canvasName, column, row ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtCell( column, row );
     }
 
+    /**
+     * Initialize game Canvases. FRONT, BACK and UTIL
+     */
     initGameCanvases( ) {
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
         this.initCanvas( 'UTIL', this.util );
     }
 
+    /**
+     * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate I_CanvasWithGrid class extension if necessary and set as property
+     * @param {String} type FRONT, UTIL or BACK. Indicates which canvas to initialize
+     * @param {Object} object 'wrapper' object to add the canvas and canvas context to as properties
+     */
     initCanvas( type, object ) {
         const id = type == 'FRONT' ? 'game-front-canvas' : type == 'BACK' ? 'game-background-canvas' : 'game-utility-canvas';
         object.canvas = document.getElementById( id );
@@ -80,6 +105,11 @@ class Game {
         }
     }
 
+    /**
+     * Wrapper method. Calls a sequentce of functions to start a new game
+     * @param {String} name name that the player chose in the starting menu
+     * @param {String} className name of the class that the player selected
+     */
     startNewGame( name, className ) {
         this.initializePlayerParty( name, className )
         const mapData = getMapData(firstMapUrl);
@@ -90,6 +120,11 @@ class Game {
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
+    /**
+     * Instantiate a Party class for the player and assign it to the this.party prop
+     * @param {String} name name that the player chose in the starting menu
+     * @param {String} className name of the class that the player selected
+     */
     initializePlayerParty( name, className ) {
         let playerPartyData = {
             name: name,
@@ -100,12 +135,20 @@ class Game {
         this.party.addItemsToInventory( startingItemIDs )
     }
 
+    /**
+     * Start listening for keypress in controls.js. Start requesting animationframe in animationframecontroller.js
+     */
     initControlsAndAnimation( ) {
         controls.initTouchControls( );
         controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
     }
 
+    /**
+     * Initialize map grids based on map dimensions. Set mapData to the Foreground and Background classes.
+     * Assign playerSprite to the Foreground spriteDictionary and play music.
+     * @param {Object} mapData mapData object retrieved from mapResources.js
+     */
     loadMapToCanvases( mapData ) {
         this.back.class.initGrid( mapData.rows, mapData.columns );
         this.front.class.initGrid( mapData.rows, mapData.columns );
@@ -122,6 +165,9 @@ class Game {
         this.sound.playMusic( mapData.music )
     }
 
+    /**
+     * Clear currentmap data from Foreground and Background. Then clear the assets from both canvas contexts
+     */
     clearMapFromCanvases( ) {
         this.front.class.clearMap( );
         this.back.class.clearMap( );
@@ -130,6 +176,11 @@ class Game {
         this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
     }
 
+    /**
+     * Wrapper method. Pause controls and clear old map from the canvases. Then load the new map and resume controls.
+     * @param {String} destination name of the map to switch to
+     * @param {String} type - DOOR, BUS, NEIGHBOUR - indicates how the player is crossing to the new map
+     */
     switchMap ( destination, type ) {
         this.paused = true;
         controls.stopListenForKeyPress( );
@@ -147,11 +198,21 @@ class Game {
         }, 100 )
     }
 
+    /**
+     * Store the current map data and name as properties of game class
+     * @param {Object} mapData - mapData object retrieved from mapResources.js
+     * @param {String} mapName - name of the current map
+     */
     storeMapData( mapData, mapName ) {
         this.activeMapName = mapName;
         this.activeMap = mapData;
     }
 
+    /**
+     * Determine the players location based on the type of arrival in the new map. Then set it to the Player sprite
+     * @param {Object} mapData - mapData object retrieved from mapResources.js
+     * @param {String} type - DOOR, BUS, NEIGHBOUR - indicates how the player is crossing to the new map
+     */
     setPlayerInNewMap( mapData, type ) {
         const newPlayerCell = {};
         let direction;
@@ -207,6 +268,11 @@ class Game {
     }
 }
 
+/**
+ * Instantiate the game class and call the startNewGame method
+ * @param {String} name name that the player chose in the starting menu
+ * @param {String} className name of the class that the player selected
+ */
 const startGame = ( name, className ) => {
     globals.GAME = new Game( );
     globals.GAME.startNewGame( name, className );

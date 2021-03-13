@@ -1,7 +1,13 @@
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
 
+/**
+ * Class containing all functionalities for sound effects and music in the game
+ */
 class SoundController {
+    /**
+     * Initialize and empty Soundcontroller class for later usage
+     */
     constructor( ) {
         this.activeMusic;
         this.musicIsPlaying;
@@ -11,6 +17,11 @@ class SoundController {
         this.allSoundEffects = {}
     }
 
+    /**
+     * Init Audio element if needed and play music
+     * @param {String} title name of music to be played. Should correspond with filename in music folder 
+     * @param {Boolean} loopMusic optional boolean indicating if music should be looped
+     */
     playMusic( title, loopMusic = true ) {
         if ( !(title in this.allMusic) ) {
             this.allMusic[title] = new Audio( musicFolder + title );
@@ -28,6 +39,11 @@ class SoundController {
         }
     }
 
+    /**
+     * Init Audio element if needed and play effect
+     * @param {String} title name of effect to be played. Should correspond with filename in effects folder 
+     * @param {Boolean} loop optional boolean indicating if effect should be looped
+     */
     playEffect( title, loop = false ) {
         if ( !(title in this.activeSoundEffects) ) {
             const effect = new Audio( effectsFolder + title );
