@@ -1,6 +1,12 @@
 const { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS } = require('../../game-data/globals')
 const { I_Tile } = require('./I_Tile');
-
+/**
+ * The I_Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
+ * It divides the canvas up in a grid of equally sized blocks, represented by an I_Tile instance.
+ * These I_Tile instances are stored in the this.array property and are retrievable by array index, xy location and column-row location.
+ * These tiles in turn register the presence of sprites, doors, action or blocked areas in said tile.
+ * This setup is the bases of all interactivity on the game canvases.
+ */
 class I_Grid {
     constructor( x, y, rows, cols, ctx ) {
 
@@ -15,7 +21,11 @@ class I_Grid {
 
         this.initializeGrid( );
     };
-    
+    /**
+     * Fill this.array with a number I_Tile instances  
+     * Length of array is dependent on this.rows and this.cols props
+     * Calculate the xy position for each new I_Tile instance
+     */
     initializeGrid( ) {
         const limit = this.rows * this.cols
         let tileX = this.getXOffset( );
@@ -38,28 +48,47 @@ class I_Grid {
         };
     };
 
+    /**
+     * Get the Y offset from the top of the Canvas needed to center the grid based on this.overflowColumns
+     */
     getXOffset( ) {
         return ( this.overflowColumns * GRID_BLOCK_PX ) / 2;
     }
-
+    /**
+     * Get the Y offset from the top of the Canvas needed to center the grid based on this.overflowRows
+     */
     getYOffset( ) {
         return ( this.overflowRows * GRID_BLOCK_PX ) / 2;
     }
 
+    /**
+     * Start drawing a map by looping through the rows of the grid based on this.cols
+     * For each row, slice the I_Tile instances in that row from this.array
+     * Then call this.drawRowInMap with the row and tilesheet as argument
+     * @param {Image} tileSheet - Image instance of a tilesheet
+     */
     drawMap( tileSheet ) {
         for ( var i = 0; i < this.array.length; i += this.cols ) {
             let row = this.array.slice( i, i + this.cols )
             this.drawRowInMap( row, tileSheet )
         }
     }
-
+    /**
+     * For each I_Tile in the row, call I_Tile.drawTileInMap with the tilesheet as argument
+     * @param {I_Tile[]} currentRow - List if I_Tile instance representing a row in the grid
+     * @param {Image} tileSheet - Image instance of a tilesheet
+     */
     drawRowInMap( currentRow, tileSheet ) {
         for ( var j = 0; j < this.cols; j++ ) {
             const currentTile = currentRow[j]
             currentTile.drawTileInMap( tileSheet )
         }
     }
-
+    /**
+     * Calculate row and column based on the xy input. Then call getTileAtCell with those as arguments
+     * @param {Number} x position of tile on X axis in canvas
+     * @param {Number} y position of tile on Y axis in canvas
+     */
     getTileAtXY( x, y ) {
         if ( x > this.x + this.cols * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x < this.x || y < this.y ) {
             return undefined;
@@ -69,12 +98,21 @@ class I_Grid {
 
         return this.getTileAtCell( column, row )
     }
-
+    /**
+     * Return the I_Tile instance at column-row position
+     * @param {Number} column column of tile in canvas
+     * @param {Number} row row position of tile in canvas
+     */
     getTileAtCell( column, row ) {
         const tileIndex = ( ( row * this.cols ) - ( this.cols - column ) ) - 1
         return this.array[tileIndex]
     }
-
+    /**
+     * Loop through the I_Tile instance in this.array
+     * For each, set the tileID, representing a tile on this grids' tilehseet
+     * If needed, set setting for the angle and mirrored props of the tile
+     * @param {(Number|Object)[]} tileGrid 
+     */
     setTileGridToArray( tileGrid ) {
         this.array.forEach( ( e, index ) => {
             if ( typeof tileGrid[index] == 'string' || typeof tileGrid[index] == 'number' ) {

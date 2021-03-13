@@ -1,7 +1,7 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base I_CanvasWithGrid class
+ * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
  * The BackgroundCanvas will contain all static elements of the current map and draw them if necessary.
  * For example, the background tiles, the doors and static actions
  */

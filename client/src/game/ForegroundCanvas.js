@@ -6,7 +6,7 @@ const { getUniqueId } = require('../helpers/utilFunctions');
 const { Road } = require('./map/map-classes/Road');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base I_CanvasWithGrid class
+ * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
  * The BackgroundCanvas contains all non-static elements of the current map.
  * For example, the NPCs, mapObjects and cars
  */

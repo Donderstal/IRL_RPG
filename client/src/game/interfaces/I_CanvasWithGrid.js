@@ -1,8 +1,8 @@
 const { I_Grid } = require('./I_Grid');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base I_CanvasWithGrid class
- * I_CanvasWithGrid contains core functionalities for interacting with the canvas context based on a grid system.
+ * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
+ * I_CanvasWithGrid contains core functionalities for interacting with the canvas context based on a I_Grid instance.
  * These include locating and returning a tile from the grid and instantiating a new grid.
  */
 class I_CanvasWithGrid {
@@ -58,7 +58,7 @@ class I_CanvasWithGrid {
     /**
      * Return the I_Tile instance at column-row position
      * @param {Number} column column of tile in canvas
-     * @param {Number} row position of tile on Y axis in canvas
+     * @param {Number} row row position of tile on canvas
      */
     getTileAtCell( column, row ) {
         return this.grid.getTileAtCell( column, row );
