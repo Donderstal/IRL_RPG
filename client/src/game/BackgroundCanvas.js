@@ -1,6 +1,7 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
+ * Both are instantiated as an extension of the base I_CanvasWithGrid class
  * The BackgroundCanvas will contain all static elements of the current map and draw them if necessary.
  * For example, the background tiles, the doors and static actions
  */
@@ -47,8 +48,8 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     }
     /**
      * Set tile grid and various data for a new map as class properties
-     * @param {Object} mapData - static data from mapResources to initialize map
-     * @param {Object} sheetData - static data from tilesheetResources to initialize sheet for map
+     * @param {Object} mapData - data object from mapResources
+     * @param {Object} sheetData - data object from tilesheetResources
      */
     setBackgroundData( mapData, sheetData ) {
         if ( mapData.doors )
