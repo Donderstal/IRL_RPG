@@ -107,8 +107,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.actions = { };
         this.hasActions = false;
         this.blockedTiles = [ ];
-
-        super.clearGrid( );
     }
 };
 

@@ -158,7 +158,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.roads = [ ];
         this.spriteDictionary = { };
         this.playerSprite.clearTileIndexes( );
-        super.clearGrid( );
     }
 }
 

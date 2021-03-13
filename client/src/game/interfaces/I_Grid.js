@@ -46,10 +46,6 @@ class I_Grid {
         return ( this.overflowRows * GRID_BLOCK_PX ) / 2;
     }
 
-    clearGrid( ) {
-        this.grid = [];
-    }
-
     drawMap( tileSheet ) {
         for ( var i = 0; i < this.array.length; i += this.cols ) {
             let row = this.array.slice( i, i + this.cols )

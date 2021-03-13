@@ -41,12 +41,6 @@ class I_CanvasWithGrid {
         };
     }
     /**
-     * Call I_Grid.clearGrid( ) to unset the active grid
-     */
-    clearGrid( ) {
-        this.grid.clearGrid( );
-    };
-    /**
      * Return the I_Tile instance at index
      * @param {Number} index array index of the tile in the grid array
      */
