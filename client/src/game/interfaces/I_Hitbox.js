@@ -2,7 +2,12 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const { 
     FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN
 } = require( '../../game-data/globals' )
-
+/**
+ * The I_Hitbox interface is the base class of all in-game elements that should have collision detection.
+ * It consists out of three circles, the inner, middle and outer.
+ * The radius of these circles is dependent on the size of the sprite that owns the hitbox.
+ * Collision is detected by comparing the xy values of two hitboxes.
+ */
 class I_Hitbox {
     constructor( x, y, radius ) {
         this.x              = x;
@@ -25,14 +30,22 @@ class I_Hitbox {
         this.innerRight     = ( ) => { return this.x + this.innerRadius }
         this.innerBottom    = ( ) => { return this.y + this.innerRadius }
     }
-
+    /**
+     * Update the xy location of the hitbox
+     * @param {Number} newX represents a in-canvas location on the X axis 
+     * @param {Number} newY represents a in-canvas location on the Y axis 
+     */
     updateXy( newX, newY ) {
         if ( this.x != newX || this.y != newY  ) {
             this.x = newX;
             this.y = newY;            
         }
     }
-
+    /**
+     * Draw the hitbox circles. Only used for testing and debugging purposes
+     * @param {Number} x represents a in-canvas location on the X axis 
+     * @param {Number} y represents a in-canvas location on the Y axis 
+     */
     draw( x, y ) {
         this.updateXy( x, y )
         let frontCtx = canvasHelpers.getFrontCanvasContext( );
@@ -43,7 +56,11 @@ class I_Hitbox {
         frontCtx.strokeStyle = this.arcColor;
         frontCtx.stroke( );
     }
-
+    /**
+     * Checks if the targetHitbox is in the outer range of method owner Hitbox. Return a boolean.
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     checkForActionRange( targetHitbox, targetDirection ) {
         if ( targetHitbox == undefined ) {
             return false;
@@ -66,7 +83,11 @@ class I_Hitbox {
         }
         return false;
     }
-
+    /**
+     * Checks if the targetHitbox is in the inner range of method owner Hitbox. Return a boolean.
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     checkForBlockedRange( targetHitbox, targetDirection ) {
         if ( targetHitbox == undefined ) {
             return false;
@@ -89,93 +110,134 @@ class I_Hitbox {
         }
         return false;
     }
-
-    //////////////
+    /**
+     * Return true if the innerCircle x of the Target hitbox is in the outerCircle x of this hitbox
+     * @param {I_Hitbox} targetHitbox 
+     */
     targetIsInVerticalBlockedRange( targetHitbox ) {        
-        return ( targetHitbox.x - targetHitbox.innerRadius ) > ( this.left( ) - this.innerRadius ) 
-        && ( targetHitbox.x + targetHitbox.innerRadius ) < ( this.right( ) + this.innerRadius )
+        return targetHitbox.innerLeft( ) > this.outerLeft( ) 
+        && targetHitbox.innerRight( ) < this.outerRight( )
     }
-
+    /**
+     * Return true if the innerCircle y of the Target hitbox is in the outerCircle y of this hitbox
+     * @param {I_Hitbox} targetHitbox 
+     */
     targetIsInHorizontalBlockedRange( targetHitbox ) {       
-        return ( targetHitbox.y - targetHitbox.innerRadius ) > ( this.top( ) - this.innerRadius )
-        && ( targetHitbox.y + targetHitbox.innerRadius ) < ( this.bottom( ) + this.innerRadius )
+        return targetHitbox.innerTop( ) > this.outerTop( )
+        && targetHitbox.innerBottom( ) < this.outerBottom( )
     }
-
-    /////////////
+    /**
+     * Return true if the center x of the Target hitbox is in the outerCircle x of this hitbox
+     * @param {I_Hitbox} targetHitbox 
+     */
     targetIsInVerticalActionRange( targetHitbox ) {        
         return targetHitbox.x > this.outerLeft( ) 
         && targetHitbox.x < this.outerRight( )
     }
-
+    /**
+     * Return true if the center y of the Target hitbox is in the outerCircle y of this hitbox
+     * @param {I_Hitbox} targetHitbox 
+     */
     targetIsInHorizontalActionRange( targetHitbox ) {       
         return targetHitbox.y > this.outerTop( ) 
         && targetHitbox.y < this.outerBottom( )
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * If the target is facing up, is below this hitbox and target top y is smaller than this innerbottom Y, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     upFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingUp  = targetDirection == FACING_UP
+        const targetIsFacingUp  = targetDirection == FACING_UP;
         const thisIsAboveTarget = targetHitbox.top( ) > this.innerTop( );
+        const targetTopIsInInnerRadius = targetHitbox.top( ) <= this.innerBottom( );
 
-        return targetIsFacingUp && ( targetHitbox.top( ) <= this.bottom( ) ) 
-        && targetHitbox.top( ) <= this.innerBottom( ) && thisIsAboveTarget
+        return targetIsFacingUp && targetTopIsInInnerRadius && thisIsAboveTarget;
     }
-
+    /**
+     * If the target is facing down, is above this hitbox and target bottom y is larger than this innertop Y, return true
+     * Checking for down facing target collision slightly deviaties from the other checks because of the 2D perspective in the game
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     downFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingDown   = targetDirection == FACING_DOWN
-        const thisIsBelowTarget    = targetHitbox.bottom( ) < this.innerBottom( )
+        const targetIsFacingDown   = targetDirection == FACING_DOWN;
+        const thisIsBelowTarget    = targetHitbox.bottom( ) < this.innerBottom( );
+        const targetOuterBottomIsInInnerRadius = targetHitbox.outerBottom( ) >= this.innerTop( )
 
-        return targetIsFacingDown && ( targetHitbox.bottom( ) >= this.top( ) ) 
-        && targetHitbox.outerBottom( ) >= this.innerTop( ) && thisIsBelowTarget
+        return targetIsFacingDown &&  targetOuterBottomIsInInnerRadius && thisIsBelowTarget;
     }
-
+    /**
+     * If the target is facing left, is right of this hitbox and target left x is smaller than this innerright x, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     leftFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) {
-        const targetIsFacingLeft    = targetDirection == FACING_LEFT
-        const thisIsLeftOfTarget    = targetHitbox.left( ) > this.innerLeft( )
+        const targetIsFacingLeft    = targetDirection == FACING_LEFT;
+        const thisIsLeftOfTarget    = targetHitbox.left( ) > this.innerLeft( );
+        const targetLeftIsInInnerRadius = targetHitbox.left( ) <= this.innerRight( );
 
-        return targetIsFacingLeft && ( targetHitbox.left( ) <= this.right( ) ) 
-        && targetHitbox.left( ) <= this.innerRight( ) && thisIsLeftOfTarget
+        return targetIsFacingLeft && targetLeftIsInInnerRadius && thisIsLeftOfTarget;
     }
-
+    /**
+     * If the target is facing right, is left of this hitbox and target right x is larger than this innerleft x, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     rightFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ){
         const targetIsFacingRight   = targetDirection == FACING_RIGHT;
-        const thisIsRightOfTarget   = targetHitbox.right( ) < this.innerRight( )
+        const thisIsRightOfTarget   = targetHitbox.right( ) < this.innerRight( );
+        const targetRightIsInInnerRadius = targetHitbox.right( ) >= this.innerLeft( );
 
-        return targetIsFacingRight && ( targetHitbox.right( ) >= this.left( ) ) 
-        && targetHitbox.right( ) >= this.innerLeft( ) && thisIsRightOfTarget
+        return targetIsFacingRight && targetRightIsInInnerRadius && thisIsRightOfTarget;
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * If the target is facing up, is below this hitbox and target top y is smaller than this outerbottom Y, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     upFacingTargetIsInActionRadius( targetHitbox, direction ) {
         const targetIsFacingUp          = direction == FACING_DOWN;
         const thisIsAboveTarget         = targetHitbox.top( ) > this.innerTop( );
-        const topIsInTargetOuterBottom  = targetHitbox.top( ) <= this.outerBottom( )
+        const topIsInTargetOuterBottom  = targetHitbox.top( ) <= this.outerBottom( );
 
-        return targetIsFacingUp && topIsInTargetOuterBottom && thisIsAboveTarget
+        return targetIsFacingUp && topIsInTargetOuterBottom && thisIsAboveTarget;
     }
-
+    /**
+     * If the target is facing down, is above this hitbox and target bottom y is larger than this outertop Y, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     downFacingTargetIsInActionRadius( targetHitbox, direction ) {
-        const targetIsFacingDown        = direction == FACING_UP
-        const thisIsBelowTarget         = targetHitbox.bottom( ) < this.innerBottom( )
-        const bottomIsInTargetOuterTop  = targetHitbox.bottom( ) > this.outerTop( )
+        const targetIsFacingDown        = direction == FACING_UP;
+        const thisIsBelowTarget         = targetHitbox.bottom( ) < this.innerBottom( );
+        const bottomIsInTargetOuterTop  = targetHitbox.bottom( ) > this.outerTop( );
 
-        return targetIsFacingDown && bottomIsInTargetOuterTop && thisIsBelowTarget
+        return targetIsFacingDown && bottomIsInTargetOuterTop && thisIsBelowTarget;
     }
-
+    /**
+     * If the target is facing left, is right of this hitbox and target left x is smaller than this outerright x, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     leftFacingTargetIsInActionRadius( targetHitbox, direction ) {
-        const targetIsFacingLeft        = direction == FACING_RIGHT
-        const thisIsLeftOfTarget        = targetHitbox.left( ) > this.innerLeft( )
-        const leftIsInTargetOuterRight  = targetHitbox.left( ) < this.outerRight( )
+        const targetIsFacingLeft        = direction == FACING_RIGHT;
+        const thisIsLeftOfTarget        = targetHitbox.left( ) > this.innerLeft( );
+        const leftIsInTargetOuterRight  = targetHitbox.left( ) < this.outerRight( );
 
-        return targetIsFacingLeft && leftIsInTargetOuterRight  && thisIsLeftOfTarget
+        return targetIsFacingLeft && leftIsInTargetOuterRight  && thisIsLeftOfTarget;
     }
-
+    /**
+     * If the target is facing right, is left of this hitbox and target right x is larger than this outerleft x, return true
+     * @param {I_Hitbox} targetHitbox - Hitbox that needs to be checked for collision
+     * @param {Number} targetDirection - number representing the direction the target is facing
+     */
     rightFacingTargetIsInActionRadius( targetHitbox, direction ){
-        const targetIsFacingRight       = direction == FACING_LEFT
-        const thisIsRightOfTarget       = targetHitbox.right( ) < this.innerRight( )
-        const rightIsInTargetOuterLeft  = targetHitbox.right( ) > this.outerLeft( )
+        const targetIsFacingRight       = direction == FACING_LEFT;
+        const thisIsRightOfTarget       = targetHitbox.right( ) < this.innerRight( );
+        const rightIsInTargetOuterLeft  = targetHitbox.right( ) > this.outerLeft( );
 
-        return targetIsFacingRight && rightIsInTargetOuterLeft && thisIsRightOfTarget
+        return targetIsFacingRight && rightIsInTargetOuterLeft && thisIsRightOfTarget;
     }
 }
 
