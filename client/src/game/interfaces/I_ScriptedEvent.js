@@ -1,5 +1,7 @@
 const Cinematic = require('./I_Cinematic').Cinematic
-
+/**
+ * The ScriptedEvent class is no longer implemented and need to be reworked to the new Grid system
+ */
 class I_ScriptedEvent {
     constructor( scriptedEventData, eventScript ) {
         this.mapName        = scriptedEventData.mapName;
