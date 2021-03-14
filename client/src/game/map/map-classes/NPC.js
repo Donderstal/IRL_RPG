@@ -154,7 +154,7 @@ class NPC extends MapSprite {
 
         if ( newRow > 0 && newRow < globals.GAME.activeMap.rows + 1 && newColumn > 0 && newColumn < globals.GAME.activeMap.columns + 1 ) {
             this.setDestination( { "col": newColumn, "row": newRow }  )
-            this.initMovement( " ", globals.MOVEMENT_SPEED * .5 );
+            this.initMovement( globals.MOVEMENT_SPEED * .5 );
         }
         else {
             this.setRandomDestinationInRadius( )

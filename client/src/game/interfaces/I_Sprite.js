@@ -9,8 +9,11 @@ const {
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
     FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
-
-
+/**
+ * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
+ * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
+ *  and movement towards a pre-defined destination.
+ */
 class Sprite {
     constructor ( tile, spriteSize, src, isCar = false ) {   
         if ( spriteSize == "STRD" ) {
@@ -73,11 +76,10 @@ class Sprite {
             && globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row ).isBlocked 
         )
     }
-
      /**
-     * @function setSpriteToGrid determine a sprite's XY on the grid
+     * Set the Sprites' location on the grid and xy axis depending on given I_Tile
      * @param {I_TIle} tile instance of I_Tile Class
-     * @param {boolean} isCar check if the sprite is a car
+     * @param {Boolean} isCar true if this is a car sprite
      */
     setSpriteToGrid( tile, isCar ) {
         this.row = tile.row;
@@ -86,13 +88,11 @@ class Sprite {
         
         this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
     }
-
      /**
-     * @function setNewLocationInGrid fetch sprite starting tile and set it to the grid
-     * @param cell row / column pair
-     * @param {integer} cell.col integer representing a column
-     * @param {integer} cell.row integer representing a row
-     * @param {string} direction check if the sprite is a car
+     * Get the I_Tile instance at given cell. Assign direction to this.direction if not undefined.
+     * Then, mark this Sprite as the player and call this.SetSpriteToGrid
+     * @param {Object} cell object with row and col as properties
+     * @param {String} direction the direction the sprite should face
      */
     setNewLocationInGrid( cell, direction ) {
         let newTile = globals.GAME.getTileOnCanvasAtCell( 'FRONT', cell.col, cell.row )
@@ -101,9 +101,9 @@ class Sprite {
         newTile.spriteId = "PLAYER"
         this.setSpriteToGrid( newTile );
     }
-
      /**
-     * @function getSpriteAndDrawWhenLoaded set handler to sheet and draw on load
+     * If the this.sheet Image is not loaded, set its src.
+     * Then, draw it when loaded.
      */
     getSpriteAndDrawWhenLoaded( ) {
         if ( !this.loaded ) {
@@ -115,9 +115,8 @@ class Sprite {
             this.sheet.src = this.sheetSrc            
         }
     }
-
      /**
-     * @function updateSpriteBorders update sprite borders based on current x & y
+     * Set the left, right, top, bottom properties based on current x, y, width and height props.
      */
     updateSpriteBorders( ) {
         this.left   = this.x,
@@ -125,9 +124,9 @@ class Sprite {
         this.top    = this.y,
         this.bottom = this.y + this.height
     }
-
-     /**
-     * @function drawSprite draw sprite and call this.updateSpriteBorders() after
+    /**
+     * Draw the sprite to the front canvas at its current x and y with current width and height.
+     * What frame of the spritesheet is drawn is dependent on the sheetPosition and direction props.
      */
     drawSprite( ) {
         canvasHelpers.drawFromImageToCanvas(
@@ -141,12 +140,11 @@ class Sprite {
 
         this.updateSpriteBorders( )
     }
-
     /**
-     * @function goToDestination decide where to go based on sprites position compared to destination prop
-     * @param {boolean} isBattle determines how y axis anims should be handled
-     * call this.goEndToAnimation() if sprite has reached destination
-     * call this.countFrame()
+     * Move closer to the middle of I_Tile instance currently assigned to this.destination.
+     * Alter this.x and/or this.y depending on the relative position of the destination.
+     * If no move is possible, call the checkForNextDestination method.
+     * @param {Boolean} isBattle optional parameter indicating if the game is in a battle 
      */
     goToDestination( isBattle = false ) {
         this.moving = false;
@@ -184,42 +182,54 @@ class Sprite {
         }
 
         if ( !this.moving ) {
-            if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
-                this.activeDestinationIndex += 1; 
-                this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
-            }
-            else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
-                this.activeDestinationIndex = 0;
-            }
-            else {
-                this.stopMovement( );
-                this.unsetDestination( );    
-                this.unsetScriptedAnimation( );
-            }
+            this.checkForNextDestination( );
         }
     }
-
     /**
-     * @function initMovement set speed and direction of movement
-     * @param {string} direction direction string to use in globals
-     * @param {integer} speed optional speed param
+     * Set the next I_Tile in this.destinationTile as this.destinationTile if possible.
+     * If not possible but moving in a loop, reset this.destinationTile to the first tile in the list.
+     * Else, stop moving by calling stopMovement, unsetDestination and unsetScriptedAnimation methods
      */
-    initMovement( direction, speed = null ) {
-        this.movingToDestination = true;
-        this.movementSpeed = speed == null ? MOVEMENT_SPEED * ( Math.random( ) + 1 ) : speed;
+    checkForNextDestination( ) {
+        if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
+            this.activeDestinationIndex += 1; 
+            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
+        }
+        else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
+            this.activeDestinationIndex = 0;
+            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;   
+        }
+        else {
+            this.stopMovement( );
+            this.unsetDestination( );    
+            this.unsetScriptedAnimation( );
+        }        
     }
-
     /**
-     * @function stopMovement unset movingToDestination
+     * Set this.movingToDestination to true. 
+     * If given speed is not null, set it to this.movementSpeed.
+     * Else, set MOVEMENT_SPEED. Add random variation to speed if this.isCar.
+     * @param {Number} speed optional. movement speed of the sprite in pixels
+     */
+    initMovement( speed = null ) {
+        this.movingToDestination = true;
+        this.movementSpeed = speed != null ? speed : this.isCar ? MOVEMENT_SPEED * ( Math.random( ) + 1 ): MOVEMENT_SPEED ;
+    }
+    /**
+     * Set this.sheetPosition to 0 to reset the sprite to a neutral pose.
+     * Set this.movingToDestination to false.
      */
     stopMovement( ) {
         this.sheetPosition = 0;
         this.movingToDestination = false;
     }
-
     /**
-     * @function setDestination set destination to class. determine destinatonTile
-     * @param {object} destination information about destination's grid location
+     * Initialize a destination properties.
+     * If destination is blocked, call unsetDestination
+     * Else if car, set a tile to this.destination
+     * Else if not a car, call setDestinationList to set this.destinationList
+     * @param {Object} destination Properties: row: Number, col: Number
+     * @param {Boolean} isLoop boolean indicated if movement should be looped
      */
     setDestination( destination, isLoop = false ) {
         this.originalDirection  = this.direction;
@@ -239,7 +249,13 @@ class Sprite {
             this.unsetDestination( );
         }
     }
-
+    /**
+     * First, fetch the I_Tile instances at current row/col and this.destination row/col.
+     * Then, get a list of pathIndexes representing the tiles in the most efficient path from this.getPathIndexes.
+     * If pathIndexes is false or undefined, call unsetDestination.
+     * Else, call the return value of getTileListFromIndexes to this.destinationTiles.
+     * @param {Boolean} isLoop 
+     */
     setDestinationList( isLoop ) {
         const startingTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
         const destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
@@ -260,17 +276,21 @@ class Sprite {
             this.unsetDestination( )
         }
     }
-
+    /**
+     * Call determineShortestPath from the pathfindingHelpersFile and return its return value
+     * @param {I_Tile} startingTile I_Tile to start the pathfinding from
+     * @param {I_Tile} destinationTile destination I_Tile
+     */
     getPathIndexes( startingTile, destinationTile ) {
         return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementAnimation == NPC_MOVE_TYPE_FLYING )   
     }
-
+    /**
+     * For each index in the list, get the I_Tile instance at its index and push it to an array.
+     * Return the array of Tiles.
+     * @param {Number[]} pathIndexes 
+     * @param {I_Tile} startingTile 
+     */
     getTileListFromIndexes( pathIndexes, startingTile ) {
-        if ( !pathIndexes ) {
-            this.unsetDestination( );
-            return;
-        }
-
         let lastIndex = startingTile.index;
         let tileList = []
 
@@ -289,7 +309,7 @@ class Sprite {
     }
 
     /**
-     * @function unsetDestination set destination and destinationTile props to false
+     * Empty all destination props or set them to false
      */
     unsetDestination( ) {
         this.destination = false;
@@ -299,7 +319,7 @@ class Sprite {
     }
 
     /**
-     * @function endGoToAnimation unset this.destination, this.inMovementAnimation
+     * Unset destination, set inMovementAnimation to false and restore pre-movement direction of sprite
      */
     endGoToAnimation( ) {
         this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
@@ -308,7 +328,9 @@ class Sprite {
     }
 
     /**
-     * @function countFrame increments this.frameCount. Change this.sheetPosition if over FRAME_LIMIT
+     * Increment the value of this.frameCount.
+     * If it is over FRAME_LIMIT, reset it to 0 and increment this.sheetPosition to show a new frame of the spriteSheet on the current row.
+     * If sheetPosition is over the sheetFrameLimit, reset it to 0 to to show the first frame of the spriteSheet on the current row.
      */
     countFrame ( ) {
         this.frameCount++;  
