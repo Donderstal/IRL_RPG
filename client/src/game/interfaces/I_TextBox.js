@@ -3,7 +3,9 @@ const {
     LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
     SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT
 } = require( '../../game-data/globals' )
-
+/**
+ * The Textbox interface is the base class for displaying in-game textboxes, excluding the Main Menu
+ */
 class I_TextBox {
     constructor( xy, dimensions, fontSize, text, buttonsText = null ) {
         this.x              = xy.x;
@@ -28,7 +30,11 @@ class I_TextBox {
         canvas.setFont(fontSize);
         this.drawTextBox( );
     }
-
+    /**
+     * Increment this.animationFrame
+     * Call drawBox(), writeText() and drawButtons()
+     * If a header is set, call writeHeader()
+     */
     drawTextBox( ) {
         this.animationFrame++;
 
@@ -39,7 +45,9 @@ class I_TextBox {
         this.writeText( );
         this.drawButtons( );
     }
-    
+    /**
+     * Call canvas.drawRect twice to draw the I_Textbox background.
+     */
     drawBox( ) {
         canvas.drawRect( 
             "FRONT", this.x, this.y, 
@@ -50,7 +58,11 @@ class I_TextBox {
             this.innerBoxWidth, this.innerBoxHeight, INNER_TEXTBOX_RGBA
         );
     }
-
+    /**
+     * Set this.fontType as the activeFont.
+     * Get the yPosition of the text in the textbox.
+     * Then, loop through the text lines and draw them below eachother in the textbox.
+     */
     writeText( ) {
         canvas.setFont(this.fontType);
         let yPositionInBox = this.y + this.lineHeight;
@@ -66,14 +78,18 @@ class I_TextBox {
             );
         }
     }
-
+    /**
+     * Write the text set to this.headerText at the top of the textbox
+     */
     writeHeader( ) {
         canvas.writeTextLine( 
             this.headerText, this.x + this.fontSize, 
             this.y + SMALL_FONT_LINE_HEIGHT, "SMALL"
         );
     }
-
+    /**
+     * For each String in the this.buttonsText array, draw write the buttonText at the bottom of the textbox
+     */
     drawButtons( ) {
         let buttonX     = this.x + LARGE_FONT_SIZE;
         let buttonsY    = this.y + this.height;
@@ -85,18 +101,26 @@ class I_TextBox {
             buttonX += ( this.width / 2 ) ;
         });
     }
-
+    /**
+     * If this.animationFrame is over the FRAME_LIMIT * 2, toggle this.buttonColor and reset this.animationFrame
+     */
     doButtonAnimation( ) {
         if ( this.animationFrame > ( FRAME_LIMIT * 2 ) ) {
             this.buttonColor = ( this.buttonColor == "black" ) ? "#800020" : "black";
             this.animationFrame = 0;
         }
     }
-
+    /**
+     * Set given text to the this.text property
+     * @param {String} text 
+     */
     setText( text ) {
         this.text = text;
     }
-
+    /**
+     * Set given text to the this.headerText property. Set this.hasHeader to true
+     * @param {String} text 
+     */
     setHeader( text ) {
         this.hasHeader  = true;
         this.headerText = text;
