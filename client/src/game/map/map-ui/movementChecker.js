@@ -80,7 +80,7 @@ const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
         return colliding;
     }
 
-    const targetSpriteIsFlying = ( targetSprite.movementAnimation == globals.NPC_MOVE_TYPE_FLYING )
+    const targetSpriteIsFlying = ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING )
 
     if ( targetSprite.deleted || targetSpriteIsFlying ) {
         return colliding;

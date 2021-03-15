@@ -5,7 +5,11 @@ const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
-
+/**
+ * The MapSprite is the base class for all standard size sprites in the game.
+ * It contains functionalities to play a scriptedanimation and log the current position of the sprite in the map grid.
+ * It also contains a I_Hitbox instance which is used for collision detection.
+ */
 class MapSprite extends I_Sprite {
     constructor ( tile, spriteSize, src ) {       
         super( tile, spriteSize, src )   
@@ -40,7 +44,7 @@ class MapSprite extends I_Sprite {
         return this.baseY( ) > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); 
     }
     /**
-     * Call super.drawSprite( )e. Then call this.updateTileIndexes( ).
+     * Call super.drawSprite( ). Then call this.updateTileIndexes( ).
      * If the game is not in a cinematic, update the xY of the I_Hitbox instance in this.hitbox and check for collision
      * Else, call this.handleAnimation.
      */

@@ -152,12 +152,12 @@ class Sprite {
         if ( this.destinationIsLeft  ) {
             this.x -= MOVEMENT_SPEED;
             this.moving = true;
-            this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
+            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
         }
         else if ( this.destinationIsRight ) {
             this.x += MOVEMENT_SPEED;
             this.moving = true;
-            this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
+            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
         }
 
         if ( isBattle ) {
@@ -172,12 +172,12 @@ class Sprite {
             if ( this.destinationIsUp ) {
                 this.y -= MOVEMENT_SPEED;
                 this.moving = true;
-                this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
+                this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
             }
             else if ( this.destinationIsDown ) {
                 this.y += MOVEMENT_SPEED  
                 this.moving = true;
-                this.direction = this.movementAnimation == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
+                this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
             }            
         }
 
@@ -195,7 +195,7 @@ class Sprite {
             this.activeDestinationIndex += 1; 
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
         }
-        else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
+        else if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
             this.activeDestinationIndex = 0;
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;   
         }
@@ -282,7 +282,7 @@ class Sprite {
      * @param {I_Tile} destinationTile destination I_Tile
      */
     getPathIndexes( startingTile, destinationTile ) {
-        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementAnimation == NPC_MOVE_TYPE_FLYING )   
+        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementType == NPC_MOVE_TYPE_FLYING )   
     }
     /**
      * For each index in the list, get the I_Tile instance at its index and push it to an array.

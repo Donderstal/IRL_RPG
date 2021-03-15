@@ -18,8 +18,10 @@ const animationList = [
     "BACK_AND_FORTH_STEP",
     "LEFT_AND_RIGHT_STEP"
 ]
-
-
+/**
+ * The NPC class is assigned to each non-player character in a map.
+ * Each NPC has a a
+ */
 class NPC extends MapSprite {
     constructor( tile ) {
         const hasAction = ( tile.spriteData.action !== undefined );
@@ -29,8 +31,8 @@ class NPC extends MapSprite {
         this.initialCol = this.col;
         this.initialRow = this.row;
         
-        this.nonPlayerAnimation = tile.spriteData.anim_type;
-        this.movementAnimation = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
+        this.animationType = tile.spriteData.anim_type;
+        this.movementType = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
         this.animationName = tile.spriteData.anim_name == undefined ? false : tile.spriteData.anim_name;
         this.name = tile.spriteData.name
 
@@ -40,11 +42,11 @@ class NPC extends MapSprite {
             this.action.name = this.name
         }
 
-        if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
+        if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
             this.setDestination( tile.spriteData.destination, true );
             this.initMovement( );
         }
-        else if ( this.nonPlayerAnimation == NPC_ANIM_TYPE_ANIMATION_LOOP ) {
+        else if ( this.animationType == NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             this.setLoopedAnimation( )
         }
         else {
@@ -67,7 +69,7 @@ class NPC extends MapSprite {
 
         if ( !this.movingToDestination && !this.inScriptedAnimation ) {
             if ( this.handleRandomAnimation( ) ) {
-                switch( this.nonPlayerAnimation ) {
+                switch( this.animationType ) {
                     case NPC_ANIM_TYPE_IDLE:
                         this.setRandomAnimation( );
                         break;
@@ -81,7 +83,7 @@ class NPC extends MapSprite {
                     case NPC_ANIM_TYPE_ANIMATION_LOOP:
                         break;
                     default : 
-                        console.log("Animation of type " + this.nonPlayerAnimation + " is not recognized")
+                        console.log("Animation of type " + this.animationType + " is not recognized")
                 }
             }
         }
@@ -111,7 +113,7 @@ class NPC extends MapSprite {
         
             if ( this.blockedTimer > this.blockedMilliSecondsLimit ) {
                 this.blockedTimer = 0;
-                this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.nonPlayerAnimation == NPC_ANIM_TYPE_MOVING_IN_LOOP );
+                this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP );
             }
         }
         else {

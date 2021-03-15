@@ -118,9 +118,9 @@ const drawSpritesInOrder = ( GAME ) => {
             if ( GAME.paused || e.deleted ) {
                 return;
             }
-            if ( e.spriteId == 'PLAYER' || !( e.movementAnimation == NPC_MOVE_TYPE_FLYING && e.movingToDestination && !e.pathIsBlocked ) ) {
+            if ( e.spriteId == 'PLAYER' || !( e.movementType == NPC_MOVE_TYPE_FLYING && e.movingToDestination && !e.pathIsBlocked ) ) {
                 e.drawSprite( );
-            } else if ( e.movementAnimation == NPC_MOVE_TYPE_FLYING ) {
+            } else if ( e.movementType == NPC_MOVE_TYPE_FLYING ) {
                 flyingSprites.push( e );     
             }
         })      
