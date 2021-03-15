@@ -20,7 +20,8 @@ const animationList = [
 ]
 /**
  * The NPC class is assigned to each non-player character in a map.
- * Each NPC has a a
+ * Each NPC has a animationType. This determines if and how the NPC should be semi-randomly animated.
+ * NPCs can also have a associated MapAction. If this is the case, a MapAction instance overwrites the I_Hitbox instance in this.hitbox.
  */
 class NPC extends MapSprite {
     constructor( tile ) {
@@ -63,29 +64,18 @@ class NPC extends MapSprite {
         this.oldBlockedTime = 0;
         this.newBlockedTime = 0;
     }
-
+    /**
+     * Call super.drawSprite.
+     * If not in movement or scriptedAnimation, call setRandomMovementOrAnimation
+     * Else if moving and not blocked, call goToDestination
+     * Else if inScriptedAnimation, call doScriptedAnimation
+     * If still movingToDestination, call countFrame and handleBlockedTimeCounter
+     */
     drawSprite( ) {
         super.drawSprite( );
 
         if ( !this.movingToDestination && !this.inScriptedAnimation ) {
-            if ( this.handleRandomAnimation( ) ) {
-                switch( this.animationType ) {
-                    case NPC_ANIM_TYPE_IDLE:
-                        this.setRandomAnimation( );
-                        break;
-                    case NPC_ANIM_TYPE_SEMI_IDLE:
-                        Math.random( ) < .33 ? this.setRandomDestinationInRadius( ) : this.setRandomAnimation( )
-                        break;
-                    case NPC_ANIM_TYPE_MOVING:
-                        this.setRandomDestinationInRadius( ) 
-                        break;
-                    case NPC_ANIM_TYPE_MOVING_IN_LOOP:
-                    case NPC_ANIM_TYPE_ANIMATION_LOOP:
-                        break;
-                    default : 
-                        console.log("Animation of type " + this.animationType + " is not recognized")
-                }
-            }
+            this.setRandomMovementOrAnimation( )
         }
         else if ( this.movingToDestination && !this.pathIsBlocked ) {
             this.goToDestination( );     
@@ -96,17 +86,50 @@ class NPC extends MapSprite {
 
         if ( this.movingToDestination ) {
             this.countFrame( );
+            this.handleBlockedTimeCounter( );
         }
-        if ( this.pathIsBlocked && this.movingToDestination ) {
+    }
+    /**
+     * Call handleRandomAnimationCounter, which return true if a animation or movement should be set.
+     * If true, set a animation or movement depending on this.animationType.
+     */
+    setRandomMovementOrAnimation( ) {
+        if ( this.handleRandomAnimationCounter( ) ) {
+            switch( this.animationType ) {
+                case NPC_ANIM_TYPE_IDLE:
+                    this.setRandomAnimation( );
+                    break;
+                case NPC_ANIM_TYPE_SEMI_IDLE:
+                    Math.random( ) < .33 ? this.setRandomDestinationInRadius( ) : this.setRandomAnimation( )
+                    break;
+                case NPC_ANIM_TYPE_MOVING:
+                    this.setRandomDestinationInRadius( ) 
+                    break;
+                case NPC_ANIM_TYPE_MOVING_IN_LOOP:
+                case NPC_ANIM_TYPE_ANIMATION_LOOP:
+                    break;
+                default : 
+                    console.log("Animation of type " + this.animationType + " is not recognized")
+            }
+        }
+    }
+    /**
+     * ( BROKEN )
+     * If this.pathIsBlocked, increment the time since the last check to this.blockedTimer.
+     * If this.blockedTimer is over this.blockedMilliSecondsLimit, reset this.blockedTimer and calculate a new path to this.destination.
+     * If this.pathIsBlocked is false, reset this.blockedTimer to 0.
+     */
+    handleBlockedTimeCounter( ) {
+        if ( this.pathIsBlocked ) {
             let addDifferenceToCounter = false;
 
             if ( this.newBlockedTime != 0 ) {
                 this.oldBlockedTime = this.newBlockedTime
                 addDifferenceToCounter = true
             }
-    
+
             this.newBlockedTime = Date.now( );
-    
+
             if ( addDifferenceToCounter ) {
                 this.blockedTimer += ( this.newBlockedTime - this.oldBlockedTime );
             }
@@ -118,10 +141,15 @@ class NPC extends MapSprite {
         }
         else {
             this.blockedTimer = 0;
-        }
+        }       
     }
-
-    handleRandomAnimation( ) {
+    /**
+     * ( BROKEN )
+     * Increment the time since the last check to this.milliSecondCounter.
+     * If milliSecondCounter is over this.currentAnimation limit, reset milliSecondCounter to zero and return true.
+     * Else, return false.
+     */
+    handleRandomAnimationCounter( ) {
         let addDifferenceToCounter = false;
 
         if ( this.currentAnimationLimit == 0 ) {
@@ -147,7 +175,12 @@ class NPC extends MapSprite {
 
         return false;
     }
-
+    /**
+     * TODO: Decide on a tile-radius and set it as a global
+     * Get a random col/row pair in a radius around the sprites' initial location.
+     * If the col/row pair is valid, pass it to this.setDestination and call this.initMovement.
+     * If the pair is not valid, keep calling this method until a valid pair is reached.
+     */
     setRandomDestinationInRadius( ) {
         const colDistance = Math.floor( Math.random( ) * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
         const rowDistance = Math.floor( Math.random( ) * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
@@ -162,7 +195,12 @@ class NPC extends MapSprite {
             this.setRandomDestinationInRadius( )
         }
     }
-
+    /**
+     * TODO: Find a better and clearer way to set the animationName.
+     * Get a random String animation name from animationList.
+     * If necessary, add a modifier to the string for the sprite current direction.
+     * Then call this.setScriptedAnimation, passing the animationName as an argument.
+     */
     setRandomAnimation( ) {
         const animation = animationList[ Math.floor( Math.random( ) * animationList.length )]
         if ( animation == "BLINK" && this.direction == globals.FACING_UP ) {
@@ -185,7 +223,9 @@ class NPC extends MapSprite {
             { "animName": animationName, "loop": false }, globals.FRAME_LIMIT
         )
     }
-    
+    /**
+     * Call this.setScriptedAnimation, passing this.animationName and loop set to true as arguments.
+     */
     setLoopedAnimation( ) {
         this.setScriptedAnimation( 
             { "animName": this.animationName, "loop": true }, globals.FRAME_LIMIT
