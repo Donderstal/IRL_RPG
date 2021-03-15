@@ -1,4 +1,3 @@
-const globals = require('../../game-data/globals')
 const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls')
@@ -9,7 +8,14 @@ let millisecondCounter = 0;
 
 let lastTimeStamp = 0;
 let newTimeStamp = 0;
-
+/**
+ * Wrapper function that runs on each animation frame if the game is in Map mode.
+ * Call drawSpritesInOrder() and clearMargins().
+ * If there are roads on the current map, call handleCarGeneration()
+ * If the game is not paused and there is a player sprite, check for movement key input
+ * If there is a speech bubble active, draw it.
+ * @param {Game} GAME Instance of the Game class in Game.js
+ */
 const handleMapAnimations = ( GAME ) => {
 
     drawSpritesInOrder( GAME )
@@ -30,7 +36,12 @@ const handleMapAnimations = ( GAME ) => {
         GAME.activeBubble.drawTextBox( )
     }
 }
-
+/**
+ * Counter function for semi-randomly generating a car.
+ * Set a limit in millisecond to the randomCarLimit variable.
+ * If the millisecondCounter variable is over the limit, call GAME.FRONT.generateCar()
+ * @param {Game} GAME Instance of the Game class in Game.js
+ */
 const handleCarGeneration = ( GAME ) => {
     let addDifferenceToCounter = false;
 
@@ -55,7 +66,10 @@ const handleCarGeneration = ( GAME ) => {
         randomCarLimit = 0;
     }
 }
-
+/**
+ * Clear the edges of the front canvas that are not currently in the active I_Grids' borders.
+ * @param {Game} GAME Instance of the Game class in Game.js
+ */
 const clearMargins = ( GAME ) => {
     const grid = GAME.FRONT.grid;
     const overflowX = ( grid.overflowColumns * GRID_BLOCK_PX ) / 2
@@ -77,7 +91,12 @@ const clearMargins = ( GAME ) => {
         CANVAS_WIDTH, overflowY
     );
 }
-
+/**
+ * First, sort GAME.FRONT.allSprites based on their location on the front canvas.
+ * Then, clear the front Canvas.
+ * Afterwards, draw allSprites in the sorted order, drawing flying sprites last. This gives the player the illusion of depth on the screen.
+ * @param {Game} GAME Instance of the Game class in Game.js
+ */
 const drawSpritesInOrder = ( GAME ) => {
     GAME.FRONT.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.y > b.y ) {

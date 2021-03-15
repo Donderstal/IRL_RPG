@@ -3,7 +3,13 @@ const triggerEvent      = require('../../game-data/triggerEvents').triggerEvent
 const actionController  = require('./map-ui/actionController')
 
 const globals           = require('../../game-data/globals')
-
+/**
+ * Check the event.key prop and prevent its default.
+ * If it is the spacebar, call handleActionButton() from the actionController.
+ * If it is "e" and there is a speech bubble active, unset the bubble.
+ * Else, add the key to the GAME.pressedKeys object.
+ * @param {Event} event JS Event objct from DOM 
+ */
 const handleMapKeyPress = ( event ) => {
     const GAME = globals.GAME;
 
@@ -20,7 +26,13 @@ const handleMapKeyPress = ( event ) => {
         GAME.pressedKeys[event.key] = true        
     }
 }
-
+/**
+ * If there is a player sprite, check if w-a-s-d or up-left-down-right has been pressed.
+ * If so, call movement.handleMovementOfSprite and pass the player sprite and its direction as arguments 
+ * ( TODO: Seperate touch and non-touch controls )
+ * @param {Boolean} touch 
+ * @param {Boolean} event 
+ */
 const handleMovementKeys = ( touch = false, event = false ) => {   
     const GAME = globals.GAME;
     const PLAYER = GAME.PLAYER;
