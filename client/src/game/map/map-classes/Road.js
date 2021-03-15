@@ -1,5 +1,8 @@
 const globals       = require('../../../game-data/globals');
-
+/**
+ * Some outdoor maps have roads. They are represented by a Road instance.
+ * If hasStart is set true, they can generate car sprites to drive down the road.
+ */
 class Road {
     constructor ( roadData, index ) {
         this.index = index;
@@ -23,7 +26,10 @@ class Road {
             this.isHorizontal ? this.startCell.row - 1 : this.startCell.row
         ).hasSprite 
     }
-
+    /**
+     * Set the start and end location of the road based on the direction prop of roadData.
+     * @param {Object} roadData object from a mapResources map containing information about the road.
+     */
     setRoadCoordinates( roadData ) {
         const activeGrid = globals.GAME.front.class.grid;
 
@@ -56,7 +62,11 @@ class Road {
                 console.log("error! Direction " + roadData.direction + " not recognized")
         }
     }
-
+    /**
+     * Loop through the given array of Road instance and check if they intersect this Road.
+     * If so, call setIntersection, passing the Road and intersecting I_Tile as arguments.
+     * @param {Road[]} roads array of Road instances
+     */
     checkForIntersections( roads ) {
         roads.forEach( ( road, index ) => { 
             if ( index != this.index ) { 
@@ -73,7 +83,12 @@ class Road {
             }
         } )
     }
-
+    /**
+     * Set tile.hasIntersection to true.
+     * For each available path at the intersection, push a string representing its direction to tile.intersectingDirections.
+     * @param {I_Tile} tile I_Tile instance to set intersection to
+     * @param {Road} road Road instance intersecting with this Road
+     */
     setIntersection( tile, road ) {
         tile.hasIntersection        = true;
         tile.intersectingDirections = [ ];
@@ -86,7 +101,10 @@ class Road {
             tile.intersectingDirections.push( this.direction );
         }
     }
-
+    /**
+     * Randomly select a car sprite from the available sprites.
+     * Return an object with the information needed generate a car sprite.
+     */
     getCarDataForTile( ) {
         const carNames = [ "car_a", "car_b", "car_c", "car_d" ]
         let randomIndex = Math.floor(Math.random() * carNames.length);
