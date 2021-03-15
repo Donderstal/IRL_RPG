@@ -39,7 +39,11 @@ class MapSprite extends I_Sprite {
     get isInCenterFacingDown( ) {
         return this.baseY( ) > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); 
     }
-
+    /**
+     * Call super.drawSprite( )e. Then call this.updateTileIndexes( ).
+     * If the game is not in a cinematic, update the xY of the I_Hitbox instance in this.hitbox and check for collision
+     * Else, call this.handleAnimation.
+     */
     drawSprite( ) {
         super.drawSprite( )
         this.updateTileIndexes( )
@@ -54,13 +58,18 @@ class MapSprite extends I_Sprite {
             this.handleAnimation( )
         }
     }
-
+    /**
+     * Call the clearSpriteData( ) method of the I_Tile instance in this.currentTileFront
+     */
     unsetActiveTile( ) {
         if ( this.currentTileFront ) {
             this.currentTileFront.clearSpriteData( );            
         }
     }
-
+    /**
+     * Call this.unsetActiveTile. Get the I_Tile instance at this.centerX and this.baseY.
+     * Call this.setActivetileIndex with the I_Tile instance as argument. Then, call this.setNextTileIndex
+     */
     updateTileIndexes( ) {
         this.unsetActiveTile( );
 
@@ -73,20 +82,23 @@ class MapSprite extends I_Sprite {
 
         this.setActiveTileIndex( tile );
         this.setNextTileIndex( );
-
-        if ( this.direction != this.nextTileDirection ) {
-            this.setNextTileIndex( );
-        } 
     }
-
+    /**
+     * Set this given I_Tile row, col and index to this.row, this.col and this.activeTileIndex.
+     * Call the setSpriteData method of the I_Tile to indicate that the tile is occupied.
+     * Set this.spriteId to the spriteId prop of I_Tile
+     * @param {I_Tile} tile 
+     */
     setActiveTileIndex( tile ) {
-        this.activeTileIndex = ( tile.index >= globals.GAME.back.class.grid.array.length || tile.index < 0 ) ? this.activeTileIndex : tile.index;
-        this.row = globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex ).row;
-        this.col = globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex ).col;
-        this.currentTileFront.setSpriteData( 'character', null )
-        this.currentTileFront.spriteId = this.spriteId;
+        this.activeTileIndex = tile.index;
+        this.row = tile.row;
+        this.col = tile.col;
+        tile.setSpriteData( 'character', null )
+        tile.spriteId = this.spriteId;
     }
-
+    /**
+     * Depending on the this.direction prop which indicates what side the MapSprite is facing, set this.nextTileIndex.
+     */
     setNextTileIndex( ) {
         switch ( this.direction ) {
             case globals["FACING_UP"] :
@@ -102,26 +114,32 @@ class MapSprite extends I_Sprite {
                 this.nextTileIndex = this.currentTileFront.col != 1 ? this.activeTileIndex - 1 : undefined;
                 break;
         }
-
-        this.nextTileDirection = this.direction;
     }
-
+    /**
+     * Set this.activeTileIndex and this.nextTileIndex to null. Used on switching maps.
+     */
     clearTileIndexes( ) {
         this.activeTileIndex = null;
         this.nextTileIndex = null;
     }
-
+    /**
+     * If this.inScriptedAnimation, call this.doScriptedAnimation.
+     * If this.inMovementAnimation, call this.goToDestination.
+     */
     handleAnimation(  ) {
         if ( this.inScriptedAnimation ) {
             this.doScriptedAnimation( );
-            return
         }
         else if ( this.inMovementAnimation ) {
-            this.goToDestination( )
-            return
+            this.goToDestination( );
         }
     }
-
+    /**
+     * ( INCOMPLETE )
+     * Old method that was used in scripted gameplay events.
+     * Should be refactored when the scripted gameplay code is refactored.
+     * @param {Scene} scene 
+     */
     setAnimation( scene ) {
         if ( scene.type == "SPEAK" ) {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
@@ -133,7 +151,11 @@ class MapSprite extends I_Sprite {
             this.setScriptedAnimation( scene, FRAME_LIMIT )
         }
     }
-
+    /**
+     * Call getSpeechBubble from the diplayText.js file with parameters as arguments.
+     * @param {String} text text to be displayed
+     * @param {String} sfx name of the sound effect to play
+     */
     speak( text, sfx ) {    
         getSpeechBubble( {
             'x'     : this.x,
@@ -143,20 +165,30 @@ class MapSprite extends I_Sprite {
             'sfx'   : ( sfx ) ? sfx : false
         } );
     }
-
+    /**
+     * Initialize animation by setting this.inScriptedAnimation to true and storing this.direction.
+     * Assign values to the properties of the this.animationScript object, which will be used to run the animation.
+     * @param {Object} scene contains the animation name and a loop boolean
+     * @param {Number} frameRate frameRate to use during animation
+     * @param {Number|Boolean} numberOfLoops optional parameter indicating if a loop is permanent
+     */
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
         this.inScriptedAnimation    = true;     
         this.originalDirection      = this.direction;
 
         this.animationScript.loop           = scene.loop;
-        this.animationScript.data           = anim[scene.animName];   
+        this.animationScript.frames         = anim[scene.animName];   
         this.animationScript.index          = 0;           
-        this.animationScript.sceneLength    = this.animationScript.data.length;      
+        this.animationScript.numberOfFrames = this.animationScript.frames.length;      
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;
         this.animationScript.currentLoop    = 0;
     }
-
+    /**
+     * Increment this.frameCount.
+     * If it is over this.animationScript.frameRate, update the AnimationIndex indicating the current frame.
+     * Then, assign the currentFrames' positions in the spriteSheet to this.sheetPosition and this.direction.
+     */
     doScriptedAnimation( ) {
         this.frameCount++;  
     
@@ -165,20 +197,25 @@ class MapSprite extends I_Sprite {
             this.updateAnimationIndex( );
 
             if ( this.inScriptedAnimation ) {
-                let currentScene = this.animationScript.data[this.animationScript.index];
+                let currentScene = this.animationScript.frames[this.animationScript.index];
 
                 this.sheetPosition  = currentScene.position;
-                this.direction      = currentScene.direction                
+                this.direction      = currentScene.direction    
             }
         }
     }
-
+    /**
+     * Check for loop or increment this.animationScriptIndex, depending on what frame from this.animationScript.frames we are in.
+     */
     updateAnimationIndex( ) {
-        ( this.animationScript.index + 1 == this.animationScript.sceneLength )
+        ( this.animationScript.index + 1 == this.animationScript.numberOfFrames )
             ? this.checkForLoop()
             : this.animationScript.index++                       
     }
-
+    /**
+     * If the current animation should be looped, reset the animationScript.index to 0.
+     * Else, call this.unsetScriptedAnimation.
+     */
     checkForLoop( ) {
         const currentLoopIsLast = this.animationScript.numberOfLoops == this.animationScript.currentLoop
 
@@ -187,11 +224,13 @@ class MapSprite extends I_Sprite {
             this.animationScript.index = 0;
         }
         else {
-  
             this.unsetScriptedAnimation( );
         }
     }
-
+    /**
+     * Set this.inScriptedAnimation to false and empty this.animationScript.
+     * Then, reset this.drection to this.originalDirection and set this.sheetPosition to 0 for a neutral spritesheet frame.
+     */
     unsetScriptedAnimation( ) {
         this.inScriptedAnimation    = false;  
         this.animationScript        = { };
