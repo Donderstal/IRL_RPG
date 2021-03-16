@@ -3,7 +3,6 @@ const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const { unsetGameMenu } = require('./Menu')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
-const handleBattleKeyPress = require('./battle/battleControls').handleBattleKeyPress
 const { initGameMenu,handleMenuKeyPress }  = require('./Menu')
 
 /**
@@ -34,9 +33,6 @@ const addKeyToPressed = ( ) => {
 
     if ( globals.GAME.mode == MAP_MODE && !globals.GAME.inMenu ) {
         handleMapKeyPress( event )
-    }
-    else if ( globals.GAME.mode == BATTLE_MODE && !globals.GAME.inMenu ) { 
-        handleBattleKeyPress( event )
     }
     else if ( globals.GAME.inMenu ) {
         handleMenuKeyPress( event );

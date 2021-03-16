@@ -1,5 +1,4 @@
 const handleMapAnimations       = require('./map/mapAnimation').handleMapAnimations
-const handleBattleAnimations    = require('./battle/battleAnimation').handleBattleAnimations
 const globals     = require('../game-data/globals')
 const { FRAMES_PER_SECOND, BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const controls                  = require('./controls')
@@ -52,9 +51,6 @@ const animationFrameController = ( ) => {
 
             if ( GAME.mode == MAP_MODE && !GAME.inMenu ) {
                 handleMapAnimations(  GAME )
-            }
-            else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu ) {
-                handleBattleAnimations( GAME )
             }
             else if ( GAME.inMenu ) {
                 drawGameMenu( );
