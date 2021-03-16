@@ -8,10 +8,11 @@ const radius = GRID_BLOCK_PX / 2;
  * It allows for collision detection for sprites larger than one GRID_BLOCK_PX.
  */
 class HitboxGroup {
-    constructor ( x, y, direction, spriteDimensionsInBlocks ) {
+    constructor ( x, y, direction, spriteDimensionsInBlocks, spriteId ) {
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.spriteId = spriteId;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks
 
         this.activeTileIndexes = [ ];
