@@ -149,7 +149,6 @@ class HitboxGroup {
                 tileAtHitbox.spriteId = this.spriteId;              
             }
         })
-
         const nextTile = this.getNextTile( hitboxesXY[0] )
 
         this.nextTileIndex = nextTile == undefined ? undefined : nextTile.index;

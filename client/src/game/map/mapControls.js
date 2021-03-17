@@ -1,5 +1,4 @@
 const movement          = require('./map-ui/movement')
-const triggerEvent      = require('../../game-data/triggerEvents').triggerEvent   
 const actionController  = require('./map-ui/actionController')
 
 const globals           = require('../../game-data/globals')
@@ -72,7 +71,6 @@ const handleMovementKeys = ( touch = false, event = false ) => {
         else if ( GAME.pressedKeys.d || GAME.pressedKeys.ArrowRight || touchRight ) {
             movement.handleMovementOfSprite( PLAYER, 'FACING_RIGHT')
         }    
-        triggerEvent("ON_POSITION")
     }
     
 }

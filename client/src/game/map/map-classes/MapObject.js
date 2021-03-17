@@ -186,7 +186,7 @@ class MapObject extends I_Sprite {
         })
         this.direction = globals[newDirection];
         super.setSpriteToGrid( intersectionTile, true ) 
-        this.setObjectDimensionsBasedOnDirection( direction )
+        this.setObjectDimensionsBasedOnDirection( newDirection )
         this.initHitboxGroups( );
 
         globals.GAME.front.class.roads.forEach( ( road ) => {
@@ -203,7 +203,7 @@ class MapObject extends I_Sprite {
      * @param {String} direction String representing a direction
      */
     setObjectDimensionsBasedOnDirection( direction ) {
-        const spriteDimensionsInBlocks = getSpriteDimensions( this.objectResource, direction );      
+        const spriteDimensionsInBlocks = getSpriteDimensions( this.objectResource, direction );     
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;  
         this.width = spriteDimensionsInBlocks.hori * GRID_BLOCK_PX;
         this.height = spriteDimensionsInBlocks.vert * GRID_BLOCK_PX; 
