@@ -1,21 +1,35 @@
 const globals = require('../game-data/globals')
-
-//Return front Canvas ctx
+/**
+ * Return the ctx of the Foreground canvas
+ */
 const getFrontCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[1]
     let ctx = canv.getContext('2d')
 
     return ctx
 }
-
-//Return back Canvas ctx
+/**
+ * Return the ctx of the Background canvas
+ */
 const getBackCanvasContext = () => {
     let canv = document.getElementsByTagName('canvas')[0]
     let ctx = canv.getContext('2d')
 
     return ctx
 }
-
+/**
+ * Shorthand for drawing from a image on a canvas at given xy.
+ * @param {String} canvas String representing the Background or Foreground canvas
+ * @param {Image} image HTML Image object containing source image
+ * @param {Number} imageX x in the source image
+ * @param {Number} imageY y in the source image
+ * @param {Number} widthInImage width to select in source image
+ * @param {Number} heightInImage height to select in source image
+ * @param {Number} canvasX x in the destiniation canvas
+ * @param {Number} canvasY x in the destiniation canvas
+ * @param {Number} widthInCanvas width in the destiniation canvas
+ * @param {Number} heightInCanvas height the destiniation canvas
+ */
 const drawFromImageToCanvas = ( 
         canvas,
         image, 
@@ -34,7 +48,14 @@ const drawFromImageToCanvas = (
         widthInCanvas, heightInCanvas 
     )
 }
-
+/**
+ * Calculate the total width of given text.
+ * If it is over the maxBubbleWidth, break it in to smaller lines.
+ * Return the lines of text in an array.
+ * @param {String} text 
+ * @param {String} fontSize 
+ * @param {Number} maxBubbleWidth 
+ */
 const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE_WIDTH ) => {
     let ctx = getFrontCanvasContext() 
     setFont(fontSize)
@@ -71,7 +92,15 @@ const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE
 
     return [ text ]
 }
-
+/**
+ * Draw a rectangle on desired canvas at given xy
+ * @param {String} canvas 'FRONT' || 'BACK'
+ * @param {Number} x 
+ * @param {Number} y 
+ * @param {Number} width 
+ * @param {Number} height 
+ * @param {String} color 
+ */
 const drawRect = ( canvas, x, y, width, height, color = null ) => {
     let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()
 
@@ -81,7 +110,10 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
     ctx.rect( x, y, width, height );
     ctx.stroke();
 }
-
+/**
+ * Set the ctx.font of frontcanvas to given font size
+ * @param {String} size 
+ */
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
     let fontSize;
@@ -99,18 +131,26 @@ const setFont = ( size ) => {
 
     ctx.font = fontSize + "px " + "Stormfaze";
 }
-
+/**
+ * Write given text with the ctx.fillText function at given xy on the front context
+ * @param {String} text 
+ * @param {Number} x 
+ * @param {Number} y 
+ * @param {Number} size 
+ * @param {String} color 
+ */
 const writeTextLine = ( text, x, y, size, color = null ) => {
     let ctx = getFrontCanvasContext()
     setFont( size )
     ctx.fillStyle = (color != null) ? color : "white"
     ctx.fillText( text, x, y )
 }
-
+/**
+ * Clear all from the canvas with given name
+ * @param {String} canvas 
+ */
 const clearEntireCanvas = ( canvas ) => {
-    let ctx;
-    canvas === "BACK" ? ctx = getBackCanvasContext() : ctx = getFrontCanvasContext()   
-        
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext();        
     ctx.clearRect( 
         0, 0,
         globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT

@@ -15,31 +15,7 @@ let rowsInGrid;
 let visitedTilesList;
 
 /**
- * @function getOppositeDirection
- * 
- * @param {integer} direction - integer
- * Down = 0, Left = 1, Right = 2, Top = 3
- * @return {integer} - opposite of input
- */
-
-const getOppositeDirection = ( direction ) => {
-    if ( direction == globals["FACING_DOWN"] ) {
-        return globals["FACING_UP"];
-    }
-    if ( direction == globals["FACING_UP"] ) {
-        return globals["FACING_DOWN"];
-    }
-    if ( direction == globals["FACING_LEFT"] ) {
-        return globals["FACING_RIGHT"];
-    }
-    if ( direction == globals["FACING_RIGHT"] ) {
-        return globals["FACING_LEFT"];
-    }
-}
-
-/**
- * @class GridLocation
- * Used in pathfinding algorithm
+ * Helper class to log a visited location in the pathfinding algorithm
  */
 class GridLocation {
     constructor( row, column, index, status = null ) {
@@ -52,9 +28,10 @@ class GridLocation {
 }
 
 /**
- * @function determineShortestPath
- * Check all tiles from the startingpoint to determine a viable path
- * All props to gregtrowbridge.com for explaining the algorithm
+ * Instantiate a GridLocation for the startingTile and push it to the queue array.
+ * For each GridLocation in the queue array, check if neighbouring cells are valid locations.
+ * If they are valid but not the destination, push them to the queue array. 
+ * If they are the destination, return the GridLocations' path property.
  */
 const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
     visitedTilesList = [];
@@ -113,10 +90,9 @@ const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
 }
 
 /**
- * @function getLocationStatus 
+ * Return a TILE_STATUS string representing wether the tile is valid, invalid or blocked.
  * @param {GridLocation} location 
- * @param {boolean} isFlying 
- * Check if a location can be traversed. Used in pathfinding algorithm
+ * @param {Boolean} isFlying 
  */
 const getLocationStatus = ( location, isFlying  ) => {
     if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
@@ -131,11 +107,13 @@ const getLocationStatus = ( location, isFlying  ) => {
 }
 
 /**
- * @function exploreInDirection
+ * Get the position that is next to the currentLocation at given direction.
+ * Call get CellIndex to determine the new positions index.
+ * Instiate a new GridLocation for this position and check its status with getLocationStatus.
+ * Then return the GridLocation.
  * @param {GridLocation} location 
  * @param {string} direction 
  * @param {boolean} isFlying 
- * Get a tile in a direction from the currentLocation and check its status
  */
 const exploreInDirection = ( currentLocation, direction, isFlying  ) => {
     let newPath = currentLocation.path.slice( );
@@ -171,12 +149,15 @@ const exploreInDirection = ( currentLocation, direction, isFlying  ) => {
 
     return newLocation;
 }
-
+/**
+ * Return the index of the tile at given row and column in the current grid.
+ * @param {Number} row 
+ * @param {Number} column 
+ */
 const getCellIndex = ( row, column ) => {
     return ( ( row * colsInGrid ) - ( colsInGrid - column ) ) - 1
 }
 
 module.exports = {
-    getOppositeDirection,
     determineShortestPath
 }
