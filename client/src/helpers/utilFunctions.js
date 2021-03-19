@@ -1,3 +1,9 @@
+/**
+ * Do a HTTP request to given url. Then, call the callback with the json response and callbackparams as arguments
+ * @param {String} url 
+ * @param {Function} callback 
+ * @param {Any[]} callbackParams 
+ */
 const fetchJSONWithCallback = ( url, callback, callbackParams = [] ) => {
     fetch(url)
         .then( (response) => {
@@ -11,7 +17,9 @@ const fetchJSONWithCallback = ( url, callback, callbackParams = [] ) => {
         }
     )
 }
-
+/**
+ * Slides a div in at the bottom and top of screen to create a 'letterbox effect'
+ */
 const toggleLetterBoxDivs = ( ) => {
     const topDiv = document.getElementById('letterbox-top')
     const bottomDiv = document.getElementById('letterbox-bottom')
@@ -30,7 +38,11 @@ const toggleLetterBoxDivs = ( ) => {
 
 const idChars   = "abcdefghijklmnopqrstuvwxyz1234567890";
 const idLength  = 10;
-
+/**
+ * Generate a 10-character idea that is not already in this list.
+ * Recursive until a unique string has been found
+ * @param {String[]} idList - list of already present ID's
+ */
 const getUniqueId = ( idList ) => {
     const newId         = generateId( )
     const isUniqueId    = true;
@@ -43,7 +55,9 @@ const getUniqueId = ( idList ) => {
 
     return ( isUniqueId ) ? newId : getUniqueId( );
 }
-
+/**
+ * Construct and return a rondom 10-character string
+ */
 const generateId = ( ) => {
     let id = "";
 
