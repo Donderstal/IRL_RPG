@@ -92,6 +92,16 @@ const ARMOR_TYPE_UPPER_BODY = "U";
 const ARMOR_TYPE_LOWER_BODY = "L"; 
 const ARMOR_TYPE_ACCESSORY = "A";
 
+// Attribute name constants
+const ATT_HEALTH_POINTS = "HP";
+const ATT_POWER_POINTS = "PP";
+const ATT_PH_ATTACK = "PH ATTACK";
+const ATT_PH_DEFENSE = "PH DEFENSE";
+const ATT_SP_ATTACK = "SP ATTACK";
+const ATT_SP_DEFENSE = "SP DEFENSE";
+const ATT_SPEED = "SPEED";
+const ATT_LUCK = "LUCK";
+
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
     let tilesheetXyValues = []
@@ -183,5 +193,14 @@ module.exports = {
     ARMOR_TYPE_HEAD, 
     ARMOR_TYPE_UPPER_BODY, 
     ARMOR_TYPE_LOWER_BODY, 
-    ARMOR_TYPE_ACCESSORY
+    ARMOR_TYPE_ACCESSORY,
+
+    ATT_HEALTH_POINTS,
+    ATT_POWER_POINTS,
+    ATT_PH_ATTACK,
+    ATT_PH_DEFENSE,
+    ATT_SP_ATTACK,
+    ATT_SP_DEFENSE,
+    ATT_SPEED,
+    ATT_LUCK
 }
