@@ -102,6 +102,13 @@ const ATT_SP_DEFENSE = "SP DEFENSE";
 const ATT_SPEED = "SPEED";
 const ATT_LUCK = "LUCK";
 
+// Attribute modifier type names
+const MODI_VERY_LOW = "VL";
+const MODI_LOW = "L";
+const MODI_STANDARD = "S";
+const MODI_HIGH = "H";
+const MODI_VERY_HIGH = "VH";
+
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
     let tilesheetXyValues = []
@@ -202,5 +209,11 @@ module.exports = {
     ATT_SP_ATTACK,
     ATT_SP_DEFENSE,
     ATT_SPEED,
-    ATT_LUCK
+    ATT_LUCK,
+
+    MODI_VERY_LOW, 
+    MODI_LOW, 
+    MODI_STANDARD, 
+    MODI_HIGH, 
+    MODI_VERY_HIGH
 }
