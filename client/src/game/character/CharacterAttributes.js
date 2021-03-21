@@ -46,6 +46,29 @@ class CharacterAttributes {
 
     get [ATT_SPEED]( ) { return this[ATT_SPEED].value; };
     get [ATT_LUCK]( ) { return this[ATT_LUCK].value; };
+    /**
+     * Call the onLevelUp method for each attribute in this.list;
+     */
+    onLevelUp( ) {
+        this.list.forEach( ( attribute ) => {
+            attribute.onLevelUp( );
+        });
+    }
+    /**
+     * @returns Dictionary with Attr names as keys and their current value as value
+     */
+    getAttributes( ) {
+        return {
+            [ATT_HEALTH_POINTS]: this[ATT_HEALTH_POINTS].value,
+            [ATT_POWER_POINTS]: this[ATT_POWER_POINTS].value,
+            [ATT_PH_ATTACK]: this[ATT_PH_ATTACK].value,
+            [ATT_PH_DEFENSE]: this[ATT_PH_DEFENSE].value,
+            [ATT_SP_ATTACK]: this[ATT_SP_ATTACK].value,
+            [ATT_SP_DEFENSE]: this[ATT_SP_DEFENSE].value,
+            [ATT_SPEED]: this[ATT_SPEED].value,
+            [ATT_LUCK]: this[ATT_LUCK].value
+        }
+    }
 }
 
 module.exports = {
