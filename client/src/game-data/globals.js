@@ -95,10 +95,10 @@ const ARMOR_TYPE_ACCESSORY = "A";
 // Attribute name constants
 const ATT_HEALTH_POINTS = "HP";
 const ATT_POWER_POINTS = "PP";
-const ATT_PH_ATTACK = "PH ATTACK";
-const ATT_PH_DEFENSE = "PH DEFENSE";
-const ATT_SP_ATTACK = "SP ATTACK";
-const ATT_SP_DEFENSE = "SP DEFENSE";
+const ATT_PH_ATTACK = "PH_ATTACK";
+const ATT_PH_DEFENSE = "PH_DEFENSE";
+const ATT_SP_ATTACK = "SP_ATTACK";
+const ATT_SP_DEFENSE = "SP_DEFENSE";
 const ATT_SPEED = "SPEED";
 const ATT_LUCK = "LUCK";
 

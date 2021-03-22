@@ -7,8 +7,8 @@ const { Equipment } = require('./Equipment')
  * To do battle, they need equipment, experience, stats, etc.
  */
 class Character extends BaseEntity {
-    constructor( name, hitPointsModifier, attributes, level, weapon = null ) { 
-        super( name, hitPointsModifier, attributes, level, weapon ) 
+    constructor( name, className, level ) { 
+        super( name, className, level ) 
         this.setExperiencePointsFromLevel( );
         this.Equipment = new Equipment( );
         console.log(this)

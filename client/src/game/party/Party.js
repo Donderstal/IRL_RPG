@@ -13,7 +13,7 @@ class Party {
         this.partySize          = partyMembers.length
         this.inventory          = new Inventory( );
         partyMembers.forEach( ( newMember, index ) => {
-            this.members.push( new Character( newMember.name, 5, "no", 5, newMember.className ) );
+            this.members.push( new Character( newMember.name, newMember.className, newMember.level ) );
         } );
         
     }
