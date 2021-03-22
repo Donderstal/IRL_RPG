@@ -1,26 +1,35 @@
 const { CharacterAttributes } = require("../character/CharacterAttributes");
 
-const { getAttributeModifierByClass } = require('../../resources/classProfileResources')
+const { getAttributeModifierByClass } = require('../../resources/classProfileResources');
+const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require("../../game-data/globals");
 /**
  * The BaseEntity is the common interface of all in-game characters and monsters who can battle
  */
 class BaseEntity {
     constructor( name, className, level ) {
-        // string
+
         this.Name = name;
-        // int
-        this.Attributes = new CharacterAttributes( getAttributeModifierByClass( className ) );
-        // int
+        this.ClassName = className;
         this.Level = level;
 
-        this.setMaximumHitpoints( )
-        // int
-        this.CurrentHitpoints = this.MaximumHitpoints;        
+        this.Attributes = new CharacterAttributes( getAttributeModifierByClass( className ), this.Level );
+
+        this.setHitAndPowerPointsToMax( ) 
     }
+
+    get maxHP( ) { return this.Attributes[ATT_HEALTH_POINTS]; }
+    get maxPP( ) { return this.Attributes[ATT_POWER_POINTS]; }
 
     get isLiving( ) { return this.CurrentHitpoints >= 0 };
     get isDead( ) { return !this.isLiving };
-
+    
+    /**
+     * Assign a value to this.CurrentHitpoints and this.CurrentPowerpoints based on 
+     */
+    setHitAndPowerPointsToMax( ) {
+        this.CurrentHitpoints = this.maxHP;
+        this.CurrentPowerpoints = this.maxPP;  
+    }
     /**
      * Subtract the given damage from the CurrentHitPoints prop. Call handleDeath if necessary
      * @param {Number} damagePoints point of damage to receive
@@ -33,41 +42,43 @@ class BaseEntity {
         }   
     }
     /**
-     * (INCOMPLETE)
-     * Handle the BaseEntity death
+     * Subtract given PP from this.CurrentPowerPoints
+     * @param {Number} ppToSpend 
      */
-    handleDeath( ) {
-        console.log(this.Name + " has died!")
-    }
-
+    spendPP( ppToSpend ) {
+        this.CurrentPowerpoints -= ppToSpend;
+    } 
     /**
-     * Set the MaximumHitpoints prop base on the Level and hitPointsModifier props
-     */
-    setMaximumHitpoints( ) {
-        this.MaximumHitpoints = this.Level * this.hitPointsModifier;
-    }
-
-    /**
-     * Set the ExperiencePoints prop based on the current level
-     */
-    setExperiencePointsFromLevel( ) {
-        this.ExperiencePoints = this.Level * 100;
-    }
-    /**
-     * Add the given amount of points to the CurrentHitPoints prop up to MaximumHitpoints
+     * Add the given amount of points to the CurrentHitPoints prop up to maxHP
      * @param {Number} healingPoints hitpoints to heal
      */
     heal( healingPoints ) {
         this.CurrentHitpoints += healingPoints;
-        if ( this.CurrentHitpoints > this.MaximumHitpoints ) { 
-            this.CurrentHitpoints = this.MaximumHitpoints;
+        if ( this.CurrentHitpoints > this.maxHP ) { 
+            this.fullHeal( )
         }
     }
     /**
-     * Assign the value of the MaximumHitpoints prop to CurrentHitPoints
+     * Add the given amount of points to the CurrentPowerpoints prop up to maxPP
+     * @param {Number} ppToHeal 
+     */
+    healPP( ppToHeal ) {
+        this.CurrentPowerpoints += ppToHeal;
+        if ( this.CurrentPowerpoints > this.maxPP ) { 
+            this.fullHealPP( )
+        }
+    }
+    /**
+     * Assign the value of the maxHP prop to CurrentHitPoints
      */
     fullHeal( ) {
-        this.CurrentHitpoints = this.MaximumHitpoints;
+        this.CurrentHitpoints = this.maxHP;
+    }
+    /**
+     * Assign the value of maxPP to currentPowerPoints
+     */
+    fullHealPP( ) {
+        this.CurrentPowerpoints = this.maxPP;
     }
     /**
      * (INCOMPLETE)
@@ -80,6 +91,20 @@ class BaseEntity {
         else {
             console.log(this.weapon)
         }
+    }
+        /**
+     * (INCOMPLETE)
+     * Handle the BaseEntity death
+     */
+    handleDeath( ) {
+        console.log(this.Name + " has died!")
+    }
+
+    /**
+     * Set the ExperiencePoints prop based on the current level
+     */
+    setExperiencePointsFromLevel( ) {
+        this.ExperiencePoints = this.Level * 100;
     }
 }
 
