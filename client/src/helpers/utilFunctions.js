@@ -47,13 +47,15 @@ const getUniqueId = ( idList ) => {
     const newId         = generateId( )
     const isUniqueId    = true;
 
-    for( var i = 0; i < idList.length; i++ ) {
-        if ( idList[i] == newId ) {
-            isUniqueId = false;
+    if ( idList.length > 1 ) {
+        for( var i = 0; i < idList.length; i++ ) {
+            if ( idList[i] == newId ) {
+                isUniqueId = false;
+            }
         }
     }
 
-    return ( isUniqueId ) ? newId : getUniqueId( );
+    return ( isUniqueId ) ? newId : getUniqueId( idList );
 }
 /**
  * Construct and return a rondom 10-character string

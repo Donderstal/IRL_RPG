@@ -3,9 +3,9 @@
  * It could decrease or increase a Attribute value. Or have some other effect, like paralysis.
  * It can be used to represent a temporary (de)buff, a state like paralysis or the effect of a piece of equipment.
  */
-
- class StatusEffect {
-    constructor( attributeKey, effectType, effectValue, effectDuration ) {
+class StatusEffect {
+    constructor( id, attributeKey, effectType, effectValue, effectDuration ) {
+        this.uniqueId = id;
         this.attributeEffected = attributeKey;
         // "BUFF" | "DEBUFF" | "TURN_BASED" | "ON_ATTACK" | "ON_DEFEND"
         this.type = effectType;
@@ -17,12 +17,17 @@
         }
     }
 
-    get hasExpired( ) { return this.currentTurn >= this.maxTurnDuration; };
-
+    get hasExpired( ) { return this.currentTurn >= this.maxTurnDuration && this.maxTurnDuration != "INFINITE"; };
+    /**
+     * Increment this.currentTurn
+     */
     countTurn( ) {
         this.currentTurn++;
     }
-
+    /**
+     * Add or subtract this.effectValue to this.attributeEffected in given dictionary
+     * @param {Object<String, Number>} attributeDictionary 
+     */
     applyStatUpOrDown( attributeDictionary ) {
         if ( this.type == "BUFF" ) {
             attributeDictionary[this.attributeEffected] += this.effectValue;
@@ -32,4 +37,8 @@
         }
         return attributeDictionary;
     }
- }
+}
+
+module.exports = {
+    StatusEffect
+}
