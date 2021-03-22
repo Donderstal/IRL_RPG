@@ -1,18 +1,17 @@
+const { CharacterAttributes } = require("../character/CharacterAttributes");
+
+const { getAttributeModifierByClass } = require('../../resources/classProfileResources')
 /**
  * The BaseEntity is the common interface of all in-game characters and monsters who can battle
  */
 class BaseEntity {
-    constructor( name, hitPointsModifier, attributes, level, weapon = null ) {
+    constructor( name, className, level ) {
         // string
         this.Name = name;
         // int
-        this.hitPointsModifier = hitPointsModifier;
+        this.Attributes = new CharacterAttributes( getAttributeModifierByClass( className ) );
         // int
         this.Level = level;
-        // arr
-        this.Attributes = attributes;
-        // I_BaseItem
-        this.Weapon = weapon
 
         this.setMaximumHitpoints( )
         // int
