@@ -12,7 +12,19 @@ class Character extends BaseEntity {
         this.setExperiencePointsFromLevel( );
         this.Equipment = new Equipment( );
     }
-    
+    get activeAttributeValues( ) { return this.getActiveAttributes( ) }
+    /**
+     * Get a copied-by-value dictionary from the Attributes instance in this character.
+     * Then, 
+     */
+    getActiveAttributes( ) {
+        let attributes = super.getActiveAttributes( );
+        return attributes;
+    }
+    /**
+     * Add given experience points to this.Experience and call this.levelUpIfNeeded.
+     * @param {Number} experiencePoints 
+     */
     addExperience( experiencePoints ) {
         this.Experience += experiencePoints;
         this.levelUpIfNeeded( );

@@ -44,7 +44,7 @@ class CharacterAttributes {
     get [ATT_POWER_POINTS]( ) { return this["INNER_" + ATT_POWER_POINTS].value; };
 
     get [ATT_PH_ATTACK]( ) { return this["INNER_" + ATT_PH_ATTACK].value; };
-    get [ATT_PH_DEFENSE]( ) { return this["INNER_" + ATT_PH_DEFENSE].vale; };
+    get [ATT_PH_DEFENSE]( ) { return this["INNER_" + ATT_PH_DEFENSE].value; };
 
     get [ATT_SP_ATTACK]( ) { return this["INNER_" + ATT_SP_ATTACK].value; };
     get [ATT_SP_DEFENSE]( ) { return this["INNER_" + ATT_SP_DEFENSE].value; };

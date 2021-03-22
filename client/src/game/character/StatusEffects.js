@@ -42,6 +42,17 @@ const { StatusEffect } = require("./StatusEffect");
         } );
     }
     /**
+     * For each effect in this.activeEffects, call the StatusEffect.applyStatUpOrDown method
+     * Then return the attributeDictionary with its updated value
+     * @param {Object<String, Number>} attributeDictionary 
+     */
+    applyStatusEffectsToAttributes( attributeDictionary ) {
+        this.activeEffects.forEach( ( effect ) => {
+            attributeDictionary = effect.applyStatUpOrDown( attributeDictionary );
+        })
+        return attributeDictionary
+    }
+    /**
      * For each effect that has a limitedDuration, call this.currentTurn method
      */
     countTurn( ) {
@@ -61,7 +72,6 @@ const { StatusEffect } = require("./StatusEffect");
             }
         } );
     }
-
     /**
      * Handle active effects to next turn
      */

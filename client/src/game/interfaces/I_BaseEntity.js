@@ -23,7 +23,17 @@ class BaseEntity {
 
     get isLiving( ) { return this.CurrentHitpoints >= 0 };
     get isDead( ) { return !this.isLiving };
-    
+
+    get activeAttributeValues( ) { return this.getActiveAttributes( ) }
+    /**
+     * Get a copied-by-value dictionary from the Attributes instance in this character.
+     * Then, apply the status effects to the Attribute dictionary and return it.
+     */
+    getActiveAttributes( ) {
+        let attributes = this.Attributes.getAttributes( );
+        attributes = this.StatusEffects.applyStatusEffectsToAttributes( attributes );
+        return attributes;
+    }
     /**
      * Assign a value to this.CurrentHitpoints and this.CurrentPowerpoints based on 
      */
