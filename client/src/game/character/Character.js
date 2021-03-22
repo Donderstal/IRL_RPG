@@ -11,7 +11,6 @@ class Character extends BaseEntity {
         super( name, className, level ) 
         this.setExperiencePointsFromLevel( );
         this.Equipment = new Equipment( );
-        console.log(this)
     }
     
     addExperience( experiencePoints ) {

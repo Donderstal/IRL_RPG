@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAR 22, 2021
+* Implementing new stat system based on CharacterAttributes and Attribute classes
+
 #### MAR 17, 2021
 * Scrapping unused code and storing it on the Junk-Code branch for now
 
