@@ -30,11 +30,12 @@ class Character extends BaseEntity {
         }
     }
     /**
-     * ( INCOMPLETE )
-     * 'Callback' to call after leveling up
+     * call this characters' Attributes.levelUpStatsToGivenLeven method.
+     * Then, call setHitAndPowerPointsToMax to restoure HP and PP to new max amounts.
      */
     onLevelUp( ) {
-        console.log(this.Name + " is now level " + this.Level)
+        this.Attributes.levelUpStatsToGivenLevel( this.Level );
+        this.setHitAndPowerPointsToMax( )
     }
     /**
      * Call unequipItem method of this.Equipment with itemToUnequip as argument

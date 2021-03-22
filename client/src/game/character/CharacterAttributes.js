@@ -3,16 +3,18 @@ const {
     ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK
 }= require('../../game-data/globals');
 const { Attribute } = require('./Attribute');
-const BASE_ATTRIBUTE_VALUE = 20;
+
+const BASE_HP_PP_VALUE = 50;
+const BASE_ATTRIBUTE_VALUE = 40;
 /**
  * The CharacterAttributes class is a dictionary with string keys and Attribute Instances as values.
  * It represents the set of Attributes that each BaseEntity extension has, stored in the BaseAttributes property.
  * It also contains various methods for calculating the current values of Attributes, taking Equipment and status effects into account.
  */
 class CharacterAttributes {
-    constructor( attributeModifiers ) {
-        this["INNER_" + ATT_HEALTH_POINTS] = new Attribute( ATT_HEALTH_POINTS, BASE_ATTRIBUTE_VALUE * 2, attributeModifiers[ATT_HEALTH_POINTS] );
-        this["INNER_" + ATT_POWER_POINTS] = new Attribute( ATT_POWER_POINTS, BASE_ATTRIBUTE_VALUE * 2, attributeModifiers[ATT_POWER_POINTS] );
+    constructor( attributeModifiers, givenLevel ) {
+        this["INNER_" + ATT_HEALTH_POINTS] = new Attribute( ATT_HEALTH_POINTS, BASE_HP_PP_VALUE, attributeModifiers[ATT_HEALTH_POINTS] );
+        this["INNER_" + ATT_POWER_POINTS] = new Attribute( ATT_POWER_POINTS, BASE_HP_PP_VALUE, attributeModifiers[ATT_POWER_POINTS] );
 
         this["INNER_" + ATT_PH_ATTACK] = new Attribute( ATT_PH_ATTACK, BASE_ATTRIBUTE_VALUE, attributeModifiers[ATT_PH_ATTACK] );
         this["INNER_" + ATT_PH_DEFENSE] = new Attribute( ATT_PH_DEFENSE, BASE_ATTRIBUTE_VALUE, attributeModifiers[ATT_PH_DEFENSE] );
@@ -33,6 +35,9 @@ class CharacterAttributes {
             this["INNER_" + ATT_SPEED],
             this["INNER_" + ATT_LUCK]
         ]
+
+        this.level = 1;
+        this.levelUpStatsToGivenLevel( givenLevel )
     };
 
     get [ATT_HEALTH_POINTS]( ) { return this["INNER_" + ATT_HEALTH_POINTS].value; };
@@ -50,6 +55,7 @@ class CharacterAttributes {
      * Call the onLevelUp method for each attribute in this.list;
      */
     onLevelUp( ) {
+        this.level++
         this.list.forEach( ( attribute ) => {
             attribute.onLevelUp( );
         });
@@ -67,6 +73,15 @@ class CharacterAttributes {
             [ATT_SP_DEFENSE]: this[ATT_SP_DEFENSE],
             [ATT_SPEED]: this[ATT_SPEED],
             [ATT_LUCK]: this[ATT_LUCK]
+        }
+    }
+    /**
+     * As long as this.level is below given level, call the onLevelUp method
+     * @param {Number} level 
+     */
+    levelUpStatsToGivenLevel( level ) {
+        while ( this.level < level ) {
+            this.onLevelUp( );
         }
     }
 }

@@ -1,5 +1,5 @@
 const { 
-    MODI_VERY_LOW, MODI_LOW, MODI_STANDARD, MODI_HIGH, MODI_VERY_HIGH
+    MODI_VERY_LOW, MODI_LOW, MODI_STANDARD, MODI_HIGH, MODI_VERY_HIGH, ATT_HEALTH_POINTS, ATT_POWER_POINTS
 }= require('../../game-data/globals');
 
 const MODIFIER_VALUES = {};
@@ -17,8 +17,8 @@ MODIFIER_VALUES[MODI_VERY_HIGH] = 1.07
 class Attribute {
     constructor( name, baseValue, modifierType ) {
         this.name       = name;
-        this.baseValue  = baseValue;
         this.modifier   = MODIFIER_VALUES[modifierType];
+        this.baseValue  = baseValue
     }
 
     get value( ) { return this.baseValue; };
@@ -26,7 +26,7 @@ class Attribute {
      * Multiply this.baseValue by this.modifier;
      */
     onLevelUp( ) {
-        this.baseValue = this.baseValue * this.modifier;
+        this.baseValue = Math.round( this.baseValue * this.modifier );
     }
 }
 
