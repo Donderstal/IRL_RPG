@@ -1,5 +1,5 @@
 const { CharacterAttributes } = require("../character/CharacterAttributes");
-
+const { StatusEffects } = require('../character/StatusEffects')
 const { getAttributeModifierByClass } = require('../../resources/classProfileResources');
 const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require("../../game-data/globals");
 /**
@@ -13,6 +13,7 @@ class BaseEntity {
         this.Level = level;
 
         this.Attributes = new CharacterAttributes( getAttributeModifierByClass( className ), this.Level );
+        this.StatusEffects  = new StatusEffects( );
 
         this.setHitAndPowerPointsToMax( ) 
     }
