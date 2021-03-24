@@ -24,6 +24,7 @@ class GameItem {
         this.SpriteSrc = data.png;
         this.Description = data.description;
         this.Type = data.type;
+        this.Effects = data.effects;
     }
     /**
      * Load the PNG image associated with this ItemTypeId from the ui sprites folder
