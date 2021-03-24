@@ -1,3 +1,5 @@
+const { EFFECT_TYPE_DEBUFF } = require("../../game-data/globals");
+
 /**
  * A StatusEffect instance represents a single effect to a single Character Attribute.
  * It could decrease or increase a Attribute value. Or have some other effect, like paralysis.
@@ -29,10 +31,10 @@ class StatusEffect {
      * @param {Object<String, Number>} attributeDictionary 
      */
     applyStatUpOrDown( attributeDictionary ) {
-        if ( this.type == "BUFF" ) {
+        if ( this.type == EFFECT_TYPE_BUFF ) {
             attributeDictionary[this.attributeEffected] += this.effectValue;
         }
-        else if ( this.type == "DEBUFF" ) {
+        else if ( this.type == EFFECT_TYPE_DEBUFF ) {
             attributeDictionary[this.attributeEffected] -= this.effectValue;
         }
         return attributeDictionary;

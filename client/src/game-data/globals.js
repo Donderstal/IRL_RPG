@@ -109,6 +109,9 @@ const MODI_STANDARD = "S";
 const MODI_HIGH = "H";
 const MODI_VERY_HIGH = "VH";
 
+const EFFECT_TYPE_BUFF  = "BU"
+const EFFECT_TYPE_DEBUFF= "DB"
+
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
     let tilesheetXyValues = []
@@ -215,5 +218,8 @@ module.exports = {
     MODI_LOW, 
     MODI_STANDARD, 
     MODI_HIGH, 
-    MODI_VERY_HIGH
+    MODI_VERY_HIGH,
+
+    EFFECT_TYPE_BUFF,
+    EFFECT_TYPE_DEBUFF
 }

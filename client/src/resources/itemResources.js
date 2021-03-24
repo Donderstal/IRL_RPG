@@ -2,7 +2,8 @@ const {
     ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_CONSUMABLE, 
     ITEM_CATEGORY_MISC, ITEM_CATEGORY_WEAPON, 
     ARMOR_TYPE_HEAD, ARMOR_TYPE_UPPER_BODY, 
-    ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY
+    ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY,
+    EFFECT_TYPE_BUFF, EFFECT_TYPE_DEBUFF, ATT_PH_ATTACK
 } = require('../game-data/globals')
 
 const itemData = {
@@ -11,6 +12,9 @@ const itemData = {
         "category" : ITEM_CATEGORY_WEAPON,
         "price": 20,
         "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_PH_ATTACK, 10 ]
+        ],
         "description": 
             "A pair of brass knuckles to up your game in fistfights. It's not much good if you're a wuss though."
     },
@@ -19,6 +23,9 @@ const itemData = {
         "category" : ITEM_CATEGORY_WEAPON,
         "price": 20,
         "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_SP_ATTACK, 10 ]
+        ],
         "description": 
             "A slingshot is a very mature and intimidating weapon. Strike fear into the hearts of your enemies!"
     },
@@ -36,6 +43,9 @@ const itemData = {
         "type": ARMOR_TYPE_UPPER_BODY,
         "price": 10,
         "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_PH_DEFENSE, 5 ]
+        ],
         "description":
             "Dude, shouldn't you have cleaned this shirt before wearing it outside?"
     },
@@ -45,6 +55,9 @@ const itemData = {
         "type": ARMOR_TYPE_LOWER_BODY,
         "price": 10,
         "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_SPEED, 5 ]
+        ],
         "description":
             "Old sneaker with some stains on them. Is it coffee, dirt or something else?"
     },
@@ -54,6 +67,10 @@ const itemData = {
         "type": ARMOR_TYPE_HEAD,
         "price": 5,
         "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_PH_DEFENSE, 2 ],
+            [ EFFECT_TYPE_BUFF, ATT_SP_DEFENSE, 2 ]
+        ],
         "description":
             "There's some kind of logo on this thing, but it's so faded that it's hard to make out what it says."
     },
@@ -63,6 +80,10 @@ const itemData = {
         "type": ARMOR_TYPE_ACCESSORY,
         "price": 5,
         "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_DEBUFF, ATT_PH_ATTACK, 2 ],
+            [ EFFECT_TYPE_BUFF, ATT_SP_ATTACK, 2 ]
+        ],
         "description":
             "A dingy plastic necklace. The kitty is pretty cute though!"
     },
