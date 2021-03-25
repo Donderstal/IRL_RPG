@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAR 25, 2021
+* Using StatusEffects for equipped items so it affects a characters' attribute values
+
 #### MAR 22, 2021
 * Implementing new stat system based on CharacterAttributes and Attribute classes
 * Setting up a basic but functional system for registering status effects
