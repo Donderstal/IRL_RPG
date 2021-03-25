@@ -1,4 +1,4 @@
-const { EFFECT_TYPE_DEBUFF } = require("../../game-data/globals");
+const { EFFECT_TYPE_DEBUFF, EFFECT_TYPE_BUFF } = require("../../game-data/globals");
 
 /**
  * A StatusEffect instance represents a single effect to a single Character Attribute.

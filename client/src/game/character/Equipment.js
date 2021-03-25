@@ -35,7 +35,7 @@ class Equipment {
      */
     setWeapon( itemToSet ) {
         this.Weapon = itemToSet;
-        this.setEffectsForEquipment( "Weapon", itemToSet.effectsData );
+        this.setEffectsForEquipment( "Weapon", itemToSet.Effects );
     }
     /**
      * Set this.Weapon and associated this.effects prop to null
@@ -50,7 +50,7 @@ class Equipment {
      */
     setUpperBody( itemToSet ) {
         this.UpperBody = itemToSet;
-        this.setEffectsForEquipment( "UpperBody", itemToSet.effectsData );
+        this.setEffectsForEquipment( "UpperBody", itemToSet.Effects );
     }
     /**
      * Set this.UpperBody and associated this.effects prop to null
@@ -65,7 +65,7 @@ class Equipment {
      */
     setLowerBody( itemToSet ) {
         this.LowerBody = itemToSet;
-        this.setEffectsForEquipment( "LowerBody", itemToSet.effectsData );
+        this.setEffectsForEquipment( "LowerBody", itemToSet.Effects );
     }
     /**
      * Set this.LowerBody and associated this.effects prop to null
@@ -80,7 +80,7 @@ class Equipment {
      */
     setHead( itemToSet ) {
         this.Head = itemToSet;
-        this.setEffectsForEquipment( "Head", itemToSet.effectsData );
+        this.setEffectsForEquipment( "Head", itemToSet.Effects );
     }
     /**
      * Set this.Head and associated this.effects prop to null
@@ -95,7 +95,7 @@ class Equipment {
      */
     setAccessory( itemToSet ) {
         this.Accessory = itemToSet;
-        this.setEffectsForEquipment( "Accessory", itemToSet.effectsData );
+        this.setEffectsForEquipment( "Accessory", itemToSet.Effects );
     }
     /**
      * Set this.Accessory and associated this.effects prop to null

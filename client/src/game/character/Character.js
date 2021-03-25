@@ -19,7 +19,7 @@ class Character extends BaseEntity {
      */
     getActiveAttributes( ) {
         let attributes = super.getActiveAttributes( );
-        return attributes;
+        return this.Equipment.applyEquipmentEffectsToAttributes( attributes );
     }
     /**
      * Add given experience points to this.Experience and call this.levelUpIfNeeded.
