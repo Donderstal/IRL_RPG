@@ -11,17 +11,25 @@ const { StatusMenuTab } = require('./menu/StatusTab');
 const { InventoryMenuTab } = require('./menu/InventoryTab');
 const { MapMenuTab } = require('./menu/MapTab');
 const { GameMenuTab } = require('./menu/GameTab');
-
+/**
+ * Set GAME.inMenu to true and assign a Menu instance to GAME.MENU
+ */
 const initGameMenu = ( ) => {
     globals.GAME.inMenu = true;
     globals.GAME.MENU = new Menu( );
 }
-
+/**
+ * Set GAME.inMenu to false and assign null to GAME.MENU
+ */
 const unsetGameMenu = ( ) => {
     globals.GAME.inMenu = false;
     globals.GAME.MENU = null;
 }
-
+/**
+ * The Menu class represents the in-game main menu.
+ * It wraps a I_MenuTab extension instance, which contains one of five possible menu tabs.
+ * Each time the menu is opened, a new Menu is instantiated. On closing, it is destroyed.
+ */
 class Menu {
     constructor( ) {
         this.tabWidth   = CANVAS_WIDTH / 5;
@@ -34,7 +42,7 @@ class Menu {
         this.MAP_TAB        = new MapMenuTab( );
         this.GAME_TAB       = new GameMenuTab( );
         
-        this.ACTIVE_MENU_TAB = this.MEMBERS_TAB;
+        this.ACTIVE_TAB = this.MEMBERS_TAB;
 
         this.tabs = [
             this.MEMBERS_TAB,
@@ -44,57 +52,74 @@ class Menu {
             this.GAME_TAB
         ];
 
-        this.ACTIVE_MENU_TAB.setButtons( )
+        this.ACTIVE_TAB.setButtons( )
     }
-
+    /**
+     * Draw the menu background, active menu tab and bottom textbox
+     */
     draw( ) {
-        this.drawMenuUI( );
-        this.ACTIVE_MENU_TAB.draw( );
+        this.drawMenuBackground( );
+        this.ACTIVE_TAB.draw( );
         this.drawMenuTextbox( );
     }
-
-    drawMenuUI( ) {
+    /**
+     * Draw the menu's background and tab buttons
+     */
+    drawMenuBackground( ) {
         drawRect( "FRONT", 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#000000" )
         this.tabs.forEach( ( tab, index ) => {
             let tabX = this.tabWidth * index
-            if ( tab == this.ACTIVE_MENU_TAB ) {
+            if ( tab == this.ACTIVE_TAB ) {
                 drawRect( "FRONT", tabX, 0, this.tabWidth, this.tabHeight, "#D82BBA" )
             }
             else {
                 drawRect( "FRONT", tabX, 0, this.tabWidth, this.tabHeight, "#64005380" )            
             }
     
-            writeTextLine( tab.tabName, tabX + LARGE_FONT_LINE_HEIGHT, 0 + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE )
+            writeTextLine( 
+                tab.tabName, tabX + LARGE_FONT_LINE_HEIGHT, 
+                0 + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE 
+            );
         })
         drawRect( "FRONT", 0, this.tabHeight, CANVAS_WIDTH, this.mainScreenHeight, "#64005380"  )
     }
-
+    /**
+     * Draw the textbox at the bottom of the menu
+     */
     drawMenuTextbox( ) {
         const controlOptions = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ]
         drawRect( "FRONT", 0, CANVAS_HEIGHT - this.tabHeight, CANVAS_WIDTH, this.tabHeight, "#D82BBA" )
         writeTextLine( 
-            this.ACTIVE_MENU_TAB.description, 0 + LARGE_FONT_LINE_HEIGHT, 
+            this.ACTIVE_TAB.description, 0 + LARGE_FONT_LINE_HEIGHT, 
             ( CANVAS_HEIGHT - this.tabHeight ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE 
         );
         writeTextLine( 
             "[ SPACEBAR ] - CONFIRM/SELECT", 0 + SMALL_FONT_LINE_HEIGHT, 
             CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
         );
-        if ( this.ACTIVE_MENU_TAB.itemSubMenu.options ) {
-            this.ACTIVE_MENU_TAB.itemSubMenu.options.forEach( ( e, index ) => {
-                writeTextLine( controlOptions[index] + " - " + e, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index + 1 )), CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE )
+        
+        const subMenuOptions = this.ACTIVE_TAB.itemSubMenu.options
+        if ( subMenuOptions ) {
+            subMenuOptions.forEach( ( e, index ) => {
+                writeTextLine( 
+                    controlOptions[index] + " - " + e, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index + 1 )), 
+                    CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
+                );
             })        
         }
     }
-
+    /**
+     * Switch to the next or previous tab in this.tabs depening on given string
+     * @param {String} direction "LEFT" || "RIGHT"
+     */
     switchTab ( direction ) {
-        if ( this.ACTIVE_MENU_TAB.modal ) {
+        if ( this.ACTIVE_TAB.modal ) {
             return;
         }
     
-        this.ACTIVE_MENU_TAB.unsetButtons( )
+        this.ACTIVE_TAB.unsetButtons( )
     
-        const currentTabIndex = this.tabs.indexOf( this.ACTIVE_MENU_TAB )
+        const currentTabIndex = this.tabs.indexOf( this.ACTIVE_TAB )
         let newIndex = direction == "LEFT" ? currentTabIndex - 1 : currentTabIndex + 1;
     
         if ( newIndex < 0 ) {
@@ -104,8 +129,8 @@ class Menu {
             newIndex = 0;
         }
     
-        this.ACTIVE_MENU_TAB = this.tabs[newIndex]
-        this.ACTIVE_MENU_TAB.setButtons( )
+        this.ACTIVE_TAB = this.tabs[newIndex]
+        this.ACTIVE_TAB.setButtons( )
     }
 }
 

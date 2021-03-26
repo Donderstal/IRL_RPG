@@ -89,7 +89,7 @@ const handleSubMenuControls = ( key, activeTab ) => {
  */
 const handleMenuKeyPress = ( event ) => {
     const MENU = globals.GAME.MENU;
-    const ACTIVE_TAB = MENU.ACTIVE_MENU_TAB
+    const ACTIVE_TAB = MENU.ACTIVE_TAB
     switch ( event.key ) {
         case "q" : 
             MENU.switchTab( "LEFT" )
