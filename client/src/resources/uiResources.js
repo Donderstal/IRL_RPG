@@ -10,7 +10,9 @@ const getModalContent = ( modalContentType, contentSource = null ) => {
         case "YES_OR_NO":
             return YES_OR_NO;
         case "SELECT_PARTY_MEMBER":
-            return getPartyMembersForModal( contentSource )
+            return getPartyMembersForModal( contentSource );
+        case "SELECT_ITEM_OF_TYPE":
+            return getPartyMembersForModal( contentSource );
     }
 }
 

@@ -62,6 +62,40 @@ class StatusMenuTab extends MenuTab {
         this.activeItem = this.buttons[this.activeButton].content.equipmentType;
     }
 
+    doActiveModalOption( ) {
+        alert( this.activeItem.Name, this.modal.activeButton.text )
+        this.unsetModal( );
+    }
+
+    doActiveSubMenuOption( optionIndex = null ) {
+        const option = this.itemSubMenu.getActiveOption( optionIndex );
+
+        switch( option ) {
+            case this.itemSubMenuOptions[0]:
+                this.activeOption = this.itemSubMenuOptions[0];
+                this.setModal(
+                    "Choose and item to equip to " + this.activeCharacter.Name,
+                    this.activeOption
+                )
+                break;
+            case this.itemSubMenuOptions[1]:
+                this.activeOption = this.itemSubMenuOptions[1];
+                this.setModal(
+                    "Unequip the item?",
+                    this.activeOption
+                )
+                break;
+            case this.itemSubMenuOptions[2]:
+                this.unsetModal( );
+                break;
+            default :
+                console.log( option );
+                break;
+        }
+
+        this.itemSubMenu.deActivate( );
+    }
+
     handleActionButton( ) {
         if ( !this.itemSubMenu.isActive && !this.modal ) {
             this.itemSubMenu.activate( );
