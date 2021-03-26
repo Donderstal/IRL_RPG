@@ -19,6 +19,7 @@ class MenuTab {
         this.itemSubMenu = new ItemSubMenu( );
         this.modal = false;
         this.buttons = [];
+        this.itemSubMenuOptions = [];
 
         this.maxButtons;
     }
@@ -68,8 +69,7 @@ class MenuTab {
     /**
      * Call the deActivate method of current button
      * Set the index of the next button to this.activebutton.
-     * Call the activate button of the next button
-     * Set the next buttons' xy value to the itemSubMenu
+     * Then call activateButtonAndSetSubMenuPosition
      */
     activateNextButtonInList( ) {
         this.buttons[this.activeButton].deActivate( )
@@ -77,14 +77,13 @@ class MenuTab {
         if ( this.activeButton >= this.buttons.length ) {
             this.activeButton = 0;
         }
-        this.buttons[this.activeButton].activate( )
-        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
+
+        this.activateButtonAndSetSubMenuPosition( false );
     }
    /**
      * Call the deActivate method of current button
      * Set the index of the previous button to this.activebutton.
-     * Call the activate button of the previous button
-     * Set the next buttons' xy value to the itemSubMenu
+     * Then call activateButtonAndSetSubMenuPosition
      */
     activatePreviousButtonInList( ) {
         this.buttons[this.activeButton].deActivate( )
@@ -92,8 +91,8 @@ class MenuTab {
         if ( this.activeButton < 0 ) {
             this.activeButton = this.buttons.length - 1;
         }
-        this.buttons[this.activeButton].activate( )
-        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
+
+        this.activateButtonAndSetSubMenuPosition( false );
     }
     /**
      * Instantiate a MenuItems in a column.
@@ -122,10 +121,15 @@ class MenuTab {
         this.buttons[this.activeButton].isActive = true;
     }
     /**
-     * (INCOMPLETE)
+     * Active the button at this.activeButton.
+     * Then, set XY for the subMenu based on activeButton position and call the subMenu initOptionsMethod;
      */
-    setButtons( ) {
-        console.log( 'hi this is ' + this.tabName )
+    activateButtonAndSetSubMenuPosition( initOptions = true ) {
+        this.buttons[this.activeButton].activate( );
+        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
+        if ( initOptions ) {
+            this.itemSubMenu.initOptions( this.itemSubMenuOptions );            
+        }
     }
     /**
      * Empty the this.buttons array. Deactivate the submenu and clear it

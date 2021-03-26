@@ -9,13 +9,11 @@ class InventoryMenuTab extends MenuTab {
         this.itemSubMenuOptions = [ "USE", "EQUIP", "DISMISS"]
         this.activeOption;
     }
-
+    
     setButtons( ) {
         this.setButtonsInColumn( 0, globals.GAME.PLAYER_ITEMS );
-        this.buttons[this.activeButton].activate( );
+        super.activateButtonAndSetSubMenuPosition( )
         this.activeItem = this.buttons[this.activeButton].content.Item
-        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
-        this.itemSubMenu.initOptions( this.itemSubMenuOptions );
     }
 
     activateNextButtonInList( ) {

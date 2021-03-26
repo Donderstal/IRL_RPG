@@ -25,9 +25,8 @@ class StatusMenuTab extends MenuTab {
         ]
 
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), equipmentNames );
+        super.activateButtonAndSetSubMenuPosition( )
         this.activeItem = this.buttons[this.activeButton].content.equipmentType
-        this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
-        this.itemSubMenu.initOptions( this.itemSubMenuOptions );
     }
 
     activateNextCharacter( ) {
