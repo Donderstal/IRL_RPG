@@ -95,18 +95,6 @@ class StatusMenuTab extends MenuTab {
         this.itemSubMenu.deActivate( );
     }
 
-    handleActionButton( ) {
-        if ( !this.itemSubMenu.isActive && !this.modal ) {
-            this.itemSubMenu.activate( );
-        }
-        else if ( this.itemSubMenu.isActive && !this.modal ) {
-            this.doActiveSubMenuOption( );
-        }
-        else if ( this.modal ) {
-            this.doActiveModalOption( );
-        }
-    }
-
     draw( ) {
         this.drawLeftPanel( );
         this.drawRightPanel( );

@@ -9,7 +9,7 @@ class InventoryMenuTab extends MenuTab {
         this.itemSubMenuOptions = [ "USE", "EQUIP", "DISMISS"]
         this.activeOption;
     }
-    
+
     setButtons( ) {
         this.setButtonsInColumn( 0, globals.GAME.PLAYER_ITEMS );
         super.activateButtonAndSetSubMenuPosition( )
@@ -26,18 +26,6 @@ class InventoryMenuTab extends MenuTab {
         super.activatePreviousButtonInList( )
         this.activeItem = this.buttons[this.activeButton].content.Item
         this.description = this.activeItem.Description;
-    }
-
-    handleActionButton( ) {
-        if ( !this.itemSubMenu.isActive && !this.modal ) {
-            this.itemSubMenu.activate( );
-        }
-        else if ( this.itemSubMenu.isActive && !this.modal ) {
-            this.doActiveSubMenuOption( );
-        }
-        else if ( this.modal ) {
-            this.doActiveModalOption( );
-        }
     }
 
     doActiveModalOption( ) {

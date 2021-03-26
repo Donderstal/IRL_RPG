@@ -25,15 +25,6 @@ class MembersMenuTab extends MenuTab {
         super.activatePreviousButtonInList( )
         this.activeItem = this.buttons[this.activeButton].content
     }
-
-    handleActionButton( ) {
-        if ( !this.itemSubMenu.isActive ) {
-            this.itemSubMenu.activate( );
-        }
-        else {
-            this.itemSubMenu.deActivate( );
-        }
-    }
 }
 
 module.exports = { 

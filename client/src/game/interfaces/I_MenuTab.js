@@ -139,6 +139,20 @@ class MenuTab {
         this.itemSubMenu.deActivate( );
         this.itemSubMenu.clearSubMenu( );
     }
+    /**
+     * Decide what method to call on actionbutton click based on the status of this.modal and this.itemSubmenu
+     */
+    handleActionButton( ) {
+        if ( !this.itemSubMenu.isActive && !this.modal ) {
+            this.itemSubMenu.activate( );
+        }
+        else if ( this.itemSubMenu.isActive && !this.modal ) {
+            this.doActiveSubMenuOption( );
+        }
+        else if ( this.modal ) {
+            this.doActiveModalOption( );
+        }
+    }
     
 }
 /**
