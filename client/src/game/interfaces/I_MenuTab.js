@@ -1,7 +1,7 @@
-const { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
-const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX } = require('../../game-data/globals');
 const { Modal } = require("./I_Modal");
 const { ItemSubMenu } = require('./I_ItemSubMenu');
+const { MenuItem } = require('./I_MenuItem');
 /**
  * MenuTab is the interface for all MenuTab classes found in the menu folder.
  * The in-game menu can be opened by pressing tab and contains five different MenuTabs
@@ -152,116 +152,6 @@ class MenuTab {
         }
         else if ( this.modal ) {
             this.doActiveModalOption( );
-        }
-    }
-    
-}
-/**
- * Each tab in the main menu is filled with a set of items. The content of these items vary.
- * In the inventory tab it's items, in the members tab it's a party member.
- * The this.type property stores the name of the active MenuTab
- * The this.content prop stores the selectable content.
- */
-class MenuItem { 
-    constructor( x, y, width, height, type, content ) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.type = type;
-        this.content = content;
-
-        this.isActive = false;        
-        this.activeButtonColor = "#D82BBA";
-        this.standardButtonColor = "#00384D";
-
-        this.displayText;
-        this.setDisplayText( );
-    }
-    /**
-     * Draw the MenuItem. Its size, and contents vary depending on the active MenuTab
-     */
-    draw( ) {
-        drawRect( "FRONT", this.x, this.y, this.width, this.height, this.standardButtonColor )
-        if ( this.isActive ) {
-            drawRect( "FRONT", this.x + ( LARGE_FONT_LINE_HEIGHT / 8 ), this.y + ( LARGE_FONT_LINE_HEIGHT / 8), this.width, this.height, this.activeButtonColor )
-        }
-        if ( this.type == "INVENTORY" ) {
-            drawFromImageToCanvas( 
-                "FRONT", this.content.Item.Image, 
-                0, 0, 807, 806, 
-                this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 2 ) ), this.y + ( ( this.height - LARGE_FONT_LINE_HEIGHT ) / 2 ), 
-                LARGE_FONT_LINE_HEIGHT, LARGE_FONT_LINE_HEIGHT 
-            );           
-        }
-
-        if ( this.type != "MEMBERS" ) {
-            writeTextLine( 
-                this.displayText, 
-                this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT, 
-                LARGE_FONT_SIZE 
-            );            
-            if ( this.type == "STATUS" ) {
-                writeTextLine( 
-                    this.subText, 
-                    this.x + ( LARGE_FONT_LINE_HEIGHT * 3 ), this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), 
-                    LARGE_FONT_SIZE 
-                );       
-            }
-        }
-        else {
-            writeTextLine( 
-                this.displayText, 
-                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT, 
-                BATTLE_FONT_SIZE
-            );    
-            writeTextLine( 
-                "Hitpoints: " + this.content.CurrentHitpoints +"/"+ this.content.MaximumHitpoints, 
-                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, 
-                LARGE_FONT_SIZE 
-            ); 
-            writeTextLine( 
-                "Level: " + this.content.Level, 
-                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * 2 ), 
-                LARGE_FONT_SIZE 
-            ); 
-            writeTextLine( 
-                "Experience: " + this.content.Experience, 
-                this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * 3 ), 
-                LARGE_FONT_SIZE 
-            ); 
-        }
-    }
-    /**
-     * Set the this.isActive prop to true
-     */
-    activate( ) {
-        this.isActive = true;
-    }
-    /**
-     * Set the this.isActive prop to false
-     */
-    deActivate( ) {
-        this.isActive = false;
-    }
-    /**
-     * Set the this.displayText prop depending on the value of this.type
-     */
-    setDisplayText( ) {
-        switch( this.type ) {
-            case "INVENTORY":
-                this.displayText = this.content.Quantity + "x - " + this.content.Item.Name 
-                break;
-            case "GAME":
-                this.displayText = this.content.title;
-                break;
-            case "MEMBERS":
-                this.displayText = this.content.Name;
-                break;
-            case "STATUS":
-                this.displayText = this.content.equipmentType
-                this.subText     = this.content.item == null ? "none" : this.content.item.Name;
-                break;
         }
     }
 }
