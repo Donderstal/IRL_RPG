@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAR 26, 2021
+* Seperating MenuControls to another file. Storing Menu code in a class
+
 #### MAR 25, 2021
 * Using StatusEffects for equipped items so it affects a characters' attribute values
 
