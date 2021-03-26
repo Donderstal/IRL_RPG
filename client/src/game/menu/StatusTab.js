@@ -23,11 +23,11 @@ class StatusMenuTab extends MenuTab {
     setButtons( ) {
         this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
         const equipmentNames = [ 
-            { equipmentType: "WEAPON", item: this.activeCharacter.Equipment["Weapon"] },
-            { equipmentType: "HEAD", item: this.activeCharacter.Equipment["Head"] },
-            { equipmentType: "ACCESSORY", item: this.activeCharacter.Equipment["Accessory"] },
-            { equipmentType: "UPPER BODY", item: this.activeCharacter.Equipment["UpperBody"] },
-            { equipmentType: "LOWER BODY", item: this.activeCharacter.Equipment["LowerBody"] },
+            { equipmentType: "WEAPON", item: this.activeCharacter.Equipment["WEAPON"] },
+            { equipmentType: "HEAD", item: this.activeCharacter.Equipment["HEAD"] },
+            { equipmentType: "ACCESSORY", item: this.activeCharacter.Equipment["ACCESSORY"] },
+            { equipmentType: "UPPER BODY", item: this.activeCharacter.Equipment["UPPER BODY"] },
+            { equipmentType: "LOWER BODY", item: this.activeCharacter.Equipment["LOWER BODY"] },
         ]
 
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), equipmentNames );

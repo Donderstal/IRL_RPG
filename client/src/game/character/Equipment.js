@@ -22,11 +22,11 @@ class Equipment {
         this.Accessory = null;  
 
         this.effects = {
-            "Weapon": null,
-            "UpperBody": null,
-            "LowerBody": null,
-            "Head": null,
-            "Accessory": null
+            "WEAPON": null,
+            "UPPER BODY": null,
+            "LOWER BODY": null,
+            "HEAD": null,
+            "ACCESSORY": null
         }
     }
     /**
@@ -35,14 +35,14 @@ class Equipment {
      */
     setWeapon( itemToSet ) {
         this.Weapon = itemToSet;
-        this.setEffectsForEquipment( "Weapon", itemToSet.Effects );
+        this.setEffectsForEquipment( "WEAPON", itemToSet.Effects );
     }
     /**
      * Set this.Weapon and associated this.effects prop to null
      */
     unsetWeapon( ) {
         this.Weapon = null;
-        this.effects["Weapon"] = null;
+        this.effects["WEAPON"] = null;
     }
     /**
      * Set given item to this.UpperBody
@@ -50,14 +50,14 @@ class Equipment {
      */
     setUpperBody( itemToSet ) {
         this.UpperBody = itemToSet;
-        this.setEffectsForEquipment( "UpperBody", itemToSet.Effects );
+        this.setEffectsForEquipment( "UPPER BODY", itemToSet.Effects );
     }
     /**
      * Set this.UpperBody and associated this.effects prop to null
      */
     unsetUpperBody( ) {
         this.UpperBody = null;
-        this.effects["UpperBody"] = null;
+        this.effects["UPPER BODY"] = null;
     }
     /**
      * Set given item to this.LowerBody
@@ -65,14 +65,14 @@ class Equipment {
      */
     setLowerBody( itemToSet ) {
         this.LowerBody = itemToSet;
-        this.setEffectsForEquipment( "LowerBody", itemToSet.Effects );
+        this.setEffectsForEquipment( "LOWER BODY", itemToSet.Effects );
     }
     /**
      * Set this.LowerBody and associated this.effects prop to null
      */
     unsetLowerBody( ) {
         this.LowerBody = null;
-        this.effects["LowerBody"] = null;
+        this.effects["LOWER BODY"] = null;
     }
     /**
      * Set given item to this.Head
@@ -80,14 +80,14 @@ class Equipment {
      */
     setHead( itemToSet ) {
         this.Head = itemToSet;
-        this.setEffectsForEquipment( "Head", itemToSet.Effects );
+        this.setEffectsForEquipment( "HEAD", itemToSet.Effects );
     }
     /**
      * Set this.Head and associated this.effects prop to null
      */
     unsetHead( ) {
         this.Head = null;
-        this.effects["Head"] = null;
+        this.effects["HEAD"] = null;
     }
     /**
      * Set given item to this.Accessory
@@ -95,14 +95,14 @@ class Equipment {
      */
     setAccessory( itemToSet ) {
         this.Accessory = itemToSet;
-        this.setEffectsForEquipment( "Accessory", itemToSet.Effects );
+        this.setEffectsForEquipment( "ACCESSORY", itemToSet.Effects );
     }
     /**
      * Set this.Accessory and associated this.effects prop to null
      */
     unsetAccessory( ) {
         this.Accessory = null;
-        this.effects["Accessory"] = null;
+        this.effects["ACCESSORY"] = null;
     }
     /**
      * Based on the items' Category and Type props, call a method to equip it.
