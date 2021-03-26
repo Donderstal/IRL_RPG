@@ -1,6 +1,9 @@
 const globals  = require('../../game-data/globals')
-
-const handleUp = ( menu ) => {
+/**
+ * Call the method in the currently active tab associated with the up key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleUp = ( activeTab ) => {
     if ( activeTab.itemSubMenu.isActive ) {
         activeTab.itemSubMenu.setPreviousOption( )
     }
@@ -8,7 +11,10 @@ const handleUp = ( menu ) => {
         activeTab.activatePreviousButtonInList( );
     }
 }
-
+/**
+ * Call the method in the currently active tab associated with the down key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
 const handleDown = ( activeTab ) => {
     if ( activeTab.itemSubMenu.isActive ) {
         activeTab.itemSubMenu.setNextOption( )
@@ -17,7 +23,10 @@ const handleDown = ( activeTab ) => {
         activeTab.activateNextButtonInList( );
     }
 }
-
+/**
+ * Call the method in the currently active tab associated with the left key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
 const handleLeft = ( activeTab ) => {
     if ( activeTab.modal ) {
         activeTab.modal.selectPreviousOption( );
@@ -29,7 +38,10 @@ const handleLeft = ( activeTab ) => {
         activeTab.activatePreviousCharacter( );
     }
 }
-
+/**
+ * Call the method in the currently active tab associated with the right key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
 const handleRight = ( activeTab ) => {
     if ( activeTab.modal ) {
         activeTab.modal.selectNextOption( );
@@ -41,13 +53,20 @@ const handleRight = ( activeTab ) => {
         activeTab.activateNextCharacter( );
     }
 }
-
+/**
+ * If there is an active item, call the tabs' handleActionButton method
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
 const handleActionButton = ( activeTab ) => {
     if ( activeTab.activeItem ) {
         activeTab.handleActionButton( );
     }
 }
-
+/**
+ * Call the activeSubMenuOption in currently active tab associated with the selected key 
+ * @param {String} key key that was pressed by player
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
 const handleSubMenuControls = ( key, activeTab ) => {
     if ( activeTab.itemSubMenu.options && activeTab.activeItem ) {
         if ( key == "z" && activeTab.itemSubMenu.options[0] ) {
@@ -64,7 +83,10 @@ const handleSubMenuControls = ( key, activeTab ) => {
         }
     }
 }
-
+/**
+ * Call the correct funtionality depending on the pressed key
+ * @param {Event} event browser event bubbled from pressed key
+ */
 const handleMenuKeyPress = ( event ) => {
     const MENU = globals.GAME.MENU;
     const ACTIVE_TAB = MENU.ACTIVE_MENU_TAB
