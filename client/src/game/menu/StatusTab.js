@@ -8,14 +8,14 @@ class StatusMenuTab extends MenuTab {
         super( "STATUS", "VERT", 6 )
         this.setButtonHeight( this.height / 6 );
         this.setButtonWidth( this.width / 5 );
-        this.itemSubMenuOptions = [ "EQUIP", "UNEGQUIP"]
+        this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "BACK" ]
         this.activeOption;
         this.activeCharacter = null;
         this.activeCharacterIndex = 0;
     }
 
-    setButtons( selectedCharacterIndex = null ) {
-        this.activeCharacter = selectedCharacterIndex == null ? globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex] : selectedCharacter;
+    setButtons( ) {
+        this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
         const equipmentNames = [ 
             { equipmentType: "WEAPON", item: this.activeCharacter.Equipment["Weapon"] },
             { equipmentType: "HEAD", item: this.activeCharacter.Equipment["Head"] },
@@ -28,6 +28,38 @@ class StatusMenuTab extends MenuTab {
         this.activeItem = this.buttons[this.activeButton].content.equipmentType
         this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
         this.itemSubMenu.initOptions( this.itemSubMenuOptions );
+    }
+
+    activateNextCharacter( ) {
+        this.buttons = [];
+        if ( this.activeCharacterIndex + 1 == globals.GAME.PARTY_MEMBERS.length ) {
+            this.activeCharacterIndex = 0;
+        }
+        else {
+            this.activeCharacterIndex += 1
+        }
+        this.setButtons( );
+    }
+
+    activatePreviousCharacter( ) {
+        this.buttons = [];
+        if ( this.activeCharacterIndex - 1 < 0 ) {
+            this.activeCharacterIndex = globals.GAME.PARTY_MEMBERS.length - 1;
+        }
+        else {
+            this.activeCharacterIndex -= 1
+        }
+        this.setButtons( );
+    }
+
+    activateNextButtonInList( ) {
+        super.activateNextButtonInList( )
+        this.activeItem = this.buttons[this.activeButton].content.equipmentType;
+    }
+
+    activatePreviousButtonInList( ) {
+        super.activatePreviousButtonInList( )
+        this.activeItem = this.buttons[this.activeButton].content.equipmentType;
     }
 
     handleActionButton( ) {

@@ -124,6 +124,9 @@ const handleLeft = ( ) => {
     else if ( ACTIVE_MENU_TAB.tabName == "MEMBERS" ) {
         ACTIVE_MENU_TAB.activatePreviousButtonInList( );
     }
+    else if ( ACTIVE_MENU_TAB.tabName == "STATUS" ) {
+        ACTIVE_MENU_TAB.activatePreviousCharacter( );
+    }
 }
 
 const handleRight = ( ) => {
@@ -132,6 +135,9 @@ const handleRight = ( ) => {
     }
     else if ( ACTIVE_MENU_TAB.tabName == "MEMBERS" ) {
         ACTIVE_MENU_TAB.activateNextButtonInList( );
+    }
+    else if ( ACTIVE_MENU_TAB.tabName == "STATUS" ) {
+        ACTIVE_MENU_TAB.activateNextCharacter( );
     }
 }
 
