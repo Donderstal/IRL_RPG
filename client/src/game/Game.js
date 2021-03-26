@@ -11,7 +11,11 @@ const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';//'my-neighbourhood/Chad-outer';
-const startingItemIDs = [ "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "phone_misc_1" ]
+const startingItemIDs = [ 
+    "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "ranged_weapon_1",  
+    "phone_misc_1", "old_sneakers_armor_2", "dirty_beanie_armor_3", "kitty_necklace_armor_3",
+    "dirty_beanie_armor_3"
+]
 
 class Game {
     constructor( ) {

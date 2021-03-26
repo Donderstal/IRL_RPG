@@ -10,6 +10,8 @@ class BaseEntity {
 
         this.Name = name;
         this.ClassName = className;
+        this.Sprite = new Image(); 
+        this.Sprite.src = '/static/sprites/' + className + ".png";
         this.Level = level;
 
         this.Attributes = new CharacterAttributes( getAttributeModifierByClass( className ), this.Level );

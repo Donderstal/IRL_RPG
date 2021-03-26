@@ -1,10 +1,12 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
-const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
+const { drawRect, writeTextLine, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
 const globals = require('../../game-data/globals');
 const { 
     GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE,
     ATT_HEALTH_POINTS, ATT_POWER_POINTS, ATT_PH_ATTACK, ATT_PH_DEFENSE,
-    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK
+    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK, 
+    MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
+    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT
 } = require('../../game-data/globals');
 
 class StatusMenuTab extends MenuTab {
@@ -106,6 +108,7 @@ class StatusMenuTab extends MenuTab {
     }
 
     drawLeftPanel( ) {
+        // placeholder canvas drawings until we get some nice menu sprites
         drawRect( "FRONT", 
             GRID_BLOCK_PX / 2, GRID_BLOCK_PX * 2, 
             ( CANVAS_WIDTH * .66 ) - GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ), 
@@ -142,6 +145,14 @@ class StatusMenuTab extends MenuTab {
 
         writeTextLine( "LUCK", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 8 ), LARGE_FONT_SIZE, "#000000" );
         writeTextLine( this.activeCharacter.Attributes[ATT_LUCK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 8 ), LARGE_FONT_SIZE, "#000000" );
+
+        drawFromImageToCanvas( 
+            "FRONT", this.activeCharacter.Sprite,
+            0, 0,
+            MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
+            CANVAS_WIDTH * .33, GRID_BLOCK_PX * 3,
+            STRD_SPRITE_WIDTH * 4, STRD_SPRITE_HEIGHT * 4
+        );
     }
 
     drawRightPanel( ) {

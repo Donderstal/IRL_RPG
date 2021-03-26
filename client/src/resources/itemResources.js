@@ -51,7 +51,7 @@ const itemData = {
             "Dude, shouldn't you have cleaned this shirt before wearing it outside?"
     },
     "old_sneakers_armor_2" : {
-        "name" : "Old sneaker",
+        "name" : "Old sneakers",
         "category" : ITEM_CATEGORY_ARMOR,
         "type": ARMOR_TYPE_LOWER_BODY,
         "price": 10,
@@ -76,7 +76,7 @@ const itemData = {
             "There's some kind of logo on this thing, but it's so faded that it's hard to make out what it says."
     },
     "kitty_necklace_armor_3" : {
-        "name" : "Dirty beanie",
+        "name" : "UwU kitty necklace",
         "category" : ITEM_CATEGORY_ARMOR,
         "type": ARMOR_TYPE_ACCESSORY,
         "price": 5,
