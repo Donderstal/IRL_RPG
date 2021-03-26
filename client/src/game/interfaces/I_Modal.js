@@ -1,5 +1,5 @@
 const globals = require('../../game-data/globals');
-const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } = require('../../game-data/globals');
+const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_IN_SHEET_PX } = require('../../game-data/globals');
 const { writeTextLine, drawRect } = require('../../helpers/canvasHelpers');
 const { getModalContent } = require('../../resources/uiResources');
 
@@ -38,7 +38,7 @@ class Modal {
                 return getModalContent( this.modalContentType );
             case "EQUIP-STATUS":
                 this.modalContentType = "SELECT_ITEM"
-                return getModalContent( this.modalContentType );
+                return getModalContent( this.modalContentType, globals.GAME );
             default:
                 console.log(" type " + this.modalType + " is not a valid modaltype")
                 break;
@@ -50,11 +50,21 @@ class Modal {
      */
     initModalOptions( ) {
         const options = this.getOptionsForModalType( );
-        options.forEach( ( option, index ) => {
-            const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
-            const buttonY = this.y + ( LARGE_FONT_LINE_HEIGHT * 3 );
-            this.buttons.push( new ModalButton( buttonX, buttonY, option, this.modalContentType ) )
-        })
+        if ( this.modalType != "EQUIP-STATUS" ) {
+            options.forEach( ( option, index ) => {
+                const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
+                const buttonY = this.y + ( LARGE_FONT_LINE_HEIGHT * 3 );
+                this.buttons.push( new ModalButton( buttonX, buttonY, option, this.modalContentType ) )
+            })
+        }
+        else {
+            options.forEach( ( option, index ) => {
+                const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
+                const buttonY = this.y + ( LARGE_FONT_LINE_HEIGHT * 3 ) ;
+                this.buttons.push( new ModalButton( buttonX, buttonY, option.Item, this.modalContentType ) )
+            })
+        }
+
         this.activeButtonIndex = 0;
 
         this.buttons[this.activeButtonIndex].activate( )
@@ -101,8 +111,16 @@ class Modal {
 
 class ModalButton {
     constructor( x, y, option, modalType ) {
-        this.text       = option.text;
-        this.png        = option.png;
+        if ( modalType == "SELECT_ITEM" ) {
+            this.item   = option;
+            this.text   = this.item.Name;
+            this.png    = this.item.Image;
+        }
+        else {
+            this.text  = option.text;
+            this.png   = option.png;            
+        }
+
         this.type       = modalType;
         this.isActive   = false;
 
@@ -127,6 +145,9 @@ class ModalButton {
                 this.height     = GRID_BLOCK_PX;
                 this.width      = GRID_BLOCK_PX;
                 break;
+            case "SELECT_ITEM" : 
+                this.height     = GRID_BLOCK_PX;
+                this.width      = CANVAS_WIDTH / 3;
             default: 
                 console.log(this.type)
         }

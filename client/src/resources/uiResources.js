@@ -11,8 +11,8 @@ const getModalContent = ( modalContentType, contentSource = null ) => {
             return YES_OR_NO;
         case "SELECT_PARTY_MEMBER":
             return getPartyMembersForModal( contentSource );
-        case "SELECT_ITEM_OF_TYPE":
-            return getPartyMembersForModal( contentSource );
+        case "SELECT_ITEM":
+            return getItemsInCategory( contentSource );
     }
 }
 
@@ -29,6 +29,22 @@ const getPartyMembersForModal = ( members ) => {
     });
 
     return modalContent;
+}
+/**
+ * Filter items from the player inventory based on the equipmenttype select in the menu
+ * @param {Game} GAME 
+ */
+const getItemsInCategory = ( GAME ) => {
+    let items = GAME.PLAYER_ITEMS;
+    let filteredItems;
+    let equipmentType = GAME.MENU.ACTIVE_TAB.activeItem[0];
+    if ( equipmentType == "W" ) {
+        filteredItems = items.filter( ( e ) => { console.log(e); return e.Item.Category == equipmentType } );
+    }
+    else {
+        filteredItems = items.filter( ( e ) => { console.log(e); return e.Item.Type == equipmentType } );
+    }
+    return filteredItems;
 }
 
 module.exports = {
