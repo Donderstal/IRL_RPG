@@ -115,7 +115,7 @@ class BaseEntity {
      * Set the ExperiencePoints prop based on the current level
      */
     setExperiencePointsFromLevel( ) {
-        this.ExperiencePoints = this.Level * 100;
+        this.Experience = this.Level * 100;
     }
 }
 

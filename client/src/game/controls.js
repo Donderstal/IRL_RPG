@@ -26,7 +26,27 @@ const stopListenForKeyPress = ( ) => {
  */
 const addKeyToPressed = ( ) => {
     event.preventDefault( );
-    
+    let firstChar = globals.GAME.PARTY_MEMBERS[0]
+    if ( event.key == "i") {
+        console.log(firstChar)
+        globals.GAME.PLAYER_INVENTORY.unequipItem( firstChar, "shirt_armor_1" );
+    }
+    if ( event.key == "p" ) {
+        console.log(firstChar)
+        globals.GAME.PLAYER_INVENTORY.equipItem( firstChar, "shirt_armor_1" );
+    }
+    if ( event.key == "l" ) {
+        console.log(firstChar)
+        firstChar.StatusEffects.addEffect("SPEED", "BUFF", 5, "INFINITE")
+    }
+    if ( event.key == "o" ) {
+        console.log(firstChar)
+        console.log(firstChar.activeAttributeValues)
+    }
+    if ( event.key == "k" ) {
+        console.log(firstChar)
+        firstChar.StatusEffects.removeEffect(firstChar.StatusEffects.activeIds[0])
+    }
     if ( event.key == "Tab" ) {
         globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }

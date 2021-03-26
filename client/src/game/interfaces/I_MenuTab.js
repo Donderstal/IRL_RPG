@@ -289,6 +289,13 @@ class MenuItem {
                 this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT, 
                 LARGE_FONT_SIZE 
             );            
+            if ( this.type == "STATUS" ) {
+                writeTextLine( 
+                    this.subText, 
+                    this.x + ( LARGE_FONT_LINE_HEIGHT * 3 ), this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), 
+                    LARGE_FONT_SIZE 
+                );       
+            }
         }
         else {
             writeTextLine( 
@@ -338,6 +345,11 @@ class MenuItem {
                 break;
             case "MEMBERS":
                 this.displayText = this.content.Name;
+                break;
+            case "STATUS":
+                this.displayText = this.content.equipmentType
+                this.subText     = this.content.item == null ? "none" : this.content.item.Name;
+                break;
         }
     }
 }
