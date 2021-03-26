@@ -3,7 +3,8 @@ const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const { unsetGameMenu } = require('./Menu')
 const handleMovementKeys = require('./map/mapControls').handleMovementKeys
 const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
-const { initGameMenu,handleMenuKeyPress }  = require('./Menu')
+const { initGameMenu }  = require('./Menu')
+const { handleMenuKeyPress } = require('./menu/menuControls');
 
 /**
  * Add keydown listener with addKeyPressed callback. Add keyup listener with removeKeyFromPressed callback.

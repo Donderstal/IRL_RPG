@@ -3,7 +3,6 @@ const globals     = require('../game-data/globals')
 const { FRAMES_PER_SECOND, BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
-const { drawGameMenu }          = require('./Menu')
 
 let lastDateNow, newDateNow;
 
@@ -53,7 +52,7 @@ const animationFrameController = ( ) => {
                 handleMapAnimations(  GAME )
             }
             else if ( GAME.inMenu ) {
-                drawGameMenu( );
+                GAME.MENU.draw( );
             }
 
             if  ( GAME.cinematicMode && GAME.activeCinematic ) {

@@ -1,0 +1,130 @@
+const globals  = require('../../game-data/globals')
+/**
+ * Call the method in the currently active tab associated with the up key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleUp = ( activeTab ) => {
+    if ( activeTab.itemSubMenu.isActive ) {
+        activeTab.itemSubMenu.setPreviousOption( )
+    }
+    else if ( activeTab.tabName != "MEMBERS" && !activeTab.modal ) {
+        activeTab.activatePreviousButtonInList( );
+    }
+}
+/**
+ * Call the method in the currently active tab associated with the down key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleDown = ( activeTab ) => {
+    if ( activeTab.itemSubMenu.isActive ) {
+        activeTab.itemSubMenu.setNextOption( )
+    }
+    else if ( activeTab.tabName != "MEMBERS" && !activeTab.modal ) {
+        activeTab.activateNextButtonInList( );
+    }
+}
+/**
+ * Call the method in the currently active tab associated with the left key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleLeft = ( activeTab ) => {
+    if ( activeTab.modal ) {
+        activeTab.modal.selectPreviousOption( );
+    }
+    else if ( activeTab.tabName == "MEMBERS" ) {
+        activeTab.activatePreviousButtonInList( );
+    }
+    else if ( activeTab.tabName == "STATUS" ) {
+        activeTab.activatePreviousCharacter( );
+    }
+}
+/**
+ * Call the method in the currently active tab associated with the right key 
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleRight = ( activeTab ) => {
+    if ( activeTab.modal ) {
+        activeTab.modal.selectNextOption( );
+    }
+    else if ( activeTab.tabName == "MEMBERS" ) {
+        activeTab.activateNextButtonInList( );
+    }
+    else if ( activeTab.tabName == "STATUS" ) {
+        activeTab.activateNextCharacter( );
+    }
+}
+/**
+ * If there is an active item, call the tabs' handleActionButton method
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleActionButton = ( activeTab ) => {
+    if ( activeTab.activeItem ) {
+        activeTab.handleActionButton( );
+    }
+}
+/**
+ * Call the activeSubMenuOption in currently active tab associated with the selected key 
+ * @param {String} key key that was pressed by player
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const handleSubMenuControls = ( key, activeTab ) => {
+    if ( activeTab.itemSubMenu.options && activeTab.activeItem ) {
+        if ( key == "z" && activeTab.itemSubMenu.options[0] ) {
+            activeTab.doActiveSubMenuOption( 0 );
+        }
+        if ( key == "x" && activeTab.itemSubMenu.options[1] ) {
+            activeTab.doActiveSubMenuOption( 1 );
+        }
+        if ( key == "c" && activeTab.itemSubMenu.options[2] ) {
+            activeTab.doActiveSubMenuOption( 2 );
+        }
+        if ( key == "v" && activeTab.itemSubMenu.options[3] ) {
+            activeTab.doActiveSubMenuOption( 3 );
+        }
+    }
+}
+/**
+ * Call the correct funtionality depending on the pressed key
+ * @param {Event} event browser event bubbled from pressed key
+ */
+const handleMenuKeyPress = ( event ) => {
+    const MENU = globals.GAME.MENU;
+    const ACTIVE_TAB = MENU.ACTIVE_TAB
+    switch ( event.key ) {
+        case "q" : 
+            MENU.switchTab( "LEFT" )
+            break;
+        case "e" :
+            MENU.switchTab( "RIGHT" )
+            break;
+        case "w":
+        case "ArrowUp":
+            handleUp( ACTIVE_TAB )
+            break;
+        case "a":
+        case "ArrowLeft":
+            handleLeft( ACTIVE_TAB );
+            break;
+        case "s":
+        case "ArrowDown":
+            handleDown( ACTIVE_TAB )
+            break;
+        case "d":
+        case "ArrowRight":
+            handleRight( ACTIVE_TAB );
+            break;
+        case " ":
+            handleActionButton( ACTIVE_TAB );
+            break;
+        case "z":
+        case "x":
+        case "c":
+        case "v":
+            handleSubMenuControls( event.key, ACTIVE_TAB );
+            break;
+    }
+}
+
+module.exports = {
+    handleMenuKeyPress
+}
