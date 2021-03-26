@@ -68,7 +68,9 @@ class StatusMenuTab extends MenuTab {
     }
 
     doActiveModalOption( ) {
-        alert( this.activeItem.Name, this.modal.activeButton.text )
+        if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined  ) {
+            globals.GAME.PLAYER_INVENTORY.equipItem( this.activeCharacter, this.modal.activeButton.item.ItemTypeId )
+        }
         this.unsetModal( );
     }
 

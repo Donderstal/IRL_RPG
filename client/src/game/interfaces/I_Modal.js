@@ -17,7 +17,7 @@ class Modal {
         this.initModalOptions( );
     }
 
-    get activeButton( ) { return this.buttons[this.activeButtonIndex].text }
+    get activeButton( ) { return this.buttons[this.activeButtonIndex] }
     
     /**
      * Get the modal options from uiResources.js based on the modalType prop
@@ -58,11 +58,19 @@ class Modal {
             })
         }
         else {
-            options.forEach( ( option, index ) => {
-                const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
-                const buttonY = this.y + ( LARGE_FONT_LINE_HEIGHT * 3 ) ;
-                this.buttons.push( new ModalButton( buttonX, buttonY, option.Item, this.modalContentType ) )
-            })
+            if ( options.length > 0 ) {
+                options.forEach( ( option, index ) => {
+                    const buttonX =  ( this.x + GRID_BLOCK_PX ) + ( index * ( GRID_BLOCK_PX * 2 ) );
+                    const buttonY = this.y + ( LARGE_FONT_LINE_HEIGHT * 3 ) ;
+                    this.buttons.push( new ModalButton( buttonX, buttonY, option.Item, this.modalContentType ) )
+                })                
+            }
+            else {
+                const buttonX =  this.x + GRID_BLOCK_PX;
+                const buttonY = this.y + LARGE_FONT_LINE_HEIGHT * 3;
+                this.buttons.push( new ModalButton( buttonX, buttonY, { text: "OK!" }, "YES_OR_NO" ) )
+                this.text = "You have no suitable items!"
+            }
         }
 
         this.activeButtonIndex = 0;
