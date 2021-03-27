@@ -112,6 +112,12 @@ const MODI_VERY_HIGH = "VH";
 const EFFECT_TYPE_BUFF  = "BU"
 const EFFECT_TYPE_DEBUFF= "DB"
 
+const EQUIPMENT_KEY_WEAPON      = "Weapon";
+const EQUIPMENT_KEY_HEAD        = "Head";
+const EQUIPMENT_KEY_UPPERBODY   = "Upper Body";
+const EQUIPMENT_KEY_LOWERBODY   = "Lower Body";
+const EQUIPMENT_KEY_ACCESSORY   = "Accessory";
+
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
     let tilesheetXyValues = []
@@ -221,5 +227,11 @@ module.exports = {
     MODI_VERY_HIGH,
 
     EFFECT_TYPE_BUFF,
-    EFFECT_TYPE_DEBUFF
+    EFFECT_TYPE_DEBUFF,
+
+    EQUIPMENT_KEY_WEAPON,
+    EQUIPMENT_KEY_HEAD,
+    EQUIPMENT_KEY_UPPERBODY,
+    EQUIPMENT_KEY_LOWERBODY,
+    EQUIPMENT_KEY_ACCESSORY
 }

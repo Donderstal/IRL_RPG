@@ -1,7 +1,10 @@
 const { 
     ITEM_CATEGORY_WEAPON, 
     ARMOR_TYPE_HEAD, ARMOR_TYPE_UPPER_BODY, 
-    ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY
+    ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY,
+    EQUIPMENT_KEY_WEAPON, EQUIPMENT_KEY_UPPERBODY,
+    EQUIPMENT_KEY_LOWERBODY, EQUIPMENT_KEY_HEAD,
+    EQUIPMENT_KEY_ACCESSORY
 } = require('../../game-data/globals')
 
 const { StatusEffects } = require('./StatusEffects');
@@ -22,11 +25,11 @@ class Equipment {
         this.Accessory = null;  
 
         this.effects = {
-            "WEAPON": null,
-            "UPPER BODY": null,
-            "LOWER BODY": null,
-            "HEAD": null,
-            "ACCESSORY": null
+            EQUIPMENT_KEY_WEAPON: null,
+            EQUIPMENT_KEY_UPPERBODY: null,
+            EQUIPMENT_KEY_LOWERBODY: null,
+            EQUIPMENT_KEY_HEAD: null,
+            EQUIPMENT_KEY_ACCESSORY: null
         }
     }
     /**
@@ -35,14 +38,14 @@ class Equipment {
      */
     setWeapon( itemToSet ) {
         this.Weapon = itemToSet;
-        this.setEffectsForEquipment( "WEAPON", itemToSet.Effects );
+        this.setEffectsForEquipment( EQUIPMENT_KEY_WEAPON, itemToSet.Effects );
     }
     /**
      * Set this.Weapon and associated this.effects prop to null
      */
     unsetWeapon( ) {
         this.Weapon = null;
-        this.effects["WEAPON"] = null;
+        this.effects[EQUIPMENT_KEY_WEAPON] = null;
     }
     /**
      * Set given item to this.UpperBody
@@ -50,14 +53,14 @@ class Equipment {
      */
     setUpperBody( itemToSet ) {
         this.UpperBody = itemToSet;
-        this.setEffectsForEquipment( "UPPER BODY", itemToSet.Effects );
+        this.setEffectsForEquipment( EQUIPMENT_KEY_UPPERBODY, itemToSet.Effects );
     }
     /**
      * Set this.UpperBody and associated this.effects prop to null
      */
     unsetUpperBody( ) {
         this.UpperBody = null;
-        this.effects["UPPER BODY"] = null;
+        this.effects[EQUIPMENT_KEY_UPPERBODY] = null;
     }
     /**
      * Set given item to this.LowerBody
@@ -65,14 +68,14 @@ class Equipment {
      */
     setLowerBody( itemToSet ) {
         this.LowerBody = itemToSet;
-        this.setEffectsForEquipment( "LOWER BODY", itemToSet.Effects );
+        this.setEffectsForEquipment( EQUIPMENT_KEY_LOWERBODY, itemToSet.Effects );
     }
     /**
      * Set this.LowerBody and associated this.effects prop to null
      */
     unsetLowerBody( ) {
         this.LowerBody = null;
-        this.effects["LOWER BODY"] = null;
+        this.effects[EQUIPMENT_KEY_LOWERBODY] = null;
     }
     /**
      * Set given item to this.Head
@@ -80,14 +83,14 @@ class Equipment {
      */
     setHead( itemToSet ) {
         this.Head = itemToSet;
-        this.setEffectsForEquipment( "HEAD", itemToSet.Effects );
+        this.setEffectsForEquipment( EQUIPMENT_KEY_HEAD, itemToSet.Effects );
     }
     /**
      * Set this.Head and associated this.effects prop to null
      */
     unsetHead( ) {
         this.Head = null;
-        this.effects["HEAD"] = null;
+        this.effects[EQUIPMENT_KEY_HEAD] = null;
     }
     /**
      * Set given item to this.Accessory
@@ -95,14 +98,14 @@ class Equipment {
      */
     setAccessory( itemToSet ) {
         this.Accessory = itemToSet;
-        this.setEffectsForEquipment( "ACCESSORY", itemToSet.Effects );
+        this.setEffectsForEquipment( EQUIPMENT_KEY_ACCESSORY, itemToSet.Effects );
     }
     /**
      * Set this.Accessory and associated this.effects prop to null
      */
     unsetAccessory( ) {
         this.Accessory = null;
-        this.effects["ACCESSORY"] = null;
+        this.effects[EQUIPMENT_KEY_ACCESSORY] = null;
     }
     /**
      * Based on the items' Category and Type props, call a method to equip it.

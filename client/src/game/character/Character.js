@@ -62,6 +62,15 @@ class Character extends BaseEntity {
     equipItem( itemToEquip ) {
         this.Equipment.equipItem( itemToEquip );
     }
+    /**
+     * Call this.unequip with the Id of the item at given slot
+     * @param {String} slotName string corresponding to a prop name of the Equipment class
+     */
+    getItemIdOfItemInEquipmentSlot( slotName ) {
+        if ( this.Equipment[slotName] != null ) {
+            return this.Equipment[slotName].ItemTypeId;
+        }
+    }
 }
 
 module.exports = {

@@ -6,7 +6,10 @@ const {
     ATT_HEALTH_POINTS, ATT_POWER_POINTS, ATT_PH_ATTACK, ATT_PH_DEFENSE,
     ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK, 
     MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
-    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT
+    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
+    EQUIPMENT_KEY_WEAPON, EQUIPMENT_KEY_UPPERBODY,
+    EQUIPMENT_KEY_LOWERBODY, EQUIPMENT_KEY_HEAD,
+    EQUIPMENT_KEY_ACCESSORY
 } = require('../../game-data/globals');
 
 class StatusMenuTab extends MenuTab {
@@ -23,11 +26,11 @@ class StatusMenuTab extends MenuTab {
     setButtons( ) {
         this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
         const equipmentNames = [ 
-            { equipmentType: "WEAPON", item: this.activeCharacter.Equipment["WEAPON"] },
-            { equipmentType: "HEAD", item: this.activeCharacter.Equipment["HEAD"] },
-            { equipmentType: "ACCESSORY", item: this.activeCharacter.Equipment["ACCESSORY"] },
-            { equipmentType: "UPPER BODY", item: this.activeCharacter.Equipment["UPPER BODY"] },
-            { equipmentType: "LOWER BODY", item: this.activeCharacter.Equipment["LOWER BODY"] },
+            { equipmentType: EQUIPMENT_KEY_WEAPON, item: this.activeCharacter.Equipment.Weapon },
+            { equipmentType: EQUIPMENT_KEY_HEAD, item: this.activeCharacter.Equipment.Head },
+            { equipmentType: EQUIPMENT_KEY_ACCESSORY, item: this.activeCharacter.Equipment.Accessory },
+            { equipmentType: EQUIPMENT_KEY_UPPERBODY, item: this.activeCharacter.Equipment.UpperBody },
+            { equipmentType: EQUIPMENT_KEY_LOWERBODY, item: this.activeCharacter.Equipment.LowerBody },
         ]
 
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), equipmentNames );
@@ -69,9 +72,20 @@ class StatusMenuTab extends MenuTab {
 
     doActiveModalOption( ) {
         if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined  ) {
-            globals.GAME.PLAYER_INVENTORY.equipItem( this.activeCharacter, this.modal.activeButton.item.ItemTypeId )
+            this.unequipItemAtActiveEquipmentSlot( );
+            globals.GAME.PLAYER_INVENTORY.equipItem( this.activeCharacter, this.modal.activeButton.item.ItemTypeId );
+        }
+        if ( this.activeOption == "UNEQUIP" && this.modal.activeButton.text == "YES" ) {
+            this.unequipItemAtActiveEquipmentSlot( );
         }
         this.unsetModal( );
+    }
+
+    unequipItemAtActiveEquipmentSlot( ) {
+        const IdOfCurrentItem = this.activeCharacter.getItemIdOfItemInEquipmentSlot( this.activeItem );
+        if ( IdOfCurrentItem != null ) {
+            globals.GAME.PLAYER_INVENTORY.unequipItem( this.activeCharacter, IdOfCurrentItem );
+        }
     }
 
     doActiveSubMenuOption( optionIndex = null ) {
@@ -91,12 +105,6 @@ class StatusMenuTab extends MenuTab {
                     "Unequip the item?",
                     this.activeOption
                 )
-                break;
-            case this.itemSubMenuOptions[2]:
-                this.unsetModal( );
-                break;
-            default :
-                console.log( option );
                 break;
         }
 
