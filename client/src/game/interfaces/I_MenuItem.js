@@ -89,6 +89,14 @@ class MenuItem {
         this.isActive = false;
     }
     /**
+     * Assign value of given argument to this.content and call this.setDisplayText( )
+     * @param {Object} content 
+     */
+    updateContent( content ) {
+        this.content = content;
+        this.setDisplayText( );
+    }
+    /**
      * Set the this.displayText prop depending on the value of this.type
      */
     setDisplayText( ) {

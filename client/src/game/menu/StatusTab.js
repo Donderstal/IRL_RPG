@@ -23,17 +23,19 @@ class StatusMenuTab extends MenuTab {
         this.activeCharacterIndex = 0;
     }
 
+    getEquipmentData( ) {
+        return [ 
+            { equipmentType: EQUIPMENT_KEY_WEAPON, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_WEAPON] },
+            { equipmentType: EQUIPMENT_KEY_HEAD, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_HEAD] },
+            { equipmentType: EQUIPMENT_KEY_ACCESSORY, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_ACCESSORY] },
+            { equipmentType: EQUIPMENT_KEY_UPPERBODY, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_UPPERBODY] },
+            { equipmentType: EQUIPMENT_KEY_LOWERBODY, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_LOWERBODY] },
+        ]
+    }
+
     setButtons( ) {
         this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
-        const equipmentNames = [ 
-            { equipmentType: EQUIPMENT_KEY_WEAPON, item: this.activeCharacter.Equipment.Weapon },
-            { equipmentType: EQUIPMENT_KEY_HEAD, item: this.activeCharacter.Equipment.Head },
-            { equipmentType: EQUIPMENT_KEY_ACCESSORY, item: this.activeCharacter.Equipment.Accessory },
-            { equipmentType: EQUIPMENT_KEY_UPPERBODY, item: this.activeCharacter.Equipment.UpperBody },
-            { equipmentType: EQUIPMENT_KEY_LOWERBODY, item: this.activeCharacter.Equipment.LowerBody },
-        ]
-
-        this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), equipmentNames );
+        this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), this.getEquipmentData( ) );
         super.activateButtonAndSetSubMenuPosition( )
         this.activeItem = this.buttons[this.activeButton].content.equipmentType
     }
@@ -79,6 +81,14 @@ class StatusMenuTab extends MenuTab {
             this.unequipItemAtActiveEquipmentSlot( );
         }
         this.unsetModal( );
+        this.refreshButtonContent( );
+    }
+
+    refreshButtonContent( ) {
+        const equipmentData = this.getEquipmentData( );
+        this.buttons.forEach( ( button, index ) => { 
+            button.updateContent( equipmentData[index] );
+        })
     }
 
     unequipItemAtActiveEquipmentSlot( ) {
@@ -131,30 +141,30 @@ class StatusMenuTab extends MenuTab {
         writeTextLine( "EXPERIENCE: " + this.activeCharacter.Experience, GRID_BLOCK_PX, ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 5 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "HP: ", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_HEALTH_POINTS] + " / ", GRID_BLOCK_PX * 3.5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_HEALTH_POINTS], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.CurrentHitpoints + " / ", GRID_BLOCK_PX * 3.5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_HEALTH_POINTS], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "PP: ", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_POWER_POINTS] + " / ", GRID_BLOCK_PX * 3.5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_POWER_POINTS], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.CurrentPowerpoints + " / ", GRID_BLOCK_PX * 3.5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_POWER_POINTS], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "PHYSICAL ATTACK: ", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 3 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_PH_ATTACK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 3 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_PH_ATTACK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 3 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "PHYSICAL DEFENCE", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 4 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_PH_DEFENSE], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 4 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_PH_DEFENSE], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 4 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "SPECIAL ATTACK: ", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 5 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_SP_ATTACK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 5 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_SP_ATTACK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 5 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "SPECIAL DEFENCE", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 6 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_SP_DEFENSE], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 6 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_SP_DEFENSE], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 6 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "SPEED: ", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 7 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_SPEED], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 7 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_SPEED], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 7 ), LARGE_FONT_SIZE, "#000000" );
 
         writeTextLine( "LUCK", GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 8 ), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( this.activeCharacter.Attributes[ATT_LUCK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 8 ), LARGE_FONT_SIZE, "#000000" );
+        writeTextLine( this.activeCharacter.activeAttributeValues[ATT_LUCK], GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * 8 ), LARGE_FONT_SIZE, "#000000" );
 
         drawFromImageToCanvas( 
             "FRONT", this.activeCharacter.Sprite,
