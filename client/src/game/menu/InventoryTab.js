@@ -6,13 +6,26 @@ class InventoryMenuTab extends MenuTab {
         super( "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 2 );
-        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISMISS"]
+        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD"]
         this.activeOption;
     }
 
     setButtons( ) {
-        this.setButtonsInColumn( 0, globals.GAME.PLAYER_ITEMS );
-        super.activateButtonAndSetSubMenuPosition( )
+        const activeItems = globals.GAME.PLAYER_ITEMS.filter( ( Item ) => { return Item.Quantity > 0 } )
+        if ( this.buttons[this.activeButton] != undefined ) {
+            this.buttons[this.activeButton].deActivate( );
+            this.buttons = [];            
+        }
+        if ( this.activeButton >= activeItems.length ) {
+            this.activeButton = activeItems.length - 1;
+        }
+        this.setButtonsInColumn( 0, activeItems );
+
+        super.activateButtonAndSetSubMenuPosition( );
+        this.buttons.forEach( ( button, index ) => {
+            button.updateContent( activeItems[index] )
+        })
+
         this.activeItem = this.buttons[this.activeButton].content.Item
     }
 
@@ -29,8 +42,17 @@ class InventoryMenuTab extends MenuTab {
     }
 
     doActiveModalOption( ) {
-        alert( this.activeItem.Name, this.modal.activeButton.text )
+        if ( this.activeOption == "USE" && this.modal.activeButton.item != undefined  ) {
+            console.log('use!')
+        }
+        if ( this.activeOption == "EQUIP" && this.modal.activeButton.text == "YES" ) {
+            console.log('equip[')
+        }
+        if ( this.activeOption == "DISCARD" && this.modal.activeButton.text == "YES" ) {
+            globals.GAME.PLAYER_INVENTORY.removeItemsFromInnerListByID( [ this.activeItem.ItemTypeId ] )
+        }
         this.unsetModal( );
+        this.setButtons( );
     }
 
     doActiveSubMenuOption( optionIndex = null ) {
@@ -73,7 +95,7 @@ class InventoryMenuTab extends MenuTab {
     dismissItem( ) {
         this.activeOption = this.itemSubMenuOptions[2];
         this.setModal(
-            "Throw away a" + this.activeItem.Name + "? This action can not be reversed!",
+            "Throw away a " + this.activeItem.Name + "? This action can not be reversed!",
             this.activeOption
         )
     }

@@ -28,7 +28,7 @@ class Modal {
             case "EQUIP-INVENTORY":
                 this.modalContentType = "SELECT_PARTY_MEMBER"
                 return getModalContent( this.modalContentType, globals.GAME.PARTY_MEMBERS );
-            case "DISMISS-INVENTORY":
+            case "DISCARD-INVENTORY":
             case "UNEQUIP-STATUS":
                 this.modalContentType = "YES_OR_NO"
                 return getModalContent( this.modalContentType );
