@@ -13,6 +13,10 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### MAR 26, 2021
+* Expanding Status menutab 
+* Adding equipment functionalities tot Status tab
+
+#### MAR 26, 2021
 * Seperating MenuControls to another file. Storing Menu code in a class
 
 #### MAR 25, 2021
