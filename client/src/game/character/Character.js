@@ -22,6 +22,12 @@ class Character extends BaseEntity {
         return this.Equipment.applyEquipmentEffectsToAttributes( attributes );
     }
     /**
+     * Return super.getActiveAttributes to bypass the characters' equipment values
+     */
+    getAttributesBeforeEquipment( ) {
+        return super.getActiveAttributes( );
+    }
+    /**
      * Add given experience points to this.Experience and call this.levelUpIfNeeded.
      * @param {Number} experiencePoints 
      */

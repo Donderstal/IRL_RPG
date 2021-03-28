@@ -25,11 +25,11 @@ class Equipment {
         this[EQUIPMENT_KEY_ACCESSORY] = null;  
 
         this.effects = {
-            EQUIPMENT_KEY_WEAPON: null,
-            EQUIPMENT_KEY_UPPERBODY: null,
-            EQUIPMENT_KEY_LOWERBODY: null,
-            EQUIPMENT_KEY_HEAD: null,
-            EQUIPMENT_KEY_ACCESSORY: null
+            [EQUIPMENT_KEY_WEAPON]: null,
+            [EQUIPMENT_KEY_UPPERBODY]: null,
+            [EQUIPMENT_KEY_LOWERBODY]: null,
+            [EQUIPMENT_KEY_HEAD]: null,
+            [EQUIPMENT_KEY_ACCESSORY]: null
         }
     }
     /**

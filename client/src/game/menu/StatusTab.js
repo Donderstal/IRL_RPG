@@ -20,13 +20,13 @@ class StatusMenuTab extends MenuTab {
         this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "BACK" ];
 
         this.redArrow = new Image();
-        this.redArrow.src = "/static/ui/red_arrow.png";
+        this.redArrow.src = "/static/ui/red_arrow_down.png";
         this.redArrow.onload = ( ) => {
             this.redArrow.loaded = true;
         };
 
         this.greenArrow = new Image();
-        this.greenArrow.src = "/static/ui/green_arrow.png";
+        this.greenArrow.src = "/static/ui/green_arrow_up.png";
         this.greenArrow.onload = ( ) => {
             this.greenArrow.loaded = true;
         };
@@ -121,6 +121,7 @@ class StatusMenuTab extends MenuTab {
                     "Choose and item to equip to " + this.activeCharacter.Name,
                     this.activeOption
                 )
+                this.setSelectedEquipmentAttributesValues( "EQUIP" );
                 break;
             case this.itemSubMenuOptions[1]:
                 this.activeOption = this.itemSubMenuOptions[1];
@@ -128,10 +129,46 @@ class StatusMenuTab extends MenuTab {
                     "Unequip the item?",
                     this.activeOption
                 )
+                this.setSelectedEquipmentAttributesValues( "UNEQUIP" );
                 break;
         }
 
         this.itemSubMenu.deActivate( );
+    }
+
+    setSelectedEquipmentAttributesValues( actionType ) {
+        let attributes = this.activeCharacter.getAttributesBeforeEquipment( );
+        const Equipment = Object.assign(
+            Object.create(
+              Object.getPrototypeOf(this.activeCharacter.Equipment),
+            ),
+            JSON.parse(JSON.stringify(this.activeCharacter.Equipment)),
+        );
+
+        if ( Equipment[EQUIPMENT_KEY_WEAPON] != null ) {
+            Equipment.equipItem( Equipment[EQUIPMENT_KEY_WEAPON] );
+        }
+        if ( Equipment[EQUIPMENT_KEY_HEAD] != null ) {
+            Equipment.equipItem( Equipment[EQUIPMENT_KEY_HEAD] );            
+        }
+        if ( Equipment[EQUIPMENT_KEY_ACCESSORY] != null ) {
+            Equipment.equipItem( Equipment[EQUIPMENT_KEY_ACCESSORY] );            
+        }
+        if ( Equipment[EQUIPMENT_KEY_UPPERBODY] != null ) {
+            Equipment.equipItem( Equipment[EQUIPMENT_KEY_UPPERBODY] );            
+        }
+        if ( Equipment[EQUIPMENT_KEY_LOWERBODY] != null ) {
+            Equipment.equipItem( Equipment[EQUIPMENT_KEY_LOWERBODY] );            
+        }
+
+        if ( actionType == "EQUIP" ) {
+            Equipment.equipItem( this.modal.activeButton.item );
+        } else if ( actionType == "UNEQUIP" ) {
+            Equipment[this.activeItem] = null;
+            Equipment.effects[this.activeItem] = null;
+        };
+        
+        this.selectedEquipmentAttributesValues = Equipment.applyEquipmentEffectsToAttributes( attributes );
     }
 
     draw( ) {
@@ -167,6 +204,14 @@ class StatusMenuTab extends MenuTab {
                 this.drawAttributeLine( attribute, index )
             }
         })
+
+        drawFromImageToCanvas( 
+            "FRONT", this.activeCharacter.Sprite,
+            0, 0,
+            MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
+            CANVAS_WIDTH * .33, GRID_BLOCK_PX * 3,
+            STRD_SPRITE_WIDTH * 4, STRD_SPRITE_HEIGHT * 4
+        );
     }
 
     drawCharacterInfo( text, index ) {
@@ -196,12 +241,22 @@ class StatusMenuTab extends MenuTab {
             GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ), 
             LARGE_FONT_SIZE, "#000000" 
         );
-        drawFromImageToCanvas(
-            "FRONT", this.greenArrow, 
-            0, 0, 768, 768, 
-            GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
-            LARGE_FONT_SIZE, LARGE_FONT_SIZE
-        );   
+        if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
+            drawFromImageToCanvas(
+                "FRONT", this.greenArrow, 
+                0, 0, 768, 768, 
+                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                LARGE_FONT_SIZE, LARGE_FONT_SIZE
+            );
+        }
+        else if ( this.modal && this.activeCharacter.activeAttributeValues[key] > this.selectedEquipmentAttributesValues[key] ) {
+            drawFromImageToCanvas(
+                "FRONT", this.redArrow, 
+                0, 0, 1200, 1200, 
+                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                LARGE_FONT_SIZE, LARGE_FONT_SIZE
+            );
+        }
     }
 
     drawAttributeLine( key, index ) {
@@ -223,12 +278,23 @@ class StatusMenuTab extends MenuTab {
             GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
             LARGE_FONT_SIZE, "#000000" 
         );
-        drawFromImageToCanvas(
-            "FRONT", this.greenArrow, 
-            0, 0, 768, 768, 
-            GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
-            LARGE_FONT_SIZE, LARGE_FONT_SIZE
-        );   
+        if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
+            drawFromImageToCanvas(
+                "FRONT", this.greenArrow, 
+                0, 0, 768, 768, 
+                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                LARGE_FONT_SIZE, LARGE_FONT_SIZE
+            ); 
+        }
+        else if ( this.modal && this.activeCharacter.activeAttributeValues[key] > this.selectedEquipmentAttributesValues[key] ) {
+            drawFromImageToCanvas(
+                "FRONT", this.redArrow, 
+                0, 0, 1200, 1200, 
+                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                LARGE_FONT_SIZE, LARGE_FONT_SIZE
+            ); 
+        }
+  
     }
 
     drawRightPanel( ) {
