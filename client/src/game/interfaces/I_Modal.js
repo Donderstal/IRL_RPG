@@ -119,8 +119,8 @@ class Modal {
 
 class ModalButton {
     constructor( x, y, option, modalType ) {
+        this.item   = option;
         if ( modalType == "SELECT_ITEM" ) {
-            this.item   = option;
             this.text   = this.item.Name;
             this.png    = this.item.Image;
         }

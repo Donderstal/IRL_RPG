@@ -159,6 +159,29 @@ class Equipment {
         }
     }
     /**
+     * Based on the items' Category and Type props, call a method to unequip it.
+     * @param {GameItem} itemToSet 
+     * 
+     */
+    returnItemAtSlotOfGivenItem( itemToSet ) {
+        if ( itemToSet.Category == ITEM_CATEGORY_WEAPON ) {
+            return this[EQUIPMENT_KEY_WEAPON];
+        }
+        else {
+            switch( itemToSet.Type ) {
+                case ARMOR_TYPE_HEAD:
+                    return this[EQUIPMENT_KEY_HEAD];
+                case ARMOR_TYPE_UPPER_BODY: 
+                    return this[EQUIPMENT_KEY_UPPERBODY];
+                case ARMOR_TYPE_LOWER_BODY:
+                    return this[EQUIPMENT_KEY_LOWERBODY];
+                case ARMOR_TYPE_ACCESSORY: 
+                    return this[EQUIPMENT_KEY_ACCESSORY];  
+            }
+        }
+        return false;
+    }
+    /**
      * Assign a StatusEffects instance to given key in this.effects.
      * Then, call the StatusEffects.addEffect method for each effect in the effectsData array.
      * @param {String} equipmentKey 

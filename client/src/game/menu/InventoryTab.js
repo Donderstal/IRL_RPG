@@ -43,10 +43,17 @@ class InventoryMenuTab extends MenuTab {
 
     doActiveModalOption( ) {
         if ( this.activeOption == "USE" && this.modal.activeButton.item != undefined  ) {
-            console.log('use!')
+            console.log(this.activeItem)
+            const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index]
+            console.log(selectedCharacter.Name)
         }
-        if ( this.activeOption == "EQUIP" && this.modal.activeButton.text == "YES" ) {
-            console.log('equip[')
+        if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined ) {
+            const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index];
+            const itemToUnequip = selectedCharacter.Equipment.returnItemAtSlotOfGivenItem( this.activeItem );
+            if ( itemToUnequip ) {
+                globals.GAME.PLAYER_INVENTORY.unequipItem( selectedCharacter, itemToUnequip.ItemTypeId );                
+            }
+            globals.GAME.PLAYER_INVENTORY.equipItem( selectedCharacter, this.activeItem.ItemTypeId );
         }
         if ( this.activeOption == "DISCARD" && this.modal.activeButton.text == "YES" ) {
             globals.GAME.PLAYER_INVENTORY.removeItemsFromInnerListByID( [ this.activeItem.ItemTypeId ] )

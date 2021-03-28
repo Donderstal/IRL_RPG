@@ -22,9 +22,9 @@ const getModalContent = ( modalContentType, contentSource = null ) => {
  */
 const getPartyMembersForModal = ( members ) => {
     let modalContent = []
-    members.forEach( ( member ) => {
+    members.forEach( ( member, index ) => {
         modalContent.push( 
-            { text: member.Name }
+            { text: member.Name, index: index, png: member.Sprite }
         )
     });
 
