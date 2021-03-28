@@ -18,11 +18,11 @@ const ITEM_EFFECT_VALUE = 2;
  */
 class Equipment {
     constructor( ) {
-        this.Weapon = null;
-        this.UpperBody = null;
-        this.LowerBody = null;
-        this.Head = null;
-        this.Accessory = null;  
+        this[EQUIPMENT_KEY_WEAPON] = null;
+        this[EQUIPMENT_KEY_UPPERBODY] = null;
+        this[EQUIPMENT_KEY_LOWERBODY] = null;
+        this[EQUIPMENT_KEY_HEAD] = null;
+        this[EQUIPMENT_KEY_ACCESSORY] = null;  
 
         this.effects = {
             EQUIPMENT_KEY_WEAPON: null,
@@ -37,14 +37,14 @@ class Equipment {
      * @param {GameItem} itemToSet 
      */
     setWeapon( itemToSet ) {
-        this.Weapon = itemToSet;
+        this[EQUIPMENT_KEY_WEAPON] = itemToSet;
         this.setEffectsForEquipment( EQUIPMENT_KEY_WEAPON, itemToSet.Effects );
     }
     /**
      * Set this.Weapon and associated this.effects prop to null
      */
     unsetWeapon( ) {
-        this.Weapon = null;
+        this[EQUIPMENT_KEY_WEAPON] = null;
         this.effects[EQUIPMENT_KEY_WEAPON] = null;
     }
     /**
@@ -52,14 +52,14 @@ class Equipment {
      * @param {GameItem} itemToSet 
      */
     setUpperBody( itemToSet ) {
-        this.UpperBody = itemToSet;
+        this[EQUIPMENT_KEY_UPPERBODY] = itemToSet;
         this.setEffectsForEquipment( EQUIPMENT_KEY_UPPERBODY, itemToSet.Effects );
     }
     /**
      * Set this.UpperBody and associated this.effects prop to null
      */
     unsetUpperBody( ) {
-        this.UpperBody = null;
+        this[EQUIPMENT_KEY_UPPERBODY] = null;
         this.effects[EQUIPMENT_KEY_UPPERBODY] = null;
     }
     /**
@@ -67,14 +67,14 @@ class Equipment {
      * @param {GameItem} itemToSet 
      */
     setLowerBody( itemToSet ) {
-        this.LowerBody = itemToSet;
+        this[EQUIPMENT_KEY_LOWERBODY] = itemToSet;
         this.setEffectsForEquipment( EQUIPMENT_KEY_LOWERBODY, itemToSet.Effects );
     }
     /**
      * Set this.LowerBody and associated this.effects prop to null
      */
     unsetLowerBody( ) {
-        this.LowerBody = null;
+        this[EQUIPMENT_KEY_LOWERBODY] = null;
         this.effects[EQUIPMENT_KEY_LOWERBODY] = null;
     }
     /**
@@ -82,14 +82,14 @@ class Equipment {
      * @param {GameItem} itemToSet 
      */
     setHead( itemToSet ) {
-        this.Head = itemToSet;
+        this[EQUIPMENT_KEY_HEAD] = itemToSet;
         this.setEffectsForEquipment( EQUIPMENT_KEY_HEAD, itemToSet.Effects );
     }
     /**
      * Set this.Head and associated this.effects prop to null
      */
     unsetHead( ) {
-        this.Head = null;
+        this[EQUIPMENT_KEY_HEAD] = null;
         this.effects[EQUIPMENT_KEY_HEAD] = null;
     }
     /**
@@ -97,14 +97,14 @@ class Equipment {
      * @param {GameItem} itemToSet 
      */
     setAccessory( itemToSet ) {
-        this.Accessory = itemToSet;
+        this[EQUIPMENT_KEY_ACCESSORY] = itemToSet;
         this.setEffectsForEquipment( EQUIPMENT_KEY_ACCESSORY, itemToSet.Effects );
     }
     /**
      * Set this.Accessory and associated this.effects prop to null
      */
     unsetAccessory( ) {
-        this.Accessory = null;
+        this[EQUIPMENT_KEY_ACCESSORY] = null;
         this.effects[EQUIPMENT_KEY_ACCESSORY] = null;
     }
     /**
@@ -168,7 +168,7 @@ class Equipment {
         this.effects[equipmentKey] = new StatusEffects( );
         effectsData.forEach( ( effect ) => {
             this.effects[equipmentKey].addEffect( 
-                effect[ITEM_EFFECT_TYPE], effect[ITEM_EFFECT_ATTRIBUTE], effect[ITEM_EFFECT_VALUE], "INFINTE" 
+               effect[ITEM_EFFECT_ATTRIBUTE], effect[ITEM_EFFECT_TYPE], effect[ITEM_EFFECT_VALUE], "INFINTE" 
             );
         })
     }
@@ -182,7 +182,6 @@ class Equipment {
                 attributeDictionary = this.effects[key].applyStatusEffectsToAttributes( attributeDictionary )
             }
         });
-
         return attributeDictionary;
     }
 }
