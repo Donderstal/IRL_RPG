@@ -1,4 +1,5 @@
-const { getItemDataById } = require('../../resources/itemResources')
+const { getItemDataById } = require('../../resources/itemResources');
+const { ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_WEAPON, ITEM_CATEGORY_CONSUMABLE } = require('../../game-data/globals');
 
 const uiSpritesFolder = "/static/ui/"
 /**
@@ -12,6 +13,12 @@ class GameItem {
         this.setItemData( );
         this.setImage( );
     }
+    get canBeEquipped( ) { 
+        return this.Category == ITEM_CATEGORY_ARMOR || this.Category == ITEM_CATEGORY_WEAPON; 
+    };
+    get canBeUsed( ) { 
+        return this.Category == ITEM_CATEGORY_CONSUMABLE; 
+    };
     /**
      * Fetch the data associated with this ItemTypeId in the itemREsources file
      * Set the properties of the itemResources object as properties of the GameItem

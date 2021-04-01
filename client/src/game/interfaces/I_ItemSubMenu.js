@@ -14,13 +14,17 @@ class ItemSubMenu {
         this.options;
         this.isInitialized;
         this.isActive;
+        this.disabledOptions;
+    }
+    get activeOptions( ) {
+        return this.options.filter( ( option ) => { return this.disabledOptions.indexOf( option ) == -1; } );
     }
     /**
      * Draw the submenu. For each option, write a textline to the front canvas
      */
     draw( ) {
         drawRect( "FRONT", this.x, this.y, this.width, this.height, "#D82BBA");
-        this.options.forEach( ( e, index ) => {
+        this.activeOptions.forEach( ( e, index ) => {
             writeTextLine( 
                 e, 
                 this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_SIZE + ( LARGE_FONT_LINE_HEIGHT * index), 
@@ -49,12 +53,23 @@ class ItemSubMenu {
      */
     initOptions( options ) {
         this.options = [ ];
+        this.disabledOptions = [ ];
         options.forEach( ( option ) => {
             this.options.push( option )
         })
 
         this.height = options.length * LARGE_FONT_LINE_HEIGHT;
         this.isInitialized = true;
+    }
+    /**
+     * Set the given options as disabled, so they can not be selected
+     * @param {String[]} options List of String representing menu actions
+     */
+    disableOptions( optionsToDisable ) {
+        this.disabledOptions = [ ];
+        optionsToDisable.forEach( ( option ) => {
+            this.disabledOptions.push( option );
+        })
     }
     /**
      * Clear the ItemSubMenu properties x, y, height and options.
@@ -86,7 +101,7 @@ class ItemSubMenu {
      */
     setNextOption( ) {
         this.activeOption += 1;
-        if ( this.activeOption >= this.options.length ) {
+        if ( this.activeOption >= this.activeOptions.length ) {
             this.activeOption = 0;
         }
     }
@@ -96,7 +111,7 @@ class ItemSubMenu {
     setPreviousOption( ) {
         this.activeOption -= 1;
         if ( this.activeOption < 0 ) {
-            this.activeOption = this.options.length - 1;
+            this.activeOption = this.activeOptions.length - 1;
         }
     }
     /**
@@ -104,7 +119,7 @@ class ItemSubMenu {
      * @param {Number} index index of an option in the array this.options
      */
     getActiveOption( index ) {
-        return this.options[index == null ? this.activeOption : index];
+        return this.activeOptions[index == null ? this.activeOption : index];
     }
 }
 

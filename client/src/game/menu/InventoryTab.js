@@ -6,7 +6,7 @@ class InventoryMenuTab extends MenuTab {
         super( "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 2 );
-        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD"]
+        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD" ]
         this.activeOption;
     }
 
@@ -26,19 +26,35 @@ class InventoryMenuTab extends MenuTab {
             button.updateContent( activeItems[index] )
         })
 
-        this.activeItem = this.buttons[this.activeButton].content.Item
+        this.activeItem = this.buttons[this.activeButton].content.Item;
+        this.setDisabledOptionsForItem( );
     }
 
     activateNextButtonInList( ) {
         super.activateNextButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content.Item
+        this.activeItem = this.buttons[this.activeButton].content.Item;
+        this.setDisabledOptionsForItem( );
         this.description = this.activeItem.Description;
     }
 
     activatePreviousButtonInList( ) {
         super.activatePreviousButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content.Item
+        this.activeItem = this.buttons[this.activeButton].content.Item;
+        this.setDisabledOptionsForItem( );
         this.description = this.activeItem.Description;
+    }
+    /**
+     * Depending on the Category prop of this.activeItem, decide which options to disable
+     */
+    setDisabledOptionsForItem( ) {
+        let optionsToDisable = [];
+        if ( !this.activeItem.canBeEquipped ) {
+            optionsToDisable.push( "EQUIP" );
+        }
+        if ( !this.activeItem.canBeUsed ) {
+            optionsToDisable.push( "USE" );
+        }        
+        this.itemSubMenu.disableOptions( optionsToDisable );
     }
 
     doActiveModalOption( ) {
