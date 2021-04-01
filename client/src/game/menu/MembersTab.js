@@ -25,6 +25,19 @@ class MembersMenuTab extends MenuTab {
         super.activatePreviousButtonInList( )
         this.activeItem = this.buttons[this.activeButton].content
     }
+
+    doActiveSubMenuOption( optionIndex = null  ) {
+        switch( this.itemSubMenu.getActiveOption( optionIndex ) ) { 
+            case this.itemSubMenuOptions[0]:
+                this.activeOption = this.itemSubMenuOptions[0];
+                break;
+            case this.itemSubMenuOptions[1]:
+                this.activeOption = this.itemSubMenuOptions[1];
+                globals.GAME.MENU.switchTab( "RIGHT", this.activeButton )
+                break;
+        }
+        this.itemSubMenu.deActivate()
+    }
 }
 
 module.exports = { 

@@ -112,7 +112,7 @@ class Menu {
      * Switch to the next or previous tab in this.tabs depening on given string
      * @param {String} direction "LEFT" || "RIGHT"
      */
-    switchTab ( direction ) {
+    switchTab ( direction, selectedCharacterIndex = null ) {
         if ( this.ACTIVE_TAB.modal ) {
             return;
         }
@@ -130,7 +130,7 @@ class Menu {
         }
     
         this.ACTIVE_TAB = this.tabs[newIndex]
-        this.ACTIVE_TAB.setButtons( )
+        this.ACTIVE_TAB.setButtons( selectedCharacterIndex )
     }
 }
 

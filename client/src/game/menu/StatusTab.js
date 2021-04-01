@@ -46,7 +46,8 @@ class StatusMenuTab extends MenuTab {
         ]
     }
 
-    setButtons( ) {
+    setButtons( selectedCharacterIndex = null) {
+        this.activeCharacterIndex = selectedCharacterIndex != null ? selectedCharacterIndex : 0; 
         this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), this.getEquipmentData( ) );
         super.activateButtonAndSetSubMenuPosition( )
@@ -61,7 +62,7 @@ class StatusMenuTab extends MenuTab {
         else {
             this.activeCharacterIndex += 1
         }
-        this.setButtons( );
+        this.setButtons( this.activeCharacterIndex );
     }
 
     activatePreviousCharacter( ) {
@@ -72,7 +73,7 @@ class StatusMenuTab extends MenuTab {
         else {
             this.activeCharacterIndex -= 1
         }
-        this.setButtons( );
+        this.setButtons( this.activeCharacterIndex );
     }
 
     activateNextButtonInList( ) {
@@ -86,7 +87,7 @@ class StatusMenuTab extends MenuTab {
     }
 
     doActiveModalOption( ) {
-        if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined  ) {
+        if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined && this.modal.activeButton.text != "OK!" ) {
             this.unequipItemAtActiveEquipmentSlot( );
             globals.GAME.PLAYER_INVENTORY.equipItem( this.activeCharacter, this.modal.activeButton.item.ItemTypeId );
         }
