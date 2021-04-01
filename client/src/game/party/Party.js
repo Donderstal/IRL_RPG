@@ -1,5 +1,7 @@
 const { Character } = require('../character/Character');
 const { Inventory } = require('./Inventory');
+
+const globals = require('../../game-data/globals');
 /**
  * A Party is a set of Character instances with a shared Inventory instance.
  * It is instantiated for the player on starting a new Game.
@@ -12,10 +14,12 @@ class Party {
         this.members            = [ ];
         this.partySize          = partyMembers.length
         this.inventory          = new Inventory( );
+        
         partyMembers.forEach( ( newMember, index ) => {
             this.members.push( new Character( newMember.name, newMember.className, newMember.level ) );
-        } );
-        
+        } );        
+
+        this.memberActiveOnMapIndex = 0;
     }
 
     get isDefeated( ) {
@@ -26,6 +30,15 @@ class Party {
         }
 
         return true;
+    }
+    /**
+     * Set the active sprite on the map as the sprite of the party member at given index
+     * @param {Number} index 
+     */
+    switchSprite( index ) {
+        this.memberActiveOnMapIndex = index;
+        const selectedPlayer = this.members[index];
+        globals.GAME.PLAYER.sheet = selectedPlayer.Sprite;
     }
     /**
      * Call the addItemsToInnerListByID method of this.inventory with itemIDList as argument

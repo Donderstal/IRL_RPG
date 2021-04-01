@@ -35,6 +35,9 @@ class MembersMenuTab extends MenuTab {
                 this.activeOption = this.itemSubMenuOptions[1];
                 globals.GAME.MENU.switchTab( "RIGHT", this.activeButton )
                 break;
+            case this.itemSubMenuOptions[2]:
+                this.activeOption = this.itemSubMenuOptions[2];
+                globals.GAME.party.switchSprite( this.activeButton );
         }
         this.itemSubMenu.deActivate()
     }

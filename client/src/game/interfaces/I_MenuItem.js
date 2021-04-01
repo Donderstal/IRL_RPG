@@ -1,5 +1,6 @@
 const { LARGE_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
 const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const globals = require('../../game-data/globals');
 /**
  * Each tab in the main menu is filled with a set of items. The content of these items vary.
  * In the inventory tab it's items, in the members tab it's a party member.
@@ -74,6 +75,13 @@ class MenuItem {
                 this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + ( LARGE_FONT_LINE_HEIGHT * 3 ), 
                 LARGE_FONT_SIZE 
             ); 
+            if ( globals.GAME.party.memberActiveOnMapIndex == globals.GAME.PARTY_MEMBERS.indexOf(this.content) ) {
+                writeTextLine( 
+                    "SHOWN ON MAP", 
+                    this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), (this.y + this.height) - BATTLE_FONT_LINE_HEIGHT, 
+                    LARGE_FONT_SIZE 
+                ); 
+            }
         }
     }
     /**
