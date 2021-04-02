@@ -149,14 +149,11 @@ class MenuTab {
                 }
                 break;
             case "INVENTORY": 
-                if ( this.activeOption == "USE" ) {
-                    this.selectCharacterForItem( );
-                }
-                else if ( this.activeOption == "EQUIP" ) {
-                    this.selectCharacterForEquipment( );
+                if ( this.activeOption == "EQUIP" ) {
+                    this.setModal( "Who should equip a " + this.activeItem.Name + "?", this.activeOption );
                 } 
-                else if ( this.activeOption == "DISMISS" ) {
-                    this.dismissItem( );
+                else if ( this.activeOption == "DISCARD" ) {
+                    this.setModal( "Throw away a" + this.activeItem.Name + "? This action can not be reversed!", this.activeOption );
                 }
                 break;
             case "MAP":

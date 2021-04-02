@@ -9,6 +9,8 @@ class Inventory {
         this.ItemList = [];
         this.ActiveItemIDs = [];
     }
+
+    get activeItems( ) { return this.ItemList.filter( ( Item ) => { return Item.Quantity > 0 } ) };
     /**
      * Return true if the given String is in this.ActiveItemIDs.
      * @param {String} itemID 

@@ -9,31 +9,38 @@ class InventoryMenuTab extends MenuTab {
         this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD", "RETURN" ]
         this.activeOption;
     }
-
+    /**
+     * Deactivate the activeButton if necessary.
+     * Then get the array of activeItems for inventory and pass it to setButtonsInColumn.
+     * Finally, activate the item subMenu and check for disabled options.
+     */
     setButtons( ) {
-        const activeItems = globals.GAME.PLAYER_ITEMS.filter( ( Item ) => { return Item.Quantity > 0 } )
         if ( this.buttons[this.activeButton] != undefined ) {
             this.buttons[this.activeButton].deActivate( );
             this.buttons = [];            
         }
+
+        const activeItems = globals.GAME.PLAYER_INVENTORY.activeItems;        
         if ( this.activeButton >= activeItems.length ) {
             this.activeButton = activeItems.length - 1;
         }
+        
         this.setButtonsInColumn( 0, activeItems );
-
         super.activateButtonAndSetSubMenuPosition( );
-        this.buttons.forEach( ( button, index ) => {
-            button.updateContent( activeItems[index] )
-        })
-
         this.setDisabledOptionsForItem( );
     }
-
+    /**
+     * Call the super of this method.
+     * Then, call setDisabledOptionsForItem
+     */
     activateNextButtonInList( ) {
         super.activateNextButtonInList( )
         this.setDisabledOptionsForItem( );
     }
-
+    /**
+     * Call the super of this method.
+     * Then, call setDisabledOptionsForItem
+     */
     activatePreviousButtonInList( ) {
         super.activatePreviousButtonInList( )
         this.setDisabledOptionsForItem( );
@@ -51,13 +58,11 @@ class InventoryMenuTab extends MenuTab {
         }        
         this.itemSubMenu.disableOptions( optionsToDisable );
     }
-
+    /**
+     * Depending on the value of this.activeOption, call associated functionalities.
+     * Then, call unsetModal and setButtons
+     */
     doActiveModalOption( ) {
-        if ( this.activeOption == "USE" && this.modal.activeButton.item != undefined  ) {
-            console.log(this.activeItem)
-            const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index]
-            console.log(selectedCharacter.Name)
-        }
         if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined ) {
             const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index];
             const itemToUnequip = selectedCharacter.Equipment.returnItemAtSlotOfGivenItem( this.activeItem );
