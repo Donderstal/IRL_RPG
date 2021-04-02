@@ -1,6 +1,9 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
 const globals = require('../../game-data/globals')
-
+/**
+ * In the inventorytab, the player can interact with all their items.
+ * Items can be equipped, used or discarded.
+ */
 class InventoryMenuTab extends MenuTab {
     constructor( ) {
         super( "INVENTORY", "VERT_HORI", 20 )

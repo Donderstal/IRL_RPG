@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### APR 2, 2021
 * Adding functionalities to Members and Inventory tab
+* Cleaning up the menucode, created some new utility functions
 
 #### MAR 29, 2021
 * Expanding Status menutab 

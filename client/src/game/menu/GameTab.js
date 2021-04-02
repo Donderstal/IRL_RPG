@@ -9,7 +9,10 @@ const buttonList = [
     { title: "QUIT TO MAIN MENU", description: "Quit this game and return to the main menu"},
     { title: "SAVE & QUIT", description: "Save your game and return to the main menu."}
 ]
-
+/**
+ * The GameMenuTab is a menu for general utilities, 
+ * like saving a game or adjusting options
+ */
 class GameMenuTab extends MenuTab {
     constructor( ) {
         super( "GAME", "VERT", 8 )
