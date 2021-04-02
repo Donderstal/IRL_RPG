@@ -8,7 +8,10 @@ const {
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     ATTRIBUTE_MENU_TEXTS, EQUIPMENT_SLOTS_LIST, ATTRIBUTE_LIST
 } = require('../../game-data/globals');
-
+/**
+ * In the StatusMenuTab, the player can have a detailed look at the attributes of the members of the party.
+ * The player can scroll between different characters and equip or unequip items.
+ */
 class StatusMenuTab extends MenuTab {
     constructor( ) {
         super( "STATUS", "VERT", 6 )
@@ -32,7 +35,9 @@ class StatusMenuTab extends MenuTab {
         this.activeCharacter = null;
         this.activeCharacterIndex = 0;
     }
-
+    /**
+     * Return an array of objects containing the names of equipment slots and current items in it.
+     */
     getEquipmentData( ) {
         let equipmentDataArray = [];
         EQUIPMENT_SLOTS_LIST.forEach( ( slot ) => {
@@ -40,7 +45,12 @@ class StatusMenuTab extends MenuTab {
         })
         return equipmentDataArray
     }
-
+    /**
+     * Set active character and active index. 
+     * Then, set buttons in a column with this.getEquipmentData as content.
+     * Finally, call activateButtonAndSetSubMenuPosition
+     * @param {Number} selectedCharacterIndex 
+     */
     setButtons( selectedCharacterIndex = null) {
         this.buttons = [];
         this.activeCharacterIndex = selectedCharacterIndex != null ? selectedCharacterIndex : 0; 
@@ -48,7 +58,10 @@ class StatusMenuTab extends MenuTab {
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), this.getEquipmentData( ) );
         super.activateButtonAndSetSubMenuPosition( )
     }
-
+    /**
+     * Depending on the value of this.activeOption, call the associated functions.
+     * Then, unset the active modal and reset the button with this.activeCharacterIndex
+     */
     doActiveModalOption( ) {
         if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined && this.modal.activeButton.text != "OK!" ) {
             globals.GAME.PLAYER_INVENTORY.unequipItemAtCharacterEquipmentSlot( this.activeItem, this.activeCharacter );
@@ -87,15 +100,19 @@ class StatusMenuTab extends MenuTab {
         let attributes = this.activeCharacter.getAttributesBeforeEquipment( );        
         this.selectedEquipmentAttributesValues = Equipment.applyEquipmentEffectsToAttributes( attributes );
     }
-
+    /**
+     * Call drawLeftPanel and drawRightPanel before super.draw
+     */
     draw( ) {
         this.drawLeftPanel( );
         this.drawRightPanel( );
         super.draw( );
     }
-
+    /**
+     * Call a series of canvas functions to draw the StatusTab left panel
+     * TODO: Replace canvas rects with UI sprites when they are finished
+     */
     drawLeftPanel( ) {
-        // placeholder canvas drawings until we get some nice menu sprites
         drawRect( "FRONT", 
             GRID_BLOCK_PX / 2, GRID_BLOCK_PX * 2, 
             ( CANVAS_WIDTH * .66 ) - GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ), 
@@ -132,7 +149,12 @@ class StatusMenuTab extends MenuTab {
             STRD_SPRITE_WIDTH * 4, STRD_SPRITE_HEIGHT * 4
         );
     }
-
+    /**
+     * @param {String} key attribute key from globals file
+     * @param {Number} currentTextY y position for text lines
+     * @param {Number} currentArrowY y position for the ui arrow
+     * @param {Number} index index of key in attributes array
+     */
     drawHealthOrPowerLine( key, currentTextY, currentArrowY, index ) {
         writeTextLine( 
             ATTRIBUTE_MENU_TEXTS[key], 
@@ -151,7 +173,11 @@ class StatusMenuTab extends MenuTab {
         );
         this.drawAttributeArrows( key, currentArrowY );
     }
-
+    /**
+     * @param {String} key attribute key from globals file
+     * @param {Number} currentTextY y position for text lines
+     * @param {Number} currentArrowY y position for the ui arrow
+     */
     drawAttributeLine( key, currentTextY, currentArrowY ) {
         writeTextLine( 
             ATTRIBUTE_MENU_TEXTS[key], 
@@ -165,7 +191,12 @@ class StatusMenuTab extends MenuTab {
         );
         this.drawAttributeArrows( key, currentArrowY );
     }
-
+    /**
+     * If the given attribute will be raised or lowered by the pending un/equip action
+     * draw a red or green arrow to communicate that change to the user
+     * @param {String} key attribute key from globals file
+     * @param {Number} y y position of the arrow on canvas
+     */
     drawAttributeArrows( key, y ) {
         if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
             drawFromImageToCanvas(
@@ -184,15 +215,32 @@ class StatusMenuTab extends MenuTab {
             ); 
         }
     }
-
+    /**
+     * Call a series of canvas functions to draw the StatusTab right panel
+     * TODO: Replace canvas rects with UI sprites when they are finished
+     */
     drawRightPanel( ) {
-        drawRect( "FRONT", 
+        drawRect( 
+            "FRONT", 
             ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), GRID_BLOCK_PX * 2, 
             ( CANVAS_WIDTH * .33 ) - GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ), 
-        "#FADADD" )
-        writeTextLine( "EQUIPMENT", GRID_BLOCK_PX + ( CANVAS_WIDTH * .66 ), ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" )
-        writeTextLine( "Previous character - [ A ]", ( CANVAS_WIDTH * .66 ) + GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ) - (LARGE_FONT_LINE_HEIGHT * 2), LARGE_FONT_SIZE, "#000000" );
-        writeTextLine( "Next character - [ D ]", ( CANVAS_WIDTH * .66 ) + GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ) - LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, "#000000" );
+            "#FADADD" 
+        );
+        writeTextLine( 
+            "EQUIPMENT", 
+            GRID_BLOCK_PX + ( CANVAS_WIDTH * .66 ), ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, 
+            LARGE_FONT_SIZE, "#000000"
+        );
+        writeTextLine( 
+            "Previous character - [ A ]", 
+            ( CANVAS_WIDTH * .66 ) + GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ) - (LARGE_FONT_LINE_HEIGHT * 2), 
+            LARGE_FONT_SIZE, "#000000" 
+        );
+        writeTextLine( 
+            "Next character - [ D ]", 
+            ( CANVAS_WIDTH * .66 ) + GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ) - LARGE_FONT_LINE_HEIGHT, 
+            LARGE_FONT_SIZE, "#000000" 
+        );
     }
 }
 
