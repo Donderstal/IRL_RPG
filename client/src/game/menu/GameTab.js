@@ -21,16 +21,6 @@ class GameMenuTab extends MenuTab {
         this.setButtonsInColumn( CANVAS_WIDTH / 3, buttonList )
         this.buttons[this.activeButton].activate( );
     }
-
-    activateNextButtonInList( ) {
-        super.activateNextButtonInList( )
-        this.description = this.buttons[this.activeButton].content.description;
-    }
-
-    activatePreviousButtonInList( ) {
-        super.activatePreviousButtonInList( )
-        this.description = this.buttons[this.activeButton].content.description;
-    }
 }
 
 module.exports = { 

@@ -26,22 +26,17 @@ class InventoryMenuTab extends MenuTab {
             button.updateContent( activeItems[index] )
         })
 
-        this.activeItem = this.buttons[this.activeButton].content.Item;
         this.setDisabledOptionsForItem( );
     }
 
     activateNextButtonInList( ) {
         super.activateNextButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content.Item;
         this.setDisabledOptionsForItem( );
-        this.description = this.activeItem.Description;
     }
 
     activatePreviousButtonInList( ) {
         super.activatePreviousButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content.Item;
         this.setDisabledOptionsForItem( );
-        this.description = this.activeItem.Description;
     }
     /**
      * Depending on the Category prop of this.activeItem, decide which options to disable

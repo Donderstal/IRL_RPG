@@ -46,7 +46,6 @@ class StatusMenuTab extends MenuTab {
         this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), this.getEquipmentData( ) );
         super.activateButtonAndSetSubMenuPosition( )
-        this.activeItem = this.buttons[this.activeButton].content.equipmentType
     }
 
     activateNextCharacter( ) {
@@ -57,16 +56,6 @@ class StatusMenuTab extends MenuTab {
     activatePreviousCharacter( ) {
         this.buttons = [];
         this.setButtons( getPreviousIndexInArray( this.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) );
-    }
-
-    activateNextButtonInList( ) {
-        super.activateNextButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content.equipmentType;
-    }
-
-    activatePreviousButtonInList( ) {
-        super.activatePreviousButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content.equipmentType;
     }
 
     doActiveModalOption( ) {
@@ -177,10 +166,10 @@ class StatusMenuTab extends MenuTab {
         ATTRIBUTE_LIST.forEach( ( attribute, index ) => {
             const currentTextY = ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) )
             const currentArrowY = ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE;
-            if ( index < 2 ) {
+            if ( index < 2 ) { // HP or PP
                 this.drawHealthOrPowerLine( attribute, currentTextY, currentArrowY, index )
             }
-            else {
+            else { // Other attributes
                 this.drawAttributeLine( attribute, currentTextY, currentArrowY )
             }
         })

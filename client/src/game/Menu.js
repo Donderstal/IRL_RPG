@@ -126,7 +126,9 @@ class Menu {
             : getNextIndexInArray( currentTabIndex, this.tabs );
 
         this.ACTIVE_TAB = this.tabs[newIndex]
-        this.ACTIVE_TAB.setButtons( selectedCharacterIndex )
+        if ( this.ACTIVE_TAB.tabName != "MAP" ) {
+            this.ACTIVE_TAB.setButtons( selectedCharacterIndex )
+        }
     }
 }
 

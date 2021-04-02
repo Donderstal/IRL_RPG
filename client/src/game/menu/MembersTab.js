@@ -13,17 +13,6 @@ class MembersMenuTab extends MenuTab {
     setButtons( ) {
         this.setButtonsInRow( GRID_BLOCK_PX * 2, globals.GAME.PARTY_MEMBERS );
         super.activateButtonAndSetSubMenuPosition( );
-        this.activeItem = this.buttons[this.activeButton].content;
-    }
-
-    activateNextButtonInList( ) {
-        super.activateNextButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content
-    }
-
-    activatePreviousButtonInList( ) {
-        super.activatePreviousButtonInList( )
-        this.activeItem = this.buttons[this.activeButton].content
     }
 
     doActiveSubMenuOption( optionIndex = null  ) {

@@ -89,6 +89,34 @@ class MenuTab {
         this.activateButtonAndSetSubMenuPosition( false );
     }
     /**
+     * Based on the current tabName, decide what to set as activeItem and description
+     */
+    setActiveItemAndDescription( ) {
+        switch( this.tabName ) {
+            case "STATUS": 
+                this.activeItem = this.buttons[this.activeButton].content.equipmentType;
+                this.description = "Equip something to your " + this.activeItem + " slot.";
+                break;
+            case "MEMBERS": 
+                this.activeItem = this.buttons[this.activeButton].content;
+                this.description = "";
+                break;
+            case "INVENTORY": 
+                this.activeItem = this.buttons[this.activeButton].content.Item;
+                this.description = this.activeItem.Description;
+                break;
+            case "MAP":
+                this.description = "";
+                break;
+            case "GAME":
+                this.description = this.buttons[this.activeButton].content.description;
+                break;
+            default:
+                console.log("TabName " + this.tabName + " was not recognized");
+        }
+    }
+    
+    /**
      * Instantiate a MenuItems in a column.
      * Activate the button at this.activeButton
      * @param {Number} x position on x axis of all buttons
@@ -116,7 +144,8 @@ class MenuTab {
     }
     /**
      * Active the button at this.activeButton.
-     * Then, set XY for the subMenu based on activeButton position and call the subMenu initOptionsMethod;
+     * Set XY for the subMenu based on activeButton position
+     * Then, call the subMenu initOptionsMethod and this.setActiveItemAndDescription;
      */
     activateButtonAndSetSubMenuPosition( initOptions = true ) {
         this.buttons[this.activeButton].activate( );
@@ -124,6 +153,7 @@ class MenuTab {
         if ( initOptions ) {
             this.itemSubMenu.initOptions( this.itemSubMenuOptions );            
         }
+        this.setActiveItemAndDescription( );
     }
     /**
      * Empty the this.buttons array. Deactivate the submenu and clear it
