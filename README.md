@@ -12,7 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### MAR 26, 2021
+#### APR 2, 2021
+* Adding functionalities to Members and Inventory tab
+
+#### MAR 29, 2021
 * Expanding Status menutab 
 * Adding equipment functionalities tot Status tab
 
