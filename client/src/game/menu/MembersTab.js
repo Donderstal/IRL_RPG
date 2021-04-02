@@ -14,22 +14,6 @@ class MembersMenuTab extends MenuTab {
         this.setButtonsInRow( GRID_BLOCK_PX * 2, globals.GAME.PARTY_MEMBERS );
         super.activateButtonAndSetSubMenuPosition( );
     }
-
-    doActiveSubMenuOption( optionIndex = null  ) {
-        switch( this.itemSubMenu.getActiveOption( optionIndex ) ) { 
-            case this.itemSubMenuOptions[0]:
-                this.activeOption = this.itemSubMenuOptions[0];
-                break;
-            case this.itemSubMenuOptions[1]:
-                this.activeOption = this.itemSubMenuOptions[1];
-                globals.GAME.MENU.switchTab( "RIGHT", this.activeButton )
-                break;
-            case this.itemSubMenuOptions[2]:
-                this.activeOption = this.itemSubMenuOptions[2];
-                globals.GAME.party.switchSprite( this.activeButton );
-        }
-        this.itemSubMenu.deActivate()
-    }
 }
 
 module.exports = { 

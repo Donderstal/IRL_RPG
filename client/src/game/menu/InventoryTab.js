@@ -73,27 +73,6 @@ class InventoryMenuTab extends MenuTab {
         this.setButtons( );
     }
 
-    doActiveSubMenuOption( optionIndex = null ) {
-        const option = this.itemSubMenu.getActiveOption( optionIndex );
-
-        switch( option ) {
-            case this.itemSubMenuOptions[0]: //USE
-                this.selectCharacterForItem( );
-                break;
-            case this.itemSubMenuOptions[1]: //EQUIP
-                this.selectCharacterForEquipment( );
-                break;
-            case this.itemSubMenuOptions[2]: //DISMISS
-                this.dismissItem( );
-                break;
-            default :
-                console.log( option );
-                break;
-        }
-
-        this.itemSubMenu.deActivate( );
-    }
-
     selectCharacterForItem( ) {
         this.activeOption = this.itemSubMenuOptions[0];
         this.setModal(

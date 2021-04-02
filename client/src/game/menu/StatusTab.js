@@ -83,31 +83,6 @@ class StatusMenuTab extends MenuTab {
             globals.GAME.PLAYER_INVENTORY.unequipItem( this.activeCharacter, IdOfCurrentItem );
         }
     }
-
-    doActiveSubMenuOption( optionIndex = null ) {
-        const option = this.itemSubMenu.getActiveOption( optionIndex );
-
-        switch( option ) {
-            case this.itemSubMenuOptions[0]:
-                this.activeOption = this.itemSubMenuOptions[0];
-                this.setModal(
-                    "Choose and item to equip to " + this.activeCharacter.Name,
-                    this.activeOption
-                )
-                this.setSelectedEquipmentAttributesValues( "EQUIP" );
-                break;
-            case this.itemSubMenuOptions[1]:
-                this.activeOption = this.itemSubMenuOptions[1];
-                this.setModal(
-                    "Unequip the item?",
-                    this.activeOption
-                )
-                this.setSelectedEquipmentAttributesValues( "UNEQUIP" );
-                break;
-        }
-
-        this.itemSubMenu.deActivate( );
-    }
     /**
      * Copy the Equipment class instance belonging to the active character.
      * Call equipItem for each item in the equipment to set its values.
@@ -160,7 +135,11 @@ class StatusMenuTab extends MenuTab {
             "LEVEL: " + this.activeCharacter.Level, "EXPERIENCE: " + this.activeCharacter.Experience
         ];
         statusTexts.forEach( ( text, index ) => {
-            this.drawCharacterInfo( text, index)
+            writeTextLine( 
+                text, 
+                GRID_BLOCK_PX, ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
+                LARGE_FONT_SIZE, "#000000" 
+            );
         })
 
         ATTRIBUTE_LIST.forEach( ( attribute, index ) => {
@@ -183,14 +162,6 @@ class StatusMenuTab extends MenuTab {
         );
     }
 
-    drawCharacterInfo( text, index ) {
-        writeTextLine( 
-            text, 
-            GRID_BLOCK_PX, ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
-            LARGE_FONT_SIZE, "#000000" 
-        );
-    }
-
     drawHealthOrPowerLine( key, currentTextY, currentArrowY, index ) {
         writeTextLine( 
             ATTRIBUTE_MENU_TEXTS[key], 
@@ -207,22 +178,7 @@ class StatusMenuTab extends MenuTab {
             GRID_BLOCK_PX * 4, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
-        if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
-            drawFromImageToCanvas(
-                "FRONT", this.greenArrow, 
-                0, 0, 768, 768, 
-                GRID_BLOCK_PX * 5, currentArrowY, 
-                LARGE_FONT_SIZE, LARGE_FONT_SIZE
-            );
-        }
-        else if ( this.modal && this.activeCharacter.activeAttributeValues[key] > this.selectedEquipmentAttributesValues[key] ) {
-            drawFromImageToCanvas(
-                "FRONT", this.redArrow, 
-                0, 0, 1200, 1200, 
-                GRID_BLOCK_PX * 5, currentArrowY, 
-                LARGE_FONT_SIZE, LARGE_FONT_SIZE
-            );
-        }
+        this.drawAttributeArrows( key, currentArrowY );
     }
 
     drawAttributeLine( key, currentTextY, currentArrowY ) {
@@ -236,11 +192,15 @@ class StatusMenuTab extends MenuTab {
             GRID_BLOCK_PX * 4, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
+        this.drawAttributeArrows( key, currentArrowY );
+    }
+
+    drawAttributeArrows( key, y ) {
         if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
             drawFromImageToCanvas(
                 "FRONT", this.greenArrow, 
                 0, 0, 768, 768, 
-                GRID_BLOCK_PX * 5, currentArrowY, 
+                GRID_BLOCK_PX * 5, y, 
                 LARGE_FONT_SIZE, LARGE_FONT_SIZE
             ); 
         }
@@ -248,11 +208,10 @@ class StatusMenuTab extends MenuTab {
             drawFromImageToCanvas(
                 "FRONT", this.redArrow, 
                 0, 0, 1200, 1200, 
-                GRID_BLOCK_PX * 5, currentArrowY, 
+                GRID_BLOCK_PX * 5, y, 
                 LARGE_FONT_SIZE, LARGE_FONT_SIZE
             ); 
         }
-  
     }
 
     drawRightPanel( ) {

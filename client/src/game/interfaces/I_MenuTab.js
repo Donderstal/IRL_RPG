@@ -115,7 +115,54 @@ class MenuTab {
                 console.log("TabName " + this.tabName + " was not recognized");
         }
     }
-    
+    /**
+     * 
+     */
+    doActiveSubMenuOption( optionIndex = null ) {
+        this.activeOption = this.itemSubMenu.getActiveOption( optionIndex );
+        this.doCurrentSubMenuAction( );
+        this.itemSubMenu.deActivate( );
+    }
+    /**
+     * Call a function depending on the current tabName and activeOption
+     */
+    doCurrentSubMenuAction( ) {
+        switch( this.tabName ) {
+            case "STATUS": 
+                if ( this.activeOption == "EQUIP" ) {
+                    this.setModal( "Choose and item to equip to " + this.activeCharacter.Name, this.activeOption )
+                }
+                else if ( this.activeOption == "UNEQUIP" ) {
+                    this.setModal( "Unequip the item?", this.activeOption )
+                }
+                this.setSelectedEquipmentAttributesValues( this.activeOption );
+                break;
+            case "MEMBERS": 
+                if ( this.activeOption == "SHOW STATUS" ) {
+                    globals.GAME.MENU.switchTab( "RIGHT", this.activeButton )
+                }
+                else if ( this.activeOption == "SELECT FOR MAP" ) {
+                    globals.GAME.party.switchSprite( this.activeButton );
+                }
+                break;
+            case "INVENTORY": 
+                if ( this.activeOption == "USE" ) {
+                    this.selectCharacterForItem( );
+                }
+                else if ( this.activeOption == "EQUIP" ) {
+                    this.selectCharacterForEquipment( );
+                } 
+                else if ( this.activeOption == "DISMISS" ) {
+                    this.dismissItem( );
+                }
+                break;
+            case "MAP":
+            case "GAME":
+                break;
+            default:
+                console.log("TabName " + this.tabName + " was not recognized");
+        }
+    }
     /**
      * Instantiate a MenuItems in a column.
      * Activate the button at this.activeButton
