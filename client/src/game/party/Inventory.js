@@ -108,6 +108,18 @@ class Inventory {
             this.ItemList.splice( itemIndex, 1 )
         }
     }
+    /**
+     * Get the ID of the item in the given slot.
+     * Then, call the unequip item method with the itemId and given Character as arguments
+     * @param {String} slot name of an equipments slot from globals file
+     * @param {Character} character character to unequip item from
+     */
+    unequipItemAtCharacterEquipmentSlot( slot, character ) {
+        const ItemTypeId = character.getItemIdOfItemInEquipmentSlot( slot );
+        if ( ItemTypeId != null ) {
+            this.unequipItem( character, ItemTypeId );
+        }
+    }
 }
 
 module.exports = {

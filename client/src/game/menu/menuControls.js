@@ -1,4 +1,5 @@
-const globals  = require('../../game-data/globals')
+const globals  = require('../../game-data/globals');
+const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 /**
  * Call the method in the currently active tab associated with the up key 
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
@@ -35,7 +36,9 @@ const handleLeft = ( activeTab ) => {
         activeTab.activatePreviousButtonInList( );
     }
     else if ( activeTab.tabName == "STATUS" ) {
-        activeTab.activatePreviousCharacter( );
+        activeTab.setButtons( 
+            getPreviousIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
+        );
     }
 }
 /**
@@ -50,7 +53,9 @@ const handleRight = ( activeTab ) => {
         activeTab.activateNextButtonInList( );
     }
     else if ( activeTab.tabName == "STATUS" ) {
-        activeTab.activateNextCharacter( );
+        activeTab.setButtons( 
+            getNextIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
+        );
     }
 }
 /**

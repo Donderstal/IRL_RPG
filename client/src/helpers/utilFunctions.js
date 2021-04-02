@@ -87,11 +87,24 @@ const getNextIndexInArray = ( currentIndex, array ) => {
 const getPreviousIndexInArray = ( currentIndex, array ) => {
     return ( currentIndex - 1 < 0 ) ? array.length - 1 : currentIndex - 1
 };
+/**
+ * Return a by-value clone of given instance
+ * @param {objecy} instance 
+ */
+const cloneInstance = ( instance ) => {
+    return Object.assign(
+        Object.create(
+          Object.getPrototypeOf(instance),
+        ),
+        JSON.parse(JSON.stringify(instance)),
+    );
+}
 
 module.exports = {
     getUniqueId,
     fetchJSONWithCallback,
     toggleLetterBoxDivs,
     getNextIndexInArray,
-    getPreviousIndexInArray
+    getPreviousIndexInArray,
+    cloneInstance
 }

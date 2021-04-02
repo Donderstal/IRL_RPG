@@ -1,6 +1,6 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
 const { drawRect, writeTextLine, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
-const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
+const { cloneInstance } = require('../../helpers/utilFunctions');
 const globals = require('../../game-data/globals');
 const { 
     GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE,
@@ -42,46 +42,23 @@ class StatusMenuTab extends MenuTab {
     }
 
     setButtons( selectedCharacterIndex = null) {
+        this.buttons = [];
         this.activeCharacterIndex = selectedCharacterIndex != null ? selectedCharacterIndex : 0; 
         this.activeCharacter = globals.GAME.PARTY_MEMBERS[this.activeCharacterIndex];
         this.setButtonsInColumn( ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), this.getEquipmentData( ) );
         super.activateButtonAndSetSubMenuPosition( )
     }
 
-    activateNextCharacter( ) {
-        this.buttons = [];
-        this.setButtons( getNextIndexInArray( this.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) );
-    }
-
-    activatePreviousCharacter( ) {
-        this.buttons = [];
-        this.setButtons( getPreviousIndexInArray( this.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) );
-    }
-
     doActiveModalOption( ) {
         if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined && this.modal.activeButton.text != "OK!" ) {
-            this.unequipItemAtActiveEquipmentSlot( );
+            globals.GAME.PLAYER_INVENTORY.unequipItemAtCharacterEquipmentSlot( this.activeItem, this.activeCharacter );
             globals.GAME.PLAYER_INVENTORY.equipItem( this.activeCharacter, this.modal.activeButton.item.ItemTypeId );
         }
         if ( this.activeOption == "UNEQUIP" && this.modal.activeButton.text == "YES" ) {
-            this.unequipItemAtActiveEquipmentSlot( );
+            globals.GAME.PLAYER_INVENTORY.unequipItemAtCharacterEquipmentSlot( this.activeItem, this.activeCharacter );
         }
         this.unsetModal( );
-        this.refreshButtonContent( );
-    }
-
-    refreshButtonContent( ) {
-        const equipmentData = this.getEquipmentData( );
-        this.buttons.forEach( ( button, index ) => { 
-            button.updateContent( equipmentData[index] );
-        })
-    }
-
-    unequipItemAtActiveEquipmentSlot( ) {
-        const IdOfCurrentItem = this.activeCharacter.getItemIdOfItemInEquipmentSlot( this.activeItem );
-        if ( IdOfCurrentItem != null ) {
-            globals.GAME.PLAYER_INVENTORY.unequipItem( this.activeCharacter, IdOfCurrentItem );
-        }
+        this.setButtons( this.activeCharacterIndex );
     }
     /**
      * Copy the Equipment class instance belonging to the active character.
@@ -92,13 +69,7 @@ class StatusMenuTab extends MenuTab {
      * @param {String} actionType 
      */
     setSelectedEquipmentAttributesValues( actionType ) {
-        const Equipment = Object.assign(
-            Object.create(
-              Object.getPrototypeOf(this.activeCharacter.Equipment),
-            ),
-            JSON.parse(JSON.stringify(this.activeCharacter.Equipment)),
-        );
-
+        const Equipment = cloneInstance(this.activeCharacter.Equipment);
         EQUIPMENT_SLOTS_LIST.forEach( ( key ) => {
             if ( Equipment[key] != null ) {
                 Equipment.equipItem( Equipment[key] )
