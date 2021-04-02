@@ -6,7 +6,7 @@ class InventoryMenuTab extends MenuTab {
         super( "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 2 );
-        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD" ]
+        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD", "RETURN" ]
         this.activeOption;
     }
 

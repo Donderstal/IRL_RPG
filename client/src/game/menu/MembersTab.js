@@ -7,7 +7,7 @@ class MembersMenuTab extends MenuTab {
         super( "MEMBERS", "HORI", 6 );
         this.setButtonHeight( this.height );
         this.setButtonWidth( this.width / 4 );
-        this.itemSubMenuOptions = [ "MOVE", "SHOW STATUS", "SELECT FOR MAP"]
+        this.itemSubMenuOptions = [ "MOVE", "SHOW STATUS", "SELECT FOR MAP", "RETURN" ]
     }
 
     setButtons( ) {

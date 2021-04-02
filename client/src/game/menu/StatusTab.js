@@ -17,7 +17,7 @@ class StatusMenuTab extends MenuTab {
         super( "STATUS", "VERT", 6 )
         this.setButtonHeight( this.height / 6 );
         this.setButtonWidth( this.width / 5 );
-        this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "BACK" ];
+        this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "RETURN" ];
 
         this.redArrow = new Image();
         this.redArrow.src = "/static/ui/red_arrow_down.png";
@@ -136,9 +136,15 @@ class StatusMenuTab extends MenuTab {
 
         this.itemSubMenu.deActivate( );
     }
-
+    /**
+     * Copy the Equipment class instance belonging to the active character.
+     * Call equipItem for each item in the equipment to set its values.
+     * Equip or unequip the selected item based on actionType.
+     * Then, apply the equipments' effects to attributes and set it 
+     * to this.selectedEquipmentAttributesValues
+     * @param {String} actionType 
+     */
     setSelectedEquipmentAttributesValues( actionType ) {
-        let attributes = this.activeCharacter.getAttributesBeforeEquipment( );
         const Equipment = Object.assign(
             Object.create(
               Object.getPrototypeOf(this.activeCharacter.Equipment),
@@ -146,29 +152,25 @@ class StatusMenuTab extends MenuTab {
             JSON.parse(JSON.stringify(this.activeCharacter.Equipment)),
         );
 
-        if ( Equipment[EQUIPMENT_KEY_WEAPON] != null ) {
-            Equipment.equipItem( Equipment[EQUIPMENT_KEY_WEAPON] );
-        }
-        if ( Equipment[EQUIPMENT_KEY_HEAD] != null ) {
-            Equipment.equipItem( Equipment[EQUIPMENT_KEY_HEAD] );            
-        }
-        if ( Equipment[EQUIPMENT_KEY_ACCESSORY] != null ) {
-            Equipment.equipItem( Equipment[EQUIPMENT_KEY_ACCESSORY] );            
-        }
-        if ( Equipment[EQUIPMENT_KEY_UPPERBODY] != null ) {
-            Equipment.equipItem( Equipment[EQUIPMENT_KEY_UPPERBODY] );            
-        }
-        if ( Equipment[EQUIPMENT_KEY_LOWERBODY] != null ) {
-            Equipment.equipItem( Equipment[EQUIPMENT_KEY_LOWERBODY] );            
-        }
+        let itemList = [ 
+            EQUIPMENT_KEY_WEAPON, EQUIPMENT_KEY_HEAD, EQUIPMENT_KEY_ACCESSORY, 
+            EQUIPMENT_KEY_UPPERBODY, EQUIPMENT_KEY_LOWERBODY 
+        ];
+        itemList.forEach( ( key ) => {
+            if ( Equipment[key] != null ) {
+                Equipment.equipItem( Equipment[key] )
+            }
+        } );
 
         if ( actionType == "EQUIP" ) {
             Equipment.equipItem( this.modal.activeButton.item );
-        } else if ( actionType == "UNEQUIP" ) {
+        } 
+        else if ( actionType == "UNEQUIP" ) {
             Equipment[this.activeItem] = null;
             Equipment.effects[this.activeItem] = null;
         };
-        
+
+        let attributes = this.activeCharacter.getAttributesBeforeEquipment( );        
         this.selectedEquipmentAttributesValues = Equipment.applyEquipmentEffectsToAttributes( attributes );
     }
 
