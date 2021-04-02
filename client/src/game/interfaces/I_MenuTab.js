@@ -1,4 +1,5 @@
 const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX } = require('../../game-data/globals');
+const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 const { Modal } = require("./I_Modal");
 const { ItemSubMenu } = require('./I_ItemSubMenu');
 const { MenuItem } = require('./I_MenuItem');
@@ -74,11 +75,7 @@ class MenuTab {
      */
     activateNextButtonInList( ) {
         this.buttons[this.activeButton].deActivate( )
-        this.activeButton += 1;
-        if ( this.activeButton >= this.buttons.length ) {
-            this.activeButton = 0;
-        }
-
+        this.activeButton = getNextIndexInArray( this.activeButton, this.buttons )
         this.activateButtonAndSetSubMenuPosition( false );
     }
    /**
@@ -88,11 +85,7 @@ class MenuTab {
      */
     activatePreviousButtonInList( ) {
         this.buttons[this.activeButton].deActivate( )
-        this.activeButton -= 1;
-        if ( this.activeButton < 0 ) {
-            this.activeButton = this.buttons.length - 1;
-        }
-
+        this.activeButton = getPreviousIndexInArray( this.activeButton, this.buttons )
         this.activateButtonAndSetSubMenuPosition( false );
     }
     /**

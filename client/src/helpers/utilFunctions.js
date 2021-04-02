@@ -69,9 +69,29 @@ const generateId = ( ) => {
     }
     return id
 }
+/**
+ * If currentIndex is not the last position in array, increment it by one.
+ * Else, return 0 to start at the beginning of the array. 
+ * @param {Number} currentIndex 
+ * @param {Any[]} array 
+ */
+const getNextIndexInArray = ( currentIndex, array ) => {
+    return ( currentIndex + 1 == array.length ) ? 0 : currentIndex += 1 ;
+};
+/**
+ * If currentIndex is not the first position in array, decrement it by one.
+ * Else, return the last index at the end of the array. 
+ * @param {Number} currentIndex 
+ * @param {Any[]} array 
+ */
+const getPreviousIndexInArray = ( currentIndex, array ) => {
+    return ( currentIndex - 1 < 0 ) ? array.length - 1 : currentIndex - 1
+};
 
 module.exports = {
     getUniqueId,
     fetchJSONWithCallback,
-    toggleLetterBoxDivs
+    toggleLetterBoxDivs,
+    getNextIndexInArray,
+    getPreviousIndexInArray
 }

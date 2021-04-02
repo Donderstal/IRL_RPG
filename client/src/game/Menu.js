@@ -5,6 +5,7 @@ const {
     LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
 } = require('../game-data/globals');
 const { drawRect, writeTextLine } = require('../helpers/canvasHelpers');
+const { getNextIndexInArray, getPreviousIndexInArray } = require('../helpers/utilFunctions');
 
 const { MembersMenuTab } = require('./menu/MembersTab');
 const { StatusMenuTab } = require('./menu/StatusTab');
@@ -120,15 +121,10 @@ class Menu {
         this.ACTIVE_TAB.unsetButtons( )
     
         const currentTabIndex = this.tabs.indexOf( this.ACTIVE_TAB )
-        let newIndex = direction == "LEFT" ? currentTabIndex - 1 : currentTabIndex + 1;
-    
-        if ( newIndex < 0 ) {
-            newIndex = this.tabs.length - 1
-        } 
-        else if ( newIndex > this.tabs.length - 1 ) {
-            newIndex = 0;
-        }
-    
+        let newIndex = direction == "LEFT" 
+            ? getPreviousIndexInArray( currentTabIndex, this.tabs ) 
+            : getNextIndexInArray( currentTabIndex, this.tabs );
+
         this.ACTIVE_TAB = this.tabs[newIndex]
         this.ACTIVE_TAB.setButtons( selectedCharacterIndex )
     }

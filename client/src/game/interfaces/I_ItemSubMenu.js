@@ -1,5 +1,6 @@
 const { LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
 const { writeTextLine, drawRect, getFrontCanvasContext } = require('../../helpers/canvasHelpers');
+const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 /**
  * The player can perform different actions on MenuItems. The available actions differ per type of MenuTab.
  * The ItemSubMenu is activated by selecting a MenuItem with the spacebar.
@@ -100,19 +101,13 @@ class ItemSubMenu {
      * Increment this.activeOption by one if possible. If not, assign zero to it.
      */
     setNextOption( ) {
-        this.activeOption += 1;
-        if ( this.activeOption >= this.activeOptions.length ) {
-            this.activeOption = 0;
-        }
+        this.activeOption = getNextIndexInArray( this.activeOption, this.activeOptions );
     }
     /**
      * Decrement this.activeOption by one if possible. If not, assign this.options.length - 1 to it.
      */
     setPreviousOption( ) {
-        this.activeOption -= 1;
-        if ( this.activeOption < 0 ) {
-            this.activeOption = this.activeOptions.length - 1;
-        }
+        this.activeOption = getPreviousIndexInArray( this.activeOption, this.activeOptions );
     }
     /**
      * Return the option at given index. If given index is null, return the options at this.activeOption

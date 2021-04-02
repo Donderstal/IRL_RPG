@@ -1,5 +1,6 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
 const { drawRect, writeTextLine, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 const globals = require('../../game-data/globals');
 const { 
     GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE,
@@ -56,24 +57,12 @@ class StatusMenuTab extends MenuTab {
 
     activateNextCharacter( ) {
         this.buttons = [];
-        if ( this.activeCharacterIndex + 1 == globals.GAME.PARTY_MEMBERS.length ) {
-            this.activeCharacterIndex = 0;
-        }
-        else {
-            this.activeCharacterIndex += 1
-        }
-        this.setButtons( this.activeCharacterIndex );
+        this.setButtons( getNextIndexInArray( this.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) );
     }
 
     activatePreviousCharacter( ) {
         this.buttons = [];
-        if ( this.activeCharacterIndex - 1 < 0 ) {
-            this.activeCharacterIndex = globals.GAME.PARTY_MEMBERS.length - 1;
-        }
-        else {
-            this.activeCharacterIndex -= 1
-        }
-        this.setButtons( this.activeCharacterIndex );
+        this.setButtons( getPreviousIndexInArray( this.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) );
     }
 
     activateNextButtonInList( ) {
