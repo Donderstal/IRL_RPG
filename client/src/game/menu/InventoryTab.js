@@ -72,30 +72,6 @@ class InventoryMenuTab extends MenuTab {
         this.unsetModal( );
         this.setButtons( );
     }
-
-    selectCharacterForItem( ) {
-        this.activeOption = this.itemSubMenuOptions[0];
-        this.setModal(
-            "Who should use a " + this.activeItem.Name + "?",
-            this.activeOption
-        )
-    }
-
-    selectCharacterForEquipment( ) {
-        this.activeOption = this.itemSubMenuOptions[1];
-        this.setModal(
-            "Who should equip a " + this.activeItem.Name + "?",
-            this.activeOption
-        )
-    }
-
-    dismissItem( ) {
-        this.activeOption = this.itemSubMenuOptions[2];
-        this.setModal(
-            "Throw away a " + this.activeItem.Name + "? This action can not be reversed!",
-            this.activeOption
-        )
-    }
 }
 
 module.exports = { 

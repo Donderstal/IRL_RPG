@@ -1,4 +1,5 @@
 const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX } = require('../../game-data/globals');
+const globals = require('../../game-data/globals');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 const { Modal } = require("./I_Modal");
 const { ItemSubMenu } = require('./I_ItemSubMenu');
@@ -116,7 +117,9 @@ class MenuTab {
         }
     }
     /**
-     * 
+     * Set this.activeOption. Call the function associated with the active option.
+     * Then deactivate the submenu
+     * @param {Number} optionIndex optional parameter
      */
     doActiveSubMenuOption( optionIndex = null ) {
         this.activeOption = this.itemSubMenu.getActiveOption( optionIndex );
