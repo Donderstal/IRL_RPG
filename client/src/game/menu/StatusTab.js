@@ -175,11 +175,13 @@ class StatusMenuTab extends MenuTab {
         })
 
         ATTRIBUTE_LIST.forEach( ( attribute, index ) => {
+            const currentTextY = ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) )
+            const currentArrowY = ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE;
             if ( index < 2 ) {
-                this.drawHealthOrPowerLine( attribute, index )
+                this.drawHealthOrPowerLine( attribute, currentTextY, currentArrowY, index )
             }
             else {
-                this.drawAttributeLine( attribute, index )
+                this.drawAttributeLine( attribute, currentTextY, currentArrowY )
             }
         })
 
@@ -200,26 +202,27 @@ class StatusMenuTab extends MenuTab {
         );
     }
 
-    drawHealthOrPowerLine( key, index ) {
+    drawHealthOrPowerLine( key, currentTextY, currentArrowY, index ) {
         writeTextLine( 
-            ATTRIBUTE_MENU_TEXTS[key], GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ), 
+            ATTRIBUTE_MENU_TEXTS[key], 
+            GRID_BLOCK_PX, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
         writeTextLine(
             (index == 0 ? this.activeCharacter.CurrentHitpoints : this.activeCharacter.CurrentPowerpoints) + " / ", 
-            GRID_BLOCK_PX * 3.5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ),
+            GRID_BLOCK_PX * 3.5, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
         writeTextLine( 
             this.activeCharacter.activeAttributeValues[key], 
-            GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ), 
+            GRID_BLOCK_PX * 4, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
         if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
             drawFromImageToCanvas(
                 "FRONT", this.greenArrow, 
                 0, 0, 768, 768, 
-                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                GRID_BLOCK_PX * 5, currentArrowY, 
                 LARGE_FONT_SIZE, LARGE_FONT_SIZE
             );
         }
@@ -227,28 +230,28 @@ class StatusMenuTab extends MenuTab {
             drawFromImageToCanvas(
                 "FRONT", this.redArrow, 
                 0, 0, 1200, 1200, 
-                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                GRID_BLOCK_PX * 5, currentArrowY, 
                 LARGE_FONT_SIZE, LARGE_FONT_SIZE
             );
         }
     }
 
-    drawAttributeLine( key, index ) {
+    drawAttributeLine( key, currentTextY, currentArrowY ) {
         writeTextLine( 
             ATTRIBUTE_MENU_TEXTS[key], 
-            GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
+            GRID_BLOCK_PX, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
         writeTextLine( 
             this.activeCharacter.activeAttributeValues[key], 
-            GRID_BLOCK_PX * 4, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
+            GRID_BLOCK_PX * 4, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
         if ( this.modal && this.activeCharacter.activeAttributeValues[key] < this.selectedEquipmentAttributesValues[key] ) {
             drawFromImageToCanvas(
                 "FRONT", this.greenArrow, 
                 0, 0, 768, 768, 
-                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                GRID_BLOCK_PX * 5, currentArrowY, 
                 LARGE_FONT_SIZE, LARGE_FONT_SIZE
             ); 
         }
@@ -256,7 +259,7 @@ class StatusMenuTab extends MenuTab {
             drawFromImageToCanvas(
                 "FRONT", this.redArrow, 
                 0, 0, 1200, 1200, 
-                GRID_BLOCK_PX * 5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * index ) + LARGE_FONT_SIZE, 
+                GRID_BLOCK_PX * 5, currentArrowY, 
                 LARGE_FONT_SIZE, LARGE_FONT_SIZE
             ); 
         }
