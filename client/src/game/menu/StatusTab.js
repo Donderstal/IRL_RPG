@@ -4,13 +4,9 @@ const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/
 const globals = require('../../game-data/globals');
 const { 
     GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE,
-    ATT_HEALTH_POINTS, ATT_POWER_POINTS, ATT_PH_ATTACK, ATT_PH_DEFENSE,
-    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK, 
     MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
-    EQUIPMENT_KEY_WEAPON, EQUIPMENT_KEY_UPPERBODY,
-    EQUIPMENT_KEY_LOWERBODY, EQUIPMENT_KEY_HEAD,
-    EQUIPMENT_KEY_ACCESSORY
+    ATTRIBUTE_MENU_TEXTS, EQUIPMENT_SLOTS_LIST, ATTRIBUTE_LIST
 } = require('../../game-data/globals');
 
 class StatusMenuTab extends MenuTab {
@@ -38,13 +34,11 @@ class StatusMenuTab extends MenuTab {
     }
 
     getEquipmentData( ) {
-        return [ 
-            { equipmentType: EQUIPMENT_KEY_WEAPON, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_WEAPON] },
-            { equipmentType: EQUIPMENT_KEY_HEAD, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_HEAD] },
-            { equipmentType: EQUIPMENT_KEY_ACCESSORY, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_ACCESSORY] },
-            { equipmentType: EQUIPMENT_KEY_UPPERBODY, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_UPPERBODY] },
-            { equipmentType: EQUIPMENT_KEY_LOWERBODY, item: this.activeCharacter.Equipment[EQUIPMENT_KEY_LOWERBODY] },
-        ]
+        let equipmentDataArray = [];
+        EQUIPMENT_SLOTS_LIST.forEach( ( slot ) => {
+            equipmentDataArray.push( { equipmentType: slot, item: this.activeCharacter.Equipment[slot] } )
+        })
+        return equipmentDataArray
     }
 
     setButtons( selectedCharacterIndex = null) {
@@ -141,11 +135,7 @@ class StatusMenuTab extends MenuTab {
             JSON.parse(JSON.stringify(this.activeCharacter.Equipment)),
         );
 
-        let itemList = [ 
-            EQUIPMENT_KEY_WEAPON, EQUIPMENT_KEY_HEAD, EQUIPMENT_KEY_ACCESSORY, 
-            EQUIPMENT_KEY_UPPERBODY, EQUIPMENT_KEY_LOWERBODY 
-        ];
-        itemList.forEach( ( key ) => {
+        EQUIPMENT_SLOTS_LIST.forEach( ( key ) => {
             if ( Equipment[key] != null ) {
                 Equipment.equipItem( Equipment[key] )
             }
@@ -184,11 +174,7 @@ class StatusMenuTab extends MenuTab {
             this.drawCharacterInfo( text, index)
         })
 
-        const attributes = [ 
-            ATT_HEALTH_POINTS, ATT_POWER_POINTS , ATT_PH_ATTACK, ATT_PH_DEFENSE, 
-            ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK 
-        ]
-        attributes.forEach( ( attribute, index ) => {
+        ATTRIBUTE_LIST.forEach( ( attribute, index ) => {
             if ( index < 2 ) {
                 this.drawHealthOrPowerLine( attribute, index )
             }
@@ -215,16 +201,12 @@ class StatusMenuTab extends MenuTab {
     }
 
     drawHealthOrPowerLine( key, index ) {
-        let keyTexts = {};
-        keyTexts[ATT_HEALTH_POINTS] = "HP: ";
-        keyTexts[ATT_POWER_POINTS] = "PP: ";
-
         writeTextLine( 
-            keyTexts[key], GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ), 
+            ATTRIBUTE_MENU_TEXTS[key], GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ), 
             LARGE_FONT_SIZE, "#000000" 
         );
         writeTextLine(
-            (key == ATT_HEALTH_POINTS ? this.activeCharacter.CurrentHitpoints : this.activeCharacter.CurrentPowerpoints) + " / ", 
+            (index == 0 ? this.activeCharacter.CurrentHitpoints : this.activeCharacter.CurrentPowerpoints) + " / ", 
             GRID_BLOCK_PX * 3.5, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1) ),
             LARGE_FONT_SIZE, "#000000" 
         );
@@ -252,16 +234,8 @@ class StatusMenuTab extends MenuTab {
     }
 
     drawAttributeLine( key, index ) {
-        const keyTexts = {};
-        keyTexts[ATT_PH_ATTACK] = "PHYSICAL ATTACK:";
-        keyTexts[ATT_PH_DEFENSE] = "PHYSICAL DEFENSE:";
-        keyTexts[ATT_SP_ATTACK] = "SPECIAL ATTACK:";
-        keyTexts[ATT_SP_DEFENSE] = "SPECIAL DEFENSE:";
-        keyTexts[ATT_SPEED] = "SPEED:";
-        keyTexts[ATT_LUCK] = "LUCK:";
-
         writeTextLine( 
-            keyTexts[key], 
+            ATTRIBUTE_MENU_TEXTS[key], 
             GRID_BLOCK_PX, ( this.height / 2 ) + ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
             LARGE_FONT_SIZE, "#000000" 
         );
