@@ -48,6 +48,12 @@ const addKeyToPressed = ( ) => {
         console.log(firstChar)
         firstChar.StatusEffects.removeEffect(firstChar.StatusEffects.activeIds[0])
     }
+
+    if ( event.key == "z" ) {
+        const thirdCahr = globals.GAME.PARTY_MEMBERS[2]
+        globals.GAME.party.doMoveOnTarget( thirdCahr.getMoveAtIndex( 0 ), firstChar, thirdCahr )
+    }
+
     if ( event.key == "Tab" ) {
         globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }

@@ -1,5 +1,6 @@
 const { Character } = require('../character/Character');
 const { Inventory } = require('./Inventory');
+const { handleMoveExecution } = require('../../helpers/moveHelpers')
 
 const globals = require('../../game-data/globals');
 /**
@@ -53,6 +54,10 @@ class Party {
      */
     removeItemsFromInventory( itemIDList ) {
         this.inventory.removeItemsFromInnerListByID( itemIDList )
+    }
+
+    doMoveOnTarget( move, moveTarget, performer ) {
+        handleMoveExecution( move, moveTarget, performer )
     }
 }
 

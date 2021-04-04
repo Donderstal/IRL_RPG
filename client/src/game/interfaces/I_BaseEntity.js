@@ -121,12 +121,25 @@ class BaseEntity {
     handleDeath( ) {
         console.log(this.Name + " has died!")
     }
-
     /**
      * Set the ExperiencePoints prop based on the current level
      */
     setExperiencePointsFromLevel( ) {
         this.Experience = this.Level * 100;
+    }
+    /**
+     * Return the value at given index in this.moves array
+     * @param {Number} index index number
+     */
+    getMoveAtIndex( index ) {
+        return this.Moves[index]
+    }
+    /**
+     * Return the value in this.moves with given string as name
+     * @param {String} name name to filter for 
+     */
+    getMoveWithName( name ) {
+        return this.Moves.filter( ( move ) => { return move.name = name} )[0]
     }
 }
 
