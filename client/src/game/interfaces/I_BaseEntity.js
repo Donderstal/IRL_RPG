@@ -1,6 +1,6 @@
 const { CharacterAttributes } = require("../character/CharacterAttributes");
 const { StatusEffects } = require('../character/StatusEffects')
-const { getAttributeModifierByClassProfile, getClassProfile, getClassSprite } = require('../../resources/classProfileResources');
+const { getAttributeModifierByClassProfile, getClassProfile, getClassSprite, getMoves } = require('../../resources/classProfileResources');
 const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require("../../game-data/globals");
 /**
  * The BaseEntity is the common interface of all in-game characters and monsters who can battle
@@ -17,8 +17,9 @@ class BaseEntity {
 
         this.Attributes = new CharacterAttributes( getAttributeModifierByClassProfile( this.ClassProfile ), this.Level );
         this.StatusEffects  = new StatusEffects( );
+        this.Moves = getMoves( this.ClassProfile, this.Level );
 
-        this.setHitAndPowerPointsToMax( ) 
+        this.setHitAndPowerPointsToMax( );
     }
 
     get maxHP( ) { return this.Attributes[ATT_HEALTH_POINTS]; }
