@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### APR 4, 2021
+* Move system based on new attributes
+
 #### APR 2, 2021
 * Adding functionalities to Members and Inventory tab
 * Cleaning up the menucode, created some new utility functions
