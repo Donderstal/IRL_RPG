@@ -54,8 +54,8 @@ const TEST_MODIFIERS_4 = {
     [ATT_LUCK]: MODI_VERY_HIGH
 }
 
-const getAttributeModifierByClass = ( className ) => {
-    switch ( className ) {
+const getAttributeModifierByClassProfile = ( classProfile ) => {
+    switch ( classProfile ) {
         case TEST_CLASSPROFILE_1:
             return TEST_MODIFIERS_1;
         case TEST_CLASSPROFILE_2: 
@@ -69,11 +69,13 @@ const getAttributeModifierByClass = ( className ) => {
 
 const getClassProfile = ( className ) => {
     switch ( className ) {
-        case TEST_CLASSNAME_1:
+        case TEST_CLASSNAME_2:
+        case TEST_CLASSNAME_5: 
             return TEST_CLASSPROFILE_1;
-        case TEST_CLASSNAME_2: 
-            return TEST_CLASSPROFILE_2;
         case TEST_CLASSNAME_3: 
+        case TEST_CLASSNAME_6: 
+            return TEST_CLASSPROFILE_2;
+        case TEST_CLASSNAME_1: 
             return TEST_CLASSPROFILE_3;
         case TEST_CLASSNAME_4: 
             return TEST_CLASSPROFILE_4;
@@ -98,7 +100,8 @@ const getClassSprite = ( className ) => {
 }
 
 module.exports = {
-    getAttributeModifierByClass,
+    getAttributeModifierByClassProfile,
     getClassProfile,
     getClassSprite
 }
+

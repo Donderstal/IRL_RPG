@@ -132,17 +132,12 @@ class Game {
      * @param {String} name name that the player chose in the starting menu
      * @param {String} className name of the class that the player selected
      */
-    initializePlayerParty( name, className ) {
-        let playerPartyData = {
-            name: name,
-            className: TEST_CLASSNAME_1,
-            level: 5
-        }
+    initializePlayerParty( name ) {
         this.party = new Party( 
             [ 
                 { name: name, className: TEST_CLASSNAME_1, level: 5 }, 
-                { name: "Roberto 'Rob' Felix", className: TEST_CLASSNAME_5, level: 6 }, 
-                { name: "Your nan", className: TEST_CLASSNAME_4, level: 7 } 
+                { name: "Roberto 'Rob' Felix", className: TEST_CLASSNAME_5, level: 5 }, 
+                { name: "Your nan", className: TEST_CLASSNAME_4, level: 5 } 
             ], 
         true );
         this.party.addItemsToInventory( startingItemIDs )
