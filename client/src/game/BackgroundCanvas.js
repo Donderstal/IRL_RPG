@@ -1,4 +1,5 @@
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
+const { I_Grid } = require('./interfaces/I_Grid');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -62,7 +63,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         let oneDimensionalMapGrid = mapData.grid.flat(1);
         this.setTileGrid( oneDimensionalMapGrid )
     }
-
     /**
      * Loop through the inner I_Grid array.
      * For each tile, check if a corresponding door, action or blocked tile is set in the BackgroundCanvas props
@@ -90,14 +90,39 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             })
         } );
     }
-    
     /**
      * Call the drawMap function of the inner I_Grid Class with this.sheetImage as parameter
      */
     drawMapFromGridData( ) {
-        this.grid.drawMap( this.sheetImage )
+        this.grid.drawMap( this.sheetImage );
+    }    
+    /**
+     * Instantiate a I_Grid with the given number of rows and columns and set it to the this.grid prop
+     * @param {Number} rows 
+     * @param {Number} cols 
+     */
+    initBattleGrid( rows, cols ) {
+        this.battleGrid       = new I_Grid( this.x, this.y, rows, cols, this.ctx );
+    };
+    /**
+     * Set the battle maps' tile list to the tilegrid
+     */
+    setBattleBackgroundData( battleMapData ) {
+        let oneDimensionalMapGrid = battleMapData.grid.flat(1);
+        this.battleGrid.setTileGridToArray( oneDimensionalMapGrid )
     }
-
+    /**
+     * Draw the battlegrid with this.sheetImage as tilesheet
+     */
+    drawBattleMapFromBattleGridData( ) {
+        this.battleGrid.drawMap( this.sheetImage );
+    }
+    /**
+     * Set the battlegrid to null
+     */
+    clearBattleMap( ) {
+        this.battleGrid = null;
+    }
     /**
      * Clear all data associated with the current map and the inner I_Grid
      */
