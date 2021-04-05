@@ -2,13 +2,16 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
 const { 
-    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
+    STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
     MOVEMENT_SPEED, FRAME_LIMIT, 
     NPC_MOVE_TYPE_FLYING,  NPC_ANIM_TYPE_MOVING_IN_LOOP,
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
     FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
+const { 
+    BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT
+} = require( '../../game-data/battleGlobals' )
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
