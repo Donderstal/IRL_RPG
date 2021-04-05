@@ -5,7 +5,8 @@ const {
   NPC_ANIM_TYPE_MOVING_IN_LOOP,
   NPC_ANIM_TYPE_ANIMATION_LOOP,
 
-  NPC_MOVE_TYPE_FLYING
+  NPC_MOVE_TYPE_FLYING,
+  TEST_CLASSNAME_2, TEST_CLASSNAME_3, TEST_CLASSNAME_6,
 } = require('../../game-data/globals')
 
 module.exports = {
@@ -1873,11 +1874,11 @@ module.exports = {
                             "sfx": "voice-1.mp3",
                             "direction": "FACING_UP",
                             "text": "I'm in your house, about to kick your ass!",
-                            "character": {
-                                "class": "chad",
-                                "level": 5,
-                                "battleSprite": "chad.png"
-                            }
+                            "party": [
+                              { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
+                              { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
+                              { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                            ]
                         }
                     }
                 ],

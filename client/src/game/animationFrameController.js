@@ -51,6 +51,9 @@ const animationFrameController = ( ) => {
             if ( GAME.mode == MAP_MODE && !GAME.inMenu ) {
                 handleMapAnimations(  GAME )
             }
+            else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu ) {
+                console.log('Battle!')
+            }
             else if ( GAME.inMenu ) {
                 GAME.MENU.draw( );
             }

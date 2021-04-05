@@ -12,6 +12,7 @@ const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
+const canvasHelpers = require('../helpers/canvasHelpers')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';//'my-neighbourhood/Chad-outer';
 const startingItemIDs = [ 
@@ -52,7 +53,6 @@ class Game {
     get PARTY_MEMBERS( ) { return this.party.members }
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
-
     /**
      * Return the I_Tile instance at index on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
@@ -62,7 +62,6 @@ class Game {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtIndex( index );
     }
-
     /**
      * Return the I_Tile instance at xy position on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
@@ -73,7 +72,6 @@ class Game {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtXY( x, y );
     }
-
     /**
      * Return the I_Tile instance at column row position on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
@@ -84,7 +82,6 @@ class Game {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
         return canvasClass.getTileAtCell( column, row );
     }
-
     /**
      * Initialize game Canvases. FRONT, BACK and UTIL
      */
@@ -93,7 +90,6 @@ class Game {
         this.initCanvas( 'BACK', this.back );
         this.initCanvas( 'UTIL', this.util );
     }
-
     /**
      * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate I_CanvasWithGrid class extension if necessary and set as property
      * @param {String} type FRONT, UTIL or BACK. Indicates which canvas to initialize
@@ -111,7 +107,6 @@ class Game {
             object.class = type == 'FRONT' ?  new ForegroundCanvas( xy.x, xy.y, object.ctx ) : new BackgroundCanvas( xy.x, xy.y, object.ctx );
         }
     }
-
     /**
      * Wrapper method. Calls a sequentce of functions to start a new game
      * @param {String} name name that the player chose in the starting menu
@@ -126,7 +121,6 @@ class Game {
         this.loadMapToCanvases( mapData )
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
-
     /**
      * Instantiate a Party class for the player and assign it to the this.party prop
      * @param {String} name name that the player chose in the starting menu
@@ -142,7 +136,6 @@ class Game {
         true );
         this.party.addItemsToInventory( startingItemIDs )
     }
-
     /**
      * Start listening for keypress in controls.js. Start requesting animationframe in animationframecontroller.js
      */
@@ -151,7 +144,6 @@ class Game {
         controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
     }
-
     /**
      * Initialize map grids based on map dimensions. Set mapData to the Foreground and Background classes.
      * Assign playerSprite to the Foreground spriteDictionary and play music.
@@ -173,7 +165,6 @@ class Game {
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
         this.sound.playMusic( mapData.music )
     }
-
     /**
      * Clear currentmap data from Foreground and Background. Then clear the assets from both canvas contexts
      */
@@ -184,7 +175,6 @@ class Game {
         this.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
         this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
     }
-
     /**
      * Wrapper method. Pause controls and clear old map from the canvases. Then load the new map and resume controls.
      * @param {String} destination name of the map to switch to
@@ -206,7 +196,6 @@ class Game {
             this.paused = false;   
         }, 100 )
     }
-
     /**
      * Store the current map data and name as properties of game class
      * @param {Object} mapData - mapData object retrieved from mapResources.js
@@ -215,8 +204,26 @@ class Game {
     storeMapData( mapData, mapName ) {
         this.activeMapName = mapName;
         this.activeMap = mapData;
+    };
+    /**
+     * Instantiate a Party class instance with partyData as argument.
+     * Then assign a Battle instance to this.battle
+     * @param {Object} partyData - actionData object retrieved from mapResources.js
+     */
+    initializeBattle( partyData ) {
+        const opponentParty = new Party( partyData, false );
+        canvasHelpers.clearEntireCanvas("FRONT")
+        canvasHelpers.clearEntireCanvas("BACK")
+        animationFrameController.startBattleAnimation( );
     }
-
+    /**
+     * Clear battle data, activate overworld mode and redraw the active map background
+     */
+    clearBattleData( ) {
+        this.battle = [];
+        this.BACK.drawMapFromGridData( );
+        animationFrameController.startOverworldAnimation( );   
+    }
     /**
      * Determine the players location based on the type of arrival in the new map. Then set it to the Player sprite
      * @param {Object} mapData - mapData object retrieved from mapResources.js
@@ -256,7 +263,6 @@ class Game {
                                 newPlayerCell.row = this.PLAYER.row;
                                 newPlayerCell.col = 1;
                                 break;
-                            
                         }
                     }
                 })

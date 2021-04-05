@@ -1,6 +1,7 @@
 const globals       = require('../../../game-data/globals')
 const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
 const displayText   = require('../map-ui/displayText')
+const { Party }     = require('../../party/Party')
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
@@ -12,8 +13,8 @@ class MapAction extends I_Hitbox {
 
         this.name = speaker
 
-        if ( action.character ) {
-            this.character = action.character
+        if ( action.party ) {
+            this.party = action.party
         }
         this.type       = action.type
         this.text       = action.text
@@ -22,7 +23,7 @@ class MapAction extends I_Hitbox {
         this.to         = action.to
         this.arcColor   = "#FF0000";
 
-        this.needsConfirmation = ( this.type == "BUS" )
+        this.needsConfirmation = ( this.type == "BUS" || this.type == "BATTLE" )
     }
     /**
      * Handle and in-range actionbutton click by the player based on the this.type prop
@@ -49,6 +50,8 @@ class MapAction extends I_Hitbox {
                 globals.GAME.switchMap( this.to, "BUS" );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
                 break;
+            case "BATTLE" : 
+                globals.GAME.initializeBattle( this.party );
         }
 
         globals.GAME.activeAction = null;
