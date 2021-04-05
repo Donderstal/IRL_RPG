@@ -63,6 +63,20 @@ class I_CanvasWithGrid {
     getTileAtCell( column, row ) {
         return this.grid.getTileAtCell( column, row );
     };
+        /**
+     * Instantiate a I_Grid with the given number of rows and columns and set it to the this.grid prop
+     * @param {Number} rows 
+     * @param {Number} cols 
+     */
+    initBattleGrid( rows, cols ) {
+        this.battleGrid       = new I_Grid( this.x, this.y, rows, cols, this.ctx );
+    };
+    /**
+     * Set the battlegrid to null
+     */
+    clearBattleMap( ) {
+        this.battleGrid = null;
+    }
 };
 
 module.exports = {
