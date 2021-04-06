@@ -31,7 +31,7 @@ class MapObject extends I_Sprite {
             'height': spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX 
         }
 
-        super( tile, dimensionsInMap, src, true )
+        super( tile, dimensionsInMap, src, globals[tile.spriteData.direction], true )
 
         this.objectResource = objectResource;
         this.widthInSheet   = dimensionsInSheet.width;

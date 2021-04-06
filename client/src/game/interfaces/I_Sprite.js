@@ -18,7 +18,7 @@ const {
  *  and movement towards a pre-defined destination.
  */
 class Sprite {
-    constructor ( tile, spriteSize, src, isCar = false ) {   
+    constructor ( tile, spriteSize, src, direction, isCar = false ) {   
         if ( spriteSize == "STRD" ) {
             this.width   = STRD_SPRITE_WIDTH;
             this.height  = STRD_SPRITE_HEIGHT;            
@@ -39,7 +39,7 @@ class Sprite {
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction      = tile.spriteData.direction ? globals[tile.spriteData.direction] : 0;
+        this.direction      = direction;
         this.sheetSrc       = src
         this.sheet          = new Image();
         this.moving         = false;
