@@ -4,6 +4,7 @@ const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
 const { getUniqueId } = require('../helpers/utilFunctions');
 const { Road } = require('./map/map-classes/Road');
+const { BattleSlot } = require('./battle/BattleSlot');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -158,6 +159,20 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.spriteDictionary = { };
         this.playerSprite.clearTileIndexes( );
     }
+    /**
+     * 
+     */
+    prepareBattlePositions( playerParty, opponentParty ) {
+        this.battleSlots = [];
+        this.slotData = [ 
+            [ 0, "LEFT" ], [ 1, "LEFT" ], [ 2, "LEFT" ],
+            [ 0, "RIGHT" ], [ 1, "RIGHT" ], [ 2, "RIGHT" ] 
+        ];
+        this.slotData.forEach(  ( element ) => {
+            this.battleSlots.push( new BattleSlot( element[0], element[1] ) );
+        })
+    }
+    
 }
 
 module.exports = { 
