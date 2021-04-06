@@ -193,6 +193,11 @@ module.exports = {
                 564, 565, 569, 572, 573, 576,
                 577
             ]
+        },
+        "battle_downtown" : {
+            "src": "battle_tiles.png",
+            "uniqueTiles": 150,
+            "blocked": [ ]
         }
     }
 }
