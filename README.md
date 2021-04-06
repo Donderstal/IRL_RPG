@@ -12,7 +12,7 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### APR 4, 2021
+#### APR 6, 2021
 * Basic switching in/out of battles in the grid system
 
 #### APR 4, 2021

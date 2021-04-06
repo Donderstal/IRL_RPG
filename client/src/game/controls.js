@@ -50,8 +50,7 @@ const addKeyToPressed = ( ) => {
     }
 
     if ( event.key == "z" ) {
-        const thirdCahr = globals.GAME.PARTY_MEMBERS[2]
-        globals.GAME.party.doMoveOnTarget( thirdCahr.getMoveAtIndex( 0 ), firstChar, thirdCahr )
+        globals.GAME.clearBattleData( )
     }
 
     if ( event.key == "Tab" ) {
