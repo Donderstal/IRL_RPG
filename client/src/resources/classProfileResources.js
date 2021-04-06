@@ -118,7 +118,7 @@ const getClassSprite = ( className ) => {
         case TEST_CLASSNAME_4: 
             return '/static/sprites/characterx3.png';
         case TEST_CLASSNAME_5: 
-            return '/static/sprites/robot.png';
+            return '/static/sprites/CharacterX5.png';
         case TEST_CLASSNAME_6: 
             return '/static/sprites/pigeon.png';
     }
