@@ -19,6 +19,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.spriteDictionary = { };
         this.playerSprite = { };
     };
+
+    get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == "LEFT"; } ); };
+    get opponentSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == "RIGHT"; } ); };
     /**
      * Set characters, mapObjects, roads and the playerstart as properties
      * @param {Object} mapData - data object from mapResources
@@ -162,7 +165,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     /**
      * 
      */
-    prepareBattlePositions( playerParty, opponentParty ) {
+    prepareBattlePositions( ) {
         this.battleSlots = [];
         this.slotData = [ 
             [ 0, "LEFT" ], [ 1, "LEFT" ], [ 2, "LEFT" ],
@@ -172,7 +175,17 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.battleSlots.push( new BattleSlot( element[0], element[1] ) );
         })
     }
-    
+    /**
+     * Instantiate sprites in appropriate battleslot for each member of given parties
+     * @param {Party} playerParty 
+     * @param {Party} opponentParty 
+     */
+    setSpritesToBattleSlots( playerParty, opponentParty ) {
+        const playerMembers = playerParty.members.filter( ( element, index ) => { return index < 3 } );
+
+        this.playerSlots.forEach( ( slot, index ) => { slot.initializeSpriteInSlot( playerMembers[index] ); } );
+        this.opponentSlots.forEach( ( slot, index ) => { slot.initializeSpriteInSlot( opponentParty.members[index]); } );
+    }
 }
 
 module.exports = { 

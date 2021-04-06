@@ -52,7 +52,7 @@ const animationFrameController = ( ) => {
                 handleMapAnimations(  GAME )
             }
             else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu ) {
-                console.log('Battle!')
+                GAME.FRONT.battleSlots.forEach( ( slot ) => { slot.drawSpriteInSlot( ); } );
             }
             else if ( GAME.inMenu ) {
                 GAME.MENU.draw( );
