@@ -212,16 +212,36 @@ class Game {
      */
     initializeBattle( partyData ) {
         const opponentParty = new Party( partyData, false );
-        canvasHelpers.clearEntireCanvas("FRONT")
-        canvasHelpers.clearEntireCanvas("BACK")
+        this.clearCanvases( );
+        this.loadBattleGraphicsToCanvases( opponentParty );
         animationFrameController.startBattleAnimation( );
     }
     /**
-     * Clear battle data, activate overworld mode and redraw the active map background
+     * Initialize the Background and Foreground battlegrids to start battle animations.
+     * Set the tilesheet and draw the map on the background.
+     * Then, prepare battleSlots and initialize the battling sprites in then
+     */
+    loadBattleGraphicsToCanvases( opponentParty ) {
+        const battleMapData = getMapData("battle/downtown");
+        this.BACK.initBattleGrid( battleMapData.rows, battleMapData.columns );
+        this.FRONT.initBattleGrid( battleMapData.rows, battleMapData.columns );
+        
+        const sheetData = tilesheets[battleMapData.tileSet];
+        this.BACK.setBattleBackgroundData( battleMapData, sheetData );
+        this.BACK.loadImageWithCallback( '/static/tilesets/' + sheetData.src, this.back.class.drawBattleMapFromBattleGridData );
+        this.FRONT.prepareBattlePositions( );
+        this.FRONT.setSpritesToBattleSlots( this.party, opponentParty );
+    }
+    /**
+     * Clear battle data,  redraw the active map background.
+     * Then activate overWorldAnimation.
      */
     clearBattleData( ) {
         this.battle = [];
-        this.BACK.drawMapFromGridData( );
+        this.clearCanvases( );
+        this.BACK.clearBattleMap( );
+        this.FRONT.clearBattleMap( );
+        this.BACK.loadImageWithCallback( '/static/tilesets/' + tilesheets[this.activeMap.tileSet].src, this.back.class.drawMapFromGridData );
         animationFrameController.startOverworldAnimation( );   
     }
     /**
@@ -280,6 +300,13 @@ class Game {
         this.PLAYER.setNewLocationInGrid( newPlayerCell, direction );
         this.front.class.allSprites.push( this.PLAYER );
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
+    }
+    /**
+     * Clear both canvases
+     */
+    clearCanvases( ) {
+        canvasHelpers.clearEntireCanvas("FRONT")
+        canvasHelpers.clearEntireCanvas("BACK")
     }
 }
 

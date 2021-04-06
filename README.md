@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### APR 4, 2021
+* Basic switching in/out of battles in the grid system
+
+#### APR 4, 2021
 * Move system based on new attributes
 
 #### APR 2, 2021
