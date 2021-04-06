@@ -11,8 +11,8 @@ const RIGHT_BATTLE_POSITION_1   = { 'column': 20, 'row': 7 };
 const RIGHT_BATTLE_POSITION_2    = { 'column': 18, 'row': 9 };
 const RIGHT_BATTLE_POSITION_3    = { 'column': 20, 'row': 11 };
 
-const SHEET_ROW_BATTLE_LEFT         = 4
-const SHEET_ROW_BATTLE_RIGHT        = 5
+const SHEET_ROW_BATTLE_FACING_LEFT         = 4
+const SHEET_ROW_BATTLE_FACING_RIGHT        = 5
 
 module.exports = {
     BATTLE_SPRITE_WIDTH,
@@ -26,6 +26,6 @@ module.exports = {
     RIGHT_BATTLE_POSITION_2,
     RIGHT_BATTLE_POSITION_3,
     
-    SHEET_ROW_BATTLE_LEFT,
-    SHEET_ROW_BATTLE_RIGHT
+    SHEET_ROW_BATTLE_FACING_LEFT,
+    SHEET_ROW_BATTLE_FACING_RIGHT
 }
