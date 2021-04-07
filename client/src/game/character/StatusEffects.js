@@ -18,9 +18,9 @@ const { StatusEffect } = require("./StatusEffect");
      * @param {Number|String} effectValue 
      * @param {Number|String} effectDuration 
      */
-    addEffect( attribute, type, effectValue, effectDuration ) {
+    addEffect( attribute, type, effectValue, effectDuration, effectTrigger = null ) {
         const id = getUniqueId( this.activeIds )
-        this.activeEffects.push( new StatusEffect( id, attribute, type, effectValue, effectDuration ) )
+        this.activeEffects.push( new StatusEffect( id, attribute, type, effectValue, effectDuration, effectTrigger ) )
         this.activeIds.push( id )
     }
     /**
@@ -79,6 +79,14 @@ const { StatusEffect } = require("./StatusEffect");
         this.countTurn( );
         this.clearExpiredEffects( );
     }
+    /**
+     * Call doStatusEffect on each StatusEffect instance with a TURN_BASED trigger
+     */
+    doTurnBasedEffects( ) {
+        const turnBasedEffects = this.activeEffects.filter( ( effect ) => { return effect.trigger == "TURN_BASED";} );
+        turnBasedEffects.forEach( ( effect ) => { effect.doStatusEffect( );} );
+    }
+
 } 
 
 module.exports = {
