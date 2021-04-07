@@ -25,7 +25,7 @@ class BaseEntity {
     get maxHP( ) { return this.Attributes[ATT_HEALTH_POINTS]; }
     get maxPP( ) { return this.Attributes[ATT_POWER_POINTS]; }
 
-    get isLiving( ) { return this.CurrentHitpoints >= 0 };
+    get isLiving( ) { return this.CurrentHitpoints > 0; };
     get isDead( ) { return !this.isLiving };
 
     get activeAttributeValues( ) { return this.getActiveAttributes( ) }

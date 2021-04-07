@@ -25,7 +25,7 @@ class Party {
 
     get isDefeated( ) {
         for ( var i = 0; i < this.partySize; i++ ) {
-            if ( !this.members[i].isDead ) {
+            if ( this.members[i].isLiving ) {
                 return false;
             }
         }
