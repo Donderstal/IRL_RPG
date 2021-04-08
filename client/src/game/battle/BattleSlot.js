@@ -52,14 +52,15 @@ class BattleSlot {
      * @param {Character} character - Character instance that will do battle
      */
     initializeSpriteInSlot( character ) {
-        this.sprite = new Sprite( this.tile, 'LARG', character.Sprite.src, this.startingDirection );
+        this.sprite = new Sprite( this.tile, 'LARG', "/static/sprites/" + ( Math.random() > .5 ? "fats_fight.png" : "chad_fight.png" ), this.startingDirection );
     }
     /**
      * If there is a sprite in the slot, draw it
      */
     drawSpriteInSlot( ) {
         if ( this.sprite != null ) {
-            this.sprite.drawSprite( );            
+            this.sprite.drawSprite( );       
+            this.sprite.countFrame( );     
         }
     }
 }

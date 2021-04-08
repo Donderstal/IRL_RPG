@@ -6,11 +6,13 @@ const { EFFECT_TYPE_DEBUFF, EFFECT_TYPE_BUFF } = require("../../game-data/global
  * It can be used to represent a temporary (de)buff, a state like paralysis or the effect of a piece of equipment.
  */
 class StatusEffect {
-    constructor( id, attributeKey, effectType, effectValue, effectDuration ) {
+    constructor( id, attributeKey, effectType, effectValue, effectDuration, effectTrigger = null ) {
         this.uniqueId = id;
         this.attributeEffected = attributeKey;
-        // "BUFF" | "DEBUFF" | "TURN_BASED" | "ON_ATTACK" | "ON_DEFEND"
+        // "BUFF" | "DEBUFF" | "STATE_EFFECT"
         this.type = effectType;
+        // "TURN_BASED" | "ON_ATTACK" | "ON_DEFEND"
+        this.trigger = effectTrigger;
 
         this.effectValue = effectValue;
         this.maxTurnDuration = effectDuration;
@@ -38,6 +40,10 @@ class StatusEffect {
             attributeDictionary[this.attributeEffected] -= this.effectValue;
         }
         return attributeDictionary;
+    }
+
+    doStatusEffect( ) {
+        console.log("status effect!")
     }
 }
 

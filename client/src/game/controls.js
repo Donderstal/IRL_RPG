@@ -1,10 +1,9 @@
 const globals = require('../game-data/globals')
 const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
-const { unsetGameMenu } = require('./Menu')
-const handleMovementKeys = require('./map/mapControls').handleMovementKeys
-const handleMapKeyPress = require('./map/mapControls').handleMapKeyPress
-const { initGameMenu }  = require('./Menu')
+const { initGameMenu, unsetGameMenu } = require('./Menu')
+const { handleMapKeyPress, handleMovementKeys } = require('./map/mapControls')
 const { handleMenuKeyPress } = require('./menu/menuControls');
+const { handleBattleKeyPress } = require('./battle/battleControls');
 
 /**
  * Add keydown listener with addKeyPressed callback. Add keyup listener with removeKeyFromPressed callback.
@@ -27,32 +26,6 @@ const stopListenForKeyPress = ( ) => {
  */
 const addKeyToPressed = ( ) => {
     event.preventDefault( );
-    let firstChar = globals.GAME.PARTY_MEMBERS[0]
-    if ( event.key == "i") {
-        console.log(firstChar)
-        globals.GAME.PLAYER_INVENTORY.unequipItem( firstChar, "shirt_armor_1" );
-    }
-    if ( event.key == "p" ) {
-        console.log(firstChar)
-        globals.GAME.PLAYER_INVENTORY.equipItem( firstChar, "shirt_armor_1" );
-    }
-    if ( event.key == "l" ) {
-        console.log(firstChar)
-        firstChar.StatusEffects.addEffect("SPEED", "BUFF", 5, "INFINITE")
-    }
-    if ( event.key == "o" ) {
-        console.log(firstChar)
-        console.log(firstChar.activeAttributeValues)
-    }
-    if ( event.key == "k" ) {
-        console.log(firstChar)
-        firstChar.StatusEffects.removeEffect(firstChar.StatusEffects.activeIds[0])
-    }
-
-    if ( event.key == "z" ) {
-        const thirdCahr = globals.GAME.PARTY_MEMBERS[2]
-        globals.GAME.party.doMoveOnTarget( thirdCahr.getMoveAtIndex( 0 ), firstChar, thirdCahr )
-    }
 
     if ( event.key == "Tab" ) {
         globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
@@ -60,6 +33,9 @@ const addKeyToPressed = ( ) => {
 
     if ( globals.GAME.mode == MAP_MODE && !globals.GAME.inMenu ) {
         handleMapKeyPress( event )
+    }
+    else if ( globals.GAME.mode == BATTLE_MODE && !globals.GAME.inMenu  ) {
+        handleBattleKeyPress( event )
     }
     else if ( globals.GAME.inMenu ) {
         handleMenuKeyPress( event );

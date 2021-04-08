@@ -13,6 +13,7 @@ const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
+const { Battle } = require('./battle/Battle')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';//'my-neighbourhood/Chad-outer';
 const startingItemIDs = [ 
@@ -212,6 +213,7 @@ class Game {
      */
     initializeBattle( partyData ) {
         const opponentParty = new Party( partyData, false );
+        this.battle = new Battle( opponentParty );
         this.clearCanvases( );
         this.loadBattleGraphicsToCanvases( opponentParty );
         animationFrameController.startBattleAnimation( );

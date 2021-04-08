@@ -1,4 +1,5 @@
-const handleMapAnimations       = require('./map/mapAnimation').handleMapAnimations
+const { handleMapAnimations }      = require('./map/mapAnimation')
+const { handleBattleAnimations }   = require('./battle/battleAnimation')
 const globals     = require('../game-data/globals')
 const { FRAMES_PER_SECOND, BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const controls                  = require('./controls')
@@ -49,10 +50,11 @@ const animationFrameController = ( ) => {
             }            
 
             if ( GAME.mode == MAP_MODE && !GAME.inMenu ) {
-                handleMapAnimations(  GAME )
+                handleMapAnimations( GAME )
             }
             else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu ) {
-                GAME.FRONT.battleSlots.forEach( ( slot ) => { slot.drawSpriteInSlot( ); } );
+                canvasHelpers.clearEntireCanvas('FRONT')
+                handleBattleAnimations( GAME )
             }
             else if ( GAME.inMenu ) {
                 GAME.MENU.draw( );

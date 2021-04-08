@@ -7,10 +7,11 @@ const {
     MOVEMENT_SPEED, FRAME_LIMIT, 
     NPC_MOVE_TYPE_FLYING,  NPC_ANIM_TYPE_MOVING_IN_LOOP,
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
-    FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
+    FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING, BATTLE_MODE
 } = require( '../../game-data/globals' )
 const { 
-    BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT
+    BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
+    BATTLE_SPRITE_WIDTH_IN_SHEET, BATTLE_SPRITE_HEIGHT_IN_SHEET
 } = require( '../../game-data/battleGlobals' )
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
@@ -132,12 +133,12 @@ class Sprite {
      * What frame of the spritesheet is drawn is dependent on the sheetPosition and direction props.
      */
     drawSprite( ) {
+        this.sheetWidth = globals.GAME.mode == BATTLE_MODE ? BATTLE_SPRITE_WIDTH_IN_SHEET: MAP_SPRITE_WIDTH_IN_SHEET;
+        this.sheetHeight = globals.GAME.mode == BATTLE_MODE ? BATTLE_SPRITE_HEIGHT_IN_SHEET:  MAP_SPRITE_HEIGHT_IN_SHEET;
         canvasHelpers.drawFromImageToCanvas(
-            "FRONT",
-            this.sheet,
-            this.sheetPosition * MAP_SPRITE_WIDTH_IN_SHEET, 
-            this.direction * MAP_SPRITE_HEIGHT_IN_SHEET, 
-            MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
+            "FRONT", this.sheet,
+            this.sheetPosition * this.sheetWidth, this.direction * this.sheetHeight, 
+            this.sheetWidth, this.sheetHeight,
             this.x, this.y, this.width, this.height
         )
 
