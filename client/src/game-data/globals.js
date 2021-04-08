@@ -21,10 +21,10 @@ const FACING_RIGHT_FLYING           = 5
 const FACING_UP_FLYING              = 6
 
 //
-const STATIC1                       = 0
-const STEP1                         = 1
-const STATIC2                       = 2
-const STEP2                         = 3
+const SHEET_COLUMN_ONE          = 0
+const SHEET_COLUMN_TWO          = 1
+const SHEET_COLUMN_THREE        = 2
+const SHEET_COLUMN_FOUR         = 3
 
 // 'enum' values for NPC sprite animation availability
 const NPC_ANIM_TYPE_IDLE            = "IDLE";
@@ -185,10 +185,10 @@ module.exports = {
     FACING_RIGHT_FLYING,
     FACING_UP_FLYING,
 
-    STATIC1,
-    STEP1,
-    STATIC2,
-    STEP2,
+    SHEET_COLUMN_ONE,
+    SHEET_COLUMN_TWO,
+    SHEET_COLUMN_THREE,
+    SHEET_COLUMN_FOUR,
 
     NPC_ANIM_TYPE_IDLE,
     NPC_ANIM_TYPE_SEMI_IDLE,
