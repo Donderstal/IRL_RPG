@@ -20,6 +20,7 @@ const {
     PH_ATTK_1, PH_ATTK_2,
     SP_ATTK_1, SP_ATTK_2
 } = require('./battleMoveResources');
+const { getMoveAnimationData } = require('./moveAnimationScripts');
 
 const TEST_CLASSPROFILE_MODIFIERS_1 = {
     [ATT_HEALTH_POINTS]: MODI_STANDARD,
@@ -32,9 +33,9 @@ const TEST_CLASSPROFILE_MODIFIERS_1 = {
     [ATT_LUCK]: MODI_LOW 
 };
 const TEST_CLASSPROFILE_MOVES_1 = [
-    { move : PH_ATTK_1, level: 1 },
-    { move : SMALL_PH_ATTK_UP, level: 5 },
-    { move : PH_ATTK_1, level: 10 }
+    { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST"  },
+    { move : SMALL_PH_ATTK_UP, level: 5, animation: "STAT_UP_CHAD" },
+    { move : PH_ATTK_1, level: 10, animation: "PHYISCAL_ATTACK_TEST_2" }
 ];
 const TEST_CLASSPROFILE_MODIFIERS_2 = {
     [ATT_HEALTH_POINTS]: MODI_LOW,
@@ -47,9 +48,9 @@ const TEST_CLASSPROFILE_MODIFIERS_2 = {
     [ATT_LUCK]: MODI_STANDARD 
 };
 const TEST_CLASSPROFILE_MOVES_2 = [
-    { move : PH_ATTK_1, level: 1 },
-    { move : SP_ATTK_1, level: 5 },
-    { move : SMALL_SPEED_UP, level: 10 }
+    { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST" },
+    { move : SP_ATTK_1, level: 5, animation: "SPECIAL_ATTACK_TEST" },
+    { move : SMALL_SPEED_UP, level: 10, animation: "STAT_UP_TEST" }
 ];
 const TEST_CLASSPROFILE_MODIFIERS_3 = {
     [ATT_HEALTH_POINTS]: MODI_STANDARD,
@@ -62,9 +63,9 @@ const TEST_CLASSPROFILE_MODIFIERS_3 = {
     [ATT_LUCK]: MODI_STANDARD 
 }
 const TEST_CLASSPROFILE_MOVES_3 = [
-    { move : PH_ATTK_1, level: 1 },
-    { move : SMALL_PH_DEF_UP, level: 5 },
-    { move : SMALL_SP_DEF_UP, level: 10 }
+    { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST" },
+    { move : SMALL_PH_DEF_UP, level: 5, animation: "STAT_UP_TEST" },
+    { move : SMALL_SP_DEF_UP, level: 10, animation: "STAT_UP_TEST" }
 ];
 const TEST_CLASSPROFILE_MODIFIERS_4 = {
     [ATT_HEALTH_POINTS]: MODI_VERY_LOW,
@@ -77,9 +78,9 @@ const TEST_CLASSPROFILE_MODIFIERS_4 = {
     [ATT_LUCK]: MODI_VERY_HIGH
 }
 const TEST_CLASSPROFILE_MOVES_4 = [
-    { move : HEAL_SMALL, level: 1 },
-    { move : HEAL_PP, level: 5 },
-    { move : SP_ATTK_2, level: 10 }
+    { move : HEAL_SMALL, level: 1, animation: "LEFT_AND_RIGHT_STEP" },
+    { move : HEAL_PP, level: 5, animation: "LEFT_AND_RIGHT_STEP" },
+    { move : SP_ATTK_2, level: 10, animation: "SPECIAL_ATTACK_TEST" }
 ];
 const getAttributeModifierByClassProfile = ( classProfile ) => {
     switch ( classProfile ) {
@@ -139,7 +140,9 @@ const filterMoves = ( level, moveObjectsList ) => {
     let validMovesArray = [ ];
     moveObjectsList.forEach( ( moveObject ) => {
         if ( moveObject.level <= level ) {
-            validMovesArray.push( moveObject.move );
+            let move = moveObject.move;
+            move.animation = getMoveAnimationData( moveObject.animation );
+            validMovesArray.push( move );
         }
     })
     return validMovesArray;
