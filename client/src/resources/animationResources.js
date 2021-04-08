@@ -1,267 +1,241 @@
-const globals = require('../game-data/globals');
+const { 
+    FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, 
+    SHEET_COLUMN_ONE, SHEET_COLUMN_TWO,
+    SHEET_COLUMN_THREE, SHEET_COLUMN_FOUR
+} = require('../game-data/globals');
+const { 
+    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT, SHEET_ROW_BATTLE_PUNCH
+} = require('../game-data/battleGlobals');
 
-const TURN_SINGLE_CIRCLE = [
-    { "direction": globals.FACING_DOWN , "position": globals.STATIC1 },
-    { "direction": globals.FACING_LEFT , "position": globals.STATIC1 },
-    { "direction": globals.FACING_UP , "position": globals.STATIC1 },
-    { "direction": globals.FACING_RIGHT , "position": globals.STATIC1 },
-]
+const animationResources = { 
+    "TURN_SINGLE_CIRCLE": [
+        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
+        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
+        { row: FACING_UP , column: SHEET_COLUMN_ONE },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
+    ],
+    "BACK_AND_FORTH": [
+        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
+        { row: FACING_UP , column: SHEET_COLUMN_ONE }
+    ],
+    "LEFT_AND_RIGHT": [
+        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE }
+    ],
+    "BACK_AND_FORTH_STEP": [
+        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
+        { row: FACING_DOWN , column: SHEET_COLUMN_TWO },
+        { row: FACING_UP , column: SHEET_COLUMN_ONE },
+        { row: FACING_UP , column: SHEET_COLUMN_TWO }
+    ],
+    "LEFT_AND_RIGHT_STEP": [
+        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
+        { row: FACING_LEFT , column: SHEET_COLUMN_TWO },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_TWO }
+    ],
+    "PUNCH_LEFT" : [
+        { row: 6, column: 0 },
+        { row: 6, column: 0 },
+        { row: 4, column: 0 },
+        { row: 4, column: 1 },
+        { row: 4, column: 0 },
+        { row: 6, column: 0 },
+        { row: 6, column: 0 },
+        { row: 6, column: 0 },
+        { row: 4, column: 0 },
+        { row: 4, column: 1 }
+    ],
+    "PUNCH_RIGHT" : [
+        { row: 6, column: 1 },
+        { row: 6, column: 1 },
+        { row: 5, column: 0 },
+        { row: 5, column: 1 },
+        { row: 5, column: 0 },
+        { row: 6, column: 1 },
+        { row: 6, column: 1 },
+        { row: 6, column: 1 },
+        { row: 5, column: 0 },
+        { row: 5, column: 1 }
+    ],
+    "CHAD_RAGE_LEFT": [
+        { row: 1, column: 1 },
+        { row: 1, column: 3 },
+        { row: 1, column: 1 },
+        { row: 1, column: 3 },
+        { row: 6, column: 0 },
+        { row: 6, column: 0 },
+        { row: 4, column: 0 },
+        { row: 6, column: 0 },
+    ],
+    "CHAD_RAGE_RIGHT": [
+        { row: 2, column: 1 },
+        { row: 2, column: 3 },
+        { row: 2, column: 1 },
+        { row: 2, column: 3 },
+        { row: 6, column: 1 },
+        { row: 6, column: 1 },
+        { row: 5, column: 0 },
+        { row: 6, column: 1 },
+    ],
+    "NECKBEARD_HACK_LEFT": [
+        { row: 10, column: 2 },
+        { row: 10, column: 3 },
+        { row: 10, column: 2 },
+        { row: 10, column: 3 },
+        { row: 10, column: 2 },
+        { row: 10, column: 3 }
+    ],
+    "NECKBEARD_HACK_RIGHT": [
+        { row: 8, column: 2 },
+        { row: 8, column: 3 },
+        { row: 8, column: 2 },
+        { row: 8, column: 3 },
+        { row: 8, column: 2 },
+        { row: 8, column: 3 }
+    ],
+    "HIT_LEFT": [
+        { row: 5, column: -1 },
+        { row: 5, column: 0 },
+        { row: 5, column: -1 },
+        { row: 5, column: 0 },
+        { row: 5, column: -1 },
+        { row: 5, column: 0 }
+    ],
+    "HIT_RIGHT": [
+        { row: 4, column: -1 },
+        { row: 4, column: 0 },
+        { row: 4, column: -1 },
+        { row: 4, column: 0 },
+        { row: 4, column: -1 },
+        { row: 4, column: 0 }
+    ],
+    "FADE_LEFT": [
+        { row: 5, column: -1 },
+        { row: 5, column: 0 },
+        { row: 5, column: -1 },
+        { row: 5, column: 0 },
+        { row: 5, column: -1 }
+    ],
+    "FADE_RIGHT": [
+        { row: 4, column: -1 },
+        { row: 4, column: 0 },
+        { row: 4, column: -1 },
+        { row: 4, column: 0 },
+        { row: 4, column: -1 }
+    ],
+    "BOP_LEFT": [ 
+        { row: 8, column: 0 },
+        { row: 8, column: 1 },
+        { row: 8, column: 2 }
+    ],
+    "BOP_RIGHT": [
+        { row: 9, column: 0 },
+        { row: 9, column: 1 },
+        { row: 9, column: 2 }
+    ],
+    "BOP_UP": [
+        { row: 10, column: 0 },
+        { row: 10, column: 1 },
+        { row: 10, column: 2 }
+    ],
+    "BOP_DOWN": [
+        { row: 7, column: 0 },
+        { row: 7, column: 1 },
+        { row: 7, column: 2 }
+    ],
+    "BLINK_LEFT": [ 
+        { row: 8, column: 3 },
+        { row: 8, column: 3 }
+    ],
+    "BLINK_RIGHT": [
+        { row: 9, column: 3 },
+        { row: 9, column: 3 }
+    ],
+    "BLINK_DOWN": [
+        { row: 7, column: 3 },
+        { row: 7, column: 3 }
+    ],
+    "LIFT": [
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 }
+    ],
+    "TALK_LEFT": [
+        { row: 11, column: 1 },
+        { row: 11, column: 1 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 11, column: 1 },
+        { row: 11, column: 1 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 11, column: 1 },
+        { row: 8, column: 0 },
+        { row: 11, column: 1 },
+        { row: 8, column: 0 }
+    ],
+    "TALK_RIGHT": [
+        { row: 11, column: 2 },
+        { row: 11, column: 2 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 11, column: 2 },
+        { row: 11, column: 2 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 11, column: 2 },
+        { row: 9, column: 0 },
+        { row: 11, column: 2 },
+        { row: 9, column: 0 }
+    ],
+    "TALK_DOWN": [
+        { row: 11, column: 0 },
+        { row: 11, column: 0 },
+        { row: 7, column: 0 },
+        { row: 7, column: 0 },
+        { row: 11, column: 0 },
+        { row: 11, column: 0 },
+        { row: 7, column: 3 },
+        { row: 7, column: 3 },
+        { row: 11, column: 0 },
+        { row: 7, column: 0 },
+        { row: 11, column: 0 },
+        { row: 7, column: 0 }
+    ]
+}
 
-const BACK_AND_FORTH = [
-    { "direction": globals.FACING_DOWN , "position": globals.STATIC1 },
-    { "direction": globals.FACING_UP , "position": globals.STATIC1 }
-]
-
-const LEFT_AND_RIGHT = [
-    { "direction": globals.FACING_LEFT , "position": globals.STATIC1 },
-    { "direction": globals.FACING_RIGHT , "position": globals.STATIC1 }
-]
-
-const BACK_AND_FORTH_STEP = [
-    { "direction": globals.FACING_DOWN , "position": globals.STATIC1 },
-    { "direction": globals.FACING_DOWN , "position": globals.STEP1 },
-    { "direction": globals.FACING_UP , "position": globals.STATIC1 },
-    { "direction": globals.FACING_UP , "position": globals.STEP1 }
-]
-
-const LEFT_AND_RIGHT_STEP = [
-    { "direction": globals.FACING_LEFT , "position": globals.STATIC1 },
-    { "direction": globals.FACING_LEFT , "position": globals.STEP1 },
-    { "direction": globals.FACING_RIGHT , "position": globals.STATIC1 },
-    { "direction": globals.FACING_RIGHT , "position": globals.STEP1 }
-]
-
-const PUNCH_L = [
-    { 'direction': 6,'position': 0 },
-    { 'direction': 6,'position': 0 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 4,'position': 1 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 6,'position': 0 },
-    { 'direction': 6,'position': 0 },
-    { 'direction': 6,'position': 0 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 4,'position': 1 }
-]
-
-const PUNCH_R = [
-    { 'direction': 6,'position': 1 },
-    { 'direction': 6,'position': 1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 5,'position': 1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 6,'position': 1 },
-    { 'direction': 6,'position': 1 },
-    { 'direction': 6,'position': 1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 5,'position': 1 }
-]
-
-const CHAD_RAGE_L = [
-    { 'direction': 1,'position': 1 },
-    { 'direction': 1,'position': 3 },
-    { 'direction': 1,'position': 1 },
-    { 'direction': 1,'position': 3 },
-    { 'direction': 6,'position': 0 },
-    { 'direction': 6,'position': 0 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 6,'position': 0 },
-];
-
-const CHAD_RAGE_R = [
-    { 'direction': 2,'position': 1 },
-    { 'direction': 2,'position': 3 },
-    { 'direction': 2,'position': 1 },
-    { 'direction': 2,'position': 3 },
-    { 'direction': 6,'position': 1 },
-    { 'direction': 6,'position': 1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 6,'position': 1 },
-]
-
-const NECKBEARD_HACK_L = [
-    { 'direction': 10,'position': 2 },
-    { 'direction': 10,'position': 3 },
-    { 'direction': 10,'position': 2 },
-    { 'direction': 10,'position': 3 },
-    { 'direction': 10,'position': 2 },
-    { 'direction': 10,'position': 3 }
-]
-
-const NECKBEARD_HACK_R = [
-    { 'direction': 8,'position': 2 },
-    { 'direction': 8,'position': 3 },
-    { 'direction': 8,'position': 2 },
-    { 'direction': 8,'position': 3 },
-    { 'direction': 8,'position': 2 },
-    { 'direction': 8,'position': 3 }
-]
-
-const HIT_L = [
-    { 'direction': 5,'position': -1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 5,'position': -1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 5,'position': -1 },
-    { 'direction': 5,'position': 0 }
-]
-
-const HIT_R = [
-    { 'direction': 4,'position': -1 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 4,'position': -1 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 4,'position': -1 },
-    { 'direction': 4,'position': 0 }
-]
-
-const FADE_L = [
-    { 'direction': 5,'position': -1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 5,'position': -1 },
-    { 'direction': 5,'position': 0 },
-    { 'direction': 5,'position': -1 }
-]
-
-const FADE_R = [
-    { 'direction': 4,'position': -1 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 4,'position': -1 },
-    { 'direction': 4,'position': 0 },
-    { 'direction': 4,'position': -1 }
-]
-
-const BOP_LEFT = [ 
-    { 'direction': 8,'position': 0 },
-    { 'direction': 8,'position': 1 },
-    { 'direction': 8,'position': 2 }
-]
-
-const BOP_RIGHT = [
-    { 'direction': 9,'position': 0 },
-    { 'direction': 9,'position': 1 },
-    { 'direction': 9,'position': 2 }
-]
-
-const BOP_UP = [
-    { 'direction': 10,'position': 0 },
-    { 'direction': 10,'position': 1 },
-    { 'direction': 10,'position': 2 }
-]
-
-const BOP_DOWN = [
-    { 'direction': 7,'position': 0 },
-    { 'direction': 7,'position': 1 },
-    { 'direction': 7,'position': 2 }
-]
-
-const BLINK_LEFT = [ 
-    { 'direction': 8,'position': 3 },
-    { 'direction': 8,'position': 3 }
-]
-
-const BLINK_RIGHT = [
-    { 'direction': 9,'position': 3 },
-    { 'direction': 9,'position': 3 }
-]
-
-const BLINK_DOWN = [
-    { 'direction': 7,'position': 3 },
-    { 'direction': 7,'position': 3 }
-]
-
-const CHAD_LIFT = [
-    { 'direction': 12,'position': 0 },
-    { 'direction': 12,'position': 1 },
-    { 'direction': 12,'position': 2 },
-    { 'direction': 12,'position': 1 },
-]
-
-const STANDARD_LIFT = [
-    { 'direction': 7,'position': 0 },
-    { 'direction': 7,'position': 1 },
-    { 'direction': 7,'position': 2 },
-    { 'direction': 7,'position': 1 },
-]
-
-const CHAD_TALK_LEFT = [
-    { 'direction': 11,'position': 1 },
-    { 'direction': 11,'position': 1 },
-    { 'direction': 8,'position': 3 },
-    { 'direction': 8,'position': 3 },
-    { 'direction': 11,'position': 1 },
-    { 'direction': 11,'position': 1 },
-    { 'direction': 8,'position': 3 },
-    { 'direction': 8,'position': 3 },
-    { 'direction': 11,'position': 1 },
-    { 'direction': 8,'position': 0 },
-    { 'direction': 11,'position': 1 },
-    { 'direction': 8,'position': 0 }
-]
-
-const CHAD_TALK_RIGHT = [
-    { 'direction': 11,'position': 2 },
-    { 'direction': 11,'position': 2 },
-    { 'direction': 9,'position': 3 },
-    { 'direction': 9,'position': 3 },
-    { 'direction': 11,'position': 2 },
-    { 'direction': 11,'position': 2 },
-    { 'direction': 9,'position': 3 },
-    { 'direction': 9,'position': 3 },
-    { 'direction': 11,'position': 2 },
-    { 'direction': 9,'position': 0 },
-    { 'direction': 11,'position': 2 },
-    { 'direction': 9,'position': 0 }
-]
-
-const CHAD_TALK_DOWN = [
-    { 'direction': 11,'position': 0 },
-    { 'direction': 11,'position': 0 },
-    { 'direction': 7,'position': 0 },
-    { 'direction': 7,'position': 0 },
-    { 'direction': 11,'position': 0 },
-    { 'direction': 11,'position': 0 },
-    { 'direction': 7,'position': 3 },
-    { 'direction': 7,'position': 3 },
-    { 'direction': 11,'position': 0 },
-    { 'direction': 7,'position': 0 },
-    { 'direction': 11,'position': 0 },
-    { 'direction': 7,'position': 0 }
-]
+/**
+ * Get the appropriate animation frames based on animation name and sprite derection
+ * @param {String} animationName 
+ * @param {Number} direction number representing the direction the sprite is currently facing
+ */
+const getAnimationFrames = ( animationName, direction = null ) => {
+    if ( animationName in animationResources ) {
+        return animationResources[animationName]
+    } 
+    
+    let suffix;
+    switch( direction ) {
+        case FACING_DOWN: 
+            suffix = "_DOWN"
+            break;
+        case FACING_LEFT:
+        case SHEET_ROW_BATTLE_FACING_LEFT:
+            suffix = "_LEFT"
+            break;
+        case FACING_UP: 
+            suffix = "_UP"
+            break;
+        case FACING_RIGHT:
+        case SHEET_ROW_BATTLE_FACING_RIGHT:
+            suffix = "_RIGHT"
+            break;
+    }
+    return animationResources[animationName + suffix];
+}
 
 module.exports = {
-    TURN_SINGLE_CIRCLE,
-    BACK_AND_FORTH,
-    LEFT_AND_RIGHT,
-    BACK_AND_FORTH_STEP,
-    LEFT_AND_RIGHT_STEP,
-
-    CHAD_RAGE_L,
-    CHAD_RAGE_R,
-    PUNCH_L,
-    PUNCH_R,
-    NECKBEARD_HACK_L,
-    NECKBEARD_HACK_R,
-
-    HIT_L,
-    HIT_R,
-
-    FADE_L,
-    FADE_R,
-
-    BOP_LEFT,
-    BOP_RIGHT,
-    BOP_UP,
-    BOP_DOWN,
-
-    BLINK_LEFT,
-    BLINK_RIGHT,
-    BLINK_DOWN,
-
-    CHAD_LIFT,
-    STANDARD_LIFT,
-
-    CHAD_TALK_DOWN,
-    CHAD_TALK_LEFT,
-    CHAD_TALK_RIGHT
+    getAnimationFrames
 }

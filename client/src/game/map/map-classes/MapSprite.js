@@ -1,6 +1,6 @@
 const globals = require('../../../game-data/globals')
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../../game-data/globals');
-const anim = require('../../../resources/animationResources')
+const { getAnimationFrames } = require('../../../resources/animationResources')
 const getSpeechBubble = require('../map-ui/displayText').getSpeechBubble
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
@@ -181,7 +181,7 @@ class MapSprite extends I_Sprite {
         this.originalDirection      = this.direction;
 
         this.animationScript.loop           = scene.loop;
-        this.animationScript.frames         = anim[scene.animName];   
+        this.animationScript.frames         = getAnimationFrames( scene.animName, this.direction );   
         this.animationScript.index          = 0;           
         this.animationScript.numberOfFrames = this.animationScript.frames.length;      
         this.animationScript.frameRate      = frameRate;
@@ -203,8 +203,8 @@ class MapSprite extends I_Sprite {
             if ( this.inScriptedAnimation ) {
                 let currentScene = this.animationScript.frames[this.animationScript.index];
 
-                this.sheetPosition  = currentScene.position;
-                this.direction      = currentScene.direction    
+                this.sheetPosition  = currentScene.column;
+                this.direction      = currentScene.row;    
             }
         }
     }
