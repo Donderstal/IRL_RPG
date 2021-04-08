@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### APR 8, 2021
+* Reintroducting battle class, battle controls and battle phases.
+
 #### APR 6, 2021
 * Basic switching in/out of battles in the grid system
 
