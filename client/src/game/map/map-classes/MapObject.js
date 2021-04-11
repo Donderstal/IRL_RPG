@@ -239,7 +239,6 @@ class MapObject extends I_Sprite {
         
         if ( !this.moving ) {
             super.endGoToAnimation( );
-            this.movingToDestination = false;
             this.deleted = true;
         }
     }

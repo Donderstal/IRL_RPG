@@ -1,6 +1,8 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
+const { getAnimationFrames } = require('../../resources/animationResources')
+const { getSpeechBubble } = require('../map/map-ui/displayText')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
@@ -46,6 +48,7 @@ class Sprite {
         this.moving         = false;
         this.deleted        = false;
         this.isCar          = isCar
+        this.animationScript = {};
 
         this.setSpriteToGrid( tile, isCar )
 
@@ -241,6 +244,11 @@ class Sprite {
         this.destination        = destination;
         this.activeDestinationIndex;
 
+        if ( globals.GAME.mode == BATTLE_MODE ) {
+            this.setDestinationList( false );
+            return;
+        }
+
         if ( !this.destinationIsBlocked ) {
             if ( !this.isCar ) {
                 this.setDestinationList( isLoop )
@@ -323,11 +331,11 @@ class Sprite {
     }
 
     /**
-     * Unset destination, set inMovementAnimation to false and restore pre-movement direction of sprite
+     * Unset destination, set movingToDestination to false and restore pre-movement direction of sprite
      */
     endGoToAnimation( ) {
         this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
-        this.inMovementAnimation = false;
+        this.movingToDestination = false;
         this.destination = {}
     }
 
@@ -347,6 +355,121 @@ class Sprite {
                 this.sheetPosition = 0;
             }
         }
+    }
+    /**
+     * If this.inScriptedAnimation, call this.doScriptedAnimation.
+     * If this.movingToDestination, call this.goToDestination.
+     */
+    handleAnimation(  ) {
+        if ( this.inScriptedAnimation ) {
+            this.doScriptedAnimation( );
+        }
+        else if ( this.movingToDestination ) {
+            this.goToDestination( );
+        }
+    }
+    /**
+     * ( INCOMPLETE )
+     * Old method that was used in scripted gameplay events.
+     * Should be refactored when the scripted gameplay code is refactored.
+     * @param {Scene} scene 
+     */
+    setAnimation( scene ) {
+        if ( scene.type == "SPEAK" ) {
+            this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
+        }
+        if ( scene.type == "MOVE" ) {
+            this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
+        }
+        if ( scene.type == "ANIM" ) {
+            this.setScriptedAnimation( scene, FRAME_LIMIT )
+        }
+    }
+    /**
+     * Call getSpeechBubble from the diplayText.js file with parameters as arguments.
+     * @param {String} text text to be displayed
+     * @param {String} sfx name of the sound effect to play
+     */
+    speak( text, sfx ) {    
+        getSpeechBubble( {
+            'x'     : this.x,
+            'y'     : this.y,
+            'text'  : text,
+            'name'  : this.name,
+            'sfx'   : ( sfx ) ? sfx : false
+        } );
+    }
+    /**
+     * Initialize animation by setting this.inScriptedAnimation to true and storing this.direction.
+     * Assign values to the properties of the this.animationScript object, which will be used to run the animation.
+     * @param {Object} scene contains the animation name and a loop boolean
+     * @param {Number} frameRate frameRate to use during animation
+     * @param {Number|Boolean} numberOfLoops optional parameter indicating if a loop is permanent
+     */
+    setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
+        this.inScriptedAnimation    = true;     
+        this.originalDirection      = this.direction;
+
+        this.animationScript.loop           = scene.loop;
+        this.animationScript.frames         = getAnimationFrames( scene.animName, this.direction );   
+        this.animationScript.index          = 0;           
+        this.animationScript.numberOfFrames = this.animationScript.frames.length;      
+        this.animationScript.frameRate      = frameRate;
+        this.animationScript.numberOfLoops  = numberOfLoops;
+        this.animationScript.currentLoop    = 0;
+    }
+    /**
+     * Increment this.frameCount.
+     * If it is over this.animationScript.frameRate, update the AnimationIndex indicating the current frame.
+     * Then, assign the currentFrames' positions in the spriteSheet to this.sheetPosition and this.direction.
+     */
+    doScriptedAnimation( ) {
+        this.frameCount++;  
+    
+        if ( this.frameCount >= this.animationScript.frameRate ) {
+            this.frameCount = 0;
+            this.updateAnimationIndex( );
+
+            if ( this.inScriptedAnimation ) {
+                let currentScene = this.animationScript.frames[this.animationScript.index];
+
+                this.sheetPosition  = currentScene.column;
+                this.direction      = currentScene.row;    
+            }
+        }
+    }
+    /**
+     * Check for loop or increment this.animationScriptIndex, depending on what frame from this.animationScript.frames we are in.
+     */
+    updateAnimationIndex( ) {
+        ( this.animationScript.index + 1 == this.animationScript.numberOfFrames )
+            ? this.checkForLoop()
+            : this.animationScript.index++                       
+    }
+    /**
+     * If the current animation should be looped, reset the animationScript.index to 0.
+     * Else, call this.unsetScriptedAnimation.
+     */
+    checkForLoop( ) {
+        const currentLoopIsLast = this.animationScript.numberOfLoops == this.animationScript.currentLoop
+
+        if ( this.animationScript.loop && ( !this.animationScript.numberOfLoops || !currentLoopIsLast ) ) {
+            this.animationScript.currentLoop++
+            this.animationScript.index = 0;
+        }
+        else {
+            this.unsetScriptedAnimation( );
+        }
+    }
+    /**
+     * Set this.inScriptedAnimation to false and empty this.animationScript.
+     * Then, reset this.drection to this.originalDirection and set this.sheetPosition to 0 for a neutral spritesheet frame.
+     */
+    unsetScriptedAnimation( ) {
+        this.inScriptedAnimation    = false;  
+        this.animationScript        = { };
+        this.direction              = this.originalDirection;
+        this.sheetPosition          = 0;
     }
 }
 
