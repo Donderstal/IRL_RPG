@@ -5,9 +5,11 @@ const {
 } = require('../../game-data/battleGlobals');
 const globals = require('../../game-data/globals');
 const { Sprite } = require('../interfaces/I_Sprite');
+const { FRAME_LIMIT } = require('../../game-data/globals');
 /**
- * A BattleSlot represents one of 6 available slots for a character in a Battle
- * The player characters are on the left, the opponent characters are on the right
+ * A BattleSlot represents one of 6 available slots for a character in a Battle.
+ * The player characters are on the left, the opponent characters are on the right.
+ * A BattleSlot contains a Sprite and a Character instance.
  */
 class BattleSlot {
     constructor( index, side ) {
@@ -17,8 +19,13 @@ class BattleSlot {
         this.sprite = null;
         this.tilePosition   = this.setTilePosition( );
         this.tile = globals.GAME.FRONT.battleGrid.getTileAtCell( this.tilePosition.column, this.tilePosition.row );
+
+        this.performingBattleMove = false;
+        this.selectedMove = null;
+        this.targetSlot = null;
     }
 
+    get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination }
     /**
      * Return the cell position of this slot based on this.index and this.side
      * This decides where to draw a sprite if one is loaded to the slot.
@@ -48,11 +55,14 @@ class BattleSlot {
         }
     }
     /**
-     * Initialize a battlesprite based on the given character
+     * Initialize a battlesprite based on the given character.
+     * Assign the sprite to this.sprite, the given character to this.character
      * @param {Character} character - Character instance that will do battle
      */
     initializeSpriteInSlot( character ) {
-        this.sprite = new Sprite( this.tile, 'LARG', "/static/sprites/" + ( Math.random() > .5 ? "fats_fight.png" : "chad_fight.png" ), this.startingDirection );
+        let src = "/static/sprites/" + ( Math.random() > .5 ? "fats_fight" : "chad_fight" ) + ".png";
+        this.sprite = new Sprite( this.tile, 'LARG', src , this.startingDirection );
+        this.character = character;
     }
     /**
      * If there is a sprite in the slot, draw it
@@ -60,8 +70,97 @@ class BattleSlot {
     drawSpriteInSlot( ) {
         if ( this.sprite != null ) {
             this.sprite.drawSprite( );       
-            this.sprite.countFrame( );     
+            if ( this.inBattleMoveAnimation ) {
+                this.sprite.handleAnimation( );
+            }   
+            else if ( this.performingBattleMove ) {
+                this.checkForNextAnimationStep( this.selectedMove.animation );
+            }
         }
+    }
+    /**
+     * Set given input to this.selectedMove and this.selectedTarget
+     * @param {Object} move data on
+     * @param {BattleSlot} target BattleSlot containing target
+     */
+    selectMove( move, target ) {
+        this.selectedMove = move;
+        this.targetSlot = target;
+    }
+    /**
+     * Depending on the animation object in this.selectedMove, set this.animationStep
+     * Then, call doMoveAnimationStep
+     */
+    doSelectedMove( ) {
+        const animation = this.selectedMove.animation;
+        this.performingBattleMove = true;
+
+        if ( animation.moveToTarget ) {
+            this.animationStep = "GO_TO";
+        }
+        else {
+            this.animationStep = "ANIMATION"
+        }
+        this.doMoveAnimationStep( animation );
+    }
+    /**
+     * Depending on the current value of this.animationStep,
+     * assign a new value to this.animationStep and call doMoveanimationStep.
+     * If the animation is done, call unsetSelectedMove and unsetMoveAnimationData
+     * @param {Object} animation object from moveAnimationScripts
+     */
+    checkForNextAnimationStep( animation ) {
+        if ( this.animationStep == "GO_TO" ) {
+            this.animationStep = "ANIMATION"
+            this.doMoveAnimationStep( animation );
+        }
+        else if ( this.animationStep == "ANIMATION" && animation.moveToTarget == true ) {
+            this.animationStep = "GO_BACK"
+            this.doMoveAnimationStep( animation );
+        }
+        else {
+            this.unsetSelectedMove( );
+            this.unsetMoveAnimationData( );
+        }
+    }
+    /**
+     * Call functions depending on the value of this.animationStep
+     * @param {Object} animation object from moveAnimationScripts
+     */
+    doMoveAnimationStep( animation ) {
+        switch( this.animationStep ) {
+            case "GO_TO": 
+                this.sprite.setDestination( this.targetSlot.tile );
+                this.sprite.initMovement( );
+                break;
+            case "ANIMATION": 
+                const scene = {
+                    animName: animation.perfomerAnimation,
+                    loop: false,
+                    numberOfLoops: false
+                };
+                this.sprite.setScriptedAnimation( scene, FRAME_LIMIT );
+                break;
+            case "GO_BACK": 
+                this.sprite.setDestination( this.tile );
+                this.sprite.initMovement( );
+                break;
+        }
+    }
+    /**
+     * Clear this.selectedMove and this.targetSlot
+     */
+    unsetSelectedMove( ) {
+        this.selectedMove = null;
+        this.targetSlot = null;
+
+    }
+    /**
+     * Clear this.animationStep and this.performingBattleMove
+     */
+    unsetMoveAnimationData( ) {
+        this.animationStep = null;
+        this.performingBattleMove = false;        
     }
 }
 
