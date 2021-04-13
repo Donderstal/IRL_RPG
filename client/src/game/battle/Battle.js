@@ -16,8 +16,8 @@ class Battle {
         return [ ...this.playerParty.members.filter( ( e ) => { return e.isLiving }), ...this.opponentParty.members.filter( ( e ) => { return e.isLiving }) ]; 
     };
     get battleIsOver( ) { return this.opponentParty.isDefeated || this.playerParty.isDefeated; };
-
-    /**
+    get battleSlots( ) { return globals.GAME.FRONT.battleSlots }
+    /** 
      * Depending on the value of this.phase, decide what phase is next and set it to this.phase
      */
     goToNextBattlePhase( ) {
