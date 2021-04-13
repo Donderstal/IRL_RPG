@@ -1,6 +1,6 @@
 <script>
     import globals from '../../game-data/globals.js';
-    import anim from '../../resources/animationResources.js';
+    import { getAnimationFrames } from '../../resources/animationResources.js';
     import GoBackButton from './GoBackButton.svelte'
     import { onMount } from 'svelte';
 
@@ -129,7 +129,7 @@
     const getAnimation = ( ) => {
         switch ( Math.floor( Math.random( ) * 8 ) ) {
             case 0 : 
-                animationFrames = anim["BACK_AND_FORTH"];
+                animationFrames = getAnimationFrames("BACK_AND_FORTH");
                 animationType = "ANIM"
             break;
             case 1 :
@@ -137,7 +137,7 @@
                 animationType = "WALK"
             break;
             case 2 :
-                animationFrames = anim["TURN_SINGLE_CIRCLE"];
+                animationFrames = getAnimationFrames("TURN_SINGLE_CIRCLE");
                 animationType = "ANIM"
             break;
             case 3 :
@@ -153,15 +153,15 @@
                 animationType = "WALK"
             break;
             case 6 : 
-                animationFrames = anim["LEFT_AND_RIGHT"];
+                animationFrames = getAnimationFrames("LEFT_AND_RIGHT");
                 animationType = "ANIM"
             break;
             case 7 : 
-                animationFrames = anim["LEFT_AND_RIGHT_STEP"];
+                animationFrames = getAnimationFrames("LEFT_AND_RIGHT_STEP");
                 animationType = "ANIM"
             break;
             case 8 : 
-                animationFrames = anim["BACK_AND_FORTH_STEP"];
+                animationFrames = getAnimationFrames("BACK_AND_FORTH_STEP");
                 animationType = "ANIM"
             break;
         }

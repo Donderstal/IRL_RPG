@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### APR 13, 2021
+* Battle sprite animation and pathfinding in grid system
+
 #### APR 8, 2021
 * Reintroducting battle class, battle controls and battle phases.
 

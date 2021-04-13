@@ -797,7 +797,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_R",
+          "anim_name": "PUNCH",
           "row": 3,
           "col": 22,
           "sprite": "characterx3.png",
@@ -812,7 +812,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_L",
+          "anim_name": "PUNCH",
           "row": 3,
           "col": 23,
           "sprite": "CharacterX5.png",
@@ -827,7 +827,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_R",
+          "anim_name": "PUNCH",
           "row": 4,
           "col": 18,
           "sprite": "CharacterX5_recolour.png",
@@ -842,7 +842,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_L",
+          "anim_name": "PUNCH",
           "row": 4,
           "col": 19,
           "sprite": "chad_recolour02.png",
@@ -926,7 +926,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_R",
+          "anim_name": "PUNCH",
           "row": 5,
           "col": 22,
           "sprite": "chad_recolour03.png",
@@ -941,7 +941,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_L",
+          "anim_name": "PUNCH",
           "row": 5,
           "col": 23,
           "sprite": "chad_recolour01.png",
@@ -956,7 +956,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_R",
+          "anim_name": "PUNCH",
           "row": 6,
           "col": 18,
           "sprite": "CharacterX5.png",
@@ -971,7 +971,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_L",
+          "anim_name": "PUNCH",
           "row": 6,
           "col": 19,
           "sprite": "fats_recolour.png",
@@ -986,7 +986,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_R",
+          "anim_name": "PUNCH",
           "row": 7,
           "col": 22,
           "sprite": "fats.png",
@@ -1001,7 +1001,7 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "PUNCH_L",
+          "anim_name": "PUNCH",
           "row": 7,
           "col": 23,
           "sprite": "CharacterX4.png",
@@ -1161,11 +1161,11 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "NECKBEARD_HACK_R",
+          "anim_name": "NECKBEARD_HACK",
           "row": 15,
           "col": 7,
           "sprite": "generic_blonde_guy.png",
-          "direction": "FACING_DOWN",
+          "direction": "FACING_RIGHT",
           "name": "Jealous Neckbeard",
           "action": {
             "type": "TEXT",
@@ -1175,11 +1175,11 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "NECKBEARD_HACK_L",
+          "anim_name": "NECKBEARD_HACK",
           "row": 15,
           "col": 10,
           "sprite": "character_x1_recolour01.png",
-          "direction": "FACING_DOWN",
+          "direction": "FACING_LEFT",
           "name": "Jealous Neckbeard",
           "action": {
             "type": "TEXT",
@@ -1420,9 +1420,9 @@ module.exports = {
         "characters" : [
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-              "anim_name": "NECKBEARD_HACK_L",
+              "anim_name": "NECKBEARD_HACK",
               "sprite": "neckbeard.png",
-              "direction": "FACING_DOWN",
+              "direction": "FACING_RIGHT",
               "name": "Darkwing Dork",    
               "row": 6,
               "col": 8,

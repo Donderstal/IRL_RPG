@@ -1,6 +1,8 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
+const { getAnimationFrames } = require('../../resources/animationResources')
+const { getSpeechBubble } = require('../map/map-ui/displayText')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
@@ -46,6 +48,7 @@ class Sprite {
         this.moving         = false;
         this.deleted        = false;
         this.isCar          = isCar
+        this.animationScript = {};
 
         this.setSpriteToGrid( tile, isCar )
 
@@ -66,7 +69,7 @@ class Sprite {
     get destinationIsUp( ) { 
         return this.isCar 
         ? this.destinationTile.y - this.height < this.top 
-        : this.destinationTile.y <= this.top + ( GRID_BLOCK_PX / 2 ) && this.destinationTile.direction == "FACING_UP";
+        : this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
         return this.isCar 
@@ -88,8 +91,8 @@ class Sprite {
     setSpriteToGrid( tile, isCar ) {
         this.row = tile.row;
         this.col = tile.col;
-        this.x = tile.x;
         
+        this.x = isCar || this.width <= GRID_BLOCK_PX ? tile.x : tile.x + ( this.width - GRID_BLOCK_PX );
         this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
     }
      /**
@@ -151,35 +154,38 @@ class Sprite {
      * @param {Boolean} isBattle optional parameter indicating if the game is in a battle 
      */
     goToDestination( isBattle = false ) {
+        const speed = globals.GAME.mode == BATTLE_MODE ? MOVEMENT_SPEED * 2 : MOVEMENT_SPEED;
         this.moving = false;
 
         if ( this.destinationIsLeft  ) {
-            this.x -= MOVEMENT_SPEED;
+            this.x -= speed;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
         }
         else if ( this.destinationIsRight ) {
-            this.x += MOVEMENT_SPEED;
+            this.x += speed;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
         }
 
         if ( isBattle ) {
             if ( this.destinationIsUp ) {
-                this.y -= MOVEMENT_SPEED;
+                this.moving = true;
+                this.y -= speed;
             }
             else if ( this.destinationIsDown ) {
-                this.y += MOVEMENT_SPEED  
+                this.moving = true;
+                this.y += speed;
             }
         }
         else if ( !this.moving ) {
             if ( this.destinationIsUp ) {
-                this.y -= MOVEMENT_SPEED;
+                this.y -= speed;
                 this.moving = true;
                 this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
             }
             else if ( this.destinationIsDown ) {
-                this.y += MOVEMENT_SPEED  
+                this.y += speed;  
                 this.moving = true;
                 this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
             }            
@@ -241,6 +247,11 @@ class Sprite {
         this.destination        = destination;
         this.activeDestinationIndex;
 
+        if ( globals.GAME.mode == BATTLE_MODE ) {
+            this.setDestinationList( false );
+            return;
+        }
+
         if ( !this.destinationIsBlocked ) {
             if ( !this.isCar ) {
                 this.setDestinationList( isLoop )
@@ -286,7 +297,11 @@ class Sprite {
      * @param {I_Tile} destinationTile destination I_Tile
      */
     getPathIndexes( startingTile, destinationTile ) {
-        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementType == NPC_MOVE_TYPE_FLYING )   
+        return pathFinder.determineShortestPath( 
+            startingTile, destinationTile, 
+            globals.GAME.mode == BATTLE_MODE ? globals.GAME.BACK.battleGrid : globals.GAME.BACK.grid, 
+            this.movementType == NPC_MOVE_TYPE_FLYING 
+        );  
     }
     /**
      * For each index in the list, get the I_Tile instance at its index and push it to an array.
@@ -323,11 +338,11 @@ class Sprite {
     }
 
     /**
-     * Unset destination, set inMovementAnimation to false and restore pre-movement direction of sprite
+     * Unset destination, set movingToDestination to false and restore pre-movement direction of sprite
      */
     endGoToAnimation( ) {
         this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
-        this.inMovementAnimation = false;
+        this.movingToDestination = false;
         this.destination = {}
     }
 
@@ -347,6 +362,125 @@ class Sprite {
                 this.sheetPosition = 0;
             }
         }
+    }
+    /**
+     * If this.inScriptedAnimation, call this.doScriptedAnimation.
+     * If this.movingToDestination, call this.goToDestination.
+     */
+    handleAnimation(  ) {
+        if ( this.inScriptedAnimation ) {
+            this.doScriptedAnimation( );
+        }
+        else if ( this.movingToDestination ) {
+            this.goToDestination( );
+            this.countFrame( );
+            let tile = globals.GAME.getTileOnCanvasAtXY( "BACK", this.x, this.y );
+            this.row = tile.row;
+            this.col = tile.col;
+        }
+    }
+    /**
+     * ( INCOMPLETE )
+     * Old method that was used in scripted gameplay events.
+     * Should be refactored when the scripted gameplay code is refactored.
+     * @param {Scene} scene 
+     */
+    setAnimation( scene ) {
+        if ( scene.type == "SPEAK" ) {
+            this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
+        }
+        if ( scene.type == "MOVE" ) {
+            this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
+        }
+        if ( scene.type == "ANIM" ) {
+            this.setScriptedAnimation( scene, FRAME_LIMIT )
+        }
+    }
+    /**
+     * Call getSpeechBubble from the diplayText.js file with parameters as arguments.
+     * @param {String} text text to be displayed
+     * @param {String} sfx name of the sound effect to play
+     */
+    speak( text, sfx ) {    
+        getSpeechBubble( {
+            'x'     : this.x,
+            'y'     : this.y,
+            'text'  : text,
+            'name'  : this.name,
+            'sfx'   : ( sfx ) ? sfx : false
+        } );
+    }
+    /**
+     * Initialize animation by setting this.inScriptedAnimation to true and storing this.direction.
+     * Assign values to the properties of the this.animationScript object, which will be used to run the animation.
+     * @param {Object} scene contains the animation name and a loop boolean
+     * @param {Number} frameRate frameRate to use during animation
+     * @param {Number|Boolean} numberOfLoops optional parameter indicating if a loop is permanent
+     */
+    setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
+        this.inScriptedAnimation    = true;     
+        this.originalDirection      = this.direction;
+
+        this.animationScript.loop           = scene.loop;
+        this.animationScript.frames         = getAnimationFrames( scene.animName, this.direction );   
+        this.animationScript.index          = 0;           
+        this.animationScript.numberOfFrames = this.animationScript.frames.length;      
+        this.animationScript.frameRate      = frameRate;
+        this.animationScript.numberOfLoops  = numberOfLoops;
+        this.animationScript.currentLoop    = 0;
+    }
+    /**
+     * Increment this.frameCount.
+     * If it is over this.animationScript.frameRate, update the AnimationIndex indicating the current frame.
+     * Then, assign the currentFrames' positions in the spriteSheet to this.sheetPosition and this.direction.
+     */
+    doScriptedAnimation( ) {
+        this.frameCount++;  
+    
+        if ( this.frameCount >= this.animationScript.frameRate ) {
+            this.frameCount = 0;
+            this.updateAnimationIndex( );
+
+            if ( this.inScriptedAnimation ) {
+                let currentScene = this.animationScript.frames[this.animationScript.index];
+
+                this.sheetPosition  = currentScene.column;
+                this.direction      = currentScene.row;    
+            }
+        }
+    }
+    /**
+     * Check for loop or increment this.animationScriptIndex, depending on what frame from this.animationScript.frames we are in.
+     */
+    updateAnimationIndex( ) {
+        ( this.animationScript.index + 1 == this.animationScript.numberOfFrames )
+            ? this.checkForLoop()
+            : this.animationScript.index++                       
+    }
+    /**
+     * If the current animation should be looped, reset the animationScript.index to 0.
+     * Else, call this.unsetScriptedAnimation.
+     */
+    checkForLoop( ) {
+        const currentLoopIsLast = this.animationScript.numberOfLoops == this.animationScript.currentLoop
+
+        if ( this.animationScript.loop && ( !this.animationScript.numberOfLoops || !currentLoopIsLast ) ) {
+            this.animationScript.currentLoop++
+            this.animationScript.index = 0;
+        }
+        else {
+            this.unsetScriptedAnimation( );
+        }
+    }
+    /**
+     * Set this.inScriptedAnimation to false and empty this.animationScript.
+     * Then, reset this.drection to this.originalDirection and set this.sheetPosition to 0 for a neutral spritesheet frame.
+     */
+    unsetScriptedAnimation( ) {
+        this.inScriptedAnimation    = false;  
+        this.animationScript        = { };
+        this.direction              = this.originalDirection;
+        this.sheetPosition          = 0;
     }
 }
 
