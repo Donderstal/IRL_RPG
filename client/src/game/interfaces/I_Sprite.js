@@ -69,7 +69,7 @@ class Sprite {
     get destinationIsUp( ) { 
         return this.isCar 
         ? this.destinationTile.y - this.height < this.top 
-        : this.destinationTile.y <= this.top + ( GRID_BLOCK_PX / 2 ) && this.destinationTile.direction == "FACING_UP";
+        : this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
         return this.isCar 
@@ -91,8 +91,8 @@ class Sprite {
     setSpriteToGrid( tile, isCar ) {
         this.row = tile.row;
         this.col = tile.col;
-        this.x = tile.x;
         
+        this.x = isCar || this.width <= GRID_BLOCK_PX ? tile.x : tile.x + ( this.width - GRID_BLOCK_PX );
         this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
     }
      /**
@@ -154,35 +154,38 @@ class Sprite {
      * @param {Boolean} isBattle optional parameter indicating if the game is in a battle 
      */
     goToDestination( isBattle = false ) {
+        const speed = globals.GAME.mode == BATTLE_MODE ? MOVEMENT_SPEED * 2 : MOVEMENT_SPEED;
         this.moving = false;
 
         if ( this.destinationIsLeft  ) {
-            this.x -= MOVEMENT_SPEED;
+            this.x -= speed;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
         }
         else if ( this.destinationIsRight ) {
-            this.x += MOVEMENT_SPEED;
+            this.x += speed;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
         }
 
         if ( isBattle ) {
             if ( this.destinationIsUp ) {
-                this.y -= MOVEMENT_SPEED;
+                this.moving = true;
+                this.y -= speed;
             }
             else if ( this.destinationIsDown ) {
-                this.y += MOVEMENT_SPEED  
+                this.moving = true;
+                this.y += speed;
             }
         }
         else if ( !this.moving ) {
             if ( this.destinationIsUp ) {
-                this.y -= MOVEMENT_SPEED;
+                this.y -= speed;
                 this.moving = true;
                 this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
             }
             else if ( this.destinationIsDown ) {
-                this.y += MOVEMENT_SPEED  
+                this.y += speed;  
                 this.moving = true;
                 this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
             }            
@@ -294,7 +297,11 @@ class Sprite {
      * @param {I_Tile} destinationTile destination I_Tile
      */
     getPathIndexes( startingTile, destinationTile ) {
-        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementType == NPC_MOVE_TYPE_FLYING )   
+        return pathFinder.determineShortestPath( 
+            startingTile, destinationTile, 
+            globals.GAME.mode == BATTLE_MODE ? globals.GAME.BACK.battleGrid : globals.GAME.BACK.grid, 
+            this.movementType == NPC_MOVE_TYPE_FLYING 
+        );  
     }
     /**
      * For each index in the list, get the I_Tile instance at its index and push it to an array.
@@ -366,6 +373,10 @@ class Sprite {
         }
         else if ( this.movingToDestination ) {
             this.goToDestination( );
+            this.countFrame( );
+            let tile = globals.GAME.getTileOnCanvasAtXY( "BACK", this.x, this.y );
+            this.row = tile.row;
+            this.col = tile.col;
         }
     }
     /**

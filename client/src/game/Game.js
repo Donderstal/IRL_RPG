@@ -6,7 +6,7 @@ const tilesheets    = require('../resources/tilesheetResources').sheets
 
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, 
-    TEST_CLASSNAME_1, TEST_CLASSNAME_4, TEST_CLASSNAME_5
+    TEST_CLASSNAME_1, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
 }  = require('../game-data/globals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
@@ -61,7 +61,12 @@ class Game {
      */
     getTileOnCanvasAtIndex( canvasName, index) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
-        return canvasClass.getTileAtIndex( index );
+        if ( this.mode == BATTLE_MODE ) {
+            return canvasClass.battleGrid.array[index];  
+        }
+        else {
+            return canvasClass.getTileAtIndex( index );            
+        }
     }
     /**
      * Return the I_Tile instance at xy position on given canvas
@@ -71,7 +76,12 @@ class Game {
      */
     getTileOnCanvasAtXY( canvasName, x, y ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
-        return canvasClass.getTileAtXY( x, y );
+        if ( this.mode == BATTLE_MODE ) {
+            return canvasClass.battleGrid.getTileAtXY( x, y );
+        }
+        else {
+            return canvasClass.getTileAtXY( x, y );       
+        }
     }
     /**
      * Return the I_Tile instance at column row position on given canvas
@@ -81,7 +91,12 @@ class Game {
      */
     getTileOnCanvasAtCell( canvasName, column, row ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
-        return canvasClass.getTileAtCell( column, row );
+        if ( this.mode == BATTLE_MODE ) {
+            return canvasClass.battleGrid.getTileAtCell( column, row );  
+        }
+        else {
+            return canvasClass.getTileAtCell( column, row );          
+        }
     }
     /**
      * Initialize game Canvases. FRONT, BACK and UTIL
