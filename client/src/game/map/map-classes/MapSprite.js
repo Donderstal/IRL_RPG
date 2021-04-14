@@ -1,5 +1,5 @@
 const globals = require('../../../game-data/globals')
-const { GRID_BLOCK_PX } = require('../../../game-data/globals');
+const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET } = require('../../../game-data/globals');
 const I_Sprite = require('../../interfaces/I_Sprite').Sprite
 const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
@@ -17,6 +17,9 @@ class MapSprite extends I_Sprite {
         this.spriteId;
         this.activeTileIndex;
         this.nextTileIndex;
+
+        this.spriteWidthInSheet = MAP_SPRITE_WIDTH_IN_SHEET;
+        this.spriteHeightInSheet = MAP_SPRITE_HEIGHT_IN_SHEET;
     }
 
     get currentTileBack( ) { return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex )  };

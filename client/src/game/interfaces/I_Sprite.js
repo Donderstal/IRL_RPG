@@ -5,16 +5,11 @@ const { getAnimationFrames } = require('../../resources/animationResources')
 const { getSpeechBubble } = require('../map/map-ui/displayText')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
-    GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET,
-    MOVEMENT_SPEED, FRAME_LIMIT, 
+    GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 
     NPC_MOVE_TYPE_FLYING,  NPC_ANIM_TYPE_MOVING_IN_LOOP,
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
     FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING, BATTLE_MODE
 } = require( '../../game-data/globals' )
-const { 
-    BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT,
-    BATTLE_SPRITE_WIDTH_IN_SHEET, BATTLE_SPRITE_HEIGHT_IN_SHEET
-} = require( '../../game-data/battleGlobals' )
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -25,10 +20,6 @@ class Sprite {
         if ( spriteSize == "STRD" ) {
             this.width   = STRD_SPRITE_WIDTH;
             this.height  = STRD_SPRITE_HEIGHT;            
-        }
-        else if ( spriteSize == "LARG" ) {
-            this.width   = BATTLE_SPRITE_WIDTH;
-            this.height  = BATTLE_SPRITE_HEIGHT;   
         }
         else {
             this.width  = spriteSize.width;
@@ -136,12 +127,10 @@ class Sprite {
      * What frame of the spritesheet is drawn is dependent on the sheetPosition and direction props.
      */
     drawSprite( ) {
-        this.sheetWidth = globals.GAME.mode == BATTLE_MODE ? BATTLE_SPRITE_WIDTH_IN_SHEET: MAP_SPRITE_WIDTH_IN_SHEET;
-        this.sheetHeight = globals.GAME.mode == BATTLE_MODE ? BATTLE_SPRITE_HEIGHT_IN_SHEET:  MAP_SPRITE_HEIGHT_IN_SHEET;
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
-            this.sheetPosition * this.sheetWidth, this.direction * this.sheetHeight, 
-            this.sheetWidth, this.sheetHeight,
+            this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 
+            this.spriteWidthInSheet, this.spriteHeightInSheet,
             this.x, this.y, this.width, this.height
         )
 
@@ -247,11 +236,6 @@ class Sprite {
         this.destination        = destination;
         this.activeDestinationIndex;
 
-        if ( globals.GAME.mode == BATTLE_MODE ) {
-            this.setDestinationList( false );
-            return;
-        }
-
         if ( !this.destinationIsBlocked ) {
             if ( !this.isCar ) {
                 this.setDestinationList( isLoop )
@@ -297,11 +281,7 @@ class Sprite {
      * @param {I_Tile} destinationTile destination I_Tile
      */
     getPathIndexes( startingTile, destinationTile ) {
-        return pathFinder.determineShortestPath( 
-            startingTile, destinationTile, 
-            globals.GAME.mode == BATTLE_MODE ? globals.GAME.BACK.battleGrid : globals.GAME.BACK.grid, 
-            this.movementType == NPC_MOVE_TYPE_FLYING 
-        );  
+        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementType == NPC_MOVE_TYPE_FLYING );  
     }
     /**
      * For each index in the list, get the I_Tile instance at its index and push it to an array.

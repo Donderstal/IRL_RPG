@@ -4,7 +4,7 @@ const {
     SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT
 } = require('../../game-data/battleGlobals');
 const globals = require('../../game-data/globals');
-const { Sprite } = require('../interfaces/I_Sprite');
+const { BattleSprite } = require('./BattleSprite');
 const { FRAME_LIMIT } = require('../../game-data/globals');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
@@ -61,7 +61,7 @@ class BattleSlot {
      */
     initializeSpriteInSlot( character ) {
         let src = "/static/sprites/" + ( Math.random() > .5 ? "fats_fight" : "chad_fight" ) + ".png";
-        this.sprite = new Sprite( this.tile, 'LARG', src , this.startingDirection );
+        this.sprite = new BattleSprite( this.tile, 'LARG', src , this.startingDirection );
         this.character = character;
     }
     /**
