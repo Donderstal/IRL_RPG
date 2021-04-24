@@ -134,18 +134,34 @@ class BattleSlot {
                 this.sprite.initMovement( );
                 break;
             case "ANIMATION": 
-                const scene = {
-                    animName: animation.perfomerAnimation,
-                    loop: false,
-                    numberOfLoops: false
-                };
-                this.sprite.setScriptedAnimation( scene, FRAME_LIMIT );
+                this.doMoveAnimation( animation );
                 break;
             case "GO_BACK": 
                 this.sprite.setDestination( this.tile, "RETURN" );
                 this.sprite.initMovement( );
                 break;
         }
+    }
+    /**
+     * Set the animations and effects associated with given 
+     * animation object to performer and target sprites
+     * @param {Object} animation object from moveAnimationScripts
+     */
+    doMoveAnimation( animation ) {
+        const scene = {
+            animName: animation.perfomerAnimation,
+            loop: false,
+            numberOfLoops: false
+        };
+        this.sprite.setScriptedAnimation( scene, FRAME_LIMIT );
+        if ( animation.targetAnimationOnHit ) {
+            const targetScene = {
+                animName: animation.targetAnimationOnHit,
+                loop: false,
+                numberOfLoops: false
+            };
+            this.targetSlot.sprite.setScriptedAnimation( targetScene, FRAME_LIMIT );
+        }        
     }
     /**
      * Clear this.selectedMove and this.targetSlot

@@ -94,7 +94,9 @@ const animationResources = {
         { row: 8, column: 2 },
         { row: 8, column: 3 }
     ],
-    "HIT_LEFT": [
+    "STANDARD_HIT_RIGHT": [
+        { row: 5, column: -1 },
+        { row: 5, column: 0 },
         { row: 5, column: -1 },
         { row: 5, column: 0 },
         { row: 5, column: -1 },
@@ -102,15 +104,20 @@ const animationResources = {
         { row: 5, column: -1 },
         { row: 5, column: 0 }
     ],
-    "HIT_RIGHT": [
+    "STANDARD_HIT_LEFT": [
         { row: 4, column: -1 },
         { row: 4, column: 0 },
         { row: 4, column: -1 },
         { row: 4, column: 0 },
         { row: 4, column: -1 },
-        { row: 4, column: 0 }
+        { row: 4, column: 0 },
+        { row: 4, column: -1 },
+        { row: 4, column: 0 },
+        { row: 4, column: -1 }
     ],
     "FADE_LEFT": [
+        { row: 5, column: -1 },
+        { row: 5, column: 0 },
         { row: 5, column: -1 },
         { row: 5, column: 0 },
         { row: 5, column: -1 },
