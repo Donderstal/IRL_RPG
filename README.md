@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### APR 24, 2021
+* BattleSprite class.
+* Improving BattlePhase structure. Ordering chars on speed in move phase
+
 #### APR 13, 2021
 * Battle sprite animation and pathfinding in grid system
 
