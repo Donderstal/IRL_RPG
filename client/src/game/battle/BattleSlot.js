@@ -130,7 +130,7 @@ class BattleSlot {
     doMoveAnimationStep( animation ) {
         switch( this.animationStep ) {
             case "GO_TO": 
-                this.sprite.setDestination( this.targetSlot.tile );
+                this.sprite.setDestination( this.targetSlot.tile, "TARGET" );
                 this.sprite.initMovement( );
                 break;
             case "ANIMATION": 
@@ -142,7 +142,7 @@ class BattleSlot {
                 this.sprite.setScriptedAnimation( scene, FRAME_LIMIT );
                 break;
             case "GO_BACK": 
-                this.sprite.setDestination( this.tile );
+                this.sprite.setDestination( this.tile, "RETURN" );
                 this.sprite.initMovement( );
                 break;
         }

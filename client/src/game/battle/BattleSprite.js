@@ -17,11 +17,23 @@ class BattleSprite extends Sprite {
             }
         }
         super( tile, spriteSize, src, direction, false );
-
+        this.startingDirection  = direction;
         this.spriteWidthInSheet = BATTLE_SPRITE_WIDTH_IN_SHEET;
         this.spriteHeightInSheet = BATTLE_SPRITE_HEIGHT_IN_SHEET;
 
         this.setSpriteToGrid( tile );
+    }
+    get destinationIsLeft( ) { 
+        return this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
+    }
+    get destinationIsRight( ) { 
+        return this.destinationTile.x + this.width > this.right && this.destinationTile.direction == "FACING_RIGHT";
+    }
+    get destinationIsUp( ) { 
+        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
+    }    
+    get destinationIsDown( ) { 
+        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
     }
     /**
      * Override of base method
@@ -33,19 +45,27 @@ class BattleSprite extends Sprite {
         this.row = tile.row;
         this.col = tile.col;
         
-        this.x = this.direction == SHEET_ROW_BATTLE_FACING_LEFT ? tile.x + ( this.width - GRID_BLOCK_PX ) : tile.x - ( this.width - GRID_BLOCK_PX ) ;
+        this.x = tile.x;
         this.y = tile.y - ( this.height - GRID_BLOCK_PX );
     }
     /**
+     * Override of base method
      * Initialize a destination properties.
      * Then, call setDestinationList
      * @param {Object} destination Properties: row: Number, col: Number
      */
-    setDestination( destination ) {
+    setDestination( destination, location ) {
         this.originalDirection  = this.direction;
-        this.destinationTiles   = [];
-        this.destination        = destination;
+        this.destination        = { };
+        this.destination        = Object.assign(this.destination, destination);
+        this.destinationTiles   = [];        
         this.activeDestinationIndex;
+
+        if ( location == "TARGET" ) {
+            this.destination.col = (this.startingDirection == SHEET_ROW_BATTLE_FACING_LEFT)
+                ? this.destination.col + 1 
+                : this.destination.col - 1;         
+        }
 
         this.setDestinationList( false );
     }
