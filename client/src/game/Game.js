@@ -228,9 +228,9 @@ class Game {
      */
     initializeBattle( partyData ) {
         const opponentParty = new Party( partyData, false );
-        this.battle = new Battle( opponentParty );
         this.clearCanvases( );
         this.loadBattleGraphicsToCanvases( opponentParty );
+        this.battle = new Battle( opponentParty );
         animationFrameController.startBattleAnimation( );
     }
     /**
