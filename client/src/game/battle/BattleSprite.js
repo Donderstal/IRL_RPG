@@ -3,7 +3,10 @@ const {
     SHEET_ROW_BATTLE_FACING_LEFT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT, 
     BATTLE_SPRITE_HEIGHT_IN_SHEET, BATTLE_SPRITE_WIDTH_IN_SHEET 
 } = require("../../game-data/battleGlobals");
-const { GRID_BLOCK_PX, NPC_MOVE_TYPE_FLYING } = require("../../game-data/globals");
+const { 
+    GRID_BLOCK_PX, NPC_MOVE_TYPE_FLYING, MOVEMENT_SPEED, 
+    FACING_RIGHT, FACING_LEFT, FACING_RIGHT_FLYING, FACING_LEFT_FLYING
+} = require("../../game-data/globals");
 
 const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
@@ -68,6 +71,39 @@ class BattleSprite extends Sprite {
         }
 
         this.setDestinationList( false );
+    }
+    /**
+     * Override of base method
+     * Move closer to the middle of I_Tile instance currently assigned to this.destination.
+     * Alter this.x and/or this.y depending on the relative position of the destination.
+     * If no move is possible, call the checkForNextDestination method.
+     */
+    goToDestination( ) {
+        this.moving = false;
+
+        if ( this.destinationIsLeft  ) {
+            this.x -= MOVEMENT_SPEED * 2;
+            this.moving = true;
+            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
+        }
+        else if ( this.destinationIsRight ) {
+            this.x += MOVEMENT_SPEED * 2;
+            this.moving = true;
+            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
+        }
+
+        if ( this.destinationIsUp ) {
+            this.moving = true;
+            this.y -= MOVEMENT_SPEED * 2;
+        }
+        else if ( this.destinationIsDown ) {
+            this.moving = true;
+            this.y += MOVEMENT_SPEED * 2;
+        }
+
+        if ( !this.moving ) {
+            this.checkForNextDestination( );
+        }
     }
     /**
      * Override of base method

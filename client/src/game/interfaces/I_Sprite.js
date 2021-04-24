@@ -8,7 +8,7 @@ const {
     GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 
     NPC_MOVE_TYPE_FLYING,  NPC_ANIM_TYPE_MOVING_IN_LOOP,
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
-    FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING, BATTLE_MODE
+    FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
@@ -140,45 +140,30 @@ class Sprite {
      * Move closer to the middle of I_Tile instance currently assigned to this.destination.
      * Alter this.x and/or this.y depending on the relative position of the destination.
      * If no move is possible, call the checkForNextDestination method.
-     * @param {Boolean} isBattle optional parameter indicating if the game is in a battle 
      */
-    goToDestination( isBattle = false ) {
-        const speed = globals.GAME.mode == BATTLE_MODE ? MOVEMENT_SPEED * 2 : MOVEMENT_SPEED;
+    goToDestination( ) {
         this.moving = false;
 
         if ( this.destinationIsLeft  ) {
-            this.x -= speed;
+            this.x -= MOVEMENT_SPEED;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
         }
         else if ( this.destinationIsRight ) {
-            this.x += speed;
+            this.x += MOVEMENT_SPEED;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
         }
-
-        if ( isBattle ) {
-            if ( this.destinationIsUp ) {
-                this.moving = true;
-                this.y -= speed;
-            }
-            else if ( this.destinationIsDown ) {
-                this.moving = true;
-                this.y += speed;
-            }
+        else if ( this.destinationIsUp ) {
+            this.y -= MOVEMENT_SPEED;
+            this.moving = true;
+            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
         }
-        else if ( !this.moving ) {
-            if ( this.destinationIsUp ) {
-                this.y -= speed;
-                this.moving = true;
-                this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
-            }
-            else if ( this.destinationIsDown ) {
-                this.y += speed;  
-                this.moving = true;
-                this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
-            }            
-        }
+        else if ( this.destinationIsDown ) {
+            this.y += MOVEMENT_SPEED;  
+            this.moving = true;
+            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
+        } 
 
         if ( !this.moving ) {
             this.checkForNextDestination( );

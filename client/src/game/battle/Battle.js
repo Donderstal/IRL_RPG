@@ -71,7 +71,6 @@ class Battle {
             } );            
         };
 
-
         this.currentTurn++;
         this.setBattleSlotsInOrder( )
     }
@@ -81,7 +80,9 @@ class Battle {
     }
 
     startSelectMovePhase( ) {
-        
+        // test setup for move pathfinding and animation
+        let selectedSlot = this.battleSlots[0]
+        selectedSlot.selectMove( selectedSlot.character.Moves[0], this.battleSlots[5] )
     }
 
     endSelectMovePhase( ) {
@@ -90,7 +91,12 @@ class Battle {
     }
 
     startDoMovesPhase( ) {
-
+        // test setup for move pathfinding and animation
+        this.battleSlots.forEach( ( e ) => {
+            if ( e.selectedMove != null ) {
+                e.doSelectedMove( );
+            }
+        })
     }
 
     endDoMovesPhase( ) {
