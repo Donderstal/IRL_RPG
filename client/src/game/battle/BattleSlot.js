@@ -29,7 +29,11 @@ class BattleSlot {
         this.targetSlot = null;
     }
 
-    get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination }
+    get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination };
+    get activeHP( ) { return this.character.CurrentHitpoints };
+    get activePP( ) { return this.character.CurrentPowerpoints };
+    get maxHP( ) { return this.character.maxHP };
+    get maxPP( ) { return this.character.maxPP }; 
     /**
      * Return the cell position of this slot based on this.index and this.side
      * This decides where to draw a sprite if one is loaded to the slot.
@@ -67,14 +71,19 @@ class BattleSlot {
         let src = "/static/sprites/" + ( Math.random() > .5 ? "fats_fight" : "chad_fight" ) + ".png";
         this.sprite = new BattleSprite( this.tile, 'LARG', src , this.startingDirection );
         this.character = character;
-
+        this.initStatBars( );
+    }
+    /**
+     * Instantiate a StatBar for HP and PP
+     */
+    initStatBars( ) {
         if ( this.side == "LEFT" ) {
-            this.HPStatBars = new StatBar( "HP-PLAYER" );
-            this.PPStatBars = new StatBar( "PP" );
+            this.HPStatBars = new StatBar( "HP-PLAYER", this.activeHP, this.maxHP );
+            this.PPStatBars = new StatBar( "PP", this.activePP, this.maxPP );
         }
         else {
-            this.HPStatBars = new StatBar( "HP-ENEMY" );
-        }
+            this.HPStatBars = new StatBar( "HP-ENEMY", this.activeHP, this.maxHP );
+        }        
     }
     /**
      * If there is a sprite in the slot, draw it
@@ -101,10 +110,10 @@ class BattleSlot {
     drawStatBars( ) {
         const HPBarX = this.sprite.x + ( GRID_BLOCK_PX * .5 )
         const HPBarY = this.sprite.y - ( GRID_BLOCK_PX * .5 )
-        this.HPStatBars.draw( HPBarX, HPBarY )
+        this.HPStatBars.draw( HPBarX, HPBarY, this.activeHP )
 
         if ( this.PPStatBars != null ) {
-            this.PPStatBars.draw( HPBarX, HPBarY + this.PPStatBars.height )
+            this.PPStatBars.draw( HPBarX, HPBarY + this.PPStatBars.height, this.activePP )
         }
     }
     /**
@@ -164,6 +173,7 @@ class BattleSlot {
                 break;
             case "ANIMATION": 
                 this.doMoveAnimation( animation );
+                this.doSelectMoveEffects( );
                 break;
             case "GO_BACK": 
                 this.sprite.setDestination( this.tile, "RETURN" );
@@ -191,6 +201,14 @@ class BattleSlot {
             };
             this.targetSlot.sprite.setScriptedAnimation( targetScene, FRAME_LIMIT );
         }        
+    }
+    /**
+     * 
+     */
+    doSelectMoveEffects( ) {
+        // test
+        this.targetSlot.character.takeDamage( 10 );
+        this.character.spendPP( 5 );
     }
     /**
      * Clear this.selectedMove and this.targetSlot
