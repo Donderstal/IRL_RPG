@@ -5,7 +5,8 @@ const {
 } = require('../../game-data/battleGlobals');
 const globals = require('../../game-data/globals');
 const { BattleSprite } = require('./BattleSprite');
-const { FRAME_LIMIT } = require('../../game-data/globals');
+const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../game-data/globals');
+const { StatBar } = require('../interfaces/I_StatBar');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
  * The player characters are on the left, the opponent characters are on the right.
@@ -15,8 +16,11 @@ class BattleSlot {
     constructor( index, side ) {
         this.index  = index;
         this.side   = side;
+        this.sprite     = null;
+        this.HPStatBars = null;
+        this.PPStatBars = null;
+
         this.tile   = [ ];
-        this.sprite = null;
         this.tilePosition   = this.setTilePosition( );
         this.tile = globals.GAME.FRONT.battleGrid.getTileAtCell( this.tilePosition.column, this.tilePosition.row );
 
@@ -63,6 +67,14 @@ class BattleSlot {
         let src = "/static/sprites/" + ( Math.random() > .5 ? "fats_fight" : "chad_fight" ) + ".png";
         this.sprite = new BattleSprite( this.tile, 'LARG', src , this.startingDirection );
         this.character = character;
+
+        if ( this.side == "LEFT" ) {
+            this.HPStatBars = new StatBar( "HP-PLAYER" );
+            this.PPStatBars = new StatBar( "PP" );
+        }
+        else {
+            this.HPStatBars = new StatBar( "HP-ENEMY" );
+        }
     }
     /**
      * If there is a sprite in the slot, draw it
@@ -76,6 +88,23 @@ class BattleSlot {
             else if ( this.performingBattleMove ) {
                 this.checkForNextAnimationStep( this.selectedMove.animation );
             }
+        }
+        if ( this.HPStatBars != null ) {
+            this.drawStatBars( )
+        }
+    }
+    /**
+     * Calc the x and y of stat bars based on this.sprite position.
+     * Call the draw method of this.HPStatBars.
+     * Do so for this.PPStatBars if it is not null.
+     */
+    drawStatBars( ) {
+        const HPBarX = this.sprite.x + ( GRID_BLOCK_PX * .5 )
+        const HPBarY = this.sprite.y - ( GRID_BLOCK_PX * .5 )
+        this.HPStatBars.draw( HPBarX, HPBarY )
+
+        if ( this.PPStatBars != null ) {
+            this.PPStatBars.draw( HPBarX, HPBarY + this.PPStatBars.height )
         }
     }
     /**
