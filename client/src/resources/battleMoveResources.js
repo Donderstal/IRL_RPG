@@ -166,7 +166,7 @@ const PH_ATTK_1 = {
     [MOVE_PROP_KEY_NAME]: "Ph attack",
     [MOVE_PROP_KEY_DESCRIPTION]: "Basic but predictable ph attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_PH_ATTACK,
-    [MOVE_PROP_KEY_BASE_VALUE]: 5,
+    [MOVE_PROP_KEY_BASE_VALUE]: 10,
     [MOVE_PROP_KEY_MODIFIER]: .2,
     [MOVE_PROP_KEY_PP_COST]: 0
 }
@@ -174,7 +174,7 @@ const PH_ATTK_2 = {
     [MOVE_PROP_KEY_NAME]: "Ph attack",
     [MOVE_PROP_KEY_DESCRIPTION]: "Strong but unreliable ph attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_PH_ATTACK,
-    [MOVE_PROP_KEY_BASE_VALUE]: 5,
+    [MOVE_PROP_KEY_BASE_VALUE]: 15,
     [MOVE_PROP_KEY_MODIFIER]: .5,
     [MOVE_PROP_KEY_PP_COST]: 5
 }
@@ -182,7 +182,7 @@ const SP_ATTK_1 = {
     [MOVE_PROP_KEY_NAME]: "PH attack down",
     [MOVE_PROP_KEY_DESCRIPTION]: "Temporarily debuff physical attack of target.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_SP_ATTACK,
-    [MOVE_PROP_KEY_BASE_VALUE]: 5,
+    [MOVE_PROP_KEY_BASE_VALUE]: 10,
     [MOVE_PROP_KEY_MODIFIER]: .2,
     [MOVE_PROP_KEY_PP_COST]: 0
 }
@@ -190,7 +190,7 @@ const SP_ATTK_2 = {
     [MOVE_PROP_KEY_NAME]: "ph attack",
     [MOVE_PROP_KEY_DESCRIPTION]: "Strong but unreliable ph attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_SP_ATTACK,
-    [MOVE_PROP_KEY_BASE_VALUE]: 5,
+    [MOVE_PROP_KEY_BASE_VALUE]: 15,
     [MOVE_PROP_KEY_MODIFIER]: .5,
     [MOVE_PROP_KEY_PP_COST]: 5
 }

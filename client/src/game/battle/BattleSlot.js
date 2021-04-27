@@ -7,6 +7,7 @@ const globals = require('../../game-data/globals');
 const { BattleSprite } = require('./BattleSprite');
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../game-data/globals');
 const { StatBar } = require('../interfaces/I_StatBar');
+const { handleMoveExecution } = require('../../helpers/moveHelpers');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
  * The player characters are on the left, the opponent characters are on the right.
@@ -210,8 +211,7 @@ class BattleSlot {
      */
     doSelectMoveEffects( ) {
         // test setup
-        this.targetSlot.character.takeDamage( 10 );
-        this.character.spendPP( 5 );
+        handleMoveExecution( this.selectedMove, this.targetSlot.character, this.character );
         if ( this.targetSlot.character.isDead ) {
             this.targetSlot.character.handleDeath( )
             this.targetSlot.sprite.fadeOut( );

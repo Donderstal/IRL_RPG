@@ -15,9 +15,7 @@ class Battle {
     }
 
     get playerParty( ) { return globals.GAME.party; };
-    get allCharactersInField( ) { 
-        return [ ...this.playerParty.members.filter( ( e ) => { return e.isLiving }), ...this.opponentParty.members.filter( ( e ) => { return e.isLiving }) ]; 
-    };
+    get allCharactersInField( ) { return [ ...this.battleSlots.filter( ( e ) => { return e.character.isLiving }) ]; };
     get battleIsOver( ) { return this.opponentParty.isDefeated || this.playerParty.isDefeated; };
     get battleSlots( ) { return globals.GAME.FRONT.battleSlots; };
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
@@ -67,7 +65,7 @@ class Battle {
     startBeginTurnPhase( ) {
         if( this.currentTurn != 0 ) {
             this.allCharactersInField.forEach( 
-                ( character ) => { character.StatusEffects.handleNextTurn(  ); 
+                ( slot ) => { slot.character.StatusEffects.handleNextTurn(  ); 
             } );            
         };
 
@@ -105,7 +103,7 @@ class Battle {
     }
 
     startEndTurnPhase( ) {
-        this.allCharactersInField.forEach( ( character ) => { character.StatusEffects.doTurnBasedEffects(  ); } );
+        this.allCharactersInField.forEach( ( slot ) => { slot.character.StatusEffects.doTurnBasedEffects(  ); } );
     }
 
     endEndTurnPhase( ) {
