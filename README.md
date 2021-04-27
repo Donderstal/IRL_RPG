@@ -13,6 +13,7 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### APR 27, 2021
+* Sequential move execution in battles. Replacing dummy damage code with real moves
 * New StatBar class for showing the active value of a character stat
 
 #### APR 24, 2021
