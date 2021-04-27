@@ -30,6 +30,7 @@ class BattleSlot {
     }
 
     get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination };
+    get inFadeOutAnimation( ) { return !this.character.isLiving && this.sprite.inScriptedAnimation };
     get canBeTargeted( ) { return this.character.isLiving };
     get canDoMove( ) { return this.character.isLiving };
     get activeHP( ) { return this.character.CurrentHitpoints };
@@ -208,9 +209,13 @@ class BattleSlot {
      * 
      */
     doSelectMoveEffects( ) {
-        // test
+        // test setup
         this.targetSlot.character.takeDamage( 10 );
         this.character.spendPP( 5 );
+        if ( this.targetSlot.character.isDead ) {
+            this.targetSlot.character.handleDeath( )
+            this.targetSlot.sprite.fadeOut( );
+        }
     }
     /**
      * Clear this.selectedMove and this.targetSlot

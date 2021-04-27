@@ -5,7 +5,7 @@ const {
 } = require("../../game-data/battleGlobals");
 const { 
     GRID_BLOCK_PX, NPC_MOVE_TYPE_FLYING, MOVEMENT_SPEED, 
-    FACING_RIGHT, FACING_LEFT, FACING_RIGHT_FLYING, FACING_LEFT_FLYING
+    FACING_RIGHT, FACING_LEFT, FACING_RIGHT_FLYING, FACING_LEFT_FLYING, FRAME_LIMIT
 } = require("../../game-data/globals");
 
 const pathFinder = require('../../helpers/pathfindingHelpers')
@@ -116,6 +116,17 @@ class BattleSprite extends Sprite {
             startingTile, destinationTile, 
             globals.GAME.BACK.battleGrid, this.movementType == NPC_MOVE_TYPE_FLYING 
         );  
+    }
+    /**
+     * Fade out animation to play on character death
+     */
+    fadeOut( ) {
+        const scene = {
+            animName: "FADE",
+            loop: false,
+            numberOfLoops: false
+        };
+        this.setScriptedAnimation( scene, FRAME_LIMIT );
     }
 }
 

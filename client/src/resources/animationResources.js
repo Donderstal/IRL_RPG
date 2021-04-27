@@ -115,7 +115,7 @@ const animationResources = {
         { row: 4, column: 0 },
         { row: 4, column: -1 }
     ],
-    "FADE_LEFT": [
+    "FADE_RIGHT": [
         { row: 5, column: -1 },
         { row: 5, column: 0 },
         { row: 5, column: -1 },
@@ -124,7 +124,7 @@ const animationResources = {
         { row: 5, column: 0 },
         { row: 5, column: -1 }
     ],
-    "FADE_RIGHT": [
+    "FADE_LEFT": [
         { row: 4, column: -1 },
         { row: 4, column: 0 },
         { row: 4, column: -1 },

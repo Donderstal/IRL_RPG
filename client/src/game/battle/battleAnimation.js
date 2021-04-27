@@ -16,7 +16,11 @@ const handleBattleAnimations = ( GAME ) => {
             return 0
         }          
     })
-    slots.forEach( ( slot ) => { slot.drawSpriteInSlot( ); } );
+    slots.forEach( ( slot ) => { 
+        if ( slot.character.isLiving || slot.inFadeOutAnimation ) {
+            slot.drawSpriteInSlot( );             
+        }
+    } );
 }
 
 module.exports = { 

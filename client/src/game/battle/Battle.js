@@ -141,6 +141,9 @@ class Battle {
         if ( this.activeSlot.canDoMove && this.activeSlot.targetSlot.canBeTargeted ) {
             this.activeSlot.doSelectedMove( );
         }
+        else {
+            this.getNextSlotForDoMove( )
+        }
     }
 }
 
