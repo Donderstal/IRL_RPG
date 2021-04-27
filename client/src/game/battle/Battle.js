@@ -82,7 +82,12 @@ class Battle {
     startSelectMovePhase( ) {
         // test setup for move pathfinding and animation
         let selectedSlot = this.battleSlots[0]
-        selectedSlot.selectMove( selectedSlot.character.Moves[0], this.battleSlots[5] )
+        this.battleSlots[0].selectMove( this.battleSlots[0].character.Moves[0], this.battleSlots[5] )
+        this.battleSlots[1].selectMove( this.battleSlots[1].character.Moves[0], this.battleSlots[3] )
+        this.battleSlots[2].selectMove( this.battleSlots[2].character.Moves[0], this.battleSlots[4] )
+        this.battleSlots[3].selectMove( this.battleSlots[3].character.Moves[0], this.battleSlots[2] )
+        this.battleSlots[4].selectMove( this.battleSlots[4].character.Moves[0], this.battleSlots[0] )
+        this.battleSlots[5].selectMove( this.battleSlots[5].character.Moves[0], this.battleSlots[1] )
     }
 
     endSelectMovePhase( ) {
@@ -91,12 +96,8 @@ class Battle {
     }
 
     startDoMovesPhase( ) {
-        // test setup for move pathfinding and animation
-        this.battleSlots.forEach( ( e ) => {
-            if ( e.selectedMove != null ) {
-                e.doSelectedMove( );
-            }
-        })
+        this.activeSlotIndex    = -1
+        this.getNextSlotForDoMove( );
     }
 
     endDoMovesPhase( ) {
@@ -127,6 +128,19 @@ class Battle {
         this.battleSlots.sort( ( thisSlot, nextSlot) => {
             return nextSlot.character.activeAttributeValues[ATT_SPEED] - thisSlot.character.activeAttributeValues[ATT_SPEED];
         });
+    }
+
+    getNextSlotForDoMove( ) {
+        this.activeSlotIndex++;
+        if ( this.activeSlotIndex == this.battleSlots.length ) {
+            this.goToNextBattlePhase( );
+            return;
+        }
+
+        this.activeSlot = this.battleSlots[this.activeSlotIndex];
+        if ( this.activeSlot.canDoMove && this.activeSlot.targetSlot.canBeTargeted ) {
+            this.activeSlot.doSelectedMove( );
+        }
     }
 }
 

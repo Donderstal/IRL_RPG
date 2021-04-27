@@ -30,6 +30,8 @@ class BattleSlot {
     }
 
     get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination };
+    get canBeTargeted( ) { return this.character.isLiving };
+    get canDoMove( ) { return this.character.isLiving };
     get activeHP( ) { return this.character.CurrentHitpoints };
     get activePP( ) { return this.character.CurrentPowerpoints };
     get maxHP( ) { return this.character.maxHP };
