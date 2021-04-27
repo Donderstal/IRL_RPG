@@ -78,8 +78,8 @@ const TEST_CLASSPROFILE_MODIFIERS_4 = {
     [ATT_LUCK]: MODI_VERY_HIGH
 }
 const TEST_CLASSPROFILE_MOVES_4 = [
-    { move : HEAL_SMALL, level: 1, animation: "LEFT_AND_RIGHT_STEP" },
-    { move : HEAL_PP, level: 5, animation: "LEFT_AND_RIGHT_STEP" },
+    { move : HEAL_SMALL, level: 1, animation: "HEAL_TEST" },
+    { move : HEAL_PP, level: 5, animation: "HEAL_TEST" },
     { move : SP_ATTK_2, level: 10, animation: "SPECIAL_ATTACK_TEST" }
 ];
 const getAttributeModifierByClassProfile = ( classProfile ) => {
