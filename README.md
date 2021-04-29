@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### APR 28, 2021
+* Added tilesheets with color changes
+* Added new sprites with talking animation
+
 #### APR 27, 2021
 * Sequential move execution in battles. Replacing dummy damage code with real moves
 * New StatBar class for showing the active value of a character stat

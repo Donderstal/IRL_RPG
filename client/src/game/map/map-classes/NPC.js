@@ -12,11 +12,7 @@ const globals = require('../../../game-data/globals');
 
 const cellRadius = 2;
 const animationList = [
-    "TURN_SINGLE_CIRCLE",
-    "BACK_AND_FORTH",
-    "LEFT_AND_RIGHT",
-    "BACK_AND_FORTH_STEP",
-    "LEFT_AND_RIGHT_STEP"
+    "TALK"
 ]
 /**
  * The NPC class is assigned to each non-player character in a map.
