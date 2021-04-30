@@ -1,16 +1,15 @@
 const { getEffectData } = require("../../resources/effectResources");
 const { drawFromImageToCanvas } = require("../../helpers/canvasHelpers");
-const { FRAME_LIMIT } = require("../../game-data/globals");
+const { FRAME_LIMIT, GRID_BLOCK_PX } = require("../../game-data/globals");
+const globals = require("../../game-data/globals");
 /**
  * I_Effect instances represent a ( part of ) a graphical effect in the game.
  */
 class I_Effect {
-    constructor( name, x, y, width, height, loop ) {
+    constructor( name, x, y, loop ) {
         this.name   = name;
         this.x      = x;
         this.y      = y;
-        this.width  = width;
-        this.height = height;
         this.frames = [];
 
         this.frameCount = 0;    
@@ -46,13 +45,16 @@ class I_Effect {
     }
     /**
      * Get the data associated with this.name.
-     * Assing the frame width and frame height from the data object
+     * Assign the frame width and frame height from the data object
+     * Assign the width and height of the sprite in canvas from data object
      * Then call setSprite and initialiseAnimationFrames
      */
     setEffectData( ) {
         const data      = getEffectData( this.name );
         this.frameWidth = data.frameWidth;
         this.frameHeight = data.frameHeight;
+        this.width  = data.widthInBlocks * (globals.GAME.mode == "BATTLE" ? ( GRID_BLOCK_PX * 1.5 ) : GRID_BLOCK_PX);
+        this.height = data.heightInBlocks * (globals.GAME.mode == "BATTLE" ? ( GRID_BLOCK_PX * 1.5 ) : GRID_BLOCK_PX);
         
         this.setSprite( data.src );
         this.initialiseAnimationFrames( data.frames );

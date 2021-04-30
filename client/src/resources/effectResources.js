@@ -3,6 +3,8 @@ const folder = "/static/effects/";
 const effectsResources = {
     "FIRE_CIRCLE_BACK" : {
         "src": folder + "fire_circle.png",
+        "widthInBlocks": 2,
+        "heightInBlocks": 2,
         "frameWidth": 128,
         "frameHeight": 128,
         "frames": [
@@ -18,6 +20,8 @@ const effectsResources = {
     },
     "FIRE_CIRCLE_FRONT" : {
         "src": folder + "fire_circle.png",
+        "widthInBlocks": 2,
+        "heightInBlocks": 2,
         "frameWidth": 128,
         "frameHeight": 128,
         "frames": [
