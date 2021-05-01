@@ -21,6 +21,10 @@ const handleBattleAnimations = ( GAME ) => {
             slot.drawSpriteInSlot( );             
         }
     } );
+
+    GAME.FRONT.activeEffects.forEach( ( e ) => {
+        e.drawAndMove( );
+    })
 }
 
 module.exports = { 
