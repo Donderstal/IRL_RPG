@@ -5,6 +5,7 @@ const { MapSprite } = require('./map/map-classes/MapSprite')
 const { getUniqueId } = require('../helpers/utilFunctions');
 const { Road } = require('./map/map-classes/Road');
 const { BattleSlot } = require('./battle/BattleSlot');
+const { getEffect } = require('../helpers/effectHelpers');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -18,10 +19,22 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = { };
+        this.activeEffects = [];
     };
 
     get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == "LEFT"; } ); };
     get opponentSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == "RIGHT"; } ); };
+    /**
+     * Return a effect Instance from geteffect and push it to this.activeEffects
+     * @param {String} name 
+     * @param {Number} x 
+     * @param {Number} y 
+     * @param {Number|null} endX 
+     * @param {Number|null} endY 
+     */
+    addEffect( name, x, y, endX = null, endY = null ) {
+        this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
+    }
     /**
      * Set characters, mapObjects, roads and the playerstart as properties
      * @param {Object} mapData - data object from mapResources

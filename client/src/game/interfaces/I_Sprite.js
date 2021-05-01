@@ -1,6 +1,7 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
+const { getEffect } = require('../../helpers/effectHelpers')
 const { getAnimationFrames } = require('../../resources/animationResources')
 const { getSpeechBubble } = require('../map/map-ui/displayText')
 const { 
@@ -40,6 +41,7 @@ class Sprite {
         this.deleted        = false;
         this.isCar          = isCar
         this.animationScript = {};
+        this.activeEffect = { active: false };
 
         this.setSpriteToGrid( tile, isCar )
 
@@ -86,6 +88,21 @@ class Sprite {
         this.x = isCar || this.width <= GRID_BLOCK_PX ? tile.x : tile.x + ( this.width - GRID_BLOCK_PX );
         this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
     }
+    /** 
+     * Instantiate a sprite-bound graphical effect and assign it to this.activeEffect
+     * @param {String} name name of the effect to instantiate
+     */
+    setGraphicalEffect( name ) {
+        this.hasActiveEffect= true;
+        this.activeEffect   = getEffect( name, this.x, this.y );
+    }
+    /**
+     * Set hasActiveEffect to false and clear this.activeEffect
+     */
+    unsetGraphicalEffect( ) {
+        this.hasActiveEffect= false;
+        this.activeEffect   = null;
+    }
      /**
      * Get the I_Tile instance at given cell. Assign direction to this.direction if not undefined.
      * Then, mark this Sprite as the player and call this.SetSpriteToGrid
@@ -127,13 +144,18 @@ class Sprite {
      * What frame of the spritesheet is drawn is dependent on the sheetPosition and direction props.
      */
     drawSprite( ) {
+        if ( this.hasActiveEffect ) {
+            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+        }
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
             this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 
             this.spriteWidthInSheet, this.spriteHeightInSheet,
             this.x, this.y, this.width, this.height
         )
-
+        if ( this.hasActiveEffect ) {
+            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+        }
         this.updateSpriteBorders( )
     }
     /**
