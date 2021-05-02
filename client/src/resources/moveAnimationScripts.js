@@ -2,51 +2,58 @@ const moveAnimationScripts = {
     "PHYISCAL_ATTACK_TEST" : {
         moveToTarget: true,
         perfomerAnimation: "PUNCH",
-        performerEffects: false,
+        performerEffect: false,
+        effectToTarget: false,
         targetAnimationOnHit: "STANDARD_HIT",
-        targetEffectsOnHit: false
+        targetEffectOnHit: false
     },
     "PHYISCAL_ATTACK_TEST_2" : {
         moveToTarget: true,
         perfomerAnimation: "PUNCH",
-        performerEffects: false,
+        performerEffect: false,
+        effectToTarget: false,
         targetAnimationOnHit: "STANDARD_HIT",
-        targetEffectsOnHit: false
+        targetEffectOnHit: false
     },
     "SPECIAL_ATTACK_TEST" : {
         moveToTarget : false,
         perfomerAnimation: "TURN_SINGLE_CIRCLE",
-        performerEffects: "FIRE_CIRCLE",
+        performerEffect: "FIRE_CIRCLE_FULL",
+        effectToTarget: "FIRE_CIRCLE_MOVING",
         targetAnimationOnHit: "STANDARD_HIT",
-        targetEffectsOnHit: false
+        targetEffectOnHit: false
     },
     "STAT_UP_TEST" : {
         moveToTarget : false,
         perfomerAnimation: "TURN_SINGLE_CIRCLE",
-        performerEffects: "FIRE_CIRCLE",
+        performerEffect: false,
+        effectToTarget: false,
         targetAnimationOnHit: "TURN_SINGLE_CIRCLE",
-        targetEffectsOnHit: false
+        targetEffectOnHit: "FIRE_CIRCLE_FULL"
     },
     "STAT_UP_CHAD" : {
         moveToTarget : false,
         perfomerAnimation: "LIFT",
-        performerEffects: "FIRE_CIRCLE",
+        performerEffect: "FIRE_CIRCLE_BACK",
+        effectToTarget: false,
         targetAnimationOnHit: "TURN_SINGLE_CIRCLE",
-        targetEffectsOnHit: false
+        targetEffectOnHit: false
     },
     "STAT_DOWN_TEST" : {
         moveToTarget : false,
         perfomerAnimation: "TURN_SINGLE_CIRCLE",
-        performerEffects: "FIRE_CIRCLE",
+        performerEffect: "FIRE_CIRCLE_BACK",
+        effectToTarget: false,
         targetAnimationOnHit: "STANDARD_HIT",
-        targetEffectsOnHit: false
+        targetEffectOnHit: "FIRE_CIRCLE_FRONT"
     },
     "HEAL_TEST" : {
         moveToTarget : false,
         perfomerAnimation: "TURN_SINGLE_CIRCLE",
-        performerEffects: "FIRE_CIRCLE",
+        performerEffect: "FIRE_CIRCLE_BACK",
+        effectToTarget: "FIRE_CIRCLE_FRONT_MOVING",
         targetAnimationOnHit: "STANDARD_HIT",
-        targetEffectsOnHit: false
+        targetEffectOnHit: false
     }
 }
 /**

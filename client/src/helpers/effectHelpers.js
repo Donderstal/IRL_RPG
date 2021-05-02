@@ -4,8 +4,8 @@ const globals = require("../game-data/globals");
 
 const scripts = { 
     "FIRE_CIRCLE_FULL": {
-        backEffect: { "name": "FIRE_CIRCLE_FRONT", "loop": false },
-        frontEffect: { "name": "FIRE_CIRCLE_BACK", "loop": false },
+        backEffect: { "name": "FIRE_CIRCLE_BACK", "loop": false },
+        frontEffect: { "name": "FIRE_CIRCLE_FRONT", "loop": false },
         type: "FRONT_AND_BACK"
     },
     "FIRE_CIRCLE_FRONT": {
@@ -17,9 +17,13 @@ const scripts = {
         type: "BACK"
     },
     "FIRE_CIRCLE_MOVING": {
-        backEffect: { "name": "FIRE_CIRCLE_FRONT", "loop": false },
-        frontEffect: { "name": "FIRE_CIRCLE_BACK", "loop": false },
+        backEffect: { "name": "FIRE_CIRCLE_BACK", "loop": false },
+        frontEffect: { "name": "FIRE_CIRCLE_FRONT", "loop": false },
         type: "MOVING_FRONT_AND_BACK"
+    },
+    "FIRE_CIRCLE_FRONT_MOVING": {
+        frontEffect: { "name": "FIRE_CIRCLE_FRONT", "loop": false },
+        type: "MOVING_FRONT"
     }
 }
 /**
@@ -49,9 +53,11 @@ class GraphicalEffect {
     }
 
     get destinationIsLeft( ) { return this.destinationX < this.x; };
-    get destinationIsRight( ) { return this.destinationX > this.x + this.width; };
+    get destinationIsRight( ) { return this.destinationX > this.x + this.effectWidth; };
     get destinationIsUp( ) { return this.destinationY < this.y; };    
-    get destinationIsDown( ) { return this.destinationY > this.y + this.height; };
+    get destinationIsDown( ) { return this.destinationY > this.y + this.effectHeight; };
+    get effectWidth( ) { return this.front ? this.front.width : this.back.width; };
+    get effectHeight( ) { return this.front ? this.front.height : this.back.height; };
     get isActive( ) { return ( this.front && this.front.active ) || ( this.back && this.back.active ) }
     /**
      * Set given values to this.x and this.y
