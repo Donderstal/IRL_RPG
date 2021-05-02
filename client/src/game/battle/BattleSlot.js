@@ -156,7 +156,11 @@ class BattleSlot {
             this.animationStep = "ANIMATION"
             this.doMoveAnimationStep( animation );
         }
-        else if ( this.animationStep == "ANIMATION" && animation.moveToTarget == true ) {
+        else if ( this.animationStep == "ANIMATION" ) {
+            this.animationStep = "HIT"
+            this.doMoveAnimationStep( animation );
+        }
+        else if ( this.animationStep == "HIT" && animation.moveToTarget == true ) {
             this.animationStep = "GO_BACK"
             this.doMoveAnimationStep( animation );
         }
@@ -179,6 +183,9 @@ class BattleSlot {
                 this.doMoveAnimation( animation );
                 this.doSelectMoveEffects( );
                 break;
+            case "HIT": 
+                this.doHitAnimation( animation );
+                this.doSelectMoveEffects( );
             case "GO_BACK": 
                 this.sprite.setDestination( this.tile, "RETURN" );
                 this.sprite.initMovement( );
@@ -191,20 +198,36 @@ class BattleSlot {
      * @param {Object} animation object from moveAnimationScripts
      */
     doMoveAnimation( animation ) {
-        const scene = {
+        this.sprite.setScriptedAnimation( {
             animName: animation.perfomerAnimation,
             loop: false,
             numberOfLoops: false
-        };
-        this.sprite.setScriptedAnimation( scene, FRAME_LIMIT );
-        if ( animation.targetAnimationOnHit ) {
-            const targetScene = {
-                animName: animation.targetAnimationOnHit,
-                loop: false,
-                numberOfLoops: false
-            };
-            this.targetSlot.sprite.setScriptedAnimation( targetScene, FRAME_LIMIT );
-        }        
+        }, FRAME_LIMIT );
+        if ( animation.performerEffect ) {
+            this.sprite.setGraphicalEffect( animation.performerEffect );
+        }
+        if ( animation.effectToTarget ) {
+            globals.GAME.FRONT.addEffect( 
+                animation.effectToTarget, 
+                this.sprite.x, this.sprite.y, 
+                this.targetSlot.sprite.x, this.targetSlot.sprite.y
+            )
+        }
+    }
+        /**
+     * Set the animations and effects associated with given 
+     * animation object to performer and target sprites
+     * @param {Object} animation object from moveAnimationScripts
+     */
+    doHitAnimation( animation ) {
+        this.targetSlot.sprite.setScriptedAnimation( {
+            animName: animation.targetAnimationOnHit,
+            loop: false,
+            numberOfLoops: false
+        }, FRAME_LIMIT );   
+        if ( animation.targetEffectOnHit ) {
+            this.targetSlot.sprite.setGraphicalEffect( animation.targetEffectOnHit );
+        }   
     }
     /**
      * 
