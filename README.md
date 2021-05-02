@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAY 1, 2021
+* Added a class based setup for graphical effects
+* Integrating new effects setup in Battle move execution
+
 #### APR 28, 2021
 * Added tilesheets with color changes
 * Added new sprites with talking animation
