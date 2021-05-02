@@ -194,7 +194,7 @@ class BattleSlot {
     }
     /**
      * Set the animations and effects associated with given 
-     * animation object to performer and target sprites
+     * animation object to performer sprite
      * @param {Object} animation object from moveAnimationScripts
      */
     doMoveAnimation( animation ) {
@@ -214,9 +214,9 @@ class BattleSlot {
             )
         }
     }
-        /**
+    /**
      * Set the animations and effects associated with given 
-     * animation object to performer and target sprites
+     * animation object to target sprite
      * @param {Object} animation object from moveAnimationScripts
      */
     doHitAnimation( animation ) {
@@ -230,10 +230,10 @@ class BattleSlot {
         }   
     }
     /**
-     * 
+     * Call handleMoveExecution with inner properties as arguments.
+     * Then, fade out the target character if it is dead
      */
     doSelectMoveEffects( ) {
-        // test setup
         handleMoveExecution( this.selectedMove, this.targetSlot.character, this.character );
         if ( this.targetSlot.character.isDead ) {
             this.targetSlot.character.handleDeath( )

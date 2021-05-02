@@ -79,7 +79,6 @@ class Battle {
 
     startSelectMovePhase( ) {
         // test setup for move pathfinding and animation
-        let selectedSlot = this.battleSlots[0]
         this.battleSlots[0].selectMove( this.battleSlots[0].character.Moves[0], this.battleSlots[5] )
         this.battleSlots[1].selectMove( this.battleSlots[1].character.Moves[0], this.battleSlots[3] )
         this.battleSlots[2].selectMove( this.battleSlots[2].character.Moves[0], this.battleSlots[4] )
