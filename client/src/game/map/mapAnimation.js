@@ -35,6 +35,10 @@ const handleMapAnimations = ( GAME ) => {
     if ( GAME.bubbleIsActive ) {
         GAME.activeBubble.drawTextBox( )
     }
+
+    GAME.FRONT.activeEffects.forEach( ( e ) => {
+        e.drawAndMove( );
+    })
 }
 /**
  * Counter function for semi-randomly generating a car.
