@@ -105,8 +105,7 @@ class GraphicalEffect {
      * @param {Object} effectData object from the scripts constant in effectHelpers.js
      */
     initEffect( layer, effectData ) {
-        console.log(effectData)
-        const newEffect = new I_Effect( effectData.name, this.x, this.y, effectData.loop )        
+        const newEffect = new I_Effect( effectData.name, this.x, this.y )        
 
         if ( layer == "B" ) {
             this.back = newEffect;

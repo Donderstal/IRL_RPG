@@ -6,7 +6,7 @@ const globals = require("../../game-data/globals");
  * I_Effect instances represent a ( part of ) a graphical effect in the game.
  */
 class I_Effect {
-    constructor( name, x, y, loop ) {
+    constructor( name, x, y ) {
         this.name   = name;
         this.x      = x;
         this.y      = y;
@@ -14,7 +14,6 @@ class I_Effect {
 
         this.frameCount = 0;    
         this.activeFrameIndex = 0;
-        this.loop = loop;
 
         this.setEffectData( )
     }
@@ -69,12 +68,9 @@ class I_Effect {
         if ( this.frameCount >= FRAME_LIMIT ) {
             this.frameCount = 0;
             this.activeFrameIndex++;
-    
-            if (this.activeFrameIndex >= this.sheetFrameLimit && this.loop) {
+
+            if (this.activeFrameIndex >= this.sheetFrameLimit ) {
                 this.activeFrameIndex = 0;
-            }
-            else if (this.activeFrameIndex >= this.sheetFrameLimit && !this.loop) {
-                this.deActivate( );
             }
         }
     }
