@@ -210,6 +210,20 @@ const animationResources = {
         { row: 7, column: 0 },
         { row: 11, column: 0 },
         { row: 7, column: 0 }
+    ],
+    "TALK_UP": [
+        { row: 10, column: 0 },
+        { row: 10, column: 0 },
+        { row: 10, column: 1 },
+        { row: 10, column: 2 },
+        { row: 10, column: 0 },
+        { row: 10, column: 0 },
+        { row: 10, column: 1 },
+        { row: 10, column: 2 },
+        { row: 10, column: 1 },
+        { row: 10, column: 2 },
+        { row: 10, column: 1 },
+        { row: 10, column: 2 },
     ]
 }
 
