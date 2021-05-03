@@ -14,6 +14,7 @@ Try the latest the game at: http://34.90.228.47/
 
 #### MAY 3, 2021
 * Restoring battle textbox with new way of dynamically setting text
+* Seperate class for car sprites
 
 #### MAY 1, 2021
 * Added a class based setup for graphical effects
