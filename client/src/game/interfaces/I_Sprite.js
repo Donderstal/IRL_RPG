@@ -17,7 +17,7 @@ const {
  *  and movement towards a pre-defined destination.
  */
 class Sprite {
-    constructor ( tile, spriteSize, src, direction, isCar = false ) {   
+    constructor ( tile, spriteSize, src, direction ) {   
         if ( spriteSize == "STRD" ) {
             this.width   = STRD_SPRITE_WIDTH;
             this.height  = STRD_SPRITE_HEIGHT;            
@@ -39,54 +39,44 @@ class Sprite {
         this.sheet          = new Image();
         this.moving         = false;
         this.deleted        = false;
-        this.isCar          = isCar
         this.animationScript = {};
         this.activeEffect = { active: false };
 
-        this.setSpriteToGrid( tile, isCar )
+        this.setSpriteToGrid( tile )
 
         this.loaded = false
         this.getSpriteAndDrawWhenLoaded( )
     }
 
     get destinationIsLeft( ) { 
-        return this.isCar 
-        ? this.destinationTile.x - this.width < this.left 
-        : this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
+        return this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
     }
     get destinationIsRight( ) { 
-        return this.isCar 
-        ? this.destinationTile.x + GRID_BLOCK_PX + this.width > this.right
-        : this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == "FACING_RIGHT";
+        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == "FACING_RIGHT";
     }
     get destinationIsUp( ) { 
-        return this.isCar 
-        ? this.destinationTile.y - this.height < this.top 
-        : this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
+        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
     }    
     get destinationIsDown( ) { 
-        return this.isCar 
-        ? this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom 
-        : this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
+        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
     }
 
     get destinationIsBlocked( ) {
         return ( 
             globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ).isBlocked 
-            && globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row ).isBlocked 
+            || globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row ).isBlocked 
         )
     }
      /**
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
      * @param {I_TIle} tile instance of I_Tile Class
-     * @param {Boolean} isCar true if this is a car sprite
      */
-    setSpriteToGrid( tile, isCar ) {
+    setSpriteToGrid( tile ) {
         this.row = tile.row;
         this.col = tile.col;
         
-        this.x = isCar || this.width <= GRID_BLOCK_PX ? tile.x : tile.x + ( this.width - GRID_BLOCK_PX );
-        this.y = ( isCar && this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
+        this.x = this.width <= GRID_BLOCK_PX ? tile.x : tile.x + ( this.width - GRID_BLOCK_PX );
+        this.y = tile.y - ( this.height - GRID_BLOCK_PX )
     }
     /** 
      * Instantiate a sprite-bound graphical effect and assign it to this.activeEffect
@@ -214,12 +204,12 @@ class Sprite {
     /**
      * Set this.movingToDestination to true. 
      * If given speed is not null, set it to this.movementSpeed.
-     * Else, set MOVEMENT_SPEED. Add random variation to speed if this.isCar.
+     * Else, set MOVEMENT_SPEED.
      * @param {Number} speed optional. movement speed of the sprite in pixels
      */
     initMovement( speed = null ) {
         this.movingToDestination = true;
-        this.movementSpeed = speed != null ? speed : this.isCar ? MOVEMENT_SPEED * ( Math.random( ) + 1 ): MOVEMENT_SPEED ;
+        this.movementSpeed = speed != null ? speed : MOVEMENT_SPEED;
     }
     /**
      * Set this.sheetPosition to 0 to reset the sprite to a neutral pose.
@@ -243,13 +233,8 @@ class Sprite {
         this.destination        = destination;
         this.activeDestinationIndex;
 
-        if ( !this.destinationIsBlocked ) {
-            if ( !this.isCar ) {
-                this.setDestinationList( isLoop )
-            }
-            else {
-                this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
-            }
+        if ( !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING ) {
+            this.setDestinationList( isLoop )
         }
         else {
             this.unsetDestination( );
