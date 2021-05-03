@@ -1,14 +1,14 @@
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET } = require('../../../game-data/globals');
-const I_Sprite = require('../../interfaces/I_Sprite').Sprite
-const I_Hitbox = require('../../interfaces/I_Hitbox').I_Hitbox
-const checkForCollision = require('../map-ui/movementChecker').checkForCollision
+const { Sprite } = require('../../interfaces/I_Sprite')
+const { I_Hitbox } = require('../../interfaces/I_Hitbox')
+const { checkForCollision } = require('../map-ui/movementChecker')
 /**
  * The MapSprite is the base class for all standard size sprites in the game.
  * It contains functionalities to play a scriptedanimation and log the current position of the sprite in the map grid.
  * It also contains a I_Hitbox instance which is used for collision detection.
  */
-class MapSprite extends I_Sprite {
+class MapSprite extends Sprite {
     constructor ( tile, spriteSize, src ) {       
         super( tile, spriteSize, src, globals[tile.spriteData.direction] )   
         this.cell = {}

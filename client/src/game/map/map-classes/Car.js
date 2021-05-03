@@ -2,7 +2,7 @@ const { MapObject } = require("./MapObject");
 const { HitboxGroup } = require('./HitboxGroup')
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
-const { GRID_BLOCK_PX } = require('../../../game-data/globals')
+const { GRID_BLOCK_PX, MOVEMENT_SPEED } = require('../../../game-data/globals')
 
 class Car extends MapObject {
     constructor( tile, spriteId ) {
@@ -14,7 +14,19 @@ class Car extends MapObject {
     
     get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
     get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
-
+    get destinationIsLeft( ) { 
+        return this.destinationTile.x - this.width < this.left;
+    }
+    get destinationIsRight( ) { 
+        return this.destinationTile.x + GRID_BLOCK_PX + this.width > this.right;
+    }
+    get destinationIsUp( ) { 
+        return this.destinationTile.y - this.height < this.top;
+    }    
+    get destinationIsDown( ) { 
+        return this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom;
+    }
+    
     drawSprite( ) {
         this.blocked = false;
         this.setActiveFrames( );
@@ -29,6 +41,34 @@ class Car extends MapObject {
             this.goToDestination( );     
         }
         this.countFrame( );
+    }
+         /**
+     * Set the Sprites' location on the grid and xy axis depending on given I_Tile
+     * @param {I_TIle} tile instance of I_Tile Class
+     * @param {Boolean} isCar true if this is a car sprite
+     */
+    setSpriteToGrid( tile, isCar ) {
+        this.row = tile.row;
+        this.col = tile.col;
+        
+        this.x = tile.x;
+        this.y = ( this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
+    }
+    /**
+     * Set this.movingToDestination to true. 
+     * If given speed is not null, set it to this.movementSpeed.
+     * Else, set MOVEMENT_SPEED. Add random variation to speed if this.isCar.
+     * @param {Number} speed optional. movement speed of the sprite in pixels
+     */
+    initMovement( speed = null ) {
+        this.movingToDestination = true;
+        this.movementSpeed = MOVEMENT_SPEED * ( Math.random( ) + 1 );
+    }
+    /**
+     * Override of base method to set Car destination as single tile
+     */
+    setDestinationList( ) {
+        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
     }
     /**
      * TODO: more dynamic movement frames fetching
