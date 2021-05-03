@@ -1419,7 +1419,7 @@ module.exports = {
         ],
         "characters" : [
             {
-              "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
+              "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
               "anim_name": "NECKBEARD_HACK",
               "sprite": "neckbeard.png",
               "direction": "FACING_RIGHT",
@@ -1434,10 +1434,11 @@ module.exports = {
               }
             },
             {
-              "anim_type": NPC_ANIM_TYPE_IDLE,
+              "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
+              "anim_name": "LIFT",
               "sprite": "chad.png",
               "direction": "FACING_DOWN",
-              "row": 2,
+              "row": 3,
               "col": 21,
               "name": "Big Balls Bert",                    
               "action": {
@@ -1551,12 +1552,12 @@ module.exports = {
                 },
                 "characters" : [
                     {
-                        "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "Chad.png",
-                        "direction": "FACING_LEFT",
-                        "name": "chad_recolour01.png",
-                        "row": 3,
-                        "col": 3,
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "sprite": "Chad.png",
+                      "direction": "FACING_LEFT",
+                      "name": "chad_recolour01.png",
+                      "row": 3,
+                      "col": 3,
                     },
                     {
                       "anim_type": NPC_ANIM_TYPE_IDLE,

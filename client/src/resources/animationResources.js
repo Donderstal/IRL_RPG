@@ -58,41 +58,21 @@ const animationResources = {
         { row: 5, column: 0 },
         { row: 5, column: 1 }
     ],
-    "CHAD_RAGE_LEFT": [
-        { row: 1, column: 1 },
-        { row: 1, column: 3 },
-        { row: 1, column: 1 },
-        { row: 1, column: 3 },
-        { row: 6, column: 0 },
-        { row: 6, column: 0 },
-        { row: 4, column: 0 },
-        { row: 6, column: 0 },
-    ],
-    "CHAD_RAGE_RIGHT": [
-        { row: 2, column: 1 },
-        { row: 2, column: 3 },
-        { row: 2, column: 1 },
-        { row: 2, column: 3 },
-        { row: 6, column: 1 },
-        { row: 6, column: 1 },
-        { row: 5, column: 0 },
-        { row: 6, column: 1 },
-    ],
     "NECKBEARD_HACK_LEFT": [
-        { row: 10, column: 2 },
-        { row: 10, column: 3 },
-        { row: 10, column: 2 },
-        { row: 10, column: 3 },
-        { row: 10, column: 2 },
-        { row: 10, column: 3 }
+        { row: 15, column: 2 },
+        { row: 15, column: 3 },
+        { row: 15, column: 2 },
+        { row: 15, column: 3 },
+        { row: 15, column: 2 },
+        { row: 15, column: 3 }
     ],
     "NECKBEARD_HACK_RIGHT": [
-        { row: 8, column: 2 },
-        { row: 8, column: 3 },
-        { row: 8, column: 2 },
-        { row: 8, column: 3 },
-        { row: 8, column: 2 },
-        { row: 8, column: 3 }
+        { row: 13, column: 2 },
+        { row: 13, column: 3 },
+        { row: 13, column: 2 },
+        { row: 13, column: 3 },
+        { row: 13, column: 2 },
+        { row: 13, column: 3 }
     ],
     "STANDARD_HIT_RIGHT": [
         { row: 5, column: -1 },
@@ -158,6 +138,10 @@ const animationResources = {
     "BLINK_RIGHT": [
         { row: 9, column: 3 },
         { row: 9, column: 3 }
+    ],
+    "BLINK_UP": [
+        { row: 10, column: 2 },
+        { row: 10, column: 2 }
     ],
     "BLINK_DOWN": [
         { row: 7, column: 3 },

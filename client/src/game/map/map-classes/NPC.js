@@ -12,7 +12,10 @@ const globals = require('../../../game-data/globals');
 
 const cellRadius = 2;
 const animationList = [
-    "TALK"
+    "BACK_AND_FORTH",
+    "LEFT_AND_RIGHT",
+    "BOP",
+    "BLINK"
 ]
 /**
  * The NPC class is assigned to each non-player character in a map.
@@ -199,9 +202,6 @@ class NPC extends MapSprite {
      */
     setRandomAnimation( ) {
         const animation = animationList[ Math.floor( Math.random( ) * animationList.length )]
-        if ( animation == "BLINK" && this.direction == globals.FACING_UP ) {
-            return;
-        }
         let animationName;
 
         switch ( animation ) {
