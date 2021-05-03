@@ -2,6 +2,7 @@ const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { NPC } = require('./map/map-classes/NPC')
 const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
+const { Car } = require('./map/map-classes/Car')
 const { getUniqueId } = require('../helpers/utilFunctions');
 const { Road } = require('./map/map-classes/Road');
 const { BattleSlot } = require('./battle/BattleSlot');
@@ -126,9 +127,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * Instantiate a MapObject instance at the given tile. Give it an unique ID and add it to the allSprites & spriteDictionary props
      * @param {I_Tile} tile 
      */
-    setObjectSprite( tile ) {
+    setObjectSprite( tile, isCar ) {
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );
-        const newObject = new MapObject( tile, newId )
+        const newObject = isCar ? new Car( tile, newId ) : new MapObject( tile, newId )
         this.allSprites.push( newObject )
         this.spriteDictionary[newId] = newObject
         tile.spriteId = newId;
@@ -162,7 +163,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         const carData = activeRoad.getCarDataForTile( )
         const tile = super.getTileAtCell( carData.col, carData.row );
         tile.setSpriteData( "object", carData )
-        this.setObjectSprite( tile )   
+        this.setObjectSprite( tile, true )   
         tile.clearSpriteData( );   
     }
     /**
