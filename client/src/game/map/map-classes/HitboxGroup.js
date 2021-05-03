@@ -26,7 +26,7 @@ class HitboxGroup {
     get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     get isAtIntersection( ) { return this.currentTileFront && this.currentTileFront.hasIntersection }
-    get isOnIntersection( ) { return this.middleTileFront && this.middleTileFront.hasIntersection; }
+    get middleIsOnIntersection( ) { return this.middleTileFront && this.middleTileFront.hasIntersection; }
     /**
      * Initialize an empty array in this.hitboxes.
      * Get the desired xyvalues of the hitboxes from this.getHitboxXYValues.
@@ -55,7 +55,8 @@ class HitboxGroup {
         let xyValues = this.getHitboxXYValues( );
     
         this.hitboxes.forEach( ( hitbox, index ) => {
-            hitbox.updateXy( xyValues[index].x, xyValues[index].y )
+            //hitbox.updateXy( xyValues[index].x, xyValues[index].y )
+            hitbox.draw( xyValues[index].x, xyValues[index].y )
         } )
 
         this.updateTileIndexes( xyValues );

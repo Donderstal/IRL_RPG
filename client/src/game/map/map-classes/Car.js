@@ -47,11 +47,11 @@ class Car extends MapObject {
      * @param {I_TIle} tile instance of I_Tile Class
      * @param {Boolean} isCar true if this is a car sprite
      */
-    setSpriteToGrid( tile, isCar ) {
+    setSpriteToGrid( tile ) {
         this.row = tile.row;
         this.col = tile.col;
         
-        this.x = tile.x;
+        this.x = this.direction == globals["FACING_RIGHT"] ? tile.x - this.width : tile.x;
         this.y = ( this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
     }
     /**
@@ -135,20 +135,29 @@ class Car extends MapObject {
      * intersectingDirection in the intersection I_Tile. If a valid direction is found, call this.switchDirections.
      */
     checkForIntersection( ) {
-        const isFacingUp = this.direction == globals["FACING_UP"]
+        const isFacingUp = this.direction == globals["FACING_UP"];
           this.hitboxGroups.forEach( ( group ) => {
-            if ( group.isAtIntersection && !this.turning ) {
-                let intersectionTile = isFacingUp ? group.middleTileFront : group.currentTileFront;
-                intersectionTile.intersectingDirections.forEach( ( direction ) => {
-                    if ( globals[direction] != this.direction && !this.turning ) {
-                        this.turning = true;
-                        this.switchDirections( direction, intersectionTile );
-                    }
-                })
+            if ( group.isAtIntersection && !this.turning && !isFacingUp ) {
+                this.handleIntersection(  group.currentTileFront );
+            }
+            else if ( group.middleIsOnIntersection && !this.turning && isFacingUp ) {
+                this.handleIntersection( group.middleTileFront );
             }
         })
     }
-        /**
+    /**
+     * Handle the intersection at the current tile and call switchDirection
+     * @param {I_Tile} intersectionTile 
+     */
+    handleIntersection( intersectionTile ) {
+        intersectionTile.intersectingDirections.forEach( ( direction ) => {
+            if ( globals[direction] != this.direction && !this.turning ) {
+                this.turning = true;
+                this.switchDirections( direction, intersectionTile );
+            }
+        })
+    }
+    /**
      * 
      * @param {String} newDirection direction to switch to as string
      * @param {I_Tile} intersectionTile grid tile with intersection
@@ -158,7 +167,7 @@ class Car extends MapObject {
             group.clearTileIndexes( )
         })
         this.direction = globals[newDirection];
-        super.setSpriteToGrid( intersectionTile, true ) 
+        super.setSpriteToGrid( intersectionTile ) 
         this.setObjectDimensionsBasedOnDirection( newDirection )
         this.initHitboxGroups( );
 
