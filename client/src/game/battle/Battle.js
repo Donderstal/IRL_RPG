@@ -4,12 +4,16 @@ const {
     BATTLE_PHASE_END_TURN, BATTLE_PHASE_END_BATTLE
 } = require('../../game-data/battleGlobals');
 const { ATT_SPEED } = require('../../game-data/globals');
+const { BattleText } = require('./BattleText');
 
 class Battle {
     constructor( opponentParty ) {
         this.phase          = BATTLE_PHASE_BEGIN_TURN; 
         this.opponentParty  = opponentParty;
         this.currentTurn    = 0;
+
+        globals.GAME.activeText     = this.opponentParty.members[0].Name + "'s party challenges you to a fight!" 
+        this.textContainer  = new BattleText( );
 
         this.handleCurrentBattlePhase( );
     }

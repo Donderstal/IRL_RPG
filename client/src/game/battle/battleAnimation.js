@@ -25,6 +25,8 @@ const handleBattleAnimations = ( GAME ) => {
     GAME.FRONT.activeEffects.forEach( ( e ) => {
         e.drawAndMove( );
     })
+
+    GAME.battle.textContainer.drawTextBox( );
 }
 
 module.exports = { 

@@ -33,6 +33,7 @@ class Game {
         this.sound = new SoundController( );
 
         this.activeBubble = { }
+        this.activeText = "";
         this.bubbleIsActive;
 
         this.front = { }; // class Foreground
@@ -54,6 +55,13 @@ class Game {
     get PARTY_MEMBERS( ) { return this.party.members }
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
+    /**
+     * Assign given text to this.activeText
+     * @param {String} text
+     */
+    setActiveText( text ) {
+        this.activeText = text;
+    }
     /**
      * Return the I_Tile instance at index on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
