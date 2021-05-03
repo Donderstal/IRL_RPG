@@ -464,6 +464,9 @@ class Sprite {
      * Then, reset this.drection to this.originalDirection and set this.sheetPosition to 0 for a neutral spritesheet frame.
      */
     unsetScriptedAnimation( ) {
+        if ( this.hasActiveEffect ) {
+            this.unsetGraphicalEffect( );
+        }
         this.inScriptedAnimation    = false;  
         this.animationScript        = { };
         this.direction              = this.originalDirection;

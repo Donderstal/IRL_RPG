@@ -201,7 +201,6 @@ class BattleSlot {
      * @param {Object} animation object from moveAnimationScripts
      */
     doMoveAnimation( animation ) {
-        this.unsetActiveEffects( );
         this.sprite.setScriptedAnimation( {
             animName: animation.perfomerAnimation,
             loop: false,
@@ -224,7 +223,6 @@ class BattleSlot {
      * @param {Object} animation object from moveAnimationScripts
      */
     doHitAnimation( animation ) {
-        this.unsetActiveEffects( );
         this.targetSlot.sprite.setScriptedAnimation( {
             animName: animation.targetAnimationOnHit,
             loop: false,
@@ -244,13 +242,6 @@ class BattleSlot {
             this.targetSlot.character.handleDeath( )
             this.targetSlot.sprite.fadeOut( );
         }
-    }
-    /**
-     * Unset effects on the inner sprite and targetslot sprite
-     */
-    unsetActiveEffects( ) {
-        this.targetSlot.sprite.unsetGraphicalEffect( )
-        this.sprite.unsetGraphicalEffect( )
     }
     /**
      * Clear this.selectedMove and this.targetSlot
