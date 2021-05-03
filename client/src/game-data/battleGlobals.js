@@ -1,4 +1,4 @@
-const { STRD_SPRITE_HEIGHT, STRD_SPRITE_WIDTH } = require('./globals') 
+const { STRD_SPRITE_HEIGHT, STRD_SPRITE_WIDTH, CANVAS_HEIGHT, CANVAS_WIDTH } = require('./globals') 
 
 const BATTLE_SPRITE_WIDTH   = STRD_SPRITE_WIDTH * 1.5;
 const BATTLE_SPRITE_HEIGHT  = STRD_SPRITE_HEIGHT * 1.5;
@@ -6,13 +6,13 @@ const BATTLE_SPRITE_HEIGHT  = STRD_SPRITE_HEIGHT * 1.5;
 const BATTLE_SPRITE_WIDTH_IN_SHEET = 96;
 const BATTLE_SPRITE_HEIGHT_IN_SHEET = 168;
 
-const LEFT_BATTLE_POSITION_1    = { 'column': 4, 'row': 7 };
-const LEFT_BATTLE_POSITION_2    = { 'column': 6, 'row': 9 };
-const LEFT_BATTLE_POSITION_3    = { 'column': 4, 'row': 11 };
+const LEFT_BATTLE_POSITION_1    = { 'column': 4, 'row': 6 };
+const LEFT_BATTLE_POSITION_2    = { 'column': 5, 'row': 9 };
+const LEFT_BATTLE_POSITION_3    = { 'column': 4, 'row': 12 };
 
-const RIGHT_BATTLE_POSITION_1   = { 'column': 20, 'row': 7 };
-const RIGHT_BATTLE_POSITION_2    = { 'column': 18, 'row': 9 };
-const RIGHT_BATTLE_POSITION_3    = { 'column': 20, 'row': 11 };
+const RIGHT_BATTLE_POSITION_1   = { 'column': 20, 'row': 6 };
+const RIGHT_BATTLE_POSITION_2    = { 'column': 19, 'row': 9 };
+const RIGHT_BATTLE_POSITION_3    = { 'column': 20, 'row': 12 };
 
 const SHEET_ROW_BATTLE_FACING_LEFT         = 4;
 const SHEET_ROW_BATTLE_FACING_RIGHT        = 5;
@@ -23,6 +23,9 @@ const BATTLE_PHASE_SELECT_MOVE  = "PHASE_2";
 const BATTLE_PHASE_DO_MOVES     = "PHASE_3";
 const BATTLE_PHASE_END_TURN     = "PHASE_4";
 const BATTLE_PHASE_END_BATTLE   = "PHASE_5";
+
+const TEXTBOX_XY = { "x": CANVAS_WIDTH * .25, "y": (CANVAS_HEIGHT / 6) * 5 }
+const TEXTBOX_DIMENSIONS = { "width": CANVAS_WIDTH * .35, "height": CANVAS_HEIGHT / 6}
 
 module.exports = {
     BATTLE_SPRITE_WIDTH,
@@ -47,5 +50,8 @@ module.exports = {
     BATTLE_PHASE_SELECT_MOVE,
     BATTLE_PHASE_DO_MOVES,
     BATTLE_PHASE_END_TURN,
-    BATTLE_PHASE_END_BATTLE
+    BATTLE_PHASE_END_BATTLE,
+
+    TEXTBOX_XY,
+    TEXTBOX_DIMENSIONS
 }
