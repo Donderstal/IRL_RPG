@@ -16,26 +16,19 @@ class Car extends MapObject {
     get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
 
     drawSprite( ) {
-        if ( this.movingToDestination ) {
-            this.blocked = false;
-            this.setActiveFrames( );
-        }
+        this.blocked = false;
+        this.setActiveFrames( );
 
         super.drawSprite( );
 
-        if ( this.movingToDestination ) {
-            this.updateHitboxes( );
-            this.checkForCollision( );
-            this.checkForIntersection( );
+        this.updateHitboxes( );
+        this.checkForCollision( );
+        this.checkForIntersection( );
 
-            if ( !this.blocked ) {
-                this.goToDestination( );     
-            }
+        if ( !this.blocked ) {
+            this.goToDestination( );     
         }
-
-        if ( this.movingToDestination ) {
-            this.countFrame( );
-        }
+        this.countFrame( );
     }
     /**
      * TODO: more dynamic movement frames fetching
@@ -132,11 +125,10 @@ class Car extends MapObject {
         globals.GAME.front.class.roads.forEach( ( road ) => {
             if ( road.direction == newDirection) {
                 this.destination = road.endCell;
-
             }
         })
 
-        this.destinationTile    = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
+        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
     }
         /**
      * Depending on what direction the destination is, move on the x or y axis.

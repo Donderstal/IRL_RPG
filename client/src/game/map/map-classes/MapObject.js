@@ -7,7 +7,6 @@ const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../../../game-data/gl
 const globals       = require('../../../game-data/globals')
 const mapObjectResources = require('../../../resources/mapObjectResources')
 /**
- * TODO: clean or seperate the movement code for car sprites.
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
  * Their sizes can vary from the standard sprite sizes.
  * They can also contain a MapAction instance.
@@ -49,6 +48,9 @@ class MapObject extends Sprite {
      * Finally, countFrame if still sprite is still moving.
      */
     drawSprite( ) {
+        if ( this.hasActiveEffect ) {
+            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+        }
         drawFromImageToCanvas(
             "FRONT",
             this.sheet,
@@ -57,7 +59,9 @@ class MapObject extends Sprite {
             this.widthInSheet, this.heightInSheet,
             this.x, this.y, this.width, this.height
         )
-
+        if ( this.hasActiveEffect ) {
+            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+        }
         this.updateSpriteBorders( )
     }
     /**
