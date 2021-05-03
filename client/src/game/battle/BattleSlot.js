@@ -8,6 +8,7 @@ const { BattleSprite } = require('./BattleSprite');
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../game-data/globals');
 const { StatBar } = require('../interfaces/I_StatBar');
 const { handleMoveExecution } = require('../../helpers/moveHelpers');
+const { MOVE_PROP_KEY_NAME } = require('../../game-data/moveGlobals');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
  * The player characters are on the left, the opponent characters are on the right.
@@ -134,6 +135,8 @@ class BattleSlot {
      * Then, call doMoveAnimationStep
      */
     doSelectedMove( ) {
+        globals.GAME.setActiveText( this.character.Name + " does " + this.selectedMove[MOVE_PROP_KEY_NAME] + "!")
+
         const animation = this.selectedMove.animation;
         this.performingBattleMove = true;
 
@@ -160,7 +163,7 @@ class BattleSlot {
             this.animationStep = "HIT"
             this.doMoveAnimationStep( animation );
         }
-        else if ( this.animationStep == "HIT" && animation.moveToTarget == true ) {
+        else if ( this.animationStep == "HIT" && animation.moveToTarget ) {
             this.animationStep = "GO_BACK"
             this.doMoveAnimationStep( animation );
         }
@@ -181,11 +184,10 @@ class BattleSlot {
                 break;
             case "ANIMATION": 
                 this.doMoveAnimation( animation );
-                this.doSelectMoveEffects( );
                 break;
             case "HIT": 
                 this.doHitAnimation( animation );
-                this.doSelectMoveEffects( );
+                this.calculateSelectedMoveResult( );
             case "GO_BACK": 
                 this.sprite.setDestination( this.tile, "RETURN" );
                 this.sprite.initMovement( );
@@ -233,7 +235,7 @@ class BattleSlot {
      * Call handleMoveExecution with inner properties as arguments.
      * Then, fade out the target character if it is dead
      */
-    doSelectMoveEffects( ) {
+    calculateSelectedMoveResult( ) {
         handleMoveExecution( this.selectedMove, this.targetSlot.character, this.character );
         if ( this.targetSlot.character.isDead ) {
             this.targetSlot.character.handleDeath( )
