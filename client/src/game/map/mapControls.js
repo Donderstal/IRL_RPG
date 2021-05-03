@@ -20,6 +20,7 @@ const handleMapKeyPress = ( event ) => {
     else if ( event.key == "e" && GAME.bubbleIsActive ) {
         GAME.activeBubble = {}
         GAME.bubbleIsActive = false
+        GAME.activeAction = null;
     }
     else if ( !GAME.cinematicMode ) {
         GAME.pressedKeys[event.key] = true        

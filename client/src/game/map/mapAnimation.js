@@ -26,7 +26,7 @@ const handleMapAnimations = ( GAME ) => {
         handleCarGeneration( GAME );
     }
 
-    if ( GAME.PLAYER != undefined && !GAME.paused ) {
+    if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
         mapControls.handleMovementKeys( );  
     }
 
