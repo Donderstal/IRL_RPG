@@ -20,10 +20,10 @@ module.exports = {
             "col": 12
         },
         "roads" : [
-            { "alignment": "HORI", "topRow": 12, "bottomRow": 13, "direction": "FACING_RIGHT" },
-            { "alignment": "HORI", "topRow": 4, "bottomRow": 5, "direction": "FACING_LEFT" },
+            { "alignment": "HORI", "topRow": 12, "bottomRow": 13, "direction": "FACING_LEFT" },
+            { "alignment": "HORI", "topRow": 4, "bottomRow": 5, "direction": "FACING_RIGHT" },
 
-            { "alignment": "VERT", "leftCol": 4, "rightCol": 5, "direction": "FACING_DOWN" },
+            { "alignment": "VERT", "leftCol": 4, "rightCol": 5, "direction": "FACING_UP" },
             { "alignment": "VERT", "leftCol": 20, "rightCol": 21, "direction": "FACING_UP" },
         ],
         "grid": [

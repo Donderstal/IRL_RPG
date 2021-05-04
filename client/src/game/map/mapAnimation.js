@@ -1,6 +1,7 @@
 const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
-const mapControls = require('./mapControls')
+const mapControls = require('./mapControls');
+const { drawRect } = require('../../helpers/canvasHelpers');
 
 let carGenerationLimit = 10000;
 let randomCarLimit = 0;
@@ -17,6 +18,11 @@ let newTimeStamp = 0;
  * @param {Game} GAME Instance of the Game class in Game.js
  */
 const handleMapAnimations = ( GAME ) => {
+    GAME.FRONT.grid.array.forEach( ( e ) => {
+        if ( e.hasIntersection ) {
+            drawRect( "BACK", e.x, e.y, GRID_BLOCK_PX, GRID_BLOCK_PX, "#FF0000" );
+        }
+    } )
 
     drawSpritesInOrder( GAME )
 

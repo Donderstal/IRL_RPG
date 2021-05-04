@@ -103,12 +103,8 @@ const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE
  */
 const drawRect = ( canvas, x, y, width, height, color = null ) => {
     let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()
-
-    ctx.beginPath();
     ctx.fillStyle = (color != null) ? color : "white"
     ctx.fillRect( x, y, width, height );
-    ctx.rect( x, y, width, height );
-    ctx.stroke();
 }
 /**
  * Set the ctx.font of frontcanvas to given font size
