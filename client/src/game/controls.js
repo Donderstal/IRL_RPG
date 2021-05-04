@@ -11,6 +11,12 @@ const { handleBattleKeyPress } = require('./battle/battleControls');
 const listenForKeyPress = ( ) => {
     window.addEventListener('keydown', addKeyToPressed)
     window.addEventListener('keyup', removeKeyFromPressed)
+    window.addEventListener('mousedown', ( event ) => {
+        if ( event.which == 3 ) {
+            // clear pressed keys on right click
+            clearPressedKeys( globals.GAME.pressedKeys );
+        }
+    })
     globals.GAME.listeningForPress = true;
 }
 /**

@@ -216,7 +216,7 @@ class Game {
         this.storeMapData( newMapData, destination );
 
         setTimeout( ( ) => {
-            controls.listenForKeyPress(); 
+            controls.listenForKeyPress( ); 
             this.paused = false;   
         }, 100 )
     }
