@@ -11,11 +11,11 @@ class Road {
         this.hasStart = roadData.hasStart == undefined;
         this.endsAtIntersection = roadData.endsAtIntersection;
 
-        this.isHorizontal = this.direction == "FACING_LEFT" || this.direction == "FACING_RIGHT";
-
+        this.isHorizontal = roadData.alignment == "HORI";
         this.startCell = {};
         this.endCell = {};
 
+        this.setRoadAligment( roadData )
         this.setRoadCoordinates( roadData )
     }
 
@@ -27,6 +27,19 @@ class Road {
         ).hasSprite 
     }
     /**
+     * @param {Object} roadData object from a mapResources map containing information about the road.
+     */
+    setRoadAligment( roadData ) {
+        if ( roadData.alignment == "VERT" ) {
+            this.leftCol    = roadData["leftCol"];
+            this.rightCol   = roadData["rightCol"];
+        } 
+        else if ( roadData.alignment == "HORI" ) {
+            this.topRow     = roadData["topRow"];
+            this.bottomRow  = roadData["bottomRow"];    
+        }
+    }
+    /**
      * Set the start and end location of the road based on the direction prop of roadData.
      * @param {Object} roadData object from a mapResources map containing information about the road.
      */
@@ -35,28 +48,28 @@ class Road {
 
         switch( roadData.direction ) {
             case "FACING_LEFT" :
-                this.startCell["row"]  = roadData.row;
-                this.startCell["col"]  = activeGrid.cols
-                this.endCell["row"] = roadData.row
-                this.endCell["col"] = 1
+                this.startCell["row"]   = this.topRow;
+                this.startCell["col"]   = activeGrid.cols;
+                this.endCell["row"]     = this.topRow;
+                this.endCell["col"]     = 1;
                 break;
             case "FACING_UP" :
-                this.startCell["row"]  = activeGrid.rows
-                this.startCell["col"]  = roadData.col;
-                this.endCell["row"] = 1
-                this.endCell["col"] = roadData.col
+                this.startCell["row"]   = activeGrid.rows;
+                this.startCell["col"]   = this.rightCol;
+                this.endCell["row"]     = 1;
+                this.endCell["col"]     = this.rightCol;
                 break;
             case "FACING_RIGHT" :
-                this.startCell["row"]  = roadData.row;
-                this.startCell["col"]  = 1
-                this.endCell["row"] = roadData.row
-                this.endCell["col"] = activeGrid.cols
+                this.startCell["row"]   = this.bottomRow;
+                this.startCell["col"]   = 1;
+                this.endCell["row"]     = this.bottomRow;
+                this.endCell["col"]     = activeGrid.cols;
                 break;
             case "FACING_DOWN" :
-                this.startCell["row"]  = 1
-                this.startCell["col"]  = roadData.col;
-                this.endCell["row"] = activeGrid.rows
-                this.endCell["col"] = roadData.col
+                this.startCell["row"]   = 1;
+                this.startCell["col"]   = this.leftCol;
+                this.endCell["row"]     = activeGrid.rows;
+                this.endCell["col"]     = this.leftCol;
                 break;
             default:
                 console.log("error! Direction " + roadData.direction + " not recognized")
@@ -69,17 +82,24 @@ class Road {
      */
     checkForIntersections( roads ) {
         roads.forEach( ( road, index ) => { 
-            if ( index != this.index ) { 
-                if  ( this.isHorizontal && !road.isHorizontal ) {
-                    const cell = { 'row': this.startCell.row, 'col': road.startCell.col }
-                    const tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", cell.col, cell.row )
-                    this.setIntersection( tile, road )
+            if ( index != this.index && ( ( this.isHorizontal && !road.isHorizontal ) || ( !this.isHorizontal && road.isHorizontal ) )) { 
+                let cell;
+                switch( this.direction ) {
+                    case "FACING_LEFT" :
+                        cell = { 'row': this.bottomRow, 'col': road.rightCol }
+                        break;
+                    case "FACING_UP" :
+                        cell = { 'row': road.topRow, 'col': this.rightCol }
+                        break;
+                    case "FACING_RIGHT" :
+                        cell = { 'row': this.topRow, 'col': road.leftCol }
+                        break;
+                    case "FACING_DOWN" :
+                        cell = { 'row': road.bottomRow, 'col': this.leftCol }
+                        break;
                 }
-                else if ( !this.isHorizontal && road.isHorizontal ) {
-                    const cell = { 'row': road.startCell.row, 'col': this.startCell.col }
-                    const tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", cell.col, cell.row )
-                    this.setIntersection( tile, road )
-                }
+                const tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", cell.col, cell.row )
+                this.setIntersection( tile, road )
             }
         } )
     }

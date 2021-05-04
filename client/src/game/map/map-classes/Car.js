@@ -47,12 +47,23 @@ class Car extends MapObject {
      * @param {I_TIle} tile instance of I_Tile Class
      * @param {Boolean} isCar true if this is a car sprite
      */
-    setSpriteToGrid( tile ) {
+    setSpriteToGrid( tile, inConstructor = true ) {
         this.row = tile.row;
         this.col = tile.col;
         
         this.x = this.direction == globals["FACING_RIGHT"] ? tile.x - this.width : tile.x;
-        this.y = ( this.direction == globals["FACING_UP"] ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
+        this.y = ( this.direction == globals["FACING_UP"] && inConstructor ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
+
+        switch ( this.direction ) { 
+            case globals["FACING_LEFT"]: 
+                this.y += GRID_BLOCK_PX
+                break;
+            case globals["FACING_UP"]: 
+                this.x -= GRID_BLOCK_PX;
+                break;
+            case globals["FACING_RIGHT"]:
+                break;
+        }
     }
     /**
      * Set this.movingToDestination to true. 
@@ -135,12 +146,8 @@ class Car extends MapObject {
      * intersectingDirection in the intersection I_Tile. If a valid direction is found, call this.switchDirections.
      */
     checkForIntersection( ) {
-        const isFacingUp = this.direction == globals["FACING_UP"];
           this.hitboxGroups.forEach( ( group ) => {
-            if ( group.isAtIntersection && !this.turning && !isFacingUp ) {
-                this.handleIntersection(  group.currentTileFront );
-            }
-            else if ( group.middleIsOnIntersection && !this.turning && isFacingUp ) {
+            if ( group.middleIsOnIntersection && !this.turning ) {
                 this.handleIntersection( group.middleTileFront );
             }
         })
@@ -167,7 +174,7 @@ class Car extends MapObject {
             group.clearTileIndexes( )
         })
         this.direction = globals[newDirection];
-        super.setSpriteToGrid( intersectionTile ) 
+        this.setSpriteToGrid( intersectionTile, false ) 
         this.setObjectDimensionsBasedOnDirection( newDirection )
         this.initHitboxGroups( );
 
