@@ -168,7 +168,7 @@ class BattleSlot {
             this.doMoveAnimationStep( animation );
         }
         else {
-            this.unsetActiveEffects( );
+            this.sprite.unsetGraphicalEffect( );
             this.unsetSelectedMove( );
             this.unsetMoveAnimationData( );
         }
