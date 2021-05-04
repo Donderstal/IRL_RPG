@@ -86,13 +86,13 @@ class Road {
                 let cell;
                 switch( this.direction ) {
                     case "FACING_LEFT" :
-                        cell = { 'row': this.bottomRow, 'col': road.rightCol }
+                        cell = { 'row': this.topRow, 'col': road.leftCol }
                         break;
                     case "FACING_UP" :
                         cell = { 'row': road.topRow, 'col': this.rightCol }
                         break;
                     case "FACING_RIGHT" :
-                        cell = { 'row': this.topRow, 'col': road.leftCol }
+                        cell = { 'row': this.bottomRow, 'col': road.rightCol }
                         break;
                     case "FACING_DOWN" :
                         cell = { 'row': road.bottomRow, 'col': this.leftCol }

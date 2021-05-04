@@ -158,7 +158,7 @@ class Car extends MapObject {
      */
     handleIntersection( intersectionTile ) {
         intersectionTile.intersectingDirections.forEach( ( direction ) => {
-            if ( globals[direction] != this.direction && !this.turning ) {
+            if ( globals[direction] != this.direction && !this.turning && Math.random( ) > .5 ) {
                 this.turning = true;
                 this.switchDirections( direction, intersectionTile );
             }
@@ -185,6 +185,9 @@ class Car extends MapObject {
         })
 
         this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
+        setTimeout( ( )=> {
+            this.turning = false;
+        }, 500 )
     }
         /**
      * Depending on what direction the destination is, move on the x or y axis.
