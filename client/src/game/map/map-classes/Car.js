@@ -57,11 +57,16 @@ class Car extends MapObject {
         switch ( this.direction ) { 
             case globals["FACING_LEFT"]: 
                 this.y += GRID_BLOCK_PX
+                this.x -= GRID_BLOCK_PX * 2;
                 break;
             case globals["FACING_UP"]: 
                 this.x -= GRID_BLOCK_PX;
                 break;
-            case globals["FACING_RIGHT"]:
+            case globals["FACING_DOWN"]:
+                this.y += GRID_BLOCK_PX
+                break;
+            case globals["FACING_RIGHT"]: 
+                this.x += GRID_BLOCK_PX;
                 break;
         }
     }
@@ -76,7 +81,7 @@ class Car extends MapObject {
         this.movementSpeed = MOVEMENT_SPEED * ( Math.random( ) + 1 );
     }
     /**
-     * Override of base method to set Car destination as single tile
+     * Override of base method to set Car destination as single tile instead of a list of tiles
      */
     setDestinationList( ) {
         this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
@@ -188,7 +193,9 @@ class Car extends MapObject {
         }
     }
     /**
-     * 
+     * Clear the hitboxGroups tile indexes and set the newDirection to Car
+     * Set the sprite to gridd at the intersectionTile and check for new spritesheet dimensions
+     * Then, initialize new HitboxGroups and set the destination tile of the new road as destination
      * @param {String} newDirection direction to switch to as string
      * @param {I_Tile} intersectionTile grid tile with intersection
      */
@@ -202,12 +209,12 @@ class Car extends MapObject {
         this.initHitboxGroups( );
 
         globals.GAME.front.class.roads.forEach( ( road ) => {
-            if ( road.direction == newDirection) {
+            if ( road.direction == newDirection ) {
                 this.destination = road.endCell;
             }
         })
 
-        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
+        this.setDestinationList( );
         setTimeout( ( )=> {
             this.handlingIntersection = false;
         }, 500 )

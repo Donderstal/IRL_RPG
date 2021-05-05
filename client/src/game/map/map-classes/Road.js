@@ -27,6 +27,7 @@ class Road {
         ).hasSprite 
     }
     /**
+     * Store the column numbers of the road if vertical, rows if horizontal
      * @param {Object} roadData object from a mapResources map containing information about the road.
      */
     setRoadAligment( roadData ) {
@@ -45,7 +46,6 @@ class Road {
      */
     setRoadCoordinates( roadData ) {
         const activeGrid = globals.GAME.front.class.grid;
-
         switch( roadData.direction ) {
             case "FACING_LEFT" :
                 this.startCell["row"]   = this.topRow;
@@ -105,23 +105,14 @@ class Road {
     }
     /**
      * Set tile.hasIntersection to true.
-     * For each available path at the intersection, push a string representing its direction to tile.intersectingDirections.
+     * Assign this.direction to tile's intersectionFrom and give road direction to intersectionTo
      * @param {I_Tile} tile I_Tile instance to set intersection to
      * @param {Road} road Road instance intersecting with this Road
      */
     setIntersection( tile, road ) {
         tile.hasIntersection        = true;
-        /* tile.intersectingDirections = [ ]; */
         tile.intersectionFrom = this.direction;
         tile.intersectionTo = road.direction;
-
-        /* if ( !road.endsAtIntersection ) {
-            tile.intersectingDirections.push( road.direction );
-        }
-
-        if ( !this.endsAtIntersection ) {
-            tile.intersectingDirections.push( this.direction );
-        } */
     }
     /**
      * Randomly select a car sprite from the available sprites.

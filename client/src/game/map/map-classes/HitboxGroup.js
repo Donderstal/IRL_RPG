@@ -55,8 +55,7 @@ class HitboxGroup {
         let xyValues = this.getHitboxXYValues( );
     
         this.hitboxes.forEach( ( hitbox, index ) => {
-            //hitbox.updateXy( xyValues[index].x, xyValues[index].y )
-            hitbox.draw( xyValues[index].x, xyValues[index].y )
+            hitbox.updateXy( xyValues[index].x, xyValues[index].y )
         } )
 
         this.updateTileIndexes( xyValues );

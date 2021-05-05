@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAY 5, 2021
+* Streamlined road system. Fixed problems with car turning
+
 #### MAY 3, 2021
 * Bugfixing graphical effects code. Making effects available outside of battles
 * Restoring battle textbox with new way of dynamically setting text
