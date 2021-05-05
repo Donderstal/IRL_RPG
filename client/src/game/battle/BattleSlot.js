@@ -22,9 +22,10 @@ class BattleSlot {
         this.HPStatBars = null;
         this.PPStatBars = null;
 
-        this.tile   = [ ];
         this.tilePosition   = this.setTilePosition( );
         this.tile = globals.GAME.FRONT.battleGrid.getTileAtCell( this.tilePosition.column, this.tilePosition.row );
+        this.slotX = this.tile.x;
+        this.slotY = this.tile.y
 
         this.performingBattleMove = false;
         this.selectedMove = null;
@@ -82,6 +83,8 @@ class BattleSlot {
      * Instantiate a StatBar for HP and PP
      */
     initStatBars( ) {
+        this.HPBarX = this.sprite.x + ( GRID_BLOCK_PX * .5 );
+        this.HPBarY = this.sprite.y - ( GRID_BLOCK_PX * .5 );
         if ( this.side == "LEFT" ) {
             this.HPStatBars = new StatBar( "HP-PLAYER", this.activeHP, this.maxHP );
             this.PPStatBars = new StatBar( "PP", this.activePP, this.maxPP );
@@ -113,12 +116,10 @@ class BattleSlot {
      * Do so for this.PPStatBars if it is not null.
      */
     drawStatBars( ) {
-        const HPBarX = this.sprite.x + ( GRID_BLOCK_PX * .5 )
-        const HPBarY = this.sprite.y - ( GRID_BLOCK_PX * .5 )
-        this.HPStatBars.draw( HPBarX, HPBarY, this.activeHP )
+        this.HPStatBars.draw( this.HPBarX, this.HPBarY, this.activeHP )
 
         if ( this.PPStatBars != null ) {
-            this.PPStatBars.draw( HPBarX, HPBarY + this.PPStatBars.height, this.activePP )
+            this.PPStatBars.draw( this.HPBarX, this.HPBarY + this.PPStatBars.height, this.activePP )
         }
     }
     /**
@@ -143,6 +144,9 @@ class BattleSlot {
         if ( animation.moveToTarget ) {
             this.animationStep = "GO_TO";
         }
+        else if ( animation.moveForward ) {
+            this.animationStep = "MOVE_FORWARD"
+        }
         else {
             this.animationStep = "ANIMATION"
         }
@@ -155,7 +159,7 @@ class BattleSlot {
      * @param {Object} animation object from moveAnimationScripts
      */
     checkForNextAnimationStep( animation ) {
-        if ( this.animationStep == "GO_TO" ) {
+        if ( this.animationStep == "GO_TO" || this.animationStep == "MOVE_FORWARD" ) {
             this.animationStep = "ANIMATION"
             this.doMoveAnimationStep( animation );
         }
@@ -163,7 +167,7 @@ class BattleSlot {
             this.animationStep = "HIT"
             this.doMoveAnimationStep( animation );
         }
-        else if ( this.animationStep == "HIT" && animation.moveToTarget ) {
+        else if ( this.animationStep == "HIT" && ( animation.moveToTarget || animation.moveForward ) ) {
             this.animationStep = "GO_BACK"
             this.doMoveAnimationStep( animation );
         }
@@ -180,7 +184,11 @@ class BattleSlot {
     doMoveAnimationStep( animation ) {
         switch( this.animationStep ) {
             case "GO_TO": 
-                this.sprite.setDestination( this.targetSlot.tile, "TARGET" );
+                this.sprite.setDestination( { x: this.targetSlot.slotX, y:this.targetSlot.slotY }, "TARGET" );
+                this.sprite.initMovement( );
+                break;
+            case "MOVE_FORWARD": 
+                this.sprite.setDestination( { x: this.slotX + ( this.sprite.width * 2 ), y: this.slotY }, "FORWARD" );
                 this.sprite.initMovement( );
                 break;
             case "ANIMATION": 
@@ -190,7 +198,7 @@ class BattleSlot {
                 this.doHitAnimation( animation );
                 this.calculateSelectedMoveResult( );
             case "GO_BACK": 
-                this.sprite.setDestination( this.tile, "RETURN" );
+                this.sprite.setDestination( { x: this.slotX, y: this.slotY }, "RETURN" );
                 this.sprite.initMovement( );
                 break;
         }

@@ -49,6 +49,7 @@ const moveAnimationScripts = {
     },
     "HEAL_TEST" : {
         moveToTarget : false,
+        moveForward : true,
         perfomerAnimation: "TURN_SINGLE_CIRCLE",
         performerEffect: "FIRE_CIRCLE_BACK",
         effectToTarget: "FIRE_CIRCLE_FRONT_MOVING",
