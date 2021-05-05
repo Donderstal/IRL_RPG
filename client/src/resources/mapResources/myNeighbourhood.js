@@ -1395,7 +1395,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" }
         ],
         "neighbours": {
             "right": "my-neighbourhood/A2",
@@ -1915,8 +1915,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" },
-          { "col": 23, "direction": "FACING_DOWN"  }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" },
+          { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN" }
         ],
         "neighbours": {
             "left": "my-neighbourhood/A1",
@@ -2198,8 +2198,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_RIGHT" },
-          { "col": 1, "direction": "FACING_UP"  }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" },
+          { "alignment": "VERT", "leftCol": 1, "rightCol": 2, "direction": "FACING_UP" }
         ],
         "neighbours": {
             "left": "my-neighbourhood/A2",
@@ -2422,8 +2422,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_LEFT" },
-          { "col": 23, "direction": "FACING_DOWN"  }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" },
+          { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN" }
         ],
         "neighbours": {
             "left": "my-neighbourhood/A3",
@@ -2653,7 +2653,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_RIGHT" }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_RIGHT" },
         ],
         "neighbours": {
             "up": "my-neighbourhood/A1",
@@ -4115,8 +4115,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_RIGHT" },
-          { "col": 23, "direction": "FACING_DOWN", "endsAtIntersection" : true }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_RIGHT" },
+          { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "endsAtIntersection" : true }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A2",
@@ -4426,8 +4426,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_RIGHT" },
-          { "col":  1, "direction": "FACING_UP", "hasStart": false }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" },
+          { "alignment": "VERT", "leftCol": 1, "rightCol": 2, "direction": "FACING_UP", "hasStart": false }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A3",
@@ -4737,8 +4737,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-          { "row": 11, "direction": "FACING_RIGHT" },
-          { "col": 23, "direction": "FACING_DOWN", "endsAtIntersection" : true }
+          { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_RIGHT" },
+          { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "endsAtIntersection" : true }
         ],
         "neighbours": {
             "up": "my-neighbourhood/A4",

@@ -20,8 +20,7 @@ module.exports = {
             "col": 12
         },
         "roads" : [
-            { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": "FACING_LEFT" },
-            { "alignment": "HORI", "topRow": 8, "bottomRow": 9, "direction": "FACING_RIGHT" },
+            { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": "FACING_RIGHT" },
             { "alignment": "HORI", "topRow": 3, "bottomRow": 4, "direction": "FACING_LEFT" },
 
             { "alignment": "VERT", "leftCol": 4, "rightCol": 5, "direction": "FACING_DOWN" },
@@ -52,7 +51,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-            { "row": 11, "direction": "FACING_LEFT" }
+            { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" }
         ],
         "neighbours": {
             "right": "downtown/A2"
@@ -80,7 +79,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-            { "row": 11, "direction": "FACING_LEFT" }
+            { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" }
           ],
         "neighbours": {
             "left": "downtown/A1",
@@ -109,7 +108,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-            { "row": 11, "direction": "FACING_LEFT" }
+            { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" }
           ],
         "neighbours": {
             "left": "downtown/A2",
@@ -192,7 +191,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-            { "row": 11, "direction": "FACING_LEFT" }
+            { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" }
           ],
         "neighbours": {
             "left": "downtown/A3",
@@ -224,8 +223,8 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-            { "row": 11, "direction": "FACING_LEFT" },
-            { "col": 23, "direction": "FACING_DOWN" }
+            { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" },
+            { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN" }
           ],
         "neighbours": {
             "left": "downtown/A5"

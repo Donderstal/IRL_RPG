@@ -15,7 +15,7 @@ const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
 const { Battle } = require('./battle/Battle')
 
-const firstMapUrl =  'downtown/TEST_CARS/';//'my-neighbourhood/A1/my-house';//'my-neighbourhood/Chad-outer';
+const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [ 
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "ranged_weapon_1",  
     "phone_misc_1", "old_sneakers_armor_2", "dirty_beanie_armor_3", "kitty_necklace_armor_3",
