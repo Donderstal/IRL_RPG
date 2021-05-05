@@ -8,9 +8,6 @@ const {
     FACING_RIGHT, FACING_LEFT, FACING_RIGHT_FLYING, FACING_LEFT_FLYING, FRAME_LIMIT
 } = require("../../game-data/globals");
 
-const pathFinder = require('../../helpers/pathfindingHelpers')
-const globals = require('../../game-data/globals')
-
 class BattleSprite extends Sprite {
     constructor( tile, spriteSize, src, direction ) {
         if ( spriteSize == "LARG" ) {
@@ -27,17 +24,17 @@ class BattleSprite extends Sprite {
         this.setSpriteToGrid( tile );
     }
     get destinationIsLeft( ) { 
-        return this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
+        return this.destination.x < this.left;
     }
     get destinationIsRight( ) { 
-        return this.destinationTile.x + this.width > this.right && this.destinationTile.direction == "FACING_RIGHT";
+        return this.destination.x + this.width > this.right;
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
+        return this.destination.y - ( this.height - GRID_BLOCK_PX ) < this.top;
     }    
     get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
-    }
+        return this.destination.y + GRID_BLOCK_PX > this.bottom;
+    } 
     /**
      * Override of base method
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
@@ -59,18 +56,10 @@ class BattleSprite extends Sprite {
      */
     setDestination( destination, location ) {
         this.originalDirection  = this.direction;
-        this.destination        = { };
-        this.destination        = Object.assign(this.destination, destination);
-        this.destinationTiles   = [];        
-        this.activeDestinationIndex;
-
+        this.destination        = destination;
         if ( location == "TARGET" ) {
-            this.destination.col = (this.startingDirection == SHEET_ROW_BATTLE_FACING_LEFT)
-                ? this.destination.col + 1 
-                : this.destination.col - 1;         
+            this.direction == SHEET_ROW_BATTLE_FACING_LEFT ? this.destination.x += this.width: this.destination.x -= this.width 
         }
-
-        this.setDestinationList( false );
     }
     /**
      * Override of base method
@@ -85,37 +74,36 @@ class BattleSprite extends Sprite {
             this.x -= MOVEMENT_SPEED * 2;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
+            if ( this.x - 10 < this.destination.x && this.x + 10 > this.destination.x ) {
+                this.x = this.destination.x;
+                this.moving = false;
+            }
         }
         else if ( this.destinationIsRight ) {
             this.x += MOVEMENT_SPEED * 2;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
+            if ( (this.x + this.width) - 10 < this.destination.x + this.width && (this.x + this.width) + 10 > this.destination.x + this.width ) {
+                this.x = this.destination.x;
+                this.moving = false;
+            }
         }
 
         if ( this.destinationIsUp ) {
-            this.moving = true;
-            this.y -= MOVEMENT_SPEED * 2;
+            this.y -= MOVEMENT_SPEED
+            if ( this.y - 10 < this.destination.y - ( this.height - GRID_BLOCK_PX ) && this.y + 10 > this.destination.y - ( this.height - GRID_BLOCK_PX ) ) {
+                this.y = this.destination.y - ( this.height - GRID_BLOCK_PX );
+            }
         }
         else if ( this.destinationIsDown ) {
-            this.moving = true;
-            this.y += MOVEMENT_SPEED * 2;
+            this.y += MOVEMENT_SPEED;
         }
 
         if ( !this.moving ) {
-            this.checkForNextDestination( );
+            this.stopMovement( );
+            this.unsetDestination( );    
+            this.unsetScriptedAnimation( );
         }
-    }
-    /**
-     * Override of base method
-     * Call determineShortestPath from the pathfindingHelpersFile and return its return value
-     * @param {I_Tile} startingTile I_Tile to start the pathfinding from
-     * @param {I_Tile} destinationTile destination I_Tile
-     */
-    getPathIndexes( startingTile, destinationTile ) {
-        return pathFinder.determineShortestPath( 
-            startingTile, destinationTile, 
-            globals.GAME.BACK.battleGrid, this.movementType == NPC_MOVE_TYPE_FLYING 
-        );  
     }
     /**
      * Fade out animation to play on character death
