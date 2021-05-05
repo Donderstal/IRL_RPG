@@ -13,6 +13,10 @@ const animationResources = {
         { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
         { row: FACING_UP , column: SHEET_COLUMN_ONE },
         { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
+        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
+        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
+        { row: FACING_UP , column: SHEET_COLUMN_ONE },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE }
     ],
     "BACK_AND_FORTH": [
         { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
@@ -26,9 +30,17 @@ const animationResources = {
         { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
         { row: FACING_DOWN , column: SHEET_COLUMN_TWO },
         { row: FACING_UP , column: SHEET_COLUMN_ONE },
+        { row: FACING_UP , column: SHEET_COLUMN_TWO },
+        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
+        { row: FACING_DOWN , column: SHEET_COLUMN_TWO },
+        { row: FACING_UP , column: SHEET_COLUMN_ONE },
         { row: FACING_UP , column: SHEET_COLUMN_TWO }
     ],
     "LEFT_AND_RIGHT_STEP": [
+        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
+        { row: FACING_LEFT , column: SHEET_COLUMN_TWO },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
+        { row: FACING_RIGHT , column: SHEET_COLUMN_TWO },
         { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
         { row: FACING_LEFT , column: SHEET_COLUMN_TWO },
         { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
@@ -148,6 +160,18 @@ const animationResources = {
         { row: 7, column: 3 }
     ],
     "LIFT": [
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
         { row: 12, column: 0 },
         { row: 12, column: 1 },
         { row: 12, column: 2 },

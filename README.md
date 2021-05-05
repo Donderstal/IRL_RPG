@@ -13,6 +13,7 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### MAY 5, 2021
+* Battle movement of sprites is now smoother and stable
 * Streamlined road system. Fixed problems with car turning
 
 #### MAY 3, 2021

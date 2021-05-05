@@ -83,12 +83,12 @@ class Battle {
 
     startSelectMovePhase( ) {
         // test setup for move pathfinding and animation
-        this.battleSlots[0].selectMove( this.battleSlots[0].character.Moves[0], this.battleSlots[5] )
-        this.battleSlots[1].selectMove( this.battleSlots[1].character.Moves[0], this.battleSlots[3] )
-        this.battleSlots[2].selectMove( this.battleSlots[2].character.Moves[0], this.battleSlots[4] )
-        this.battleSlots[3].selectMove( this.battleSlots[3].character.Moves[0], this.battleSlots[2] )
-        this.battleSlots[4].selectMove( this.battleSlots[4].character.Moves[0], this.battleSlots[0] )
-        this.battleSlots[5].selectMove( this.battleSlots[5].character.Moves[0], this.battleSlots[1] )
+        this.battleSlots[0].selectMove( this.battleSlots[0].character.Moves[1], this.battleSlots[5] )
+        this.battleSlots[1].selectMove( this.battleSlots[1].character.Moves[1], this.battleSlots[3] )
+        this.battleSlots[2].selectMove( this.battleSlots[2].character.Moves[1], this.battleSlots[4] )
+        this.battleSlots[3].selectMove( this.battleSlots[3].character.Moves[1], this.battleSlots[2] )
+        this.battleSlots[4].selectMove( this.battleSlots[4].character.Moves[1], this.battleSlots[0] )
+        this.battleSlots[5].selectMove( this.battleSlots[5].character.Moves[1], this.battleSlots[1] )
     }
 
     endSelectMovePhase( ) {
