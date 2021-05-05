@@ -111,15 +111,17 @@ class Road {
      */
     setIntersection( tile, road ) {
         tile.hasIntersection        = true;
-        tile.intersectingDirections = [ ];
+        /* tile.intersectingDirections = [ ]; */
+        tile.intersectionFrom = this.direction;
+        tile.intersectionTo = road.direction;
 
-        if ( !road.endsAtIntersection ) {
+        /* if ( !road.endsAtIntersection ) {
             tile.intersectingDirections.push( road.direction );
         }
 
         if ( !this.endsAtIntersection ) {
             tile.intersectingDirections.push( this.direction );
-        }
+        } */
     }
     /**
      * Randomly select a car sprite from the available sprites.
