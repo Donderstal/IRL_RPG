@@ -57,7 +57,9 @@ class Car extends MapObject {
         switch ( this.direction ) { 
             case globals["FACING_LEFT"]: 
                 this.y += GRID_BLOCK_PX
-                this.x -= GRID_BLOCK_PX * 2;
+                if ( !inConstructor ) {
+                    this.x -= GRID_BLOCK_PX * 2;                    
+                }
                 break;
             case globals["FACING_UP"]: 
                 this.x -= GRID_BLOCK_PX;

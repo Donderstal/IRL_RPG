@@ -18,12 +18,6 @@ let newTimeStamp = 0;
  * @param {Game} GAME Instance of the Game class in Game.js
  */
 const handleMapAnimations = ( GAME ) => {
-    GAME.FRONT.grid.array.forEach( ( e ) => {
-        if ( e.hasIntersection ) {
-            drawRect( "BACK", e.x, e.y, GRID_BLOCK_PX, GRID_BLOCK_PX, "#FF0000" );
-        }
-    } )
-
     drawSpritesInOrder( GAME )
 
     clearMargins( GAME );      
