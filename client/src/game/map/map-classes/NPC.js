@@ -10,6 +10,8 @@ const {
 }  = require('../../../game-data/globals');
 const globals = require('../../../game-data/globals');
 
+const { Counter } = require('../../../helpers/Counter');
+
 const cellRadius = 2;
 const animationList = [
     "BACK_AND_FORTH",
@@ -50,18 +52,10 @@ class NPC extends MapSprite {
             this.setLoopedAnimation( )
         }
         else {
-            this.animationMillisecondsLimit = 7500;
-            this.currentAnimationLimit = 0;
-            this.milliSecondCounter = 0;
-            this.lastTimeStamp = 0;
-            this.newTimeStamp = 0;            
+            this.doAnimationCounter = new Counter( 7500, true )    
         }
 
-        this.blockedMilliSecondsLimit = 10000;
-        this.blockedTimer = 0;
-
-        this.oldBlockedTime = 0;
-        this.newBlockedTime = 0;
+        this.blockedCounter = new Counter( 10000, false )
     }
     /**
      * Call super.drawSprite.
@@ -89,11 +83,11 @@ class NPC extends MapSprite {
         }
     }
     /**
-     * Call handleRandomAnimationCounter, which return true if a animation or movement should be set.
+     * Call doAnimationCounter.countAndCheckLimit, which return true if a animation or movement should be set.
      * If true, set a animation or movement depending on this.animationType.
      */
     setRandomMovementOrAnimation( ) {
-        if ( this.handleRandomAnimationCounter( ) ) {
+        if ( this.doAnimationCounter.countAndCheckLimit( ) ) {
             switch( this.animationType ) {
                 case NPC_ANIM_TYPE_IDLE:
                     this.setRandomAnimation( );
@@ -113,67 +107,21 @@ class NPC extends MapSprite {
         }
     }
     /**
-     * ( BROKEN )
-     * If this.pathIsBlocked, increment the time since the last check to this.blockedTimer.
-     * If this.blockedTimer is over this.blockedMilliSecondsLimit, reset this.blockedTimer and calculate a new path to this.destination.
-     * If this.pathIsBlocked is false, reset this.blockedTimer to 0.
+     * If this.pathIsBlocked, call countAndcheckLimit in the Counter instance in this.blockedCounter
+     * If this.blockedTimer is over its millisecond limit, reset the destination to calculate a new path.
+     * If the NPCs path is not blocked, clear this.blockedCounter
      */
     handleBlockedTimeCounter( ) {
         if ( this.pathIsBlocked ) {
-            let addDifferenceToCounter = false;
-
-            if ( this.newBlockedTime != 0 ) {
-                this.oldBlockedTime = this.newBlockedTime
-                addDifferenceToCounter = true
-            }
-
-            this.newBlockedTime = Date.now( );
-
-            if ( addDifferenceToCounter ) {
-                this.blockedTimer += ( this.newBlockedTime - this.oldBlockedTime );
-            }
-        
-            if ( this.blockedTimer > this.blockedMilliSecondsLimit ) {
-                this.blockedTimer = 0;
+            if ( this.blockedCounter.countAndCheckLimit( ) ) {
                 this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP );
-            }
+            } 
         }
         else {
-            this.blockedTimer = 0;
+            this.blockedCounter.resetCounter( );
         }       
     }
-    /**
-     * ( BROKEN )
-     * Increment the time since the last check to this.milliSecondCounter.
-     * If milliSecondCounter is over this.currentAnimation limit, reset milliSecondCounter to zero and return true.
-     * Else, return false.
-     */
-    handleRandomAnimationCounter( ) {
-        let addDifferenceToCounter = false;
 
-        if ( this.currentAnimationLimit == 0 ) {
-            this.currentAnimationLimit = Math.ceil(Math.random( ) * this.animationMillisecondsLimit )
-        }
-
-        if ( this.newTimeStamp != 0 ) {
-            this.lastTimeStamp = this.newTimeStamp
-            addDifferenceToCounter = true
-        }
-
-        this.newTimeStamp = Date.now( );
-
-        if ( addDifferenceToCounter ) {
-            this.milliSecondCounter += ( this.newTimeStamp - this.lastTimeStamp );
-        }
-    
-        if ( this.milliSecondCounter > this.currentAnimationLimit ) {
-            this.milliSecondCounter = 0;
-            this.currentAnimationLimit = 0;
-            return true;
-        }
-
-        return false;
-    }
     /**
      * TODO: Decide on a tile-radius and set it as a global
      * Get a random col/row pair in a radius around the sprites' initial location.
