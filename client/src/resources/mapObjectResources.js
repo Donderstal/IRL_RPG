@@ -1,17 +1,77 @@
 module.exports = {
+    "Bench_Green" :{
+        "src": "bench_green.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 2
+    },
+    "Bollard" :{
+        "src": "bollard.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 1
+    },
+    "Bus_Stop" : {
+        "src": "Bus_Stop.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 4,
+        "width_blocks": 1
+    },   
+    "Computer_With_Table" : {
+        "src": "computer_table.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 3,
+        "width_blocks": 1
+    },
+    "Couch_Blue" : {
+        "src": "couch.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 3,
+        "width_blocks": 1
+    },
+    "Fire_Hydrant" :{
+        "src": "fire_hydrant.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 1
+    },
+    "Fridge" : {
+        "src": "fridge.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 2,
+        "width_blocks": 1
+    },
+    "Rug_01" : { 
+        "src": "rug01.png",
+        "dimensional_alignment": "STANDARD",
+        "on_background": true,
+        "height_blocks": 4,
+        "width_blocks": 3
+    },
+    "Single_Bed" : { 
+        "src": "single_bed.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 2,
+        "width_blocks": 1
+    },
+    "Sink" : { 
+        "src": "sink.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 3,
+        "width_blocks": 1
+    },
+    "Small_Table" : {
+        "src": "small_table.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 1
+    },
     "Lamppost_1" : {
         "src": "lamppost.png",
         "dimensional_alignment": "STANDARD",
         "height_blocks": 5,
         "width_blocks": 1,
     },
-    "Bus_Stop" : {
-        "src": "Bus_Stop.png",
-        "dimensional_alignment": "STANDARD",
-        "height_blocks": 4,
-        "width_blocks": 1,
-    },
-
     // cars
     "car_a" : {
         "src": "car_a.png",

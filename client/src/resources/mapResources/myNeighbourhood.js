@@ -1611,6 +1611,23 @@ module.exports = {
                         "locked": false
                     }
                 ],
+                "mapObjects" : [
+                  {
+                    "type"  : "Couch_Blue",
+                    "row"   : 9,
+                    "col"   : 3
+                  },
+                  {
+                    "type"  : "Bench_Green",
+                    "row"   : 10,
+                    "col"   : 6
+                  },
+                  {
+                    "type"  : "Rug_01",
+                    "row"   : 4,
+                    "col"   : 8
+                  },
+              ],
                 "characters" : [
                   {
                       "anim_type": NPC_ANIM_TYPE_IDLE,
