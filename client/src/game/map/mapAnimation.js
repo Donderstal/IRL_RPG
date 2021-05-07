@@ -1,14 +1,9 @@
 const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls');
-const { drawRect } = require('../../helpers/canvasHelpers');
+const { Counter } = require('../../helpers/Counter');
 
-let carGenerationLimit = 10000;
-let randomCarLimit = 0;
-let millisecondCounter = 0;
-
-let lastTimeStamp = 0;
-let newTimeStamp = 0;
+const carCounter = new Counter( 10000, true );
 /**
  * Wrapper function that runs on each animation frame if the game is in Map mode.
  * Call drawSpritesInOrder() and clearMargins().
@@ -23,7 +18,12 @@ const handleMapAnimations = ( GAME ) => {
     clearMargins( GAME );      
     
     if ( GAME.FRONT.roads.length > 0 ) {
-        handleCarGeneration( GAME );
+        if ( carCounter.countAndCheckLimit( ) ) {
+            GAME.FRONT.generateCar( );
+        }
+    }
+    else {
+        carCounter.resetCounter( );
     }
 
     if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
@@ -40,36 +40,7 @@ const handleMapAnimations = ( GAME ) => {
         e.drawAndMove( );
     })
 }
-/**
- * Counter function for semi-randomly generating a car.
- * Set a limit in millisecond to the randomCarLimit variable.
- * If the millisecondCounter variable is over the limit, call GAME.FRONT.generateCar()
- * @param {Game} GAME Instance of the Game class in Game.js
- */
-const handleCarGeneration = ( GAME ) => {
-    let addDifferenceToCounter = false;
 
-    if ( randomCarLimit == 0 ) {
-        randomCarLimit = Math.ceil(Math.random( ) * carGenerationLimit )
-    }
-
-    if ( newTimeStamp != 0 ) {
-        lastTimeStamp = newTimeStamp
-        addDifferenceToCounter = true
-    }
-
-    newTimeStamp = Date.now( );
-
-    if ( addDifferenceToCounter ) {
-        millisecondCounter += ( newTimeStamp - lastTimeStamp );
-    }
-
-    if ( millisecondCounter > randomCarLimit ) {
-        GAME.FRONT.generateCar( );
-        millisecondCounter = 0;
-        randomCarLimit = 0;
-    }
-}
 /**
  * Clear the edges of the front canvas that are not currently in the active I_Grids' borders.
  * @param {Game} GAME Instance of the Game class in Game.js
