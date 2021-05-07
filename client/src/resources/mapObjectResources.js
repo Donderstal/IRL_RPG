@@ -4,16 +4,12 @@ module.exports = {
         "dimensional_alignment": "STANDARD",
         "height_blocks": 5,
         "width_blocks": 1,
-        "alignment": "BOTTOM_LEFT" ,
-        "base_width_px": 22
     },
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
         "dimensional_alignment": "STANDARD",
         "height_blocks": 4,
         "width_blocks": 1,
-        "alignment": "BOTTOM_LEFT" ,
-        "base_width_px": 32
     },
 
     // cars
@@ -24,7 +20,6 @@ module.exports = {
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
         "vert_width_blocks": 2,
-        "alignment": "BOTTOM_LEFT",
         "movement_frames" : { 
             "FACING_LEFT" : [
                 { "x": 0, "y": 384 },
@@ -51,7 +46,6 @@ module.exports = {
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
         "vert_width_blocks": 2,
-        "alignment": "BOTTOM_LEFT",
         "movement_frames" : { 
             "FACING_LEFT" : [
                 { "x": 0, "y": 384 },
@@ -78,7 +72,6 @@ module.exports = {
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
         "vert_width_blocks": 2,
-        "alignment": "BOTTOM_LEFT",
         "movement_frames" : { 
             "FACING_LEFT" : [
                 { "x": 0, "y": 384 },
@@ -105,7 +98,6 @@ module.exports = {
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
         "vert_width_blocks": 2,
-        "alignment": "BOTTOM_LEFT",
         "movement_frames" : { 
             "FACING_LEFT" : [
                 { "x": 0, "y": 384 },
