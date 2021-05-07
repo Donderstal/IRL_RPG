@@ -232,6 +232,26 @@ const animationResources = {
         { row: 10, column: 2 },
         { row: 10, column: 1 },
         { row: 10, column: 2 },
+    ],
+    "BATTLE_BREATHE_LEFT": [
+        { row: 4, column: 0 },
+        { row: 4, column: 1 },
+        { row: 4, column: 2 },
+        { row: 4, column: 3 },
+        { row: 4, column: 0 },
+        { row: 4, column: 1 },
+        { row: 4, column: 2 },
+        { row: 4, column: 3 }
+    ],
+    "BATTLE_BREATHE_RIGHT": [
+        { row: 5, column: 0 },
+        { row: 5, column: 1 },
+        { row: 5, column: 2 },
+        { row: 5, column: 3 },
+        { row: 5, column: 0 },
+        { row: 5, column: 1 },
+        { row: 5, column: 2 },
+        { row: 5, column: 3 }
     ]
 }
 

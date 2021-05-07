@@ -1,12 +1,14 @@
 const { Sprite } = require("../interfaces/I_Sprite");
 const { 
     SHEET_ROW_BATTLE_FACING_LEFT, BATTLE_SPRITE_WIDTH, BATTLE_SPRITE_HEIGHT, 
-    BATTLE_SPRITE_HEIGHT_IN_SHEET, BATTLE_SPRITE_WIDTH_IN_SHEET 
+    BATTLE_SPRITE_HEIGHT_IN_SHEET, BATTLE_SPRITE_WIDTH_IN_SHEET, BATTLE_PHASE_DO_MOVES 
 } = require("../../game-data/battleGlobals");
 const { 
     GRID_BLOCK_PX, NPC_MOVE_TYPE_FLYING, MOVEMENT_SPEED, 
     FACING_RIGHT, FACING_LEFT, FACING_RIGHT_FLYING, FACING_LEFT_FLYING, FRAME_LIMIT
 } = require("../../game-data/globals");
+const globals = require("../../game-data/globals");
+const { Counter } = require("../../helpers/Counter");
 
 class BattleSprite extends Sprite {
     constructor( tile, spriteSize, src, direction ) {
@@ -20,6 +22,8 @@ class BattleSprite extends Sprite {
         this.startingDirection  = direction;
         this.spriteWidthInSheet = BATTLE_SPRITE_WIDTH_IN_SHEET;
         this.spriteHeightInSheet = BATTLE_SPRITE_HEIGHT_IN_SHEET;
+
+        this.idleAnimationCounter = new Counter( 10000, true )
 
         this.setSpriteToGrid( tile );
     }
@@ -35,6 +39,21 @@ class BattleSprite extends Sprite {
     get destinationIsDown( ) { 
         return this.destination.y + GRID_BLOCK_PX > this.bottom;
     } 
+    drawSprite( ) {
+        if ( !this.inScriptedAnimation && !this.movingToDestination && globals.GAME.battle.phase != BATTLE_PHASE_DO_MOVES ) {
+            if ( this.idleAnimationCounter.countAndCheckLimit( ) ) {
+                this.setScriptedAnimation( {
+                    animName: "BATTLE_BREATHE",
+                    loop: false,
+                    numberOfLoops: false
+                }, FRAME_LIMIT );
+            }
+        }
+        else {
+            this.idleAnimationCounter.resetCounter( );
+        }
+        super.drawSprite( );
+    }
     /**
      * Override of base method
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
