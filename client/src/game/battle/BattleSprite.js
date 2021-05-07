@@ -40,6 +40,14 @@ class BattleSprite extends Sprite {
         return this.destination.y + GRID_BLOCK_PX > this.bottom;
     } 
     drawSprite( ) {
+        this.handleIdleAnimationCounter( );
+        super.drawSprite( );
+    }
+    /**
+     * If character is not animated, moving or in PHASE_DO_MOVES, call the counter
+     * If the counter is over limit, set a idle animation with setScriptedAnimation
+     */
+    handleIdleAnimationCounter( ) {
         if ( !this.inScriptedAnimation && !this.movingToDestination && globals.GAME.battle.phase != BATTLE_PHASE_DO_MOVES ) {
             if ( this.idleAnimationCounter.countAndCheckLimit( ) ) {
                 this.setScriptedAnimation( {
@@ -51,8 +59,7 @@ class BattleSprite extends Sprite {
         }
         else {
             this.idleAnimationCounter.resetCounter( );
-        }
-        super.drawSprite( );
+        }        
     }
     /**
      * Override of base method
