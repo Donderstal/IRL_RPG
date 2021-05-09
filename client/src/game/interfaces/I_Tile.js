@@ -65,6 +65,11 @@ class I_Tile {
             this.x, this.y,
             GRID_BLOCK_PX, GRID_BLOCK_PX
         )
+        //test
+        this.ctx.beginPath( )
+        this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
+        this.ctx.stroke( )
+        //test
     }
     /**
      * Draw the tile at given XY location in tilesheet to the Utility canvas.
