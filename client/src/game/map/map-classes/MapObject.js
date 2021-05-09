@@ -1,4 +1,3 @@
-const { I_Hitbox }     = require('../../interfaces/I_Hitbox')
 const { Sprite }     = require('../../interfaces/I_Sprite')
 const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
 const { MapAction }    = require('./MapAction')
@@ -26,6 +25,8 @@ class MapObject extends Sprite {
         super( tile, dimensionsInMap, src, intialDirection )
 
         this.objectResource = objectResource;
+        this.onBackground   = objectResource.on_background
+        this.groundedAtBase = objectResource.grounded_at_bottom
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
@@ -37,9 +38,19 @@ class MapObject extends Sprite {
             this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height  *  .5  ), tile.spriteData.action )
             this.action = tile.spriteData.action
         }
-        else if ( this.width == globals.GRID_BLOCK_PX ) {
-            this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height  * .5 ), this.width / 2 );
+
+        if ( !this.onBackground && this.width > GRID_BLOCK_PX ) {
+            for( var i = 1; i < ( this.width / GRID_BLOCK_PX ); i++ ) {
+                const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index + i )
+                tileToBlock.setSpriteData( 'filler', {} )                
+            }
         }
+        if ( !this.onBackground && this.height > GRID_BLOCK_PX && !this.groundedAtBase ) {
+            for( var i = 1; i < ( this.height / GRID_BLOCK_PX ) - 1; i++ ) {
+                const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index - ( globals.GAME.FRONT.grid.cols * i ) )
+                tileToBlock.setSpriteData( 'filler', {} )         
+            }
+        } 
     }
     /**
      * Call this.setActiveFrames to determine which frames to draw.

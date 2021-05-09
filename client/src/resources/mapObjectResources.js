@@ -14,6 +14,7 @@ module.exports = {
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
         "dimensional_alignment": "STANDARD",
+        "grounded_at_bottom": true,
         "height_blocks": 4,
         "width_blocks": 1
     },   
@@ -69,6 +70,7 @@ module.exports = {
     "Lamppost_1" : {
         "src": "lamppost.png",
         "dimensional_alignment": "STANDARD",
+        "grounded_at_bottom": true,
         "height_blocks": 5,
         "width_blocks": 1,
     },
