@@ -93,7 +93,16 @@ const drawSpritesInOrder = ( GAME ) => {
             if ( GAME.paused || e.deleted ) {
                 return;
             }
-            if ( e.spriteId == 'PLAYER' || !( e.movementType == NPC_MOVE_TYPE_FLYING && e.movingToDestination && !e.pathIsBlocked ) ) {
+            if ( e.onBackground ) {
+                e.drawSprite( );
+            } 
+        }) 
+
+        GAME.FRONT.allSprites.forEach( (e) => {
+            if ( GAME.paused || e.deleted ) {
+                return;
+            }
+            if ( !e.onBackground && (e.spriteId == 'PLAYER' || !( e.movementType == NPC_MOVE_TYPE_FLYING && e.movingToDestination && !e.pathIsBlocked )) ) {
                 e.drawSprite( );
             } else if ( e.movementType == NPC_MOVE_TYPE_FLYING ) {
                 flyingSprites.push( e );     

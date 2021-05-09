@@ -75,7 +75,7 @@ class Sprite {
         this.row = tile.row;
         this.col = tile.col;
         
-        this.x = this.width <= GRID_BLOCK_PX ? tile.x : tile.x + ( this.width - GRID_BLOCK_PX );
+        this.x = tile.x;
         this.y = tile.y - ( this.height - GRID_BLOCK_PX )
     }
     /** 
