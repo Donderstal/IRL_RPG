@@ -27,6 +27,7 @@ class MapObject extends Sprite {
         this.objectResource = objectResource;
         this.onBackground   = objectResource.on_background
         this.groundedAtBase = objectResource.grounded_at_bottom
+        this.notGrounded    = objectResource.not_grounded
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
@@ -39,18 +40,22 @@ class MapObject extends Sprite {
             this.action = tile.spriteData.action
         }
 
-        if ( !this.onBackground && this.width > GRID_BLOCK_PX ) {
+        if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX ) {
             for( var i = 1; i < ( this.width / GRID_BLOCK_PX ); i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index + i )
                 tileToBlock.setSpriteData( 'filler', {} )                
             }
         }
-        if ( !this.onBackground && this.height > GRID_BLOCK_PX && !this.groundedAtBase ) {
+        if ( !this.onBackground && !this.notGrounded && this.height > GRID_BLOCK_PX && !this.groundedAtBase ) {
             for( var i = 1; i < ( this.height / GRID_BLOCK_PX ) - 1; i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index - ( globals.GAME.FRONT.grid.cols * i ) )
                 tileToBlock.setSpriteData( 'filler', {} )         
             }
         } 
+
+        if ( this.notGrounded || this.onBackground ) {
+            tile.clearSpriteData( )
+        }
     }
     /**
      * Call this.setActiveFrames to determine which frames to draw.

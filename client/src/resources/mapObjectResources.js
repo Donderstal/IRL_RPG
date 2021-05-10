@@ -42,6 +42,55 @@ module.exports = {
         "height_blocks": 2,
         "width_blocks": 1
     },
+    "Poster_Cruise" : {
+        "src": "poster1.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.75,
+        "width_blocks": 1.75,
+        "not_grounded": true
+    },
+    "Poster_Cola" : {
+        "src": "poster2.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.75,
+        "width_blocks": 1.75,
+        "not_grounded": true
+    },
+    "Poster_Gronk" : {
+        "src": "poster3.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.75,
+        "width_blocks": 1.75,
+        "not_grounded": true
+    },
+    "Sign_01" : {
+        "src": "sign1.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.75,
+        "width_blocks": 1,
+        "not_grounded": true
+    },
+    "Sign_02" : {
+        "src": "sign2.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.75,
+        "width_blocks": 1,
+        "not_grounded": true
+    },
+    "Sign_03" : {
+        "src": "sign3.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 1,
+        "not_grounded": true
+    },
+    "Sign_04" : {
+        "src": "sign4.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 1,
+        "not_grounded": true
+    },
     "Rug_01" : { 
         "src": "rug01.png",
         "dimensional_alignment": "STANDARD",

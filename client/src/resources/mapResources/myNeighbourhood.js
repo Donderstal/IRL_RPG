@@ -1415,6 +1415,11 @@ module.exports = {
                 "type"  : "Lamppost_1",
                 "row"   : 8,
                 "col"   : 19
+            },
+            { 
+              "type"  : "Poster_Gronk",
+              "row"   : 3,
+              "col"   : 18
             }
         ],
         "characters" : [
