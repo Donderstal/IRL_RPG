@@ -10,7 +10,7 @@ const { checkForCollision } = require('../map-ui/movementChecker')
  */
 class MapSprite extends Sprite {
     constructor ( tile, spriteSize, src ) {       
-        super( tile, spriteSize, src, globals[tile.spriteData.direction] )   
+        super( tile, spriteSize, src, globals[tile.spriteData.direction] == undefined ? 0 : globals[tile.spriteData.direction] )   
         this.cell = {}
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
