@@ -2,9 +2,11 @@ const { Sprite }     = require('../../interfaces/I_Sprite')
 const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
 const { MapAction }    = require('./MapAction')
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../../../game-data/globals')
+const { Counter } = require('../../../helpers/Counter')
 
 const globals       = require('../../../game-data/globals')
 const mapObjectResources = require('../../../resources/mapObjectResources')
+
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
  * Their sizes can vary from the standard sprite sizes.
@@ -40,13 +42,13 @@ class MapObject extends Sprite {
             this.action = tile.spriteData.action
         }
 
-        if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX ) {
+        if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX && !objectResource.isCar ) {
             for( var i = 1; i < ( this.width / GRID_BLOCK_PX ); i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index + i )
                 tileToBlock.setSpriteData( 'filler', {} )                
             }
         }
-        if ( !this.onBackground && !this.notGrounded && this.height > GRID_BLOCK_PX && !this.groundedAtBase ) {
+        if ( !this.onBackground && !this.notGrounded && this.height > GRID_BLOCK_PX && !this.groundedAtBase && !objectResource.isCar ) {
             for( var i = 1; i < ( this.height / GRID_BLOCK_PX ) - 1; i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index - ( globals.GAME.FRONT.grid.cols * i ) )
                 tileToBlock.setSpriteData( 'filler', {} )         
@@ -55,6 +57,11 @@ class MapObject extends Sprite {
 
         if ( this.notGrounded || this.onBackground ) {
             tile.clearSpriteData( )
+        }
+
+        if ( objectResource.idle_animation ) {
+            this.hasIdleAnimation = true;
+            this.idleAnimationCounter = new Counter( 5000, true );
         }
     }
     /**
@@ -78,7 +85,38 @@ class MapObject extends Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
         }
+
+        if ( this.inIdleAnimation ) {
+            this.countIdleAnimationFrame( )            
+        }
+        else if ( this.hasIdleAnimation ) {
+            if ( this.idleAnimationCounter.countAndCheckLimit( ) ) {
+                this.setIdleObjectAnimation( );
+            }
+        }
+
         this.updateSpriteBorders( )
+    }
+    /**
+     * Increment idleAnimationFrame and check if it is over limit
+     * If over limit, restore sheetposition and set inIdleAnimation to false
+     */
+    countIdleAnimationFrame( ) {
+        this.idleAnimationFrame++
+        if ( this.idleAnimationFrame > this.idleAnimationFrameLimit ) {
+            this.inIdleAnimation = false;
+            this.sheetPosition -= 1;
+        }
+    }
+    /**
+     * Set inIdleAnimation to true. Increment sheetposition.
+     * Inititalise animationFrame and animationFrameLimit
+     */
+    setIdleObjectAnimation( ) {
+        this.inIdleAnimation = true;
+        this.sheetPosition += 1;
+        this.idleAnimationFrame = 0;
+        this.idleAnimationFrameLimit = 10;
     }
     /**
      * Set the width and height of this sprite in sheet and canvas when facing given direction.
