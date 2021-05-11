@@ -87,41 +87,41 @@ const drawSpritesInOrder = ( GAME ) => {
 
     canvas.clearEntireCanvas("FRONT")
 
-    const flyingSprites = []
+    const backgroundSprites = [];
+    const standardSprites   = [];
+    const foregroundSprites = [];
+    const flyingSprites     = [];
+
+    GAME.FRONT.allSprites.forEach( ( sprite )  => {
+        if ( sprite.onBackground ) {
+            backgroundSprites.push( sprite );
+        }
+        else if ( sprite.notGrounded ) {
+            foregroundSprites.push( sprite );
+        }
+        else if ( sprite.movementType == NPC_MOVE_TYPE_FLYING && sprite.moving ) {
+            flyingSprites.push( sprite );
+        }
+        else {
+            standardSprites.push( sprite );
+        }
+    })
+    
+    drawSpritesInArray( backgroundSprites, GAME );
+    drawSpritesInArray( standardSprites, GAME );
+    drawSpritesInArray( foregroundSprites, GAME );
+    drawSpritesInArray( flyingSprites, GAME );
+}
+
+const drawSpritesInArray = ( array, GAME ) => {
     if ( !GAME.paused ) {
-        GAME.FRONT.allSprites.forEach( (e) => {
-            if ( GAME.paused || e.deleted ) {
+        array.forEach( ( sprite ) => {
+            if ( GAME.paused || sprite.deleted ) {
                 return;
             }
-            if ( e.onBackground ) {
-                e.drawSprite( );
-            } 
-        }) 
-
-        GAME.FRONT.allSprites.forEach( (e) => {
-            if ( GAME.paused || e.deleted ) {
-                return;
-            }
-            if ( !e.groundedAtBase && !e.onBackground && (e.spriteId == 'PLAYER' || !( e.movementType == NPC_MOVE_TYPE_FLYING && e.movingToDestination && !e.pathIsBlocked )) ) {
-                e.drawSprite( );
-            } else if ( e.movementType == NPC_MOVE_TYPE_FLYING ) {
-                flyingSprites.push( e );     
-            }
-        })   
-        
-        GAME.FRONT.allSprites.forEach( (e) => {
-            if ( GAME.paused || e.deleted ) {
-                return;
-            }
-            if ( e.groundedAtBase ) {
-                e.drawSprite( );
-            } 
-        }) 
-
-        flyingSprites.forEach( ( e ) => {
-            e.drawSprite( );
+            sprite.drawSprite( );
         })
-    } 
+    }
 }
 
 module.exports = {
