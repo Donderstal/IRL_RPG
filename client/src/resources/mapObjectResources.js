@@ -68,28 +68,32 @@ module.exports = {
         "dimensional_alignment": "STANDARD",
         "height_blocks": 1.75,
         "width_blocks": 1,
-        "not_grounded": true
+        "not_grounded": true,
+        "idle_animation": true
     },
     "Sign_02" : {
         "src": "sign2.png",
         "dimensional_alignment": "STANDARD",
         "height_blocks": 1.75,
         "width_blocks": 1,
-        "not_grounded": true
+        "not_grounded": true,
+        "idle_animation": true
     },
     "Sign_03" : {
         "src": "sign3.png",
         "dimensional_alignment": "STANDARD",
         "height_blocks": 1,
         "width_blocks": 1,
-        "not_grounded": true
+        "not_grounded": true,
+        "idle_animation": true
     },
     "Sign_04" : {
         "src": "sign4.png",
         "dimensional_alignment": "STANDARD",
         "height_blocks": 1,
         "width_blocks": 1,
-        "not_grounded": true
+        "not_grounded": true,
+        "idle_animation": true
     },
     "Rug_01" : { 
         "src": "rug01.png",
@@ -127,6 +131,7 @@ module.exports = {
     "car_a" : {
         "src": "car_a.png",
         "dimensional_alignment": "HORI_VERT",
+        "isCar" : true,
         "hori_height_blocks": 3,
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
@@ -153,6 +158,7 @@ module.exports = {
     "car_b" : {
         "src": "car_b.png",
         "dimensional_alignment": "HORI_VERT",
+        "isCar" : true,
         "hori_height_blocks": 3,
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
@@ -179,6 +185,7 @@ module.exports = {
     "car_c" : {
         "src": "car_c.png",
         "dimensional_alignment": "HORI_VERT",
+        "isCar" : true,
         "hori_height_blocks": 3,
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,
@@ -205,6 +212,7 @@ module.exports = {
     "car_d" : {
         "src": "car_d.png",
         "dimensional_alignment": "HORI_VERT",
+        "isCar" : true,
         "hori_height_blocks": 3,
         "hori_width_blocks": 4,
         "vert_height_blocks": 3,

@@ -142,6 +142,26 @@ module.exports = {
                     "to": "my-neighbourhood/A2",
                     "text": "Take the bus to your neighbourhood?"
                 }
+            },
+            { 
+                "type"  : "Sign_01",
+                "row"   : 2,
+                "col"   : 10
+            },
+            { 
+                "type"  : "Sign_02",
+                "row"   : 2,
+                "col"   : 8
+            },
+            { 
+                "type"  : "Sign_03",
+                "row"   : 2,
+                "col"   : 15
+            },
+            { 
+                "type"  : "Sign_04",
+                "row"   : 2,
+                "col"   : 17
             }
         ],
         "characters" : [
@@ -207,7 +227,7 @@ module.exports = {
         "outdoors": true,
         "music": "game-jam.mp3",
         "roads" : [
-            { "row": 11, "direction": "FACING_LEFT" }
+            { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" },
           ],
         "neighbours": {
             "left": "downtown/A4",
