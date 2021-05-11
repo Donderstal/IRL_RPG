@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAY 11, 2021
+* Adding new map sprite images and resource code
+
 #### MAY 7, 2021
 * Utility Counter class to avoid code repetition
 
