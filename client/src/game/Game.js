@@ -142,7 +142,7 @@ class Game {
         this.storeMapData( mapData, firstMapUrl );
         mapData.playerStart.playerClass = className;
         mapData.playerStart.name = name;
-        this.loadMapToCanvases( mapData )
+        this.loadMapToCanvases( mapData, true )
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
     /**
@@ -173,7 +173,7 @@ class Game {
      * Assign playerSprite to the Foreground spriteDictionary and play music.
      * @param {Object} mapData mapData object retrieved from mapResources.js
      */
-    loadMapToCanvases( mapData ) {
+    loadMapToCanvases( mapData, isNewGame = false ) {
         this.back.class.initGrid( mapData.rows, mapData.columns );
         this.front.class.initGrid( mapData.rows, mapData.columns );
     
@@ -183,7 +183,7 @@ class Game {
         this.back.class.setEventsDoorsAndBlockedToTilesInGrid( );
         this.back.class.loadImageWithCallback( '/static/tilesets/' + sheetData.src, this.back.class.drawMapFromGridData );
     
-        this.front.class.setForegroundData( mapData );
+        this.front.class.setForegroundData( mapData, isNewGame );
         this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER

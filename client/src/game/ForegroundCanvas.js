@@ -40,13 +40,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * Set characters, mapObjects, roads and the playerstart as properties
      * @param {Object} mapData - data object from mapResources
      */
-    setForegroundData( mapData ) {
+    setForegroundData( mapData, isNewGame ) {
         if ( mapData.characters )
             this.setCharacters( mapData.characters );
         if ( mapData.mapObjects )
             this.setObjects( mapData.mapObjects );
-        if ( mapData.playerStart )
-            this.setPlayerCharacter( mapData.playerStart );
+        if ( mapData.playerStart && isNewGame )
+            this.initPlayerCharacter( mapData.playerStart );
         if ( mapData.roads ) 
             this.setCarGenerator( mapData.roads );
     }
@@ -55,7 +55,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * Instantiate a mapSprite to start location and mark it as the player sprite
      * @param {Object} start row - column location to set Player sprite to 
      */
-    setPlayerCharacter( start ) {
+    initPlayerCharacter( start ) {
         const startingTile = this.grid.array.filter( tile => {
             return tile.row == start.row && tile.col == start.col
           })
