@@ -13,6 +13,7 @@ class Road {
 
         this.isHorizontal = roadData.alignment == "HORI";
         this.startCell = {};
+        this.secondCell = {}
         this.endCell = {};
 
         this.setRoadAligment( roadData )
@@ -23,7 +24,12 @@ class Road {
         return globals.GAME.getTileOnCanvasAtCell( 
             "FRONT",
             this.startCell.col,
-            this.isHorizontal ? this.startCell.row - 1 : this.startCell.row
+            this.startCell.row
+        ).hasSprite 
+        || globals.GAME.getTileOnCanvasAtCell( 
+            "FRONT",
+            this.secondCell.col,
+            this.secondCell.row
         ).hasSprite 
     }
     /**
@@ -50,24 +56,32 @@ class Road {
             case "FACING_LEFT" :
                 this.startCell["row"]   = this.topRow;
                 this.startCell["col"]   = activeGrid.cols;
+                this.secondCell["row"]   = this.bottomRow;
+                this.secondCell["col"]   = activeGrid.cols;
                 this.endCell["row"]     = this.topRow;
                 this.endCell["col"]     = 1;
                 break;
             case "FACING_UP" :
                 this.startCell["row"]   = activeGrid.rows;
                 this.startCell["col"]   = this.rightCol;
+                this.secondCell["row"]  = activeGrid.rows;
+                this.secondCell["col"]  = this.leftCol;
                 this.endCell["row"]     = 1;
                 this.endCell["col"]     = this.rightCol;
                 break;
             case "FACING_RIGHT" :
                 this.startCell["row"]   = this.bottomRow;
                 this.startCell["col"]   = 1;
+                this.secondCell["row"]  = this.topRow;
+                this.secondCell["col"]  = 1;
                 this.endCell["row"]     = this.bottomRow;
                 this.endCell["col"]     = activeGrid.cols;
                 break;
             case "FACING_DOWN" :
                 this.startCell["row"]   = 1;
                 this.startCell["col"]   = this.leftCol;
+                this.secondCell["row"]  = 1;
+                this.secondCell["col"]  = this.rightCol;
                 this.endCell["row"]     = activeGrid.rows;
                 this.endCell["col"]     = this.leftCol;
                 break;
