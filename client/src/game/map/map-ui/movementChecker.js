@@ -1,6 +1,12 @@
 const globals = require('../../../game-data/globals')
-
+/**
+ * Check if the given sprite collides with another sprite on the map
+ * @param {I_Sprite} sprite 
+ * @param {Boolean} isPlayer
+ * @returns {Boolean} true if collison, false if not
+ */
 const checkForCollision = ( sprite, isPlayer ) => {
+    let colliding = false; 
     const currBackTile = sprite.currentTileBack;
     const nextBackTile = sprite.nextTileBack;
     if ( isPlayer && ( currBackTile != undefined && nextBackTile != undefined ) ) {
@@ -31,15 +37,22 @@ const checkForCollision = ( sprite, isPlayer ) => {
     globals.GAME.FRONT.grid.array.forEach( ( e ) => {
         if( e.hasSprite && e.spriteId != sprite.spriteId ) {
             if ( checkIfSpritesCollide( sprite, e.spriteId ) ) {
-                return true;
+                colliding = true;
             }
         }
     } )
     
-    return false;
+    return colliding;
 }
 
+/**
+ * Check if the given sprite collides with target sprite
+ * @param {I_Sprite} sprite 
+ * @param {String} targetSpriteId 
+ * @returns {Boolean} true if collison, false if not
+ */
 const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
+    let colliding = false;
     const targetSprite = globals.GAME.front.class.spriteDictionary[targetSpriteId];
     const targetSpriteIsFlying = ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING )
 
@@ -47,26 +60,26 @@ const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
         return false;
     }
 
-    if ( 'hitboxes' in targetSprite && targetSprite.hitboxes.length > 0 && 'hitboxes' in sprite &&  sprite.hitboxes.length > 0 ) {
+    if ( 'hitboxes' in targetSprite && 'hitboxes' in sprite ) {
         sprite.hitboxes.forEach( ( hitbox ) => {
             targetSprite.hitboxes.forEach( ( targetHitbox ) => {
                 if ( hitbox.checkForActionRange( targetHitbox, sprite.direction ) ) {
-                    return true;
+                    colliding = true;
                 }
             })
         })
     }
-    else if ( 'hitboxes' in targetSprite && targetSprite.hitboxes.length > 0 ) {
+    else if ( 'hitboxes' in targetSprite ) {
         targetSprite.hitboxes.forEach( ( targetHitbox ) => {
             if (  sprite.hitbox.checkForActionRange( targetHitbox, sprite.direction ) ) {
-                return true;
+                colliding = true;
             }
         })
     }
-    else if ( 'hitboxes' in sprite && sprite.hitboxes.length > 0 ) {
+    else if ( 'hitboxes' in sprite ) {
         sprite.hitboxes.forEach( ( hitbox ) => {
             if ( hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
-                return true;
+                colliding = true;
             }
         })
     }
@@ -75,6 +88,8 @@ const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
             return true;     
         }
     }
+
+    return colliding
 }
 
 module.exports = {
