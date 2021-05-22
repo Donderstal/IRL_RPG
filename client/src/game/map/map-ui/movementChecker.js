@@ -7,20 +7,15 @@ const globals = require('../../../game-data/globals')
  */
 const checkForCollision = ( sprite, isPlayer ) => {
     let colliding = false; 
-    const currBackTile = sprite.currentTileBack;
-    const nextBackTile = sprite.nextTileBack;
-    if ( isPlayer && ( currBackTile != undefined && nextBackTile != undefined ) ) {
-        const currBackTile = sprite.currentTileBack;
-        const nextBackTile = sprite.nextTileBack;
 
-        if  ( currBackTile.hasEvent && currBackTile.eventType == 'DOOR' ) {
-            currBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
+    if ( isPlayer && ( sprite.currentTileBack != undefined && sprite.nextTileBack != undefined ) ) {
+        if  ( sprite.currentTileBack.hasEvent && sprite.currentTileBack.eventType == 'DOOR' ) {
+            sprite.currentTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
-        else if  ( nextBackTile != undefined && nextBackTile.hasEvent && nextBackTile.eventType == 'DOOR' ) {
-            nextBackTile.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
+        else if  ( sprite.nextTileBack.hasEvent && sprite.nextTileBack.eventType == 'DOOR' ) {
+            sprite.nextTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
-        const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
-        if ( nextBackgroundTile != undefined && nextBackgroundTile.blocked ) {
+        if ( sprite.nextTileBack != undefined && sprite.nextTileBack.blocked ) {
             switch ( sprite.direction ) {
                 case globals['FACING_RIGHT'] :
                     return sprite.isInCenterFacingRight;
@@ -44,7 +39,6 @@ const checkForCollision = ( sprite, isPlayer ) => {
     
     return colliding;
 }
-
 /**
  * Check if the given sprite collides with target sprite
  * @param {I_Sprite} sprite 
