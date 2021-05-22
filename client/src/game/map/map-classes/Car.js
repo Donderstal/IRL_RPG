@@ -103,11 +103,7 @@ class Car extends MapObject {
      * Push these instances to the this.hitBoxGroups array.
      */
     initHitboxGroups( ) {
-        this.hitboxGroups = [ ]
-
-        this.hitboxGroups = [
-            new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId )
-        ]
+        this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
         if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
             this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
         }
@@ -165,34 +161,22 @@ class Car extends MapObject {
         const tile = Object.assign(Object.create(Object.getPrototypeOf(intersectionTile)), intersectionTile);
         const directionFrom = intersectionTile.intersectionFrom;
         const directionTo = intersectionTile.intersectionTo;
-        const leftToUpTurn = ( directionFrom == "FACING_LEFT" && directionTo == "FACING_UP" );
-        const upToRightTurn = ( directionFrom == "FACING_UP" && directionTo == "FACING_RIGHT" );
-        const rightToDownTurn = ( directionFrom == "FACING_RIGHT" && directionTo == "FACING_DOWN" );
-        const downToLeftTurn = ( directionFrom == "FACING_DOWN" && directionTo == "FACING_LEFT" );
         
-        if ( leftToUpTurn ) {
+        if ( directionFrom == "FACING_LEFT" && directionTo == "FACING_UP" ) {
             tile.x += GRID_BLOCK_PX;
         }
-        else if ( upToRightTurn ) {
+        else if ( directionFrom == "FACING_UP" && directionTo == "FACING_RIGHT" ) {
             tile.y += GRID_BLOCK_PX;
         }
-        else if ( rightToDownTurn ) {
+        else if ( directionFrom == "FACING_RIGHT" && directionTo == "FACING_DOWN" ) {
             tile.x -= GRID_BLOCK_PX;
         }
-        else if ( downToLeftTurn  ) {
+        else if ( directionFrom == "FACING_DOWN" && directionTo == "FACING_LEFT" ) {
             tile.y -= GRID_BLOCK_PX;
         }
 
-        if ( Math.random( ) > .5 ) {
-            this.handlingIntersection = true;
-            this.switchDirections( directionTo, tile );
-        }
-        else {
-            this.handlingIntersection = true;
-            setTimeout( ( )=> {
-                this.handlingIntersection = false;
-            }, 500 )
-        }
+        this.handlingIntersection = true;
+        Math.random( ) > .5 ? this.switchDirections( directionTo, tile ) : setTimeout(( )=> {this.handlingIntersection = false}, 500);
     }
     /**
      * Clear the hitboxGroups tile indexes and set the newDirection to Car
