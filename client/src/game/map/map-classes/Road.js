@@ -54,41 +54,37 @@ class Road {
         const activeGrid = globals.GAME.front.class.grid;
         switch( roadData.direction ) {
             case "FACING_LEFT" :
-                this.startCell["row"]   = this.topRow;
-                this.startCell["col"]   = activeGrid.cols;
-                this.secondCell["row"]   = this.bottomRow;
-                this.secondCell["col"]   = activeGrid.cols;
-                this.endCell["row"]     = this.topRow;
-                this.endCell["col"]     = 1;
+                this.setCells( this.topRow, activeGrid.cols, this.bottomRow, activeGrid.cols, this.topRow, 1 );
                 break;
             case "FACING_UP" :
-                this.startCell["row"]   = activeGrid.rows;
-                this.startCell["col"]   = this.rightCol;
-                this.secondCell["row"]  = activeGrid.rows;
-                this.secondCell["col"]  = this.leftCol;
-                this.endCell["row"]     = 1;
-                this.endCell["col"]     = this.rightCol;
+                this.setCells( activeGrid.rows, this.rightCol, activeGrid.rows, this.leftCol, 1, this.rightCol );
                 break;
             case "FACING_RIGHT" :
-                this.startCell["row"]   = this.bottomRow;
-                this.startCell["col"]   = 1;
-                this.secondCell["row"]  = this.topRow;
-                this.secondCell["col"]  = 1;
-                this.endCell["row"]     = this.bottomRow;
-                this.endCell["col"]     = activeGrid.cols;
+                this.setCells( this.bottomRow, 1, this.topRow, 1, this.bottomRow, activeGrid.cols );
                 break;
             case "FACING_DOWN" :
-                this.startCell["row"]   = 1;
-                this.startCell["col"]   = this.leftCol;
-                this.secondCell["row"]  = 1;
-                this.secondCell["col"]  = this.rightCol;
-                this.endCell["row"]     = activeGrid.rows;
-                this.endCell["col"]     = this.leftCol;
+                this.setCells( 1, this.leftCol, 1, this.rightCol, activeGrid.rows, this.leftCol );
                 break;
             default:
                 console.log("error! Direction " + roadData.direction + " not recognized")
         }
     }
+    /**
+     * @param {Number} startRow row of the start cell
+     * @param {Number} startCol col of the start cell
+     * @param {Number} secondRow row of the second cell
+     * @param {Number} secondCol col of the second cell
+     * @param {Number} endRow row of the end cell
+     * @param {Number} endCol col of the end cell
+     */
+    setCells( startRow, startCol, secondRow, secondCol, endRow, endCol ) {
+        this.startCell["row"]   = startRow;
+        this.startCell["col"]   = startCol;
+        this.secondCell["row"]  = secondRow;
+        this.secondCell["col"]  = secondCol;
+        this.endCell["row"]     = endRow;
+        this.endCell["col"]     = endCol;
+0   }
     /**
      * Loop through the given array of Road instance and check if they intersect this Road.
      * If so, call setIntersection, passing the Road and intersecting I_Tile as arguments.
