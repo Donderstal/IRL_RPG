@@ -61,34 +61,9 @@ const clearPressedKeys = ( pressedKeys ) => {
         pressedKeys[key] = false
     })
 }
-/**
- * ( INCOMPLETE )
- * Set eventlisteners for the touchstart and touchmove events
- */
-const initTouchControls = ( ) => {
-    const frontCanvas = document.getElementById('game-front-canvas')
-
-    frontCanvas.addEventListener("touchstart", handleStart);
-    frontCanvas.addEventListener("touchmove", handleMove);
-}
-/**
- * ( INCOMPLETE )
- * Call handleMovementKeys function from mapControls.js
- */
-const handleStart = ( event ) => {
-    handleMovementKeys(true, event)
-}
-/**
- * ( INCOMPLETE )
- * Call handleMovementKeys function from mapControls.js
- */
-const handleMove = ( event ) => {
-    handleMovementKeys(true, event)
-}
 
 module.exports = {
     listenForKeyPress,
     stopListenForKeyPress,
-    clearPressedKeys,
-    initTouchControls
+    clearPressedKeys
 }

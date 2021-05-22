@@ -1,6 +1,5 @@
 const movement          = require('./map-ui/movement')
 const actionController  = require('./map-ui/actionController')
-
 const globals           = require('../../game-data/globals')
 /**
  * Check the event.key prop and prevent its default.
@@ -29,47 +28,24 @@ const handleMapKeyPress = ( event ) => {
 /**
  * If there is a player sprite, check if w-a-s-d or up-left-down-right has been pressed.
  * If so, call movement.handleMovementOfSprite and pass the player sprite and its direction as arguments 
- * ( TODO: Seperate touch and non-touch controls )
  * @param {Boolean} touch 
  * @param {Boolean} event 
  */
 const handleMovementKeys = ( touch = false, event = false ) => {   
     const GAME = globals.GAME;
     const PLAYER = GAME.PLAYER;
-    let touchLeft = false;
-    let touchRight = false;
-    let touchUp = false;
-    let touchDown = false;
-
-    if ( touch && PLAYER != undefined && !GAME.cinematicMode ) {
-        var rect = document.getElementById('game-front-canvas').getBoundingClientRect();
-        const touch = event.touches[0]
-    
-        let touchX = touch.clientX - rect.left;
-        let touchY = touch.clientY - rect.top;
-    
-        let playerX = PLAYER.x;
-        let playerY = PLAYER.y;
-        let playerBottom = playerY + PLAYER.height;
-        let playerRight = playerX + PLAYER.width;
-    
-        touchLeft = ( touchX < playerX )
-        touchRight = ( touchX > playerRight )
-        touchUp = ( touchY < playerY )
-        touchDown = ( touchY > playerBottom )
-    }
 
     if ( PLAYER != undefined ) {
-        if ( GAME.pressedKeys.w || GAME.pressedKeys.ArrowUp || touchUp ) {
+        if ( GAME.pressedKeys.w || GAME.pressedKeys.ArrowUp ) {
             movement.handleMovementOfSprite( PLAYER, 'FACING_UP')
         }
-        else if ( GAME.pressedKeys.a || GAME.pressedKeys.ArrowLeft || touchLeft ) {
+        else if ( GAME.pressedKeys.a || GAME.pressedKeys.ArrowLeft ) {
             movement.handleMovementOfSprite( PLAYER, 'FACING_LEFT')
         }
-        else if ( GAME.pressedKeys.s || GAME.pressedKeys.ArrowDown || touchDown ) {
+        else if ( GAME.pressedKeys.s || GAME.pressedKeys.ArrowDown ) {
             movement.handleMovementOfSprite( PLAYER, 'FACING_DOWN')
         }
-        else if ( GAME.pressedKeys.d || GAME.pressedKeys.ArrowRight || touchRight ) {
+        else if ( GAME.pressedKeys.d || GAME.pressedKeys.ArrowRight ) {
             movement.handleMovementOfSprite( PLAYER, 'FACING_RIGHT')
         }    
     }

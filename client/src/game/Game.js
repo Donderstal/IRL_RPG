@@ -164,7 +164,6 @@ class Game {
      * Start listening for keypress in controls.js. Start requesting animationframe in animationframecontroller.js
      */
     initControlsAndAnimation( ) {
-        controls.initTouchControls( );
         controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
     }
