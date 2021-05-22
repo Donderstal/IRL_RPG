@@ -1,16 +1,12 @@
 const globals = require('../../../game-data/globals')
-const { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } = require('../../../game-data/globals');
+const { GRID_BLOCK_PX, MOVEMENT_SPEED } = require('../../../game-data/globals');
 
 let frameCount = 0;
 
 /**
- * Call functions in order to move sprite
- * @param {string} direction - string representing direction
- * 
- * Clear old sprite
- * Call @function moveInDirection to update sprite xy and direction
- * Call @method sprite.countFrame
- * Draw sprite in new location and/or pose
+ * Call moveInDirection and then call sprite.countFrame
+ * @param {I_Sprite} sprite 
+ * @param {Number} direction 
  */
 const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
@@ -18,12 +14,9 @@ const handleMovementOfSprite = ( sprite, direction ) => {
 }
 
 /**
- * @param {string} direction - string representing direction
- * @param {object} sprite - instance of the MapSprite class from initMapSprite.js
- * 
- * Check map state to see if movement is allowed
- * Update sprite x or y with movement speed based on direction
- * Update sprite direction prop based on direction globals
+ * If movement is allowed, increment or decrement the x or y value of given sprite appropriatly
+ * @param {I_Sprite} sprite 
+ * @param {Number} direction 
  */
 const moveInDirection = ( sprite, direction ) => {
     const changedDirection = sprite.direction != globals[direction] ;
@@ -47,31 +40,38 @@ const moveInDirection = ( sprite, direction ) => {
         }     
     }
 }
-
+/**
+ * Check if the sprite can move in the given direction from their current position
+ * @param {I_Sprite} sprite 
+ * @param {Number} direction 
+ */
 const checkIfMovementAllowed = ( sprite, direction ) => {
+    let moveIsAllowed = true;
+
     const activeMap = globals.GAME.activeMap;
     const activeBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.activeTileIndex);
     const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
     const nextForegroundTile = globals.GAME.getTileOnCanvasAtIndex( "FRONT", sprite.nextTileIndex);
-
     if ( activeBackgroundTile == undefined ) {
         return true;
     }
 
-    if ( activeBackgroundTile.row == 1 && direction == 'FACING_UP' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
+    const facingUpOnTopRow = activeBackgroundTile.row == 1 && direction == 'FACING_UP';
+    const facingRightOnRightCol = activeBackgroundTile.col == globals.GAME.back.class.grid.cols && direction == 'FACING_RIGHT' ;
+    const facingLeftOnLeftCol = activeBackgroundTile.col == 1 && direction == 'FACING_LEFT';
+    const facingDownOnBottomRow = activeBackgroundTile.row == globals.GAME.back.class.grid.rows && direction == 'FACING_DOWN';
+
+
+    if ( facingUpOnTopRow && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
         return !sprite.isInCenterFacingUp;
     }
-    else if ( activeBackgroundTile.row == globals.GAME.back.class.grid.rows && direction == 'FACING_DOWN' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.down ) ) {
+    else if ( facingDownOnBottomRow && ( !activeMap.outdoors || !activeMap.neighbours.down ) ) {
         return !sprite.isInCenterFacingDown;
     }
-    else if ( activeBackgroundTile.col == 1 && direction == 'FACING_LEFT' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.left )  ) {
+    else if ( facingLeftOnLeftCol && ( !activeMap.outdoors || !activeMap.neighbours.left )  ) {
         return !sprite.isInCenterFacingLeft;
     }
-    else if ( activeBackgroundTile.col == globals.GAME.back.class.grid.cols && direction == 'FACING_RIGHT' 
-    && ( !activeMap.outdoors || !activeMap.neighbours.right )  ) {
+    else if ( facingRightOnRightCol && ( !activeMap.outdoors || !activeMap.neighbours.right )  ) {
         return !sprite.isInCenterFacingRight;
     }
 
@@ -90,8 +90,11 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     
     return true
 }
-
-
+/**
+ * If there is a neighbouring map and the given sprite is over the map border
+ * call GAME.switchMap to intialize the new map and return true.
+ * @param {I_Sprite} sprite
+ */
 const checkForNeighbours = ( sprite ) => {
     const activeMap = globals.GAME.activeMap;
     const activeGrid = globals.GAME.back.class.grid
@@ -99,22 +102,19 @@ const checkForNeighbours = ( sprite ) => {
     if ( activeMap.outdoors ) {
         if ( activeGrid.x > sprite.centerX( ) && activeMap.neighbours.left ) {
             globals.GAME.switchMap( activeMap.neighbours.left, 'NEIGHBOUR' )
-            return true
+            return true;
         }
-
         if ( activeGrid.x + ( activeGrid.cols * GRID_BLOCK_PX ) < sprite.centerX( ) && activeMap.neighbours.right ) {
             globals.GAME.switchMap( activeMap.neighbours.right, 'NEIGHBOUR' )
-            return true
+            return true;
         }
-
         if ( activeGrid.y > sprite.baseY( ) && activeMap.neighbours.up ) {
             globals.GAME.switchMap( activeMap.neighbours.up, 'NEIGHBOUR' )
-            return activeMap.neighbours.up
+            return true;
         }
-
         if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY( ) && activeMap.neighbours.down ) {
             globals.GAME.switchMap( activeMap.neighbours.down, 'NEIGHBOUR' )
-            return activeMap.neighbours.down
+            return true;
         }
     }
 
