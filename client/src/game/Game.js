@@ -14,6 +14,7 @@ const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
 const { Battle } = require('./battle/Battle')
+const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyProgression')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [ 
@@ -44,6 +45,7 @@ class Game {
 
         this.activeMap; 
         this.activeMapName; // string
+        this.currentChapter;
 
         this.initGameCanvases( );
     }
@@ -142,7 +144,8 @@ class Game {
         this.storeMapData( mapData, firstMapUrl );
         mapData.playerStart.playerClass = className;
         mapData.playerStart.name = name;
-        this.loadMapToCanvases( mapData, true )
+        this.loadMapToCanvases( mapData, true );
+        startNewStory( );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
     /**
@@ -213,6 +216,7 @@ class Game {
         this.loadMapToCanvases( newMapData );
         this.setPlayerInNewMap( newMapData, type );
         this.storeMapData( newMapData, destination );
+        getScriptedEventsForMap( this.activeMapName );
 
         setTimeout( ( ) => {
             controls.listenForKeyPress( ); 

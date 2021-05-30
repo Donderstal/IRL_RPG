@@ -4,13 +4,13 @@ const chapterEvents = [
         // C 0, Scene 0
         [
             {
-                mapName: "my-neighbourhood/A1/neighbourhood-A1",
+                mapName: "my-neighbourhood/A1",
                 trigger: "ON_ENTER",
                 passScene: false,
                 scriptId: "C0_S0_E0"
             },
             {
-                mapName: "my-neighbourhood/A2/neighbourhood-A2",
+                mapName: "my-neighbourhood/A2",
                 trigger: "ON_ENTER",
                 passScene: true,
                 scriptId: "C0_S0_E1"
@@ -19,7 +19,7 @@ const chapterEvents = [
         // C 0, Scene 1
         [
             {
-                mapName: "my-neighbourhood/A3/neighbourhood-A3",
+                mapName: "my-neighbourhood/A3",
                 trigger: "ON_LEAVE",
                 passScene: true,
                 scriptId: "C0_S1_E0"
@@ -28,7 +28,7 @@ const chapterEvents = [
         // C 0, Scene 2
         [
             {
-                mapName: "my-neighbourhood/A4/neighbourhood-A4",
+                mapName: "my-neighbourhood/A4",
                 trigger: "ON_POSITION",
                 position: {
                     "col": 12,
