@@ -1,8 +1,5 @@
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MOVEMENT_SPEED } = require('../../../game-data/globals');
-
-let frameCount = 0;
-
 /**
  * Call moveInDirection and then call sprite.countFrame
  * @param {I_Sprite} sprite 
@@ -12,7 +9,6 @@ const handleMovementOfSprite = ( sprite, direction ) => {
     moveInDirection( sprite, direction )
     sprite.countFrame( )
 }
-
 /**
  * If movement is allowed, increment or decrement the x or y value of given sprite appropriatly
  * @param {I_Sprite} sprite 

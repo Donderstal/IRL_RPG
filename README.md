@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAY 30, 2021
+* Fixed various small bugs in map mode
+
 #### MAY 11, 2021
 * Adding new map sprite images and resource code
 

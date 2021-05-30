@@ -45,13 +45,15 @@ class MapObject extends Sprite {
         if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX && !objectResource.isCar ) {
             for( var i = 1; i < ( this.width / GRID_BLOCK_PX ); i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index + i )
-                tileToBlock.setSpriteData( 'filler', {} )                
+                tileToBlock.setSpriteData( 'filler', {} );
+                tileToBlock.spriteId = this.spriteId;                    
             }
         }
         if ( !this.onBackground && !this.notGrounded && this.height > GRID_BLOCK_PX && !this.groundedAtBase && !objectResource.isCar ) {
             for( var i = 1; i < ( this.height / GRID_BLOCK_PX ) - 1; i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index - ( globals.GAME.FRONT.grid.cols * i ) )
-                tileToBlock.setSpriteData( 'filler', {} )         
+                tileToBlock.setSpriteData( 'filler', {} );
+                tileToBlock.spriteId = this.spriteId;             
             }
         } 
 
