@@ -4,46 +4,46 @@ const eventScripts = {
         scenes: [
             { 
                 type: "SPEAK",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 text: "Hey!",
                 sfx: "voice-2.mp3"
             },
             { 
                 type: "MOVE",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 destination: "Player",
                 endDirection: "FACING_UP"
             },
             { 
                 type: "SPEAK",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 text: "Don't you work at our branch a few blocks down the street?",
                 sfx: "voice-2.mp3"
             },
             { 
                 type: "SPEAK",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 text: "You better hurry up! Your shift's already begun...",
                 sfx: "voice-2.mp3"
             },
             { 
                 type: "ANIM",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 animName: "TURN_SINGLE_CIRCLE",
                 loop: false
             },
             { 
                 type: "SPEAK",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 text: "See ya later, wage cuck!",
                 sfx: "lala.mp3"
             },
             { 
                 type: "MOVE",
-                spriteName: "Yum-mart Exec",
+                spriteName: "Mr. Business",
                 destination: {
-                    row: "current",
-                    col: -2
+                    "row": 6,
+                    "col": 22
                 }
             }
         ]

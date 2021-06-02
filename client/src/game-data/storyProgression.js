@@ -2,8 +2,8 @@
 const globals   = require('./globals')
 const { chapterEvents } = require('../resources/eventResources')
 const { eventScripts } = require('../resources/eventScripts')
+const { ScriptedEvent } = require('../game/cutscenes/ScriptedEvent');
 
-let currentChapter = globals.GAME.currentChapter;
 const chapters = [
     {
         id: 0,
@@ -32,6 +32,7 @@ const chapters = [
 ]
 
 const progressStory = ( ) => {
+    let currentChapter = globals.GAME.currentChapter;
     if  ( currentChapter.activeScene == currentChapter.scenes.length ) {
         console.log( 'next chapter!' )
         currentChapter = chapters[currentChapter.id + 1]
@@ -43,24 +44,25 @@ const progressStory = ( ) => {
     }
     currentChapter.scriptedEvents = [];
     chapterEvents[currentChapter.id][currentChapter.activeScene].forEach( (e) => {
-        globals.GAME.currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
+        globals.GAME.currentChapter.scriptedEvents.push( new ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
     console.log(currentChapter)
     getScriptedEventsForMap(globals.GAME.activeMapName)
 }
 
 const startNewStory = ( ) => {
-    currentChapter = chapters[0];
+    globals.GAME.currentChapter = chapters[0];
+    let currentChapter = globals.GAME.currentChapter;
     currentChapter.activeScene = 0 
     currentChapter.scriptedEvents = [];
     chapterEvents[currentChapter.id][currentChapter.activeScene].forEach( (e) => {
-        currentChapter.scriptedEvents.push( e )
-        //currentChapter.scriptedEvents.push( new I_ScriptedEvent( e, eventScripts[e.scriptId] ) )
+        currentChapter.scriptedEvents.push( new ScriptedEvent( e, eventScripts[e.scriptId] ) )
     })
     console.log(currentChapter)
 }
 
 const getScriptedEventsForMap = ( mapName ) => {
+    let currentChapter = globals.GAME.currentChapter;
     globals.GAME.activeMap.scriptedEvents = []
 
     currentChapter.scriptedEvents.forEach( (e) => {

@@ -14,8 +14,7 @@ const { progressStory } = require('./storyProgression')
  */
 
 const triggerEvent = ( TRIGGER, args = null ) => {
-    let events = [ ]
-    events.forEach( (e) => {
+    globals.GAME.activeMap.scriptedEvents.forEach( (e) => {
         if ( TRIGGER == e.trigger && TRIGGER != "ON_POSITION" ) {
             e.fireEvent( args );
             if ( e.passScene ) {
