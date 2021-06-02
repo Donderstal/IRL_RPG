@@ -60,7 +60,7 @@ const animationFrameController = ( ) => {
                 GAME.MENU.draw( );
             }
 
-            if  ( GAME.cinematicMode && GAME.activeCinematic ) {
+            if  ( GAME.inCinematic && GAME.activeCinematic ) {
                 GAME.activeCinematic.checkForScenePass( )
             }
         }
