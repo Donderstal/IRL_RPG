@@ -213,6 +213,13 @@ class Game {
      * @param {String} type - DOOR, BUS, NEIGHBOUR - indicates how the player is crossing to the new map
      */
     switchMap ( destination, type ) {
+        if ( this.activeMap.scriptedEvents != undefined ) {
+            triggerEvent("ON_LEAVE", [ destination, type ]); 
+            if ( this.inCinematic ) {
+                return;
+            }            
+        }
+
         this.paused = true;
         controls.stopListenForKeyPress( );
         controls.clearPressedKeys( this.pressedKeys );

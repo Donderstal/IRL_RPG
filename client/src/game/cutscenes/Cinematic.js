@@ -54,10 +54,7 @@ class Cinematic {
             globals.GAME.deActivateCinematic( this );
             globals.GAME.activeCinematic = null;
             if ( this.trigger == "ON_LEAVE" ) {
-                globals.GAME.mapTransition = {
-                    urlToNewMap: this.args[0],
-                    oldMapName: this.args[1]
-                }
+                globals.GAME.switchMap( this.args[0], this.args[1] )
             }
         }
     }
