@@ -146,6 +146,14 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
         }
+        
+        if ( this.movingToDestination && !this.pathIsBlocked && this == globals.GAME.PLAYER ) {
+            this.goToDestination( );   
+            this.countFrame( );  
+        }
+        else if ( this.inScriptedAnimation && this == globals.GAME.PLAYER ) {
+            this.doScriptedAnimation( );
+        }
         this.updateSpriteBorders( )
     }
     /**

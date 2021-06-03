@@ -65,6 +65,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         startingTile[0].setSpriteData( 'character', null )
         startingTile[0].spriteId = "PLAYER"
         this.playerSprite.spriteId = "PLAYER"
+        this.playerSprite.name = "Player";
         this.allSprites.push( this.playerSprite )
     }
     /**

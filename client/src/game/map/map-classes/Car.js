@@ -37,7 +37,7 @@ class Car extends MapObject {
         this.checkForCollision( );
         this.checkForIntersection( );
 
-        if ( !this.blocked ) {
+        if ( !this.blo0cked ) {
             this.goToDestination( );     
         }
         this.countFrame( );

@@ -149,8 +149,8 @@ const eventScripts = {
                 type: "MOVE",
                 spriteName: "Player",
                 destination: {
-                    row: 12,
-                    col: 0
+                    row: 13,
+                    col: 1
                 },
                 endDirection: "FACING_RIGHT"
             },
@@ -158,15 +158,9 @@ const eventScripts = {
                 type: "MOVE",
                 spriteName: "Manager Bob",
                 destination: {
-                    row: 12,
-                    col: 'current'
+                    row: 13,
+                    col: 2
                 },
-                endDirection: "FACING_DOWN"
-            },
-            { 
-                type: "MOVE",
-                spriteName: "Manager Bob",
-                destination: "Player",
                 endDirection: "FACING_LEFT"
             },
             { 
@@ -196,17 +190,8 @@ const eventScripts = {
                 type: "MOVE",
                 spriteName: "Manager Bob",
                 destination: {
-                    row: 8,
-                    col: 'current'
-                },
-                endDirection: "FACING_DOWN"
-            },
-            { 
-                type: "MOVE",
-                spriteName: "Manager Bob",
-                destination: {
-                    row: 8,
-                    col: 4
+                    row: 10,
+                    col: 6
                 },
                 endDirection: "FACING_DOWN"
             }
