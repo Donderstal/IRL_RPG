@@ -87,7 +87,7 @@ class NPC extends MapSprite {
      * If true, set a animation or movement depending on this.animationType.
      */
     setRandomMovementOrAnimation( ) {
-        if ( this.doAnimationCounter.countAndCheckLimit( ) ) {
+        if ( this.doAnimationCounter.countAndCheckLimit( ) && !globals.GAME.inCinematic ) {
             switch( this.animationType ) {
                 case NPC_ANIM_TYPE_IDLE:
                     this.setRandomAnimation( );

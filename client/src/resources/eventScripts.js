@@ -75,20 +75,12 @@ const eventScripts = {
                 text: "Come over here, will ya?",
                 sfx: "voice-1.mp3"
             },
-            {
-                type: "MOVE",
-                spriteName: "Chaddy Chandler",
-                destination: {
-                    "row": 5,
-                    "col": 4
-                }
-            },
             { 
                 type: "MOVE",
                 spriteName: "Chaddy Chandler",
                 destination: {
-                    "row": 2,
-                    "col": 4
+                    "row": 3,
+                    "col": 5
                 },
                 endDirection: "FACING_DOWN"
             },

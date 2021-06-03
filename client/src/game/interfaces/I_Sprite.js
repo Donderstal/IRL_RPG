@@ -65,7 +65,7 @@ class Sprite {
         return ( 
             globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ).isBlocked 
             || globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row ).isBlocked 
-        )
+        )     
     }
      /**
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
@@ -234,7 +234,7 @@ class Sprite {
         this.activeDestinationIndex;
 
         if ( !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING ) {
-            this.setDestinationList( isLoop )
+            this.setDestinationList( isLoop );
         }
         else {
             this.unsetDestination( );
@@ -307,6 +307,10 @@ class Sprite {
         this.destinationTile = false;
         this.destinationTiles = [];
         this.activeDestinationIndex = 0;
+        if ( globals.GAME.activeCinematic && this.name == globals.GAME.activeCinematic.activeScene.spriteName )
+        {
+            globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
+        }
     }
 
     /**
@@ -362,7 +366,8 @@ class Sprite {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
         }
         if ( scene.type == "MOVE" ) {
-            this.setDestination( scene.destination, (scene.endDirection) ? scene.endDirection : false );
+            this.setDestination( scene.destination );
+            this.initMovement( );
         }
         if ( scene.type == "ANIM" ) {
             this.setScriptedAnimation( scene, FRAME_LIMIT )

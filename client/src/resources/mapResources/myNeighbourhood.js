@@ -1424,21 +1424,6 @@ module.exports = {
         ],
         "characters" : [
             {
-              "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
-              "anim_name": "NECKBEARD_HACK",
-              "sprite": "neckbeard.png",
-              "direction": "FACING_RIGHT",
-              "name": "Darkwing Dork",    
-              "row": 6,
-              "col": 8,
-              "action": {
-                  "type": "TEXT",
-                  "sfx": "voice-1.mp3",
-                  "direction": "FACING_UP",
-                  "text": "I'm a level 24 Darkmage."
-              }
-            },
-            {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
               "anim_name": "LIFT",
               "sprite": "chad.png",

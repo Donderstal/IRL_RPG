@@ -15,6 +15,7 @@ const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
 const { Battle } = require('./battle/Battle')
 const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyProgression')
+const { triggerEvent } = require('../game-data/triggerEvents')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [ 
@@ -189,7 +190,12 @@ class Game {
         this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
-        this.sound.playMusic( mapData.music )
+        this.sound.playMusic( mapData.music );
+        setTimeout( ( ) => {
+            if ( this.activeMap.scriptedEvents ) {
+                triggerEvent("ON_ENTER")        
+            }
+        }, 250 )
     }
     /**
      * Clear currentmap data from Foreground and Background. Then clear the assets from both canvas contexts
@@ -335,6 +341,16 @@ class Game {
     clearCanvases( ) {
         canvasHelpers.clearEntireCanvas("FRONT")
         canvasHelpers.clearEntireCanvas("BACK")
+    }
+
+    activateCinematic( cinematic ) {
+        this.activeCinematic = cinematic;
+        this.inCinematic = true;
+    }
+
+    deActivateCinematic( ) {
+        this.activeCinematic = false;
+        this.inCinematic = false;
     }
 }
 

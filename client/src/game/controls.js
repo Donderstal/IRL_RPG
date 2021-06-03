@@ -37,11 +37,18 @@ const addKeyToPressed = ( ) => {
         globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }
 
-    if ( globals.GAME.mode == MAP_MODE && !globals.GAME.inMenu ) {
+    if ( globals.GAME.mode == MAP_MODE && !globals.GAME.inMenu && !globals.GAME.inCinematic ) {
         handleMapKeyPress( event )
     }
-    else if ( globals.GAME.mode == BATTLE_MODE && !globals.GAME.inMenu  ) {
+    else if ( globals.GAME.mode == BATTLE_MODE && !globals.GAME.inMenu && !globals.GAME.inCinematic  ) {
         handleBattleKeyPress( event )
+    }
+    else if ( globals.GAME.inCinematic ) {
+        if ( event.key == " " && globals.GAME.bubbleIsActive ) {
+            globals.GAME.activeBubble = {}
+            globals.GAME.bubbleIsActive = false
+            globals.GAME.activeAction = null;
+        }
     }
     else if ( globals.GAME.inMenu ) {
         handleMenuKeyPress( event );
