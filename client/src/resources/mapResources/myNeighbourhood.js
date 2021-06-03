@@ -1878,15 +1878,34 @@ module.exports = {
                         "col": 3,
                         "name": "Boze Bert",                    
                         "action": {
-                            "type": "BATTLE",
-                            "sfx": "voice-1.mp3",
-                            "direction": "FACING_UP",
-                            "text": "I'm in your house, about to kick your ass!",
-                            "party": [
-                              { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
-                              { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
-                              { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                          "type": "BATTLE",
+                          "sfx": "voice-1.mp3",
+                          "direction": "FACING_UP",
+                          "text": "I'm in your house, about to kick your ass!",
+                          "party": [
+                            { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
+                            { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
+                            { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                          ], 
+                          "hasEvent": true,
+                          "event": {
+                            "trigger": "ON_BATTLE_START",
+                            "script": [
+                              {
+                                type: "ANIM",
+                                spriteName: "Boze Bert",
+                                animName: "LIFT",
+                                loop: false
+                              },
+                              { 
+                                type: "SPEAK",
+                                spriteName: "Boze Bert",
+                                text: "You'll regret this!",
+                                sfx: "voice-2.mp3"
+                              },
                             ]
+
+                          }
                         }
                     }
                 ],
