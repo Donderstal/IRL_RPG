@@ -18,8 +18,7 @@ class MapAction extends I_Hitbox {
         }
         if ( action.hasEvent ) {
             this.hasEvent   = true;
-            this.trigger = action.event.trigger;
-            this.scenes = action.event.script;
+            this.events     = action.events
         }
         this.type       = action.type
         this.text       = action.text
@@ -54,17 +53,22 @@ class MapAction extends I_Hitbox {
             case "BUS" :
                 globals.GAME.switchMap( this.to, "BUS" );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
+                globals.GAME.activeAction = null;
                 break;
             case "BATTLE" : 
                 if ( this.hasEvent ) {
-                    new Cinematic( this, this.trigger, [ this.party ] );
-                    return;
+                    this.events.forEach( ( e ) => {
+                        if ( e["trigger"] == "ON_BATTLE_START" ) {
+                            new Cinematic( e, e.trigger, [ this.party, this.name ] );                            
+                        }
+                    } )
+
+                }
+                else {
+                    globals.GAME.initializeBattle( this.party, this.name );                    
                 };
-
-                globals.GAME.initializeBattle( this.party );
         }
-
-        globals.GAME.activeAction = null;
+        console.log(globals.GAME.activeAction)
     }
     /**
      * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
@@ -73,6 +77,13 @@ class MapAction extends I_Hitbox {
         globals.GAME.sound.playEffect( this.sfx );
         displayText.getSpeechBubble( this )
     } 
+    checkForEventOnBattleEnd( ) {
+        this.events.forEach( ( e ) => {
+            if ( e["trigger"] == "ON_BATTLE_END" ) {
+                new Cinematic( e, e.trigger, [ this.party, this.name ] );                            
+            }
+        } )
+    }
 }
 
 module.exports = {

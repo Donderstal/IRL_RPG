@@ -250,11 +250,11 @@ class Game {
      * Then assign a Battle instance to this.battle
      * @param {Object} partyData - actionData object retrieved from mapResources.js
      */
-    initializeBattle( partyData ) {
+    initializeBattle( partyData, opponentName ) {
         const opponentParty = new Party( partyData, false );
         this.clearCanvases( );
         this.loadBattleGraphicsToCanvases( opponentParty );
-        this.battle = new Battle( opponentParty );
+        this.battle = new Battle( opponentParty, opponentName );
         animationFrameController.startBattleAnimation( );
     }
     /**
@@ -283,6 +283,8 @@ class Game {
         this.BACK.clearBattleMap( );
         this.FRONT.clearBattleMap( );
         this.BACK.loadImageWithCallback( '/static/tilesets/' + tilesheets[this.activeMap.tileSet].src, this.back.class.drawMapFromGridData );
+        this.activeAction.checkForEventOnBattleEnd( );
+        this.activeAction = null;
         animationFrameController.startOverworldAnimation( );   
     }
     /**

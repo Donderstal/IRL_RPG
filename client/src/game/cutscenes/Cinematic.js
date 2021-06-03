@@ -57,7 +57,7 @@ class Cinematic {
                 globals.GAME.switchMap( this.args[0], this.args[1] )
             }
             else if ( this.trigger == "ON_BATTLE_START" ) {
-                globals.GAME.initializeBattle( this.args[0] );
+                globals.GAME.initializeBattle( this.args[0], this.args[1] );
             }
         }
     }

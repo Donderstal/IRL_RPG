@@ -33,11 +33,6 @@ const stopListenForKeyPress = ( ) => {
 const addKeyToPressed = ( ) => {
     event.preventDefault( );
 
-    if ( event.key == "l" ) {
-        console.log(globals.GAME.PLAYER);
-        console.log(globals.GAME.PLAYER.destinationIsLeft);
-        console.log(globals.GAME.activeCinematic);
-    }
     if ( event.key == "Tab" ) {
         globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }
@@ -52,7 +47,6 @@ const addKeyToPressed = ( ) => {
         if ( event.key == " " && globals.GAME.bubbleIsActive ) {
             globals.GAME.activeBubble = {}
             globals.GAME.bubbleIsActive = false
-            globals.GAME.activeAction = null;
         }
     }
     else if ( globals.GAME.inMenu ) {

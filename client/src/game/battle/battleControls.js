@@ -12,6 +12,13 @@ const handleBattleKeyPress = ( event ) => {
     else if ( event.key == " " && BATTLE.phase != BATTLE_PHASE_DO_MOVES ) {
         BATTLE.goToNextBattlePhase( );
     }
+
+    if ( event.key == "z" ) {
+        BATTLE.endBattle( );
+    }
+    if ( event.key == "l" ) {
+        console.log(BATTLE);
+    }
  };
 
 module.exports = {

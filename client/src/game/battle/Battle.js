@@ -7,7 +7,8 @@ const { ATT_SPEED } = require('../../game-data/globals');
 const { BattleText } = require('./BattleText');
 
 class Battle {
-    constructor( opponentParty ) {
+    constructor( opponentParty, opponentName ) {
+        this.opponentName   = opponentName;
         this.phase          = BATTLE_PHASE_BEGIN_TURN; 
         this.opponentParty  = opponentParty;
         this.currentTurn    = 0;

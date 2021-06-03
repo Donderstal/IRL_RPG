@@ -1888,25 +1888,43 @@ module.exports = {
                             { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
                           ], 
                           "hasEvent": true,
-                          "event": {
+                          "events": [
+                            {
                             "trigger": "ON_BATTLE_START",
-                            "script": [
-                              {
-                                type: "ANIM",
-                                spriteName: "Boze Bert",
-                                animName: "LIFT",
-                                loop: false
-                              },
-                              { 
-                                type: "SPEAK",
-                                spriteName: "Boze Bert",
-                                text: "You'll regret this!",
-                                sfx: "voice-2.mp3"
-                              },
-                            ]
-
-                          }
-                        }
+                            "scenes": [
+                                {
+                                  type: "ANIM",
+                                  spriteName: "Boze Bert",
+                                  animName: "LIFT",
+                                  loop: false
+                                },
+                                { 
+                                  type: "SPEAK",
+                                  spriteName: "Boze Bert",
+                                  text: "You'll regret this!",
+                                  sfx: "voice-2.mp3"
+                                },
+                              ]
+                            },
+                            {
+                              "trigger": "ON_BATTLE_END",
+                              "scenes": [
+                                  {
+                                    type: "ANIM",
+                                    spriteName: "Boze Bert",
+                                    animName: "TURN_SINGLE_CIRCLE",
+                                    loop: false
+                                  },
+                                  { 
+                                    type: "SPEAK",
+                                    spriteName: "Boze Bert",
+                                    text: "Oh no, I got PWND!!",
+                                    sfx: "voice-2.mp3"
+                                  },
+                                ]
+                              }
+                        ]
+                      }
                     }
                 ],
                 "actions" : [
