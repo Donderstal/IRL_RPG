@@ -45,9 +45,19 @@ const addKeyToPressed = ( ) => {
     }
     else if ( globals.GAME.inCinematic ) {
         if ( event.key == " " && globals.GAME.bubbleIsActive ) {
+            if ( globals.GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
+                globals.GAME.activeCinematic.activeScene.setSelection( "YES" )                
+            }
             globals.GAME.activeBubble = {}
             globals.GAME.bubbleIsActive = false
         }
+        else if ( event.key == "z" && globals.GAME.bubbleIsActive && globals.GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
+            globals.GAME.activeCinematic.activeScene.setSelection( "NO" )
+            globals.GAME.activeBubble = {}
+            globals.GAME.bubbleIsActive = false
+        }
+
+
     }
     else if ( globals.GAME.inMenu ) {
         handleMenuKeyPress( event );

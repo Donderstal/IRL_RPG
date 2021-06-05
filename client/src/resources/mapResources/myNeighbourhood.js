@@ -1501,10 +1501,19 @@ module.exports = {
                 "type": "BATTLE",
                 "scenes": [
                   {
-                    type: "SPEAK",
+                    type: "SPEAK_YES_OR_NO",
                     spriteName: "Pauline",
                     "sfx": "voice-3.mp3",
-                    "text": "Ever had your ass kicked by a lady?",
+                    "text": "Are you looking to get your ass kicked?",
+                    "pathYes": false,
+                    "pathNo": [
+                      {
+                        "type": "SPEAK",
+                        spriteName: "Pauline",
+                        "sfx": "voice-3.mp3",
+                        "text": "That's a shame, honey",                     
+                      }
+                    ]
                   }
                 ],
                 "party": [
@@ -2004,10 +2013,19 @@ module.exports = {
                           sfx: "voice-2.mp3"
                         },
                         {
-                          type: "SPEAK",
+                          type: "SPEAK_YES_OR_NO",
                           spriteName: "Boze Bert",
                           text: "Want me to kick your ass?!",
-                          sfx: "voice-2.mp3"
+                          sfx: "voice-2.mp3",
+                          pathYes: false,
+                          pathNo: [
+                            {
+                              type: "SPEAK",
+                              spriteName: "Boze Bert",
+                              text: "You're lucky you're a coward!",
+                              sfx: "voice-2.mp3",
+                            }
+                          ]
                         }
                       ],
                       "hasEvent": true,

@@ -13,6 +13,12 @@ class Scene {
             this.text = data.text;
         }
 
+        if (  this.type == "SPEAK_YES_OR_NO" ) {
+            this.text = data.text;
+            this.pathYes = data.pathYes;
+            this.pathNo = data.pathNo;
+        }
+
         if ( this.type == "MOVE" ) {
             if ( typeof data.destination === 'string' || data.destination instanceof String ) {
                 const sprite = this.getSpriteByName( data.destination )                
@@ -62,6 +68,10 @@ class Scene {
     getSpriteByName( name = this.spriteName ) {
         const spriteArray = name == "Player" ? globals.GAME.PLAYER : globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
         return name == "Player" ? spriteArray : spriteArray[0];
+    }
+    
+    setSelection( selection ) {
+        this.selection = selection;
     }
 } 
 

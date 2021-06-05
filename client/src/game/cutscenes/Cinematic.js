@@ -6,8 +6,8 @@ const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOpp
  */
 class Cinematic {
     constructor( data, trigger, args ) {
-        this.scenes = [];
-        this.scenes = data.scenes;
+        this.data = data;
+        this.scenes = data.scenes.slice();
         this.trigger = trigger;
         this.args   = args;
         this.numberOfScenes = this.scenes.length
@@ -21,6 +21,14 @@ class Cinematic {
         if ( this.activeScene.type == "SPEAK" ) {
             if ( !globals.GAME.bubbleIsActive ) {
                 this.activateNextScene( )
+            }
+            else {
+                return
+            }
+        }
+        if ( this.activeScene.type == "SPEAK_YES_OR_NO" ) {
+            if ( !globals.GAME.bubbleIsActive ) {
+                this.handleYesOrNoScene( );
             }
             else {
                 return
@@ -63,6 +71,28 @@ class Cinematic {
                 globals.GAME.activeAction.confirm( );
             }
         }
+    }
+    handleYesOrNoScene( ) {
+        let scenesToAdd;
+        switch( this.activeScene.selection ) {
+            case "YES" :
+                scenesToAdd = this.activeScene.pathYes;
+                break;
+            case "NO" :
+                scenesToAdd = this.activeScene.pathNo;
+                globals.GAME.activeAction.dismiss( );
+                break;
+            default:
+                console.log("Selection has invalid value: " + this.activeScene.selection)
+        }
+
+        if ( scenesToAdd ) {
+            for ( var i = 0; i < scenesToAdd.length; i++ ) {
+                this.scenes.splice( this.iterator + 1 + i, 0 , scenesToAdd[i] )
+            }            
+        }
+        
+        this.activateNextScene( );
     }
 }
 

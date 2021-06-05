@@ -370,6 +370,9 @@ class Sprite {
      * @param {Scene} scene 
      */
     setAnimation( scene ) {
+        if ( scene.type == "SPEAK_YES_OR_NO" ) {
+            this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false, [ "( Space ) YES", "( Z ) NO" ] )
+        }
         if ( scene.type == "SPEAK" ) {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
         }
@@ -386,13 +389,14 @@ class Sprite {
      * @param {String} text text to be displayed
      * @param {String} sfx name of the sound effect to play
      */
-    speak( text, sfx ) {    
+    speak( text, sfx, options = null ) {    
         getSpeechBubble( {
-            'x'     : this.x,
-            'y'     : this.y,
-            'text'  : text,
-            'name'  : this.name,
-            'sfx'   : ( sfx ) ? sfx : false
+            'x'         : this.x,
+            'y'         : this.y,
+            'text'      : text,
+            'name'      : this.name,
+            'sfx'       : ( sfx ) ? sfx : false,
+            'options'   : options
         } );
     }
     /**

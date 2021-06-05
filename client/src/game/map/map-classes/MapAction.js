@@ -42,7 +42,7 @@ class MapAction extends I_Hitbox {
         }
 
         if ( !this.needsConfirmation ) {
-            globals.GAME.activeAction = null;
+            this.dismiss( )
         }
     }
     /**
@@ -67,6 +67,9 @@ class MapAction extends I_Hitbox {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
         }
+    }
+    dismiss( ) {
+        globals.GAME.activeAction = null;
     }
     /**
      * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
