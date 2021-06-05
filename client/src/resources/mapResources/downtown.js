@@ -138,9 +138,15 @@ module.exports = {
                 "hasAction" : true,
                 "action" : {
                     "type": "BUS",
-                    "sfx": "typing.mp3",
                     "to": "my-neighbourhood/A2",
-                    "text": "Take the bus to your neighbourhood?"
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Player",
+                          "sfx": "typing.mp3",
+                          "text": "Shall I take the bus to my neighbourhood?"
+                        }
+                      ]
                 }
             },
             { 
@@ -169,39 +175,25 @@ module.exports = {
                 "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                 "move_type": NPC_MOVE_TYPE_FLYING,
                 "sprite": "pigeon.png",
-                "direction": "FACING_DOWN",
-                "name": "Darkwing Dork",    
+                "direction": "FACING_DOWN", 
                 "row": 6,
                 "col": 8,
                 "destination" : {
                     "row": 2,
                     "col": 13,
                 },
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "I'm a level 24 Darkmage."
-                }
             },
             {
                 "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
                 "move_type": NPC_MOVE_TYPE_FLYING,
                 "sprite": "pigeon.png",
                 "direction": "FACING_DOWN",
-                "name": "Darkwing Dork",    
                 "row": 1,
                 "col": 14,
                 "destination" : {
                     "row": 5,
                     "col": 18,
                 },
-                "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "I'm a level 24 Darkmage."
-                }
             }
         ]
     },
@@ -259,12 +251,17 @@ module.exports = {
                 "direction": "FACING_DOWN",
                 "row": 3,
                 "col": 13,
-                "name": "Pidgebert thug",                     
+                "name": "Pidgebert thug 1",                     
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "If you mess with Pidgebert you mess with me!"
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Pidgebert thug 1",  
+                          "sfx": "voice-1.mp3",
+                          "text": "If you mess with Pidgebert you mess with me!"
+                        }
+                    ]
                 }
             },
             {
@@ -276,9 +273,20 @@ module.exports = {
                 "name": "Pidgebert",                    
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "Who you lookin at, shithead?"
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Pidgebert",
+                          "sfx": "voice-1.mp3",
+                          "text": "Who you lookin at, shithead?"
+                        },
+                        {
+                            type: "SPEAK",
+                            spriteName: "Pidgebert",
+                            "sfx": "voice-1.mp3",
+                            "text": "I'm Pidgebert, the meanest pigeon in town!"
+                        }
+                    ]
                 }
             },
             {
@@ -287,54 +295,74 @@ module.exports = {
                 "direction": "FACING_DOWN",
                 "row": 3,
                 "col": 15,
-                "name": "Pidgebert thug",                    
+                "name": "Pidgebert thug 2",                    
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "A powerful pigeon like Pidgebert needs protection."
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Pidgebert thug 2",  
+                          "sfx": "voice-1.mp3",
+                          "text": "A powerful pigeon like Pidgebert needs protection."
+                        }
+                    ]
                 }
             },
             {
                 "anim_type": NPC_ANIM_TYPE_MOVING,
                 "sprite": "pigeon.png",
                 "direction": "FACING_LEFT",
-                "name": "Marching pigeon",    
+                "name": "Marching pigeon 1",    
                 "row": 5,
                 "col": 14,
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "Pigeons of the world, unite!"
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Marching pigeon 1",     
+                          "sfx": "voice-1.mp3",
+                          "text": "Pigeons of the world, unite!"
+                        }
+                    ]
                 }
             },
             {
                 "anim_type": NPC_ANIM_TYPE_MOVING,
                 "sprite": "pigeon.png",
                 "direction": "FACING_LEFT",
-                "name": "Marching pigeon",    
+                "name": "Marching pigeon 2",    
                 "row": 6,
                 "col": 14,
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "I'm mad as hell and I'm not going to take it anymore"
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Marching pigeon 2",   
+                          "sfx": "voice-1.mp3",
+                          "text": "I'm mad as hell and I'm not going to take it anymore"
+                        }
+                    ]
                 }
             },
             {
                 "anim_type": NPC_ANIM_TYPE_MOVING,
                 "sprite": "pigeon.png",
                 "direction": "FACING_LEFT",
-                "name": "Marching pigeon",    
+                "name": "Marching pigeon 3",    
                 "row": 7,
                 "col": 14,
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "direction": "FACING_UP",
-                    "text": "Proud pigeons far and wide, march with us!"
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Marching pigeon 3",    
+                          "sfx": "voice-1.mp3",
+                          "text": "Proud pigeons far and wide, march with us!"
+                        }
+                    ]
                 }
             },
             {
@@ -346,9 +374,14 @@ module.exports = {
                 "col": 3,
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-2.mp3",
-                    "direction": "FACING_UP",
-                    "text": "Pidgebert is not like other pigeons, if you understand what I mean."
+                    "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Grandma Shanksville",  
+                          "sfx": "voice-2.mp3",
+                          "text": "Pidgebert is not like other pigeons, if you understand what I mean."
+                        }
+                    ]
                 }
             }
         ]

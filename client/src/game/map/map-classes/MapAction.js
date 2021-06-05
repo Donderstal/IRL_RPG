@@ -1,6 +1,5 @@
 const globals       = require('../../../game-data/globals')
 const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
-const displayText   = require('../map-ui/displayText')
 const { Cinematic }     = require('../../cutscenes/Cinematic')
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
@@ -11,7 +10,8 @@ class MapAction extends I_Hitbox {
         let radius = globals.GRID_BLOCK_PX / 2;
         super( x, y, radius )
 
-        this.name = speaker
+        this.name = speaker;
+        this.scenes = action.scenes;
 
         if ( action.party ) {
             this.party = action.party
@@ -62,20 +62,17 @@ class MapAction extends I_Hitbox {
                             new Cinematic( e, e.trigger, [ this.party, this.name ] );                            
                         }
                     } )
-
                 }
                 else {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
         }
-        console.log(globals.GAME.activeAction)
     }
     /**
      * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
      */
     displayActionText( ) {
-        globals.GAME.sound.playEffect( this.sfx );
-        displayText.getSpeechBubble( this )
+        new Cinematic( this, "ON_NPC_INTERACTION" );
     } 
     checkForEventOnBattleEnd( ) {
         this.events.forEach( ( e ) => {

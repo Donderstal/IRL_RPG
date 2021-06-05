@@ -352,8 +352,14 @@ module.exports = {
         "name": "Anne",
         "action": {
           "type": "TEXT",
-          "sfx": "voice-2.mp3",
-          "text": "What are we looking at? I forgot my glasses."
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "Anne",
+              "sfx": "voice-2.mp3",
+              "text": "What are we looking at? I forgot my glasses."              
+            }
+          ]
         }
       },
       {
@@ -365,8 +371,14 @@ module.exports = {
         "name": "Jolene",
         "action": {
           "type": "TEXT",
-          "sfx": "voice-2.mp3",
-          "text": "Wow, these guys are hot!"
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "Jolene",
+              "sfx": "voice-2.mp3",
+              "text": "Wow, these guys are hot!"           
+            }
+          ]
         }
       },
       {
@@ -378,8 +390,14 @@ module.exports = {
         "name": "Wendy",
         "action": {
           "type": "TEXT",
-          "sfx": "lalala.mp3",
-          "text": "I wish I could be as fit as those girls..."
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "Wendy",
+              "sfx": "lalala.mp3",
+              "text": "I wish I could be as fit as those girls..."     
+            }
+          ]
         }
       },
       {
@@ -391,8 +409,14 @@ module.exports = {
         "name": "William",
         "action": {
           "type": "TEXT",
-          "sfx": "mauww.mp3",
-          "text": "Bro, that bro is ripped bro!"
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "William",
+              "sfx": "mauww.mp3",
+              "text": "Bro, that bro is ripped bro!"  
+            }
+          ]
         }
       },
       {
@@ -404,8 +428,14 @@ module.exports = {
         "name": "Billiam",
         "action": {
           "type": "TEXT",
-          "sfx": "mauww.mp3",
-          "text": "Man, I wish a was as tough as those guys..."
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "Billiam",
+              "sfx": "mauww.mp3",
+              "text": "Man, I wish a was as tough as those guys..."
+            }
+          ]
         }
       },
       {
@@ -414,11 +444,17 @@ module.exports = {
         "col": 9,
         "sprite": "robot.png",
         "direction": "FACING_RIGHT",
-        "name": "Securitybot",
+        "name": "Securitybot A",
         "action": {
           "type": "TEXT",
-          "sfx": "typing.mp3",
-          "text": "Beep-boop. Scanning for possible security breaches."
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "Securitybot A",
+              "sfx": "typing.mp3",
+              "text": "Beep-boop. Scanning for possible security breaches."
+            }
+          ]
         }
       },
       {
@@ -427,11 +463,17 @@ module.exports = {
         "col": 16,
         "sprite": "robot.png",
         "direction": "FACING_LEFT",
-        "name": "Securitybot",
+        "name": "Securitybot B",
         "action": {
           "type": "TEXT",
-          "sfx": "typing.mp3",
-          "text": "Beep-boop. Scanning for possible security breaches."
+          "scenes" : [
+            {
+              type: "SPEAK",
+              "name": "Securitybot B",
+              "sfx": "typing.mp3",
+              "text": "Beep-boop. Scanning for possible security breaches."
+            }
+          ]
         }
       }
     ],
@@ -757,12 +799,17 @@ module.exports = {
           "col": 9,
           "sprite": "chad.png",
           "direction": "FACING_LEFT",
-          "name": "Big lifter",                    
+          "name": "Big lifter Bob",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Do you even lift, bro?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "name": "Big lifter Bob",    
+                  "sfx": "voice-1.mp3",
+                  "text": "Do you even lift, bro?"
+                }
+              ]
           }
         },
         {
@@ -1432,10 +1479,15 @@ module.exports = {
               "col": 21,
               "name": "Big Balls Bert",                    
               "action": {
-                  "type": "TEXT",
-                  "sfx": "voice-1.mp3",
-                  "direction": "FACING_UP",
-                  "text": "Do you even lift, bro?"
+                "type": "TEXT",
+                "scenes": [
+                  {
+                    type: "SPEAK",
+                    spriteName: "Big Balls Bert",
+                    "sfx": "voice-1.mp3",
+                    "text": "Do you even lift, bro?"
+                  }
+                ]
               }
             },
             {
@@ -1446,15 +1498,57 @@ module.exports = {
               "col": 4,
               "name": "Pauline",                    
               "action": {
-                  "type": "BATTLE",
-                  "sfx": "voice-3.mp3",
-                  "direction": "FACING_LEFT",
-                  "text": "Ever had your ass kicked by a lady?",
-                  "character": {
-                      "class": "Influencer",
-                      "level": 5,
-                      "battleSprite": "influencer.png"
+                "type": "BATTLE",
+                "scenes": [
+                  {
+                    type: "SPEAK",
+                    spriteName: "Pauline",
+                    "sfx": "voice-3.mp3",
+                    "text": "Ever had your ass kicked by a lady?",
                   }
+                ],
+                "party": [
+                  { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
+                  { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
+                  { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                ], 
+                "hasEvent": true,
+                "events": [
+                  {
+                    "trigger": "ON_BATTLE_START",
+                    "scenes": [
+                      {
+                        type: "ANIM",
+                        spriteName: "Pauline",
+                        animName: "LEFT_AND_RIGHT",
+                        loop: false
+                      },
+                      { 
+                        type: "SPEAK",
+                        spriteName: "Pauline",
+                        text: "You'll regret this!",
+                        sfx: "voice-2.mp3"
+                      },
+                    ]
+                  },
+                  {
+                    "trigger": "ON_BATTLE_END",
+                    "scenes": [
+                      {
+                        type: "ANIM",
+                        spriteName: "Pauline",
+                        animName: "TURN_SINGLE_CIRCLE",
+                        loop: false
+                      },
+                      { 
+                        type: "SPEAK",
+                        spriteName: "Pauline",
+                        text: "Oh no, I got PWND!!",
+                        sfx: "voice-2.mp3"
+                      },
+                    ]
+                  }
+                ],
               }
             },
             {
@@ -1465,9 +1559,15 @@ module.exports = {
               "row": 4,
               "col": 5,
               "action": {
-                  "type": "TEXT",
-                  "sfx": "voice-2.mp3",
-                  "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
+                "type": "TEXT",
+                "scenes": [
+                  {
+                    type: "SPEAK",
+                    spriteName: "Lisa",
+                    "sfx": "voice-2.mp3",
+                    "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
+                  }
+                ]
               }
             },
             {
@@ -1479,8 +1579,14 @@ module.exports = {
               "col": 22,
               "action": {
                 "type": "TEXT",
-                "sfx": "voice-1.mp3",
-                "text": "I'm working for the corporation. Business business business!"
+                "scenes": [
+                  {
+                    type: "SPEAK",
+                    spriteName: "Mr. Business",
+                    "sfx": "voice-1.mp3",
+                    "text": "I'm working for the corporation. Business business business!"
+                  }
+                ]
               }
             }
         ],
@@ -1504,11 +1610,17 @@ module.exports = {
         ],
         "actions" : [
             {
-                "row": 4,
-                "col": 15,
-                "type": "TEXT",
-                "sfx": "typing.mp3",
-                "text": "Who still uses these things anyway?"
+              "row": 4,
+              "col": 15,
+              "type": "TEXT",
+              "scenes": [
+                {
+                  type: "SPEAK",
+                  spriteName: "Player",
+                  "sfx": "typing.mp3",
+                  "text": "Who still uses these things anyway?"
+                }
+              ]
             }
         ],
         "subMaps": {
@@ -1870,84 +1982,113 @@ module.exports = {
                     }
                 ],
                 "characters" : [
-                    {
-                        "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "chad.png",
-                        "direction": "FACING_DOWN",
-                        "row": 2,
-                        "col": 3,
-                        "name": "Boze Bert",                    
-                        "action": {
-                          "type": "BATTLE",
-                          "sfx": "voice-1.mp3",
-                          "direction": "FACING_UP",
-                          "text": "I'm in your house, about to kick your ass!",
-                          "party": [
-                            { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
-                            { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
-                            { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
-                          ], 
-                          "hasEvent": true,
-                          "events": [
+                  {
+                    "anim_type": NPC_ANIM_TYPE_IDLE,
+                    "sprite": "chad.png",
+                    "direction": "FACING_DOWN",
+                    "name": "Boze Bert",
+                    "row": 2,
+                    "col": 3,               
+                    "action": {
+                      "type": "BATTLE",
+                      "party": [
+                        { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
+                        { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
+                        { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                      ], 
+                      "scenes": [
+                        {
+                          type: "SPEAK",
+                          spriteName: "Boze Bert",
+                          text: "I love fighting man!",
+                          sfx: "voice-2.mp3"
+                        },
+                        {
+                          type: "SPEAK",
+                          spriteName: "Boze Bert",
+                          text: "Want me to kick your ass?!",
+                          sfx: "voice-2.mp3"
+                        }
+                      ],
+                      "hasEvent": true,
+                      "events": [
+                        {
+                          "trigger": "ON_BATTLE_START",
+                          "scenes": [
                             {
-                            "trigger": "ON_BATTLE_START",
-                            "scenes": [
-                                {
-                                  type: "ANIM",
-                                  spriteName: "Boze Bert",
-                                  animName: "LIFT",
-                                  loop: false
-                                },
-                                { 
-                                  type: "SPEAK",
-                                  spriteName: "Boze Bert",
-                                  text: "You'll regret this!",
-                                  sfx: "voice-2.mp3"
-                                },
-                              ]
+                              type: "ANIM",
+                              spriteName: "Boze Bert",
+                              animName: "LIFT",
+                              loop: false
                             },
+                            { 
+                              type: "SPEAK",
+                              spriteName: "Boze Bert",
+                              text: "You'll regret this!",
+                              sfx: "voice-2.mp3"
+                            },
+                          ]
+                        },
+                        {
+                          "trigger": "ON_BATTLE_END",
+                          "scenes": [
                             {
-                              "trigger": "ON_BATTLE_END",
-                              "scenes": [
-                                  {
-                                    type: "ANIM",
-                                    spriteName: "Boze Bert",
-                                    animName: "TURN_SINGLE_CIRCLE",
-                                    loop: false
-                                  },
-                                  { 
-                                    type: "SPEAK",
-                                    spriteName: "Boze Bert",
-                                    text: "Oh no, I got PWND!!",
-                                    sfx: "voice-2.mp3"
-                                  },
-                                ]
-                              }
-                        ]
-                      }
+                              type: "ANIM",
+                              spriteName: "Boze Bert",
+                              animName: "TURN_SINGLE_CIRCLE",
+                              loop: false
+                            },
+                            { 
+                              type: "SPEAK",
+                              spriteName: "Boze Bert",
+                              text: "Oh no, I got PWND!!",
+                              sfx: "voice-2.mp3"
+                            },
+                          ]
+                        }
+                      ]
                     }
+                  }
                 ],
                 "actions" : [
                     {
                         "row": 1,
                         "col": 4,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "This is my fridge. Sadly, there's nothing in it..."
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "This is my fridge. Sadly, there's nothing in it..."
+                          }
+                        ]
                     },
                     {
                         "row": 6,
                         "col": 1,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "I <3 my computer"
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "I <3 my computer",
+                          }
+                        ]
                     },
                     {
                         "row": 4,
                         "col": 4,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "I should clean this stove sometime"
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "I should clean this stove sometime",
+                          }
+                        ]
                     }
                 ]
             }
@@ -2000,10 +2141,16 @@ module.exports = {
                 "col"   : 20,
                 "hasAction" : true,
                 "action" : {
-                    "type": "BUS",
-                    "to": "downtown/A3",
-                    "sfx": "typing.mp3",
-                    "text": "Take the bus downtown?"
+                  "type": "BUS",
+                  "to": "downtown/A3",
+                  "scenes": [
+                    {
+                      type: "SPEAK",
+                      spriteName: "Player",
+                      "sfx": "typing.mp3",
+                      "text": "Shall I take the bus downtown?"
+                    }
+                  ]
                 }
             }
         ],
@@ -2016,9 +2163,21 @@ module.exports = {
                 "row": 3,
                 "col": 5,
                 "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "text": "What's the definition of insanity?"
+                  "type": "TEXT",
+                  "scenes": [
+                    {
+                      type: "SPEAK",
+                      spriteName: "Chaddy Chandler",
+                      "sfx": "voice-1.mp3",
+                      "text": "Could you piss off?"
+                    },
+                    {
+                      type: "SPEAK",
+                      spriteName: "Chaddy Chandler",
+                      "sfx": "voice-1.mp3",
+                      "text": "Can't you see I'm minding my own business?"
+                    }
+                  ]
                 }
             },
             {
@@ -2030,8 +2189,14 @@ module.exports = {
                 "name": "Patty",
                 "action": {
                     "type": "TEXT",
-                    "sfx": "poo-poo.mp3",
-                    "text": "I used to date a level 24 Darkmage."
+                    "scenes": [
+                      {
+                        type: "SPEAK",
+                        spriteName: "Patty",
+                        "sfx": "poo-poo.mp3",
+                        "text": "I used to date a level 24 Darkmage."
+                      }
+                    ]
                 }
             },
             {
@@ -2043,8 +2208,14 @@ module.exports = {
                 "col": 19,
                 "action": {
                     "type": "TEXT",
-                    "sfx": "mauww.mp3",
-                    "text": "I'm an aspiring ninja, m'lady."
+                    "scenes": [
+                      {
+                        type: "SPEAK",
+                        spriteName: "Yung Edgelord",
+                        "sfx": "mauww.mp3",
+                        "text": "I'm an aspiring ninja, m'lady."
+                      }
+                    ]
                 }
             },
             {
@@ -2055,84 +2226,108 @@ module.exports = {
                 "name": "Consoombot",                    
                 "direction": "FACING_UP",
                 "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "text": "Hello, potential customer!"
+                  "type": "TEXT",
+                  "scenes": [
+                    {
+                      type: "SPEAK",
+                      spriteName: "Consoombot",   
+                      "sfx": "typing.mp3",
+                      "text": "Hello, potential customer!"
+                    }
+                  ]
                 }
             }
         ],
         "actions" : [
-            {
-                "row": 4,
-                "col": 10,
-                "type": "TEXT",
+          {
+            "row": 4,
+            "col": 10,
+            "type": "TEXT",
+            "scenes": [
+              {
+                type: "SPEAK",
+                spriteName: "Player",
                 "sfx": "typing.mp3",
                 "text": "Who still uses these things anyway?"
-            }
+              }
+            ]
+          }
         ],
         "subMaps": {
-            "yum-corp" : {
-                "mapName": "my-neighbourhood/A2/yum-corp",
-                "tileSet": "Generic_Room_C_Tile_Set",     
-                "music": "yum-mart-theme.mp3",
-                "outdoors": false,
-                "rows":11,
-                "columns":7,
-                "grid": [
-                    [11,0,2,2,3,10,11],
-                    [15,4,5,6,7,14,15],
-                    [12,33,9,53,54,9,31],
-                    [16,9,46,47,9,9,35],
-                    [20,9,50,51,9,9,9],
-                    [32,9,9,9,32,38,19],
-                    [25,24,9,44,45,9,23],
-                    [29,28,9,48,49,9,27],
-                    [9,9,57,9,9,57,13],
-                    [25,9,9,9,58,9,17],
-                    [29,9,62,9,9,9,21]
-                ],
-                "doors": [ 
-                    {
-                        "row": 11, 
-                        "col": 3,
-                        "to"  : "my-neighbourhood/A2",
-                        "directionIn": "FACING_DOWN",
-                        "directionOut": "FACING_UP",
-                        "locked": false
-                    },
-                    {
-                        "row": 2, 
-                        "col": 6,
-                        "to"  : "my-neighbourhood/A2/back-alley",
-                        "directionOut": "FACING_DOWN",           
-                        "directionIn": "FACING_UP",
-                        "locked": false
-                    }
-                ],
-                "characters": [
-                    {
-                        "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "influencer.png",
-                        "direction": "FACING_DOWN",
-                        "row": 2,
-                        "col": 5,
-                        "name": "Hot Hannah",
-                        "action": {
-                            "type": "TEXT",
+          "yum-corp" : {
+              "mapName": "my-neighbourhood/A2/yum-corp",
+              "tileSet": "Generic_Room_C_Tile_Set",     
+              "music": "yum-mart-theme.mp3",
+              "outdoors": false,
+              "rows":11,
+              "columns":7,
+              "grid": [
+                  [11,0,2,2,3,10,11],
+                  [15,4,5,6,7,14,15],
+                  [12,33,9,53,54,9,31],
+                  [16,9,46,47,9,9,35],
+                  [20,9,50,51,9,9,9],
+                  [32,9,9,9,32,38,19],
+                  [25,24,9,44,45,9,23],
+                  [29,28,9,48,49,9,27],
+                  [9,9,57,9,9,57,13],
+                  [25,9,9,9,58,9,17],
+                  [29,9,62,9,9,9,21]
+              ],
+              "doors": [ 
+                  {
+                      "row": 11, 
+                      "col": 3,
+                      "to"  : "my-neighbourhood/A2",
+                      "directionIn": "FACING_DOWN",
+                      "directionOut": "FACING_UP",
+                      "locked": false
+                  },
+                  {
+                      "row": 2, 
+                      "col": 6,
+                      "to"  : "my-neighbourhood/A2/back-alley",
+                      "directionOut": "FACING_DOWN",           
+                      "directionIn": "FACING_UP",
+                      "locked": false
+                  }
+              ],
+              "characters": [
+                  {
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "sprite": "influencer.png",
+                      "direction": "FACING_DOWN",
+                      "row": 2,
+                      "col": 5,
+                      "name": "Hot Hannah",
+                      "action": {
+                        "type": "TEXT",
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Hot Hannah",   
                             "sfx": "poo-poo.mp3",
                             "text": "There's this weird neckbeard in the back alley trying to connect my to my internet."
-                        }
-                    }
-                ],
-                "actions" : [
+                          }
+                        ]
+                      }
+                  }
+              ],
+              "actions" : [
+                {
+                  "row": 6,
+                  "col": 1,
+                  "type": "TEXT",
+                  "scenes": [
                     {
-                        "row": 6,
-                        "col": 1,
-                        "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "Is there a used condom in this bin?"
+                      type: "SPEAK",
+                      spriteName: "Player",
+                      "sfx": "typing.mp3",
+                      "text": "Is there a used condom in this bin?"
                     }
-                ]
+                  ]
+                }
+              ]
             },
             "house-of-war" : {
                 "mapName": "my-neighbourhood/A2/house-of-war",
@@ -2171,17 +2366,23 @@ module.exports = {
                 ],
                 "characters": [
                     {
-                        "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "chad.png",
-                        "direction": "FACING_RIGHT",
-                        "row": 4,
-                        "col": 4,
-                        "name": "Strange Pete",
-                        "action": {
-                            "type": "TEXT",
+                      "anim_type": NPC_ANIM_TYPE_IDLE,
+                      "sprite": "chad.png",
+                      "direction": "FACING_RIGHT",
+                      "row": 4,
+                      "col": 4,
+                      "name": "Strange Pete",
+                      "action": {
+                        "type": "TEXT",
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Strange Pete",   
                             "sfx": "voice-1.mp3",
                             "text": "Do you even lift, bro?"
-                        }
+                          }
+                        ]
+                      }
                     }
                 ]
             },
@@ -2210,8 +2411,14 @@ module.exports = {
                         "name": "Mortimer Richards III",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-3.mp3",
-                            "text": "The Wifi here sucks, man"
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Mortimer Richards III",
+                                "sfx": "voice-3.mp3",
+                                "text": "The Wifi here sucks, man"
+                              }
+                            ]
                         }
                     }
                 ],
@@ -2263,8 +2470,14 @@ module.exports = {
                 "name": "Cocaine Johnny",
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "text": "I sold my kidneys to pay for my new house."
+                    "scenes": [
+                      {
+                        type: "SPEAK",
+                        spriteName: "Cocaine Johnny",
+                        "sfx": "voice-1.mp3",
+                        "text": "I sold my kidneys to pay for my new house."
+                      }
+                    ]
                 }
             },
             {
@@ -2276,8 +2489,14 @@ module.exports = {
                 "name": "Dirk Chan",
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "text": "Bronies are so 2016"
+                    "scenes": [
+                      {
+                        type: "SPEAK",
+                        spriteName: "Dirk Chan",
+                        "sfx": "voice-1.mp3",
+                        "text": "Bronies are so 2016"
+                      }
+                    ]
                 }
             },
             {
@@ -2289,8 +2508,14 @@ module.exports = {
                 "name": "Ketamine Kate",
                 "action": {
                     "type": "TEXT",
-                    "sfx": "voice-3.mp3",
-                    "text": "I sold my house to pay for a new pair of kidneys."
+                    "scenes": [
+                      {
+                        type: "SPEAK",
+                        spriteName: "Ketamine Kate",
+                        "sfx": "voice-3.mp3",
+                        "text": "I sold my house to pay for a new pair of kidneys."
+                      }
+                    ]
                 }
             }
         ],
@@ -2378,8 +2603,14 @@ module.exports = {
                         "name": "Monsieur Des Combes",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-1.mp3",
-                            "text": "Welcome to Hotel Le Canard. May I see your credit rating, please?"
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Monsieur Des Combes",
+                                "sfx": "voice-1.mp3",
+                                "text": "Welcome to Hotel Le Canard. May I see your credit rating, please?"
+                              }
+                            ]
                         }
                     },
                     {
@@ -2391,8 +2622,14 @@ module.exports = {
                         "name": "Receptionist",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-3.mp3",
-                            "text": "Are you sure you're in the right place sir? You look like a hobo."
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Receptionist",
+                                "sfx": "voice-3.mp3",
+                                "text": "Are you sure you're in the right place sir? You look like a hobo."
+                              }
+                            ]
                         }
                     }
                 ]
@@ -2538,8 +2775,14 @@ module.exports = {
                         "name": "Hot Hannah",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "poo-poo.mp3",
-                            "text": "I'll send you nudes if you donate to my patreon."
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Hot Hannah",
+                                "sfx": "poo-poo.mp3",
+                                "text": "I'll send you nudes if you donate to my patreon."
+                              }
+                            ]
                         }
                     }
                 ]
@@ -2587,8 +2830,14 @@ module.exports = {
                         "name": "@TheFitGirlGoodLife",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-3.mp3",
-                            "text": "I'm just here to make some money until my Instagram account takes off."
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "@TheFitGirlGoodLife",
+                                "sfx": "voice-3.mp3",
+                                "text": "I'm just here to make some money until my Instagram account takes off."
+                              }
+                            ]
                         }
                     },
                     {
@@ -2600,8 +2849,14 @@ module.exports = {
                         "name": "The Dealer",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-1.mp3",
-                            "text": "Wanna buy some cocaine, nerd?"
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "The Dealer",
+                                "sfx": "voice-1.mp3",
+                                "text": "Wanna buy something, nerd?"
+                              }
+                            ]
                         }
                     },
                     {
@@ -2613,8 +2868,14 @@ module.exports = {
                         "name": "Small balled Steve",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-1.mp3",
-                            "text": "The Yum-mart sells the best 'roid in town, man!"
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Small balled Steve",
+                                "sfx": "voice-1.mp3",
+                                "text": "The Yum-mart sells the best 'roid in town, man!"
+                              }
+                            ]
                         }
                     },
                     {
@@ -2626,8 +2887,14 @@ module.exports = {
                         "name": "Manager Bob",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-2.mp3",
-                            "text": "What could be better than seeing all these happy customers trust our high quality products?"
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Manager Bob",
+                                "sfx": "voice-2.mp3",
+                                "text": "What could be better than seeing all these happy customers trust our high quality products?"
+                              }
+                            ]
                         }
                     },
                     {
@@ -2639,8 +2906,14 @@ module.exports = {
                         "name": "Alana",
                         "action": {
                             "type": "TEXT",
-                            "sfx": "voice-3.mp3",
-                            "text": "I wish we had a better stores than Yum-mart in our neighbourhood."
+                            "scenes": [
+                              {
+                                type: "SPEAK",
+                                spriteName: "Alana",
+                                "sfx": "voice-3.mp3",
+                                "text": "I wish we had a better stores than Yum-mart in our neighbourhood."
+                              }
+                            ]
                         }
                     }
                 ],
@@ -2649,43 +2922,79 @@ module.exports = {
                         "row": 4,
                         "col": 7,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
+                          }
+                        ]
                     },
                     {
                         "row": 11,
                         "col": 1,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
+                          }
+                        ]
                     },
                     {
                         "row": 2,
                         "col": 6,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "Now on sale: Jen and Berry's ice cream!'"
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "Now on sale: Jen and Berry's ice cream!'"
+                          }
+                        ]
                     },
                     {
                         "row": 5,
                         "col": 3,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "These veggies don't look that fresh..."
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "These veggies don't look that fresh..."
+                          }
+                        ]
                     },
                     {
                         "row": 5,
                         "col": 5,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "These veggies don't look that fresh..."
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "These veggies don't look that fresh..."
+                          }
+                        ]
                     },
                     {
                         "row": 8,
                         "col": 1,
                         "type": "TEXT",
-                        "sfx": "typing.mp3",
-                        "text": "They're all out of Roditos :("
+                        "scenes": [
+                          {
+                            type: "SPEAK",
+                            spriteName: "Player",
+                            "sfx": "typing.mp3",
+                            "text": "They're all out of Roditos."
+                          }
+                        ]
                     }
                 ]
             }
