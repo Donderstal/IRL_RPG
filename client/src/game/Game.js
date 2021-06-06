@@ -367,10 +367,13 @@ class Game {
  * Instantiate the game class and call the startNewGame method
  * @param {String} name name that the player chose in the starting menu
  * @param {String} className name of the class that the player selected
+ * @param {boolean} debugMode if true, the instance will draw the grid and sprite hitboxes
+ * @param {boolean} disableStoryMode if true, no
  */
-const startGame = ( name, className ) => {
+const startGame = ( name, className, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
-    globals.GAME.startNewGame( name, className );
+    globals.GAME.startNewGame( name, className, debugMode, disableStoryMode );
+    console.log(debugMode, disableStoryMode)
 }
 
 module.exports = {

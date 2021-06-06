@@ -258,4 +258,9 @@
     <div class="select-character-inner">
         <p>{descriptions[activeClass]}</p>
     </div>
+    <div style="position:absolute; top:10%; left:5%;">
+        <h4>Instance settings</h4>
+        <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
+        <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
+    </div>
 </div>
