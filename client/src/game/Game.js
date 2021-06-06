@@ -139,14 +139,18 @@ class Game {
      * @param {String} name name that the player chose in the starting menu
      * @param {String} className name of the class that the player selected
      */
-    startNewGame( name, className ) {
+    startNewGame( name, className, debugMode, disableStoryMode ) {
         this.initializePlayerParty( name, className )
         const mapData = getMapData(firstMapUrl);
         this.storeMapData( mapData, firstMapUrl );
+        this.debugMode = debugMode;
+        this.disableStoryMode = disableStoryMode;
         mapData.playerStart.playerClass = className;
         mapData.playerStart.name = name;
         this.loadMapToCanvases( mapData, true );
-        startNewStory( );
+        if ( !this.disableStoryMode ) {
+            startNewStory( );            
+        }
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
     /**
@@ -229,7 +233,9 @@ class Game {
         this.loadMapToCanvases( newMapData );
         this.setPlayerInNewMap( newMapData, type );
         this.storeMapData( newMapData, destination );
-        getScriptedEventsForMap( this.activeMapName );
+        if ( !this.disableStoryMode ) {
+            getScriptedEventsForMap( this.activeMapName );            
+        }
 
         setTimeout( ( ) => {
             controls.listenForKeyPress( ); 
