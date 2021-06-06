@@ -355,7 +355,7 @@ module.exports = {
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "Anne",
+              spriteName: "Anne",
               "sfx": "voice-2.mp3",
               "text": "What are we looking at? I forgot my glasses."              
             }
@@ -374,7 +374,7 @@ module.exports = {
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "Jolene",
+              spriteName: "Jolene",
               "sfx": "voice-2.mp3",
               "text": "Wow, these guys are hot!"           
             }
@@ -393,7 +393,7 @@ module.exports = {
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "Wendy",
+              spriteName: "Wendy",
               "sfx": "lalala.mp3",
               "text": "I wish I could be as fit as those girls..."     
             }
@@ -412,7 +412,7 @@ module.exports = {
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "William",
+              spriteName: "William",
               "sfx": "mauww.mp3",
               "text": "Bro, that bro is ripped bro!"  
             }
@@ -431,7 +431,7 @@ module.exports = {
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "Billiam",
+              spriteName: "Billiam",
               "sfx": "mauww.mp3",
               "text": "Man, I wish a was as tough as those guys..."
             }
@@ -444,13 +444,13 @@ module.exports = {
         "col": 9,
         "sprite": "robot.png",
         "direction": "FACING_RIGHT",
-        "name": "Securitybot A",
+        "name": "Securitybot_r11c9",
         "action": {
           "type": "TEXT",
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "Securitybot A",
+              spriteName: "Securitybot_r11c9",
               "sfx": "typing.mp3",
               "text": "Beep-boop. Scanning for possible security breaches."
             }
@@ -463,13 +463,13 @@ module.exports = {
         "col": 16,
         "sprite": "robot.png",
         "direction": "FACING_LEFT",
-        "name": "Securitybot B",
+        "name": "Securitybot_r11c16",
         "action": {
           "type": "TEXT",
           "scenes" : [
             {
               type: "SPEAK",
-              "name": "Securitybot B",
+              spriteName: "Securitybot_r11c16",
               "sfx": "typing.mp3",
               "text": "Beep-boop. Scanning for possible security breaches."
             }
@@ -794,18 +794,18 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "CHAD_LIFT",
+          "anim_name": "LIFT",
           "row": 3,
           "col": 9,
           "sprite": "chad.png",
           "direction": "FACING_LEFT",
-          "name": "Big lifter Bob",                    
+          "name": "Big lifter_r3c9",                    
           "action": {
               "type": "TEXT",
               "scenes" : [
                 {
                   type: "SPEAK",
-                  "name": "Big lifter Bob",    
+                  "spriteName": "Big lifter_r3c9",    
                   "sfx": "voice-1.mp3",
                   "text": "Do you even lift, bro?"
                 }
@@ -814,32 +814,42 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "STANDARD_LIFT",
+          "anim_name": "LIFT",
           "row": 3,
           "col": 11,
           "sprite": "chad_recolour01.png",
           "direction": "FACING_LEFT",
-          "name": "Big liftery",                    
+          "name": "Big lifter_r3c11",                    
           "action": {
-              "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Do you even lift, bro?"
+            "type": "TEXT",
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Big lifter_r3c11",      
+                "sfx": "voice-1.mp3",
+                "text": "Do you even lift, bro?"
+              }
+            ]
           }
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "STANDARD_LIFT",
+          "anim_name": "LIFT",
           "row": 3,
           "col": 13,
           "sprite": "chad_recolour03.png",
           "direction": "FACING_LEFT",
-          "name": "Big lifter",                    
+          "name": "Big lifter_r3c13",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Do you even lift, bro?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Big lifter_r3c13",   
+                  "sfx": "voice-1.mp3",
+                  "text": "Do you even lift, bro?"
+                }
+              ]
           }
         },
         {
@@ -852,9 +862,14 @@ module.exports = {
           "name": "Training Granny",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-2.mp3",
-              "direction": "FACING_UP",
-              "text": "Not bad for a granny, eh?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Granny",    
+                  "sfx": "voice-2.mp3",
+                  "text": "Not bad for a granny, eh?"
+                }
+              ]
           }
         },
         {
@@ -864,12 +879,17 @@ module.exports = {
           "col": 23,
           "sprite": "CharacterX5.png",
           "direction": "FACING_LEFT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r3c23",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "It feels kinda wrong to punch a granny."
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r3c23",  
+                  "sfx": "voice-1.mp3",
+                  "text": "It feels kinda wrong to punch a granny."
+                }
+              ]
           }
         },
         {
@@ -879,12 +899,17 @@ module.exports = {
           "col": 18,
           "sprite": "CharacterX5_recolour.png",
           "direction": "FACING_RIGHT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r4c18",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "I love kicking ass!"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r4c18", 
+                  "sfx": "voice-1.mp3",
+                  "text": "I love kicking ass!"
+                }
+              ]
           }
         },
         {
@@ -894,12 +919,17 @@ module.exports = {
           "col": 19,
           "sprite": "chad_recolour02.png",
           "direction": "FACING_LEFT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r4c19",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "I love getting my ass kicked."
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r4c19", 
+                  "sfx": "voice-1.mp3",
+                  "text": "I love getting my ass kicked."
+                }
+              ]
           }
         },
         {
@@ -928,47 +958,62 @@ module.exports = {
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "STANDARD_LIFT",
+          "anim_name": "LIFT",
           "row": 5,
           "col": 9,
           "sprite": "chad_recolour01.png",
           "direction": "FACING_LEFT",
-          "name": "Big lifter",                    
+          "name": "Big lifter_r5c9",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Do you even lift, bro?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Big lifter_r5c9", 
+                  "sfx": "voice-1.mp3",
+                  "text": "Do you even lift, bro?"
+                }
+              ]
           }
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "STANDARD_LIFT",
+          "anim_name": "LIFT",
           "row": 5,
           "col": 11,
           "sprite": "chad_recolour03.png",
           "direction": "FACING_LEFT",
-          "name": "Big lifter",                    
+          "name": "Big lifter_r5c11",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Do you even lift, bro?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Big lifter_r5c11", 
+                  "sfx": "voice-1.mp3",
+                  "text": "Do you even lift, bro?"
+                }
+              ]
           }
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "CHAD_LIFT",
+          "anim_name": "LIFT",
           "row": 5,
           "col": 13,
           "sprite": "chad.png",
           "direction": "FACING_LEFT",
-          "name": "Big lifter",                    
+          "name": "Big lifter_r5c13",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Do you even lift, bro?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Big lifter_r5c13", 
+                  "sfx": "voice-1.mp3",
+                  "text": "Do you even lift, bro?"
+                }
+              ]
           }
         },
         {
@@ -978,12 +1023,17 @@ module.exports = {
           "col": 22,
           "sprite": "chad_recolour03.png",
           "direction": "FACING_RIGHT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r5c22",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "I'm usually not even particularly aggressive, you know'."
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r5c22",        
+                  "sfx": "voice-1.mp3",
+                  "text": "I'm usually not even particularly aggressive, you know."
+                }
+              ]
           }
         },
         {
@@ -993,12 +1043,17 @@ module.exports = {
           "col": 23,
           "sprite": "chad_recolour01.png",
           "direction": "FACING_LEFT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r5c23",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "Punch punch PUNCH!!!"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r5c23",
+                  "sfx": "voice-1.mp3",
+                  "text": "I'm usually not even particularly aggressive, you know."
+                }
+              ]
           }
         },
         {
@@ -1008,12 +1063,17 @@ module.exports = {
           "col": 18,
           "sprite": "CharacterX5.png",
           "direction": "FACING_RIGHT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r6c18",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "I wish I was punching that granny."
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r6c18",     
+                  "sfx": "voice-1.mp3",
+                  "text": "I wish I was punching that granny."
+                }
+              ]
           }
         },
         {
@@ -1023,12 +1083,17 @@ module.exports = {
           "col": 19,
           "sprite": "fats_recolour.png",
           "direction": "FACING_LEFT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r6c19",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "So is this Krav Magna or Taekwondo?"
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r6c19",     
+                  "sfx": "voice-1.mp3",
+                  "text": "So is this Krav Magna or Taekwondo?"
+                }
+              ]
           }
         },
         {
@@ -1038,12 +1103,17 @@ module.exports = {
           "col": 22,
           "sprite": "fats.png",
           "direction": "FACING_RIGHT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r7c22",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "I thought we were doing Karate."
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r7c22",
+                  "sfx": "voice-1.mp3",
+                  "text": "I thought we were doing Karate."
+                }
+              ]
           }
         },
         {
@@ -1053,12 +1123,17 @@ module.exports = {
           "col": 23,
           "sprite": "CharacterX4.png",
           "direction": "FACING_LEFT",
-          "name": "Training Guy",                    
+          "name": "Training Guy_r7c23",                    
           "action": {
               "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "direction": "FACING_UP",
-              "text": "I'm pretty sure we're practicing Capoeira."
+              "scenes" : [
+                {
+                  type: "SPEAK",
+                  "spriteName": "Training Guy_r7c23",  
+                  "sfx": "voice-1.mp3",
+                  "text": "I'm pretty sure we're practicing Capoeira."
+                }
+              ]
           }
         },
         {
@@ -1067,11 +1142,17 @@ module.exports = {
           "col": 3,
           "sprite": "robot.png",
           "direction": "FACING_UP",
-          "name": "Securitybot",
+          "name": "Securitybot_r8c3",
           "action": {
             "type": "TEXT",
-            "sfx": "typing.mp3",
-            "text": "Beep-boop. Don't make me kick your ass, potential customer!"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Securitybot_r8c3",
+                "sfx": "typing.mp3",
+                "text": "Beep-boop. Don't make me kick your ass, potential customer!"
+              }
+            ]
           }
         },
         {
@@ -1081,53 +1162,77 @@ module.exports = {
           "col": 7,
           "sprite": "pigeon.png",
           "direction": "FACING_DOWN",
-          "name": "Pidgebert",
+          "name": "Lost pigeon",
           "action": {
             "type": "TEXT",
-            "sfx": "poo-poo.mp3",
-            "text": "Roo-koo! I got in but can't find my way out! Roo-koo!"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Lost pigeon",
+                "sfx": "poo-poo.mp3",
+                "text": "Roo-koo! I got in but can't find my way out! Roo-koo!"
+              }
+            ]
           }
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "CHAD_TALK_DOWN",
+          "anim_name": "TALK",
           "row": 7,
           "col": 13,
           "sprite": "chad.png",
           "direction": "FACING_DOWN",
-          "name": "Talking Chad",
+          "name": "Talking Chad_r7c13",
           "action": {
             "type": "TEXT",
-            "sfx": "mauww.mp3",
-            "text": "Can't you see I'm talking?"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Talking Chad_r7c13",
+                "sfx": "mauww.mp3",
+                "text": "Can't you see I'm talking?"
+              }
+            ]
           }
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "CHAD_TALK_RIGHT",
+          "anim_name": "TALK",
           "row": 8,
           "col": 12,
           "sprite": "chad.png",
           "direction": "FACING_RIGHT",
-          "name": "Talking Chad",
+          "name": "Talking Chad_r8c12",
           "action": {
             "type": "TEXT",
-            "sfx": "mauww.mp3",
-            "text": "Can't you see I'm talking?"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Talking Chad_r8c12",
+                "sfx": "mauww.mp3",
+                "text": "Can't you see I'm talking?"
+              }
+            ]
           }
         },
         {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
-          "anim_name": "CHAD_TALK_LEFT",
+          "anim_name": "TALK",
           "row": 8,
           "col": 14,
           "sprite": "chad.png",
           "direction": "FACING_LEFT",
-          "name": "Talking Chad",
+          "name": "Talking Chad_r8c14",
           "action": {
             "type": "TEXT",
-            "sfx": "mauww.mp3",
-            "text": "Can't you see I'm talking?"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Talking Chad_r8c14",
+                "sfx": "mauww.mp3",
+                "text": "Can't you see I'm talking?"
+              }
+            ]
           }
         },
         {
@@ -1136,11 +1241,17 @@ module.exports = {
           "col": 15,
           "sprite": "robot.png",
           "direction": "FACING_DOWN",
-          "name": "Securitybot",
+          "name": "Securitybot_r9c15",
           "action": {
             "type": "TEXT",
-            "sfx": "typing.mp3",
-            "text": "Beep-boop. Don't make me kick your ass, potential customer!"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Securitybot_r9c15",
+                "sfx": "typing.mp3",
+                "text": "Beep-boop. Don't make me kick your ass, potential customer!"
+              }
+            ]
           }
         },
         {
@@ -1159,8 +1270,14 @@ module.exports = {
           "name": "Mr. Chimp Phd. Esq.",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-3.mp3",
-            "text": "I got rich in the great GME short of 2021."
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Mr. Chimp Phd. Esq.",
+                "sfx": "voice-3.mp3",
+                "text": "I got rich in the great GME short of 2021."
+              }
+            ]
           }
         },
         {
@@ -1172,8 +1289,26 @@ module.exports = {
           "name": "Sir Makesalot",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-4.mp3",
-            "text": "Welcome to Chad club! I'm Sir Makesalot and I love your money!"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Sir Makesalot",
+                "sfx": "voice-4.mp3",
+                "text": "Welcome to Chad club! I'm Sir Makesalot, the founder of this fine establishment."
+              },
+              {
+                type: "SPEAK",
+                "spriteName": "Mr. Chimp Phd. Esq.",
+                "sfx": "voice-3.mp3",
+                "text": "And I'm Mr. Chimp Phd. Esq., the financial backer of this luxurious gym."
+              },
+              {
+                type: "SPEAK",
+                "spriteName": "Sir Makesalot",
+                "sfx": "voice-4.mp3",
+                "text": "This is you first time here, right? Shall I show you around?"
+              },
+            ]
           }
         },
         {
@@ -1182,11 +1317,17 @@ module.exports = {
           "col": 23,
           "sprite": "chad_recolour01.png",
           "direction": "FACING_LEFT",
-          "name": "Runner",
+          "name": "Runner_r11c23",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "text": "I love running, man."
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Runner_r11c23",
+                "sfx": "voice-1.mp3",
+                "text": "I love running, man."
+              }
+            ]
           },  
           "destination" : {
             "row": 11,
@@ -1199,11 +1340,17 @@ module.exports = {
           "col": 4,
           "sprite": "robot.png",
           "direction": "FACING_RIGHT",
-          "name": "Securitybot",
+          "name": "Securitybot_r14c4",
           "action": {
             "type": "TEXT",
-            "sfx": "typing.mp3",
-            "text": "Beep-boop. Don't make me kick your ass, potential customer!"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Securitybot_r14c4",
+                "sfx": "typing.mp3",
+                "text": "Beep-boop. Don't make me kick your ass, potential customer!"
+              }
+            ]
           }
         },
         {
@@ -1213,11 +1360,17 @@ module.exports = {
           "col": 7,
           "sprite": "generic_blonde_guy.png",
           "direction": "FACING_RIGHT",
-          "name": "Jealous Neckbeard",
+          "name": "Jealous Neckbeard_r15c7",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "text": "I hate all these show-offs here in the club."
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Jealous Neckbeard_r15c7",
+                "sfx": "voice-1.mp3",
+                "text": "I hate all these show-offs here in the club."
+              }
+            ]
           }
         },
         {
@@ -1227,11 +1380,17 @@ module.exports = {
           "col": 10,
           "sprite": "character_x1_recolour01.png",
           "direction": "FACING_LEFT",
-          "name": "Jealous Neckbeard",
+          "name":  "Jealous Neckbeard_r15c10",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "text": "I'm a true warrior! At least in my RPG games..."
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Jealous Neckbeard_r15c10",
+                "sfx": "voice-1.mp3",
+                "text": "I'm a true warrior! At least in my RPG games..."
+              }
+            ]
           }
         },
         {
@@ -1240,12 +1399,18 @@ module.exports = {
           "col": 16,
           "sprite": "chad_recolour03.png",
           "direction": "FACING_RIGHT",
-          "name": "Runner",
+          "name": "Runner_r13c16",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "text": "Can't you see I'm training?"
-          },   
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Runner_r13c16",
+                "sfx": "voice-1.mp3",
+                "text": "Can't you see I'm training?"
+              }
+            ]
+          },  
           "destination" : {
             "row": 13,
             "col": 23,
@@ -1257,14 +1422,20 @@ module.exports = {
           "col": 23,
           "sprite": "chad.png",
           "direction": "FACING_LEFT",
-          "name": "Runner",
+          "name": "Runner_r15c23",
           "action": {
             "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "text": "Get out of my way!"
+            "scenes" : [
+              {
+                type: "SPEAK",
+                "spriteName": "Runner_r15c23",
+                "sfx": "voice-1.mp3",
+                "text": "Get out of my way!"
+              }
+            ]
           },          
           "destination" : {
-            "row": 13,
+            "row": 15,
             "col": 16,
           }
         }

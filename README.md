@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JUN 5, 2021
+* Cinematic instances for all NPC interaction
+* Enabled yes/no answers to a NPC question
+
 #### JUN 3, 2021
 * Restoring story cutscenes and events
 
