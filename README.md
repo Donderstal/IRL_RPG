@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JUN 6, 2021
+* Game can now be started in debug mode and/or no story events mode
+
 #### JUN 5, 2021
 * Cinematic instances for all NPC interaction
 * Enabled yes/no answers to a NPC question
