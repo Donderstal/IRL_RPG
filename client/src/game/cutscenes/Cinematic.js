@@ -56,9 +56,13 @@ class Cinematic {
     activateNextScene( ) {
         this.iterator++
         if ( this.scenes[this.iterator] ) {
+            if ( this.activeScene.type == "SPEAK" || this.activeScene.type == "SPEAK_YES_OR_NO" ) {
+                this.activeScene.unsetSpriteAnimation( )
+            }
             this.activeScene = new Scene( this.scenes[this.iterator] );            
         }
         else {
+            this.activeScene.unsetSpriteAnimation( )
             globals.GAME.deActivateCinematic( this );
             globals.GAME.activeCinematic = null;
             if ( this.trigger == "ON_LEAVE" ) {

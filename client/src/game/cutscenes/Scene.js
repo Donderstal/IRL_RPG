@@ -65,6 +65,13 @@ class Scene {
         sprite.setAnimation(this)      
     }
 
+    unsetSpriteAnimation( ) {
+        const sprite = this.getSpriteByName( );
+        if ( sprite.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
+            sprite.unsetScriptedAnimation( )            
+        }
+    }
+
     getSpriteByName( name = this.spriteName ) {
         const spriteArray = name == "Player" ? globals.GAME.PLAYER : globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
         return name == "Player" ? spriteArray : spriteArray[0];

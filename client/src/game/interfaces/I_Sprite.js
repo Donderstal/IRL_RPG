@@ -398,6 +398,9 @@ class Sprite {
             'sfx'       : ( sfx ) ? sfx : false,
             'options'   : options
         } );
+        if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
+            this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
+        }
     }
     /**
      * Initialize animation by setting this.inScriptedAnimation to true and storing this.direction.
