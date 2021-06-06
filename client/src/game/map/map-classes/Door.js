@@ -12,7 +12,7 @@ class Door extends I_Hitbox {
         this.directionIn    = door.directionIn
         this.directionOut   = door.directionOut
         this.locked         = door.locked
-        this.arcColor       = "#FFFFFF";
+        this.arcColor       = "#FFFF00";
 
     }
     /**

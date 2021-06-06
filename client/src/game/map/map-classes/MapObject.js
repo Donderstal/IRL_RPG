@@ -38,7 +38,7 @@ class MapObject extends Sprite {
         this.type = "object"
 
         if ( this.hasAction ) {
-            this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height  *  .5  ), tile.spriteData.action )
+            this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), tile.spriteData.action )
             this.action = tile.spriteData.action
         }
 
@@ -73,6 +73,9 @@ class MapObject extends Sprite {
      * Finally, countFrame if still sprite is still moving.
      */
     drawSprite( ) {
+        if ( this.hasAction ) {
+            this.hitbox.updateXy( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ) );            
+        }
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
         }

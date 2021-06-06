@@ -1,7 +1,8 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
 const { 
     FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN
-} = require( '../../game-data/globals' )
+} = require( '../../game-data/globals' );
+const globals = require( '../../game-data/globals' );
 /**
  * The I_Hitbox interface is the base class of all in-game elements that should have collision detection.
  * It consists out of three circles, the inner, middle and outer.
@@ -40,14 +41,16 @@ class I_Hitbox {
             this.x = newX;
             this.y = newY;            
         }
+        if ( globals.GAME.debugMode ) {
+            this.draw( );
+        }
     }
     /**
      * Draw the hitbox circles. Only used for testing and debugging purposes
      * @param {Number} x represents a in-canvas location on the X axis 
      * @param {Number} y represents a in-canvas location on the Y axis 
      */
-    draw( x, y ) {
-        this.updateXy( x, y )
+    draw( ) {
         let frontCtx = canvasHelpers.getFrontCanvasContext( );
         frontCtx.beginPath( );
         frontCtx.arc( this.x, this.y, this.outerRadius, 0, 2 * Math.PI );

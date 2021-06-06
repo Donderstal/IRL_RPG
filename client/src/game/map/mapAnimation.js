@@ -87,6 +87,14 @@ const drawSpritesInOrder = ( GAME ) => {
 
     canvas.clearEntireCanvas("FRONT")
 
+    if ( GAME.debugMode ) {
+        GAME.BACK.grid.array.forEach( ( tile ) => { 
+            if ( tile.hasEvent ) {
+                tile.event.updateXy( tile.event.x, tile.event.y );
+            }
+        })
+    }
+
     const backgroundSprites = [];
     const standardSprites   = [];
     const foregroundSprites = [];

@@ -65,11 +65,12 @@ class I_Tile {
             this.x, this.y,
             GRID_BLOCK_PX, GRID_BLOCK_PX
         )
-        //test
-        this.ctx.beginPath( )
-        this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
-        this.ctx.stroke( )
-        //test
+        if ( globals.GAME.debugMode ) {
+            this.ctx.beginPath( )
+            this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
+            this.ctx.stroke( )
+            this.ctx.fillText( this.ID, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .5, )
+        }
     }
     /**
      * Draw the tile at given XY location in tilesheet to the Utility canvas.
