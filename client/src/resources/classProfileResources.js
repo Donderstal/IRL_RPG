@@ -120,42 +120,62 @@ const getClassProfile = ( className ) => {
             return TEST_CLASSPROFILE_4;
     }
 };
-const getClassSprite = ( className ) => {
+const getClassSprite = ( className, getBattleSprite = false ) => {
     const spriteFolder = '/static/sprites/';
+    let spriteSrc = "";
+
     switch ( className ) {
         case TEST_CLASSNAME_1:
-            return spriteFolder + 'neckbeard.png';
+            spriteSrc = 'neckbeard';
+            break;
         case TEST_CLASSNAME_2: 
-            return spriteFolder + 'chad.png';
+            spriteSrc = 'chad';
+            break;
         case TEST_CLASSNAME_3: 
-            return spriteFolder + 'influencer.png';
+            spriteSrc = 'influencer';
+            break;
         case TEST_CLASSNAME_4: 
-            return spriteFolder + 'characterx3.png';
+            spriteSrc = 'characterx3';
+            break;
         case TEST_CLASSNAME_5: 
-            return spriteFolder + 'characterx5.png';
+            spriteSrc = 'characterx5';
+            break;
         case TEST_CLASSNAME_6: 
-            return spriteFolder + 'pigeon.png';
+            spriteSrc = 'pigeon';
+            break;
         case TEST_CLASSNAME_7:
-            return spriteFolder + 'business_man.png';
+            spriteSrc = 'business_man';
+            break;
         case TEST_CLASSNAME_8:
-            return spriteFolder + 'chad_recolour01.png';
+            spriteSrc = 'chad_recolour01';
+            break;
         case TEST_CLASSNAME_9:
-            return spriteFolder + 'chad_recolour02.png';
+            spriteSrc = 'chad_recolour02';
+            break;
         case TEST_CLASSNAME_10:
-            return spriteFolder + 'chad_recolour03.png';
+            spriteSrc = 'chad_recolour03';
+            break;
         case TEST_CLASSNAME_11:
-            return spriteFolder + 'character_x1_recolour01.png';
+            spriteSrc = 'character_x1_recolour01';
+            break;
         case TEST_CLASSNAME_12:
-            return spriteFolder + 'character_x4.png';
+            spriteSrc = 'character_x4';
+            break;
         case TEST_CLASSNAME_13:
-            return spriteFolder + 'character_x5_recolour.png';
+            spriteSrc = 'character_x5_recolour';
+            break;
         case TEST_CLASSNAME_14:
-            return spriteFolder + 'fats.png';
+            spriteSrc = 'fats';
+            break;
         case TEST_CLASSNAME_15:
-            return spriteFolder + 'generic_balding_guy.png';
+            spriteSrc = 'generic_balding_guy';
+            break;
         case TEST_CLASSNAME_16:
-            return spriteFolder + 'generic_blonde_guy.png';
+            spriteSrc = 'generic_blonde_guy';
+            break;
     }
+
+    return spriteFolder + spriteSrc + ( getBattleSprite ? "_fight" : "") + '.png'; 
 };
 const getMoves = ( classProfile, level ) => {
     switch ( classProfile ) {

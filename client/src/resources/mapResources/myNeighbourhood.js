@@ -6,7 +6,10 @@ const {
   NPC_ANIM_TYPE_ANIMATION_LOOP,
 
   NPC_MOVE_TYPE_FLYING,
-  TEST_CLASSNAME_2, TEST_CLASSNAME_3, TEST_CLASSNAME_6,
+  TEST_CLASSNAME_1, TEST_CLASSNAME_2, TEST_CLASSNAME_3, TEST_CLASSNAME_4,
+  TEST_CLASSNAME_5, TEST_CLASSNAME_6, TEST_CLASSNAME_7, TEST_CLASSNAME_8,
+  TEST_CLASSNAME_9, TEST_CLASSNAME_10, TEST_CLASSNAME_11, TEST_CLASSNAME_12, 
+  TEST_CLASSNAME_13, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16,
 } = require('../../game-data/globals')
 
 module.exports = {
@@ -773,7 +776,7 @@ module.exports = {
           "anim_name": "BACK_AND_FORTH_STEP",
           "row": 3,
           "col": 2,
-          "sprite": "CharacterX4.png",
+          "sprite": "characterx4.png",
           "direction": "FACING_DOWN",
         },
         {
@@ -781,7 +784,7 @@ module.exports = {
           "anim_name": "BACK_AND_FORTH_STEP",
           "row": 3,
           "col": 4,
-          "sprite": "CharacterX5.png",
+          "sprite": "characterx5.png",
           "direction": "FACING_DOWN",
         },
         {
@@ -789,7 +792,7 @@ module.exports = {
           "anim_name": "BACK_AND_FORTH_STEP",
           "row": 3,
           "col": 6,
-          "sprite": "CharacterX5_recolour.png",
+          "sprite": "characterx5_recolour.png",
           "direction": "FACING_DOWN",
         },
         {
@@ -877,7 +880,7 @@ module.exports = {
           "anim_name": "PUNCH",
           "row": 3,
           "col": 23,
-          "sprite": "CharacterX5.png",
+          "sprite": "characterx5.png",
           "direction": "FACING_LEFT",
           "name": "Training Guy_r3c23",                    
           "action": {
@@ -897,7 +900,7 @@ module.exports = {
           "anim_name": "PUNCH",
           "row": 4,
           "col": 18,
-          "sprite": "CharacterX5_recolour.png",
+          "sprite": "characterx5_recolour.png",
           "direction": "FACING_RIGHT",
           "name": "Training Guy_r4c18",                    
           "action": {
@@ -1061,7 +1064,7 @@ module.exports = {
           "anim_name": "PUNCH",
           "row": 6,
           "col": 18,
-          "sprite": "CharacterX5.png",
+          "sprite": "characterx5.png",
           "direction": "FACING_RIGHT",
           "name": "Training Guy_r6c18",                    
           "action": {
@@ -1121,7 +1124,7 @@ module.exports = {
           "anim_name": "PUNCH",
           "row": 7,
           "col": 23,
-          "sprite": "CharacterX4.png",
+          "sprite": "characterx4.png",
           "direction": "FACING_LEFT",
           "name": "Training Guy_r7c23",                    
           "action": {
@@ -1689,8 +1692,8 @@ module.exports = {
                 ],
                 "party": [
                   { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
-                  { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
-                  { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                  { "name": "Boze Berta", "className": TEST_CLASSNAME_10, "level": 5 },
+                  { "name": "Duifje", "className": TEST_CLASSNAME_16, "level": 5 },
                 ], 
                 "hasEvent": true,
                 "events": [
@@ -1835,7 +1838,7 @@ module.exports = {
                 "characters" : [
                     {
                       "anim_type": NPC_ANIM_TYPE_IDLE,
-                      "sprite": "Chad.png",
+                      "sprite": "chad.png",
                       "direction": "FACING_LEFT",
                       "name": "chad_recolour01.png",
                       "row": 3,
@@ -1843,7 +1846,7 @@ module.exports = {
                     },
                     {
                       "anim_type": NPC_ANIM_TYPE_IDLE,
-                      "sprite": "Chad.png",
+                      "sprite": "chad.png",
                       "direction": "FACING_DOWN",
                       "name": "chad_recolour02.png",
                       "row": 3,
@@ -1851,7 +1854,7 @@ module.exports = {
                     },
                     {
                       "anim_type": NPC_ANIM_TYPE_IDLE,
-                      "sprite": "Chad.png",
+                      "sprite": "chad.png",
                       "direction": "FACING_UP",
                       "name": "chad_recolour01.png",
                       "row": 3,
@@ -1859,7 +1862,7 @@ module.exports = {
                   },
                   {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
-                    "sprite": "Chad.png",
+                    "sprite": "chad.png",
                     "direction": "FACING_RIGHT",
                     "name": "chad_recolour02.png",
                     "row": 3,
@@ -2049,7 +2052,7 @@ module.exports = {
                   },
                   {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
-                    "sprite": "CharacterX4.png",
+                    "sprite": "characterx4.png",
                     "direction": "FACING_DOWN",
                     "name": "CharacterX4.png",
                     "row": 2,
@@ -2057,7 +2060,7 @@ module.exports = {
                   },
                   {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
-                    "sprite": "CharacterX5.png",
+                    "sprite": "characterx5.png",
                     "direction": "FACING_DOWN",
                     "name": "CharacterX5.png",
                     "row": 2,
@@ -2065,7 +2068,7 @@ module.exports = {
                   },
                   {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
-                    "sprite": "CharacterX5_recolour.png",
+                    "sprite": "characterx5_recolour.png",
                     "direction": "FACING_DOWN",
                     "name": "CharacterX5_recolour.png",
                     "row": 2,
@@ -2173,8 +2176,8 @@ module.exports = {
                       "type": "BATTLE",
                       "party": [
                         { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
-                        { "name": "Boze Berta", "className": TEST_CLASSNAME_3, "level": 5 },
-                        { "name": "Duifje", "className": TEST_CLASSNAME_6, "level": 5 },
+                        { "name": "Boze Berta", "className": TEST_CLASSNAME_14, "level": 5 },
+                        { "name": "Duifje", "className": TEST_CLASSNAME_15, "level": 5 },
                       ], 
                       "scenes": [
                         {

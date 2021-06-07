@@ -247,7 +247,7 @@ module.exports = {
         "characters" : [
             {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
-                "sprite": "CharacterX5_recolour.png",
+                "sprite": "characterx5_recolour.png",
                 "direction": "FACING_DOWN",
                 "row": 3,
                 "col": 13,
