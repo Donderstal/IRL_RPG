@@ -5,6 +5,11 @@ const {
 
     TEST_CLASSNAME_1, TEST_CLASSNAME_2, TEST_CLASSNAME_3,
     TEST_CLASSNAME_4, TEST_CLASSNAME_5, TEST_CLASSNAME_6,
+    TEST_CLASSNAME_7, TEST_CLASSNAME_8, TEST_CLASSNAME_9,
+    TEST_CLASSNAME_10, TEST_CLASSNAME_11, TEST_CLASSNAME_12, 
+    TEST_CLASSNAME_13, TEST_CLASSNAME_14, TEST_CLASSNAME_15,
+    TEST_CLASSNAME_16,
+
     TEST_CLASSPROFILE_1, TEST_CLASSPROFILE_2,
     TEST_CLASSPROFILE_3, TEST_CLASSPROFILE_4
 }= require('../game-data/globals');
@@ -98,30 +103,58 @@ const getClassProfile = ( className ) => {
     switch ( className ) {
         case TEST_CLASSNAME_2:
         case TEST_CLASSNAME_5: 
+        case TEST_CLASSNAME_8:
+        case TEST_CLASSNAME_9:
+        case TEST_CLASSNAME_10:
+        case TEST_CLASSNAME_14:
             return TEST_CLASSPROFILE_1;
         case TEST_CLASSNAME_3: 
         case TEST_CLASSNAME_6: 
             return TEST_CLASSPROFILE_2;
         case TEST_CLASSNAME_1: 
+        case TEST_CLASSNAME_15:
+        case TEST_CLASSNAME_16:
             return TEST_CLASSPROFILE_3;
+        case TEST_CLASSNAME_7:
         case TEST_CLASSNAME_4: 
             return TEST_CLASSPROFILE_4;
     }
 };
 const getClassSprite = ( className ) => {
+    const spriteFolder = '/static/sprites/';
     switch ( className ) {
         case TEST_CLASSNAME_1:
-            return '/static/sprites/neckbeard.png';
+            return spriteFolder + 'neckbeard.png';
         case TEST_CLASSNAME_2: 
-            return '/static/sprites/chad.png';
+            return spriteFolder + 'chad.png';
         case TEST_CLASSNAME_3: 
-            return '/static/sprites/influencer.png';
+            return spriteFolder + 'influencer.png';
         case TEST_CLASSNAME_4: 
-            return '/static/sprites/characterx3.png';
+            return spriteFolder + 'characterx3.png';
         case TEST_CLASSNAME_5: 
-            return '/static/sprites/CharacterX5.png';
+            return spriteFolder + 'characterx5.png';
         case TEST_CLASSNAME_6: 
-            return '/static/sprites/pigeon.png';
+            return spriteFolder + 'pigeon.png';
+        case TEST_CLASSNAME_7:
+            return spriteFolder + 'business_man.png';
+        case TEST_CLASSNAME_8:
+            return spriteFolder + 'chad_recolour01.png';
+        case TEST_CLASSNAME_9:
+            return spriteFolder + 'chad_recolour02.png';
+        case TEST_CLASSNAME_10:
+            return spriteFolder + 'chad_recolour03.png';
+        case TEST_CLASSNAME_11:
+            return spriteFolder + 'character_x1_recolour01.png';
+        case TEST_CLASSNAME_12:
+            return spriteFolder + 'character_x4.png';
+        case TEST_CLASSNAME_13:
+            return spriteFolder + 'character_x5_recolour.png';
+        case TEST_CLASSNAME_14:
+            return spriteFolder + 'fats.png';
+        case TEST_CLASSNAME_15:
+            return spriteFolder + 'generic_balding_guy.png';
+        case TEST_CLASSNAME_16:
+            return spriteFolder + 'generic_blonde_guy.png';
     }
 };
 const getMoves = ( classProfile, level ) => {
