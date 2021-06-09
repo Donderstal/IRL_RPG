@@ -17,7 +17,7 @@ const moveAnimationScripts = {
     },
     "SPECIAL_ATTACK_TEST" : {
         moveToTarget : false,
-        perfomerAnimation: "TURN_SINGLE_CIRCLE",
+        perfomerAnimation: "CAST",
         performerEffect: "FIRE_CIRCLE_FULL",
         effectToTarget: "FIRE_CIRCLE_MOVING",
         targetAnimationOnHit: "STANDARD_HIT",
@@ -25,7 +25,7 @@ const moveAnimationScripts = {
     },
     "STAT_UP_TEST" : {
         moveToTarget : false,
-        perfomerAnimation: "TURN_SINGLE_CIRCLE",
+        perfomerAnimation: "CAST",
         performerEffect: false,
         effectToTarget: false,
         targetAnimationOnHit: "TURN_SINGLE_CIRCLE",
@@ -41,7 +41,7 @@ const moveAnimationScripts = {
     },
     "STAT_DOWN_TEST" : {
         moveToTarget : false,
-        perfomerAnimation: "TURN_SINGLE_CIRCLE",
+        perfomerAnimation: "CAST",
         performerEffect: "FIRE_CIRCLE_BACK",
         effectToTarget: false,
         targetAnimationOnHit: "STANDARD_HIT",
@@ -50,7 +50,7 @@ const moveAnimationScripts = {
     "HEAL_TEST" : {
         moveToTarget : false,
         moveForward : true,
-        perfomerAnimation: "TURN_SINGLE_CIRCLE",
+        perfomerAnimation: "CAST",
         performerEffect: "FIRE_CIRCLE_BACK",
         effectToTarget: "FIRE_CIRCLE_FRONT_MOVING",
         targetAnimationOnHit: "STANDARD_HIT",
