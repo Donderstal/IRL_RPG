@@ -6,7 +6,7 @@ const tilesheets    = require('../resources/tilesheetResources').sheets
 
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, 
-    TEST_CLASSNAME_1, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
+    TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
 }  = require('../game-data/globals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
@@ -161,7 +161,7 @@ class Game {
     initializePlayerParty( name ) {
         this.party = new Party( 
             [ 
-                { name: name, className: TEST_CLASSNAME_1, level: 5 }, 
+                { name: name, className: TEST_CLASSNAME_2, level: 5 }, 
                 { name: "Roberto 'Rob' Felix", className: TEST_CLASSNAME_5, level: 5 }, 
                 { name: "Your nan", className: TEST_CLASSNAME_4, level: 5 } 
             ], 

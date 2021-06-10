@@ -9,6 +9,7 @@ const { FRAME_LIMIT, GRID_BLOCK_PX } = require('../../game-data/globals');
 const { StatBar } = require('../interfaces/I_StatBar');
 const { handleMoveExecution } = require('../../helpers/moveHelpers');
 const { MOVE_PROP_KEY_NAME } = require('../../game-data/moveGlobals');
+const { getClassSprite } = require('../../resources/classProfileResources');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
  * The player characters are on the left, the opponent characters are on the right.
@@ -74,7 +75,7 @@ class BattleSlot {
      * @param {Character} character - Character instance that will do battle
      */
     initializeSpriteInSlot( character ) {
-        let src = "/static/sprites/" + ( Math.random() > .5 ? "fats_fight" : "chad_fight" ) + ".png";
+        let src = getClassSprite( character.ClassName, true );
         this.sprite = new BattleSprite( this.tile, 'LARG', src , this.startingDirection );
         this.character = character;
         this.initStatBars( );

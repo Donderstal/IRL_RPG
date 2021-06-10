@@ -956,7 +956,7 @@ module.exports = {
           "anim_name": "LEFT_AND_RIGHT_STEP",
           "row": 4,
           "col": 6,
-          "sprite": "influencer.png",
+          "sprite": "woman.png",
           "direction": "FACING_DOWN",
         },
         {
@@ -1666,7 +1666,7 @@ module.exports = {
             },
             {
               "anim_type": NPC_ANIM_TYPE_IDLE,
-              "sprite": "influencer.png",
+              "sprite": "woman.png",
               "direction": "FACING_RIGHT",
               "row": 4,
               "col": 4,
@@ -1988,9 +1988,9 @@ module.exports = {
                   },
                   {
                       "anim_type": NPC_ANIM_TYPE_IDLE,
-                      "sprite": "influencer.png",
+                      "sprite": "woman.png",
                       "direction": "FACING_DOWN",
-                      "name": "influencer.png",
+                      "name": "woman.png",
                       "row": 2,
                       "col": 11
                   },
@@ -2487,7 +2487,7 @@ module.exports = {
               "characters": [
                   {
                       "anim_type": NPC_ANIM_TYPE_IDLE,
-                      "sprite": "influencer.png",
+                      "sprite": "woman.png",
                       "direction": "FACING_DOWN",
                       "row": 2,
                       "col": 5,
@@ -2693,7 +2693,7 @@ module.exports = {
             },
             {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
-                "sprite": "influencer.png",
+                "sprite": "woman.png",
                 "direction": "FACING_DOWN",
                 "row": 9,
                 "col": 11,
@@ -2807,7 +2807,7 @@ module.exports = {
                     },
                     {
                         "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "influencer.png",
+                        "sprite": "woman.png",
                         "direction": "FACING_DOWN",
                         "row": 7,
                         "col": 7,
@@ -2960,7 +2960,7 @@ module.exports = {
                 "characters": [
                     {
                         "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "influencer.png",
+                        "sprite": "woman.png",
                         "direction": "FACING_DOWN",
                         "row": 3,
                         "col": 3,
@@ -3015,7 +3015,7 @@ module.exports = {
                 "characters": [
                     {
                         "anim_type": NPC_ANIM_TYPE_IDLE,
-                        "sprite": "influencer.png",
+                        "sprite": "woman.png",
                         "direction": "FACING_LEFT",
                         "row": 12,
                         "col": 9,

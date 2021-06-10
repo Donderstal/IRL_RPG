@@ -7,12 +7,11 @@ const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require("../../game-data/globals
  */
 class BaseEntity {
     constructor( name, className, level ) {
-
         this.Name = name;
         this.ClassName = className;
         this.Level = level;
         this.Sprite = new Image(); 
-        this.Sprite.src = '/static/sprites/' + className + ".png";
+        this.Sprite.src = getClassSprite( className );
         this.getClassProfileAndSpriteOnInit( )
 
         this.Attributes = new CharacterAttributes( getAttributeModifierByClassProfile( this.ClassProfile ), this.Level );
