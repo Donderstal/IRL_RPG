@@ -8,7 +8,10 @@ const {
     TEST_CLASSNAME_7, TEST_CLASSNAME_8, TEST_CLASSNAME_9,
     TEST_CLASSNAME_10, TEST_CLASSNAME_11, TEST_CLASSNAME_12, 
     TEST_CLASSNAME_13, TEST_CLASSNAME_14, TEST_CLASSNAME_15,
-    TEST_CLASSNAME_16,
+    TEST_CLASSNAME_16, TEST_CLASSNAME_17, TEST_CLASSNAME_18,
+    TEST_CLASSNAME_19, TEST_CLASSNAME_20, TEST_CLASSNAME_21,
+    TEST_CLASSNAME_22, TEST_CLASSNAME_23, TEST_CLASSNAME_24,
+    TEST_CLASSNAME_25, TEST_CLASSNAME_26, TEST_CLASSNAME_27,
 
     TEST_CLASSPROFILE_1, TEST_CLASSPROFILE_2,
     TEST_CLASSPROFILE_3, TEST_CLASSPROFILE_4
@@ -132,7 +135,7 @@ const getClassSprite = ( className, getBattleSprite = false ) => {
             spriteSrc = 'chad';
             break;
         case TEST_CLASSNAME_3: 
-            spriteSrc = 'influencer';
+            spriteSrc = 'woman';
             break;
         case TEST_CLASSNAME_4: 
             spriteSrc = 'characterx3';
@@ -172,6 +175,39 @@ const getClassSprite = ( className, getBattleSprite = false ) => {
             break;
         case TEST_CLASSNAME_16:
             spriteSrc = 'generic_blonde_guy';
+            break;
+        case TEST_CLASSNAME_17:
+            spriteSrc = 'fats_recolour';
+            break;
+        case TEST_CLASSNAME_18:
+            spriteSrc = 'new_girl';
+            break;
+        case TEST_CLASSNAME_19:
+            spriteSrc = 'new_girl_recolour';
+            break;
+        case TEST_CLASSNAME_20:
+            spriteSrc = 'manager';
+            break;
+        case TEST_CLASSNAME_21:
+            spriteSrc = 'monkey_ceo';
+            break;
+        case TEST_CLASSNAME_22:
+            spriteSrc = 'pony_tail';
+            break;
+        case TEST_CLASSNAME_23:
+            spriteSrc = 'pony_tail_recolour';
+            break;
+        case TEST_CLASSNAME_24:
+            spriteSrc = 'robot';
+            break;
+        case TEST_CLASSNAME_25:
+            spriteSrc = 'tumbler_girl';
+            break;
+        case TEST_CLASSNAME_26:
+            spriteSrc = 'tumbler_girl_recolour01';
+            break;
+        case TEST_CLASSNAME_27:
+            spriteSrc = 'tumbler_girl_recolour02';
             break;
     }
 
