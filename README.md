@@ -12,7 +12,7 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### JUN 6, 2021
+#### JUN 10, 2021
 * Added new BattleSprites. Improved setup for fetching sprites based on classnames
 
 #### JUN 6, 2021
