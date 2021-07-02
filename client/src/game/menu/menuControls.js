@@ -9,7 +9,7 @@ const handleUp = ( activeTab ) => {
         activeTab.itemSubMenu.setPreviousOption( )
     }
     else if ( activeTab.tabName != "MEMBERS" && !activeTab.modal ) {
-        activeTab.activatePreviousButtonInList( );
+        activeTab.activateButton( "PREVIOUS" );
     }
 }
 /**
@@ -21,7 +21,7 @@ const handleDown = ( activeTab ) => {
         activeTab.itemSubMenu.setNextOption( )
     }
     else if ( activeTab.tabName != "MEMBERS" && !activeTab.modal ) {
-        activeTab.activateNextButtonInList( );
+        activeTab.activateButton( "NEXT" );
     }
 }
 /**
@@ -33,13 +33,15 @@ const handleLeft = ( activeTab ) => {
         activeTab.modal.selectPreviousOption( );
     }
     else if ( activeTab.tabName == "MEMBERS" ) {
-        activeTab.activatePreviousButtonInList( );
+        activeTab.activateButton( "PREVIOUS" );
     }
     else if ( activeTab.tabName == "STATUS" ) {
         activeTab.setButtons( 
             getPreviousIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
         );
     }
+
+    scrollBetweenItemColumns( activeTab );
 }
 /**
  * Call the method in the currently active tab associated with the right key 
@@ -50,12 +52,31 @@ const handleRight = ( activeTab ) => {
         activeTab.modal.selectNextOption( );
     }
     else if ( activeTab.tabName == "MEMBERS" ) {
-        activeTab.activateNextButtonInList( );
+        activeTab.activateButton( "NEXT" );
     }
     else if ( activeTab.tabName == "STATUS" ) {
         activeTab.setButtons( 
             getNextIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
         );
+    }
+
+    scrollBetweenItemColumns( activeTab );
+}
+
+/**
+ * If the menu is in inventory mode and the party has more than ten items,
+ * scroll to the button right or left.
+ * @param {I_MenuTab} activeTab I_MenuTab extension currently active
+ */
+const scrollBetweenItemColumns = ( activeTab ) => {
+    const availablePlayerItems = globals.GAME.PLAYER_INVENTORY.activeItems;
+    if ( activeTab.tabName == "INVENTORY" && availablePlayerItems.length > 10 ) {
+        if ( activeTab.activeButton < 10 && availablePlayerItems[ activeTab.activeButton + 10 ] != undefined ) {
+            activeTab.activateButton( activeTab.activeButton + 10 );
+        }
+        else if ( activeTab.activeButton >= 10 && availablePlayerItems[ activeTab.activeButton - 10 ] != undefined ) {
+            activeTab.activateButton( activeTab.activeButton - 10 );
+        }
     }
 }
 /**

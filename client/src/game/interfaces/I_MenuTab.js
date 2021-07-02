@@ -69,24 +69,28 @@ class MenuTab {
     setButtonWidth( width ) {
         this.buttonWidth = width;
     }
-    /**
-     * Call the deActivate method of current button
-     * Set the index of the next button to this.activebutton.
-     * Then call activateButtonAndSetSubMenuPosition
-     */
-    activateNextButtonInList( ) {
-        this.buttons[this.activeButton].deActivate( )
-        this.activeButton = getNextIndexInArray( this.activeButton, this.buttons )
-        this.activateButtonAndSetSubMenuPosition( false );
-    }
    /**
      * Call the deActivate method of current button
-     * Set the index of the previous button to this.activebutton.
+     * Decide what the new active buttons should be based on buttonType
      * Then call activateButtonAndSetSubMenuPosition
+     * @param {String|Number} buttonType "NEXT", "PREVIOUS" or a int to be used as button index
      */
-    activatePreviousButtonInList( ) {
-        this.buttons[this.activeButton].deActivate( )
-        this.activeButton = getPreviousIndexInArray( this.activeButton, this.buttons )
+    activateButton( buttonType ) {
+        this.buttons[this.activeButton].deActivate( );
+
+        if ( buttonType === "NEXT" ) {
+            this.activeButton = getNextIndexInArray( this.activeButton, this.buttons );
+        }
+        else if ( buttonType == "PREVIOUS" ) {
+            this.activeButton = getPreviousIndexInArray( this.activeButton, this.buttons )
+        }
+        else if ( Number.isInteger( buttonType ) ) {
+            this.activeButton = buttonType;
+        }
+        else {
+             console.log( "Error! Buttontype " + buttonType + " is invalid.")
+        }
+
         this.activateButtonAndSetSubMenuPosition( false );
     }
     /**
@@ -169,12 +173,14 @@ class MenuTab {
      * @param {Number} x position on x axis of all buttons
      * @param {Object[]} buttonContentList array of objects to assign as content to MenuItem instances
      */
-    setButtonsInColumn( x, buttonContentList ) {
+    setButtonsInColumn( x, buttonContentList, activate = true ) {
         let y = ( this.buttonHeight * .125 ) + ( GRID_BLOCK_PX * 2 )
         buttonContentList.forEach( ( buttonContent, index ) => {
             this.buttons.push( new MenuItem( x, y + ( index * this.buttonHeight ), this.buttonWidth, this.buttonHeight * .75, this.tabName, buttonContent ) )
         } )
-        this.buttons[this.activeButton].activate( )
+        if ( activate ) {
+            this.buttons[this.activeButton].activate( )            
+        }
     }
     /**
      * Instantiate a MenuItems in a row.
@@ -182,12 +188,14 @@ class MenuTab {
      * @param {Number} y position on y axis of all buttons
      * @param {Object[]} buttonContentList array of objects to assign as content to MenuItem instances
      */
-    setButtonsInRow( y, buttonContentList ) {
+    setButtonsInRow( y, buttonContentList, activate = true ) {
         let x = ( this.buttonWidth * .125 );
         buttonContentList.forEach( ( buttonContent, index ) => {
             this.buttons.push( new MenuItem( x + ( index * this.buttonWidth ), y, this.buttonWidth * .75, this.buttonHeight, this.tabName, buttonContent ) )
         } )
-        this.buttons[this.activeButton].isActive = true;
+        if ( activate ) {
+            this.buttons[this.activeButton].activate( )            
+        }
     }
     /**
      * Active the button at this.activeButton.

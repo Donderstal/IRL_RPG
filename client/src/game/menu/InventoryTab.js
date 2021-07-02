@@ -27,8 +27,16 @@ class InventoryMenuTab extends MenuTab {
         if ( this.activeButton >= activeItems.length ) {
             this.activeButton = activeItems.length - 1;
         }
-        
-        this.setButtonsInColumn( 0, activeItems );
+        if ( activeItems.length > 10 ) {
+            const firstTen = activeItems.slice( 0, 10 )
+            const secondTen = activeItems.slice( 10 )
+            this.setButtonsInColumn( 0, firstTen, false );
+            this.setButtonsInColumn( globals.CANVAS_WIDTH / 2, secondTen );
+        }
+        else {
+            this.setButtonsInColumn( 0, activeItems );
+        }
+
         super.activateButtonAndSetSubMenuPosition( );
         this.setDisabledOptionsForItem( );
     }
@@ -36,16 +44,8 @@ class InventoryMenuTab extends MenuTab {
      * Call the super of this method.
      * Then, call setDisabledOptionsForItem
      */
-    activateNextButtonInList( ) {
-        super.activateNextButtonInList( )
-        this.setDisabledOptionsForItem( );
-    }
-    /**
-     * Call the super of this method.
-     * Then, call setDisabledOptionsForItem
-     */
-    activatePreviousButtonInList( ) {
-        super.activatePreviousButtonInList( )
+     activateButton( buttonType ) {
+        super.activateButton( buttonType )
         this.setDisabledOptionsForItem( );
     }
     /**
