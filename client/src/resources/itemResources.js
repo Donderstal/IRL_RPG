@@ -4,7 +4,7 @@ const {
     ARMOR_TYPE_HEAD, ARMOR_TYPE_UPPER_BODY, 
     ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY,
     EFFECT_TYPE_BUFF, EFFECT_TYPE_DEBUFF, ATT_PH_ATTACK,
-    ATT_PH_DEFENSE, ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED
+    ATT_PH_DEFENSE, ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ITEM_CATEGORY_KEY, ITEM_CATEGORY_USABLE
 } = require('../game-data/globals')
 
 const itemData = {
@@ -50,6 +50,42 @@ const itemData = {
         "description":
             "Dude, shouldn't you have cleaned this shirt before wearing it outside?"
     },
+    "shirt_armor_2" : {
+        "name" : "Padded shirt",
+        "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_UPPER_BODY,
+        "price": 10,
+        "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_PH_DEFENSE, 10 ]
+        ],
+        "description":
+            "Stolen from the Renaissance fair. Looks dope!"
+    },
+    "shirt_armor_3" : {
+        "name" : "Shiny unicorn shirt",
+        "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_UPPER_BODY,
+        "price": 10,
+        "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_SP_DEFENSE, 10 ]
+        ],
+        "description":
+            "There's something about this shirt that just makes it stand out. "
+    },
+    "lower_body_armor_1" : {
+        "name" : "Old lady shoes",
+        "category" : ITEM_CATEGORY_ARMOR,
+        "type": ARMOR_TYPE_LOWER_BODY,
+        "price": 10,
+        "png": "test-item",
+        "effects": [ 
+            [ EFFECT_TYPE_BUFF, ATT_SP_DEFENSE, 5 ]
+        ],
+        "description":
+            "You know those shoes that old ladies wear? This is a pair of those. Could be leather or plastic, I'm not sure."
+    },
     "old_sneakers_armor_2" : {
         "name" : "Old sneakers",
         "category" : ITEM_CATEGORY_ARMOR,
@@ -60,7 +96,7 @@ const itemData = {
             [ EFFECT_TYPE_BUFF, ATT_SPEED, 5 ]
         ],
         "description":
-            "Old sneaker with some stains on them. Is it coffee, dirt or something else?"
+            "Old sneakers with some stains on them. Is it coffee, dirt or something else?"
     },
     "dirty_beanie_armor_3" : {
         "name" : "Dirty beanie",
@@ -95,6 +131,20 @@ const itemData = {
         "png": "test-item",
         "description":
             "These phones were all the rage in 2036. Seems like this one has retired early."
+    },
+    "key_1" : {
+        "name" : "Old key",
+        "category" : ITEM_CATEGORY_KEY,
+        "price" : 0,
+        "png": "test-item",
+        "description" : "Just some key you found lying about. What could it be for?"
+    },
+    "usable_1" : {
+        "name" : "Stink bomb",
+        "category" : ITEM_CATEGORY_USABLE,
+        "price" : 10,
+        "png" : "test-item",
+        "description" : "Use this bomb to make your opponents cringe in fear and disgust!"
     }
 }
 

@@ -1,5 +1,5 @@
 const { getItemDataById } = require('../../resources/itemResources');
-const { ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_WEAPON, ITEM_CATEGORY_CONSUMABLE } = require('../../game-data/globals');
+const { ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_WEAPON, ITEM_CATEGORY_CONSUMABLE, ITEM_CATEGORY_USABLE, ITEM_CATEGORY_KEY } = require('../../game-data/globals');
 
 const uiSpritesFolder = "/static/ui/"
 /**
@@ -17,7 +17,13 @@ class GameItem {
         return this.Category == ITEM_CATEGORY_ARMOR || this.Category == ITEM_CATEGORY_WEAPON; 
     };
     get canBeUsed( ) { 
+        return this.Category == ITEM_CATEGORY_CONSUMABLE || this.Category == ITEM_CATEGORY_USABLE; 
+    };
+    get canBeUsedOutsideBattle( ) {
         return this.Category == ITEM_CATEGORY_CONSUMABLE; 
+    }
+    get isKey( ) {
+        return this.Category == ITEM_CATEGORY_KEY;
     };
     /**
      * Fetch the data associated with this ItemTypeId in the itemREsources file
