@@ -66,6 +66,10 @@ class InventoryMenuTab extends MenuTab {
      * Then, call unsetModal and setButtons
      */
     doActiveModalOption( ) {
+        if ( this.activeOption == "USE" && this.modal.activeButton.item != undefined ) {
+            const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index];
+            globals.GAME.PLAYER_INVENTORY.useItem( selectedCharacter, this.activeItem.ItemTypeId );
+        }
         if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined ) {
             const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index];
             const itemToUnequip = selectedCharacter.Equipment.returnItemAtSlotOfGivenItem( this.activeItem );

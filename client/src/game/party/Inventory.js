@@ -1,3 +1,5 @@
+const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require('../../game-data/globals');
+const { MOVE_TYPE_HEAL } = require('../../game-data/moveGlobals');
 const { StackedItem } = require('./StackedItem');
 /**
  * An instance of the Inventory class is given to each Party instance in the game.
@@ -51,6 +53,36 @@ class Inventory {
         let ItemStack = this.getItemStackById( itemID );
         ItemStack.unequipItem( character );
     }
+    /**
+     * Get the ItemStack instance associated with given String.
+     * Then handle the effect associated with the item and decrement the ItemStack
+     * @param {Character} character 
+     * @param {String} itemID 
+     */
+    useItem( targetCharacter, itemID ) {
+        let ItemStack = this.getItemStackById( itemID );
+        switch( ItemStack.Item.Type ) {
+            case MOVE_TYPE_HEAL:
+                ItemStack.Item.Effects.forEach( ( e ) => {
+                    console.log(e)
+                    if ( e[0] == ATT_HEALTH_POINTS ) {
+                        targetCharacter.heal( e[1] )
+                    }
+                    else if ( e[0] == ATT_POWER_POINTS ) {
+                        targetCharacter.healPP( e[1] )
+                    }
+                } )
+                break;
+        }
+        ItemStack.subtractItem( );
+    }
+    /**
+     * Get the ItemStack instance associated with given String.
+     * Then handle the effect associated with the item and decrement the ItemStack
+     * @param {Character} character 
+     * @param {String} itemID 
+     */
+    
     /**
      * Loop through the given array of itemIDs.
      * If a itemID is alreay in this.ActiveItemIDs, call the addItem method from the associated ItemStack.

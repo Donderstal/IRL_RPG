@@ -147,7 +147,10 @@ class MenuTab {
                 }
                 break;
             case "INVENTORY": 
-                if ( this.activeOption == "EQUIP" ) {
+                if ( this.activeOption == "USE" ) {
+                    this.setModal( "Who should use a " + this.activeItem.Name + "?", this.activeOption );
+                } 
+                else if ( this.activeOption == "EQUIP" ) {
                     this.setModal( "Who should equip a " + this.activeItem.Name + "?", this.activeOption );
                 } 
                 else if ( this.activeOption == "DISCARD" ) {
