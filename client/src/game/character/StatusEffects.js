@@ -18,7 +18,7 @@ const { StatusEffect } = require("./StatusEffect");
      * @param {Number|String} effectValue 
      * @param {Number|String} effectDuration 
      */
-    addEffect( attribute, type, effectValue, effectDuration, effectTrigger = null ) {
+     addStatusEffect( attribute, type, effectValue, effectDuration, effectTrigger = null ) {
         const id = getUniqueId( this.activeIds )
         this.activeEffects.push( new StatusEffect( id, attribute, type, effectValue, effectDuration, effectTrigger ) )
         this.activeIds.push( id )

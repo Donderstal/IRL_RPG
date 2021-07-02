@@ -32,7 +32,7 @@ class BaseEntity {
      * Add a StatusEffect to StatusEffects with given arguments
      */
     addStatusEffect( attribute, type, effectValue, effectDuration ) {
-        this.StatusEffects.addEffect( attribute, type, effectValue, effectDuration );
+        this.StatusEffects.addStatusEffect( attribute, type, effectValue, effectDuration );
     }
     /**
      * Used in constructor. Set the characters' sprite and classprofile depending on their className

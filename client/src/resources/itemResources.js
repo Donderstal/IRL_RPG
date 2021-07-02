@@ -1,11 +1,15 @@
 const { 
     ITEM_CATEGORY_ARMOR, ITEM_CATEGORY_CONSUMABLE, 
     ITEM_CATEGORY_MISC, ITEM_CATEGORY_WEAPON, 
-    ARMOR_TYPE_HEAD, ARMOR_TYPE_UPPER_BODY, 
+    ARMOR_TYPE_HEAD, ARMOR_TYPE_UPPER_BODY,
     ARMOR_TYPE_LOWER_BODY, ARMOR_TYPE_ACCESSORY,
     EFFECT_TYPE_BUFF, EFFECT_TYPE_DEBUFF, ATT_PH_ATTACK,
-    ATT_PH_DEFENSE, ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ITEM_CATEGORY_KEY, ITEM_CATEGORY_USABLE
+    ATT_PH_DEFENSE, ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, 
+    ITEM_CATEGORY_KEY, ITEM_CATEGORY_USABLE, ATT_HEALTH_POINTS, ATT_POWER_POINTS
 } = require('../game-data/globals')
+const {
+    MOVE_TYPE_HEAL
+} = require('../game-data/moveGlobals');
 
 const itemData = {
     "melee_weapon_1" : {
@@ -33,10 +37,26 @@ const itemData = {
     "hp_consumable_1" : {
         "name" : "Bread sandwich",
         "category" : ITEM_CATEGORY_CONSUMABLE,
+        "type" : MOVE_TYPE_HEAL,
         "price": 10,
         "png": "test-item",
+        "effects": [ 
+            [ ATT_HEALTH_POINTS, 20 ]
+        ],
         "description":
             "A FoodTek Bread Sandwich has all the nutrition deficits a modern person needs!"
+    },
+    "pp_consumable_1" : {
+        "name" : "Weird drink",
+        "category" : ITEM_CATEGORY_CONSUMABLE,
+        "type" : MOVE_TYPE_HEAL,
+        "price": 10,
+        "png": "test-item",
+        "effects": [ 
+            [ ATT_POWER_POINTS, 20 ]
+        ],
+        "description":
+            "Seems to be some kind of disgusting energy drink. For some reason, it's quite popular."
     },
     "shirt_armor_1" : {
         "name" : "Greasy shirt",
@@ -60,7 +80,7 @@ const itemData = {
             [ EFFECT_TYPE_BUFF, ATT_PH_DEFENSE, 10 ]
         ],
         "description":
-            "Stolen from the Renaissance fair. Looks dope!"
+            "Stole it at the Renaissance fair. Looks dope!"
     },
     "shirt_armor_3" : {
         "name" : "Shiny unicorn shirt",
@@ -84,7 +104,7 @@ const itemData = {
             [ EFFECT_TYPE_BUFF, ATT_SP_DEFENSE, 5 ]
         ],
         "description":
-            "You know those shoes that old ladies wear? This is a pair of those. Could be leather or plastic, I'm not sure."
+            "You know those shoes that old ladies wear? This is a pair of those. Is it leather or plastic?"
     },
     "old_sneakers_armor_2" : {
         "name" : "Old sneakers",

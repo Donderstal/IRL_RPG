@@ -190,7 +190,7 @@ class Equipment {
     setEffectsForEquipment( equipmentKey, effectsData ) {
         this.effects[equipmentKey] = new StatusEffects( );
         effectsData.forEach( ( effect ) => {
-            this.effects[equipmentKey].addEffect( 
+            this.effects[equipmentKey].addStatusEffect( 
                effect[ITEM_EFFECT_ATTRIBUTE], effect[ITEM_EFFECT_TYPE], effect[ITEM_EFFECT_VALUE], "INFINTE" 
             );
         })
