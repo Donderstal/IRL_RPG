@@ -54,6 +54,12 @@ class Menu {
         ];
 
         this.ACTIVE_TAB.setButtons( )
+
+        this.activeTabIndexes = {
+            "STATUS": 0,
+            "MEMBERS": 0,
+            "INVENTORY": 0
+        }
     }
     /**
      * Draw the menu background, active menu tab and bottom textbox
@@ -123,6 +129,9 @@ class Menu {
         if ( this.ACTIVE_TAB.modal ) {
             return;
         }
+        if ( this.ACTIVE_TAB.tabName != "MAP" ) {
+            this.activeTabIndexes[this.ACTIVE_TAB.tabName] = this.ACTIVE_TAB.tabName == "STATUS" ? this.ACTIVE_TAB.activeCharacterIndex : this.ACTIVE_TAB.activeButton
+        }
     
         this.ACTIVE_TAB.unsetButtons( )
     
@@ -133,7 +142,7 @@ class Menu {
 
         this.ACTIVE_TAB = this.tabs[newIndex]
         if ( this.ACTIVE_TAB.tabName != "MAP" ) {
-            this.ACTIVE_TAB.setButtons( selectedCharacterIndex )
+            this.ACTIVE_TAB.setButtons( selectedCharacterIndex != null ? selectedCharacterIndex : this.activeTabIndexes[this.ACTIVE_TAB.tabName] )
         }
     }
 }

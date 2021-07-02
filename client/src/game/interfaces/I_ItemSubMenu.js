@@ -24,7 +24,16 @@ class ItemSubMenu {
      * Draw the submenu. For each option, write a textline to the front canvas
      */
     draw( ) {
+        this.drawBackground( );
+        this.drawOptions( );
+    }
+    drawBackground( ) {
+        getFrontCanvasContext().beginPath();
+        getFrontCanvasContext().rect(this.x, this.y, this.width, this.height);
+        getFrontCanvasContext().stroke();
         drawRect( "FRONT", this.x, this.y, this.width, this.height, "#00384D");
+    }
+    drawOptions( ) {
         this.activeOptions.forEach( ( e, index ) => {
             if ( index === this.activeOption && this.isActive ) {
                 drawRect( "FRONT", this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4, "#D82BBA");
@@ -34,12 +43,12 @@ class ItemSubMenu {
             }
             writeTextLine( 
                 e, 
-                this.x + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_SIZE + ( LARGE_FONT_LINE_HEIGHT * index), 
+                this.x + ( LARGE_FONT_LINE_HEIGHT / 2 ), this.y + LARGE_FONT_SIZE + ( LARGE_FONT_LINE_HEIGHT * index), 
                 LARGE_FONT_SIZE 
             );
-        } ) 
+        } )        
     }
-    /**
+    /** 
      * Assign given x y pair to this.x and this.y
      * @param {Number} x 
      * @param {Number} y 

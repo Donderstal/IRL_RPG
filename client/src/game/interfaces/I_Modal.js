@@ -137,28 +137,8 @@ class ModalButton {
         this.activeColor    = "#D82BBA";
         this.standardColor  = "#00384D";
 
-        this.setDimensions( )
-    }
-
-    /**
-     * Set modal button height and width based on the type of mmodal content
-     */
-    setDimensions( ) {
-        switch ( this.type ) {
-            case "SELECT_PARTY_MEMBER" : 
-                this.height     = GRID_BLOCK_PX * 3;
-                this.width      = GRID_BLOCK_PX * 2;
-                break;
-            case "YES_OR_NO" :
-                this.height     = GRID_BLOCK_PX;
-                this.width      = GRID_BLOCK_PX;
-                break;
-            case "SELECT_ITEM" : 
-                this.height     = GRID_BLOCK_PX;
-                this.width      = CANVAS_WIDTH / 3;
-            default: 
-                console.log(this.type)
-        }
+        this.height     = GRID_BLOCK_PX * 3;
+        this.width      = GRID_BLOCK_PX * 2;
     }
 
     /**

@@ -142,7 +142,7 @@ class MenuTab {
                 if ( this.activeOption == "SHOW STATUS" ) {
                     globals.GAME.MENU.switchTab( "RIGHT", this.activeButton )
                 }
-                else if ( this.activeOption == "SELECT FOR MAP" ) {
+                else if ( this.activeOption == "SHOW ON MAP" ) {
                     globals.GAME.party.switchSprite( this.activeButton );
                 }
                 break;

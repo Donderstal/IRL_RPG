@@ -11,7 +11,7 @@ class MembersMenuTab extends MenuTab {
         super( "MEMBERS", "HORI", 6 );
         this.setButtonHeight( this.height );
         this.setButtonWidth( this.width / 4 );
-        this.itemSubMenuOptions = [ "MOVE", "SHOW STATUS", "SELECT FOR MAP", "RETURN" ]
+        this.itemSubMenuOptions = [ "MOVE", "SHOW STATUS", "SHOW ON MAP", "RETURN" ]
     }
     /**
      * Set buttons in a row with the player party members as content.

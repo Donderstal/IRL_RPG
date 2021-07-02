@@ -70,7 +70,7 @@ const handleRight = ( activeTab ) => {
  */
 const scrollBetweenItemColumns = ( activeTab ) => {
     const availablePlayerItems = globals.GAME.PLAYER_INVENTORY.activeItems;
-    if ( activeTab.tabName == "INVENTORY" && availablePlayerItems.length > 10 ) {
+    if ( activeTab.tabName == "INVENTORY" && availablePlayerItems.length > 10 && !activeTab.modal ) {
         if ( activeTab.activeButton < 10 && availablePlayerItems[ activeTab.activeButton + 10 ] != undefined ) {
             activeTab.activateButton( activeTab.activeButton + 10 );
         }
@@ -94,7 +94,7 @@ const handleActionButton = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleSubMenuControls = ( key, activeTab ) => {
-    if ( activeTab.itemSubMenu.options && activeTab.activeItem ) {
+    if ( activeTab.itemSubMenu.options && activeTab.activeItem && !activeTab.modal ) {
         if ( key == "z" && activeTab.itemSubMenu.options[0] ) {
             activeTab.doActiveSubMenuOption( 0 );
         }
