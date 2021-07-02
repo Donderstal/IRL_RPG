@@ -8,7 +8,7 @@ class InventoryMenuTab extends MenuTab {
     constructor( ) {
         super( "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
-        this.setButtonWidth( this.width / 2 );
+        this.setButtonWidth( this.width / 3 );
         this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD", "RETURN" ]
         this.activeOption;
     }
@@ -30,8 +30,8 @@ class InventoryMenuTab extends MenuTab {
         if ( activeItems.length > 10 ) {
             const firstTen = activeItems.slice( 0, 10 )
             const secondTen = activeItems.slice( 10 )
-            this.setButtonsInColumn( 0, firstTen, false );
-            this.setButtonsInColumn( globals.CANVAS_WIDTH / 2, secondTen );
+            this.setButtonsInColumn( globals.GRID_BLOCK_PX, firstTen, false );
+            this.setButtonsInColumn( ( globals.CANVAS_WIDTH / 2 ) + globals.GRID_BLOCK_PX, secondTen );
         }
         else {
             this.setButtonsInColumn( 0, activeItems );

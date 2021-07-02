@@ -10,7 +10,7 @@ class ItemSubMenu {
     constructor( ) {
         this.x;
         this.y;
-        this.width = GRID_BLOCK_PX * 3;
+        this.width = GRID_BLOCK_PX * 2;
         this.height;
         this.options;
         this.isInitialized;
@@ -24,18 +24,19 @@ class ItemSubMenu {
      * Draw the submenu. For each option, write a textline to the front canvas
      */
     draw( ) {
-        drawRect( "FRONT", this.x, this.y, this.width, this.height, "#D82BBA");
+        drawRect( "FRONT", this.x, this.y, this.width, this.height, "#00384D");
         this.activeOptions.forEach( ( e, index ) => {
-            writeTextLine( 
-                e, 
-                this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_SIZE + ( LARGE_FONT_LINE_HEIGHT * index), 
-                LARGE_FONT_SIZE 
-            );
             if ( index === this.activeOption && this.isActive ) {
+                drawRect( "FRONT", this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4, "#D82BBA");
                 getFrontCanvasContext().beginPath();
                 getFrontCanvasContext().rect(this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4);
                 getFrontCanvasContext().stroke();
             }
+            writeTextLine( 
+                e, 
+                this.x + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_SIZE + ( LARGE_FONT_LINE_HEIGHT * index), 
+                LARGE_FONT_SIZE 
+            );
         } ) 
     }
     /**
@@ -71,6 +72,7 @@ class ItemSubMenu {
         optionsToDisable.forEach( ( option ) => {
             this.disabledOptions.push( option );
         })
+        this.height = (this.options.length * LARGE_FONT_LINE_HEIGHT) - (this.disabledOptions.length * LARGE_FONT_LINE_HEIGHT);
     }
     /**
      * Clear the ItemSubMenu properties x, y, height and options.

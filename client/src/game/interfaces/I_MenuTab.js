@@ -32,12 +32,6 @@ class MenuTab {
      */
     draw( ) {
         this.buttons.forEach( ( button ) => { button.draw( ); } );
-        if ( this.itemSubMenu.isActive ) {
-            this.itemSubMenu.draw( );
-        }
-        if ( this.modal ) {
-            this.modal.draw( );
-        }
     }
     /**
      * Set a Modal instance with given text and type to the this.modal property

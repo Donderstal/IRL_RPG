@@ -62,6 +62,12 @@ class Menu {
         this.drawMenuBackground( );
         this.ACTIVE_TAB.draw( );
         this.drawMenuTextbox( );
+        if ( this.ACTIVE_TAB.itemSubMenu.isActive ) {
+            this.ACTIVE_TAB.itemSubMenu.draw( );
+        }
+        if ( this.ACTIVE_TAB.modal ) {
+            this.ACTIVE_TAB.modal.draw( );
+        }
     }
     /**
      * Draw the menu's background and tab buttons
