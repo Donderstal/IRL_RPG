@@ -2,7 +2,7 @@ const globals  = require('../game-data/globals')
 
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, 
-    LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
+    LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE
 } = require('../game-data/globals');
 const { drawRect, writeTextLine } = require('../helpers/canvasHelpers');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../helpers/utilFunctions');
@@ -12,12 +12,13 @@ const { StatusMenuTab } = require('./menu/StatusTab');
 const { InventoryMenuTab } = require('./menu/InventoryTab');
 const { MapMenuTab } = require('./menu/MapTab');
 const { GameMenuTab } = require('./menu/GameTab');
+const { I_Menu } = require('./interfaces/I_Menu');
 /**
  * Set GAME.inMenu to true and assign a Menu instance to GAME.MENU
  */
 const initGameMenu = ( ) => {
     globals.GAME.inMenu = true;
-    globals.GAME.MENU = new Menu( );
+    globals.GAME.MENU = new MainMenu( );
 }
 /**
  * Set GAME.inMenu to false and assign null to GAME.MENU
@@ -27,16 +28,34 @@ const unsetGameMenu = ( ) => {
     globals.GAME.MENU = null;
 }
 /**
- * The Menu class represents the in-game main menu.
+ * The MainMenu class represents the in-game main menu.
  * It wraps a I_MenuTab extension instance, which contains one of five possible menu tabs.
- * Each time the menu is opened, a new Menu is instantiated. On closing, it is destroyed.
  */
-class Menu {
+class MainMenu extends I_Menu {
     constructor( ) {
-        this.tabWidth   = CANVAS_WIDTH / 5;
-        this.tabHeight  = GRID_BLOCK_PX * 2;
+        super( CANVAS_WIDTH / 5, GRID_BLOCK_PX * 2 )
         this.mainScreenHeight = CANVAS_HEIGHT - this.tabHeight;
+        this.uniqueTextMenuButtonHints = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ];
+        this.initializeTabs( );
+    }
 
+    get currentTextMenuButtonHints( ) {
+        const buttonHints = [...this.textMenuButtonHints];
+        const subMenuOptions = this.ACTIVE_TAB.itemSubMenu.activeOptions
+        console.log(this.ACTIVE_TAB)
+        if ( subMenuOptions ) {
+            subMenuOptions.forEach( ( e, index ) => {
+                buttonHints.push( this.uniqueTextMenuButtonHints[index] + " - " + e )
+            })        
+        }
+        return buttonHints;
+     }
+
+    drawMenuTextbox( ) {
+        super.drawMenuTextbox( this.currentTextMenuButtonHints );
+    }
+
+    initializeTabs( ) {
         this.MEMBERS_TAB    = new MembersMenuTab( );
         this.STATUS_TAB     = new StatusMenuTab( );
         this.INVENTORY_TAB  = new InventoryMenuTab( );
@@ -95,31 +114,6 @@ class Menu {
             );
         })
         drawRect( "FRONT", 0, this.tabHeight, CANVAS_WIDTH, this.mainScreenHeight, "#64005380"  )
-    }
-    /**
-     * Draw the textbox at the bottom of the menu
-     */
-    drawMenuTextbox( ) {
-        const controlOptions = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ]
-        drawRect( "FRONT", 0, CANVAS_HEIGHT - this.tabHeight, CANVAS_WIDTH, this.tabHeight, "#D82BBA" )
-        writeTextLine( 
-            this.ACTIVE_TAB.description, 0 + LARGE_FONT_LINE_HEIGHT, 
-            ( CANVAS_HEIGHT - this.tabHeight ) + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE 
-        );
-        writeTextLine( 
-            "[ SPACEBAR ] - CONFIRM/SELECT", 0 + SMALL_FONT_LINE_HEIGHT, 
-            CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
-        );
-        
-        const subMenuOptions = this.ACTIVE_TAB.itemSubMenu.options
-        if ( subMenuOptions ) {
-            subMenuOptions.forEach( ( e, index ) => {
-                writeTextLine( 
-                    controlOptions[index] + " - " + e, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index + 1 )), 
-                    CANVAS_HEIGHT - SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE 
-                );
-            })        
-        }
     }
     /**
      * Switch to the next or previous tab in this.tabs depening on given string

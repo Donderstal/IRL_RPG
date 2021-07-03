@@ -18,7 +18,16 @@ class ItemSubMenu {
         this.disabledOptions;
     }
     get activeOptions( ) {
-        return this.options.filter( ( option ) => { return this.disabledOptions.indexOf( option ) == -1; } );
+        return this.options.filter( 
+            ( option ) => { 
+                if ( option == "RETURN" ){
+                    return this.isActive;
+                }
+                else {
+                    return this.disabledOptions.indexOf( option ) == -1;
+                }
+            } 
+        );
     }
     /**
      * Draw the submenu. For each option, write a textline to the front canvas

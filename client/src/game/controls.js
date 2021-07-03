@@ -1,6 +1,6 @@
 const globals = require('../game-data/globals')
 const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
-const { initGameMenu, unsetGameMenu } = require('./Menu')
+const { initGameMenu, unsetGameMenu } = require('./MainMenu')
 const { handleMapKeyPress, handleMovementKeys } = require('./map/mapControls')
 const { handleMenuKeyPress } = require('./menu/menuControls');
 const { handleBattleKeyPress } = require('./battle/battleControls');

@@ -4,7 +4,7 @@ const {
     SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT
 } = require( '../../game-data/globals' )
 /**
- * The Textbox interface is the base class for displaying in-game textboxes, excluding the Main Menu
+ * The Textbox interface is the base class for displaying in-game textboxes, excluding the MainMenu
  */
 class I_TextBox {
     constructor( xy, dimensions, fontSize, text, buttonsText = null ) {
