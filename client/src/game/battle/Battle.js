@@ -13,6 +13,7 @@ class Battle {
         this.opponentParty  = opponentParty;
         this.currentTurn    = 0;
 
+        this.activeCharacterIndex = -1
         globals.GAME.activeText     = this.opponentParty.members[0].Name + "'s party challenges you to a fight!" 
         this.menu     = new BattleMenu( );
 
@@ -91,18 +92,43 @@ class Battle {
     }
 
     startSelectMovePhase( ) {
-        // test setup for move pathfinding and animation
-        this.menu.setOptions( this.battleSlots[0].character.Moves )
-        this.battleSlots[0].selectMove( this.battleSlots[0].character.Moves[1], this.battleSlots[5] )
-        this.battleSlots[1].selectMove( this.battleSlots[1].character.Moves[1], this.battleSlots[3] )
-        this.battleSlots[2].selectMove( this.battleSlots[2].character.Moves[1], this.battleSlots[4] )
-        this.battleSlots[3].selectMove( this.battleSlots[3].character.Moves[1], this.battleSlots[2] )
-        this.battleSlots[4].selectMove( this.battleSlots[4].character.Moves[1], this.battleSlots[0] )
-        this.battleSlots[5].selectMove( this.battleSlots[5].character.Moves[1], this.battleSlots[1] )
+        this.initializeSelectionMenuForNextCharacter( );
+    }
+
+    selectOpponentMoves( ) {
+        this.opponentSlots.forEach( ( slot ) => {
+            const moves = slot.character.Moves;
+            slot.selectMove( 
+                moves[ Math.floor( Math.random() * moves.length )], 
+                this.opponentSlots[ Math.floor( Math.random() * this.opponentSlots.length ) ] 
+            );
+        } );
+    }
+
+    moveButtonCursor( direction ) {
+        this.menu.moveButtonCursor( direction )
+    }
+
+    initializeSelectionMenuForNextCharacter( ) {
+        this.activeCharacterIndex++;
+        this.menu.setOptions( this.playerSlots[this.activeCharacterIndex].character.Moves );
+        this.menu.activateSelectionMenu( );
+        this.activeText = "Select a move for " + this.playerSlots[this.activeCharacterIndex].character.Name + ".";
+    }
+
+    getNextCharacterForMoveSelection( ) {
+        if ( this.activeCharacterIndex + 1 >= this.playerSlots.length ) {
+            this.goToNextBattlePhase( );
+        }
+        else {
+            this.menu.deActivateSelectionMenu( );
+            this.initializeSelectionMenuForNextCharacter( )
+        }
     }
 
     endSelectMovePhase( ) {
         this.sortBattleSlotsByCharacterSpeed( );
+        this.activeCharacterIndex = -1;
         this.phase = BATTLE_PHASE_DO_MOVES;
     }
 

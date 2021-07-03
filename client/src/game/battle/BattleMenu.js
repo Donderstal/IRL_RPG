@@ -6,6 +6,7 @@ const globals = require( '../../game-data/globals' );
 const { I_Menu } = require("../interfaces/I_Menu");
 const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
 const { MenuItem } = require('../interfaces/I_MenuItem');
+const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 
 class BattleMenu extends I_Menu {
     constructor( ) {
@@ -14,6 +15,7 @@ class BattleMenu extends I_Menu {
         this.textMenuButtonHints.push( "[ Z ] - RETURN/DESELECT" )
         this.options = [ ]
         this.optionButtons = [];
+        this.activeButtonIndex;
     }
         
     get activeText( ) {
@@ -57,6 +59,23 @@ class BattleMenu extends I_Menu {
         super.draw( );
     }
 
+    activateSelectionMenu( ) {
+        this.activeButtonIndex = 0;
+        this.inSelectionMode = true;
+        this.optionButtons[this.activeButtonIndex].activate( );
+    }
+
+    deActivateSelectionMenu( ) {
+        this.optionButtons[this.activeButtonIndex].deActivate( );
+        this.inSelectionMode = false;
+    }
+
+    selectButtonAtIndex( index ) {
+        this.optionButtons[this.activeButtonIndex].deActivate( );
+        this.activeButtonIndex = index;
+        this.optionButtons[this.activeButtonIndex].activate( );
+    }
+
     drawMenuTextbox( ) {
         super.drawMenuTextbox( this.textMenuButtonHints )
     }
@@ -66,6 +85,27 @@ class BattleMenu extends I_Menu {
         this.optionButtons.forEach( ( e ) => {
             e.draw( );
         } )
+    }
+
+    moveButtonCursor( direction ) {
+        console.log('oi')
+        switch( direction ) {
+            case "UP":
+                this.selectButtonAtIndex( getPreviousIndexInArray( this.activeButtonIndex, this.optionButtons ) )
+                break;
+            case "LEFT":
+            case "RIGHT":
+                if ( this.activeButtonIndex < 2 && this.optionButtons[ this.activeButtonIndex + 2 ] != undefined ) {
+                    this.selectButtonAtIndex( this.activeButtonIndex + 2 );
+                }
+                else if ( this.activeButtonIndex >= 2 && this.optionButtons[ this.activeButtonIndex - 2 ] != undefined ) {
+                    this.selectButtonAtIndex( this.activeButtonIndex - 2);
+                }
+                break;
+            case "DOWN":
+                this.selectButtonAtIndex( getNextIndexInArray( this.activeButtonIndex, this.optionButtons ) );
+                break;
+        }
     }
 }
 
