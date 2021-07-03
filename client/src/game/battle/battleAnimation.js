@@ -1,3 +1,5 @@
+const { BATTLE_PHASE_SELECT_MOVE } = require("../../game-data/battleGlobals");
+
 /**
  * Sort active slots based on the position of their associated sprite in the grid.
  * Then, draw them in sorted order to simulate depth.
@@ -27,7 +29,7 @@ const handleBattleAnimations = ( GAME ) => {
     })
 
     if ( GAME.battle.menu != undefined ) {
-        GAME.battle.menu.draw( );        
+        GAME.battle.menu.draw( GAME.battle.phase == BATTLE_PHASE_SELECT_MOVE );        
     }
 }
 

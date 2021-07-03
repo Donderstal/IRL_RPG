@@ -24,6 +24,13 @@ class Battle {
     get battleIsOver( ) { return this.opponentParty.isDefeated || this.playerParty.isDefeated; };
     get battleSlots( ) { return globals.GAME.FRONT.battleSlots; };
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
+
+    get activeText( ) {
+        return globals.GAME.activeText;
+    }
+    set activeText( text ) {
+        globals.GAME.activeText = text;
+    }
     /** 
      * Depending on the value of this.phase, decide what phase is next and set it to this.phase
      */
@@ -75,7 +82,8 @@ class Battle {
         };
 
         this.currentTurn++;
-        this.setBattleSlotsInOrder( )
+        this.setBattleSlotsInOrder( );
+        this.activeText = "Turn " + this.currentTurn + " begins!"
     }
 
     endBeginTurnPhase( ) {
@@ -84,6 +92,7 @@ class Battle {
 
     startSelectMovePhase( ) {
         // test setup for move pathfinding and animation
+        this.menu.setOptions( this.battleSlots[0].character.Moves )
         this.battleSlots[0].selectMove( this.battleSlots[0].character.Moves[1], this.battleSlots[5] )
         this.battleSlots[1].selectMove( this.battleSlots[1].character.Moves[1], this.battleSlots[3] )
         this.battleSlots[2].selectMove( this.battleSlots[2].character.Moves[1], this.battleSlots[4] )
@@ -108,6 +117,7 @@ class Battle {
 
     startEndTurnPhase( ) {
         this.allCharactersInField.forEach( ( slot ) => { slot.character.StatusEffects.doTurnBasedEffects(  ); } );
+        this.activeText = "End of turn " + this.currentTurn + "."
     }
 
     endEndTurnPhase( ) {
@@ -119,10 +129,12 @@ class Battle {
     }
 
     setBattleSlotsInOrder( ) {
-        const leftSlots = this.battleSlots.filter( ( e ) => e.side == "LEFT" )
-        const rightSlots = this.battleSlots.filter( ( e ) => e.side == "RIGHT" )
+        const leftSlots = this.battleSlots.filter( ( e ) => { return e.side == "LEFT" } )
+        const rightSlots = this.battleSlots.filter( ( e ) => { return e.side == "RIGHT" } )
         leftSlots.sort( ( a, b) => { return a.index - b.index; });
         rightSlots.sort( ( a, b) => { return a.index - b.index; });
+        this.playerSlots = [ ...leftSlots];
+        this.opponentSlots = [ ...rightSlots];
         this.battleSlots = [ ...leftSlots, ...rightSlots ];
     }
 
@@ -130,6 +142,7 @@ class Battle {
         this.battleSlots.sort( ( thisSlot, nextSlot) => {
             return nextSlot.character.activeAttributeValues[ATT_SPEED] - thisSlot.character.activeAttributeValues[ATT_SPEED];
         });
+        this.battleSlots.forEach( ( e ) => { console.log(e.character.Name + " " + e.index)})
     }
 
     getNextSlotForDoMove( ) {

@@ -109,6 +109,9 @@ class MenuItem {
      */
     setDisplayText( ) {
         switch( this.type ) {
+            case "SELECT_MOVE":
+                this.displayText = this.content.Name;
+                break;
             case "INVENTORY":
                 this.displayText = this.content.Quantity + "x - " + this.content.Item.Name 
                 break;
