@@ -38,6 +38,10 @@ class MainMenu extends I_Menu {
         this.uniqueTextMenuButtonHints = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ];
         this.initializeTabs( );
     }
+    
+    get activeText( ) {
+        return this.ACTIVE_TAB.description;
+    }
 
     get currentTextMenuButtonHints( ) {
         const buttonHints = [...this.textMenuButtonHints];

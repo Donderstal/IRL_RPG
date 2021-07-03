@@ -26,7 +26,9 @@ const handleBattleAnimations = ( GAME ) => {
         e.drawAndMove( );
     })
 
-    GAME.battle.textContainer.drawTextBox( );
+    if ( GAME.battle.menu != undefined ) {
+        GAME.battle.menu.draw( );        
+    }
 }
 
 module.exports = { 
