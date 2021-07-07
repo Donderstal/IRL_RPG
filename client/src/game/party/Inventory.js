@@ -13,6 +13,7 @@ class Inventory {
     }
 
     get activeItems( ) { return this.ItemList.filter( ( Item ) => { return Item.Quantity > 0 } ) };
+    get itemsAvailableInBattle( ) { return this.activeItems.filter( ( ItemStack ) => { return ItemStack.Item.canBeUsed } ) };
     /**
      * Return true if the given String is in this.ActiveItemIDs.
      * @param {String} itemID 

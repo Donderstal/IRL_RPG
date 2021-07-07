@@ -23,6 +23,8 @@ class Battle {
     get playerParty( ) { return globals.GAME.party; };
     get allCharactersInField( ) { return [ ...this.battleSlots.filter( ( e ) => { return e.character.isLiving }) ]; };
     get battleIsOver( ) { return this.opponentParty.isDefeated || this.playerParty.isDefeated; };
+    get activeSelectionBattleSlot( ) { return this.playerSlots[this.activeCharacterIndex]; }
+
     get battleSlots( ) { return globals.GAME.FRONT.battleSlots; };
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
 
@@ -111,9 +113,8 @@ class Battle {
 
     initializeSelectionMenuForNextCharacter( ) {
         this.activeCharacterIndex++;
-        this.menu.setOptions( this.playerSlots[this.activeCharacterIndex].character.Moves );
         this.menu.activateSelectionMenu( );
-        this.activeText = "Select a move for " + this.playerSlots[this.activeCharacterIndex].character.Name + ".";
+        this.activeText = "Select a move for " + activeSelectionBattleSlot.character.Name + ".";
     }
 
     getNextCharacterForMoveSelection( ) {

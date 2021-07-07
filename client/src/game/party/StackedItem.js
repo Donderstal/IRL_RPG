@@ -9,6 +9,8 @@ class StackedItem {
         this.Item = new GameItem( itemTypeId );
         this.BaseQuantity = 1;
         this.EquippedQuantity = 0;
+        this.Name = this.Item.Name;
+        this.Description = this.Item.Description;
     }
 
     get Quantity( ) { return this.BaseQuantity - this.EquippedQuantity; }

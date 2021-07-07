@@ -4,7 +4,7 @@ const {
 } = require('../../game-data/globals');
 const globals = require( '../../game-data/globals' );
 const { I_Menu } = require("../interfaces/I_Menu");
-const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
+const { drawRect } = require('../../helpers/canvasHelpers');
 const { MenuItem } = require('../interfaces/I_MenuItem');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 
@@ -17,9 +17,17 @@ class BattleMenu extends I_Menu {
         this.optionButtons = [];
         this.activeButtonIndex;
     }
-        
+    
+    get activeButton( ) {
+        return this.optionButtons[this.activeButtonIndex];
+    }
     get activeText( ) {
-        return globals.GAME.activeText;
+        if ( this.inSelectionMode ) {
+            return this.activeButton.Description;   
+        }
+        else {
+            return globals.GAME.activeText;            
+        }
     }
 
     setOptions( options ) {
@@ -28,6 +36,7 @@ class BattleMenu extends I_Menu {
     }
 
     initializeOptionButtons( ) {
+        this.optionButtons = [];
         this.options.forEach( ( e, index ) => {
             let x;
             let y;
@@ -44,10 +53,10 @@ class BattleMenu extends I_Menu {
                 x = LARGE_FONT_LINE_HEIGHT + ( CANVAS_WIDTH * .625 );
                 y = this.menuY + ( GRID_BLOCK_PX * .125 )  + ( this.tabHeight / 2 );
             }
-            e.Name = e["NAME"];
-            e.Description = e["DESCRIPTION"];
 
             this.optionButtons.push( new MenuItem( x, y, CANVAS_WIDTH / 3, this.tabHeight / 3, "SELECT_MOVE", e ) );
+            this.optionButtons[index].Name = e.Name != undefined ? e.Name : e["NAME"];
+            this.optionButtons[index].Description = e.Description != undefined ? e.Description : e["DESCRIPTION"];
         } )
     }
 
@@ -62,18 +71,54 @@ class BattleMenu extends I_Menu {
     activateSelectionMenu( ) {
         this.activeButtonIndex = 0;
         this.inSelectionMode = true;
-        this.optionButtons[this.activeButtonIndex].activate( );
+        this.activateMainSelectionMenu( );
+        this.activeButton.activate( );
     }
 
     deActivateSelectionMenu( ) {
-        this.optionButtons[this.activeButtonIndex].deActivate( );
+        this.activeButton.deActivate( );
+        this.deActivateMainSelectionMenu( );
+        this.deActivateMovesSubMenu( );
+        this.deActivateItemsSubMenu( );
         this.inSelectionMode = false;
     }
 
+    activateMainSelectionMenu( ) { 
+        this.inMainMenu = true;
+        this.setOptions( [ 
+            { "Name": "Standard Attack", "Description": "Hit an enemy with your fists." },
+            { "Name": "Select Move", "Description": "Select a move to damage your enemies or help your allies." },
+            { "Name": "Use Item", "Description": "Use one of the items in your inventory." },
+            { "Name": "Defend", "Description": "Take a defensive stance to reduce damage." },
+        ] );
+    }
+
+    deActivateMainSelectionMenu( ) {
+        this.inMainMenu = false;
+    }
+
+    activateItemsSubMenu( ) {
+        this.inItemsMenu = true;
+        this.setOptions( globals.GAME.PLAYER_INVENTORY.itemsAvailableInBattle );
+    }
+
+    deActivateItemsSubMenu( ) {
+        this.inItemsMenu = false;
+    }
+
+    activateMovesSubMenu( ) {
+        this.inMovesMenu = true;
+        this.setOptions( globals.GAME.battle.activeSelectionBattleSlot.character.Moves );
+    }
+
+    deActivateMovesSubMenu( ) {
+        this.inMovesMenu = false;
+    }
+
     selectButtonAtIndex( index ) {
-        this.optionButtons[this.activeButtonIndex].deActivate( );
+        this.activeButton.deActivate( );
         this.activeButtonIndex = index;
-        this.optionButtons[this.activeButtonIndex].activate( );
+        this.activeButton.activate( );
     }
 
     drawMenuTextbox( ) {
@@ -88,7 +133,6 @@ class BattleMenu extends I_Menu {
     }
 
     moveButtonCursor( direction ) {
-        console.log('oi')
         switch( direction ) {
             case "UP":
                 this.selectButtonAtIndex( getPreviousIndexInArray( this.activeButtonIndex, this.optionButtons ) )
