@@ -187,6 +187,26 @@ const animationResources = {
         { row: 12, column: 1 },
         { row: 12, column: 0 }
     ],
+    "SELECTION_ANIMATION_RIGHT": [
+        { row: 13, column: 0 },
+        { row: 13, column: 0 },
+        { row: 13, column: 1 },
+        { row: 13, column: 1 },
+        { row: 13, column: 2 },
+        { row: 13, column: 2 },
+        { row: 13, column: 1 },
+        { row: 13, column: 1 }
+    ],
+    "SELECTION_ANIMATION_LEFT": [
+        { row: 12, column: 0 },
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
+        { row: 12, column: 1 },
+    ],
     "LIFT": [
         { row: 14, column: 0 },
         { row: 14, column: 1 },

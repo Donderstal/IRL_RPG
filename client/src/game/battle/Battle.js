@@ -120,16 +120,22 @@ class Battle {
 
     initializeSelectionMenuForNextCharacter( ) {
         this.activeCharacterIndex++;
+        this.activeSelectionBattleSlot.activateSelectionMode( );
         this.menu.activateSelectionMenu( );
         this.activeText = "Select a move for " + this.activeSelectionBattleSlot.character.Name + ".";
     }
 
+    unsetSelectionMenuForActiveCharacter( ) {
+        this.menu.deActivateSelectionMenu( );
+        this.activeSelectionBattleSlot.deactivateSelectionMode( );
+    }
+
     getNextCharacterForMoveSelection( ) {
+        this.unsetSelectionMenuForActiveCharacter( );
         if ( this.activeCharacterIndex + 1 >= this.playerSlots.length ) {
             this.goToNextBattlePhase( );
         }
         else {
-            this.menu.deActivateSelectionMenu( );
             this.initializeSelectionMenuForNextCharacter( )
         }
     }

@@ -10,6 +10,7 @@ const { StatBar } = require('../interfaces/I_StatBar');
 const { handleMoveExecution } = require('../../helpers/moveHelpers');
 const { MOVE_PROP_KEY_NAME } = require('../../game-data/moveGlobals');
 const { getClassSprite } = require('../../resources/classProfileResources');
+const { drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
  * The player characters are on the left, the opponent characters are on the right.
@@ -31,6 +32,23 @@ class BattleSlot {
         this.performingBattleMove = false;
         this.selectedMove = null;
         this.targetSlot = null;
+
+        this.inMoveSelection = false;
+        this.isTargeted    = false;
+
+        this.greenArrowPNG       = new Image( )
+        this.greenArrowLoaded    = false;
+        this.greenArrowPNG.src   = "/static/ui/green_arrow.png"
+        this.greenArrowPNG.onload = ( ) => {
+            this.greenArrowLoaded = true;
+        }
+
+        this.redArrowPNG       = new Image( )
+        this.redArrowLoaded    = false;
+        this.redArrowPNG.src   = "/static/ui/red_arrow.png"
+        this.redArrowPNG.onload = ( ) => {
+            this.redArrowLoaded = true;
+        }
     }
 
     get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination };
@@ -41,6 +59,40 @@ class BattleSlot {
     get activePP( ) { return this.character.CurrentPowerpoints };
     get maxHP( ) { return this.character.maxHP };
     get maxPP( ) { return this.character.maxPP }; 
+
+    drawInMoveSelectionArrow( ) {
+        drawFromImageToCanvas(
+            "FRONT", this.greenArrowPNG,
+            0, 0,
+            860, 900,
+            this.sprite.x, this.sprite.y - GRID_BLOCK_PX, 
+            GRID_BLOCK_PX, GRID_BLOCK_PX
+        )
+    }
+
+    drawIsTargetedArrow( ) {
+        drawFromImageToCanvas(
+            "FRONT", this.redArrowPNG,
+            0, 0,
+            1200, 1200,
+            this.sprite.x + this.sprite.width, this.sprite.y + (this.sprite.height / 2) - (GRID_BLOCK_PX / 2), 
+            GRID_BLOCK_PX, GRID_BLOCK_PX
+        )
+    }
+
+    activateSelectionMode( ) {
+        this.sprite.setScriptedAnimation( { 
+            animName: "SELECTION_ANIMATION",
+            loop: true
+        }, FRAME_LIMIT );
+        this.inMoveSelection = true;
+    }
+
+    deactivateSelectionMode( ) {
+        this.sprite.unsetScriptedAnimation( );
+        this.inMoveSelection = false;
+    }
+
     /**
      * Return the cell position of this slot based on this.index and this.side
      * This decides where to draw a sprite if one is loaded to the slot.
@@ -109,6 +161,9 @@ class BattleSlot {
         }
         if ( this.HPStatBars != null ) {
             this.drawStatBars( )
+        }
+        if ( this.inMoveSelection ) {
+            this.drawInMoveSelectionArrow( );
         }
     }
     /**
