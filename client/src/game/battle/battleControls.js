@@ -6,36 +6,54 @@ const { BATTLE_PHASE_DO_MOVES, BATTLE_PHASE_SELECT_MOVE } = require('../../game-
  */
 const handleBattleKeyPress = ( event ) => {
     const BATTLE = globals.GAME.battle;
-    if ( event.key == " " && BATTLE.phase == BATTLE_PHASE_DO_MOVES && !BATTLE.activeSlot.performingBattleMove ) {
+    if ( event.key == " " && BATTLE.inDoMovesPhase && !BATTLE.activeSlot.performingBattleMove ) {
         BATTLE.getNextSlotForDoMove( );
     }
-    else if ( event.key == " " && BATTLE.phase == BATTLE_PHASE_SELECT_MOVE  ) {
-        BATTLE.getNextCharacterForMoveSelection( );
+    else if ( event.key == " " && BATTLE.inSelectMovePhase ) {
+        BATTLE.handleActionKeyInSelectMovePhase( );
+        //BATTLE.getNextCharacterForMoveSelection( );
     }
-    else if ( event.key == " " && BATTLE.phase != BATTLE_PHASE_DO_MOVES ) {
+    else if ( event.key == " " && !BATTLE.inDoMovesPhase ) {
         BATTLE.goToNextBattlePhase( );
     }
 
-    if ( BATTLE.phase == BATTLE_PHASE_SELECT_MOVE && event.key == "w" || event.key == "ArrowUp"  ) {
-        BATTLE.moveButtonCursor( "UP" )
-    }
-    else if ( BATTLE.phase == BATTLE_PHASE_SELECT_MOVE && event.key == "a" || event.key == "ArrowLeft" ) {
-        BATTLE.moveButtonCursor( "LEFT" )
-    }
-    else if ( BATTLE.phase == BATTLE_PHASE_SELECT_MOVE && event.key == "s" || event.key == "ArrowDown" ) {
-        BATTLE.moveButtonCursor( "DOWN" )
-    }
-    else if ( BATTLE.phase == BATTLE_PHASE_SELECT_MOVE && event.key == "d" || event.key == "ArrowRight" ) {
-        BATTLE.moveButtonCursor( "RIGHT" )
+    if ( event.key == "z" && BATTLE.inSelectMovePhase ) {
+        BATTLE.handleReturnKeyInSelectMovePhase( );
     }
 
-    if ( event.key == "z" ) {
+    if ( BATTLE.inSelectMovePhase ) {
+        handleDirectonKeysInBattleMenu( event.key );
+    }
+
+    if ( event.key == "q" ) {
         BATTLE.endBattle( );
     }
     if ( event.key == "l" ) {
         console.log(BATTLE);
     }
- };
+};
+
+const handleDirectonKeysInBattleMenu = ( key ) => {
+    const BATTLE = globals.GAME.battle;
+    switch( key ) {
+        case "w":
+        case "ArrowUp":
+            BATTLE.moveButtonCursor( "UP" )
+            break;
+        case "a":
+        case "ArrowLeft":
+            BATTLE.moveButtonCursor( "LEFT" )
+            break;
+        case "s":
+        case "ArrowDown":
+            BATTLE.moveButtonCursor( "DOWN" )
+            break;
+        case "d":
+        case "ArrowRight":
+            BATTLE.moveButtonCursor( "RIGHT" )
+            break;
+    }
+} 
 
 module.exports = {
     handleBattleKeyPress

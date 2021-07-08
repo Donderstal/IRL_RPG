@@ -13,6 +13,7 @@ class Battle {
         this.opponentParty  = opponentParty;
         this.currentTurn    = 0;
 
+        this.selectingTarget = false;
         this.activeCharacterIndex = -1
         globals.GAME.activeText     = this.opponentParty.members[0].Name + "'s party challenges you to a fight!" 
         this.menu     = new BattleMenu( );
@@ -34,6 +35,12 @@ class Battle {
     set activeText( text ) {
         globals.GAME.activeText = text;
     }
+
+    get inBeginTurnPhase( ) { return this.phase == BATTLE_PHASE_BEGIN_TURN; }
+    get inSelectMovePhase( ) { return this.phase == BATTLE_PHASE_SELECT_MOVE; }
+    get inDoMovesPhase( ) { return this.phase == BATTLE_PHASE_DO_MOVES; }
+    get inEndTurnPhase( ) { return this.phase == BATTLE_PHASE_END_TURN; }
+    get inEndBattlePhase( ) { return this.phase == BATTLE_PHASE_END_BATTLE; }
     /** 
      * Depending on the value of this.phase, decide what phase is next and set it to this.phase
      */
@@ -114,7 +121,7 @@ class Battle {
     initializeSelectionMenuForNextCharacter( ) {
         this.activeCharacterIndex++;
         this.menu.activateSelectionMenu( );
-        this.activeText = "Select a move for " + activeSelectionBattleSlot.character.Name + ".";
+        this.activeText = "Select a move for " + this.activeSelectionBattleSlot.character.Name + ".";
     }
 
     getNextCharacterForMoveSelection( ) {
@@ -126,6 +133,38 @@ class Battle {
             this.initializeSelectionMenuForNextCharacter( )
         }
     }
+
+    handleActionKeyInSelectMovePhase( ) {
+        if ( this.selectingTarget ) {
+            // this.confirmTarget( );
+        }
+        else {
+            if ( this.menu.inMainMenu && this.menu.activeButtonName == "Select Move" ) {
+                this.menu.deActivateMainSelectionMenu( );
+                this.menu.activateMovesSubMenu( );
+            }
+            else if ( this.menu.inMainMenu && this.menu.activeButtonName == "Use Item" ) {
+                this.menu.deActivateMainSelectionMenu( );
+                this.menu.activateItemsSubMenu( );
+            }
+        }
+    };
+
+    handleReturnKeyInSelectMovePhase( ) {
+        if ( this.selectingTarget ) {
+            // this.stopTargeting( );
+        }
+        else {
+            if ( this.menu.inItemsMenu ) {
+                this.menu.deActivateItemsSubMenu( );
+                this.menu.activateMainSelectionMenu( );
+            }
+            else if ( this.menu.inMovesMenu ) {
+                this.menu.deActivateMovesSubMenu( );
+                this.menu.activateMainSelectionMenu( );
+            }
+        }
+    };
 
     endSelectMovePhase( ) {
         this.sortBattleSlotsByCharacterSpeed( );

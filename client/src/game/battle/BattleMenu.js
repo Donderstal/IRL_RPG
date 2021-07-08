@@ -17,9 +17,11 @@ class BattleMenu extends I_Menu {
         this.optionButtons = [];
         this.activeButtonIndex;
     }
-    
     get activeButton( ) {
         return this.optionButtons[this.activeButtonIndex];
+    }
+    get activeButtonName( ) {
+        return this.activeButton.Name;
     }
     get activeText( ) {
         if ( this.inSelectionMode ) {
@@ -69,10 +71,9 @@ class BattleMenu extends I_Menu {
     }
 
     activateSelectionMenu( ) {
-        this.activeButtonIndex = 0;
         this.inSelectionMode = true;
         this.activateMainSelectionMenu( );
-        this.activeButton.activate( );
+        this.activateFirstButtonInMenu( );
     }
 
     deActivateSelectionMenu( ) {
@@ -83,6 +84,11 @@ class BattleMenu extends I_Menu {
         this.inSelectionMode = false;
     }
 
+    activateFirstButtonInMenu( ) {
+        this.activeButtonIndex = 0;
+        this.activeButton.activate( );
+    }
+
     activateMainSelectionMenu( ) { 
         this.inMainMenu = true;
         this.setOptions( [ 
@@ -91,6 +97,7 @@ class BattleMenu extends I_Menu {
             { "Name": "Use Item", "Description": "Use one of the items in your inventory." },
             { "Name": "Defend", "Description": "Take a defensive stance to reduce damage." },
         ] );
+        this.activateFirstButtonInMenu( );
     }
 
     deActivateMainSelectionMenu( ) {
@@ -100,6 +107,7 @@ class BattleMenu extends I_Menu {
     activateItemsSubMenu( ) {
         this.inItemsMenu = true;
         this.setOptions( globals.GAME.PLAYER_INVENTORY.itemsAvailableInBattle );
+        this.activateFirstButtonInMenu( );
     }
 
     deActivateItemsSubMenu( ) {
@@ -109,6 +117,7 @@ class BattleMenu extends I_Menu {
     activateMovesSubMenu( ) {
         this.inMovesMenu = true;
         this.setOptions( globals.GAME.battle.activeSelectionBattleSlot.character.Moves );
+        this.activateFirstButtonInMenu( );
     }
 
     deActivateMovesSubMenu( ) {

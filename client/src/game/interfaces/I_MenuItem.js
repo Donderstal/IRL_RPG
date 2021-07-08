@@ -110,7 +110,7 @@ class MenuItem {
     setDisplayText( ) {
         switch( this.type ) {
             case "SELECT_MOVE":
-                this.displayText = this.content.Name;
+                this.displayText = this.content.Name != undefined ? this.content.Name : this.content["NAME"];
                 break;
             case "INVENTORY":
                 this.displayText = this.content.Quantity + "x - " + this.content.Item.Name 
