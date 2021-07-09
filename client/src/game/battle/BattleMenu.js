@@ -23,13 +23,13 @@ class BattleMenu extends I_Menu {
     get activeButtonName( ) {
         return this.activeButton.Name;
     }
+    
     get activeText( ) {
-        if ( this.inSelectionMode ) {
-            return this.activeButton.Description;   
-        }
-        else {
-            return globals.GAME.activeText;            
-        }
+        return globals.GAME.activeText;
+    }
+
+    set activeText( text ) {
+        globals.GAME.activeText = text;
     }
 
     setOptions( options ) {
@@ -87,6 +87,7 @@ class BattleMenu extends I_Menu {
     activateFirstButtonInMenu( ) {
         this.activeButtonIndex = 0;
         this.activeButton.activate( );
+        this.activeText = this.activeButton.Description;
     }
 
     activateMainSelectionMenu( ) { 
@@ -128,6 +129,7 @@ class BattleMenu extends I_Menu {
         this.activeButton.deActivate( );
         this.activeButtonIndex = index;
         this.activeButton.activate( );
+        this.activeText = this.activeButton.Description;
     }
 
     drawMenuTextbox( ) {

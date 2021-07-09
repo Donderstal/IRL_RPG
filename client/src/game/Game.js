@@ -16,6 +16,7 @@ const canvasHelpers = require('../helpers/canvasHelpers')
 const { Battle } = require('./battle/Battle')
 const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyProgression')
 const { triggerEvent } = require('../game-data/triggerEvents')
+const { TypeWriter } = require('../helpers/TypeWriter')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [
@@ -59,6 +60,14 @@ class Game {
     get PARTY_MEMBERS( ) { return this.party.members }
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
+
+    get activeText( ) {
+        return this.typeWriter.activeText;
+    }
+
+    set activeText( text ) {
+        this.typeWriter = new TypeWriter( text );
+    }
     /**
      * Assign given text to this.activeText
      * @param {String} text
