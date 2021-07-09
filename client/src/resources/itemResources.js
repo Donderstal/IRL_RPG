@@ -8,7 +8,7 @@ const {
     ITEM_CATEGORY_KEY, ITEM_CATEGORY_USABLE, ATT_HEALTH_POINTS, ATT_POWER_POINTS
 } = require('../game-data/globals')
 const {
-    MOVE_TYPE_HEAL
+    MOVE_TYPE_HEAL, MOVE_TYPE_SP_ATTACK
 } = require('../game-data/moveGlobals');
 
 const itemData = {
@@ -163,6 +163,10 @@ const itemData = {
         "name" : "Stink bomb",
         "category" : ITEM_CATEGORY_USABLE,
         "price" : 10,
+        "type" : MOVE_TYPE_SP_ATTACK,
+        "effects": [ 
+            [ ATT_HEALTH_POINTS, 20 ]
+        ],
         "png" : "test-item",
         "description" : "Use this bomb to make your opponents cringe in fear and disgust!"
     }

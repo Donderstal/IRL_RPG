@@ -9,11 +9,12 @@ class StackedItem {
         this.Item = new GameItem( itemTypeId );
         this.BaseQuantity = 1;
         this.EquippedQuantity = 0;
+        this.PendingForUsageQuantity = 0;
         this.Name = this.Item.Name;
         this.Description = this.Item.Description;
     }
 
-    get Quantity( ) { return this.BaseQuantity - this.EquippedQuantity; }
+    get Quantity( ) { return this.BaseQuantity - (this.EquippedQuantity + this.PendingForUsageQuantity); }
     get IsEmpty( ) { return this.Quantity < 1; }
     /**
      * Increment BaseQuantity by one to indicate a GameItem is added to the stack
@@ -27,6 +28,14 @@ class StackedItem {
     subtractItem( ) {
         this.BaseQuantity -= 1;
     }
+
+    addPendingForUsage( ) {
+        this.PendingForUsageQuantity += 1;
+    }
+    subtractPendingForUsage( ) {
+        this.PendingForUsageQuantity -= 1;
+    }
+
     /**
      * Call the equipItem method of given character, with this.Item as argument.
      * Then, increment this.EquippedQuantity by one.

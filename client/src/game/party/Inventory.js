@@ -1,5 +1,5 @@
 const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require('../../game-data/globals');
-const { MOVE_TYPE_HEAL } = require('../../game-data/moveGlobals');
+const { MOVE_TYPE_HEAL, MOVE_TYPE_SP_ATTACK } = require('../../game-data/moveGlobals');
 const { StackedItem } = require('./StackedItem');
 /**
  * An instance of the Inventory class is given to each Party instance in the game.
@@ -62,20 +62,38 @@ class Inventory {
      */
     useItem( targetCharacter, itemID ) {
         let ItemStack = this.getItemStackById( itemID );
+        let resultText;
+
         switch( ItemStack.Item.Type ) {
             case MOVE_TYPE_HEAL:
                 ItemStack.Item.Effects.forEach( ( e ) => {
                     console.log(e)
                     if ( e[0] == ATT_HEALTH_POINTS ) {
-                        targetCharacter.heal( e[1] )
+                        let pointsHealed = targetCharacter.heal( e[1] )
+                        resultText = targetCharacter.Name + " heals " + pointsHealed + " HP!";
                     }
                     else if ( e[0] == ATT_POWER_POINTS ) {
-                        targetCharacter.healPP( e[1] )
+                        let pointsHealed = targetCharacter.healPP( e[1] )
+                        resultText = targetCharacter.Name + " heals " + pointsHealed + " PP!";
+                    }
+                } )
+                break;
+            case MOVE_TYPE_SP_ATTACK:
+                ItemStack.Item.Effects.forEach( ( e ) => {
+                    console.log(e)
+                    if ( e[0] == ATT_HEALTH_POINTS ) {
+                        let pointsLost = targetCharacter.takeDamage( e[1] )
+                        resultText = targetCharacter.Name + " loses " + pointsLost + " HP!";
+                    }
+                    else if ( e[0] == ATT_POWER_POINTS ) {
+                        let pointsLost = targetCharacter.spendPP( e[1] )
+                        resultText = targetCharacter.Name + " loses " + pointsLost + " PP!";
                     }
                 } )
                 break;
         }
         ItemStack.subtractItem( );
+        return resultText;
     }
     /**
      * Get the ItemStack instance associated with given String.

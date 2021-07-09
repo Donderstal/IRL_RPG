@@ -62,38 +62,50 @@ class BaseEntity {
      * @param {Number} damagePoints point of damage to receive
      */
     takeDamage( damagePoints ) {
+        let startingValue = this.CurrentHitpoints
         this.CurrentHitpoints -= damagePoints;
         if ( this.isDead ) {
             this.CurrentHitpoints = 0;
             this.handleDeath( );
         }   
+        return ( startingValue - this.CurrentHitpoints );
     }
     /**
      * Subtract given PP from this.CurrentPowerPoints
      * @param {Number} ppToSpend 
      */
     spendPP( ppToSpend ) {
+        let startingValue = this.CurrentPowerpoints
         this.CurrentPowerpoints -= ppToSpend;
+        if ( this.CurrentPowerpoints < 0 ) {
+            this.CurrentPowerpoints = 0;
+        }
+        return ( startingValue - this.CurrentPowerpoints );
     } 
     /**
      * Add the given amount of points to the CurrentHitPoints prop up to maxHP
      * @param {Number} healingPoints hitpoints to heal
      */
     heal( healingPoints ) {
+        let startingValue = this.CurrentHitpoints
         this.CurrentHitpoints += healingPoints;
         if ( this.CurrentHitpoints > this.maxHP ) { 
             this.fullHeal( )
         }
+        return ( this.CurrentHitpoints - startingValue );
     }
     /**
      * Add the given amount of points to the CurrentPowerpoints prop up to maxPP
      * @param {Number} ppToHeal 
      */
     healPP( ppToHeal ) {
+        let startingValue = this.CurrentPowerpoints
         this.CurrentPowerpoints += ppToHeal;
         if ( this.CurrentPowerpoints > this.maxPP ) { 
             this.fullHealPP( )
         }
+
+        return ( this.CurrentPowerpoints - startingValue );
     }
     /**
      * Assign the value of the maxHP prop to CurrentHitPoints
