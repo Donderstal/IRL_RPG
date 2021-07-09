@@ -5,6 +5,7 @@ const {
 } = require('../../game-data/battleGlobals');
 const { ATT_SPEED } = require('../../game-data/globals');
 const { BattleMenu } = require('./BattleMenu');
+const { getPreviousIndexInArray, getNextIndexInArray } = require('../../helpers/utilFunctions');
 
 class Battle {
     constructor( opponentParty, opponentName ) {
@@ -28,6 +29,7 @@ class Battle {
 
     get battleSlots( ) { return globals.GAME.FRONT.battleSlots; };
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
+    get targetedSlot( ) { return this.opponentSlots[this.targetIndex] }
 
     get activeText( ) {
         return globals.GAME.activeText;
@@ -115,7 +117,21 @@ class Battle {
     }
 
     moveButtonCursor( direction ) {
-        this.menu.moveButtonCursor( direction )
+        if ( this.selectingTarget ) {
+            if ( direction == "UP" ) {
+                this.targetedSlot.deTarget( );
+                this.targetIndex = getPreviousIndexInArray( this.targetIndex, this.opponentSlots );
+                this.targetedSlot.target( );
+            }
+            else if ( direction == "DOWN") {
+                this.targetedSlot.deTarget( );
+                this.targetIndex = getNextIndexInArray( this.targetIndex, this.opponentSlots );
+                this.targetedSlot.target( );
+            }
+        }
+        else {
+            this.menu.moveButtonCursor( direction );            
+        }
     }
 
     initializeSelectionMenuForNextCharacter( ) {
@@ -131,6 +147,7 @@ class Battle {
     }
 
     getNextCharacterForMoveSelection( ) {
+        this.deactivateChooseTargetMode( );
         this.unsetSelectionMenuForActiveCharacter( );
         if ( this.activeCharacterIndex + 1 >= this.playerSlots.length ) {
             this.goToNextBattlePhase( );
@@ -142,7 +159,9 @@ class Battle {
 
     handleActionKeyInSelectMovePhase( ) {
         if ( this.selectingTarget ) {
-            // this.confirmTarget( );
+            let selectedMove = this.activeSelectionBattleSlot.character.Moves.filter( ( e ) => { return e["NAME"] == this.menu.activeButtonName; })
+            this.activeSelectionBattleSlot.selectMove( selectedMove[0], this.targetedSlot );
+            this.getNextCharacterForMoveSelection( );
         }
         else {
             if ( this.menu.inMainMenu && this.menu.activeButtonName == "Select Move" ) {
@@ -153,12 +172,18 @@ class Battle {
                 this.menu.deActivateMainSelectionMenu( );
                 this.menu.activateItemsSubMenu( );
             }
+            else if ( this.menu.inMainMenu && this.menu.activeButtonName == "Defend" ) {
+                //selectDefend( );
+            }
+            else {
+                this.activateChooseTargetMode( );
+            }
         }
     };
 
     handleReturnKeyInSelectMovePhase( ) {
         if ( this.selectingTarget ) {
-            // this.stopTargeting( );
+            this.deactivateChooseTargetMode( );
         }
         else {
             if ( this.menu.inItemsMenu ) {
@@ -171,6 +196,17 @@ class Battle {
             }
         }
     };
+
+    activateChooseTargetMode( ) {
+        this.selectingTarget = true;
+        this.targetIndex = 0;
+        this.targetedSlot.target( );
+    };
+
+    deactivateChooseTargetMode( ) {
+        this.targetedSlot.deTarget( );
+        this.selectingTarget = false;
+    }
 
     endSelectMovePhase( ) {
         this.sortBattleSlotsByCharacterSpeed( );

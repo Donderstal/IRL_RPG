@@ -165,6 +165,9 @@ class BattleSlot {
         if ( this.inMoveSelection ) {
             this.drawInMoveSelectionArrow( );
         }
+        if ( this.isTargeted ) {
+            this.drawIsTargetedArrow( );
+        }
     }
     /**
      * Calc the x and y of stat bars based on this.sprite position.
@@ -322,7 +325,15 @@ class BattleSlot {
         this.animationStep = null;
         this.performingBattleMove = false;        
     }
-}
+
+    target( ) {
+        this.isTargeted = true;
+    }
+
+    deTarget( ) {
+        this.isTargeted = false;
+    }
+} 
 
 module.exports = {
     BattleSlot
