@@ -37,6 +37,12 @@ class Battle {
     get battleSlots( ) { return globals.GAME.FRONT.battleSlots; };
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
 
+    get playerSlots( ) { return this.allPlayerSlots.filter( ( e ) => { return e.isAlive; } ); }
+    set playerSlots( slots ) { this.allPlayerSlots = slots; }
+
+    get opponentSlots( ) { return this.allOpponentSlots.filter( ( e ) => { return e.isAlive; } ); }
+    set opponentSlots( slots ) { this.allOpponentSlots = slots; }
+
     get targetedSlot( ) { 
         let selectedActionType = MOVE_PROP_KEY_TYPE in this.currentlySelectedAction ? this.currentlySelectedAction[MOVE_PROP_KEY_TYPE] : this.currentlySelectedAction.Item.Type
         if ( selectedActionType == MOVE_TYPE_HEAL || selectedActionType ==  MOVE_TYPE_STAT_UP ) {
@@ -147,7 +153,10 @@ class Battle {
 
     selectOpponentMoves( ) {
         this.opponentSlots.forEach( ( slot ) => {
-            let move = slot.character.Moves[ Math.floor( Math.random() * slot.character.Moves.length )];
+            let standardAttack = STANDARD_ATTACK
+            standardAttack.animation = this.basicAttackAnimation;
+            let moves = [ ...slot.character.Moves, standardAttack ]
+            let move = moves[ Math.floor( Math.random() * moves.length )];
             let targetSlot;
 
             if ( move[MOVE_PROP_KEY_TYPE] == MOVE_TYPE_HEAL || move[MOVE_PROP_KEY_TYPE] == MOVE_TYPE_STAT_UP ) {
@@ -165,12 +174,12 @@ class Battle {
         if ( this.selectingTarget ) {
             if ( direction == "UP" ) {
                 this.targetedSlot.deTarget( );
-                this.targetIndex = getPreviousIndexInArray( this.targetIndex, this.opponentSlots );
+                this.targetIndex = getPreviousIndexInArray( this.targetIndex, this.targetedSlot in this.opponentSlots ? this.opponentSlots : this.playerSlots );
                 this.targetedSlot.target( );
             }
             else if ( direction == "DOWN") {
                 this.targetedSlot.deTarget( );
-                this.targetIndex = getNextIndexInArray( this.targetIndex, this.opponentSlots );
+                this.targetIndex = getNextIndexInArray( this.targetIndex, this.targetedSlot in this.opponentSlots ? this.opponentSlots : this.playerSlots  );
                 this.targetedSlot.target( );
             }
         }
