@@ -12,6 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JUL 9, 2021
+* Implemented usage of items in Battle mode and Map mode
+* Added BattleMenu class to serve as in-battle UI
+* Restored battle controls and action selection 
+
 #### JUN 10, 2021
 * Added new BattleSprites. Improved setup for fetching sprites based on classnames
 

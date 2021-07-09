@@ -11,6 +11,7 @@ const { handleMoveExecution } = require('../../helpers/moveHelpers');
 const { MOVE_PROP_KEY_NAME } = require('../../game-data/moveGlobals');
 const { getClassSprite } = require('../../resources/classProfileResources');
 const { drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const { StackedItem } = require('../party/StackedItem');
 /**
  * A BattleSlot represents one of 6 available slots for a character in a Battle.
  * The player characters are on the left, the opponent characters are on the right.
@@ -195,7 +196,13 @@ class BattleSlot {
      * Then, call doMoveAnimationStep
      */
     doSelectedMove( ) {
-        globals.GAME.setActiveText( this.character.Name + " does " + this.selectedMove[MOVE_PROP_KEY_NAME] + "!")
+        if ( this.selectedMove instanceof StackedItem ) {
+            globals.GAME.setActiveText( this.character.Name + " uses a " + this.selectedMove.Name + " on " + this.targetSlot.character.Name + "!")      
+        }
+        else {
+            globals.GAME.setActiveText( this.character.Name + " uses " + this.selectedMove[MOVE_PROP_KEY_NAME] + " on " + this.targetSlot.character.Name + "!")            
+        }
+
 
         const animation = this.selectedMove.animation;
         this.performingBattleMove = true;
@@ -304,7 +311,15 @@ class BattleSlot {
      * Then, fade out the target character if it is dead
      */
     calculateSelectedMoveResult( ) {
-        handleMoveExecution( this.selectedMove, this.targetSlot.character, this.character );
+        if ( this.selectedMove instanceof StackedItem ) {
+            this.selectedMove.subtractPendingForUsage( );
+            let resultText = globals.GAME.PLAYER_INVENTORY.useItem( this.targetSlot.character, this.selectedMove.ItemTypeID );
+            globals.GAME.setActiveText( resultText );   
+        }
+        else {
+            handleMoveExecution( this.selectedMove, this.targetSlot.character, this.character );            
+        }
+
         if ( this.targetSlot.character.isDead ) {
             this.targetSlot.character.handleDeath( )
             this.targetSlot.sprite.fadeOut( );

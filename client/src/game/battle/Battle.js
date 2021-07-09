@@ -8,6 +8,7 @@ const { BattleMenu } = require('./BattleMenu');
 const { getPreviousIndexInArray, getNextIndexInArray } = require('../../helpers/utilFunctions');
 const { MOVE_PROP_KEY_TYPE, MOVE_TYPE_HEAL,MOVE_TYPE_STAT_UP } = require('../../game-data/moveGlobals');
 const { STANDARD_ATTACK } = require('../../resources/battleMoveResources');
+const { getMoveAnimationData } = require('../../resources/moveAnimationScripts');
 
 class Battle {
     constructor( opponentParty, opponentName ) {
@@ -21,6 +22,10 @@ class Battle {
         globals.GAME.activeText     = this.opponentParty.members[0].Name + "'s party challenges you to a fight!" 
         this.menu     = new BattleMenu( );
 
+        this.basicAttackAnimation = getMoveAnimationData( "PHYISCAL_ATTACK_TEST" );
+        this.basicConsumableAnimation = getMoveAnimationData( "HEAL_TEST" );
+        this.basicUsableAnimation = getMoveAnimationData( "SPECIAL_ATTACK_TEST" );
+
         this.handleCurrentBattlePhase( );
     }
 
@@ -33,7 +38,7 @@ class Battle {
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
 
     get targetedSlot( ) { 
-        let selectedActionType = this.currentlySelectedAction[MOVE_PROP_KEY_TYPE]
+        let selectedActionType = MOVE_PROP_KEY_TYPE in this.currentlySelectedAction ? this.currentlySelectedAction[MOVE_PROP_KEY_TYPE] : this.currentlySelectedAction.Item.Type
         if ( selectedActionType == MOVE_TYPE_HEAL || selectedActionType ==  MOVE_TYPE_STAT_UP ) {
             return this.playerSlots[this.targetIndex]
         }
@@ -44,6 +49,7 @@ class Battle {
     get currentlySelectedAction( ) { 
         if ( this.selectingTarget ) {
             if ( this.menu.inMainMenu && this.menu.activeButtonName == "Standard Attack" ) {
+                STANDARD_ATTACK.animation = this.basicAttackAnimation;
                 return STANDARD_ATTACK;
             }
             else if ( this.menu.inMovesMenu ) {
@@ -51,7 +57,10 @@ class Battle {
                 return selectedMove[0];                
             }
             else if ( this.menu.inItemsMenu ) {
-
+                let filteredItem = globals.GAME.PLAYER_INVENTORY.ItemList.filter( ( e ) => { return e.Name == this.menu.activeButtonName } ); 
+                let selectedItem = filteredItem[0];
+                selectedItem.animation = this.basicConsumableAnimation;
+                return selectedItem;
             }
         }
         else {
@@ -133,15 +142,22 @@ class Battle {
 
     startSelectMovePhase( ) {
         this.initializeSelectionMenuForNextCharacter( );
+        this.selectOpponentMoves( );
     }
 
     selectOpponentMoves( ) {
         this.opponentSlots.forEach( ( slot ) => {
-            const moves = slot.character.Moves;
-            slot.selectMove( 
-                moves[ Math.floor( Math.random() * moves.length )], 
-                this.opponentSlots[ Math.floor( Math.random() * this.opponentSlots.length ) ] 
-            );
+            let move = slot.character.Moves[ Math.floor( Math.random() * slot.character.Moves.length )];
+            let targetSlot;
+
+            if ( move[MOVE_PROP_KEY_TYPE] == MOVE_TYPE_HEAL || move[MOVE_PROP_KEY_TYPE] == MOVE_TYPE_STAT_UP ) {
+                targetSlot = this.opponentSlots[ Math.floor( Math.random() * this.opponentSlots.length ) ] 
+            }
+            else {
+                targetSlot = this.playerSlots[ Math.floor( Math.random() * this.playerSlots.length ) ] 
+            }
+
+            slot.selectMove( move, targetSlot );
         } );
     }
 
@@ -189,6 +205,9 @@ class Battle {
     handleActionKeyInSelectMovePhase( ) {
         if ( this.selectingTarget ) {
             this.activeSelectionBattleSlot.selectMove( this.currentlySelectedAction, this.targetedSlot );
+            if ( this.menu.inItemsMenu ) {
+                this.currentlySelectedAction.addPendingForUsage( );
+            }
             this.getNextCharacterForMoveSelection( );
         }
         else {
