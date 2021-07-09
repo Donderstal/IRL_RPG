@@ -163,36 +163,44 @@ const SMALL_LUCK_DOWN = {
 }
 ///
 const PH_ATTK_1 = {
-    [MOVE_PROP_KEY_NAME]: "Ph attack",
-    [MOVE_PROP_KEY_DESCRIPTION]: "Basic but predictable ph attack.",
+    [MOVE_PROP_KEY_NAME]: "Ph attack 1",
+    [MOVE_PROP_KEY_DESCRIPTION]: "Basic but predictable physical attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_PH_ATTACK,
     [MOVE_PROP_KEY_BASE_VALUE]: 10,
     [MOVE_PROP_KEY_MODIFIER]: .2,
-    [MOVE_PROP_KEY_PP_COST]: 0
+    [MOVE_PROP_KEY_PP_COST]: 2
 }
 const PH_ATTK_2 = {
-    [MOVE_PROP_KEY_NAME]: "Ph attack",
-    [MOVE_PROP_KEY_DESCRIPTION]: "Strong but unreliable ph attack.",
+    [MOVE_PROP_KEY_NAME]: "Ph attack 2",
+    [MOVE_PROP_KEY_DESCRIPTION]: "Strong but unreliable physical attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_PH_ATTACK,
     [MOVE_PROP_KEY_BASE_VALUE]: 15,
     [MOVE_PROP_KEY_MODIFIER]: .5,
     [MOVE_PROP_KEY_PP_COST]: 5
 }
 const SP_ATTK_1 = {
-    [MOVE_PROP_KEY_NAME]: "PH attack down",
-    [MOVE_PROP_KEY_DESCRIPTION]: "Temporarily debuff physical attack of target.",
+    [MOVE_PROP_KEY_NAME]: "Special attack 1",
+    [MOVE_PROP_KEY_DESCRIPTION]: "Basic but predictable special attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_SP_ATTACK,
     [MOVE_PROP_KEY_BASE_VALUE]: 10,
     [MOVE_PROP_KEY_MODIFIER]: .2,
-    [MOVE_PROP_KEY_PP_COST]: 0
+    [MOVE_PROP_KEY_PP_COST]: 2
 }
 const SP_ATTK_2 = {
-    [MOVE_PROP_KEY_NAME]: "ph attack",
-    [MOVE_PROP_KEY_DESCRIPTION]: "Strong but unreliable ph attack.",
+    [MOVE_PROP_KEY_NAME]: "Special attack 2",
+    [MOVE_PROP_KEY_DESCRIPTION]: "Strong but unreliable special attack.",
     [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_SP_ATTACK,
     [MOVE_PROP_KEY_BASE_VALUE]: 15,
     [MOVE_PROP_KEY_MODIFIER]: .5,
     [MOVE_PROP_KEY_PP_COST]: 5
+}
+const STANDARD_ATTACK = {
+    [MOVE_PROP_KEY_NAME]: "Standard attack",
+    [MOVE_PROP_KEY_DESCRIPTION]: "The most standard punch.",
+    [MOVE_PROP_KEY_TYPE]: MOVE_TYPE_PH_ATTACK,
+    [MOVE_PROP_KEY_BASE_VALUE]: 5,
+    [MOVE_PROP_KEY_MODIFIER]: .2,
+    [MOVE_PROP_KEY_PP_COST]: 0,
 }
 //
 module.exports = {
@@ -204,5 +212,6 @@ module.exports = {
     SMALL_SPEED_UP, SMALL_SPEED_DOWN,
     SMALL_LUCK_UP, SMALL_LUCK_DOWN,
     PH_ATTK_1, PH_ATTK_2,
-    SP_ATTK_1, SP_ATTK_2
+    SP_ATTK_1, SP_ATTK_2,
+    STANDARD_ATTACK
 }

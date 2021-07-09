@@ -6,6 +6,8 @@ const {
 const { ATT_SPEED } = require('../../game-data/globals');
 const { BattleMenu } = require('./BattleMenu');
 const { getPreviousIndexInArray, getNextIndexInArray } = require('../../helpers/utilFunctions');
+const { MOVE_PROP_KEY_TYPE, MOVE_TYPE_HEAL,MOVE_TYPE_STAT_UP } = require('../../game-data/moveGlobals');
+const { STANDARD_ATTACK } = require('../../resources/battleMoveResources');
 
 class Battle {
     constructor( opponentParty, opponentName ) {
@@ -29,7 +31,34 @@ class Battle {
 
     get battleSlots( ) { return globals.GAME.FRONT.battleSlots; };
     set battleSlots( slots ) { globals.GAME.FRONT.battleSlots = slots; };
-    get targetedSlot( ) { return this.opponentSlots[this.targetIndex] }
+
+    get targetedSlot( ) { 
+        let selectedActionType = this.currentlySelectedAction[MOVE_PROP_KEY_TYPE]
+        if ( selectedActionType == MOVE_TYPE_HEAL || selectedActionType ==  MOVE_TYPE_STAT_UP ) {
+            return this.playerSlots[this.targetIndex]
+        }
+        else {
+            return this.opponentSlots[this.targetIndex]             
+        }
+    }
+    get currentlySelectedAction( ) { 
+        if ( this.selectingTarget ) {
+            if ( this.menu.inMainMenu && this.menu.activeButtonName == "Standard Attack" ) {
+                return STANDARD_ATTACK;
+            }
+            else if ( this.menu.inMovesMenu ) {
+                let selectedMove = this.activeSelectionBattleSlot.character.Moves.filter( ( e ) => { return e["NAME"] == this.menu.activeButtonName } ); 
+                return selectedMove[0];                
+            }
+            else if ( this.menu.inItemsMenu ) {
+
+            }
+        }
+        else {
+            return null;
+        }
+
+    }
 
     get activeText( ) {
         return globals.GAME.activeText;
@@ -159,8 +188,7 @@ class Battle {
 
     handleActionKeyInSelectMovePhase( ) {
         if ( this.selectingTarget ) {
-            let selectedMove = this.activeSelectionBattleSlot.character.Moves.filter( ( e ) => { return e["NAME"] == this.menu.activeButtonName; })
-            this.activeSelectionBattleSlot.selectMove( selectedMove[0], this.targetedSlot );
+            this.activeSelectionBattleSlot.selectMove( this.currentlySelectedAction, this.targetedSlot );
             this.getNextCharacterForMoveSelection( );
         }
         else {
