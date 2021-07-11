@@ -1,6 +1,6 @@
 const { 
     ATT_HEALTH_POINTS, ATT_POWER_POINTS, ATT_PH_ATTACK, ATT_PH_DEFENSE,
-    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK
+    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK, ATTRIBUTE_MENU_TEXTS
 } = require('../game-data/globals')
 
 const { 
@@ -51,12 +51,12 @@ const doHealingMove = ( move, target, performer ) => {
 const doStatUp = ( move, target, performer ) => {
     performer.spendPP( move[MOVE_PROP_KEY_PP_COST] );
     target.addStatusEffect( move[MOVE_PROP_KEY_ATTRIBUTE], "BUFF", move[MOVE_PROP_KEY_BASE_VALUE], move[MOVE_PROP_KEY_TURNS_AMOUNT] )
-    return target.Name + "'s " + MOVE_PROP_KEY_ATTRIBUTE + " increased by " + move[MOVE_PROP_KEY_BASE_VALUE] + "!";
+    return target.Name + "'s " + ATTRIBUTE_MENU_TEXTS[move[MOVE_PROP_KEY_ATTRIBUTE]] + " increased by " + move[MOVE_PROP_KEY_BASE_VALUE] + "!";
 }
 const doStatDown = ( move, target, performer ) => {
     performer.spendPP( move[MOVE_PROP_KEY_PP_COST] );
     target.addStatusEffect( move[MOVE_PROP_KEY_ATTRIBUTE], "DEBUFF", move[MOVE_PROP_KEY_BASE_VALUE], move[MOVE_PROP_KEY_TURNS_AMOUNT] )
-    return target.Name + "'s " + MOVE_PROP_KEY_ATTRIBUTE + " decreased by " + move[MOVE_PROP_KEY_BASE_VALUE] + "!";
+    return target.Name + "'s " + ATTRIBUTE_MENU_TEXTS[move[MOVE_PROP_KEY_ATTRIBUTE]] + " decreased by " + move[MOVE_PROP_KEY_BASE_VALUE] + "!";
 }
 const doPhysicalDamage = ( move, defender, performer ) => {
     const baseDamage = move[MOVE_PROP_KEY_BASE_VALUE] * ( performer.Attributes[ATT_PH_ATTACK] / defender.Attributes[ATT_PH_DEFENSE] );

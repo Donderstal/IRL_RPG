@@ -176,11 +176,13 @@ class Battle {
                 this.targetedSlot.deTarget( );
                 this.targetIndex = getPreviousIndexInArray( this.targetIndex, this.targetedSlot in this.opponentSlots ? this.opponentSlots : this.playerSlots );
                 this.targetedSlot.target( );
+                this.activeText = "Use " + this.menu.activeButton.Name + " on " + this.targetedSlot.character.Name + "?";
             }
             else if ( direction == "DOWN") {
                 this.targetedSlot.deTarget( );
                 this.targetIndex = getNextIndexInArray( this.targetIndex, this.targetedSlot in this.opponentSlots ? this.opponentSlots : this.playerSlots  );
                 this.targetedSlot.target( );
+                this.activeText = "Use " + this.menu.activeButton.Name + " on " + this.targetedSlot.character.Name + "?";
             }
         }
         else {
@@ -257,11 +259,13 @@ class Battle {
         this.selectingTarget = true;
         this.targetIndex = 0;
         this.targetedSlot.target( );
+        this.activeText = "Use " + this.menu.activeButton.Name + " on " + this.targetedSlot.character.Name + "?";
     };
 
     deactivateChooseTargetMode( ) {
         this.targetedSlot.deTarget( );
         this.selectingTarget = false;
+        this.activeText = this.menu.activeButton.Description;
     }
 
     endSelectMovePhase( ) {

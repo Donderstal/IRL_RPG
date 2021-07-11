@@ -157,7 +157,7 @@ class StatusMenuTab extends MenuTab {
      */
     drawHealthOrPowerLine( key, currentTextY, currentArrowY, index ) {
         writeTextLine( 
-            ATTRIBUTE_MENU_TEXTS[key], 
+            ATTRIBUTE_MENU_TEXTS[key] + ": ", 
             GRID_BLOCK_PX, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
@@ -180,7 +180,7 @@ class StatusMenuTab extends MenuTab {
      */
     drawAttributeLine( key, currentTextY, currentArrowY ) {
         writeTextLine( 
-            ATTRIBUTE_MENU_TEXTS[key], 
+            ATTRIBUTE_MENU_TEXTS[key] + ": ",
             GRID_BLOCK_PX, currentTextY, 
             LARGE_FONT_SIZE, "#000000" 
         );
