@@ -7,6 +7,7 @@ const { I_Menu } = require("../interfaces/I_Menu");
 const { drawRect } = require('../../helpers/canvasHelpers');
 const { MenuItem } = require('../interfaces/I_MenuItem');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
+const { generateActionHint } = require('../../helpers/UITextHelper');
 
 class BattleMenu extends I_Menu {
     constructor( ) {
@@ -16,6 +17,7 @@ class BattleMenu extends I_Menu {
         this.options = [ ]
         this.optionButtons = [];
         this.activeButtonIndex;
+        this.actionHints = false;
     }
     get activeButton( ) {
         return this.optionButtons[this.activeButtonIndex];
@@ -57,6 +59,7 @@ class BattleMenu extends I_Menu {
             }
 
             this.optionButtons.push( new MenuItem( x, y, CANVAS_WIDTH / 3, this.tabHeight / 3, "SELECT_MOVE", e ) );
+            this.optionButtons[index].Item = e;
             this.optionButtons[index].Name = e.Name != undefined ? e.Name : e["NAME"];
             this.optionButtons[index].Description = e.Description != undefined ? e.Description : e["DESCRIPTION"];
         } )
@@ -87,6 +90,7 @@ class BattleMenu extends I_Menu {
     activateFirstButtonInMenu( ) {
         this.activeButtonIndex = 0;
         this.activeButton.activate( );
+        this.actionHints    = generateActionHint( this.activeButton.Item, this.inItemsMenu ? "ITEM" : "MOVE" );
         this.activeText = this.activeButton.Description;
     }
 
@@ -126,14 +130,17 @@ class BattleMenu extends I_Menu {
     }
 
     selectButtonAtIndex( index ) {
+        this.actionHints    = [];
         this.activeButton.deActivate( );
         this.activeButtonIndex = index;
         this.activeButton.activate( );
-        this.activeText = this.activeButton.Description;
+
+        this.actionHints    = generateActionHint( this.activeButton.Item, this.inItemsMenu ? "ITEM" : "MOVE" )
+        this.activeText     = this.activeButton.Description;
     }
 
     drawMenuTextbox( ) {
-        super.drawMenuTextbox( this.textMenuButtonHints )
+        super.drawMenuTextbox( this.textMenuButtonHints, this.actionHints )
     }
 
     selectionTab( ) {

@@ -25,12 +25,22 @@ const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
     /**
      * Draw the textbox at the bottom of the menu
      */
-    drawMenuTextbox( buttonHints ) {
+    drawMenuTextbox( buttonHints, actionHints = false ) {
         drawRect( "FRONT", 0, CANVAS_HEIGHT - this.tabHeight, CANVAS_WIDTH, this.tabHeight, "#D82BBA" )
         writeTextLine( 
             this.activeText, 0 + LARGE_FONT_LINE_HEIGHT, 
             ( CANVAS_HEIGHT - this.tabHeight ) + LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE
         );
+        if ( actionHints ) {
+            actionHints.forEach( ( actionHint, index ) => {
+                writeTextLine( 
+                    actionHint, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index )), 
+                    CANVAS_HEIGHT - ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE 
+                );
+            } );
+        }
+
+        drawRect( "FRONT", 0, CANVAS_HEIGHT - (SMALL_FONT_LINE_HEIGHT * 2), CANVAS_WIDTH, 1, "#FFFFFF" )
         buttonHints.forEach( ( buttonHint, index ) => {
             writeTextLine( 
                 buttonHint, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index )), 
