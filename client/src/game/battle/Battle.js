@@ -3,12 +3,13 @@ const {
     BATTLE_PHASE_BEGIN_TURN, BATTLE_PHASE_SELECT_MOVE, BATTLE_PHASE_DO_MOVES,
     BATTLE_PHASE_END_TURN, BATTLE_PHASE_END_BATTLE
 } = require('../../game-data/battleGlobals');
-const { ATT_SPEED } = require('../../game-data/globals');
+const { ATT_SPEED, ITEM_CATEGORY_CONSUMABLE } = require('../../game-data/globals');
 const { BattleMenu } = require('./BattleMenu');
 const { getPreviousIndexInArray, getNextIndexInArray } = require('../../helpers/utilFunctions');
 const { MOVE_PROP_KEY_TYPE, MOVE_TYPE_HEAL,MOVE_TYPE_STAT_UP } = require('../../game-data/moveGlobals');
 const { STANDARD_ATTACK } = require('../../resources/battleMoveResources');
 const { getMoveAnimationData } = require('../../resources/moveAnimationScripts');
+const { getRandomItemOfType } = require('../../resources/itemResources');
 
 class Battle {
     constructor( opponentParty, opponentName ) {
@@ -105,7 +106,7 @@ class Battle {
                 this.endEndTurnPhase( );
                 break;
             case BATTLE_PHASE_END_BATTLE:
-                this.endBattle( );
+                this.endEndBattlePhase( );
                 break;
         }
         this.handleCurrentBattlePhase( )
@@ -127,6 +128,9 @@ class Battle {
             case BATTLE_PHASE_END_TURN:
                 this.startEndTurnPhase( );
                 break;
+            case BATTLE_PHASE_END_BATTLE:
+                this.startEndBattlePhase( );
+                break
         }
     }
 
@@ -290,6 +294,54 @@ class Battle {
 
     endEndTurnPhase( ) {
         this.phase = BATTLE_PHASE_BEGIN_TURN;
+    }
+
+    startEndBattlePhase( ) {
+        if ( this.playerParty.isDefeated ) {
+            this.activeText = "Your party has been defeated in battle!";
+        }
+        else {
+            this.activeText = "Your party has won the battle!";
+            this.playerSlots.forEach( ( slot ) => {
+                slot.setCheeringAnimation( );
+            } )
+            this.handleBattleEnd( );
+        }
+    }
+
+    handleBattleEnd( ) {
+        this.resultTextIndex = -1;
+        this.resultText = [
+            "You get " + Math.floor( Math.random( ) * 100 ) + " Euros."
+        ]
+
+        if ( Math.floor( Math.random( ) * 100 ) > 49 ) {
+            let item = getRandomItemOfType( ITEM_CATEGORY_CONSUMABLE );
+            this.resultText.push( "You got a" + item.name + "!");
+            this.playerParty.inventory.addItemsToInnerListByID( [ item.key ] );
+        }
+
+        let experienceGained = this.opponentParty.getExperienceValue( );
+        this.resultText.push( "The party gets " + experienceGained + " experience points." )
+        this.playerSlots.forEach( ( slot ) => { 
+            if ( slot.character.addExperience( experienceGained ) ) {
+                this.resultText.push( slot.character.Name + " has leveled up to level " + slot.character.Level + "!" );
+            }
+        })
+    }
+
+    getNextBattleEndText( ) {
+        if ( this.resultTextIndex + 1 < this.resultText.length ) {
+            this.resultTextIndex++
+            this.activeText = this.resultText[this.resultTextIndex]
+        }
+        else {
+            this.endEndBattlePhase( );
+        }
+    }
+
+    endEndBattlePhase( ) {
+        this.endBattle( );
     }
 
     endBattle( ) {

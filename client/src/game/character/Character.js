@@ -13,6 +13,10 @@ class Character extends BaseEntity {
         this.Equipment = new Equipment( );
     }
     get activeAttributeValues( ) { return this.getActiveAttributes( ) }
+
+    getExperienceValue( ) {
+        return this.Level * 2;
+    }
     /**
      * Get a copied-by-value dictionary from the Attributes instance in this character.
      * Then, 
@@ -33,18 +37,20 @@ class Character extends BaseEntity {
      */
     addExperience( experiencePoints ) {
         this.Experience += experiencePoints;
-        this.levelUpIfNeeded( );
+        return this.levelUpIfNeeded( );
     }
     /**
      * Check the amount of this.Experience. If this is higher than the currentlevel allows, level up and call onLevelUp.
      */
     levelUpIfNeeded( ) {
         let oldLevel = this.Level;
-        this.Level = ( this.Experience / 100 );
+        this.Level = Math.floor( this.Experience / 100 );
         if ( this.Level != oldLevel ) {
-            this.MaximumHitpoints = this.setMaximumHitpoints( )
             this.onLevelUp( );
+            return true;
         }
+
+        return false;
     }
     /**
      * call this characters' Attributes.levelUpStatsToGivenLeven method.

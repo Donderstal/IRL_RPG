@@ -182,6 +182,19 @@ const getItemDataById = ( itemId ) => {
     }
 }
 
+const getRandomItemOfType = ( type = null ) => {
+    let itemKeys = Object.keys( itemData )
+    if ( type != null ) {
+        itemKeys = itemKeys.filter( ( key ) => { return itemData[key]["type"] == type;});
+    }
+
+    const randomKey = itemKeys[ Math.floor(Math.random() * itemKeys.length) ];
+    let item = itemData[ randomKey ];
+    item.key = randomKey;
+    return item;
+}
+
 module.exports = {
-    getItemDataById
+    getItemDataById,
+    getRandomItemOfType
 }

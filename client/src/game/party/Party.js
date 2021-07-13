@@ -32,6 +32,13 @@ class Party {
 
         return true;
     }
+    getExperienceValue( ) {
+        let value = 0;
+        this.members.forEach( ( e ) => {
+            value += e.getExperienceValue( ); 
+        } )
+        return value;
+    }
     /**
      * Set the active sprite on the map as the sprite of the party member at given index
      * @param {Number} index 

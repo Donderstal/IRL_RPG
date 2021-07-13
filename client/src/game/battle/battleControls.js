@@ -13,6 +13,9 @@ const handleBattleKeyPress = ( event ) => {
         BATTLE.handleActionKeyInSelectMovePhase( );
         //BATTLE.getNextCharacterForMoveSelection( );
     }
+    else if ( event.key == " " && BATTLE.inEndBattlePhase ) {
+        BATTLE.getNextBattleEndText( );
+    }
     else if ( event.key == " " && !BATTLE.inDoMovesPhase ) {
         BATTLE.goToNextBattlePhase( );
     }

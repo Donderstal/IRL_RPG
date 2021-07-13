@@ -82,11 +82,15 @@ class BattleSlot {
         )
     }
 
-    activateSelectionMode( ) {
+    setCheeringAnimation( ) {
         this.sprite.setScriptedAnimation( { 
             animName: "SELECTION_ANIMATION",
             loop: true
         }, FRAME_LIMIT );
+    }
+
+    activateSelectionMode( ) {
+        this.setCheeringAnimation( );
         this.inMoveSelection = true;
     }
 
