@@ -7,7 +7,7 @@ const { ATT_SPEED, ITEM_CATEGORY_CONSUMABLE } = require('../../game-data/globals
 const { BattleMenu } = require('./BattleMenu');
 const { getPreviousIndexInArray, getNextIndexInArray } = require('../../helpers/utilFunctions');
 const { MOVE_PROP_KEY_TYPE, MOVE_TYPE_HEAL,MOVE_TYPE_STAT_UP } = require('../../game-data/moveGlobals');
-const { STANDARD_ATTACK } = require('../../resources/battleMoveResources');
+const { STANDARD_ATTACK, STANDARD_DEFEND } = require('../../resources/battleMoveResources');
 const { getMoveAnimationData } = require('../../resources/moveAnimationScripts');
 const { getRandomItemOfType } = require('../../resources/itemResources');
 
@@ -69,6 +69,10 @@ class Battle {
                 selectedItem.animation = this.basicConsumableAnimation;
                 return selectedItem;
             }
+        }
+        else if ( this.menu.inMainMenu && this.menu.activeButtonName == "Defend" ) {
+            STANDARD_DEFEND.animation = this.basicConsumableAnimation;
+            return STANDARD_DEFEND;
         }
         else {
             return null;
@@ -176,15 +180,16 @@ class Battle {
 
     moveButtonCursor( direction ) {
         if ( this.selectingTarget ) {
-            if ( direction == "UP" ) {
+            let targetSlots = this.targetedSlot.side == "RIGHT" ? this.opponentSlots : this.playerSlots;
+            if ( direction == "UP" && targetSlots.length > 1 ) {
                 this.targetedSlot.deTarget( );
-                this.targetIndex = getPreviousIndexInArray( this.targetIndex, this.targetedSlot in this.opponentSlots ? this.opponentSlots : this.playerSlots );
+                this.targetIndex = getPreviousIndexInArray( this.targetIndex, targetSlots );
                 this.targetedSlot.target( );
                 this.activeText = "Use " + this.menu.activeButton.Name + " on " + this.targetedSlot.character.Name + "?";
             }
-            else if ( direction == "DOWN") {
+            else if ( direction == "DOWN" && targetSlots.length > 1 ) {
                 this.targetedSlot.deTarget( );
-                this.targetIndex = getNextIndexInArray( this.targetIndex, this.targetedSlot in this.opponentSlots ? this.opponentSlots : this.playerSlots  );
+                this.targetIndex = getNextIndexInArray( this.targetIndex, targetSlots );
                 this.targetedSlot.target( );
                 this.activeText = "Use " + this.menu.activeButton.Name + " on " + this.targetedSlot.character.Name + "?";
             }
@@ -235,7 +240,9 @@ class Battle {
                 this.menu.activateItemsSubMenu( );
             }
             else if ( this.menu.inMainMenu && this.menu.activeButtonName == "Defend" ) {
-                //selectDefend( );
+                STANDARD_DEFEND.animation = this.basicConsumableAnimation;
+                this.activeSelectionBattleSlot.selectMove( STANDARD_DEFEND, this.activeSelectionBattleSlot );
+                this.getNextCharacterForMoveSelection( );
             }
             else {
                 this.activateChooseTargetMode( );

@@ -6,6 +6,7 @@ const globals = require( '../../game-data/globals' );
 const { I_Menu } = require("../interfaces/I_Menu");
 const { drawRect } = require('../../helpers/canvasHelpers');
 const { MenuItem } = require('../interfaces/I_MenuItem');
+const { STANDARD_ATTACK, STANDARD_DEFEND } = require('../../resources/battleMoveResources');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 const { generateActionHint } = require('../../helpers/UITextHelper');
 
@@ -59,7 +60,16 @@ class BattleMenu extends I_Menu {
             }
 
             this.optionButtons.push( new MenuItem( x, y, CANVAS_WIDTH / 3, this.tabHeight / 3, "SELECT_MOVE", e ) );
-            this.optionButtons[index].Item = e;
+            if ( e.Name == "Standard Attack" ) {
+                this.optionButtons[index].Item = STANDARD_ATTACK;     
+            }
+            else if ( e.Name == "Defend" ) {
+                this.optionButtons[index].Item = STANDARD_DEFEND; 
+            }
+            else {
+                this.optionButtons[index].Item = e;                
+            }
+
             this.optionButtons[index].Name = e.Name != undefined ? e.Name : e["NAME"];
             this.optionButtons[index].Description = e.Description != undefined ? e.Description : e["DESCRIPTION"];
         } )
@@ -127,6 +137,7 @@ class BattleMenu extends I_Menu {
 
     deActivateMovesSubMenu( ) {
         this.inMovesMenu = false;
+        this.actionHints = [];
     }
 
     selectButtonAtIndex( index ) {

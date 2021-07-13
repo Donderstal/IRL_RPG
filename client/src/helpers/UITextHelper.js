@@ -9,12 +9,11 @@ const {
 const moveTypeTextHint  = "Move type: ";
 const damageTextHint    = "Base damage: ";
 const healingTextHint   = "Base healing: ";
-const statTextHint      = "Base change";
+const statTextHint      = "Base change: ";
 const attributeTextHint = "Attribute: ";
 const ppCostTextHint    = "PP cost: "
 
 const generateActionHint = ( actionData, type ) => {
-    console.log(actionData)
     const hintContents = { 
         [MOVE_PROP_KEY_TYPE]: "",
         [MOVE_PROP_KEY_ATTRIBUTE]: "",
@@ -36,7 +35,7 @@ const generateActionHint = ( actionData, type ) => {
             }     
         })
     }
-    console.log(hintContents);    
+ 
     switch( hintContents[MOVE_PROP_KEY_TYPE] ) {
         case MOVE_TYPE_HEAL:
             return [ 

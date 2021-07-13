@@ -1,6 +1,7 @@
 const { 
     ATT_HEALTH_POINTS, ATT_POWER_POINTS, ATT_PH_ATTACK, ATT_PH_DEFENSE,
-    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK, ATTRIBUTE_MENU_TEXTS
+    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK, ATTRIBUTE_MENU_TEXTS,
+    EFFECT_TYPE_BUFF, EFFECT_TYPE_DEBUFF
 } = require('../game-data/globals')
 
 const { 
@@ -50,23 +51,24 @@ const doHealingMove = ( move, target, performer ) => {
 }
 const doStatUp = ( move, target, performer ) => {
     performer.spendPP( move[MOVE_PROP_KEY_PP_COST] );
-    target.addStatusEffect( move[MOVE_PROP_KEY_ATTRIBUTE], "BUFF", move[MOVE_PROP_KEY_BASE_VALUE], move[MOVE_PROP_KEY_TURNS_AMOUNT] )
+    target.addStatusEffect( move[MOVE_PROP_KEY_ATTRIBUTE], EFFECT_TYPE_BUFF, move[MOVE_PROP_KEY_BASE_VALUE], move[MOVE_PROP_KEY_TURNS_AMOUNT] )
     return target.Name + "'s " + ATTRIBUTE_MENU_TEXTS[move[MOVE_PROP_KEY_ATTRIBUTE]] + " increased by " + move[MOVE_PROP_KEY_BASE_VALUE] + "!";
 }
 const doStatDown = ( move, target, performer ) => {
     performer.spendPP( move[MOVE_PROP_KEY_PP_COST] );
-    target.addStatusEffect( move[MOVE_PROP_KEY_ATTRIBUTE], "DEBUFF", move[MOVE_PROP_KEY_BASE_VALUE], move[MOVE_PROP_KEY_TURNS_AMOUNT] )
+    target.addStatusEffect( move[MOVE_PROP_KEY_ATTRIBUTE], EFFECT_TYPE_DEBUFF, move[MOVE_PROP_KEY_BASE_VALUE], move[MOVE_PROP_KEY_TURNS_AMOUNT] )
     return target.Name + "'s " + ATTRIBUTE_MENU_TEXTS[move[MOVE_PROP_KEY_ATTRIBUTE]] + " decreased by " + move[MOVE_PROP_KEY_BASE_VALUE] + "!";
 }
 const doPhysicalDamage = ( move, defender, performer ) => {
-    const baseDamage = move[MOVE_PROP_KEY_BASE_VALUE] * ( performer.Attributes[ATT_PH_ATTACK] / defender.Attributes[ATT_PH_DEFENSE] );
-    const damage = Math.round(baseDamage *  getSemiRandomModifier( move[MOVE_PROP_KEY_MODIFIER] ) );
+    const baseDamage = move[MOVE_PROP_KEY_BASE_VALUE] * ( performer.activeAttributeValues[ATT_PH_ATTACK] / defender.activeAttributeValues[ATT_PH_DEFENSE] );
+    let modifier = getSemiRandomModifier( move[MOVE_PROP_KEY_MODIFIER] );
+    const damage = Math.round(baseDamage * modifier );
     performer.spendPP( move[MOVE_PROP_KEY_PP_COST] );
     defender.takeDamage( damage );
     return defender.Name + " took " + damage + " damage!";
 }
 const doSpecialDamage = ( move, defender, performer ) => {
-    const baseDamage = move[MOVE_PROP_KEY_BASE_VALUE] * ( performer.Attributes[ATT_SP_ATTACK] / defender.Attributes[ATT_SP_DEFENSE] );
+    const baseDamage = move[MOVE_PROP_KEY_BASE_VALUE] * ( performer.activeAttributeValues[ATT_SP_ATTACK] / defender.activeAttributeValues[ATT_SP_DEFENSE] );
     const damage = Math.round(baseDamage *  getSemiRandomModifier( move[MOVE_PROP_KEY_MODIFIER] ) );
     performer.spendPP( move[MOVE_PROP_KEY_PP_COST] );
     defender.takeDamage( damage );
