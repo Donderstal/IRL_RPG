@@ -27,6 +27,8 @@ class Sprite {
             this.height = spriteSize.height;
         }
 
+        globals.GAME.assetLoader.addAsset( src, "Image" )
+
         this.left, this.right, this.top, this.bottom;
         this.centerX = () => { return this.x + ( this.width / 2 ) };
         this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };

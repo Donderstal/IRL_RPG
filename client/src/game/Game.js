@@ -17,6 +17,7 @@ const { Battle } = require('./battle/Battle')
 const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyProgression')
 const { triggerEvent } = require('../game-data/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
+const { AssetLoader } = require('../helpers/AssetLoader')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [
@@ -49,6 +50,8 @@ class Game {
         this.activeMap; 
         this.activeMapName; // string
         this.currentChapter;
+        this.loadingAssets = false;
+        this.assetLoader;
 
         this.initGameCanvases( );
     }
@@ -68,6 +71,21 @@ class Game {
     set activeText( text ) {
         this.typeWriter = new TypeWriter( text );
     }
+    activateAssetLoader( ) {
+        controls.stopListenForKeyPress( );
+        controls.clearPressedKeys( this.pressedKeys );
+
+        this.assetLoader = new AssetLoader( );
+        this.loadingAssets = true;
+        this.paused = true;
+    }
+    deActivateAssetLoader( ) {
+        this.assetLoader = { };
+        this.loadingAssets = false;
+        this.paused = false;
+        
+        controls.listenForKeyPress( ); 
+    } 
     /**
      * Assign given text to this.activeText
      * @param {String} text
@@ -150,6 +168,7 @@ class Game {
      * @param {String} className name of the class that the player selected
      */
     startNewGame( name, className, debugMode, disableStoryMode ) {
+        this.activateAssetLoader( );
         this.initializePlayerParty( name, className )
         const mapData = getMapData(firstMapUrl);
         this.storeMapData( mapData, firstMapUrl );
@@ -234,9 +253,7 @@ class Game {
             }            
         }
 
-        this.paused = true;
-        controls.stopListenForKeyPress( );
-        controls.clearPressedKeys( this.pressedKeys );
+        this.activateAssetLoader( );
 
         const newMapData = getMapData( destination );
         this.clearMapFromCanvases( );
@@ -246,11 +263,6 @@ class Game {
         if ( !this.disableStoryMode ) {
             getScriptedEventsForMap( this.activeMapName );            
         }
-
-        setTimeout( ( ) => {
-            controls.listenForKeyPress( ); 
-            this.paused = false;   
-        }, 100 )
     }
     /**
      * Store the current map data and name as properties of game class

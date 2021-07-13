@@ -44,7 +44,7 @@ const animationFrameController = ( ) => {
     
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
-        if ( !GAME.paused ) {
+        if ( !GAME.paused && !GAME.loadingAssets ) {
             if ( !GAME.listeningForPress ) {
                 controls.listenForKeyPress()
             }            
@@ -63,6 +63,9 @@ const animationFrameController = ( ) => {
             if  ( GAME.inCinematic && GAME.activeCinematic ) {
                 GAME.activeCinematic.checkForScenePass( )
             }
+        }
+        else if ( GAME.loadingAssets ) {
+            GAME.assetLoader.drawLoadingScreen( )
         }
         else {
             canvasHelpers.clearEntireCanvas('FRONT')
