@@ -2,6 +2,7 @@ const { CharacterAttributes } = require("../character/CharacterAttributes");
 const { StatusEffects } = require('../character/StatusEffects')
 const { getAttributeModifierByClassProfile, getClassProfile, getClassSprite, getMoves } = require('../../resources/classProfileResources');
 const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require("../../game-data/globals");
+const globals = require("../../game-data/globals");
 /**
  * The BaseEntity is the common interface of all in-game characters and monsters who can battle
  */
@@ -10,9 +11,8 @@ class BaseEntity {
         this.Name = name;
         this.ClassName = className;
         this.Level = level;
-        this.Sprite = new Image(); 
-        this.Sprite.src = getClassSprite( className );
-        this.getClassProfileAndSpriteOnInit( )
+        this.Sprite = globals.PNG_DICTIONARY[getClassSprite( className )]; 
+        this.ClassProfile = getClassProfile( this.ClassName );
 
         this.Attributes = new CharacterAttributes( getAttributeModifierByClassProfile( this.ClassProfile ), this.Level );
         this.StatusEffects  = new StatusEffects( );
@@ -33,13 +33,6 @@ class BaseEntity {
      */
     addStatusEffect( attribute, type, effectValue, effectDuration ) {
         this.StatusEffects.addStatusEffect( attribute, type, effectValue, effectDuration );
-    }
-    /**
-     * Used in constructor. Set the characters' sprite and classprofile depending on their className
-     */
-    getClassProfileAndSpriteOnInit( ) {
-        this.ClassProfile = getClassProfile( this.ClassName );
-        this.Sprite.src = getClassSprite( this.ClassName );
     }
     /**
      * Get a copied-by-value dictionary from the Attributes instance in this character.

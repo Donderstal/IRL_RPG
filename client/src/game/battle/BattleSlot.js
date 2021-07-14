@@ -37,19 +37,8 @@ class BattleSlot {
         this.inMoveSelection = false;
         this.isTargeted    = false;
 
-        this.greenArrowPNG       = new Image( )
-        this.greenArrowLoaded    = false;
-        this.greenArrowPNG.src   = "/static/ui/green_arrow.png"
-        this.greenArrowPNG.onload = ( ) => {
-            this.greenArrowLoaded = true;
-        }
-
-        this.redArrowPNG       = new Image( )
-        this.redArrowLoaded    = false;
-        this.redArrowPNG.src   = "/static/ui/red_arrow.png"
-        this.redArrowPNG.onload = ( ) => {
-            this.redArrowLoaded = true;
-        }
+        this.greenArrowPNG      = globals.PNG_DICTIONARY["/static/ui/green_arrow.png"];
+        this.redArrowPNG        = globals.PNG_DICTIONARY["/static/ui/red_arrow.png"];
     }
 
     get inBattleMoveAnimation( ) { return this.sprite.inScriptedAnimation || this.sprite.movingToDestination };

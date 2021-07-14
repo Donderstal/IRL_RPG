@@ -1,3 +1,4 @@
+const globals = require("../../game-data/globals");
 const { GRID_BLOCK_PX, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE } = require("../../game-data/globals");
 const { drawFromImageToCanvas, writeTextLine } = require('../../helpers/canvasHelpers')
 const uiSpriteFolder = "/static/ui/"
@@ -12,8 +13,6 @@ class StatBar {
         this.height         = this.width / 8;
         this.sheetWidth     = 224;
         this.sheetHeight    = 28;
-        this.frontBarImage  = new Image( );
-        this.backBarImage   = new Image( );
 
         this.currentStatValue   = currentValue;
         this.maxStatValue       = maxValue;
@@ -31,18 +30,18 @@ class StatBar {
     setBarSprites( ) {
         switch ( this.type ) {
             case "HP-PLAYER":
-                this.frontBarImage.src = uiSpriteFolder + "HP.png"
-                this.backBarImage.src  = uiSpriteFolder + "HP_Empty.png"
+                this.frontBarImage = globals.PNG_DICTIONARY[uiSpriteFolder + "HP.png"];
+                this.backBarImage = globals.PNG_DICTIONARY[uiSpriteFolder + "HP_Empty.png"];
                 this.statName   = "HP";
                 break;
             case "HP-ENEMY" :                
-                this.frontBarImage.src = uiSpriteFolder + "Enemy_HP.png"
-                this.backBarImage.src  = uiSpriteFolder + "Enemy_HP_Empty.png"
+                this.frontBarImage = globals.PNG_DICTIONARY[uiSpriteFolder + "Enemy_HP.png"];
+                this.backBarImage = globals.PNG_DICTIONARY[uiSpriteFolder + "Enemy_HP_Empty.png"];
                 this.statName   = "HP";
                 break;
             case "PP"       :
-                this.frontBarImage.src = uiSpriteFolder + "AP.png"
-                this.backBarImage.src  = uiSpriteFolder + "AP_Empty.png"
+                this.frontBarImage = globals.PNG_DICTIONARY[uiSpriteFolder + "AP.png"];
+                this.backBarImage = globals.PNG_DICTIONARY[uiSpriteFolder + "AP_Empty.png"];
                 this.statName   = "PP";
                 break;
             default:

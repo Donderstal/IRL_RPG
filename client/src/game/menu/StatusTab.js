@@ -18,18 +18,9 @@ class StatusMenuTab extends MenuTab {
         this.setButtonHeight( this.height / 6 );
         this.setButtonWidth( this.width / 5 );
         this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "RETURN" ];
-
-        this.redArrow = new Image();
-        this.redArrow.src = "/static/ui/red_arrow_down.png";
-        this.redArrow.onload = ( ) => {
-            this.redArrow.loaded = true;
-        };
-
-        this.greenArrow = new Image();
-        this.greenArrow.src = "/static/ui/green_arrow_up.png";
-        this.greenArrow.onload = ( ) => {
-            this.greenArrow.loaded = true;
-        };
+        
+        this.redArrow   = globals.PNG_DICTIONARY["/static/ui/red_arrow_dwown.png"];
+        this.greenArrow = globals.PNG_DICTIONARY["/static/ui/green_arrow_up.png"];
 
         this.activeOption;
         this.activeCharacter = null;
