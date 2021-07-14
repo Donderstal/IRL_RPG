@@ -194,6 +194,7 @@ const setSheetXyValues = ( tilesInSheet ) => {
 
 const SHEET_XY_VALUES = setSheetXyValues( 10000 );
 
+const PNG_DICTIONARY = {};
 
 module.exports = {
     MOVEMENT_SPEED,
@@ -330,5 +331,7 @@ module.exports = {
     TEST_CLASSPROFILE_1,
     TEST_CLASSPROFILE_2,
     TEST_CLASSPROFILE_3,
-    TEST_CLASSPROFILE_4
+    TEST_CLASSPROFILE_4,
+
+    PNG_DICTIONARY
 }

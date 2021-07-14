@@ -17,6 +17,7 @@ const { Battle } = require('./battle/Battle')
 const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyProgression')
 const { triggerEvent } = require('../game-data/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
+const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [
@@ -388,8 +389,24 @@ class Game {
  */
 const startGame = ( name, className, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
-    globals.GAME.startNewGame( name, className, debugMode, disableStoryMode );
-    console.log(debugMode, disableStoryMode)
+    fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, debugMode, disableStoryMode ] )
+}
+
+const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
+    json.forEach( ( pngPath, i ) => {
+        let image   = new Image( );
+        let path    = pngPath;
+        let index   = i;
+
+        image.src = path;
+        image.onload = ( ) => {
+            globals.PNG_DICTIONARY[path] = image;
+            if ( index + 1 == json.length ) {
+                globals.GAME.startNewGame( startingOptions[0], startingOptions[1], startingOptions[2], startingOptions[3] );
+            }
+        }
+    });
+
 }
 
 module.exports = {

@@ -86,11 +86,8 @@ class I_Effect {
      */
     setSprite( src ) {
         this.src        = src;
-        this.sheet      = new Image();
-        this.sheet.src  = this.src;      
-        this.sheet.onload = ( ) => {
-            this.active = true;
-        }  
+        this.sheet      = globals.PNG_DICTIONARY[this.src];
+        this.active     = true;
     }
     /**
      * Set this.x and this.y to given values

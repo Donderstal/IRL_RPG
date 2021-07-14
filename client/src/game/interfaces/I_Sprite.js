@@ -36,16 +36,13 @@ class Sprite {
         this.frameCount     = 0
         this.direction      = direction;
         this.sheetSrc       = src
-        this.sheet          = new Image();
+        this.sheet          = globals.PNG_DICTIONARY[src]
         this.moving         = false;
         this.deleted        = false;
         this.animationScript = {};
         this.activeEffect = { active: false };
 
         this.setSpriteToGrid( tile )
-
-        this.loaded = false
-        this.getSpriteAndDrawWhenLoaded( )
     }
 
     get destinationIsLeft( ) { 
@@ -105,20 +102,6 @@ class Sprite {
         newTile.setSpriteData( 'character', null )
         newTile.spriteId = "PLAYER"
         this.setSpriteToGrid( newTile );
-    }
-     /**
-     * If the this.sheet Image is not loaded, set its src.
-     * Then, draw it when loaded.
-     */
-    getSpriteAndDrawWhenLoaded( ) {
-        if ( !this.loaded ) {
-            this.sheet.onload = () => {
-                this.loaded = true
-                this.drawSprite()
-            }
-
-            this.sheet.src = this.sheetSrc            
-        }
     }
      /**
      * Set the left, right, top, bottom properties based on current x, y, width and height props.
