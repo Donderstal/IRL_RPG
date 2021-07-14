@@ -248,7 +248,7 @@ class BattleSlot {
                 this.sprite.initMovement( );
                 break;
             case "MOVE_FORWARD": 
-                this.sprite.setDestination( { x: this.slotX + ( this.sprite.width * 2 ), y: this.slotY }, "FORWARD" );
+                this.sprite.setDestination( { x: this.side == "LEFT" ? this.slotX + (this.sprite.width * 2) : this.slotX - (this.sprite.width * 2), y: this.slotY }, "FORWARD" );
                 this.sprite.initMovement( );
                 break;
             case "ANIMATION": 

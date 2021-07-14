@@ -17,30 +17,25 @@ const moveAnimationScripts = {
     },
     "SPECIAL_ATTACK_TEST" : {
         moveToTarget : false,
+        moveForward : true,
         perfomerAnimation: "CAST",
         performerEffect: "FIRE_CIRCLE_FULL",
         effectToTarget: "FIRE_CIRCLE_MOVING",
         targetAnimationOnHit: "STANDARD_HIT",
         targetEffectOnHit: false
     },
-    "STAT_UP_TEST" : {
+    "STAT_UP" : {
         moveToTarget : false,
-        perfomerAnimation: "CAST",
-        performerEffect: false,
-        effectToTarget: false,
-        targetAnimationOnHit: "TURN_SINGLE_CIRCLE",
-        targetEffectOnHit: "FIRE_CIRCLE_FULL"
-    },
-    "STAT_UP_CHAD" : {
-        moveToTarget : false,
-        perfomerAnimation: "LIFT",
+        moveForward : true,
+        perfomerAnimation: "POWER_UP",
         performerEffect: "FIRE_CIRCLE_BACK",
         effectToTarget: false,
-        targetAnimationOnHit: "TURN_SINGLE_CIRCLE",
+        targetAnimationOnHit: "CAST",
         targetEffectOnHit: false
     },
     "STAT_DOWN_TEST" : {
         moveToTarget : false,
+        moveForward : true,
         perfomerAnimation: "CAST",
         performerEffect: "FIRE_CIRCLE_BACK",
         effectToTarget: false,
