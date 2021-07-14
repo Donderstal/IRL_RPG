@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JUL 14, 2021
+* Now pre-loading all assets when the game begins
+
 #### JUL 13, 2021
 * Fixed various battle UI issues
 * Added a proper battle ending with xp count etc.

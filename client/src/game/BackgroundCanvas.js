@@ -93,7 +93,8 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     /**
      * Call the drawMap function of the inner I_Grid Class with this.sheetImage as parameter
      */
-    drawMapFromGridData( ) {
+    drawMapFromGridData( image ) {
+        this.sheetImage = image;
         this.grid.drawMap( this.sheetImage );
     }    
     /**
@@ -106,7 +107,8 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     /**
      * Draw the battlegrid with this.sheetImage as tilesheet
      */
-    drawBattleMapFromBattleGridData( ) {
+    drawBattleMapFromBattleGridData( image ) {
+        this.sheetImage = image;
         this.battleGrid.drawMap( this.sheetImage );
     }
     /**

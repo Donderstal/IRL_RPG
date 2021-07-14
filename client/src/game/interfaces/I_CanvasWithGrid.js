@@ -27,20 +27,6 @@ class I_CanvasWithGrid {
         this.grid.setTileGridToArray( tileIndexArray )
     }
     /**
-     * Instantiatie an Image Instance and call callback on it when it loads
-     * @param {String} src - Location of image on server staring from root folder
-     * @param {Function} callback - Callback to call after loading the image
-     */
-    loadImageWithCallback( src, callback ) {
-        this.sheetImage = new Image();
-        this.sheetImage.src = src;
-
-        this.sheetImage.onload = ( ) => { 
-            const boundCallback = callback.bind(this);
-            boundCallback( );
-        };
-    }
-    /**
      * Return the I_Tile instance at index
      * @param {Number} index array index of the tile in the grid array
      */

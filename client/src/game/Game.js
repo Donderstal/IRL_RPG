@@ -199,7 +199,10 @@ class Game {
     
         this.back.class.setBackgroundData( mapData, sheetData );
         this.back.class.setEventsDoorsAndBlockedToTilesInGrid( );
-        this.back.class.loadImageWithCallback( '/static/tilesets/' + sheetData.src, this.back.class.drawMapFromGridData );
+        console.log('/static/tilesets/' + sheetData.src)
+        console.log(globals.PNG_DICTIONARY)
+        console.log('/static/tilesets/' + sheetData.src in globals.PNG_DICTIONARY)
+        this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
     
         this.front.class.setForegroundData( mapData, isNewGame );
         this.front.class.setSpritesToGrid( );
@@ -286,7 +289,7 @@ class Game {
         
         const sheetData = tilesheets[battleMapData.tileSet];
         this.BACK.setBattleBackgroundData( battleMapData, sheetData );
-        this.BACK.loadImageWithCallback( '/static/tilesets/' + sheetData.src, this.back.class.drawBattleMapFromBattleGridData );
+        this.BACK.drawBattleMapFromBattleGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
         this.FRONT.prepareBattlePositions( );
         this.FRONT.setSpritesToBattleSlots( this.party, opponentParty );
     }
@@ -299,7 +302,7 @@ class Game {
         this.clearCanvases( );
         this.BACK.clearBattleMap( );
         this.FRONT.clearBattleMap( );
-        this.BACK.loadImageWithCallback( '/static/tilesets/' + tilesheets[this.activeMap.tileSet].src, this.back.class.drawMapFromGridData );
+        this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + tilesheets[this.activeMap.tileSet].src] );
         this.activeAction.checkForEventOnBattleEnd( );
         this.activeAction = null;
         animationFrameController.startOverworldAnimation( );   
