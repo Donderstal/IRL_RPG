@@ -1,6 +1,17 @@
 const folder = "/static/effects/";
 
 const effectsResources = {
+    "STAR" : {
+        "src": folder + "star_fx.png",
+        "widthInBlocks": 2,
+        "heightInBlocks": 2,
+        "frameWidth": 192,
+        "frameHeight": 192,
+        "frames": [
+            { 'x': 0, 'y': 0 },
+            { 'x': 192, 'y': 0 }
+        ]
+    },
     "FIRE_CIRCLE_BACK" : {
         "src": folder + "fire_circle.png",
         "widthInBlocks": 2,

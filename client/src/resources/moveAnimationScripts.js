@@ -31,7 +31,7 @@ const moveAnimationScripts = {
         performerEffect: "FIRE_CIRCLE_BACK",
         effectToTarget: false,
         targetAnimationOnHit: "CAST",
-        targetEffectOnHit: false
+        targetEffectOnHit: "STAR"
     },
     "STAT_DOWN_TEST" : {
         moveToTarget : false,
@@ -47,9 +47,9 @@ const moveAnimationScripts = {
         moveForward : true,
         perfomerAnimation: "CAST",
         performerEffect: "FIRE_CIRCLE_BACK",
-        effectToTarget: "FIRE_CIRCLE_FRONT_MOVING",
-        targetAnimationOnHit: "STANDARD_HIT",
-        targetEffectOnHit: false
+        effectToTarget: false,
+        targetAnimationOnHit: "TURN_SINGLE_CIRCLE",
+        targetEffectOnHit: "STAR"
     }
 }
 /**

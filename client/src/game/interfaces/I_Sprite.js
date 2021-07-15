@@ -118,7 +118,7 @@ class Sprite {
      */
     drawSprite( ) {
         if ( this.hasActiveEffect ) {
-            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.25  ) )
         }
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
@@ -127,9 +127,9 @@ class Sprite {
             this.x, this.y, this.width, this.height
         )
         if ( this.hasActiveEffect ) {
-            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.25 ) )
         }
-        
+
         if ( this.movingToDestination && !this.pathIsBlocked && this == globals.GAME.PLAYER ) {
             this.goToDestination( );   
             this.countFrame( );  
@@ -393,6 +393,9 @@ class Sprite {
      * @param {Number|Boolean} numberOfLoops optional parameter indicating if a loop is permanent
      */
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
+        if ( this.inScriptedAnimation ) {
+            this.unsetScriptedAnimation( );
+        }
         this.inScriptedAnimation    = true;     
         this.originalDirection      = this.direction;
 

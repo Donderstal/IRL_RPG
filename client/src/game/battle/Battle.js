@@ -306,6 +306,13 @@ class Battle {
     startEndBattlePhase( ) {
         if ( this.playerParty.isDefeated ) {
             this.activeText = "Your party has been defeated in battle!";
+            this.opponentSlots.forEach( ( slot ) => {
+                slot.setCheeringAnimation( );
+            } )
+            this.resultText = [
+                this.opponentParty.members[0].Name + "'s party celebrates their victory!",
+                "You lose " + Math.floor( Math.random( ) * 100 ) + " Euros."
+            ];
         }
         else {
             this.activeText = "Your party has won the battle!";
