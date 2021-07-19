@@ -1,9 +1,9 @@
-const myNeigbourhood    = require( './mapResources/myNeighbourhood' )
-const downtown          = require( './mapResources/downtown' )
-const battle            = require( './mapResources/battleMaps' )
+const myNeighbourhood    = require( './mapResources/myNeighbourhood/my-neighbourhood' );
+const downtown          = require( './mapResources/downtown/downtown' );
+const battle            = require( './mapResources/battle/battleMaps' );
 
 const mapResources = {
-    "my-neighbourhood" :    myNeigbourhood,
+    "my-neighbourhood" :    myNeighbourhood,
     "downtown":             downtown,
     "battle":               battle,
 }
