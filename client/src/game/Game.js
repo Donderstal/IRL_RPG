@@ -29,6 +29,7 @@ const startingItemIDs = [
 
 class Game {
     constructor( ) {
+        this.isRunning = false;
         this.mode; // 'MAP' || 'BATTLE'        
         this.cinematicMode; // bool
         this.paused; // bool
@@ -185,6 +186,7 @@ class Game {
     initControlsAndAnimation( ) {
         controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
+        this.isRunning = true;
     }
     /**
      * Initialize map grids based on map dimensions. Set mapData to the Foreground and Background classes.
@@ -393,6 +395,7 @@ class Game {
 const startGame = ( name, className, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
     fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, debugMode, disableStoryMode ] )
+    drawLoadingScreen( );
 }
 
 const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
@@ -409,7 +412,21 @@ const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
             }
         }
     });
+}
 
+const drawLoadingScreen = ( ) => {
+    if ( !globals.GAME.isRunning && globals.GAME.mode == undefined) {
+        globals.GAME.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
+        globals.GAME.front.ctx.fillStyle = "#D82BBA";
+        globals.GAME.front.ctx.fillRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
+        globals.GAME.front.ctx.fillStyle = "#FFFFFF";
+        globals.GAME.front.ctx.font = globals.SMALL_FONT_SIZE + "px " + "Stormfaze";
+        globals.GAME.front.ctx.fillText("Loading...", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 );
+        setTimeout( drawLoadingScreen, 50 )
+    }
+    else {
+        globals.GAME.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT ) 
+    }
 }
 
 module.exports = {
