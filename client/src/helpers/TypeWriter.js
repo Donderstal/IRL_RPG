@@ -8,9 +8,11 @@ class TypeWriter {
 
         this.write( );
     }
+    
+    get isWriting( ) { return this.index < this.fullText.length }
 
     write( ) {
-        if ( this.index < this.fullText.length ) {
+        if ( this.isWriting ) {
             this.activeText += this.fullText.charAt(this.index);
             this.index++;
             setTimeout( this.write.bind(this), this.speed );
