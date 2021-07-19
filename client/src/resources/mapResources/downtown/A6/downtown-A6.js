@@ -1,3 +1,7 @@
+const { 
+    NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING
+   } = require('../../../../game-data/globals')
+
 module.exports = {
     "mapName": "downtown/A6",
     "tileSet": "downtown",

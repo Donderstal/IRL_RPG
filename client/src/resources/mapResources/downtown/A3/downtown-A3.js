@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_MOVE_TYPE_FLYING }
+const { NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_MOVE_TYPE_FLYING } = require('../../../../game-data/globals')
 
 module.exports = {
     "mapName": "downtown/A3",

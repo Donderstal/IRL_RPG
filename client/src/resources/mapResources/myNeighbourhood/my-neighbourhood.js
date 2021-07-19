@@ -3,9 +3,9 @@ const A2 = require('./A2/my-neighbourhood-A2');
 const A3 = require('./A3/my-neighbourhood-A3');
 const A4 = require('./A4/my-neighbourhood-A4');
 const B1 = require('./B1/my-neighbourhood-B1');
-const B2 = require('./A1/my-neighbourhood-B2');
-const B3 = require('./A1/my-neighbourhood-B3');
-const B4 = require('./A1/my-neighbourhood-B4');
+const B2 = require('./B2/my-neighbourhood-B2');
+const B3 = require('./B3/my-neighbourhood-B3');
+const B4 = require('./B4/my-neighbourhood-B4');
 
 module.exports = {
     "A1": A1,

@@ -1,3 +1,8 @@
+const { 
+  NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING,
+  TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
+ } = require('../../../../game-data/globals')
+
 module.exports = {
     "mapName": "my-neighbourhood/A1",
     "tileSet": "my_neighbourhood",

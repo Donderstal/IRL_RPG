@@ -1,3 +1,7 @@
+const { 
+    NPC_ANIM_TYPE_IDLE
+} = require('../../../../game-data/globals')
+
 module.exports = {
     "mapName": "my-neighbourhood/A4",
     "tileSet": "my_neighbourhood",

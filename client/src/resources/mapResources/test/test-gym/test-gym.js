@@ -1,3 +1,8 @@
+const { 
+  NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_MOVING, NPC_ANIM_TYPE_MOVING_IN_LOOP,
+  NPC_MOVE_TYPE_FLYING
+ } = require('../../../../game-data/globals')
+
 module.exports = {
         "mapName": "Chad-outer",
         "tileSet": "my_neighbourhood_2",
