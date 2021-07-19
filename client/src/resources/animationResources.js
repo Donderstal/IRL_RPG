@@ -358,7 +358,15 @@ const getAnimationFrames = ( animationName, direction = null ) => {
             suffix = "_RIGHT"
             break;
     }
-    return animationResources[animationName + suffix];
+    if ( animationName + suffix in animationResources ) {
+        return animationResources[animationName + suffix];        
+    }
+    else {
+        console.log("Error! Animation not found in animationResources")
+        console.log("Animation name: " + animationName + suffix )
+        return animationResources["BOP" + suffix]
+    }
+
 }
 
 module.exports = {

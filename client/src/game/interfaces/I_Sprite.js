@@ -402,6 +402,14 @@ class Sprite {
         this.animationScript.loop           = scene.loop;
         this.animationScript.frames         = getAnimationFrames( scene.animName, this.direction );   
         this.animationScript.index          = 0;           
+
+        if ( this.animationScript.frames == undefined ) {
+            console.log(this.animationScript)
+            console.log(scene)
+            console.log(this.direction)
+            alert('Error in animitionScript setter!')
+        }
+
         this.animationScript.numberOfFrames = this.animationScript.frames.length;      
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;
