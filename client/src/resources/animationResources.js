@@ -208,43 +208,22 @@ const animationResources = {
         { row: 12, column: 1 },
     ],
     "LIFT": [
-        { row: 14, column: 0 },
-        { row: 14, column: 1 },
-        { row: 14, column: 2 },
-        { row: 14, column: 1 },
-        { row: 14, column: 0 },
-        { row: 14, column: 1 },
-        { row: 14, column: 2 },
-        { row: 14, column: 1 },
-        { row: 14, column: 0 },
-        { row: 14, column: 1 },
-        { row: 14, column: 2 },
-        { row: 14, column: 1 },
-        { row: 14, column: 0 },
-        { row: 14, column: 1 },
-        { row: 14, column: 2 },
-        { row: 14, column: 1 }
-    ],
-    "BECOME_HALTER": [
-        { row: 14, column: 0 },
-        { row: 14, column: 1 },
-        { row: 14, column: 2 },
-        { row: 14, column: 3 },
-        { row: 15, column: 0 },
-        { row: 15, column: 1 },
-        { row: 15, column: 2 },
-        { row: 15, column: 3 },
-        { row: 16, column: 0 },
-        { row: 16, column: 1 },
-        { row: 16, column: 0 },
-        { row: 15, column: 3 },
-        { row: 15, column: 2 },
-        { row: 15, column: 1 },
-        { row: 15, column: 0 },
-        { row: 14, column: 3 },
-        { row: 14, column: 2 },
-        { row: 14, column: 1 },
-        { row: 14, column: 0 }
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 },
+        { row: 12, column: 0 },
+        { row: 12, column: 1 },
+        { row: 12, column: 2 },
+        { row: 12, column: 1 }
     ],
     "TALK_LEFT": [
         { row: 11, column: 1 },
@@ -321,6 +300,34 @@ const animationResources = {
         { row: 5, column: 1 },
         { row: 5, column: 2 },
         { row: 5, column: 3 }
+    ],
+    "POWER_UP_LEFT": [
+        { row: 8, column: 0 },
+        { row: 8, column: 1 },
+        { row: 8, column: 2 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 8, column: 3 },
+        { row: 8, column: 2 },
+        { row: 8, column: 1 },
+        { row: 8, column: 0 }
+    ],
+    "POWER_UP_RIGHT" : [
+        { row: 9, column: 0 },
+        { row: 9, column: 1 },
+        { row: 9, column: 2 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 9, column: 3 },
+        { row: 9, column: 2 },
+        { row: 9, column: 1 },
+        { row: 9, column: 0 }
     ]
 }
 
@@ -351,7 +358,15 @@ const getAnimationFrames = ( animationName, direction = null ) => {
             suffix = "_RIGHT"
             break;
     }
-    return animationResources[animationName + suffix];
+    if ( animationName + suffix in animationResources ) {
+        return animationResources[animationName + suffix];        
+    }
+    else {
+        console.log("Error! Animation not found in animationResources")
+        console.log("Animation name: " + animationName + suffix )
+        return animationResources["BOP" + suffix]
+    }
+
 }
 
 module.exports = {

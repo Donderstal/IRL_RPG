@@ -18,6 +18,7 @@ const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyPr
 const { triggerEvent } = require('../game-data/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
 const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
+const { setLoadingScreen } = require('./LoadingScreen')
 
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [
@@ -29,6 +30,7 @@ const startingItemIDs = [
 
 class Game {
     constructor( ) {
+        this.isRunning = false;
         this.mode; // 'MAP' || 'BATTLE'        
         this.cinematicMode; // bool
         this.paused; // bool
@@ -185,6 +187,7 @@ class Game {
     initControlsAndAnimation( ) {
         controls.listenForKeyPress();  
         animationFrameController.startRequestingFrame( );
+        this.isRunning = true;
     }
     /**
      * Initialize map grids based on map dimensions. Set mapData to the Foreground and Background classes.
@@ -393,6 +396,7 @@ class Game {
 const startGame = ( name, className, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
     fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, debugMode, disableStoryMode ] )
+    setLoadingScreen( );
 }
 
 const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
@@ -409,7 +413,6 @@ const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
             }
         }
     });
-
 }
 
 module.exports = {

@@ -118,7 +118,7 @@ class Sprite {
      */
     drawSprite( ) {
         if ( this.hasActiveEffect ) {
-            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.25  ) )
         }
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
@@ -127,9 +127,9 @@ class Sprite {
             this.x, this.y, this.width, this.height
         )
         if ( this.hasActiveEffect ) {
-            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
+            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.25 ) )
         }
-        
+
         if ( this.movingToDestination && !this.pathIsBlocked && this == globals.GAME.PLAYER ) {
             this.goToDestination( );   
             this.countFrame( );  
@@ -393,12 +393,23 @@ class Sprite {
      * @param {Number|Boolean} numberOfLoops optional parameter indicating if a loop is permanent
      */
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
+        if ( this.inScriptedAnimation ) {
+            this.unsetScriptedAnimation( );
+        }
         this.inScriptedAnimation    = true;     
         this.originalDirection      = this.direction;
 
         this.animationScript.loop           = scene.loop;
         this.animationScript.frames         = getAnimationFrames( scene.animName, this.direction );   
         this.animationScript.index          = 0;           
+
+        if ( this.animationScript.frames == undefined ) {
+            console.log(this.animationScript)
+            console.log(scene)
+            console.log(this.direction)
+            alert('Error in animitionScript setter!')
+        }
+
         this.animationScript.numberOfFrames = this.animationScript.frames.length;      
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;

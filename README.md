@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JUL 19, 2021
+* Added a loading screen for the game initialization
+
 #### JUL 14, 2021
 * Now pre-loading all assets when the game begins
 

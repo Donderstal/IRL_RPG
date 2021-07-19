@@ -42,7 +42,7 @@ const TEST_CLASSPROFILE_MODIFIERS_1 = {
 };
 const TEST_CLASSPROFILE_MOVES_1 = [
     { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST"  },
-    { move : SMALL_PH_ATTK_UP, level: 5, animation: "STAT_UP_CHAD" },
+    { move : SMALL_PH_ATTK_UP, level: 5, animation: "STAT_UP" },
     { move : PH_ATTK_1, level: 10, animation: "PHYISCAL_ATTACK_TEST_2" }
 ];
 const TEST_CLASSPROFILE_MODIFIERS_2 = {
@@ -58,7 +58,7 @@ const TEST_CLASSPROFILE_MODIFIERS_2 = {
 const TEST_CLASSPROFILE_MOVES_2 = [
     { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST" },
     { move : SP_ATTK_1, level: 5, animation: "SPECIAL_ATTACK_TEST" },
-    { move : SMALL_SPEED_UP, level: 10, animation: "STAT_UP_TEST" }
+    { move : SMALL_SPEED_UP, level: 10, animation: "STAT_UP" }
 ];
 const TEST_CLASSPROFILE_MODIFIERS_3 = {
     [ATT_HEALTH_POINTS]: MODI_STANDARD,
@@ -72,8 +72,8 @@ const TEST_CLASSPROFILE_MODIFIERS_3 = {
 }
 const TEST_CLASSPROFILE_MOVES_3 = [
     { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST" },
-    { move : SMALL_PH_DEF_UP, level: 5, animation: "STAT_UP_TEST" },
-    { move : SMALL_SP_DEF_UP, level: 10, animation: "STAT_UP_TEST" }
+    { move : SMALL_PH_DEF_UP, level: 5, animation: "STAT_UP" },
+    { move : SMALL_SP_DEF_UP, level: 10, animation: "STAT_UP" }
 ];
 const TEST_CLASSPROFILE_MODIFIERS_4 = {
     [ATT_HEALTH_POINTS]: MODI_VERY_LOW,

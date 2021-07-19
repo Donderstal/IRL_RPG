@@ -227,11 +227,11 @@ class BattleSlot {
             this.animationStep = "HIT"
             this.doMoveAnimationStep( animation );
         }
-        else if ( this.animationStep == "HIT" && ( animation.moveToTarget || animation.moveForward ) ) {
+        else if ( this.animationStep == "HIT" && ( animation.moveToTarget || animation.moveForward ) && !this.sprite.inScriptedAnimation ) {
             this.animationStep = "GO_BACK"
             this.doMoveAnimationStep( animation );
         }
-        else {
+        else if ( !this.sprite.movingToDestination && !this.sprite.inScriptedAnimation && !this.targetSlot.sprite.inScriptedAnimation ) {
             this.sprite.unsetGraphicalEffect( );
             this.unsetSelectedMove( );
             this.unsetMoveAnimationData( );
@@ -248,7 +248,7 @@ class BattleSlot {
                 this.sprite.initMovement( );
                 break;
             case "MOVE_FORWARD": 
-                this.sprite.setDestination( { x: this.slotX + ( this.sprite.width * 2 ), y: this.slotY }, "FORWARD" );
+                this.sprite.setDestination( { x: this.side == "LEFT" ? this.slotX + (this.sprite.width * 2) : this.slotX - (this.sprite.width * 2), y: this.slotY }, "FORWARD" );
                 this.sprite.initMovement( );
                 break;
             case "ANIMATION": 

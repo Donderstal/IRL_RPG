@@ -14,16 +14,33 @@ class StatBar {
         this.sheetWidth     = 224;
         this.sheetHeight    = 28;
 
+        this.nextStatValue      = false;
         this.currentStatValue   = currentValue;
         this.maxStatValue       = maxValue;
 
         this.setBarSprites( );
     }
 
+    get onePercent( ) { return this.maxStatValue / 100 }
     get frontBarFactor( ) { return this.currentStatValue / this.maxStatValue }
     get frontBarWidthInSheet( ) { return this.sheetWidth * this.frontBarFactor }
     get frontBarWidth( ) { return this.width * this.frontBarFactor }
     get statText( ) { return this.statName + ": " + this.currentStatValue + "/" + this.maxStatValue  }
+
+    animateValueChange( ) {
+        if ( this.currentStatValue < this.nextStatValue ) {
+            this.currentStatValue = Math.round( this.currentStatValue += this.onePercent )
+            setTimeout( this.animateValueChange.bind(this), 50 );
+        }
+        else if ( this.currentStatValue > this.nextStatValue ) {
+            this.currentStatValue = Math.round( this.currentStatValue -= this.onePercent )
+            setTimeout( this.animateValueChange.bind(this), 50 );
+        }
+
+        if ( this.currentStatValue > ( this.nextStatValue - this.onePercent ) && this.currentStatValue < ( this.nextStatValue + this.onePercent ) ) {
+            this.currentStatValue = this.nextStatValue;
+        }
+    }
     /**
      * Depending on the value of this.type, set statName and imageSrc props
      */
@@ -53,7 +70,8 @@ class StatBar {
      * @param {Number} value 
      */
     setCurrentValue( value ) {
-        this.currentStatValue = value;
+        this.nextStatValue = value;
+        this.animateValueChange( )
     }
     /**
      * Call this.setCurrentValue with value as argument.

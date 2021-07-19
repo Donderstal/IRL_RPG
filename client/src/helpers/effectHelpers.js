@@ -24,6 +24,14 @@ const scripts = {
     "FIRE_CIRCLE_FRONT_MOVING": {
         frontEffect: { "name": "FIRE_CIRCLE_FRONT", "loop": false },
         type: "MOVING_FRONT"
+    },
+    "STAR": {
+        backEffect: { "name": "STAR", "loop": true },
+        type: "BACK"
+    },
+    "STAR_MOVING" : {
+        backEffect: { "name": "STAR", "loop": true },
+        type: "MOVING_BACK"
     }
 }
 /**
