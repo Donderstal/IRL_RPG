@@ -32,6 +32,16 @@ class Party {
 
         return true;
     }
+
+    get Level( ) { 
+        let counter;
+        this.members.forEach( ( member ) => {
+            counter += member.Level
+        } )
+
+        return Math.round( counter / this.members.length );
+    }
+
     getExperienceValue( ) {
         let value = 0;
         this.members.forEach( ( e ) => {

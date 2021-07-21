@@ -1,0 +1,13 @@
+module.exports = {
+    LEVEL_OVER: "LO",
+    LEVEL_UNDER: "LU",
+    CHAPTER_BEFORE: "CB",
+    CHAPTER_IN: "CI",
+    CHAPTER_AFTER: "CA",
+    ITEM_OWNED: "IO",
+    ITEM_NOT_OWNED: "IO",
+    EVENT_HAS_FIRED: "EHF",
+    EVENT_RESPONSE_YES: "ERY",
+    EVENT_RESPONSE_NO: "ERN",
+}
+
