@@ -16,9 +16,9 @@ const getMapData = ( fullMapName ) => {
 
     const mapData = mapResources[neighbourhoodName][mapName]
     if ( mapNameArray[2] ) {
-        return mapData.subMaps[mapNameArray[2]];
+        return JSON.parse( JSON.stringify( mapData.subMaps[mapNameArray[2]] ) );
     } else {
-        return mapData
+        return JSON.parse( JSON.stringify(mapData) )
     }
 }
 

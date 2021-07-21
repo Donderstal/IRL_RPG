@@ -10,14 +10,49 @@ class MapAction extends I_Hitbox {
         super( x, y, globals.GRID_BLOCK_PX / 2 )
 
         Object.keys( action ).forEach( ( key ) => {
-            this[key] = action[key];
+            this[key] = action[key];  
         } )
 
         this.arcColor   = "#FF0000";
         this.spriteId   = spriteId;
+
+        this.setScenesNameAndSfx( );
     }
 
     get needsConfirmation( ) { return this.type == "BUS" || this.type == "BATTLE" ; }
+    /**
+     * 
+     */
+    setScenesNameAndSfx( ) {
+        if ( this.scenes ) {
+            this.checkPropForScenes(this.scenes)
+        }
+        if ( this.events ) {
+            this.events.forEach( ( e ) => { 
+                let event = e;
+                this.checkPropForScenes( event.scenes )
+            } )
+        }
+    }
+    /**
+     * 
+     */
+    checkPropForScenes( prop ) {
+        prop.forEach( ( e ) => {
+            if ( !e.spriteName ) {
+                e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
+            }
+            if ( !e.sfx ) {
+                e.sfx = this.sfx;
+            }
+            if ( e.pathNo ) {
+                this.checkPropForScenes( e.pathNo )
+            }
+            if ( e.pathYes ) {
+                this.checkPropForScenes( e.pathYes )
+            }
+        } )
+    }
     /**
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */

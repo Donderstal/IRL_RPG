@@ -39,12 +39,6 @@ class NPC extends MapSprite {
         this.name = tile.spriteData.name
         this.spriteId = spriteId;
 
-        if ( hasAction ) {
-            this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, spriteId );
-            this.action = tile.spriteData.action
-            this.action.name = this.name
-        }
-
         if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
             this.setDestination( tile.spriteData.destination, true );
             this.initMovement( );
@@ -55,6 +49,15 @@ class NPC extends MapSprite {
         else {
             this.doAnimationCounter = new Counter( 7500, true )    
         }
+
+        // setting a timeout so the MapAction is instantiated after this sprite is added to FRONT.spritedictionary
+        setTimeout( ( ) => { 
+            if ( hasAction ) {
+                this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, spriteId );
+                this.action = tile.spriteData.action
+                this.action.name = this.name
+            }
+        }, 50 )
 
         this.blockedCounter = new Counter( 10000, false )
     }
