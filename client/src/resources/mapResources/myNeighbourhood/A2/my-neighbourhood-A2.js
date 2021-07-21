@@ -1,7 +1,10 @@
 const { 
   NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE
- } = require('../../../../game-data/globals')
-
+} = require('../../../../game-data/globals')
+const {
+  BUS_TO_DOWTOWN, A2_TALKING_CHAD, A2_TALKING_NECKBEARD, A2_TALKING_GIRL, 
+  A2_TALKING_ROBOT, A2_SUBMAP1_WOMAN, A2_SUBMAP1_ACTION_BIN, A2_SUBMAP3_WIFIGUY, A2_SUBMAP2_LIFTING_CHAD, 
+} = require( './interactions')
 
 module.exports = {
     "mapName": "my-neighbourhood/A2",
@@ -49,18 +52,7 @@ module.exports = {
             "row"   : 8,
             "col"   : 20,
             "hasAction" : true,
-            "action" : {
-              "type": "BUS",
-              "to": "downtown/A3",
-              "scenes": [
-                {
-                  "type": "SPEAK",
-                  "spriteName": "Player",
-                  "sfx": "typing.mp3",
-                  "text": "Shall I take the bus downtown?"
-                }
-              ]
-            }
+            "action" : BUS_TO_DOWTOWN
         }
     ],
     "characters" : [
@@ -71,20 +63,7 @@ module.exports = {
             "name": "Chaddy Chandler",
             "row": 3,
             "col": 5,
-            "action": {
-              "type": "TEXT",
-              "sfx": "voice-1.mp3",
-              "scenes": [
-                {
-                  "type": "SPEAK",
-                  "text": "Could you piss off?"
-                },
-                {
-                  "type": "SPEAK",
-                  "text": "Can't you see I'm minding my own business?"
-                }
-              ]
-            }
+            "action": A2_TALKING_CHAD
         },
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -93,16 +72,7 @@ module.exports = {
             "row": 6,
             "col": 18,
             "name": "Patty",
-            "action": {
-                "type": "TEXT",
-                "sfx": "poo-poo.mp3",
-                "scenes": [
-                  {
-                    "type": "SPEAK",
-                    "text": "I used to date a level 24 Darkmage."
-                  }
-                ]
-            }
+            "action": A2_TALKING_GIRL
         },
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -111,16 +81,7 @@ module.exports = {
             "name": "Yung Edgelord",
             "row": 7,
             "col": 19,
-            "action": {
-                "type": "TEXT",
-                "sfx": "mauww.mp3",
-                "scenes": [
-                  {
-                    "type": "SPEAK",
-                    "text": "I'm an aspiring ninja, m'lady."
-                  }
-                ]
-            }
+            "action": A2_TALKING_NECKBEARD
         },
         {
             "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
@@ -129,33 +90,10 @@ module.exports = {
             "col": 12, 
             "name": "Consoombot",                    
             "direction": "FACING_UP",
-            "action": {
-              "type": "TEXT",
-              "sfx": "typing.mp3",
-              "scenes": [
-                {
-                  "type": "SPEAK",
-                  "text": "Hello, potential customer!"
-                }
-              ]
-            }
+            "action": A2_TALKING_ROBOT
         }
     ],
-    "actions" : [
-      {
-        "row": 4,
-        "col": 10,
-        "type": "TEXT",
-        "scenes": [
-          {
-            "type": "SPEAK",
-            "spriteName": "Player",
-            "sfx": "typing.mp3",
-            "text": "Who still uses these things anyway?"
-          }
-        ]
-      }
-    ],
+    "actions" : [ ],
     "subMaps": {
       "yum-corp" : {
           "mapName": "my-neighbourhood/A2/yum-corp",
@@ -203,32 +141,11 @@ module.exports = {
                   "row": 2,
                   "col": 5,
                   "name": "Hot Hannah",
-                  "action": {
-                    "type": "TEXT",
-                    "sfx": "poo-poo.mp3",
-                    "scenes": [
-                      {
-                        "type": "SPEAK",
-                        "text": "There's this weird neckbeard in the back alley trying to connect my to my internet."
-                      }
-                    ]
-                  }
+                  "action": A2_SUBMAP1_WOMAN
               }
           ],
           "actions" : [
-            {
-              "row": 6,
-              "col": 1,
-              "type": "TEXT",
-              "scenes": [
-                {
-                  "type": "SPEAK",
-                  "spriteName": "Player",
-                  "sfx": "typing.mp3",
-                  "text": "Is there a used condom in this bin?"
-                }
-              ]
-            }
+            A2_SUBMAP1_ACTION_BIN
           ]
         },
         "house-of-war" : {
@@ -274,16 +191,7 @@ module.exports = {
                   "row": 4,
                   "col": 4,
                   "name": "Strange Pete",
-                  "action": {
-                    "type": "TEXT",
-                    "sfx": "voice-1.mp3",
-                    "scenes": [
-                      {
-                        "type": "SPEAK",
-                        "text": "Do you even lift, bro?"
-                      }
-                    ]
-                  }
+                  "action": A2_SUBMAP2_LIFTING_CHAD
                 }
             ]
         },
@@ -310,16 +218,7 @@ module.exports = {
                     "row": 3,
                     "col": 5,
                     "name": "Mortimer Richards III",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-3.mp3",
-                        "scenes": [
-                          {
-                            "type": "SPEAK",
-                            "text": "The Wifi here sucks, man"
-                          }
-                        ]
-                    }
+                    "action": A2_SUBMAP3_WIFIGUY
                 }
             ],
             "doors": [ 

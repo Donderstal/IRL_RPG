@@ -1,4 +1,5 @@
 const { NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_MOVE_TYPE_FLYING } = require('../../../../game-data/globals')
+const { BUS_TO_FIRST_NEIGHBOURHOOD } = require('./interactions')
 
 module.exports = {
     "mapName": "downtown/A3",
@@ -34,18 +35,7 @@ module.exports = {
             "row"   : 8,
             "col"   : 20,
             "hasAction" : true,
-            "action" : {
-                "type": "BUS",
-                "to": "my-neighbourhood/A2",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "spriteName": "Player",
-                      "sfx": "typing.mp3",
-                      "text": "Shall I take the bus to my neighbourhood?"
-                    }
-                  ]
-            }
+            "action" : BUS_TO_FIRST_NEIGHBOURHOOD
         },
         { 
             "type"  : "Sign_01",

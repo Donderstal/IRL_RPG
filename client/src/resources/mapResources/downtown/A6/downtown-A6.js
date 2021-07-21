@@ -1,6 +1,7 @@
 const { 
     NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING
    } = require('../../../../game-data/globals')
+const { PIDGEBERT_THUG, PIDGEBERT, PIDGEBERT_PIGEON, PIDGEBERT_GRANDMA } = require('./interactions')
 
 module.exports = {
     "mapName": "downtown/A6",
@@ -25,16 +26,7 @@ module.exports = {
             "row": 3,
             "col": 13,
             "name": "Pidgebert thug",                     
-            "action": {
-                "type": "TEXT",
-                "sfx": "battle-baba.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "If you mess with Pidgebert you mess with me!"
-                    }
-                ]
-            }
+            "action": PIDGEBERT_THUG
         },
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -43,20 +35,7 @@ module.exports = {
             "row": 3,
             "col": 14,
             "name": "Pidgebert",                    
-            "action": {
-                "type": "TEXT",
-                "sfx": "voice-1.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "Who you lookin at, shithead?"
-                    },
-                    {
-                        "type": "SPEAK",
-                        "text": "I'm Pidgebert, the meanest pigeon in town!"
-                    }
-                ]
-            }
+            "action": PIDGEBERT
         },
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -65,16 +44,7 @@ module.exports = {
             "row": 3,
             "col": 15,
             "name": "Pidgebert thug",                    
-            "action": {
-                "type": "TEXT",
-                "sfx": "battle-baba.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "A powerful pigeon like Pidgebert needs protection."
-                    }
-                ]
-            }
+            "action": PIDGEBERT_THUG
         },
         {
             "anim_type": NPC_ANIM_TYPE_MOVING,
@@ -83,16 +53,7 @@ module.exports = {
             "name": "Marching pigeon",    
             "row": 5,
             "col": 14,
-            "action": {
-                "type": "TEXT",
-                "sfx": "poo-poo.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "Pigeons of the world, unite!"
-                    }
-                ]
-            }
+            "action": PIDGEBERT_PIGEON
         },
         {
             "anim_type": NPC_ANIM_TYPE_MOVING,
@@ -101,16 +62,7 @@ module.exports = {
             "name": "Marching pigeon",    
             "row": 6,
             "col": 14,
-            "action": {
-                "type": "TEXT",
-                "sfx": "poo-poo.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "I'm mad as hell and I'm not going to take it anymore"
-                    }
-                ]
-            }
+            "action": PIDGEBERT_PIGEON
         },
         {
             "anim_type": NPC_ANIM_TYPE_MOVING,
@@ -119,16 +71,7 @@ module.exports = {
             "name": "Marching pigeon",    
             "row": 7,
             "col": 14,
-            "action": {
-                "type": "TEXT",
-                "sfx": "poo-poo.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "Proud pigeons far and wide, march with us!"
-                    }
-                ]
-            }
+            "action": PIDGEBERT_PIGEON
         },
         {
             "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
@@ -137,16 +80,7 @@ module.exports = {
             "name": "Grandma Shanksville",    
             "row": 8,
             "col": 3,
-            "action": {
-                "type": "TEXT",
-                "sfx": "voice-2.mp3",
-                "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "Pidgebert is not like other pigeons, if you understand what I mean."
-                    }
-                ]
-            }
+            "action": PIDGEBERT_GRANDMA
         }
     ]
 }

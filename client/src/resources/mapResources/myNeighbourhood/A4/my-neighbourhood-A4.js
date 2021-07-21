@@ -2,6 +2,12 @@ const {
     NPC_ANIM_TYPE_IDLE
 } = require('../../../../game-data/globals')
 
+const {
+    A4_SUBMAP1_SPEAK_WOMAN, A4_SUBMAP2_SPEAK_WOMAN, A4_SUBMAP2_SPEAK_GUY1, A4_SUBMAP2_SPEAK_GUY2, A4_SUBMAP2_SPEAK_MANAGER, A4_SUBMAP2_SPEAK_GIRL,
+    A4_SUBMAP2_SIGN_ACTION_R4C7, A4_SUBMAP2_SIGN_ACTION_R1C11, A4_SUBMAP2_ICECREAM_ACTION, A4_SUBMAP2_VEGGIES_ACTION_R5C3, 
+    A4_SUBMAP2_VEGGIES_ACTION_R5C5,  A4_SUBMAP2_RODITOS_ACTION
+}   = require('./interactions')
+
 module.exports = {
     "mapName": "my-neighbourhood/A4",
     "tileSet": "my_neighbourhood",
@@ -17,7 +23,20 @@ module.exports = {
     },
     "rows":12,
     "columns":24,
-    "grid":[[414,432,432,433,434,435,434,434,474,475,475,475,475,475,475,475,475,499,4,520,521,276,277,277],[418,419,436,437,438,439,460,438,478,479,488,489,490,491,500,501,502,503,4,524,525,276,277,38],[422,423,440,441,442,443,464,465,482,483,492,493,494,495,504,505,506,507,4,4,4,276,284,277],[426,427,444,445,446,447,468,469,486,487,496,497,498,497,508,509,510,511,4,30,528,276,284,277],[429,312,321,448,450,4,535,4,4,4,178,4,30,4,4,29,4,4,176,4,4,276,284,277],[354,312,312,448,450,4,4,23,4,4,4,4,4,4,4,4,4,4,4,529,530,276,284,277],[312,382,313,449,450,4,4,4,4,4,28,4,194,4,23,26,4,177,4,533,534,276,288,277],[312,312,312,453,450,532,4,4,4,4,4,4,4,4,4,4,4,4,4,148,4,276,37,277],[585,585,585,590,556,553,553,570,571,571,571,571,560,561,562,553,571,571,571,571,551,557,277,277],[277,277,277,277,277,277,277,41,277,277,277,277,277,277,38,277,277,277,277,277,277,42,277,277],[277,574,575,41,575,575,575,574,575,575,575,575,277,277,277,277,575,575,575,575,559,277,277,277],[546,546,547,538,539,539,539,539,539,539,539,539,539,539,539,539,544,541,541,541,541,549,280,277]],
+    "grid":[ 
+        [414,432,432,433,434,435,434,434,474,475,475,475,475,475,475,475,475,499,  4,520,521,276,277,277],
+        [418,419,436,437,438,439,460,438,478,479,488,489,490,491,500,501,502,503,  4,524,525,276,277, 38],
+        [422,423,440,441,442,443,464,465,482,483,492,493,494,495,504,505,506,507,  4,  4,  4,276,284,277],
+        [426,427,444,445,446,447,468,469,486,487,496,497,498,497,508,509,510,511,  4, 30,528,276,284,277],
+        [429,312,321,448,450,  4,535,  4,  4,  4,178,  4, 30,  4,  4, 29,  4,  4,176,  4,  4,276,284,277],
+        [354,312,312,448,450,  4,  4, 23,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,529,530,276,284,277],
+        [312,382,313,449,450,  4,  4,  4,  4,  4, 28,  4,194,  4, 23, 26,  4,177,  4,533,534,276,288,277],
+        [312,312,312,453,450,532,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,148,  4,276, 37,277],
+        [585,585,585,590,556,553,553,570,571,571,571,571,560,561,562,553,571,571,571,571,551,557,277,277],
+        [277,277,277,277,277,277,277, 41,277,277,277,277,277,277, 38,277,277,277,277,277,277, 42,277,277],
+        [277,574,575, 41,575,575,575,574,575,575,575,575,277,277,277,277,575,575,575,575,559,277,277,277],
+        [546,546,547,538,539,539,539,539,539,539,539,539,539,539,539,539,544,541,541,541,541,549,280,277]
+    ],
     "doors": [ 
         {
             "row": 4, 
@@ -77,17 +96,8 @@ module.exports = {
                     "direction": "FACING_DOWN",
                     "row": 3,
                     "col": 3,
-                    "name": "Hot Hannah",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "poo-poo.mp3",
-                        "scenes": [
-                        {
-                            "type": "SPEAK",
-                            "text": "I'll send you nudes if you donate to my patreon."
-                        }
-                        ]
-                    }
+                    "name": "Big Money Hannah",
+                    "action": A4_SUBMAP1_SPEAK_WOMAN
                 }
             ]
         },
@@ -132,16 +142,7 @@ module.exports = {
                     "row": 12,
                     "col": 9,
                     "name": "@TheFitGirlGoodLife",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-3.mp3",
-                        "scenes": [
-                        {
-                            "type": "SPEAK",
-                            "text": "I'm just here to make some money until my Instagram account takes off."
-                        }
-                        ]
-                    }
+                    "action": A4_SUBMAP2_SPEAK_WOMAN
                 },
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -150,16 +151,7 @@ module.exports = {
                     "row": 2,
                     "col": 2,
                     "name": "The Dealer",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-1.mp3",
-                        "scenes": [
-                        {
-                            "type": "SPEAK",
-                            "text": "Wanna buy something, nerd?"
-                        }
-                        ]
-                    }
+                    "action": A4_SUBMAP2_SPEAK_GUY1
                 },
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -168,16 +160,7 @@ module.exports = {
                     "row": 6,
                     "col": 8,
                     "name": "Small balled Steve",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-1.mp3",
-                        "scenes": [
-                        {
-                            "type": "SPEAK",
-                            "text": "The Yum-mart sells the best 'roid in town, man!"
-                        }
-                        ]
-                    }
+                    "action": A4_SUBMAP2_SPEAK_GUY2
                 },
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -186,16 +169,7 @@ module.exports = {
                     "row": 10,
                     "col": 6,
                     "name": "Manager Bob",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-2.mp3",
-                        "scenes": [
-                        {
-                            "type": "SPEAK",
-                            "text": "What could be better than seeing all these happy customers trust our high quality products?"
-                        }
-                        ]
-                    }
+                    "action": A4_SUBMAP2_SPEAK_MANAGER
                 },
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -204,97 +178,16 @@ module.exports = {
                     "row": 3,
                     "col": 10,
                     "name": "Alana",
-                    "action": {
-                        "type": "TEXT",
-                        "sfx": "voice-3.mp3",
-                        "scenes": [
-                        {
-                            "type": "SPEAK",
-                            "text": "I wish we had a better stores than Yum-mart in our neighbourhood."
-                        }
-                        ]
-                    }
+                    "action": A4_SUBMAP2_SPEAK_GIRL
                 }
             ],
             "actions" : [
-                {
-                    "row": 4,
-                    "col": 7,
-                    "type": "TEXT",
-                    "scenes": [
-                    {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
-                    }
-                    ]
-                },
-                {
-                    "row": 11,
-                    "col": 1,
-                    "type": "TEXT",
-                    "scenes": [
-                    {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
-                    }
-                    ]
-                },
-                {
-                    "row": 2,
-                    "col": 6,
-                    "type": "TEXT",
-                    "scenes": [
-                    {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "Now on sale: Jen and Berry's ice cream!'"
-                    }
-                    ]
-                },
-                {
-                    "row": 5,
-                    "col": 3,
-                    "type": "TEXT",
-                    "scenes": [
-                    {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "These veggies don't look that fresh..."
-                    }
-                    ]
-                },
-                {
-                    "row": 5,
-                    "col": 5,
-                    "type": "TEXT",
-                    "scenes": [
-                    {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "These veggies don't look that fresh..."
-                    }
-                    ]
-                },
-                {
-                    "row": 8,
-                    "col": 1,
-                    "type": "TEXT",
-                    "scenes": [
-                    {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "They're all out of Roditos."
-                    }
-                    ]
-                }
+                A4_SUBMAP2_SIGN_ACTION_R4C7,
+                A4_SUBMAP2_SIGN_ACTION_R1C11,
+                A4_SUBMAP2_ICECREAM_ACTION,
+                A4_SUBMAP2_VEGGIES_ACTION_R5C3,
+                A4_SUBMAP2_VEGGIES_ACTION_R5C5,
+                A4_SUBMAP2_RODITOS_ACTION
             ]
         }
     }

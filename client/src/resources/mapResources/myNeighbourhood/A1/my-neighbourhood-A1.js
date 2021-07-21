@@ -1,7 +1,12 @@
 const { 
   NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING,
   TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
- } = require('../../../../game-data/globals')
+ } = require('../../../../game-data/globals');
+
+const {
+  A1_MY_HOUSE_COMPUTER_ACTION, A1_MY_HOUSE_FRIDGE_ACTION, A1_MY_HOUSE_STOVE_ACTION,
+  A1_LIFTING_CHAD, A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT
+} = require('./interactions');
 
 module.exports = {
     "mapName": "my-neighbourhood/A1",
@@ -45,16 +50,7 @@ module.exports = {
           "row": 3,
           "col": 21,
           "name": "Big Balls Bert",                    
-          "action": {
-            "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "scenes": [
-              {
-                "type": "SPEAK",
-                "text": "Do you even lift, bro?"
-              }
-            ]
-          }
+          "action": A1_MY_HOUSE_CHAD_FIGHT
         },
         {
           "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -63,59 +59,7 @@ module.exports = {
           "row": 4,
           "col": 4,
           "name": "Pauline",                    
-          "action": {
-            "type": "BATTLE",
-            "sfx": "voice-2.mp3",
-            "scenes": [
-              {
-                "type": "SPEAK_YES_OR_NO",
-                "text": "Are you looking to get your ass kicked?",
-                "pathYes": false,
-                "pathNo": [
-                  {
-                    "type": "SPEAK",
-                    "text": "That's a shame, honey",                     
-                  }
-                ]
-              }
-            ],
-            "party": [
-              { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
-              { "name": "Boze Berta", "className": TEST_CLASSNAME_10, "level": 5 },
-              { "name": "Duifje", "className": TEST_CLASSNAME_16, "level": 5 },
-            ], 
-            "hasEvent": true,
-            "events": [
-              {
-                "trigger": "ON_BATTLE_START",
-                "scenes": [
-                  {
-                    type: "ANIM",
-                    animName: "LEFT_AND_RIGHT",
-                    loop: false
-                  },
-                  { 
-                    type: "SPEAK",
-                    text: "You'll regret this!",
-                  },
-                ]
-              },
-              {
-                "trigger": "ON_BATTLE_END",
-                "scenes": [
-                  {
-                    type: "ANIM",
-                    animName: "TURN_SINGLE_CIRCLE",
-                    loop: false
-                  },
-                  { 
-                    type: "SPEAK",
-                    text: "Oh no, I got PWND!!",
-                  },
-                ]
-              }
-            ],
-          }
+          "action": A1_WOMAN_FIGHT
         },
         {
           "anim_type": NPC_ANIM_TYPE_IDLE,
@@ -124,16 +68,7 @@ module.exports = {
           "name": "Lisa",                    
           "row": 4,
           "col": 5,
-          "action": {
-            "type": "TEXT",
-            "sfx": "voice-3.mp3",
-            "scenes": [
-              {
-                "type": "SPEAK",
-                "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
-              }
-            ]
-          }
+          "action": A1_GIRL_OUTSIDE
         },
         {
           "anim_type": NPC_ANIM_TYPE_MOVING,
@@ -142,17 +77,7 @@ module.exports = {
           "name": "Mr. Business",                    
           "row": 6,
           "col": 22,
-          "action": {
-            "type": "TEXT",
-            "sfx": "voice-1.mp3",
-            "scenes": [
-              {
-                "type": "SPEAK",
-                "sfx": "voice-1.mp3",
-                "text": "I'm working for the corporation. Business business business!"
-              }
-            ]
-          }
+          "action": A1_BUSINESS_MAN
         }
     ],
     "doors": [ 
@@ -173,85 +98,8 @@ module.exports = {
             "locked": false
         }
     ],
-    "actions" : [
-        {
-          "row": 4,
-          "col": 15,
-          "type": "TEXT",
-          "scenes": [
-            {
-              "type": "SPEAK",
-              "spriteName": "Player",
-              "sfx": "typing.mp3",
-              "text": "Who still uses these things anyway?"
-            }
-          ]
-        }
-    ],
+    "actions" : [ ],
     "subMaps": {
-        "testmap" : {   
-            "mapName": "my-neighbourhood/A1/testmap",
-            "tileSet": "Interior_Yum_Mart_Tiles",
-            "music": "game-jam-2.mp3",
-            "outdoors": false,
-            "rows": 16,
-            "columns": 24,
-            "grid":[
-              [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-              [4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5],
-              [ 8,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,44],
-              [12,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,54],
-              [16,74,41,41,41,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,41,41,41,58],
-              [20,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,44],
-              [12,74,74,74,74,41,41,41,74,74,74,41,74,74,74,74,41,41,41,74,74,74,74,54],
-              [16,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,58],
-              [20,41,74,41,74,41,74,41,41,41,74,41,74,41,41,41,74,41,41,41,74,41,41,44],
-              [12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],
-              [16,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,58],
-              [20,41,41,74,74,41,41,41,74,41,74,41,41,74,41,41,41,41,74,41,41,41,41,44],
-              [12,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,74,54],
-              [16,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,58],
-              [ 8,74,74,74,74,74,74,74,74,74,74,41,74,74,74,74,74,74,74,74,74,74,74,74],
-              [12,75,75,75,75,75,75,75,75,75,75,79,79,75,75,75,75,75,75,75,75,75,75,74]],
-            "playerStart":{ 
-                "row": 3,
-                "col": 2
-            },
-            "characters" : [
-                {
-                  "anim_type": NPC_ANIM_TYPE_IDLE,
-                  "sprite": "chad.png",
-                  "direction": "FACING_LEFT",
-                  "name": "chad_recolour01.png",
-                  "row": 3,
-                  "col": 3,
-                },
-                {
-                  "anim_type": NPC_ANIM_TYPE_IDLE,
-                  "sprite": "chad.png",
-                  "direction": "FACING_DOWN",
-                  "name": "chad_recolour02.png",
-                  "row": 3,
-                  "col": 4
-                },
-                {
-                  "anim_type": NPC_ANIM_TYPE_IDLE,
-                  "sprite": "chad.png",
-                  "direction": "FACING_UP",
-                  "name": "chad_recolour01.png",
-                  "row": 3,
-                  "col": 5
-              },
-              {
-                "anim_type": NPC_ANIM_TYPE_IDLE,
-                "sprite": "chad.png",
-                "direction": "FACING_RIGHT",
-                "name": "chad_recolour02.png",
-                "row": 3,
-                "col": 6,
-              }
-            ]
-        },
         "neighbours-house" : {   
             "mapName": "my-neighbourhood/A1/neighbours-house",
             "tileSet": "Interior_Yum_Mart_Tiles",
@@ -554,106 +402,11 @@ module.exports = {
                 "name": "Boze Bert",
                 "row": 2,
                 "col": 3,               
-                "action": {
-                  "type": "BATTLE",
-                  "sfx": "voice-1.mp3",
-                  "party": [
-                    { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
-                    { "name": "Boze Berta", "className": TEST_CLASSNAME_14, "level": 5 },
-                    { "name": "Duifje", "className": TEST_CLASSNAME_15, "level": 5 },
-                  ], 
-                  "scenes": [
-                    {
-                      "type": "SPEAK",
-                      "text": "I love fighting man!"
-                    },
-                    {
-                      "type": "SPEAK_YES_OR_NO",
-                      "text": "Want me to kick your ass?!",
-                      "pathYes": false,
-                      "pathNo": [
-                        {
-                          "type": "SPEAK",
-                          "text": "You're lucky you're a coward!"
-                        }
-                      ]
-                    }
-                  ],
-                  "hasEvent": true,
-                  "events": [
-                    {
-                      "trigger": "ON_BATTLE_START",
-                      "scenes": [
-                        {
-                          "type": "ANIM",
-                          "animName": "LIFT",
-                          "loop": false
-                        },
-                        { 
-                          "type": "SPEAK",
-                          "text": "You'll regret this!",
-                          "sfx": "battle-baba.mp3"
-                        },
-                      ]
-                    },
-                    {
-                      "trigger": "ON_BATTLE_END",
-                      "scenes": [
-                        {
-                          "type": "ANIM",
-                          "animName": "TURN_SINGLE_CIRCLE",
-                          "loop": false
-                        },
-                        { 
-                          "type": "SPEAK",
-                          "text": "Oh no, I got PWND!!"
-                        },
-                      ]
-                    }
-                  ]
-                }
+                "action": A1_MY_HOUSE_CHAD_FIGHT
               }
             ],
             "actions" : [
-                {
-                    "row": 1,
-                    "col": 4,
-                    "type": "TEXT",
-                    "scenes": [
-                      {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "This is my fridge. Sadly, there's nothing in it..."
-                      }
-                    ]
-                },
-                {
-                    "row": 6,
-                    "col": 1,
-                    "type": "TEXT",
-                    "scenes": [
-                      {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "I <3 my computer",
-                      }
-                    ]
-                },
-                {
-                    "row": 4,
-                    "col": 4,
-                    "type": "TEXT",
-                    "scenes": [
-                      {
-                        "type": "SPEAK",
-                        "spriteName": "Player",
-                        "sfx": "typing.mp3",
-                        "text": "I should clean this stove sometime",
-                      }
-                    ]
-                }
+              A1_MY_HOUSE_COMPUTER_ACTION, A1_MY_HOUSE_FRIDGE_ACTION, A1_MY_HOUSE_STOVE_ACTION
             ]
         }
     }
