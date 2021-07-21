@@ -41,6 +41,7 @@ class MapAction extends I_Hitbox {
         prop.forEach( ( e ) => {
             if ( !e.spriteName ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
+                e.spriteId = this.spriteId;
             }
             if ( !e.sfx ) {
                 e.sfx = this.sfx;

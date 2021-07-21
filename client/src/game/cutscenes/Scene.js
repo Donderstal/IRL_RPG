@@ -4,6 +4,7 @@ class Scene {
     constructor( data ) {
         this.type   = data.type;
         this.spriteName = data.spriteName;
+        this.spriteId = data.spriteId != undefined ? data.spriteId : this.getSpriteByName().spriteId;
         this.sfx = ( data.sfx ) ? data.sfx : false;
         this.setAction( data )
     }
@@ -21,7 +22,7 @@ class Scene {
 
         if ( this.type == "MOVE" ) {
             if ( typeof data.destination === 'string' || data.destination instanceof String ) {
-                const sprite = this.getSpriteByName( data.destination )                
+                const sprite = this.getSpriteById( this.getSpriteByName( data.destination ).spriteId );             
                 data.destination = { 
                     'col': sprite.col, 
                     'row': sprite.row 
@@ -56,17 +57,17 @@ class Scene {
     }
 
     getSpriteCell( ) {
-        const sprite = this.getSpriteByName( )
+        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
         return { 'row': sprite.row, 'col': sprite.col }
     }
 
     setAnimToSprite( ) {
-        const sprite = this.getSpriteByName( )
+        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
         sprite.setAnimation(this)      
     }
 
     unsetSpriteAnimation( ) {
-        const sprite = this.getSpriteByName( );
+        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
         if ( sprite.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             sprite.unsetScriptedAnimation( )            
         }
@@ -75,6 +76,10 @@ class Scene {
     getSpriteByName( name = this.spriteName ) {
         const spriteArray = name == "Player" ? globals.GAME.PLAYER : globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
         return name == "Player" ? spriteArray : spriteArray[0];
+    }
+
+    getSpriteById( id = this.spriteId ) {
+        return globals.GAME.FRONT.spriteDictionary[id];
     }
     
     setSelection( selection ) {
