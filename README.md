@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JUL 21, 2021
+* Now storing map interactions in seperate files
+
 #### JUL 19, 2021
 * Splitted long neighbourhood maps into single map files
 * Added a loading screen for the game initialization
