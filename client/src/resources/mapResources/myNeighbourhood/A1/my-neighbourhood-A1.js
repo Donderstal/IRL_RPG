@@ -47,11 +47,10 @@ module.exports = {
           "name": "Big Balls Bert",                    
           "action": {
             "type": "TEXT",
+            "sfx": "voice-1.mp3",
             "scenes": [
               {
-                type: "SPEAK",
-                spriteName: "Big Balls Bert",
-                "sfx": "voice-1.mp3",
+                "type": "SPEAK",
                 "text": "Do you even lift, bro?"
               }
             ]
@@ -66,18 +65,15 @@ module.exports = {
           "name": "Pauline",                    
           "action": {
             "type": "BATTLE",
+            "sfx": "voice-2.mp3",
             "scenes": [
               {
-                type: "SPEAK_YES_OR_NO",
-                spriteName: "Pauline",
-                "sfx": "voice-3.mp3",
+                "type": "SPEAK_YES_OR_NO",
                 "text": "Are you looking to get your ass kicked?",
                 "pathYes": false,
                 "pathNo": [
                   {
                     "type": "SPEAK",
-                    spriteName: "Pauline",
-                    "sfx": "voice-3.mp3",
                     "text": "That's a shame, honey",                     
                   }
                 ]
@@ -95,15 +91,12 @@ module.exports = {
                 "scenes": [
                   {
                     type: "ANIM",
-                    spriteName: "Pauline",
                     animName: "LEFT_AND_RIGHT",
                     loop: false
                   },
                   { 
                     type: "SPEAK",
-                    spriteName: "Pauline",
                     text: "You'll regret this!",
-                    sfx: "voice-2.mp3"
                   },
                 ]
               },
@@ -112,15 +105,12 @@ module.exports = {
                 "scenes": [
                   {
                     type: "ANIM",
-                    spriteName: "Pauline",
                     animName: "TURN_SINGLE_CIRCLE",
                     loop: false
                   },
                   { 
                     type: "SPEAK",
-                    spriteName: "Pauline",
                     text: "Oh no, I got PWND!!",
-                    sfx: "voice-2.mp3"
                   },
                 ]
               }
@@ -136,11 +126,10 @@ module.exports = {
           "col": 5,
           "action": {
             "type": "TEXT",
+            "sfx": "voice-3.mp3",
             "scenes": [
               {
-                type: "SPEAK",
-                spriteName: "Lisa",
-                "sfx": "voice-2.mp3",
+                "type": "SPEAK",
                 "text": "I ate oysters for breakfast this morning. It was a terrible idea... "
               }
             ]
@@ -155,10 +144,10 @@ module.exports = {
           "col": 22,
           "action": {
             "type": "TEXT",
+            "sfx": "voice-1.mp3",
             "scenes": [
               {
-                type: "SPEAK",
-                spriteName: "Mr. Business",
+                "type": "SPEAK",
                 "sfx": "voice-1.mp3",
                 "text": "I'm working for the corporation. Business business business!"
               }
@@ -191,8 +180,8 @@ module.exports = {
           "type": "TEXT",
           "scenes": [
             {
-              type: "SPEAK",
-              spriteName: "Player",
+              "type": "SPEAK",
+              "spriteName": "Player",
               "sfx": "typing.mp3",
               "text": "Who still uses these things anyway?"
             }
@@ -567,6 +556,7 @@ module.exports = {
                 "col": 3,               
                 "action": {
                   "type": "BATTLE",
+                  "sfx": "voice-1.mp3",
                   "party": [
                     { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },
                     { "name": "Boze Berta", "className": TEST_CLASSNAME_14, "level": 5 },
@@ -574,23 +564,17 @@ module.exports = {
                   ], 
                   "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Boze Bert",
-                      text: "I love fighting man!",
-                      sfx: "voice-2.mp3"
+                      "type": "SPEAK",
+                      "text": "I love fighting man!"
                     },
                     {
-                      type: "SPEAK_YES_OR_NO",
-                      spriteName: "Boze Bert",
-                      text: "Want me to kick your ass?!",
-                      sfx: "voice-2.mp3",
-                      pathYes: false,
-                      pathNo: [
+                      "type": "SPEAK_YES_OR_NO",
+                      "text": "Want me to kick your ass?!",
+                      "pathYes": false,
+                      "pathNo": [
                         {
-                          type: "SPEAK",
-                          spriteName: "Boze Bert",
-                          text: "You're lucky you're a coward!",
-                          sfx: "voice-2.mp3",
+                          "type": "SPEAK",
+                          "text": "You're lucky you're a coward!"
                         }
                       ]
                     }
@@ -601,16 +585,14 @@ module.exports = {
                       "trigger": "ON_BATTLE_START",
                       "scenes": [
                         {
-                          type: "ANIM",
-                          spriteName: "Boze Bert",
-                          animName: "LIFT",
-                          loop: false
+                          "type": "ANIM",
+                          "animName": "LIFT",
+                          "loop": false
                         },
                         { 
-                          type: "SPEAK",
-                          spriteName: "Boze Bert",
-                          text: "You'll regret this!",
-                          sfx: "voice-2.mp3"
+                          "type": "SPEAK",
+                          "text": "You'll regret this!",
+                          "sfx": "battle-baba.mp3"
                         },
                       ]
                     },
@@ -618,16 +600,13 @@ module.exports = {
                       "trigger": "ON_BATTLE_END",
                       "scenes": [
                         {
-                          type: "ANIM",
-                          spriteName: "Boze Bert",
-                          animName: "TURN_SINGLE_CIRCLE",
-                          loop: false
+                          "type": "ANIM",
+                          "animName": "TURN_SINGLE_CIRCLE",
+                          "loop": false
                         },
                         { 
-                          type: "SPEAK",
-                          spriteName: "Boze Bert",
-                          text: "Oh no, I got PWND!!",
-                          sfx: "voice-2.mp3"
+                          "type": "SPEAK",
+                          "text": "Oh no, I got PWND!!"
                         },
                       ]
                     }
@@ -642,8 +621,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                       {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "This is my fridge. Sadly, there's nothing in it..."
                       }
@@ -655,8 +634,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                       {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "I <3 my computer",
                       }
@@ -668,8 +647,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                       {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "I should clean this stove sometime",
                       }

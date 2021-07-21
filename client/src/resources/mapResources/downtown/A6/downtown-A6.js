@@ -24,14 +24,13 @@ module.exports = {
             "direction": "FACING_DOWN",
             "row": 3,
             "col": 13,
-            "name": "Pidgebert thug 1",                     
+            "name": "Pidgebert thug",                     
             "action": {
                 "type": "TEXT",
+                "sfx": "battle-baba.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Pidgebert thug 1",  
-                      "sfx": "voice-1.mp3",
+                      "type": "SPEAK",
                       "text": "If you mess with Pidgebert you mess with me!"
                     }
                 ]
@@ -46,17 +45,14 @@ module.exports = {
             "name": "Pidgebert",                    
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-1.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Pidgebert",
-                      "sfx": "voice-1.mp3",
+                      "type": "SPEAK",
                       "text": "Who you lookin at, shithead?"
                     },
                     {
-                        type: "SPEAK",
-                        spriteName: "Pidgebert",
-                        "sfx": "voice-1.mp3",
+                        "type": "SPEAK",
                         "text": "I'm Pidgebert, the meanest pigeon in town!"
                     }
                 ]
@@ -68,14 +64,13 @@ module.exports = {
             "direction": "FACING_DOWN",
             "row": 3,
             "col": 15,
-            "name": "Pidgebert thug 2",                    
+            "name": "Pidgebert thug",                    
             "action": {
                 "type": "TEXT",
+                "sfx": "battle-baba.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Pidgebert thug 2",  
-                      "sfx": "voice-1.mp3",
+                      "type": "SPEAK",
                       "text": "A powerful pigeon like Pidgebert needs protection."
                     }
                 ]
@@ -85,16 +80,15 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_MOVING,
             "sprite": "pigeon.png",
             "direction": "FACING_LEFT",
-            "name": "Marching pigeon 1",    
+            "name": "Marching pigeon",    
             "row": 5,
             "col": 14,
             "action": {
                 "type": "TEXT",
+                "sfx": "poo-poo.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Marching pigeon 1",     
-                      "sfx": "voice-1.mp3",
+                      "type": "SPEAK",
                       "text": "Pigeons of the world, unite!"
                     }
                 ]
@@ -104,16 +98,15 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_MOVING,
             "sprite": "pigeon.png",
             "direction": "FACING_LEFT",
-            "name": "Marching pigeon 2",    
+            "name": "Marching pigeon",    
             "row": 6,
             "col": 14,
             "action": {
                 "type": "TEXT",
+                "sfx": "poo-poo.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Marching pigeon 2",   
-                      "sfx": "voice-1.mp3",
+                      "type": "SPEAK",
                       "text": "I'm mad as hell and I'm not going to take it anymore"
                     }
                 ]
@@ -123,16 +116,15 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_MOVING,
             "sprite": "pigeon.png",
             "direction": "FACING_LEFT",
-            "name": "Marching pigeon 3",    
+            "name": "Marching pigeon",    
             "row": 7,
             "col": 14,
             "action": {
                 "type": "TEXT",
+                "sfx": "poo-poo.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Marching pigeon 3",    
-                      "sfx": "voice-1.mp3",
+                      "type": "SPEAK",
                       "text": "Proud pigeons far and wide, march with us!"
                     }
                 ]
@@ -147,11 +139,10 @@ module.exports = {
             "col": 3,
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-2.mp3",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Grandma Shanksville",  
-                      "sfx": "voice-2.mp3",
+                      "type": "SPEAK",
                       "text": "Pidgebert is not like other pigeons, if you understand what I mean."
                     }
                 ]

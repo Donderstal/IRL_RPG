@@ -39,8 +39,8 @@ module.exports = {
                 "to": "my-neighbourhood/A2",
                 "scenes": [
                     {
-                      type: "SPEAK",
-                      spriteName: "Player",
+                      "type": "SPEAK",
+                      "spriteName": "Player",
                       "sfx": "typing.mp3",
                       "text": "Shall I take the bus to my neighbourhood?"
                     }

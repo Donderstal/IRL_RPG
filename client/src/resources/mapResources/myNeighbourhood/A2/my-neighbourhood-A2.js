@@ -54,8 +54,8 @@ module.exports = {
               "to": "downtown/A3",
               "scenes": [
                 {
-                  type: "SPEAK",
-                  spriteName: "Player",
+                  "type": "SPEAK",
+                  "spriteName": "Player",
                   "sfx": "typing.mp3",
                   "text": "Shall I take the bus downtown?"
                 }
@@ -73,17 +73,14 @@ module.exports = {
             "col": 5,
             "action": {
               "type": "TEXT",
+              "sfx": "voice-1.mp3",
               "scenes": [
                 {
-                  type: "SPEAK",
-                  spriteName: "Chaddy Chandler",
-                  "sfx": "voice-1.mp3",
+                  "type": "SPEAK",
                   "text": "Could you piss off?"
                 },
                 {
-                  type: "SPEAK",
-                  spriteName: "Chaddy Chandler",
-                  "sfx": "voice-1.mp3",
+                  "type": "SPEAK",
                   "text": "Can't you see I'm minding my own business?"
                 }
               ]
@@ -98,11 +95,10 @@ module.exports = {
             "name": "Patty",
             "action": {
                 "type": "TEXT",
+                "sfx": "poo-poo.mp3",
                 "scenes": [
                   {
-                    type: "SPEAK",
-                    spriteName: "Patty",
-                    "sfx": "poo-poo.mp3",
+                    "type": "SPEAK",
                     "text": "I used to date a level 24 Darkmage."
                   }
                 ]
@@ -117,11 +113,10 @@ module.exports = {
             "col": 19,
             "action": {
                 "type": "TEXT",
+                "sfx": "mauww.mp3",
                 "scenes": [
                   {
-                    type: "SPEAK",
-                    spriteName: "Yung Edgelord",
-                    "sfx": "mauww.mp3",
+                    "type": "SPEAK",
                     "text": "I'm an aspiring ninja, m'lady."
                   }
                 ]
@@ -136,11 +131,10 @@ module.exports = {
             "direction": "FACING_UP",
             "action": {
               "type": "TEXT",
+              "sfx": "typing.mp3",
               "scenes": [
                 {
-                  type: "SPEAK",
-                  spriteName: "Consoombot",   
-                  "sfx": "typing.mp3",
+                  "type": "SPEAK",
                   "text": "Hello, potential customer!"
                 }
               ]
@@ -154,8 +148,8 @@ module.exports = {
         "type": "TEXT",
         "scenes": [
           {
-            type: "SPEAK",
-            spriteName: "Player",
+            "type": "SPEAK",
+            "spriteName": "Player",
             "sfx": "typing.mp3",
             "text": "Who still uses these things anyway?"
           }
@@ -211,11 +205,10 @@ module.exports = {
                   "name": "Hot Hannah",
                   "action": {
                     "type": "TEXT",
+                    "sfx": "poo-poo.mp3",
                     "scenes": [
                       {
-                        type: "SPEAK",
-                        spriteName: "Hot Hannah",   
-                        "sfx": "poo-poo.mp3",
+                        "type": "SPEAK",
                         "text": "There's this weird neckbeard in the back alley trying to connect my to my internet."
                       }
                     ]
@@ -229,8 +222,8 @@ module.exports = {
               "type": "TEXT",
               "scenes": [
                 {
-                  type: "SPEAK",
-                  spriteName: "Player",
+                  "type": "SPEAK",
+                  "spriteName": "Player",
                   "sfx": "typing.mp3",
                   "text": "Is there a used condom in this bin?"
                 }
@@ -283,11 +276,10 @@ module.exports = {
                   "name": "Strange Pete",
                   "action": {
                     "type": "TEXT",
+                    "sfx": "voice-1.mp3",
                     "scenes": [
                       {
-                        type: "SPEAK",
-                        spriteName: "Strange Pete",   
-                        "sfx": "voice-1.mp3",
+                        "type": "SPEAK",
                         "text": "Do you even lift, bro?"
                       }
                     ]
@@ -320,11 +312,10 @@ module.exports = {
                     "name": "Mortimer Richards III",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-3.mp3",
                         "scenes": [
                           {
-                            type: "SPEAK",
-                            spriteName: "Mortimer Richards III",
-                            "sfx": "voice-3.mp3",
+                            "type": "SPEAK",
                             "text": "The Wifi here sucks, man"
                           }
                         ]

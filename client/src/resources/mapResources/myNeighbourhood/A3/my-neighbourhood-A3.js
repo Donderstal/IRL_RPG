@@ -29,10 +29,10 @@ module.exports = {
             "name": "Cocaine Johnny",
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-1.mp3",
                 "scenes": [
                   {
-                    type: "SPEAK",
-                    spriteName: "Cocaine Johnny",
+                    "type": "SPEAK",
                     "sfx": "voice-1.mp3",
                     "text": "I sold my kidneys to pay for my new house."
                   }
@@ -48,12 +48,11 @@ module.exports = {
             "name": "Dirk Chan",
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-1.mp3",
                 "scenes": [
                   {
-                    type: "SPEAK",
-                    spriteName: "Dirk Chan",
-                    "sfx": "voice-1.mp3",
-                    "text": "Bronies are so 2016"
+                    "type": "SPEAK",
+                    "text": "I used to be a Brony, before the Great War"
                   }
                 ]
             }
@@ -67,11 +66,10 @@ module.exports = {
             "name": "Ketamine Kate",
             "action": {
                 "type": "TEXT",
+                "sfx": "voice-3.mp3",
                 "scenes": [
                   {
-                    type: "SPEAK",
-                    spriteName: "Ketamine Kate",
-                    "sfx": "voice-3.mp3",
+                    "type": "SPEAK",
                     "text": "I sold my house to pay for a new pair of kidneys."
                   }
                 ]
@@ -162,11 +160,10 @@ module.exports = {
                     "name": "Monsieur Des Combes",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-1.mp3",
                         "scenes": [
                           {
-                            type: "SPEAK",
-                            spriteName: "Monsieur Des Combes",
-                            "sfx": "voice-1.mp3",
+                            "type": "SPEAK",
                             "text": "Welcome to Hotel Le Canard. May I see your credit rating, please?"
                           }
                         ]
@@ -181,11 +178,10 @@ module.exports = {
                     "name": "Receptionist",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-3.mp3",
                         "scenes": [
                           {
-                            type: "SPEAK",
-                            spriteName: "Receptionist",
-                            "sfx": "voice-3.mp3",
+                            "type": "SPEAK",
                             "text": "Are you sure you're in the right place sir? You look like a hobo."
                           }
                         ]

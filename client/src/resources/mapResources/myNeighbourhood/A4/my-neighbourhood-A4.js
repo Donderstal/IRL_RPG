@@ -80,11 +80,10 @@ module.exports = {
                     "name": "Hot Hannah",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "poo-poo.mp3",
                         "scenes": [
                         {
-                            type: "SPEAK",
-                            spriteName: "Hot Hannah",
-                            "sfx": "poo-poo.mp3",
+                            "type": "SPEAK",
                             "text": "I'll send you nudes if you donate to my patreon."
                         }
                         ]
@@ -135,11 +134,10 @@ module.exports = {
                     "name": "@TheFitGirlGoodLife",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-3.mp3",
                         "scenes": [
                         {
-                            type: "SPEAK",
-                            spriteName: "@TheFitGirlGoodLife",
-                            "sfx": "voice-3.mp3",
+                            "type": "SPEAK",
                             "text": "I'm just here to make some money until my Instagram account takes off."
                         }
                         ]
@@ -154,11 +152,10 @@ module.exports = {
                     "name": "The Dealer",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-1.mp3",
                         "scenes": [
                         {
-                            type: "SPEAK",
-                            spriteName: "The Dealer",
-                            "sfx": "voice-1.mp3",
+                            "type": "SPEAK",
                             "text": "Wanna buy something, nerd?"
                         }
                         ]
@@ -173,11 +170,10 @@ module.exports = {
                     "name": "Small balled Steve",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-1.mp3",
                         "scenes": [
                         {
-                            type: "SPEAK",
-                            spriteName: "Small balled Steve",
-                            "sfx": "voice-1.mp3",
+                            "type": "SPEAK",
                             "text": "The Yum-mart sells the best 'roid in town, man!"
                         }
                         ]
@@ -192,11 +188,10 @@ module.exports = {
                     "name": "Manager Bob",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-2.mp3",
                         "scenes": [
                         {
-                            type: "SPEAK",
-                            spriteName: "Manager Bob",
-                            "sfx": "voice-2.mp3",
+                            "type": "SPEAK",
                             "text": "What could be better than seeing all these happy customers trust our high quality products?"
                         }
                         ]
@@ -211,11 +206,10 @@ module.exports = {
                     "name": "Alana",
                     "action": {
                         "type": "TEXT",
+                        "sfx": "voice-3.mp3",
                         "scenes": [
                         {
-                            type: "SPEAK",
-                            spriteName: "Alana",
-                            "sfx": "voice-3.mp3",
+                            "type": "SPEAK",
                             "text": "I wish we had a better stores than Yum-mart in our neighbourhood."
                         }
                         ]
@@ -229,8 +223,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                     {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
                     }
@@ -242,8 +236,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                     {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "The sign reads: 'Caution! Yum-mart cannot be held responsible for any injuries caused by wet floors.'"
                     }
@@ -255,8 +249,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                     {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "Now on sale: Jen and Berry's ice cream!'"
                     }
@@ -268,8 +262,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                     {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "These veggies don't look that fresh..."
                     }
@@ -281,8 +275,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                     {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "These veggies don't look that fresh..."
                     }
@@ -294,8 +288,8 @@ module.exports = {
                     "type": "TEXT",
                     "scenes": [
                     {
-                        type: "SPEAK",
-                        spriteName: "Player",
+                        "type": "SPEAK",
+                        "spriteName": "Player",
                         "sfx": "typing.mp3",
                         "text": "They're all out of Roditos."
                     }
