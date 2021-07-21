@@ -117,9 +117,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * @param {I_Tile} tile 
      */
     setCharacterSprite( tile ) {
-        const newNPC = new NPC( tile, "STRD" );
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );
-        newNPC.spriteId = newId;
+        const newNPC = new NPC( tile, newId );
         this.allSprites.push( newNPC )
         this.spriteDictionary[newId] = newNPC
         tile.spriteId = newId;

@@ -38,7 +38,7 @@ class MapObject extends Sprite {
         this.type = "object"
 
         if ( this.hasAction ) {
-            this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), tile.spriteData.action )
+            this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), tile.spriteData.action, spriteId )
             this.action = tile.spriteData.action
         }
 

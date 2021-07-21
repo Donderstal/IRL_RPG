@@ -6,29 +6,18 @@ const { Cinematic }     = require('../../cutscenes/Cinematic')
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
  */
 class MapAction extends I_Hitbox {
-    constructor ( x, y, action, speaker = null ) {
-        let radius = globals.GRID_BLOCK_PX / 2;
-        super( x, y, radius )
+    constructor ( x, y, action, spriteId = null ) {
+        super( x, y, globals.GRID_BLOCK_PX / 2 )
 
-        this.name = speaker;
-        this.scenes = action.scenes;
+        Object.keys( action ).forEach( ( key ) => {
+            this[key] = action[key];
+        } )
 
-        if ( action.party ) {
-            this.party = action.party
-        }
-        if ( action.hasEvent ) {
-            this.hasEvent   = true;
-            this.events     = action.events
-        }
-        this.type       = action.type
-        this.text       = action.text
-        this.sfx        = action.sfx
-        this.direction  = action.direction
-        this.to         = action.to
         this.arcColor   = "#FF0000";
-
-        this.needsConfirmation = ( this.type == "BUS" || this.type == "BATTLE" )
+        this.spriteId   = spriteId;
     }
+
+    get needsConfirmation( ) { return this.type == "BUS" || this.type == "BATTLE" ; }
     /**
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */

@@ -25,7 +25,7 @@ const animationList = [
  * NPCs can also have a associated MapAction. If this is the case, a MapAction instance overwrites the I_Hitbox instance in this.hitbox.
  */
 class NPC extends MapSprite {
-    constructor( tile ) {
+    constructor( tile, spriteId ) {
         const hasAction = ( tile.spriteData.action !== undefined );
         let src = '/static/sprites/'+ tile.spriteData.sprite;
         super( tile, "STRD", src )   
@@ -37,9 +37,10 @@ class NPC extends MapSprite {
         this.movementType = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
         this.animationName = tile.spriteData.anim_name == undefined ? false : tile.spriteData.anim_name;
         this.name = tile.spriteData.name
+        this.spriteId = spriteId;
 
         if ( hasAction ) {
-            this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, tile.spriteData.name );
+            this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, spriteId );
             this.action = tile.spriteData.action
             this.action.name = this.name
         }
