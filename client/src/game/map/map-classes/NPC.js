@@ -1,5 +1,3 @@
-const MapSprite     = require('./MapSprite').MapSprite
-const MapAction     = require('./MapAction').MapAction
 const { 
     NPC_ANIM_TYPE_IDLE,
     NPC_ANIM_TYPE_SEMI_IDLE,
@@ -8,9 +6,10 @@ const {
     NPC_ANIM_TYPE_ANIMATION_LOOP,
     NPC_MOVE_TYPE_WALKING
 }  = require('../../../game-data/globals');
-const globals = require('../../../game-data/globals');
-
+const { MapSprite } = require('./MapSprite')
+const { ActionSelector } = require('./ActionSelector')
 const { Counter } = require('../../../helpers/Counter');
+const globals = require('../../../game-data/globals');
 
 const cellRadius = 2;
 const animationList = [
@@ -53,7 +52,7 @@ class NPC extends MapSprite {
         // setting a timeout so the MapAction is instantiated after this sprite is added to FRONT.spritedictionary
         setTimeout( ( ) => { 
             if ( hasAction ) {
-                this.hitbox = new MapAction( this.centerX( ), this.y, tile.spriteData.action, spriteId );
+                this.hitbox = new ActionSelector( this.centerX( ), this.y, tile.spriteData.action, spriteId );
                 this.action = tile.spriteData.action
                 this.action.name = this.name
             }

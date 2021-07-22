@@ -1,12 +1,13 @@
 const globals       = require('../../../game-data/globals')
-const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox
+const { I_Hitbox }     = require('../../interfaces/I_Hitbox')
 const { Cinematic }     = require('../../cutscenes/Cinematic')
+const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
  */
 class MapAction extends I_Hitbox {
-    constructor ( x, y, action, spriteId = null ) {
+    constructor ( x, y, action, spriteId = null, condition = null ) {
         super( x, y, globals.GRID_BLOCK_PX / 2 )
 
         Object.keys( action ).forEach( ( key ) => {
@@ -17,8 +18,12 @@ class MapAction extends I_Hitbox {
         this.spriteId   = spriteId;
 
         this.setScenesNameAndSfx( );
+        if ( condition != null ) {
+            this.conditionType = condition["type"];
+            this.conditionValue = condition["value"];
+        }
     }
-
+    get meetsCondition( ) { return conditionIsTrue( this.conditionType, this.conditionValue ) }
     get needsConfirmation( ) { return this.type == "BUS" || this.type == "BATTLE" ; }
     /**
      * 
@@ -63,7 +68,7 @@ class MapAction extends I_Hitbox {
             case "BUS" :
             case "BATTLE" :
                 this.displayActionText( )
-                break;            
+                break;     
         }
 
         if ( !this.needsConfirmation ) {

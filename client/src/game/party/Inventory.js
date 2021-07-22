@@ -92,7 +92,7 @@ class Inventory {
                 } )
                 break;
         }
-        ItemStack.subtractItem( );
+        this.subtractItemFromStackAtIndex( this.ItemList.indexOf( ItemStack ) )
         return resultText;
     }
     /**

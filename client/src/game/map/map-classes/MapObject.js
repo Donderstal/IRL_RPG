@@ -1,8 +1,8 @@
 const { Sprite }     = require('../../interfaces/I_Sprite')
 const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
-const { MapAction }    = require('./MapAction')
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../../../game-data/globals')
 const { Counter } = require('../../../helpers/Counter')
+const { ActionSelector } = require('./ActionSelector')
 
 const globals       = require('../../../game-data/globals')
 const mapObjectResources = require('../../../resources/mapObjectResources')
@@ -38,7 +38,7 @@ class MapObject extends Sprite {
         this.type = "object"
 
         if ( this.hasAction ) {
-            this.hitbox = new MapAction( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), tile.spriteData.action, spriteId )
+            this.hitbox = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), tile.spriteData.action, spriteId )
             this.action = tile.spriteData.action
         }
 

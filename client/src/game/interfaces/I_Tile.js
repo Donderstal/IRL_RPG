@@ -1,7 +1,7 @@
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } = require('../../game-data/globals')
-const { MapAction } = require('../map/map-classes/MapAction')
 const { Door } = require('../map/map-classes/Door')
-const globals = require('../../game-data/globals')
+const globals = require('../../game-data/globals');
+const { ActionSelector } = require('../map/map-classes/ActionSelector');
 /**
  * The I_Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an I_Grid instance.
@@ -177,7 +177,7 @@ class I_Tile {
      * @param {Object} doorData object from the doors array in the current map
      */
     setAction( actionData ) {
-        this.event = new MapAction( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData );
+        this.event = new ActionSelector( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData );
     }
     /**
      * Set this.hasEvent to false and this.event to null 
