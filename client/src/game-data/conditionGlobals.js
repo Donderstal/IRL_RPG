@@ -9,5 +9,6 @@ module.exports = {
     EVENT_HAS_FIRED: "EHF",
     EVENT_RESPONSE_YES: "ERY",
     EVENT_RESPONSE_NO: "ERN",
+    DEFAULT: "DEF"
 }
 

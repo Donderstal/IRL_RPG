@@ -1,11 +1,13 @@
-const myNeighbourhood    = require( './mapResources/myNeighbourhood/my-neighbourhood' );
+const myNeighbourhood   = require( './mapResources/myNeighbourhood/my-neighbourhood' );
 const downtown          = require( './mapResources/downtown/downtown' );
 const battle            = require( './mapResources/battle/battleMaps' );
+const test              = require( './mapResources/test/test' );
 
 const mapResources = {
     "my-neighbourhood" :    myNeighbourhood,
     "downtown":             downtown,
     "battle":               battle,
+    "test":                 test
 }
 
 const getMapData = ( fullMapName ) => {
