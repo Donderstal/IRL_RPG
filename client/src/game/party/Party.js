@@ -34,7 +34,7 @@ class Party {
     }
 
     get Level( ) { 
-        let counter;
+        let counter = 0;
         this.members.forEach( ( member ) => {
             counter += member.Level
         } )
