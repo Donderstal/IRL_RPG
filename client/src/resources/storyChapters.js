@@ -1,4 +1,4 @@
-const chapterEvents = [
+const storyChapters = [
     // Chapter 0
     [
         // C 0, Scene 0
@@ -51,5 +51,5 @@ const chapterEvents = [
 ]
 
 module.exports = {
-    chapterEvents
+    storyChapters
 }
