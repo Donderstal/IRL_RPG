@@ -7,13 +7,13 @@ const chapterEvents = [
                 mapName: "my-neighbourhood/A1",
                 trigger: "ON_ENTER",
                 passScene: false,
-                scriptId: "C0_S0_E0"
+                scriptId: "0_0_0"
             },
             {
                 mapName: "my-neighbourhood/A2",
                 trigger: "ON_ENTER",
                 passScene: true,
-                scriptId: "C0_S0_E1"
+                scriptId: "0_0_1"
             }  
         ],
         // C 0, Scene 1
@@ -22,7 +22,7 @@ const chapterEvents = [
                 mapName: "my-neighbourhood/A3",
                 trigger: "ON_LEAVE",
                 passScene: true,
-                scriptId: "C0_S1_E0"
+                scriptId: "0_1_0"
             }
         ],
         // C 0, Scene 2
@@ -35,7 +35,7 @@ const chapterEvents = [
                     "direction": "FACING_RIGHT"
                 },
                 passScene: true,
-                scriptId: "C0_S2_E0"
+                scriptId: "0_2_0"
             }
         ],
         // C 0, Scene 3
@@ -44,7 +44,7 @@ const chapterEvents = [
                 mapName: "my-neighbourhood/A4/yum-mart",
                 trigger: "ON_ENTER",
                 passScene: false,
-                scriptId: "C0_S3_E0"
+                scriptId: "0_3_0"
             }
         ]         
     ]
