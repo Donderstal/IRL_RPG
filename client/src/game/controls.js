@@ -1,9 +1,10 @@
 const globals = require('../game-data/globals')
 const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
 const { initGameMenu, unsetGameMenu } = require('./MainMenu')
-const { handleMapKeyPress, handleMovementKeys } = require('./map/mapControls')
+const { handleMapKeyPress } = require('./map/mapControls')
 const { handleMenuKeyPress } = require('./menu/menuControls');
 const { handleBattleKeyPress } = require('./battle/battleControls');
+const { INTERACTION_YES, INTERACTION_NO } = require('../game-data/interactionGlobals');
 
 /**
  * Add keydown listener with addKeyPressed callback. Add keyup listener with removeKeyFromPressed callback.
@@ -32,34 +33,37 @@ const stopListenForKeyPress = ( ) => {
  */
 const addKeyToPressed = ( ) => {
     event.preventDefault( );
+    const GAME = globals.GAME
 
     if ( event.key == "Tab" ) {
-        globals.GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
+        GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }
 
-    if ( globals.GAME.mode == MAP_MODE && !globals.GAME.inMenu && !globals.GAME.inCinematic ) {
+    if ( GAME.mode == MAP_MODE && !GAME.inMenu && !GAME.inCinematic ) {
         handleMapKeyPress( event )
     }
-    else if ( globals.GAME.mode == BATTLE_MODE && !globals.GAME.inMenu && !globals.GAME.inCinematic  ) {
+    else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu && !GAME.inCinematic  ) {
         handleBattleKeyPress( event )
     }
-    else if ( globals.GAME.inCinematic ) {
-        if ( event.key == " " && globals.GAME.bubbleIsActive ) {
-            if ( globals.GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
-                globals.GAME.activeCinematic.activeScene.setSelection( "YES" )                
+    else if ( GAME.inCinematic ) {
+        if ( event.key == " " && GAME.bubbleIsActive ) {
+            if ( GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
+                GAME.activeAction.registerSelection( INTERACTION_YES );
+                GAME.activeCinematic.activeScene.setSelection( "YES" )  ;              
             }
-            globals.GAME.activeBubble = {}
-            globals.GAME.bubbleIsActive = false
+            GAME.activeBubble = {}
+            GAME.bubbleIsActive = false
         }
-        else if ( event.key == "z" && globals.GAME.bubbleIsActive && globals.GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
-            globals.GAME.activeCinematic.activeScene.setSelection( "NO" )
-            globals.GAME.activeBubble = {}
-            globals.GAME.bubbleIsActive = false
+        else if ( event.key == "z" && GAME.bubbleIsActive && GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
+            GAME.activeAction.registerSelection( INTERACTION_NO );
+            GAME.activeCinematic.activeScene.setSelection( "NO" )
+            GAME.activeBubble = {}
+            GAME.bubbleIsActive = false
         }
 
 
     }
-    else if ( globals.GAME.inMenu ) {
+    else if ( GAME.inMenu ) {
         handleMenuKeyPress( event );
     }
 }

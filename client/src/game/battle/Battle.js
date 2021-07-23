@@ -359,7 +359,7 @@ class Battle {
     }
 
     endBattle( ) {
-        globals.GAME.clearBattleData( );
+        globals.GAME.clearBattleData( this.playerParty.isDefeated );
     }
 
     setBattleSlotsInOrder( ) {

@@ -300,13 +300,13 @@ class Game {
      * Clear battle data,  redraw the active map background.
      * Then activate overWorldAnimation.
      */
-    clearBattleData( ) {
+    clearBattleData( playerLostBattle ) {
         this.battle = [];
         this.clearCanvases( );
         this.BACK.clearBattleMap( );
         this.FRONT.clearBattleMap( );
         this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + tilesheets[this.activeMap.tileSet].src] );
-        this.activeAction.checkForEventOnBattleEnd( );
+        this.activeAction.checkForEventOnBattleEnd( playerLostBattle );
         this.activeAction = null;
         animationFrameController.startOverworldAnimation( );   
     }

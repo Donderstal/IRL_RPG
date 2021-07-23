@@ -74,6 +74,9 @@ class Cinematic {
             else if ( this.trigger == "ON_NPC_INTERACTION" && globals.GAME.activeAction != null && globals.GAME.activeAction.needsConfirmation ) {
                 globals.GAME.activeAction.confirm( );
             }
+            else if ( this.trigger == "ON_NPC_INTERACTION" && globals.GAME.activeAction != null && !globals.GAME.activeAction.needsConfirmation ) {
+                globals.GAME.activeAction.dismiss( );
+            }
         }
     }
     handleYesOrNoScene( ) {
@@ -84,7 +87,6 @@ class Cinematic {
                 break;
             case "NO" :
                 scenesToAdd = this.activeScene.pathNo;
-                globals.GAME.activeAction.dismiss( );
                 break;
             default:
                 console.log("Selection has invalid value: " + this.activeScene.selection)

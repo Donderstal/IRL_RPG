@@ -31,11 +31,19 @@ class ActionSelector {
         this.activeAction.checkForBlockedRange( )
     }
 
+    registerSelection( selection ) {
+        this.activeAction.registerSelection( selection )
+    }
+
     handle( ) {
         this.activeAction.handle( );
     }
 
     confirm( ) {
+        this.activeAction.dismiss( );
+    }
+
+    dismiss( ) {
         this.activeAction.dismiss( );
     }
 
