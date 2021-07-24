@@ -1,6 +1,4 @@
-  
-const globals           = require('./globals')
-const { progressStory } = require('./storyProgression')
+const globals           = require('../game-data/globals')
 
 /**
  * @param {string} TRIGGER - Trigger type as a string
@@ -14,18 +12,18 @@ const { progressStory } = require('./storyProgression')
  */
 
 const triggerEvent = ( TRIGGER, args = null ) => {
-    globals.GAME.activeMap.scriptedEvents.forEach( (e) => {
+    globals.GAME.story.sceneEvents.forEach( (e) => {
         if ( TRIGGER == e.trigger && TRIGGER != "ON_POSITION" ) {
             e.fireEvent( args );
             if ( e.passScene ) {
-                progressStory( );                
+                globals.GAME.story.goToNextSceneEvent( );               
             }
         }
         else if ( TRIGGER == e.trigger && TRIGGER == "ON_POSITION" ) {
             if ( triggerOnPosition( e ) ) {
                 e.fireEvent( );
                 if ( e.passScene ) {
-                    progressStory( );                
+                    globals.GAME.story.goToNextSceneEvent( );                
                 }
             }
         }
