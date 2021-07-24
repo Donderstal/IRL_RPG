@@ -16,6 +16,10 @@ const handleMapAnimations = ( GAME ) => {
     drawSpritesInOrder( GAME )
 
     clearMargins( GAME );      
+
+    GAME.BACK.backgroundActions.forEach( ( e ) => { 
+        e.updateXy( e.x, e.y )
+    })
     
     if ( GAME.FRONT.roads.length > 0 ) {
         if ( carCounter.countAndCheckLimit( ) ) {

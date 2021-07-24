@@ -9,6 +9,7 @@ const { I_Grid } = require('./interfaces/I_Grid');
 class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
+        this.backgroundActions = [];
     };
     /**
      * Assign given string as value for the this.mapName prop
@@ -73,13 +74,15 @@ class BackgroundCanvas extends I_CanvasWithGrid {
                 this.doors.forEach( ( door ) => {
                     if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
                         tile.setEventData( "DOOR", door );
+                        this.backgroundActions.push( tile.event )
                     }
                 })                
             }
             if ( this.hasActions ) {
                 this.actions.forEach( ( action ) => {
-                    if ( tile.row == action.row && tile.col == action.col && !action.isSet ) {
+                    if ( tile.row == action[0].row && tile.col == action[0].col && !action.isSet ) {
                         tile.setEventData( "ACTION", action );
+                        this.backgroundActions.push( tile.event )
                     }
                 })                
             }
@@ -120,6 +123,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.actions = { };
         this.hasActions = false;
         this.blockedTiles = [ ];
+        this.backgroundActions = [];
     }
 };
 
