@@ -9,6 +9,7 @@ class ScriptedEvent {
         this.passScene      = scriptedEventData.passScene;
 
         this.eventScript    = eventScript;
+        this.eventId        = eventScript.name;
         this.fired          = false;
 
         if ( scriptedEventData.trigger == "ON_POSITION" ) {

@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### JUL 22, 2021
+* Moved storyprogression code to a new StoryProgression class
+
+#### JUL 22, 2021
 * Implemented ActionSelector class for conditional events
 
 #### JUL 21, 2021

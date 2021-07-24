@@ -14,12 +14,11 @@ const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
 const { Battle } = require('./battle/Battle')
-const { startNewStory, getScriptedEventsForMap } = require('../game-data/storyProgression')
-const { triggerEvent } = require('../game-data/triggerEvents')
+const { triggerEvent } = require('../helpers/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
 const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
 const { setLoadingScreen } = require('./LoadingScreen')
-
+const { StoryProgression } = require('../helpers/StoryProgression')
 const firstMapUrl =  'my-neighbourhood/A1/my-house';
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
@@ -38,6 +37,7 @@ class Game {
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
         this.sound = new SoundController( );
+        this.story;
 
         this.activeBubble = { }
         this.activeText = "";
@@ -162,7 +162,7 @@ class Game {
         mapData.playerStart.name = name;
         this.loadMapToCanvases( mapData, true );
         if ( !this.disableStoryMode ) {
-            startNewStory( );            
+            this.story = new StoryProgression( );     
         }
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
@@ -251,7 +251,7 @@ class Game {
         this.setPlayerInNewMap( newMapData, type );
         this.storeMapData( newMapData, destination );
         if ( !this.disableStoryMode ) {
-            getScriptedEventsForMap( this.activeMapName );            
+            this.story.getScriptedEventsForMap( this.activeMapName );            
         }
 
         setTimeout( ( ) => {

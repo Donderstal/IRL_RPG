@@ -1,7 +1,7 @@
 const movement          = require('./map-ui/movement')
 const actionController  = require('./map-ui/actionController')
 const globals           = require('../../game-data/globals');
-const { triggerEvent } = require('../../game-data/triggerEvents');
+const { triggerEvent } = require('../../helpers/triggerEvents');
 /**
  * Check the event.key prop and prevent its default.
  * If it is the spacebar, call handleActionButton() from the actionController.

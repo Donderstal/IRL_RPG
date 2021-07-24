@@ -37,7 +37,6 @@ class StoryProgression {
     }
 
     goToNextSceneEvent( ) {
-        console.log(this.activeEventId)
         if ( this.activeEventIndex + 1 == this.sceneEvents.length ) {
             this.goToNextScene( )
         }
@@ -57,7 +56,6 @@ class StoryProgression {
     }
 
     goToNextChapter( ) {
-        console.log(this.activeEventId)
         this.activeChapterIndex++
         this.activateCurrentChapter( );
     }
