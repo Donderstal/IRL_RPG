@@ -24,7 +24,7 @@ class ActionSelector {
     }
 
     checkForActionRange( ) {
-        this.activeAction.checkForActionRange( )
+        this.activeAction.checkForActionRange( )      
     }
 
     checkForBlockedRange( ) {

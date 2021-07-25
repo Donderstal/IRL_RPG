@@ -355,7 +355,7 @@ class Game {
                 break;
             case 'BUS' :
                 mapData.mapObjects.forEach( ( object ) => {
-                    if ( object.action != undefined && object.action.type == "BUS" ) {
+                    if ( object.action != undefined && object.action[0].action.type == "BUS" ) {
                         newPlayerCell.row = object.row;
                         newPlayerCell.col = object.col;
                     }

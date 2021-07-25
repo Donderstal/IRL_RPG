@@ -82,7 +82,7 @@ class MapAction extends I_Hitbox {
             case "BUS" :
                 globals.GAME.switchMap( this.to, "BUS" );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
-                this.dismiss( );
+                globals.GAME.activeAction = null;
                 break;
             case "BATTLE" : 
                 if ( this.hasEvent ) {

@@ -71,10 +71,7 @@ class Cinematic {
             else if ( this.trigger == "ON_BATTLE_START" ) {
                 globals.GAME.initializeBattle( this.args[0], this.args[1] );
             }
-            else if ( this.trigger == "ON_NPC_INTERACTION" && globals.GAME.activeAction != null && globals.GAME.activeAction.needsConfirmation ) {
-                globals.GAME.activeAction.confirm( );
-            }
-            else if ( this.trigger == "ON_NPC_INTERACTION" && globals.GAME.activeAction != null && !globals.GAME.activeAction.needsConfirmation ) {
+            else if ( this.trigger == "ON_NPC_INTERACTION" && globals.GAME.activeAction != null ) {
                 globals.GAME.activeAction.dismiss( );
             }
         }
