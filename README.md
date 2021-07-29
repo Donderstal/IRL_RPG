@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### JUL 25, 2021
+* Added locking / unlocking doors
+
+#### JUL 25, 2021
 * Bugfixing new interaction system
 * Updated existing interactions
 

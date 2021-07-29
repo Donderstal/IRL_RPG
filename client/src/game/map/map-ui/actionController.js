@@ -27,7 +27,7 @@ const handleActionButton = ( ) => {
     if ( currentPlayerTileFront.hasSprite && spritesById[currentPlayerTileFront.spriteId].action != undefined ) {
         GAME.activeAction = spritesById[currentPlayerTileFront.spriteId].hitbox
     }
-    else if ( nextPlayerTileFront.hasSprite && spritesById[nextPlayerTileFront.spriteId].action != undefined ) {
+    else if ( nextPlayerTileFront != undefined && nextPlayerTileFront.hasSprite && spritesById[nextPlayerTileFront.spriteId].action != undefined ) {
         GAME.activeAction = spritesById[nextPlayerTileFront.spriteId].hitbox
     }
     else if ( currentPlayerTileBack.hasEvent ) {
