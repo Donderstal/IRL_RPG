@@ -1,11 +1,12 @@
+const { ITEM_OWNED, EVENT_HAS_FIRED } = require('../../../../game-data/conditionGlobals');
 const { 
-  NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING,
-  TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
+  NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING
  } = require('../../../../game-data/globals');
+const { LOGGABLE_INTERACTION_1 } = require('../../../../game-data/interactionGlobals');
 
 const {
   A1_MY_HOUSE_COMPUTER_ACTION, A1_MY_HOUSE_FRIDGE_ACTION, A1_MY_HOUSE_STOVE_ACTION,
-  A1_LIFTING_CHAD, A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT
+  A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT
 } = require('./interactions');
 
 module.exports = {
@@ -386,12 +387,16 @@ module.exports = {
                 },
             "doors": [ 
                 {
-                    "row": 8, 
-                    "col": 2,
-                    "to"  : "my-neighbourhood/A1",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
-                    "locked": false
+                  "condition" : {
+                    "type": EVENT_HAS_FIRED,
+                    "value": LOGGABLE_INTERACTION_1
+                  },
+                  "row": 8, 
+                  "col": 2,
+                  "from" : "my-neighbourhood/A1/my-house",
+                  "to"  : "my-neighbourhood/A1",
+                  "directionIn": "FACING_DOWN",
+                  "directionOut": "FACING_UP",
                 }
             ],
             "characters" : [

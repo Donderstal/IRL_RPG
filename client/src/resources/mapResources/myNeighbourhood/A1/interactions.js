@@ -1,7 +1,8 @@
 const { 
   TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
  } = require('../../../../game-data/globals')
-const { DEFAULT } = require('../../../../game-data/conditionGlobals')
+const { DEFAULT } = require('../../../../game-data/conditionGlobals');
+const { LOGGABLE_INTERACTION_1 } = require('../../../../game-data/interactionGlobals');
 const A1_MY_HOUSE_COMPUTER_ACTION = [ 
   { 
     "row": 6, "col": 1,
@@ -154,6 +155,8 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
       "type": DEFAULT
     },
     "action": {
+      "shouldBeRegistered": true,
+      "registryKey": LOGGABLE_INTERACTION_1,
       "type": "BATTLE",
       "sfx": "voice-1.mp3",
       "party": [
@@ -162,10 +165,10 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
         { "name": "Duifje", "className": TEST_CLASSNAME_15, "level": 5 },
       ], 
       "scenes": [
-        { "type": "SPEAK", "text": "I love fighting man!" },
+        { "type": "SPEAK", "text": "I locked the door. You'll never get out again!" },
         {
           "type": "SPEAK_YES_OR_NO",
-          "text": "Want me to kick your ass?!",
+          "text": "Wanna throw hands about it?",
           "pathYes": false,
           "pathNo": [
             { "type": "SPEAK", "text": "You're lucky you're a coward!" }
@@ -185,7 +188,7 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
           "trigger": "ON_BATTLE_END",
           "scenes": [
             { "type": "ANIM", "animName": "TURN_SINGLE_CIRCLE", "loop": false },
-            { "type": "SPEAK", "text": "Oh no, I got PWND!!" }
+            { "type": "SPEAK", "text": "Ok ok, I'll unlock the door..." }
           ]
         }
       ]
