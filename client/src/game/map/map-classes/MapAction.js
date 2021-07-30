@@ -4,6 +4,7 @@ const { Cinematic }     = require('../../cutscenes/Cinematic')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { addEventToRegistry } = require('../../../helpers/interactionRegistry');
 const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
+const { Inventory } = require('../../party/Inventory');
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
@@ -19,15 +20,27 @@ class MapAction extends I_Hitbox {
         this.arcColor   = "#FF0000";
         this.spriteId   = spriteId;
         this.registeredSelection = false;
+        this.confirmingAction    = false;
 
         this.setScenesNameAndSfx( );
         if ( condition != null ) {
             this.conditionType = condition["type"];
             this.conditionValue = condition["value"];
         }
+        if ( this["available_items"] ) {
+            this.inventory = new Inventory( );
+            this.idList = [];
+            Object.keys( this["available_items"] ).forEach( ( itemID ) => {
+                let item = this["available_items"][itemID]
+                for ( var i = 0; i < item.amount; i++ ) {
+                    this.idList.push( item.id );
+                }
+            } )
+            this.inventory.addItemsToInnerListByID( this.idList );
+        }
     }
     get meetsCondition( ) { return conditionIsTrue( this.conditionType, this.conditionValue ) }
-    get needsConfirmation( ) { return this.type == "BUS" || this.type == "BATTLE" ; }
+    get needsConfirmation( ) { return this.type == "BUS" || this.type == "BATTLE" || this.type == "SHOP"; }
     /**
      * 
      */
@@ -66,18 +79,13 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) {
-        switch ( this.type ) {
-            case "TEXT" :
-            case "BUS" :
-            case "BATTLE" :
-                this.displayActionText( )
-                break;     
-        }
+        this.displayActionText( )
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered
      */
     confirm( ) {
+        this.confirmingAction = true;
         switch ( this.type ) {
             case "BUS" :
                 globals.GAME.switchMap( this.to, "BUS" );
@@ -95,14 +103,18 @@ class MapAction extends I_Hitbox {
                 else {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
+            case "SHOP" :
+                console.log( this.inventory )
+                this.dismiss( );
         }
     }
 
     dismiss( ) {
-        if ( this.needsConfirmation && this.registeredSelection == INTERACTION_YES ) {
+        if ( this.needsConfirmation && this.registeredSelection == INTERACTION_YES && !this.confirmingAction ) {
             this.confirm( )
         }
         else {
+            this.confirmingAction = false;
             globals.GAME.activeAction = null;
             this.addEventToRegistry( );            
         }
