@@ -5,6 +5,7 @@ const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { addEventToRegistry } = require('../../../helpers/interactionRegistry');
 const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
 const { Inventory } = require('../../party/Inventory');
+const { initShopMenu } = require('../map-ui/ShopMenu');
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
@@ -104,8 +105,7 @@ class MapAction extends I_Hitbox {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
             case "SHOP" :
-                console.log( this.inventory )
-                this.dismiss( );
+                initShopMenu( );
         }
     }
 

@@ -10,7 +10,8 @@ class ActionSelector {
         this.initializeConditionList( x, y, actionList, spriteId );
     }
 
-    get action( ) { return this.activeAction };
+    get action( ) { return this.activeAction; };
+    get inventory( ) { return this.activeAction.inventory; };
 
     draw( ) {
         this.activeAction.draw( );
