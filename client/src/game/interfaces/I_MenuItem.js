@@ -31,7 +31,7 @@ class MenuItem {
         if ( this.isActive ) {
             drawRect( "FRONT", this.x + ( LARGE_FONT_LINE_HEIGHT / 8 ), this.y + ( LARGE_FONT_LINE_HEIGHT / 8), this.width, this.height, this.activeButtonColor )
         }
-        if ( this.type == "INVENTORY" ) {
+        if ( this.type == "INVENTORY" || this.type == "BUY" || this.type == "SELL" ) {
             drawFromImageToCanvas( 
                 "FRONT", this.content.Item.Image, 
                 0, 0, 807, 806, 
@@ -46,7 +46,7 @@ class MenuItem {
                 this.x + LARGE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, this.y + LARGE_FONT_LINE_HEIGHT, 
                 LARGE_FONT_SIZE 
             );            
-            if ( this.type == "STATUS" ) {
+            if ( this.type == "STATUS" || this.type == "EQUIP" ) {
                 writeTextLine( 
                     this.subText, 
                     this.x + ( LARGE_FONT_LINE_HEIGHT * 3 ), this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), 
@@ -112,7 +112,9 @@ class MenuItem {
             case "SELECT_MOVE":
                 this.displayText = this.content.Name != undefined ? this.content.Name : this.content["NAME"];
                 break;
-            case "INVENTORY":
+            case "INVENTORY": 
+            case "BUY":
+            case "SELL":
                 this.displayText = this.content.Quantity + "x - " + this.content.Item.Name 
                 break;
             case "GAME":
@@ -122,6 +124,7 @@ class MenuItem {
                 this.displayText = this.content.Name;
                 break;
             case "STATUS":
+            case "EQUIP":
                 this.displayText = this.content.equipmentType
                 this.subText     = this.content.item == null ? "none" : this.content.item.Name;
                 break;

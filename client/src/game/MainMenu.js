@@ -46,7 +46,6 @@ class MainMenu extends I_Menu {
     get currentTextMenuButtonHints( ) {
         const buttonHints = [...this.textMenuButtonHints];
         const subMenuOptions = this.ACTIVE_TAB.itemSubMenu.activeOptions
-        console.log(this.ACTIVE_TAB)
         if ( subMenuOptions ) {
             subMenuOptions.forEach( ( e, index ) => {
                 buttonHints.push( this.uniqueTextMenuButtonHints[index] + " - " + e )
@@ -128,7 +127,9 @@ class MainMenu extends I_Menu {
             return;
         }
         if ( this.ACTIVE_TAB.tabName != "MAP" ) {
-            this.activeTabIndexes[this.ACTIVE_TAB.tabName] = this.ACTIVE_TAB.tabName == "STATUS" ? this.ACTIVE_TAB.activeCharacterIndex : this.ACTIVE_TAB.activeButton
+            this.activeTabIndexes[this.ACTIVE_TAB.tabName] = this.ACTIVE_TAB.tabName == "STATUS" || this.ACTIVE_TAB.tabName == "EQUIP" 
+                ? this.ACTIVE_TAB.activeCharacterIndex 
+                : this.ACTIVE_TAB.activeButton
         }
     
         this.ACTIVE_TAB.unsetButtons( )
@@ -147,5 +148,6 @@ class MainMenu extends I_Menu {
 
 module.exports = {
     initGameMenu,
-    unsetGameMenu
+    unsetGameMenu,
+    MainMenu
 }

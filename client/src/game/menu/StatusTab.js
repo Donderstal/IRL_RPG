@@ -13,8 +13,8 @@ const {
  * The player can scroll between different characters and equip or unequip items.
  */
 class StatusMenuTab extends MenuTab {
-    constructor( ) {
-        super( "STATUS", "VERT", 6 )
+    constructor( isShopMenu ) {
+        super( isShopMenu ? "EQUIP" : "STATUS", "VERT", 6 )
         this.setButtonHeight( this.height / 6 );
         this.setButtonWidth( this.width / 5 );
         this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "RETURN" ];

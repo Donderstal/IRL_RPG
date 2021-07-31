@@ -5,11 +5,12 @@ const globals = require('../../game-data/globals')
  * Items can be equipped, used or discarded.
  */
 class InventoryMenuTab extends MenuTab {
-    constructor( ) {
-        super( "INVENTORY", "VERT_HORI", 20 )
+    constructor( inShopMenu = false, inBuyingScreen = false ) {
+        super( inShopMenu ? inBuyingScreen ? "SELL" : "BUY"  : "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 3 );
-        this.itemSubMenuOptions = [ "USE", "EQUIP", "DISCARD", "RETURN" ]
+        this.itemSubMenuOptions = inShopMenu ? inBuyingScreen ? [ "SELL" ] : [ "BUY" ] : [ "USE", "EQUIP", "DISCARD", "RETURN" ]
+        this.inventorySource = inShopMenu && !inBuyingScreen ? globals.GAME.activeAction.inventory : globals.GAME.PLAYER_INVENTORY;
         this.activeOption;
     }
     /**
@@ -23,7 +24,7 @@ class InventoryMenuTab extends MenuTab {
             this.buttons = [];            
         }
 
-        const activeItems = globals.GAME.PLAYER_INVENTORY.activeItems;        
+        const activeItems = this.inventorySource.activeItems;        
         if ( this.activeButton >= activeItems.length ) {
             this.activeButton = activeItems.length - 1;
         }

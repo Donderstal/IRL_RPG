@@ -35,7 +35,7 @@ const handleLeft = ( activeTab ) => {
     else if ( activeTab.tabName == "MEMBERS" ) {
         activeTab.activateButton( "PREVIOUS" );
     }
-    else if ( activeTab.tabName == "STATUS" ) {
+    else if ( activeTab.tabName == "STATUS" || activeTab.tabName == "EQUIP" ) {
         activeTab.setButtons( 
             getPreviousIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
         );
@@ -54,7 +54,7 @@ const handleRight = ( activeTab ) => {
     else if ( activeTab.tabName == "MEMBERS" ) {
         activeTab.activateButton( "NEXT" );
     }
-    else if ( activeTab.tabName == "STATUS" ) {
+    else if ( activeTab.tabName == "STATUS" || activeTab.tabName == "EQUIP" ) {
         activeTab.setButtons( 
             getNextIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
         );
@@ -70,7 +70,7 @@ const handleRight = ( activeTab ) => {
  */
 const scrollBetweenItemColumns = ( activeTab ) => {
     const availablePlayerItems = globals.GAME.PLAYER_INVENTORY.activeItems;
-    if ( activeTab.tabName == "INVENTORY" && availablePlayerItems.length > 10 && !activeTab.modal ) {
+    if ( ( activeTab.tabName == "INVENTORY" || activeTab.tabName =="BUY" || activeTab.tabName =="SELL" ) && availablePlayerItems.length > 10 && !activeTab.modal ) {
         if ( activeTab.activeButton < 10 && availablePlayerItems[ activeTab.activeButton + 10 ] != undefined ) {
             activeTab.activateButton( activeTab.activeButton + 10 );
         }

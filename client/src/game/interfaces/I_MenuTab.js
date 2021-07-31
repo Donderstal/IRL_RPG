@@ -93,6 +93,7 @@ class MenuTab {
     setActiveItemAndDescription( ) {
         switch( this.tabName ) {
             case "STATUS": 
+            case "EQUIP": 
                 this.activeItem = this.buttons[this.activeButton].content.equipmentType;
                 this.description = "Equip something to your " + this.activeItem + " slot.";
                 break;
@@ -101,6 +102,8 @@ class MenuTab {
                 this.description = "";
                 break;
             case "INVENTORY": 
+            case "BUY":
+            case "SELL":
                 this.activeItem = this.buttons[this.activeButton].content.Item;
                 this.description = this.activeItem.Description;
                 break;
@@ -130,6 +133,7 @@ class MenuTab {
     doCurrentSubMenuAction( ) {
         switch( this.tabName ) {
             case "STATUS": 
+            case "EQUIP": 
                 if ( this.activeOption == "EQUIP" ) {
                     this.setModal( "Choose and item to equip to " + this.activeCharacter.Name, this.activeOption )
                 }
@@ -157,6 +161,16 @@ class MenuTab {
                     this.setModal( "Throw away a" + this.activeItem.Name + "? This action can not be reversed!", this.activeOption );
                 }
                 break;
+            case "SELL":
+                if ( this.activeOption == "SELL" ) {
+                    alert("Sell!")
+                    console.log(this.activeItem)
+                } 
+            case "BUY":
+                if ( this.activeOption == "BUY" ) {
+                    alert("Buy!")
+                    console.log(this.activeItem)
+                } 
             case "MAP":
             case "GAME":
                 break;
