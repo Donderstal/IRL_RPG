@@ -9,7 +9,7 @@ class InventoryMenuTab extends MenuTab {
         super( inShopMenu ? inBuyingScreen ? "SELL" : "BUY"  : "INVENTORY", "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 3 );
-        this.itemSubMenuOptions = inShopMenu ? inBuyingScreen ? [ "SELL" ] : [ "BUY" ] : [ "USE", "EQUIP", "DISCARD", "RETURN" ]
+        this.itemSubMenuOptions = inShopMenu ? inBuyingScreen ? [ "Remove from selling list", "Confirm sell" ] : [ "Remove from buying List", "Confirm buy" ] : [ "USE", "EQUIP", "DISCARD", "RETURN" ]
         this.inventorySource = inShopMenu && !inBuyingScreen ? globals.GAME.activeAction.inventory : globals.GAME.PLAYER_INVENTORY;
         this.activeOption;
     }

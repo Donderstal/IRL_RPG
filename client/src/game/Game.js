@@ -19,7 +19,8 @@ const { TypeWriter } = require('../helpers/TypeWriter')
 const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
 const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
-const firstMapUrl =  'my-neighbourhood/A1/my-house';
+
+const firstMapUrl =  'test/test-actions';
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -180,6 +181,7 @@ class Game {
             ], 
         true );
         this.party.addItemsToInventory( startingItemIDs )
+        this.party.inventory.addMoney( 50 );
     }
     /**
      * Start listening for keypress in controls.js. Start requesting animationframe in animationframecontroller.js

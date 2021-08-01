@@ -38,6 +38,7 @@ class MapAction extends I_Hitbox {
                 }
             } )
             this.inventory.addItemsToInnerListByID( this.idList );
+            this.inventory.addMoney( this["money"] )
         }
     }
     get meetsCondition( ) { return conditionIsTrue( this.conditionType, this.conditionValue ) }

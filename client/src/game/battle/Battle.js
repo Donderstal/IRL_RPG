@@ -325,9 +325,11 @@ class Battle {
 
     handleBattleEnd( ) {
         this.resultTextIndex = -1;
+        let moneyFromBattle = Math.floor( Math.random( ) * 100 )
         this.resultText = [
-            "You get " + Math.floor( Math.random( ) * 100 ) + " Euros."
+            "You get " + moneyFromBattle + " Euros."
         ]
+        this.playerParty.inventory.addMoney( moneyFromBattle );
 
         if ( Math.floor( Math.random( ) * 100 ) > 49 ) {
             let item = getRandomItemOfType( ITEM_CATEGORY_CONSUMABLE );

@@ -10,10 +10,21 @@ class Inventory {
     constructor( ) {
         this.ItemList = [];
         this.ActiveItemIDs = [];
+        this.Money = 0;
     }
 
     get activeItems( ) { return this.ItemList.filter( ( Item ) => { return Item.Quantity > 0 } ) };
     get itemsAvailableInBattle( ) { return this.activeItems.filter( ( ItemStack ) => { return ItemStack.Item.canBeUsed } ) };
+
+    addMoney( value ) {
+        this.Money += value;
+    }
+    subtractMoney( value ) {
+        this.Money -= value;
+    }
+    canSpendAmount( amount ) {
+        return amount <= this.Money
+    }
     /**
      * Return true if the given String is in this.ActiveItemIDs.
      * @param {String} itemID 
