@@ -31,11 +31,28 @@ class MenuItem {
         if ( this.isActive ) {
             drawRect( "FRONT", this.x + ( LARGE_FONT_LINE_HEIGHT / 8 ), this.y + ( LARGE_FONT_LINE_HEIGHT / 8), this.width, this.height, this.activeButtonColor )
         }
+
+        if ( this.type == "BUY" ) {
+            writeTextLine( 
+                " €" + this.content.Item.Price, 
+                this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 2 ) ), this.y + LARGE_FONT_LINE_HEIGHT, 
+                LARGE_FONT_SIZE 
+            );    
+        }
+
+        if ( this.type == "SELL" ) {
+            writeTextLine( 
+                " €" + (this.content.Item.Price / 2), 
+                this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 2 ) ), this.y + LARGE_FONT_LINE_HEIGHT, 
+                LARGE_FONT_SIZE 
+            );    
+        }
+
         if ( this.type == "INVENTORY" || this.type == "BUY" || this.type == "SELL" ) {
             drawFromImageToCanvas( 
                 "FRONT", this.content.Item.Image, 
                 0, 0, 807, 806, 
-                this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 2 ) ), this.y + ( ( this.height - LARGE_FONT_LINE_HEIGHT ) / 2 ), 
+                this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 4 ) ), this.y + ( ( this.height - LARGE_FONT_LINE_HEIGHT ) / 2 ), 
                 LARGE_FONT_LINE_HEIGHT, LARGE_FONT_LINE_HEIGHT 
             );           
         }
@@ -113,9 +130,13 @@ class MenuItem {
                 this.displayText = this.content.Name != undefined ? this.content.Name : this.content["NAME"];
                 break;
             case "INVENTORY": 
-            case "BUY":
-            case "SELL":
                 this.displayText = this.content.Quantity + "x - " + this.content.Item.Name 
+                break;
+            case "BUY":
+                this.displayText = this.content.Quantity + "x - " + this.content.Item.Name
+                break;
+            case "SELL":
+                this.displayText = this.content.Quantity + "x - " + this.content.Item.Name
                 break;
             case "GAME":
                 this.displayText = this.content.title;

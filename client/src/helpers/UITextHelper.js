@@ -7,6 +7,8 @@ const {
 } = require('../game-data/moveGlobals')
 
 const moveTypeTextHint  = "Move type: ";
+const priceTextHint     = "Price: "
+const itemCategoryHint  = "Item category: "
 const damageTextHint    = "Base damage: ";
 const healingTextHint   = "Base healing: ";
 const statTextHint      = "Base change: ";
@@ -23,10 +25,16 @@ const generateActionHint = ( actionData, type ) => {
         [MOVE_PROP_KEY_MODIFIER]: "",
         [MOVE_PROP_KEY_PP_COST]: ""
     }
+    let hasPrice = false; 
     if ( type == "ITEM" ) {
-        hintContents[MOVE_PROP_KEY_TYPE]        = actionData.Item.Type;
-        hintContents[MOVE_PROP_KEY_ATTRIBUTE]   = actionData.Item.Effects[0][0];
-        hintContents[MOVE_PROP_KEY_BASE_VALUE]  = actionData.Item.Effects[0][1];
+        hasPrice = true;
+        hintContents.Category                   = actionData.Item.Category;
+        hintContents.Price                      = actionData.Item.Price;
+        if ( "Type" in actionData.Item ) {
+            hintContents[MOVE_PROP_KEY_TYPE]        = actionData.Item.Type;     
+            hintContents[MOVE_PROP_KEY_ATTRIBUTE]   = actionData.Item.Effects[0][0];
+            hintContents[MOVE_PROP_KEY_BASE_VALUE]  = actionData.Item.Effects[0][1];       
+        }
     }
     else if ( type == "MOVE" ) {
         Object.keys( hintContents ).forEach( ( e ) => {
@@ -35,48 +43,53 @@ const generateActionHint = ( actionData, type ) => {
             }     
         })
     }
- 
+    
     switch( hintContents[MOVE_PROP_KEY_TYPE] ) {
         case MOVE_TYPE_HEAL:
             return [ 
                 moveTypeTextHint + "Heal", 
                 healingTextHint + hintContents[MOVE_PROP_KEY_BASE_VALUE], 
                 attributeTextHint + hintContents[MOVE_PROP_KEY_ATTRIBUTE],
-                ppCostTextHint + ( hintContents[MOVE_PROP_KEY_PP_COST] ? hintContents[MOVE_PROP_KEY_PP_COST] : 0 )
+                !hasPrice ? ppCostTextHint + hintContents[MOVE_PROP_KEY_PP_COST] : priceTextHint + hintContents.Price
             ];
         case MOVE_TYPE_PH_ATTACK:
             return [ 
                 moveTypeTextHint + "Physical attack", 
                 damageTextHint + hintContents[MOVE_PROP_KEY_BASE_VALUE], 
-                ppCostTextHint + ( hintContents[MOVE_PROP_KEY_PP_COST] ? hintContents[MOVE_PROP_KEY_PP_COST] : 0 )
+                !hasPrice ? ppCostTextHint + hintContents[MOVE_PROP_KEY_PP_COST] : priceTextHint + hintContents.Price
             ];
         case MOVE_TYPE_SP_ATTACK:
             return [ 
                 moveTypeTextHint + "Special attack", 
                 damageTextHint + hintContents[MOVE_PROP_KEY_BASE_VALUE], 
-                ppCostTextHint + ( hintContents[MOVE_PROP_KEY_PP_COST] ? hintContents[MOVE_PROP_KEY_PP_COST] : 0 )
+                !hasPrice ? ppCostTextHint + hintContents[MOVE_PROP_KEY_PP_COST] : priceTextHint + hintContents.Price
             ];
         case MOVE_TYPE_STAT_UP:
             return [ 
                 moveTypeTextHint + "Stat up", 
                 statTextHint + hintContents[MOVE_PROP_KEY_BASE_VALUE], 
                 attributeTextHint + hintContents[MOVE_PROP_KEY_ATTRIBUTE],
-                ppCostTextHint + ( hintContents[MOVE_PROP_KEY_PP_COST] ? hintContents[MOVE_PROP_KEY_PP_COST] : 0 )
+                !hasPrice ? ppCostTextHint + hintContents[MOVE_PROP_KEY_PP_COST] : priceTextHint + hintContents.Price
             ];
         case MOVE_TYPE_STAT_DOWN: 
             return [ 
                 moveTypeTextHint + "Stat down", 
                 statTextHint + hintContents[MOVE_PROP_KEY_BASE_VALUE], 
                 attributeTextHint + hintContents[MOVE_PROP_KEY_ATTRIBUTE],
-                ppCostTextHint + ( hintContents[MOVE_PROP_KEY_PP_COST] ? hintContents[MOVE_PROP_KEY_PP_COST] : 0 )
+                !hasPrice ? ppCostTextHint + hintContents[MOVE_PROP_KEY_PP_COST] : priceTextHint + hintContents.Price
             ];
         case MOVE_TYPE_STAT_EFF:
             return [ 
                 moveTypeTextHint + "Status effect", 
                 healingTextHint + hintContents[MOVE_PROP_KEY_BASE_VALUE], 
-                ppCostTextHint + ( hintContents[MOVE_PROP_KEY_PP_COST] ? hintContents[MOVE_PROP_KEY_PP_COST] : 0 )
+                !hasPrice ? ppCostTextHint + hintContents[MOVE_PROP_KEY_PP_COST] : priceTextHint + hintContents.Price
             ];
-    }
+        default:
+            return [
+                itemCategoryHint + hintContents.Category,
+                priceTextHint + hintContents.Price
+            ];
+    }  
 }
 
 module.exports = {

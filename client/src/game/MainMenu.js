@@ -55,7 +55,7 @@ class MainMenu extends I_Menu {
      }
 
     drawMenuTextbox( ) {
-        super.drawMenuTextbox( this.currentTextMenuButtonHints );
+        super.drawMenuTextbox( this.currentTextMenuButtonHints, this.ACTIVE_TAB.actionHints );
     }
 
     initializeTabs( ) {

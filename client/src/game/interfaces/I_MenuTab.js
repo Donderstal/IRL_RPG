@@ -4,6 +4,7 @@ const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/
 const { Modal } = require("./I_Modal");
 const { ItemSubMenu } = require('./I_ItemSubMenu');
 const { MenuItem } = require('./I_MenuItem');
+const { generateActionHint } = require('../../helpers/UITextHelper');
 /**
  * MenuTab is the interface for all MenuTab classes found in the menu folder.
  * The in-game menu can be opened by pressing tab and contains five different MenuTabs
@@ -214,10 +215,14 @@ class MenuTab {
      * Then, call the subMenu initOptionsMethod and this.setActiveItemAndDescription;
      */
     activateButtonAndSetSubMenuPosition( initOptions = true ) {
+        this.actionHints = [];
         this.buttons[this.activeButton].activate( );
         this.itemSubMenu.setXy( this.buttons[this.activeButton].x + this.buttons[this.activeButton].width, this.buttons[this.activeButton].y )
         if ( initOptions ) {
             this.itemSubMenu.initOptions( this.itemSubMenuOptions );            
+        }
+        if ( this.tabName == "INVENTORY" || this.tabName == "BUY" || this.tabName == "SELL" ) {
+            this.actionHints = generateActionHint( this.buttons[this.activeButton].content, "ITEM", true )
         }
         this.setActiveItemAndDescription( );
     }
