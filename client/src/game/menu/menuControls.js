@@ -84,7 +84,10 @@ const scrollBetweenItemColumns = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleActionButton = ( activeTab ) => {
-    if ( activeTab.activeItem ) {
+    if ( activeTab.tabName == "SELL" || activeTab.tabName == "BUY" ) {
+        globals.GAME.MENU.addActiveItemToList( );
+    }
+    else if ( activeTab.activeItem ) {
         activeTab.handleActionButton( );
     }
 }
@@ -94,7 +97,13 @@ const handleActionButton = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleSubMenuControls = ( key, activeTab ) => {
-    if ( activeTab.itemSubMenu.options && activeTab.activeItem && !activeTab.modal ) {
+    if ( (activeTab.tabName == "SELL" || activeTab.tabName == "BUY") && key == "z" ) {
+        globals.GAME.MENU.removeActiveItemFromList( );
+    }
+    else if ( (activeTab.tabName == "SELL" || activeTab.tabName == "BUY") && key == "x" ) {
+        globals.GAME.MENU.confirmTransaction( );
+    }
+    else if ( activeTab.itemSubMenu.options && activeTab.activeItem && !activeTab.modal ) {
         if ( key == "z" && activeTab.itemSubMenu.options[0] ) {
             activeTab.doActiveSubMenuOption( 0 );
         }

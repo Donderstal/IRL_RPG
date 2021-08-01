@@ -44,7 +44,7 @@ class MainMenu extends I_Menu {
     }
 
     get currentTextMenuButtonHints( ) {
-        const buttonHints = this.ACTIVE_TAB.tabName == "BUY" ? [ "[ SPACEBAR ] - Add to buying list"] : this.ACTIVE_TAB.tabName == "SELL" ? [ "[ SPACEBAR ] - Add to selling list"] : [...this.textMenuButtonHints];
+        const buttonHints = this.ACTIVE_TAB.tabName == "BUY" ? [ "[ SPACEBAR ] - ADD TO BUYING LIST"] : this.ACTIVE_TAB.tabName == "SELL" ? [ "[ SPACEBAR ] - ADD TO SELLING LIST"] : [...this.textMenuButtonHints];
         const subMenuOptions = this.ACTIVE_TAB.itemSubMenu.activeOptions
         if ( subMenuOptions ) {
             subMenuOptions.forEach( ( e, index ) => {

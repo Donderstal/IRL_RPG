@@ -27,9 +27,10 @@ class ShopMenu extends MainMenu {
         super( CANVAS_WIDTH / 5, GRID_BLOCK_PX * 2 )
         this.mainScreenHeight = CANVAS_HEIGHT - this.tabHeight;
         this.uniqueTextMenuButtonHints = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ];
+        this.activeTransactionItemsList = [];
         this.initializeTabs( );
     }
-
+    
     get pendingForSaleItemsPrice( ) { return 0; };
     get pendingForBuyItemsPrice( ) { return 0; };
     
@@ -84,6 +85,31 @@ class ShopMenu extends MainMenu {
             "SELL": 0,
             "BUY": 0
         }
+    }
+
+    addActiveItemToList( ) {
+        this.activeTransactionItemsList.push( this.ACTIVE_TAB.activeItem )
+    }
+
+    removeActiveItemFromList( ) {
+        const index = this.activeTransactionItemsList.indexOf(this.ACTIVE_TAB.activeItem);
+        if (index !== -1) {
+            this.activeTransactionItemsList.splice(index, 1);
+        }
+    }
+
+    resetActiveTransactionItemsList( ) {
+        this.activeTransactionItemsList = [];
+    }
+
+    switchTab( direction, selectedCharacterIndex = null ) {
+        this.resetActiveTransactionItemsList( );
+        super.switchTab( direction, selectedCharacterIndex )
+    }
+
+    confirmTransaction( ) {
+        console.log(this.ACTIVE_TAB.tabName);
+        console.log(this.activeTransactionItemsList)
     }
 }
 
