@@ -13,6 +13,8 @@ class InventoryMenuTab extends MenuTab {
         this.inventorySource = inShopMenu && !inBuyingScreen ? globals.GAME.activeAction.inventory : globals.GAME.PLAYER_INVENTORY;
         this.activeOption;
     }
+
+    get activeItems( ) { return this.inventorySource.activeItems; }
     /**
      * Deactivate the activeButton if necessary.
      * Then get the array of activeItems for inventory and pass it to setButtonsInColumn.
@@ -23,23 +25,21 @@ class InventoryMenuTab extends MenuTab {
             this.buttons[this.activeButton].deActivate( );
             this.buttons = [];            
         }
-
-        const activeItems = this.inventorySource.activeItems;        
-        if ( this.activeButton >= activeItems.length ) {
-            this.activeButton = activeItems.length - 1;
+  
+        if ( this.activeButton >= this.activeItems.length ) {
+            this.activeButton = this.activeItems.length - 1;
         }
-        if ( activeItems.length > 10 ) {
-            const firstTen = activeItems.slice( 0, 10 )
-            const secondTen = activeItems.slice( 10 )
+        if ( this.activeItems.length > 10 ) {
+            const firstTen = this.activeItems.slice( 0, 10 )
+            const secondTen = this.activeItems.slice( 10 )
             this.setButtonsInColumn( globals.GRID_BLOCK_PX, firstTen, false );
             this.setButtonsInColumn( ( globals.CANVAS_WIDTH / 2 ) + globals.GRID_BLOCK_PX, secondTen );
         }
         else {
-            this.setButtonsInColumn( 0, activeItems );
+            this.setButtonsInColumn( 0, this.activeItems );
         }
 
         super.activateButtonAndSetSubMenuPosition( );
-        this.setDisabledOptionsForItem( );
     }
     /**
      * Call the super of this method.

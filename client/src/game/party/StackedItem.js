@@ -12,10 +12,22 @@ class StackedItem {
         this.PendingForUsageQuantity = 0;
         this.Name = this.Item.Name;
         this.Description = this.Item.Description;
+        this.Category   = this.Item.Category;
+        this.Price      = this.Item.Price
+        this.SpriteSrc  = this.Item.SpriteSrc;
+        this.Description= this.Item.Description;
+        this.Type       = this.Item.Type;
+        this.Effects    = this.Item.Effects;
+        this.Image      = this.Item.Image;
     }
 
     get Quantity( ) { return this.BaseQuantity - (this.EquippedQuantity + this.PendingForUsageQuantity); }
     get IsEmpty( ) { return this.Quantity < 1; }
+
+    get canBeEquipped( ) { return this.Item.canBeEquipped ;  };
+    get canBeUsed( ) { return this.Item.canBeUsed; };
+    get canBeUsedOutsideBattle( ) { return this.Item.canBeUsedOutsideBattle; }
+    get isKey( ) { return this.Item.isKey; };
     /**
      * Increment BaseQuantity by one to indicate a GameItem is added to the stack
      */

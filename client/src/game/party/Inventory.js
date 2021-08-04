@@ -143,7 +143,6 @@ class Inventory {
      */
     removeItemsFromInnerListByID( itemIDsToRemove ) {
         let itemsToRemoveIndexes = [];
-
         itemIDsToRemove.forEach( ( itemID ) => {
             if ( this.hasItem( itemID ) ) {
                 this.ItemList.forEach( ( stackedItem, index ) => {
@@ -166,6 +165,10 @@ class Inventory {
     subtractItemFromStackAtIndex( itemIndex ) {
         let stackedItem = this.ItemList[itemIndex]
         stackedItem.subtractItem( );
+
+        if ( stackedItem.PendingForUsageQuantity > 0 ) {
+            stackedItem.subtractPendingForUsage( );
+        }
 
         if ( stackedItem.Quantity < 1 ) {
             this.ActiveItemIDs.splice( this.ActiveItemIDs.indexOf[stackedItem.ItemTypeID], 1 );
