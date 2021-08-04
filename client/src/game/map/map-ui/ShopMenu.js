@@ -31,8 +31,26 @@ class ShopMenu extends MainMenu {
         this.initializeTabs( );
     }
     
-    get pendingForSaleItemsPrice( ) { return 0; };
-    get pendingForBuyItemsPrice( ) { return 0; };
+    get pendingItemIDList( ) { return this.activeTransactionItemsList.map( item => item.ItemTypeID )}
+
+    get playerInventory( ) { return globals.GAME.PLAYER_INVENTORY; };
+    get shopInventory( ) { return globals.GAME.activeAction.inventory; };
+
+    get pendingForSaleItemsPrice( ) { return this.activeTransactionItemsList.reduce( ( acc, item ) => acc + ( ( item.Price / 2 ) || 0), 0); };
+    get pendingForBuyItemsPrice( ) { return this.activeTransactionItemsList.reduce( ( acc, item ) => acc + ( item.Price || 0), 0); };
+
+    get playerBudget( ) { return globals.GAME.PLAYER_INVENTORY.Money };
+    set playerBudget( value ) { 
+        if (value < globals.GAME.PLAYER_INVENTORY.Money ) {
+            globals.GAME.PLAYER_INVENTORY.subtractMoney( globals.GAME.PLAYER_INVENTORY.Money - value );
+        }
+        else if ( value > globals.GAME.PLAYER_INVENTORY.Money ) {
+            globals.GAME.PLAYER_INVENTORY.addMoney( value - globals.GAME.PLAYER_INVENTORY.Money );
+        }
+     };
+
+    get shopBudget( ) { return globals.GAME.activeAction.inventory.Money };
+    set shopBudget( value ) { globals.GAME.activeAction.inventory.Money = value }
     
     get activeText( ) {
         return this.ACTIVE_TAB.description;
@@ -42,11 +60,11 @@ class ShopMenu extends MainMenu {
         super.draw( );
         const startingX = this.tabWidth * 3;
         writeTextLine( 
-            "Your money: " + globals.GAME.PLAYER_INVENTORY.Money, startingX + LARGE_FONT_LINE_HEIGHT, 
+            "Your money: " + this.playerBudget, startingX + LARGE_FONT_LINE_HEIGHT, 
             LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE 
         );
         writeTextLine( 
-            "Merchant money: " + globals.GAME.activeAction.inventory.Money, startingX + LARGE_FONT_LINE_HEIGHT, 
+            "Merchant money: " + this.shopBudget, startingX + LARGE_FONT_LINE_HEIGHT, 
             (LARGE_FONT_LINE_HEIGHT * 2), LARGE_FONT_SIZE 
         );
 
@@ -88,13 +106,17 @@ class ShopMenu extends MainMenu {
     }
 
     addActiveItemToList( ) {
-        this.activeTransactionItemsList.push( this.ACTIVE_TAB.activeItem )
+        if ( this.ACTIVE_TAB.activeItem.Quantity > 0 ) {
+            this.ACTIVE_TAB.activeItem.addPendingForUsage( )
+            this.activeTransactionItemsList.push( this.ACTIVE_TAB.activeItem )            
+        }
     }
 
     removeActiveItemFromList( ) {
         const index = this.activeTransactionItemsList.indexOf(this.ACTIVE_TAB.activeItem);
-        if (index !== -1) {
+        if ( index !== -1 ) {
             this.activeTransactionItemsList.splice(index, 1);
+            this.ACTIVE_TAB.activeItem.subtractPendingForUsage( )
         }
     }
 
@@ -108,8 +130,36 @@ class ShopMenu extends MainMenu {
     }
 
     confirmTransaction( ) {
-        console.log(this.ACTIVE_TAB.tabName);
-        console.log(this.activeTransactionItemsList)
+        if ( this.pendingForSaleItemsPrice == 0 ) {
+            return;
+        }
+        if ( this.ACTIVE_TAB.tabName == "SELL" ) {
+            if ( this.pendingForSaleItemsPrice > this.shopBudget ) {
+                alert( "They can't pay this!" )
+                return;
+            }
+            else {
+                this.shopBudget     = this.shopBudget - this.pendingForSaleItemsPrice;
+                this.playerBudget   = this.playerBudget + this.pendingForSaleItemsPrice;
+                this.playerInventory.removeItemsFromInnerListByID( this.pendingItemIDList );
+                this.shopInventory.addItemsToInnerListByID( this.pendingItemIDList );
+            }
+        }
+        else if ( this.ACTIVE_TAB.tabName == "BUY" ) {
+            if ( this.pendingForBuyItemsPrice > this.playerBudget ) {
+                alert( "You can't pay this!" )
+                return;
+            }
+            else {
+                this.shopBudget     = this.shopBudget + this.pendingForBuyItemsPrice;
+                this.playerBudget   = this.playerBudget - this.pendingForBuyItemsPrice;
+                this.shopInventory.removeItemsFromInnerListByID( this.pendingItemIDList );
+                this.playerInventory.addItemsToInnerListByID( this.pendingItemIDList );
+            }
+        }
+
+        this.activeTransactionItemsList = [];
+        this.ACTIVE_TAB.setButtons( );
     }
 }
 

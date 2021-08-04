@@ -105,7 +105,7 @@ class MenuTab {
             case "INVENTORY": 
             case "BUY":
             case "SELL":
-                this.activeItem = this.buttons[this.activeButton].content.Item;
+                this.activeItem = this.buttons[this.activeButton].content;
                 this.description = this.activeItem.Description;
                 break;
             case "MAP":

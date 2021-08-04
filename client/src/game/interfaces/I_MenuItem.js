@@ -27,6 +27,7 @@ class MenuItem {
      * Draw the MenuItem. Its size, and contents vary depending on the active MenuTab
      */
     draw( ) {
+        this.setDisplayText( )
         drawRect( "FRONT", this.x, this.y, this.width, this.height, this.standardButtonColor )
         if ( this.isActive ) {
             drawRect( "FRONT", this.x + ( LARGE_FONT_LINE_HEIGHT / 8 ), this.y + ( LARGE_FONT_LINE_HEIGHT / 8), this.width, this.height, this.activeButtonColor )
