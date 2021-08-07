@@ -1,3 +1,4 @@
+const globals = require('../game-data/globals');
 const { CANVAS_WIDTH, CANVAS_HEIGHT } = require('../game-data/globals');
 const { drawRect } = require('./canvasHelpers');
 
@@ -36,17 +37,21 @@ class Fader {
     }
 
     fadeToBlack( ) {
-        this.A += .05
+        this.A += .0125
     }
 
     fadeFromBlack( ) {
-        this.A -= .05
+        this.A -= .0125
     }
 
     checkForFadeEnd( ) {
-        if ( ( this.fadingFromBlack && this.A <= 0 ) 
-        || ( this.fadingToBlack && this.A >= 1 ) ) {
+        if ( this.fadingFromBlack && this.A <= 0 ) {
             this.unsetFadingAnimation( )
+            globals.GAME.sound.resumeMusic( );
+        }
+        else if ( this.fadingToBlack && this.A >= 1 ) {
+            this.unsetFadingAnimation( )
+            this.startFadeFromBlack( );
         }
     }
 

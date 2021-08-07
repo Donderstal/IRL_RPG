@@ -39,6 +39,14 @@ class SoundController {
         }
     }
 
+    pauseMusic( ) {
+        this.activeMusic.pause( );        
+    }
+
+    resumeMusic( ) {
+        this.activeMusic.play( );         
+    }
+
     /**
      * Init Audio element if needed and play effect
      * @param {String} title name of effect to be played. Should correspond with filename in effects folder 

@@ -42,7 +42,7 @@ class MapAction extends I_Hitbox {
         }
     }
     get meetsCondition( ) { return conditionIsTrue( this.conditionType, this.conditionValue ) }
-    get needsConfirmation( ) { return this.type == "BUS" || this.type == "BATTLE" || this.type == "SHOP"; }
+    get needsConfirmation( ) { return this.type != "TEXT"; }
     /**
      * 
      */
@@ -92,7 +92,7 @@ class MapAction extends I_Hitbox {
             case "BUS" :
                 globals.GAME.switchMap( this.to, "BUS" );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
-                globals.GAME.activeAction = null;
+                this.resetAction( );
                 break;
             case "BATTLE" : 
                 if ( this.hasEvent ) {
@@ -109,6 +109,12 @@ class MapAction extends I_Hitbox {
             case "SHOP" :
                 initShopMenu( );
                 break;
+            case "SLEEP" :
+                globals.GAME.fader.startFadeToBlack( );
+                globals.GAME.sound.pauseMusic( );
+                globals.GAME.sound.playEffect( "misc/random6.wav" );
+                this.resetAction( );
+                break;
             default: 
                 console.log('Error! ' + this.type + " is not a valid action type")
                 break;
@@ -120,8 +126,7 @@ class MapAction extends I_Hitbox {
             this.confirm( )
         }
         else {
-            this.confirmingAction = false;
-            globals.GAME.activeAction = null;
+            this.resetAction( );
             this.addEventToRegistry( );            
         }
     }
@@ -148,14 +153,17 @@ class MapAction extends I_Hitbox {
     }
 
     addEventToRegistry( ) {
-        console.log(this.registryKey)
-        console.log(this.registeredSelection)
         if ( this.shouldBeRegistered && this.registeredSelection ) {
             addEventToRegistry( this.registryKey, this.registeredSelection )   
         }
         else if ( this.shouldBeRegistered ) {
             addEventToRegistry( this.registryKey )   
         }
+    }
+
+    resetAction( ) {
+        globals.GAME.activeAction = null;
+        this.confirmingAction = false;
     }
 }
 

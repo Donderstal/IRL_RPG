@@ -19,6 +19,7 @@ const { writeTextLine } = require("../../../helpers/canvasHelpers");
  */
 const unsetShopMenu = ( ) => {
     globals.GAME.inMenu = false;
+    globals.GAME.activeAction.resetAction( );
     globals.GAME.MENU = null;
 }
 
