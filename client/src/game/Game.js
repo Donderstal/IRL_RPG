@@ -19,6 +19,7 @@ const { TypeWriter } = require('../helpers/TypeWriter')
 const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
 const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
+const { Fader } = require('../helpers/Fader')
 
 const firstMapUrl =  'test/test-actions';
 const startingItemIDs = [
@@ -38,6 +39,7 @@ class Game {
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
         this.sound = new SoundController( );
+        this.fader = new Fader( );
         this.story;
 
         this.activeBubble = { }
