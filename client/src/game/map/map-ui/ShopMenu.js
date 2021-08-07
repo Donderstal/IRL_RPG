@@ -121,6 +121,9 @@ class ShopMenu extends MainMenu {
     }
 
     resetActiveTransactionItemsList( ) {
+        this.activeTransactionItemsList.forEach( ( item ) => {
+            item.resetPendingAmount( );
+        });
         this.activeTransactionItemsList = [];
     }
 

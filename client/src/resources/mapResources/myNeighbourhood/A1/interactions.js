@@ -155,6 +155,7 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
       "type": DEFAULT
     },
     "action": {
+      "type": "BATTLE",
       "shouldBeRegistered": true,
       "registryKey": LOGGABLE_INTERACTION_1,
       "type": "BATTLE",

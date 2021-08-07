@@ -39,6 +39,13 @@ class MenuItem {
                 this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 2 ) ), this.y + LARGE_FONT_LINE_HEIGHT, 
                 LARGE_FONT_SIZE 
             );    
+            if ( this.content.PendingForUsageQuantity > 0 ) {
+                writeTextLine( 
+                    "Buying " + this.content.PendingForUsageQuantity, 
+                    this.x + this.width + LARGE_FONT_LINE_HEIGHT * 2, this.y + LARGE_FONT_LINE_HEIGHT, 
+                    LARGE_FONT_SIZE 
+                );  
+            }
         }
 
         if ( this.type == "SELL" ) {
@@ -47,6 +54,13 @@ class MenuItem {
                 this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 2 ) ), this.y + LARGE_FONT_LINE_HEIGHT, 
                 LARGE_FONT_SIZE 
             );    
+            if ( this.content.PendingForUsageQuantity > 0 ) {
+                writeTextLine( 
+                    "Selling " + this.content.PendingForUsageQuantity, 
+                    this.x + this.width + LARGE_FONT_LINE_HEIGHT * 2, this.y + LARGE_FONT_LINE_HEIGHT, 
+                    LARGE_FONT_SIZE 
+                );  
+            }
         }
 
         if ( this.type == "INVENTORY" || this.type == "BUY" || this.type == "SELL" ) {

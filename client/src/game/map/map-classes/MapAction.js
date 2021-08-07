@@ -105,8 +105,13 @@ class MapAction extends I_Hitbox {
                 else {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
+                break;
             case "SHOP" :
                 initShopMenu( );
+                break;
+            default: 
+                console.log('Error! ' + this.type + " is not a valid action type")
+                break;
         }
     }
 

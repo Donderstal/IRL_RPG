@@ -48,6 +48,10 @@ class StackedItem {
         this.PendingForUsageQuantity -= 1;
     }
 
+    resetPendingAmount( ) {
+        this.PendingForUsageQuantity = 0;
+    }
+
     /**
      * Call the equipItem method of given character, with this.Item as argument.
      * Then, increment this.EquippedQuantity by one.
