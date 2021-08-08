@@ -48,6 +48,10 @@ class ActionSelector {
         this.activeAction.dismiss( );
     }
 
+    resetAction( ) {
+        this.activeAction.resetAction( );
+    }
+
     checkForEventOnBattleEnd( ) {
         this.activeAction.checkForEventOnBattleEnd( );
     }

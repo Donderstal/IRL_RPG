@@ -53,6 +53,12 @@ class Scene {
             this.loop = data.loop;
         }
 
+        if ( this.type == "FADE_SREEN_OUT_IN" ) {
+            globals.GAME.sound.pauseMusic( );
+            globals.GAME.fader.startFadeToBlack( );
+            globals.GAME.sound.playEffect( "relaxing_chord.wav" )
+        }
+
         this.setAnimToSprite( );
     }
 

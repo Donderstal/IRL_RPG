@@ -12,7 +12,14 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### JUL 25, 2021
+#### AUG 8, 2021
+* In-game restore points
+* Added fader class for fade in/out animations
+
+#### AUG 4, 2021
+* Added a basic shop menu for buying/selling items
+
+#### JUL 30, 2021
 * Added locking / unlocking doors
 
 #### JUL 25, 2021

@@ -41,7 +41,12 @@ class Party {
 
         return Math.round( counter / this.members.length );
     }
-
+    fullHealParty( ) {
+        this.members.forEach( ( member ) => {
+            member.fullHeal( );
+            member.fullHealPP( );
+        } )
+    }
     getExperienceValue( ) {
         let value = 0;
         this.members.forEach( ( e ) => {

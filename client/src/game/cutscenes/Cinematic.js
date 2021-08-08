@@ -51,6 +51,15 @@ class Cinematic {
                 this.activateNextScene( )
             }      
         }
+        if ( this.activeScene.type == "FADE_SREEN_OUT_IN" ) {
+            if ( globals.GAME.fader.inFadingAnimation ) {
+                return
+            }
+            else {
+                globals.GAME.sound.resumeMusic( );
+                this.activateNextScene( )
+            }
+        }
     }
 
     activateNextScene( ) {
@@ -65,6 +74,7 @@ class Cinematic {
             this.activeScene.unsetSpriteAnimation( )
             globals.GAME.deActivateCinematic( this );
             globals.GAME.activeCinematic = null;
+            globals.GAME.activeAction.resetAction( );
             if ( this.trigger == "ON_LEAVE" ) {
                 globals.GAME.switchMap( this.args[0], this.args[1] )
             }

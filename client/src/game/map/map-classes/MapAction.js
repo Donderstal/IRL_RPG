@@ -92,7 +92,6 @@ class MapAction extends I_Hitbox {
             case "BUS" :
                 globals.GAME.switchMap( this.to, "BUS" );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
-                this.resetAction( );
                 break;
             case "BATTLE" : 
                 if ( this.hasEvent ) {
@@ -110,10 +109,7 @@ class MapAction extends I_Hitbox {
                 initShopMenu( );
                 break;
             case "SLEEP" :
-                globals.GAME.fader.startFadeToBlack( );
-                globals.GAME.sound.pauseMusic( );
-                globals.GAME.sound.playEffect( "misc/random6.wav" );
-                this.resetAction( );
+                this.healPlayerPartyOnRest( );
                 break;
             default: 
                 console.log('Error! ' + this.type + " is not a valid action type")
@@ -161,7 +157,12 @@ class MapAction extends I_Hitbox {
         }
     }
 
+    healPlayerPartyOnRest( ) {
+        globals.GAME.party.fullHealParty( );
+    }
+
     resetAction( ) {
+        this.addEventToRegistry( ); 
         globals.GAME.activeAction = null;
         this.confirmingAction = false;
     }
