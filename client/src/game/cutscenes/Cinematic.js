@@ -74,18 +74,29 @@ class Cinematic {
             this.activeScene.unsetSpriteAnimation( )
             globals.GAME.deActivateCinematic( this );
             globals.GAME.activeCinematic = null;
-            globals.GAME.activeAction.resetAction( );
-            if ( this.trigger == "ON_LEAVE" ) {
-                globals.GAME.switchMap( this.args[0], this.args[1] )
-            }
-            else if ( this.trigger == "ON_BATTLE_START" ) {
-                globals.GAME.initializeBattle( this.args[0], this.args[1] );
-            }
-            else if ( this.trigger == "ON_NPC_INTERACTION" && globals.GAME.activeAction != null ) {
-                globals.GAME.activeAction.dismiss( );
-            }
+            this.handleEndOfCinematicTrigger( );
         }
     }
+
+    handleEndOfCinematicTrigger( ) {
+        switch( this.trigger ) {
+            case "ON_LEAVE": 
+                globals.GAME.switchMap( this.args[0], this.args[1] )
+                break;
+            case "ON_BATTLE_START": 
+                globals.GAME.initializeBattle( this.args[0], this.args[1] );
+                break;
+            case "ON_NPC_INTERACTION": 
+                if ( globals.GAME.activeAction.dismissAtCinematicEnd ) {
+                    globals.GAME.activeAction.resetAction( );
+                }
+                else {
+                    globals.GAME.activeAction.confirm( );
+                }
+                break;
+        }
+    }
+
     handleYesOrNoScene( ) {
         let scenesToAdd;
         switch( this.activeScene.selection ) {
