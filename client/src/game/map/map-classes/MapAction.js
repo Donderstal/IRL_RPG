@@ -122,8 +122,7 @@ class MapAction extends I_Hitbox {
             this.confirm( )
         }
         else {
-            this.resetAction( );
-            this.addEventToRegistry( );            
+            this.resetAction( );   
         }
     }
     /**

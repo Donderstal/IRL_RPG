@@ -12,7 +12,7 @@ class ActionSelector {
 
     get action( ) { return this.activeAction; };
     get inventory( ) { return this.activeAction.inventory; };
-    get dismissAtCinematicEnd( ) { return this.activeAction.type != "SHOP" && this.activeAction.type != "BATTLE" }
+    get dismissAtCinematicEnd( ) { return this.activeAction.type != "SLEEP" && this.activeAction.type != "SHOP" && this.activeAction.type != "BATTLE" }
 
     draw( ) {
         this.activeAction.draw( );

@@ -87,12 +87,7 @@ class Cinematic {
                 globals.GAME.initializeBattle( this.args[0], this.args[1] );
                 break;
             case "ON_NPC_INTERACTION": 
-                if ( globals.GAME.activeAction.dismissAtCinematicEnd ) {
-                    globals.GAME.activeAction.resetAction( );
-                }
-                else {
-                    globals.GAME.activeAction.confirm( );
-                }
+                ( globals.GAME.activeAction.dismissAtCinematicEnd ) ? globals.GAME.activeAction.resetAction( ) : globals.GAME.activeAction.dismiss( );
                 break;
         }
     }
