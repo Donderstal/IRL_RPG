@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### AUG 10, 2021
+* Cleaned and fixed various small interaction bugs
+* Added an interactive testing map
+
 #### AUG 8, 2021
 * In-game restore points
 * Added fader class for fade in/out animations
