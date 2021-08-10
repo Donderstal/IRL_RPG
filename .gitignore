@@ -3,6 +3,8 @@ node_modules
 client/node_modules
 client/public/out
 client/public/bundle.*
-client/src/resources/mapResources/test
+client/src/resources/mapResources/test/test-gym
+client/src/resources/mapResources/test/test-cars
+client/src/resources/mapResources/test/test-actions
 static
 __pycache__
