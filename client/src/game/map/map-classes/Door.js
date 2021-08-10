@@ -62,7 +62,8 @@ class Door extends I_Hitbox {
         else if ( this.condition ) {
             new Cinematic( unlockDoorEvent, "ON_LEAVE", [ this.to, "DOOR"] )
             this.metConditionAtLastCheck = true;
-            addDoorToUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.to )
+            addDoorToUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.to );
+            this.dismiss( );
         }
     }
     dismiss( ) {

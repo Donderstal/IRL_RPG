@@ -221,6 +221,13 @@ module.exports = {
             "blocked": [
                 0, 1, 2, 3, 11, 16, 17, 18, 19, ,24, 27
             ]
+        },
+        "Generic_Room_BX" : {
+            "src": "Generic_Room_BX.png",
+            "uniqueTiles": 48,
+            "blocked": [
+                0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
+            ]
         }
     }
 }

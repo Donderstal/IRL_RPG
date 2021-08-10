@@ -142,20 +142,20 @@ module.exports = {
         "src": "chair_red_cushion.png",
         ...ONE_BLOCK_SPRITE
     },
-    "Computer_With_Table" : {
+    "computer_table" : {
         "src": "computer_table.png",
-        ...THREE_HIGH_SPRITE
+        ...getTwoHighSprite( false )
     },
     "Couch_Blue" : {
         "src": "couch.png",
         ...THREE_HIGH_SPRITE
     },
     "couch_nice_left" : {
-        "src": "couch_nice_left",
+        "src": "couch_nice_left.png",
         ...THREE_HIGH_SPRITE
     },
     "couch_nice_right" : {
-        "src": "couch_nice_right",
+        "src": "couch_nice_right.png",
         ...THREE_HIGH_SPRITE
     },
     "couch_yello" : {
@@ -167,7 +167,7 @@ module.exports = {
         ...ONE_BLOCK_SPRITE
     },
     "Fridge" : {
-        "src": "fridge.png",
+        "src": "Fridge.png",
         ...getTwoHighSprite( false )
     },
     "gate_left" : {
@@ -233,7 +233,7 @@ module.exports = {
     },
     "rug_boo" : { 
         "src": "rug_boo.png",
-        ...getBackgroundItem( 2, 3 )
+        ...getBackgroundItem( 3, 2 )
     },
     "rug_g1" : { 
         "src": "rug_g1.png",

@@ -197,8 +197,16 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     setSpritesToBattleSlots( playerParty, opponentParty ) {
         const playerMembers = playerParty.members.filter( ( element, index ) => { return index < 3 } );
 
-        this.playerSlots.forEach( ( slot, index ) => { slot.initializeSpriteInSlot( playerMembers[index] ); } );
-        this.opponentSlots.forEach( ( slot, index ) => { slot.initializeSpriteInSlot( opponentParty.members[index]); } );
+        this.playerSlots.forEach( ( slot, index ) => { 
+            if ( playerMembers[index] != undefined ) {
+                slot.initializeSpriteInSlot( playerMembers[index] );                 
+            }
+        } );
+        this.opponentSlots.forEach( ( slot, index ) => { 
+            if ( opponentParty.members[index] != undefined ) {
+                slot.initializeSpriteInSlot( opponentParty.members[index]);              
+            }
+        } );
     }
 }
 

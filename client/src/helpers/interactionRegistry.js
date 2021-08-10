@@ -8,7 +8,7 @@ const isInRegistryWithValue = ( key, value ) => {
     if ( isInRegistry( key ) ) {
         return interactionRegistry[key] == value;
     }
-
+    
     return false;
 }
 
