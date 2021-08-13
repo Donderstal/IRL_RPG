@@ -1,5 +1,5 @@
 module.exports = { 
-    "mapName": "downtown/TEST_CARS/",
+    "mapName": "test/TEST_CARS/",
     "tileSet": "downtown",
     "outdoors": true,
     "music": "game-jam-2.mp3",

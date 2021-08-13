@@ -4,8 +4,8 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_RIGHT" },
-      { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "endsAtIntersection" : true }
+      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_RIGHT", "hasStart": true },
+      { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "endsAtIntersection" : true, "hasStart": true }
     ],
     "neighbours": {
         "up": "my-neighbourhood/A2",

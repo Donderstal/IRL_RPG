@@ -15,7 +15,7 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT" }
+      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasStart": true }
     ],
     "neighbours": {
         "right": "my-neighbourhood/A2",
@@ -387,10 +387,10 @@ module.exports = {
                 },
             "doors": [ 
                 {
-                  "condition" : {
+                  /* "condition" : {
                     "type": EVENT_HAS_FIRED,
                     "value": LOGGABLE_INTERACTION_1
-                  },
+                  }, */
                   "row": 8, 
                   "col": 2,
                   "from" : "my-neighbourhood/A1/my-house",
