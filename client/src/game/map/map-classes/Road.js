@@ -6,10 +6,9 @@ const globals       = require('../../../game-data/globals');
 class Road {
     constructor ( roadData, index ) {
         this.index = index;
-        this.direction = roadData.direction;
-
-        this.hasStart = roadData.hasStart == undefined;
-        this.endsAtIntersection = roadData.endsAtIntersection;
+        Object.keys( roadData ).forEach( ( e ) => {
+            this[e] = roadData[e]
+        } );
 
         this.isHorizontal = roadData.alignment == "HORI";
         this.startCell = {};
@@ -128,13 +127,13 @@ class Road {
      * Randomly select a car sprite from the available sprites.
      * Return an object with the information needed generate a car sprite.
      */
-    getCarDataForTile( ) {
+    getCarDataForTile( isBus = false ) {
         const carNames = [ "car_a", "car_b", "car_c", "car_d" ]
         let randomIndex = Math.floor(Math.random() * carNames.length);
         return {
             "direction": this.direction,
             "moving": true,
-            "type": carNames[randomIndex],
+            "type": isBus ? "bus" : carNames[randomIndex],
             "col": this.startCell.col,
             "row": this.startCell.row,
             "destination": this.endCell

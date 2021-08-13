@@ -154,17 +154,28 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * If a car can be spawned, get carData for a car from the selected road
      * Then set the data to at the roads' I_Tile and instantiate a class with setObjectSprite
      */
-    generateCar( ) {
+    generateCar(  ) {
         const spawnableRoads = this.roads.filter( ( road ) => { return road.hasStart })
         const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
-        if ( activeRoad.startCellIsBlocked ) {
-            return;
+        if ( !activeRoad.startCellIsBlocked ) {
+            this.setVehicleToTile( activeRoad.getCarDataForTile( ) );
         }
-        const carData = activeRoad.getCarDataForTile( )
+    }
+
+    generateBus( ) {
+        const roadArray = this.roads.filter( ( road ) => { return road.hasBusLine })
+        let road = roadArray[0]
+        if ( !road.startCellIsBlocked ) {
+            console.log(road)
+            this.setVehicleToTile( road.getCarDataForTile( true ) );
+        }
+    }
+
+    setVehicleToTile( carData ) {
         const tile = super.getTileAtCell( carData.col, carData.row );
         tile.setSpriteData( "object", carData )
         this.setObjectSprite( tile, true )   
-        tile.clearSpriteData( );   
+        tile.clearSpriteData( );  
     }
     /**
      * Clear all props containing information on the currently active map
