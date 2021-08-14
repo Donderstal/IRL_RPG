@@ -17,6 +17,10 @@ class Road {
 
         this.setRoadAligment( roadData )
         this.setRoadCoordinates( roadData )
+        
+        if ( this.hasBusLine ) {
+            this.setBusStopLocation( )
+        }
     }
 
     get startCellIsBlocked( ) { 
@@ -136,8 +140,12 @@ class Road {
             "type": isBus ? "bus" : carNames[randomIndex],
             "col": this.startCell.col,
             "row": this.startCell.row,
-            "destination": this.endCell
+            "destination": isBus ? this.busStopLocation : this.endCell
         }
+    }
+
+    setBusStopLocation( ) {
+        this.busStopLocation = ( this.isHorizontal ) ? { row: this.startCell.row, col: this.busStopLocation.col + 3 } : { row: this.busStopLocation.row, col: this.startCell.col }
     }
 }
 module.exports = {

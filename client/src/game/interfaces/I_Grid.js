@@ -21,6 +21,9 @@ class I_Grid {
 
         this.initializeGrid( );
     };
+
+    get width( ) { return this.cols * GRID_BLOCK_PX }
+    get height( ) { return this.rows * GRID_BLOCK_PX }
     /**
      * Fill this.array with a number I_Tile instances  
      * Length of array is dependent on this.rows and this.cols props

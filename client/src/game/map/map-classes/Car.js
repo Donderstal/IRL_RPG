@@ -26,6 +26,23 @@ class Car extends MapObject {
     get destinationIsDown( ) { 
         return this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom;
     }
+    get isOffScreen( ) {
+        if ( this.direction == globals["FACING_LEFT"] ) {
+            return ( this.left + this.width ) < 0;
+        }
+        else if ( this.direction == globals["FACING_UP"] ) {
+            return ( this.top + this.height ) < 0;
+        }
+        else if ( this.direction == globals["FACING_RIGHT"] ) {
+            return this.right - this.width > globals.GAME.FRONT.grid.width;
+        }
+        else if ( this.direction == globals["FACING_DOWN"] ) {
+            return this.bottom - this.height > globals.GAME.FRONT.grid.height;
+        }
+    }
+    get isBus( ) {
+        return this.sheetSrc.includes('bus');
+    }
     
     drawSprite( ) {
         this.blocked = false;
@@ -35,8 +52,10 @@ class Car extends MapObject {
 
         this.updateHitboxes( );
         this.checkForCollision( );
-        this.checkForIntersection( );
-
+        
+        if ( !this.isBus ) {
+            this.checkForIntersection( );            
+        }
         if ( !this.blocked ) {
             this.goToDestination( );     
         }
@@ -232,9 +251,10 @@ class Car extends MapObject {
             this.direction = globals["FACING_DOWN"]
         }
         
-        if ( !this.moving ) {
+        if ( !this.moving && this.isOffScreen ) {
             super.endGoToAnimation( );
             this.deleted = true;
+            globals.GAME.FRONT.deleteSprite( this.spriteId );
         }
     }
     /**

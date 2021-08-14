@@ -219,6 +219,14 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             }
         } );
     }
+
+    deleteSprite( spriteId ) {
+        delete this.spriteDictionary[spriteId];
+        this.allSprites = [];
+        Object.keys( this.spriteDictionary ).forEach ( ( e ) => {
+            this.allSprites.push( this.spriteDictionary[e] )
+        })
+    }
 }
 
 module.exports = { 
