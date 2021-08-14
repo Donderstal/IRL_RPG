@@ -7,6 +7,7 @@ const { getUniqueId } = require('../helpers/utilFunctions');
 const { Road } = require('./map/map-classes/Road');
 const { BattleSlot } = require('./battle/BattleSlot');
 const { getEffect } = require('../helpers/effectHelpers');
+const globals = require('../game-data/globals');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -221,6 +222,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
 
     deleteSprite( spriteId ) {
+        const tile = globals.GAME.FRONT.getTileAtCell( this.spriteDictionary[spriteId].col, this.spriteDictionary[spriteId].row )
+        tile.clearSpriteData( );
         delete this.spriteDictionary[spriteId];
         this.allSprites = [];
         Object.keys( this.spriteDictionary ).forEach ( ( e ) => {

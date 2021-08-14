@@ -53,10 +53,24 @@ class Scene {
             this.loop = data.loop;
         }
 
-        if ( this.type == "FADE_SREEN_OUT_IN" ) {
+        if ( this.type == "CREATE_SPRITE" ) {
+            const tile = globals.GAME.FRONT.getTileAtCell( data.col, data.row );
+            tile.setSpriteData( "character", data )
+            globals.GAME.FRONT.setCharacterSprite( tile, true )   
+            tile.clearSpriteData( );  
+            return;
+        }
+
+        if ( this.type == "DELETE_SPRITE" ) {
+            setTimeout( ( ) => { globals.GAME.FRONT.deleteSprite( this.spriteId ) }, 250 )
+            return;
+        }
+
+        if ( this.type == "FADE_SCREEN_OUT_IN" ) {
             globals.GAME.sound.pauseMusic( );
             globals.GAME.fader.startFadeToBlack( );
             globals.GAME.sound.playEffect( "relaxing_chord.wav" )
+            return;
         }
 
         this.setAnimToSprite( );
@@ -73,6 +87,10 @@ class Scene {
     }
 
     unsetSpriteAnimation( ) {
+        if ( this.type == "DELETE_SPRITE" ) {
+            return;
+        }
+        
         const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
         if ( sprite.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             sprite.unsetScriptedAnimation( )            

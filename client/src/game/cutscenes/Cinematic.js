@@ -1,6 +1,6 @@
 const globals               = require('../../game-data/globals')
+const { Sprite } = require('../interfaces/I_Sprite')
 const { Scene }     = require('./Scene')
-const getOppositeDirection  = require('../../helpers/pathfindingHelpers').getOppositeDirection
 /**
  * The Cinematic and Scene classes are no longer implemented and need to be reworked to the new Grid system
  */
@@ -51,13 +51,29 @@ class Cinematic {
                 this.activateNextScene( )
             }      
         }
-        if ( this.activeScene.type == "FADE_SREEN_OUT_IN" ) {
+        if ( this.activeScene.type == "FADE_SCREEN_OUT_IN" ) {
             if ( globals.GAME.fader.inFadingAnimation ) {
                 return
             }
             else {
                 globals.GAME.sound.resumeMusic( );
                 this.activateNextScene( )
+            }
+        }
+        if ( this.activeScene.type == "CREATE_SPRITE" ) {
+            if ( this.activeScene.getSpriteByName( ) instanceof Sprite ) {
+                this.activateNextScene( );
+            }
+            else {
+                return
+            }
+        }
+        if ( this.activeScene.type == "DELETE_SPRITE" ) {
+            if ( !(this.activeScene.getSpriteByName( ) instanceof Sprite) ) {
+                this.activateNextScene( );
+            }
+            else {
+                return
             }
         }
     }

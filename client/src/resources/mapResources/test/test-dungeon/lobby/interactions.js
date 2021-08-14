@@ -111,7 +111,7 @@ const REST = [
                     "text": "You must be exhausted from your travels, dear! Do you wish to rest?",
                     "pathYes": [
                         { "type": "SPEAK", "text": "Lovely, darling. Have some snacks and I'll tell you about the past..." },
-                        { "type": "FADE_SREEN_OUT_IN", "sfx": "misc/random6.wav" },
+                        { "type": "FADE_SCREEN_OUT_IN", "sfx": "misc/random6.wav" },
                         { "type": "SPEAK", "text": "...and that's how I defeated Robot Emperor Trump in a game of cricket!" },
                         { "type": "SPEAK", "text": "True story dear! Now off you go and take care! <3" }
                     ],
