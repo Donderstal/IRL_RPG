@@ -34,7 +34,7 @@ class Cinematic {
                 return
             }
         }
-        if ( this.activeScene.type == "MOVE" ) {
+        if ( this.activeScene.type == "MOVE" || this.activeScene.type == "MOVE_CAR" ) {
             if ( this.activeScene.walkingToDestination ) {
                 return
             }
@@ -60,7 +60,7 @@ class Cinematic {
                 this.activateNextScene( )
             }
         }
-        if ( this.activeScene.type == "CREATE_SPRITE" ) {
+        if ( this.activeScene.type == "CREATE_SPRITE" || this.activeScene.type == "CREATE_CAR" ) {
             if ( this.activeScene.getSpriteByName( ) instanceof Sprite ) {
                 this.activateNextScene( );
             }

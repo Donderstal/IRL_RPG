@@ -298,7 +298,7 @@ class Sprite {
         this.destinationTile = false;
         this.destinationTiles = [];
         this.activeDestinationIndex = 0;
-        if ( globals.GAME.activeCinematic && this.name == globals.GAME.activeCinematic.activeScene.spriteName )
+        if ( globals.GAME.activeCinematic != undefined && this.name == globals.GAME.activeCinematic.activeScene.spriteName )
         {
             globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
         }

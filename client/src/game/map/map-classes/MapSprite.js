@@ -51,7 +51,7 @@ class MapSprite extends Sprite {
     drawSprite( ) {
         super.drawSprite( )
         this.updateTileIndexes( )
-        if ( !globals.GAME.cinematicMode ) {
+        if ( !globals.GAME.inCinematic ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
             this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );  
             if ( this.pathIsBlocked && this.destinationTile != undefined && this.destinationTile.index == this.activeTileIndex ) {

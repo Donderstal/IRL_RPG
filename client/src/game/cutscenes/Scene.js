@@ -4,7 +4,13 @@ class Scene {
     constructor( data ) {
         this.type   = data.type;
         this.spriteName = data.spriteName;
-        this.spriteId = data.spriteId != undefined ? data.spriteId : this.getSpriteByName().spriteId;
+        if ( this.type == "CREATE_CAR" || this.type == "CREATE_SPRITE" ) {
+            this.spriteId = "";
+        }
+        else {
+            this.spriteId = data.spriteId != undefined ? data.spriteId : this.getSpriteByName().spriteId;            
+        }
+
         this.sfx = ( data.sfx ) ? data.sfx : false;
         this.setAction( data )
     }
@@ -47,16 +53,43 @@ class Scene {
             this.walkingToDestination = true;            
         }
 
+        if ( this.type == "MOVE_CAR" ) {
+            let roads   = globals.GAME.FRONT.roads.filter( ( e ) => { return e.roadId == data.roadId; })
+            let road    = roads[0];
+
+            if ( road.isHorizontal ) {
+                this.destination = { "row": road.topRow, "col": data.col }
+            }
+            else {
+                this.destination = { "row": data.row, "col": road.leftCol }
+            }
+            this.walkingToDestination = true;   
+            let car = this.getSpriteByName( )
+            car.initMovingSprite( this )
+            console.log(this)
+        }
+        
         if ( this.type == "ANIM" ) {
             this.animName = data.animName;
             this.endDirection = ( data.endDirection ) ? globals[data.endDirection] : false;
             this.loop = data.loop;
         }
 
+        if ( this.type == "CREATE_CAR" ) {
+            let roads   = globals.GAME.FRONT.roads.filter( ( e ) => { return e.roadId == data.roadId; })
+            let roadData    = roads[0].getCarDataForTile( true );
+            roadData.name = this.spriteName;
+            console.log(roadData)
+            globals.GAME.FRONT.setVehicleToTile( roadData )
+            return;
+        }
+
         if ( this.type == "CREATE_SPRITE" ) {
             const tile = globals.GAME.FRONT.getTileAtCell( data.col, data.row );
+            data.name = data.spriteName;
             tile.setSpriteData( "character", data )
             globals.GAME.FRONT.setCharacterSprite( tile, true )   
+            this.spriteId = tile.spriteId;
             tile.clearSpriteData( );  
             return;
         }
@@ -87,7 +120,7 @@ class Scene {
     }
 
     unsetSpriteAnimation( ) {
-        if ( this.type == "DELETE_SPRITE" ) {
+        if ( this.type == "DELETE_SPRITE" || this.type == "MOVE_CAR" ) {
             return;
         }
         

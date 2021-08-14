@@ -163,20 +163,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         }
     }
 
-    generateBus( ) {
-        const roadArray = this.roads.filter( ( road ) => { return road.hasBusLine })
-        let road = roadArray[0]
-        if ( !road.startCellIsBlocked ) {
-            console.log(road)
-            this.setVehicleToTile( road.getCarDataForTile( true ) );
-        }
-    }
-
     setVehicleToTile( carData ) {
         const tile = super.getTileAtCell( carData.col, carData.row );
         tile.setSpriteData( "object", carData )
         this.setObjectSprite( tile, true )   
-        tile.clearSpriteData( );  
+        let id = tile.spriteId;
+        tile.clearSpriteData( );
+        return id;  
     }
     /**
      * Clear all props containing information on the currently active map

@@ -7,7 +7,8 @@ const { GRID_BLOCK_PX, MOVEMENT_SPEED } = require('../../../game-data/globals')
 class Car extends MapObject {
     constructor( tile, spriteId ) {
         super( tile, spriteId );
-
+        this.frames = this.objectResource["movement_frames"];
+        this.name = tile.spriteData.name
         this.initMovingSprite( tile.spriteData )
         this.initHitboxGroups( );
     }
@@ -56,7 +57,7 @@ class Car extends MapObject {
         if ( !this.isBus ) {
             this.checkForIntersection( );            
         }
-        if ( !this.blocked ) {
+        if ( !this.blocked && this.movingToDestination ) {
             this.goToDestination( );     
         }
         this.countFrame( );
@@ -113,9 +114,10 @@ class Car extends MapObject {
      * @param {Object} spriteData 
      */
     initMovingSprite( spriteData ) {
-        this.initMovement( );
-        this.frames = this.objectResource["movement_frames"];
-        this.setDestination( spriteData.destination );
+        if ( spriteData.destination ) {
+            this.initMovement( );
+            this.setDestination( spriteData.destination );            
+        }
     }
     /**
      * Instantiate on or more I_Hitboxgroup depending on the sprites alignment.
@@ -251,10 +253,16 @@ class Car extends MapObject {
             this.direction = globals["FACING_DOWN"]
         }
         
-        if ( !this.moving && this.isOffScreen ) {
-            super.endGoToAnimation( );
-            this.deleted = true;
-            globals.GAME.FRONT.deleteSprite( this.spriteId );
+        if ( !this.moving ) {
+            if ( globals.GAME.activeCinematic != undefined && this.name == globals.GAME.activeCinematic.activeScene.spriteName )
+            {
+                globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
+            }
+
+            if ( this.isOffScreen ) {
+                this.deleted = true;
+                globals.GAME.FRONT.deleteSprite( this.spriteId );
+            }
         }
     }
     /**
