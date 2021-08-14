@@ -79,7 +79,6 @@ class Scene {
             let roads   = globals.GAME.FRONT.roads.filter( ( e ) => { return e.roadId == data.roadId; })
             let roadData    = roads[0].getCarDataForTile( true );
             roadData.name = this.spriteName;
-            console.log(roadData)
             globals.GAME.FRONT.setVehicleToTile( roadData )
             return;
         }
@@ -131,8 +130,8 @@ class Scene {
     }
 
     getSpriteByName( name = this.spriteName ) {
-        const spriteArray = name == "Player" ? globals.GAME.PLAYER : globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
-        return name == "Player" ? spriteArray : spriteArray[0];
+        const spriteArray = globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
+        return spriteArray[0];
     }
 
     getSpriteById( id = this.spriteId ) {

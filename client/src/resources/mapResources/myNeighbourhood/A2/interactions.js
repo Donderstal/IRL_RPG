@@ -13,7 +13,32 @@ const BUS_TO_DOWTOWN = [
             "type": "SPEAK_YES_OR_NO",
             "spriteName": "Player",
             "sfx": "typing.mp3",
-            "text": "Shall I take the bus to my downtown?"
+            "text": "Shall I take the bus downtown?",
+            "pathYes": [
+              {
+                  "type": "CREATE_CAR", 
+                  "sprite": "bus.png", "direction": "FACING_LEFT",
+                  "spriteName": "bus-test", "roadId": "road_1"
+              },
+              {
+                  "type": "MOVE_CAR", "col": 20,
+                  "sprite": "bus.png", "direction": "FACING_LEFT",
+                  "spriteName": "bus-test", "roadId": "road_1"
+              },
+              { 
+                  "type": "MOVE", "spriteName": "Player",
+                  "destination": { "row": 10, "col": 20 }
+              },
+              { 
+                  "type": "DELETE_SPRITE", "spriteName": "Player" 
+              },
+              {
+                  "type": "MOVE_CAR", "col": 1,
+                  "sprite": "bus.png", "direction": "FACING_LEFT",
+                  "spriteName": "bus-test", "roadId": "road_1"
+              },
+              { "type": "FADE_SCREEN_OUT_IN", "sfx": "misc/random6.wav" }
+          ],
           }
       ]
     }

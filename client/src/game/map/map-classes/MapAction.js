@@ -48,21 +48,21 @@ class MapAction extends I_Hitbox {
      */
     setScenesNameAndSfx( ) {
         if ( this.scenes ) {
-            this.checkPropForScenes(this.scenes)
+            this.checkPropsForScenes(this.scenes)
         }
         if ( this.events ) {
             this.events.forEach( ( e ) => { 
                 let event = e;
-                this.checkPropForScenes( event.scenes )
+                this.checkPropsForScenes( event.scenes )
             } )
         }
     }
     /**
      * 
      */
-    checkPropForScenes( prop ) {
-        prop.forEach( ( e ) => {
-            if ( !e.spriteName ) {
+    checkPropsForScenes( scenes ) {
+        scenes.forEach( ( e ) => {
+            if ( !e.spriteName && e.type != "FADE_SCREEN_OUT_IN" ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
                 e.spriteId = this.spriteId;
             }
@@ -70,10 +70,10 @@ class MapAction extends I_Hitbox {
                 e.sfx = this.sfx;
             }
             if ( e.pathNo ) {
-                this.checkPropForScenes( e.pathNo )
+                this.checkPropsForScenes( e.pathNo )
             }
             if ( e.pathYes ) {
-                this.checkPropForScenes( e.pathYes )
+                this.checkPropsForScenes( e.pathYes )
             }
         } )
     }
@@ -81,7 +81,7 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) {
-        this.displayActionText( )
+        this.startCinematicScript( )
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered
@@ -128,8 +128,10 @@ class MapAction extends I_Hitbox {
     /**
      * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
      */
-    displayActionText( ) {
-        new Cinematic( this, "ON_NPC_INTERACTION" );
+    startCinematicScript( ) {
+        this.type == "BUS"
+            ? new Cinematic( this, "ON_LEAVE", [ this.to, "BUS" ] )
+            : new Cinematic( this, "ON_NPC_INTERACTION" );
     } 
 
     checkForEventOnBattleEnd( playerLostBattle ) {
