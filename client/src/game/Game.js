@@ -20,6 +20,7 @@ const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
 const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
+const { Cinematic } = require('./cutscenes/Cinematic')
 
 const firstMapUrl =  "my-neighbourhood/A1/my-house";
 const startingItemIDs = [
@@ -252,7 +253,21 @@ class Game {
         const newMapData = getMapData( destination );
         this.clearMapFromCanvases( );
         this.loadMapToCanvases( newMapData );
-        this.setPlayerInNewMap( newMapData, type );
+        if ( type != "BUS" ) {
+            this.setPlayerInNewMap( newMapData, type );
+        }
+        else {
+            newMapData.mapObjects.forEach( ( object ) => {
+                if ( object.action != undefined && object.action[0].action.type == "BUS" ) {
+                    object.action[0].action.events.forEach( ( e ) => {
+                        if ( e["trigger"] == "ON_ENTER" ) {
+                            new Cinematic( e, "ON_ENTER" )
+                        }
+                    })
+                }
+                
+            } )
+        }
         this.storeMapData( newMapData, destination );
         if ( !this.disableStoryMode ) {
             this.story.getScriptedEventsForMap( this.activeMapName );            

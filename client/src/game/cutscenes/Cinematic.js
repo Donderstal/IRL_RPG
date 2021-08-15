@@ -60,6 +60,16 @@ class Cinematic {
                 this.activateNextScene( )
             }
         }
+        if ( this.activeScene.type == "FADE_SCREEN_IN" || this.activeScene.type == "FADE_SCREEN_OUT" ) {
+            let fader = globals.GAME.fader
+            if ( ( fader.fadingFromBlack && fader.A <= 0 ) || ( fader.fadingToBlack && fader.A >= 1 ) 
+            || fader.holdBlackScreen ) {
+                this.activateNextScene( )
+            }
+            else {
+                return;
+            }
+        }
         if ( this.activeScene.type == "CREATE_SPRITE" || this.activeScene.type == "CREATE_CAR" ) {
             if ( this.activeScene.getSpriteByName( ) instanceof Sprite ) {
                 this.activateNextScene( );

@@ -84,6 +84,11 @@ class Scene {
         }
 
         if ( this.type == "CREATE_SPRITE" ) {
+            if ( data.spriteName == "Player" ) {
+                globals.GAME.setPlayerInNewMap( globals.GAME.activeMap, "BUS" )
+                return;
+            }
+
             const tile = globals.GAME.FRONT.getTileAtCell( data.col, data.row );
             data.name = data.spriteName;
             tile.setSpriteData( "character", data )
@@ -98,11 +103,22 @@ class Scene {
             return;
         }
 
-        if ( this.type == "FADE_SCREEN_OUT_IN" ) {
+        if ( this.type  == "FADE_SCREEN_OUT" ) {
             globals.GAME.sound.pauseMusic( );
-            globals.GAME.fader.startFadeToBlack( );
+            globals.GAME.fader.startFadeToBlack(  );
             globals.GAME.sound.playEffect( "relaxing_chord.wav" )
             return;
+        }
+        
+        if ( this.type  == "FADE_SCREEN_OUT_IN" ) {
+            globals.GAME.sound.pauseMusic( );
+            globals.GAME.fader.startFadeToBlack( true );
+            globals.GAME.sound.playEffect( "relaxing_chord.wav" )
+            return;
+        }
+
+        if ( this.type == "FADE_SCREEN_IN" ) {
+            globals.GAME.fader.startFadeFromBlack( );
         }
 
         this.setAnimToSprite( );

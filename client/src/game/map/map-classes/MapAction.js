@@ -62,7 +62,7 @@ class MapAction extends I_Hitbox {
      */
     checkPropsForScenes( scenes ) {
         scenes.forEach( ( e ) => {
-            if ( !e.spriteName && e.type != "FADE_SCREEN_OUT_IN" ) {
+            if ( !e.spriteName && !e.type.includes("FADE_SCREEN_") ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
                 e.spriteId = this.spriteId;
             }
@@ -90,8 +90,11 @@ class MapAction extends I_Hitbox {
         this.confirmingAction = true;
         switch ( this.type ) {
             case "BUS" :
-                globals.GAME.switchMap( this.to, "BUS" );
-                globals.GAME.sound.playEffect( "misc/random5.wav" );
+                this.events.forEach( ( e ) => {
+                    if ( e["trigger"] == "ON_LEAVE" ) {
+                        new Cinematic( e, "ON_LEAVE", [ this.to, "BUS" ] );                            
+                    }
+                } )
                 break;
             case "BATTLE" : 
                 if ( this.hasEvent ) {
@@ -129,9 +132,7 @@ class MapAction extends I_Hitbox {
      * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
      */
     startCinematicScript( ) {
-        this.type == "BUS"
-            ? new Cinematic( this, "ON_LEAVE", [ this.to, "BUS" ] )
-            : new Cinematic( this, "ON_NPC_INTERACTION" );
+        new Cinematic( this, "ON_NPC_INTERACTION" );
     } 
 
     checkForEventOnBattleEnd( playerLostBattle ) {
