@@ -18,85 +18,54 @@ class Cinematic {
     }
 
     checkForScenePass( ) {
-        if ( this.activeScene.type == "SPEAK" ) {
-            if ( !globals.GAME.bubbleIsActive ) {
-                this.activateNextScene( )
-            }
-            else {
-                return
-            }
+        let goToNextScene = false;
+        switch( this.activeScene.type ) {
+            case "SPEAK":
+                goToNextScene = !globals.GAME.bubbleIsActive
+                break;
+            case "SPEAK_YES_OR_NO":
+                goToNextScene = !globals.GAME.bubbleIsActive
+                break;
+            case "MOVE" :
+            case "MOVE_CAR":
+                goToNextScene = !this.activeScene.walkingToDestination
+                break;
+            case "ANIM": 
+                const sprite = this.activeScene.getSpriteByName( );
+                goToNextScene = !sprite.inScriptedAnimation
+                break;
+            case "CREATE_CAR":
+            case "CREATE_SPRITE":
+                goToNextScene = this.activeScene.getSpriteByName( ) instanceof Sprite
+                break;
+            case "DELETE_SPRITE":
+                goToNextScene = !(this.activeScene.getSpriteByName( ) instanceof Sprite)
+                break;
+            case "FADE_SCREEN_OUT":
+            case "FADE_SCREEN_IN" :
+                let fader = globals.GAME.fader
+                goToNextScene = ( fader.fadingFromBlack && fader.A <= 0 ) || ( fader.fadingToBlack && fader.A >= 1 ) || fader.holdBlackScreen
+                break;
+            case "FADE_SCREEN_OUT_IN":
+                goToNextScene = !globals.GAME.fader.inFadingAnimation
+                break;
+            case "WAIT":
+                goToNextScene = this.activeScene.counter.countAndCheckLimit( )
+                break;
+            default :
+                console.log( "Scene type " + this.type + " is not recognized")
         }
-        if ( this.activeScene.type == "SPEAK_YES_OR_NO" ) {
-            if ( !globals.GAME.bubbleIsActive ) {
-                this.handleYesOrNoScene( );
-            }
-            else {
-                return
-            }
-        }
-        if ( this.activeScene.type == "MOVE" || this.activeScene.type == "MOVE_CAR" ) {
-            if ( this.activeScene.walkingToDestination ) {
-                return
-            }
-            else {
-                this.activateNextScene( )
-            }
-        }
-        if ( this.activeScene.type == "ANIM" ) {
-            const sprite = this.activeScene.getSpriteByName( );
-            if ( sprite.inScriptedAnimation ) {
-                return 
-            }          
-            else {
-                this.activateNextScene( )
-            }      
-        }
-        if ( this.activeScene.type == "FADE_SCREEN_OUT_IN" ) {
-            if ( globals.GAME.fader.inFadingAnimation ) {
-                return
-            }
-            else {
-                globals.GAME.sound.resumeMusic( );
-                this.activateNextScene( )
-            }
-        }
-        if ( this.activeScene.type == "FADE_SCREEN_IN" || this.activeScene.type == "FADE_SCREEN_OUT" ) {
-            let fader = globals.GAME.fader
-            if ( ( fader.fadingFromBlack && fader.A <= 0 ) || ( fader.fadingToBlack && fader.A >= 1 ) 
-            || fader.holdBlackScreen ) {
-                this.activateNextScene( )
-            }
-            else {
-                return;
-            }
-        }
-        if ( this.activeScene.type == "CREATE_SPRITE" || this.activeScene.type == "CREATE_CAR" ) {
-            if ( this.activeScene.getSpriteByName( ) instanceof Sprite ) {
-                this.activateNextScene( );
-            }
-            else {
-                return
-            }
-        }
-        if ( this.activeScene.type == "DELETE_SPRITE" ) {
-            if ( !(this.activeScene.getSpriteByName( ) instanceof Sprite) ) {
-                this.activateNextScene( );
-            }
-            else {
-                return
-            }
-        }
-        if ( this.activeScene.type == "WAIT" ) {
-            if ( this.activeScene.counter.countAndCheckLimit( ) ) {
-                this.activateNextScene( );
-            }
-            else {
-                return
-            }
+
+        if ( goToNextScene ) {
+            this.activateNextScene( );
         }
     }
 
     activateNextScene( ) {
+        if ( this.activeScene.type == "SPEAK_YES_OR_NO" ) {
+            this.registerYesOrNoSelection( )
+        }
+        
         this.iterator++
         if ( this.scenes[this.iterator] ) {
             if ( this.activeScene.type == "SPEAK" || this.activeScene.type == "SPEAK_YES_OR_NO" ) {
@@ -126,7 +95,7 @@ class Cinematic {
         }
     }
 
-    handleYesOrNoScene( ) {
+    registerYesOrNoSelection( ) {
         let scenesToAdd;
         switch( this.activeScene.selection ) {
             case "YES" :
@@ -144,8 +113,6 @@ class Cinematic {
                 this.scenes.splice( this.iterator + 1 + i, 0 , scenesToAdd[i] )
             }            
         }
-        
-        this.activateNextScene( );
     }
 }
 
