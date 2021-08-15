@@ -37,6 +37,7 @@ const BUS_TO_DOWTOWN = [
               { 
                   "type": "DELETE_SPRITE", "spriteName": "Player" 
               },
+              { "type": "WAIT", "ms": 500 },
               {
                   "type": "MOVE_CAR", "col": 1,
                   "sprite": "bus.png", "direction": "FACING_LEFT",
@@ -59,10 +60,12 @@ const BUS_TO_DOWTOWN = [
                 "sprite": "bus.png", "direction": "FACING_LEFT",
                 "spriteName": "bus-test", "roadId": "road_1"
               },
+              { "type": "WAIT", "ms": 500 },
               {
                 "type": "CREATE_SPRITE", "direction": "FACING_DOWN",
                 "spriteName": "Player", "row": 7, "col": 7,
               },
+              { "type": "WAIT", "ms": 500 },
               {
                 "type": "MOVE_CAR", "col": 1,
                 "sprite": "bus.png", "direction": "FACING_LEFT",

@@ -62,11 +62,11 @@ class MapAction extends I_Hitbox {
      */
     checkPropsForScenes( scenes ) {
         scenes.forEach( ( e ) => {
-            if ( !e.spriteName && !e.type.includes("FADE_SCREEN_") ) {
+            if ( !e.spriteName && !e.type.includes("FADE_SCREEN_") && e.type != "WAIT" ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
                 e.spriteId = this.spriteId;
             }
-            if ( !e.sfx ) {
+            if ( !e.sfx  && e.type != "WAIT" ) {
                 e.sfx = this.sfx;
             }
             if ( e.pathNo ) {

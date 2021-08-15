@@ -86,6 +86,14 @@ class Cinematic {
                 return
             }
         }
+        if ( this.activeScene.type == "WAIT" ) {
+            if ( this.activeScene.counter.countAndCheckLimit( ) ) {
+                this.activateNextScene( );
+            }
+            else {
+                return
+            }
+        }
     }
 
     activateNextScene( ) {

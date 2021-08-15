@@ -1,4 +1,5 @@
-const globals               = require('../../game-data/globals')
+const globals               = require('../../game-data/globals');
+const { Counter } = require('../../helpers/Counter');
 
 class Scene {
     constructor( data ) {
@@ -119,6 +120,10 @@ class Scene {
 
         if ( this.type == "FADE_SCREEN_IN" ) {
             globals.GAME.fader.startFadeFromBlack( );
+        }
+
+        if ( this.type == "WAIT" ) {
+            this.counter = new Counter( data.ms )
         }
 
         this.setAnimToSprite( );
