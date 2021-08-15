@@ -9,16 +9,21 @@ const BUS_TO_DOWTOWN = [
       "type": "BUS",
       "to": "downtown/A3",
       "scenes": [
+        {
+          "type": "SPEAK_YES_OR_NO",
+          "spriteName": "Player",
+          "sfx": "typing.mp3",
+          "text": "Shall I take the bus downtown?",
+        }
+        ],
+        "events": [
           {
-            "type": "SPEAK_YES_OR_NO",
-            "spriteName": "Player",
-            "sfx": "typing.mp3",
-            "text": "Shall I take the bus downtown?",
-            "pathYes": [
+            "trigger": "ON_LEAVE",
+            "scenes": [
               {
-                  "type": "CREATE_CAR", 
-                  "sprite": "bus.png", "direction": "FACING_LEFT",
-                  "spriteName": "bus-test", "roadId": "road_1"
+                "type": "CREATE_CAR", 
+                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "spriteName": "bus-test", "roadId": "road_1"
               },
               {
                   "type": "MOVE_CAR", "col": 20,
@@ -37,10 +42,35 @@ const BUS_TO_DOWTOWN = [
                   "sprite": "bus.png", "direction": "FACING_LEFT",
                   "spriteName": "bus-test", "roadId": "road_1"
               },
-              { "type": "FADE_SCREEN_OUT_IN", "sfx": "misc/random6.wav" }
-          ],
+              { "type": "FADE_SCREEN_OUT", "sfx": "misc/random6.wav" }
+            ]
+          },
+          {
+            "trigger": "ON_ENTER",
+            "scenes": [
+              { "type": "FADE_SCREEN_IN" },
+              {
+                "type": "CREATE_CAR", 
+                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "spriteName": "bus-test", "roadId": "road_1"
+              },
+              {
+                "type": "MOVE_CAR", "col": 20,
+                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "spriteName": "bus-test", "roadId": "road_1"
+              },
+              {
+                "type": "CREATE_SPRITE", "direction": "FACING_DOWN",
+                "spriteName": "Player", "row": 7, "col": 7,
+              },
+              {
+                "type": "MOVE_CAR", "col": 1,
+                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "spriteName": "bus-test", "roadId": "road_1"
+              }
+            ]
           }
-      ]
+        ],
     }
   }
 ]
