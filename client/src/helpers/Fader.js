@@ -8,12 +8,14 @@ class Fader {
         this.A = false;
         this.fadingToBlack = false;
         this.fadingFromBlack = false;
+        this.holdBlackScreen = false;
     }
 
     get RGBA( ) { return "rgba( " + this.RGB + this.A + ")"; }
-    get inFadingAnimation( ) { return this.fadingFromBlack || this.fadingToBlack; }
+    get inFadingAnimation( ) { return this.fadingFromBlack || this.fadingToBlack || this.holdBlackScreen; }
 
-    startFadeToBlack( ) {
+    startFadeToBlack( fadeInAndOut = false ) {
+        this.fadeInAndOut       = fadeInAndOut
         this.fadingToBlack      = true;
         this.A = 0;
     }
@@ -43,21 +45,31 @@ class Fader {
     fadeFromBlack( ) {
         this.A -= .0075
     }
+    
+    holdBlackMode( ) {
+        this.holdBlackScreen = true;
+    }
 
     checkForFadeEnd( ) {
         if ( this.fadingFromBlack && this.A <= 0 ) {
-            this.unsetFadingAnimation( )
+            this.unsetFadingAnimation( );
             globals.GAME.sound.resumeMusic( );
         }
+        else if ( this.fadingToBlack && this.A >= 1 && this.fadeInAndOut ) {
+            this.unsetFadingAnimation( );
+            this.startFadeFromBlack( );      
+        }
         else if ( this.fadingToBlack && this.A >= 1 ) {
-            this.unsetFadingAnimation( )
-            this.startFadeFromBlack( );
+            this.unsetFadingAnimation( );
+            this.holdBlackMode( );
         }
     }
 
     unsetFadingAnimation( ) {
+        this.holdBlackScreen    = false;
         this.fadingToBlack      = false;
         this.fadingFromBlack    = false;
+        this.fadeInAndOut       = false;
     }
 }
 

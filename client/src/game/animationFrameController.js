@@ -63,13 +63,13 @@ const animationFrameController = ( ) => {
             if  ( GAME.inCinematic && GAME.activeCinematic ) {
                 GAME.activeCinematic.checkForScenePass( )
             } 
-            if ( GAME.fader.inFadingAnimation ) {
-                GAME.fader.handleFade( )
-            }
         }
         else {
             canvasHelpers.clearEntireCanvas('FRONT')
-        }        
+        }       
+        if ( GAME.fader.inFadingAnimation ) {
+            GAME.fader.handleFade( )
+        } 
     }
 
     requestAnimationFrame(animationFrameController)
