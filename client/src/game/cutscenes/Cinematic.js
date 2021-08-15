@@ -1,3 +1,6 @@
+const { 
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT 
+} = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals')
 const { Sprite } = require('../interfaces/I_Sprite')
 const { Scene }     = require('./Scene')
@@ -20,36 +23,36 @@ class Cinematic {
     checkForScenePass( ) {
         let goToNextScene = false;
         switch( this.activeScene.type ) {
-            case "SPEAK":
+            case SPEAK:
                 goToNextScene = !globals.GAME.bubbleIsActive
                 break;
-            case "SPEAK_YES_OR_NO":
+            case SPEAK_YES_NO:
                 goToNextScene = !globals.GAME.bubbleIsActive
                 break;
-            case "MOVE" :
-            case "MOVE_CAR":
+            case MOVE :
+            case MOVE_CAR:
                 goToNextScene = !this.activeScene.walkingToDestination
                 break;
-            case "ANIM": 
+            case ANIM: 
                 const sprite = this.activeScene.getSpriteByName( );
                 goToNextScene = !sprite.inScriptedAnimation
                 break;
-            case "CREATE_CAR":
-            case "CREATE_SPRITE":
+            case CREATE_CAR:
+            case CREATE_SPRITE:
                 goToNextScene = this.activeScene.getSpriteByName( ) instanceof Sprite
                 break;
-            case "DELETE_SPRITE":
+            case DELETE_SPRITE:
                 goToNextScene = !(this.activeScene.getSpriteByName( ) instanceof Sprite)
                 break;
-            case "FADE_SCREEN_OUT":
-            case "FADE_SCREEN_IN" :
+            case FADE_OUT:
+            case FADE_IN :
                 let fader = globals.GAME.fader
                 goToNextScene = ( fader.fadingFromBlack && fader.A <= 0 ) || ( fader.fadingToBlack && fader.A >= 1 ) || fader.holdBlackScreen
                 break;
-            case "FADE_SCREEN_OUT_IN":
+            case FADE_IN_OUT:
                 goToNextScene = !globals.GAME.fader.inFadingAnimation
                 break;
-            case "WAIT":
+            case WAIT:
                 goToNextScene = this.activeScene.counter.countAndCheckLimit( )
                 break;
             default :
@@ -62,13 +65,13 @@ class Cinematic {
     }
 
     activateNextScene( ) {
-        if ( this.activeScene.type == "SPEAK_YES_OR_NO" ) {
+        if ( this.activeScene.is( SPEAK_YES_NO ) ) {
             this.registerYesOrNoSelection( )
         }
         
         this.iterator++
         if ( this.scenes[this.iterator] ) {
-            if ( this.activeScene.type == "SPEAK" || this.activeScene.type == "SPEAK_YES_OR_NO" ) {
+            if ( this.activeScene.is( SPEAK ) || this.activeScene.is( SPEAK_YES_NO ) ) {
                 this.activeScene.unsetSpriteAnimation( )
             }
             this.activeScene = new Scene( this.scenes[this.iterator] );            

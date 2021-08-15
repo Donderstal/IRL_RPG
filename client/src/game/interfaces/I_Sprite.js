@@ -11,6 +11,7 @@ const {
     FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
     FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
+const { SPEAK_YES_NO, SPEAK, MOVE, ANIM } = require('../../game-data/conditionGlobals')
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -353,17 +354,17 @@ class Sprite {
      * @param {Scene} scene 
      */
     setAnimation( scene ) {
-        if ( scene.type == "SPEAK_YES_OR_NO" ) {
+        if ( scene.is( SPEAK_YES_NO ) ) {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false, [ "( Space ) YES", "( Z ) NO" ] )
         }
-        if ( scene.type == "SPEAK" ) {
+        if ( scene.is( SPEAK ) ) {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
         }
-        if ( scene.type == "MOVE" ) {
+        if ( scene.is( MOVE ) ) {
             this.setDestination( scene.destination );
             this.initMovement( );
         }
-        if ( scene.type == "ANIM" ) {
+        if ( scene.is( ANIM ) ) {
             this.setScriptedAnimation( scene, FRAME_LIMIT )
         }
     }

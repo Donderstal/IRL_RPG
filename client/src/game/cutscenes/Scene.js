@@ -1,3 +1,6 @@
+const { 
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT 
+} = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { Counter } = require('../../helpers/Counter');
 
@@ -5,7 +8,7 @@ class Scene {
     constructor( data ) {
         this.type   = data.type;
         this.spriteName = data.spriteName;
-        if ( this.type == "CREATE_CAR" || this.type == "CREATE_SPRITE" ) {
+        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) ) {
             this.spriteId = "";
         }
         else {
@@ -16,55 +19,59 @@ class Scene {
         this.setAction( data )
     }
 
+    is( value ) {
+        return this.type == value
+    }
+
     setAction( data ) {
         let setToSprite = false;
         switch( this.type ) {
-            case "SPEAK":
+            case SPEAK:
                 this.text = data.text;
                 setToSprite = true;
                 break;
-            case "SPEAK_YES_OR_NO":
+            case SPEAK_YES_NO:
                 this.text = data.text;
                 this.pathYes = data.pathYes;
                 this.pathNo = data.pathNo;
                 setToSprite = true;
                 break;
-            case "MOVE" :
+            case MOVE :
                 this.initMoveScene( data );
                 setToSprite = true;
                 break;
-            case "MOVE_CAR":
+            case MOVE_CAR:
                 this.initMoveCarScene( data );
                 break;
-            case "ANIM": 
+            case ANIM: 
                 this.animName = data.animName;
                 this.endDirection = ( data.endDirection ) ? globals[data.endDirection] : false;
                 this.loop = data.loop;
                 setToSprite = true;
                 break;
-            case "CREATE_CAR":
+            case CREATE_CAR:
                 this.initCreateCarScene( data );
                 break;
-            case "CREATE_SPRITE":
+            case CREATE_SPRITE:
                 this.initCreateSpriteScene( data );
                 break;
-            case "DELETE_SPRITE":
+            case DELETE_SPRITE:
                 setTimeout( ( ) => { globals.GAME.FRONT.deleteSprite( this.spriteId ) }, 250 )
                 break;
-            case "FADE_SCREEN_OUT":
+            case FADE_OUT:
                 globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack(  );
                 globals.GAME.sound.playEffect( "relaxing_chord.wav" )
                 break;
-            case "FADE_SCREEN_IN" :
+            case FADE_IN:
                 globals.GAME.fader.startFadeFromBlack( );
                 break;
-            case "FADE_SCREEN_OUT_IN":
+            case FADE_OUT_IN:
                 globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack( true );
                 globals.GAME.sound.playEffect( "relaxing_chord.wav" )
                 break;
-            case "WAIT":
+            case WAIT:
                 this.counter = new Counter( data.ms )
                 break;
             default :
@@ -141,7 +148,7 @@ class Scene {
     }
 
     unsetSpriteAnimation( ) {
-        if ( this.type == "DELETE_SPRITE" || this.type == "MOVE_CAR" ) {
+        if ( this.is( DELETE_SPRITE ) || this.is( MOVE_CAR ) ) {
             return;
         }
         

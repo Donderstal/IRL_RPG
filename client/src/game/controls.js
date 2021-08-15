@@ -5,6 +5,7 @@ const { handleMapKeyPress } = require('./map/mapControls')
 const { handleMenuKeyPress } = require('./menu/menuControls');
 const { handleBattleKeyPress } = require('./battle/battleControls');
 const { INTERACTION_YES, INTERACTION_NO } = require('../game-data/interactionGlobals');
+const { SPEAK_YES_NO } = require('../game-data/conditionGlobals');
 
 /**
  * Add keydown listener with addKeyPressed callback. Add keyup listener with removeKeyFromPressed callback.
@@ -47,14 +48,14 @@ const addKeyToPressed = ( ) => {
     }
     else if ( GAME.inCinematic ) {
         if ( event.key == " " && GAME.bubbleIsActive ) {
-            if ( GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
+            if ( GAME.activeCinematic.activeScene.is( SPEAK_YES_NO ) ) {
                 GAME.activeAction.registerSelection( INTERACTION_YES );
                 GAME.activeCinematic.activeScene.setSelection( "YES" )  ;              
             }
             GAME.activeBubble = {}
             GAME.bubbleIsActive = false
         }
-        else if ( event.key == "z" && GAME.bubbleIsActive && GAME.activeCinematic.activeScene.type == "SPEAK_YES_OR_NO" ) {
+        else if ( event.key == "z" && GAME.bubbleIsActive && GAME.activeCinematic.activeScene.is( SPEAK_YES_NO ) ) {
             GAME.activeAction.registerSelection( INTERACTION_NO );
             GAME.activeCinematic.activeScene.setSelection( "NO" )
             GAME.activeBubble = {}

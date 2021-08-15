@@ -9,6 +9,19 @@ module.exports = {
     EVENT_HAS_FIRED: "EHF",
     EVENT_RESPONSE_YES: "ERY",
     EVENT_RESPONSE_NO: "ERN",
-    DEFAULT: "DEF"
+    DEFAULT: "DEF",
+
+    SPEAK: "SPK",
+    SPEAK_YES_NO: "SYN",
+    MOVE: "MOV",
+    MOVE_CAR: "MOC",
+    ANIM: "ANI",
+    CREATE_CAR: "CRC",
+    CREATE_SPRITE: "CRS",
+    DELETE_SPRITE: "DEL",
+    FADE_IN: "FAI",
+    FADE_OUT: "FAO",
+    FADE_IN_OUT: "FIO",
+    WAIT: "WAI"
 }
 
