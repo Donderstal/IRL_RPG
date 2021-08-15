@@ -1,4 +1,6 @@
-const { DEFAULT } = require("../../../../game-data/conditionGlobals")
+const {
+  DEFAULT, SPEAK_YES_NO, CREATE_CAR, MOVE_CAR, MOVE, DELETE_SPRITE, WAIT, FADE_OUT, FADE_IN, CREATE_SPRITE, SPEAK 
+} = require("../../../../game-data/conditionGlobals")
 
 const BUS_TO_DOWTOWN = [
   {
@@ -10,7 +12,7 @@ const BUS_TO_DOWTOWN = [
       "to": "downtown/A3",
       "scenes": [
         {
-          "type": "SPEAK_YES_OR_NO",
+          "type": SPEAK_YES_NO,
           "spriteName": "Player",
           "sfx": "typing.mp3",
           "text": "Shall I take the bus downtown?",
@@ -21,53 +23,53 @@ const BUS_TO_DOWTOWN = [
             "trigger": "ON_LEAVE",
             "scenes": [
               {
-                "type": "CREATE_CAR", 
+                "type": CREATE_CAR, 
                 "sprite": "bus.png", "direction": "FACING_LEFT",
                 "spriteName": "bus-test", "roadId": "road_1"
               },
               {
-                  "type": "MOVE_CAR", "col": 20,
+                  "type": MOVE_CAR, "col": 20,
                   "sprite": "bus.png", "direction": "FACING_LEFT",
                   "spriteName": "bus-test", "roadId": "road_1"
               },
               { 
-                  "type": "MOVE", "spriteName": "Player",
+                  "type": MOVE, "spriteName": "Player",
                   "destination": { "row": 10, "col": 20 }
               },
               { 
-                  "type": "DELETE_SPRITE", "spriteName": "Player" 
+                  "type": DELETE_SPRITE, "spriteName": "Player" 
               },
-              { "type": "WAIT", "ms": 500 },
+              { "type": WAIT, "ms": 500 },
               {
-                  "type": "MOVE_CAR", "col": 1,
+                  "type": MOVE_CAR, "col": 1,
                   "sprite": "bus.png", "direction": "FACING_LEFT",
                   "spriteName": "bus-test", "roadId": "road_1"
               },
-              { "type": "FADE_SCREEN_OUT", "sfx": "misc/random6.wav" }
+              { "type": FADE_OUT, "sfx": "misc/random6.wav" }
             ]
           },
           {
             "trigger": "ON_ENTER",
             "scenes": [
-              { "type": "FADE_SCREEN_IN" },
+              { "type": FADE_IN },
               {
-                "type": "CREATE_CAR", 
+                "type": CREATE_CAR, 
                 "sprite": "bus.png", "direction": "FACING_LEFT",
                 "spriteName": "bus-test", "roadId": "road_1"
               },
               {
-                "type": "MOVE_CAR", "col": 20,
+                "type": MOVE_CAR, "col": 20,
                 "sprite": "bus.png", "direction": "FACING_LEFT",
                 "spriteName": "bus-test", "roadId": "road_1"
               },
-              { "type": "WAIT", "ms": 500 },
+              { "type": WAIT, "ms": 500 },
               {
-                "type": "CREATE_SPRITE", "direction": "FACING_DOWN",
+                "type": CREATE_SPRITE, "direction": "FACING_DOWN",
                 "spriteName": "Player", "row": 7, "col": 7,
               },
-              { "type": "WAIT", "ms": 500 },
+              { "type": WAIT, "ms": 500 },
               {
-                "type": "MOVE_CAR", "col": 1,
+                "type": MOVE_CAR, "col": 1,
                 "sprite": "bus.png", "direction": "FACING_LEFT",
                 "spriteName": "bus-test", "roadId": "road_1"
               }
@@ -87,8 +89,8 @@ const A2_TALKING_CHAD = [
       "type": "TEXT",
       "sfx": "voice-1.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "Could you piss off?" },
-        { "type": "SPEAK", "text": "Can't you see I'm minding my own business?" }
+        { "type": SPEAK, "text": "Could you piss off?" },
+        { "type": SPEAK, "text": "Can't you see I'm minding my own business?" }
       ]
     }    
   }
@@ -103,7 +105,7 @@ const A2_TALKING_NECKBEARD = [
       "type": "TEXT",
       "sfx": "mauww.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "I'm an aspiring ninja, m'lady." }
+        { "type": SPEAK, "text": "I'm an aspiring ninja, m'lady." }
       ]
     }
   }
@@ -118,7 +120,7 @@ const A2_TALKING_GIRL = [
       "type": "TEXT",
       "sfx": "poo-poo.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "I used to date a level 24 Darkmage." }
+        { "type": SPEAK, "text": "I used to date a level 24 Darkmage." }
       ]
     }
   }
@@ -133,7 +135,7 @@ const A2_TALKING_ROBOT = [
       "type": "TEXT",
       "sfx": "typing.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "Hello, potential customer!" }
+        { "type": SPEAK, "text": "Hello, potential customer!" }
       ]
     }
   }
@@ -148,7 +150,7 @@ const A2_SUBMAP1_WOMAN = [
       "type": "TEXT",
       "sfx": "poo-poo.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "There's this weird neckbeard in the back alley trying to connect my to my internet." }
+        { "type": SPEAK, "text": "There's this weird neckbeard in the back alley trying to connect my to my internet." }
       ]
     }
   }
@@ -165,7 +167,7 @@ const A2_SUBMAP1_ACTION_BIN  = [
       "type": "TEXT",
       "scenes": [
         {
-          "type": "SPEAK",
+          "type": SPEAK,
           "spriteName": "Player",
           "sfx": "typing.mp3",
           "text": "Is there a used condom in this bin?"
@@ -184,7 +186,7 @@ const A2_SUBMAP3_WIFIGUY = [
       "type": "TEXT",
       "sfx": "voice-3.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "The Wifi here sucks, man" }
+        { "type": SPEAK, "text": "The Wifi here sucks, man" }
       ]
     }
   }
@@ -199,7 +201,7 @@ const A2_SUBMAP2_LIFTING_CHAD = [
       "type": "TEXT",
       "sfx": "voice-1.mp3",
       "scenes": [
-        { "type": "SPEAK", "text": "Do you even lift, bro?"}
+        { "type": SPEAK, "text": "Do you even lift, bro?"}
       ]
     }
   }

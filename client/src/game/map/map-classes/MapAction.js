@@ -6,6 +6,7 @@ const { addEventToRegistry } = require('../../../helpers/interactionRegistry');
 const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
 const { Inventory } = require('../../party/Inventory');
 const { initShopMenu } = require('../map-ui/ShopMenu');
+const { WAIT, FADE_IN_OUT, FADE_OUT, FADE_IN } = require('../../../game-data/conditionGlobals');
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
@@ -62,7 +63,7 @@ class MapAction extends I_Hitbox {
      */
     checkPropsForScenes( scenes ) {
         scenes.forEach( ( e ) => {
-            if ( !e.spriteName && !e.type.includes("FADE_SCREEN_") && e.type != "WAIT" ) {
+            if ( !e.spriteName && e.type != FADE_IN_OUT && e.type != FADE_OUT && e.type != FADE_IN && e.type != WAIT ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
                 e.spriteId = this.spriteId;
             }

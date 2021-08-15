@@ -1,5 +1,5 @@
 const { LOGGABLE_INTERACTION_1 } = require("../../../../../game-data/interactionGlobals");
-const { DEFAULT, EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, EVENT_HAS_FIRED, SPEAK } = require("../../../../../game-data/conditionGlobals");
 
 const STANDARD_ROBOT =  [
     {
@@ -10,9 +10,9 @@ const STANDARD_ROBOT =  [
             "type": "SLEEP",
             "sfx": "typing.mp3",
             "scenes": [
-                { "type": "SPEAK", "text": "For your safety, good citizen!" },
-                { "type": "SPEAK", "text": "There's no reason to go beyond here." },
-                { "type": "SPEAK", "text": "We advise you to go inside!" }
+                { "type": SPEAK, "text": "For your safety, good citizen!" },
+                { "type": SPEAK, "text": "There's no reason to go beyond here." },
+                { "type": SPEAK, "text": "We advise you to go inside!" }
             ]
         } 
     }
@@ -29,8 +29,8 @@ const KEY_ROBOT = [
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_1,
             "scenes": [
-                { "type": "SPEAK", "text": "Didn't I give you a key already" },
-                { "type": "SPEAK", "text": "There's still no reason to go beyond here." }
+                { "type": SPEAK, "text": "Didn't I give you a key already" },
+                { "type": SPEAK, "text": "There's still no reason to go beyond here." }
             ]
         } 
     },
@@ -44,12 +44,12 @@ const KEY_ROBOT = [
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_1,
             "scenes": [
-                { "type": "SPEAK", "text": "For your safety, good citizen!" },
-                { "type": "SPEAK", "text": "There's no reason to go beyond here." },
-                { "type": "SPEAK", "text": "We advise you to go inside!" },
-                { "type": "SPEAK", "text": "..." },
-                { "type": "SPEAK", "text": "Oh, the door's still locked?" },
-                { "type": "SPEAK", "text": "Here's the key, human!" }
+                { "type": SPEAK, "text": "For your safety, good citizen!" },
+                { "type": SPEAK, "text": "There's no reason to go beyond here." },
+                { "type": SPEAK, "text": "We advise you to go inside!" },
+                { "type": SPEAK, "text": "..." },
+                { "type": SPEAK, "text": "Oh, the door's still locked?" },
+                { "type": SPEAK, "text": "Here's the key, human!" }
             ]
         } 
     }
@@ -63,8 +63,8 @@ const BUTLER = [
             "type": "SLEEP",
             "sfx": "voice-1.mp3",
             "scenes": [
-                { "type": "SPEAK", "text": "Want to go in, sir?" },
-                { "type": "SPEAK", "text": "I'm afraid you'll have ask the robots..." }
+                { "type": SPEAK, "text": "Want to go in, sir?" },
+                { "type": SPEAK, "text": "I'm afraid you'll have ask the robots..." }
             ]
         }   
     }
