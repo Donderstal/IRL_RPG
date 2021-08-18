@@ -1,3 +1,5 @@
+const { FACING_RIGHT } = require("../game-data/globals")
+
 const storyChapters = [
     // Chapter 0
     [
@@ -32,7 +34,7 @@ const storyChapters = [
                 trigger: "ON_POSITION",
                 position: {
                     "col": 12,
-                    "direction": "FACING_RIGHT"
+                    "direction": FACING_RIGHT
                 },
                 passScene: true,
                 scriptId: "0_2_0"

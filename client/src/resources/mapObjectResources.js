@@ -1,3 +1,5 @@
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
+
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": "STANDARD",
     "height_blocks": 1, "width_blocks": 1
@@ -32,19 +34,19 @@ const STANDARD_CAR = {
     "hori_height_blocks": 3, "hori_width_blocks": 4,
     "vert_height_blocks": 3, "vert_width_blocks": 2,
     "movement_frames" : { 
-        "FACING_LEFT" : [
+        [FACING_LEFT] : [
             { "x": 0, "y": 384 },
             { "x": 0, "y": 576 }
         ],
-        "FACING_UP" : [
+        [FACING_UP] : [
             { "x": 0, "y": 960 },
             { "x": 128, "y": 960 }
         ],
-        "FACING_RIGHT" : [
+        [FACING_RIGHT] : [
             { "x": 0, "y": 0 },
             { "x": 0, "y": 192 }
         ],
-        "FACING_DOWN" : [
+        [FACING_DOWN] : [
             { "x": 0, "y": 768 },
             { "x": 128, "y": 768 }
         ]
@@ -56,19 +58,19 @@ const BUS = {
     "hori_height_blocks": 3, "hori_width_blocks": 6,
     "vert_height_blocks": 4, "vert_width_blocks": 3,
     "movement_frames" : {
-        "FACING_LEFT" : [
+        [FACING_LEFT] : [
             { "x": 0, "y": 384 },
             { "x": 0, "y": 576 }
         ],
-        "FACING_UP" : [
+        [FACING_UP] : [
             { "x": 0, "y": 1024 },
             { "x": 192, "y": 1024 }
         ],
-        "FACING_RIGHT" : [
+        [FACING_RIGHT] : [
             { "x": 0, "y": 0 },
             { "x": 0, "y": 192 }
         ],
-        "FACING_DOWN" : [
+        [FACING_DOWN] : [
             { "x": 0, "y": 768 },
             { "x": 192, "y": 768 }
         ]

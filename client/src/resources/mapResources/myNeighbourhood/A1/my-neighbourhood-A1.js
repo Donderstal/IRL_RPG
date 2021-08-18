@@ -13,7 +13,7 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasStart": true }
+      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_LEFT, "hasStart": true }
     ],
     "neighbours": {
         "right": "my-neighbourhood/A2",
@@ -72,7 +72,7 @@ module.exports = {
         {
           "anim_type": NPC_ANIM_TYPE_MOVING,
           "sprite": "business_man.png",
-          "direction": "FACING_LEFT",
+          "direction": FACING_LEFT,
           "name": "Mr. Business",                    
           "row": 6,
           "col": 22,

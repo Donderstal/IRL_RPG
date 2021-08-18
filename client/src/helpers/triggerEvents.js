@@ -1,4 +1,5 @@
 const globals           = require('../game-data/globals')
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
 
 /**
  * @param {string} TRIGGER - Trigger type as a string
@@ -33,16 +34,16 @@ const triggerEvent = ( TRIGGER, args = null ) => {
 const triggerOnPosition = ( e ) => {
     const position = e.position;
     if ( globals[position.direction] == globals.GAME.PLAYER.direction ) {
-        if ( position.direction == "FACING_RIGHT" && globals.GAME.PLAYER.col == position.col ) {
+        if ( position.direction == FACING_RIGHT && globals.GAME.PLAYER.col == position.col ) {
             return true;
         }
-        if ( position.direction == "FACING_LEFT" && globals.GAME.PLAYER.col == position.col ) {
+        if ( position.direction == FACING_LEFT && globals.GAME.PLAYER.col == position.col ) {
             return true;
         }
-        if ( position.direction == "FACING_UP" && globals.GAME.PLAYER.row == position.row) {
+        if ( position.direction == FACING_UP && globals.GAME.PLAYER.row == position.row) {
             return true;
         }
-        if ( position.direction == "FACING_DOWN" && globals.GAME.PLAYER.row == position.row) {
+        if ( position.direction == FACING_DOWN && globals.GAME.PLAYER.row == position.row) {
             return true;
         }
     }

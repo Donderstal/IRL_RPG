@@ -1,3 +1,5 @@
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
+
 const eventScripts = {
     // Chapter 0, Scene 0
     "0_0_0" : {
@@ -9,7 +11,7 @@ const eventScripts = {
             },
             { 
                 type: "MOVE", spriteName: "Mr. Business",
-                destination: "Player", endDirection: "FACING_UP"
+                destination: "Player", endDirection: FACING_UP
             },
             { 
                 type: "SPEAK", spriteName: "Mr. Business",
@@ -54,11 +56,11 @@ const eventScripts = {
             },
             { 
                 type: "MOVE", spriteName: "Chaddy Chandler",
-                destination: { "row": 3, "col": 5 }, endDirection: "FACING_DOWN"
+                destination: { "row": 3, "col": 5 }, endDirection: FACING_DOWN
             },
             { 
                 type: "ANIM", spriteName: "Chaddy Chandler",
-                animName: "TURN_SINGLE_CIRCLE", endDirection: "FACING_DOWN", loop: false
+                animName: "TURN_SINGLE_CIRCLE", endDirection: FACING_DOWN, loop: false
             }
         ]
     },
@@ -108,11 +110,11 @@ const eventScripts = {
             },
             { 
                 type: "MOVE", spriteName: "Player",
-                destination: { row: 13, col: 1  }, endDirection: "FACING_RIGHT"
+                destination: { row: 13, col: 1  }, endDirection: FACING_RIGHT
             },
             { 
                 type: "MOVE", spriteName: "Manager Bob",
-                destination: { row: 13, col: 2 }, endDirection: "FACING_LEFT"
+                destination: { row: 13, col: 2 }, endDirection: FACING_LEFT
             },
             { 
                 type: "SPEAK", spriteName: "Manager Bob",
@@ -132,7 +134,7 @@ const eventScripts = {
             },
             { 
                 type: "MOVE", spriteName: "Manager Bob",
-                destination: { row: 10, col: 6 }, endDirection: "FACING_DOWN"
+                destination: { row: 10, col: 6 }, endDirection: FACING_DOWN
             }
         ]
     },
