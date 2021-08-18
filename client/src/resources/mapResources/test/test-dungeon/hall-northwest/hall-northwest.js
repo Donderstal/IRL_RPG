@@ -1,5 +1,5 @@
-const { NPC_ANIM_TYPE_IDLE } = require("../../../../../game-data/globals");
-const { BUTLER_1, BUTLER_2, MONKEY, GRUMPY_MAN } = require("./interactions");
+const { MONKEY, GRUMPY_MAN } = require("./interactions");
+const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_UP, FACING_RIGHT } = require("../../../../../game-data/globals");
 
 module.exports = {
     "mapName":"test/hall-northwest",
@@ -25,20 +25,20 @@ module.exports = {
         {"type":"pot_plant_a","row":14,"col":4}],
     "characters":[
         {
-            "anim_type":NPC_ANIM_TYPE_IDLE,"row":2,"col":8,"sprite":"new_girl_recolour.png","direction":"FACING_DOWN"
+            "anim_type":NPC_ANIM_TYPE_IDLE,"row":2,"col":8,"sprite":"new_girl_recolour.png","direction":FACING_DOWN
         },
         {
-            "anim_type":NPC_ANIM_TYPE_IDLE,"row":2,"col":18,"sprite":"generic_balding_guy.png","direction":"FACING_DOWN"
+            "anim_type":NPC_ANIM_TYPE_IDLE,"row":2,"col":18,"sprite":"generic_balding_guy.png","direction":FACING_DOWN
             , "action": GRUMPY_MAN
         },
         {
             "anim_type":NPC_ANIM_TYPE_IDLE,
             "row":4,"col":2,
-            "sprite":"monkey_ceo.png","direction":"FACING_RIGHT",
+            "sprite":"monkey_ceo.png","direction":FACING_RIGHT,
             "action": MONKEY
         },
         {
-            "anim_type":NPC_ANIM_TYPE_IDLE,"row":14,"col":17,"sprite":"fats.png","direction":"FACING_UP"
+            "anim_type":NPC_ANIM_TYPE_IDLE,"row":14,"col":17,"sprite":"fats.png","direction":FACING_UP
         }
     ],
     "actions":[],
@@ -48,16 +48,16 @@ module.exports = {
             "col": 2,
             "from" : "test/hall-northwest",
             "to"  : "test/hall-west",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP"
+            "directionIn": FACING_DOWN,
+            "directionOut": FACING_UP
         },
         {
             "row": 14, 
             "col": 17,
             "from" : "test/hall-northwest",
             "to"  : "test/test-dungeon-lobby",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP"
+            "directionIn": FACING_DOWN,
+            "directionOut": FACING_UP
         }
     ]
 }

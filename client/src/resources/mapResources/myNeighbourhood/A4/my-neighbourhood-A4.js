@@ -1,5 +1,5 @@
 const { 
-    NPC_ANIM_TYPE_IDLE
+    NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_LEFT, FACING_UP
 } = require('../../../../game-data/globals')
 
 const {
@@ -14,8 +14,8 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-    { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasStart": true },
-    { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "hasStart": true }
+    { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_LEFT, "hasStart": true },
+    { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": FACING_DOWN, "hasStart": true }
     ],
     "neighbours": {
         "left": "my-neighbourhood/A3",
@@ -42,16 +42,16 @@ module.exports = {
             "row": 4, 
             "col": 16,
             "to"  : "my-neighbourhood/A4/yum-mart",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         },
         {
             "row": 4, 
             "col": 2,
             "to"  : "my-neighbourhood/A4/luxury-house",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         }
     ],
@@ -84,8 +84,8 @@ module.exports = {
                     "row": 14, 
                     "col": 3,
                     "to"  : "my-neighbourhood/A4",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ],
@@ -93,7 +93,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "woman.png",
-                    "direction": "FACING_DOWN",
+                    "direction": FACING_DOWN,
                     "row": 3,
                     "col": 3,
                     "name": "Big Money Hannah",
@@ -128,8 +128,8 @@ module.exports = {
                     "row": 13, 
                     "col": 6,
                     "to"  : "my-neighbourhood/A4",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
         
@@ -138,7 +138,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "woman.png",
-                    "direction": "FACING_LEFT",
+                    "direction": FACING_LEFT,
                     "row": 12,
                     "col": 9,
                     "name": "@TheFitGirlGoodLife",
@@ -147,7 +147,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "chad.png",
-                    "direction": "FACING_DOWN",
+                    "direction": FACING_DOWN,
                     "row": 2,
                     "col": 2,
                     "name": "The Dealer",
@@ -156,7 +156,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "chad.png",
-                    "direction": "FACING_UP",
+                    "direction": FACING_UP,
                     "row": 6,
                     "col": 8,
                     "name": "Small balled Steve",
@@ -165,7 +165,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "manager.png",
-                    "direction": "FACING_DOWN",
+                    "direction": FACING_DOWN,
                     "row": 10,
                     "col": 6,
                     "name": "Manager Bob",
@@ -174,7 +174,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "tumblr_girl.png",
-                    "direction": "FACING_LEFT",
+                    "direction": FACING_LEFT,
                     "row": 3,
                     "col": 10,
                     "name": "Alana",

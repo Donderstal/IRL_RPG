@@ -1,5 +1,5 @@
 const { EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
-const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE } = require("../../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT } = require("../../../../../game-data/globals");
 const { LOGGABLE_INTERACTION_4 } = require("../../../../../game-data/interactionGlobals");
 const { BUTLER_1, BUTLER_2, JONA, REST, SHOP } = require("./interactions");
 
@@ -31,21 +31,21 @@ module.exports = {
         {"type":"pot_plant_a","row":11,"col":15},
         {"type":"pot_plant_a","row":12,"col":15}],
     "characters":[
-        {"anim_type": NPC_ANIM_TYPE_IDLE,"row":5,"col":8,"name": "Butler","sprite":"business_man.png","direction":"FACING_DOWN", "action": BUTLER_1},
-        {"anim_type": NPC_ANIM_TYPE_IDLE,"row":5,"col":11,"name": "Butler","sprite":"business_man.png","direction":"FACING_DOWN", "action": BUTLER_2},
-        {"anim_type": NPC_ANIM_TYPE_SEMI_IDLE,"row":7,"col":6,"name": "Jona","sprite":"chad_recolour01.png","direction":"FACING_DOWN", "action": JONA},
+        {"anim_type": NPC_ANIM_TYPE_IDLE,"row":5,"col":8,"name": "Butler","sprite":"business_man.png","direction":FACING_DOWN, "action": BUTLER_1},
+        {"anim_type": NPC_ANIM_TYPE_IDLE,"row":5,"col":11,"name": "Butler","sprite":"business_man.png","direction":FACING_DOWN, "action": BUTLER_2},
+        {"anim_type": NPC_ANIM_TYPE_SEMI_IDLE,"row":7,"col":6,"name": "Jona","sprite":"chad_recolour01.png","direction":FACING_DOWN, "action": JONA},
         {
             "name": "Sweet granny",
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "row":9,"col":17,
-            "sprite":"characterx3.png","direction":"FACING_DOWN",
+            "sprite":"characterx3.png","direction":FACING_DOWN,
             "action": REST
         },
         {
             "name": "Consoombot",
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "row":12,"col":17,
-            "sprite":"robot.png","direction":"FACING_UP",
+            "sprite":"robot.png","direction":FACING_UP,
             "action": SHOP
         }
     ],
@@ -56,24 +56,24 @@ module.exports = {
             "col": 9,
             "from" : "test/test-dungeon-lobby",
             "to"  : "test/test-dungeon-hall",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP"
+            "directionIn": FACING_DOWN,
+            "directionOut": FACING_UP
         },
         {
             "row": 12, 
             "col": 10,
             "from" : "test/test-dungeon-lobby",
             "to"  : "test/test-dungeon-hall",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP"
+            "directionIn": FACING_DOWN,
+            "directionOut": FACING_UP
         },
         {
             "row": 9, 
             "col": 1,
             "from" : "test/test-dungeon-lobby",
             "to"  : "test/hall-west",
-            "directionIn": "FACING_LEFT",
-            "directionOut": "FACING_RIGHT"
+            "directionIn": FACING_LEFT,
+            "directionOut": FACING_RIGHT
         },
         {
             "condition" : {
@@ -84,8 +84,8 @@ module.exports = {
             "col": 2,
             "from" : "test/test-dungeon-outside",
             "to"  : "test/hall-northwest",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
           },
     ]
 }

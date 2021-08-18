@@ -1,9 +1,7 @@
-const { ITEM_OWNED, EVENT_HAS_FIRED } = require('../../../../game-data/conditionGlobals');
 const { 
-  NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING
+  NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING, 
+  FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT
  } = require('../../../../game-data/globals');
-const { LOGGABLE_INTERACTION_1 } = require('../../../../game-data/interactionGlobals');
-
 const {
   A1_MY_HOUSE_COMPUTER_ACTION, A1_MY_HOUSE_FRIDGE_ACTION, A1_MY_HOUSE_STOVE_ACTION,
   A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT
@@ -47,7 +45,7 @@ module.exports = {
           "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
           "anim_name": "LIFT",
           "sprite": "chad.png",
-          "direction": "FACING_DOWN",
+          "direction": FACING_DOWN,
           "row": 3,
           "col": 21,
           "name": "Big Balls Bert",                    
@@ -56,7 +54,7 @@ module.exports = {
         {
           "anim_type": NPC_ANIM_TYPE_IDLE,
           "sprite": "woman.png",
-          "direction": "FACING_RIGHT",
+          "direction": FACING_RIGHT,
           "row": 4,
           "col": 4,
           "name": "Pauline",                    
@@ -65,7 +63,7 @@ module.exports = {
         {
           "anim_type": NPC_ANIM_TYPE_IDLE,
           "sprite": "tumblr_girl.png",
-          "direction": "FACING_LEFT",
+          "direction": FACING_LEFT,
           "name": "Lisa",                    
           "row": 4,
           "col": 5,
@@ -86,16 +84,16 @@ module.exports = {
             "row": 3, 
             "col": 7,
             "to"  : "my-neighbourhood/A1/my-house",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         },
         {
             "row": 4, 
             "col": 10,
             "to"  : "my-neighbourhood/A1/neighbours-house",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         }
     ],
@@ -114,16 +112,16 @@ module.exports = {
                     "row": 16, 
                     "col": 12,
                     "to"  : "my-neighbourhood/A1",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 },
                 {
                     "row": 16, 
                     "col": 13,
                     "to"  : "my-neighbourhood/A1",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ],
@@ -148,7 +146,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "business_man.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "business_man.png",
                   "row": 2,
                   "col": 2
@@ -156,7 +154,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "chad.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "chad.png",
                   "row": 2,
                   "col": 3
@@ -164,7 +162,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "chad_recolour01.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "chad_recolour01.png",
                   "row": 2,
                   "col": 4
@@ -172,7 +170,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "chad_recolour02.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "chad_recolour02.png",
                   "row": 2,
                   "col": 5
@@ -180,7 +178,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "chad_recolour03.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "chad_recolour03.png",
                   "row": 2,
                   "col": 6
@@ -188,7 +186,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "character_x1_recolour01.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "character_x1_recolour01.png",
                   "row": 2,
                   "col": 7
@@ -196,7 +194,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "characterx3.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "characterx3.png",
                   "row": 2,
                   "col": 8
@@ -204,7 +202,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "generic_balding_guy.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "generic_balding_guy.png",
                   "row": 2,
                   "col": 9
@@ -212,7 +210,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "generic_blonde_guy.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "generic_blonde_guy.png",
                   "row": 2,
                   "col": 10
@@ -220,7 +218,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "woman.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "woman.png",
                   "row": 2,
                   "col": 11
@@ -228,7 +226,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "manager.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "manager.png",
                   "row": 2,
                   "col": 12
@@ -236,7 +234,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "monkey_ceo.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "monkey_ceo.png",
                   "row": 2,
                   "col": 13
@@ -244,7 +242,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "neckbeard.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "neckbeard.png",
                   "row": 2,
                   "col": 14
@@ -252,7 +250,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "robot.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "robot.png",
                   "row": 2,
                   "col": 15,
@@ -260,7 +258,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "tumbler_girl_recolour01.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "tumbler_girl_recolour01.png",
                   "row": 2,
                   "col": 16
@@ -268,7 +266,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "tumbler_girl_recolour02.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "tumbler_girl_recolour02.png",
                   "row": 2,
                   "col": 17
@@ -276,7 +274,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "tumblr_girl.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "name": "tumblr_girl.png",
                   "row": 2,
                   "col": 18
@@ -284,7 +282,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "characterx4.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "CharacterX4.png",
                 "row": 2,
                 "col": 19
@@ -292,7 +290,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "characterx5.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "CharacterX5.png",
                 "row": 2,
                 "col": 20
@@ -300,7 +298,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "characterx5_recolour.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "CharacterX5_recolour.png",
                 "row": 2,
                 "col": 21
@@ -308,7 +306,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "fats.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "fats.png",
                 "row": 2,
                 "col": 22
@@ -316,7 +314,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "fats_recolour.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "fats_recolour.png",
                 "row": 2,
                 "col": 23
@@ -324,7 +322,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "new_girl.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "new_girl.png",
                 "row": 4,
                 "col": 2
@@ -332,7 +330,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "new_girl_recolour.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "new_girl_recolour.png",
                 "row": 4,
                 "col": 3
@@ -340,7 +338,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "pigeon.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "pigeon.png",
                 "row": 4,
                 "col": 4
@@ -348,7 +346,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "pony_tail.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "pony_tail.png",
                 "row": 4,
                 "col": 5
@@ -356,7 +354,7 @@ module.exports = {
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "pony_tail_recolour.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "pony_tail_recolour.png",
                 "row": 4,
                 "col": 6
@@ -387,23 +385,19 @@ module.exports = {
                 },
             "doors": [ 
                 {
-                  /* "condition" : {
-                    "type": EVENT_HAS_FIRED,
-                    "value": LOGGABLE_INTERACTION_1
-                  }, */
                   "row": 8, 
                   "col": 2,
                   "from" : "my-neighbourhood/A1/my-house",
                   "to"  : "my-neighbourhood/A1",
-                  "directionIn": "FACING_DOWN",
-                  "directionOut": "FACING_UP",
+                  "directionIn": FACING_DOWN,
+                  "directionOut": FACING_UP,
                 }
             ],
             "characters" : [
               {
                 "anim_type": NPC_ANIM_TYPE_IDLE,
                 "sprite": "chad.png",
-                "direction": "FACING_DOWN",
+                "direction": FACING_DOWN,
                 "name": "Boze Bert",
                 "row": 2,
                 "col": 3,               

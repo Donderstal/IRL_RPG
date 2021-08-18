@@ -1,4 +1,7 @@
 const { 
+  FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT
+} = require('../../../../game-data/globals');
+const { 
   NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_ANIM_TYPE_MOVING, NPC_ANIM_TYPE_MOVING_IN_LOOP,
   NPC_MOVE_TYPE_FLYING
  } = require('../../../../game-data/globals')
@@ -322,7 +325,7 @@ module.exports = {
             "row": 2,
             "col": 15,
             "sprite": "pigeon.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
           },
           {
             "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
@@ -330,7 +333,7 @@ module.exports = {
             "row": 3,
             "col": 3,
             "sprite": "pigeon.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "destination": {
               "col": 9,
               "row": 3
@@ -341,7 +344,7 @@ module.exports = {
             "row": 7,
             "col": 5,
             "sprite": "new_girl.png",
-            "direction": "FACING_UP",
+            "direction": FACING_UP,
             "name": "Anne",
             "action": {
               "type": "TEXT",
@@ -360,7 +363,7 @@ module.exports = {
             "row": 7,
             "col": 6,
             "sprite": "pony_tail.png",
-            "direction": "FACING_UP",
+            "direction": FACING_UP,
             "name": "Jolene",
             "action": {
               "type": "TEXT",
@@ -379,7 +382,7 @@ module.exports = {
             "row": 7,
             "col": 9,
             "sprite": "tumbler_girl_recolour01.png",
-            "direction": "FACING_UP",
+            "direction": FACING_UP,
             "name": "Wendy",
             "action": {
               "type": "TEXT",
@@ -398,7 +401,7 @@ module.exports = {
             "row": 7,
             "col": 19,
             "sprite": "generic_balding_guy.png",
-            "direction": "FACING_UP",
+            "direction": FACING_UP,
             "name": "William",
             "action": {
               "type": "TEXT",
@@ -417,7 +420,7 @@ module.exports = {
             "row": 7,
             "col": 20,
             "sprite": "neckbeard.png",
-            "direction": "FACING_UP",
+            "direction": FACING_UP,
             "name": "Billiam",
             "action": {
               "type": "TEXT",
@@ -436,7 +439,7 @@ module.exports = {
             "row": 11,
             "col": 9,
             "sprite": "robot.png",
-            "direction": "FACING_RIGHT",
+            "direction": FACING_RIGHT,
             "name": "Securitybot_r11c9",
             "action": {
               "type": "TEXT",
@@ -455,7 +458,7 @@ module.exports = {
             "row": 11,
             "col": 16,
             "sprite": "robot.png",
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "name": "Securitybot_r11c16",
             "action": {
               "type": "TEXT",
@@ -476,16 +479,16 @@ module.exports = {
               "row": 6, 
               "col": 12,
               "to"  : "my-neighbourhood/Chad-outer/chad-club",
-              "directionIn": "FACING_UP",
-              "directionOut": "FACING_DOWN",
+              "directionIn": FACING_UP,
+              "directionOut": FACING_DOWN,
               "locked": false
           },
           {
               "row": 6, 
               "col": 13,
               "to"  : "my-neighbourhood/Chad-outer/chad-club",
-              "directionIn": "FACING_UP",
-              "directionOut": "FACING_DOWN",
+              "directionIn": FACING_UP,
+              "directionOut": FACING_DOWN,
               "locked": false
           }
         ],
@@ -767,7 +770,7 @@ module.exports = {
               "row": 3,
               "col": 2,
               "sprite": "characterx4.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
             },
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
@@ -775,7 +778,7 @@ module.exports = {
               "row": 3,
               "col": 4,
               "sprite": "characterx5.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
             },
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
@@ -783,7 +786,7 @@ module.exports = {
               "row": 3,
               "col": 6,
               "sprite": "characterx5_recolour.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
             },
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
@@ -791,7 +794,7 @@ module.exports = {
               "row": 3,
               "col": 9,
               "sprite": "chad.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Big lifter_r3c9",                    
               "action": {
                   "type": "TEXT",
@@ -811,7 +814,7 @@ module.exports = {
               "row": 3,
               "col": 11,
               "sprite": "chad_recolour01.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Big lifter_r3c11",                    
               "action": {
                 "type": "TEXT",
@@ -831,7 +834,7 @@ module.exports = {
               "row": 3,
               "col": 13,
               "sprite": "chad_recolour03.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Big lifter_r3c13",                    
               "action": {
                   "type": "TEXT",
@@ -851,7 +854,7 @@ module.exports = {
               "row": 3,
               "col": 22,
               "sprite": "characterx3.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Training Granny",                    
               "action": {
                   "type": "TEXT",
@@ -871,7 +874,7 @@ module.exports = {
               "row": 3,
               "col": 23,
               "sprite": "characterx5.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Training Guy_r3c23",                    
               "action": {
                   "type": "TEXT",
@@ -891,7 +894,7 @@ module.exports = {
               "row": 4,
               "col": 18,
               "sprite": "characterx5_recolour.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Training Guy_r4c18",                    
               "action": {
                   "type": "TEXT",
@@ -911,7 +914,7 @@ module.exports = {
               "row": 4,
               "col": 19,
               "sprite": "chad_recolour02.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Training Guy_r4c19",                    
               "action": {
                   "type": "TEXT",
@@ -931,7 +934,7 @@ module.exports = {
               "row": 4,
               "col": 2,
               "sprite": "pony_tail.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
             },
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
@@ -939,7 +942,7 @@ module.exports = {
               "row": 4,
               "col": 4,
               "sprite": "new_girl.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
             },
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
@@ -947,7 +950,7 @@ module.exports = {
               "row": 4,
               "col": 6,
               "sprite": "woman.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
             },
             {
               "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
@@ -955,7 +958,7 @@ module.exports = {
               "row": 5,
               "col": 9,
               "sprite": "chad_recolour01.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Big lifter_r5c9",                    
               "action": {
                   "type": "TEXT",
@@ -975,7 +978,7 @@ module.exports = {
               "row": 5,
               "col": 11,
               "sprite": "chad_recolour03.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Big lifter_r5c11",                    
               "action": {
                   "type": "TEXT",
@@ -995,7 +998,7 @@ module.exports = {
               "row": 5,
               "col": 13,
               "sprite": "chad.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Big lifter_r5c13",                    
               "action": {
                   "type": "TEXT",
@@ -1015,7 +1018,7 @@ module.exports = {
               "row": 5,
               "col": 22,
               "sprite": "chad_recolour03.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Training Guy_r5c22",                    
               "action": {
                   "type": "TEXT",
@@ -1035,7 +1038,7 @@ module.exports = {
               "row": 5,
               "col": 23,
               "sprite": "chad_recolour01.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Training Guy_r5c23",                    
               "action": {
                   "type": "TEXT",
@@ -1055,7 +1058,7 @@ module.exports = {
               "row": 6,
               "col": 18,
               "sprite": "characterx5.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Training Guy_r6c18",                    
               "action": {
                   "type": "TEXT",
@@ -1075,7 +1078,7 @@ module.exports = {
               "row": 6,
               "col": 19,
               "sprite": "fats_recolour.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Training Guy_r6c19",                    
               "action": {
                   "type": "TEXT",
@@ -1095,7 +1098,7 @@ module.exports = {
               "row": 7,
               "col": 22,
               "sprite": "fats.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Training Guy_r7c22",                    
               "action": {
                   "type": "TEXT",
@@ -1115,7 +1118,7 @@ module.exports = {
               "row": 7,
               "col": 23,
               "sprite": "characterx4.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Training Guy_r7c23",                    
               "action": {
                   "type": "TEXT",
@@ -1134,7 +1137,7 @@ module.exports = {
               "row": 8,
               "col": 3,
               "sprite": "robot.png",
-              "direction": "FACING_UP",
+              "direction": FACING_UP,
               "name": "Securitybot_r8c3",
               "action": {
                 "type": "TEXT",
@@ -1154,7 +1157,7 @@ module.exports = {
               "row": 9,
               "col": 7,
               "sprite": "pigeon.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
               "name": "Lost pigeon",
               "action": {
                 "type": "TEXT",
@@ -1174,7 +1177,7 @@ module.exports = {
               "row": 7,
               "col": 13,
               "sprite": "chad.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
               "name": "Talking Chad_r7c13",
               "action": {
                 "type": "TEXT",
@@ -1194,7 +1197,7 @@ module.exports = {
               "row": 8,
               "col": 12,
               "sprite": "chad.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Talking Chad_r8c12",
               "action": {
                 "type": "TEXT",
@@ -1214,7 +1217,7 @@ module.exports = {
               "row": 8,
               "col": 14,
               "sprite": "chad.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Talking Chad_r8c14",
               "action": {
                 "type": "TEXT",
@@ -1233,7 +1236,7 @@ module.exports = {
               "row": 9,
               "col": 15,
               "sprite": "robot.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
               "name": "Securitybot_r9c15",
               "action": {
                 "type": "TEXT",
@@ -1252,14 +1255,14 @@ module.exports = {
               "row": 12,
               "col": 3,
               "sprite": "new_girl.png",
-              "direction": "FACING_RIGHT"
+              "direction": FACING_RIGHT
             },
             {
               "anim_type": NPC_ANIM_TYPE_IDLE,
               "row": 12,
               "col": 12,
               "sprite": "monkey_ceo.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
               "name": "Mr. Chimp Phd. Esq.",
               "action": {
                 "type": "TEXT",
@@ -1278,7 +1281,7 @@ module.exports = {
               "row": 12,
               "col": 13,
               "sprite": "business_man.png",
-              "direction": "FACING_DOWN",
+              "direction": FACING_DOWN,
               "name": "Sir Makesalot",
               "action": {
                 "type": "TEXT",
@@ -1309,7 +1312,7 @@ module.exports = {
               "row": 11,
               "col": 23,
               "sprite": "chad_recolour01.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Runner_r11c23",
               "action": {
                 "type": "TEXT",
@@ -1332,7 +1335,7 @@ module.exports = {
               "row": 14,
               "col": 4,
               "sprite": "robot.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Securitybot_r14c4",
               "action": {
                 "type": "TEXT",
@@ -1352,7 +1355,7 @@ module.exports = {
               "row": 15,
               "col": 7,
               "sprite": "generic_blonde_guy.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Jealous Neckbeard_r15c7",
               "action": {
                 "type": "TEXT",
@@ -1372,7 +1375,7 @@ module.exports = {
               "row": 15,
               "col": 10,
               "sprite": "character_x1_recolour01.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name":  "Jealous Neckbeard_r15c10",
               "action": {
                 "type": "TEXT",
@@ -1391,7 +1394,7 @@ module.exports = {
               "row": 13,
               "col": 16,
               "sprite": "chad_recolour03.png",
-              "direction": "FACING_RIGHT",
+              "direction": FACING_RIGHT,
               "name": "Runner_r13c16",
               "action": {
                 "type": "TEXT",
@@ -1414,7 +1417,7 @@ module.exports = {
               "row": 15,
               "col": 23,
               "sprite": "chad.png",
-              "direction": "FACING_LEFT",
+              "direction": FACING_LEFT,
               "name": "Runner_r15c23",
               "action": {
                 "type": "TEXT",
@@ -1439,16 +1442,16 @@ module.exports = {
               "row": 16, 
               "col": 12,
               "to"  : "my-neighbourhood/Chad-outer",
-              "directionIn": "FACING_DOWN",
-              "directionOut": "FACING_UP",
+              "directionIn": FACING_DOWN,
+              "directionOut": FACING_UP,
               "locked": false
             },
             {
               "row": 16, 
               "col": 13,
               "to"  : "my-neighbourhood/Chad-outer",
-              "directionIn": "FACING_DOWN",
-              "directionOut": "FACING_UP",
+              "directionIn": FACING_DOWN,
+              "directionOut": FACING_UP,
               "locked": false
             } 
           ]

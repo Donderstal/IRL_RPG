@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_MOVE_TYPE_FLYING } = require('../../../../game-data/globals')
+const { NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_MOVE_TYPE_FLYING, FACING_DOWN, FACING_LEFT } = require('../../../../game-data/globals')
 const { BUS_TO_FIRST_NEIGHBOURHOOD } = require('./interactions')
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-        { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasStart": true, "roadId": "road_1" }
+        { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_LEFT, "hasStart": true, "roadId": "road_1" }
       ],
     "neighbours": {
         "left": "downtown/A2",
@@ -63,7 +63,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
             "move_type": NPC_MOVE_TYPE_FLYING,
             "sprite": "pigeon.png",
-            "direction": "FACING_DOWN", 
+            "direction": FACING_DOWN, 
             "row": 6,
             "col": 8,
             "destination" : {
@@ -75,7 +75,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
             "move_type": NPC_MOVE_TYPE_FLYING,
             "sprite": "pigeon.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 1,
             "col": 14,
             "destination" : {

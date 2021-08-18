@@ -1,10 +1,14 @@
+const { 
+  FACING_RIGHT
+} = require('../../../../game-data/globals');
+
 module.exports = {
     "mapName": "my-neighbourhood/B1",
     "tileSet": "my_neighbourhood_2",
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_RIGHT", "hasStart": true },
+      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_RIGHT, "hasStart": true },
     ],
     "neighbours": {
         "up": "my-neighbourhood/A1",

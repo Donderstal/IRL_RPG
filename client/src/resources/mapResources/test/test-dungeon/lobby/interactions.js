@@ -1,5 +1,4 @@
-const { DEFAULT, SPEAK, SPEAK_YES_NO, FADE_IN_OUT } = require("../../../../../game-data/conditionGlobals");
-const { EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, SPEAK, SPEAK_YES_NO, FADE_IN_OUT, EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
 const { LOGGABLE_INTERACTION_4 } = require("../../../../../game-data/interactionGlobals");
 
 const BUTLER_1 = [

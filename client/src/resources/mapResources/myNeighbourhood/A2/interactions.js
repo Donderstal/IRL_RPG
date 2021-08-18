@@ -1,7 +1,9 @@
 const {
   DEFAULT, SPEAK_YES_NO, CREATE_CAR, MOVE_CAR, MOVE, DELETE_SPRITE, WAIT, FADE_OUT, FADE_IN, CREATE_SPRITE, SPEAK 
 } = require("../../../../game-data/conditionGlobals")
-
+const { 
+  FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT
+} = require('../../../../game-data/globals');
 const BUS_TO_DOWTOWN = [
   {
     "condition": {
@@ -24,12 +26,12 @@ const BUS_TO_DOWTOWN = [
             "scenes": [
               {
                 "type": CREATE_CAR, 
-                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "sprite": "bus.png", "direction": FACING_LEFT,
                 "spriteName": "bus-test", "roadId": "road_1"
               },
               {
                   "type": MOVE_CAR, "col": 20,
-                  "sprite": "bus.png", "direction": "FACING_LEFT",
+                  "sprite": "bus.png", "direction": FACING_LEFT,
                   "spriteName": "bus-test", "roadId": "road_1"
               },
               { 
@@ -42,7 +44,7 @@ const BUS_TO_DOWTOWN = [
               { "type": WAIT, "ms": 500 },
               {
                   "type": MOVE_CAR, "col": 1,
-                  "sprite": "bus.png", "direction": "FACING_LEFT",
+                  "sprite": "bus.png", "direction": FACING_LEFT,
                   "spriteName": "bus-test", "roadId": "road_1"
               },
               { "type": FADE_OUT, "sfx": "misc/random6.wav" }
@@ -54,23 +56,23 @@ const BUS_TO_DOWTOWN = [
               { "type": FADE_IN },
               {
                 "type": CREATE_CAR, 
-                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "sprite": "bus.png", "direction": FACING_LEFT,
                 "spriteName": "bus-test", "roadId": "road_1"
               },
               {
                 "type": MOVE_CAR, "col": 20,
-                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "sprite": "bus.png", "direction": FACING_LEFT,
                 "spriteName": "bus-test", "roadId": "road_1"
               },
               { "type": WAIT, "ms": 500 },
               {
-                "type": CREATE_SPRITE, "direction": "FACING_DOWN",
+                "type": CREATE_SPRITE, "direction": FACING_DOWN,
                 "spriteName": "Player", "row": 7, "col": 7,
               },
               { "type": WAIT, "ms": 500 },
               {
                 "type": MOVE_CAR, "col": 1,
-                "sprite": "bus.png", "direction": "FACING_LEFT",
+                "sprite": "bus.png", "direction": FACING_LEFT,
                 "spriteName": "bus-test", "roadId": "road_1"
               }
             ]

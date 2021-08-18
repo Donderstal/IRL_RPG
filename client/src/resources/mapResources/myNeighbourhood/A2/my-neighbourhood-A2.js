@@ -1,5 +1,6 @@
 const { 
-  NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE
+  NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE,
+  FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT
 } = require('../../../../game-data/globals')
 const {
   BUS_TO_DOWTOWN, A2_TALKING_CHAD, A2_TALKING_NECKBEARD, A2_TALKING_GIRL, 
@@ -12,8 +13,8 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasBusLine": true, "hasStart": true, "busStopLocation": { "row": 8, "col": 20 }, "roadId": "road_1" },
-      { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "hasStart": true }
+      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_LEFT, "hasBusLine": true, "hasStart": true, "busStopLocation": { "row": 8, "col": 20 }, "roadId": "road_1" },
+      { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": FACING_DOWN, "hasStart": true }
     ],
     "neighbours": {
         "left": "my-neighbourhood/A1",
@@ -28,16 +29,16 @@ module.exports = {
             "row": 4, 
             "col": 3,
             "to"  : "my-neighbourhood/A2/yum-corp",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         },
         {
             "row": 4, 
             "col": 15,
             "to"  : "my-neighbourhood/A2/house-of-war",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         }
     ],
@@ -59,7 +60,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "chad.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "name": "Chaddy Chandler",
             "row": 3,
             "col": 5,
@@ -68,7 +69,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "tumblr_girl.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 6,
             "col": 18,
             "name": "Patty",
@@ -77,7 +78,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "neckbeard.png",
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "name": "Yung Edgelord",
             "row": 7,
             "col": 19,
@@ -89,7 +90,7 @@ module.exports = {
             "row": 8, 
             "col": 12, 
             "name": "Consoombot",                    
-            "direction": "FACING_UP",
+            "direction": FACING_UP,
             "action": A2_TALKING_ROBOT
         }
     ],
@@ -120,16 +121,16 @@ module.exports = {
                   "row": 11, 
                   "col": 3,
                   "to"  : "my-neighbourhood/A2",
-                  "directionIn": "FACING_DOWN",
-                  "directionOut": "FACING_UP",
+                  "directionIn": FACING_DOWN,
+                  "directionOut": FACING_UP,
                   "locked": false
               },
               {
                   "row": 2, 
                   "col": 6,
                   "to"  : "my-neighbourhood/A2/back-alley",
-                  "directionOut": "FACING_DOWN",           
-                  "directionIn": "FACING_UP",
+                  "directionOut": FACING_DOWN,           
+                  "directionIn": FACING_UP,
                   "locked": false
               }
           ],
@@ -137,7 +138,7 @@ module.exports = {
               {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "woman.png",
-                  "direction": "FACING_DOWN",
+                  "direction": FACING_DOWN,
                   "row": 2,
                   "col": 5,
                   "name": "Hot Hannah",
@@ -172,8 +173,8 @@ module.exports = {
                     "row": 10, 
                     "col": 5,
                     "to"  : "my-neighbourhood/A2",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ],
@@ -187,7 +188,7 @@ module.exports = {
                 {
                   "anim_type": NPC_ANIM_TYPE_IDLE,
                   "sprite": "chad.png",
-                  "direction": "FACING_RIGHT",
+                  "direction": FACING_RIGHT,
                   "row": 4,
                   "col": 4,
                   "name": "Strange Pete",
@@ -214,7 +215,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "neckbeard.png",
-                    "direction": "FACING_DOWN",
+                    "direction": FACING_DOWN,
                     "row": 3,
                     "col": 5,
                     "name": "Mortimer Richards III",
@@ -226,16 +227,16 @@ module.exports = {
                     "row": 6, 
                     "col": 4,
                     "to"  : "my-neighbourhood/A2/yum-corp",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 },
                 {
                     "row": 6, 
                     "col": 5,
                     "to"  : "my-neighbourhood/A2/yum-corp",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ]

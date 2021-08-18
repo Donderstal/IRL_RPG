@@ -1,5 +1,5 @@
 const { 
-    NPC_ANIM_TYPE_IDLE
+    NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT
 } = require('../../../../game-data/globals')
 
 const {
@@ -11,8 +11,8 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasStart": true },
-      { "alignment": "VERT", "leftCol": 1, "rightCol": 2, "direction": "FACING_UP", "hasStart": true }
+      { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_LEFT, "hasStart": true },
+      { "alignment": "VERT", "leftCol": 1, "rightCol": 2, "direction": FACING_UP, "hasStart": true }
     ],
     "neighbours": {
         "left": "my-neighbourhood/A2",
@@ -39,7 +39,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "chad.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 9,
             "col": 10,
             "name": "Cocaine Johnny",
@@ -48,7 +48,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "neckbeard.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 4,
             "col": 20,
             "name": "Dirk Chan",
@@ -57,7 +57,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "woman.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 9,
             "col": 11,
             "name": "Ketamine Kate",
@@ -69,16 +69,16 @@ module.exports = {
             "row": 4, 
             "col": 8,
             "to"  : "my-neighbourhood/A3/le-canard-lobby",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         },
         {
             "row": 4, 
             "col": 9,
             "to"  : "my-neighbourhood/A3/le-canard-lobby",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
             "locked": false
         }
     ],
@@ -109,32 +109,32 @@ module.exports = {
                     "row": 8, 
                     "col": 1,
                     "to"  : "my-neighbourhood/A3/hotel-west-hall",
-                    "directionIn": "FACING_LEFT",
-                    "directionOut": "FACING_RIGHT",
+                    "directionIn": FACING_LEFT,
+                    "directionOut": FACING_RIGHT,
                     "locked": false
                 },
                 {
                     "row": 8, 
                     "col": 12,
                     "to"  : "my-neighbourhood/A3/hotel-east-hall",
-                    "directionIn": "FACING_RIGHT",
-                    "directionOut": "FACING_LEFT",
+                    "directionIn": FACING_RIGHT,
+                    "directionOut": FACING_LEFT,
                     "locked": true
                 },
                 {
                     "row": 1, 
                     "col": 7,
                     "to"  : "my-neighbourhood/A3/hotel-office-area",
-                    "directionIn": "FACING_UP",
-                    "directionOut": "FACING_DOWN",
+                    "directionIn": FACING_UP,
+                    "directionOut": FACING_DOWN,
                     "locked": true
                 },
                 {
                     "row": 12, 
                     "col": 5,
                     "to"  : "my-neighbourhood/A3",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ],
@@ -142,7 +142,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "business_man.png",
-                    "direction": "FACING_RIGHT",
+                    "direction": FACING_RIGHT,
                     "row": 11,
                     "col": 4,
                     "name": "Monsieur Des Combes",
@@ -151,7 +151,7 @@ module.exports = {
                 {
                     "anim_type": NPC_ANIM_TYPE_IDLE,
                     "sprite": "woman.png",
-                    "direction": "FACING_DOWN",
+                    "direction": FACING_DOWN,
                     "row": 7,
                     "col": 7,
                     "name": "Receptionist",
@@ -177,16 +177,16 @@ module.exports = {
                     "row": 3, 
                     "col": 23,
                     "to"  : "my-neighbourhood/A3/le-canard-lobby",
-                    "directionIn": "FACING_RIGHT",
-                    "directionOut": "FACING_LEFT",
+                    "directionIn": FACING_RIGHT,
+                    "directionOut": FACING_LEFT,
                     "locked": false
                 },
                 {
                     "row": 1, 
                     "col": 4,
                     "to"  : "my-neighbourhood/A3/room-large-1",
-                    "directionIn": "FACING_UP",
-                    "directionOut": "FACING_DOWN",
+                    "directionIn": FACING_UP,
+                    "directionOut": FACING_DOWN,
                     "locked": false
                 }
             ]
@@ -214,8 +214,8 @@ module.exports = {
                     "row": 8, 
                     "col": 2,
                     "to"  : "my-neighbourhood/A3/hotel-west-hall",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP",
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ]

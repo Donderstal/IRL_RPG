@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE } = require("../../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_UP } = require("../../../../../game-data/globals");
 const { BUTLER_1, BUTLER_2 } = require("./interactions");
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
             "col":1,
             "name": "Butler",
             "sprite":"business_man.png",
-            "direction":"FACING_DOWN",
+            "direction":FACING_DOWN,
             "action": BUTLER_1
         },
         {
@@ -34,7 +34,7 @@ module.exports = {
             "col":4,
             "name": "Butler",
             "sprite": "business_man.png",
-            "direction":"FACING_DOWN",
+            "direction":FACING_DOWN,
             "action": BUTLER_2
         }
     ],
@@ -45,32 +45,32 @@ module.exports = {
             "col": 2,
             "from" : "test/test-dungeon-hall",
             "to"  : "test/test-dungeon-lobby",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
         },
         {
             "row": 2, 
             "col": 3,
             "from" : "test/test-dungeon-hall",
             "to"  : "test/test-dungeon-lobby",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
         },
         {
             "row": 16, 
             "col": 2,
             "from" : "test/test-dungeon-hall",
             "to"  : "test/test-dungeon-outside",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP",
+            "directionIn": FACING_DOWN,
+            "directionOut": FACING_UP,
         },
         {
             "row": 16, 
             "col": 3,
             "from" : "test/test-dungeon-hall",
             "to"  : "test/test-dungeon-outside",
-            "directionIn": "FACING_DOWN",
-            "directionOut": "FACING_UP",
+            "directionIn": FACING_DOWN,
+            "directionOut": FACING_UP,
         }
     ],
 }

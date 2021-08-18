@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE } = require("../../../../../game-data/globals")
+const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT } = require("../../../../../game-data/globals");
 const { 
     BUTLER_IN_TRAINING, SECUREBOT, LADY_LEFT, NECKBEARD_RIGHT, SECUREBOT_LEFT,
     COMPUTER_1_ACTION, COMPUTER_2_ACTION, COMPUTER_3_ACTION
@@ -18,14 +18,14 @@ module.exports = {
             "name": "Securebot Mk II",
             "anim_type":NPC_ANIM_TYPE_IDLE,
             "row":2,"col":2,
-            "sprite":"robot.png","direction":"FACING_DOWN",
+            "sprite":"robot.png","direction":FACING_DOWN,
             "action": SECUREBOT
         },
         {
             "name": "Newbie butler",
             "anim_type":NPC_ANIM_TYPE_IDLE,
             "row":2,"col":13,
-            "sprite":"manager.png","direction":"FACING_DOWN",
+            "sprite":"manager.png","direction":FACING_DOWN,
             "action": BUTLER_IN_TRAINING
         }
     ],
@@ -36,32 +36,32 @@ module.exports = {
             "col": 20,
             "from" : "test/hall-west",
             "to"  : "test/test-dungeon-lobby",
-            "directionIn": "FACING_RIGHT",
-            "directionOut": "FACING_LEFT"
+            "directionIn": FACING_RIGHT,
+            "directionOut": FACING_LEFT
         },
         {
             "row": 2, 
             "col": 2,
             "from" : "test/hall-west",
             "to"  : "test/hall-northwest",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN"
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN
         },
         {
             "row": 2, 
             "col": 11,
             "from" : "test/hall-west",
             "to"  : "test/hall-west/room-left",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN"
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN
         },
         {
             "row": 2, 
             "col": 15,
             "from" : "test/hall-west",
             "to"  : "test/hall-west/room-right",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN"
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN
         }
     ],
     "subMaps": {
@@ -76,8 +76,8 @@ module.exports = {
             "grid":[16,17,18,19,20,21,22,23,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,38,42],
             "mapObjects":[{"type":"chair_red_cushion","row":2,"col":1},{"type":"blue_double_bed","row":3,"col":3},{"type":"Rug_01","row":5,"col":2}],
             "characters":[
-                {"anim_type":NPC_ANIM_TYPE_IDLE,"name":"Secure Bob","row":3,"col":1,"sprite":"robot.png","direction":"FACING_DOWN", "action": SECUREBOT_LEFT},
-                {"anim_type":NPC_ANIM_TYPE_IDLE,"name":"Annie","row":4,"col":4,"sprite":"tumbler_girl_recolour01.png","direction":"FACING_DOWN", "action": LADY_LEFT}
+                {"anim_type":NPC_ANIM_TYPE_IDLE,"name":"Secure Bob","row":3,"col":1,"sprite":"robot.png","direction":FACING_DOWN, "action": SECUREBOT_LEFT},
+                {"anim_type":NPC_ANIM_TYPE_IDLE,"name":"Annie","row":4,"col":4,"sprite":"tumbler_girl_recolour01.png","direction":FACING_DOWN, "action": LADY_LEFT}
             ],
             "actions":[],
             "doors":[
@@ -86,8 +86,8 @@ module.exports = {
                     "col": 3,
                     "from" : "test/hall-west/room-left",
                     "to"  : "test/hall-west",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP"
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP
                 }
             ]
         },
@@ -101,7 +101,7 @@ module.exports = {
             "columns":4,
             "grid":[16,17,18,19,20,21,22,23,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,38,42,42],
             "mapObjects":[{"type":"bin_hop","row":3,"col":1},{"type":"computer_table","row":3,"col":2},{"type":"computer_table","row":3,"col":3},{"type":"computer_table","row":3,"col":4}],
-            "characters":[{"anim_type":NPC_ANIM_TYPE_IDLE,"name":"Furious jerker","row":4,"col":3,"sprite":"neckbeard.png","direction":"FACING_UP", "action": NECKBEARD_RIGHT }],
+            "characters":[{"anim_type":NPC_ANIM_TYPE_IDLE,"name":"Furious jerker","row":4,"col":3,"sprite":"neckbeard.png","direction":FACING_UP, "action": NECKBEARD_RIGHT }],
             "actions":[ COMPUTER_1_ACTION, COMPUTER_2_ACTION, COMPUTER_3_ACTION ],
             "doors":[
                 {
@@ -109,8 +109,8 @@ module.exports = {
                     "col": 2,
                     "from" : "test/hall-west/room-right",
                     "to"  : "test/hall-west",
-                    "directionIn": "FACING_DOWN",
-                    "directionOut": "FACING_UP"
+                    "directionIn": FACING_DOWN,
+                    "directionOut": FACING_UP
                 }
             ]
         }

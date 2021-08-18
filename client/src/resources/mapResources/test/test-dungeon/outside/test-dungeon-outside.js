@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_ANIMATION_LOOP } = require("../../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_ANIMATION_LOOP, FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT } = require("../../../../../game-data/globals");
 const { STANDARD_ROBOT, KEY_ROBOT, BUTLER } = require("./interactions");
 const { EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
 const { LOGGABLE_INTERACTION_1 } = require("../../../../../game-data/interactionGlobals");
@@ -56,7 +56,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_RIGHT",
+            "direction": FACING_RIGHT,
             "action": STANDARD_ROBOT
         },
         {
@@ -65,7 +65,7 @@ module.exports = {
             "col": 5,
             "name": "Butler",
             "sprite": "business_man.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "action": BUTLER
         },
         {
@@ -74,7 +74,7 @@ module.exports = {
             "col": 8,
             "name": "Butler",
             "sprite": "business_man.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "action": BUTLER
         },
         {
@@ -84,7 +84,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "action": STANDARD_ROBOT
         },
         {
@@ -94,7 +94,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_RIGHT",
+            "direction": FACING_RIGHT,
             "action": STANDARD_ROBOT
         },
         {
@@ -104,7 +104,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "action": STANDARD_ROBOT
         },
         {
@@ -114,7 +114,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_RIGHT",
+            "direction": FACING_RIGHT,
             "action": STANDARD_ROBOT
         },
         {
@@ -124,7 +124,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "action": KEY_ROBOT
         },
         {
@@ -134,7 +134,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_RIGHT",
+            "direction": FACING_RIGHT,
             "action": STANDARD_ROBOT
         },
         {
@@ -144,7 +144,7 @@ module.exports = {
             "anim_type": NPC_ANIM_TYPE_ANIMATION_LOOP,
             "anim_name": "TALK",
             "name": robotName,
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "action": STANDARD_ROBOT
         }
     ],
@@ -158,8 +158,8 @@ module.exports = {
           "col": 6,
           "from" : "test/test-dungeon-outside",
           "to"  : "test/test-dungeon-hall",
-          "directionIn": "FACING_UP",
-          "directionOut": "FACING_DOWN",
+          "directionIn": FACING_UP,
+          "directionOut": FACING_DOWN,
         },
         {
             "condition" : {
@@ -170,8 +170,8 @@ module.exports = {
             "col": 7,
             "from" : "test/test-dungeon-outside",
             "to"  : "test/test-dungeon-hall",
-            "directionIn": "FACING_UP",
-            "directionOut": "FACING_DOWN",
+            "directionIn": FACING_UP,
+            "directionOut": FACING_DOWN,
           }
     ],
 }

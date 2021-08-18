@@ -1,6 +1,7 @@
 const { 
-    NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING
-   } = require('../../../../game-data/globals')
+    NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING,
+    FACING_DOWN, FACING_LEFT
+} = require('../../../../game-data/globals')
 const { PIDGEBERT_THUG, PIDGEBERT, PIDGEBERT_PIGEON, PIDGEBERT_GRANDMA } = require('./interactions')
 
 module.exports = {
@@ -9,8 +10,8 @@ module.exports = {
     "outdoors": true,
     "music": "game-jam.mp3",
     "roads" : [
-        { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": "FACING_LEFT", "hasStart": true },
-        { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": "FACING_DOWN", "hasStart": true }
+        { "alignment": "HORI", "topRow": 10, "bottomRow": 11, "direction": FACING_LEFT, "hasStart": true },
+        { "alignment": "VERT", "leftCol": 23, "rightCol": 24, "direction": FACING_DOWN, "hasStart": true }
       ],
     "neighbours": {
         "left": "downtown/A5"
@@ -22,7 +23,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "characterx5_recolour.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 3,
             "col": 13,
             "name": "Pidgebert thug",                     
@@ -31,7 +32,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "pigeon.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 3,
             "col": 14,
             "name": "Pidgebert",                    
@@ -40,7 +41,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "sprite": "fats_recolour.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "row": 3,
             "col": 15,
             "name": "Pidgebert thug",                    
@@ -49,7 +50,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_MOVING,
             "sprite": "pigeon.png",
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "name": "Marching pigeon",    
             "row": 5,
             "col": 14,
@@ -58,7 +59,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_MOVING,
             "sprite": "pigeon.png",
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "name": "Marching pigeon",    
             "row": 6,
             "col": 14,
@@ -67,7 +68,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_MOVING,
             "sprite": "pigeon.png",
-            "direction": "FACING_LEFT",
+            "direction": FACING_LEFT,
             "name": "Marching pigeon",    
             "row": 7,
             "col": 14,
@@ -76,7 +77,7 @@ module.exports = {
         {
             "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
             "sprite": "characterx3.png",
-            "direction": "FACING_DOWN",
+            "direction": FACING_DOWN,
             "name": "Grandma Shanksville",    
             "row": 8,
             "col": 3,
