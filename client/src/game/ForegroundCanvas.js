@@ -8,6 +8,7 @@ const { Road } = require('./map/map-classes/Road');
 const { BattleSlot } = require('./battle/BattleSlot');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
+const { CONTROL_LEFT, CONTROL_RIGHT } = require('../game-data/battleGlobals');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -24,8 +25,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.activeEffects = [];
     };
 
-    get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == "LEFT"; } ); };
-    get opponentSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == "RIGHT"; } ); };
+    get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_LEFT; } ); };
+    get opponentSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_RIGHT; } ); };
     /**
      * Return a effect Instance from geteffect and push it to this.activeEffects
      * @param {String} name 
@@ -187,8 +188,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     prepareBattlePositions( ) {
         this.battleSlots = [];
         this.slotData = [ 
-            [ 0, "LEFT" ], [ 1, "LEFT" ], [ 2, "LEFT" ],
-            [ 0, "RIGHT" ], [ 1, "RIGHT" ], [ 2, "RIGHT" ] 
+            [ 0, CONTROL_LEFT ], [ 1, CONTROL_LEFT ], [ 2, CONTROL_LEFT ],
+            [ 0, CONTROL_RIGHT ], [ 1, CONTROL_RIGHT ], [ 2, CONTROL_RIGHT ] 
         ];
         this.slotData.forEach(  ( element ) => {
             this.battleSlots.push( new BattleSlot( element[0], element[1] ) );

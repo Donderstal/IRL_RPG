@@ -8,7 +8,7 @@ const {
     TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
 }  = require('../game-data/globals')
 const { 
-    ON_ENTER, ON_LEAVE, EVENT_BUS
+    ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR
 }  = require('../game-data/conditionGlobals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
@@ -341,7 +341,7 @@ class Game {
         let direction;
 
         switch ( type ) {
-            case 'DOOR' :
+            case EVENT_DOOR :
                 mapData.doors.forEach( ( door ) => {
                     if ( this.activeMapName == door.to ) {
                         newPlayerCell.row = door.row;
@@ -350,7 +350,7 @@ class Game {
                     }
                 } )
                 break;
-            case 'NEIGHBOUR' :
+            case EVENT_NEIGHBOUR :
                 Object.keys( mapData.neighbours ).forEach( ( key ) => {
                     if ( this.activeMapName == mapData.neighbours[key] ) {
                         switch ( key ) {
@@ -375,7 +375,7 @@ class Game {
                     }
                 })
                 break;
-            case 'BUS' :
+            case EVENT_BUS :
                 mapData.mapObjects.forEach( ( object ) => {
                     if ( object.action != undefined && object.action[0].action.type == EVENT_BUS ) {
                         newPlayerCell.row = object.row;
@@ -383,6 +383,9 @@ class Game {
                         direction   = FACING_DOWN
                     }
                 } )
+                break;
+            default : 
+                console.log( "Type " + type + " not recognized." )
                 break;
         }
 

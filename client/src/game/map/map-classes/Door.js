@@ -1,6 +1,6 @@
 const globals           = require('../../../game-data/globals')
 const { GRID_BLOCK_PX } = require('../../../game-data/globals')
-const { ON_NPC_INTERACTION, ON_LEAVE } = require('../../../game-data/conditionGlobals')
+const { ON_NPC_INTERACTION, ON_LEAVE, EVENT_DOOR } = require('../../../game-data/conditionGlobals')
 const { I_Hitbox }         = require('../../interfaces/I_Hitbox')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { Cinematic } = require('../../cutscenes/Cinematic');
@@ -61,7 +61,7 @@ class Door extends I_Hitbox {
             new Cinematic( lockedDoorEvent, ON_NPC_INTERACTION )
         }
         else if ( this.condition ) {
-            new Cinematic( unlockDoorEvent, ON_LEAVE, [ this.to, "DOOR"] )
+            new Cinematic( unlockDoorEvent, ON_LEAVE, [ this.to, EVENT_DOOR] )
             this.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.to );
             this.dismiss( );
@@ -79,7 +79,7 @@ class Door extends I_Hitbox {
     checkForBlockedRange( targetHitbox, targetDirection ) {
         if ( super.checkForBlockedRange( targetHitbox, targetDirection ) ) {
             if ( ( this.meetsCondition && this.metConditionAtLastCheck ) || !this.condition ) {
-                globals.GAME.switchMap( this.to, "DOOR" );
+                globals.GAME.switchMap( this.to, EVENT_DOOR );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
             }
         }

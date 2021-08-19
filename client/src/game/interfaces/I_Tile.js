@@ -1,4 +1,5 @@
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../game-data/globals')
+const { EVENT_DOOR } = require('../../game-data/conditionGlobals')
 const { Door } = require('../map/map-classes/Door')
 const globals = require('../../game-data/globals');
 const { ActionSelector } = require('../map/map-classes/ActionSelector');
@@ -36,7 +37,7 @@ class I_Tile {
      * Return true if the Tile has an event of the type DOOR
      */
     get hasDoor( ) { 
-        return this.hasEvent && this.eventType == "DOOR"; 
+        return this.hasEvent && this.eventType == EVENT_DOOR; 
     };
     /**
      * Return true if the tile is blocked or has a sprite on it
@@ -136,7 +137,7 @@ class I_Tile {
         this.hasEvent = true;
         this.eventType = type;
         switch ( type ) {
-            case 'DOOR' :
+            case EVENT_DOOR :
                 this.setDoor( eventData )
                 break;
             case 'ACTION' :

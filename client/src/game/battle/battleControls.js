@@ -1,5 +1,7 @@
 const globals = require('../../game-data/globals');
-const { BATTLE_PHASE_DO_MOVES, BATTLE_PHASE_SELECT_MOVE } = require('../../game-data/battleGlobals');
+const {     
+    CONTROL_UP, CONTROL_LEFT, CONTROL_RIGHT, CONTROL_DOWN 
+} = require('../../game-data/battleGlobals')
 /**
  * Call functionalities depending on the key pressed
  * @param {Event} event js browser Event class
@@ -41,19 +43,19 @@ const handleDirectonKeysInBattleMenu = ( key ) => {
     switch( key ) {
         case "w":
         case "ArrowUp":
-            BATTLE.moveButtonCursor( "UP" )
+            BATTLE.moveButtonCursor( CONTROL_UP )
             break;
         case "a":
         case "ArrowLeft":
-            BATTLE.moveButtonCursor( "LEFT" )
+            BATTLE.moveButtonCursor( CONTROL_LEFT )
             break;
         case "s":
         case "ArrowDown":
-            BATTLE.moveButtonCursor( "DOWN" )
+            BATTLE.moveButtonCursor( CONTROL_DOWN )
             break;
         case "d":
         case "ArrowRight":
-            BATTLE.moveButtonCursor( "RIGHT" )
+            BATTLE.moveButtonCursor( CONTROL_RIGHT )
             break;
     }
 } 

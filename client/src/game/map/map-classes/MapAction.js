@@ -8,7 +8,7 @@ const { Inventory } = require('../../party/Inventory');
 const { initShopMenu } = require('../map-ui/ShopMenu');
 const { 
     WAIT, FADE_IN_OUT, FADE_OUT, FADE_IN, ON_LEAVE, ON_BATTLE_END, ON_BATTLE_START, ON_NPC_INTERACTION, 
-    EVENT_BUS, EVENT_BATTLE, EVENT_SHOP, EVENT_RESTORE
+    EVENT_BUS, EVENT_BATTLE, EVENT_SHOP, EVENT_RESTORE, EVENT_TALK
 } = require('../../../game-data/conditionGlobals');
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.

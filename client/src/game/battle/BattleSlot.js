@@ -1,7 +1,9 @@
 const {     
     LEFT_BATTLE_POSITION_1, LEFT_BATTLE_POSITION_2, LEFT_BATTLE_POSITION_3,
     RIGHT_BATTLE_POSITION_1, RIGHT_BATTLE_POSITION_2, RIGHT_BATTLE_POSITION_3,
-    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT
+    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT,
+    BATTLE_STEP_GO_TO, BATTLE_STEP_GO_BACK, BATTLE_STEP_MOVE_FORWARD,
+    BATTLE_STEP_ANIMATION, BATTLE_STEP_HIT, CONTROL_LEFT, CONTROL_RIGHT
 } = require('../../game-data/battleGlobals');
 const globals = require('../../game-data/globals');
 const { BattleSprite } = require('./BattleSprite');
@@ -93,7 +95,7 @@ class BattleSlot {
      * This decides where to draw a sprite if one is loaded to the slot.
      */
     setTilePosition( ) {
-        if ( this.side == "LEFT" ) {
+        if ( this.side == CONTROL_LEFT ) {
             this.startingDirection = SHEET_ROW_BATTLE_FACING_RIGHT;
             switch( this.index ) {
                 case 0:
@@ -104,7 +106,7 @@ class BattleSlot {
                     return LEFT_BATTLE_POSITION_3;
             }
         }
-        else if ( this.side == "RIGHT" ) {
+        else if ( this.side == CONTROL_RIGHT ) {
             this.startingDirection = SHEET_ROW_BATTLE_FACING_LEFT;
             switch( this.index ) {
                 case 0:
@@ -133,7 +135,7 @@ class BattleSlot {
     initStatBars( ) {
         this.HPBarX = this.sprite.x + ( GRID_BLOCK_PX * .5 );
         this.HPBarY = this.sprite.y - ( GRID_BLOCK_PX * .5 );
-        if ( this.side == "LEFT" ) {
+        if ( this.side == CONTROL_LEFT ) {
             this.HPStatBars = new StatBar( "HP-PLAYER", this.activeHP, this.maxHP );
             this.PPStatBars = new StatBar( "PP", this.activePP, this.maxPP );
         }
@@ -202,13 +204,13 @@ class BattleSlot {
         this.performingBattleMove = true;
 
         if ( animation.moveToTarget ) {
-            this.animationStep = "GO_TO";
+            this.animationStep = BATTLE_STEP_GO_TO;
         }
         else if ( animation.moveForward ) {
-            this.animationStep = "MOVE_FORWARD"
+            this.animationStep = BATTLE_STEP_MOVE_FORWARD
         }
         else {
-            this.animationStep = "ANIMATION"
+            this.animationStep = BATTLE_STEP_ANIMATION
         }
         this.doMoveAnimationStep( animation );
     }
@@ -219,16 +221,16 @@ class BattleSlot {
      * @param {Object} animation object from moveAnimationScripts
      */
     checkForNextAnimationStep( animation ) {
-        if ( this.animationStep == "GO_TO" || this.animationStep == "MOVE_FORWARD" ) {
-            this.animationStep = "ANIMATION"
+        if ( this.animationStep == BATTLE_STEP_GO_TO || this.animationStep == BATTLE_STEP_MOVE_FORWARD ) {
+            this.animationStep = BATTLE_STEP_ANIMATION
             this.doMoveAnimationStep( animation );
         }
-        else if ( this.animationStep == "ANIMATION" ) {
-            this.animationStep = "HIT"
+        else if ( this.animationStep == BATTLE_STEP_ANIMATION ) {
+            this.animationStep = BATTLE_STEP_HIT
             this.doMoveAnimationStep( animation );
         }
-        else if ( this.animationStep == "HIT" && ( animation.moveToTarget || animation.moveForward ) && !this.sprite.inScriptedAnimation ) {
-            this.animationStep = "GO_BACK"
+        else if ( this.animationStep == BATTLE_STEP_HIT && ( animation.moveToTarget || animation.moveForward ) && !this.sprite.inScriptedAnimation ) {
+            this.animationStep = BATTLE_STEP_GO_BACK
             this.doMoveAnimationStep( animation );
         }
         else if ( !this.sprite.movingToDestination && !this.sprite.inScriptedAnimation && !this.targetSlot.sprite.inScriptedAnimation ) {
@@ -243,21 +245,21 @@ class BattleSlot {
      */
     doMoveAnimationStep( animation ) {
         switch( this.animationStep ) {
-            case "GO_TO": 
+            case BATTLE_STEP_GO_TO: 
                 this.sprite.setDestination( { x: this.targetSlot.slotX, y:this.targetSlot.slotY }, "TARGET" );
                 this.sprite.initMovement( );
                 break;
-            case "MOVE_FORWARD": 
-                this.sprite.setDestination( { x: this.side == "LEFT" ? this.slotX + (this.sprite.width * 2) : this.slotX - (this.sprite.width * 2), y: this.slotY }, "FORWARD" );
+            case BATTLE_STEP_MOVE_FORWARD: 
+                this.sprite.setDestination( { x: this.side == CONTROL_LEFT ? this.slotX + (this.sprite.width * 2) : this.slotX - (this.sprite.width * 2), y: this.slotY }, "FORWARD" );
                 this.sprite.initMovement( );
                 break;
-            case "ANIMATION": 
+            case BATTLE_STEP_ANIMATION: 
                 this.doMoveAnimation( animation );
                 break;
-            case "HIT": 
+            case BATTLE_STEP_HIT: 
                 this.doHitAnimation( animation );
                 this.calculateSelectedMoveResult( );
-            case "GO_BACK": 
+            case BATTLE_STEP_GO_BACK: 
                 this.sprite.setDestination( { x: this.slotX, y: this.slotY }, "RETURN" );
                 this.sprite.initMovement( );
                 break;

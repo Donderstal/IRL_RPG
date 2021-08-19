@@ -7,6 +7,7 @@ const { ATT_SPEED, ITEM_CATEGORY_CONSUMABLE } = require('../../game-data/globals
 const { BattleMenu } = require('./BattleMenu');
 const { getPreviousIndexInArray, getNextIndexInArray } = require('../../helpers/utilFunctions');
 const { MOVE_PROP_KEY_TYPE, MOVE_TYPE_HEAL,MOVE_TYPE_STAT_UP } = require('../../game-data/moveGlobals');
+const { CONTROL_LEFT, CONTROL_RIGHT } = require('../../game-data/battleGlobals');
 const { STANDARD_ATTACK, STANDARD_DEFEND } = require('../../resources/battleMoveResources');
 const { getMoveAnimationData } = require('../../resources/moveAnimationScripts');
 const { getRandomItemOfType } = require('../../resources/itemResources');
@@ -180,14 +181,14 @@ class Battle {
 
     moveButtonCursor( direction ) {
         if ( this.selectingTarget ) {
-            let targetSlots = this.targetedSlot.side == "RIGHT" ? this.opponentSlots : this.playerSlots;
-            if ( direction == "UP" && targetSlots.length > 1 ) {
+            let targetSlots = this.targetedSlot.side == CONTROL_RIGHT ? this.opponentSlots : this.playerSlots;
+            if ( direction == CONTROL_UP && targetSlots.length > 1 ) {
                 this.targetedSlot.deTarget( );
                 this.targetIndex = getPreviousIndexInArray( this.targetIndex, targetSlots );
                 this.targetedSlot.target( );
                 this.activeText = "Use " + this.menu.activeButton.Name + " on " + this.targetedSlot.character.Name + "?";
             }
-            else if ( direction == "DOWN" && targetSlots.length > 1 ) {
+            else if ( direction == CONTROL_DOWN && targetSlots.length > 1 ) {
                 this.targetedSlot.deTarget( );
                 this.targetIndex = getNextIndexInArray( this.targetIndex, targetSlots );
                 this.targetedSlot.target( );
@@ -365,8 +366,8 @@ class Battle {
     }
 
     setBattleSlotsInOrder( ) {
-        const leftSlots = this.battleSlots.filter( ( e ) => { return e.side == "LEFT" } )
-        const rightSlots = this.battleSlots.filter( ( e ) => { return e.side == "RIGHT" } )
+        const leftSlots = this.battleSlots.filter( ( e ) => { return e.side == CONTROL_LEFT } )
+        const rightSlots = this.battleSlots.filter( ( e ) => { return e.side == CONTROL_RIGHT } )
         leftSlots.sort( ( a, b) => { return a.index - b.index; });
         rightSlots.sort( ( a, b) => { return a.index - b.index; });
         this.playerSlots = [ ...leftSlots];

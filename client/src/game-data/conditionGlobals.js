@@ -36,6 +36,7 @@ module.exports = {
     EVENT_DOOR: "EV_DO",
     EVENT_SHOP: "EV_SH",
     EVENT_RESTORE: "EV_RE",
-    EVENT_BATTLE: "EV_BA"
+    EVENT_BATTLE: "EV_BA",
+    EVENT_NEIGHBOUR: "EV_NE"
 }
 

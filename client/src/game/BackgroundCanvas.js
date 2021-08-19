@@ -1,5 +1,5 @@
+const { EVENT_DOOR } = require('../game-data/conditionGlobals');
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
-const { I_Grid } = require('./interfaces/I_Grid');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -73,7 +73,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             if ( this.hasDoors ) {
                 this.doors.forEach( ( door ) => {
                     if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
-                        tile.setEventData( "DOOR", door );
+                        tile.setEventData( EVENT_DOOR, door );
                         this.backgroundActions.push( tile.event )
                     }
                 })                

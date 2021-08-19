@@ -9,6 +9,9 @@ const { MenuItem } = require('../interfaces/I_MenuItem');
 const { STANDARD_ATTACK, STANDARD_DEFEND } = require('../../resources/battleMoveResources');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 const { generateActionHint } = require('../../helpers/UITextHelper');
+const {     
+    CONTROL_UP, CONTROL_LEFT, CONTROL_RIGHT, CONTROL_DOWN 
+} = require('../../game-data/battleGlobals')
 
 class BattleMenu extends I_Menu {
     constructor( ) {
@@ -163,11 +166,11 @@ class BattleMenu extends I_Menu {
 
     moveButtonCursor( direction ) {
         switch( direction ) {
-            case "UP":
+            case CONTROL_UP:
                 this.selectButtonAtIndex( getPreviousIndexInArray( this.activeButtonIndex, this.optionButtons ) )
                 break;
-            case "LEFT":
-            case "RIGHT":
+            case CONTROL_LEFT:
+            case CONTROL_RIGHT:
                 if ( this.activeButtonIndex < 2 && this.optionButtons[ this.activeButtonIndex + 2 ] != undefined ) {
                     this.selectButtonAtIndex( this.activeButtonIndex + 2 );
                 }
@@ -175,7 +178,7 @@ class BattleMenu extends I_Menu {
                     this.selectButtonAtIndex( this.activeButtonIndex - 2);
                 }
                 break;
-            case "DOWN":
+            case CONTROL_DOWN:
                 this.selectButtonAtIndex( getNextIndexInArray( this.activeButtonIndex, this.optionButtons ) );
                 break;
         }

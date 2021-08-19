@@ -1,5 +1,6 @@
 const globals = require('../../../game-data/globals')
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
+const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
 /**
  * Check if the given sprite collides with another sprite on the map
  * @param {I_Sprite} sprite 
@@ -10,10 +11,10 @@ const checkForCollision = ( sprite, isPlayer ) => {
     let colliding = false; 
 
     if ( isPlayer && ( sprite.currentTileBack != undefined && sprite.nextTileBack != undefined ) ) {
-        if  ( sprite.currentTileBack.hasEvent && sprite.currentTileBack.eventType == 'DOOR' ) {
+        if  ( sprite.currentTileBack.hasEvent && sprite.currentTileBack.eventType == EVENT_DOOR ) {
             sprite.currentTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
-        else if  ( sprite.nextTileBack.hasEvent && sprite.nextTileBack.eventType == 'DOOR' ) {
+        else if  ( sprite.nextTileBack.hasEvent && sprite.nextTileBack.eventType == EVENT_DOOR ) {
             sprite.nextTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
         if ( sprite.nextTileBack != undefined && sprite.nextTileBack.blocked ) {

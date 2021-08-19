@@ -1,5 +1,6 @@
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
+const { EVENT_NEIGHBOUR } = require('../../../game-data/conditionGlobals')
 /**
  * Call moveInDirection and then call sprite.countFrame
  * @param {I_Sprite} sprite 
@@ -97,19 +98,19 @@ const checkForNeighbours = ( sprite ) => {
 
     if ( activeMap.outdoors ) {
         if ( activeGrid.x > sprite.centerX( ) && activeMap.neighbours.left ) {
-            globals.GAME.switchMap( activeMap.neighbours.left, 'NEIGHBOUR' )
+            globals.GAME.switchMap( activeMap.neighbours.left, EVENT_NEIGHBOUR )
             return true;
         }
         if ( activeGrid.x + ( activeGrid.cols * GRID_BLOCK_PX ) < sprite.centerX( ) && activeMap.neighbours.right ) {
-            globals.GAME.switchMap( activeMap.neighbours.right, 'NEIGHBOUR' )
+            globals.GAME.switchMap( activeMap.neighbours.right, EVENT_NEIGHBOUR )
             return true;
         }
         if ( activeGrid.y > sprite.baseY( ) && activeMap.neighbours.up ) {
-            globals.GAME.switchMap( activeMap.neighbours.up, 'NEIGHBOUR' )
+            globals.GAME.switchMap( activeMap.neighbours.up, EVENT_NEIGHBOUR )
             return true;
         }
         if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY( ) && activeMap.neighbours.down ) {
-            globals.GAME.switchMap( activeMap.neighbours.down, 'NEIGHBOUR' )
+            globals.GAME.switchMap( activeMap.neighbours.down, EVENT_NEIGHBOUR )
             return true;
         }
     }
