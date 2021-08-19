@@ -5,11 +5,11 @@ const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 
 class Car extends MapObject {
-    constructor( tile, spriteId ) {
-        super( tile, spriteId );
+    constructor( tile, spriteData, spriteId ) {
+        super( tile, spriteData, spriteId );
         this.frames = this.objectResource["movement_frames"];
-        this.name = tile.spriteData.name
-        this.initMovingSprite( tile.spriteData )
+        this.name = spriteData.name
+        this.initMovingSprite( spriteData )
         this.initHitboxGroups( );
     }
     

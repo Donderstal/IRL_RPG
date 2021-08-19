@@ -215,7 +215,7 @@ class Game {
         this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
     
         this.front.class.setForegroundData( mapData, isNewGame );
-        this.front.class.setSpritesToGrid( );
+        //this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
         this.sound.playMusic( mapData.music );

@@ -24,22 +24,22 @@ const animationList = [
  * NPCs can also have a associated MapAction. If this is the case, a MapAction instance overwrites the I_Hitbox instance in this.hitbox.
  */
 class NPC extends MapSprite {
-    constructor( tile, spriteId ) {
-        const hasAction = ( tile.spriteData.action !== undefined );
-        let src = '/static/sprites/'+ tile.spriteData.sprite;
-        super( tile, "STRD", src )   
+    constructor( tile, spriteData, spriteId ) {
+        const hasAction = ( spriteData.action !== undefined );
+        let src = '/static/sprites/'+ spriteData.sprite;
+        super( tile, spriteData.direction, "STRD", src )   
 
         this.initialCol = this.col;
         this.initialRow = this.row;
         
-        this.animationType = tile.spriteData.anim_type;
-        this.movementType = tile.spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : tile.spriteData.move_type
-        this.animationName = tile.spriteData.anim_name == undefined ? false : tile.spriteData.anim_name;
-        this.name = tile.spriteData.name
+        this.animationType = spriteData.anim_type;
+        this.movementType = spriteData.move_type == undefined ? NPC_MOVE_TYPE_WALKING : spriteData.move_type
+        this.animationName = spriteData.anim_name == undefined ? false : spriteData.anim_name;
+        this.name = spriteData.name
         this.spriteId = spriteId;
 
         if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
-            this.setDestination( tile.spriteData.destination, true );
+            this.setDestination( spriteData.destination, true );
             this.initMovement( );
         }
         else if ( this.animationType == NPC_ANIM_TYPE_ANIMATION_LOOP ) {
@@ -52,8 +52,8 @@ class NPC extends MapSprite {
         // setting a timeout so the MapAction is instantiated after this sprite is added to FRONT.spritedictionary
         setTimeout( ( ) => { 
             if ( hasAction ) {
-                this.hitbox = new ActionSelector( this.centerX( ), this.y, tile.spriteData.action, spriteId );
-                this.action = tile.spriteData.action
+                this.hitbox = new ActionSelector( this.centerX( ), this.y, spriteData.action, spriteId );
+                this.action = spriteData.action
                 this.action.name = this.name
             }
         }, 50 )

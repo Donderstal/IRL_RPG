@@ -14,16 +14,16 @@ const mapObjectResources = require('../../../resources/mapObjectResources')
  * Larger MapObject sprites have a HitboxGroup instead of a single hitbox for collision and location detection.
  */
 class MapObject extends Sprite {
-    constructor ( tile, spriteId ){
-        const objectResource = mapObjectResources[tile.spriteData.type]
+    constructor ( tile, spriteData, spriteId ){
+        const objectResource = mapObjectResources[spriteData.type]
         const src = "/static/sprite-assets/" + objectResource.src
-        const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, tile.spriteData.direction );
+        const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, spriteData.direction );
         const dimensionsInMap = {
             "width": spriteDimensionsInBlocks.hori * GRID_BLOCK_PX,
             "height": spriteDimensionsInBlocks.vert * GRID_BLOCK_PX 
         }
 
-        super( tile, dimensionsInMap, src, tile.spriteData.direction )
+        super( tile, dimensionsInMap, src, spriteData.direction )
 
         this.objectResource = objectResource;
         this.onBackground   = objectResource.on_background
@@ -32,16 +32,16 @@ class MapObject extends Sprite {
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
-        this.hasAction  = tile.spriteData.hasAction;
+        this.hasAction  = spriteData.hasAction;
         this.spriteId = spriteId;
         this.type = "object"
 
         if ( this.hasAction ) {
-            this.hitbox = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), tile.spriteData.action, spriteId )
-            this.action = tile.spriteData.action
+            this.hitbox = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), spriteData.action, spriteId )
+            this.action = spriteData.action
         }
 
-        if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX && !objectResource.isCar ) {
+        /* if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX && !objectResource.isCar ) {
             for( var i = 1; i < ( this.width / GRID_BLOCK_PX ); i++ ) {
                 const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index + i )
                 tileToBlock.setSpriteData( 'filler', {} );
@@ -54,11 +54,7 @@ class MapObject extends Sprite {
                 tileToBlock.setSpriteData( 'filler', {} );
                 tileToBlock.spriteId = this.spriteId;             
             }
-        } 
-
-        if ( this.notGrounded || this.onBackground ) {
-            tile.clearSpriteData( )
-        }
+        } */ 
 
         if ( objectResource.idle_animation ) {
             this.hasIdleAnimation = true;

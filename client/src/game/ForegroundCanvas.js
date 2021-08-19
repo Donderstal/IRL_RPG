@@ -28,12 +28,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_LEFT; } ); };
     get opponentSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_RIGHT; } ); };
     /**
-     * Return a effect Instance from geteffect and push it to this.activeEffects
-     * @param {String} name 
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number|null} endX 
-     * @param {Number|null} endY 
+     * Return a effect Instance and push it to this.activeEffects
      */
     addEffect( name, x, y, endX = null, endY = null ) {
         this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
@@ -63,7 +58,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
           })
         let mapSpritesFolder = '/static/sprites/';
         let spriteSrc = mapSpritesFolder + start.playerClass.toLowerCase() + '.png'
-        this.playerSprite = new MapSprite( startingTile[0], 'STRD', spriteSrc )
+        this.playerSprite = new MapSprite( startingTile[0], 0, 'STRD', spriteSrc )
         startingTile[0].setSpriteData( 'character', null )
         startingTile[0].spriteId = "PLAYER"
         this.playerSprite.spriteId = "PLAYER"
@@ -79,7 +74,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         characters.forEach( ( character ) => {
             this.grid.array.forEach( ( tile ) => {
                 if ( tile.row == character.row && tile.col == character.col ) {
-                    tile.setSpriteData( "character", character )
+                    this.setCharacterSprite( tile, character );
+                    //tile.setSpriteData( "character", character )
                 }
             })
         })
@@ -93,7 +89,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         mapObjects.forEach( ( object ) => {
             this.grid.array.forEach( ( tile ) => {
                 if ( tile.row == object.row && tile.col == object.col ) {
-                    tile.setSpriteData( "object", object )
+                    this.setObjectSprite( tile, object, false )
                 }
             })
         })
@@ -118,9 +114,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * Instantiate a NPC instance at the given tile. Give it an unique ID and add it to the allSprites & spriteDictionary props
      * @param {I_Tile} tile 
      */
-    setCharacterSprite( tile ) {
+    setCharacterSprite( tile, characterData ) {
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );
-        const newNPC = new NPC( tile, newId );
+        const newNPC = new NPC( tile, characterData, newId );
         this.allSprites.push( newNPC )
         this.spriteDictionary[newId] = newNPC
         tile.spriteId = newId;
@@ -129,9 +125,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      * Instantiate a MapObject instance at the given tile. Give it an unique ID and add it to the allSprites & spriteDictionary props
      * @param {I_Tile} tile 
      */
-    setObjectSprite( tile, isCar ) {
+    setObjectSprite( tile, objectData, isCar ) {
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );
-        const newObject = isCar ? new Car( tile, newId ) : new MapObject( tile, newId )
+        const newObject = isCar ? new Car( tile, objectData, newId ) : new MapObject( tile, objectData, newId )
         this.allSprites.push( newObject )
         this.spriteDictionary[newId] = newObject
         tile.spriteId = newId;
@@ -160,7 +156,10 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         const spawnableRoads = this.roads.filter( ( road ) => { return road.hasStart })
         const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
         if ( !activeRoad.startCellIsBlocked ) {
-            this.setVehicleToTile( activeRoad.getCarDataForTile( ) );
+            const carData = activeRoad.getCarDataForTile( )
+            const tile = super.getTileAtCell( carData.col, carData.row );
+            this.setObjectSprite( tile, carData, true )   
+            return tile.spriteId; 
         }
     }
 

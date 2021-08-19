@@ -9,8 +9,8 @@ const { checkForCollision } = require('../map-ui/movementChecker')
  * It also contains a I_Hitbox instance which is used for collision detection.
  */
 class MapSprite extends Sprite {
-    constructor ( tile, spriteSize, src ) {       
-        super( tile, spriteSize, src, tile.spriteData.direction )   
+    constructor ( tile, direction, spriteSize, src ) {       
+        super( tile, spriteSize, src, direction )   
         this.cell = {}
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
