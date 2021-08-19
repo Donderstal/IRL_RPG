@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### AUG 19, 2021
+* Replaced a lot of strings with globals
+
 #### AUG 15, 2021
 * Added a ON_LEAVE & ON_ENTER anim chain for bus travel
 * Added new Cinematic scene types: FADE_IN, CREATE_SPRITE, WAIT and more
