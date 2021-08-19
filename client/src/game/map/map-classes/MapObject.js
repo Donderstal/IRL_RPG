@@ -1,6 +1,6 @@
 const { Sprite }     = require('../../interfaces/I_Sprite')
 const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
-const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } = require('../../../game-data/globals')
+const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 const { Counter } = require('../../../helpers/Counter')
 const { ActionSelector } = require('./ActionSelector')
 
@@ -17,14 +17,13 @@ class MapObject extends Sprite {
     constructor ( tile, spriteId ){
         const objectResource = mapObjectResources[tile.spriteData.type]
         const src = "/static/sprite-assets/" + objectResource.src
-        const intialDirection = globals[ 'direction' in tile.spriteData ? tile.spriteData.direction : "FACING_DOWN"]
         const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, tile.spriteData.direction );
         const dimensionsInMap = {
             "width": spriteDimensionsInBlocks.hori * GRID_BLOCK_PX,
             "height": spriteDimensionsInBlocks.vert * GRID_BLOCK_PX 
         }
 
-        super( tile, dimensionsInMap, src, intialDirection )
+        super( tile, dimensionsInMap, src, tile.spriteData.direction )
 
         this.objectResource = objectResource;
         this.onBackground   = objectResource.on_background
@@ -149,11 +148,11 @@ const getSpriteDimensions = ( objectResource, spriteDirection ) => {
         spriteDimensionsInBlocks.vert = objectResource.height_blocks
     } 
     else if ( objectResource.dimensional_alignment == "HORI_VERT" ) {
-        if ( spriteDirection == "FACING_LEFT" || spriteDirection == "FACING_RIGHT" ) {
+        if ( spriteDirection == FACING_LEFT || spriteDirection == FACING_RIGHT ) {
             spriteDimensionsInBlocks.hori = objectResource.hori_width_blocks;
             spriteDimensionsInBlocks.vert = objectResource.hori_height_blocks
         }
-        else if ( spriteDirection == "FACING_UP" || spriteDirection == "FACING_DOWN" ) {
+        else if ( spriteDirection == FACING_UP || spriteDirection == FACING_DOWN ) {
             spriteDimensionsInBlocks.hori = objectResource.vert_width_blocks;
             spriteDimensionsInBlocks.vert = objectResource.vert_height_blocks
         }

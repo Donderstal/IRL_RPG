@@ -2,7 +2,7 @@ const { MapObject } = require("./MapObject");
 const { HitboxGroup } = require('./HitboxGroup')
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
-const { GRID_BLOCK_PX, MOVEMENT_SPEED } = require('../../../game-data/globals')
+const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 
 class Car extends MapObject {
     constructor( tile, spriteId ) {
@@ -28,16 +28,16 @@ class Car extends MapObject {
         return this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom;
     }
     get isOffScreen( ) {
-        if ( this.direction == globals["FACING_LEFT"] ) {
+        if ( this.direction == FACING_LEFT ) {
             return ( this.left + this.width ) < 0;
         }
-        else if ( this.direction == globals["FACING_UP"] ) {
+        else if ( this.direction == FACING_UP ) {
             return ( this.top + this.height ) < 0;
         }
-        else if ( this.direction == globals["FACING_RIGHT"] ) {
+        else if ( this.direction == FACING_RIGHT ) {
             return this.right - this.width > globals.GAME.FRONT.grid.width;
         }
-        else if ( this.direction == globals["FACING_DOWN"] ) {
+        else if ( this.direction == FACING_DOWN ) {
             return this.bottom - this.height > globals.GAME.FRONT.grid.height;
         }
     }
@@ -71,23 +71,23 @@ class Car extends MapObject {
         this.row = tile.row;
         this.col = tile.col;
         
-        this.x = this.direction == globals["FACING_RIGHT"] ? tile.x - this.width : tile.x;
-        this.y = ( this.direction == globals["FACING_UP"] && inConstructor ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
+        this.x = this.direction == FACING_RIGHT ? tile.x - this.width : tile.x;
+        this.y = ( this.direction == FACING_UP && inConstructor ) ? tile.y + GRID_BLOCK_PX + this.height : tile.y - ( this.height - GRID_BLOCK_PX )
 
         switch ( this.direction ) { 
-            case globals["FACING_LEFT"]: 
+            case FACING_LEFT: 
                 this.y += GRID_BLOCK_PX
                 if ( !inConstructor ) {
                     this.x -= GRID_BLOCK_PX * 2;                    
                 }
                 break;
-            case globals["FACING_UP"]: 
+            case FACING_UP: 
                 this.x -= GRID_BLOCK_PX;
                 break;
-            case globals["FACING_DOWN"]:
+            case FACING_DOWN:
                 this.y += GRID_BLOCK_PX
                 break;
-            case globals["FACING_RIGHT"]: 
+            case FACING_RIGHT: 
                 this.x += GRID_BLOCK_PX;
                 break;
         }
@@ -125,7 +125,7 @@ class Car extends MapObject {
      */
     initHitboxGroups( ) {
         this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
-        if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
+        if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
             this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
         }
         else {
@@ -141,7 +141,7 @@ class Car extends MapObject {
     updateHitboxes( ) {        
         this.hitboxes = []
         this.hitboxGroups.forEach( ( group, index ) => {
-            if ( this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"] ) {
+            if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
                 group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
             }
             else {
@@ -183,16 +183,16 @@ class Car extends MapObject {
         const directionFrom = intersectionTile.intersectionFrom;
         const directionTo = intersectionTile.intersectionTo;
         
-        if ( directionFrom == "FACING_LEFT" && directionTo == "FACING_UP" ) {
+        if ( directionFrom == FACING_LEFT && directionTo == FACING_UP ) {
             tile.x += GRID_BLOCK_PX;
         }
-        else if ( directionFrom == "FACING_UP" && directionTo == "FACING_RIGHT" ) {
+        else if ( directionFrom == FACING_UP && directionTo == FACING_RIGHT ) {
             tile.y += GRID_BLOCK_PX;
         }
-        else if ( directionFrom == "FACING_RIGHT" && directionTo == "FACING_DOWN" ) {
+        else if ( directionFrom == FACING_RIGHT && directionTo == FACING_DOWN ) {
             tile.x -= GRID_BLOCK_PX;
         }
-        else if ( directionFrom == "FACING_DOWN" && directionTo == "FACING_LEFT" ) {
+        else if ( directionFrom == FACING_DOWN && directionTo == FACING_LEFT ) {
             tile.y -= GRID_BLOCK_PX;
         }
 
@@ -232,25 +232,25 @@ class Car extends MapObject {
      */
     goToDestination( ) {
         this.moving = false
-        if ( this.destinationIsLeft && this.direction == globals["FACING_LEFT"] ) {
+        if ( this.destinationIsLeft && this.direction == FACING_LEFT ) {
             this.x -= this.movementSpeed
             this.moving = true;
-            this.direction = globals["FACING_LEFT"]
+            this.direction = FACING_LEFT
         }
-        else if ( this.destinationIsUp && this.direction == globals["FACING_UP"] ) {
+        else if ( this.destinationIsUp && this.direction == FACING_UP ) {
             this.y -= this.movementSpeed
             this.moving = true;
-            this.direction = globals["FACING_UP"]
+            this.direction = FACING_UP
         }
-        else if ( this.destinationIsRight  && this.direction == globals["FACING_RIGHT"]  ) {
+        else if ( this.destinationIsRight  && this.direction == FACING_RIGHT  ) {
             this.x += this.movementSpeed
             this.moving = true;
-            this.direction = globals["FACING_RIGHT"];
+            this.direction = FACING_RIGHT;
         }
-        else if ( this.destinationIsDown && this.direction == globals["FACING_DOWN"]  ) {
+        else if ( this.destinationIsDown && this.direction == FACING_DOWN  ) {
             this.y += this.movementSpeed
             this.moving = true;
-            this.direction = globals["FACING_DOWN"]
+            this.direction = FACING_DOWN
         }
         
         if ( !this.moving ) {
@@ -271,17 +271,17 @@ class Car extends MapObject {
      */
     setActiveFrames( ) {
         switch ( this.direction ) {
-            case globals["FACING_LEFT"] :
-                this.activeFrames = this.frames["FACING_LEFT"];
+            case FACING_LEFT :
+                this.activeFrames = this.frames[FACING_LEFT];
                 break;
-            case globals["FACING_UP"] :
-                this.activeFrames = this.frames["FACING_UP"];
+            case FACING_UP :
+                this.activeFrames = this.frames[FACING_UP];
                 break;
-            case globals["FACING_RIGHT"] :
-                this.activeFrames = this.frames[ "FACING_RIGHT"];
+            case FACING_RIGHT :
+                this.activeFrames = this.frames[ FACING_RIGHT];
                 break;
-            case globals["FACING_DOWN"] : 
-                this.activeFrames = this.frames[ "FACING_DOWN"];
+            case FACING_DOWN : 
+                this.activeFrames = this.frames[ FACING_DOWN];
                 break;
             default :
                 break;

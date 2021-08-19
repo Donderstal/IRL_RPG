@@ -1,6 +1,6 @@
 const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox;
 const globals       = require('../../../game-data/globals');
-const { GRID_BLOCK_PX } = require('../../../game-data/globals');
+const { GRID_BLOCK_PX, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 
 const radius = GRID_BLOCK_PX / 2;
 /**
@@ -66,12 +66,11 @@ class HitboxGroup {
      * The return value of these methods is stored in the xyValues array and returned.
      */
     getHitboxXYValues( ) {
-        const spriteIsAlignedVertically = this.direction == globals["FACING_UP"] || this.direction == globals["FACING_DOWN"]
-        ;
+        const spriteIsAlignedVertically = this.direction == FACING_UP || this.direction == FACING_DOWN;
         let xyCounter = { 'x': this.x + ( GRID_BLOCK_PX * .5 ) , 'y': this.y + ( GRID_BLOCK_PX * .5 ) + ( spriteIsAlignedVertically ? 0 : GRID_BLOCK_PX ) };
         let xyValues = spriteIsAlignedVertically ? this.getVerticalXYValues( xyCounter ) : this.getHorizontalXYValues( xyCounter );
         
-        if ( this.direction == globals["FACING_DOWN"] || this.direction == globals["FACING_RIGHT"] ) {
+        if ( !spriteIsAlignedVertically ) {
             // reverse the xyvalues array for down or right facing sprite. This is because the xyCounter starts counting from the top-left
             xyValues = xyValues.reverse( );
         }
@@ -160,16 +159,16 @@ class HitboxGroup {
     getNextTile( nextTileXY ) {
         let nextTile;
         switch ( this.direction ) {
-            case globals["FACING_LEFT"]:
+            case FACING_LEFT:
                 nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', nextTileXY.x - GRID_BLOCK_PX, nextTileXY.y );
                 break;
-            case globals["FACING_UP"]:
+            case FACING_UP:
                 nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', nextTileXY.x, nextTileXY.y - GRID_BLOCK_PX );
                 break;
-            case globals["FACING_RIGHT"]: 
+            case FACING_RIGHT: 
                 nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', nextTileXY.x + GRID_BLOCK_PX, nextTileXY.y );
                 break;
-            case globals["FACING_DOWN"]:
+            case FACING_DOWN:
                 nextTile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', nextTileXY.x, nextTileXY.y + GRID_BLOCK_PX );
                 break;
         }

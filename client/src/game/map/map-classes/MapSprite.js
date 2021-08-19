@@ -1,5 +1,5 @@
 const globals = require('../../../game-data/globals')
-const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET } = require('../../../game-data/globals');
+const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Sprite } = require('../../interfaces/I_Sprite')
 const { I_Hitbox } = require('../../interfaces/I_Hitbox')
 const { checkForCollision } = require('../map-ui/movementChecker')
@@ -10,7 +10,7 @@ const { checkForCollision } = require('../map-ui/movementChecker')
  */
 class MapSprite extends Sprite {
     constructor ( tile, spriteSize, src ) {       
-        super( tile, spriteSize, src, tile.spriteData.direction ?? 0 )   
+        super( tile, spriteSize, src, tile.spriteData.direction )   
         this.cell = {}
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
@@ -105,16 +105,16 @@ class MapSprite extends Sprite {
      */
     setNextTileIndex( ) {
         switch ( this.direction ) {
-            case globals["FACING_UP"] :
+            case FACING_UP :
                 this.nextTileIndex = this.currentTileFront.row != 1 ? this.activeTileIndex - globals.GAME.back.class.grid.cols : undefined;
                 break;
-            case globals["FACING_RIGHT"] :
+            case FACING_RIGHT :
                 this.nextTileIndex = this.currentTileFront.col != globals.GAME.activeMap.columns ? this.activeTileIndex + 1 : undefined;
                 break;
-            case globals["FACING_DOWN"] :
+            case FACING_DOWN :
                 this.nextTileIndex = this.currentTileFront.row != globals.GAME.activeMap.rows ? this.activeTileIndex + globals.GAME.back.class.grid.cols : undefined;
                 break;
-            case globals["FACING_LEFT"] :
+            case FACING_LEFT :
                 this.nextTileIndex = this.currentTileFront.col != 1 ? this.activeTileIndex - 1 : undefined;
                 break;
         }

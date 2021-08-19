@@ -35,7 +35,7 @@ class Sprite {
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction      = direction;
+        this.direction      = direction != null ? direction : 0;
         this.sheetSrc       = src
         this.sheet          = globals.PNG_DICTIONARY[src]
         this.moving         = false;
@@ -47,16 +47,16 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.destinationTile.x <= this.left && this.destinationTile.direction == "FACING_LEFT";
+        return this.destinationTile.x <= this.left && this.destinationTile.direction == FACING_LEFT;
     }
     get destinationIsRight( ) { 
-        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == "FACING_RIGHT";
+        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == FACING_RIGHT;
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == "FACING_UP";
+        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == FACING_UP;
     }    
     get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == "FACING_DOWN";
+        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == FACING_DOWN;
     }
 
     get destinationIsBlocked( ) {
@@ -99,7 +99,7 @@ class Sprite {
      */
     setNewLocationInGrid( cell, direction ) {
         let newTile = globals.GAME.getTileOnCanvasAtCell( 'FRONT', cell.col, cell.row )
-        this.direction = globals[direction] != undefined ? globals[direction] : this.direction;
+        this.direction = direction;
         newTile.setSpriteData( 'character', null )
         newTile.spriteId = "PLAYER"
         this.setSpriteToGrid( newTile );
@@ -280,8 +280,8 @@ class Sprite {
         pathIndexes.forEach( ( pathIndex ) => {
             let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )
             tile.direction = pathIndex < lastIndex 
-            ? pathIndex == lastIndex - 1 ? "FACING_LEFT" : "FACING_UP" 
-            : pathIndex == lastIndex + 1 ? "FACING_RIGHT" : "FACING_DOWN" ;
+            ? pathIndex == lastIndex - 1 ? FACING_LEFT : FACING_UP
+            : pathIndex == lastIndex + 1 ? FACING_RIGHT : FACING_DOWN;
             tileList.push( { 
                 tile,
             } )

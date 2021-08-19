@@ -1,4 +1,5 @@
 const globals       = require('../../../game-data/globals');
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../../../game-data/globals")
 /**
  * Some outdoor maps have roads. They are represented by a Road instance.
  * If hasStart is set true, they can generate car sprites to drive down the road.
@@ -56,16 +57,16 @@ class Road {
     setRoadCoordinates( roadData ) {
         const activeGrid = globals.GAME.front.class.grid;
         switch( roadData.direction ) {
-            case "FACING_LEFT" :
+            case FACING_LEFT :
                 this.setCells( this.topRow, activeGrid.cols, this.bottomRow, activeGrid.cols, this.topRow, 1 );
                 break;
-            case "FACING_UP" :
+            case FACING_UP :
                 this.setCells( activeGrid.rows, this.rightCol, activeGrid.rows, this.leftCol, 1, this.rightCol );
                 break;
-            case "FACING_RIGHT" :
+            case FACING_RIGHT :
                 this.setCells( this.bottomRow, 1, this.topRow, 1, this.bottomRow, activeGrid.cols );
                 break;
-            case "FACING_DOWN" :
+            case FACING_DOWN :
                 this.setCells( 1, this.leftCol, 1, this.rightCol, activeGrid.rows, this.leftCol );
                 break;
             default:
@@ -98,16 +99,16 @@ class Road {
             if ( index != this.index && ( ( this.isHorizontal && !road.isHorizontal ) || ( !this.isHorizontal && road.isHorizontal ) )) { 
                 let cell;
                 switch( this.direction ) {
-                    case "FACING_LEFT" :
+                    case FACING_LEFT :
                         cell = { 'row': this.topRow, 'col': road.leftCol }
                         break;
-                    case "FACING_UP" :
+                    case FACING_UP :
                         cell = { 'row': road.topRow, 'col': this.rightCol }
                         break;
-                    case "FACING_RIGHT" :
+                    case FACING_RIGHT :
                         cell = { 'row': this.bottomRow, 'col': road.rightCol }
                         break;
-                    case "FACING_DOWN" :
+                    case FACING_DOWN :
                         cell = { 'row': road.bottomRow, 'col': this.leftCol }
                         break;
                 }
