@@ -8,17 +8,17 @@ const {
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     ATTRIBUTE_MENU_TEXTS, EQUIPMENT_SLOTS_LIST, ATTRIBUTE_LIST
 } = require('../../game-data/globals');
-const { COLOR_WHITE, COLOR_BACKGROUND } = require('../../game-data/uiGlobals')
+const { COLOR_WHITE, COLOR_BACKGROUND, MENU_TYPE_EQUIP, MENU_TYPE_STATUS, MENU_BUTTON_EQUIP, MENU_BUTTON_UNEQUIP, MENU_BUTTON_RETURN } = require('../../game-data/uiGlobals')
 /**
  * In the StatusMenuTab, the player can have a detailed look at the attributes of the members of the party.
  * The player can scroll between different characters and equip or unequip items.
  */
 class StatusMenuTab extends MenuTab {
     constructor( isShopMenu ) {
-        super( isShopMenu ? "EQUIP" : "STATUS", "VERT", 6 )
+        super( isShopMenu ? MENU_TYPE_EQUIP : MENU_TYPE_STATUS, "VERT", 6 )
         this.setButtonHeight( this.height / 6 );
         this.setButtonWidth( this.width / 5 );
-        this.itemSubMenuOptions = [ "EQUIP", "UNEQUIP", "RETURN" ];
+        this.itemSubMenuOptions = [ MENU_BUTTON_EQUIP, MENU_BUTTON_UNEQUIP, MENU_BUTTON_RETURN ];
         
         this.redArrow   = globals.PNG_DICTIONARY["/static/ui/red_arrow_dwown.png"];
         this.greenArrow = globals.PNG_DICTIONARY["/static/ui/green_arrow_up.png"];
@@ -55,11 +55,11 @@ class StatusMenuTab extends MenuTab {
      * Then, unset the active modal and reset the button with this.activeCharacterIndex
      */
     doActiveModalOption( ) {
-        if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined && this.modal.activeButton.text != "OK!" ) {
+        if ( this.activeOption == MENU_BUTTON_EQUIP && this.modal.activeButton.item != undefined && this.modal.activeButton.text != "OK!" ) {
             globals.GAME.PLAYER_INVENTORY.unequipItemAtCharacterEquipmentSlot( this.activeItem, this.activeCharacter );
             globals.GAME.PLAYER_INVENTORY.equipItem( this.activeCharacter, this.modal.activeButton.item.ItemTypeId );
         }
-        if ( this.activeOption == "UNEQUIP" && this.modal.activeButton.text == "YES" ) {
+        if ( this.activeOption == MENU_BUTTON_UNEQUIP && this.modal.activeButton.text == "YES" ) {
             globals.GAME.PLAYER_INVENTORY.unequipItemAtCharacterEquipmentSlot( this.activeItem, this.activeCharacter );
         }
         this.unsetModal( );
@@ -81,10 +81,10 @@ class StatusMenuTab extends MenuTab {
             }
         } );
 
-        if ( actionType == "EQUIP" ) {
+        if ( actionType == MENU_BUTTON_EQUIP ) {
             Equipment.equipItem( this.modal.activeButton.item );
         } 
-        else if ( actionType == "UNEQUIP" ) {
+        else if ( actionType == MENU_BUTTON_UNEQUIP ) {
             Equipment[this.activeItem] = null;
             Equipment.effects[this.activeItem] = null;
         };

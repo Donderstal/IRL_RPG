@@ -1,6 +1,7 @@
 const { MenuTab } = require('../interfaces/I_MenuTab');
 const { GRID_BLOCK_PX } = require('../../game-data/globals');
 const globals = require('../../game-data/globals');
+const { MENU_BUTTON_MOVE, MENU_BUTTON_SHOW_STATUS, MENU_BUTTON_SHOW_ON_MAP, MENU_BUTTON_RETURN } = require('../../game-data/uiGlobals')
 /**
  * The MembersMenuTab is an overview of the party.
  * Here, the player can select which party member is displayed on the map.
@@ -8,10 +9,10 @@ const globals = require('../../game-data/globals');
  */
 class MembersMenuTab extends MenuTab {
     constructor( ) {
-        super( "MEMBERS", "HORI", 6 );
+        super( MENU_TYPE_MEMBERS, "HORI", 6 );
         this.setButtonHeight( this.height );
         this.setButtonWidth( this.width / 4 );
-        this.itemSubMenuOptions = [ "MOVE", "SHOW STATUS", "SHOW ON MAP", "RETURN" ]
+        this.itemSubMenuOptions = [ MENU_BUTTON_MOVE, MENU_BUTTON_SHOW_STATUS, MENU_BUTTON_SHOW_ON_MAP, MENU_BUTTON_RETURN ]
     }
     /**
      * Set buttons in a row with the player party members as content.

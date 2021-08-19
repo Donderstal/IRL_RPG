@@ -1,15 +1,16 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
 const globals = require('../../game-data/globals')
+const { MENU_BUTTON_REMOVE_FROM,  MENU_BUTTON_CONFIRM_TRANS, MENU_BUTTON_EQUIP, MENU_BUTTON_RETURN, MENU_TYPE_SELL, MENU_TYPE_INVENTORY, MENU_BUTTON_DISCARD, MENU_BUTTON_USE } = require('../../game-data/uiGlobals')
 /**
  * In the inventorytab, the player can interact with all their items.
  * Items can be equipped, used or discarded.
  */
 class InventoryMenuTab extends MenuTab {
     constructor( inShopMenu = false, inBuyingScreen = false ) {
-        super( inShopMenu ? inBuyingScreen ? "SELL" : "BUY"  : "INVENTORY", "VERT_HORI", 20 )
+        super( inShopMenu ? inBuyingScreen ? MENU_TYPE_SELL : MENU_TYPE_SELL  : MENU_TYPE_INVENTORY, "VERT_HORI", 20 )
         this.setButtonHeight( this.height / 10 );
         this.setButtonWidth( this.width / 3 );
-        this.itemSubMenuOptions = inShopMenu ? [ "REMOVE FROM LIST", "CONFIRM TRANSACTION" ] : [ "USE", "EQUIP", "DISCARD", "RETURN" ]
+        this.itemSubMenuOptions = inShopMenu ? [ MENU_BUTTON_REMOVE_FROM,  MENU_BUTTON_CONFIRM_TRANS ] : [ MENU_BUTTON_USE, MENU_BUTTON_EQUIP, MENU_BUTTON_DISCARD, MENU_BUTTON_RETURN ]
         this.inventorySource = inShopMenu && !inBuyingScreen ? globals.GAME.activeAction.inventory : globals.GAME.PLAYER_INVENTORY;
         this.activeOption;
     }
@@ -55,10 +56,10 @@ class InventoryMenuTab extends MenuTab {
     setDisabledOptionsForItem( ) {
         let optionsToDisable = [];
         if ( !this.activeItem.canBeEquipped ) {
-            optionsToDisable.push( "EQUIP" );
+            optionsToDisable.push( MENU_BUTTON_EQUIP );
         }
         if ( !this.activeItem.canBeUsed ) {
-            optionsToDisable.push( "USE" );
+            optionsToDisable.push( MENU_BUTTON_USE );
         }        
         this.itemSubMenu.disableOptions( optionsToDisable );
     }
@@ -67,11 +68,11 @@ class InventoryMenuTab extends MenuTab {
      * Then, call unsetModal and setButtons
      */
     doActiveModalOption( ) {
-        if ( this.activeOption == "USE" && this.modal.activeButton.item != undefined ) {
+        if ( this.activeOption == MENU_BUTTON_USE && this.modal.activeButton.item != undefined ) {
             const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index];
             globals.GAME.PLAYER_INVENTORY.useItem( selectedCharacter, this.activeItem.ItemTypeId );
         }
-        if ( this.activeOption == "EQUIP" && this.modal.activeButton.item != undefined ) {
+        if ( this.activeOption == MENU_BUTTON_EQUIP && this.modal.activeButton.item != undefined ) {
             const selectedCharacter = globals.GAME.PARTY_MEMBERS[this.modal.activeButton.item.index];
             const itemToUnequip = selectedCharacter.Equipment.returnItemAtSlotOfGivenItem( this.activeItem );
             if ( itemToUnequip ) {
@@ -79,7 +80,7 @@ class InventoryMenuTab extends MenuTab {
             }
             globals.GAME.PLAYER_INVENTORY.equipItem( selectedCharacter, this.activeItem.ItemTypeId );
         }
-        if ( this.activeOption == "DISCARD" && this.modal.activeButton.text == "YES" ) {
+        if ( this.activeOption == MENU_BUTTON_DISCARD && this.modal.activeButton.text == "YES" ) {
             globals.GAME.PLAYER_INVENTORY.removeItemsFromInnerListByID( [ this.activeItem.ItemTypeId ] )
         }
         this.unsetModal( );

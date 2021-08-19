@@ -1,6 +1,7 @@
 const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX } = require('../../game-data/globals');
 const globals = require('../../game-data/globals');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
+const { MENU_ACTION_NEXT, MENU_ACTION_PREVIOUS } = require('../../game-data/uiGlobals')
 const { Modal } = require("./I_Modal");
 const { ItemSubMenu } = require('./I_ItemSubMenu');
 const { MenuItem } = require('./I_MenuItem');
@@ -68,15 +69,15 @@ class MenuTab {
      * Call the deActivate method of current button
      * Decide what the new active buttons should be based on buttonType
      * Then call activateButtonAndSetSubMenuPosition
-     * @param {String|Number} buttonType "NEXT", "PREVIOUS" or a int to be used as button index
+     * @param {String|Number} buttonType MENU_ACTION_NEXT, MENU_ACTION_PREVIOUS or a int to be used as button index
      */
     activateButton( buttonType ) {
         this.buttons[this.activeButton].deActivate( );
 
-        if ( buttonType === "NEXT" ) {
+        if ( buttonType === MENU_ACTION_NEXT ) {
             this.activeButton = getNextIndexInArray( this.activeButton, this.buttons );
         }
-        else if ( buttonType == "PREVIOUS" ) {
+        else if ( buttonType == MENU_ACTION_PREVIOUS ) {
             this.activeButton = getPreviousIndexInArray( this.activeButton, this.buttons )
         }
         else if ( Number.isInteger( buttonType ) ) {

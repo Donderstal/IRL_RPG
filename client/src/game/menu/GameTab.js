@@ -1,5 +1,6 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
-const { CANVAS_WIDTH } = require('../../game-data/globals')
+const { CANVAS_WIDTH } = require('../../game-data/globals');
+const { MENU_TYPE_GAME } = require('../../game-data/uiGlobals');
 
 const buttonList = [
     { title: "SAVE GAME", description: "Save your game"} ,
@@ -15,7 +16,7 @@ const buttonList = [
  */
 class GameMenuTab extends MenuTab {
     constructor( ) {
-        super( "GAME", "VERT", 8 )
+        super( MENU_TYPE_GAME, "VERT", 8 )
         this.setButtonHeight( this.height / 8 );
         this.setButtonWidth( this.width / 3 );
     }

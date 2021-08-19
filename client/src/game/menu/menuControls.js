@@ -1,5 +1,6 @@
 const globals  = require('../../game-data/globals');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
+const { MENU_TYPE_SELL, MENU_TYPE_INVENTORY, MENU_TYPE_STATUS, MENU_TYPE_EQUIP, MENU_TYPE_BUY, MENU_ACTION_NEXT, MENU_ACTION_PREVIOUS } = require('../../game-data/uiGlobals')
 /**
  * Call the method in the currently active tab associated with the up key 
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
@@ -8,8 +9,8 @@ const handleUp = ( activeTab ) => {
     if ( activeTab.itemSubMenu.isActive ) {
         activeTab.itemSubMenu.setPreviousOption( )
     }
-    else if ( activeTab.tabName != "MEMBERS" && !activeTab.modal ) {
-        activeTab.activateButton( "PREVIOUS" );
+    else if ( activeTab.tabName != MENU_TYPE_MEMBERS && !activeTab.modal ) {
+        activeTab.activateButton( MENU_ACTION_PREVIOUS );
     }
 }
 /**
@@ -20,8 +21,8 @@ const handleDown = ( activeTab ) => {
     if ( activeTab.itemSubMenu.isActive ) {
         activeTab.itemSubMenu.setNextOption( )
     }
-    else if ( activeTab.tabName != "MEMBERS" && !activeTab.modal ) {
-        activeTab.activateButton( "NEXT" );
+    else if ( activeTab.tabName != MENU_TYPE_MEMBERS && !activeTab.modal ) {
+        activeTab.activateButton( MENU_ACTION_NEXT );
     }
 }
 /**
@@ -32,10 +33,10 @@ const handleLeft = ( activeTab ) => {
     if ( activeTab.modal ) {
         activeTab.modal.selectPreviousOption( );
     }
-    else if ( activeTab.tabName == "MEMBERS" ) {
-        activeTab.activateButton( "PREVIOUS" );
+    else if ( activeTab.tabName == MENU_TYPE_MEMBERS ) {
+        activeTab.activateButton( MENU_ACTION_PREVIOUS );
     }
-    else if ( activeTab.tabName == "STATUS" || activeTab.tabName == "EQUIP" ) {
+    else if ( activeTab.tabName == MENU_TYPE_STATUS || activeTab.tabName == MENU_TYPE_EQUIP ) {
         activeTab.setButtons( 
             getPreviousIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
         );
@@ -51,10 +52,10 @@ const handleRight = ( activeTab ) => {
     if ( activeTab.modal ) {
         activeTab.modal.selectNextOption( );
     }
-    else if ( activeTab.tabName == "MEMBERS" ) {
-        activeTab.activateButton( "NEXT" );
+    else if ( activeTab.tabName == MENU_TYPE_MEMBERS ) {
+        activeTab.activateButton( MENU_ACTION_NEXT );
     }
-    else if ( activeTab.tabName == "STATUS" || activeTab.tabName == "EQUIP" ) {
+    else if ( activeTab.tabName == MENU_TYPE_STATUS || activeTab.tabName == MENU_TYPE_EQUIP ) {
         activeTab.setButtons( 
             getNextIndexInArray( activeTab.activeCharacterIndex, globals.GAME.PARTY_MEMBERS ) 
         );
@@ -70,7 +71,8 @@ const handleRight = ( activeTab ) => {
  */
 const scrollBetweenItemColumns = ( activeTab ) => {
     const availablePlayerItems = globals.GAME.PLAYER_INVENTORY.activeItems;
-    if ( ( activeTab.tabName == "INVENTORY" || activeTab.tabName =="BUY" || activeTab.tabName =="SELL" ) && availablePlayerItems.length > 10 && !activeTab.modal ) {
+    if ( ( activeTab.tabName == MENU_TYPE_INVENTORY || activeTab.tabName == MENU_TYPE_BUY || activeTab.tabName == MENU_TYPE_SELL ) 
+        && availablePlayerItems.length > 10 && !activeTab.modal ) {
         if ( activeTab.activeButton < 10 && availablePlayerItems[ activeTab.activeButton + 10 ] != undefined ) {
             activeTab.activateButton( activeTab.activeButton + 10 );
         }
@@ -84,7 +86,7 @@ const scrollBetweenItemColumns = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleActionButton = ( activeTab ) => {
-    if ( activeTab.tabName == "SELL" || activeTab.tabName == "BUY" ) {
+    if ( activeTab.tabName == MENU_TYPE_SELL || activeTab.tabName == MENU_TYPE_BUY ) {
         globals.GAME.MENU.addActiveItemToList( );
     }
     else if ( activeTab.activeItem ) {
@@ -97,10 +99,10 @@ const handleActionButton = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleSubMenuControls = ( key, activeTab ) => {
-    if ( (activeTab.tabName == "SELL" || activeTab.tabName == "BUY") && key == "z" ) {
+    if ( (activeTab.tabName == MENU_TYPE_SELL || activeTab.tabName == MENU_TYPE_BUY) && key == "z" ) {
         globals.GAME.MENU.removeActiveItemFromList( );
     }
-    else if ( (activeTab.tabName == "SELL" || activeTab.tabName == "BUY") && key == "x" ) {
+    else if ( (activeTab.tabName == MENU_TYPE_SELL || activeTab.tabName == MENU_TYPE_BUY) && key == "x" ) {
         globals.GAME.MENU.confirmTransaction( );
     }
     else if ( activeTab.itemSubMenu.options && activeTab.activeItem && !activeTab.modal ) {
