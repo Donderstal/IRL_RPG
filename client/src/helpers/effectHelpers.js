@@ -1,5 +1,5 @@
 const { I_Effect } = require("../game/interfaces/I_Effect");
-const { MOVEMENT_SPEED } = require("../game-data/globals");
+const { MOVEMENT_SPEED, BATTLE_MODE } = require("../game-data/globals");
 const globals = require("../game-data/globals");
 
 const scripts = { 
@@ -129,7 +129,7 @@ class GraphicalEffect {
      */
     goToDestination( ) {
         let moving = false;
-        let speed = globals.GAME.mode == "BATTLE" ? MOVEMENT_SPEED * 2 : MOVEMENT_SPEED;
+        let speed = globals.GAME.mode == BATTLE_MODE ? MOVEMENT_SPEED * 2 : MOVEMENT_SPEED;
 
         if ( this.destinationIsLeft  ) {
             moving = true;            

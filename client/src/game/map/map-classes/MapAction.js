@@ -7,7 +7,8 @@ const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
 const { Inventory } = require('../../party/Inventory');
 const { initShopMenu } = require('../map-ui/ShopMenu');
 const { 
-    WAIT, FADE_IN_OUT, FADE_OUT, FADE_IN, ON_LEAVE, ON_BATTLE_END, ON_BATTLE_START, ON_NPC_INTERACTION 
+    WAIT, FADE_IN_OUT, FADE_OUT, FADE_IN, ON_LEAVE, ON_BATTLE_END, ON_BATTLE_START, ON_NPC_INTERACTION, 
+    EVENT_BUS, EVENT_BATTLE, EVENT_SHOP, EVENT_RESTORE
 } = require('../../../game-data/conditionGlobals');
 /**
  * A Mapaction is a I_Hitbox extension that has an event tied to it.
@@ -45,7 +46,7 @@ class MapAction extends I_Hitbox {
         }
     }
     get meetsCondition( ) { return conditionIsTrue( this.conditionType, this.conditionValue ) }
-    get needsConfirmation( ) { return this.type != "TEXT"; }
+    get needsConfirmation( ) { return this.type != EVENT_TALK; }
     /**
      * 
      */
@@ -92,14 +93,14 @@ class MapAction extends I_Hitbox {
     confirm( ) {
         this.confirmingAction = true;
         switch ( this.type ) {
-            case "BUS" :
+            case EVENT_BUS :
                 this.events.forEach( ( e ) => {
                     if ( e["trigger"] == ON_LEAVE ) {
-                        new Cinematic( e, e["trigger"], [ this.to, "BUS" ] );                            
+                        new Cinematic( e, e["trigger"], [ this.to, EVENT_BUS ] );                            
                     }
                 } )
                 break;
-            case "BATTLE" : 
+            case EVENT_BATTLE : 
                 if ( this.hasEvent ) {
                     this.events.forEach( ( e ) => {
                         if ( e["trigger"] == ON_BATTLE_START ) {
@@ -111,10 +112,10 @@ class MapAction extends I_Hitbox {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
                 break;
-            case "SHOP" :
+            case EVENT_SHOP :
                 initShopMenu( );
                 break;
-            case "SLEEP" :
+            case EVENT_RESTORE :
                 this.healPlayerPartyOnRest( );
                 break;
             default: 

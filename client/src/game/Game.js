@@ -8,7 +8,7 @@ const {
     TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
 }  = require('../game-data/globals')
 const { 
-    ON_ENTER, ON_LEAVE
+    ON_ENTER, ON_LEAVE, EVENT_BUS
 }  = require('../game-data/conditionGlobals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
@@ -255,12 +255,12 @@ class Game {
         const newMapData = getMapData( destination );
         this.clearMapFromCanvases( );
         this.loadMapToCanvases( newMapData );
-        if ( type != "BUS" ) {
+        if ( type != EVENT_BUS ) {
             this.setPlayerInNewMap( newMapData, type );
         }
         else {
             newMapData.mapObjects.forEach( ( object ) => {
-                if ( object.action != undefined && object.action[0].action.type == "BUS" ) {
+                if ( object.action != undefined && object.action[0].action.type == EVENT_BUS ) {
                     object.action[0].action.events.forEach( ( e ) => {
                         if ( e["trigger"] == ON_ENTER ) {
                             new Cinematic( e, ON_ENTER )
@@ -377,7 +377,7 @@ class Game {
                 break;
             case 'BUS' :
                 mapData.mapObjects.forEach( ( object ) => {
-                    if ( object.action != undefined && object.action[0].action.type == "BUS" ) {
+                    if ( object.action != undefined && object.action[0].action.type == EVENT_BUS ) {
                         newPlayerCell.row = object.row;
                         newPlayerCell.col = object.col;
                         direction   = FACING_DOWN

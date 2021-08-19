@@ -1,6 +1,6 @@
 const { getEffectData } = require("../../resources/effectResources");
 const { drawFromImageToCanvas } = require("../../helpers/canvasHelpers");
-const { FRAME_LIMIT, GRID_BLOCK_PX } = require("../../game-data/globals");
+const { FRAME_LIMIT, GRID_BLOCK_PX, BATTLE_MODE } = require("../../game-data/globals");
 const globals = require("../../game-data/globals");
 /**
  * I_Effect instances represent a ( part of ) a graphical effect in the game.
@@ -52,8 +52,8 @@ class I_Effect {
         const data      = getEffectData( this.name );
         this.frameWidth = data.frameWidth;
         this.frameHeight = data.frameHeight;
-        this.width  = data.widthInBlocks * (globals.GAME.mode == "BATTLE" ? ( GRID_BLOCK_PX * 1.5 ) : GRID_BLOCK_PX);
-        this.height = data.heightInBlocks * (globals.GAME.mode == "BATTLE" ? ( GRID_BLOCK_PX * 1.5 ) : GRID_BLOCK_PX);
+        this.width  = data.widthInBlocks * (globals.GAME.mode == BATTLE_MODE ? ( GRID_BLOCK_PX * 1.5 ) : GRID_BLOCK_PX);
+        this.height = data.heightInBlocks * (globals.GAME.mode == BATTLE_MODE ? ( GRID_BLOCK_PX * 1.5 ) : GRID_BLOCK_PX);
         
         this.setSprite( data.src );
         this.initialiseAnimationFrames( data.frames );

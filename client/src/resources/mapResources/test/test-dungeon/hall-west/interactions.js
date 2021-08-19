@@ -1,4 +1,4 @@
-const { DEFAULT, SPEAK, MOVE, ANIM, SPEAK_YES_NO, EVENT_HAS_FIRED, ON_BATTLE_END } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, SPEAK, MOVE, ANIM, SPEAK_YES_NO, EVENT_HAS_FIRED, ON_BATTLE_END, EVENT_BATTLE, EVENT_TALK } = require("../../../../../game-data/conditionGlobals");
 const { TEST_CLASSNAME_1 } = require("../../../../../game-data/globals");
 const { LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3, LOGGABLE_INTERACTION_4 } = require("../../../../../game-data/interactionGlobals");
 
@@ -9,7 +9,7 @@ const COMPUTER_1_ACTION = [
         "type": DEFAULT
         },
         "action": {
-        "type": "TEXT",
+        "type": EVENT_TALK,
         "scenes": [
             {
             "type": SPEAK,
@@ -28,7 +28,7 @@ const COMPUTER_2_ACTION = [
         "type": DEFAULT
         },
         "action": {
-        "type": "TEXT",
+        "type": EVENT_TALK,
             "scenes": [
                 {
                     "type": SPEAK,
@@ -53,7 +53,7 @@ const COMPUTER_3_ACTION = [
         "type": DEFAULT
         },
         "action": {
-        "type": "TEXT",
+        "type": EVENT_TALK,
         "scenes": [
             {
             "type": SPEAK,
@@ -72,7 +72,7 @@ const BUTLER_IN_TRAINING = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "I'm training to be a butler!" },
@@ -89,7 +89,7 @@ const SECUREBOT = [
             "value": LOGGABLE_INTERACTION_4,
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Oh silly me, I'm in the way again!" },
@@ -103,7 +103,7 @@ const SECUREBOT = [
             "value": LOGGABLE_INTERACTION_3
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_4,
@@ -120,7 +120,7 @@ const SECUREBOT = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_2,
@@ -139,7 +139,7 @@ const SECUREBOT_LEFT = [
             "value": LOGGABLE_INTERACTION_2
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_3,
@@ -155,7 +155,7 @@ const SECUREBOT_LEFT = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Me and Annie have been together for a long time." },
@@ -171,7 +171,7 @@ const LADY_LEFT = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "TEXT",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Secure Bob has been my boyfriend for ten years now." },
@@ -188,7 +188,7 @@ const NECKBEARD_RIGHT = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "BATTLE",
+            "type": EVENT_BATTLE,
             "sfx": "typing.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "DUDE!!!" },

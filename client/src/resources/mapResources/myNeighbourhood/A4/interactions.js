@@ -1,4 +1,4 @@
-const { DEFAULT, SPEAK } = require("../../../../game-data/conditionGlobals")
+const { DEFAULT, SPEAK, EVENT_TALK } = require("../../../../game-data/conditionGlobals")
 
 const A4_SUBMAP1_SPEAK_WOMAN = [
   {
@@ -6,7 +6,7 @@ const A4_SUBMAP1_SPEAK_WOMAN = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "poo-poo.mp3",
       "scenes": [
           { "type": SPEAK, "text": "I'm always making big bucks you know. I just can't help it!" }
@@ -21,7 +21,7 @@ const A4_SUBMAP2_SPEAK_WOMAN = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-3.mp3",
       "scenes": [ 
         { "type": SPEAK, "text": "I'm just here to make some money until my Instagram account takes off." }
@@ -36,7 +36,7 @@ const A4_SUBMAP2_SPEAK_GUY1 = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
         { "type": SPEAK, "text": "You sure you want something, nerd?" },
@@ -52,7 +52,7 @@ const A4_SUBMAP2_SPEAK_GUY2 = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
         { "type": SPEAK, "text": "The Yum-mart sells the best 'roid in town, man!" }
@@ -67,7 +67,7 @@ const A4_SUBMAP2_SPEAK_MANAGER = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-2.mp3",
       "scenes": [
         { "type": SPEAK, "text": "What could be better than seeing all these happy customers trust our high quality products?" }
@@ -82,7 +82,7 @@ const A4_SUBMAP2_SPEAK_GIRL = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-3.mp3",
       "scenes": [
         { "type": SPEAK, "text": "I wish we had a better stores than Yum-mart in our neighbourhood." }
@@ -107,7 +107,7 @@ const A4_SUBMAP2_SIGN_ACTION_R4C7 = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": A4_SUBMAP2_SIGN_ACTION_SCENES
     }
   }
@@ -121,7 +121,7 @@ const A4_SUBMAP2_SIGN_ACTION_R1C11 = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": A4_SUBMAP2_SIGN_ACTION_SCENES
     }
   }
@@ -134,7 +134,7 @@ const A4_SUBMAP2_ICECREAM_ACTION = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": [
         {
           "type": SPEAK,
@@ -163,7 +163,7 @@ const A4_SUBMAP2_VEGGIES_ACTION_R5C3 = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": A4_SUBMAP2_VEGGIES_ACTION_SCENES
     }
   }
@@ -176,7 +176,7 @@ const A4_SUBMAP2_VEGGIES_ACTION_R5C5 = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": A4_SUBMAP2_VEGGIES_ACTION_SCENES
     }
   }
@@ -189,7 +189,7 @@ const A4_SUBMAP2_RODITOS_ACTION = [
       "type" : DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": [
         {
           "type": SPEAK,

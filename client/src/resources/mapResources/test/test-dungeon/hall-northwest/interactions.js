@@ -1,4 +1,4 @@
-const { DEFAULT, SPEAK } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, SPEAK, EVENT_TALK } = require("../../../../../game-data/conditionGlobals");
 
 const MONKEY = [
     {
@@ -6,7 +6,7 @@ const MONKEY = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "I don't get humans, to be honest with you." },
@@ -26,7 +26,7 @@ const GRUMPY_MAN = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "battle-baba.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Kids these days!" },

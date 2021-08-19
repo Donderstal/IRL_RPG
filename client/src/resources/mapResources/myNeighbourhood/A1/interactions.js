@@ -1,7 +1,7 @@
 const { 
   TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
  } = require('../../../../game-data/globals')
-const { DEFAULT, SPEAK, SPEAK_YES_NO, ANIM, ON_BATTLE_START, ON_BATTLE_END } = require('../../../../game-data/conditionGlobals');
+const { DEFAULT, SPEAK, SPEAK_YES_NO, ANIM, ON_BATTLE_START, ON_BATTLE_END, EVENT_BATTLE, EVENT_TALK } = require('../../../../game-data/conditionGlobals');
 const { LOGGABLE_INTERACTION_1 } = require('../../../../game-data/interactionGlobals');
 const A1_MY_HOUSE_COMPUTER_ACTION = [ 
   { 
@@ -10,7 +10,7 @@ const A1_MY_HOUSE_COMPUTER_ACTION = [
       "type": DEFAULT
     },
     "action": {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": [
         {
           "type": SPEAK,
@@ -29,7 +29,7 @@ const A1_MY_HOUSE_FRIDGE_ACTION = [
       "type": DEFAULT
     },
     "action": {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": [
         {
           "type": SPEAK,
@@ -48,7 +48,7 @@ const A1_MY_HOUSE_STOVE_ACTION = [
       "type": DEFAULT
     },
     "action": {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": [
         {
           "type": SPEAK,
@@ -66,7 +66,7 @@ const A1_LIFTING_CHAD = [
       "type": DEFAULT
     },
     "action": {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
         { "type": SPEAK, "text": "Do you even lift, bro?"}
@@ -81,7 +81,7 @@ const A1_BUSINESS_MAN = [
       "type": DEFAULT
     },
     "action": {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
         { "type": SPEAK, "text": "I'm working for the corporation. Business business business!" }
@@ -96,7 +96,7 @@ const A1_GIRL_OUTSIDE = [
       "type": DEFAULT
     },
     "action": {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-3.mp3",
       "scenes": [
         { "type": SPEAK, "text": "I ate oysters for breakfast this morning. It was a terrible idea... " }
@@ -111,7 +111,7 @@ const A1_WOMAN_FIGHT = [
       "type": DEFAULT
     },
     "action": {
-      "type": "BATTLE",
+      "type": EVENT_BATTLE,
       "sfx": "voice-2.mp3",
       "scenes": [
         {
@@ -133,15 +133,15 @@ const A1_WOMAN_FIGHT = [
         {
           "trigger": ON_BATTLE_START,
           "scenes": [
-            { "type": "ANIM", "animName": "LEFT_AND_RIGHT", "loop": false },
-            { "type": "SPEAK", "text": "You'll regret this!" },
+            { "type": ANIM, "animName": "LEFT_AND_RIGHT", "loop": false },
+            { "type": SPEAK, "text": "You'll regret this!" },
           ]
         },
         {
           "trigger": ON_BATTLE_END,
           "scenes": [
-            { "type": "ANIM", "animName": "TURN_SINGLE_CIRCLE", "loop": false },
-            { "type": "SPEAK", "text": "Oh no, I got PWND!!" }
+            { "type": ANIM, "animName": "TURN_SINGLE_CIRCLE", "loop": false },
+            { "type": SPEAK, "text": "Oh no, I got PWND!!" }
           ]
         }
       ],
@@ -155,10 +155,9 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
       "type": DEFAULT
     },
     "action": {
-      "type": "BATTLE",
+      "type": EVENT_BATTLE,
       "shouldBeRegistered": true,
       "registryKey": LOGGABLE_INTERACTION_1,
-      "type": "BATTLE",
       "sfx": "voice-1.mp3",
       "party": [
         { "name": "Boze Bert", "className": TEST_CLASSNAME_2, "level": 5 },

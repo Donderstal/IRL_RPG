@@ -1,5 +1,6 @@
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT 
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, 
+    WAIT, EVENT_BUS
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { Counter } = require('../../helpers/Counter');
@@ -125,7 +126,7 @@ class Scene {
 
     initCreateSpriteScene( data ) {
         if ( data.spriteName == "Player" ) {
-            globals.GAME.setPlayerInNewMap( globals.GAME.activeMap, "BUS" )
+            globals.GAME.setPlayerInNewMap( globals.GAME.activeMap, EVENT_BUS )
             return;
         }
 

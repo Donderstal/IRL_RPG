@@ -1,5 +1,5 @@
 const {
-  DEFAULT, SPEAK_YES_NO, CREATE_CAR, MOVE_CAR, MOVE, DELETE_SPRITE, WAIT, FADE_OUT, FADE_IN, CREATE_SPRITE, SPEAK 
+  DEFAULT, SPEAK_YES_NO, CREATE_CAR, MOVE_CAR, MOVE, DELETE_SPRITE, WAIT, FADE_OUT, FADE_IN, CREATE_SPRITE, SPEAK, EVENT_BUS, EVENT_TALK
 } = require("../../../../game-data/conditionGlobals")
 const { 
   FACING_DOWN, FACING_LEFT
@@ -13,7 +13,7 @@ const BUS_TO_DOWTOWN = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "BUS",
+      "type": EVENT_BUS,
       "to": "downtown/A3",
       "scenes": [
         {
@@ -91,7 +91,7 @@ const A2_TALKING_CHAD = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
         { "type": SPEAK, "text": "Could you piss off?" },
@@ -107,7 +107,7 @@ const A2_TALKING_NECKBEARD = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "mauww.mp3",
       "scenes": [
         { "type": SPEAK, "text": "I'm an aspiring ninja, m'lady." }
@@ -122,7 +122,7 @@ const A2_TALKING_GIRL = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "poo-poo.mp3",
       "scenes": [
         { "type": SPEAK, "text": "I used to date a level 24 Darkmage." }
@@ -137,7 +137,7 @@ const A2_TALKING_ROBOT = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "typing.mp3",
       "scenes": [
         { "type": SPEAK, "text": "Hello, potential customer!" }
@@ -152,7 +152,7 @@ const A2_SUBMAP1_WOMAN = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "poo-poo.mp3",
       "scenes": [
         { "type": SPEAK, "text": "There's this weird neckbeard in the back alley trying to connect my to my internet." }
@@ -169,7 +169,7 @@ const A2_SUBMAP1_ACTION_BIN  = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "scenes": [
         {
           "type": SPEAK,
@@ -188,7 +188,7 @@ const A2_SUBMAP3_WIFIGUY = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-3.mp3",
       "scenes": [
         { "type": SPEAK, "text": "The Wifi here sucks, man" }
@@ -203,7 +203,7 @@ const A2_SUBMAP2_LIFTING_CHAD = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
         { "type": SPEAK, "text": "Do you even lift, bro?"}

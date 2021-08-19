@@ -1,4 +1,4 @@
-const { DEFAULT, SPEAK, SPEAK_YES_NO } = require("../../../../game-data/conditionGlobals")
+const { DEFAULT, SPEAK, SPEAK_YES_NO, EVENT_TALK } = require("../../../../game-data/conditionGlobals")
 
 const PIDGEBERT_THUG = [
   {
@@ -6,7 +6,7 @@ const PIDGEBERT_THUG = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "battle-baba.mp3",
       "scenes": [
           { "type": SPEAK, "text": "If you mess with Pidgebert you mess with me!" }
@@ -21,7 +21,7 @@ const PIDGEBERT = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
           { "type": SPEAK, "text": "Who you lookin at, shithead?" },
@@ -47,7 +47,7 @@ const PIDGEBERT_PIGEON = [
       "type": DEFAULT
     },
     "action" : {
-      "type": "TEXT",
+      "type": EVENT_TALK,
       "sfx": "voice-1.mp3",
       "scenes": [
           { "type": SPEAK, "text": "Pigeons of the world, unite!" }
@@ -62,7 +62,7 @@ const PIDGEBERT_PIGEON = [
         "type": DEFAULT
       },
       "action" : {
-        "type": "TEXT",
+        "type": EVENT_TALK,
         "sfx": "voice-2.mp3",
         "scenes": [
             { "type": SPEAK, "text": "Pidgebert is not like other pigeons, if you understand what I mean." }

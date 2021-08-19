@@ -1,4 +1,4 @@
-const { DEFAULT, SPEAK } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, SPEAK, EVENT_TALK } = require("../../../../../game-data/conditionGlobals");
 
 const BUTLER_1 = [
     {
@@ -6,7 +6,7 @@ const BUTLER_1 = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Welcome to our fine establishment." }
@@ -22,7 +22,7 @@ const BUTLER_2 = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "We're happy to have you.'" }

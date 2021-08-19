@@ -1,3 +1,4 @@
+const { EVENT_BATTLE, EVENT_SHOP, EVENT_SLEEP } = require("../../../game-data/conditionGlobals");
 const { MapAction } = require("./MapAction");
 
 class ActionSelector {
@@ -12,7 +13,9 @@ class ActionSelector {
 
     get action( ) { return this.activeAction; };
     get inventory( ) { return this.activeAction.inventory; };
-    get dismissAtCinematicEnd( ) { return this.activeAction.type != "SLEEP" && this.activeAction.type != "SHOP" && this.activeAction.type != "BATTLE" }
+    get dismissAtCinematicEnd( ) { 
+        return this.activeAction.type != EVENT_SLEEP && this.activeAction.type != EVENT_SHOP && this.activeAction.type != EVENT_BATTLE
+    }
 
     draw( ) {
         this.activeAction.draw( );

@@ -30,6 +30,12 @@ module.exports = {
     ON_BATTLE_END: "ON_BE",
     ON_NPC_INTERACTION: "ON_NP",
     ON_POSITION: "ON_PO",
-    ON_EVENT: "ON_EV"
+
+    EVENT_BUS: "EV_BU",
+    EVENT_TALK: "EV_TE",
+    EVENT_DOOR: "EV_DO",
+    EVENT_SHOP: "EV_SH",
+    EVENT_RESTORE: "EV_RE",
+    EVENT_BATTLE: "EV_BA"
 }
 

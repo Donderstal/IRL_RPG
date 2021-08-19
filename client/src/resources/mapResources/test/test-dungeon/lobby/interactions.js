@@ -1,4 +1,7 @@
-const { DEFAULT, SPEAK, SPEAK_YES_NO, FADE_IN_OUT, EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
+const { 
+    DEFAULT, SPEAK, SPEAK_YES_NO, FADE_IN_OUT, EVENT_HAS_FIRED,
+    EVENT_SHOP, EVENT_RESTORE, EVENT_TALK
+} = require("../../../../../game-data/conditionGlobals");
 const { LOGGABLE_INTERACTION_4 } = require("../../../../../game-data/interactionGlobals");
 
 const BUTLER_1 = [
@@ -7,7 +10,7 @@ const BUTLER_1 = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "I'm terribly sorry sir!" },
@@ -23,7 +26,7 @@ const BUTLER_2 = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Glad to meet you lord!" },
@@ -40,7 +43,7 @@ const JONA = [
             "value": LOGGABLE_INTERACTION_4,
         },
         "action": { 
-            "type": "TEXT",
+            "type":  EVENT_TALK,
             "sfx": "typing.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Wow, you got the robot to move?" },
@@ -53,7 +56,7 @@ const JONA = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "These annoying butlers won't let me into the grand hall!" },
@@ -70,7 +73,7 @@ const SHOP = [
             "type": DEFAULT
          },
         "action": { 
-            "type": "SHOP",
+            "type": EVENT_SHOP,
             "sfx": "voice-2.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Hello individual! Are you looking for the new products marketed to your demographic?" },
@@ -102,7 +105,7 @@ const REST = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_RESTORE,
             "sfx": "typing.mp3",
             "scenes": [
                 {

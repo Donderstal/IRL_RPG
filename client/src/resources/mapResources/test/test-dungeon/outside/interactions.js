@@ -1,5 +1,5 @@
 const { LOGGABLE_INTERACTION_1 } = require("../../../../../game-data/interactionGlobals");
-const { DEFAULT, EVENT_HAS_FIRED, SPEAK } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, EVENT_HAS_FIRED, SPEAK, EVENT_TALK } = require("../../../../../game-data/conditionGlobals");
 
 const STANDARD_ROBOT =  [
     {
@@ -7,7 +7,7 @@ const STANDARD_ROBOT =  [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "For your safety, good citizen!" },
@@ -24,7 +24,7 @@ const KEY_ROBOT = [
             "value": LOGGABLE_INTERACTION_1
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_1,
@@ -39,7 +39,7 @@ const KEY_ROBOT = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "typing.mp3",
             "shouldBeRegistered": true,
             "registryKey": LOGGABLE_INTERACTION_1,
@@ -60,7 +60,7 @@ const BUTLER = [
             "type": DEFAULT
         },
         "action": { 
-            "type": "SLEEP",
+            "type": EVENT_TALK,
             "sfx": "voice-1.mp3",
             "scenes": [
                 { "type": SPEAK, "text": "Want to go in, sir?" },
