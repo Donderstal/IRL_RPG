@@ -8,6 +8,7 @@ const {
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     ATTRIBUTE_MENU_TEXTS, EQUIPMENT_SLOTS_LIST, ATTRIBUTE_LIST
 } = require('../../game-data/globals');
+const { COLOR_WHITE, COLOR_BACKGROUND } = require('../../game-data/uiGlobals')
 /**
  * In the StatusMenuTab, the player can have a detailed look at the attributes of the members of the party.
  * The player can scroll between different characters and equip or unequip items.
@@ -107,7 +108,7 @@ class StatusMenuTab extends MenuTab {
         drawRect( "FRONT", 
             GRID_BLOCK_PX / 2, GRID_BLOCK_PX * 2, 
             ( CANVAS_WIDTH * .66 ) - GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ), 
-        "#FADADD" )
+        COLOR_BACKGROUND )
         
         const statusTexts = [ 
             "CHARACTER", "NAME: " + this.activeCharacter.Name, "CLASS: " + this.activeCharacter.ClassName,
@@ -117,7 +118,7 @@ class StatusMenuTab extends MenuTab {
             writeTextLine( 
                 text, 
                 GRID_BLOCK_PX, ( GRID_BLOCK_PX * 2 ) + ( LARGE_FONT_LINE_HEIGHT * ( index + 1 ) ), 
-                LARGE_FONT_SIZE, "#000000" 
+                LARGE_FONT_SIZE, COLOR_WHITE 
             );
         })
 
@@ -150,17 +151,17 @@ class StatusMenuTab extends MenuTab {
         writeTextLine( 
             ATTRIBUTE_MENU_TEXTS[key] + ": ", 
             GRID_BLOCK_PX, currentTextY, 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
         writeTextLine(
             (index == 0 ? this.activeCharacter.CurrentHitpoints : this.activeCharacter.CurrentPowerpoints) + " / ", 
             GRID_BLOCK_PX * 3.5, currentTextY, 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
         writeTextLine( 
             this.activeCharacter.activeAttributeValues[key], 
             GRID_BLOCK_PX * 4, currentTextY, 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
         this.drawAttributeArrows( key, currentArrowY );
     }
@@ -173,12 +174,12 @@ class StatusMenuTab extends MenuTab {
         writeTextLine( 
             ATTRIBUTE_MENU_TEXTS[key] + ": ",
             GRID_BLOCK_PX, currentTextY, 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
         writeTextLine( 
             this.activeCharacter.activeAttributeValues[key], 
             GRID_BLOCK_PX * 4, currentTextY, 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
         this.drawAttributeArrows( key, currentArrowY );
     }
@@ -215,22 +216,22 @@ class StatusMenuTab extends MenuTab {
             "FRONT", 
             ( CANVAS_WIDTH * .66 ) + ( GRID_BLOCK_PX / 2 ), GRID_BLOCK_PX * 2, 
             ( CANVAS_WIDTH * .33 ) - GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ), 
-            "#FADADD" 
+            COLOR_BACKGROUND 
         );
         writeTextLine( 
             "EQUIPMENT", 
             GRID_BLOCK_PX + ( CANVAS_WIDTH * .66 ), ( GRID_BLOCK_PX * 2 ) + LARGE_FONT_LINE_HEIGHT, 
-            LARGE_FONT_SIZE, "#000000"
+            LARGE_FONT_SIZE, COLOR_WHITE
         );
         writeTextLine( 
             "Previous character - [ A ]", 
             ( CANVAS_WIDTH * .66 ) + GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ) - (LARGE_FONT_LINE_HEIGHT * 2), 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
         writeTextLine( 
             "Next character - [ D ]", 
             ( CANVAS_WIDTH * .66 ) + GRID_BLOCK_PX, CANVAS_HEIGHT - ( GRID_BLOCK_PX * 2 ) - LARGE_FONT_LINE_HEIGHT, 
-            LARGE_FONT_SIZE, "#000000" 
+            LARGE_FONT_SIZE, COLOR_WHITE 
         );
     }
 }

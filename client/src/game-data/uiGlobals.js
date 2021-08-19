@@ -1,0 +1,8 @@
+module.exports = {
+    COLOR_BLACK: '#000000',
+    COLOR_WHITE: '#ffffff',
+    COLOR_PRIMARY: '#9c1e86',
+    COLOR_SECONDARY: '#D82BBA',
+    COLOR_TERTIARY: '#00384D',
+    COLOR_BACKGROUND: '#00384D'
+}

@@ -1,9 +1,9 @@
 const { 
-    CANVAS_WIDTH, CANVAS_HEIGHT,
-    LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE,
-    BATTLE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, 
+    CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_LINE_HEIGHT, 
+    LARGE_FONT_SIZE, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE, BATTLE_FONT_SIZE, 
 } = require('../../game-data/globals');
 const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
+const { COLOR_SECONDARY, COLOR_WHITE } = require('../../game-data/uiGlobals')
 /**
  * The Menu class represents an in-game main menu.
  * It wraps a I_MenuTab extension instance, which contains one menu tab isntance.
@@ -26,7 +26,7 @@ const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
      * Draw the textbox at the bottom of the menu
      */
     drawMenuTextbox( buttonHints, actionHints = false ) {
-        drawRect( "FRONT", 0, CANVAS_HEIGHT - this.tabHeight, CANVAS_WIDTH, this.tabHeight, "#D82BBA" )
+        drawRect( "FRONT", 0, CANVAS_HEIGHT - this.tabHeight, CANVAS_WIDTH, this.tabHeight, COLOR_SECONDARY )
         writeTextLine( 
             this.activeText, 0 + LARGE_FONT_LINE_HEIGHT, 
             ( CANVAS_HEIGHT - this.tabHeight ) + LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE
@@ -40,7 +40,7 @@ const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
             } );
         }
 
-        drawRect( "FRONT", 0, CANVAS_HEIGHT - (SMALL_FONT_LINE_HEIGHT * 2), CANVAS_WIDTH, 1, "#FFFFFF" )
+        drawRect( "FRONT", 0, CANVAS_HEIGHT - (SMALL_FONT_LINE_HEIGHT * 2), CANVAS_WIDTH, 1, COLOR_WHITE )
         buttonHints.forEach( ( buttonHint, index ) => {
             writeTextLine( 
                 buttonHint, 0 + SMALL_FONT_LINE_HEIGHT + ( ( CANVAS_WIDTH * .25 ) * ( index )), 

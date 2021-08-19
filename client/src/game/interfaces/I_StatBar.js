@@ -1,5 +1,6 @@
 const globals = require("../../game-data/globals");
 const { GRID_BLOCK_PX, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE } = require("../../game-data/globals");
+const { COLOR_WHITE } = require('../../game-data/uiGlobals')
 const { drawFromImageToCanvas, writeTextLine } = require('../../helpers/canvasHelpers')
 const uiSpriteFolder = "/static/ui/"
 /**
@@ -96,7 +97,7 @@ class StatBar {
             this.frontBarWidth, this.height
         )
         writeTextLine( 
-            this.statText, x - ( this.width / 2.1 ), y + SMALL_FONT_LINE_HEIGHT - ( ( this.height - SMALL_FONT_SIZE ) / 2 ), "SMALL", "#000000"
+            this.statText, x - ( this.width / 2.1 ), y + SMALL_FONT_LINE_HEIGHT - ( ( this.height - SMALL_FONT_SIZE ) / 2 ), "SMALL", COLOR_WHITE
         )
     }
 } 

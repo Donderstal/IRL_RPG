@@ -3,6 +3,7 @@ const {
     FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN
 } = require( '../../game-data/globals' );
 const globals = require( '../../game-data/globals' );
+const { COLOR_WHITE } = require( '../../game-data/uiGlobals' );
 /**
  * The I_Hitbox interface is the base class of all in-game elements that should have collision detection.
  * It consists out of three circles, the inner, middle and outer.
@@ -17,7 +18,7 @@ class I_Hitbox {
         this.radius         = radius;
         this.innerRadius    = radius / 2 
         this.collision      = false;
-        this.arcColor       = "#FFFFFF";
+        this.arcColor       = COLOR_WHITE;
         this.outerTop       = ( ) => { return this.y - this.outerRadius }
         this.outerLeft      = ( ) => { return this.x - this.outerRadius }
         this.outerRight     = ( ) => { return this.x + this.outerRadius }

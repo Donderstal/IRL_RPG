@@ -1,8 +1,8 @@
 const globals = require('../../game-data/globals');
-const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, GRID_BLOCK_IN_SHEET_PX } = require('../../game-data/globals');
+const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } = require('../../game-data/globals');
 const { writeTextLine, drawRect } = require('../../helpers/canvasHelpers');
 const { getModalContent } = require('../../resources/uiResources');
-
+const { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_TERTIARY } = require('../../game-data/uiGlobals')
 
 class Modal {
     constructor( displayText, modalType ) {
@@ -111,7 +111,7 @@ class Modal {
         drawRect("FRONT", this.x, this.y, this.width, this.height );
         drawRect("FRONT", 
         this.x + ( GRID_BLOCK_PX * .125 ), this.y + ( GRID_BLOCK_PX * .125 ), 
-        this.width - ( GRID_BLOCK_PX * .25 ), this.height - ( GRID_BLOCK_PX * .25 ), "#64005380");
+        this.width - ( GRID_BLOCK_PX * .25 ), this.height - ( GRID_BLOCK_PX * .25 ), COLOR_PRIMARY);
         writeTextLine( this.text, this.x + GRID_BLOCK_PX, this.y + ( LARGE_FONT_LINE_HEIGHT * 2 ), LARGE_FONT_SIZE )
         this.buttons.forEach( e => e.draw() )
     }
@@ -134,8 +134,8 @@ class ModalButton {
 
         this.x          = x;
         this.y          = y;
-        this.activeColor    = "#D82BBA";
-        this.standardColor  = "#00384D";
+        this.activeColor    = COLOR_SECONDARY;
+        this.standardColor  = COLOR_TERTIARY;
 
         this.height     = GRID_BLOCK_PX * 3;
         this.width      = GRID_BLOCK_PX * 2;

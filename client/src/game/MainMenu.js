@@ -13,6 +13,7 @@ const { InventoryMenuTab } = require('./menu/InventoryTab');
 const { MapMenuTab } = require('./menu/MapTab');
 const { GameMenuTab } = require('./menu/GameTab');
 const { I_Menu } = require('./interfaces/I_Menu');
+const { COLOR_WHITE, COLOR_PRIMARY, COLOR_SECONDARY } = require('../game-data/uiGlobals')
 /**
  * Set GAME.inMenu to true and assign a Menu instance to GAME.MENU
  */
@@ -101,14 +102,14 @@ class MainMenu extends I_Menu {
      * Draw the menu's background and tab buttons
      */
     drawMenuBackground( ) {
-        drawRect( "FRONT", 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#000000" )
+        drawRect( "FRONT", 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, COLOR_WHITE )
         this.tabs.forEach( ( tab, index ) => {
             let tabX = this.tabWidth * index
             if ( tab == this.ACTIVE_TAB ) {
-                drawRect( "FRONT", tabX, 0, this.tabWidth, this.tabHeight, "#D82BBA" )
+                drawRect( "FRONT", tabX, 0, this.tabWidth, this.tabHeight, COLOR_SECONDARY )
             }
             else {
-                drawRect( "FRONT", tabX, 0, this.tabWidth, this.tabHeight, "#64005380" )            
+                drawRect( "FRONT", tabX, 0, this.tabWidth, this.tabHeight, COLOR_PRIMARY )            
             }
     
             writeTextLine( 
@@ -116,7 +117,7 @@ class MainMenu extends I_Menu {
                 0 + LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE 
             );
         })
-        drawRect( "FRONT", 0, this.tabHeight, CANVAS_WIDTH, this.mainScreenHeight, "#64005380"  )
+        drawRect( "FRONT", 0, this.tabHeight, CANVAS_WIDTH, this.mainScreenHeight, COLOR_PRIMARY  )
     }
     /**
      * Switch to the next or previous tab in this.tabs depening on given string

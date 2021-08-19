@@ -1,8 +1,7 @@
 const { 
-    CANVAS_WIDTH, CANVAS_HEIGHT, 
-    LARGE_FONT_SIZE, LARGE_FONT_LINE_HEIGHT,
-    BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT 
+    CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT 
 } = require('../game-data/globals');
+const { COLOR_WHITE, COLOR_SECONDARY } = require('../game-data/uiGlobals')
 const { TypeWriter } = require('../helpers/TypeWriter')
 const globals = require('../game-data/globals');
 
@@ -50,9 +49,9 @@ class LoadingScreen {
 
     draw( ) {
         globals.GAME.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
-        globals.GAME.front.ctx.fillStyle = "#D82BBA";
+        globals.GAME.front.ctx.fillStyle = COLOR_SECONDARY;
         globals.GAME.front.ctx.fillRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
-        globals.GAME.front.ctx.fillStyle = "#FFFFFF";
+        globals.GAME.front.ctx.fillStyle = COLOR_WHITE;
         
         globals.GAME.front.ctx.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
         globals.GAME.front.ctx.fillText( this.mainText, ( CANVAS_WIDTH / 2 ) - ( this.mainTextWidth / 2 ), CANVAS_HEIGHT / 2 );

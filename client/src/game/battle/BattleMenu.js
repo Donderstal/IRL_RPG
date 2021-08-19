@@ -9,6 +9,7 @@ const { MenuItem } = require('../interfaces/I_MenuItem');
 const { STANDARD_ATTACK, STANDARD_DEFEND } = require('../../resources/battleMoveResources');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
 const { generateActionHint } = require('../../helpers/UITextHelper');
+const { COLOR_PRIMARY } = require('../../game-data/uiGlobals')
 const {     
     CONTROL_UP, CONTROL_LEFT, CONTROL_RIGHT, CONTROL_DOWN 
 } = require('../../game-data/battleGlobals')
@@ -158,7 +159,7 @@ class BattleMenu extends I_Menu {
     }
 
     selectionTab( ) {
-        drawRect( "FRONT", 0, CANVAS_HEIGHT - ( this.tabHeight * 2 ), CANVAS_WIDTH, this.tabHeight, "#64005380" )
+        drawRect( "FRONT", 0, CANVAS_HEIGHT - ( this.tabHeight * 2 ), CANVAS_WIDTH, this.tabHeight, COLOR_PRIMARY )
         this.optionButtons.forEach( ( e ) => {
             e.draw( );
         } )

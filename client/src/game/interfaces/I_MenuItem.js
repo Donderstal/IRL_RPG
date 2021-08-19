@@ -1,5 +1,6 @@
 const { LARGE_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
 const { writeTextLine, drawRect, drawFromImageToCanvas } = require('../../helpers/canvasHelpers');
+const { COLOR_SECONDARY, COLOR_TERTIARY } = require('../../game-data/uiGlobals')
 const globals = require('../../game-data/globals');
 /**
  * Each tab in the main menu is filled with a set of items. The content of these items vary.
@@ -17,8 +18,8 @@ class MenuItem {
         this.content = content;
 
         this.isActive = false;        
-        this.activeButtonColor = "#D82BBA";
-        this.standardButtonColor = "#00384D";
+        this.activeButtonColor = COLOR_SECONDARY;
+        this.standardButtonColor = COLOR_TERTIARY;
 
         this.displayText;
         this.setDisplayText( );

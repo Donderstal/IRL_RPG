@@ -1,6 +1,7 @@
 const { LARGE_FONT_SIZE, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT } = require('../../game-data/globals');
 const { writeTextLine, drawRect, getFrontCanvasContext } = require('../../helpers/canvasHelpers');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
+const { COLOR_SECONDARY, COLOR_TERTIARY } = require('../../game-data/uiGlobals')
 /**
  * The player can perform different actions on MenuItems. The available actions differ per type of MenuTab.
  * The ItemSubMenu is activated by selecting a MenuItem with the spacebar.
@@ -40,12 +41,12 @@ class ItemSubMenu {
         getFrontCanvasContext().beginPath();
         getFrontCanvasContext().rect(this.x, this.y, this.width, this.height);
         getFrontCanvasContext().stroke();
-        drawRect( "FRONT", this.x, this.y, this.width, this.height, "#00384D");
+        drawRect( "FRONT", this.x, this.y, this.width, this.height, COLOR_TERTIARY);
     }
     drawOptions( ) {
         this.activeOptions.forEach( ( e, index ) => {
             if ( index === this.activeOption && this.isActive ) {
-                drawRect( "FRONT", this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4, "#D82BBA");
+                drawRect( "FRONT", this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4, COLOR_SECONDARY);
                 getFrontCanvasContext().beginPath();
                 getFrontCanvasContext().rect(this.x + 2, this.y + (this.activeOption * LARGE_FONT_LINE_HEIGHT) + 2, this.width - 4, LARGE_FONT_LINE_HEIGHT - 4);
                 getFrontCanvasContext().stroke();
