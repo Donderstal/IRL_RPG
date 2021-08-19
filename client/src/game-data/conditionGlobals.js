@@ -22,6 +22,14 @@ module.exports = {
     FADE_IN: "FAI",
     FADE_OUT: "FAO",
     FADE_IN_OUT: "FIO",
-    WAIT: "WAI"
+    WAIT: "WAI",
+
+    ON_ENTER: "ON_EN",
+    ON_LEAVE: "ON_LE",
+    ON_BATTLE_START: "ON_BS",
+    ON_BATTLE_END: "ON_BE",
+    ON_NPC_INTERACTION: "ON_NP",
+    ON_POSITION: "ON_PO",
+    ON_EVENT: "ON_EV"
 }
 

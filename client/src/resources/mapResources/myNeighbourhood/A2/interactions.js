@@ -2,8 +2,11 @@ const {
   DEFAULT, SPEAK_YES_NO, CREATE_CAR, MOVE_CAR, MOVE, DELETE_SPRITE, WAIT, FADE_OUT, FADE_IN, CREATE_SPRITE, SPEAK 
 } = require("../../../../game-data/conditionGlobals")
 const { 
-  FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT
+  FACING_DOWN, FACING_LEFT
 } = require('../../../../game-data/globals');
+const { 
+  ON_ENTER, ON_LEAVE
+}  = require('../../../../game-data/conditionGlobals')
 const BUS_TO_DOWTOWN = [
   {
     "condition": {
@@ -22,7 +25,7 @@ const BUS_TO_DOWTOWN = [
         ],
         "events": [
           {
-            "trigger": "ON_LEAVE",
+            "trigger": ON_LEAVE,
             "scenes": [
               {
                 "type": CREATE_CAR, 
@@ -51,7 +54,7 @@ const BUS_TO_DOWTOWN = [
             ]
           },
           {
-            "trigger": "ON_ENTER",
+            "trigger": ON_ENTER,
             "scenes": [
               { "type": FADE_IN },
               {

@@ -1,7 +1,7 @@
 const { 
   TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
  } = require('../../../../game-data/globals')
-const { DEFAULT, SPEAK, SPEAK_YES_NO, ANIM } = require('../../../../game-data/conditionGlobals');
+const { DEFAULT, SPEAK, SPEAK_YES_NO, ANIM, ON_BATTLE_START, ON_BATTLE_END } = require('../../../../game-data/conditionGlobals');
 const { LOGGABLE_INTERACTION_1 } = require('../../../../game-data/interactionGlobals');
 const A1_MY_HOUSE_COMPUTER_ACTION = [ 
   { 
@@ -131,14 +131,14 @@ const A1_WOMAN_FIGHT = [
       "hasEvent": true,
       "events": [
         {
-          "trigger": "ON_BATTLE_START",
+          "trigger": ON_BATTLE_START,
           "scenes": [
             { "type": "ANIM", "animName": "LEFT_AND_RIGHT", "loop": false },
             { "type": "SPEAK", "text": "You'll regret this!" },
           ]
         },
         {
-          "trigger": "ON_BATTLE_END",
+          "trigger": ON_BATTLE_END,
           "scenes": [
             { "type": "ANIM", "animName": "TURN_SINGLE_CIRCLE", "loop": false },
             { "type": "SPEAK", "text": "Oh no, I got PWND!!" }
@@ -179,14 +179,14 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
       "hasEvent": true,
       "events": [
         {
-          "trigger": "ON_BATTLE_START",
+          "trigger": ON_BATTLE_START,
           "scenes": [
             { "type": ANIM, "animName": "LIFT", "loop": false },
             { "type": SPEAK, "text": "You'll regret this!", "sfx": "battle-baba.mp3" }
           ]
         },
         {
-          "trigger": "ON_BATTLE_END",
+          "trigger": ON_BATTLE_END,
           "scenes": [
             { "type": ANIM, "animName": "TURN_SINGLE_CIRCLE", "loop": false },
             { "type": SPEAK, "text": "Ok ok, I'll unlock the door..." }

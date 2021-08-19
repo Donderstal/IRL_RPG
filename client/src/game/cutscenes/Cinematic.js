@@ -2,6 +2,9 @@ const {
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT 
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals')
+const { 
+    ON_NPC_INTERACTION, ON_BATTLE_START, ON_LEAVE
+}  = require('../../game-data/conditionGlobals')
 const { Sprite } = require('../interfaces/I_Sprite')
 const { Scene }     = require('./Scene')
 /**
@@ -86,13 +89,13 @@ class Cinematic {
 
     handleEndOfCinematicTrigger( ) {
         switch( this.trigger ) {
-            case "ON_LEAVE": 
+            case ON_LEAVE: 
                 globals.GAME.switchMap( this.args[0], this.args[1] )
                 break;
-            case "ON_BATTLE_START": 
+            case ON_BATTLE_START: 
                 globals.GAME.initializeBattle( this.args[0], this.args[1] );
                 break;
-            case "ON_NPC_INTERACTION": 
+            case ON_NPC_INTERACTION: 
                 globals.GAME.activeAction.dismiss( );
                 break;
         }

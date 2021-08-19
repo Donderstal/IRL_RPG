@@ -1,4 +1,7 @@
 const { Cinematic } = require('./Cinematic')
+const { 
+    ON_POSITION
+} = require('../../game-data/conditionGlobals');
 /**
  * The ScriptedEvent class is no longer implemented and need to be reworked to the new Grid system
  */
@@ -12,7 +15,7 @@ class ScriptedEvent {
         this.eventId        = eventScript.name;
         this.fired          = false;
 
-        if ( scriptedEventData.trigger == "ON_POSITION" ) {
+        if ( scriptedEventData.trigger == ON_POSITION ) {
             this.position = scriptedEventData.position
         }
     }

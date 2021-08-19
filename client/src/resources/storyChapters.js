@@ -1,5 +1,7 @@
 const { FACING_RIGHT } = require("../game-data/globals")
-
+const { 
+    ON_ENTER, ON_LEAVE, ON_POSITION
+}  = require('../game-data/conditionGlobals')
 const storyChapters = [
     // Chapter 0
     [
@@ -7,13 +9,13 @@ const storyChapters = [
         [
             {
                 mapName: "my-neighbourhood/A1",
-                trigger: "ON_ENTER",
+                trigger: ON_ENTER,
                 passScene: false,
                 scriptId: "0_0_0"
             },
             {
                 mapName: "my-neighbourhood/A2",
-                trigger: "ON_ENTER",
+                trigger: ON_ENTER,
                 passScene: true,
                 scriptId: "0_0_1"
             }  
@@ -22,7 +24,7 @@ const storyChapters = [
         [
             {
                 mapName: "my-neighbourhood/A3",
-                trigger: "ON_LEAVE",
+                trigger: ON_LEAVE,
                 passScene: true,
                 scriptId: "0_1_0"
             }
@@ -31,7 +33,7 @@ const storyChapters = [
         [
             {
                 mapName: "my-neighbourhood/A4",
-                trigger: "ON_POSITION",
+                trigger: ON_POSITION,
                 position: {
                     "col": 12,
                     "direction": FACING_RIGHT
@@ -44,7 +46,7 @@ const storyChapters = [
         [ 
             {
                 mapName: "my-neighbourhood/A4/yum-mart",
-                trigger: "ON_ENTER",
+                trigger: ON_ENTER,
                 passScene: false,
                 scriptId: "0_3_0"
             }

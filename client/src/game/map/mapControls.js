@@ -2,6 +2,7 @@ const movement          = require('./map-ui/movement')
 const actionController  = require('./map-ui/actionController')
 const globals           = require('../../game-data/globals');
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../game-data/globals');
+const { ON_POSITION } = require('../../game-data/conditionGlobals');
 const { triggerEvent } = require('../../helpers/triggerEvents');
 /**
  * Check the event.key prop and prevent its default.
@@ -51,7 +52,7 @@ const handleMovementKeys = ( touch = false, event = false ) => {
             movement.handleMovementOfSprite( PLAYER, FACING_RIGHT)
         }
         if ( GAME.activeMap.scriptedEvents != undefined ) {
-            triggerEvent( "ON_POSITION" );                
+            triggerEvent( ON_POSITION );                
         }
     }
     

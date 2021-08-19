@@ -3,11 +3,13 @@ const globals  = require('../game-data/globals')
 const controls      = require('./controls')
 const getMapData    = require('../resources/mapResources').getMapData
 const tilesheets    = require('../resources/tilesheetResources').sheets
-
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN,
     TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
 }  = require('../game-data/globals')
+const { 
+    ON_ENTER, ON_LEAVE
+}  = require('../game-data/conditionGlobals')
 const { SoundController } = require('./SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
@@ -219,7 +221,7 @@ class Game {
         this.sound.playMusic( mapData.music );
         setTimeout( ( ) => {
             if ( this.activeMap.scriptedEvents ) {
-                triggerEvent("ON_ENTER")        
+                triggerEvent(ON_ENTER)        
             }
         }, 250 )
     }
@@ -240,7 +242,7 @@ class Game {
      */
     switchMap ( destination, type ) {
         if ( this.activeMap.scriptedEvents != undefined ) {
-            triggerEvent("ON_LEAVE", [ destination, type ]); 
+            triggerEvent(ON_LEAVE, [ destination, type ]); 
             if ( this.inCinematic ) {
                 return;
             }            
@@ -260,8 +262,8 @@ class Game {
             newMapData.mapObjects.forEach( ( object ) => {
                 if ( object.action != undefined && object.action[0].action.type == "BUS" ) {
                     object.action[0].action.events.forEach( ( e ) => {
-                        if ( e["trigger"] == "ON_ENTER" ) {
-                            new Cinematic( e, "ON_ENTER" )
+                        if ( e["trigger"] == ON_ENTER ) {
+                            new Cinematic( e, ON_ENTER )
                         }
                     })
                 }

@@ -1,6 +1,5 @@
-const { DEFAULT, SPEAK, MOVE, ANIM, SPEAK_YES_NO } = require("../../../../../game-data/conditionGlobals");
+const { DEFAULT, SPEAK, MOVE, ANIM, SPEAK_YES_NO, EVENT_HAS_FIRED, ON_BATTLE_END } = require("../../../../../game-data/conditionGlobals");
 const { TEST_CLASSNAME_1 } = require("../../../../../game-data/globals");
-const { EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
 const { LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3, LOGGABLE_INTERACTION_4 } = require("../../../../../game-data/interactionGlobals");
 
 const COMPUTER_1_ACTION = [ 
@@ -204,7 +203,7 @@ const NECKBEARD_RIGHT = [
             ], 
             "events": [
                 {
-                  "trigger": "ON_BATTLE_END",
+                  "trigger": ON_BATTLE_END,
                   "scenes": [
                     { "type": ANIM, "animName": "TURN_SINGLE_CIRCLE", "loop": false },
                     { "type": SPEAK, "text": "Could you just knock next time you come in?" }

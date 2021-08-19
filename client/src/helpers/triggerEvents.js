@@ -1,26 +1,27 @@
 const globals           = require('../game-data/globals')
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
-
+const { 
+    ON_POSITION
+}  = require('../game-data/conditionGlobals')
 /**
  * @param {string} TRIGGER - Trigger type as a string
  * Possible triggers:
- * "ON_ENTER" - When map loads;
- * "ON_LEAVE" - Before map exit;
- * "ON_POSITION" - Specific position on map;
- * "ON_BATTLESTART" - Before battle starts;
- * "ON_BATTLEEND" - After battle ends;
- * "ON_EVENT" - After event in map;
+ * ON_ENTER - When map loads;
+ * ON_LEAVE - Before map exit;
+ * ON_POSITION - Specific position on map;
+ * ON_BATTLE_START" - Before battle starts;
+ * ON_BATTLE_END" - After battle ends;
  */
 
 const triggerEvent = ( TRIGGER, args = null ) => {
     globals.GAME.story.sceneEvents.forEach( (e) => {
-        if ( TRIGGER == e.trigger && TRIGGER != "ON_POSITION" ) {
+        if ( TRIGGER == e.trigger && TRIGGER != ON_POSITION ) {
             e.fireEvent( args );
             if ( e.passScene ) {
                 globals.GAME.story.goToNextSceneEvent( );               
             }
         }
-        else if ( TRIGGER == e.trigger && TRIGGER == "ON_POSITION" ) {
+        else if ( TRIGGER == e.trigger && TRIGGER == ON_POSITION ) {
             if ( triggerOnPosition( e ) ) {
                 e.fireEvent( );
                 if ( e.passScene ) {

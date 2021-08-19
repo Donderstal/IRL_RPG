@@ -1,6 +1,8 @@
 const { DEFAULT, SPEAK_YES_NO, CREATE_CAR, MOVE_CAR, MOVE, DELETE_SPRITE, WAIT, FADE_OUT, FADE_IN, CREATE_SPRITE } = require("../../../../game-data/conditionGlobals")
 const { FACING_LEFT, FACING_DOWN } = require("../../../../game-data/globals")
-
+const { 
+  ON_ENTER, ON_LEAVE
+}  = require('../../../../game-data/conditionGlobals')
 const BUS_TO_FIRST_NEIGHBOURHOOD = [
   {
     "condition" : {
@@ -19,7 +21,7 @@ const BUS_TO_FIRST_NEIGHBOURHOOD = [
       ],
       "events": [
         {
-          "trigger": "ON_LEAVE",
+          "trigger": ON_LEAVE,
           "scenes": [
             {
               "type": CREATE_CAR, 
@@ -48,7 +50,7 @@ const BUS_TO_FIRST_NEIGHBOURHOOD = [
           ]
         },
         {
-          "trigger": "ON_ENTER",
+          "trigger": ON_ENTER,
           "scenes": [
             { "type": FADE_IN },
             {
