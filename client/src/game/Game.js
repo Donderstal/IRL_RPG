@@ -5,7 +5,7 @@ const getMapData    = require('../resources/mapResources').getMapData
 const tilesheets    = require('../resources/tilesheetResources').sheets
 
 const { 
-    CANVAS_WIDTH, CANVAS_HEIGHT, 
+    CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN,
     TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
 }  = require('../game-data/globals')
 const { SoundController } = require('./SoundController');
@@ -369,6 +369,7 @@ class Game {
                                 newPlayerCell.col = 1;
                                 break;
                         }
+                        direction = this.PLAYER.direction
                     }
                 })
                 break;
@@ -377,6 +378,7 @@ class Game {
                     if ( object.action != undefined && object.action[0].action.type == "BUS" ) {
                         newPlayerCell.row = object.row;
                         newPlayerCell.col = object.col;
+                        direction   = FACING_DOWN
                     }
                 } )
                 break;

@@ -1,4 +1,5 @@
 const globals = require('../../../game-data/globals')
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 /**
  * Check if the given sprite collides with another sprite on the map
  * @param {I_Sprite} sprite 
@@ -17,13 +18,13 @@ const checkForCollision = ( sprite, isPlayer ) => {
         }
         if ( sprite.nextTileBack != undefined && sprite.nextTileBack.blocked ) {
             switch ( sprite.direction ) {
-                case globals['FACING_RIGHT'] :
+                case FACING_RIGHT :
                     return sprite.isInCenterFacingRight;
-                case globals['FACING_LEFT'] :
+                case FACING_LEFT :
                     return sprite.isInCenterFacingLeft;
-                case globals['FACING_UP'] :
+                case FACING_UP :
                     return sprite.isInCenterFacingUp;
-                case globals['FACING_DOWN'] :
+                case FACING_DOWN :
                     return sprite.isInCenterFacingDown;
             }
         }

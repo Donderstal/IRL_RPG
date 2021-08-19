@@ -1,4 +1,4 @@
-const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } = require('../../game-data/globals')
+const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../game-data/globals')
 const { Door } = require('../map/map-classes/Door')
 const globals = require('../../game-data/globals');
 const { ActionSelector } = require('../map/map-classes/ActionSelector');
@@ -153,19 +153,19 @@ class I_Tile {
         const directionIn = doorData.directionIn
         let xy = { };
         switch ( directionIn ) {
-            case 'FACING_UP' :
+            case FACING_UP :
                 xy.x = this.x + ( GRID_BLOCK_PX / 2 )
                 xy.y = this.y
                 break;
-            case 'FACING_RIGHT' :
+            case FACING_RIGHT :
                 xy.x = this.x + GRID_BLOCK_PX
                 xy.y = this.y + ( GRID_BLOCK_PX / 2 )
                 break;
-            case 'FACING_DOWN' :
+            case FACING_DOWN :
                 xy.x = this.x + ( GRID_BLOCK_PX / 2 )
                 xy.y = this.y + GRID_BLOCK_PX
                 break;
-            case 'FACING_LEFT' :
+            case FACING_LEFT :
                 xy.x = this.x
                 xy.y = this.y + ( GRID_BLOCK_PX / 2 )
                 break;

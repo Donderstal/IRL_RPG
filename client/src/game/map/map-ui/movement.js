@@ -1,5 +1,5 @@
 const globals = require('../../../game-data/globals')
-const { GRID_BLOCK_PX, MOVEMENT_SPEED } = require('../../../game-data/globals');
+const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 /**
  * Call moveInDirection and then call sprite.countFrame
  * @param {I_Sprite} sprite 
@@ -15,23 +15,23 @@ const handleMovementOfSprite = ( sprite, direction ) => {
  * @param {Number} direction 
  */
 const moveInDirection = ( sprite, direction ) => {
-    const changedDirection = sprite.direction != globals[direction] ;
-    sprite.direction = globals[direction]   
+    const changedDirection = sprite.direction != direction;
+    sprite.direction = direction   
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
 
     if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
-        if ( direction == 'FACING_RIGHT' ) {
+        if ( direction == FACING_RIGHT ) {
             sprite.x += MOVEMENT_SPEED        
         }
-        else if ( direction == 'FACING_LEFT' ) {
+        else if ( direction == FACING_LEFT ) {
             sprite.x -= MOVEMENT_SPEED    
         }
-        else if ( direction == 'FACING_DOWN' ) {
+        else if ( direction == FACING_DOWN ) {
             sprite.y += MOVEMENT_SPEED        
         }
-        else if ( direction == 'FACING_UP' ){
+        else if ( direction == FACING_UP ){
             sprite.y -= MOVEMENT_SPEED        
         }     
     }
@@ -52,10 +52,10 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return true;
     }
 
-    const facingUpOnTopRow = activeBackgroundTile.row == 1 && direction == 'FACING_UP';
-    const facingRightOnRightCol = activeBackgroundTile.col == globals.GAME.back.class.grid.cols && direction == 'FACING_RIGHT' ;
-    const facingLeftOnLeftCol = activeBackgroundTile.col == 1 && direction == 'FACING_LEFT';
-    const facingDownOnBottomRow = activeBackgroundTile.row == globals.GAME.back.class.grid.rows && direction == 'FACING_DOWN';
+    const facingUpOnTopRow = activeBackgroundTile.row == 1 && direction == FACING_UP;
+    const facingRightOnRightCol = activeBackgroundTile.col == globals.GAME.back.class.grid.cols && direction == FACING_RIGHT;
+    const facingLeftOnLeftCol = activeBackgroundTile.col == 1 && direction == FACING_LEFT;
+    const facingDownOnBottomRow = activeBackgroundTile.row == globals.GAME.back.class.grid.rows && direction == FACING_DOWN;
 
 
     if ( facingUpOnTopRow && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
@@ -73,13 +73,13 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 
     if ( nextBackgroundTile != undefined && ( nextBackgroundTile.isBlocked || nextForegroundTile.isBlocked ) ) {
         switch ( direction ) {
-            case 'FACING_RIGHT' :
+            case FACING_RIGHT :
                 return !sprite.isInCenterFacingRight;
-            case 'FACING_LEFT' :
+            case FACING_LEFT :
                 return !sprite.isInCenterFacingLeft;
-            case 'FACING_UP' :
+            case FACING_UP :
                 return !sprite.isInCenterFacingUp;
-            case 'FACING_DOWN' :
+            case FACING_DOWN :
                 return !sprite.isInCenterFacingDown;
         }
     }
