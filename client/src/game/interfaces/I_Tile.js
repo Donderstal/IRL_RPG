@@ -188,25 +188,6 @@ class I_Tile {
         this.event = null;
     }
     /**
-     * Set this.hasSprite property to true and assign type to this.spriteType. Store data parameter in this.spriteData
-     * @param {String} type 'enumerable' that decided how to set the given sprite data. 'character' || 'object'
-     * @param {Object} data A character or mapObject object from the characters or mapObjects in the active map
-     */
-    setSpriteData( type, data ) {
-        this.hasSprite = true;
-        this.spriteType = type;
-        this.spriteData = data;
-    }
-    /**
-     * Clear all sprite related properties: hasSprite, spriteType, spriteData and spriteId
-     */
-    clearSpriteData( ) {
-        this.hasSprite = false;
-        this.spriteType = null;
-        this.spriteData = null;
-        this.spriteId = null;
-    }
-    /**
      * Set wether the tilesheet tile in the I_Tile instance should be drawn flipped or mirrored
      * @param {Object} settings with the properties mirrored and angle 
      */

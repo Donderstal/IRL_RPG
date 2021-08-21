@@ -59,8 +59,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         let mapSpritesFolder = '/static/sprites/';
         let spriteSrc = mapSpritesFolder + start.playerClass.toLowerCase() + '.png'
         this.playerSprite = new MapSprite( startingTile[0], 0, 'STRD', spriteSrc )
-        startingTile[0].setSpriteData( 'character', null )
-        startingTile[0].spriteId = "PLAYER"
         this.playerSprite.spriteId = "PLAYER"
         this.playerSprite.name = "Player";
         this.allSprites.push( this.playerSprite )
@@ -75,7 +73,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.grid.array.forEach( ( tile ) => {
                 if ( tile.row == character.row && tile.col == character.col ) {
                     this.setCharacterSprite( tile, character );
-                    //tile.setSpriteData( "character", character )
                 }
             })
         })
@@ -92,22 +89,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
                     this.setObjectSprite( tile, object, false )
                 }
             })
-        })
-    };
-    /**
-     * Loop through all I_Tiles in this.grid.array.
-     * If I_Tile.hasSprite, call setObjectSprite or setCharacterSprite depending on the spriteType
-     */
-    setSpritesToGrid( ) {
-        this.grid.array.forEach( ( tile ) => {
-            if ( tile.hasSprite ) {
-                if ( tile.spriteType == 'object' ) {
-                    this.setObjectSprite( tile )
-                }
-                else if ( tile.spriteType == 'character' && tile.spriteId != "PLAYER" ) {
-                    this.setCharacterSprite( tile )
-                }
-            }
         })
     };
     /**
@@ -157,19 +138,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
         if ( !activeRoad.startCellIsBlocked ) {
             const carData = activeRoad.getCarDataForTile( )
-            const tile = super.getTileAtCell( carData.col, carData.row );
-            this.setObjectSprite( tile, carData, true )   
-            return tile.spriteId; 
+            this.setVehicleToTile( carData )
         }
     }
 
     setVehicleToTile( carData ) {
         const tile = super.getTileAtCell( carData.col, carData.row );
-        tile.setSpriteData( "object", carData )
-        this.setObjectSprite( tile, true )   
-        let id = tile.spriteId;
-        tile.clearSpriteData( );
-        return id;  
+        this.setObjectSprite( tile, carData, true )   
     }
     /**
      * Clear all props containing information on the currently active map
@@ -179,7 +154,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites = [ ];
         this.roads = [ ];
         this.spriteDictionary = { };
-        this.playerSprite.clearTileIndexes( );
     }
     /**
      * 
@@ -216,7 +190,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
 
     deleteSprite( spriteId ) {
         const tile = globals.GAME.FRONT.getTileAtCell( this.spriteDictionary[spriteId].col, this.spriteDictionary[spriteId].row )
-        tile.clearSpriteData( );
         delete this.spriteDictionary[spriteId];
         this.allSprites = [];
         Object.keys( this.spriteDictionary ).forEach ( ( e ) => {

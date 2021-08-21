@@ -132,10 +132,7 @@ class Scene {
 
         const tile = globals.GAME.FRONT.getTileAtCell( data.col, data.row );
         data.name = data.spriteName;
-        tile.setSpriteData( "character", data )
-        globals.GAME.FRONT.setCharacterSprite( tile, true )   
-        this.spriteId = tile.spriteId;
-        tile.clearSpriteData( );  
+        globals.GAME.FRONT.setCharacterSprite( tile, data, true )   
     }
 
     getSpriteCell( ) {

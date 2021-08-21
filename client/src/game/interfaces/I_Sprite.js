@@ -100,8 +100,6 @@ class Sprite {
     setNewLocationInGrid( cell, direction ) {
         let newTile = globals.GAME.getTileOnCanvasAtCell( 'FRONT', cell.col, cell.row )
         this.direction = direction;
-        newTile.setSpriteData( 'character', null )
-        newTile.spriteId = "PLAYER"
         this.setSpriteToGrid( newTile );
     }
      /**
