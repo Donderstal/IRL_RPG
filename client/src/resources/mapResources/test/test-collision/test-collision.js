@@ -1,6 +1,9 @@
 const { 
-    FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, NPC_ANIM_TYPE_IDLE
+    FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING_IN_LOOP
 } = require('../../../../game-data/globals');
+const { 
+  CONDITION_TEST_1_ITEM
+} = require("./interactions");
 module.exports = { 
     "mapName": "test/test-collision",
     "tileSet": "downtown",
@@ -52,14 +55,28 @@ module.exports = {
           "direction": FACING_DOWN,
           "row": 6,
           "col": 10,
-          "name": "Pauline"
+          "name": "Pauline",
+          "action": CONDITION_TEST_1_ITEM
         },
+        {
+          "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
+          "sprite": "new_girl.png",
+          "direction": FACING_UP,
+          "row": 5,
+          "col": 12,
+          "destination" : {
+              "row": 2,
+              "col": 12,
+          },
+          "name": "Pauline2",
+          "action": CONDITION_TEST_1_ITEM
+        }
     ],
     "mapObjects" : [
         {
           "type"  : "Couch_Blue",
           "row"   : 9,
-          "col"   : 5
+          "col"   : 6
         },
         {
           "type"  : "Bench_Green",

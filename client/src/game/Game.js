@@ -37,6 +37,7 @@ class Game {
         this.isRunning = false;
         this.mode; // 'MAP' || 'BATTLE'        
         this.cinematicMode; // bool
+        this.inCinematic = false;
         this.paused; // bool
         this.inMenu;
         this.listeningForPress; // bool

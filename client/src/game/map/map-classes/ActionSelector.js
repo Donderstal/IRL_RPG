@@ -28,14 +28,6 @@ class ActionSelector {
         })
     }
 
-    checkForActionRange( ) {
-        this.activeAction.checkForActionRange( )      
-    }
-
-    checkForBlockedRange( ) {
-        this.activeAction.checkForBlockedRange( )
-    }
-
     registerSelection( selection ) {
         this.activeAction.registerSelection( selection )
     }
@@ -64,6 +56,7 @@ class ActionSelector {
         actionList.forEach( ( item ) =>{
             this.conditionalActions.push( new MapAction( x, y, item.action, spriteId, item.condition ) );
         })
+        this.checkForConditions( );
     }
 
     checkForConditions( ) {

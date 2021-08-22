@@ -1,6 +1,7 @@
 const globals = require('../../../game-data/globals')
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
+const { ActionSelector } = require('../map-classes/ActionSelector')
 /**
  * Check if the given sprite collides with another sprite on the map
  * @param {I_Sprite} sprite 
@@ -31,13 +32,13 @@ const checkForCollision = ( sprite, isPlayer ) => {
         }
     }
 
-    globals.GAME.FRONT.grid.array.forEach( ( e ) => {
-        if( e.hasSprite && e.spriteId != sprite.spriteId ) {
-            if ( checkIfSpritesCollide( sprite, e.spriteId ) ) {
+    globals.GAME.FRONT.allSprites.forEach( ( e ) => {
+        if( e.spriteId != sprite.spriteId ) {
+            if ( checkIfSpritesCollide( sprite, e ) ) {
                 colliding = true;
             }
         }
-    } )
+    })
     
     return colliding;
 }
@@ -47,9 +48,8 @@ const checkForCollision = ( sprite, isPlayer ) => {
  * @param {String} targetSpriteId 
  * @returns {Boolean} true if collison, false if not
  */
-const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
+const checkIfSpritesCollide = ( sprite, targetSprite ) => {
     let colliding = false;
-    const targetSprite = globals.GAME.front.class.spriteDictionary[targetSpriteId];
     const targetSpriteIsFlying = ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING )
 
     if ( targetSprite.deleted || targetSpriteIsFlying || targetSprite == undefined ) {
@@ -79,8 +79,8 @@ const checkIfSpritesCollide = ( sprite, targetSpriteId ) => {
             }
         })
     }
-    else {
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+    else if ( 'hitbox' in targetSprite ) {
+        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox.activeAction != undefined ? targetSprite.hitbox.activeAction : targetSprite.hitbox, sprite.direction ) ) {
             return true;     
         }
     }
