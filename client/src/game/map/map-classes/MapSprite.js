@@ -51,23 +51,18 @@ class MapSprite extends Sprite {
     drawSprite( ) {
         super.drawSprite( )
         this.updateTileIndexes( )
-        if ( !globals.GAME.inCinematic ) {
-            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );    
+        if ( this.hitbox != undefined ) {
+            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );             
+        }
+        if ( !globals.GAME.inCinematic && ( this.movingToDestination || this == globals.GAME.PLAYER ) ) {  
             this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );  
             if ( this.pathIsBlocked && this.destinationTile != undefined && this.destinationTile.index == this.activeTileIndex ) {
                 this.pathIsBlocked = !this.pathIsBlocked;
             }  
         }
-        else if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
+        
+        if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
             this.handleAnimation( )
-        }
-    }
-    /**
-     * Call the clearSpriteData( ) method of the I_Tile instance in this.currentTileFront
-     */
-    unsetActiveTile( ) {
-        if ( this.currentTileFront ) {
-            this.currentTileFront.clearSpriteData( );            
         }
     }
     /**
@@ -75,8 +70,6 @@ class MapSprite extends Sprite {
      * Call this.setActivetileIndex with the I_Tile instance as argument. Then, call this.setNextTileIndex
      */
     updateTileIndexes( ) {
-        this.unsetActiveTile( );
-
         const tile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', this.centerX( ), this.baseY( ) );
 
         if ( tile == undefined ) {
@@ -89,16 +82,12 @@ class MapSprite extends Sprite {
     }
     /**
      * Set this given I_Tile row, col and index to this.row, this.col and this.activeTileIndex.
-     * Call the setSpriteData method of the I_Tile to indicate that the tile is occupied.
-     * Set this.spriteId to the spriteId prop of I_Tile
      * @param {I_Tile} tile 
      */
     setActiveTileIndex( tile ) {
         this.activeTileIndex = tile.index;
         this.row = tile.row;
         this.col = tile.col;
-        tile.setSpriteData( 'character', null )
-        tile.spriteId = this.spriteId;
     }
     /**
      * Depending on the this.direction prop which indicates what side the MapSprite is facing, set this.nextTileIndex.
@@ -118,13 +107,6 @@ class MapSprite extends Sprite {
                 this.nextTileIndex = this.currentTileFront.col != 1 ? this.activeTileIndex - 1 : undefined;
                 break;
         }
-    }
-    /**
-     * Set this.activeTileIndex and this.nextTileIndex to null. Used on switching maps.
-     */
-    clearTileIndexes( ) {
-        this.activeTileIndex = null;
-        this.nextTileIndex = null;
     }
 } 
 

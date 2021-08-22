@@ -124,6 +124,7 @@ class Car extends MapObject {
      * Push these instances to the this.hitBoxGroups array.
      */
     initHitboxGroups( ) {
+        this.hitbox = false;
         this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
         if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
             this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
@@ -207,9 +208,6 @@ class Car extends MapObject {
      * @param {I_Tile} intersectionTile grid tile with intersection
      */
     switchDirections( newDirection, intersectionTile ) {
-        this.hitboxGroups.forEach( ( group ) => {
-            group.clearTileIndexes( )
-        })
         this.direction = globals[newDirection];
         this.setSpriteToGrid( intersectionTile, false ) 
         this.setObjectDimensionsBasedOnDirection( newDirection )

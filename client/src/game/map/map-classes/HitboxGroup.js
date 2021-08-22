@@ -112,20 +112,6 @@ class HitboxGroup {
         return xyValues;
     }
     /**
-     * Get the active hitbox positions from this.getHitboxXYValues.
-     * Loop through the hitbox position, and for each I_Tile instance at the positions, call clearSpriteData and set spriteId to null.
-     */
-    clearTileIndexes( ) {
-        let hitboxesXY = this.getHitboxXYValues( );
-        hitboxesXY.forEach( ( hitboxXY ) => {
-            let tileAtHitbox = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxXY.x, hitboxXY.y )
-            if ( tileAtHitbox != undefined ) {
-                tileAtHitbox.clearSpriteData( )
-                tileAtHitbox.spriteId = null;                   
-            }
-        })
-    }
-    /**
      * First, loop through activeTileIndexes and clear sprite data in each I_Tile associated with an index.
      * Then, empty the activeTileIndexes array. Loop through the hitboxesXY array. 
      * For each hitboxXy, get the I_Tile at that xy, push it to activeTileIndexes and set the spriteId to it.
@@ -133,19 +119,11 @@ class HitboxGroup {
      * @param {Object[]} hitboxesXY list of xy pairs from getHitboxXYValues
      */
     updateTileIndexes( hitboxesXY ) {
-        this.activeTileIndexes.forEach( ( tileIndex ) => {
-            let tile = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tileIndex );
-            tile.clearSpriteData( );
-            tile.spriteId = null;
-        } )
-
         this.activeTileIndexes = [ ]
         hitboxesXY.forEach( ( hitboxXY ) => {
             let tileAtHitbox = globals.GAME.getTileOnCanvasAtXY( 'FRONT', hitboxXY.x, hitboxXY.y )
             if ( tileAtHitbox != undefined ) {
-                this.activeTileIndexes.push( tileAtHitbox.index )  
-                tileAtHitbox.setSpriteData( 'object', null )
-                tileAtHitbox.spriteId = this.spriteId;              
+                this.activeTileIndexes.push( tileAtHitbox.index )        
             }
         })
         const nextTile = this.getNextTile( hitboxesXY[0] )

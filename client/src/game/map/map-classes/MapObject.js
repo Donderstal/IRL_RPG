@@ -3,9 +3,8 @@ const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 const { Counter } = require('../../../helpers/Counter')
 const { ActionSelector } = require('./ActionSelector')
-
-const globals       = require('../../../game-data/globals')
 const mapObjectResources = require('../../../resources/mapObjectResources')
+const { I_Hitbox } = require('../../interfaces/I_Hitbox')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
@@ -37,24 +36,13 @@ class MapObject extends Sprite {
         this.type = "object"
 
         if ( this.hasAction ) {
-            this.hitbox = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), spriteData.action, spriteId )
+            this.actionSelector = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), spriteData.action, spriteId )
+            this.hitbox = this.actionSelector.activeAction;
             this.action = spriteData.action
+        }  
+        else if ( !this.onBackground ) {
+            this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), GRID_BLOCK_PX / 2  )
         }
-
-        /* if ( !this.onBackground && !this.notGrounded && this.width > GRID_BLOCK_PX && !objectResource.isCar ) {
-            for( var i = 1; i < ( this.width / GRID_BLOCK_PX ); i++ ) {
-                const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index + i )
-                tileToBlock.setSpriteData( 'filler', {} );
-                tileToBlock.spriteId = this.spriteId;                    
-            }
-        }
-        if ( !this.onBackground && !this.notGrounded && this.height > GRID_BLOCK_PX && !this.groundedAtBase && !objectResource.isCar ) {
-            for( var i = 1; i < ( this.height / GRID_BLOCK_PX ) - 1; i++ ) {
-                const tileToBlock = globals.GAME.getTileOnCanvasAtIndex( "FRONT", tile.index - ( globals.GAME.FRONT.grid.cols * i ) )
-                tileToBlock.setSpriteData( 'filler', {} );
-                tileToBlock.spriteId = this.spriteId;             
-            }
-        } */ 
 
         if ( objectResource.idle_animation ) {
             this.hasIdleAnimation = true;
@@ -68,9 +56,10 @@ class MapObject extends Sprite {
      * Finally, countFrame if still sprite is still moving.
      */
     drawSprite( ) {
-        if ( this.hasAction ) {
+        if ( this.hitbox ) {
             this.hitbox.updateXy( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ) );            
         }
+
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
         }
