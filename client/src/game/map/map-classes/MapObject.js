@@ -4,7 +4,7 @@ const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, FACING_RIGHT, FACING_LEFT, FACING
 const { Counter } = require('../../../helpers/Counter')
 const { ActionSelector } = require('./ActionSelector')
 const mapObjectResources = require('../../../resources/mapObjectResources')
-const { I_Hitbox } = require('../../interfaces/I_Hitbox')
+const { HitboxGroup } = require('./HitboxGroup')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
@@ -36,12 +36,17 @@ class MapObject extends Sprite {
         this.type = "object"
 
         if ( this.hasAction ) {
-            this.actionSelector = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), spriteData.action, spriteId )
+            if ( !this.groundedAtBase ) {
+                this.actionSelector = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), spriteData.action, spriteId )
+            }
+            else {
+                this.actionSelector = new ActionSelector( this.x + ( this.width * .5 ), ( this.y + this.height ) - (GRID_BLOCK_PX / 2), spriteData.action, spriteId )
+            }            
             this.hitbox = this.actionSelector.activeAction;
             this.action = spriteData.action
         }  
-        else if ( !this.onBackground ) {
-            this.hitbox = new I_Hitbox( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), GRID_BLOCK_PX / 2  )
+        else if ( !this.onBackground && !this.notGrounded ) {
+            this.initHitboxGroups( );
         }
 
         if ( objectResource.idle_animation ) {
@@ -56,8 +61,8 @@ class MapObject extends Sprite {
      * Finally, countFrame if still sprite is still moving.
      */
     drawSprite( ) {
-        if ( this.hitbox ) {
-            this.hitbox.updateXy( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ) );            
+        if ( this.hitboxGroups ) {
+            this.updateHitboxes( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ) );            
         }
 
         if ( this.hasActiveEffect ) {
@@ -85,6 +90,52 @@ class MapObject extends Sprite {
         }
 
         this.updateSpriteBorders( )
+    }
+    /**
+     * Instantiate on or more I_Hitboxgroup depending on the sprites alignment.
+     * Push these instances to the this.hitBoxGroups array.
+     */
+    initHitboxGroups( ) {
+        this.hitbox = false;
+        if ( this.groundedAtBase ) {
+            this.hitboxGroups = [ new HitboxGroup( this.x, ( this.y + this.height ) - GRID_BLOCK_PX, this.direction, { "hori": this.spriteDimensionsInBlocks.hori, "vert": 1 }, this.spriteId ) ]
+        }
+        else {
+            this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
+            if ( ( this.direction == FACING_UP || this.direction == FACING_DOWN ) && this.width > GRID_BLOCK_PX) {
+                this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
+            }
+            else if ( this.direction != FACING_UP && this.direction != FACING_DOWN ) {
+                this.hitboxGroups.push( new HitboxGroup( this.x, this.y + GRID_BLOCK_PX, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
+            }            
+        }
+
+    }
+    /**
+     * Empty the this.hitboxes array.
+     * Loop through this.hitboxGroups.
+     * For each, call updateHitboxes.
+     * Then, push all hitboxes in the current group to this.hitboxes.
+     */
+    updateHitboxes( ) {        
+        this.hitboxes = []
+        this.hitboxGroups.forEach( ( group, index ) => {
+            if ( !this.groundedAtBase ) {
+                if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
+                    group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y )
+                }
+                else {
+                    group.updateHitboxes( this.x, this.y + GRID_BLOCK_PX * index )
+                }
+            }
+            else {
+                group.updateHitboxes( this.x, ( this.y + this.height ) - GRID_BLOCK_PX )
+            }
+
+            group.hitboxes.forEach( ( hitbox ) => {
+                this.hitboxes.push( hitbox )
+            } );        
+        })
     }
     /**
      * Increment idleAnimationFrame and check if it is over limit

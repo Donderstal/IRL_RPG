@@ -1,6 +1,6 @@
 const globals           = require('../../../game-data/globals')
 const { GRID_BLOCK_PX } = require('../../../game-data/globals')
-const { ON_NPC_INTERACTION, ON_LEAVE, EVENT_DOOR } = require('../../../game-data/conditionGlobals')
+const { ON_NPC_INTERACTION, ON_LEAVE, EVENT_DOOR, SPEAK } = require('../../../game-data/conditionGlobals')
 const { I_Hitbox }         = require('../../interfaces/I_Hitbox')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { Cinematic } = require('../../cutscenes/Cinematic');
@@ -10,11 +10,11 @@ const { inUnlockedDoorsRegistry, addDoorToUnlockedDoorsRegistry } = require('../
 const lockedDoorEvent = {
     scenes: [
         { 
-            type: "SPEAK", spriteName: "Player",
+            type: SPEAK, spriteName: "Player",
             text: "This door is locked!"
         },
         { 
-            type: "SPEAK", spriteName: "Player",
+            type: SPEAK, spriteName: "Player",
             text: "I need to find some way to open it..."
         }
     ]
@@ -23,7 +23,7 @@ const lockedDoorEvent = {
 const unlockDoorEvent = {
     scenes: [
         { 
-            type: "SPEAK", spriteName: "Player",
+            type: SPEAK, spriteName: "Player",
             sfx: "misc/Heavy-Door-Lock--Unlocking.mp3", text: "Let's unlock this door now..."
         }
     ]

@@ -1,5 +1,4 @@
 const { MapObject } = require("./MapObject");
-const { HitboxGroup } = require('./HitboxGroup')
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
@@ -10,7 +9,6 @@ class Car extends MapObject {
         this.frames = this.objectResource["movement_frames"];
         this.name = spriteData.name
         this.initMovingSprite( spriteData )
-        this.initHitboxGroups( );
     }
     
     get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
@@ -50,8 +48,6 @@ class Car extends MapObject {
         this.setActiveFrames( );
 
         super.drawSprite( );
-
-        this.updateHitboxes( );
         this.checkForCollision( );
         
         if ( !this.isBus ) {
@@ -118,40 +114,6 @@ class Car extends MapObject {
             this.initMovement( );
             this.setDestination( spriteData.destination );            
         }
-    }
-    /**
-     * Instantiate on or more I_Hitboxgroup depending on the sprites alignment.
-     * Push these instances to the this.hitBoxGroups array.
-     */
-    initHitboxGroups( ) {
-        this.hitbox = false;
-        this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
-        if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
-            this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
-        }
-        else {
-            this.hitboxGroups.push( new HitboxGroup( this.x, this.y + GRID_BLOCK_PX, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
-        }
-    }
-    /**
-     * Empty the this.hitboxes array.
-     * Loop through this.hitboxGroups.
-     * For each, call updateHitboxes.
-     * Then, push all hitboxes in the current group to this.hitboxes.
-     */
-    updateHitboxes( ) {        
-        this.hitboxes = []
-        this.hitboxGroups.forEach( ( group, index ) => {
-            if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
-                group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y)
-            }
-            else {
-                group.updateHitboxes( this.x, this.y + GRID_BLOCK_PX * index )
-            }
-            group.hitboxes.forEach( ( hitbox ) => {
-                this.hitboxes.push( hitbox )
-            } );        
-        })
     }
     /**
      * Set the value of this.blocked to the return value of the checkForCollision, passing the first group in this.hitboxGroups as argument.
