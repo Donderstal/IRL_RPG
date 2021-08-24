@@ -1,4 +1,4 @@
-const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, GRID_BLOCK_PX } = require("../game-data/globals")
 
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": "STANDARD",
@@ -55,20 +55,20 @@ const STANDARD_CAR = {
 
 const BUS = {
     "dimensional_alignment": "HORI_VERT", "isCar" : true,
-    "hori_height_blocks": 3, "hori_width_blocks": 6,
+    "hori_height_blocks": 3, "hori_width_blocks": 4,
     "vert_height_blocks": 4, "vert_width_blocks": 3,
     "movement_frames" : {
         [FACING_LEFT] : [
-            { "x": 0, "y": 384 },
-            { "x": 0, "y": 576 }
+            { "x": GRID_BLOCK_PX, "y": 384 },
+            { "x": GRID_BLOCK_PX, "y": 576 }
         ],
         [FACING_UP] : [
             { "x": 0, "y": 1024 },
             { "x": 192, "y": 1024 }
         ],
         [FACING_RIGHT] : [
-            { "x": 0, "y": 0 },
-            { "x": 0, "y": 192 }
+            { "x": GRID_BLOCK_PX, "y": 0 },
+            { "x": GRID_BLOCK_PX, "y": 192 }
         ],
         [FACING_DOWN] : [
             { "x": 0, "y": 768 },

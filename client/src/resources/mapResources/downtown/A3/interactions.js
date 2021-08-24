@@ -29,13 +29,13 @@ const BUS_TO_FIRST_NEIGHBOURHOOD = [
               "spriteName": "bus-test", "roadId": "road_1"
             },
             {
-                "type": MOVE_CAR, "col": 20,
+                "type": MOVE_CAR, "col": 22,
                 "sprite": "bus.png", "direction": FACING_LEFT,
                 "spriteName": "bus-test", "roadId": "road_1"
             },
             { 
                 "type": MOVE, "spriteName": "Player",
-                "destination": { "row": 10, "col": 20 }
+                "destination": { "row": 9, "col": 19 }
             },
             { 
                 "type": DELETE_SPRITE, "spriteName": "Player" 
@@ -59,14 +59,14 @@ const BUS_TO_FIRST_NEIGHBOURHOOD = [
               "spriteName": "bus-test", "roadId": "road_1"
             },
             {
-              "type": MOVE_CAR, "col": 20,
+              "type": MOVE_CAR, "col": 22,
               "sprite": "bus.png", "direction": FACING_LEFT,
               "spriteName": "bus-test", "roadId": "road_1"
             },
             { "type": WAIT, "ms": 500 },
             {
               "type": CREATE_SPRITE, "direction": FACING_DOWN,
-              "spriteName": "Player", "row": 8, "col": 18,
+              "spriteName": "Player", "row": 9, "col": 19,
             },
             { "type": WAIT, "ms": 500 },
             {
