@@ -12,6 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### AUG 24, 2021
+* Reduced complexity of data flow to set or unset a sprite
+* Removed tile-based collision for non-tile sprites
+* MapObject sprites now use HitboxGroup instances where possible
+
 #### AUG 19, 2021
 * Replaced a lot of strings with globals
 
