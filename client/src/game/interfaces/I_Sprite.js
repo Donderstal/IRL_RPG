@@ -47,22 +47,24 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.destinationTile.x <= this.left && this.destinationTile.direction == FACING_LEFT;
+        return this.destinationTile.x < this.left && this.destinationTile.direction == FACING_LEFT;
     }
     get destinationIsRight( ) { 
         return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == FACING_RIGHT;
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) <= this.top && this.destinationTile.direction == FACING_UP;
+        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) < this.top && this.destinationTile.direction == FACING_UP;
     }    
     get destinationIsDown( ) { 
         return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == FACING_DOWN;
     }
 
     get destinationIsBlocked( ) {
+        const backTile = globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row );
+        const frontTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
         return ( 
-            globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row ).isBlocked 
-            || globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row ).isBlocked 
+            backTile.isBlocked 
+            || globals.GAME.FRONT.tileHasBlockingSprite( frontTile.index )
         )     
     }
      /**
@@ -179,11 +181,13 @@ class Sprite {
     checkForNextDestination( ) {
         if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
             this.activeDestinationIndex += 1; 
-            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;    
+            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile; 
+            this.direction = this.destinationTile.direction;    
         }
         else if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
             this.activeDestinationIndex = 0;
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;   
+            this.direction = this.destinationTile.direction; 
         }
         else {
             this.stopMovement( );
@@ -227,7 +231,7 @@ class Sprite {
             this.setDestinationList( isLoop );
         }
         else {
-            this.unsetDestination( );
+            this.unsetDestination( );    
         }
     }
     /**
@@ -251,10 +255,12 @@ class Sprite {
         if ( pathIndexes != undefined && pathIndexes != false ) {
             this.destinationTiles = this.getTileListFromIndexes( pathIndexes, startingTile )
             this.activeDestinationIndex = 0;
-            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;              
+            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;      
+            this.initMovement( );       
+            this.direction = this.destinationTile.direction; 
         }
         else {
-            this.unsetDestination( )
+            this.unsetDestination( );    
         }
     }
     /**
@@ -360,7 +366,6 @@ class Sprite {
         }
         if ( scene.is( MOVE ) ) {
             this.setDestination( scene.destination );
-            this.initMovement( );
         }
         if ( scene.is( ANIM ) ) {
             this.setScriptedAnimation( scene, FRAME_LIMIT )

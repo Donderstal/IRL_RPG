@@ -196,6 +196,33 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.allSprites.push( this.spriteDictionary[e] )
         })
     }
+
+    tileHasBlockingSprite( tileIndex ) {
+        const tile = this.getTileAtIndex( tileIndex );
+        let colliding = false;
+        let allHitboxes = [];
+        this.allSprites.forEach( ( sprite ) => {
+            if ( sprite.hitbox != undefined && sprite.hitbox ) {
+                allHitboxes.push( sprite.hitbox );
+            }
+            else if ( sprite.hitboxGroups != undefined ) {
+                sprite.hitboxGroups.forEach( ( group ) => {
+                    group.hitboxes.forEach( ( hitbox ) => {
+                        allHitboxes.push( hitbox )
+                    })
+                })
+            }
+        })
+
+        let spriteIndex = 0;
+        while( colliding == false && allHitboxes[spriteIndex] != undefined ) {
+            let hitbox = allHitboxes[spriteIndex];
+            colliding = hitbox.x > tile.x && hitbox.y > tile.y 
+            && hitbox.x < tile.x + globals.GRID_BLOCK_PX && hitbox.y < tile.y + globals.GRID_BLOCK_PX 
+            spriteIndex++
+        }
+        return colliding;
+    }
 }
 
 module.exports = { 

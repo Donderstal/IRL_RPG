@@ -70,7 +70,7 @@ class I_Tile {
             this.ctx.beginPath( )
             this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
             this.ctx.stroke( )
-            this.ctx.fillText( this.ID, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .5, )
+            this.ctx.fillText( this.index, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .5, )
         }
     }
     /**

@@ -40,7 +40,6 @@ class NPC extends MapSprite {
 
         if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
             this.setDestination( spriteData.destination, true );
-            this.initMovement( );
         }
         else if ( this.animationType == NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             this.setLoopedAnimation( )
@@ -76,13 +75,13 @@ class NPC extends MapSprite {
         }
         else if ( this.movingToDestination && !this.pathIsBlocked ) {
             this.goToDestination( );     
+            this.countFrame( );
         }
         else if ( this.inScriptedAnimation ) {
             this.doScriptedAnimation( );
         }
 
         if ( this.movingToDestination ) {
-            this.countFrame( );
             this.handleBlockedTimeCounter( );
         }
     }
@@ -140,7 +139,6 @@ class NPC extends MapSprite {
 
         if ( newRow > 0 && newRow < globals.GAME.activeMap.rows + 1 && newColumn > 0 && newColumn < globals.GAME.activeMap.columns + 1 ) {
             this.setDestination( { "col": newColumn, "row": newRow }  )
-            this.initMovement( globals.MOVEMENT_SPEED * .5 );
         }
         else {
             this.setRandomDestinationInRadius( )

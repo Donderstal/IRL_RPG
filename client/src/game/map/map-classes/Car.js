@@ -111,7 +111,6 @@ class Car extends MapObject {
      */
     initMovingSprite( spriteData ) {
         if ( spriteData.destination ) {
-            this.initMovement( );
             this.setDestination( spriteData.destination );            
         }
     }
