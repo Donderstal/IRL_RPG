@@ -25,16 +25,10 @@ class Road {
     }
 
     get startCellIsBlocked( ) { 
-        return globals.GAME.getTileOnCanvasAtCell( 
-            "FRONT",
-            this.startCell.col,
-            this.startCell.row
-        ).hasSprite 
-        || globals.GAME.getTileOnCanvasAtCell( 
-            "FRONT",
-            this.secondCell.col,
-            this.secondCell.row
-        ).hasSprite 
+        let FRONT = globals.GAME.FRONT;
+        let firstTile = globals.GAME.getTileOnCanvasAtCell(  "FRONT", this.startCell.col, this.startCell.row )
+        let secondTile = globals.GAME.getTileOnCanvasAtCell(  "FRONT", this.secondCell.col, this.secondCell.row )
+        return FRONT.tileHasBlockingSprite( firstTile.index ) || FRONT.tileHasBlockingSprite( secondTile.index )
     }
     /**
      * Store the column numbers of the road if vertical, rows if horizontal

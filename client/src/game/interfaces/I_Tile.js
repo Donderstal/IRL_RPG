@@ -22,10 +22,7 @@ class I_Tile {
         this.col = col;
 
         this.blocked = false;
-
-        this.hasSprite = false;
-        this.spriteType;
-        this.spriteData = {};
+        this.direction = {};
 
         this.hasEvent = false;
         this.eventType;

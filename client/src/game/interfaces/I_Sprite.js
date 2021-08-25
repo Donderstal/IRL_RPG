@@ -47,16 +47,16 @@ class Sprite {
     }
 
     get destinationIsLeft( ) { 
-        return this.destinationTile.x < this.left && this.destinationTile.direction == FACING_LEFT;
+        return this.destinationTile.x < this.left && this.destinationTile.direction[this.spriteId] == FACING_LEFT;
     }
     get destinationIsRight( ) { 
-        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction == FACING_RIGHT;
+        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction[this.spriteId] == FACING_RIGHT;
     }
     get destinationIsUp( ) { 
-        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) < this.top && this.destinationTile.direction == FACING_UP;
+        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) < this.top && this.destinationTile.direction[this.spriteId] == FACING_UP;
     }    
     get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction == FACING_DOWN;
+        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction[this.spriteId] == FACING_DOWN;
     }
 
     get destinationIsBlocked( ) {
@@ -201,16 +201,18 @@ class Sprite {
      */
     checkForNextDestination( ) {
         if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
+            this.setSpriteToDestinationTile( );
             this.activeDestinationIndex += 1; 
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile; 
-            this.direction = this.destinationTile.direction;    
+            this.direction = this.destinationTile.direction[this.spriteId];    
         }
         else if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
+            this.setSpriteToDestinationTile( );
             this.activeDestinationIndex = 0;
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;   
-            this.direction = this.destinationTile.direction; 
+            this.direction = this.destinationTile.direction[this.spriteId]; 
         }
-        else {
+        else if ( !this.isCar ) {
             this.stopMovement( );
             this.unsetDestination( );    
             this.unsetScriptedAnimation( );
@@ -251,7 +253,7 @@ class Sprite {
         if ( !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING ) {
             this.setDestinationList( isLoop );
         }
-        else {
+        else if ( !this.isCar ) {
             this.unsetDestination( );    
         }
     }
@@ -278,9 +280,9 @@ class Sprite {
             this.activeDestinationIndex = 0;
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;      
             this.initMovement( );       
-            this.direction = this.destinationTile.direction; 
+            this.direction = this.destinationTile.direction[this.spriteId]; 
         }
-        else {
+        else if ( !this.isCar ) {
             this.unsetDestination( );    
         }
     }
@@ -304,7 +306,7 @@ class Sprite {
 
         pathIndexes.forEach( ( pathIndex ) => {
             let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )
-            tile.direction = pathIndex < lastIndex 
+            tile.direction[this.spriteId] = pathIndex < lastIndex 
             ? pathIndex == lastIndex - 1 ? FACING_LEFT : FACING_UP
             : pathIndex == lastIndex + 1 ? FACING_RIGHT : FACING_DOWN;
             tileList.push( { 

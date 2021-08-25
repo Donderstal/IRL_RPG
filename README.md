@@ -13,6 +13,11 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### AUG 24, 2021
+* Improved sprite movement in grid
+* Better pathfinding detection of tiles blocked by sprites
+* Sprites now handle repathing better when a tile becomes blocked
+
+#### AUG 24, 2021
 * Reduced complexity of data flow to set or unset a sprite
 * Removed tile-based collision for non-tile sprites
 * MapObject sprites now use HitboxGroup instances where possible
