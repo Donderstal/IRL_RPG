@@ -1,5 +1,5 @@
 const { 
-    FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING_IN_LOOP
+    FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_ANIM_TYPE_IDLE
 } = require('../../../../game-data/globals');
 const { 
   CONDITION_TEST_1_ITEM
@@ -15,13 +15,6 @@ module.exports = {
         "row": 8,
         "col": 12
     },
-    "roads" : [
-        { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": FACING_RIGHT, "hasStart": true  },
-        { "alignment": "HORI", "topRow": 3, "bottomRow": 4, "direction": FACING_LEFT, "hasStart": true  },
-
-        { "alignment": "VERT", "leftCol": 4, "rightCol": 5, "direction": FACING_DOWN, "hasStart": true  },
-        { "alignment": "VERT", "leftCol": 20, "rightCol": 21, "direction": FACING_UP, "hasStart": true  },
-    ],
     "grid": [
         [39,39,39,16,16,39,39,39,39,39,39,39,39,39,39,39,39,39,39,16,16,39,39,39],
         [39,39,39,16,16,39,39,39,39,39,39,39,39,39,39,39,39,39,39,16,16,39,39,39],
@@ -42,34 +35,236 @@ module.exports = {
     ],
     "characters" : [
         {
-          "anim_type": NPC_ANIM_TYPE_IDLE,
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
           "sprite": "pony_tail.png",
           "direction": FACING_DOWN,
           "row": 6,
-          "col": 8,
+          "col": 10,
           "name": "Bro"
         },
         {
-          "anim_type": NPC_ANIM_TYPE_IDLE,
-          "sprite": "new_girl.png",
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
           "direction": FACING_DOWN,
-          "row": 6,
+          "row": 7,
           "col": 10,
-          "name": "Pauline",
-          "action": CONDITION_TEST_1_ITEM
+          "name": "Bro"
         },
         {
-          "anim_type": NPC_ANIM_TYPE_MOVING_IN_LOOP,
-          "sprite": "new_girl.png",
-          "direction": FACING_UP,
-          "row": 5,
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 8,
+          "col": 10,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 9,
+          "col": 10,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 10,
+          "col": 10,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 11,
+          "col": 10,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 6,
+          "col": 11,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 7,
+          "col": 11,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 8,
+          "col": 11,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 9,
+          "col": 11,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 10,
+          "col": 11,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 11,
+          "col": 11,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 6,
           "col": 12,
-          "destination" : {
-              "row": 2,
-              "col": 12,
-          },
-          "name": "Pauline2",
-          "action": CONDITION_TEST_1_ITEM
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 7,
+          "col": 12,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 9,
+          "col": 12,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 10,
+          "col": 12,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 11,
+          "col": 12,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 6,
+          "col": 13,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 7,
+          "col": 13,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 8,
+          "col": 13,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 9,
+          "col": 13,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 10,
+          "col": 13,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 11,
+          "col": 13,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 6,
+          "col": 14,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 7,
+          "col": 14,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 8,
+          "col": 14,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 9,
+          "col": 14,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 10,
+          "col": 14,
+          "name": "Bro"
+        },
+        {
+          "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+          "sprite": "pony_tail.png",
+          "direction": FACING_DOWN,
+          "row": 11,
+          "col": 14,
+          "name": "Bro"
         }
     ],
     "mapObjects" : [

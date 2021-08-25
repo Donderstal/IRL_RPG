@@ -98,7 +98,8 @@ const getLocationStatus = ( location, isFlying  ) => {
     if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
         return TILE_STATUS_INVALID;
     } else if ( 
-        ( !isFlying && ( globals.GAME.getTileOnCanvasAtIndex( "FRONT", location.index ).isBlocked || globals.GAME.getTileOnCanvasAtIndex( "BACK",location.index ).isBlocked ) )
+        (!isFlying && 
+        ( globals.GAME.getTileOnCanvasAtIndex( "BACK", location.index ).isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( location.index )  ))
         || visitedTilesList.indexOf(location.index) > -1 ) {
         return TILE_STATUS_BLOCKED;
     } else {
