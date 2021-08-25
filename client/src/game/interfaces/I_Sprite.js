@@ -146,27 +146,48 @@ class Sprite {
      * If no move is possible, call the checkForNextDestination method.
      */
     goToDestination( ) {
+        this.wasMoving = this.moving;
         this.moving = false;
 
         if ( this.destinationIsLeft  ) {
-            this.x -= MOVEMENT_SPEED;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
+            if ( ( this.x - MOVEMENT_SPEED ) < this.destinationTile.x && !this.isCar ) {
+                this.setSpriteToDestinationTile( );
+            }
+            else {
+                this.x -= MOVEMENT_SPEED;               
+            }
         }
         else if ( this.destinationIsRight ) {
-            this.x += MOVEMENT_SPEED;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
+            if ( ( this.x + MOVEMENT_SPEED ) > ( this.destinationTile.x + GRID_BLOCK_PX ) && !this.isCar ) {
+                this.setSpriteToDestinationTile( );
+            }
+            else {
+                this.x += MOVEMENT_SPEED;              
+            }
         }
         else if ( this.destinationIsUp ) {
-            this.y -= MOVEMENT_SPEED;
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
+            if ( ( this.y - MOVEMENT_SPEED ) < this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) && !this.isCar ) {
+                this.setSpriteToDestinationTile( );
+            }
+            else {
+                this.y -= MOVEMENT_SPEED;                  
+            }
         }
         else if ( this.destinationIsDown ) {
-            this.y += MOVEMENT_SPEED;  
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
+            if ( ( this.y + MOVEMENT_SPEED ) > ( this.destinationTile.y + GRID_BLOCK_PX ) && !this.isCar ) {
+                this.setSpriteToDestinationTile( );
+            }
+            else {
+                this.y += MOVEMENT_SPEED;                  
+            }
         } 
 
         if ( !this.moving ) {
@@ -295,10 +316,19 @@ class Sprite {
         return tileList;
     }
 
+    setSpriteToDestinationTile( ) {
+        this.y = this.destinationTile.y - ( this.height - GRID_BLOCK_PX )
+        this.x = this.destinationTile.x     
+    }
+
     /**
      * Empty all destination props or set them to false
      */
     unsetDestination( ) {
+        if ( this.wasMoving && !this.isCar && this.destinationTile ) {
+            this.setSpriteToDestinationTile( );
+        }
+
         this.destination = false;
         this.destinationTile = false;
         this.destinationTiles = [];

@@ -15,6 +15,13 @@ module.exports = {
         "row": 8,
         "col": 12
     },
+    "roads" : [
+      { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": FACING_RIGHT, "hasStart": true  },
+      { "alignment": "HORI", "topRow": 3, "bottomRow": 4, "direction": FACING_LEFT, "hasStart": true  },
+
+      { "alignment": "VERT", "leftCol": 4, "rightCol": 5, "direction": FACING_DOWN, "hasStart": true  },
+      { "alignment": "VERT", "leftCol": 20, "rightCol": 21, "direction": FACING_UP, "hasStart": true  },
+  ],
     "grid": [
         [39,39,39,16,16,39,39,39,39,39,39,39,39,39,39,39,39,39,39,16,16,39,39,39],
         [39,39,39,16,16,39,39,39,39,39,39,39,39,39,39,39,39,39,39,16,16,39,39,39],

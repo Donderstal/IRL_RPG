@@ -8,6 +8,7 @@ class Car extends MapObject {
         super( tile, spriteData, spriteId );
         this.frames = this.objectResource["movement_frames"];
         this.name = spriteData.name
+        this.isCar = true;
         this.initMovingSprite( spriteData )
     }
     
@@ -111,7 +112,8 @@ class Car extends MapObject {
      */
     initMovingSprite( spriteData ) {
         if ( spriteData.destination ) {
-            this.setDestination( spriteData.destination );            
+            this.setDestination( spriteData.destination );      
+            this.initMovement( );    
         }
     }
     /**
