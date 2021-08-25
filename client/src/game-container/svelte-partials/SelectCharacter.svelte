@@ -262,5 +262,10 @@
         <h4>Instance settings</h4>
         <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
+        <p><label>Select starting location</label><select id="map-selection">
+            <option value="my-neighbourhood/A1/my-house">Standard</option>
+            <option value="test/test-collision">Collision Test</option>
+            <option value="test/test-dungeon-outside">Test Dungeon</option>
+        </select></p>
     </div>
 </div>

@@ -25,11 +25,12 @@
     const startGameWithParams = ( ) => {
         const characterName = document.getElementById('name-input').value;
         const characterClass = classNames[document.getElementById('active-class').innerText].toLowerCase();
+        const startingMap = document.getElementById('map-selection').value
         const runInDebugMode = document.getElementById('enable-debug').checked;
         const disableStoryEvents = document.getElementById('disable-story').checked;
         closeMainMenu( )
         setTimeout( ( ) => {
-            startGame.startGame( characterName, characterClass, runInDebugMode, disableStoryEvents );
+            startGame.startGame( characterName, characterClass, startingMap, runInDebugMode, disableStoryEvents );
         }, 1000)
     }
     const getButtonAction = ( buttonId ) => {

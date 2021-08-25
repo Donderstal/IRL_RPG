@@ -159,10 +159,10 @@ class Game {
      * @param {String} name name that the player chose in the starting menu
      * @param {String} className name of the class that the player selected
      */
-    startNewGame( name, className, debugMode, disableStoryMode ) {
+    startNewGame( name, className, startingMap, debugMode, disableStoryMode ) {
         this.initializePlayerParty( name, className )
-        const mapData = getMapData(firstMapUrl);
-        this.storeMapData( mapData, firstMapUrl );
+        const mapData = getMapData(startingMap);
+        this.storeMapData( mapData, startingMap );
         this.debugMode = debugMode;
         this.disableStoryMode = disableStoryMode;
         mapData.playerStart.playerClass = className;
@@ -420,9 +420,9 @@ class Game {
  * @param {boolean} debugMode if true, the instance will draw the grid and sprite hitboxes
  * @param {boolean} disableStoryMode if true, no
  */
-const startGame = ( name, className, debugMode, disableStoryMode ) => {
+const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
-    fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, debugMode, disableStoryMode ] )
+    fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, startingMap, debugMode, disableStoryMode ] )
     setLoadingScreen( );
 }
 
@@ -436,7 +436,7 @@ const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
         image.onload = ( ) => {
             globals.PNG_DICTIONARY[path] = image;
             if ( index + 1 == json.length ) {
-                globals.GAME.startNewGame( startingOptions[0], startingOptions[1], startingOptions[2], startingOptions[3] );
+                globals.GAME.startNewGame( startingOptions[0], startingOptions[1], startingOptions[2], startingOptions[3], startingOptions[4] );
             }
         }
     });
