@@ -4,12 +4,20 @@ class TypeWriter {
         this.speed  = 50;
 
         this.fullText   = text;
+        this.displayFull = false;
         this.activeText = "";
 
         this.write( );
     }
     
-    get isWriting( ) { return this.index < this.fullText.length }
+    get isWriting( ) { 
+        if ( !this.displayFull ) {
+            if ( this.index < this.fullText.length ) {
+                return true;
+            }
+        }
+        return false;
+     }
 
     write( ) {
         if ( this.isWriting ) {
@@ -17,6 +25,11 @@ class TypeWriter {
             this.index++;
             setTimeout( this.write.bind(this), this.speed );
         }
+    }
+
+    displayFullText( ) {
+        this.activeText = this.fullText;
+        this.displayFull = true;
     }
 }
 

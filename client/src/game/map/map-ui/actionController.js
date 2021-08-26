@@ -4,11 +4,6 @@ const handleActionButton = ( ) => {
     const GAME = globals.GAME;
     const PLAYER = GAME.PLAYER;
 
-    if ( GAME.bubbleIsActive ) {
-        GAME.activeBubble = {}
-        GAME.bubbleIsActive = false
-    }
-
     const currentPlayerTileBack = GAME.getTileOnCanvasAtIndex( "BACK", PLAYER.activeTileIndex );
     const nextPlayerTileBack = GAME.getTileOnCanvasAtIndex( "BACK", PLAYER.nextTileIndex );
 

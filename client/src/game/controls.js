@@ -47,13 +47,16 @@ const addKeyToPressed = ( ) => {
         handleBattleKeyPress( event )
     }
     else if ( GAME.inCinematic ) {
-        if ( event.key == " " && GAME.bubbleIsActive ) {
+        if ( event.key == " " && GAME.bubbleIsActive && !GAME.activeBubble.typeWriter.isWriting ) {
             if ( GAME.activeCinematic.activeScene.is( SPEAK_YES_NO ) ) {
                 GAME.activeAction.registerSelection( INTERACTION_YES );
                 GAME.activeCinematic.activeScene.setSelection( "YES" )  ;              
             }
             GAME.activeBubble = {}
             GAME.bubbleIsActive = false
+        }
+        else if ( event.key == " " && GAME.bubbleIsActive && GAME.activeBubble.typeWriter.isWriting ) {
+            GAME.activeBubble.typeWriter.displayFullText( )
         }
         else if ( event.key == "z" && GAME.bubbleIsActive && GAME.activeCinematic.activeScene.is( SPEAK_YES_NO ) ) {
             GAME.activeAction.registerSelection( INTERACTION_NO );

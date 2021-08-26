@@ -2,7 +2,8 @@ const canvas = require( '../../helpers/canvasHelpers' )
 const { 
     LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
     SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT
-} = require( '../../game-data/globals' )
+} = require( '../../game-data/globals' );
+const { TypeWriter } = require('../../helpers/TypeWriter');
 /**
  * The Textbox interface is the base class for displaying in-game textboxes, excluding the MainMenu
  */
@@ -21,13 +22,27 @@ class I_TextBox {
         this.innerBoxWidth  = dimensions.width + ( LARGE_FONT_SIZE * .25 )  + this.fontSize * 2;
         this.innerBoxHeight = dimensions.height + ( LARGE_FONT_SIZE * .25 );
 
-        this.text           = canvas.breakTextIntoLines( text, this.fontSize )
+        this.text           = text
         this.buttonsText    = ( buttonsText == null ) ? [ "( Space ) OK" ] : buttonsText;
         this.buttonColor    = "white";
         this.animationFrame = 0;
 
         canvas.setFont(this.fontSize);
         this.drawTextBox( );
+    }
+    set text( text ) {             
+        this.typeWriter = new TypeWriter( text );
+    }
+    get text( ) {
+        const fullTextArray = canvas.breakTextIntoLines( this.typeWriter.fullText, LARGE_FONT_SIZE );
+        const currentTextArray = canvas.breakTextIntoLines( this.typeWriter.activeText, LARGE_FONT_SIZE );
+
+        let returner = [];
+        fullTextArray.forEach( ( line, index ) => {
+            returner.push( typeof currentTextArray[index] === 'undefined' ? " " : currentTextArray[index]  )
+        })
+
+        return returner;
     }
     /**
      * Increment this.animationFrame

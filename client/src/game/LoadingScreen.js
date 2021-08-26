@@ -19,7 +19,7 @@ class LoadingScreen {
             "Paying artists in exposure...",
             "Taxing waiters more than billionaires...",
             "Redeveloping public housing as luxury condos...",
-            "Mansplaining feminisim..."
+            "Press space to interact with characters and objects..."
         ]
 
         this.mainText = "Loading..."
