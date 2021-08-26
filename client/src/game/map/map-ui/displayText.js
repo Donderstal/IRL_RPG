@@ -18,8 +18,8 @@ const getSpeechBubbleXy = ( x, y, dimensions ) => {
 }
 
 const getSpeechBubbleDimensions = ( action ) => {
-    var text = canvas.breakTextIntoLines( action.text, 'LARGE' )    
-    canvas.setFont( "LARGE" )
+    var text = canvas.breakTextIntoLines( action.text, globals.LARGE_FONT_SIZE )    
+    canvas.setFont( globals.LARGE_FONT_SIZE )
     var textWidth = canvas.getFrontCanvasContext().measureText( text ).width
     if ( action.name ) {
         return {

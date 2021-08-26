@@ -97,7 +97,7 @@ class StatBar {
             this.frontBarWidth, this.height
         )
         writeTextLine( 
-            this.statText, x - ( this.width / 2.1 ), y + SMALL_FONT_LINE_HEIGHT - ( ( this.height - SMALL_FONT_SIZE ) / 2 ), "SMALL", COLOR_WHITE
+            this.statText, x - ( this.width / 2.1 ), y + SMALL_FONT_LINE_HEIGHT - ( ( this.height - SMALL_FONT_SIZE ) / 2 ), SMALL_FONT_SIZE, COLOR_WHITE
         )
     }
 } 

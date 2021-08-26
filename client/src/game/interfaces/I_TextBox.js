@@ -8,26 +8,25 @@ const {
  */
 class I_TextBox {
     constructor( xy, dimensions, fontSize, text, buttonsText = null ) {
-        this.x              = xy.x;
-        this.y              = xy.y;
-        this.width          = dimensions.width;
-        this.height         = dimensions.height;
-
-        this.fontType       = fontSize 
         this.fontSize       = ( fontSize == "LARGE" ) ? LARGE_FONT_SIZE : SMALL_FONT_SIZE;
         this.lineHeight     = ( fontSize == "LARGE" ) ? LARGE_FONT_LINE_HEIGHT : SMALL_FONT_LINE_HEIGHT;
 
+        this.x              = xy.x;
+        this.y              = xy.y;
+        this.width          = dimensions.width + this.fontSize * 2;
+        this.height         = dimensions.height;
+
         this.innerBoxX      = xy.x - ( LARGE_FONT_SIZE * .125 );
         this.innerBoxY      = xy.y - ( LARGE_FONT_SIZE * .125 );
-        this.innerBoxWidth  = dimensions.width + ( LARGE_FONT_SIZE * .25 );
+        this.innerBoxWidth  = dimensions.width + ( LARGE_FONT_SIZE * .25 )  + this.fontSize * 2;
         this.innerBoxHeight = dimensions.height + ( LARGE_FONT_SIZE * .25 );
 
-        this.text           = canvas.breakTextIntoLines( text, 'LARGE' )
+        this.text           = canvas.breakTextIntoLines( text, this.fontSize )
         this.buttonsText    = ( buttonsText == null ) ? [ "( Space ) OK" ] : buttonsText;
         this.buttonColor    = "white";
         this.animationFrame = 0;
 
-        canvas.setFont(fontSize);
+        canvas.setFont(this.fontSize);
         this.drawTextBox( );
     }
     /**
@@ -57,6 +56,11 @@ class I_TextBox {
             "FRONT", this.innerBoxX, this.innerBoxY, 
             this.innerBoxWidth, this.innerBoxHeight, INNER_TEXTBOX_RGBA
         );
+        const front = canvas.getFrontCanvasContext( )
+        front.beginPath( )
+        front.strokeStyle = "white";
+        front.rect( this.x, this.y, this.width, this.height )
+        front.stroke( )
     }
     /**
      * Set this.fontType as the activeFont.
@@ -68,13 +72,13 @@ class I_TextBox {
         let yPositionInBox = this.y + this.lineHeight;
 
         if ( this.hasHeader ) {
-            yPositionInBox += SMALL_FONT_LINE_HEIGHT;
+            yPositionInBox += LARGE_FONT_SIZE;
         }
 
         for ( var i = 0; i < this.text.length; i++ ) {
             canvas.writeTextLine( 
                 this.text[i], this.x + this.fontSize, 
-                yPositionInBox + ( this.lineHeight * i ), this.fontType
+                yPositionInBox + ( this.lineHeight * i ), this.fontSize
             );
         }
     }
@@ -84,7 +88,7 @@ class I_TextBox {
     writeHeader( ) {
         canvas.writeTextLine( 
             this.headerText, this.x + this.fontSize, 
-            this.y + SMALL_FONT_LINE_HEIGHT, "SMALL"
+            this.y + SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE
         );
     }
     /**
@@ -92,11 +96,11 @@ class I_TextBox {
      */
     drawButtons( ) {
         let buttonX     = this.x + LARGE_FONT_SIZE;
-        let buttonsY    = this.y + this.height;
+        let buttonsY    = (this.y + this.height) - ( LARGE_FONT_SIZE * .5 );
 
         this.buttonsText.forEach( (buttonText) => {
             canvas.writeTextLine(
-                buttonText, buttonX, buttonsY, "SMALL", this.buttonColor
+                buttonText, buttonX, buttonsY, SMALL_FONT_SIZE, this.buttonColor
             )
             buttonX += ( this.width / 2 ) ;
         });
