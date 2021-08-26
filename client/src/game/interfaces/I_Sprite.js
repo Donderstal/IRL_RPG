@@ -250,7 +250,7 @@ class Sprite {
         this.destination        = destination;
         this.activeDestinationIndex;
 
-        if ( !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING ) {
+        if ( !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING || this.isCar ) {
             this.setDestinationList( isLoop );
         }
         else if ( !this.isCar ) {

@@ -25,10 +25,10 @@ const handleActionButton = ( ) => {
         }
     } )
     
-    if ( currentPlayerTileBack.hasEvent ) {
+    if ( currentPlayerTileBack != undefined && currentPlayerTileBack.hasEvent ) {
         GAME.activeAction =  currentPlayerTileBack.event
     }
-    else if ( nextPlayerTileBack.hasEvent ) {
+    else if ( nextPlayerTileBack != undefined && nextPlayerTileBack.hasEvent ) {
         GAME.activeAction =  nextPlayerTileBack.event
     }
 

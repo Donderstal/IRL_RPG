@@ -99,6 +99,9 @@ class MapObject extends Sprite {
         this.hitbox = false;
         if ( this.groundedAtBase ) {
             this.hitboxGroups = [ new HitboxGroup( this.x, ( this.y + this.height ) - GRID_BLOCK_PX, this.direction, { "hori": this.spriteDimensionsInBlocks.hori, "vert": 1 }, this.spriteId ) ]
+            if ( this.width > GRID_BLOCK_PX) {
+                this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, ( this.y + this.height ) - GRID_BLOCK_PX, this.direction, { "hori": this.spriteDimensionsInBlocks.hori, "vert": 1 }, this.spriteId ) )
+            }
         }
         else {
             this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
@@ -120,16 +123,11 @@ class MapObject extends Sprite {
     updateHitboxes( ) {        
         this.hitboxes = []
         this.hitboxGroups.forEach( ( group, index ) => {
-            if ( !this.groundedAtBase ) {
-                if ( this.direction == FACING_UP || this.direction == FACING_DOWN ) {
-                    group.updateHitboxes( this.x + GRID_BLOCK_PX * index , this.y )
-                }
-                else {
-                    group.updateHitboxes( this.x, this.y + GRID_BLOCK_PX * index )
-                }
+            if ( this.direction == FACING_UP || this.direction == FACING_DOWN || this.groundedAtBase ) {
+                group.updateHitboxes( this.x + GRID_BLOCK_PX * index, this.groundedAtBase ? ( this.y + this.height ) - GRID_BLOCK_PX : this.y )
             }
             else {
-                group.updateHitboxes( this.x, ( this.y + this.height ) - GRID_BLOCK_PX )
+                group.updateHitboxes( this.x, this.y + GRID_BLOCK_PX * index )
             }
 
             group.hitboxes.forEach( ( hitbox ) => {
