@@ -12,33 +12,16 @@ const getSpeechBubble = ( action ) => {
 
 const getSpeechBubbleXy = ( x, y, dimensions ) => {
     return {
-        'x': ( x - dimensions.width < 0 ) ? x : x - dimensions.width,
+        'x': ( x - MAX_BUBBLE_WIDTH < 0 ) ? x : x - MAX_BUBBLE_WIDTH,
         'y': ( y - dimensions.height < 0 ) ? y : y - dimensions.height
     }
 }
 
 const getSpeechBubbleDimensions = ( action ) => {
     var text = canvas.breakTextIntoLines( action.text, globals.LARGE_FONT_SIZE )    
-    canvas.setFont( globals.LARGE_FONT_SIZE )
-    var textWidth = canvas.getFrontCanvasContext().measureText( text ).width
-    if ( action.name ) {
-        return {
-            'width' : ( text.length != 1 ) 
-                ? MAX_BUBBLE_WIDTH 
-                : ( textWidth < MIN_BUBBLE_WIDTH ) 
-                    ? MIN_BUBBLE_WIDTH 
-                    : textWidth + LARGE_FONT_LINE_HEIGHT,
-            'height': LARGE_FONT_LINE_HEIGHT + ( text.length * LARGE_FONT_LINE_HEIGHT ) + SMALL_FONT_LINE_HEIGHT
-        }
-    }
-
     return {
-        'width' : ( text.length != 1 ) 
-            ? MAX_BUBBLE_WIDTH 
-            : ( textWidth < MIN_BUBBLE_WIDTH ) 
-                ? MIN_BUBBLE_WIDTH 
-                : textWidth + LARGE_FONT_LINE_HEIGHT,
-        'height': LARGE_FONT_LINE_HEIGHT + ( text.length * LARGE_FONT_LINE_HEIGHT )
+        'width' : MAX_BUBBLE_WIDTH ,
+        'height': LARGE_FONT_LINE_HEIGHT + ( text.length * LARGE_FONT_LINE_HEIGHT ) + ( action.name ? SMALL_FONT_LINE_HEIGHT : 0 )
     }
 }
 

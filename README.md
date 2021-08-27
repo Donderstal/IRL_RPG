@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### AUG 27
+* Starting map can now be selected
+* Implementing TypeWriter in regular speech bubbles
+
 #### AUG 25, 2021
 * Improved sprite movement in grid
 * Better pathfinding detection of tiles blocked by sprites
