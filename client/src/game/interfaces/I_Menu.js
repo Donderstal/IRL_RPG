@@ -3,7 +3,8 @@ const {
     LARGE_FONT_SIZE, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE, BATTLE_FONT_SIZE, 
 } = require('../../game-data/globals');
 const { drawRect, writeTextLine } = require('../../helpers/canvasHelpers');
-const { COLOR_SECONDARY, COLOR_WHITE } = require('../../game-data/uiGlobals')
+const { COLOR_SECONDARY, COLOR_WHITE } = require('../../game-data/uiGlobals');
+const globals = require('../../game-data/globals');
 /**
  * The Menu class represents an in-game main menu.
  * It wraps a I_MenuTab extension instance, which contains one menu tab isntance.
@@ -11,10 +12,12 @@ const { COLOR_SECONDARY, COLOR_WHITE } = require('../../game-data/uiGlobals')
  */
  class I_Menu {
     constructor( width, height ) {
+        globals.GAME.sound.pauseMusic( );
         this.tabWidth   = width;
         this.tabHeight  = height;
         this.mainScreenHeight = CANVAS_HEIGHT - this.tabHeight;
         this.textMenuButtonHints = [ "[ SPACEBAR ] - CONFIRM/SELECT" ];
+        globals.GAME.sound.playMusic( "Menu music.mp3" );
     }
     /**
      * Draw the menu background, active menu tab and bottom textbox

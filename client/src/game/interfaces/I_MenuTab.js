@@ -240,12 +240,15 @@ class MenuTab {
      */
     handleActionButton( ) {
         if ( !this.itemSubMenu.isActive && !this.modal ) {
+            globals.GAME.sound.playEffect( "misc/menu-scroll-b.mp3")
             this.itemSubMenu.activate( );
         }
         else if ( this.itemSubMenu.isActive && !this.modal ) {
+            globals.GAME.sound.playEffect( "misc/menu-select.mp3")
             this.doActiveSubMenuOption( );
         }
         else if ( this.modal ) {
+            globals.GAME.sound.playEffect( "misc/menu-unselect.mp3")
             this.doActiveModalOption( );
         }
     }

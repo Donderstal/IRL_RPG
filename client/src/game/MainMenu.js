@@ -127,6 +127,8 @@ class MainMenu extends I_Menu {
         if ( this.ACTIVE_TAB.modal ) {
             return;
         }
+
+        globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3")
         if ( this.ACTIVE_TAB.tabName != "MAP" ) {
             this.activeTabIndexes[this.ACTIVE_TAB.tabName] = this.ACTIVE_TAB.tabName == "STATUS" || this.ACTIVE_TAB.tabName == "EQUIP" 
                 ? this.ACTIVE_TAB.activeCharacterIndex 

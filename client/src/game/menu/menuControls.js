@@ -1,11 +1,12 @@
 const globals  = require('../../game-data/globals');
 const { getNextIndexInArray, getPreviousIndexInArray } = require('../../helpers/utilFunctions');
-const { MENU_TYPE_SELL, MENU_TYPE_INVENTORY, MENU_TYPE_STATUS, MENU_TYPE_EQUIP, MENU_TYPE_BUY, MENU_ACTION_NEXT, MENU_ACTION_PREVIOUS } = require('../../game-data/uiGlobals')
+const { MENU_TYPE_SELL, MENU_TYPE_INVENTORY, MENU_TYPE_STATUS, MENU_TYPE_MEMBERS, MENU_TYPE_EQUIP, MENU_TYPE_BUY, MENU_ACTION_NEXT, MENU_ACTION_PREVIOUS } = require('../../game-data/uiGlobals')
 /**
  * Call the method in the currently active tab associated with the up key 
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleUp = ( activeTab ) => {
+    globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3")
     if ( activeTab.itemSubMenu.isActive ) {
         activeTab.itemSubMenu.setPreviousOption( )
     }
@@ -18,6 +19,7 @@ const handleUp = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleDown = ( activeTab ) => {
+    globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3")
     if ( activeTab.itemSubMenu.isActive ) {
         activeTab.itemSubMenu.setNextOption( )
     }
@@ -30,6 +32,7 @@ const handleDown = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleLeft = ( activeTab ) => {
+    globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3")
     if ( activeTab.modal ) {
         activeTab.modal.selectPreviousOption( );
     }
@@ -49,6 +52,7 @@ const handleLeft = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleRight = ( activeTab ) => {
+    globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3")
     if ( activeTab.modal ) {
         activeTab.modal.selectNextOption( );
     }
@@ -99,6 +103,7 @@ const handleActionButton = ( activeTab ) => {
  * @param {I_MenuTab} activeTab I_MenuTab extension currently active
  */
 const handleSubMenuControls = ( key, activeTab ) => {
+    globals.GAME.sound.playEffect( "misc/menu-select.mp3")
     if ( (activeTab.tabName == MENU_TYPE_SELL || activeTab.tabName == MENU_TYPE_BUY) && key == "z" ) {
         globals.GAME.MENU.removeActiveItemFromList( );
     }

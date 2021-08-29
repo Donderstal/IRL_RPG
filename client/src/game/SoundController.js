@@ -34,7 +34,7 @@ class SoundController {
             }
             this.activeMusic = this.allMusic[title];
             this.activeMusic.loop = loopMusic;
-            this.activeMusic.volume = 0.5
+            this.activeMusic.volume = title.includes("menu") ? 0.25 : 0.5
             this.activeMusic.play( );            
         }
     }
@@ -56,7 +56,12 @@ class SoundController {
         if ( !(title in this.activeSoundEffects) ) {
             const effect = new Audio( effectsFolder + title );
             this.allSoundEffects[title] = effect;
+        }        
+        else {
+            this.allSoundEffects[title].pause();
+            this.allSoundEffects[title].currentTime = 0;
         }
+
 
         this.activeSoundEffects[title] = this.allSoundEffects[title];
         this.activeSoundEffects[title].title = title;
