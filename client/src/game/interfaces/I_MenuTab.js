@@ -133,52 +133,7 @@ class MenuTab {
      * Call a function depending on the current tabName and activeOption
      */
     doCurrentSubMenuAction( ) {
-        switch( this.tabName ) {
-            case "STATUS": 
-            case "EQUIP": 
-                if ( this.activeOption == "EQUIP" ) {
-                    this.setModal( "Choose and item to equip to " + this.activeCharacter.Name, this.activeOption )
-                }
-                else if ( this.activeOption == "UNEQUIP" ) {
-                    this.setModal( "Unequip the item?", this.activeOption )
-                }
-                this.setSelectedEquipmentAttributesValues( this.activeOption );
-                break;
-            case "MEMBERS": 
-                if ( this.activeOption == "SHOW STATUS" ) {
-                    globals.GAME.MENU.switchTab( "RIGHT", this.activeButton )
-                }
-                else if ( this.activeOption == "SHOW ON MAP" ) {
-                    globals.GAME.party.switchSprite( this.activeButton );
-                }
-                break;
-            case "INVENTORY": 
-                if ( this.activeOption == "USE" ) {
-                    this.setModal( "Who should use a " + this.activeItem.Name + "?", this.activeOption );
-                } 
-                else if ( this.activeOption == "EQUIP" ) {
-                    this.setModal( "Who should equip a " + this.activeItem.Name + "?", this.activeOption );
-                } 
-                else if ( this.activeOption == "DISCARD" ) {
-                    this.setModal( "Throw away a" + this.activeItem.Name + "? This action can not be reversed!", this.activeOption );
-                }
-                break;
-            case "SELL":
-                if ( this.activeOption == "SELL" ) {
-                    alert("Sell!")
-                    console.log(this.activeItem)
-                } 
-            case "BUY":
-                if ( this.activeOption == "BUY" ) {
-                    alert("Buy!")
-                    console.log(this.activeItem)
-                } 
-            case "MAP":
-            case "GAME":
-                break;
-            default:
-                console.log("TabName " + this.tabName + " was not recognized");
-        }
+        console.log("TabName " + this.tabName + " was not recognized");
     }
     /**
      * Instantiate a MenuItems in a column.

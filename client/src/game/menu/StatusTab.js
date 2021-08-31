@@ -20,12 +20,23 @@ class StatusMenuTab extends MenuTab {
         this.setButtonWidth( this.width / 5 );
         this.itemSubMenuOptions = [ MENU_BUTTON_EQUIP, MENU_BUTTON_UNEQUIP, MENU_BUTTON_RETURN ];
         
-        this.redArrow   = globals.PNG_DICTIONARY["/static/ui/red_arrow_dwown.png"];
+        this.redArrow   = globals.PNG_DICTIONARY["/static/ui/red_arrow_down.png"];
         this.greenArrow = globals.PNG_DICTIONARY["/static/ui/green_arrow_up.png"];
 
         this.activeOption;
         this.activeCharacter = null;
         this.activeCharacterIndex = 0;
+    }
+    doCurrentSubMenuAction( ) {
+        switch( this.activeOption ) {
+            case MENU_BUTTON_EQUIP:
+                this.setModal( "Choose and item to equip to " + this.activeCharacter.Name, this.activeOption )
+                break;
+            case MENU_BUTTON_UNEQUIP:
+                this.setModal( "Unequip the item?", this.activeOption )
+                break;
+        }
+        this.setSelectedEquipmentAttributesValues( this.activeOption );
     }
     /**
      * Return an array of objects containing the names of equipment slots and current items in it.

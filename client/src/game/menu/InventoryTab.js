@@ -86,6 +86,21 @@ class InventoryMenuTab extends MenuTab {
         this.unsetModal( );
         this.setButtons( );
     }
+
+    doCurrentSubMenuAction( ) {
+        switch( this.activeOption ) {
+            case MENU_BUTTON_USE:
+                this.setModal( "Who should use a " + this.activeItem.Name + "?", this.activeOption );
+                break;
+            case MENU_BUTTON_EQUIP:
+                this.setModal( "Who should equip a " + this.activeItem.Name + "?", this.activeOption );
+                break;
+            case MENU_BUTTON_DISCARD:
+                this.setModal( "Throw away a" + this.activeItem.Name + "? This action can not be reversed!", this.activeOption );
+                break;
+        }
+        MENU_BUTTON_USE
+    }
 }
 
 module.exports = { 
