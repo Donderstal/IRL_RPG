@@ -96,7 +96,7 @@ class MenuItem {
                 BATTLE_FONT_SIZE
             );    
             writeTextLine( 
-                "Hitpoints: " + this.content.CurrentHitpoints +"/"+ this.content.MaximumHitpoints, 
+                "Hitpoints: " + this.content.CurrentHitpoints +"/"+ this.content.maxHP, 
                 this.x + ( LARGE_FONT_LINE_HEIGHT * 2 ), this.y + BATTLE_FONT_LINE_HEIGHT + LARGE_FONT_LINE_HEIGHT, 
                 LARGE_FONT_SIZE 
             ); 

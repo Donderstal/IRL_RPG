@@ -41,6 +41,7 @@ class InventoryMenuTab extends MenuTab {
         }
 
         super.activateButtonAndSetSubMenuPosition( );
+        this.activateButton( );
     }
     /**
      * Call the super of this method.

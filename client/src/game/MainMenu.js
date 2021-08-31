@@ -39,10 +39,6 @@ class MainMenu extends I_Menu {
         this.uniqueTextMenuButtonHints = [ "[ Z ]", "[ X ]", "[ C ]", "[ V ]" ];
         this.initializeTabs( );
     }
-    
-    get activeText( ) {
-        return this.ACTIVE_TAB.description;
-    }
 
     get currentTextMenuButtonHints( ) {
         const buttonHints = this.ACTIVE_TAB.tabName == "BUY" ? [ "[ SPACEBAR ] - ADD TO BUYING LIST"] : this.ACTIVE_TAB.tabName == "SELL" ? [ "[ SPACEBAR ] - ADD TO SELLING LIST"] : [...this.textMenuButtonHints];
@@ -63,17 +59,13 @@ class MainMenu extends I_Menu {
         this.MEMBERS_TAB    = new MembersMenuTab( );
         this.STATUS_TAB     = new StatusMenuTab( );
         this.INVENTORY_TAB  = new InventoryMenuTab( );
-        this.MAP_TAB        = new MapMenuTab( );
-        this.GAME_TAB       = new GameMenuTab( );
         
         this.ACTIVE_TAB = this.MEMBERS_TAB;
 
         this.tabs = [
             this.MEMBERS_TAB,
             this.STATUS_TAB,
-            this.INVENTORY_TAB,
-            this.MAP_TAB,
-            this.GAME_TAB
+            this.INVENTORY_TAB
         ];
 
         this.ACTIVE_TAB.setButtons( )

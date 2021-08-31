@@ -19,7 +19,7 @@ class MenuTab {
         this.height = CANVAS_HEIGHT - ( GRID_BLOCK_PX * 4 );
         this.width = CANVAS_WIDTH;
         this.margin = GRID_BLOCK_PX * .25;
-        this.description = "This is the " + alignment + " tab.";
+        globals.GAME.activeText = "This is the " + alignment + " tab.";
         this.activeButton = 0;
         this.itemSubMenu = new ItemSubMenu( );
         this.modal = false;
@@ -97,23 +97,23 @@ class MenuTab {
             case "STATUS": 
             case "EQUIP": 
                 this.activeItem = this.buttons[this.activeButton].content.equipmentType;
-                this.description = "Equip something to your " + this.activeItem + " slot.";
+                globals.GAME.activeText = "Equip something to your " + this.activeItem + " slot.";
                 break;
             case "MEMBERS": 
                 this.activeItem = this.buttons[this.activeButton].content;
-                this.description = "";
+                globals.GAME.activeText = "";
                 break;
             case "INVENTORY": 
             case "BUY":
             case "SELL":
                 this.activeItem = this.buttons[this.activeButton].content;
-                this.description = this.activeItem.Description;
+                globals.GAME.activeText = this.activeItem.Description;
                 break;
             case "MAP":
-                this.description = "";
+                globals.GAME.activeText = "";
                 break;
             case "GAME":
-                this.description = this.buttons[this.activeButton].content.description;
+                globals.GAME.activeText = this.buttons[this.activeButton].content.description;
                 break;
             default:
                 console.log("TabName " + this.tabName + " was not recognized");

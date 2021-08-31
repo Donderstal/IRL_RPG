@@ -30,14 +30,6 @@ class BattleMenu extends I_Menu {
     get activeButtonName( ) {
         return this.activeButton.Name;
     }
-    
-    get activeText( ) {
-        return globals.GAME.activeText;
-    }
-
-    set activeText( text ) {
-        globals.GAME.activeText = text;
-    }
 
     setOptions( options ) {
         this.options = options;

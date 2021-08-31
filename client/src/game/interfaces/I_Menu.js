@@ -19,6 +19,15 @@ const globals = require('../../game-data/globals');
         this.textMenuButtonHints = [ "[ SPACEBAR ] - CONFIRM/SELECT" ];
         globals.GAME.sound.playMusic( "Menu music.mp3" );
     }
+
+    get activeText( ) {
+        return globals.GAME.activeText;
+    }
+
+    set activeText( text ) {
+        globals.GAME.activeText = text;
+    }
+    
     /**
      * Draw the menu background, active menu tab and bottom textbox
      */

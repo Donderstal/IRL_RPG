@@ -52,10 +52,6 @@ class ShopMenu extends MainMenu {
 
     get shopBudget( ) { return globals.GAME.activeAction.inventory.Money };
     set shopBudget( value ) { globals.GAME.activeAction.inventory.Money = value }
-    
-    get activeText( ) {
-        return this.ACTIVE_TAB.description;
-    }
 
     draw( ) {
         super.draw( );
