@@ -30,7 +30,7 @@ const generateActionHint = ( actionData, type ) => {
         hasPrice = true;
         hintContents.Category                   = actionData.Item.Category;
         hintContents.Price                      = actionData.Item.Price;
-        if ( "Type" in actionData.Item ) {
+        if ( "Type" in actionData.Item && actionData.Item["Type"] != undefined ) {
             hintContents[MOVE_PROP_KEY_TYPE]        = actionData.Item.Type;     
             hintContents[MOVE_PROP_KEY_ATTRIBUTE]   = actionData.Item.Effects[0][0];
             hintContents[MOVE_PROP_KEY_BASE_VALUE]  = actionData.Item.Effects[0][1];       

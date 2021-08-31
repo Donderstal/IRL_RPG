@@ -309,7 +309,7 @@ class BattleSlot {
     calculateSelectedMoveResult( ) {
         if ( this.selectedMove instanceof StackedItem ) {
             this.selectedMove.subtractPendingForUsage( );
-            let resultText = globals.GAME.PLAYER_INVENTORY.useItem( this.targetSlot.character, this.selectedMove.ItemTypeID );
+            let resultText = globals.GAME.PLAYER_INVENTORY.useItem( this.targetSlot.character, this.selectedMove.ItemTypeId );
             globals.GAME.setActiveText( resultText );   
         }
         else {

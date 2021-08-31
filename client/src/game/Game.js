@@ -23,8 +23,6 @@ const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
 const { Cinematic } = require('./cutscenes/Cinematic')
-
-const firstMapUrl =  "test/test-collision"//"my-neighbourhood/A1/my-house";
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  

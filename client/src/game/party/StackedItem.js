@@ -5,7 +5,7 @@ const { GameItem } = require('../interfaces/I_GameItem')
  */
 class StackedItem {
     constructor( itemTypeId ) {
-        this.ItemTypeID = itemTypeId;
+        this.ItemTypeId = itemTypeId;
         this.Item = new GameItem( itemTypeId );
         this.BaseQuantity = 1;
         this.EquippedQuantity = 0;

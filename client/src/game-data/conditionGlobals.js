@@ -21,7 +21,7 @@ module.exports = {
     DELETE_SPRITE: "DEL",
     FADE_IN: "FAI",
     FADE_OUT: "FAO",
-    FADE_IN_OUT: "FIO",
+    FADE_OUT_IN: "FOI",
     WAIT: "WAI",
 
     ON_ENTER: "ON_EN",

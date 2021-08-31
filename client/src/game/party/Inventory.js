@@ -39,7 +39,7 @@ class Inventory {
     getItemStackById( itemID ) {
         let ItemStack;
         this.ItemList.forEach( ( e ) => {
-            if ( e.ItemTypeID == itemID ) {
+            if ( e.ItemTypeId == itemID ) {
                 ItemStack = e;
             }
         })
@@ -123,7 +123,7 @@ class Inventory {
         newItemIDs.forEach( ( itemID ) => {
             if ( this.hasItem( itemID ) ) {
                 this.ItemList.forEach( ( stackedItem ) => {
-                    if ( stackedItem.ItemTypeID == itemID ) {
+                    if ( stackedItem.ItemTypeId == itemID ) {
                         stackedItem.addItem( )
                     }   
                 })
@@ -146,7 +146,7 @@ class Inventory {
         itemIDsToRemove.forEach( ( itemID ) => {
             if ( this.hasItem( itemID ) ) {
                 this.ItemList.forEach( ( stackedItem, index ) => {
-                    if ( stackedItem.ItemTypeID == itemID ) {
+                    if ( stackedItem.ItemTypeId == itemID ) {
                         itemsToRemoveIndexes.push( index )
                     }   
                 })
@@ -171,7 +171,7 @@ class Inventory {
         }
 
         if ( stackedItem.Quantity < 1 ) {
-            this.ActiveItemIDs.splice( this.ActiveItemIDs.indexOf[stackedItem.ItemTypeID], 1 );
+            this.ActiveItemIDs.splice( this.ActiveItemIDs.indexOf[stackedItem.ItemTypeId], 1 );
             this.ItemList.splice( itemIndex, 1 )
         }
     }

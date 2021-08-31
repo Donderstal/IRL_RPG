@@ -65,12 +65,14 @@ class MenuItem {
         }
 
         if ( this.type == "INVENTORY" || this.type == "BUY" || this.type == "SELL" ) {
-            drawFromImageToCanvas( 
-                "FRONT", this.content.Item.Image, 
-                0, 0, 807, 806, 
-                this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 4 ) ), this.y + ( ( this.height - LARGE_FONT_LINE_HEIGHT ) / 2 ), 
-                LARGE_FONT_LINE_HEIGHT, LARGE_FONT_LINE_HEIGHT 
-            );           
+            if ( this.content.Item.Image != undefined ) {
+                drawFromImageToCanvas( 
+                    "FRONT", this.content.Item.Image, 
+                    0, 0, 807, 806, 
+                    this.x + ( this.width - ( LARGE_FONT_LINE_HEIGHT * 4 ) ), this.y + ( ( this.height - LARGE_FONT_LINE_HEIGHT ) / 2 ), 
+                    LARGE_FONT_LINE_HEIGHT, LARGE_FONT_LINE_HEIGHT 
+                );    
+            }
         }
 
         if ( this.type != "MEMBERS" ) {

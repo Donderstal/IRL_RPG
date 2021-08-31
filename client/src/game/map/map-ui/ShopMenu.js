@@ -32,7 +32,7 @@ class ShopMenu extends MainMenu {
         this.initializeTabs( );
     }
     
-    get pendingItemIDList( ) { return this.activeTransactionItemsList.map( item => item.ItemTypeID )}
+    get pendingItemIDList( ) { return this.activeTransactionItemsList.map( item => item.ItemTypeId )}
 
     get playerInventory( ) { return globals.GAME.PLAYER_INVENTORY; };
     get shopInventory( ) { return globals.GAME.activeAction.inventory; };
