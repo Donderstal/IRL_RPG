@@ -14,26 +14,20 @@ const {
  */
 
 const triggerEvent = ( TRIGGER, args = null ) => {
-    globals.GAME.story.sceneEvents.forEach( (e) => {
-        if ( TRIGGER == e.trigger && TRIGGER != ON_POSITION ) {
-            e.fireEvent( args );
-            if ( e.passScene ) {
-                globals.GAME.story.goToNextSceneEvent( );               
-            }
+    const currentStoryEvent = globals.GAME.story.currentStoryEvent;
+    if  ( globals.GAME.activeMapName == currentStoryEvent.mapName && TRIGGER == currentStoryEvent.trigger ) {
+        if ( TRIGGER != ON_POSITION ) {
+            currentStoryEvent.fireEvent( args );
         }
-        else if ( TRIGGER == e.trigger && TRIGGER == ON_POSITION ) {
-            if ( triggerOnPosition( e ) ) {
-                e.fireEvent( );
-                if ( e.passScene ) {
-                    globals.GAME.story.goToNextSceneEvent( );                
-                }
-            }
+        else if ( TRIGGER == ON_POSITION && triggerOnPosition( ) ) {
+            currentStoryEvent.fireEvent( );
         }
-    })
+        globals.GAME.story.goToNextStoryScene( );  
+    }
 }
 
-const triggerOnPosition = ( e ) => {
-    const position = e.position;
+const triggerOnPosition = ( ) => {
+    const position = globals.GAME.story.currentStoryEvent.position;
     if ( globals[position.direction] == globals.GAME.PLAYER.direction ) {
         if ( position.direction == FACING_RIGHT && globals.GAME.PLAYER.col == position.col ) {
             return true;

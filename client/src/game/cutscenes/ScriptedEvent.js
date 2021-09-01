@@ -6,13 +6,12 @@ const {
  * The ScriptedEvent class is no longer implemented and need to be reworked to the new Grid system
  */
 class ScriptedEvent {
-    constructor( scriptedEventData, eventScript ) {
+    constructor( scriptedEventData ) {
         this.mapName        = scriptedEventData.mapName;
         this.trigger        = scriptedEventData.trigger;
         this.passScene      = scriptedEventData.passScene;
 
-        this.eventScript    = eventScript;
-        this.eventId        = eventScript.name;
+        this.eventScript    = { scenes: scriptedEventData.scenes };
         this.fired          = false;
 
         if ( scriptedEventData.trigger == ON_POSITION ) {

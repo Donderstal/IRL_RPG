@@ -219,9 +219,7 @@ class Game {
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
         this.sound.playMusic( mapData.music );
         setTimeout( ( ) => {
-            if ( this.activeMap.scriptedEvents ) {
-                triggerEvent(ON_ENTER)        
-            }
+            triggerEvent(ON_ENTER)     
         }, 250 )
     }
     /**
@@ -240,12 +238,10 @@ class Game {
      * @param {String} type - DOOR, BUS, NEIGHBOUR - indicates how the player is crossing to the new map
      */
     switchMap ( destination, type ) {
-        if ( this.activeMap.scriptedEvents != undefined ) {
-            triggerEvent(ON_LEAVE, [ destination, type ]); 
-            if ( this.inCinematic ) {
-                return;
-            }            
-        }
+        triggerEvent(ON_LEAVE, [ destination, type ]); 
+        if ( this.inCinematic ) {
+            return;
+        }        
 
         this.paused = true;
         controls.stopListenForKeyPress( );
@@ -270,10 +266,6 @@ class Game {
             } )
         }
         this.storeMapData( newMapData, destination );
-        if ( !this.disableStoryMode ) {
-            this.story.getScriptedEventsForMap( this.activeMapName );            
-        }
-
         setTimeout( ( ) => {
             controls.listenForKeyPress( ); 
             this.paused = false;   
