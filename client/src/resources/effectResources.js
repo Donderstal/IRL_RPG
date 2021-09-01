@@ -45,7 +45,26 @@ const effectsResources = {
             { 'x': 0, 'y': 896 },
             { 'x': 128, 'y': 896 }
         ]
-    }
+    },
+    "BLUE_SQUARE" : {
+        "src": folder + "Square_fx.png",
+        "widthInBlocks": 2.875,
+        "heightInBlocks": 2.3125,
+        "frameWidth": 184,
+        "frameHeight": 148,
+        "frames": [
+            { 'x': 0, 'y': 0 },
+            { 'x': 184, 'y': 0 },
+            { 'x': 0, 'y': 148 },
+            { 'x': 184, 'y': 148 },
+            { 'x': 0, 'y': 296 },
+            { 'x': 184, 'y': 296 },
+            { 'x': 0, 'y': 444 },
+            { 'x': 184, 'y': 444 },
+            { 'x': 0, 'y': 592 },
+            { 'x': 184, 'y': 592 },
+        ]
+    },
 }
 /**
  * Get the object at given key in the inner effectsResources object

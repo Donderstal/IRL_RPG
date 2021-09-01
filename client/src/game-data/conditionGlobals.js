@@ -37,6 +37,7 @@ module.exports = {
     EVENT_SHOP: "EV_SH",
     EVENT_RESTORE: "EV_RE",
     EVENT_BATTLE: "EV_BA",
-    EVENT_NEIGHBOUR: "EV_NE"
+    EVENT_NEIGHBOUR: "EV_NE",
+    EVENT_SAVE: "EV_SA"
 }
 

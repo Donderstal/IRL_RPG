@@ -119,7 +119,7 @@ class Sprite {
      */
     drawSprite( ) {
         if ( this.hasActiveEffect ) {
-            this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.25  ) )
+            this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
@@ -128,7 +128,7 @@ class Sprite {
             this.x, this.y, this.width, this.height
         )
         if ( this.hasActiveEffect ) {
-            this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.25 ) )
+            this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
 
         if ( this.movingToDestination && !this.pathIsBlocked && this == globals.GAME.PLAYER ) {

@@ -36,6 +36,10 @@ const addKeyToPressed = ( ) => {
     event.preventDefault( );
     const GAME = globals.GAME
 
+    if ( event.key == "m" ) {
+        GAME.PLAYER.setGraphicalEffect( "BLUE_SQUARE" )
+    }
+    
     if ( event.key == "Tab" ) {
         GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }

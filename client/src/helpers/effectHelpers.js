@@ -32,6 +32,10 @@ const scripts = {
     "STAR_MOVING" : {
         backEffect: { "name": "STAR", "loop": true },
         type: "MOVING_BACK"
+    },
+    "BLUE_SQUARE" : {
+        backEffect: { "name": "BLUE_SQUARE", "loop": true },
+        type: "BLUE_SQUARE"
     }
 }
 /**
@@ -228,6 +232,8 @@ const getEffect = ( name, x, y, endX = null, endY = null ) => {
             return new SingleLayerEffect( script, x, y, "F" );
         case "BACK":
             return new SingleLayerEffect( script, x, y, "B" );
+        case "BLUE_SQUARE":
+            return new SingleLayerEffect( script, x, y, "B");
         case "FRONT_AND_BACK":
             return new DoubleLayerEffect( script, x, y );
         case "MOVING_FRONT":
