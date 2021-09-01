@@ -12,7 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### AUG 27
+#### SEP 1, 2021
+* Refactored story code to less complex design
+
+#### AUG 27, 2021
 * Starting map can now be selected
 * Implementing TypeWriter in regular speech bubbles
 
