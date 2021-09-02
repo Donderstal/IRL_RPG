@@ -119,6 +119,10 @@ const drawSpritesInOrder = ( GAME ) => {
         }
     })
     
+    if ( GAME.FRONT.savepoint ) {
+        GAME.FRONT.savepoint.draw( )
+    }
+    
     drawSpritesInArray( backgroundSprites, GAME );
     drawSpritesInArray( standardSprites, GAME );
     drawSpritesInArray( foregroundSprites, GAME );
