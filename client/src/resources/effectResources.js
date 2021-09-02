@@ -48,23 +48,44 @@ const effectsResources = {
     },
     "BLUE_SQUARE" : {
         "src": folder + "Square_fx.png",
-        "widthInBlocks": 2.875,
-        "heightInBlocks": 2.3125,
-        "frameWidth": 184,
-        "frameHeight": 148,
+        "widthInBlocks": 4.3125,
+        "heightInBlocks": 3.46875,
+        "frameWidth": 276,
+        "frameHeight": 222,
         "frames": [
             { 'x': 0, 'y': 0 },
-            { 'x': 184, 'y': 0 },
-            { 'x': 0, 'y': 148 },
-            { 'x': 184, 'y': 148 },
-            { 'x': 0, 'y': 296 },
-            { 'x': 184, 'y': 296 },
+            { 'x': 276, 'y': 0 },
+            { 'x': 0, 'y': 222 },
+            { 'x': 276, 'y': 222 },
             { 'x': 0, 'y': 444 },
-            { 'x': 184, 'y': 444 },
-            { 'x': 0, 'y': 592 },
-            { 'x': 184, 'y': 592 },
+            { 'x': 276, 'y': 444 },
+            { 'x': 0, 'y': 666 },
+            { 'x': 276, 'y': 666 },
+            { 'x': 0, 'y': 888 },
+            { 'x': 276, 'y': 888 },
         ]
     },
+    "PURPLE_CROSS" : {
+        "src": folder + "cross_fx.png",
+        "widthInBlocks": 4.3125,
+        "heightInBlocks": 3.46875,
+        "frameWidth": 276,
+        "frameHeight": 222,
+        "frames": [
+            { 'x': 0, 'y': 0 },
+            { 'x': 276, 'y': 0 },
+            { 'x': 0, 'y': 222 },
+            { 'x': 276, 'y': 222 },
+            { 'x': 0, 'y': 444 },
+            { 'x': 276, 'y': 444 },
+            { 'x': 0, 'y': 666 },
+            { 'x': 276, 'y': 666 },
+            { 'x': 0, 'y': 888 },
+            { 'x': 276, 'y': 888 },
+            { 'x': 0, 'y': 1110 },
+            { 'x': 276, 'y': 1110 },
+        ]
+    }
 }
 /**
  * Get the object at given key in the inner effectsResources object

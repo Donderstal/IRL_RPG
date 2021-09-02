@@ -36,6 +36,10 @@ const scripts = {
     "BLUE_SQUARE" : {
         backEffect: { "name": "BLUE_SQUARE", "loop": true },
         type: "BLUE_SQUARE"
+    },
+    "PURPLE_CROSS" : {
+        backEffect: { "name": "PURPLE_CROSS", "loop": true },
+        type: "PURPLE_CROSS"
     }
 }
 /**
@@ -233,6 +237,8 @@ const getEffect = ( name, x, y, endX = null, endY = null ) => {
         case "BACK":
             return new SingleLayerEffect( script, x, y, "B" );
         case "BLUE_SQUARE":
+            return new SingleLayerEffect( script, x, y, "B");
+        case "PURPLE_CROSS":
             return new SingleLayerEffect( script, x, y, "B");
         case "FRONT_AND_BACK":
             return new DoubleLayerEffect( script, x, y );
