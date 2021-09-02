@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### SEP 2, 2021
+* Added model for saving games as json files
+
 #### SEP 1, 2021
 * Refactored story code to less complex design
 

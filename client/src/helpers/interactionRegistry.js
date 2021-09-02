@@ -16,8 +16,13 @@ const addEventToRegistry = ( eventKey, value = true ) => {
     interactionRegistry[eventKey] = value;
 }
 
+const getRegistry = ( ) => {
+    return interactionRegistry;
+}
+
 module.exports = {
     isInRegistry,
     isInRegistryWithValue,
-    addEventToRegistry
+    addEventToRegistry,
+    getRegistry
 }

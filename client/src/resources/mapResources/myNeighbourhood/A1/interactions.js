@@ -1,7 +1,7 @@
 const { 
   TEST_CLASSNAME_2, TEST_CLASSNAME_10, TEST_CLASSNAME_14, TEST_CLASSNAME_15, TEST_CLASSNAME_16
  } = require('../../../../game-data/globals')
-const { DEFAULT, SPEAK, SPEAK_YES_NO, ANIM, ON_BATTLE_START, ON_BATTLE_END, EVENT_BATTLE, EVENT_TALK } = require('../../../../game-data/conditionGlobals');
+const { DEFAULT, SPEAK, SPEAK_YES_NO, ANIM, ON_BATTLE_START, ON_BATTLE_END, EVENT_BATTLE, EVENT_TALK, EVENT_SAVE } = require('../../../../game-data/conditionGlobals');
 const { LOGGABLE_INTERACTION_1 } = require('../../../../game-data/interactionGlobals');
 const A1_MY_HOUSE_COMPUTER_ACTION = [ 
   { 
@@ -195,8 +195,24 @@ const A1_MY_HOUSE_CHAD_FIGHT = [
     }
   }
 ]
+
+const ACTION_SAVE = { 
+  "row": 7, "col": 7,
+  "action": {
+  "type": EVENT_SAVE,
+  "scenes": [
+      { 
+          "type": SPEAK_YES_NO, "spriteName": "Player", "text": "Save the game?",
+          "pathNo": [
+              { "type": SPEAK, "spriteName": "Player", "text": "Why did you press the button then??", }
+          ]   
+      }
+  ]
+  }
+}
   
 module.exports = {
   A1_MY_HOUSE_COMPUTER_ACTION, A1_MY_HOUSE_FRIDGE_ACTION, A1_MY_HOUSE_STOVE_ACTION,
-  A1_LIFTING_CHAD, A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT
+  A1_LIFTING_CHAD, A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT,
+  ACTION_SAVE
 }

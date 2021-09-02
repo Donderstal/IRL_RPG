@@ -4,7 +4,7 @@ const {
  } = require('../../../../game-data/globals');
 const {
   A1_MY_HOUSE_COMPUTER_ACTION, A1_MY_HOUSE_FRIDGE_ACTION, A1_MY_HOUSE_STOVE_ACTION,
-  A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT
+  A1_BUSINESS_MAN, A1_GIRL_OUTSIDE, A1_WOMAN_FIGHT, A1_MY_HOUSE_CHAD_FIGHT, ACTION_SAVE
 } = require('./interactions');
 
 module.exports = {
@@ -360,7 +360,8 @@ module.exports = {
                 "col": 6
               },
               
-            ]
+            ],
+            "savepoint": ACTION_SAVE,
         },
         "my-house" : {   
             "mapName": "my-neighbourhood/A1/my-house",

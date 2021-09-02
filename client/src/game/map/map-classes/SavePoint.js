@@ -1,5 +1,6 @@
 const { GRID_BLOCK_PX } = require("../../../game-data/globals");
 const { getEffect } = require("../../../helpers/effectHelpers");
+const { saveGame } = require("../../../helpers/saveSystemHelpers");
 const { MapAction } = require("./MapAction");
 
 class Savepoint extends MapAction { 
@@ -17,6 +18,11 @@ class Savepoint extends MapAction {
 
     draw( ) {
         this.effect.drawBack( this.x - ( this.effect.effects[0].width / 2 ), this.y - ( this.effect.effects[0].height / 2 ) )
+    }
+
+    confirm( ) {
+        this.confirmingAction = true;
+        saveGame( );
     }
 }
 
