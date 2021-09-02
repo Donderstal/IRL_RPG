@@ -1,5 +1,6 @@
 const { EVENT_DOOR } = require('../game-data/conditionGlobals');
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
+const { Savepoint } = require('./map/map-classes/SavePoint');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -10,6 +11,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.backgroundActions = [];
+        this.savepoint = false;
     };
     /**
      * Assign given string as value for the this.mapName prop
@@ -58,6 +60,8 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             this.setDoors( mapData.doors );
         if ( mapData.actions )
             this.setActions( mapData.actions );
+        if ( mapData.savepoint ) 
+            this.setSavepoint( mapData.savepoint );
         if ( sheetData.blocked ) 
             this.setBlockedTiles( sheetData.blocked )
 
@@ -114,6 +118,13 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.sheetImage = image;
         this.battleGrid.drawMap( this.sheetImage );
     }
+    setSavepoint( savepointData ) {
+        const tile = this.getTileAtCell( savepointData.col, savepointData.row )
+        tile.hasEvent = true;
+        tile.eventType = "SAVE"
+        tile.event = new Savepoint( tile, savepointData.action );
+        this.savepoint = tile;
+    }
     /**
      * Clear all data associated with the current map and the inner I_Grid
      */
@@ -124,6 +135,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.hasActions = false;
         this.blockedTiles = [ ];
         this.backgroundActions = [];
+        this.savepoint = false;
     }
 };
 

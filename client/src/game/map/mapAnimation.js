@@ -119,8 +119,8 @@ const drawSpritesInOrder = ( GAME ) => {
         }
     })
     
-    if ( GAME.FRONT.savepoint ) {
-        GAME.FRONT.savepoint.draw( )
+    if ( GAME.BACK.savepoint ) {
+        GAME.BACK.savepoint.event.draw( )
     }
     
     drawSpritesInArray( backgroundSprites, GAME );

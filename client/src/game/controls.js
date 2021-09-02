@@ -37,7 +37,7 @@ const addKeyToPressed = ( ) => {
     const GAME = globals.GAME
 
     if ( event.key == "m" ) {
-        GAME.PLAYER.setGraphicalEffect( "BLUE_SQUARE" )
+        GAME.PLAYER.setGraphicalEffect( "PURPLE_CROSS" )
     }
     
     if ( event.key == "Tab" ) {

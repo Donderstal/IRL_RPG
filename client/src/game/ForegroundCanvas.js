@@ -9,7 +9,6 @@ const { BattleSlot } = require('./battle/BattleSlot');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
 const { CONTROL_LEFT, CONTROL_RIGHT } = require('../game-data/battleGlobals');
-const { Savepoint } = require('./map/map-classes/SavePoint');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -24,7 +23,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.spriteDictionary = { };
         this.playerSprite = { };
         this.activeEffects = [];
-        this.savepoint = false;
     };
 
     get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_LEFT; } ); };
@@ -48,8 +46,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.initPlayerCharacter( mapData.playerStart );
         if ( mapData.roads ) 
             this.setCarGenerator( mapData.roads );
-        if ( mapData.savepoint ) 
-            this.setSavepoint( mapData.savepoint );
     }
 
     /**
@@ -158,7 +154,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites = [ ];
         this.roads = [ ];
         this.spriteDictionary = { };
-        this.savepoint = false;
     }
     /**
      * 
@@ -199,11 +194,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         Object.keys( this.spriteDictionary ).forEach ( ( e ) => {
             this.allSprites.push( this.spriteDictionary[e] )
         })
-    }
-
-    setSavepoint( savepointData ) {
-        const tile = globals.GAME.FRONT.getTileAtCell( savepointData.col, savepointData.row )
-        this.savepoint = new Savepoint( tile, savepointData )
     }
 
     tileHasBlockingSprite( tileIndex ) {
