@@ -290,5 +290,15 @@ module.exports = {
           "row"   : 4,
           "col"   : 8
         },
+        {
+          "type"  : "bar_sign",
+          "row"   : 3,
+          "col"   : 3
+        },
+        {
+          "type"  : "hotel_sign",
+          "row"   : 6,
+          "col"   : 10
+        },
     ]
 }

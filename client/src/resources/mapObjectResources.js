@@ -105,6 +105,14 @@ const getSignData = ( heightInBlocks ) => {
 }
 
 module.exports = {
+    "bar_sign": {
+        "dimensional_alignment": "STANDARD",
+        "src": "bar_sign.png",
+        "height_blocks": 1,
+        "width_blocks": 1.8125,
+        "not_grounded": true,
+        "idle_animation": true
+    },
     "bench_a" :{
         "src": "bench_a.png",
         ...TWO_WIDE_SPRITE
@@ -204,6 +212,10 @@ module.exports = {
     "gate_right" : {
         "src": "gate_right.png",
         ...ONE_BLOCK_SPRITE
+    },
+    "hotel_sign" : {
+        "src": "hotel_sign.png",
+        ...getSignData( 2.21875 )
     },
     "house_plant" : {
         "src": "house_plant.png",
