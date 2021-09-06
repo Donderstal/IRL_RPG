@@ -2,11 +2,13 @@ const myNeighbourhood   = require( './mapResources/myNeighbourhood/my-neighbourh
 const downtown          = require( './mapResources/downtown/downtown' );
 const battle            = require( './mapResources/battle/battleMaps' );
 const test              = require( './mapResources/test/test' );
+const northside         = require('./mapResources/northside/northside');
 
 const mapResources = {
     "my-neighbourhood" :    myNeighbourhood,
     "downtown":             downtown,
     "battle":               battle,
+    "northside":            northside,
     "test":                 test
 }
 

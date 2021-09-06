@@ -264,6 +264,7 @@
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
         <p><label>Select starting location</label><select id="map-selection">
             <option value="my-neighbourhood/A1/my-house">Standard</option>
+            <option value="northside/A3">Northside</option>
             <option value="test/test-collision">Collision Test</option>
             <option value="test/test-dungeon-outside">Test Dungeon</option>
         </select></p>

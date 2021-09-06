@@ -122,7 +122,7 @@ module.exports = {
         ...TWO_WIDE_SPRITE
     },
     "bin_a" :{
-        "src": "bin_a",
+        "src": "bin_a.png",
         ...ONE_BLOCK_SPRITE
     },
     "bin_hop" :{
@@ -130,7 +130,7 @@ module.exports = {
         ...ONE_BLOCK_SPRITE
     },
     "bin_x" :{
-        "src": "bollard.png",
+        "src": "bin_x.png",
         ...ONE_BLOCK_SPRITE
     },
     "blue_couch_right" : {
@@ -325,8 +325,12 @@ module.exports = {
         "src": "small_table.png",
         ...ONE_BLOCK_SPRITE
     },
+    "water_puddle": {
+        "src": "water_puddle.png",
+        ...getBackgroundItem( 1, 1 )
+    },
     "yellow_chair" : {
-        "src": "yellow_chair",
+        "src": "yellow_chair.png",
         ...STANDARD_SHELVE
     },
     "yellow_lamp" : {
