@@ -244,17 +244,51 @@ class Sprite {
      * @param {Object} destination Properties: row: Number, col: Number
      * @param {Boolean} isLoop boolean indicated if movement should be looped
      */
-    setDestination( destination, isLoop = false ) {
+    setDestination( destination, isLoop = false, destinationIsOffScreen = false ) {
         this.originalDirection  = this.direction;
         this.destinationTiles   = [];
-        this.destination        = destination;
+        this.destination = {}
+
+        if (destinationIsOffScreen) {
+            this.setOffScreenDestination( destination )
+        }
+        else {
+            this.destination        = destination;
+        }
+
         this.activeDestinationIndex;
 
-        if ( !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING || this.isCar ) {
+        if ( destinationIsOffScreen || !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING || this.isCar ) {
             this.setDestinationList( isLoop );
         }
         else if ( !this.isCar ) {
             this.unsetDestination( );    
+        }
+
+        if  ( destinationIsOffScreen && this.destination ) {
+            let tile = globals.GAME.getTileOnCanvasAtCell("FRONT", destination.col, destination.row )
+            tile.direction = { [this.spriteId]: tile.direction };
+            this.destinationTiles.push( { tile: tile  } )
+        }
+    }
+
+    setOffScreenDestination( destination ) {
+        destination.offScreen = true;
+        if ( destination.col < 1 ) {
+            this.destination.col = 1
+            this.destination.row = destination.row
+        }
+        else if ( destination.row < 1 ) {
+            this.destination.col = destination.col
+            this.destination.row = 1
+        }
+        else if ( destination.col > globals.GAME.FRONT.grid.cols ) {
+            this.destination.col = 24
+            this.destination.row = destination.row
+        }
+        else if ( destination.row > globals.GAME.FRONT.grid.rows ) { 
+            this.destination.col = destination.col
+            this.destination.row = 24
         }
     }
     /**
@@ -329,6 +363,9 @@ class Sprite {
     unsetDestination( ) {
         if ( this.wasMoving && !this.isCar && this.destinationTile ) {
             this.setSpriteToDestinationTile( );
+        }
+        if ( this.destination.offScreen ) {
+            globals.GAME.FRONT.deleteSprite( this.spriteId );
         }
 
         this.destination = false;
