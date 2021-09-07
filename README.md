@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### SEP 7, 2021
+* Added added new maps in a more urban style
+
 #### SEP 2, 2021
 * Added model for saving games as json files
 
