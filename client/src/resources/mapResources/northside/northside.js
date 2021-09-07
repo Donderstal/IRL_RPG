@@ -3,8 +3,12 @@ const A2 = require('./A2/northside-A2');
 const A3 = require('./A3/northside-A3');
 const A4 = require('./A4/northside-A4');
 const A5 = require('./A5/northside-A5');
+const Z4 = require('./Z4/northside-Z4');
 
 module.exports = {
+
+    "Z4": Z4,
+
     "A1": A1,
     "A2": A2,
     "A3": A3,

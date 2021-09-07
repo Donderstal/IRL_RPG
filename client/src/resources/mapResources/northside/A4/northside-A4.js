@@ -7,7 +7,8 @@ module.exports = {
     "music": "game-jam.mp3",
     "neighbours": {
         "left": "northside/A3",
-        "right": "northside/A5"
+        "right": "northside/A5",
+        "up": "northside/Z4"
     },
     "roads" : [
         { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": FACING_LEFT, "hasStart": true },
