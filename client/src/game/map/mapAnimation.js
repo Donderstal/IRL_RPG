@@ -3,7 +3,7 @@ const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls');
 const { Counter } = require('../../helpers/Counter');
 
-const carCounter = new Counter( 10000, true );
+const carCounter = new Counter( 5000, true );
 /**
  * Wrapper function that runs on each animation frame if the game is in Map mode.
  * Call drawSpritesInOrder() and clearMargins().

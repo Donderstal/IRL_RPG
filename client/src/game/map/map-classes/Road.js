@@ -127,7 +127,7 @@ class Road {
      * Return an object with the information needed generate a car sprite.
      */
     getCarDataForTile( isBus = false ) {
-        const carNames = [ "car_a", "car_b", "car_c", "car_d" ]
+        const carNames = [ "car_a", "car_b", "car_c", "car_d", "bus" ]
         let randomIndex = Math.floor(Math.random() * carNames.length);
         return {
             "direction": this.direction,
