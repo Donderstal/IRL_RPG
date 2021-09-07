@@ -222,6 +222,49 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         }
         return colliding;
     }
+
+    generateWalkingNPC( locations ) {
+        let start = locations[ Math.floor( Math.random( ) * locations.length ) ];
+        let possibleDestinations = locations.filter( ( e ) => { return e.direction != start.direction })
+        let end = possibleDestinations[ Math.floor( Math.random( ) * possibleDestinations.length ) ];
+        this.generateRandomWalkingSprite( start, end )
+    }
+
+    generateRandomWalkingSprite( start, destination ) {
+        const GAME = globals.GAME
+        let tile;
+        if ( start.col < 1 ) {
+            tile = GAME.FRONT.getTileAtCell( start.col + 1, start.row )
+        }
+        else if ( start.row < 1 ) {
+            tile = GAME.FRONT.getTileAtCell( start.col, start.row + 1 )
+        }
+        else if ( start.col > this.grid.cols ) {
+            tile = GAME.FRONT.getTileAtCell( start.col - 1, start.row )
+        }
+        else if ( start.row > this.grid.rows ) {
+            tile = GAME.FRONT.getTileAtCell( start.col, start.row - 1 )
+        }
+
+        let pngs = globals.SPRITE_PNGS()
+        GAME.FRONT.setCharacterSprite( tile, { "sprite": pngs[ Math.floor( Math.random( ) * pngs.length ) ], "direction": globals.FACING_RIGHT } )
+
+        let sprite = GAME.FRONT.spriteDictionary[tile.spriteId];
+        if ( start.col < 1 ) {
+            sprite.x -= globals.GRID_BLOCK_PX
+        }
+        else if ( start.row < 1 ) {
+            sprite.y -= globals.GRID_BLOCK_PX
+        }
+        else if ( start.col > this.grid.cols ) {
+            sprite.x += globals.GRID_BLOCK_PX
+        }
+        else if ( start.row > this.grid.rows ){
+            sprite.y += globals.GRID_BLOCK_PX
+        }
+
+        sprite.setDestination( destination, false, true )
+    }
 }
 
 module.exports = { 

@@ -4,6 +4,7 @@ const mapControls = require('./mapControls');
 const { Counter } = require('../../helpers/Counter');
 
 const carCounter = new Counter( 5000, true );
+const npcCounter = new Counter( 5000, true );
 /**
  * Wrapper function that runs on each animation frame if the game is in Map mode.
  * Call drawSpritesInOrder() and clearMargins().
@@ -21,19 +22,11 @@ const handleMapAnimations = ( GAME ) => {
         e.updateXy( e.x, e.y )
     })
     
-    if ( GAME.FRONT.roads.length > 0 ) {
-        if ( carCounter.countAndCheckLimit( ) ) {
-            GAME.FRONT.generateCar( );
-        }
-    }
-    else {
-        carCounter.resetCounter( );
-    }
-
+    handleCarCounter(GAME)
+    handleNpcCounter(GAME)
     if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
         mapControls.handleMovementKeys( );  
     }
-
     GAME.PLAYER.pathIsBlocked = false;
 
     if ( GAME.bubbleIsActive ) {
@@ -43,6 +36,28 @@ const handleMapAnimations = ( GAME ) => {
     GAME.FRONT.activeEffects.forEach( ( e ) => {
         e.drawAndMove( );
     })
+}
+
+const handleCarCounter = ( GAME ) => {
+    if ( GAME.FRONT.roads.length > 0 ) {
+        if ( carCounter.countAndCheckLimit( ) ) {
+            GAME.FRONT.generateCar( );
+        }
+    }
+    else {
+        carCounter.resetCounter( );
+    }
+}
+
+const handleNpcCounter = ( GAME ) => {
+    if ( GAME.activeMap.randomDestinations.length > 0 ) {
+        if ( npcCounter.countAndCheckLimit( ) ) {
+            GAME.FRONT.generateWalkingNPC( GAME.activeMap.randomDestinations );
+        }
+    }
+    else {
+        npcCounter.resetCounter( );
+    }
 }
 
 /**

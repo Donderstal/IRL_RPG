@@ -273,7 +273,7 @@ class Sprite {
     }
 
     setOffScreenDestination( destination ) {
-        destination.offScreen = true;
+        this.destination.offScreen = true;
         if ( destination.col < 1 ) {
             this.destination.col = 1
             this.destination.row = destination.row
