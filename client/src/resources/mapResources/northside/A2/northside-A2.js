@@ -1,5 +1,5 @@
 const { FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_IDLE } = require("../../../../game-data/globals");
-const { GRID } = require("../A5/grid");
+const { GRID } = require("./grid");
 
 module.exports = {
     "mapName": "northside/A2",
