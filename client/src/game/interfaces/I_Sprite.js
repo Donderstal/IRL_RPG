@@ -266,14 +266,15 @@ class Sprite {
         }
 
         if  ( destinationIsOffScreen && this.destination ) {
-            let tile = globals.GAME.getTileOnCanvasAtCell("FRONT", destination.col, destination.row )
+            let tile = globals.GAME.getTileOnCanvasAtCell("FRONT", destination.col, destination.row )            
             tile.direction = { [this.spriteId]: tile.direction };
             this.destinationTiles.push( { tile: tile  } )
+            this.destination = destination;
+            this.destination.offScreen = true;
         }
     }
 
     setOffScreenDestination( destination ) {
-        this.destination.offScreen = true;
         if ( destination.col < 1 ) {
             this.destination.col = 1
             this.destination.row = destination.row

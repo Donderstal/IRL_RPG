@@ -58,7 +58,7 @@ class NPC extends MapSprite {
             }
         }, 50 )
 
-        this.blockedCounter = new Counter( 1000, false )
+        this.blockedCounter = new Counter( 2000 * Math.random( ), false )
     }
     /**
      * Call super.drawSprite.
@@ -118,7 +118,7 @@ class NPC extends MapSprite {
         if ( this.pathIsBlocked ) {
             if ( this.blockedCounter.countAndCheckLimit( ) ) {
                 if ( this.destination ) {
-                    this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP );
+                    this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP, this.destination.offScreen );
                 }
                 else {
                     this.stopMovement( );

@@ -10,6 +10,16 @@ module.exports = {
         "left": "northside/A1",
         "right": "northside/A3"
     },
+    "randomDestinations" : [
+        { "col": 0, "row": 9, "direction": FACING_RIGHT },
+        { "col": 0, "row": 10, "direction": FACING_RIGHT },
+        { "col": 0, "row": 11, "direction": FACING_RIGHT },
+        { "col": 0, "row": 12, "direction": FACING_RIGHT },
+        { "col": 25, "row": 9, "direction": FACING_LEFT },
+        { "col": 25, "row": 10, "direction": FACING_LEFT },
+        { "col": 25, "row": 11, "direction": FACING_LEFT },
+        { "col": 25, "row": 12, "direction": FACING_LEFT }
+    ],
     "roads" : [
         { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": FACING_LEFT, "hasStart": true },
         { "alignment": "HORI", "topRow": 15, "bottomRow": 16, "direction": FACING_RIGHT, "hasStart": true }

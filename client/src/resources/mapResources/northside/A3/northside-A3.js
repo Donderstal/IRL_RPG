@@ -23,6 +23,14 @@ module.exports = {
     "grid": GRID,
     "actions": [],
     "doors": [],
+    "randomDestinations" : [
+        { "col": 0, "row": 9, "direction": FACING_RIGHT },
+        { "col": 0, "row": 10, "direction": FACING_RIGHT },
+        { "col": 0, "row": 11, "direction": FACING_RIGHT },
+        { "col": 25, "row": 9, "direction": FACING_LEFT },
+        { "col": 25, "row": 10, "direction": FACING_LEFT },
+        { "col": 25, "row": 11, "direction": FACING_LEFT }
+    ],
     "characters": [
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,

@@ -12,6 +12,7 @@ module.exports = {
     "rows": 16,
     "columns": 24,
     "grid": GRID,
+    "randomDestinations" : [],
     "mapObjects": [
         {
             "type": "Sign_02",

@@ -16,6 +16,21 @@ module.exports = {
     "rows": 16,
     "columns": 24,
     "grid": GRID,
+    "randomDestinations" : [
+        { "col": 0, "row": 4, "direction": FACING_RIGHT },
+        { "col": 0, "row": 5, "direction": FACING_RIGHT },
+        { "col": 0, "row": 6, "direction": FACING_RIGHT },
+        { "col": 0, "row": 7, "direction": FACING_RIGHT },
+        { "col": 0, "row": 8, "direction": FACING_RIGHT },
+        { "col": 0, "row": 9, "direction": FACING_RIGHT },
+        { "col": 0, "row": 10, "direction": FACING_RIGHT },
+        { "col": 0, "row": 11, "direction": FACING_RIGHT },
+        { "col": 0, "row": 12, "direction": FACING_RIGHT },
+        { "col": 25, "row": 9, "direction": FACING_LEFT },
+        { "col": 25, "row": 10, "direction": FACING_LEFT },
+        { "col": 25, "row": 11, "direction": FACING_LEFT },
+        { "col": 25, "row": 12, "direction": FACING_LEFT }
+      ],
     "mapObjects": [
         {
             "type": "Sign_03",

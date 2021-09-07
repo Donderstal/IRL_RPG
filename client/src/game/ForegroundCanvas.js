@@ -199,6 +199,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     tileHasBlockingSprite( tileIndex ) {
         const tile = this.getTileAtIndex( tileIndex );
         let colliding = false;
+        if ( tile == undefined ) {
+            return false;
+        }
         let allHitboxes = [];
         this.allSprites.forEach( ( sprite ) => {
             if ( sprite.hitbox != undefined && sprite.hitbox ) {
