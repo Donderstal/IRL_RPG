@@ -20,6 +20,10 @@ module.exports = {
         { "col": 0, "row": 9, "direction": FACING_RIGHT },
         { "col": 0, "row": 10, "direction": FACING_RIGHT },
         { "col": 0, "row": 11, "direction": FACING_RIGHT },
+        { "col": 2, "row": 6, "direction": FACING_DOWN },
+        { "col": 10, "row": 8, "direction": FACING_DOWN },
+        { "col": 20, "row": 8, "direction": FACING_DOWN },
+        { "col": 21, "row": 8, "direction": FACING_DOWN },
         { "col": 25, "row": 9, "direction": FACING_LEFT },
         { "col": 25, "row": 10, "direction": FACING_LEFT },
         { "col": 25, "row": 11, "direction": FACING_LEFT }
@@ -100,13 +104,6 @@ module.exports = {
             "col": 2,
             "sprite": "business_man.png",
             "direction": FACING_DOWN
-        },
-        {
-            "anim_type": NPC_ANIM_TYPE_IDLE,
-            "row": 8,
-            "col": 20,
-            "sprite": "characterx5.png",
-            "direction": FACING_UP
         },
         {
             "anim_type": NPC_ANIM_TYPE_IDLE,

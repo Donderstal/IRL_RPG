@@ -12,7 +12,13 @@ module.exports = {
     "rows": 16,
     "columns": 24,
     "grid": GRID,
-    "randomDestinations" : [],
+    "randomDestinations" : [
+        { "col": 10, "row": 7, "direction": FACING_DOWN },
+        { "col": 11, "row": 7, "direction": FACING_DOWN },
+        { "col": 15, "row": 6, "direction": FACING_DOWN },
+        { "col": 15, "row": 17, "direction": FACING_UP },
+        { "col": 16, "row": 17, "direction": FACING_UP }
+    ],
     "mapObjects": [
         {
             "type": "Sign_02",

@@ -27,6 +27,9 @@ module.exports = {
         { "col": 0, "row": 9, "direction": FACING_RIGHT },
         { "col": 0, "row": 10, "direction": FACING_RIGHT },
         { "col": 0, "row": 11, "direction": FACING_RIGHT },
+        { "col": 2, "row": 8, "direction": FACING_DOWN },
+        { "col": 12, "row": 8, "direction": FACING_DOWN },
+        { "col": 18, "row": 8, "direction": FACING_DOWN },
         { "col": 25, "row": 9, "direction": FACING_LEFT },
         { "col": 25, "row": 10, "direction": FACING_LEFT },
         { "col": 25, "row": 11, "direction": FACING_LEFT }
