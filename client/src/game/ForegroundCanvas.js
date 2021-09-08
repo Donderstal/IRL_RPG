@@ -235,7 +235,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
 
     generateRandomWalkingSprite( start, destination ) {
         const GAME = globals.GAME
-        let tile;
+        let tile = GAME.FRONT.getTileAtCell( start.col, start.row );
         if ( start.col < 1 ) {
             tile = GAME.FRONT.getTileAtCell( start.col + 1, start.row )
         }

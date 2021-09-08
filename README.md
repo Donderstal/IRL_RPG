@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### SEP 8, 2021
+* Added random walking npc generation for a more lively city
+
 #### SEP 7, 2021
 * Added added new maps in a more urban style
 

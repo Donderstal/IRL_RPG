@@ -52,13 +52,13 @@ class I_CanvasWithGrid {
             return { "x": -GRID_BLOCK_PX, "y": row * GRID_BLOCK_PX, "col": column, "row": row, isOffscreen: true, direction: FACING_LEFT }
         }
         else if ( row < 1 ) {
-            return { "x": column * GRID_BLOCK_PX, "y": -(GRID_BLOCK_PX * 2), "col": column, "row": row, isOffscreen: true, direction: FACING_DOWN }
+            return { "x": column * GRID_BLOCK_PX, "y": -(GRID_BLOCK_PX * 2), "col": column, "row": row, isOffscreen: true, direction: FACING_UP }
         }
         else if ( column > this.grid.cols ) {
             return { "x": this.grid.width + GRID_BLOCK_PX, "y": row * GRID_BLOCK_PX, "col": column, "row": row, isOffscreen: true, direction: FACING_RIGHT }
         }
         else if ( row > this.grid.rows ) { 
-            return { "x": column * GRID_BLOCK_PX, "y": this.grid.height + GRID_BLOCK_PX, "col": column, "row": row, isOffscreen: true, direction: FACING_UP }
+            return { "x": column * GRID_BLOCK_PX, "y": this.grid.height + (GRID_BLOCK_PX * 2), "col": column, "row": row, isOffscreen: true, direction: FACING_DOWN }
         }
 
         return this.grid.getTileAtCell( column, row );

@@ -35,7 +35,7 @@ class Sprite {
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction      = direction != null ? direction : 0;
+        this.direction      = direction != null ? direction : 0 //tile.direction != null ? tile.direction : direction != null ? direction : 0;
         this.sheetSrc       = src
         this.sheet          = globals.PNG_DICTIONARY[src]
         this.moving         = false;
@@ -247,13 +247,9 @@ class Sprite {
     setDestination( destination, isLoop = false, destinationIsOffScreen = false ) {
         this.originalDirection  = this.direction;
         this.destinationTiles   = [];
-        this.destination = {}
-
+        this.destination = { col: destination.col, row: destination.row }
         if (destinationIsOffScreen) {
             this.setOffScreenDestination( destination )
-        }
-        else {
-            this.destination        = destination;
         }
 
         this.activeDestinationIndex;
@@ -289,7 +285,7 @@ class Sprite {
         }
         else if ( destination.row > globals.GAME.FRONT.grid.rows ) { 
             this.destination.col = destination.col
-            this.destination.row = 24
+            this.destination.row = 16
         }
     }
     /**
