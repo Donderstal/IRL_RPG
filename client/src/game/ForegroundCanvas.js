@@ -236,6 +236,14 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     generateRandomWalkingSprite( start, destination ) {
         const GAME = globals.GAME
         let tile = GAME.FRONT.getTileAtCell( start.col, start.row );
+        const backTile = globals.GAME.getTileOnCanvasAtCell( "BACK", tile.col, tile.row );
+        const frontTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", tile.col, tile.row );
+
+        if ( backTile.isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( frontTile.index ) ) {
+            this.generateWalkingNPC( globals.GAME.activeMap.spawnPoints );
+            return;
+        }
+
         if ( start.col < 1 ) {
             tile = GAME.FRONT.getTileAtCell( start.col + 1, start.row )
         }

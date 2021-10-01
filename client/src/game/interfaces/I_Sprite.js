@@ -323,7 +323,7 @@ class Sprite {
             let map = globals.GAME.activeMap;
             this.inTimeout = false;
 
-            if ( this.x < 0 || this.y < 0 || this.x > globals.GRID_BLOCK_PX * map.rows || (this.y - ( this.height - GRID_BLOCK_PX)) > GRID_BLOCK_PX * map.cols ) {
+            if ( this.x < 0 || this.y < 0 || this.x > globals.GRID_BLOCK_PX * map.rows || (this.y + ( 2* GRID_BLOCK_PX)) > GRID_BLOCK_PX * map.cols ) {
                 globals.GAME.FRONT.deleteSprite( this.spriteId );
             }
             else {
