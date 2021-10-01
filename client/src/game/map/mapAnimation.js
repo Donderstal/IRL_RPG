@@ -50,9 +50,9 @@ const handleCarCounter = ( GAME ) => {
 }
 
 const handleNpcCounter = ( GAME ) => {
-    if ( GAME.activeMap.randomDestinations.length > 0 ) {
-        if ( npcCounter.countAndCheckLimit( ) ) {
-            GAME.FRONT.generateWalkingNPC( GAME.activeMap.randomDestinations );
+    if ( GAME.activeMap.spawnPoints != undefined ) {
+        if ( npcCounter.countAndCheckLimit( ) && GAME.activeMap.spawnPoints.length > 0) {
+            GAME.FRONT.generateWalkingNPC( GAME.activeMap.spawnPoints );
         }
     }
     else {

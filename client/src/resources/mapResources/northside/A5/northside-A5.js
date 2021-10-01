@@ -16,7 +16,7 @@ module.exports = {
     "rows": 16,
     "columns": 24,
     "grid": GRID,
-    "randomDestinations" : [
+    "spawnPoints" : [
         { "col": 0, "row": 4, "direction": FACING_RIGHT },
         { "col": 0, "row": 5, "direction": FACING_RIGHT },
         { "col": 0, "row": 6, "direction": FACING_RIGHT },

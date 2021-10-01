@@ -10,7 +10,7 @@ module.exports = {
         "left": "northside/A1",
         "right": "northside/A3"
     },
-    "randomDestinations" : [
+    "spawnPoints" : [
         { "col": 0, "row": 9, "direction": FACING_RIGHT },
         { "col": 0, "row": 10, "direction": FACING_RIGHT },
         { "col": 0, "row": 11, "direction": FACING_RIGHT },

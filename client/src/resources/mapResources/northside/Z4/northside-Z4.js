@@ -12,7 +12,7 @@ module.exports = {
     "rows": 16,
     "columns": 24,
     "grid": GRID,
-    "randomDestinations" : [
+    "spawnPoints" : [
         { "col": 10, "row": 7, "direction": FACING_DOWN },
         { "col": 11, "row": 7, "direction": FACING_DOWN },
         { "col": 15, "row": 6, "direction": FACING_DOWN },
