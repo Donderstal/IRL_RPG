@@ -121,6 +121,10 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
+        if ( this.sheet == undefined ) {
+            console.log(this.sheetSrc)
+            console.log(globals.PNG_DICTIONARY)
+        }
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
             this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 

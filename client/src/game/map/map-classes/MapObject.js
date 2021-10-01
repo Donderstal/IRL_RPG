@@ -68,6 +68,10 @@ class MapObject extends Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
         }
+        if ( this.sheet == undefined ) {
+            console.log(this)
+            console.log(this.objectResource)
+        }
         drawFromImageToCanvas(
             "FRONT",
             this.sheet,
