@@ -42,6 +42,8 @@ class Sprite {
         this.deleted        = false;
         this.animationScript = {};
         this.activeEffect = { active: false };
+        this.speed      = MOVEMENT_SPEED
+        this.isPasserby = false;
 
         this.setSpriteToGrid( tile )
     }
@@ -156,41 +158,41 @@ class Sprite {
         if ( this.destinationIsLeft  ) {
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
-            if ( ( this.x - MOVEMENT_SPEED ) < this.destinationTile.x && !this.isCar ) {
+            if ( ( this.x - this.speed ) < this.destinationTile.x && !this.isCar ) {
                 this.setSpriteToDestinationTile( );
             }
             else {
-                this.x -= MOVEMENT_SPEED;               
+                this.x -= this.speed;               
             }
         }
         else if ( this.destinationIsRight ) {
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
-            if ( ( this.x + MOVEMENT_SPEED ) > ( this.destinationTile.x + GRID_BLOCK_PX ) && !this.isCar ) {
+            if ( ( this.x + this.speed ) > ( this.destinationTile.x + GRID_BLOCK_PX ) && !this.isCar ) {
                 this.setSpriteToDestinationTile( );
             }
             else {
-                this.x += MOVEMENT_SPEED;              
+                this.x += this.speed;              
             }
         }
         else if ( this.destinationIsUp ) {
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
-            if ( ( this.y - MOVEMENT_SPEED ) < this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) && !this.isCar ) {
+            if ( ( this.y - this.speed ) < this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) && !this.isCar ) {
                 this.setSpriteToDestinationTile( );
             }
             else {
-                this.y -= MOVEMENT_SPEED;                  
+                this.y -= this.speed;                  
             }
         }
         else if ( this.destinationIsDown ) {
             this.moving = true;
             this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
-            if ( ( this.y + MOVEMENT_SPEED ) > ( this.destinationTile.y + GRID_BLOCK_PX ) && !this.isCar ) {
+            if ( ( this.y + this.speed ) > ( this.destinationTile.y + GRID_BLOCK_PX ) && !this.isCar ) {
                 this.setSpriteToDestinationTile( );
             }
             else {
-                this.y += MOVEMENT_SPEED;                  
+                this.y += this.speed;                  
             }
         } 
 
@@ -224,13 +226,13 @@ class Sprite {
     }
     /**
      * Set this.movingToDestination to true. 
-     * If given speed is not null, set it to this.movementSpeed.
+     * If given speed is not null, set it to this.speed.
      * Else, set MOVEMENT_SPEED.
      * @param {Number} speed optional. movement speed of the sprite in pixels
      */
     initMovement( speed = null ) {
         this.movingToDestination = true;
-        this.movementSpeed = speed != null ? speed : MOVEMENT_SPEED;
+        this.speed = speed != null ? speed : MOVEMENT_SPEED;
     }
     /**
      * Set this.sheetPosition to 0 to reset the sprite to a neutral pose.
@@ -314,10 +316,27 @@ class Sprite {
             this.destinationTiles = this.getTileListFromIndexes( pathIndexes, startingTile )
             this.activeDestinationIndex = 0;
             this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;      
-            this.initMovement( );       
+            this.initMovement(  MOVEMENT_SPEED * (Math.random() * (1 - .5) + .5 ));       
             this.direction = this.destinationTile.direction[this.spriteId]; 
         }
-        else if ( !this.isCar ) {
+        else if ( !this.isCar && this.isPasserby ) {
+            let map = globals.GAME.activeMap;
+            this.inTimeout = false;
+
+            if ( this.x < 0 || this.y < 0 || this.x > globals.GRID_BLOCK_PX * map.rows || (this.y - ( this.height - GRID_BLOCK_PX)) > GRID_BLOCK_PX * map.cols ) {
+                globals.GAME.FRONT.deleteSprite( this.spriteId );
+            }
+            else {
+                setTimeout( ( ) => { 
+                    this.inTimeout = true;
+                    let map = globals.GAME.activeMap
+                    let spawnPoints = map.spawnPoints.filter( ( e ) => { return e.row != this.row && e.col != this.col })
+                    let destination = spawnPoints[ Math.floor( Math.random( ) * spawnPoints.length ) ]
+                    this.setDestination( destination, false, destination.row < 1 || destination.col < 1 || destination.row > map.rows || destination.col > map.cols )
+                }, 500 )                
+            }
+        }
+        else if ( !this.isCar && !this.isPasserby ) {
             this.unsetDestination( );    
         }
     }
