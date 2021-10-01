@@ -266,6 +266,7 @@
             <option value="my-neighbourhood/A1/my-house">Standard</option>
             <option value="northside/A3">Northside</option>
             <option value="test/test-collision">Collision Test</option>
+            <option value="test/newMapFormat">newMapFormat</option>
             <option value="test/test-dungeon-outside">Test Dungeon</option>
         </select></p>
     </div>

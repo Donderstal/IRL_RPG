@@ -245,6 +245,11 @@ module.exports = {
 
             ]
         },
+        "starting_neighbourhood_clean": {
+            "src": "Starting_neighbourhood_2.png",
+            "uniqueTiles": 12000,
+            "blocked": [ ]
+        },
         "battle_downtown" : {
             "src": "battle_tiles.png",
             "uniqueTiles": 150,

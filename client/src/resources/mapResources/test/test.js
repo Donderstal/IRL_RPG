@@ -6,6 +6,7 @@ const hallNorthWest = require('./test-dungeon/hall-northwest/hall-northwest');
 const testActions = require('./test-actions/test-actions');
 const TESTCARS = require('./test-cars/test-cars')
 const testCollision = require('./test-collision/test-collision')
+const newMapFormat = require('./new-map-format')
 
 module.exports = {
     "test-dungeon-outside": testDungeonOutside,
@@ -15,5 +16,6 @@ module.exports = {
     'hall-northwest': hallNorthWest,
     'test-actions': testActions,
     'test-collision': testCollision,
-    'TEST_CARS' : TESTCARS
+    'TEST_CARS' : TESTCARS,
+    'newMapFormat' : newMapFormat
 }
