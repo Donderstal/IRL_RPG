@@ -83,7 +83,7 @@ module.exports = {
         {
             "row": 3, 
             "col": 7,
-            "to"  : "my-neighbourhood/A1/my-house",
+            "destination"  : "my-neighbourhood/A1/my-house",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -91,7 +91,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 10,
-            "to"  : "my-neighbourhood/A1/neighbours-house",
+            "destination"  : "my-neighbourhood/A1/neighbours-house",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -111,7 +111,7 @@ module.exports = {
                 {
                     "row": 16, 
                     "col": 12,
-                    "to"  : "my-neighbourhood/A1",
+                    "destination"  : "my-neighbourhood/A1",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false
@@ -119,7 +119,7 @@ module.exports = {
                 {
                     "row": 16, 
                     "col": 13,
-                    "to"  : "my-neighbourhood/A1",
+                    "destination"  : "my-neighbourhood/A1",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false
@@ -389,7 +389,7 @@ module.exports = {
                   "row": 8, 
                   "col": 2,
                   "from" : "my-neighbourhood/A1/my-house",
-                  "to"  : "my-neighbourhood/A1",
+                  "destination"  : "my-neighbourhood/A1",
                   "directionIn": FACING_DOWN,
                   "directionOut": FACING_UP,
                 }

@@ -28,7 +28,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 3,
-            "to"  : "my-neighbourhood/A2/yum-corp",
+            "destination"  : "my-neighbourhood/A2/yum-corp",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -36,7 +36,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 15,
-            "to"  : "my-neighbourhood/A2/house-of-war",
+            "destination"  : "my-neighbourhood/A2/house-of-war",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -120,7 +120,7 @@ module.exports = {
               {
                   "row": 11, 
                   "col": 3,
-                  "to"  : "my-neighbourhood/A2",
+                  "destination"  : "my-neighbourhood/A2",
                   "directionIn": FACING_DOWN,
                   "directionOut": FACING_UP,
                   "locked": false
@@ -128,7 +128,7 @@ module.exports = {
               {
                   "row": 2, 
                   "col": 6,
-                  "to"  : "my-neighbourhood/A2/back-alley",
+                  "destination"  : "my-neighbourhood/A2/back-alley",
                   "directionOut": FACING_DOWN,           
                   "directionIn": FACING_UP,
                   "locked": false
@@ -172,7 +172,7 @@ module.exports = {
                 {
                     "row": 10, 
                     "col": 5,
-                    "to"  : "my-neighbourhood/A2",
+                    "destination"  : "my-neighbourhood/A2",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false
@@ -226,7 +226,7 @@ module.exports = {
                 {
                     "row": 6, 
                     "col": 4,
-                    "to"  : "my-neighbourhood/A2/yum-corp",
+                    "destination"  : "my-neighbourhood/A2/yum-corp",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false
@@ -234,7 +234,7 @@ module.exports = {
                 {
                     "row": 6, 
                     "col": 5,
-                    "to"  : "my-neighbourhood/A2/yum-corp",
+                    "destination"  : "my-neighbourhood/A2/yum-corp",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false

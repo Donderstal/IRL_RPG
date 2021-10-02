@@ -334,7 +334,7 @@ class Game {
         switch ( type ) {
             case EVENT_DOOR :
                 mapData.doors.forEach( ( door ) => {
-                    if ( this.activeMapName == door.to ) {
+                    if ( this.activeMapName == door.destination ) {
                         newPlayerCell.row = door.row;
                         newPlayerCell.col = door.col;
                         direction = door.directionOut;

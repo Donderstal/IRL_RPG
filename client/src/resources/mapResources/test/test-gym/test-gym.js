@@ -478,7 +478,7 @@ module.exports = {
           {
               "row": 6, 
               "col": 12,
-              "to"  : "my-neighbourhood/Chad-outer/chad-club",
+              "destination"  : "my-neighbourhood/Chad-outer/chad-club",
               "directionIn": FACING_UP,
               "directionOut": FACING_DOWN,
               "locked": false
@@ -486,7 +486,7 @@ module.exports = {
           {
               "row": 6, 
               "col": 13,
-              "to"  : "my-neighbourhood/Chad-outer/chad-club",
+              "destination"  : "my-neighbourhood/Chad-outer/chad-club",
               "directionIn": FACING_UP,
               "directionOut": FACING_DOWN,
               "locked": false
@@ -1441,7 +1441,7 @@ module.exports = {
             {
               "row": 16, 
               "col": 12,
-              "to"  : "my-neighbourhood/Chad-outer",
+              "destination"  : "my-neighbourhood/Chad-outer",
               "directionIn": FACING_DOWN,
               "directionOut": FACING_UP,
               "locked": false
@@ -1449,7 +1449,7 @@ module.exports = {
             {
               "row": 16, 
               "col": 13,
-              "to"  : "my-neighbourhood/Chad-outer",
+              "destination"  : "my-neighbourhood/Chad-outer",
               "directionIn": FACING_DOWN,
               "directionOut": FACING_UP,
               "locked": false

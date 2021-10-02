@@ -104,7 +104,7 @@ class MapAction extends I_Hitbox {
             case EVENT_BUS :
                 this.events.forEach( ( e ) => {
                     if ( e["trigger"] == ON_LEAVE ) {
-                        new Cinematic( e, e["trigger"], [ this.to, EVENT_BUS ] );                            
+                        new Cinematic( e, e["trigger"], [ this.destination, EVENT_BUS ] );                            
                     }
                 } )
                 break;

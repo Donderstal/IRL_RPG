@@ -68,7 +68,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 8,
-            "to"  : "my-neighbourhood/A3/le-canard-lobby",
+            "destination"  : "my-neighbourhood/A3/le-canard-lobby",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -76,7 +76,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 9,
-            "to"  : "my-neighbourhood/A3/le-canard-lobby",
+            "destination"  : "my-neighbourhood/A3/le-canard-lobby",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -108,7 +108,7 @@ module.exports = {
                 {
                     "row": 8, 
                     "col": 1,
-                    "to"  : "my-neighbourhood/A3/hotel-west-hall",
+                    "destination"  : "my-neighbourhood/A3/hotel-west-hall",
                     "directionIn": FACING_LEFT,
                     "directionOut": FACING_RIGHT,
                     "locked": false
@@ -116,7 +116,7 @@ module.exports = {
                 {
                     "row": 8, 
                     "col": 12,
-                    "to"  : "my-neighbourhood/A3/hotel-east-hall",
+                    "destination"  : "my-neighbourhood/A3/hotel-east-hall",
                     "directionIn": FACING_RIGHT,
                     "directionOut": FACING_LEFT,
                     "locked": true
@@ -124,7 +124,7 @@ module.exports = {
                 {
                     "row": 1, 
                     "col": 7,
-                    "to"  : "my-neighbourhood/A3/hotel-office-area",
+                    "destination"  : "my-neighbourhood/A3/hotel-office-area",
                     "directionIn": FACING_UP,
                     "directionOut": FACING_DOWN,
                     "locked": true
@@ -132,7 +132,7 @@ module.exports = {
                 {
                     "row": 12, 
                     "col": 5,
-                    "to"  : "my-neighbourhood/A3",
+                    "destination"  : "my-neighbourhood/A3",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false
@@ -176,7 +176,7 @@ module.exports = {
                 {
                     "row": 3, 
                     "col": 23,
-                    "to"  : "my-neighbourhood/A3/le-canard-lobby",
+                    "destination"  : "my-neighbourhood/A3/le-canard-lobby",
                     "directionIn": FACING_RIGHT,
                     "directionOut": FACING_LEFT,
                     "locked": false
@@ -184,7 +184,7 @@ module.exports = {
                 {
                     "row": 1, 
                     "col": 4,
-                    "to"  : "my-neighbourhood/A3/room-large-1",
+                    "destination"  : "my-neighbourhood/A3/room-large-1",
                     "directionIn": FACING_UP,
                     "directionOut": FACING_DOWN,
                     "locked": false
@@ -213,7 +213,7 @@ module.exports = {
                 {
                     "row": 8, 
                     "col": 2,
-                    "to"  : "my-neighbourhood/A3/hotel-west-hall",
+                    "destination"  : "my-neighbourhood/A3/hotel-west-hall",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false

@@ -35,7 +35,7 @@ module.exports = {
             "row": 4, 
             "col": 20,
             "from" : "test/hall-west",
-            "to"  : "test/test-dungeon-lobby",
+            "destination"  : "test/test-dungeon-lobby",
             "directionIn": FACING_RIGHT,
             "directionOut": FACING_LEFT
         },
@@ -43,7 +43,7 @@ module.exports = {
             "row": 2, 
             "col": 2,
             "from" : "test/hall-west",
-            "to"  : "test/hall-northwest",
+            "destination"  : "test/hall-northwest",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN
         },
@@ -51,7 +51,7 @@ module.exports = {
             "row": 2, 
             "col": 11,
             "from" : "test/hall-west",
-            "to"  : "test/hall-west/room-left",
+            "destination"  : "test/hall-west/room-left",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN
         },
@@ -59,7 +59,7 @@ module.exports = {
             "row": 2, 
             "col": 15,
             "from" : "test/hall-west",
-            "to"  : "test/hall-west/room-right",
+            "destination"  : "test/hall-west/room-right",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN
         }
@@ -85,7 +85,7 @@ module.exports = {
                     "row": 8, 
                     "col": 3,
                     "from" : "test/hall-west/room-left",
-                    "to"  : "test/hall-west",
+                    "destination"  : "test/hall-west",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP
                 }
@@ -108,7 +108,7 @@ module.exports = {
                     "row": 8, 
                     "col": 2,
                     "from" : "test/hall-west/room-right",
-                    "to"  : "test/hall-west",
+                    "destination"  : "test/hall-west",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP
                 }

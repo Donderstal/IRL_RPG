@@ -41,7 +41,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 16,
-            "to"  : "my-neighbourhood/A4/yum-mart",
+            "destination"  : "my-neighbourhood/A4/yum-mart",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -49,7 +49,7 @@ module.exports = {
         {
             "row": 4, 
             "col": 2,
-            "to"  : "my-neighbourhood/A4/luxury-house",
+            "destination"  : "my-neighbourhood/A4/luxury-house",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
             "locked": false
@@ -83,7 +83,7 @@ module.exports = {
                 {
                     "row": 14, 
                     "col": 3,
-                    "to"  : "my-neighbourhood/A4",
+                    "destination"  : "my-neighbourhood/A4",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false
@@ -127,7 +127,7 @@ module.exports = {
                 {
                     "row": 13, 
                     "col": 6,
-                    "to"  : "my-neighbourhood/A4",
+                    "destination"  : "my-neighbourhood/A4",
                     "directionIn": FACING_DOWN,
                     "directionOut": FACING_UP,
                     "locked": false

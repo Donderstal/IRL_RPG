@@ -30,19 +30,19 @@ const unlockDoorEvent = {
 }
 /**
  * I_Hitbox extension that trigger the GAME.switchMap function if the player is in blockedRange
- * this.to stores the name of the map where the door leads to.
+ * this.destination stores the name of the map where the door leads to.
  */
 class Door extends I_Hitbox {
     constructor( x, y, door ) {
         super( x, y, GRID_BLOCK_PX * .75 )
         this.from           = door.from;
-        this.to             = door.to;
+        this.destination             = door.destination;
         this.directionIn    = door.directionIn
         this.directionOut   = door.directionOut
         this.locked         = door.locked
         this.arcColor       = "#FFFF00";
 
-        if ( door.condition && !inUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.to ) ) {
+        if ( door.condition && !inUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.destination ) ) {
             this.condition = true;
             this.conditionType = door.condition.type;
             this.conditionValue = door.condition.value
@@ -61,9 +61,9 @@ class Door extends I_Hitbox {
             new Cinematic( lockedDoorEvent, ON_NPC_INTERACTION )
         }
         else if ( this.condition ) {
-            new Cinematic( unlockDoorEvent, ON_LEAVE, [ this.to, EVENT_DOOR] )
+            new Cinematic( unlockDoorEvent, ON_LEAVE, [ this.destination, EVENT_DOOR] )
             this.metConditionAtLastCheck = true;
-            addDoorToUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.to );
+            addDoorToUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.destination );
             this.dismiss( );
         }
     }
@@ -72,14 +72,14 @@ class Door extends I_Hitbox {
     }
     /**
      * Override of the base checkForBlockedRange.
-     * If super.checkForBlockedRange, call GAME.switchMap to go the the map in the this.to prop.
+     * If super.checkForBlockedRange, call GAME.switchMap to go the the map in the this.destination prop.
      * @param {I_Hitbox} targetHitbox 
      * @param {String} targetDirection 
      */
     checkForBlockedRange( targetHitbox, targetDirection ) {
         if ( super.checkForBlockedRange( targetHitbox, targetDirection ) ) {
             if ( ( this.meetsCondition && this.metConditionAtLastCheck ) || !this.condition ) {
-                globals.GAME.switchMap( this.to, EVENT_DOOR );
+                globals.GAME.switchMap( this.destination, EVENT_DOOR );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );
             }
         }

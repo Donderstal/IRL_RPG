@@ -47,7 +47,7 @@ module.exports = {
             "row": 14, 
             "col": 2,
             "from" : "test/hall-northwest",
-            "to"  : "test/hall-west",
+            "destination"  : "test/hall-west",
             "directionIn": FACING_DOWN,
             "directionOut": FACING_UP
         },
@@ -55,7 +55,7 @@ module.exports = {
             "row": 14, 
             "col": 17,
             "from" : "test/hall-northwest",
-            "to"  : "test/test-dungeon-lobby",
+            "destination"  : "test/test-dungeon-lobby",
             "directionIn": FACING_DOWN,
             "directionOut": FACING_UP
         }
