@@ -9,6 +9,7 @@ const { BattleSlot } = require('./battle/BattleSlot');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
 const { CONTROL_LEFT, CONTROL_RIGHT } = require('../game-data/battleGlobals');
+const { DEFAULT, EVENT_TALK, SPEAK } = require('../game-data/conditionGlobals');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -226,41 +227,73 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         return colliding;
     }
 
-    generateWalkingNPC( locations ) {
-        let start = locations[ Math.floor( Math.random( ) * locations.length ) ];
-        let possibleDestinations = locations.filter( ( e ) => { return e.direction != start.direction })
-        let end = possibleDestinations[ Math.floor( Math.random( ) * possibleDestinations.length ) ];
+    generateWalkingNPC( ) {
+        let start = this.getValidSpawnStart( );
+        let end = this.getValidSpawnDestination( start )
         this.generateRandomWalkingSprite( start, end )
     }
 
-    generateRandomWalkingSprite( start, destination ) {
-        const GAME = globals.GAME
-        let tile = GAME.FRONT.getTileAtCell( start.col, start.row );
-        const backTile = globals.GAME.getTileOnCanvasAtCell( "BACK", tile.col, tile.row );
-        const frontTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", tile.col, tile.row );
+    getValidSpawnStart( ) {
+        let validLocations = this.filterSpawnPoints( )
+        return validLocations[ Math.floor( Math.random( ) * validLocations.length ) ];
+    }
 
-        if ( backTile.isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( frontTile.index ) ) {
-            this.generateWalkingNPC( globals.GAME.activeMap.spawnPoints );
-            return;
+    getValidSpawnDestination( startLocation = null, oldDestination = null ) {
+        let validLocations = this.filterSpawnPoints( startLocation );
+        if ( oldDestination ) {
+            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", oldDestination.col, oldDestination.row )
+            if (!( tile.isBlocked || this.tileHasBlockingSprite( tile.index )))
+                return oldDestination
         }
+        return validLocations[ Math.floor( Math.random( ) * validLocations.length ) ];
+    }
 
+    filterSpawnPoints( startLocation = null ) {
+        return globals.GAME.activeMap.spawnPoints.filter( ( e) => {
+            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.col, e.row )
+            return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index )) && startLocation != null ? e.direction != startLocation.direction : true
+        })
+    }
+
+    generateRandomWalkingSprite( start, destination ) {
+        let tile = this.getTileAtCell( start.col, start.row );
         if ( start.col < 1 ) {
-            tile = GAME.FRONT.getTileAtCell( start.col + 1, start.row )
+            tile = this.getTileAtCell( start.col + 1, start.row )
         }
         else if ( start.row < 1 ) {
-            tile = GAME.FRONT.getTileAtCell( start.col, start.row + 1 )
+            tile = this.getTileAtCell( start.col, start.row + 1 )
         }
         else if ( start.col > this.grid.cols ) {
-            tile = GAME.FRONT.getTileAtCell( start.col - 1, start.row )
+            tile = this.getTileAtCell( start.col - 1, start.row )
         }
         else if ( start.row > this.grid.rows ) {
-            tile = GAME.FRONT.getTileAtCell( start.col, start.row - 1 )
+            tile = this.getTileAtCell( start.col, start.row - 1 )
         }
 
         let pngs = globals.SPRITE_PNGS()
-        GAME.FRONT.setCharacterSprite( tile, { "sprite": pngs[ Math.floor( Math.random( ) * pngs.length ) ], "direction": globals.FACING_RIGHT } )
+        let characterData = {
+            "sprite": pngs[ Math.floor( Math.random( ) * pngs.length ) ], 
+            "direction": globals.FACING_RIGHT,
+            "hasAction": true,
+            "action": [
+                {
+                    "condition": {
+                        "type": DEFAULT
+                    },
+                    "action": { 
+                        "type": EVENT_TALK,
+                        "sfx": "voice-1.mp3",
+                        "scenes": [
+                            { "type": SPEAK, "text": "This is a random text!" },
+                            { "type": SPEAK, "text": "Omg so random..." }
+                        ]
+                    } 
+                }                
+            ]
+        }
+        this.setCharacterSprite( tile, characterData )
 
-        let sprite = GAME.FRONT.spriteDictionary[tile.spriteId];
+        let sprite = this.spriteDictionary[tile.spriteId];
         if ( start.col < 1 ) {
             sprite.x -= globals.GRID_BLOCK_PX
         }
