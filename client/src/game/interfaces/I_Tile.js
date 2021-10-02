@@ -22,6 +22,7 @@ class I_Tile {
         this.col = col;
 
         this.blocked = false;
+        this.blockedException = false;
         this.direction = {};
 
         this.hasEvent = false;
@@ -40,7 +41,7 @@ class I_Tile {
      * Return true if the tile is blocked or has a sprite on it
      */
     get isBlocked( ) { 
-        return this.blocked || this.hasSprite
+        return !this.blockedException && (this.blocked || this.hasSprite)
     }
     /**
      * If this.ID is not null or empty, fetch the xy position of the this.ID property from SHEET_XY_VALUES.

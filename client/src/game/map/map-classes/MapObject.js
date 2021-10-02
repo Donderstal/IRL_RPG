@@ -1,10 +1,13 @@
 const { Sprite }     = require('../../interfaces/I_Sprite')
 const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
+const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 const { Counter } = require('../../../helpers/Counter')
 const { ActionSelector } = require('./ActionSelector')
 const mapObjectResources = require('../../../resources/mapObjectResources')
 const { HitboxGroup } = require('./HitboxGroup')
+const { Door } = require('./Door')
+const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
@@ -16,13 +19,13 @@ class MapObject extends Sprite {
     constructor ( tile, spriteData, spriteId ){
         const objectResource = mapObjectResources[spriteData.type]
         const src = "/static/sprite-assets/" + objectResource.src
-        const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, spriteData.direction );
+        const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, spriteData.hasDoor ? null : spriteData.direction );
         const dimensionsInMap = {
             "width": spriteDimensionsInBlocks.hori * GRID_BLOCK_PX,
             "height": spriteDimensionsInBlocks.vert * GRID_BLOCK_PX 
         }
 
-        super( tile, dimensionsInMap, src, spriteData.direction )
+        super( tile, dimensionsInMap, src, spriteData.hasDoor ? null : spriteData.direction )
 
         this.objectResource = objectResource;
         this.onBackground   = objectResource.on_background
@@ -32,6 +35,7 @@ class MapObject extends Sprite {
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
         this.hasAction  = spriteData.hasAction;
+        this.hasDoor = spriteData.hasDoor;
         this.spriteId = spriteId;
         this.type = "object"
 
@@ -45,6 +49,13 @@ class MapObject extends Sprite {
             this.hitbox = this.actionSelector.activeAction;
             this.action = spriteData.action
         }  
+        else if ( spriteData.hasDoor ) {
+            this.hitbox = new Door( this.x + ( ( GRID_BLOCK_PX * .75 ) / 2 ), this.y, spriteData );
+            for ( var i = 1; i == Math.floor( this.width  / GRID_BLOCK_PX); i++ ) {
+                let tileBack = globals.GAME.BACK.getTileAtXY( this.x + ( i * GRID_BLOCK_PX ) , this.y + this.height );
+                tileBack.blockedException = true;                
+            }
+        }
         else if ( !this.onBackground && !this.notGrounded ) {
             this.initHitboxGroups( );
         }
@@ -80,6 +91,10 @@ class MapObject extends Sprite {
             this.widthInSheet, this.heightInSheet,
             this.x, this.y, this.width, this.height
         )
+        if ( this.hasDoor ) {
+            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );  
+            this.hitbox.checkForBlockedRange( globals.GAME.PLAYER.hitbox, globals.GAME.PLAYER.direction );
+        }
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( this.width / 2 ), this.y + ( this.height * 0.15 ) )
         }

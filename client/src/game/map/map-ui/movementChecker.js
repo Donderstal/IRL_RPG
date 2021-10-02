@@ -18,7 +18,7 @@ const checkForCollision = ( sprite, isPlayer ) => {
         else if  ( sprite.nextTileBack.hasEvent && sprite.nextTileBack.eventType == EVENT_DOOR ) {
             sprite.nextTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
         }
-        if ( sprite.nextTileBack != undefined && sprite.nextTileBack.blocked ) {
+        if ( sprite.nextTileBack != undefined && sprite.nextTileBack.isBlocked ) {
             switch ( sprite.direction ) {
                 case FACING_RIGHT :
                     return sprite.isInCenterFacingRight;
@@ -34,7 +34,7 @@ const checkForCollision = ( sprite, isPlayer ) => {
 
     globals.GAME.FRONT.allSprites.forEach( ( e ) => {
         if( e.spriteId != sprite.spriteId ) {
-            if ( checkIfSpritesCollide( sprite, e ) ) {
+            if ( checkIfSpritesCollide( sprite, e ) && !e.hasDoor ) {
                 colliding = true;
             }
         }
