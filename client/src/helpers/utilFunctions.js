@@ -1,3 +1,5 @@
+const { FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN } = require("../game-data/globals");
+
 /**
  * Do a HTTP request to given url. Then, call the callback with the json response and callbackparams as arguments
  * @param {String} url 
@@ -99,12 +101,28 @@ const cloneInstance = ( instance ) => {
         JSON.parse(JSON.stringify(instance)),
     );
 }
-
+/**
+ * Return the opposite of given direction
+ * @param {int} direction
+ */
+const getOppositeDirection = ( direction ) => {
+    switch( direction ) {
+        case FACING_LEFT:
+            return FACING_RIGHT;
+        case FACING_UP:
+            return FACING_DOWN;
+        case FACING_RIGHT:
+            return FACING_LEFT;
+        case FACING_DOWN: 
+            return FACING_UP;
+    }
+}
 module.exports = {
     getUniqueId,
     fetchJSONWithCallback,
     toggleLetterBoxDivs,
     getNextIndexInArray,
     getPreviousIndexInArray,
-    cloneInstance
+    cloneInstance,
+    getOppositeDirection
 }

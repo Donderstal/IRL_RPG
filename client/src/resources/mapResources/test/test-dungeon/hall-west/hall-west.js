@@ -36,28 +36,24 @@ module.exports = {
             "col": 20,
             "destination"  : "test/test-dungeon-lobby",
             "directionIn": FACING_RIGHT,
-            "directionOut": FACING_LEFT
         },
         {
             "row": 2, 
             "col": 2,
             "destination"  : "test/hall-northwest",
             "directionIn": FACING_UP,
-            "directionOut": FACING_DOWN
         },
         {
             "row": 2, 
             "col": 11,
             "destination"  : "test/hall-west/room-left",
             "directionIn": FACING_UP,
-            "directionOut": FACING_DOWN
         },
         {
             "row": 2, 
             "col": 15,
             "destination"  : "test/hall-west/room-right",
             "directionIn": FACING_UP,
-            "directionOut": FACING_DOWN
         }
     ],
     "subMaps": {
@@ -82,7 +78,6 @@ module.exports = {
                     "col": 3,
                     "destination"  : "test/hall-west",
                     "directionIn": FACING_DOWN,
-                    "directionOut": FACING_UP
                 }
             ]
         },
@@ -104,7 +99,6 @@ module.exports = {
                     "col": 2,
                     "destination"  : "test/hall-west",
                     "directionIn": FACING_DOWN,
-                    "directionOut": FACING_UP
                 }
             ]
         }

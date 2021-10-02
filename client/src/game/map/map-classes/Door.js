@@ -5,7 +5,8 @@ const { I_Hitbox }         = require('../../interfaces/I_Hitbox')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { Cinematic } = require('../../cutscenes/Cinematic');
 const { ITEM_OWNED } = require('../../../game-data/conditionGlobals');
-const { inUnlockedDoorsRegistry, addDoorToUnlockedDoorsRegistry } = require('../../../helpers/doorRegistry')
+const { inUnlockedDoorsRegistry, addDoorToUnlockedDoorsRegistry } = require('../../../helpers/doorRegistry');
+const { getOppositeDirection } = require('../../../helpers/utilFunctions');
 
 const lockedDoorEvent = {
     scenes: [
@@ -38,7 +39,7 @@ class Door extends I_Hitbox {
         this.mapName        = globals.GAME.activeMapName;
         this.destination    = door.destination;
         this.directionIn    = door.directionIn
-        this.directionOut   = door.directionOut
+        this.directionOut   = getOppositeDirection(this.directionIn);
         this.locked         = door.locked
         this.arcColor       = "#FFFF00";
 

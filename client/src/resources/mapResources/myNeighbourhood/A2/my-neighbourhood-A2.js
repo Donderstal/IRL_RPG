@@ -30,7 +30,6 @@ module.exports = {
             "col": 3,
             "destination"  : "my-neighbourhood/A2/yum-corp",
             "directionIn": FACING_UP,
-            "directionOut": FACING_DOWN,
             "locked": false
         },
         {
@@ -38,7 +37,6 @@ module.exports = {
             "col": 15,
             "destination"  : "my-neighbourhood/A2/house-of-war",
             "directionIn": FACING_UP,
-            "directionOut": FACING_DOWN,
             "locked": false
         }
     ],
@@ -122,14 +120,13 @@ module.exports = {
                   "col": 3,
                   "destination"  : "my-neighbourhood/A2",
                   "directionIn": FACING_DOWN,
-                  "directionOut": FACING_UP,
                   "locked": false
               },
               {
                   "row": 2, 
                   "col": 6,
                   "destination"  : "my-neighbourhood/A2/back-alley",
-                  "directionOut": FACING_DOWN,           
+               
                   "directionIn": FACING_UP,
                   "locked": false
               }
@@ -174,7 +171,6 @@ module.exports = {
                     "col": 5,
                     "destination"  : "my-neighbourhood/A2",
                     "directionIn": FACING_DOWN,
-                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ],
@@ -228,7 +224,6 @@ module.exports = {
                     "col": 4,
                     "destination"  : "my-neighbourhood/A2/yum-corp",
                     "directionIn": FACING_DOWN,
-                    "directionOut": FACING_UP,
                     "locked": false
                 },
                 {
@@ -236,7 +231,6 @@ module.exports = {
                     "col": 5,
                     "destination"  : "my-neighbourhood/A2/yum-corp",
                     "directionIn": FACING_DOWN,
-                    "directionOut": FACING_UP,
                     "locked": false
                 }
             ]

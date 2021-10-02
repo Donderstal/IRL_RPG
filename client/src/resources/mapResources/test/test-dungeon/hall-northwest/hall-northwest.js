@@ -48,14 +48,12 @@ module.exports = {
             "col": 2,
             "destination"  : "test/hall-west",
             "directionIn": FACING_DOWN,
-            "directionOut": FACING_UP
         },
         {
             "row": 14, 
             "col": 17,
             "destination"  : "test/test-dungeon-lobby",
             "directionIn": FACING_DOWN,
-            "directionOut": FACING_UP
         }
     ]
 }

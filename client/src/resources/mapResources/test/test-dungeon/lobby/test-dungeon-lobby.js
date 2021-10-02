@@ -56,21 +56,18 @@ module.exports = {
             "col": 9,
             "destination"  : "test/test-dungeon-hall",
             "directionIn": FACING_DOWN,
-            "directionOut": FACING_UP
         },
         {
             "row": 12, 
             "col": 10,
             "destination"  : "test/test-dungeon-hall",
             "directionIn": FACING_DOWN,
-            "directionOut": FACING_UP
         },
         {
             "row": 9, 
             "col": 1,
             "destination"  : "test/hall-west",
             "directionIn": FACING_LEFT,
-            "directionOut": FACING_RIGHT
         },
         {
             "condition" : {
@@ -81,7 +78,6 @@ module.exports = {
             "col": 2,
             "destination"  : "test/hall-northwest",
             "directionIn": FACING_UP,
-            "directionOut": FACING_DOWN,
           },
     ]
 }
