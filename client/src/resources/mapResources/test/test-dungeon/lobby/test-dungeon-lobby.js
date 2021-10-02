@@ -54,13 +54,13 @@ module.exports = {
         {
             "row": 12, 
             "col": 9,
-            "destination"  : "test/test-dungeon-hall",
+            "destination"  : "test/newMapFormat",
             "direction": FACING_DOWN,
         },
         {
             "row": 12, 
             "col": 10,
-            "destination"  : "test/test-dungeon-hall",
+            "destination"  : "test/newMapFormat",
             "direction": FACING_DOWN,
         },
         {

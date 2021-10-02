@@ -2,8 +2,8 @@ const {
     FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, NPC_ANIM_TYPE_IDLE
   } = require('../../../game-data/globals');
 module.exports = {
-    "mapName": "AA5",
-    "neighbourhood": "NEW",
+    "mapName": "test/newMapFormat",
+    "neighbourhood": "test",
     "neighbours": {
         "right": "my-neighbourhood/neighbourhood-A1",
         "left": "null/AA4",
@@ -2054,7 +2054,7 @@ module.exports = {
             "col": 23,
             "hasDoor": true,
             "direction": FACING_UP,
-            "destination": "Tst/A1"
+            "destination": "test/test-dungeon-lobby"
         },
         {
             "type": "Bollard",

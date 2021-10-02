@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### OCT 1, 2021
+* Implementing sprite based doors
+
+#### OCT 1, 2021
 * Solved problems with randomly spawned sprites getting stuck
 * Updating sprites, tilesheet data and code to new MapMaker map format
 
