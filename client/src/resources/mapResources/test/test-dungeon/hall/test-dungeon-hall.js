@@ -43,7 +43,6 @@ module.exports = {
 
             "row": 2, 
             "col": 2,
-            "from" : "test/test-dungeon-hall",
             "destination"  : "test/test-dungeon-lobby",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
@@ -51,7 +50,6 @@ module.exports = {
         {
             "row": 2, 
             "col": 3,
-            "from" : "test/test-dungeon-hall",
             "destination"  : "test/test-dungeon-lobby",
             "directionIn": FACING_UP,
             "directionOut": FACING_DOWN,
@@ -59,7 +57,6 @@ module.exports = {
         {
             "row": 16, 
             "col": 2,
-            "from" : "test/test-dungeon-hall",
             "destination"  : "test/test-dungeon-outside",
             "directionIn": FACING_DOWN,
             "directionOut": FACING_UP,
@@ -67,7 +64,6 @@ module.exports = {
         {
             "row": 16, 
             "col": 3,
-            "from" : "test/test-dungeon-hall",
             "destination"  : "test/test-dungeon-outside",
             "directionIn": FACING_DOWN,
             "directionOut": FACING_UP,

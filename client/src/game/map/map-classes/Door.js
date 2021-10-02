@@ -35,14 +35,14 @@ const unlockDoorEvent = {
 class Door extends I_Hitbox {
     constructor( x, y, door ) {
         super( x, y, GRID_BLOCK_PX * .75 )
-        this.from           = door.from;
-        this.destination             = door.destination;
+        this.mapName        = globals.GAME.activeMapName;
+        this.destination    = door.destination;
         this.directionIn    = door.directionIn
         this.directionOut   = door.directionOut
         this.locked         = door.locked
         this.arcColor       = "#FFFF00";
 
-        if ( door.condition && !inUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.destination ) ) {
+        if ( door.condition && !inUnlockedDoorsRegistry(this.registryString) ) {
             this.condition = true;
             this.conditionType = door.condition.type;
             this.conditionValue = door.condition.value
@@ -52,6 +52,9 @@ class Door extends I_Hitbox {
         }
 
         this.metConditionAtLastCheck = ( this.meetsCondition && this.conditionType != ITEM_OWNED );
+    }
+    get registryString( ) {
+        return this.mapName + "_" + this.directionIn + "_" + this.destination;
     }
     get meetsCondition( ) { 
         return !this.condition || conditionIsTrue( this.conditionType, this.conditionValue );
@@ -63,7 +66,7 @@ class Door extends I_Hitbox {
         else if ( this.condition ) {
             new Cinematic( unlockDoorEvent, ON_LEAVE, [ this.destination, EVENT_DOOR] )
             this.metConditionAtLastCheck = true;
-            addDoorToUnlockedDoorsRegistry( this.from + "_" + this.directionIn + "_" + this.destination );
+            addDoorToUnlockedDoorsRegistry(this.registryString);
             this.dismiss( );
         }
     }

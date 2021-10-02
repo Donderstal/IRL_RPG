@@ -388,7 +388,6 @@ module.exports = {
                 {
                   "row": 8, 
                   "col": 2,
-                  "from" : "my-neighbourhood/A1/my-house",
                   "destination"  : "my-neighbourhood/A1",
                   "directionIn": FACING_DOWN,
                   "directionOut": FACING_UP,
