@@ -18,7 +18,7 @@ const canvasHelpers = require('../helpers/canvasHelpers')
 const { Battle } = require('./battle/Battle')
 const { triggerEvent } = require('../helpers/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
-const { fetchJSONWithCallback } = require('../helpers/utilFunctions')
+const { fetchJSONWithCallback, getOppositeDirection } = require('../helpers/utilFunctions')
 const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
@@ -337,7 +337,7 @@ class Game {
                     if ( this.activeMapName == door.destination ) {
                         newPlayerCell.row = door.row;
                         newPlayerCell.col = door.col;
-                        direction = door.directionOut;
+                        direction = getOppositeDirection(door.direction);
                     }
                 } )
                 break;

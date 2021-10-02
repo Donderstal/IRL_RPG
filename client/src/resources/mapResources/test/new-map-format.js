@@ -2053,7 +2053,7 @@ module.exports = {
             "row": 8,
             "col": 23,
             "hasDoor": true,
-            "directionIn": FACING_UP,
+            "direction": FACING_UP,
             "destination": "Tst/A1"
         },
         {

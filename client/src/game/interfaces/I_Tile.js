@@ -143,14 +143,14 @@ class I_Tile {
         }
     }
     /**
-     * Calculate the new doors' XY depending on the directionIn prop of doorData
+     * Calculate the new doors' XY depending on the direction prop of doorData
      * Then, instantiate a Door instance and assign it to the event property
      * @param {Object} doorData object from the doors array in the current map
      */
     setDoor( doorData ) {
-        const directionIn = doorData.directionIn
+        const direction = doorData.direction
         let xy = { };
-        switch ( directionIn ) {
+        switch ( direction ) {
             case FACING_UP :
                 xy.x = this.x + ( GRID_BLOCK_PX / 2 )
                 xy.y = this.y

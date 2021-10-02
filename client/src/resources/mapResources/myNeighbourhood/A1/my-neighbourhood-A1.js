@@ -84,15 +84,13 @@ module.exports = {
             "row": 3, 
             "col": 7,
             "destination"  : "my-neighbourhood/A1/my-house",
-            "directionIn": FACING_UP,
-            "locked": false
+            "direction": FACING_UP,
         },
         {
             "row": 4, 
             "col": 10,
             "destination"  : "my-neighbourhood/A1/neighbours-house",
-            "directionIn": FACING_UP,
-            "locked": false
+            "direction": FACING_UP,
         }
     ],
     "actions" : [ ],
@@ -110,15 +108,15 @@ module.exports = {
                     "row": 16, 
                     "col": 12,
                     "destination"  : "my-neighbourhood/A1",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+      
                 },
                 {
                     "row": 16, 
                     "col": 13,
                     "destination"  : "my-neighbourhood/A1",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+      
                 }
             ],
             "mapObjects" : [
@@ -385,7 +383,7 @@ module.exports = {
                   "row": 8, 
                   "col": 2,
                   "destination"  : "my-neighbourhood/A1",
-                  "directionIn": FACING_DOWN,
+                  "direction": FACING_DOWN,
                 }
             ],
             "characters" : [

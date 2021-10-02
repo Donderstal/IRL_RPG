@@ -42,15 +42,13 @@ module.exports = {
             "row": 4, 
             "col": 16,
             "destination"  : "my-neighbourhood/A4/yum-mart",
-            "directionIn": FACING_UP,
-            "locked": false
+            "direction": FACING_UP,
         },
         {
             "row": 4, 
             "col": 2,
             "destination"  : "my-neighbourhood/A4/luxury-house",
-            "directionIn": FACING_UP,
-            "locked": false
+            "direction": FACING_UP,
         }
     ],
     "subMaps": {
@@ -82,8 +80,8 @@ module.exports = {
                     "row": 14, 
                     "col": 3,
                     "destination"  : "my-neighbourhood/A4",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+    
                 }
             ],
             "characters": [
@@ -125,8 +123,8 @@ module.exports = {
                     "row": 13, 
                     "col": 6,
                     "destination"  : "my-neighbourhood/A4",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+    
                 }
         
             ],

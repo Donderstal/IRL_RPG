@@ -157,7 +157,7 @@ module.exports = {
           "row": 3, 
           "col": 6,
           "destination"  : "test/test-dungeon-hall",
-          "directionIn": FACING_UP,
+          "direction": FACING_UP,
         },
         {
             "condition" : {
@@ -167,7 +167,7 @@ module.exports = {
             "row": 3, 
             "col": 7,
             "destination"  : "test/test-dungeon-hall",
-            "directionIn": FACING_UP,
+            "direction": FACING_UP,
           }
     ],
 }

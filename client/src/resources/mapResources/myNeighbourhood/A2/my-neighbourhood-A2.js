@@ -29,15 +29,13 @@ module.exports = {
             "row": 4, 
             "col": 3,
             "destination"  : "my-neighbourhood/A2/yum-corp",
-            "directionIn": FACING_UP,
-            "locked": false
+            "direction": FACING_UP,
         },
         {
             "row": 4, 
             "col": 15,
             "destination"  : "my-neighbourhood/A2/house-of-war",
-            "directionIn": FACING_UP,
-            "locked": false
+            "direction": FACING_UP,
         }
     ],
     "mapObjects" : [
@@ -119,16 +117,16 @@ module.exports = {
                   "row": 11, 
                   "col": 3,
                   "destination"  : "my-neighbourhood/A2",
-                  "directionIn": FACING_DOWN,
-                  "locked": false
+                  "direction": FACING_DOWN,
+    
               },
               {
                   "row": 2, 
                   "col": 6,
                   "destination"  : "my-neighbourhood/A2/back-alley",
                
-                  "directionIn": FACING_UP,
-                  "locked": false
+                  "direction": FACING_UP,
+    
               }
           ],
           "characters": [
@@ -170,8 +168,8 @@ module.exports = {
                     "row": 10, 
                     "col": 5,
                     "destination"  : "my-neighbourhood/A2",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+    
                 }
             ],
             "inaccessible": [ 
@@ -223,15 +221,15 @@ module.exports = {
                     "row": 6, 
                     "col": 4,
                     "destination"  : "my-neighbourhood/A2/yum-corp",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+    
                 },
                 {
                     "row": 6, 
                     "col": 5,
                     "destination"  : "my-neighbourhood/A2/yum-corp",
-                    "directionIn": FACING_DOWN,
-                    "locked": false
+                    "direction": FACING_DOWN,
+    
                 }
             ]
         }

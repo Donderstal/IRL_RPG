@@ -38,8 +38,7 @@ class Door extends I_Hitbox {
         super( x, y, GRID_BLOCK_PX * .75 )
         this.mapName        = globals.GAME.activeMapName;
         this.destination    = door.destination;
-        this.directionIn    = door.directionIn
-        this.directionOut   = getOppositeDirection(this.directionIn);
+        this.direction    = door.direction
         this.locked         = door.locked
         this.arcColor       = "#FFFF00";
 
@@ -55,7 +54,7 @@ class Door extends I_Hitbox {
         this.metConditionAtLastCheck = ( this.meetsCondition && this.conditionType != ITEM_OWNED );
     }
     get registryString( ) {
-        return this.mapName + "_" + this.directionIn + "_" + this.destination;
+        return this.mapName + "_" + this.direction + "_" + this.destination;
     }
     get meetsCondition( ) { 
         return !this.condition || conditionIsTrue( this.conditionType, this.conditionValue );
