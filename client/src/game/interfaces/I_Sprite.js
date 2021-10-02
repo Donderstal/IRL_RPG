@@ -380,11 +380,11 @@ class Sprite {
     /**
      * Empty all destination props or set them to false
      */
-    unsetDestination( ) {
-        if ( this.wasMoving && !this.isCar && this.destinationTile ) {
+    unsetDestination( snapToTile = true ) {
+        if ( this.wasMoving && !this.isCar && this.destinationTile && snapToTile ) {
             this.setSpriteToDestinationTile( );
         }
-        if ( this.destination.offScreen ) {
+        if ( this.isPasserby && snapToTile ) {
             globals.GAME.FRONT.deleteSprite( this.spriteId );
         }
 

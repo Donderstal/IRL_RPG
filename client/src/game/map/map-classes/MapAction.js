@@ -84,8 +84,16 @@ class MapAction extends I_Hitbox {
     /**
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
-    handle( ) {
-        this.startCinematicScript( )
+    handle( ) { 
+        let sprite = globals.GAME.FRONT.spriteDictionary[this.spriteId]
+        let destination = Object.assign( { }, sprite.destination )
+        console.log(globals.GAME.FRONT.spriteDictionary[this.spriteId])
+        if ( sprite.movingToDestination ) {
+            sprite.wasMovingBeforeCinematic = true;
+            sprite.stopMovement( );
+            sprite.unsetDestination( false );
+        }
+        this.startCinematicScript( destination )
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered
@@ -135,8 +143,8 @@ class MapAction extends I_Hitbox {
     /**
      * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
      */
-    startCinematicScript( ) {
-        new Cinematic( this, ON_NPC_INTERACTION );
+    startCinematicScript( destination = false ) {
+        new Cinematic( this, ON_NPC_INTERACTION, [ this.spriteId, destination ] );
     } 
 
     checkForEventOnBattleEnd( playerLostBattle ) {

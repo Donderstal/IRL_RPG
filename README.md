@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### OCT 1, 2021
+* Solved problems with randomly spawned sprites getting stuck
+* Updating sprites, tilesheet data and code to new MapMaker map format
+
 #### SEP 8, 2021
 * Added random walking npc generation for a more lively city
 
