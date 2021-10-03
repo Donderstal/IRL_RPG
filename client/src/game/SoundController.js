@@ -1,40 +1,32 @@
+const globals = require('../game-data/globals')
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
 
 /**
- * Class containing all functionalities for sound effects and music in the game
+ * The SoundController functions like a registry for sounds and music in the game
+ * SoundController uses the AUDIO_DICTIONARY globals as source for audio elements
  */
 class SoundController {
-    /**
-     * Initialize and empty Soundcontroller class for later usage
-     */
     constructor( ) {
-        this.activeMusic;
-        this.musicIsPlaying;
-        this.allMusic = {};
-
+        this.activeMusic = null;
         this.activeSoundEffects = {};
-        this.allSoundEffects = {}
+        this.musicIsPlaying = false;
     }
 
-    /**
-     * Init Audio element if needed and play music
-     * @param {String} title name of music to be played. Should correspond with filename in music folder 
-     * @param {Boolean} loopMusic optional boolean indicating if music should be looped
-     */
-    playMusic( title, loopMusic = true ) {
-        if ( !(title in this.allMusic) ) {
-            this.allMusic[title] = new Audio( musicFolder + title );
-        }
+    get audioList( ) {
+        return globals.AUDIO_DICTIONARY;
+    }
 
-        if ( this.activeMusic != this.allMusic[title] ) {
+    playMusic( filename, loopMusic = true ) {
+        let src = musicFolder + filename;
+        if ( this.activeMusic != this.audioList[src] ) {
             if ( this.activeMusic != null && this.activeMusic != undefined ) {
                 this.activeMusic.pause( );
                 this.activeMusic.currentTime = 0;
             }
-            this.activeMusic = this.allMusic[title];
+            this.activeMusic = this.audioList[src];
             this.activeMusic.loop = loopMusic;
-            this.activeMusic.volume = title.includes("menu") ? 0.25 : 0.5
+            this.activeMusic.volume = src.includes("menu") ? 0.25 : 0.5
             this.activeMusic.play( );            
         }
     }
@@ -47,26 +39,18 @@ class SoundController {
         this.activeMusic.play( );         
     }
 
-    /**
-     * Init Audio element if needed and play effect
-     * @param {String} title name of effect to be played. Should correspond with filename in effects folder 
-     * @param {Boolean} loop optional boolean indicating if effect should be looped
-     */
-    playEffect( title, loop = false ) {
-        if ( !(title in this.activeSoundEffects) ) {
-            const effect = new Audio( effectsFolder + title );
-            this.allSoundEffects[title] = effect;
-        }        
-        else {
-            this.allSoundEffects[title].pause();
-            this.allSoundEffects[title].currentTime = 0;
+    playEffect( filename, loop = false ) {
+        let src = effectsFolder + filename;
+        if ( src in this.activeSoundEffects ) {
+            this.audioList[src].pause();
+            this.audioList[src].currentTime = 0;
         }
 
-
-        this.activeSoundEffects[title] = this.allSoundEffects[title];
-        this.activeSoundEffects[title].title = title;
-        this.activeSoundEffects[title].volume = 0.75
-        this.activeSoundEffects[title].play( );
+        this.activeSoundEffects[src] = this.audioList[src];
+        this.activeSoundEffects[src].src = src;
+        this.activeSoundEffects[src].loop = loop;
+        this.activeSoundEffects[src].volume = 0.75
+        this.activeSoundEffects[src].play( );
     }
 }
 

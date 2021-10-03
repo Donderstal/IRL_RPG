@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### OCT 3, 2021
+* Pre-loading audio files on Game initialization
+
 #### OCT 1, 2021
 * Implementing sprite based doors
 
