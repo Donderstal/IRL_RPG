@@ -195,6 +195,7 @@ const setSheetXyValues = ( tilesInSheet ) => {
 const SHEET_XY_VALUES = setSheetXyValues( 10000 );
 
 const PNG_DICTIONARY = {};
+const AUDIO_DICTIONARY = {};
 const SPRITE_PNGS = ( ) => { 
     let returner = [];
     Object.keys( PNG_DICTIONARY ).forEach( ( e ) => { 
@@ -344,5 +345,6 @@ module.exports = {
     TEST_CLASSPROFILE_4,
 
     PNG_DICTIONARY,
-    SPRITE_PNGS
+    SPRITE_PNGS,
+    AUDIO_DICTIONARY
 }

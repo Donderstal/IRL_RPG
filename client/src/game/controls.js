@@ -37,11 +37,7 @@ const addKeyToPressed = ( ) => {
     const GAME = globals.GAME
 
     if ( event.key == "m" ) {
-        let tile = GAME.FRONT.getTileAtCell( 1, 11 )
-        GAME.FRONT.setCharacterSprite( tile, { "sprite": "business_man.png", "direction": globals.FACING_RIGHT } )
-        let sprite = globals.GAME.FRONT.spriteDictionary[tile.spriteId];
-        sprite.x -= globals.GRID_BLOCK_PX
-        sprite.setDestination( { "col": 25, "row": 9 }, false, true )
+        console.log(globals.AUDIO_DICTIONARY)
     }
     
     if ( event.key == "Tab" ) {

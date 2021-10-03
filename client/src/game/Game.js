@@ -412,8 +412,19 @@ class Game {
  */
 const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
+    fetchJSONWithCallback( "static/audio-list.json", loadAudioFiles )
     fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, startingMap, debugMode, disableStoryMode ] )
     setLoadingScreen( );
+}
+
+const loadAudioFiles = ( json ) => {
+    json.forEach( ( audioPath ) => {
+        let audio   = new Audio( audioPath );
+        let path    = audioPath;
+        audio.oncanplaythrough = ( ) => {
+            globals.AUDIO_DICTIONARY[path] = audio;
+        }
+    });
 }
 
 const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
