@@ -190,8 +190,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
 
     deleteSprite( spriteId ) {
-        if ( this.spriteDictionary[spriteId].walkingSoundEffect ) {
-            this.spriteDictionary[spriteId].walkingSoundEffect.reset( );
+        if ( this.spriteDictionary[spriteId].movementSoundEffect ) {
+            this.spriteDictionary[spriteId].movementSoundEffect.reset( );
         };
         delete this.spriteDictionary[spriteId];
         this.allSprites = [];

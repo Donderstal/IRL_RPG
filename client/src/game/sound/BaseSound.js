@@ -21,6 +21,14 @@ class BaseSound {
         this.audioNode.play( );
     }
 
+    mute( ) {
+        this.audioNode.volume = 0;
+    }
+
+    setVolumeToFactor( volumeModifier ) { 
+        this.audioNode.volume = this.baseVolume * volumeModifier;
+    }
+
     pause( ) {
         this.audioNode.pause( );
     }
