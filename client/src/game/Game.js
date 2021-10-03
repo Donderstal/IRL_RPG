@@ -10,7 +10,7 @@ const {
 const { 
     ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR
 }  = require('../game-data/conditionGlobals')
-const { SoundController } = require('./SoundController');
+const { SoundController } = require('./sound/SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
@@ -217,7 +217,7 @@ class Game {
         //this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
-        this.sound.playMusic( mapData.music );
+        this.sound.setActiveMusic( mapData.music );
         setTimeout( ( ) => {
             triggerEvent(ON_ENTER)     
         }, 250 )

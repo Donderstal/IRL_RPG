@@ -53,7 +53,7 @@ class Fader {
     checkForFadeEnd( ) {
         if ( this.fadingFromBlack && this.A <= 0 ) {
             this.unsetFadingAnimation( );
-            globals.GAME.sound.resumeMusic( );
+            globals.GAME.sound.playMusic( );
         }
         else if ( this.fadingToBlack && this.A >= 1 && this.fadeInAndOut ) {
             this.unsetFadingAnimation( );

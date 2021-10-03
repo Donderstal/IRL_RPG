@@ -17,7 +17,7 @@ const globals = require('../../game-data/globals');
         this.tabHeight  = height;
         this.mainScreenHeight = CANVAS_HEIGHT - this.tabHeight;
         this.textMenuButtonHints = [ "[ SPACEBAR ] - CONFIRM/SELECT" ];
-        globals.GAME.sound.playMusic( "Menu music.mp3" );
+        globals.GAME.sound.setActiveMusic( "Menu music.mp3" );
     }
 
     get activeText( ) {
