@@ -1,5 +1,6 @@
 const globals = require('../../game-data/globals');
 const { BaseSound } = require('./BaseSound');
+const { SpatialSound } = require('./SpatialSound');
 
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
@@ -42,6 +43,11 @@ class SoundController {
     getEffect( filename, loop = false ) {
         let src = effectsFolder + filename;
         return new BaseSound( this.audioList[src], standardSFXVolume, loop );
+    }
+
+    getSpatialEffect( filename, loop = false ) {
+        let src = effectsFolder + filename; SpatialSound
+        return new SpatialSound( this.audioList[src], standardSFXVolume, loop );
     }
 
     playEffect( filename, loop = false ) {

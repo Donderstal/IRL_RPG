@@ -10,6 +10,8 @@ class Car extends MapObject {
         this.name = spriteData.name
         this.isCar = true;
         this.initMovingSprite( spriteData )
+        this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "car-engine.wav", true );
+        this.movementSoundEffect.mute( );
     }
     
     get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
@@ -56,6 +58,11 @@ class Car extends MapObject {
         }
         if ( !this.blocked && this.movingToDestination ) {
             this.goToDestination( );     
+            if (this.movementSoundEffect != undefined)
+                this.movementSoundEffect.setVolumeAndPan( this )
+        }
+        else if (this.movementSoundEffect != undefined &&( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
+            this.movementSoundEffect.reset( );
         }
         this.countFrame( );
     }

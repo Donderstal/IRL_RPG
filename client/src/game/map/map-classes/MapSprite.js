@@ -20,7 +20,7 @@ class MapSprite extends Sprite {
 
         this.spriteWidthInSheet = MAP_SPRITE_WIDTH_IN_SHEET;
         this.spriteHeightInSheet = MAP_SPRITE_HEIGHT_IN_SHEET;
-        this.movementSoundEffect = globals.GAME.sound.getEffect( "single-footstep.wav", true );
+        this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "footsteps.wav", true );
         this.movementSoundEffect.mute( );
     }
 
@@ -66,43 +66,10 @@ class MapSprite extends Sprite {
         if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
             this.handleAnimation( )
         }
-        if ( this.movingToDestination && !this.pathIsBlocked) {
-            if ( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasNotStartedPlaying ) {
-                this.movementSoundEffect.play( );
-            }
-            else {
-                let PLAYER = globals.GAME.PLAYER;
-                let hearingDistance = GRID_BLOCK_PX * 3
-                let modifiers = { hori: 0, vert: 0}
-
-                if ( PLAYER.centerX() >= this.right ) {
-                    let modifier = 1 - ((PLAYER.centerX( ) - this.right) / hearingDistance);
-                    modifiers.hori = modifier > 0 ? modifier : 0
-                }
-                else if ( PLAYER.centerX() <= this.left ) {
-                    let modifier = 1 - ((this.left - PLAYER.centerX( )) / hearingDistance);
-                    modifiers.hori = modifier > 0 ? modifier : 0
-                }
-                else if (PLAYER.centerX() < this.right && PLAYER.centerX() > this.left) {
-                    modifiers.hori = 1;
-                }
-
-                if ( PLAYER.baseY( ) >= this.bottom ) {
-                    let modifier = 1 - ((PLAYER.baseY( ) - this.bottom) / hearingDistance);
-                    modifiers.vert = modifier > 0 ? modifier : 0
-                }
-                else if ( PLAYER.baseY( ) <= this.top ) {
-                    let modifier = 1 - ((this.top - PLAYER.baseY()) / hearingDistance);
-                    modifiers.vert = modifier > 0 ? modifier : 0
-                }
-                else if ( PLAYER.baseY( ) < this.bottom && PLAYER.baseY( ) > this.top ) {
-                    modifiers.vert = 1;
-                }
-
-                this.movementSoundEffect.setVolumeToFactor( modifiers.hori * modifiers.vert );
-            }
+        if ( this.movingToDestination && !this.pathIsBlocked && this.movementSoundEffect != undefined ) {
+            this.movementSoundEffect.setVolumeAndPan( this )
         }
-        else if ( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded ) { 
+        else if ( this.movementSoundEffect != undefined && ( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
             this.movementSoundEffect.reset( );
         }
     }
