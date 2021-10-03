@@ -15,7 +15,6 @@ const standardSFXVolume = 0.75;
 class SoundController {
     constructor( ) {
         this.activeMusic = false;
-        this.activeSoundEffects = [];
         this.musicIsPlaying = false;
     }
 
@@ -40,10 +39,13 @@ class SoundController {
         this.activeMusic.play( );         
     }
 
-    playEffect( filename, loop = false ) {
+    getEffect( filename, loop = false ) {
         let src = effectsFolder + filename;
-        const newEffect = new BaseSound( this.audioList[src], standardSFXVolume, loop );
-        this.activeSoundEffects = [ ...this.activeSoundEffects, newEffect ]
+        return new BaseSound( this.audioList[src], standardSFXVolume, loop );
+    }
+
+    playEffect( filename, loop = false ) {
+        const newEffect = this.getEffect( filename, loop )
         newEffect.play();
     }
 }

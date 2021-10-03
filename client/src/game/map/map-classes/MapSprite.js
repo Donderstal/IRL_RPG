@@ -20,6 +20,7 @@ class MapSprite extends Sprite {
 
         this.spriteWidthInSheet = MAP_SPRITE_WIDTH_IN_SHEET;
         this.spriteHeightInSheet = MAP_SPRITE_HEIGHT_IN_SHEET;
+        this.walkingSoundEffect = globals.GAME.sound.getEffect( "single-footstep.wav", true );
     }
 
     get currentTileBack( ) { return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex )  };
@@ -63,6 +64,14 @@ class MapSprite extends Sprite {
         
         if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
             this.handleAnimation( )
+        }
+        if ( this.movingToDestination ) {
+            if ( this.walkingSoundEffect.isPaused || this.walkingSoundEffect.hasNotStartedPlaying ) {
+                this.walkingSoundEffect.play( );
+            }
+        }
+        else if ( this.walkingSoundEffect.isPaused || this.walkingSoundEffect.hasEnded ) { 
+            this.walkingSoundEffect.reset( );
         }
     }
     /**
