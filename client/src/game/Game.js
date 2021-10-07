@@ -23,6 +23,7 @@ const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
 const { Cinematic } = require('./cutscenes/Cinematic')
+const { FileLoader } = require('../helpers/Loader')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -41,6 +42,7 @@ class Game {
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
         this.sound = new SoundController( );
+        this.audio = new AudioContext( );
         this.fader = new Fader( );
         this.story;
 
@@ -412,35 +414,8 @@ class Game {
  */
 const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
-    fetchJSONWithCallback( "static/audio-list.json", loadAudioFiles )
-    fetchJSONWithCallback( "static/png-list.json", startNewGameAfterLoadingFiles, [ name, className, startingMap, debugMode, disableStoryMode ] )
+    new FileLoader( [name, className, startingMap, debugMode, disableStoryMode] );
     setLoadingScreen( );
-}
-
-const loadAudioFiles = ( json ) => {
-    json.forEach( ( audioPath ) => {
-        let audio   = new Audio( audioPath );
-        let path    = audioPath;
-        audio.oncanplaythrough = ( ) => {
-            globals.AUDIO_DICTIONARY[path] = audio;
-        }
-    });
-}
-
-const startNewGameAfterLoadingFiles = ( json, startingOptions ) => {
-    json.forEach( ( pngPath, i ) => {
-        let image   = new Image( );
-        let path    = pngPath;
-        let index   = i;
-
-        image.src = path;
-        image.onload = ( ) => {
-            globals.PNG_DICTIONARY[path] = image;
-            if ( index + 1 == json.length ) {
-                globals.GAME.startNewGame( startingOptions[0], startingOptions[1], startingOptions[2], startingOptions[3], startingOptions[4] );
-            }
-        }
-    });
 }
 
 module.exports = {
