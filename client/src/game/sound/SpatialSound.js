@@ -4,10 +4,36 @@ const globals = require('../../game-data/globals');
 class SpatialSound extends BaseSound {
     constructor( baseAudioElement, volume, loopSound = false ) {
         super(baseAudioElement, volume, loopSound)
+  
+        this.track = globals.GAME.audio.createMediaElementSource(this.audioNode);
+        this.panner = new StereoPannerNode(globals.GAME.audio);
+        this.track.connect(this.panner).connect(globals.GAME.audio.destination);
     }
 
     setVolumeAndPan( sprite ) {
         this.setDistanceToPlayerVolume( sprite );
+        this.setPan( sprite );
+    }
+
+    setPan( sprite ) {
+        let PLAYER = globals.GAME.PLAYER;
+        let hearingDistance = globals.GRID_BLOCK_PX * 3
+        if ( this.isPaused || this.hasNotStartedPlaying ) {
+            this.play( );
+        }
+        if ( PLAYER.centerX() >= sprite.right ) {
+            let modifier = (PLAYER.centerX( ) - sprite.right) / hearingDistance;
+            modifier = modifier > 1 ? 1 : modifier;
+            this.panner.pan.value = 0 - modifier;
+        }
+        else if ( PLAYER.centerX() <= sprite.left ) {
+            let modifier = (sprite.left - PLAYER.centerX( )) / hearingDistance;
+            modifier = modifier > 1 ? 1 : modifier;
+            this.panner.pan.value = 0 + modifier;
+        }
+        else if (PLAYER.centerX() < sprite.right && PLAYER.centerX() > sprite.left) {
+            this.panner.pan.value = 0;
+        }
     }
 
     setDistanceToPlayerVolume( sprite ) {

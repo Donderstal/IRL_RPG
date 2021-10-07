@@ -62,7 +62,6 @@ class MapSprite extends Sprite {
                 this.pathIsBlocked = !this.pathIsBlocked;
             }  
         }
-        
         if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
             this.handleAnimation( )
         }
