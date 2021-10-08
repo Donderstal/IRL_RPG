@@ -68,7 +68,7 @@ class MapSprite extends Sprite {
         if ( this.movingToDestination && !this.pathIsBlocked && this.movementSoundEffect != undefined ) {
             this.movementSoundEffect.setVolumeAndPan( this )
         }
-        else if ( this.movementSoundEffect != undefined && ( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
+        else if (( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded ) || ( !this.movingToDestination || this.pathIsBlocked ) ) { 
             this.movementSoundEffect.reset( );
         }
     }

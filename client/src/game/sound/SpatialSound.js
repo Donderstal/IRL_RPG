@@ -21,12 +21,12 @@ class SpatialSound extends BaseSound {
         if ( this.isPaused || this.hasNotStartedPlaying ) {
             this.play( );
         }
-        if ( PLAYER.centerX() >= sprite.right ) {
+        if ( PLAYER.centerX() >= sprite.right && sprite !== PLAYER) {
             let modifier = (PLAYER.centerX( ) - sprite.right) / hearingDistance;
             modifier = modifier > 1 ? 1 : modifier;
             this.panner.pan.value = 0 - modifier;
         }
-        else if ( PLAYER.centerX() <= sprite.left ) {
+        else if ( PLAYER.centerX() <= sprite.left && sprite !== PLAYER ) {
             let modifier = (sprite.left - PLAYER.centerX( )) / hearingDistance;
             modifier = modifier > 1 ? 1 : modifier;
             this.panner.pan.value = 0 + modifier;
@@ -37,11 +37,14 @@ class SpatialSound extends BaseSound {
     }
 
     setDistanceToPlayerVolume( sprite ) {
+        let PLAYER = globals.GAME.PLAYER;
         if ( this.isPaused || this.hasNotStartedPlaying ) {
             this.play( );
         }
+        else if ( sprite == PLAYER ) {
+            this.setVolumeToFactor( 1 );
+        }
         else {
-            let PLAYER = globals.GAME.PLAYER;
             let hearingDistance = globals.GRID_BLOCK_PX * 3
             let modifiers = { hori: 0, vert: 0}
 

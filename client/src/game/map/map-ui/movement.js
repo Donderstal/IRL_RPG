@@ -23,6 +23,7 @@ const moveInDirection = ( sprite, direction ) => {
     const movingToNeighbour = checkForNeighbours(sprite)
 
     if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
+        sprite.movementSoundEffect.setVolumeAndPan( sprite )
         if ( direction == FACING_RIGHT ) {
             sprite.x += MOVEMENT_SPEED        
         }
@@ -35,6 +36,9 @@ const moveInDirection = ( sprite, direction ) => {
         else if ( direction == FACING_UP ){
             sprite.y -= MOVEMENT_SPEED        
         }     
+    }
+    else {
+        sprite.movementSoundEffect.reset( );
     }
 }
 /**
