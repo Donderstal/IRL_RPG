@@ -346,7 +346,15 @@ class Sprite {
      * @param {I_Tile} destinationTile destination I_Tile
      */
     getPathIndexes( startingTile, destinationTile ) {
-        return pathFinder.determineShortestPath( startingTile, destinationTile, globals.GAME.BACK.grid, this.movementType == NPC_MOVE_TYPE_FLYING );  
+        let BACK = globals.GAME.BACK;
+        let FRONT = globals.GAME.FRONT;
+        const grid = { 
+            'rows': BACK.grid.rows,
+            'cols': BACK.grid.cols,
+            'tiles': BACK.grid.array.filter( ( tile ) => { return !BACK.getTileAtIndex(tile.index).isBlocked && !FRONT.tileHasBlockingSprite(tile.index) })
+        };
+
+        return pathFinder.determineShortestPath( startingTile, destinationTile, grid, this.movementType == NPC_MOVE_TYPE_FLYING );  
     }
     /**
      * For each index in the list, get the I_Tile instance at its index and push it to an array.

@@ -1,5 +1,3 @@
-const globals = require('../game-data/globals')
-
 const TILE_STATUS_INVALID = "INVALID";
 const TILE_STATUS_BLOCKED = "BLOCKED";
 const TILE_STATUS_VALID = "VALID";
@@ -9,10 +7,8 @@ const DIRECTION_EAST = "EAST";
 const DIRECTION_SOUTH = "SOUTH";
 const DIRECTION_WEST = "WEST";
 
-let colsInGrid;
-let rowsInGrid;
-
-let visitedTilesList;
+let colsInGrid, rowsInGrid, tiles;
+let queue, visitedTilesList, foundPath;
 
 /**
  * Helper class to log a visited location in the pathfinding algorithm
@@ -33,74 +29,57 @@ class GridLocation {
  * If they are valid but not the destination, push them to the queue array. 
  * If they are the destination, return the GridLocations' path property.
  */
-const determineShortestPath = ( startingTile, targetTile, grid, isFlying ) => {
+const determineShortestPath = ( startingTile, targetTile, grid ) => {
     visitedTilesList = [];
     colsInGrid = grid.cols;
     rowsInGrid = grid.rows;
+    tiles = grid.tiles;
+    foundPath = false;
 
     let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, "START" )
-    const queue = [ location ];
+    queue = [ location ];
 
     while ( queue.length > 0 ) {
         const currentLocation = queue.shift( );
 
         if ( currentLocation.row != 1 ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_NORTH, isFlying )
-            if ( newLocation.index == targetTile.index ) {
-                return newLocation.path;
-            }
-            else if ( newLocation.status == TILE_STATUS_VALID ) {
-                queue.push(newLocation);
-            }            
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_NORTH, targetTile )   
         }
-
         if ( currentLocation.column != colsInGrid ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_EAST, isFlying )
-            if ( newLocation.index == targetTile.index  ) {
-                return newLocation.path;
-            }
-            else if ( newLocation.status == TILE_STATUS_VALID ) {
-                queue.push(newLocation);
-            }
-
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_EAST, targetTile ) 
         }
-
         if ( currentLocation.row != rowsInGrid ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_SOUTH, isFlying )
-            if ( newLocation.index == targetTile.index ) {
-                return newLocation.path;
-            }
-            else if ( newLocation.status == TILE_STATUS_VALID ) {
-                queue.push(newLocation);
-            }            
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_SOUTH, targetTile )   
+        }
+        if  ( currentLocation.column != 1 ) {
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_WEST, targetTile )            
         }
 
-        if  ( currentLocation.column != 1 ) {
-            var newLocation = exploreInDirection( currentLocation, DIRECTION_WEST, isFlying )
-            if ( newLocation.index == targetTile.index  ) {
-                return newLocation.path;
-            }
-            else if ( newLocation.status == TILE_STATUS_VALID ) {
-                queue.push(newLocation);
-            }            
-        }
-    }
+        if ( foundPath != false )
+            return foundPath;
+    } 
 
     return false;    
+}
+
+const addTileInDirectionToQueueIfValid = ( currentLocation, direction, targetTile ) => {
+    var newLocation = exploreInDirection( currentLocation, direction )
+    if ( newLocation.index == targetTile.index  ) {
+        foundPath = newLocation.path;
+    }
+    else if ( newLocation.status == TILE_STATUS_VALID ) {
+        queue.push(newLocation);
+    }   
 }
 
 /**
  * Return a TILE_STATUS string representing wether the tile is valid, invalid or blocked.
  * @param {GridLocation} location 
- * @param {Boolean} isFlying 
  */
-const getLocationStatus = ( location, isFlying  ) => {
+const getLocationStatus = ( location ) => {
     if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
         return TILE_STATUS_INVALID;
-    } else if ( 
-        (!isFlying && 
-        ( globals.GAME.getTileOnCanvasAtIndex( "BACK", location.index ).isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( location.index )  ))
-        || visitedTilesList.indexOf(location.index) > -1 ) {
+    } else if ( visitedTilesList.indexOf(location.index) > -1 ) {
         return TILE_STATUS_BLOCKED;
     } else {
         return TILE_STATUS_VALID;
@@ -116,8 +95,7 @@ const getLocationStatus = ( location, isFlying  ) => {
  * @param {string} direction 
  * @param {boolean} isFlying 
  */
-const exploreInDirection = ( currentLocation, direction, isFlying  ) => {
-    let newPath = currentLocation.path.slice( );
+const exploreInDirection = ( currentLocation, direction  ) => {
     let row = currentLocation.row;
     let col = currentLocation.column;
 
@@ -138,25 +116,26 @@ const exploreInDirection = ( currentLocation, direction, isFlying  ) => {
             console.log('Direction ' + direction + " not recognized" );
     }
 
-    let index = getCellIndex( row, col )
-    newPath.push(index);
-    const newLocation = new GridLocation( row, col, index );
-    newLocation.path = newPath;
-    newLocation.status = getLocationStatus( newLocation, isFlying  );
+    let tileInList = false;
+    let index;
+    tiles.forEach( ( e ) => { 
+        if ( e.col == col && e.row == row ) {
+            tileInList = true;
+            index = e.index
+        }
+    })
 
-    if ( newLocation.status === TILE_STATUS_VALID ) {
+    if ( !tileInList )
+        return { index: 'x', status: TILE_STATUS_INVALID };
+
+    const newLocation = new GridLocation( row, col, index );
+    newLocation.path = [...currentLocation.path.slice( ), index];
+    newLocation.status = getLocationStatus( newLocation  );
+
+    if ( newLocation.status === TILE_STATUS_VALID )
         visitedTilesList.push( newLocation.index )
-    }
 
     return newLocation;
-}
-/**
- * Return the index of the tile at given row and column in the current grid.
- * @param {Number} row 
- * @param {Number} column 
- */
-const getCellIndex = ( row, column ) => {
-    return ( ( row * colsInGrid ) - ( colsInGrid - column ) ) - 1
 }
 
 module.exports = {
