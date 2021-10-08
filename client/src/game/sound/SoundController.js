@@ -17,10 +17,16 @@ class SoundController {
     constructor( ) {
         this.activeMusic = false;
         this.musicIsPlaying = false;
+        this.activeSoundEffects = [];
     }
 
     get audioList( ) {
         return globals.AUDIO_DICTIONARY;
+    }
+
+    clearActiveSoundEffects( ) {
+        this.activeSoundEffects.forEach( ( sound ) =>{ sound.reset( ) });
+        this.activeSoundEffects = []
     }
 
     setActiveMusic( filename ) {

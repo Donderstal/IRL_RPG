@@ -244,7 +244,7 @@ class Game {
         if ( this.inCinematic ) {
             return;
         }        
-
+        this.sound.clearActiveSoundEffects( );
         this.paused = true;
         controls.stopListenForKeyPress( );
         controls.clearPressedKeys( this.pressedKeys );
