@@ -7,6 +7,7 @@ const testActions = require('./test-actions/test-actions');
 const TESTCARS = require('./test-cars/test-cars')
 const testCollision = require('./test-collision/test-collision')
 const newMapFormat = require('./new-map-format')
+const pathfindingTest = require('./pathfinding-test')
 
 module.exports = {
     "test-dungeon-outside": testDungeonOutside,
@@ -17,5 +18,6 @@ module.exports = {
     'test-actions': testActions,
     'test-collision': testCollision,
     'TEST_CARS' : TESTCARS,
-    'newMapFormat' : newMapFormat
+    'newMapFormat' : newMapFormat,
+    'pathfinding-test': pathfindingTest
 }
