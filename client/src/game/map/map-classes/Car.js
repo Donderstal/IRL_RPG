@@ -1,7 +1,8 @@
 const { MapObject } = require("./MapObject");
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
-const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
+const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
+const { Counter } = require("../../../helpers/Counter");
 
 class Car extends MapObject {
     constructor( tile, spriteData, spriteId ) {
@@ -12,6 +13,7 @@ class Car extends MapObject {
         this.initMovingSprite( spriteData )
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "car-engine.wav", true );
         this.movementSoundEffect.mute( );
+        this.blockedCounter = new Counter( 2000 * Math.random( ), false );
     }
     
     get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
@@ -45,6 +47,19 @@ class Car extends MapObject {
     get isBus( ) {
         return this.sheetSrc.includes('bus');
     }
+
+    handleBlockedTimeCounter( ) {
+        if ( this.blocked ) {
+            if ( this.blockedCounter.countAndCheckLimit( ) ) {
+                this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
+                this.carHornSoundEffect.setVolumeAndPan( this )
+                this.carHornSoundEffect.play( );
+            } 
+        }
+        else {
+            this.blockedCounter.resetCounter( );
+        }       
+    }
     
     drawSprite( ) {
         this.blocked = false;
@@ -64,6 +79,7 @@ class Car extends MapObject {
         else if (this.movementSoundEffect != undefined &&( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
             this.movementSoundEffect.reset( );
         }
+        this.handleBlockedTimeCounter( )
         this.countFrame( );
     }
          /**
@@ -140,7 +156,7 @@ class Car extends MapObject {
      */
     checkForIntersection( ) {
           this.hitboxGroups.forEach( ( group ) => {
-            if ( group.middleIsOnIntersection && !this.handlingIntersection && globals[group.middleTileFront.intersectionFrom] == this.direction) {
+            if ( group.middleIsOnIntersection && !this.handlingIntersection && group.middleTileFront.intersectionFrom == this.direction) {
                 this.handleIntersection( group.middleTileFront );
             }
         })
@@ -178,7 +194,7 @@ class Car extends MapObject {
      * @param {I_Tile} intersectionTile grid tile with intersection
      */
     switchDirections( newDirection, intersectionTile ) {
-        this.direction = globals[newDirection];
+        this.direction = newDirection;
         this.setSpriteToGrid( intersectionTile, false ) 
         this.setObjectDimensionsBasedOnDirection( newDirection )
         this.initHitboxGroups( );
