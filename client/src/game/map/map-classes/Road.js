@@ -50,22 +50,30 @@ class Road {
      */
     setRoadCoordinates( roadData ) {
         const activeGrid = globals.GAME.front.class.grid;
+
+        this.startCol = (roadData.startCol != undefined ? roadData.startCol : (roadData.direction == FACING_LEFT ? activeGrid.cols : 1));
+        this.endCol = (roadData.endCol != undefined ? roadData.endCol : (roadData.direction == FACING_LEFT ? 1 : activeGrid.cols));
+        this.startRow = (roadData.startRow != undefined ? roadData.startRow : (roadData.direction == FACING_UP ? activeGrid.rows : 1));
+        this.endRow = (roadData.endCol != undefined ? roadData.endCol : (roadData.direction == FACING_UP ? 1 : activeGrid.rows));
+
         switch( roadData.direction ) {
             case FACING_LEFT :
-                this.setCells( this.topRow, activeGrid.cols, this.bottomRow, activeGrid.cols, this.topRow, 1 );
+                this.setCells( this.topRow, this.startCol, this.bottomRow, this.startCol, this.topRow, this.endCol );
                 break;
             case FACING_UP :
-                this.setCells( activeGrid.rows, this.rightCol, activeGrid.rows, this.leftCol, 1, this.rightCol );
+                this.setCells( this.startRow, this.rightCol, this.startRow, this.leftCol, this.endRow, this.rightCol );
                 break;
             case FACING_RIGHT :
-                this.setCells( this.bottomRow, 1, this.topRow, 1, this.bottomRow, activeGrid.cols );
+                this.setCells( this.bottomRow, this.startCol, this.topRow, this.startCol, this.bottomRow, this.endCol );
                 break;
             case FACING_DOWN :
-                this.setCells( 1, this.leftCol, 1, this.rightCol, activeGrid.rows, this.leftCol );
+                this.setCells( this.startRow, this.leftCol, this.startRow, this.rightCol, this.endRow, this.leftCol );
                 break;
             default:
                 console.log("error! Direction " + roadData.direction + " not recognized")
         }
+
+        this.setMovementCostToRoadTiles( roadData );
     }
     /**
      * @param {Number} startRow row of the start cell
@@ -82,7 +90,45 @@ class Road {
         this.secondCell["col"]  = secondCol;
         this.endCell["row"]     = endRow;
         this.endCell["col"]     = endCol;
-0   }
+    }
+    setMovementCostToRoadTiles( roadData ) {
+        switch( roadData.direction ) {
+            case FACING_LEFT :
+                for ( var i = this.endCol; i <= this.startCol; i++ ) {
+                    let tileTop = globals.GAME.getTileOnCanvasAtCell( "BACK", i, this.topRow );
+                    let tileBottom = globals.GAME.getTileOnCanvasAtCell( "BACK", i,this.bottomRow );
+                    tileTop.setMovementCost( 3 )
+                    tileBottom.setMovementCost( 3 )
+                }
+                break;
+            case FACING_UP :
+                for ( var i = this.endRow; i <= this.startRow; i++ ) {
+                    let tileLeft = globals.GAME.getTileOnCanvasAtCell( "BACK", this.leftCol, i );
+                    let tileRight = globals.GAME.getTileOnCanvasAtCell( "BACK", this.rightCol, i );
+                    tileLeft.setMovementCost( 3 )
+                    tileRight.setMovementCost( 3 )
+                }
+                break;
+            case FACING_RIGHT :
+                for ( var i = this.startCol; i <= this.endCol; i++ ) {
+                    let tileTop = globals.GAME.getTileOnCanvasAtCell( "BACK", i, this.topRow );
+                    let tileBottom = globals.GAME.getTileOnCanvasAtCell( "BACK", i,this.bottomRow );
+                    tileTop.setMovementCost( 3 )
+                    tileBottom.setMovementCost( 3 )
+                } 
+                break;
+            case FACING_DOWN :
+                for ( var i = this.startRow; i <= this.endRow; i++ ) {
+                    let tileLeft = globals.GAME.getTileOnCanvasAtCell( "BACK", this.leftCol, i );
+                    let tileRight = globals.GAME.getTileOnCanvasAtCell( "BACK", this.rightCol, i );
+                    tileLeft.setMovementCost( 3 )
+                    tileRight.setMovementCost( 3 )
+                } 
+                break;
+            default:
+                console.log("error! Direction " + roadData.direction + " not recognized")
+        }
+    }
     /**
      * Loop through the given array of Road instance and check if they intersect this Road.
      * If so, call setIntersection, passing the Road and intersecting I_Tile as arguments.

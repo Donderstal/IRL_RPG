@@ -25,6 +25,8 @@ class I_Tile {
         this.blockedException = false;
         this.direction = {};
 
+        this.movementCost = 1;
+
         this.hasEvent = false;
         this.eventType;
         this.event;
@@ -42,6 +44,9 @@ class I_Tile {
      */
     get isBlocked( ) { 
         return !this.blockedException && (this.blocked || this.hasSprite)
+    }
+    setMovementCost( value ) {
+        this.movementCost = value;
     }
     /**
      * If this.ID is not null or empty, fetch the xy position of the this.ID property from SHEET_XY_VALUES.
