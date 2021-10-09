@@ -14,6 +14,12 @@ class Car extends MapObject {
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "car-engine.wav", true );
         this.movementSoundEffect.mute( );
         this.blockedCounter = new Counter( 2000 * Math.random( ), false );
+
+        globals.GAME.FRONT.roads.forEach( ( road ) => { 
+            if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {
+                road.activeCarIds.push( this.spriteId );
+            }
+        })
     }
     
     get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };

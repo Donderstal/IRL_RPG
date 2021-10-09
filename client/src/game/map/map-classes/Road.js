@@ -18,6 +18,9 @@ class Road {
 
         this.setRoadAligment( roadData )
         this.setRoadCoordinates( roadData )
+
+        this.intersections = { };
+        this.activeCarIds = [];
         
         if ( this.hasBusLine ) {
             this.setBusStopLocation( )
@@ -29,6 +32,10 @@ class Road {
         let firstTile = globals.GAME.getTileOnCanvasAtCell(  "FRONT", this.startCell.col, this.startCell.row )
         let secondTile = globals.GAME.getTileOnCanvasAtCell(  "FRONT", this.secondCell.col, this.secondCell.row )
         return FRONT.tileHasBlockingSprite( firstTile.index ) || FRONT.tileHasBlockingSprite( secondTile.index )
+    }
+
+    get carsOnRoad( ) {
+        return this.activeCarIds.map( ( id ) => { return globals.GAME.FRONT.spriteDictionary[id]; })
     }
     /**
      * Store the column numbers of the road if vertical, rows if horizontal
@@ -172,9 +179,10 @@ class Road {
      * @param {Road} road Road instance intersecting with this Road
      */
     setIntersection( tile, road ) {
-        tile.hasIntersection        = true;
-        tile.intersectionFrom = this.direction;
-        tile.intersectionTo = road.direction;
+        tile.hasIntersection    = true;
+        tile.intersectionFrom   = this.direction;
+        tile.intersectionTo     = road.direction;
+        this.intersections[road.direction] = tile;
     }
     /**
      * Randomly select a car sprite from the available sprites.

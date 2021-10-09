@@ -193,6 +193,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         if ( this.spriteDictionary[spriteId].movementSoundEffect ) {
             this.spriteDictionary[spriteId].movementSoundEffect.reset( );
         };
+        if ( this.spriteDictionary[spriteId].isCar ) {
+            this.roads.forEach( ( e ) => {
+                if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
+                    e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
+                }
+            });
+        }
         delete this.spriteDictionary[spriteId];
         this.allSprites = [];
         Object.keys( this.spriteDictionary ).forEach ( ( e ) => {
