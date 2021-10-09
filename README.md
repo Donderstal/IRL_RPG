@@ -12,7 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### OCT 3, 2021
+#### OCT 9, 2021
+* Improving pathfinding performace.
+* Priorityqueue based pathfinding algorithm.
+
+#### OCT 7, 2021
 * Basic sound effects spatialization using AudioContext
 
 #### OCT 3, 2021
