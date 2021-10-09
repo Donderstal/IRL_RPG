@@ -1,3 +1,5 @@
+const { PriorityQueue } = require("./PriorityQueue");
+
 const TILE_STATUS_INVALID = "INVALID";
 const TILE_STATUS_BLOCKED = "BLOCKED";
 const TILE_STATUS_VALID = "VALID";
@@ -8,15 +10,16 @@ const DIRECTION_SOUTH = "SOUTH";
 const DIRECTION_WEST = "WEST";
 
 let colsInGrid, rowsInGrid, tiles;
-let queue, visitedTilesList, foundPath;
+let queue, visitedTilesList, foundPath, movementCost;
 
 /**
  * Helper class to log a visited location in the pathfinding algorithm
  */
 class GridLocation {
-    constructor( row, column, index, status = null ) {
+    constructor( row, column, index, cost, status = null ) {
         this.row = row;
         this.column = column;
+        this.movementCost = cost;
         this.path = [];
         this.status = status;
         this.index = index;
@@ -30,17 +33,19 @@ class GridLocation {
  * If they are the destination, return the GridLocations' path property.
  */
 const determineShortestPath = ( startingTile, targetTile, grid ) => {
+    queue = new PriorityQueue( );
     visitedTilesList = [];
     colsInGrid = grid.cols;
     rowsInGrid = grid.rows;
     tiles = grid.tiles;
     foundPath = false;
 
-    let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, "START" )
-    queue = [ location ];
+    let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, startingTile.movementCost, "START" )
+    movementCost = location.movementCost;
+    queue.addItemToQueue( location, movementCost );
 
-    while ( queue.length > 0 ) {
-        const currentLocation = queue.shift( );
+    while ( !queue.isEmpty ) {
+        const currentLocation = queue.getFirstItemFromQueue( );
 
         if ( currentLocation.row != 1 ) {
             addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_NORTH, targetTile )   
@@ -63,12 +68,13 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
 }
 
 const addTileInDirectionToQueueIfValid = ( currentLocation, direction, targetTile ) => {
-    var newLocation = exploreInDirection( currentLocation, direction )
+    var newLocation = exploreInDirection( currentLocation.item, direction )
+    const movementCost = currentLocation.priority + newLocation.movementCost;
     if ( newLocation.index == targetTile.index  ) {
         foundPath = newLocation.path;
     }
-    else if ( newLocation.status == TILE_STATUS_VALID ) {
-        queue.push(newLocation);
+    else if ( newLocation.status == TILE_STATUS_VALID || movementCost < currentLocation.priority ) {
+        queue.addItemToQueue( newLocation, movementCost );
     }   
 }
 
@@ -117,19 +123,19 @@ const exploreInDirection = ( currentLocation, direction  ) => {
     }
 
     let tileInList = false;
-    let index;
+    let tile;
     tiles.forEach( ( e ) => { 
         if ( e.col == col && e.row == row ) {
+            tile = e;
             tileInList = true;
-            index = e.index
         }
     })
 
     if ( !tileInList )
         return { index: 'x', status: TILE_STATUS_INVALID };
 
-    const newLocation = new GridLocation( row, col, index );
-    newLocation.path = [...currentLocation.path.slice( ), index];
+    const newLocation = new GridLocation( row, col, tile.index, tile.movementCost );
+    newLocation.path = [...currentLocation.path.slice( ), tile.index];
     newLocation.status = getLocationStatus( newLocation  );
 
     if ( newLocation.status === TILE_STATUS_VALID )
