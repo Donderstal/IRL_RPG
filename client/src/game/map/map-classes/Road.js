@@ -19,7 +19,12 @@ class Road {
         this.setRoadAligment( roadData )
         this.setRoadCoordinates( roadData )
 
-        this.intersections = { };
+        this.intersections = { 
+            [FACING_LEFT]: [],
+            [FACING_UP]: [],
+            [FACING_RIGHT]: [],
+            [FACING_DOWN]: []
+        };
         this.activeCarIds = [];
         
         if ( this.hasBusLine ) {
@@ -37,6 +42,55 @@ class Road {
     get carsOnRoad( ) {
         return this.activeCarIds.map( ( id ) => { return globals.GAME.FRONT.spriteDictionary[id]; })
     }
+
+    get priorityIntersections( ) {
+        switch( this.direction ) {
+            case FACING_LEFT :
+                return this.intersections[FACING_DOWN];
+            case FACING_UP :
+                return this.intersections[FACING_LEFT];
+            case FACING_RIGHT :
+                return this.intersections[FACING_UP];
+            case FACING_DOWN :
+                return this.intersections[FACING_RIGHT];
+            default:
+                console.log("error! Direction " + this.direction + " not recognized")
+        }
+    }
+
+    checkIfCarsAreNearingIntersection( ) {
+        this.carsOnRoad.forEach( ( e ) => {
+            const car = e;
+            let inRange = false;
+            if ( car.currentTileFront != undefined ) {
+                this.priorityIntersections.forEach( ( tile ) => {
+                    switch( this.direction ) {
+                        case FACING_LEFT :
+                            inRange = tile.col == ( car.currentTileFront.col - 7 );
+                            break;
+                        case FACING_UP :
+                            inRange = tile.row == ( car.currentTileFront.row - 4 );
+                            break;
+                        case FACING_RIGHT :
+                            inRange = tile.col == ( car.currentTileFront.col + 4 );
+                            break;
+                        case FACING_DOWN :
+                            inRange = tile.row == ( car.currentTileFront.row + 7 );
+                            break;
+                        default:
+                            console.log("error! Direction " + this.direction + " not recognized")
+                    }
+                    if ( inRange && !car.waitingAtIntersection ) {
+                        car.setWaitAtIntersection( );
+                    }
+                    else if ( !inRange ) {
+                        car.unsetWaitAtIntersection( );
+                    }
+                });                
+            }
+        });
+    }
+
     /**
      * Store the column numbers of the road if vertical, rows if horizontal
      * @param {Object} roadData object from a mapResources map containing information about the road.
@@ -182,7 +236,34 @@ class Road {
         tile.hasIntersection    = true;
         tile.intersectionFrom   = this.direction;
         tile.intersectionTo     = road.direction;
-        this.intersections[road.direction] = tile;
+        switch ( this.direction ) {
+            case FACING_LEFT :
+                if ( road.direction == FACING_DOWN ) {
+                    console.log("LEFT F has DOWN F to its right")                    
+                }
+                globals.GAME.BACK.ctx.fillStyle = "orange";
+                break;
+            case FACING_UP :
+                if ( road.direction == FACING_LEFT ) {
+                    console.log("UP F has LEFT F to its right")                    
+                }
+                globals.GAME.BACK.ctx.fillStyle = "yellow";
+                break;
+            case FACING_RIGHT :
+                if ( road.direction == FACING_UP ) {
+                    console.log("RIGHT F has UP F to its right")              
+                }
+                globals.GAME.BACK.ctx.fillStyle = "red";
+                break;
+            case FACING_DOWN :
+                if ( road.direction == FACING_RIGHT ) {
+                    console.log("DOWN F has RIGHT F to its right")          
+                }
+                globals.GAME.BACK.ctx.fillStyle = "lightblue";
+                break;
+        }
+        globals.GAME.BACK.ctx.fillRect( tile.x, tile.y, globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX )
+        this.intersections[road.direction].push(tile);
     }
     /**
      * Randomly select a car sprite from the available sprites.

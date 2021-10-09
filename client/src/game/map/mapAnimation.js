@@ -24,6 +24,7 @@ const handleMapAnimations = ( GAME ) => {
     
     handleCarCounter(GAME)
     handleNpcCounter(GAME)
+    handleRoadIntersections(GAME);
     if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
         mapControls.handleMovementKeys( );  
     }
@@ -60,6 +61,9 @@ const handleNpcCounter = ( GAME ) => {
     }
 }
 
+const handleRoadIntersections = ( GAME ) => {
+    GAME.FRONT.roads.forEach( ( road ) => { road.checkIfCarsAreNearingIntersection( ) ;});
+}
 /**
  * Clear the edges of the front canvas that are not currently in the active I_Grids' borders.
  * @param {Game} GAME Instance of the Game class in Game.js

@@ -14,6 +14,7 @@ class Car extends MapObject {
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "car-engine.wav", true );
         this.movementSoundEffect.mute( );
         this.blockedCounter = new Counter( 2000 * Math.random( ), false );
+        this.waitingAtIntersection = false;
 
         globals.GAME.FRONT.roads.forEach( ( road ) => { 
             if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {
@@ -22,8 +23,8 @@ class Car extends MapObject {
         })
     }
     
-    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
-    get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
+    get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
+    get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
     get destinationIsLeft( ) { 
         return this.destinationTile.x - this.width < this.left;
     }
@@ -77,7 +78,7 @@ class Car extends MapObject {
         if ( !this.isBus ) {
             this.checkForIntersection( );            
         }
-        if ( !this.blocked && this.movingToDestination ) {
+        if ( !this.blocked && !this.waitingAtIntersection && this.movingToDestination ) {
             this.goToDestination( );     
             if (this.movementSoundEffect != undefined)
                 this.movementSoundEffect.setVolumeAndPan( this )
@@ -87,6 +88,14 @@ class Car extends MapObject {
         }
         this.handleBlockedTimeCounter( )
         this.countFrame( );
+    }
+
+    setWaitAtIntersection( ) {
+        this.waitingAtIntersection = true;
+    }
+
+    unsetWaitAtIntersection( ) {
+        this.waitingAtIntersection = false;
     }
          /**
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
