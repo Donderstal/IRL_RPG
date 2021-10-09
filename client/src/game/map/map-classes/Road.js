@@ -95,34 +95,42 @@ class Road {
         switch( roadData.direction ) {
             case FACING_LEFT :
                 for ( var i = this.endCol; i <= this.startCol; i++ ) {
-                    let tileTop = globals.GAME.getTileOnCanvasAtCell( "BACK", i, this.topRow );
-                    let tileBottom = globals.GAME.getTileOnCanvasAtCell( "BACK", i,this.bottomRow );
-                    tileTop.setMovementCost( 3 )
-                    tileBottom.setMovementCost( 3 )
+                    if ( this.crossings.indexOf(i) < 0 ) {
+                        let tileTop = globals.GAME.getTileOnCanvasAtCell( "BACK", i, this.topRow );
+                        let tileBottom = globals.GAME.getTileOnCanvasAtCell( "BACK", i,this.bottomRow );
+                        tileTop.setMovementCost( 5 )
+                        tileBottom.setMovementCost( 5 )                       
+                    }
                 }
                 break;
             case FACING_UP :
                 for ( var i = this.endRow; i <= this.startRow; i++ ) {
-                    let tileLeft = globals.GAME.getTileOnCanvasAtCell( "BACK", this.leftCol, i );
-                    let tileRight = globals.GAME.getTileOnCanvasAtCell( "BACK", this.rightCol, i );
-                    tileLeft.setMovementCost( 3 )
-                    tileRight.setMovementCost( 3 )
+                    if ( this.crossings.indexOf(i) < 0 ) {
+                        let tileLeft = globals.GAME.getTileOnCanvasAtCell( "BACK", this.leftCol, i );
+                        let tileRight = globals.GAME.getTileOnCanvasAtCell( "BACK", this.rightCol, i );
+                        tileLeft.setMovementCost( 5 )
+                        tileRight.setMovementCost( 5 )
+                    }
                 }
                 break;
             case FACING_RIGHT :
                 for ( var i = this.startCol; i <= this.endCol; i++ ) {
-                    let tileTop = globals.GAME.getTileOnCanvasAtCell( "BACK", i, this.topRow );
-                    let tileBottom = globals.GAME.getTileOnCanvasAtCell( "BACK", i,this.bottomRow );
-                    tileTop.setMovementCost( 3 )
-                    tileBottom.setMovementCost( 3 )
+                    if ( this.crossings.indexOf(i) < 0 ) {
+                        let tileTop = globals.GAME.getTileOnCanvasAtCell( "BACK", i, this.topRow );
+                        let tileBottom = globals.GAME.getTileOnCanvasAtCell( "BACK", i,this.bottomRow );
+                        tileTop.setMovementCost( 5 )
+                        tileBottom.setMovementCost( 5 )
+                    }
                 } 
                 break;
             case FACING_DOWN :
                 for ( var i = this.startRow; i <= this.endRow; i++ ) {
-                    let tileLeft = globals.GAME.getTileOnCanvasAtCell( "BACK", this.leftCol, i );
-                    let tileRight = globals.GAME.getTileOnCanvasAtCell( "BACK", this.rightCol, i );
-                    tileLeft.setMovementCost( 3 )
-                    tileRight.setMovementCost( 3 )
+                    if ( this.crossings.indexOf(i) < 0 ) {
+                        let tileLeft = globals.GAME.getTileOnCanvasAtCell( "BACK", this.leftCol, i );
+                        let tileRight = globals.GAME.getTileOnCanvasAtCell( "BACK", this.rightCol, i );
+                        tileLeft.setMovementCost( 5 )
+                        tileRight.setMovementCost( 5 )
+                    }
                 } 
                 break;
             default:

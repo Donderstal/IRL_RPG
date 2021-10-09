@@ -171,7 +171,10 @@ module.exports = {
             "topRow": 9,
             "bottomRow": 10,
             "startCol": 1,
-            "endCol": 24
+            "endCol": 24,
+            "crossings" : [
+                10, 11, 16, 17
+            ]
         },
         {
             "direction": FACING_LEFT,
@@ -180,7 +183,10 @@ module.exports = {
             "topRow": 7,
             "bottomRow": 8,
             "startCol": 24,
-            "endCol": 1
+            "endCol": 1,
+            "crossings" : [
+                10, 11, 16, 17
+            ]
         },
         {
             "direction": FACING_UP,
@@ -189,7 +195,10 @@ module.exports = {
             "leftCol": 14,
             "rightCol": 15,
             "startRow": 16,
-            "endRow": 1
+            "endRow": 1,
+            "crossings" : [
+                5, 6, 11, 12
+            ]
         },
         {
             "direction": FACING_DOWN,
@@ -198,7 +207,10 @@ module.exports = {
             "leftCol": 12,
             "rightCol": 13,
             "startRow": 1,
-            "endRow": 16
+            "endRow": 16,
+            "crossings" : [
+                5, 6, 11, 12
+            ]
         }
     ],
     "playerStart" : {
