@@ -24,7 +24,9 @@ class Car extends MapObject {
     }
     
     get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
+    get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
     get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
+    get secondNextTileFront( ) { return this.hitboxGroups[0].secondNextTileFront };
     get destinationIsLeft( ) { 
         return this.destinationTile.x - this.width < this.left;
     }

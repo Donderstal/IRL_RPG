@@ -80,17 +80,54 @@ class Road {
                         default:
                             console.log("error! Direction " + this.direction + " not recognized")
                     }
-                    if ( inRange && !car.waitingAtIntersection ) {
+                    if ( inRange && !car.waitingAtIntersection && this.checkForComingCars( tile ) ) {
                         car.setWaitAtIntersection( );
                     }
-                    else if ( !inRange ) {
+                    else if ( inRange && car.waitingAtIntersection && !this.checkForComingCars( tile ) ) {
                         car.unsetWaitAtIntersection( );
                     }
                 });                
             }
         });
     }
-
+    checkForComingCars( intersectionTile ) {
+        let priorityRoad = this.getIntersectingRoadAtTile( intersectionTile );
+        let tileInRange = [];
+        if ( priorityRoad.carsOnRoad.length > 0 ) {
+            tileInRange = priorityRoad.carsOnRoad.filter( ( car ) => {
+                if ( priorityRoad.alignment == 'VERT' ) {
+                    return ( 
+                        (car.middleTileFront != undefined && intersectionTile.row == car.middleTileFront.row ) ||
+                        (car.currentTileFront != undefined && intersectionTile.row == car.currentTileFront.row ) ||
+                        (car.nextTileFront != undefined && intersectionTile.row == car.nextTileFront.row ) ||
+                        (car.secondNextTileFront != undefined && intersectionTile.row == car.secondNextTileFront.row )
+                    );
+                }
+                else {
+                    return ( 
+                        (car.middleTileFront != undefined && intersectionTile.col == car.middleTileFront.col) || 
+                        (car.currentTileFront != undefined && intersectionTile.col == car.currentTileFront.col) || 
+                        (car.nextTileFront != undefined && intersectionTile.col == car.nextTileFront.col) ||
+                        (car.secondNextTileFront != undefined && intersectionTile.col == car.secondNextTileFront.col )
+                    );
+                }
+            })
+        }
+        return tileInRange.length > 0;
+    }
+    getIntersectingRoadAtTile( tile ) {
+        return globals.GAME.FRONT.roads.filter( ( road ) => {
+            if ( road.direction == tile.intersectionTo ) {
+                if ( road.alignment == "HORI" && ( road.topRow == tile.row || road.bottomRow == tile.row ) ) {
+                    return true;
+                }
+                else if ( road.leftCol == tile.col || road.rightCol == tile.col ) {
+                    return true;                    
+                }
+            }
+            return false;
+        })[0]
+    }
     /**
      * Store the column numbers of the road if vertical, rows if horizontal
      * @param {Object} roadData object from a mapResources map containing information about the road.

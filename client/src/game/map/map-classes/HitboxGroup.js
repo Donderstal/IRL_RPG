@@ -24,6 +24,18 @@ class HitboxGroup {
     get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[0]) };
     get middleTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndexes[1]) };
     get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
+    get secondNextTileFront( ) {
+        switch( this.direction ) {
+            case FACING_LEFT:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex - 1 );
+            case FACING_UP:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex - globals.GAME.activeMap.cols );
+            case FACING_RIGHT:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex + 1 );
+            case FACING_DOWN:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex + globals.GAME.activeMap.cols );
+        }
+    }
 
     get isAtIntersection( ) { return this.currentTileFront && this.currentTileFront.hasIntersection }
     get middleIsOnIntersection( ) { return this.middleTileFront && this.middleTileFront.hasIntersection; }
