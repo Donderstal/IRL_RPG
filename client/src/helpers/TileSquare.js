@@ -44,7 +44,7 @@ class TileSquare {
         else if ( sprite.right > this.left && sprite.right < this.right ) {
             return true;
         }
-        else if ( sprite.right > this.right && sprite.left < this.left ) {
+        else if ( sprite.right >= this.right && sprite.left <= this.left ) {
             return true;
         }
         return false;
@@ -57,7 +57,7 @@ class TileSquare {
         else if ( sprite.bottom > this.top && sprite.bottom < this.bottom ) {
             return true;
         }
-        else if ( sprite.bottom > this.bottom && sprite.top < this.top ) {
+        else if ( sprite.bottom >= this.bottom && sprite.top <= this.top ) {
             return true;
         }
         return false;

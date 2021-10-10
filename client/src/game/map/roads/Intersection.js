@@ -7,6 +7,7 @@ class Intersection {
         this.roads      = [];
 
         this.core;
+        this.openLanes = { }
 
         this.leftFacingLane = false;
         this.upFacingLane = false;
@@ -63,6 +64,9 @@ class Intersection {
                     console.log('direction ' + e + ' is not recognized')      
             }
         });
+        this.directions.forEach((direction) => {
+            this.openLanes[direction] = true;
+        })
     }
 
     initIntersectionFromPendingList( pendingList ) {
@@ -83,6 +87,55 @@ class Intersection {
         });
 
         this.core = new TileSquare( tileList );
+    }
+
+    updateIntersectionStatus( ) {
+        Object.keys(this.openLanes).forEach( (key) => { 
+            this.openLanes[key] = true;
+        })
+
+        this.checkForCarsOnIntersection( );
+    }
+
+    checkForCarsOnIntersection( ) {
+        if ( this.leftFacingLane && this.checkForCarsOnSquare( this.leftFacingRoad.carsOnRoad, this.leftFacingLane )) {
+            this.closeLane( FACING_DOWN );
+        }
+        if ( this.upFacingLane && this.checkForCarsOnSquare( his.upFacingRoad.carsOnRoad, this.upFacingLane)) {
+            this.closeLane( FACING_RIGHT );
+        }
+        if ( this.rightFacingLane && this.checkForCarsOnSquare(this.rightFacingRoad.carsOnRoad, this.rightFacingLane)) {
+            this.closeLane( FACING_UP );
+        }
+        if ( this.downFacingLane && this.checkForCarsOnSquare(this.downFacingRoad.carsOnRoad, this.downFacingLane)) {
+            this.closeLane( FACING_LEFT );                
+        }
+
+        let horizontalCars = [...this.rightFacingRoad.carsOnRoad, ...this.leftFacingRoad.carsOnRoad];
+        if ( this.checkForCarsOnSquare( horizontalCars, this.core ) ) {
+            this.closeLane( FACING_UP );
+            this.closeLane( FACING_DOWN );
+        }
+
+        let verticalCars = [...this.downFacingRoad.carsOnRoad, ...this.upFacingRoad.carsOnRoad];
+        if ( this.checkForCarsOnSquare( verticalCars, this.core ) ) {
+            this.closeLane( FACING_LEFT );
+            this.closeLane( FACING_RIGHT );
+        }
+    }
+
+    checkForCarsOnSquare( cars, square ) {
+        let carOnLane = false;
+        cars.forEach( ( car ) => {
+            if ( square.spriteIsInTileSquare( car ) ) {
+                carOnLane = true;
+            }
+        })
+        return carOnLane;
+    }
+
+    closeLane( direction ) {
+        this.openLanes[direction] = false;
     }
 }
 

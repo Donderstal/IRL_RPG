@@ -43,7 +43,8 @@ class RoadNetwork {
     }
 
     handleRoadIntersections( ) {
-        this.roads.forEach( ( road ) => { road.checkIfCarsAreNearingIntersection( ) ;});
+        this.roads.forEach( ( road ) => { road.checkIfCarsAreNearingIntersection( ); });
+        this.intersections.forEach( ( intersection ) => { intersection.updateIntersectionStatus( ); })
     }
 
     handleCarCounter( ) {
