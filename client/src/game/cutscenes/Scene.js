@@ -108,7 +108,7 @@ class Scene {
     }
 
     initMoveCarScene( data ) {
-        let roads   = globals.GAME.FRONT.roads.filter( ( e ) => { return e.roadId == data.roadId; })
+        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadId == data.roadId; })
         let road    = roads[0];
 
         this.destination = road.isHorizontal ? { "row": road.topRow, "col": data.col } : { "row": data.row, "col": road.leftCol }
@@ -118,7 +118,7 @@ class Scene {
     }
 
     initCreateCarScene( data ) {
-        let roads   = globals.GAME.FRONT.roads.filter( ( e ) => { return e.roadId == data.roadId; })
+        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadId == data.roadId; })
         let roadData    = roads[0].getCarDataForTile( true );
         roadData.name = this.spriteName;
         globals.GAME.FRONT.setVehicleToTile( roadData )

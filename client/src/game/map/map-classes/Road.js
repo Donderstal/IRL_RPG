@@ -116,7 +116,7 @@ class Road {
         return tileInRange.length > 0;
     }
     getIntersectingRoadAtTile( tile ) {
-        return globals.GAME.FRONT.roads.filter( ( road ) => {
+        return globals.GAME.FRONT.roadNetwork.roads.filter( ( road ) => {
             if ( road.direction == tile.intersectionTo ) {
                 if ( road.alignment == "HORI" && ( road.topRow == tile.row || road.bottomRow == tile.row ) ) {
                     return true;

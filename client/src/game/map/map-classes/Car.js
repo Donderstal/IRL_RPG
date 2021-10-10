@@ -16,7 +16,7 @@ class Car extends MapObject {
         this.blockedCounter = new Counter( 2000 * Math.random( ), false );
         this.waitingAtIntersection = false;
 
-        globals.GAME.FRONT.roads.forEach( ( road ) => { 
+        globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
             if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {
                 road.activeCarIds.push( this.spriteId );
             }
@@ -216,7 +216,7 @@ class Car extends MapObject {
         this.setObjectDimensionsBasedOnDirection( newDirection )
         this.initHitboxGroups( );
 
-        globals.GAME.front.class.roads.forEach( ( road ) => {
+        globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => {
             if ( road.direction == newDirection ) {
                 this.destination = road.endCell;
             }

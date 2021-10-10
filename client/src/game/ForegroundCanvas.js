@@ -4,12 +4,12 @@ const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
 const { Car } = require('./map/map-classes/Car')
 const { getUniqueId } = require('../helpers/utilFunctions');
-const { Road } = require('./map/map-classes/Road');
 const { BattleSlot } = require('./battle/BattleSlot');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
 const { CONTROL_LEFT, CONTROL_RIGHT } = require('../game-data/battleGlobals');
 const { DEFAULT, EVENT_TALK, SPEAK } = require('../game-data/conditionGlobals');
+const { RoadNetwork } = require('./map/RoadNetwork');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -19,11 +19,11 @@ const { DEFAULT, EVENT_TALK, SPEAK } = require('../game-data/conditionGlobals');
 class ForegroundCanvas extends I_CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
-        this.roads = [ ];
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = { };
         this.activeEffects = [];
+        this.roadNetwork;
     };
 
     get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_LEFT; } ); };
@@ -46,7 +46,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         if ( mapData.playerStart && isNewGame )
             this.initPlayerCharacter( mapData.playerStart );
         if ( mapData.roads ) 
-            this.setCarGenerator( mapData.roads );
+            this.roadNetwork = new RoadNetwork( mapData.roads );
     }
 
     /**
@@ -114,35 +114,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.spriteDictionary[newId] = newObject
         tile.spriteId = newId;
     }
-    /**
-     * Loop through given roads array. For each, instantiate a Road class and add it to the this.roads prop. Afterwards, check for intersecting roads.
-     * @param {Object[]} roads - array of road data objects
-     */
-    setCarGenerator( roads ) {
-        roads.forEach( ( roadData, index ) => {
-            this.roads.push( new Road( roadData, index ) )
-        } )
-
-        if ( roads.length > 1 ) {
-            this.roads.forEach( ( road ) => {
-                road.checkForIntersections( this.roads )
-            })
-        }
-    }
-    /**
-     * Semi-randomly select a road to spawn a car on. 
-     * If a car can be spawned, get carData for a car from the selected road
-     * Then set the data to at the roads' I_Tile and instantiate a class with setObjectSprite
-     */
-    generateCar(  ) {
-        const spawnableRoads = this.roads.filter( ( road ) => { return road.hasStart })
-        const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
-        if ( !activeRoad.startCellIsBlocked ) {
-            const carData = activeRoad.getCarDataForTile( )
-            this.setVehicleToTile( carData )
-        }
-    }
-
     setVehicleToTile( carData ) {
         const tile = super.getTileAtCell( carData.col, carData.row );
         this.setObjectSprite( tile, carData, true )   
@@ -153,7 +124,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      */
     clearMap( ) {
         this.allSprites = [ ];
-        this.roads = [ ];
+        this.roadNetwork = null;
         this.spriteDictionary = { };
     }
     /**
@@ -194,7 +165,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.spriteDictionary[spriteId].movementSoundEffect.reset( );
         };
         if ( this.spriteDictionary[spriteId].isCar ) {
-            this.roads.forEach( ( e ) => {
+            this.roadNetwork.roads.forEach( ( e ) => {
                 if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
                     e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
                 }

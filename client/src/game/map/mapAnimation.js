@@ -22,9 +22,10 @@ const handleMapAnimations = ( GAME ) => {
         e.updateXy( e.x, e.y )
     })
     
-    handleCarCounter(GAME)
+    GAME.FRONT.roadNetwork.handleCarCounter()
     handleNpcCounter(GAME)
-    handleRoadIntersections(GAME);
+    GAME.FRONT.roadNetwork.handleRoadIntersections();
+
     if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
         mapControls.handleMovementKeys( );  
     }
@@ -39,17 +40,6 @@ const handleMapAnimations = ( GAME ) => {
     })
 }
 
-const handleCarCounter = ( GAME ) => {
-    if ( GAME.FRONT.roads.length > 0 ) {
-        if ( carCounter.countAndCheckLimit( ) ) {
-            GAME.FRONT.generateCar( );
-        }
-    }
-    else {
-        carCounter.resetCounter( );
-    }
-}
-
 const handleNpcCounter = ( GAME ) => {
     if ( GAME.activeMap.spawnPoints != undefined ) {
         if ( npcCounter.countAndCheckLimit( ) && GAME.activeMap.spawnPoints.length > 0) {
@@ -59,10 +49,6 @@ const handleNpcCounter = ( GAME ) => {
     else {
         npcCounter.resetCounter( );
     }
-}
-
-const handleRoadIntersections = ( GAME ) => {
-    GAME.FRONT.roads.forEach( ( road ) => { road.checkIfCarsAreNearingIntersection( ) ;});
 }
 /**
  * Clear the edges of the front canvas that are not currently in the active I_Grids' borders.
