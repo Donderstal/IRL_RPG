@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### OCT 9, 2021
+* RoadNetwork class for overarching road and intersections funcs
+
+#### OCT 9, 2021
 * Improving pathfinding performace.
 * Priorityqueue based pathfinding algorithm.
 

@@ -1,9 +1,6 @@
 const globals       = require('../../../game-data/globals');
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../../../game-data/globals")
-/**
- * Some outdoor maps have roads. They are represented by a Road instance.
- * If hasStart is set true, they can generate car sprites to drive down the road.
- */
+
 class Road {
     constructor ( roadData, index ) {
         this.index = index;
@@ -128,10 +125,7 @@ class Road {
             return false;
         })[0]
     }
-    /**
-     * Store the column numbers of the road if vertical, rows if horizontal
-     * @param {Object} roadData object from a mapResources map containing information about the road.
-     */
+
     setRoadAligment( roadData ) {
         if ( roadData.alignment == "VERT" ) {
             this.leftCol    = roadData["leftCol"];
@@ -142,10 +136,7 @@ class Road {
             this.bottomRow  = roadData["bottomRow"];    
         }
     }
-    /**
-     * Set the start and end location of the road based on the direction prop of roadData.
-     * @param {Object} roadData object from a mapResources map containing information about the road.
-     */
+
     setRoadCoordinates( roadData ) {
         const activeGrid = globals.GAME.front.class.grid;
 
@@ -173,14 +164,7 @@ class Road {
 
         this.setMovementCostToRoadTiles( roadData );
     }
-    /**
-     * @param {Number} startRow row of the start cell
-     * @param {Number} startCol col of the start cell
-     * @param {Number} secondRow row of the second cell
-     * @param {Number} secondCol col of the second cell
-     * @param {Number} endRow row of the end cell
-     * @param {Number} endCol col of the end cell
-     */
+
     setCells( startRow, startCol, secondRow, secondCol, endRow, endCol ) {
         this.startCell["row"]   = startRow;
         this.startCell["col"]   = startCol;
@@ -235,11 +219,7 @@ class Road {
                 console.log("error! Direction " + roadData.direction + " not recognized")
         }
     }
-    /**
-     * Loop through the given array of Road instance and check if they intersect this Road.
-     * If so, call setIntersection, passing the Road and intersecting I_Tile as arguments.
-     * @param {Road[]} roads array of Road instances
-     */
+
     checkForIntersections( roads ) {
         roads.forEach( ( road, index ) => { 
             if ( index != this.index && ( ( this.isHorizontal && !road.isHorizontal ) || ( !this.isHorizontal && road.isHorizontal ) )) { 
@@ -263,12 +243,7 @@ class Road {
             }
         } )
     }
-    /**
-     * Set tile.hasIntersection to true.
-     * Assign this.direction to tile's intersectionFrom and give road direction to intersectionTo
-     * @param {I_Tile} tile I_Tile instance to set intersection to
-     * @param {Road} road Road instance intersecting with this Road
-     */
+
     setIntersection( tile, road ) {
         tile.hasIntersection    = true;
         tile.intersectionFrom   = this.direction;
@@ -302,10 +277,7 @@ class Road {
         globals.GAME.BACK.ctx.fillRect( tile.x, tile.y, globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX )
         this.intersections[road.direction].push(tile);
     }
-    /**
-     * Randomly select a car sprite from the available sprites.
-     * Return an object with the information needed generate a car sprite.
-     */
+
     getCarDataForTile( isBus = false ) {
         const carNames = [ "car_a", "car_b", "car_c", "car_d", "bus" ]
         let randomIndex = Math.floor(Math.random() * carNames.length);

@@ -99,11 +99,7 @@ class Car extends MapObject {
     unsetWaitAtIntersection( ) {
         this.waitingAtIntersection = false;
     }
-         /**
-     * Set the Sprites' location on the grid and xy axis depending on given I_Tile
-     * @param {I_TIle} tile instance of I_Tile Class
-     * @param {Boolean} isCar true if this is a car sprite
-     */
+
     setSpriteToGrid( tile, inConstructor = true ) {
         this.row = tile.row;
         this.col = tile.col;
@@ -129,48 +125,30 @@ class Car extends MapObject {
                 break;
         }
     }
-    /**
-     * Set this.movingToDestination to true. 
-     * If given speed is not null, set it to this.movementSpeed.
-     * Else, set MOVEMENT_SPEED. Add random variation to speed if this.isCar.
-     * @param {Number} speed optional. movement speed of the sprite in pixels
-     */
+
     initMovement( speed = null ) {
         this.movingToDestination = true;
         this.movementSpeed = MOVEMENT_SPEED * ( Math.random( ) + 1 );
     }
-    /**
-     * Override of base method to set Car destination as single tile instead of a list of tiles
-     */
+
     setDestinationList( ) {
         this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
     }
-    /**
-     * Call this.initMovement and assign frames to this.frames.
-     * Then, call setDestination with spriteData.destination as argument
-     * @param {Object} spriteData 
-     */
+
     initMovingSprite( spriteData ) {
         if ( spriteData.destination ) {
             this.setDestination( spriteData.destination );      
             this.initMovement( );    
         }
     }
-    /**
-     * Set the value of this.blocked to the return value of the checkForCollision, passing the first group in this.hitboxGroups as argument.
-     * If not blocked and there is another hitboxGroup, set this.blocked to the return value of checkForCollision with the second group as argument.
-     */
+
     checkForCollision( ) {
         this.blocked = checkForCollision( this.hitboxGroups[0], false )
         if ( !this.blocked && this.hitboxGroups.length > 1 ) {
             this.blocked = checkForCollision( this.hitboxGroups[1], false )
         }        
     }
-        /**
-     * Check if the sprite is currently facing up to determine which I_Tile to check for intersection.
-     * Loop through the Hitboxes. If not turning and group is at intersection, loop through the 
-     * intersectingDirection in the intersection I_Tile. If a valid direction is found, call this.switchDirections.
-     */
+
     checkForIntersection( ) {
           this.hitboxGroups.forEach( ( group ) => {
             if ( group.middleIsOnIntersection && !this.handlingIntersection && group.middleTileFront.intersectionFrom == this.direction) {
@@ -178,10 +156,7 @@ class Car extends MapObject {
             }
         })
     }
-    /**
-     * Handle the intersection at the current tile and call switchDirection
-     * @param {I_Tile} intersectionTile 
-     */
+
     handleIntersection( intersectionTile ) {
         const tile = Object.assign(Object.create(Object.getPrototypeOf(intersectionTile)), intersectionTile);
         const directionFrom = intersectionTile.intersectionFrom;
@@ -203,13 +178,7 @@ class Car extends MapObject {
         this.handlingIntersection = true;
         Math.random( ) > .5 ? this.switchDirections( directionTo, tile ) : setTimeout(( )=> {this.handlingIntersection = false}, 500);
     }
-    /**
-     * Clear the hitboxGroups tile indexes and set the newDirection to Car
-     * Set the sprite to gridd at the intersectionTile and check for new spritesheet dimensions
-     * Then, initialize new HitboxGroups and set the destination tile of the new road as destination
-     * @param {String} newDirection direction to switch to as string
-     * @param {I_Tile} intersectionTile grid tile with intersection
-     */
+
     switchDirections( newDirection, intersectionTile ) {
         this.direction = newDirection;
         this.setSpriteToGrid( intersectionTile, false ) 
@@ -227,10 +196,7 @@ class Car extends MapObject {
             this.handlingIntersection = false;
         }, 500 )
     }
-        /**
-     * Depending on what direction the destination is, move on the x or y axis.
-     * If No move is possible, call endGoToAnimation and set this.deleted to true.
-     */
+
     goToDestination( ) {
         this.moving = false
         if ( this.destinationIsLeft && this.direction == FACING_LEFT ) {
@@ -266,10 +232,7 @@ class Car extends MapObject {
             }
         }
     }
-    /**
-     * Set the value of this.activeFrames, depending on this.direction.
-     * Then, set sheetFrameLimit to this.activeFrames.length.
-     */
+
     setActiveFrames( ) {
         switch ( this.direction ) {
             case FACING_LEFT :
