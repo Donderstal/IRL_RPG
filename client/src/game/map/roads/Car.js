@@ -1,4 +1,4 @@
-const { MapObject } = require("./MapObject");
+const { MapObject } = require("../map-classes/MapObject");
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');

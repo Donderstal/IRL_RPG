@@ -1,6 +1,6 @@
 const globals = require('../../game-data/globals')
 const { Counter } = require('../../helpers/Counter');
-const { Road } = require('./map-classes/Road');
+const { Road } = require('./roads/Road');
 
 const carCounter = new Counter( 5000, true );
 
