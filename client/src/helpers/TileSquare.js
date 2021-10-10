@@ -26,20 +26,33 @@ class TileSquare {
     }
 
     spriteIsInTileSquare( sprite ) {
-        let spriteIsOnTiles = false;
+        return this.spriteInHorizontalRange( sprite ) && this.spriteInVerticalRange( sprite );
+    }
+
+    spriteInHorizontalRange( sprite ) {
         if ( sprite.left > this.left && sprite.left < this.right ) {
-            spriteIsOnTiles = true;
+            return true;
         }
         else if ( sprite.right > this.left && sprite.right < this.right ) {
-            spriteIsOnTiles = true;
+            return true;
         }
-        else if ( sprite.top > this.top && sprite.top < this.top ) {
-            spriteIsOnTiles = true;
+        else if ( sprite.right > this.right && sprite.left < this.left ) {
+            return true;
         }
-        else if ( sprite.bottom > this.top && sprite.top < this.top ) {
-            spriteIsOnTiles = true;
+        return false;
+    }
+
+    spriteInVerticalRange( sprite ) {
+        if ( sprite.top > this.top && sprite.top < this.bottom ) {
+            return true;
         }
-        return spriteIsOnTiles;
+        else if ( sprite.bottom > this.top && sprite.bottom < this.bottom ) {
+            return true;
+        }
+        else if ( sprite.bottom > this.bottom && sprite.top < this.top ) {
+            return true;
+        }
+        return false;
     }
 }
 
