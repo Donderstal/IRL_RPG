@@ -2,6 +2,7 @@ const globals = require('../../game-data/globals')
 const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require('../../game-data/globals')
 const { Counter } = require('../../helpers/Counter');
 const { TileSquare } = require('../../helpers/TileSquare');
+const { Intersection } = require('./roads/Intersection');
 const { Road } = require('./roads/Road');
 
 const carCounter = new Counter( 5000, true );
@@ -74,7 +75,6 @@ class RoadNetwork {
                 }
             })
         })
-        console.log(this.pendingIntersections);
         this.checkPendingIntersections( );
     }
 
@@ -105,7 +105,6 @@ class RoadNetwork {
             const pendingIntersection = this.pendingIntersections.shift( );
             const currentDirections = pendingIntersection.directions;
             const pendingSquare = pendingIntersection.square;
-            console.log(pendingIntersection);
             let filteredIntersections = [];
 
             if ( this.areDirectionsInList(currentDirections, FACING_DOWN, FACING_LEFT) ) {
@@ -145,12 +144,11 @@ class RoadNetwork {
                 } );
             } 
 
-            console.log([ ...filteredIntersections, pendingIntersection])
             filteredIntersections.forEach( ( e ) => {
                 let index =  this.pendingIntersections.indexOf( e );
                 this.pendingIntersections.splice( index, 1 )
             })
-            console.log(this.pendingIntersections)
+            this.intersections.push( new Intersection([ ...filteredIntersections, pendingIntersection]))
         }
     }
 }

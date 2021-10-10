@@ -1,3 +1,4 @@
+const globals = require("../game-data/globals");
 const { GRID_BLOCK_PX } = require('../game-data/globals');
 const { cloneInstance } = require('./utilFunctions');
 
@@ -6,9 +7,16 @@ class TileSquare {
         this.tileList = [];
         this.setTileList( tileList );
         this.setSquareDimensions( );
+        globals.GAME.BACK.ctx.fillStyle = 'white';
+        globals.GAME.BACK.ctx.fillRect( this.left, this.top, this.width, this.height );
         console.log(this);
     }
 
+    get leftColumn( ) { return Math.min.apply(Math, this.tileList.map( (tile) => { return tile.col; } )); };
+    get topRow( ) { return Math.min.apply(Math, this.tileList.map( (tile) => { return tile.row; } )); };
+    get rightColumn( ) { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.col; } )); };
+    get bottomRow( ) { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.row; } )); };
+ 
     setTileList( list ) {
         list.forEach( ( tile ) => { 
             this.tileList.push( cloneInstance(tile) )
