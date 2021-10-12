@@ -25,12 +25,6 @@ class RoadNetwork {
         roads.forEach( ( road, index ) => {
             this.roads.push( new Road( road, index ) )
         });
-
-        if ( roads.length > 1 ) {
-            this.roads.forEach( ( road ) => {
-                road.checkForIntersections( this.roads )
-            })
-        }
     }
 
     generateCar(  ) {
@@ -43,7 +37,6 @@ class RoadNetwork {
     }
 
     handleRoadIntersections( ) {
-        this.roads.forEach( ( road ) => { road.checkIfCarsAreNearingIntersection( ); });
         this.intersections.forEach( ( intersection ) => { intersection.updateIntersectionStatus( ); })
     }
 
