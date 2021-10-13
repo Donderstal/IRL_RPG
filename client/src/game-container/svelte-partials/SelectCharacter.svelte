@@ -267,6 +267,7 @@
             <option value="northside/A3">Northside</option>
             <option value="test/test-collision">Collision Test</option>
             <option value="test/pathfinding-test">Pathfinding Test</option>
+            <option value="test/pathfinding-test-2">Pathfinding Test 2</option>
             <option value="test/newMapFormat">newMapFormat</option>
             <option value="test/test-dungeon-outside">Test Dungeon</option>
         </select></p>
