@@ -1,4 +1,5 @@
 const globals       = require('../../../game-data/globals');
+const { Counter } = require('../../../helpers/Counter');
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../../../game-data/globals")
 
 class Road {
@@ -22,8 +23,10 @@ class Road {
             [FACING_RIGHT]: [],
             [FACING_DOWN]: []
         };
+
         this.activeCarIds = [];
-        
+        this.carCounter = new Counter( 5000, true );
+
         if ( this.hasBusLine ) {
             this.setBusStopLocation( )
         }
@@ -40,18 +43,16 @@ class Road {
         return this.activeCarIds.map( ( id ) => { return globals.GAME.FRONT.spriteDictionary[id]; })
     }
 
-    get priorityIntersections( ) {
-        switch( this.direction ) {
-            case FACING_LEFT :
-                return this.intersections[FACING_DOWN];
-            case FACING_UP :
-                return this.intersections[FACING_LEFT];
-            case FACING_RIGHT :
-                return this.intersections[FACING_UP];
-            case FACING_DOWN :
-                return this.intersections[FACING_RIGHT];
-            default:
-                console.log("error! Direction " + this.direction + " not recognized")
+    handleCarCounter( ) {
+        if ( this.carCounter.countAndCheckLimit( ) ) {
+            this.generateCar( );
+            this.carCounter.resetCounter( );
+        }
+    }
+
+    generateCar(  ) {
+        if ( !this.startCellIsBlocked ) {
+            globals.GAME.FRONT.setVehicleToTile( this.getCarDataForTile( ) )
         }
     }
 
@@ -136,7 +137,6 @@ class Road {
                 console.log("error! Direction " + roadData.direction + " not recognized")
         }
     }
-    
     setTilesMovementCost( colParam1, rowParam1, colParam2, rowParam2) {
         let tile1 = globals.GAME.getTileOnCanvasAtCell( "BACK", colParam1, rowParam1 );
         let tile2 = globals.GAME.getTileOnCanvasAtCell( "BACK", colParam2, rowParam2 );

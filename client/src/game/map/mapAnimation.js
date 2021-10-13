@@ -22,9 +22,8 @@ const handleMapAnimations = ( GAME ) => {
         e.updateXy( e.x, e.y )
     })
     
-    GAME.FRONT.roadNetwork.handleCarCounter()
+    handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
-    GAME.FRONT.roadNetwork.handleRoadIntersections();
 
     if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
         mapControls.handleMovementKeys( );  
@@ -38,6 +37,11 @@ const handleMapAnimations = ( GAME ) => {
     GAME.FRONT.activeEffects.forEach( ( e ) => {
         e.drawAndMove( );
     })
+}
+
+const handleRoadNetworkFuncs = ( GAME ) => {
+    GAME.FRONT.roadNetwork.handleCarCounter()
+    GAME.FRONT.roadNetwork.handleRoadIntersections();
 }
 
 const handleNpcCounter = ( GAME ) => {

@@ -1,11 +1,8 @@
 const globals = require('../../game-data/globals')
 const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require('../../game-data/globals')
-const { Counter } = require('../../helpers/Counter');
 const { TileSquare } = require('../../helpers/TileSquare');
 const { Intersection } = require('./roads/Intersection');
 const { Road } = require('./roads/Road');
-
-const carCounter = new Counter( 5000, true );
 
 class RoadNetwork {
     constructor( roads ) {
@@ -27,28 +24,12 @@ class RoadNetwork {
         });
     }
 
-    generateCar(  ) {
-        const spawnableRoads = this.roads.filter( ( road ) => { return road.hasStart })
-        const activeRoad = spawnableRoads[ Math.floor(Math.random() * spawnableRoads.length) ];
-        if ( !activeRoad.startCellIsBlocked ) {
-            const carData = activeRoad.getCarDataForTile( )
-            globals.GAME.FRONT.setVehicleToTile( carData )
-        }
-    }
-
     handleRoadIntersections( ) {
         this.intersections.forEach( ( intersection ) => { intersection.updateIntersectionStatus( ); })
     }
 
     handleCarCounter( ) {
-        if ( this.roads.length > 0 ) {
-            if ( carCounter.countAndCheckLimit( ) ) {
-                this.generateCar( );
-            }
-        }
-        else {
-            carCounter.resetCounter( );
-        }
+        this.roads.forEach( ( e ) => { e.handleCarCounter( ); })
     }
 
     roadsIntersect( horizontalRoad, verticalRoad ) {
