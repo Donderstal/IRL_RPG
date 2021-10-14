@@ -7,8 +7,6 @@ class TileSquare {
         this.tileList = [];
         this.setTileList( tileList );
         this.setSquareDimensions( );
-        globals.GAME.BACK.ctx.fillStyle = 'white';
-        globals.GAME.BACK.ctx.fillRect( this.left, this.top, this.width, this.height );
         console.log(this);
     }
 
