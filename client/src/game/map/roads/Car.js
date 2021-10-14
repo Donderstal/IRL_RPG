@@ -13,7 +13,9 @@ class Car extends MapObject {
         this.initMovingSprite( spriteData )
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "car-engine.wav", true );
         this.movementSoundEffect.mute( );
-        this.blockedCounter = new Counter( 2000 * Math.random( ), false );
+        this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
+        this.carHornSoundEffect.mute( );
+        this.blockedCounter = new Counter( 5000, false );
         this.waitingAtIntersection = false;
 
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
@@ -60,13 +62,14 @@ class Car extends MapObject {
     handleBlockedTimeCounter( ) {
         if ( this.blocked ) {
             if ( this.blockedCounter.countAndCheckLimit( ) ) {
-                this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
-                this.carHornSoundEffect.setVolumeAndPan( this )
                 this.carHornSoundEffect.play( );
             } 
         }
         else {
             this.blockedCounter.resetCounter( );
+            if ( this.carHornSoundEffect != undefined ) {
+                this.carHornSoundEffect.reset( );                
+            }
         }       
     }
     
@@ -80,10 +83,12 @@ class Car extends MapObject {
         if ( !this.isBus ) {
             this.checkForIntersection( );            
         }
+        if (this.movementSoundEffect != undefined && this.carHornSoundEffect != undefined) {
+            this.carHornSoundEffect.setVolumeAndPan( this )
+            this.movementSoundEffect.setVolumeAndPan( this )                 
+        }
         if ( !this.blocked && !this.waitingAtIntersection && this.movingToDestination ) {
             this.goToDestination( );     
-            if (this.movementSoundEffect != undefined)
-                this.movementSoundEffect.setVolumeAndPan( this )
         }
         else if (this.movementSoundEffect != undefined &&( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
             this.movementSoundEffect.reset( );
