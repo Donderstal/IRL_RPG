@@ -1,7 +1,7 @@
-const { FACING_LEFT, FACING_RIGHT, FACING_DOWN, FACING_UP } = require("../../../game-data/globals");
+const { FACING_RIGHT, FACING_LEFT, FACING_DOWN, FACING_UP } = require("../../../game-data/globals");
 
 module.exports = {
-    "mapName": "test/pathfinding-test-2",
+    "mapName": "crossing-test",
     "neighbourhood": "test",
     "neighbours": {
         "right": "",
@@ -11,57 +11,62 @@ module.exports = {
     },
     "spawnPoints": [
         {
+            "col": 2,
+            "row": 0,
+            "direction": FACING_DOWN
+        },
+        {
+            "col": 4,
+            "row": 0,
+            "direction": FACING_DOWN
+        },
+        {
+            "col": 6,
+            "row": 0,
+            "direction": FACING_DOWN
+        },
+        {
+            "col": 8,
+            "row": 0,
+            "direction": FACING_DOWN
+        },
+        {
+            "col": 10,
+            "row": 0,
+            "direction": FACING_DOWN
+        },
+        {
             "col": 12,
             "row": 0,
             "direction": FACING_DOWN
         },
         {
-            "col": 19,
+            "col": 14,
             "row": 0,
             "direction": FACING_DOWN
         },
         {
-            "col": 5,
-            "row": 5,
+            "col": 16,
+            "row": 0,
             "direction": FACING_DOWN
         },
         {
-            "col": 6,
-            "row": 5,
+            "col": 18,
+            "row": 0,
             "direction": FACING_DOWN
         },
         {
-            "col": 21,
-            "row": 5,
+            "col": 20,
+            "row": 0,
             "direction": FACING_DOWN
         },
         {
             "col": 22,
-            "row": 5,
+            "row": 0,
             "direction": FACING_DOWN
         },
         {
-            "col": 0,
-            "row": 6,
-            "direction": FACING_RIGHT
-        },
-        {
-            "col": 25,
-            "row": 6,
-            "direction": FACING_LEFT
-        },
-        {
-            "col": 0,
-            "row": 8,
-            "direction": FACING_RIGHT
-        },
-        {
-            "col": 25,
-            "row": 8,
-            "direction": FACING_LEFT
-        },
-        {
-            "col": 2,
+            "col": 3,
             "row": 17,
             "direction": FACING_UP
         },
@@ -71,12 +76,42 @@ module.exports = {
             "direction": FACING_UP
         },
         {
-            "col": 10,
+            "col": 7,
+            "row": 17,
+            "direction": FACING_UP
+        },
+        {
+            "col": 9,
+            "row": 17,
+            "direction": FACING_UP
+        },
+        {
+            "col": 11,
+            "row": 17,
+            "direction": FACING_UP
+        },
+        {
+            "col": 13,
+            "row": 17,
+            "direction": FACING_UP
+        },
+        {
+            "col": 15,
+            "row": 17,
+            "direction": FACING_UP
+        },
+        {
+            "col": 17,
             "row": 17,
             "direction": FACING_UP
         },
         {
             "col": 19,
+            "row": 17,
+            "direction": FACING_UP
+        },
+        {
+            "col": 21,
             "row": 17,
             "direction": FACING_UP
         },
@@ -88,58 +123,34 @@ module.exports = {
     ],
     "roads": [
         {
-            "direction": FACING_LEFT,
-            "alignment": "HORI",
-            "hasStart": true,
-            "topRow": 10,
-            "bottomRow": 11,
-            "startCol": 24,
-            "endCol": 1,
-            "crossings" : [
-               [ 8, 9 ],
-               [ 21, 22 ]
-            ]
-        },
-        {
             "direction": FACING_RIGHT,
             "alignment": "HORI",
             "hasStart": true,
-            "topRow": 14,
-            "bottomRow": 15,
+            "topRow": 9,
+            "bottomRow": 10,
             "startCol": 1,
             "endCol": 24,
             "crossings" : [
-                [ 8, 9 ],
-                [ 21, 22 ]
+                [ 7, 8 ],
+                [ 17, 18 ]
             ]
         },
         {
-            "direction": FACING_UP,
-            "alignment": "VERT",
+            "direction": FACING_LEFT,
+            "alignment": "HORI",
             "hasStart": true,
-            "leftCol": 16,
-            "rightCol": 17,
-            "startRow": 16,
-            "endRow": 1,
+            "topRow": 7,
+            "bottomRow": 8,
+            "startCol": 24,
+            "endCol": 1,
             "crossings" : [
-                [ 7, 8 ]
-            ]
-        },
-        {
-            "direction": FACING_DOWN,
-            "alignment": "VERT",
-            "hasStart": true,
-            "leftCol": 14,
-            "rightCol": 15,
-            "startRow": 1,
-            "endRow": 16,
-            "crossings" : [
-                [ 7, 8 ]
+                [ 7, 8 ],
+                [ 17, 18 ]
             ]
         }
     ],
     "playerStart" : {
-        "row": 8,
+        "row": 3,
         "col": 3
     },
     "tileSet": "starting_neighbourhood_clean",
@@ -149,962 +160,722 @@ module.exports = {
     "columns": 24,
     "grid": [
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 536,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 537,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 538,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 540,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 542,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 540,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 541,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 542,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 704,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 704,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 652,
-            "angle": 270,
-            "mirrored": true
-        },
-        {
-            "id": 652,
-            "angle": 270,
-            "mirrored": true
-        },
-        {
-            "id": 652,
-            "angle": 270,
-            "mirrored": true
-        },
-        {
-            "id": 652,
-            "angle": 270,
-            "mirrored": true
-        },
-        {
-            "id": 704,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 704,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 652,
-            "angle": 90,
-            "mirrored": true
-        },
-        {
-            "id": 652,
-            "angle": 90,
-            "mirrored": true
-        },
-        {
-            "id": 652,
-            "angle": 90,
-            "mirrored": true
-        },
-        {
-            "id": 652,
-            "angle": 90,
-            "mirrored": true
-        },
-        {
-            "id": 704,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
-            "angle": 0,
-            "mirrored": false
-        },
-        {
-            "id": 714,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
@@ -1114,1014 +885,1202 @@ module.exports = {
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 709,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 720,
+            "id": 709,
             "angle": 0,
-            "mirrored": true
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 709,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
+        },
+        {
+            "id": 683,
+            "angle": 0,
+            "mirrored": false
         },
         {
-            "id": 682,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 720,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 721,
+            "id": 683,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
+            "id": 687,
+            "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
-            "mirrored": true
+            "id": 687,
+            "angle": 0,
+            "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
+            "id": 687,
+            "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
-            "mirrored": true
+            "id": 687,
+            "angle": 0,
+            "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 687,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
+            "id": 769,
             "angle": 0,
-            "mirrored": true
+            "mirrored": false
         },
         {
-            "id": 652,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
+            "id": 769,
             "angle": 0,
-            "mirrored": true
+            "mirrored": false
         },
         {
-            "id": 652,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 769,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 726,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 727,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 726,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 727,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 730,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 731,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 730,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 630,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 731,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
+            "id": 717,
+            "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
-            "mirrored": true
+            "id": 717,
+            "angle": 0,
+            "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
+            "id": 717,
+            "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
-            "angle": 180,
-            "mirrored": true
+            "id": 717,
+            "angle": 0,
+            "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
+            "id": 717,
             "angle": 0,
-            "mirrored": true
+            "mirrored": false
         },
         {
-            "id": 652,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 724,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 652,
+            "id": 717,
             "angle": 0,
-            "mirrored": true
+            "mirrored": false
         },
         {
-            "id": 652,
+            "id": 719,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 682,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         },
         {
-            "id": 656,
+            "id": 717,
             "angle": 0,
             "mirrored": false
         }
     ],
-    "mapObjects": [
-        {
-            "type": "Sign_02",
-            "row": 2,
-            "col": 12
-        },
-        {
-            "type": "Poster_Gronk",
-            "row": 3,
-            "col": 3
-        },
-        {
-            "type": "Poster_Gronk",
-            "row": 3,
-            "col": 8
-        },
-        {
-            "type": "hotel_sign",
-            "row": 3,
-            "col": 19
-        },
-        {
-            "type": "door_5",
-            "row": 5,
-            "col": 5,
-            "hasDoor": true,
-            "directionIn": "",
-            "destination": ""
-        },
-        {
-            "type": "door_5",
-            "row": 5,
-            "col": 21,
-            "hasDoor": true,
-            "directionIn": "",
-            "destination": ""
-        },
-        {
-            "type": "Lamppost_1",
-            "row": 8,
-            "col": 12
-        },
-        {
-            "type": "Lamppost_1",
-            "row": 8,
-            "col": 19
-        },
-        {
-            "type": "Bus_Stop",
-            "row": 12,
-            "col": 7
-        }
-    ],
+    "mapObjects": [],
     "characters": [],
     "actions": [],
     "doors": []

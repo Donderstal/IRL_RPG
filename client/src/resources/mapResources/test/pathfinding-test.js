@@ -173,7 +173,8 @@ module.exports = {
             "startCol": 1,
             "endCol": 24,
             "crossings" : [
-                10, 11, 16, 17
+                [ 10, 11], 
+                [ 16, 17 ]
             ]
         },
         {
@@ -185,7 +186,8 @@ module.exports = {
             "startCol": 24,
             "endCol": 1,
             "crossings" : [
-                10, 11, 16, 17
+                [ 10, 11], 
+                [ 16, 17 ]
             ]
         },
         {
@@ -197,7 +199,8 @@ module.exports = {
             "startRow": 16,
             "endRow": 1,
             "crossings" : [
-                5, 6, 11, 12
+                [ 5, 6 ], 
+                [ 11, 12 ]
             ]
         },
         {
@@ -209,7 +212,8 @@ module.exports = {
             "startRow": 1,
             "endRow": 16,
             "crossings" : [
-                5, 6, 11, 12
+                [ 5, 6 ], 
+                [ 11, 12 ]
             ]
         }
     ],
