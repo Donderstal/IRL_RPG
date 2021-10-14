@@ -2,7 +2,6 @@ const globals = require("../../game-data/globals");
 
 class BaseSound {
     constructor( baseAudioElement, volume, loopSound = false ) {
-        console.log(baseAudioElement);
         this.initAudioNode(baseAudioElement, volume, loopSound);
         this.baseVolume = volume;
         globals.GAME.sound.activeSoundEffects.push( this );

@@ -23,7 +23,7 @@ const moveInDirection = ( sprite, direction ) => {
     const movingToNeighbour = checkForNeighbours(sprite)
 
     if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
-        sprite.movementSoundEffect.setVolumeAndPan( sprite )
+        sprite.playerWalking = true;
         if ( direction == FACING_RIGHT ) {
             sprite.x += MOVEMENT_SPEED        
         }
@@ -38,7 +38,7 @@ const moveInDirection = ( sprite, direction ) => {
         }     
     }
     else {
-        sprite.movementSoundEffect.reset( );
+        sprite.playerWalking = false;
     }
 }
 /**

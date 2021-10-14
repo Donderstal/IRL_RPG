@@ -65,12 +65,19 @@ class MapSprite extends Sprite {
         if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
             this.handleAnimation( )
         }
-        if ( this.movingToDestination && !this.pathIsBlocked && this.movementSoundEffect != undefined ) {
+        this.handleSoundEffects( );
+    }
+
+    handleSoundEffects( ) {
+        if ( (this.movingToDestination || this.playerWalking ) && !this.pathIsBlocked && this.movementSoundEffect != undefined ) {
             this.movementSoundEffect.setVolumeAndPan( this )
         }
         else if (( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded ) || ( !this.movingToDestination || this.pathIsBlocked ) ) { 
             this.movementSoundEffect.reset( );
         }
+        else if ( this === globals.GAME.PLAYER && !this.playerWalking ) {
+            this.movementSoundEffect.reset( );
+        }        
     }
     /**
      * Call this.unsetActiveTile. Get the I_Tile instance at this.centerX and this.baseY.

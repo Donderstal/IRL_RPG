@@ -51,6 +51,9 @@ const handleMovementKeys = ( touch = false, event = false ) => {
         else if ( GAME.pressedKeys.d || GAME.pressedKeys.ArrowRight ) {
             movement.handleMovementOfSprite( PLAYER, FACING_RIGHT)
         }
+        else {
+            PLAYER.playerWalking = false;
+        }
         triggerEvent( ON_POSITION );      
     }
     
