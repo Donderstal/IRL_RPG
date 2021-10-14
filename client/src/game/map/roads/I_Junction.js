@@ -72,19 +72,19 @@ class I_Junction {
 
     handleIntersectionCars( ) {
         this.intersectionCars.forEach( ( car ) => {
-            if ( this.leftFacingLane && car.direction == FACING_LEFT
+            if ( this.leftFacingLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
                 && this.leftFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.upFacingLane && car.direction == FACING_UP
+            else if ( this.upFacingLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
                 && this.upFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_UP]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.rightFacingLane && car.direction == FACING_RIGHT
+            else if ( this.rightFacingLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
                 && this.rightFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_RIGHT]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.downFacingLane && car.direction == FACING_DOWN
+            else if ( this.downFacingLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
                 && this.downFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_DOWN]) {
                 car.setWaitAtIntersection( ); 
             }

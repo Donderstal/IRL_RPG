@@ -25,7 +25,10 @@ class Crossing extends I_Junction {
         })
 
         this.core = new TileSquare(  tileList );
-        this.core.tileList.forEach( ( tile ) => { tile.setMovementCost( 0.1 ); })
+        this.core.tileList.forEach( ( tile ) => { 
+            let gridTile = globals.GAME.BACK.getTileAtCell( tile.col, tile.row );
+            gridTile.setMovementCost( 0.1 ); 
+        })
     }
 
     updateCrossingStatus( ) {

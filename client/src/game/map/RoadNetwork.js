@@ -167,7 +167,11 @@ class RoadNetwork {
             const pendingCrossing = this.pendingCrossings.shift( );
             const pendingRoad = pendingCrossing.road;
             let filteredCrossings = this.pendingCrossings.filter( ( e ) => { 
-                return e.road !== pendingRoad && e.crossing === pendingRoad.crossing && e.road.alignment == pendingRoad.alignment;
+                return e.road !== pendingRoad && e.road.alignment == pendingRoad.alignment && JSON.stringify(e.location) == JSON.stringify(pendingCrossing.location)
+                && ( e.road.alignment == 'HORI' 
+                    ? (e.road.topRow == pendingRoad.bottomRow + 1 || e.road.bottomRow == pendingRoad.topRow - 1)
+                    : (e.road.leftCol == pendingRoad.rightCol + 1 || e.road.rightCol == pendingRoad.leftCol - 1)
+                );
             })
 
             filteredCrossings.forEach( ( e ) => {

@@ -12,10 +12,13 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### OCT 14, 2021
+* Functioning pedestrian crossing in Crossing class
+
 #### OCT 12, 2021
 * Intersection class for structured priority intersections
 
-#### OCT 9, 2021
+#### OCT 10, 2021
 * RoadNetwork class for overarching road and intersections funcs
 * TileSquare helper class for detecting sprites' location with trigger
 

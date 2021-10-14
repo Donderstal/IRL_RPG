@@ -49,7 +49,7 @@ class TileSquare {
     }
 
     spriteInVerticalRange( sprite ) {
-        if ( sprite.top > this.top && sprite.top < this.bottom ) {
+        if ( sprite.isCar ? sprite.top > this.top && sprite.top < this.bottom : sprite.baseY() > this.top && sprite.baseY() < this.bottom ) {
             return true;
         }
         else if ( sprite.bottom > this.top && sprite.bottom < this.bottom ) {
