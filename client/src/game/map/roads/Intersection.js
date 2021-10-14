@@ -1,9 +1,34 @@
 const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require("../../../game-data/globals");
 const { I_Junction } = require("./I_Junction");
+const { TileSquare } = require("../../../helpers/TileSquare");
 
 class Intersection extends I_Junction {
     constructor( pendingIntersections ) {
-        super( pendingIntersections );
+        super( );
+
+        this.laneDepth = 2;
+        this.initIntersectionFromPendingList( pendingIntersections );
+        this.setLanes( );
+    }
+
+    initIntersectionFromPendingList( pendingList ) {
+        let tileList = [];
+
+        pendingList.forEach( ( pending ) => {
+            pending.directions.forEach( ( e ) => {
+                if ( !(this.directions.indexOf( e ) > -1) ) {
+                    this.directions.push(e);
+                }
+            }); 
+            pending.roads.forEach( ( road ) => {
+                if ( !(this.roads.indexOf( road ) > -1) ) {
+                    this.roads.push(road);
+                }
+            });
+            tileList = [ ...pending.square.tileList, ...tileList ]
+        });
+
+        this.core = new TileSquare( tileList );
     }
 
     updateIntersectionStatus( ) {
@@ -17,62 +42,23 @@ class Intersection extends I_Junction {
     }
 
     checkForCarsOnIntersection( ) {
-        let horizontalCars = [];
-        let verticalCars = [];
+        let leftCars = this.leftFacingLane ? this.leftFacingRoad.carsOnRoad : this.leftFacingLane;
+        let upCars = this.upFacingLane ? this.upFacingRoad.carsOnRoad : this.upFacingLane;
+        let rightCars = this.rightFacingLane ? this.rightFacingRoad.carsOnRoad : this.rightFacingLane;
+        let downCars = this.downFacingLane ? this.downFacingRoad.carsOnRoad : this.downFacingLane;
 
-        if ( this.leftFacingLane && this.checkForCarsOnSquare( this.leftFacingRoad.carsOnRoad, this.leftFacingLane )) {
+        if (leftCars && (this.checkForCarsOnSquare(leftCars, this.leftFacingLane) || this.checkForCarsOnSquare(leftCars, this.core))) {
             this.closeLane( FACING_DOWN );
-            horizontalCars = [...this.leftFacingRoad.carsOnRoad];
         }
-        if ( this.upFacingLane && this.checkForCarsOnSquare( this.upFacingRoad.carsOnRoad, this.upFacingLane)) {
+        if (upCars && (this.checkForCarsOnSquare(upCars, this.upFacingLane) || this.checkForCarsOnSquare(upCars, this.core))) {
             this.closeLane( FACING_RIGHT );
-            verticalCars = [...this.upFacingRoad.carsOnRoad]
         }
-        if ( this.rightFacingLane && this.checkForCarsOnSquare(this.rightFacingRoad.carsOnRoad, this.rightFacingLane)) {
+        if (rightCars && (this.checkForCarsOnSquare(rightCars, this.rightFacingLane) || this.checkForCarsOnSquare(rightCars, this.core))) {
             this.closeLane( FACING_UP );
-            horizontalCars = [...horizontalCars, ...this.rightFacingRoad.carsOnRoad];
         }
-        if ( this.downFacingLane && this.checkForCarsOnSquare(this.downFacingRoad.carsOnRoad, this.downFacingLane)) {
-            this.closeLane( FACING_LEFT );        
-            verticalCars = [...verticalCars, ...this.downFacingRoad.carsOnRoad]        
+        if (downCars && (this.checkForCarsOnSquare(downCars, this.downFacingLane) || this.checkForCarsOnSquare(downCars, this.core))) {
+            this.closeLane( FACING_LEFT );              
         }
-
-        if ( this.checkForCarsOnSquare( horizontalCars, this.core ) ) {
-            this.closeLane( FACING_UP );
-            this.closeLane( FACING_DOWN );
-            this.openLane( FACING_LEFT );
-            this.openLane( FACING_RIGHT );
-        } 
-        else if ( this.checkForCarsOnSquare( verticalCars, this.core ) ) {
-            this.closeLane( FACING_LEFT );
-            this.closeLane( FACING_RIGHT );
-            this.openLane( FACING_UP );
-            this.openLane( FACING_DOWN );
-        }
-    }
-
-    handleIntersectionCars( ) {
-        this.intersectionCars.forEach( ( car ) => {
-            if ( this.leftFacingLane && car.direction == FACING_LEFT
-                && this.leftFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT]) {
-                car.setWaitAtIntersection( );
-            }
-            else if ( this.upFacingLane && car.direction == FACING_UP
-                && this.upFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_UP]) {
-                car.setWaitAtIntersection( );
-            }
-            else if ( this.rightFacingLane && car.direction == FACING_RIGHT
-                && this.rightFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_RIGHT]) {
-                car.setWaitAtIntersection( );
-            }
-            else if ( this.downFacingLane && car.direction == FACING_DOWN
-                && this.downFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_DOWN]) {
-                car.setWaitAtIntersection( ); 
-            }
-            else {
-                car.unsetWaitAtIntersection( );
-            }
-        });
     }
 
     closeLane( direction ) {
