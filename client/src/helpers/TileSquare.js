@@ -60,6 +60,15 @@ class TileSquare {
         }
         return false;
     }
+
+    tileIsIncluded( tile ) {
+        let isIncluded = false;
+        this.tileList.forEach( ( tileInList) => { 
+            if ( tile.index == tileInList.index ) 
+                isIncluded = true;
+        });
+        return isIncluded;
+    }
 }
 
 module.exports = {
