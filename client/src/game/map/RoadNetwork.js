@@ -1,6 +1,7 @@
 const globals = require('../../game-data/globals')
 const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require('../../game-data/globals')
 const { TileSquare } = require('../../helpers/TileSquare');
+const { Crossing } = require('./roads/Crossing');
 const { Intersection } = require('./roads/Intersection');
 const { Road } = require('./roads/Road');
 
@@ -12,6 +13,10 @@ class RoadNetwork {
         this.pendingIntersections = [];
         this.intersections = [];
         this.setIntersections( );
+
+        this.pendingCrossings = [];
+        this.crossings = [];
+        this.setCrossings( );
     }
 
     areDirectionsInList( directions, direction1, direction2) {
@@ -26,6 +31,10 @@ class RoadNetwork {
 
     handleRoadIntersections( ) {
         this.intersections.forEach( ( intersection ) => { intersection.updateIntersectionStatus( ); })
+    }
+
+    handleRoadCrossings( ) {
+        this.crossings.forEach( ( intersection ) => { intersection.updateCrossingStatus( ); })
     }
 
     handleCarCounter( ) {
@@ -124,6 +133,48 @@ class RoadNetwork {
                 this.pendingIntersections.splice( index, 1 )
             })
             this.intersections.push( new Intersection([ ...filteredIntersections, pendingIntersection]))
+        }
+    }
+
+    setCrossings( ) {
+        const FRONT = globals.GAME.FRONT;
+        this.roads.forEach( ( e ) => { 
+            if ( e.crossings ) {
+                let road = e
+                road.crossings.forEach( ( crossing ) => {
+                    console.log(crossing);
+                    console.log(road);
+                    let horizontal = road.alignment == 'HORI';
+                    this.pendingCrossings.push( {
+                        'road': road,
+                        'location' : crossing,
+                        'square': new TileSquare( [
+                            FRONT.getTileAtCell( horizontal ? crossing[0] : road.leftCol, !horizontal ? crossing[0] : road.topRow ),
+                            FRONT.getTileAtCell( horizontal ? crossing[0] : road.rightCol, !horizontal ? crossing[0] : road.bottomRow ),
+                            FRONT.getTileAtCell( horizontal ? crossing[1] : road.leftCol, !horizontal ? crossing[1] : road.topRow ),
+                            FRONT.getTileAtCell( horizontal ? crossing[1] : road.rightCol, !horizontal ? crossing[1] : road.bottomRow )
+                        ] )
+                    } )                     
+                });
+            };
+        });
+
+        this.checkPendingCrossings( );
+    }
+
+    checkPendingCrossings( ) {
+        while ( this.pendingCrossings.length > 0 ) {
+            const pendingCrossing = this.pendingCrossings.shift( );
+            const pendingRoad = pendingCrossing.road;
+            let filteredCrossings = this.pendingCrossings.filter( ( e ) => { 
+                return e.road !== pendingRoad && e.crossing === pendingRoad.crossing && e.road.alignment == pendingRoad.alignment;
+            })
+
+            filteredCrossings.forEach( ( e ) => {
+                let index =  this.pendingCrossings.indexOf( e );
+                this.pendingCrossings.splice( index, 1 )
+            })
+            this.crossings.push( new Crossing([ ...filteredCrossings, pendingCrossing]))
         }
     }
 }

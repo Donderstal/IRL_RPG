@@ -25,7 +25,7 @@ class Road {
         };
 
         this.activeCarIds = [];
-        this.carCounter = new Counter( 5000, true );
+        this.carCounter = new Counter( 15000, true );
 
         if ( this.hasBusLine ) {
             this.setBusStopLocation( )
@@ -107,30 +107,22 @@ class Road {
         switch( roadData.direction ) {
             case FACING_LEFT :
                 for ( var i = this.endCol; i <= this.startCol; i++ ) {
-                    if ( this.crossings.indexOf(i) < 0 ) {
-                        this.setTilesMovementCost(i, this.topRow, i, this.bottomRow)                   
-                    }
+                    this.setTilesMovementCost(i, this.topRow, i, this.bottomRow) 
                 }
                 break;
             case FACING_UP :
                 for ( var i = this.endRow; i <= this.startRow; i++ ) {
-                    if ( this.crossings.indexOf(i) < 0 ) {
-                        this.setTilesMovementCost(this.leftCol, i, this.rightCol, i)
-                    }
+                    this.setTilesMovementCost(this.leftCol, i, this.rightCol, i)
                 }
                 break;
             case FACING_RIGHT :
                 for ( var i = this.startCol; i <= this.endCol; i++ ) {
-                    if ( this.crossings.indexOf(i) < 0 ) {
-                        this.setTilesMovementCost(i, this.topRow, i, this.bottomRow)
-                    }
+                    this.setTilesMovementCost(i, this.topRow, i, this.bottomRow)
                 } 
                 break;
             case FACING_DOWN :
                 for ( var i = this.startRow; i <= this.endRow; i++ ) {
-                    if ( this.crossings.indexOf(i) < 0 ) {
-                        this.setTilesMovementCost(this.leftCol, i, this.rightCol, i)
-                    }
+                    this.setTilesMovementCost(this.leftCol, i, this.rightCol, i)
                 } 
                 break;
             default:
