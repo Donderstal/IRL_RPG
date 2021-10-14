@@ -34,40 +34,45 @@ class I_Junction {
     }
 
     setLane( direction ) {
-        const FRONT = globals.GAME.FRONT
-        let tileList = [];
         switch( direction ) {
             case FACING_LEFT:
-                for( var i = 1; i <= this.laneDepth; i++ ) {
-                    tileList.push( FRONT.getTileAtCell( this.core.rightColumn + i, this.leftFacingRoad.topRow ) );
-                    tileList.push( FRONT.getTileAtCell( this.core.rightColumn + i, this.leftFacingRoad.bottomRow ) );
-                }
-                this.leftFacingLane = new TileSquare(tileList);
+                this.leftFacingLane = new TileSquare(
+                    this.pushTilesToList(this.core.rightColumn, this.leftFacingRoad.topRow, this.core.rightColumn, this.leftFacingRoad.bottomRow, direction)
+                );
                 break;
             case FACING_UP:
-                for( var i = 1; i <= this.laneDepth; i++ ) {
-                    tileList.push( FRONT.getTileAtCell( this.upFacingRoad.leftCol, this.core.bottomRow + i ) );
-                    tileList.push( FRONT.getTileAtCell( this.upFacingRoad.rightCol, this.core.bottomRow + i ) );
-                }
-                this.upFacingLane = new TileSquare(tileList);
+                this.upFacingLane = new TileSquare(
+                    this.pushTilesToList(this.upFacingRoad.leftCol, this.core.bottomRow, this.upFacingRoad.rightCol, this.core.bottomRow, direction)
+                );
                 break;                
             case FACING_RIGHT:
-                for( var i = 1; i <= this.laneDepth; i++ ) {
-                    tileList.push( FRONT.getTileAtCell( this.core.leftColumn - i, this.rightFacingRoad.topRow ) );
-                    tileList.push( FRONT.getTileAtCell( this.core.leftColumn - i, this.rightFacingRoad.bottomRow ) );
-                }
-                this.rightFacingLane = new TileSquare(tileList);
+                this.rightFacingLane = new TileSquare(
+                    this.pushTilesToList(this.core.leftColumn, this.rightFacingRoad.topRow, this.core.leftColumn, this.rightFacingRoad.bottomRow, direction)
+                );
                 break; 
             case FACING_DOWN:
-                for( var i = 1; i <= this.laneDepth; i++ ) {
-                    tileList.push( FRONT.getTileAtCell( this.downFacingRoad.leftCol, this.core.topRow - i ) );
-                    tileList.push( FRONT.getTileAtCell( this.downFacingRoad.rightCol, this.core.topRow - i ) );
-                }
-                this.downFacingLane = new TileSquare(tileList);
+                this.downFacingLane = new TileSquare(
+                    this.pushTilesToList(this.downFacingRoad.leftCol, this.core.topRow, this.downFacingRoad.rightCol, this.core.topRow, direction)
+                );
                 break;       
             default:
                 console.log('direction ' + e + ' is not recognized')      
         }
+    }
+
+    pushTilesToList( col1, row1, col2, row2, direction ) {
+        const FRONT = globals.GAME.FRONT
+        let tileList = [];
+        for( var i = 1; i <= this.laneDepth; i++ ) {
+            tileList.push( FRONT.getTileAtCell( 
+                direction == FACING_LEFT ? col1 + i : direction == FACING_RIGHT ? col1 + i : col1, 
+                direction == FACING_UP ? row1 + i : direction == FACING_DOWN ? row1 + i : row1, 
+            ), FRONT.getTileAtCell( 
+                direction == FACING_LEFT ? col2 + i : direction == FACING_RIGHT ? col2 + i : col2, 
+                direction == FACING_UP ? row2 + i : direction == FACING_DOWN ? row2 + i : row2, 
+            ) )
+        }
+        return tileList;
     }
 
     handleIntersectionCars( ) {

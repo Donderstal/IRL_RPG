@@ -3,7 +3,6 @@ const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls');
 const { Counter } = require('../../helpers/Counter');
 
-const carCounter = new Counter( 5000, true );
 const npcCounter = new Counter( 5000, true );
 /**
  * Wrapper function that runs on each animation frame if the game is in Map mode.
@@ -42,6 +41,7 @@ const handleMapAnimations = ( GAME ) => {
 const handleRoadNetworkFuncs = ( GAME ) => {
     GAME.FRONT.roadNetwork.handleCarCounter()
     GAME.FRONT.roadNetwork.handleRoadIntersections();
+    GAME.FRONT.roadNetwork.handleRoadCrossings();
 }
 
 const handleNpcCounter = ( GAME ) => {
