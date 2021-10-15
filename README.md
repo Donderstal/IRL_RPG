@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### OCT 14, 2021
+* Fixed bugs in playing map music and spatial sound
+
+#### OCT 14, 2021
 * Functioning pedestrian crossing in Crossing class
 
 #### OCT 12, 2021

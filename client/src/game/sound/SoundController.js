@@ -11,13 +11,14 @@ const standardSFXVolume = 0.75;
 
 /**
  * The SoundController functions like a registry for sounds and music in the game
- * SoundController uses the AUDIO_DICTIONARY globals as source for audio elements
+ * SoundController uses the AUDIO_DICTIONARY global as source for audio elements
  */
 class SoundController {
     constructor( ) {
         this.activeMusic = false;
         this.musicIsPlaying = false;
         this.activeSoundEffects = [];
+        this.activeMusicId = "";
     }
 
     get audioList( ) {
@@ -30,10 +31,16 @@ class SoundController {
     }
 
     setActiveMusic( filename ) {
-        if ( this.activeMusic ) {
-            this.activeMusic.pause( );   
-        }
         let src = musicFolder + filename;
+        if (this.activeMusicId == src) {
+            this.playMusic( );
+            return;
+        }
+
+        this.activeMusicId = src;
+        if ( this.activeMusic ) {
+            this.pauseMusic( );   
+        }
         this.activeMusic = new BaseSound( this.audioList[src], src.includes("menu") ? menuMusicVolume : standardMusicVolume, true );
         this.playMusic( );
     }

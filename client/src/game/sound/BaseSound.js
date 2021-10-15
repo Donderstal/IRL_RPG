@@ -1,5 +1,8 @@
 const globals = require("../../game-data/globals");
-
+/**
+ * BaseSound' properties are shared by all sounds 
+ * Contains a HTML Audio node, cloned from a source Audio node
+ */
 class BaseSound {
     constructor( baseAudioElement, volume, loopSound = false ) {
         this.initAudioNode(baseAudioElement, volume, loopSound);

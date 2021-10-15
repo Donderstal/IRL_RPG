@@ -1,6 +1,8 @@
 const { BaseSound } = require('./BaseSound')
 const globals = require('../../game-data/globals');
-
+/**
+ * Spatial sound pans and plays a sound relative to the player
+ */
 class SpatialSound extends BaseSound {
     constructor( baseAudioElement, volume, loopSound = false ) {
         super(baseAudioElement, volume, loopSound)
