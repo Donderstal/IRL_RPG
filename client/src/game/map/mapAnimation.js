@@ -39,9 +39,11 @@ const handleMapAnimations = ( GAME ) => {
 }
 
 const handleRoadNetworkFuncs = ( GAME ) => {
-    GAME.FRONT.roadNetwork.handleCarCounter()
-    GAME.FRONT.roadNetwork.handleRoadIntersections();
-    GAME.FRONT.roadNetwork.handleRoadCrossings();
+    if ( GAME.FRONT.roadNetwork != null ) {
+        GAME.FRONT.roadNetwork.handleCarCounter()
+        GAME.FRONT.roadNetwork.handleRoadIntersections();
+        GAME.FRONT.roadNetwork.handleRoadCrossings();
+    }
 }
 
 const handleNpcCounter = ( GAME ) => {

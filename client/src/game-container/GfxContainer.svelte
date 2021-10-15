@@ -1,6 +1,21 @@
 <script>
     import globals from '../game-data/globals.js';
     import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
+
+    const logClick = ( event ) => {
+        globals.GAME.FRONT.allSprites.forEach( ( e ) => {
+            if ( e.x <= event.offsetX && e.x + e.width >= event.offsetX 
+            && e.y <= event.offsetY && e.y + e.height >= event.offsetY  ) {
+                console.log(e)
+            }
+        });
+        globals.GAME.BACK.grid.array.forEach( ( e ) => {
+            if ( e.x <= event.offsetX && e.x + e.width >= event.offsetX 
+            && e.y <= event.offsetY && e.y + e.height >= event.offsetY  ) {
+                console.log(e)
+            }
+        });
+    }
 </script>
 
 <style>
@@ -44,7 +59,7 @@
         <canvas id='game-background-canvas' class="game-background-body" 
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>
 
-        <canvas id='game-front-canvas' class="game-front-body" 
+        <canvas id='game-front-canvas' class="game-front-body" on:click={logClick}
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
     </div>
 

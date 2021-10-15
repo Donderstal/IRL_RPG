@@ -95,7 +95,11 @@ module.exports = {
             "topRow": 14,
             "bottomRow": 15,
             "startCol": 24,
-            "endCol": 1
+            "endCol": 1,
+            "crossings": [
+                [ 11, 12 ],
+                [ 17, 18 ]
+            ]
         },
         {
             "direction": FACING_UP,
@@ -104,7 +108,10 @@ module.exports = {
             "leftCol": 15,
             "rightCol": 16,
             "startRow": 16,
-            "endRow": 1
+            "endRow": 1,
+            "crossings": [
+                [ 11, 12 ]
+            ]
         },
         {
             "direction": FACING_DOWN,
@@ -113,7 +120,10 @@ module.exports = {
             "leftCol": 13,
             "rightCol": 14,
             "startRow": 1,
-            "endRow": 16
+            "endRow": 16,
+            "crossings": [
+                [ 11, 12 ]
+            ]
         }
     ],
     "tileSet": "starting_neighbourhood_clean",
