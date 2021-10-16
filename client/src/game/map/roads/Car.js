@@ -17,6 +17,7 @@ class Car extends MapObject {
         this.carHornSoundEffect.mute( );
         this.blockedCounter = new Counter( 5000, false );
         this.waitingAtIntersection = false;
+        this.crossedIntersectionIds = [];
 
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
             if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {
@@ -200,6 +201,33 @@ class Car extends MapObject {
         setTimeout( ( )=> {
             this.handlingIntersection = false;
         }, 500 )
+    }
+
+    turnToDirection( newDirection, road, turn, id ) {
+        this.crossedIntersectionIds.push( id );
+        this.direction = newDirection;
+        this.destination = road.endCell;
+        this.setObjectDimensionsBasedOnDirection( newDirection );
+        switch( newDirection ) {
+            case FACING_LEFT:
+                this.x = turn.right - this.width;
+                this.y = turn.top - (this.height - turn.height);;
+                break;
+            case FACING_UP:
+                this.x = turn.left;
+                this.y = turn.bottom - this.height;
+                break;
+            case FACING_RIGHT:
+                this.x = turn.left;
+                this.y = turn.top - (this.height - turn.height);
+                break;
+            case FACING_DOWN:
+                this.x = turn.left;
+                this.y = turn.top;
+                break;
+        }
+        this.initHitboxGroups( );
+        this.setDestinationList( );
     }
 
     goToDestination( ) {

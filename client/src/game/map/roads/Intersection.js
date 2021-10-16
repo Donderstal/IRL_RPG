@@ -4,9 +4,10 @@ const { TileSquare } = require("../../../helpers/TileSquare");
 const globals = require("../../../game-data/globals");
 
 class Intersection extends I_Junction {
-    constructor( pendingIntersections ) {
+    constructor( pendingIntersections, id ) {
         super( );
 
+        this.id = id;
         this.laneDepth = 2;
         this.initIntersectionFromPendingList( pendingIntersections );
         this.setLanes( );
@@ -128,38 +129,39 @@ class Intersection extends I_Junction {
     }
 
     checkIfCarsCanTurn( ) {
-        this.intersectionCars.forEach( ( car ) => {
+        const turnableCars = this.intersectionCars.filter( (car) => {return car.crossedIntersectionIds.indexOf(this.id) == -1})
+        turnableCars.forEach( ( car ) => {
             switch( car.direction ) {
                 case FACING_LEFT:
                     if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare )) {
-                        console.log( 'facing left car for down turn')
+                        car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.leftDownSquare,this.id)
                     }
                     if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare )) {
-                        console.log( 'facing left car for up turn')
+                        car.turnToDirection(FACING_UP, this.upFacingRoad, this.leftUpSquare,this.id)
                     }
                     break;
                 case FACING_UP:
                     if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare )) {
-                        console.log( 'facing up car for left turn')
+                        car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftUpSquare,this.id);
                     }
                     if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare )) {
-                        console.log( 'facing up car for right turn')
+                        car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightUpSquare,this.id);
                     }
                     break;
                 case FACING_RIGHT:
                     if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare )) {
-                        console.log( 'facing right car for down turn' )
+                        car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.rightDownSquare,this.id)
                     }
                     if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare )) {
-                        console.log( 'facing right car for up turn' )
+                        car.turnToDirection(FACING_UP, this.upFacingRoad, this.rightUpSquare,this.id)
                     }
                     break;
                 case FACING_DOWN:
                     if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare )) {
-                        console.log( 'facing down car for left turn')
+                        car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftDownSquare,this.id);
                     }
                     if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare )) {
-                        console.log( 'facing down car for right turn')
+                        car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightDownSquare,this.id);
                     }
                     break;
                 default:

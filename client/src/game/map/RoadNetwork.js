@@ -1,6 +1,7 @@
 const globals = require('../../game-data/globals')
 const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require('../../game-data/globals')
 const { TileSquare } = require('../../helpers/TileSquare');
+const { getUniqueId } = require('../../helpers/utilFunctions');
 const { Crossing } = require('./roads/Crossing');
 const { Intersection } = require('./roads/Intersection');
 const { Road } = require('./roads/Road');
@@ -12,6 +13,7 @@ class RoadNetwork {
 
         this.pendingIntersections = [];
         this.intersections = [];
+        this.intersectionIds = []
         this.setIntersections( );
 
         this.pendingCrossings = [];
@@ -132,7 +134,9 @@ class RoadNetwork {
                 let index =  this.pendingIntersections.indexOf( e );
                 this.pendingIntersections.splice( index, 1 )
             })
-            this.intersections.push( new Intersection([ ...filteredIntersections, pendingIntersection]))
+            const id = getUniqueId(this.intersectionIds);
+            this.intersections.push( new Intersection([ ...filteredIntersections, pendingIntersection], id))
+            this.intersectionIds.push(id);
         }
     }
 
