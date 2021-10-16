@@ -258,6 +258,20 @@ class Car extends MapObject {
         
         this.sheetFrameLimit = this.activeFrames.length
     }   
+
+    isOnSquare( square ) {
+        let isOnSquare = true;
+        let firstFront = this.hitboxGroups[0].currentTileFront;
+        let secondTileFront = this.hitboxGroups[1].currentTileFront;
+        let firstTileMiddle = this.hitboxGroups[0].middleTileFront;
+        let secondTileMiddle = this.hitboxGroups[1].middleTileFront;
+        [firstFront, secondTileFront, firstTileMiddle, secondTileMiddle].forEach( ( tile ) => {
+            if ( !square.tileIsIncluded(tile) )
+                isOnSquare = false;
+        })
+
+        return isOnSquare;
+    }
 }
 
 module.exports = {

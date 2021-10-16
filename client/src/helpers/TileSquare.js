@@ -60,6 +60,8 @@ class TileSquare {
     }
 
     tileIsIncluded( tile ) {
+        if ( tile == undefined )
+            return false;
         let isIncluded = false;
         this.tileList.forEach( ( tileInList) => { 
             if ( tile.index == tileInList.index ) 
