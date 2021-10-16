@@ -12,7 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### OCT 14, 2021
+#### OCT 15, 2021
+* New and improved car turning system
+
+#### OCT 15, 2021
 * Fixed bugs in playing map music and spatial sound
 
 #### OCT 14, 2021
