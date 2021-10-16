@@ -3,8 +3,8 @@ const { Counter } = require('../../../helpers/Counter');
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../../../game-data/globals")
 
 class Road {
-    constructor ( roadData, index ) {
-        this.index = index;
+    constructor ( roadData, id ) {
+        this.id = id;
         Object.keys( roadData ).forEach( ( e ) => {
             this[e] = roadData[e]
         } );
@@ -145,7 +145,8 @@ class Road {
             "type": isBus ? "bus" : carNames[randomIndex],
             "col": this.startCell.col,
             "row": this.startCell.row,
-            "destination": isBus ? this.busStopLocation : this.endCell
+            "destination": isBus ? this.busStopLocation : this.endCell,
+            "carPath": globals.GAME.FRONT.roadNetwork.getVehiclePath( this.id )
         }
     }
 

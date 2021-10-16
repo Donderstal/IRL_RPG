@@ -9,11 +9,12 @@ const { Road } = require('./roads/Road');
 class RoadNetwork {
     constructor( roads ) {
         this.roads = [];
+        this.roadIds = [];
         this.initRoads( roads );
 
         this.pendingIntersections = [];
         this.intersections = [];
-        this.intersectionIds = []
+        this.intersectionIds = [];
         this.setIntersections( );
 
         this.pendingCrossings = [];
@@ -21,13 +22,47 @@ class RoadNetwork {
         this.setCrossings( );
     }
 
+    getVehiclePath( startingRoadId ) {
+        let activeRoadID = startingRoadId;
+        let path = [ startingRoadId ];
+        let visitedIntersections = [];
+        let availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID );
+        let nextIntersection = availableIntersections.shift();
+        while ( nextIntersection != undefined ) {
+            let skipIntersection = Math.random( ) > 0.5
+            if ( skipIntersection || visitedIntersections.indexOf(nextIntersection.id) > -1) {
+                nextIntersection = availableIntersections.shift();
+            }
+            else {
+                const intersectingRoadIds = nextIntersection.getIntersectingRoadIds( activeRoadID );
+                visitedIntersections.push(nextIntersection.id);
+                if (intersectingRoadIds.length == 2 ){
+                    activeRoadID = Math.random > 0.5 ? intersectingRoadIds[0] : intersectingRoadIds[1];
+                }
+                else if (intersectingRoadIds.length == 1) {
+                    activeRoadID = intersectingRoadIds.shift();
+                }
+                path.push(activeRoadID);
+                availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID );
+            }
+        }
+        
+        return path;
+    }
+
+    getIntersectionsOnRoadWithId( roadId ) {
+        return this.intersections.filter( (e) => {return e.roadIds.indexOf(roadId) != -1} );
+    }
+
     areDirectionsInList( directions, direction1, direction2) {
         return directions.indexOf( direction1 ) > -1 && directions.indexOf( direction2 ) > -1
     }
 
     initRoads( roads ) {
-        roads.forEach( ( road, index ) => {
-            this.roads.push( new Road( road, index ) )
+        roads.forEach( ( road ) => {
+            const id = getUniqueId(this.roadIds);
+            this.roads.push( new Road( road, id ) )
+            this.roadIds.push( id );
         });
     }
 

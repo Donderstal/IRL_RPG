@@ -12,6 +12,7 @@ class Intersection extends I_Junction {
         this.initIntersectionFromPendingList( pendingIntersections );
         this.setLanes( );
         this.setTurns( );
+        this.roadIds = this.roads.map((e)=>{return e.id;});
     }
 
     get hasLeftUpTurn( ) { return this.leftFacingLane != false && this.upFacingLane != false; };
@@ -168,6 +169,28 @@ class Intersection extends I_Junction {
                     console.log("direction " + car.direction + " not recognized");
             }
         });
+    }
+
+    getRoadById( id ) {
+        return this.roads.filter((e)=>{return e.id == id;})[0];
+    }
+
+    getIntersectingRoadIds( roadId ) {
+        let intersectingRoadIds = [];
+        const road = this.getRoadById( roadId );
+        if (road.direction == FACING_DOWN | road.direction == FACING_UP){
+            if (this.rightFacingLane)
+                intersectingRoadIds.push(this.rightFacingRoad.id);
+            if (this.leftFacingLane)
+                intersectingRoadIds.push(this.leftFacingRoad.id);
+        }
+        else if (road.direction == FACING_RIGHT | road.direction == FACING_LEFT) {
+            if (this.upFacingLane)
+                intersectingRoadIds.push(this.upFacingRoad.id);
+            if (this.downFacingLane)
+                intersectingRoadIds.push(this.downFacingRoad.id);
+        }
+        return intersectingRoadIds;
     }
 }
 
