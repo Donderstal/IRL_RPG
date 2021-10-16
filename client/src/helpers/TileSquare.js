@@ -1,4 +1,3 @@
-const globals = require("../game-data/globals");
 const { GRID_BLOCK_PX } = require('../game-data/globals');
 const { cloneInstance } = require('./utilFunctions');
 
@@ -7,7 +6,6 @@ class TileSquare {
         this.tileList = [];
         this.setTileList( tileList );
         this.setSquareDimensions( );
-        console.log(this);
     }
 
     get leftColumn( ) { return Math.min.apply(Math, this.tileList.map( (tile) => { return tile.col; } )); };

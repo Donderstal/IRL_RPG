@@ -1,4 +1,4 @@
-const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require("../../../game-data/globals");
+ const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require("../../../game-data/globals");
 const { TileSquare } = require("../../../helpers/TileSquare");
 const globals = require("../../../game-data/globals");
 
@@ -15,8 +15,6 @@ class I_Junction {
         this.upFacingLane = false;
         this.rightFacingLane = false;
         this.downFacingLane = false;
-
-        console.log(this);
     }
 
     get leftFacingRoad( ) { return this.roads.filter( ( e ) => { return e.direction == FACING_LEFT; })[0]; };
@@ -75,7 +73,7 @@ class I_Junction {
         return tileList;
     }
 
-    handleIntersectionCars( ) {
+    setCarsToWaitIfLaneIsClosed( ) {
         this.intersectionCars.forEach( ( car ) => {
             if ( this.leftFacingLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
                 && this.leftFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT]) {

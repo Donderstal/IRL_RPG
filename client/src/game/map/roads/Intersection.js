@@ -9,7 +9,13 @@ class Intersection extends I_Junction {
         this.laneDepth = 2;
         this.initIntersectionFromPendingList( pendingIntersections );
         this.setLanes( );
+        this.setTurns( );
     }
+
+    get hasLeftUpTurn( ) { return this.leftFacingLane && this.upFacingLane; };
+    get hasRightUpTurn( ) { return this.rightFacingLane && this.upFacingLane; };
+    get hasLeftDownTurn( ) { return this.leftFacingLane && this.downFacingLane; };
+    get hasRightDownTurn( ) { return this.rightFacingLane && this.downFacingLane; };
 
     initIntersectionFromPendingList( pendingList ) {
         let tileList = [];
@@ -38,7 +44,7 @@ class Intersection extends I_Junction {
         })
 
         this.checkForCarsOnIntersection( );
-        this.handleIntersectionCars( );
+        this.setCarsToWaitIfLaneIsClosed( );
     }
 
     checkForCarsOnIntersection( ) {
@@ -67,6 +73,40 @@ class Intersection extends I_Junction {
 
     openLane( direction ) {
         this.openLanes[direction] = true;
+    }
+
+    setTurns( ) {
+        if ( this.hasLeftUpTurn ) {
+            this.leftUpSquare = new TileSquare( this.getTilesFromCoreList(
+                this.core.leftColumn, this.core.topRow, 
+                this.core.leftColumn + 1, this.core.topRow + 1
+            ) );
+        }
+        if ( this.hasRightUpTurn ) {
+            this.rightUpSquare = new TileSquare( this.getTilesFromCoreList(
+                this.core.leftColumn, this.core.bottomRow, 
+                this.core.leftColumn + 1, this.core.bottomRow - 1
+            ) );
+        }
+        if ( this.hasLeftDownTurn ) {
+            this.leftDownSquare = new TileSquare( this.getTilesFromCoreList(
+                this.core.rightColumn, this.core.topRow, 
+                this.core.rightColumn - 1, this.core.topRow + 1
+            ) );
+        }
+        if ( this.hasRightDownTurn ) {
+            this.rightDownSquare = new TileSquare( this.getTilesFromCoreList(
+                this.core.rightColumn, this.core.bottomRow, 
+                this.core.rightColumn - 1, this.core.bottomRow - 1
+            ) );
+        }
+    }
+
+    getTilesFromCoreList( col1, row1, col2, row2 ) {
+        return this.core.tileList.filter( ( e ) => {
+            return ( e.col == col1 || e.col == col2 ) 
+            && ( e.row == row1 || e.row == row2 ) 
+        });
     }
 }
 

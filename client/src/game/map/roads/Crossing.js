@@ -35,7 +35,7 @@ class Crossing extends I_Junction {
         this.openCrossing( );
         this.checkForSpritesOnCrossing( );
         this.checkForCarsNearCrossing( );
-        this.handleIntersectionCars( );
+        this.setCarsToWaitIfLaneIsClosed( );
     }
 
     openCrossing( ) {
