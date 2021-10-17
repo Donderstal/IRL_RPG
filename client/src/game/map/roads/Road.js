@@ -44,7 +44,7 @@ class Road {
     }
 
     handleCarCounter( ) {
-        if ( this.carCounter.countAndCheckLimit( ) ) {
+        if ( this.hasStart && this.carCounter.countAndCheckLimit( ) ) {
             this.generateCar( );
             this.carCounter.resetCounter( );
         }

@@ -134,34 +134,34 @@ class Intersection extends I_Junction {
         turnableCars.forEach( ( car ) => {
             switch( car.direction ) {
                 case FACING_LEFT:
-                    if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare )) {
+                    if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.downFacingRoad.id) {
                         car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.leftDownSquare,this.id)
                     }
-                    if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare )) {
+                    if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.upFacingRoad.id) {
                         car.turnToDirection(FACING_UP, this.upFacingRoad, this.leftUpSquare,this.id)
                     }
                     break;
                 case FACING_UP:
-                    if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare )) {
+                    if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.leftFacingRoad.id) {
                         car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftUpSquare,this.id);
                     }
-                    if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare )) {
+                    if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.rightFacingRoad.id) {
                         car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightUpSquare,this.id);
                     }
                     break;
                 case FACING_RIGHT:
-                    if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare )) {
+                    if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.downFacingRoad.id) {
                         car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.rightDownSquare,this.id)
                     }
-                    if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare )) {
+                    if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.upFacingRoad.id) {
                         car.turnToDirection(FACING_UP, this.upFacingRoad, this.rightUpSquare,this.id)
                     }
                     break;
                 case FACING_DOWN:
-                    if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare )) {
+                    if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.leftFacingRoad.id) {
                         car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftDownSquare,this.id);
                     }
-                    if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare )) {
+                    if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.rightFacingRoad.id) {
                         car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightDownSquare,this.id);
                     }
                     break;

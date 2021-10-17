@@ -54,8 +54,8 @@ class RoadNetwork {
         return this.intersections.filter( (e) => {return e.roadIds.indexOf(roadId) != -1} );
     }
 
-    areDirectionsInList( directions, direction1, direction2) {
-        return directions.indexOf( direction1 ) > -1 && directions.indexOf( direction2 ) > -1
+    areItemsInList( list, item1, item2 ) {
+        return list.indexOf( item1 ) > -1 && list.indexOf( item2 ) > -1
     }
 
     initRoads( roads ) {
@@ -79,19 +79,23 @@ class RoadNetwork {
     }
 
     roadsIntersect( horizontalRoad, verticalRoad ) {
-        return (horizontalRoad.startCol < verticalRoad.leftCol && horizontalRoad.endCol > verticalRoad.rightCol) 
-        || (horizontalRoad.startCol > verticalRoad.leftCol && horizontalRoad.endCol < verticalRoad.rightCol)
+        return ( Math.min(horizontalRoad.startCol, horizontalRoad.endCol) <= verticalRoad.leftCol )
+        && ( Math.max(horizontalRoad.startCol, horizontalRoad.endCol) >= verticalRoad.rightCol )
+        && ( Math.min(verticalRoad.startRow, verticalRoad.endRow) <= horizontalRoad.topRow )
+        && ( Math.max(verticalRoad.startRow, verticalRoad.endRow) >= horizontalRoad.bottomRow );
     }
 
     setIntersections( ) {
         this.roads.forEach( ( e ) => { 
             let currentRoad = e;
-            let otherRoads = this.roads.filter( ( e ) => { return e != currentRoad; })
+            let otherRoads = this.roads.filter( ( e ) => { return e != currentRoad })
             otherRoads.forEach( ( otherRoad ) => {
                 if ( currentRoad.alignment == 'HORI' && otherRoad.alignment == 'VERT' && this.roadsIntersect( currentRoad, otherRoad )) {
+                    console.log(true)
                     this.addPendingIntersection(currentRoad, otherRoad); 
                 }
                 else if ( currentRoad.alignment == 'VERT' && otherRoad.alignment == 'HORI' && this.roadsIntersect( otherRoad, currentRoad )) {
+                    console.log(true)
                     this.addPendingIntersection(otherRoad, currentRoad); 
                 }
             })
@@ -103,13 +107,14 @@ class RoadNetwork {
         let FRONT = globals.GAME.FRONT
         let skip = false;
         this.pendingIntersections.forEach( ( e ) => {
-            if ( this.areDirectionsInList( e.directions, horizontalRoad.direction, verticalRoad.direction )) {
+            if ( this.areItemsInList( e.roadIds, horizontalRoad.id, verticalRoad.id )) {
                 skip = true;
             }
         })
         if ( !skip ) {
             this.pendingIntersections.push( {
                 'roads': [ verticalRoad, horizontalRoad ],
+                'roadIds': [ verticalRoad.id, horizontalRoad.id ],
                 'directions' : [ verticalRoad.direction, horizontalRoad.direction ],
                 'square': new TileSquare( [
                     FRONT.getTileAtCell( verticalRoad.leftCol, horizontalRoad.topRow ),
@@ -128,39 +133,39 @@ class RoadNetwork {
             const pendingSquare = pendingIntersection.square;
             let filteredIntersections = [];
 
-            if ( this.areDirectionsInList(currentDirections, FACING_DOWN, FACING_LEFT) ) {
+            if ( this.areItemsInList(currentDirections, FACING_DOWN, FACING_LEFT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areDirectionsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.left == pendingSquare.right )
-                        || ( this.areDirectionsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.top == pendingSquare.bottom ) 
-                        || ( this.areDirectionsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
+                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.left == pendingSquare.right )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.top == pendingSquare.bottom ) 
+                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
                     )
                 } );
             }
-            else if ( this.areDirectionsInList(currentDirections, FACING_DOWN, FACING_RIGHT) ) {
+            else if ( this.areItemsInList(currentDirections, FACING_DOWN, FACING_RIGHT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areDirectionsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areDirectionsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areDirectionsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.left == pendingSquare.right )
+                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottom == pendingSquare.top )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottom == pendingSquare.top )
+                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.left == pendingSquare.right )
                     )
                 } );
             } 
-            else if ( this.areDirectionsInList(currentDirections, FACING_UP, FACING_LEFT) ) {
+            else if ( this.areItemsInList(currentDirections, FACING_UP, FACING_LEFT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areDirectionsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.right == pendingSquare.left )
-                        || ( this.areDirectionsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
-                        || ( this.areDirectionsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
+                        ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.right == pendingSquare.left )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
+                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
                     )
                 } );
             }
-            else if ( this.areDirectionsInList(currentDirections, FACING_UP, FACING_RIGHT) ) {
+            else if ( this.areItemsInList(currentDirections, FACING_UP, FACING_RIGHT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areDirectionsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areDirectionsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areDirectionsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.right == pendingSquare.left )
+                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottom == pendingSquare.top )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottom == pendingSquare.top )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.right == pendingSquare.left )
                     )
                 } );
             } 

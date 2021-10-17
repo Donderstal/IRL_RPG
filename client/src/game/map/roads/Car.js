@@ -18,6 +18,8 @@ class Car extends MapObject {
         this.blockedCounter = new Counter( 5000, false );
         this.waitingAtIntersection = false;
         this.crossedIntersectionIds = [];
+        this.carPath = spriteData.carPath;
+        this.carPathIndex = 0;
 
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
             if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {
@@ -26,6 +28,7 @@ class Car extends MapObject {
         })
     }
     
+    get nextRoadId( ) { return this.carPath[this.carPathIndex+1]; };
     get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
     get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
     get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
@@ -226,6 +229,7 @@ class Car extends MapObject {
                 this.y = turn.top;
                 break;
         }
+        this.carPathIndex++;
         this.initHitboxGroups( );
         this.setDestinationList( );
     }
