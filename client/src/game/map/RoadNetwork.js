@@ -22,6 +22,10 @@ class RoadNetwork {
         this.setCrossings( );
     }
 
+    getRoadById( id ) {
+        return this.roads.filter((e) => {return e.id==id;})[0];
+    }
+
     getVehiclePath( startingRoadId ) {
         let activeRoadID = startingRoadId;
         let path = [ startingRoadId ];
@@ -29,12 +33,16 @@ class RoadNetwork {
         let availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID );
         let nextIntersection = availableIntersections.shift();
         while ( nextIntersection != undefined ) {
-            let skipIntersection = Math.random( ) > 0.5
-            if ( skipIntersection || visitedIntersections.indexOf(nextIntersection.id) > -1) {
+            const activeRoad = this.getRoadById( activeRoadID );
+            const roadEndsAtIntersection = nextIntersection.roadDirectionEndsAtIntersection(activeRoad.direction);
+            const skipIntersection = Math.random( ) > 0.5;
+            const intersectingRoadIds = nextIntersection.getIntersectingRoadIds( activeRoadID );
+
+            if ( !roadEndsAtIntersection && (skipIntersection || visitedIntersections.indexOf(nextIntersection.id) > -1 || intersectingRoadIds.length == 0) ) {
+                visitedIntersections.push(nextIntersection.id);
                 nextIntersection = availableIntersections.shift();
             }
             else {
-                const intersectingRoadIds = nextIntersection.getIntersectingRoadIds( activeRoadID );
                 visitedIntersections.push(nextIntersection.id);
                 if (intersectingRoadIds.length == 2 ){
                     activeRoadID = Math.random > 0.5 ? intersectingRoadIds[0] : intersectingRoadIds[1];

@@ -20,6 +20,45 @@ class Intersection extends I_Junction {
     get hasLeftDownTurn( ) { return this.leftFacingLane != false && this.downFacingLane != false; };
     get hasRightDownTurn( ) { return this.rightFacingLane != false && this.downFacingLane != false; };
 
+    get leftRoadEndsAtInterSection( ) { 
+        return ( this.downFacingLane ) 
+            ? this.downFacingLane.leftColumn == this.leftFacingRoad.endCol
+            : this.upFacingLane.leftColumn == this.leftFacingRoad.endCol;
+    }
+
+    get upRoadEndsAtInterSection( ) { 
+        return ( this.leftFacingLane ) 
+            ? this.leftFacingLane.topRow == this.upFacingRoad.endRow
+            : this.rightFacingLane.topRow == this.upFacingRoad.endRow
+    }
+
+    get rightRoadEndsAtInterSection( ) { 
+        return ( this.upFacingLane ) 
+            ? this.upFacingLane.rightColumn == this.rightFacingRoad.endCol
+            : this.downFacingLane.rightColumn == this.rightFacingRoad.endCol;
+    }
+
+    get downRoadEndsAtInterSection( ) { 
+        return ( this.rightFacingLane ) 
+            ? this.rightFacingLane.bottomRow == this.downFacingRoad.endRow
+            : this.leftFacingLane.bottomRow == this.downFacingRoad.endRow
+    }
+
+    roadDirectionEndsAtIntersection( direction ) {
+        switch( direction ) {
+            case FACING_LEFT:
+                return this.leftRoadEndsAtInterSection;
+            case FACING_UP:
+                return this.upRoadEndsAtInterSection;
+            case FACING_RIGHT:
+                return this.rightRoadEndsAtInterSection;
+            case FACING_DOWN:
+                return this.downRoadEndsAtInterSection;
+            default:
+                console.log('direction ' + direction + ' not recognized' )
+        }
+    }
+
     initIntersectionFromPendingList( pendingList ) {
         let tileList = [];
 
@@ -179,15 +218,15 @@ class Intersection extends I_Junction {
         let intersectingRoadIds = [];
         const road = this.getRoadById( roadId );
         if (road.direction == FACING_DOWN | road.direction == FACING_UP){
-            if (this.rightFacingLane)
+            if (this.rightFacingLane && !this.rightRoadEndsAtInterSection)
                 intersectingRoadIds.push(this.rightFacingRoad.id);
-            if (this.leftFacingLane)
+            if (this.leftFacingLane && !this.leftRoadEndsAtInterSection)
                 intersectingRoadIds.push(this.leftFacingRoad.id);
         }
         else if (road.direction == FACING_RIGHT | road.direction == FACING_LEFT) {
-            if (this.upFacingLane)
+            if (this.upFacingLane && !this.upRoadEndsAtInterSection )
                 intersectingRoadIds.push(this.upFacingRoad.id);
-            if (this.downFacingLane)
+            if (this.downFacingLane && !this.downRoadEndsAtInterSection)
                 intersectingRoadIds.push(this.downFacingRoad.id);
         }
         return intersectingRoadIds;
