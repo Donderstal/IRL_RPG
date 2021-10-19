@@ -76,7 +76,7 @@ class I_Junction {
     setCarsToWaitIfLaneIsClosed( ) {
         this.intersectionCars.forEach( ( car ) => {
             if ( this.leftFacingLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
-                && this.leftFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT]) {
+                && this.leftFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT] ) {
                 car.setWaitAtIntersection( );
             }
             else if ( this.upFacingLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)

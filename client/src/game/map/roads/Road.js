@@ -73,7 +73,7 @@ class Road {
         this.startCol = (roadData.startCol != undefined ? roadData.startCol : (roadData.direction == FACING_LEFT ? activeGrid.cols : 1));
         this.endCol = (roadData.endCol != undefined ? roadData.endCol : (roadData.direction == FACING_LEFT ? 1 : activeGrid.cols));
         this.startRow = (roadData.startRow != undefined ? roadData.startRow : (roadData.direction == FACING_UP ? activeGrid.rows : 1));
-        this.endRow = (roadData.endCol != undefined ? roadData.endCol : (roadData.direction == FACING_UP ? 1 : activeGrid.rows));
+        this.endRow = (roadData.endRow != undefined ? roadData.endRow : (roadData.direction == FACING_UP ? 1 : activeGrid.rows));
 
         switch( roadData.direction ) {
             case FACING_LEFT :

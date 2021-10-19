@@ -30,20 +30,17 @@ class RoadNetwork {
         let activeRoadID = startingRoadId;
         let path = [ startingRoadId ];
         let visitedIntersections = [];
-        let availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID );
+        let availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID, visitedIntersections );
         let nextIntersection = availableIntersections.shift();
         while ( nextIntersection != undefined ) {
             const activeRoad = this.getRoadById( activeRoadID );
             const roadEndsAtIntersection = nextIntersection.roadDirectionEndsAtIntersection(activeRoad.direction);
-            const skipIntersection = Math.random( ) > 0.5;
             const intersectingRoadIds = nextIntersection.getIntersectingRoadIds( activeRoadID );
+            const turnAtIntersection = intersectingRoadIds.length > 0 && Math.random( ) > 0.5;
 
-            if ( !roadEndsAtIntersection && (skipIntersection || visitedIntersections.indexOf(nextIntersection.id) > -1 || intersectingRoadIds.length == 0) ) {
-                visitedIntersections.push(nextIntersection.id);
-                nextIntersection = availableIntersections.shift();
-            }
-            else {
-                visitedIntersections.push(nextIntersection.id);
+            visitedIntersections.push(nextIntersection.id);
+            
+            if ( roadEndsAtIntersection || turnAtIntersection ) {
                 if (intersectingRoadIds.length == 2 ){
                     activeRoadID = Math.random > 0.5 ? intersectingRoadIds[0] : intersectingRoadIds[1];
                 }
@@ -51,15 +48,30 @@ class RoadNetwork {
                     activeRoadID = intersectingRoadIds.shift();
                 }
                 path.push(activeRoadID);
-                availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID );
+                availableIntersections = this.getIntersectionsOnRoadWithId( activeRoadID, visitedIntersections );
             }
+
+            nextIntersection = availableIntersections.shift();
         }
         
         return path;
     }
 
-    getIntersectionsOnRoadWithId( roadId ) {
-        return this.intersections.filter( (e) => {return e.roadIds.indexOf(roadId) != -1} );
+    getIntersectionsOnRoadWithId( roadId, visitedIntersections ) {
+        const activeRoad = this.getRoadById( roadId );
+        let intersections = this.intersections.filter( (e) => {return e.roadIds.indexOf(roadId) != -1 && visitedIntersections.indexOf(e.id) == -1} );
+        switch( activeRoad.direction ) {
+            case FACING_LEFT:
+                return intersections.sort((a, b) => { return b.core.leftColumn - a.core.leftColumn });
+            case FACING_UP:
+                return intersections.sort((a, b) => { return b.core.topRow - a.core.topRow });
+            case FACING_RIGHT:
+                return intersections.sort((a, b) => { return a.core.leftColumn - b.core.leftColumn });
+            case FACING_DOWN:
+                return intersections.sort((a, b) => { return a.core.topRow - b.core.topRow });
+            default:
+                console.log('direction ' + direction + ' not recognized' )
+        };
     }
 
     areItemsInList( list, item1, item2 ) {
