@@ -12,7 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### OCT 15, 2021
+#### OCT 19, 2021
+* Predetermined car pathing algorithm
+* Improving car location detection on intersections
+
+#### OCT 17, 2021
 * New and improved car turning system
 
 #### OCT 15, 2021
