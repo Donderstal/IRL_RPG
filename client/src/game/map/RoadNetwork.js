@@ -108,15 +108,10 @@ class RoadNetwork {
     setIntersections( ) {
         this.roads.forEach( ( e ) => { 
             let currentRoad = e;
-            let otherRoads = this.roads.filter( ( e ) => { return e != currentRoad })
+            let otherRoads = this.roads.filter( ( e ) => { return e.alignment != currentRoad.alignment; })
             otherRoads.forEach( ( otherRoad ) => {
-                if ( currentRoad.alignment == 'HORI' && otherRoad.alignment == 'VERT' && this.roadsIntersect( currentRoad, otherRoad )) {
-                    console.log(true)
-                    this.addPendingIntersection(currentRoad, otherRoad); 
-                }
-                else if ( currentRoad.alignment == 'VERT' && otherRoad.alignment == 'HORI' && this.roadsIntersect( otherRoad, currentRoad )) {
-                    console.log(true)
-                    this.addPendingIntersection(otherRoad, currentRoad); 
+                if (this.roadsIntersect(currentRoad.alignment == 'HORI' ? currentRoad : otherRoad, currentRoad.alignment == 'HORI' ? otherRoad : currentRoad ) ) {
+                    this.addPendingIntersection(currentRoad.alignment == 'HORI' ? currentRoad : otherRoad, currentRoad.alignment == 'HORI' ? otherRoad : currentRoad );
                 }
             })
         })
@@ -156,36 +151,36 @@ class RoadNetwork {
             if ( this.areItemsInList(currentDirections, FACING_DOWN, FACING_LEFT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.left == pendingSquare.right )
-                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.top == pendingSquare.bottom ) 
-                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
+                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.leftColumn == pendingSquare.rightColumn + 1 && e.square.bottomRow == pendingSquare.bottomRow )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.rightColumn ) 
+                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom + 1 && e.square.leftColumn == pendingSquare.rightColumn + 1 )
                     )
                 } );
             }
             else if ( this.areItemsInList(currentDirections, FACING_DOWN, FACING_RIGHT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.left == pendingSquare.right )
+                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottomRow == pendingSquare.topRow - 1 && e.square.leftColumn == pendingSquare.rightColumn + 1 )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottomRow == pendingSquare.topRow + 1 && e.square.rightColumn == pendingSquare.rightColumn )
+                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.leftColumn == pendingSquare.rightColumn + 1 && e.square.bottomRow == pendingSquare.bottomRow )
                     )
                 } );
             } 
             else if ( this.areItemsInList(currentDirections, FACING_UP, FACING_LEFT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.right == pendingSquare.left )
-                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
-                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom )
+                        ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.rightColumn == pendingSquare.leftColumn - 1 && e.square.bottomRow == pendingSquare.bottomRow )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.leftColumn - 1 )
+                        || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.rightColumn )
                     )
                 } );
             }
             else if ( this.areItemsInList(currentDirections, FACING_UP, FACING_RIGHT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
                     return (
-                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottom == pendingSquare.top )
-                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.right == pendingSquare.left )
+                        ( this.areItemsInList(e.directions, FACING_UP, FACING_LEFT) && e.square.bottomRow == pendingSquare.topRow - 1 && e.square.rightColumn == pendingSquare.rightColumn )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_LEFT) && e.square.bottomRow == pendingSquare.topRow - 1 && e.square.rightColumn == pendingSquare.leftColumn - 1 )
+                        || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.rightColumn == pendingSquare.leftColumn - 1 && e.square.bottomRow == pendingSquare.bottomRow )
                     )
                 } );
             } 
