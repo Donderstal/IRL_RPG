@@ -14,16 +14,27 @@ class I_Junction {
         this.directionsIn = [];
         this.directionsOut = [];
 
-        this.leftFacingLane = false;
-        this.upFacingLane = false;
-        this.rightFacingLane = false;
-        this.downFacingLane = false;
+        this.leftFacingInLane = false;
+        this.leftFacingOutLane = false;
+
+        this.upFacingInLane = false;
+        this.upFacingOutLane = false;
+        
+        this.rightFacingInLane = false;
+        this.rightFacingOutLane = false;
+
+        this.downFacingInLane = false;
+        this.downFacingOutLane = false;
     }
 
     get leftFacingRoad( ) { return this.roads.filter( ( e ) => { return e.direction == FACING_LEFT; })[0]; };
     get upFacingRoad( ) { return this.roads.filter( ( e ) => { return e.direction == FACING_UP; })[0]; };
     get rightFacingRoad( ) { return this.roads.filter( ( e ) => { return e.direction == FACING_RIGHT; })[0]; };
     get downFacingRoad( ) { return this.roads.filter( ( e ) => { return e.direction == FACING_DOWN; })[0]; };
+
+    hasDirection( direction ) {
+        return this.directions.indexOf(direction) > -1;
+    }
 
     directionEnds( direction ) {
         return this.directionsIn.indexOf(direction) > -1 && this.directionsOut.indexOf(direction) == -1;
@@ -143,20 +154,20 @@ class I_Junction {
 
     setCarsToWaitIfLaneIsClosed( ) {
         this.intersectionCars.forEach( ( car ) => {
-            if ( this.leftFacingLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
-                && this.leftFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT] ) {
+            if ( this.leftFacingInLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
+                && this.leftFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT] ) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.upFacingLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
-                && this.upFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_UP]) {
+            else if ( this.upFacingInLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
+                && this.upFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_UP]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.rightFacingLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
-                && this.rightFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_RIGHT]) {
+            else if ( this.rightFacingInLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
+                && this.rightFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_RIGHT]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.downFacingLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
-                && this.downFacingLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_DOWN]) {
+            else if ( this.downFacingInLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
+                && this.downFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_DOWN]) {
                 car.setWaitAtIntersection( ); 
             }
             else {

@@ -10,46 +10,16 @@ class Intersection extends I_Junction {
         this.id = id;
         this.laneDepth = 2;
         this.initIntersectionFromPendingList( pendingIntersections );
+        this.checkIfRoadsEndOrStartAtIntersection( );
         this.setLanes( );
         this.setTurns( );
         this.roadIds = this.roads.map((e)=>{return e.id;});
     }
 
-    get hasLeftUpTurn( ) { return this.leftFacingLane != false && this.upFacingLane != false; };
-    get hasRightUpTurn( ) { return this.rightFacingLane != false && this.upFacingLane != false; };
-    get hasLeftDownTurn( ) { return this.leftFacingLane != false && this.downFacingLane != false; };
-    get hasRightDownTurn( ) { return this.rightFacingLane != false && this.downFacingLane != false; };
-
-    get leftRoadEndsAtInterSection( ) { 
-        return this.core.leftColumn == this.leftFacingRoad.endCol;
-    }
-
-    get upRoadEndsAtInterSection( ) { 
-        return this.core.topRow == this.upFacingRoad.endRow;
-    }
-
-    get rightRoadEndsAtInterSection( ) { 
-        return this.core.rightColumn == this.rightFacingRoad.endCol;
-    }
-
-    get downRoadEndsAtInterSection( ) { 
-        return this.core.bottomRow == this.downFacingRoad.endRow;
-    }
-
-    roadDirectionEndsAtIntersection( direction ) {
-        switch( direction ) {
-            case FACING_LEFT:
-                return this.leftRoadEndsAtInterSection;
-            case FACING_UP:
-                return this.upRoadEndsAtInterSection;
-            case FACING_RIGHT:
-                return this.rightRoadEndsAtInterSection;
-            case FACING_DOWN:
-                return this.downRoadEndsAtInterSection;
-            default:
-                console.log('direction ' + direction + ' not recognized' )
-        }
-    }
+    get hasLeftUpTurn( ) { return this.hasDirection(FACING_UP) && this.hasDirection(FACING_LEFT); };
+    get hasRightUpTurn( ) { return this.hasDirection(FACING_UP) && this.hasDirection(FACING_RIGHT); };
+    get hasLeftDownTurn( ) { return this.hasDirection(FACING_DOWN) && this.hasDirection(FACING_LEFT); };
+    get hasRightDownTurn( ) { return this.hasDirection(FACING_DOWN) && this.hasDirection(FACING_RIGHT); };
 
     initIntersectionFromPendingList( pendingList ) {
         let tileList = [];
@@ -83,41 +53,41 @@ class Intersection extends I_Junction {
     }
 
     checkForCarsOnIntersection( ) {
-        let leftCars = this.leftFacingLane ? this.leftFacingRoad.carsOnRoad : this.leftFacingLane;
-        let upCars = this.upFacingLane ? this.upFacingRoad.carsOnRoad : this.upFacingLane;
-        let rightCars = this.rightFacingLane ? this.rightFacingRoad.carsOnRoad : this.rightFacingLane;
-        let downCars = this.downFacingLane ? this.downFacingRoad.carsOnRoad : this.downFacingLane;
+        let leftCars = this.hasDirection(FACING_LEFT) ? this.leftFacingRoad.carsOnRoad : false;
+        let upCars = this.hasDirection(FACING_UP) ? this.upFacingRoad.carsOnRoad : false;
+        let rightCars = this.hasDirection(FACING_RIGHT) ? this.rightFacingRoad.carsOnRoad : false;
+        let downCars = this.hasDirection(FACING_DOWN) ? this.downFacingRoad.carsOnRoad : false;
 
-        if (leftCars && (this.checkForCarsOnSquare(leftCars, this.leftFacingLane) || this.checkForCarsOnSquare(leftCars, this.core))) {
+        if (leftCars && (this.checkForCarsOnSquare(leftCars, this.leftFacingInLane) || this.checkForCarsOnSquare(leftCars, this.core))) {
             this.closeLane( FACING_DOWN );
         }
-        if (upCars && (this.checkForCarsOnSquare(upCars, this.upFacingLane) || this.checkForCarsOnSquare(upCars, this.core))) {
+        if (upCars && (this.checkForCarsOnSquare(upCars, this.upFacingInLane) || this.checkForCarsOnSquare(upCars, this.core))) {
             this.closeLane( FACING_RIGHT );
         }
-        if (rightCars && (this.checkForCarsOnSquare(rightCars, this.rightFacingLane) || this.checkForCarsOnSquare(rightCars, this.core))) {
+        if (rightCars && (this.checkForCarsOnSquare(rightCars, this.rightFacingInLane) || this.checkForCarsOnSquare(rightCars, this.core))) {
             this.closeLane( FACING_UP );
         }
-        if (downCars && (this.checkForCarsOnSquare(downCars, this.downFacingLane) || this.checkForCarsOnSquare(downCars, this.core))) {
+        if (downCars && (this.checkForCarsOnSquare(downCars, this.downFacingInLane) || this.checkForCarsOnSquare(downCars, this.core))) {
             this.closeLane( FACING_LEFT );              
         }
     }
 
     setCarsToWaitIfLaneIsClosed( ) {
         this.intersectionCars.forEach( ( car ) => {
-            if ( this.leftFacingLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
-                && this.leftFacingLane.spriteIsInTileSquare(car) && this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.leftDownSquare) && !this.openLanes[FACING_LEFT]) {
+            if (this.leftFacingInLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
+                && this.leftFacingInLane.spriteIsInTileSquare(car) && (this.downFacingRoad == undefined|| this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.leftDownSquare)) && !this.openLanes[FACING_LEFT]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.upFacingLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
-                && this.upFacingLane.spriteIsInTileSquare(car) && this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftUpSquare) && !this.openLanes[FACING_UP]) {
+            else if (this.upFacingInLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
+                && this.upFacingInLane.spriteIsInTileSquare(car) && (this.leftFacingRoad == undefined || this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftUpSquare) )&& !this.openLanes[FACING_UP]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.rightFacingLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
-                && this.rightFacingLane.spriteIsInTileSquare(car) && this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.rightUpSquare) && !this.openLanes[FACING_RIGHT]) {
+            else if (this.rightFacingInLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
+                && this.rightFacingInLane.spriteIsInTileSquare(car) && (this.upFacingRoad == undefined || this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.rightUpSquare)) && !this.openLanes[FACING_RIGHT]) {
                 car.setWaitAtIntersection( );
             }
-            else if ( this.downFacingLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
-                && this.downFacingLane.spriteIsInTileSquare(car) && this.squareHasNoCars(this.rigfhtFacingRoad.carsOnRoad, this.rightDownSquare) && !this.openLanes[FACING_DOWN]) {
+            else if (this.downFacingInLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
+                && this.downFacingInLane.spriteIsInTileSquare(car) && ( this.rightFacingRoad == undefined || this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightDownSquare)) && !this.openLanes[FACING_DOWN]) {
                 car.setWaitAtIntersection( ); 
             }
             else {
@@ -205,12 +175,12 @@ class Intersection extends I_Junction {
                     if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.upFacingRoad.id) {
                         car.turnToDirection(FACING_UP, this.upFacingRoad, this.leftUpSquare,this.id)
                     }
-                    else if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.downFacingRoad.id 
-                    && this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightDownSquare) && this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightFacingLane)) {
+                    else if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.downFacingRoad.id && ( this.rightFacingRoad == undefined
+                    || (this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightDownSquare) && this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightFacingInLane)))) {
                         car.unsetWaitAtIntersection( );
                         car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.leftDownSquare,this.id)
                     }
-                    else if ( car.nextRoadId == this.upFacingRoad.id ) {
+                    else if ( this.downFacingRoad && this.hasDirection(FACING_LEFT) && car.nextRoadId == this.downFacingRoad.id ) {
                         car.setWaitAtIntersection( );
                     }
                     break;
@@ -218,12 +188,12 @@ class Intersection extends I_Junction {
                     if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.rightFacingRoad.id) {
                         car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightUpSquare,this.id);
                     }
-                    else if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.leftFacingRoad.id 
-                    && this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.leftDownSquare) && this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.downFacingLane)) {
+                    else if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.leftFacingRoad.id && (this.downFacingRoad == undefined 
+                    || (this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.leftDownSquare) && this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.downFacingInLane)))) {
                         car.unsetWaitAtIntersection( );
                         car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftUpSquare,this.id);
                     }
-                    else if ( car.nextRoadId == this.rightFacingRoad.id ){
+                    else if ( this.leftFacingRoad && this.hasDirection(FACING_DOWN) && car.nextRoadId == this.leftFacingRoad.id ){
                         car.setWaitAtIntersection( );
                     }
                     break;
@@ -231,12 +201,12 @@ class Intersection extends I_Junction {
                     if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.downFacingRoad.id) {
                         car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.rightDownSquare,this.id)
                     }
-                    else if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.upFacingRoad.id 
-                    && this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftUpSquare) && this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftFacingLane)) {
+                    else if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.upFacingRoad.id && ( this.leftFacingRoad == undefined 
+                    || (this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftUpSquare) && this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftFacingInLane)))) {
                         car.unsetWaitAtIntersection( );
                         car.turnToDirection(FACING_UP, this.upFacingRoad, this.rightUpSquare,this.id)
                     }
-                    else if ( car.nextRoadId == this.upFacingRoad.id ) {
+                    else if ( this.upFacingRoad && this.hasDirection(FACING_LEFT) && car.nextRoadId == this.upFacingRoad.id ) {
                         car.setWaitAtIntersection( );
                     }
                     break;
@@ -244,12 +214,12 @@ class Intersection extends I_Junction {
                     if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.leftFacingRoad.id) {
                         car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftDownSquare,this.id);
                     }
-                    else if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.rightFacingRoad.id 
-                    && this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.rightUpSquare) && this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.upFacingLane)) {
+                    else if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.rightFacingRoad.id && ( this.upFacingRoad == undefined 
+                    || (this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.rightUpSquare) && this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.upFacingInLane)))) {
                         car.unsetWaitAtIntersection( );
                         car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightDownSquare,this.id);
                     }
-                    else if ( car.nextRoadId == this.rightFacingRoad.id ) {
+                    else if ( this.rightFacingRoad && this.hasDirection(FACING_UP) &&  car.nextRoadId == this.rightFacingRoad.id ) {
                         car.setWaitAtIntersection( );
                     }
                     break;
@@ -266,16 +236,16 @@ class Intersection extends I_Junction {
     getIntersectingRoadIds( roadId ) {
         let intersectingRoadIds = [];
         const road = this.getRoadById( roadId );
-        if (road.direction == FACING_DOWN | road.direction == FACING_UP){
-            if (this.rightFacingLane && !this.rightRoadEndsAtInterSection)
+        if (road.direction == FACING_DOWN || road.direction == FACING_UP){
+            if (this.hasDirection(FACING_RIGHT) && !this.directionEnds(FACING_RIGHT))
                 intersectingRoadIds.push(this.rightFacingRoad.id);
-            if (this.leftFacingLane && !this.leftRoadEndsAtInterSection)
+                if (this.hasDirection(FACING_LEFT) && !this.directionEnds(FACING_LEFT))
                 intersectingRoadIds.push(this.leftFacingRoad.id);
         }
-        else if (road.direction == FACING_RIGHT | road.direction == FACING_LEFT) {
-            if (this.upFacingLane && !this.upRoadEndsAtInterSection )
+        else if (road.direction == FACING_RIGHT || road.direction == FACING_LEFT) {
+            if (this.hasDirection(FACING_UP) && !this.directionEnds(FACING_UP))
                 intersectingRoadIds.push(this.upFacingRoad.id);
-            if (this.downFacingLane && !this.downRoadEndsAtInterSection)
+                if (this.hasDirection(FACING_DOWN) && !this.directionEnds(FACING_DOWN))
                 intersectingRoadIds.push(this.downFacingRoad.id);
         }
         return intersectingRoadIds;

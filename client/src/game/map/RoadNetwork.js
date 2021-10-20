@@ -34,7 +34,7 @@ class RoadNetwork {
         let nextIntersection = availableIntersections.shift();
         while ( nextIntersection != undefined ) {
             const activeRoad = this.getRoadById( activeRoadID );
-            const roadEndsAtIntersection = nextIntersection.roadDirectionEndsAtIntersection(activeRoad.direction);
+            const roadEndsAtIntersection = nextIntersection.directionEnds(activeRoad.direction);
             const intersectingRoadIds = nextIntersection.getIntersectingRoadIds( activeRoadID );
             const turnAtIntersection = intersectingRoadIds.length > 0 && Math.random( ) > 0.5;
 

@@ -68,17 +68,17 @@ class Crossing extends I_Junction {
     }
 
     checkForCarsNearCrossing( ) {
-        if ( this.leftFacingLane ) {
-            this.checkForCarsOnSquare( this.leftFacingRoad.carsOnRoad, this.leftFacingLane )
+        if ( this.leftFacingInLane ) {
+            this.checkForCarsOnSquare( this.leftFacingRoad.carsOnRoad, this.leftFacingInLane )
         }
-        if ( this.upFacingLane ) {
-            this.checkForCarsOnSquare( this.upFacingRoad.carsOnRoad, this.upFacingLane)
+        if ( this.upFacingInLane ) {
+            this.checkForCarsOnSquare( this.upFacingRoad.carsOnRoad, this.upFacingInLane)
         }
-        if ( this.rightFacingLane ) {
-            this.checkForCarsOnSquare(this.rightFacingRoad.carsOnRoad, this.rightFacingLane)
+        if ( this.rightFacingInLane ) {
+            this.checkForCarsOnSquare(this.rightFacingRoad.carsOnRoad, this.rightFacingInLane)
         }
-        if ( this.downFacingLane ) {
-            this.checkForCarsOnSquare(this.downFacingRoad.carsOnRoad, this.downFacingLane)   
+        if ( this.downFacingInLane ) {
+            this.checkForCarsOnSquare(this.downFacingRoad.carsOnRoad, this.downFacingInLane)   
         }
     }
 }
