@@ -5,7 +5,8 @@ const hallWest = require('./test-dungeon/hall-west/hall-west');
 const hallNorthWest = require('./test-dungeon/hall-northwest/hall-northwest');
 const testActions = require('./test-actions/test-actions');
 const TESTCARS = require('./test-cars/test-cars')
-const testCollision = require('./test-collision/test-collision')
+const singleTurnsTest = require('./single-turns-test')
+const doubleRoadsTest = require('./double-roads')
 const newMapFormat = require('./new-map-format')
 const crossingTest = require('./crossing-test')
 const pathfindingTest = require('./pathfinding-test')
@@ -18,7 +19,8 @@ module.exports = {
     'hall-west': hallWest,
     'hall-northwest': hallNorthWest,
     'test-actions': testActions,
-    'test-collision': testCollision,
+    'single-turns-test': singleTurnsTest,
+    'double-roads-test': doubleRoadsTest,
     'TEST_CARS' : TESTCARS,
     'newMapFormat' : newMapFormat,
     'crossing-test': crossingTest,
