@@ -170,7 +170,7 @@ class I_Junction {
                 && this.downFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_DOWN]) {
                 car.setWaitAtIntersection( ); 
             }
-            else {
+            else if ( car.unsetWaitAtIntersection == 'function') {
                 car.unsetWaitAtIntersection( );
             }
         });
@@ -181,7 +181,6 @@ class I_Junction {
         cars.forEach( (car) => {
             if ( square.spriteIsInTileSquare(car) ) {
                 carOnLane = true;
-                this.intersectionCars.push(car)
             }
         })
         return carOnLane;

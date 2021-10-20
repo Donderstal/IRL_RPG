@@ -20,10 +20,12 @@ class Car extends MapObject {
         this.crossedIntersectionIds = [];
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
+        this.roadId;
 
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
             if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {
                 road.activeCarIds.push( this.spriteId );
+                this.roadId = road.id;
             }
         })
     }
@@ -207,6 +209,13 @@ class Car extends MapObject {
     }
 
     turnToDirection( newDirection, road, turn, id ) {
+        globals.GAME.FRONT.roadNetwork.roads.forEach( ( e ) => {
+            if ( e.id === this.roadId ) {
+                e.activeCarIds.splice( e.activeCarIds.indexOf( this.spriteId ), 1 )                
+            }
+        });
+        this.roadId = road.id;
+        road.activeCarIds.push(this.spriteId);
         this.crossedIntersectionIds.push( id );
         this.direction = newDirection;
         this.destination = road.endCell;

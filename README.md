@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### OCT 20, 2021
+* Fixed several bugs in the road and intersection system
+
 #### OCT 19, 2021
 * Predetermined car pathing algorithm
 * Improving car location detection on intersections

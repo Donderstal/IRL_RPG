@@ -156,6 +156,10 @@ class RoadNetwork {
                         || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.top == pendingSquare.bottom + 1 && e.square.leftColumn == pendingSquare.rightColumn + 1 )
                     )
                 } );
+                if ( filteredIntersections.length == 1 && this.areItemsInList(currentDirections, FACING_DOWN, FACING_LEFT) 
+                && this.areItemsInList(filteredIntersections[0].directions, FACING_UP, FACING_RIGHT)) {
+                    filteredIntersections = [];
+                }
             }
             else if ( this.areItemsInList(currentDirections, FACING_DOWN, FACING_RIGHT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
@@ -165,6 +169,10 @@ class RoadNetwork {
                         || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.leftColumn == pendingSquare.rightColumn + 1 && e.square.bottomRow == pendingSquare.bottomRow )
                     )
                 } );
+                if ( filteredIntersections.length == 1 && this.areItemsInList(currentDirections, FACING_DOWN, FACING_RIGHT) 
+                && this.areItemsInList(filteredIntersections[0].directions, FACING_UP, FACING_LEFT)) {
+                    filteredIntersections = [];
+                }
             } 
             else if ( this.areItemsInList(currentDirections, FACING_UP, FACING_LEFT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
@@ -174,6 +182,10 @@ class RoadNetwork {
                         || ( this.areItemsInList(e.directions, FACING_UP, FACING_RIGHT) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.rightColumn )
                     )
                 } );
+                if ( filteredIntersections.length == 1 && this.areItemsInList(currentDirections, FACING_UP, FACING_LEFT) 
+                && this.areItemsInList(filteredIntersections[0].directions, FACING_DOWN, FACING_RIGHT)) {
+                    filteredIntersections = [];
+                }
             }
             else if ( this.areItemsInList(currentDirections, FACING_UP, FACING_RIGHT) ) {
                 filteredIntersections = this.pendingIntersections.filter( ( e ) => { 
@@ -183,6 +195,10 @@ class RoadNetwork {
                         || ( this.areItemsInList(e.directions, FACING_DOWN, FACING_RIGHT) && e.square.rightColumn == pendingSquare.leftColumn - 1 && e.square.bottomRow == pendingSquare.bottomRow )
                     )
                 } );
+                if ( filteredIntersections.length == 1 && this.areItemsInList(currentDirections, FACING_UP, FACING_RIGHT) 
+                && this.areItemsInList(filteredIntersections[0].directions, FACING_DOWN, FACING_LEFT)) {
+                    filteredIntersections = [];
+                }
             } 
 
             filteredIntersections.forEach( ( e ) => {

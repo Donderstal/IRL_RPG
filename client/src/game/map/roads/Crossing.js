@@ -81,6 +81,11 @@ class Crossing extends I_Junction {
             this.checkForCarsOnSquare(this.downFacingRoad.carsOnRoad, this.downFacingInLane)   
         }
     }
+
+    checkForCarsOnSquare( cars, square ) {
+        super.checkForCarsOnSquare( cars, square);
+        this.intersectionCars.push(cars);
+    }
 }
 
 module.exports = {
