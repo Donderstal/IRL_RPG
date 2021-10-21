@@ -5,10 +5,10 @@ module.exports = {
     "mapName": "lennart-neighbourhood/D3",
     "neighbourhood": "lennart-neighbourhood",
     "neighbours": {
-        "right": "",
+        "right": "lennart-neighbourhood/E3",
         "left": "",
         "up": "lennart-neighbourhood/D2",
-        "down": ""
+        "down": "lennart-neighbourhood/D4"
     },
     "spawnPoints": [],
     "roads": [
