@@ -28,6 +28,13 @@ class MapObject extends Sprite {
         super( tile, dimensionsInMap, src, spriteData.hasDoor ? null : spriteData.direction )
 
         this.objectResource = objectResource;
+        if( "movement_frames" in this.objectResource) {
+            this.frames = this.objectResource["movement_frames"];            
+        }
+        else {
+            this.frames = false;
+        }
+
         this.onBackground   = objectResource.on_background
         this.groundedAtBase = objectResource.grounded_at_bottom
         this.notGrounded    = objectResource.not_grounded
@@ -72,6 +79,10 @@ class MapObject extends Sprite {
      * Finally, countFrame if still sprite is still moving.
      */
     drawSprite( ) {
+        if ( this.frames ) {
+            this.setActiveFrames( );            
+        }
+
         if ( this.hitboxGroups ) {
             this.updateHitboxes( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ) );            
         }
@@ -86,8 +97,8 @@ class MapObject extends Sprite {
         drawFromImageToCanvas(
             "FRONT",
             this.sheet,
-            this.movingToDestination ? this.activeFrames[this.sheetPosition].x : this.sheetPosition * this.widthInSheet, 
-            this.movingToDestination ? this.activeFrames[this.sheetPosition].y : this.direction * this.heightInSheet, 
+            this.frames ? this.activeFrames[this.sheetPosition].x : this.sheetPosition * this.widthInSheet, 
+            this.frames ? this.activeFrames[this.sheetPosition].y : this.direction * this.heightInSheet, 
             this.widthInSheet, this.heightInSheet,
             this.x, this.y, this.width, this.height
         )
@@ -110,6 +121,27 @@ class MapObject extends Sprite {
 
         this.updateSpriteBorders( )
     }
+    //
+    setActiveFrames( ) {
+        switch ( this.direction ) {
+            case FACING_LEFT :
+                this.activeFrames = this.frames[FACING_LEFT];
+                break;
+            case FACING_UP :
+                this.activeFrames = this.frames[FACING_UP];
+                break;
+            case FACING_RIGHT :
+                this.activeFrames = this.frames[ FACING_RIGHT];
+                break;
+            case FACING_DOWN : 
+                this.activeFrames = this.frames[ FACING_DOWN];
+                break;
+            default :
+                break;
+        }                  
+        
+        this.sheetFrameLimit = this.activeFrames.length
+    }   
     /**
      * Instantiate on or more I_Hitboxgroup depending on the sprites alignment.
      * Push these instances to the this.hitBoxGroups array.

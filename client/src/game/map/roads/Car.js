@@ -7,7 +7,6 @@ const { Counter } = require("../../../helpers/Counter");
 class Car extends MapObject {
     constructor( tile, spriteData, spriteId ) {
         super( tile, spriteData, spriteId );
-        this.frames = this.objectResource["movement_frames"];
         this.name = spriteData.name
         this.isCar = true;
         this.initMovingSprite( spriteData )
@@ -81,8 +80,6 @@ class Car extends MapObject {
     
     drawSprite( ) {
         this.blocked = false;
-        this.setActiveFrames( );
-
         super.drawSprite( );
         this.checkForCollision( );
         
@@ -278,27 +275,6 @@ class Car extends MapObject {
             }
         }
     }
-
-    setActiveFrames( ) {
-        switch ( this.direction ) {
-            case FACING_LEFT :
-                this.activeFrames = this.frames[FACING_LEFT];
-                break;
-            case FACING_UP :
-                this.activeFrames = this.frames[FACING_UP];
-                break;
-            case FACING_RIGHT :
-                this.activeFrames = this.frames[ FACING_RIGHT];
-                break;
-            case FACING_DOWN : 
-                this.activeFrames = this.frames[ FACING_DOWN];
-                break;
-            default :
-                break;
-        }                  
-        
-        this.sheetFrameLimit = this.activeFrames.length
-    }   
 
     isOnSquare( square ) {
         let isOnSquare = true;
