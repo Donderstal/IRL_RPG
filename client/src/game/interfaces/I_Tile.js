@@ -84,6 +84,7 @@ class I_Tile {
      */
     drawTileToUtilityCanvas( sheetImage, tilesheetXy ) {
         const ctx = globals.GAME.util.ctx;
+        ctx.clearRect(0,0,GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX)
         this.mirrored ? ctx.setTransform( -1, 0, 0, 1, GRID_BLOCK_IN_SHEET_PX, 0 ) : ctx.setTransform(1,0,0,1,0,0);
         switch( this.angle ) {
             case 0: 
@@ -94,7 +95,7 @@ class I_Tile {
                 );
                 break;
             case 90:
-                ctx.translate( 0 + GRID_BLOCK_PX * 2, 0 );
+                ctx.translate( 0 + GRID_BLOCK_IN_SHEET_PX, 0 );
                 ctx.rotate( 90 * ( Math.PI / 180 ) );
                 ctx.drawImage( 
                     sheetImage, 
@@ -105,7 +106,7 @@ class I_Tile {
                 ctx.setTransform(1,0,0,1,0,0);
                 break;
             case 180:
-                ctx.translate( 0 + GRID_BLOCK_PX * 2, 0 + GRID_BLOCK_PX * 2 );
+                ctx.translate( 0 + GRID_BLOCK_IN_SHEET_PX, 0 + GRID_BLOCK_IN_SHEET_PX );
                 ctx.rotate( Math.PI );
                 ctx.drawImage( 
                     sheetImage, 
@@ -116,7 +117,7 @@ class I_Tile {
                 ctx.setTransform(1,0,0,1,0,0);
                 break;
             case 270:
-                ctx.translate( 0, 0 + GRID_BLOCK_PX * 2 );
+                ctx.translate( 0, 0 + GRID_BLOCK_IN_SHEET_PX );
                 ctx.rotate( 270 * ( Math.PI / 180 ) )
                 ctx.drawImage( 
                     sheetImage, 
