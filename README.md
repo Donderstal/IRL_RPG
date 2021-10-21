@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### OCT 21, 2021
+* Adding in prototypes of Lennart's new maps
+
 #### OCT 20, 2021
 * Fixed several bugs in the road and intersection system
 

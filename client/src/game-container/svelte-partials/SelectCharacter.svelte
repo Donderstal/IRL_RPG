@@ -264,6 +264,7 @@
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
         <p><label>Select starting location</label><select id="map-selection">
             <option value="my-neighbourhood/A1/my-house">Standard</option>
+            <option value="lennart-neighbourhood/D2">Lennart</option>
             <option value="northside/A3">Northside</option>
             <option value="test/double-roads-test">double-roads-test</option>
             <option value="test/single-turns-test">test/single-turns-test</option>

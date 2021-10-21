@@ -127,40 +127,24 @@ class Intersection extends I_Junction {
                 this.core.rightColumn, this.core.topRow, 
                 this.core.rightColumn - 1, this.core.topRow + 1
             ) );
-            globals.GAME.BACK.ctx.fillStyle = 'yellow';
-            globals.GAME.BACK.ctx.fillRect(
-                this.leftUpSquare.left, this.leftUpSquare.top, GRID_BLOCK_PX * 2, GRID_BLOCK_PX * 2
-            );
         }
         if ( this.hasRightUpTurn ) {
             this.rightUpSquare = new TileSquare( this.getTilesFromCoreList(
                 this.core.rightColumn, this.core.bottomRow, 
                 this.core.rightColumn - 1, this.core.bottomRow - 1
             ) );
-            globals.GAME.BACK.ctx.fillStyle = 'red';
-            globals.GAME.BACK.ctx.fillRect(
-                this.rightUpSquare.left, this.rightUpSquare.top, GRID_BLOCK_PX * 2, GRID_BLOCK_PX * 2
-            );
         }
         if ( this.hasLeftDownTurn ) {
             this.leftDownSquare = new TileSquare( this.getTilesFromCoreList(
                 this.core.leftColumn, this.core.topRow, 
                 this.core.leftColumn + 1, this.core.topRow + 1
             ) );
-            globals.GAME.BACK.ctx.fillStyle = 'pink';
-            globals.GAME.BACK.ctx.fillRect(
-                this.leftDownSquare.left, this.leftDownSquare.top, GRID_BLOCK_PX * 2, GRID_BLOCK_PX * 2
-            );
         }
         if ( this.hasRightDownTurn ) {
             this.rightDownSquare = new TileSquare( this.getTilesFromCoreList(
                 this.core.leftColumn, this.core.bottomRow, 
                 this.core.leftColumn + 1, this.core.bottomRow - 1
             ) );
-            globals.GAME.BACK.ctx.fillStyle = 'purple';
-            globals.GAME.BACK.ctx.fillRect(
-                this.rightDownSquare.left, this.rightDownSquare.top, GRID_BLOCK_PX * 2, GRID_BLOCK_PX * 2
-            );
         }
     }
 
