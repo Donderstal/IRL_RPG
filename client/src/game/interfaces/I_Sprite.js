@@ -12,6 +12,7 @@ const {
     FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
 } = require( '../../game-data/globals' )
 const { SPEAK_YES_NO, SPEAK, MOVE, ANIM } = require('../../game-data/conditionGlobals')
+const { Destination } = require('../map/map-classes/Destination')
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -315,6 +316,7 @@ class Sprite {
         const startingTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
         const destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
         let pathIndexes = [ ]
+        new Destination( this.destination.col, this.destination.row, this.spriteId );
         if ( isLoop ) {
             let goToIndexes = this.getPathIndexes( startingTile, destinationTile )
             let loopIndexes = this.getPathIndexes( destinationTile, startingTile )
