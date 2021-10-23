@@ -69,6 +69,10 @@ class Sprite {
             || globals.GAME.FRONT.tileHasBlockingSprite( frontTile.index )
         )     
     }
+    get isOffScreen( ) {
+        return ( this.left + this.width ) < 0 || ( this.top + this.height ) < 0 
+        || this.right - this.width > globals.GAME.FRONT.grid.width || this.bottom - this.height > globals.GAME.FRONT.grid.height;
+    }
      /**
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
      * @param {I_TIle} tile instance of I_Tile Class
@@ -137,9 +141,15 @@ class Sprite {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
 
-        if ( this.movingToDestination && !this.pathIsBlocked && this == globals.GAME.PLAYER ) {
-            this.goToDestination( );   
-            this.countFrame( );  
+        if ( this.movingToDestination && this == globals.GAME.PLAYER ) {
+            this.setDestination( this.destination, this.destination.isLoop, this.destination.isOffScreen)
+            if( !this.pathIsBlocked ) {
+                this.goToDestination( );   
+                this.countFrame( );  
+            }        
+            else {
+                this.sheetPosition = 0;
+            }    
         }
         else if ( this.inScriptedAnimation && this == globals.GAME.PLAYER ) {
             this.doScriptedAnimation( );
@@ -253,7 +263,7 @@ class Sprite {
     setDestination( destination, isLoop = false, destinationIsOffScreen = false ) {
         this.originalDirection  = this.direction;
         this.destinationTiles   = [];
-        this.destination = { col: destination.col, row: destination.row }
+        this.destination = { col: destination.col, row: destination.row, isLoop: isLoop, isOffScreen: destinationIsOffScreen }
         if (destinationIsOffScreen) {
             this.setOffScreenDestination( destination )
         }
@@ -392,7 +402,9 @@ class Sprite {
         if ( this.wasMoving && !this.isCar && this.destinationTile && snapToTile ) {
             this.setSpriteToDestinationTile( );
         }
-        if ( this.isPasserby && snapToTile ) {
+        if ( this.isPasserby && snapToTile && 
+            ((this.col === this.destination.col && this.row == this.destination.row && !this.destination.isOffScreen ) 
+            || (this.isOffScreen && this.destination.isOffScreen)) ) {
             globals.GAME.FRONT.deleteSprite( this.spriteId );
         }
 
