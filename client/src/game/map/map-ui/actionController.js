@@ -4,9 +4,6 @@ const handleActionButton = ( ) => {
     const GAME = globals.GAME;
     const PLAYER = GAME.PLAYER;
 
-    const currentPlayerTileBack = GAME.getTileOnCanvasAtIndex( "BACK", PLAYER.activeTileIndex );
-    const nextPlayerTileBack = GAME.getTileOnCanvasAtIndex( "BACK", PLAYER.nextTileIndex );
-
     if ( GAME.activeAction != undefined && GAME.activeAction.needsConfirmation ) {
         GAME.activeAction.confirm( );
         GAME.activeBubble = {}
@@ -20,11 +17,11 @@ const handleActionButton = ( ) => {
         }
     } )
     
-    if ( currentPlayerTileBack != undefined && currentPlayerTileBack.hasEvent ) {
-        GAME.activeAction =  currentPlayerTileBack.event
+    if ( PLAYER.currentTileBack != undefined && PLAYER.currentTileBack.hasEvent ) {
+        GAME.activeAction =  PLAYER.currentTileBack.event
     }
-    else if ( nextPlayerTileBack != undefined && nextPlayerTileBack.hasEvent ) {
-        GAME.activeAction =  nextPlayerTileBack.event
+    else if ( PLAYER.nextTileBack != undefined && PLAYER.nextTileBack.hasEvent ) {
+        GAME.activeAction =  PLAYER.nextTileBack.event
     }
 
     if ( GAME.activeAction != null ) {

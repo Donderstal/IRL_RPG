@@ -15,20 +15,39 @@ class MapSprite extends Sprite {
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.spriteId;
-        this.activeTileIndex;
-        this.nextTileIndex;
-
         this.spriteWidthInSheet = MAP_SPRITE_WIDTH_IN_SHEET;
         this.spriteHeightInSheet = MAP_SPRITE_HEIGHT_IN_SHEET;
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "footsteps.wav", true );
         this.movementSoundEffect.mute( );
     }
 
-    get currentTileBack( ) { return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.activeTileIndex )  };
-    get nextTileBack( ) { return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.nextTileIndex ) };
+    get currentTileBack( ) { return globals.GAME.getTileOnCanvasAtXY( "BACK", this.centerX(), this.baseY() ) };
+    get nextTileBack( ) { 
+        switch(this.direction) {
+            case FACING_LEFT:
+                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX() - GRID_BLOCK_PX, this.baseY());
+            case FACING_UP:
+                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX(), this.baseY() - GRID_BLOCK_PX);
+            case FACING_RIGHT:
+                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX() + GRID_BLOCK_PX, this.baseY());
+            case FACING_DOWN:
+                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX(), this.baseY() + GRID_BLOCK_PX);
+        }
+     };
 
-    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.activeTileIndex )  };
-    get nextTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.nextTileIndex ) };
+    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX(), this.baseY()) };
+    get nextTileFront( ) { 
+        switch(this.direction) {
+            case FACING_LEFT:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX() - GRID_BLOCK_PX, this.baseY());
+            case FACING_UP:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX(), this.baseY() - GRID_BLOCK_PX);
+            case FACING_RIGHT:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX() + GRID_BLOCK_PX, this.baseY());
+            case FACING_DOWN:
+                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX(), this.baseY() + GRID_BLOCK_PX);
+        }
+    };
 
     get isInCenterFacingLeft( ) {
         return this.centerX( ) < ( this.currentTileBack.x + ( GRID_BLOCK_PX * .55 ) );
@@ -52,15 +71,11 @@ class MapSprite extends Sprite {
      */
     drawSprite( ) {
         super.drawSprite( )
-        this.updateTileIndexes( )
         if ( this.hitbox != undefined ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );             
         }
         if ( !globals.GAME.inCinematic && ( this.movingToDestination || this == globals.GAME.PLAYER ) ) {  
             this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );  
-            if ( this.pathIsBlocked && this.destinationTile != undefined && this.destinationTile.index == this.activeTileIndex ) {
-                this.pathIsBlocked = !this.pathIsBlocked;
-            }  
         }
         if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
             this.handleAnimation( )
@@ -78,49 +93,6 @@ class MapSprite extends Sprite {
         else if ( this === globals.GAME.PLAYER && !this.playerWalking ) {
             this.movementSoundEffect.reset( );
         }        
-    }
-    /**
-     * Call this.unsetActiveTile. Get the I_Tile instance at this.centerX and this.baseY.
-     * Call this.setActivetileIndex with the I_Tile instance as argument. Then, call this.setNextTileIndex
-     */
-    updateTileIndexes( ) {
-        const tile = globals.GAME.getTileOnCanvasAtXY( 'FRONT', this.centerX( ), this.baseY( ) );
-
-        if ( tile == undefined ) {
-            this.activeTileIndex = null;
-            return;
-        } 
-
-        this.setActiveTileIndex( tile );
-        this.setNextTileIndex( );
-    }
-    /**
-     * Set this given I_Tile row, col and index to this.row, this.col and this.activeTileIndex.
-     * @param {I_Tile} tile 
-     */
-    setActiveTileIndex( tile ) {
-        this.activeTileIndex = tile.index;
-        this.row = tile.row;
-        this.col = tile.col;
-    }
-    /**
-     * Depending on the this.direction prop which indicates what side the MapSprite is facing, set this.nextTileIndex.
-     */
-    setNextTileIndex( ) {
-        switch ( this.direction ) {
-            case FACING_UP :
-                this.nextTileIndex = this.currentTileFront.row != 1 ? this.activeTileIndex - globals.GAME.back.class.grid.cols : undefined;
-                break;
-            case FACING_RIGHT :
-                this.nextTileIndex = this.currentTileFront.col != globals.GAME.activeMap.columns ? this.activeTileIndex + 1 : undefined;
-                break;
-            case FACING_DOWN :
-                this.nextTileIndex = this.currentTileFront.row != globals.GAME.activeMap.rows ? this.activeTileIndex + globals.GAME.back.class.grid.cols : undefined;
-                break;
-            case FACING_LEFT :
-                this.nextTileIndex = this.currentTileFront.col != 1 ? this.activeTileIndex - 1 : undefined;
-                break;
-        }
     }
 } 
 

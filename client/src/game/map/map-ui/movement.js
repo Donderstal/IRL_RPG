@@ -47,20 +47,15 @@ const moveInDirection = ( sprite, direction ) => {
  * @param {Number} direction 
  */
 const checkIfMovementAllowed = ( sprite, direction ) => {
-    let moveIsAllowed = true;
-
     const activeMap = globals.GAME.activeMap;
-    const activeBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.activeTileIndex);
-    const nextBackgroundTile = globals.GAME.getTileOnCanvasAtIndex( "BACK", sprite.nextTileIndex);
-    const nextForegroundTile = globals.GAME.getTileOnCanvasAtIndex( "FRONT", sprite.nextTileIndex);
-    if ( activeBackgroundTile == undefined ) {
+    if ( sprite.currentTileBack == undefined ) {
         return true;
     }
 
-    const facingUpOnTopRow = activeBackgroundTile.row == 1 && direction == FACING_UP;
-    const facingRightOnRightCol = activeBackgroundTile.col == globals.GAME.back.class.grid.cols && direction == FACING_RIGHT;
-    const facingLeftOnLeftCol = activeBackgroundTile.col == 1 && direction == FACING_LEFT;
-    const facingDownOnBottomRow = activeBackgroundTile.row == globals.GAME.back.class.grid.rows && direction == FACING_DOWN;
+    const facingUpOnTopRow = sprite.currentTileBack.row == 1 && direction == FACING_UP;
+    const facingRightOnRightCol = sprite.currentTileBack.col == globals.GAME.back.class.grid.cols && direction == FACING_RIGHT;
+    const facingLeftOnLeftCol = sprite.currentTileBack.col == 1 && direction == FACING_LEFT;
+    const facingDownOnBottomRow = sprite.currentTileBack.row == globals.GAME.back.class.grid.rows && direction == FACING_DOWN;
 
 
     if ( facingUpOnTopRow && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
@@ -76,7 +71,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
         return !sprite.isInCenterFacingRight;
     }
 
-    if ( nextBackgroundTile != undefined && ( nextBackgroundTile.isBlocked || nextForegroundTile.isBlocked ) ) {
+    if ( sprite.nextTileBack != undefined && ( sprite.nextTileBack.isBlocked || sprite.nextTileFront.isBlocked ) ) {
         switch ( direction ) {
             case FACING_RIGHT :
                 return !sprite.isInCenterFacingRight;
