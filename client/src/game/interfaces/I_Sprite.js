@@ -1,5 +1,4 @@
 const canvasHelpers = require('../../helpers/canvasHelpers')
-const pathFinder = require('../../helpers/pathfindingHelpers')
 const globals = require('../../game-data/globals')
 const { getEffect } = require('../../helpers/effectHelpers')
 const { getAnimationFrames } = require('../../resources/animationResources')
@@ -7,12 +6,11 @@ const { getSpeechBubble } = require('../map/map-ui/displayText')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 
-    NPC_MOVE_TYPE_FLYING,  NPC_ANIM_TYPE_MOVING_IN_LOOP,
-    FACING_LEFT, FACING_LEFT_FLYING, FACING_RIGHT, FACING_RIGHT_FLYING,
-    FACING_UP, FACING_UP_FLYING, FACING_DOWN, FACING_DOWN_FLYING
+    STATE_IDLE, STATE_MOVING, STATE_WAITING, STATE_BLOCKED
 } = require( '../../game-data/globals' )
 const { SPEAK_YES_NO, SPEAK, MOVE, ANIM } = require('../../game-data/conditionGlobals')
 const { Destination } = require('../map/map-classes/Destination')
+const { SpriteState } = require('../../helpers/SpriteState')
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -32,7 +30,7 @@ class Sprite {
         this.left, this.right, this.top, this.bottom;
         this.centerX = () => { return this.x + ( this.width / 2 ) };
         this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
-
+        this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
@@ -108,6 +106,7 @@ class Sprite {
      * What frame of the spritesheet is drawn is dependent on the sheetPosition and direction props.
      */
     drawSprite( ) {
+        this.updateState( );
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
@@ -124,20 +123,31 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
-
-        if ( this.destination && this.destination.path ) {
-            if( !this.pathIsBlocked ) {
-                this.destination.goTo( );   
-                this.countFrame( );  
-            }        
-            else {
-                this.sheetPosition = 0;
-            }    
-        }
-        else if ( this.inScriptedAnimation && this == globals.GAME.PLAYER ) {
+        this.checkForMoveToDestination( );
+        if ( this.inScriptedAnimation && this == globals.GAME.PLAYER ) {
             this.doScriptedAnimation( );
         }
         this.updateSpriteBorders( )
+    }
+
+    updateState( ) {
+        if ( this.State.is(STATE_IDLE) && this.destination && this.destination.path ) {
+            this.State.set(STATE_MOVING);
+        }
+        else if ( this.State.is(STATE_MOVING) && (!this.destination || !this.destination.path) ) {
+            this.State.set(STATE_IDLE);
+        }
+        else if ( this.State.is(STATE_MOVING) && this.pathIsBlocked ) {
+            this.State.set(STATE_BLOCKED);
+            this.sheetPosition = 0;
+        }
+    }
+
+    checkForMoveToDestination( ) {
+        if ( this.State.is(STATE_MOVING) ) {
+            this.destination.goTo( );   
+            this.countFrame( ); 
+        }
     }
     /**
      * Initialize a destination properties.

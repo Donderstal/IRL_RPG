@@ -37,6 +37,10 @@ const NPC_ANIM_TYPE_ANIMATION_LOOP  = "ANIMATION_LOOP";
 const NPC_MOVE_TYPE_WALKING         = "WALKING";
 const NPC_MOVE_TYPE_FLYING          = "FLYING";
 
+const STATE_IDLE                    = "IDLE";
+const STATE_WAITING                 = "WAITING";
+const STATE_BLOCKED                 = "BLOCKED";
+const STATE_MOVING                  = "MOVING";
 // animation frame limit
 const FRAME_LIMIT                   = 8
 const FRAMES_PER_SECOND             = 60
@@ -243,6 +247,10 @@ module.exports = {
     NPC_MOVE_TYPE_WALKING,
     NPC_MOVE_TYPE_FLYING,
 
+    STATE_IDLE,
+    STATE_BLOCKED,
+    STATE_WAITING,
+    STATE_MOVING,
 
     FRAME_LIMIT,
     FRAMES_PER_SECOND,

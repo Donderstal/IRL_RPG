@@ -66,30 +66,29 @@ class Car extends MapObject {
     }
     
     drawSprite( ) {
-        this.blocked = false;
+        this.updateState( );
         super.drawSprite( );
         this.checkForCollision( );
         
         if ( !this.isBus ) {
             this.checkForIntersection( );            
         }
+        this.checkForMoveToDestination( );
+        this.handleSoundEffects( )
+        this.handleBlockedTimeCounter( )
+        if ( !this.State.is(globals.STATE_MOVING) ) {
+            this.countFrame( );            
+        }
+    }
+
+    handleSoundEffects( ) {
         if (this.movementSoundEffect != undefined && this.carHornSoundEffect != undefined) {
             this.carHornSoundEffect.setVolumeAndPan( this )
             this.movementSoundEffect.setVolumeAndPan( this )                 
         }
-        if ( this.destination && this.destination.path ) {
-            if( !this.pathIsBlocked ) {
-                this.destination.goTo( );   
-            }        
-            else {
-                this.sheetPosition = 0;
-            }    
-        }
-        else if (this.movementSoundEffect != undefined &&( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
+        if (this.movementSoundEffect != undefined &&( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
             this.movementSoundEffect.reset( );
-        }
-        this.handleBlockedTimeCounter( )
-        this.countFrame( );
+        }        
     }
 
     setWaitAtIntersection( ) {
