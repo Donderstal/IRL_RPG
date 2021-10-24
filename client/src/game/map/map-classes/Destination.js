@@ -50,11 +50,17 @@ class Destination {
             'tiles': this.backClass.grid.array.filter((tile) => {return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);})
         };
         const startingTile = this.frontClass.getTileAtCell(this.sprite.col, this.sprite.row);
+        if ( startingTile.offScreen ) {
+            grid.tiles.unshift(startingTile);
+        }
         const destinationTile = this.frontClass.getTileAtCell(this.column, this.row);
+        if ( destinationTile.offScreen ) {
+            grid.tiles.push( destinationTile );
+        }
         const indexList = pathFinder.determineShortestPath(startingTile, destinationTile, grid, this.sprite.movementType == NPC_MOVE_TYPE_FLYING);
 
         this.path = indexList.reduce( (acc, cur, index) => {
-            const currentLocation = this.frontClass.getTileAtIndex(cur);
+            const currentLocation = this.frontClass.getTileAtCell(cur.column, cur.row);
             const step = { 
                 "x": currentLocation.x,
                 "y": currentLocation.y

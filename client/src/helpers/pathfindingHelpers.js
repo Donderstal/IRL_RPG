@@ -16,13 +16,13 @@ let queue, visitedTilesList, foundPath, movementCost;
  * Helper class to log a visited location in the pathfinding algorithm
  */
 class GridLocation {
-    constructor( row, column, index, cost, status = null ) {
+    constructor( row, column, cost, status = null ) {
         this.row = row;
         this.column = column;
         this.movementCost = cost;
         this.path = [];
         this.status = status;
-        this.index = index;
+        this.index = column + "_" + row;
     }
 }
 
@@ -40,7 +40,8 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
     tiles = grid.tiles;
     foundPath = false;
 
-    let location = new GridLocation( startingTile.row, startingTile.col, startingTile.index, startingTile.movementCost, "START" )
+    let location = new GridLocation( startingTile.row, startingTile.col, startingTile.movementCost, "START" )
+    let targetLocationIndex = targetTile.col + "_" + targetTile.row;
     movementCost = location.movementCost;
     queue.addItemToQueue( location, movementCost );
 
@@ -48,16 +49,16 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
         const currentLocation = queue.getFirstItemFromQueue( );
 
         if ( currentLocation.row != 1 ) {
-            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_NORTH, targetTile )   
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_NORTH, targetLocationIndex )   
         }
         if ( currentLocation.column != colsInGrid ) {
-            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_EAST, targetTile ) 
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_EAST, targetLocationIndex ) 
         }
         if ( currentLocation.row != rowsInGrid ) {
-            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_SOUTH, targetTile )   
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_SOUTH, targetLocationIndex )   
         }
         if  ( currentLocation.column != 1 ) {
-            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_WEST, targetTile )            
+            addTileInDirectionToQueueIfValid( currentLocation, DIRECTION_WEST, targetLocationIndex )            
         }
 
         if ( foundPath != false )
@@ -67,10 +68,10 @@ const determineShortestPath = ( startingTile, targetTile, grid ) => {
     return false;    
 }
 
-const addTileInDirectionToQueueIfValid = ( currentLocation, direction, targetTile ) => {
+const addTileInDirectionToQueueIfValid = ( currentLocation, direction, targetLocationIndex ) => {
     var newLocation = exploreInDirection( currentLocation.item, direction )
     const movementCost = currentLocation.priority + newLocation.movementCost;
-    if ( newLocation.index == targetTile.index  ) {
+    if ( newLocation.index == targetLocationIndex  ) {
         foundPath = newLocation.path;
     }
     else if ( newLocation.status == TILE_STATUS_VALID || movementCost < currentLocation.priority ) {
@@ -83,7 +84,7 @@ const addTileInDirectionToQueueIfValid = ( currentLocation, direction, targetTil
  * @param {GridLocation} location 
  */
 const getLocationStatus = ( location ) => {
-    if ( location.row < 1 || location.column < 1 || location.row > rowsInGrid || location.col > colsInGrid ) {
+    if ( location.row < 0 || location.column < 0 || location.row > rowsInGrid + 1 || location.col > colsInGrid + 1 ) {
         return TILE_STATUS_INVALID;
     } else if ( visitedTilesList.indexOf(location.index) > -1 ) {
         return TILE_STATUS_BLOCKED;
@@ -134,8 +135,8 @@ const exploreInDirection = ( currentLocation, direction  ) => {
     if ( !tileInList )
         return { index: 'x', status: TILE_STATUS_INVALID };
 
-    const newLocation = new GridLocation( row, col, tile.index, tile.movementCost );
-    newLocation.path = [...currentLocation.path.slice( ), tile.index];
+    const newLocation = new GridLocation( row, col, tile.movementCost );
+    newLocation.path = [...currentLocation.path.slice( ), { row: row, column: col }];
     newLocation.status = getLocationStatus( newLocation  );
 
     if ( newLocation.status === TILE_STATUS_VALID )

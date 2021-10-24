@@ -1,4 +1,4 @@
-const { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS } = require('../../game-data/globals')
+const { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS, OUT_LEFT, OUT_UP, OUT_RIGHT, OUT_DOWN } = require('../../game-data/globals')
 const { I_Tile } = require('./I_Tile');
 /**
  * The I_Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
@@ -93,11 +93,14 @@ class I_Grid {
      * @param {Number} y position of tile on Y axis in canvas
      */
     getTileAtXY( x, y ) {
-        if ( x > this.x + this.cols * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x < this.x || y < this.y ) {
-            return undefined;
-        }
         const column = Math.ceil( ( x - this.x ) / GRID_BLOCK_PX);
         const row = Math.ceil( ( y - this.y )  / GRID_BLOCK_PX);
+        if ( x > this.x + this.cols * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x < this.x || y < this.y ) {
+            return this.getDummyTile( 
+                x < this.x ? OUT_LEFT : x > this.x + this.cols * GRID_BLOCK_PX ? OUT_RIGHT : column,
+                y < this.y ? OUT_UP :  y > this.y + this.rows * GRID_BLOCK_PX ? OUT_DOWN : row
+            );
+        }
 
         return this.getTileAtCell( column, row )
     }
@@ -107,7 +110,10 @@ class I_Grid {
      * @param {Number} row row position of tile in canvas
      */
     getTileAtCell( column, row ) {
-        const tileIndex = ( ( row * this.cols ) - ( this.cols - column ) ) - 1
+        if ( column == OUT_LEFT || row == OUT_UP || column == OUT_RIGHT || row == OUT_DOWN ){
+            return this.getDummyTile( column, row );
+        }
+        const tileIndex = ( ( row * this.cols ) - ( this.cols - column ) ) - 1;
         return this.array[tileIndex]
     }
     /**
@@ -126,6 +132,24 @@ class I_Grid {
                 e.setSettings( { 'mirrored': tileGrid[index].mirrored, 'angle': tileGrid[index].angle } )
             }
         })
+    }
+
+    getDummyTile( column, row ) {
+        let tile;
+        if ( column == OUT_LEFT ){
+            tile = new I_Tile( OUT_LEFT, -GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, 0 )
+        }
+        else if ( row == OUT_UP ) {
+            tile = new I_Tile( OUT_UP, (col - 1) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column )
+        }
+        else if ( column == OUT_RIGHT ) {
+            tile = new I_Tile( OUT_RIGHT, this.width + GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, this.cols + 1 )
+        }
+        else if ( row == OUT_DOWN ) {
+            tile = new I_Tile( OUT_UP, (col - 1) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column )
+        }
+        tile.offScreen = true;
+        return tile;
     }
 }
 
