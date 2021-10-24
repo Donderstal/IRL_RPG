@@ -40,6 +40,7 @@ class Sprite {
         this.sheetSrc       = src
         this.sheet          = globals.PNG_DICTIONARY[src]
         this.moving         = false;
+        this.destination    = false;
         this.deleted        = false;
         this.animationScript = {};
         this.activeEffect = { active: false };
@@ -47,28 +48,6 @@ class Sprite {
         this.isPasserby = false;
 
         this.setSpriteToGrid( tile )
-    }
-
-    get destinationIsLeft( ) { 
-        return this.destinationTile.x < this.left && this.destinationTile.direction[this.spriteId] == FACING_LEFT;
-    }
-    get destinationIsRight( ) { 
-        return this.destinationTile.x + GRID_BLOCK_PX > this.right && this.destinationTile.direction[this.spriteId] == FACING_RIGHT;
-    }
-    get destinationIsUp( ) { 
-        return this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) < this.top && this.destinationTile.direction[this.spriteId] == FACING_UP;
-    }    
-    get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX > this.bottom && this.destinationTile.direction[this.spriteId] == FACING_DOWN;
-    }
-
-    get destinationIsBlocked( ) {
-        const backTile = globals.GAME.getTileOnCanvasAtCell( "BACK", this.destination.col, this.destination.row );
-        const frontTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
-        return ( 
-            backTile.isBlocked 
-            || globals.GAME.FRONT.tileHasBlockingSprite( frontTile.index )
-        )     
     }
     get isOffScreen( ) {
         return ( this.left + this.width ) < 0 || ( this.top + this.height ) < 0 
@@ -142,10 +121,9 @@ class Sprite {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
 
-        if ( this.movingToDestination && this == globals.GAME.PLAYER ) {
-            this.setDestination( this.destination, this.destination.isLoop, this.destination.isOffScreen)
+        if ( this.destination && this.destination.path ) {
             if( !this.pathIsBlocked ) {
-                this.goToDestination( );   
+                this.destination.goTo( );   
                 this.countFrame( );  
             }        
             else {
@@ -158,102 +136,6 @@ class Sprite {
         this.updateSpriteBorders( )
     }
     /**
-     * Move closer to the middle of I_Tile instance currently assigned to this.destination.
-     * Alter this.x and/or this.y depending on the relative position of the destination.
-     * If no move is possible, call the checkForNextDestination method.
-     */
-    goToDestination( ) {
-        this.wasMoving = this.moving;
-        this.moving = false;
-
-        if ( this.destinationIsLeft  ) {
-            this.moving = true;
-            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
-            if ( ( this.x - this.speed ) < this.destinationTile.x && !this.isCar ) {
-                this.setSpriteToDestinationTile( );
-            }
-            else {
-                this.x -= this.speed;               
-            }
-        }
-        else if ( this.destinationIsRight ) {
-            this.moving = true;
-            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
-            if ( ( this.x + this.speed ) > ( this.destinationTile.x + GRID_BLOCK_PX ) && !this.isCar ) {
-                this.setSpriteToDestinationTile( );
-            }
-            else {
-                this.x += this.speed;              
-            }
-        }
-        else if ( this.destinationIsUp ) {
-            this.moving = true;
-            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
-            if ( ( this.y - this.speed ) < this.destinationTile.y - ( this.height - GRID_BLOCK_PX ) && !this.isCar ) {
-                this.setSpriteToDestinationTile( );
-            }
-            else {
-                this.y -= this.speed;                  
-            }
-        }
-        else if ( this.destinationIsDown ) {
-            this.moving = true;
-            this.direction = this.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
-            if ( ( this.y + this.speed ) > ( this.destinationTile.y + GRID_BLOCK_PX ) && !this.isCar ) {
-                this.setSpriteToDestinationTile( );
-            }
-            else {
-                this.y += this.speed;                  
-            }
-        } 
-
-        if ( !this.moving ) {
-            this.checkForNextDestination( );
-        }
-    }
-    /**
-     * Set the next I_Tile in this.destinationTile as this.destinationTile if possible.
-     * If not possible but moving in a loop, reset this.destinationTile to the first tile in the list.
-     * Else, stop moving by calling stopMovement, unsetDestination and unsetScriptedAnimation methods
-     */
-    checkForNextDestination( ) {
-        if ( this.activeDestinationIndex + 1 < this.destinationTiles.length ) {
-            this.setSpriteToDestinationTile( );
-            this.activeDestinationIndex += 1; 
-            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile; 
-            this.direction = this.destinationTile.direction[this.spriteId];    
-        }
-        else if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
-            this.setSpriteToDestinationTile( );
-            this.activeDestinationIndex = 0;
-            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;   
-            this.direction = this.destinationTile.direction[this.spriteId]; 
-        }
-        else if ( !this.isCar ) {
-            this.stopMovement( );
-            this.unsetDestination( );    
-            this.unsetScriptedAnimation( );
-        }        
-    }
-    /**
-     * Set this.movingToDestination to true. 
-     * If given speed is not null, set it to this.speed.
-     * Else, set MOVEMENT_SPEED.
-     * @param {Number} speed optional. movement speed of the sprite in pixels
-     */
-    initMovement( speed = null ) {
-        this.movingToDestination = true;
-        this.speed = speed != null ? speed : MOVEMENT_SPEED;
-    }
-    /**
-     * Set this.sheetPosition to 0 to reset the sprite to a neutral pose.
-     * Set this.movingToDestination to false.
-     */
-    stopMovement( ) {
-        this.sheetPosition = 0;
-        this.movingToDestination = false;
-    }
-    /**
      * Initialize a destination properties.
      * If destination is blocked, call unsetDestination
      * Else if car, set a tile to this.destination
@@ -261,174 +143,9 @@ class Sprite {
      * @param {Object} destination Properties: row: Number, col: Number
      * @param {Boolean} isLoop boolean indicated if movement should be looped
      */
-    setDestination( destination, isLoop = false, destinationIsOffScreen = false ) {
-        this.originalDirection  = this.direction;
-        this.destinationTiles   = [];
-        this.destination = { col: destination.col, row: destination.row, isLoop: isLoop, isOffScreen: destinationIsOffScreen }
-        if (destinationIsOffScreen) {
-            this.setOffScreenDestination( destination )
-        }
-
-        this.activeDestinationIndex;
-
-        if ( destinationIsOffScreen || !this.destinationIsBlocked || this.movementType == NPC_MOVE_TYPE_FLYING || this.isCar ) {
-            this.setDestinationList( isLoop );
-        }
-        else if ( !this.isCar ) {
-            this.unsetDestination( );    
-        }
-
-        if  ( destinationIsOffScreen && this.destination ) {
-            let tile = globals.GAME.getTileOnCanvasAtCell("FRONT", destination.col, destination.row )            
-            tile.direction = { [this.spriteId]: tile.direction };
-            this.destinationTiles.push( { tile: tile  } )
-            this.destination = destination;
-            this.destination.offScreen = true;
-        }
+    setDestination( destination, deleteWhenDestinationReached = false ) {
+        this.destination = new Destination( destination.col, destination.row, this.spriteId, deleteWhenDestinationReached );
     }
-
-    setOffScreenDestination( destination ) {
-        if ( destination.col < 1 ) {
-            this.destination.col = 1
-            this.destination.row = destination.row
-        }
-        else if ( destination.row < 1 ) {
-            this.destination.col = destination.col
-            this.destination.row = 1
-        }
-        else if ( destination.col > globals.GAME.FRONT.grid.cols ) {
-            this.destination.col = 24
-            this.destination.row = destination.row
-        }
-        else if ( destination.row > globals.GAME.FRONT.grid.rows ) { 
-            this.destination.col = destination.col
-            this.destination.row = 16
-        }
-    }
-    /**
-     * First, fetch the I_Tile instances at current row/col and this.destination row/col.
-     * Then, get a list of pathIndexes representing the tiles in the most efficient path from this.getPathIndexes.
-     * If pathIndexes is false or undefined, call unsetDestination.
-     * Else, call the return value of getTileListFromIndexes to this.destinationTiles.
-     * @param {Boolean} isLoop 
-     */
-    setDestinationList( isLoop ) {
-        const startingTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.col, this.row );
-        const destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row )
-        let pathIndexes = [ ]
-        new Destination( this.destination.col, this.destination.row, this.spriteId );
-        if ( isLoop ) {
-            let goToIndexes = this.getPathIndexes( startingTile, destinationTile )
-            let loopIndexes = this.getPathIndexes( destinationTile, startingTile )
-            pathIndexes = [ ...goToIndexes, ...loopIndexes ]
-        } else {
-            pathIndexes = this.getPathIndexes( startingTile, destinationTile )
-        }
-        if ( pathIndexes != undefined && pathIndexes != false ) {
-            this.destinationTiles = this.getTileListFromIndexes( pathIndexes, startingTile )
-            this.activeDestinationIndex = 0;
-            this.destinationTile = this.destinationTiles[this.activeDestinationIndex].tile;      
-            this.initMovement(  MOVEMENT_SPEED * (Math.random() * (1 - .5) + .5 ));       
-            this.direction = this.destinationTile.direction[this.spriteId]; 
-        }
-        else if ( !this.isCar && this.isPasserby ) {
-            let map = globals.GAME.activeMap;
-            this.inTimeout = false;
-
-            if ( this.x < 0 || this.y < 0 || this.x > globals.GRID_BLOCK_PX * map.rows || (this.y + ( 2* GRID_BLOCK_PX)) > GRID_BLOCK_PX * map.cols ) {
-                globals.GAME.FRONT.deleteSprite( this.spriteId );
-            }
-            else {
-                setTimeout( ( ) => { 
-                    this.inTimeout = true;
-                    let map = globals.GAME.activeMap
-                    let spawnPoints = map.spawnPoints.filter( ( e ) => { return e.row != this.row && e.col != this.col })
-                    let destination = spawnPoints[ Math.floor( Math.random( ) * spawnPoints.length ) ]
-                    this.setDestination( destination, false, destination.row < 1 || destination.col < 1 || destination.row > map.rows || destination.col > map.cols )
-                }, 500 )                
-            }
-        }
-        else if ( !this.isCar && !this.isPasserby ) {
-            this.unsetDestination( );    
-        }
-    }
-    /**
-     * Call determineShortestPath from the pathfindingHelpersFile and return its return value
-     * @param {I_Tile} startingTile I_Tile to start the pathfinding from
-     * @param {I_Tile} destinationTile destination I_Tile
-     */
-    getPathIndexes( startingTile, destinationTile ) {
-        let BACK = globals.GAME.BACK;
-        let FRONT = globals.GAME.FRONT;
-        const grid = { 
-            'rows': BACK.grid.rows,
-            'cols': BACK.grid.cols,
-            'tiles': BACK.grid.array.filter( ( tile ) => { return !BACK.getTileAtIndex(tile.index).isBlocked && !FRONT.tileHasBlockingSprite(tile.index) })
-        };
-
-        return pathFinder.determineShortestPath( startingTile, destinationTile, grid, this.movementType == NPC_MOVE_TYPE_FLYING );  
-    }
-    /**
-     * For each index in the list, get the I_Tile instance at its index and push it to an array.
-     * Return the array of Tiles.
-     * @param {Number[]} pathIndexes 
-     * @param {I_Tile} startingTile 
-     */
-    getTileListFromIndexes( pathIndexes, startingTile ) {
-        let lastIndex = startingTile.index;
-        let tileList = []
-
-        pathIndexes.forEach( ( pathIndex ) => {
-            let tile = globals.GAME.getTileOnCanvasAtIndex( "BACK", pathIndex )
-            tile.direction[this.spriteId] = pathIndex < lastIndex 
-            ? pathIndex == lastIndex - 1 ? FACING_LEFT : FACING_UP
-            : pathIndex == lastIndex + 1 ? FACING_RIGHT : FACING_DOWN;
-            tileList.push( { 
-                tile,
-            } )
-            lastIndex = pathIndex;
-        })
-
-        return tileList;
-    }
-
-    setSpriteToDestinationTile( ) {
-        this.y = this.destinationTile.y - ( this.height - GRID_BLOCK_PX )
-        this.x = this.destinationTile.x     
-    }
-
-    /**
-     * Empty all destination props or set them to false
-     */
-    unsetDestination( snapToTile = true ) {
-        if ( this.wasMoving && !this.isCar && this.destinationTile && snapToTile ) {
-            this.setSpriteToDestinationTile( );
-        }
-        if ( this.isPasserby && snapToTile && 
-            ((this.col === this.destination.col && this.row == this.destination.row && !this.destination.isOffScreen ) 
-            || (this.isOffScreen && this.destination.isOffScreen)) ) {
-            globals.GAME.FRONT.deleteSprite( this.spriteId );
-        }
-
-        this.destination = false;
-        this.destinationTile = false;
-        this.destinationTiles = [];
-        this.activeDestinationIndex = 0;
-        if ( globals.GAME.activeCinematic != undefined && this.name == globals.GAME.activeCinematic.activeScene.spriteName )
-        {
-            globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
-        }
-    }
-
-    /**
-     * Unset destination, set movingToDestination to false and restore pre-movement direction of sprite
-     */
-    endGoToAnimation( ) {
-        this.direction = (this.destination.endDirection) ? this.destination.endDirection : this.direction;
-        this.movingToDestination = false;
-        this.destination = {}
-    }
-
     /**
      * Increment the value of this.frameCount.
      * If it is over FRAME_LIMIT, reset it to 0 and increment this.sheetPosition to show a new frame of the spriteSheet on the current row.

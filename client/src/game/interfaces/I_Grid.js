@@ -140,13 +140,13 @@ class I_Grid {
             tile = new I_Tile( OUT_LEFT, -GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, 0 )
         }
         else if ( row == OUT_UP ) {
-            tile = new I_Tile( OUT_UP, (col - 1) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column )
+            tile = new I_Tile( OUT_UP, (column - 1) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column )
         }
         else if ( column == OUT_RIGHT ) {
             tile = new I_Tile( OUT_RIGHT, this.width + GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, this.cols + 1 )
         }
         else if ( row == OUT_DOWN ) {
-            tile = new I_Tile( OUT_UP, (col - 1) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column )
+            tile = new I_Tile( OUT_UP, (column - 1) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column )
         }
         tile.offScreen = true;
         return tile;

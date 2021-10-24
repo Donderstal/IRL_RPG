@@ -289,7 +289,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         }
 
         sprite.isPasserby = true;
-        sprite.setDestination( destination, false, true )
+        sprite.setDestination( destination, true )
     }
 }
 

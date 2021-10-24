@@ -3,15 +3,21 @@ const pathFinder = require('../../../helpers/pathfindingHelpers')
 const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING, OUT_LEFT, OUT_UP, OUT_RIGHT, OUT_DOWN } = require( '../../../game-data/globals' )
 
 class Destination {
-    constructor( column, row, spriteId, isRemovable = true ) {
-        this.column = column;
-        this.row = row;
-        this.spriteId = spriteId;
-        this.isRemovable = isRemovable;
+    constructor( column, row, spriteId, deleteSprite = false ) {
+        this.column         = column;
+        this.row            = row;
+        this.spriteId       = spriteId;
+        this.deleteSprite   = deleteSprite;
 
         this.path = false;
         this.currentPathIndex;
-        this.calculatePath( );
+        if ( this.isBlocked && this.deleteSprite ) {
+            this.unsetPath( );
+            this.frontClass.deleteSprite(this.spriteId)
+        }
+        else {
+            this.calculatePath( );            
+        }
     }
 
     get backClass() { return globals.GAME.BACK; };
@@ -21,10 +27,10 @@ class Destination {
     get sprite() { return this.frontClass.spriteDictionary[this.spriteId]; };
 
     get currentStep() { return this.path[this.currentPathIndex]; };
-    get currentStepIsLeft() { return this.currentStep.x < this.sprite.left; };
-    get currentStepIsRight() { return this.currentStep.x + GRID_BLOCK_PX > this.sprite.right; };
-    get currentStepIsUp() { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) < this.sprite.top; };    
-    get currentStepIsDown() { return this.currentStep.y + GRID_BLOCK_PX > this.sprite.bottom; };
+    get currentStepIsLeft() { return this.currentStep.x < this.sprite.left && this.currentStep.direction == FACING_LEFT; };
+    get currentStepIsRight() { return this.currentStep.x + GRID_BLOCK_PX > this.sprite.right && this.currentStep.direction == FACING_RIGHT; };
+    get currentStepIsUp() { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) < this.sprite.top && this.currentStep.direction == FACING_UP; };    
+    get currentStepIsDown() { return this.currentStep.y + GRID_BLOCK_PX > this.sprite.bottom && this.currentStep.direction == FACING_DOWN; };
     
     get isBlocked( ) { return this.backTile.isBlocked || this.frontClass.tileHasBlockingSprite( this.frontTile.index ); };
     get isOffScreen( ) { return this.column === OUT_LEFT || this.row === OUT_UP || this.column === OUT_RIGHT || this.row === OUT_DOWN; };
@@ -49,7 +55,7 @@ class Destination {
             'rows': this.backClass.grid.rows, 'cols': this.backClass.grid.cols,
             'tiles': this.backClass.grid.array.filter((tile) => {return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);})
         };
-        const startingTile = this.frontClass.getTileAtCell(this.sprite.col, this.sprite.row);
+        const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX(), this.sprite.baseY());
         if ( startingTile.offScreen ) {
             grid.tiles.unshift(startingTile);
         }
@@ -58,7 +64,13 @@ class Destination {
             grid.tiles.push( destinationTile );
         }
         const indexList = pathFinder.determineShortestPath(startingTile, destinationTile, grid, this.sprite.movementType == NPC_MOVE_TYPE_FLYING);
-
+        if ( !indexList ) {
+            this.unsetPath( );
+            if ( this.deleteSprite ) {
+                this.frontClass.deleteSprite(this.spriteId);                
+            }
+            return;
+        }
         this.path = indexList.reduce( (acc, cur, index) => {
             const currentLocation = this.frontClass.getTileAtCell(cur.column, cur.row);
             const step = { 
@@ -99,6 +111,31 @@ class Destination {
         else if ( this.spriteHasReachedDestination ) { 
             this.snapSpriteToCurrentStepTile( );
             this.unsetPath( );
+            if ( this.deleteSprite ) {
+                this.frontClass.deleteSprite(this.spriteId)
+            }
+        }
+    }
+
+    goTo( ) {
+        if ( this.currentStepIsLeft  ) {
+            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
+            this.sprite.x -= this.sprite.speed;
+        }
+        else if ( this.currentStepIsRight ) {
+            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
+            this.sprite.x += this.sprite.speed;
+        }
+        else if ( this.currentStepIsUp ) {
+            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
+            this.sprite.y -= this.sprite.speed;
+        }
+        else if ( this.currentStepIsDown ) {
+            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
+            this.sprite.y += this.sprite.speed;
+        } 
+        else {
+            this.checkForNextStep( );
         }
     }
 }
