@@ -1,6 +1,6 @@
 const globals = require('../../../game-data/globals')
 const pathFinder = require('../../../helpers/pathfindingHelpers')
-const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING } = require( '../../../game-data/globals' )
+const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING, OUT_LEFT, OUT_UP, OUT_RIGHT, OUT_DOWN } = require( '../../../game-data/globals' )
 
 class Destination {
     constructor( column, row, spriteId, isRemovable = true ) {
@@ -27,7 +27,7 @@ class Destination {
     get currentStepIsDown() { return this.currentStep.y + GRID_BLOCK_PX > this.sprite.bottom; };
     
     get isBlocked( ) { return this.backTile.isBlocked || this.frontClass.tileHasBlockingSprite( this.frontTile.index ); };
-    get isOffScreen( ) { return this.column === "OUT-LEFT" || this.row === "OUT-UP" || this.column === "OUT-RIGHT" || this.row === "OUT-DOWN"; };
+    get isOffScreen( ) { return this.column === OUT_LEFT || this.row === OUT_UP || this.column === OUT_RIGHT || this.row === OUT_DOWN; };
     get spriteHasReachedDestination( ) { return this.currentPathIndex === this.path.length - 1; };
     get spriteHasReachedCurrentStep( ) { 
         let factor = this.sprite.movementSpeed / 2;

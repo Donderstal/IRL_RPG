@@ -1,4 +1,4 @@
-const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT } = require("../../../../../game-data/globals");
+const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT, OUT_RIGHT, OUT_LEFT } = require("../../../../../game-data/globals");
 const { C4Grid } = require("./C4-grid");
 
 module.exports = {
@@ -22,12 +22,12 @@ module.exports = {
             "direction": FACING_DOWN
         },
         {
-            "col": 25,
+            "col": OUT_RIGHT,
             "row": 9,
             "direction": FACING_LEFT
         },
         {
-            "col": 0,
+            "col": OUT_LEFT,
             "row": 10,
             "direction": FACING_RIGHT
         }

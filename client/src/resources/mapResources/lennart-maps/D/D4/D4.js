@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_UP, FACING_RIGHT, FACING_LEFT } = require("../../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_UP, FACING_RIGHT, FACING_LEFT, OUT_UP, OUT_RIGHT, OUT_LEFT } = require("../../../../../game-data/globals");
 const { D4Grid } = require("./D4-grid");
 
 module.exports = {
@@ -13,12 +13,12 @@ module.exports = {
     "spawnPoints": [
         {
             "col": 4,
-            "row": 0,
+            "row": OUT_UP,
             "direction": FACING_DOWN
         },
         {
             "col": 5,
-            "row": 0,
+            "row": OUT_UP,
             "direction": FACING_DOWN
         },
         {
@@ -32,12 +32,12 @@ module.exports = {
             "direction": FACING_DOWN
         },
         {
-            "col": 0,
+            "col": OUT_LEFT,
             "row": 9,
             "direction": FACING_RIGHT
         },
         {
-            "col": 25,
+            "col": OUT_RIGHT,
             "row": 10,
             "direction": FACING_LEFT
         }

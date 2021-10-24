@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN } = require("../../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, OUT_LEFT, OUT_DOWN } = require("../../../../../game-data/globals");
 const { E3Grid } = require("./E3-grid");
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     },
     "spawnPoints": [
         {
-            "col": 0,
+            "col": OUT_LEFT,
             "row": 6,
             "direction": FACING_RIGHT
         },
@@ -28,7 +28,7 @@ module.exports = {
         },
         {
             "col": 11,
-            "row": 17,
+            "row": OUT_DOWN,
             "direction": FACING_UP
         }
     ],

@@ -1,4 +1,4 @@
-const { FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_IDLE, NPC_MOVE_TYPE_FLYING } = require("../../../../game-data/globals");
+const { FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_IDLE, NPC_MOVE_TYPE_FLYING, OUT_RIGHT, OUT_LEFT, OUT_UP } = require("../../../../game-data/globals");
 const { GRID } = require("./grid");
 
 module.exports = {
@@ -16,19 +16,19 @@ module.exports = {
         { "alignment": "HORI", "topRow": 15, "bottomRow": 16, "direction": FACING_RIGHT, "hasStart": true }
       ],
     "spawnPoints" : [
-    { "col": 0, "row": 9, "direction": FACING_RIGHT },
-    { "col": 0, "row": 10, "direction": FACING_RIGHT },
-    { "col": 0, "row": 11, "direction": FACING_RIGHT },
-    { "col": 0, "row": 12, "direction": FACING_RIGHT },
+    { "col": OUT_LEFT, "row": 9, "direction": FACING_RIGHT },
+    { "col": OUT_LEFT, "row": 10, "direction": FACING_RIGHT },
+    { "col": OUT_LEFT, "row": 11, "direction": FACING_RIGHT },
+    { "col": OUT_LEFT, "row": 12, "direction": FACING_RIGHT },
     { "col": 8, "row": 8, "direction": FACING_DOWN },
     { "col": 12, "row": 8, "direction": FACING_DOWN },
-    { "col": 15, "row": 0, "direction": FACING_DOWN },
-    { "col": 16, "row": 0, "direction": FACING_DOWN },
+    { "col": 15, "row": OUT_UP, "direction": FACING_DOWN },
+    { "col": 16, "row": OUT_UP, "direction": FACING_DOWN },
     { "col": 19, "row": 7, "direction": FACING_DOWN },
-    { "col": 25, "row": 9, "direction": FACING_LEFT },
-    { "col": 25, "row": 10, "direction": FACING_LEFT },
-    { "col": 25, "row": 11, "direction": FACING_LEFT },
-    { "col": 25, "row": 12, "direction": FACING_LEFT }
+    { "col": OUT_RIGHT, "row": 9, "direction": FACING_LEFT },
+    { "col": OUT_RIGHT, "row": 10, "direction": FACING_LEFT },
+    { "col": OUT_RIGHT, "row": 11, "direction": FACING_LEFT },
+    { "col": OUT_RIGHT, "row": 12, "direction": FACING_LEFT }
     ],
     "rows": 16,
     "columns": 24,

@@ -1,4 +1,4 @@
-const { FACING_DOWN, FACING_RIGHT, FACING_LEFT, FACING_UP } = require("../../../../../game-data/globals");
+const { FACING_DOWN, FACING_RIGHT, FACING_LEFT, FACING_UP, OUT_UP, OUT_LEFT, OUT_DOWN } = require("../../../../../game-data/globals");
 const { D2grid } = require("./D2-grid");
 
 module.exports = {
@@ -13,11 +13,11 @@ module.exports = {
     "spawnPoints": [
         {
             "col": 12,
-            "row": 0,
+            "row": OUT_UP,
             "direction": FACING_DOWN
         },
         {
-            "col": 0,
+            "col": OUT_LEFT,
             "row": 9,
             "direction": FACING_RIGHT
         },
@@ -27,23 +27,23 @@ module.exports = {
             "direction": FACING_LEFT
         },
         {
-            "col": 0,
+            "col": OUT_LEFT,
             "row": 11,
             "direction": FACING_RIGHT
         },
         {
             "col": 9,
-            "row": 17,
+            "row": OUT_DOWN,
             "direction": FACING_UP
         },
         {
             "col": 17,
-            "row": 17,
+            "row": OUT_DOWN,
             "direction": FACING_UP
         },
         {
             "col": 18,
-            "row": 17,
+            "row": OUT_DOWN,
             "direction": FACING_UP
         }
     ],

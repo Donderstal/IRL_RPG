@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_LEFT, FACING_RIGHT, FACING_UP } = require("../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_LEFT, FACING_RIGHT, FACING_UP, OUT_LEFT, OUT_RIGHT } = require("../../../../game-data/globals");
 const { GRID } = require("./grid");
 
 module.exports = {
@@ -17,16 +17,16 @@ module.exports = {
     "columns": 24,
     "grid": GRID,
     "spawnPoints" : [
-        { "col": 0, "row": 9, "direction": FACING_RIGHT },
-        { "col": 0, "row": 10, "direction": FACING_RIGHT },
-        { "col": 0, "row": 11, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 9, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 10, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 11, "direction": FACING_RIGHT },
         { "col": 2, "row": 6, "direction": FACING_DOWN },
         { "col": 10, "row": 8, "direction": FACING_DOWN },
         { "col": 20, "row": 8, "direction": FACING_DOWN },
         { "col": 21, "row": 8, "direction": FACING_DOWN },
-        { "col": 25, "row": 9, "direction": FACING_LEFT },
-        { "col": 25, "row": 10, "direction": FACING_LEFT },
-        { "col": 25, "row": 11, "direction": FACING_LEFT }
+        { "col": OUT_RIGHT, "row": 9, "direction": FACING_LEFT },
+        { "col": OUT_RIGHT, "row": 10, "direction": FACING_LEFT },
+        { "col": OUT_RIGHT, "row": 11, "direction": FACING_LEFT }
     ],
     "actions": [],
     "doors": [],

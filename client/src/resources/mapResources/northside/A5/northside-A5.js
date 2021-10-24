@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE, FACING_LEFT, FACING_RIGHT, FACING_DOWN, NPC_MOVE_TYPE_FLYING } = require("../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, FACING_LEFT, FACING_RIGHT, FACING_DOWN, NPC_MOVE_TYPE_FLYING, OUT_LEFT, OUT_RIGHT } = require("../../../../game-data/globals");
 const { GRID } = require("./grid");
 
 module.exports = {
@@ -17,22 +17,22 @@ module.exports = {
     "columns": 24,
     "grid": GRID,
     "spawnPoints" : [
-        { "col": 0, "row": 4, "direction": FACING_RIGHT },
-        { "col": 0, "row": 5, "direction": FACING_RIGHT },
-        { "col": 0, "row": 6, "direction": FACING_RIGHT },
-        { "col": 0, "row": 7, "direction": FACING_RIGHT },
-        { "col": 0, "row": 8, "direction": FACING_RIGHT },
-        { "col": 0, "row": 9, "direction": FACING_RIGHT },
-        { "col": 0, "row": 10, "direction": FACING_RIGHT },
-        { "col": 0, "row": 11, "direction": FACING_RIGHT },
-        { "col": 0, "row": 12, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 4, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 5, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 6, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 7, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 8, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 9, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 10, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 11, "direction": FACING_RIGHT },
+        { "col": OUT_LEFT, "row": 12, "direction": FACING_RIGHT },
         { "col": 16, "row": 3, "direction": FACING_DOWN },
         { "col": 23, "row": 3, "direction": FACING_DOWN },
         { "col": 24, "row": 3, "direction": FACING_DOWN },
-        { "col": 25, "row": 9, "direction": FACING_LEFT },
-        { "col": 25, "row": 10, "direction": FACING_LEFT },
-        { "col": 25, "row": 11, "direction": FACING_LEFT },
-        { "col": 25, "row": 12, "direction": FACING_LEFT }
+        { "col": OUT_RIGHT, "row": 9, "direction": FACING_LEFT },
+        { "col": OUT_RIGHT, "row": 10, "direction": FACING_LEFT },
+        { "col": OUT_RIGHT, "row": 11, "direction": FACING_LEFT },
+        { "col": OUT_RIGHT, "row": 12, "direction": FACING_LEFT }
       ],
     "mapObjects": [
         {

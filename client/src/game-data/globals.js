@@ -207,7 +207,16 @@ const SPRITE_PNGS = ( ) => {
     return returner;
 };
 
+const OUT_LEFT = "O-L";
+const OUT_UP   = "O-T";
+const OUT_RIGHT= "O-T";
+const OUT_DOWN = "O-D";
+
 module.exports = {
+    OUT_LEFT,
+    OUT_UP,
+    OUT_RIGHT,
+    OUT_DOWN,
     MOVEMENT_SPEED,
 
     FACING_DOWN,
