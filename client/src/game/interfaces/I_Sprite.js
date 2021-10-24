@@ -94,10 +94,14 @@ class Sprite {
      * Set the left, right, top, bottom properties based on current x, y, width and height props.
      */
     updateSpriteBorders( ) {
-        this.left   = this.x,
-        this.right  = this.x + this.width,
-        this.top    = this.y,
+        this.left   = this.x
+        this.right  = this.x + this.width
+        this.top    = this.y
         this.bottom = this.y + this.height
+
+        let cell = globals.GAME.getTileOnCanvasAtXY("FRONT", this.centerX(), this.baseY())
+        this.row = cell.row;
+        this.col = cell.col;
     }
     /**
      * Draw the sprite to the front canvas at its current x and y with current width and height.
@@ -144,6 +148,7 @@ class Sprite {
      * @param {Boolean} isLoop boolean indicated if movement should be looped
      */
     setDestination( destination, deleteWhenDestinationReached = false ) {
+        this.updateSpriteBorders( );
         this.destination = new Destination( destination.col, destination.row, this.spriteId, deleteWhenDestinationReached );
     }
     /**

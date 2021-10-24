@@ -13,6 +13,10 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### OCT 21, 2021
+* Improved pathfinding algorithm
+* Dummy tiles for out-of-grid destinations
+
+#### OCT 21, 2021
 * Adding in prototypes of Lennart's new maps
 * Solved bugs with angled tiles, non-moving car positioning
 

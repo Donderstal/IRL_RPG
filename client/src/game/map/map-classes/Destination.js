@@ -105,8 +105,7 @@ class Destination {
     checkForNextStep( ) {
         if ( this.currentPathIndex + 1 < this.path.length ) {
             this.snapSpriteToCurrentStepTile( );
-            this.currentPathIndex += 1; 
-            this.sprite.direction = this.currentStep;    
+            this.currentPathIndex += 1;  
         }        
         else if ( this.spriteHasReachedDestination ) { 
             this.snapSpriteToCurrentStepTile( );
@@ -119,19 +118,19 @@ class Destination {
 
     goTo( ) {
         if ( this.currentStepIsLeft  ) {
-            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_LEFT_FLYING : FACING_LEFT;
+            this.sprite.direction = FACING_LEFT;
             this.sprite.x -= this.sprite.speed;
         }
         else if ( this.currentStepIsRight ) {
-            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_RIGHT_FLYING : FACING_RIGHT;
+            this.sprite.direction = FACING_RIGHT;
             this.sprite.x += this.sprite.speed;
         }
         else if ( this.currentStepIsUp ) {
-            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_UP_FLYING : FACING_UP;
+            this.sprite.direction = FACING_UP;
             this.sprite.y -= this.sprite.speed;
         }
         else if ( this.currentStepIsDown ) {
-            this.sprite.direction = this.sprite.movementType == NPC_MOVE_TYPE_FLYING ? FACING_DOWN_FLYING : FACING_DOWN;
+            this.sprite.direction = FACING_DOWN;
             this.sprite.y += this.sprite.speed;
         } 
         else {
