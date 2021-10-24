@@ -95,7 +95,7 @@ class RoadNetwork {
     }
 
     handleCarCounter( ) {
-        //this.roads.forEach( ( e ) => { e.handleCarCounter( ); })
+        this.roads.forEach( ( e ) => { e.handleCarCounter( ); })
     }
 
     roadsIntersect( horizontalRoad, verticalRoad ) {

@@ -11,9 +11,8 @@ class Destination {
 
         this.path = false;
         this.currentPathIndex;
-        if ( this.isBlocked && this.deleteSprite ) {
-            this.unsetPath( );
-            this.frontClass.deleteSprite(this.spriteId)
+        if ( this.sprite.isCar ) {
+            this.setCarPath( );
         }
         else {
             this.calculatePath( );            
@@ -48,6 +47,19 @@ class Destination {
     snapSpriteToCurrentStepTile( ) {
         this.sprite.y = this.currentStep.y - (this.sprite.height - GRID_BLOCK_PX);
         this.sprite.x = this.currentStep.x     
+    }
+
+    setCarPath( ) {
+        this.currentPathIndex = 0;
+        const currentLocation = this.frontClass.getTileAtCell(this.column, this.row);
+        const step = { 
+            "x":this.sprite.direction == FACING_LEFT ? currentLocation.x - this.sprite.width: 
+                this.sprite.direction == FACING_RIGHT ? currentLocation.x + this.sprite.width : currentLocation.x,
+            "y":this.sprite.direction == FACING_UP ? currentLocation.y - this.sprite.width: 
+                this.sprite.direction == FACING_DOWN ? currentLocation.y + this.sprite.width : currentLocation.y,
+            "direction": this.sprite.direction
+        };
+        this.path = [ step ];
     }
 
     calculatePath( ) {

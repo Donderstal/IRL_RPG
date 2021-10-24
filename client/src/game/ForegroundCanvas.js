@@ -113,6 +113,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites.push( newObject )
         this.spriteDictionary[newId] = newObject
         tile.spriteId = newId;
+        if ( isCar ) {
+            newObject.setDestination( objectData.destination, true );
+        }
     }
     setVehicleToTile( carData ) {
         const tile = super.getTileAtCell( carData.col, carData.row );
