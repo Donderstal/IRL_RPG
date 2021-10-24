@@ -9,7 +9,6 @@ class Car extends MapObject {
         super( tile, spriteData, spriteId );
         this.name = spriteData.name
         this.isCar = true;
-        this.initMovingSprite( spriteData )
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "car-engine.wav", true );
         this.movementSoundEffect.mute( );
         this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
@@ -34,18 +33,6 @@ class Car extends MapObject {
     get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
     get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
     get secondNextTileFront( ) { return this.hitboxGroups[0].secondNextTileFront };
-    get destinationIsLeft( ) { 
-        return this.destinationTile.x - this.width < this.left;
-    }
-    get destinationIsRight( ) { 
-        return this.destinationTile.x + GRID_BLOCK_PX + this.width > this.right;
-    }
-    get destinationIsUp( ) { 
-        return this.destinationTile.y - this.height < this.top;
-    }    
-    get destinationIsDown( ) { 
-        return this.destinationTile.y + GRID_BLOCK_PX + this.height > this.bottom;
-    }
     get isOffScreen( ) {
         if ( this.direction == FACING_LEFT ) {
             return ( this.left + this.width ) < 0;
@@ -90,8 +77,13 @@ class Car extends MapObject {
             this.carHornSoundEffect.setVolumeAndPan( this )
             this.movementSoundEffect.setVolumeAndPan( this )                 
         }
-        if ( !this.blocked && !this.waitingAtIntersection && this.movingToDestination ) {
-            this.goToDestination( );     
+        if ( this.destination && this.destination.path ) {
+            if( !this.pathIsBlocked ) {
+                this.destination.goTo( );   
+            }        
+            else {
+                this.sheetPosition = 0;
+            }    
         }
         else if (this.movementSoundEffect != undefined &&( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded )) { 
             this.movementSoundEffect.reset( );
@@ -131,22 +123,6 @@ class Car extends MapObject {
             case FACING_RIGHT: 
                 this.x += GRID_BLOCK_PX;
                 break;
-        }
-    }
-
-    initMovement( speed = null ) {
-        this.movingToDestination = true;
-        this.movementSpeed = MOVEMENT_SPEED * ( Math.random( ) + 1 );
-    }
-
-    setDestinationList( ) {
-        this.destinationTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.destination.col, this.destination.row );
-    }
-
-    initMovingSprite( spriteData ) {
-        if ( spriteData.destination ) {
-            this.setDestination( spriteData.destination );      
-            this.initMovement( );    
         }
     }
 
@@ -215,7 +191,6 @@ class Car extends MapObject {
         road.activeCarIds.push(this.spriteId);
         this.crossedIntersectionIds.push( id );
         this.direction = newDirection;
-        this.destination = road.endCell;
         this.setObjectDimensionsBasedOnDirection( newDirection );
         switch( newDirection ) {
             case FACING_LEFT:
@@ -237,43 +212,7 @@ class Car extends MapObject {
         }
         this.carPathIndex++;
         this.initHitboxGroups( );
-        this.setDestinationList( );
-    }
-
-    goToDestination( ) {
-        this.moving = false
-        if ( this.destinationIsLeft && this.direction == FACING_LEFT ) {
-            this.x -= this.movementSpeed
-            this.moving = true;
-            this.direction = FACING_LEFT
-        }
-        else if ( this.destinationIsUp && this.direction == FACING_UP ) {
-            this.y -= this.movementSpeed
-            this.moving = true;
-            this.direction = FACING_UP
-        }
-        else if ( this.destinationIsRight  && this.direction == FACING_RIGHT  ) {
-            this.x += this.movementSpeed
-            this.moving = true;
-            this.direction = FACING_RIGHT;
-        }
-        else if ( this.destinationIsDown && this.direction == FACING_DOWN  ) {
-            this.y += this.movementSpeed
-            this.moving = true;
-            this.direction = FACING_DOWN
-        }
-        
-        if ( !this.moving ) {
-            if ( globals.GAME.activeCinematic != undefined && this.name == globals.GAME.activeCinematic.activeScene.spriteName )
-            {
-                globals.GAME.activeCinematic.activeScene.walkingToDestination = false;
-            }
-
-            if ( this.isOffScreen ) {
-                this.deleted = true;
-                globals.GAME.FRONT.deleteSprite( this.spriteId );
-            }
-        }
+        this.setDestination( road.endCell, true );
     }
 
     isOnSquare( square ) {
