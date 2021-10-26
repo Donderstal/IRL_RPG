@@ -5,7 +5,6 @@ const globals               = require('../../game-data/globals')
 const { 
     ON_NPC_INTERACTION, ON_BATTLE_START, ON_LEAVE
 }  = require('../../game-data/conditionGlobals')
-const { Sprite } = require('../interfaces/I_Sprite')
 const { Scene }     = require('./Scene')
 /**
  * The Cinematic and Scene classes are no longer implemented and need to be reworked to the new Grid system
@@ -38,14 +37,14 @@ class Cinematic {
                 break;
             case ANIM: 
                 const sprite = this.activeScene.getSpriteByName( );
-                goToNextScene = !sprite.inScriptedAnimation
+                goToNextScene = !sprite.State.inAnimation
                 break;
             case CREATE_CAR:
             case CREATE_SPRITE:
-                goToNextScene = this.activeScene.getSpriteByName( ) instanceof Sprite
+                goToNextScene = this.activeScene.getSpriteByName( ) != undefined;
                 break;
             case DELETE_SPRITE:
-                goToNextScene = !(this.activeScene.getSpriteByName( ) instanceof Sprite)
+                goToNextScene = this.activeScene.getSpriteByName( ) == undefined;
                 break;
             case FADE_OUT:
             case FADE_IN :

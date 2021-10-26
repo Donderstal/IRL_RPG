@@ -60,29 +60,12 @@ class NPC extends MapSprite {
 
         this.blockedCounter = new Counter( 2000 * Math.random( ), false )
     }
-    /**
-     * Call super.drawSprite.
-     * If not in movement or scriptedAnimation, call setRandomMovementOrAnimation
-     * Else if moving and not blocked, call goToDestination
-     * Else if inScriptedAnimation, call doScriptedAnimation
-     * If still movingToDestination, call countFrame and handleBlockedTimeCounter
-     */
+
     drawSprite( ) {
         super.drawSprite( );
 
-        if ( !this.movingToDestination && !this.inScriptedAnimation ) {
-            this.setRandomMovementOrAnimation( )
-        }
-        else if ( this.movingToDestination && !this.pathIsBlocked ) {
-            this.goToDestination( );     
-            this.countFrame( );
-        }
-        else if ( this.inScriptedAnimation ) {
-            this.doScriptedAnimation( );
-        }
-
-        if ( this.movingToDestination ) {
-            this.handleBlockedTimeCounter( );
+        if ( this.State.is(globals.STATE_IDLE) ) {
+            this.setRandomMovementOrAnimation( );
         }
     }
     /**

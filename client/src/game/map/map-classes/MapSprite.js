@@ -2,7 +2,6 @@ const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Sprite } = require('../../interfaces/I_Sprite')
 const { I_Hitbox } = require('../../interfaces/I_Hitbox')
-const { checkForCollision } = require('../map-ui/movementChecker')
 /**
  * The MapSprite is the base class for all standard size sprites in the game.
  * It contains functionalities to play a scriptedanimation and log the current position of the sprite in the map grid.
@@ -74,23 +73,14 @@ class MapSprite extends Sprite {
         if ( this.hitbox != undefined ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );             
         }
-        if ( !globals.GAME.inCinematic && ( this.movingToDestination || this == globals.GAME.PLAYER ) ) {  
-            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );  
-        }
-        if ( globals.GAME.cinematicMode && ( this.inScriptedAnimation || this.movingToDestination ) ) {
-            this.handleAnimation( )
-        }
         this.handleSoundEffects( );
     }
 
     handleSoundEffects( ) {
-        if ( (this.movingToDestination || this.playerWalking ) && !this.pathIsBlocked && this.movementSoundEffect != undefined ) {
+        if ( this.State.is(globals.STATE_MOVING) && this.movementSoundEffect != undefined ) {
             this.movementSoundEffect.setVolumeAndPan( this )
         }
-        else if (( this.movementSoundEffect.isPaused || this.movementSoundEffect.hasEnded ) || ( !this.movingToDestination || this.pathIsBlocked ) ) { 
-            this.movementSoundEffect.reset( );
-        }
-        else if ( this === globals.GAME.PLAYER && !this.playerWalking ) {
+        else {
             this.movementSoundEffect.reset( );
         }        
     }

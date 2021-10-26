@@ -1,4 +1,4 @@
-const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING, FACING_DOWN, FACING_DOWN_FLYING, FACING_RIGHT, FACING_UP, OUT_UP } = require("../../../../game-data/globals");
+const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING, FACING_DOWN, FACING_RIGHT, FACING_UP, OUT_DOWN } = require("../../../../game-data/globals");
 const { GRID } = require("./grid");
 
 module.exports = {
@@ -16,8 +16,8 @@ module.exports = {
         { "col": 10, "row": 7, "direction": FACING_DOWN },
         { "col": 11, "row": 7, "direction": FACING_DOWN },
         { "col": 15, "row": 6, "direction": FACING_DOWN },
-        { "col": 15, "row": OUT_UP, "direction": FACING_UP },
-        { "col": 16, "row": OUT_UP, "direction": FACING_UP }
+        { "col": 15, "row": OUT_DOWN, "direction": FACING_UP },
+        { "col": 16, "row": OUT_DOWN, "direction": FACING_UP }
     ],
     "mapObjects": [
         {

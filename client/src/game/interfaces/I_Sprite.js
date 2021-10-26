@@ -229,18 +229,11 @@ class Sprite {
             this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
         }
     }
-    /**
-     * Initialize animation by setting this.inScriptedAnimation to true and storing this.direction.
-     * Assign values to the properties of the this.animationScript object, which will be used to run the animation.
-     * @param {Object} scene contains the animation name and a loop boolean
-     * @param {Number} frameRate frameRate to use during animation
-     * @param {Number|Boolean} numberOfLoops optional parameter indicating if a loop is permanent
-     */
+
     setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
-        if ( this.inScriptedAnimation ) {
+        if ( this.State.inAnimation ) {
             this.unsetScriptedAnimation( );
-        }
-        this.inScriptedAnimation    = true;     
+        } 
         this.originalDirection      = this.direction;
 
         this.animationScript.loop           = scene.loop;
@@ -258,7 +251,7 @@ class Sprite {
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;
         this.animationScript.currentLoop    = 0;
-        this.State.inAnimation = true;
+        this.State.animationOn( );
     }
     /**
      * Increment this.frameCount.
@@ -272,12 +265,10 @@ class Sprite {
             this.frameCount = 0;
             this.updateAnimationIndex( );
 
-            if ( this.inScriptedAnimation ) {
-                let currentScene = this.animationScript.frames[this.animationScript.index];
+            let currentScene = this.animationScript.frames[this.animationScript.index];
 
-                this.sheetPosition  = currentScene.column;
-                this.direction      = currentScene.row;    
-            }
+            this.sheetPosition  = currentScene.column;
+            this.direction      = currentScene.row;   
         }
     }
     /**
@@ -311,7 +302,7 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.unsetGraphicalEffect( );
         }
-        this.inScriptedAnimation    = false;  
+        this.State.animationOff( );  
         this.animationScript        = { };
         this.direction              = this.originalDirection;
         this.sheetPosition          = 0;

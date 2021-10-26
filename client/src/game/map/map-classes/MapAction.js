@@ -88,7 +88,7 @@ class MapAction extends I_Hitbox {
         let sprite = globals.GAME.FRONT.spriteDictionary[this.spriteId]
         let destination = Object.assign( { }, sprite.destination )
         console.log(globals.GAME.FRONT.spriteDictionary[this.spriteId])
-        if ( sprite.movingToDestination ) {
+        if ( sprite.State.is(globals.STATE_MOVING) ) {
             sprite.wasMovingBeforeCinematic = true;
             sprite.stopMovement( );
             sprite.unsetDestination( false );
