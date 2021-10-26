@@ -12,7 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### OCT 21, 2021
+#### OCT 26, 2021
+* Movement State class for more consistent state management
+
+#### OCT 24, 2021
 * Improved pathfinding algorithm
 * Dummy tiles for out-of-grid destinations
 * Destination instance for all sprites
