@@ -3,9 +3,8 @@ const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, FA
 const { Sprite } = require('../../interfaces/I_Sprite')
 const { I_Hitbox } = require('../../interfaces/I_Hitbox')
 /**
- * The MapSprite is the base class for all standard size sprites in the game.
- * It contains functionalities to play a scriptedanimation and log the current position of the sprite in the map grid.
- * It also contains a I_Hitbox instance which is used for collision detection.
+ * The MapSprite represents a 1-tile wide sprite on the Front grid
+ * Logs its position on the grid and has a sound effect for movement
  */
 class MapSprite extends Sprite {
     constructor ( tile, direction, spriteSize, src ) {       
@@ -63,11 +62,7 @@ class MapSprite extends Sprite {
     get isInCenterFacingDown( ) {
         return this.baseY( ) > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); 
     }
-    /**
-     * Call super.drawSprite( ). Then call this.updateTileIndexes( ).
-     * If the game is not in a cinematic, update the xY of the I_Hitbox instance in this.hitbox and check for collision
-     * Else, call this.handleAnimation.
-     */
+
     drawSprite( ) {
         super.drawSprite( )
         if ( this.hitbox != undefined ) {
