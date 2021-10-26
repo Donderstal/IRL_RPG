@@ -1,4 +1,4 @@
-const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING } = require('../../game-data/globals')
+const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls');
 const { Counter } = require('../../helpers/Counter');
@@ -122,7 +122,7 @@ const drawSpritesInOrder = ( GAME ) => {
         else if ( sprite.notGrounded ) {
             foregroundSprites.push( sprite );
         }
-        else if ( sprite.movementType == NPC_MOVE_TYPE_FLYING && sprite.moving ) {
+        else if ( sprite.movementType == NPC_MOVE_TYPE_FLYING && sprite.State.is( STATE_MOVING ) ) {
             flyingSprites.push( sprite );
         }
         else {

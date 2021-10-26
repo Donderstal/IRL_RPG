@@ -33,20 +33,6 @@ class Car extends MapObject {
     get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
     get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
     get secondNextTileFront( ) { return this.hitboxGroups[0].secondNextTileFront };
-    get isOffScreen( ) {
-        if ( this.direction == FACING_LEFT ) {
-            return ( this.left + this.width ) < 0;
-        }
-        else if ( this.direction == FACING_UP ) {
-            return ( this.top + this.height ) < 0;
-        }
-        else if ( this.direction == FACING_RIGHT ) {
-            return this.right - this.width > globals.GAME.FRONT.grid.width;
-        }
-        else if ( this.direction == FACING_DOWN ) {
-            return this.bottom - this.height > globals.GAME.FRONT.grid.height;
-        }
-    }
     get isBus( ) {
         return this.sheetSrc.includes('bus');
     }

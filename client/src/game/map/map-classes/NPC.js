@@ -90,6 +90,7 @@ class NPC extends MapSprite {
                 default : 
                     console.log("Animation of type " + this.animationType + " is not recognized")
             }
+            this.doAnimationCounter.resetCounter( );
         }
     }
     /**

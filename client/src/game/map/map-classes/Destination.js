@@ -32,17 +32,7 @@ class Destination {
     get currentStepIsDown() { return this.currentStep.y + GRID_BLOCK_PX > this.sprite.bottom && this.currentStep.direction == FACING_DOWN; };
     
     get isBlocked( ) { return this.backTile.isBlocked || this.frontClass.tileHasBlockingSprite( this.frontTile.index ); };
-    get isOffScreen( ) { return this.column === OUT_LEFT || this.row === OUT_UP || this.column === OUT_RIGHT || this.row === OUT_DOWN; };
     get spriteHasReachedDestination( ) { return this.currentPathIndex === this.path.length - 1; };
-    get spriteHasReachedCurrentStep( ) { 
-        let factor = this.sprite.movementSpeed / 2;
-        if ( this.currentStep.direction === FACING_LEFT || this.currentStep.direction == FACING_RIGHT ) {
-            return this.currentStep.x + factor > this.sprite.x && this.currentStep.x - factor < this.sprite.x;
-        }
-        else if ( this.currentStep.direction === FACING_UP || this.currentStep.direction == FACING_DOWN ) {
-            return this.currentStep.y + factor > this.sprite.bottom - GRID_BLOCK_PX && this.currentStep.y - factor < this.sprite.bottom - GRID_BLOCK_PX;
-        }
-    };
 
     snapSpriteToCurrentStepTile( ) {
         this.sprite.y = this.currentStep.y - (this.sprite.height - GRID_BLOCK_PX);
@@ -116,7 +106,6 @@ class Destination {
 
     checkForNextStep( ) {
         if ( this.currentPathIndex + 1 < this.path.length ) {
-            this.snapSpriteToCurrentStepTile( );
             this.currentPathIndex += 1;  
         }        
         else if ( this.spriteHasReachedDestination ) { 

@@ -291,7 +291,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             sprite.y += globals.GRID_BLOCK_PX
         }
 
-        sprite.isPasserby = true;
         sprite.setDestination( destination, true )
     }
 }

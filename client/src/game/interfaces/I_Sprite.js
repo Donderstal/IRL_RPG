@@ -35,22 +35,15 @@ class Sprite {
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction      = direction != null ? direction : 0 //tile.direction != null ? tile.direction : direction != null ? direction : 0;
+        this.direction      = direction != null ? direction : 0
         this.sheetSrc       = src
         this.sheet          = globals.PNG_DICTIONARY[src]
-        this.moving         = false;
         this.destination    = false;
-        this.deleted        = false;
         this.animationScript = {};
         this.activeEffect = { active: false };
         this.speed      = MOVEMENT_SPEED
-        this.isPasserby = false;
 
         this.setSpriteToGrid( tile )
-    }
-    get isOffScreen( ) {
-        return ( this.left + this.width ) < 0 || ( this.top + this.height ) < 0 
-        || this.right - this.width > globals.GAME.FRONT.grid.width || this.bottom - this.height > globals.GAME.FRONT.grid.height;
     }
      /**
      * Set the Sprites' location on the grid and xy axis depending on given I_Tile
@@ -261,23 +254,25 @@ class Sprite {
     doScriptedAnimation( ) {
         this.frameCount++;  
     
-        if ( this.frameCount >= this.animationScript.frameRate ) {
+        if ( this.animationScript.frames != undefined &&this.frameCount >= this.animationScript.frameRate ) {
             this.frameCount = 0;
             this.updateAnimationIndex( );
-
-            let currentScene = this.animationScript.frames[this.animationScript.index];
-
-            this.sheetPosition  = currentScene.column;
-            this.direction      = currentScene.row;   
         }
     }
     /**
      * Check for loop or increment this.animationScriptIndex, depending on what frame from this.animationScript.frames we are in.
      */
     updateAnimationIndex( ) {
-        ( this.animationScript.index + 1 == this.animationScript.numberOfFrames )
-            ? this.checkForLoop()
-            : this.animationScript.index++                       
+        if ( this.animationScript.index + 1 == this.animationScript.numberOfFrames ) {
+            this.checkForLoop()
+        }
+        else {
+            let currentScene = this.animationScript.frames[this.animationScript.index];
+
+            this.sheetPosition  = currentScene.column;
+            this.direction      = currentScene.row;   
+            this.animationScript.index++ 
+        }               
     }
     /**
      * If the current animation should be looped, reset the animationScript.index to 0.
