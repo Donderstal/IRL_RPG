@@ -8,6 +8,7 @@ const {
     GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 
     STATE_IDLE, STATE_MOVING, STATE_WAITING, STATE_BLOCKED
 } = require( '../../game-data/globals' )
+const { checkForCollision } = require('../map/map-ui/movementChecker')
 const { SPEAK_YES_NO, SPEAK, MOVE, ANIM } = require('../../game-data/conditionGlobals')
 const { Destination } = require('../map/map-classes/Destination')
 const { SpriteState } = require('../../helpers/SpriteState')
@@ -110,10 +111,6 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
-        if ( this.sheet == undefined ) {
-            console.log(this.sheetSrc)
-            console.log(globals.PNG_DICTIONARY)
-        }
         canvasHelpers.drawFromImageToCanvas(
             "FRONT", this.sheet,
             this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 
@@ -123,10 +120,10 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
+        this.checkForBlockedPath( );
         this.checkForMoveToDestination( );
-        if ( this.inScriptedAnimation && this == globals.GAME.PLAYER ) {
-            this.doScriptedAnimation( );
-        }
+        this.checkForAnimation( );
+
         this.updateSpriteBorders( )
     }
 
@@ -141,12 +138,28 @@ class Sprite {
             this.State.set(STATE_BLOCKED);
             this.sheetPosition = 0;
         }
+        else if ( this.State.is(STATE_BLOCKED) ) {
+            this.State.set(STATE_MOVING);
+        }
+    }
+
+    checkForAnimation( ) {
+        if ( this.State.inAnimation ) {
+            this.doScriptedAnimation( );
+        }
     }
 
     checkForMoveToDestination( ) {
         if ( this.State.is(STATE_MOVING) ) {
             this.destination.goTo( );   
             this.countFrame( ); 
+        }
+    }
+
+    checkForBlockedPath( ) {
+        this.pathIsBlocked = false;
+        if ( this.State.is(STATE_MOVING) ) {
+            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );
         }
     }
     /**
@@ -176,22 +189,6 @@ class Sprite {
             if (this.sheetPosition >= this.sheetFrameLimit) {
                 this.sheetPosition = 0;
             }
-        }
-    }
-    /**
-     * If this.inScriptedAnimation, call this.doScriptedAnimation.
-     * If this.movingToDestination, call this.goToDestination.
-     */
-    handleAnimation(  ) {
-        if ( this.inScriptedAnimation ) {
-            this.doScriptedAnimation( );
-        }
-        else if ( this.movingToDestination ) {
-            this.goToDestination( );
-            this.countFrame( );
-            let tile = globals.GAME.getTileOnCanvasAtXY( "BACK", this.x, this.y );
-            this.row = tile.row;
-            this.col = tile.col;
         }
     }
     /**
@@ -261,6 +258,7 @@ class Sprite {
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;
         this.animationScript.currentLoop    = 0;
+        this.State.inAnimation = true;
     }
     /**
      * Increment this.frameCount.
