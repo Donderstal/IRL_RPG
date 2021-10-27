@@ -9,6 +9,18 @@ class ActionSelector {
         this.conditionalActions = [];
 
         this.initializeConditionList( x, y, actionList, spriteId );
+        this.outerTop       = ( ) => { return this.action.outerTop() }
+        this.outerLeft      = ( ) => { return this.action.outerLeft() }
+        this.outerRight     = ( ) => { return this.action.outerRight() }
+        this.outerBottom    = ( ) => { return this.action.outerBottom() }       
+        this.top            = ( ) => { return this.action.top() }
+        this.left           = ( ) => { return this.action.left() }
+        this.right          = ( ) => { return this.action.right() }
+        this.bottom         = ( ) => { return this.action.bottom() }
+        this.innerTop       = ( ) => { return this.action.innerTop() }
+        this.innerLeft      = ( ) => { return this.action.innerLeft() }
+        this.innerRight     = ( ) => { return this.action.innerRight() }
+        this.innerBottom    = ( ) => { return this.action.innerBottom() }
     }
 
     get action( ) { return this.activeAction; };
