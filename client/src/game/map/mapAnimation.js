@@ -27,8 +27,6 @@ const handleMapAnimations = ( GAME ) => {
     if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
         mapControls.handleMovementKeys( );  
     }
-    GAME.PLAYER.pathIsBlocked = false;
-
     if ( GAME.bubbleIsActive ) {
         GAME.activeBubble.drawTextBox( )
     }

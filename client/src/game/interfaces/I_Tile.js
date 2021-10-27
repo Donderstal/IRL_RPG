@@ -42,7 +42,7 @@ class I_Tile {
      * Return true if the tile is blocked or has a sprite on it
      */
     get isBlocked( ) { 
-        return this.blocked;
+        return this.index != globals.OUT_LEFT && this.index != globals.OUT_TOP && this.index != globals.OUT_RIGHT && this.index != globals.OUT_DOWN && this.blocked;
     }
     setMovementCost( value ) {
         this.movementCost = value;

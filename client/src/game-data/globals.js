@@ -213,7 +213,7 @@ const SPRITE_PNGS = ( ) => {
 
 const OUT_LEFT = "O-L";
 const OUT_UP   = "O-T";
-const OUT_RIGHT= "O-T";
+const OUT_RIGHT= "O-R";
 const OUT_DOWN = "O-D";
 
 module.exports = {

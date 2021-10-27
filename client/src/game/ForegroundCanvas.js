@@ -182,6 +182,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
 
     tileHasBlockingSprite( tileIndex ) {
+        if ( tileIndex == globals.OUT_LEFT || tileIndex == globals.OUT_LEFT || tileIndex == globals.OUT_RIGHT || tileIndex == globals.OUT_DOWN ) {
+            return false;
+        }
         const tile = this.getTileAtIndex( tileIndex );
         let colliding = false;
         if ( tile == undefined ) {
