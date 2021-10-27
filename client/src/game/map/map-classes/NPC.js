@@ -1,6 +1,7 @@
 const { 
     NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING,
-    NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_MOVE_TYPE_WALKING
+    NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_MOVE_TYPE_WALKING,
+    STATE_BLOCKED
 }  = require('../../../game-data/globals');
 const { MapSprite } = require('./MapSprite')
 const { ActionSelector } = require('./ActionSelector')
@@ -59,6 +60,7 @@ class NPC extends MapSprite {
 
     drawSprite( ) {
         super.drawSprite( );
+        this.handleBlockedTimeCounter( );
 
         if ( this.State.is(globals.STATE_IDLE) ) {
             this.setRandomMovementOrAnimation( );
@@ -88,15 +90,9 @@ class NPC extends MapSprite {
     }
 
     handleBlockedTimeCounter( ) {
-        if ( this.pathIsBlocked ) {
+        if ( this.State.is(STATE_BLOCKED) ) {
             if ( this.blockedCounter.countAndCheckLimit( ) ) {
-                if ( this.destination ) {
-                    this.setDestination( { 'col': this.destination.col, 'row': this.destination.row }, this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP, this.destination.offScreen );
-                }
-                else {
-                    this.stopMovement( );
-                    this.unsetDestination( );
-                }
+                this.destination.calculatePath( );
             } 
         }
         else {

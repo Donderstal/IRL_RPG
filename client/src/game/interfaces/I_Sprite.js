@@ -46,6 +46,10 @@ class Sprite {
         this.setSpriteToGrid( tile )
     }
 
+    get pathIsBlocked() { 
+        return checkForCollision( this, this == globals.GAME.PLAYER );
+     }
+
     setSpriteToGrid( tile ) {
         this.row = tile.row;
         this.col = tile.col;
@@ -95,7 +99,6 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
-        this.checkForBlockedPath( );
         this.checkForMoveToDestination( );
         this.checkForAnimation( );
 
@@ -113,7 +116,7 @@ class Sprite {
             this.State.set(STATE_BLOCKED);
             this.sheetPosition = 0;
         }
-        else if ( this.State.is(STATE_BLOCKED) ) {
+        else if ( this.State.is(STATE_BLOCKED) && !this.pathIsBlocked ) {
             this.State.set(STATE_MOVING);
         }
     }
@@ -128,13 +131,6 @@ class Sprite {
         if ( this.State.is(STATE_MOVING) ) {
             this.destination.goTo( );   
             this.countFrame( ); 
-        }
-    }
-
-    checkForBlockedPath( ) {
-        this.pathIsBlocked = false;
-        if ( this.State.is(STATE_MOVING) ) {
-            this.pathIsBlocked = checkForCollision( this, this == globals.GAME.PLAYER );
         }
     }
 

@@ -58,15 +58,15 @@ class Destination {
             'tiles': this.backClass.grid.array.filter((tile) => {return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);})
         };
         const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX(), this.sprite.baseY());
-        if ( startingTile.offScreen ) {
+        if ( startingTile.offScreen || grid.tiles.indexOf(startingTile) == -1  ) {
             grid.tiles.unshift(startingTile);
         }
         const destinationTile = this.frontClass.getTileAtCell(this.column, this.row);
-        if ( destinationTile.offScreen ) {
+        if ( destinationTile.offScreen || grid.tiles.indexOf(destinationTile) == -1 ) {
             grid.tiles.push( destinationTile );
         }
         const indexList = pathFinder.determineShortestPath(startingTile, destinationTile, grid, this.sprite.movementType == NPC_MOVE_TYPE_FLYING);
-        if ( !indexList ) {
+        if ( !indexList && startingTile.offScreen ) {
             this.unsetPath( );
             if ( this.deleteSprite ) {
                 this.frontClass.deleteSprite(this.spriteId);                

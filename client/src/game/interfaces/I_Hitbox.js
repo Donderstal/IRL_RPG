@@ -96,7 +96,7 @@ class I_Hitbox {
         if ( targetHitbox == undefined ) {
             return false;
         }
-        if ( this.targetIsInVerticalBlockedRange( targetHitbox ) ) {
+        if ( this.targetIsInVerticalActionRange( targetHitbox ) ) {
             if ( this.upFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
                 return true;
             }
@@ -104,7 +104,7 @@ class I_Hitbox {
                 return true;
             }
         }
-        else if ( this.targetIsInHorizontalBlockedRange( targetHitbox ) ) {
+        else if ( this.targetIsInHorizontalActionRange( targetHitbox ) ) {
             if ( this.leftFacingTargetIsInBlockedRadius( targetHitbox, targetDirection ) ) {
                 return true;
             }

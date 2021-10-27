@@ -50,16 +50,14 @@ const checkForCollision = ( sprite, isPlayer ) => {
  */
 const checkIfSpritesCollide = ( sprite, targetSprite ) => {
     let colliding = false;
-    const targetSpriteIsFlying = ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING )
-
-    if ( targetSprite.deleted || targetSpriteIsFlying || targetSprite == undefined ) {
-        return false;
+    if ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING ) {
+        return colliding;
     }
 
     if ( 'hitboxes' in targetSprite && 'hitboxes' in sprite ) {
         sprite.hitboxes.forEach( ( hitbox ) => {
             targetSprite.hitboxes.forEach( ( targetHitbox ) => {
-                if ( hitbox.checkForActionRange( targetHitbox, sprite.direction ) ) {
+                if ( hitbox.checkForBlockedRange( targetHitbox, sprite.direction ) ) {
                     colliding = true;
                 }
             })
@@ -67,20 +65,20 @@ const checkIfSpritesCollide = ( sprite, targetSprite ) => {
     }
     else if ( 'hitboxes' in targetSprite ) {
         targetSprite.hitboxes.forEach( ( targetHitbox ) => {
-            if (  sprite.hitbox.checkForActionRange( targetHitbox, sprite.direction ) ) {
+            if (  sprite.hitbox.checkForBlockedRange( targetHitbox, sprite.direction ) ) {
                 colliding = true;
             }
         })
     }
     else if ( 'hitboxes' in sprite ) {
         sprite.hitboxes.forEach( ( hitbox ) => {
-            if ( hitbox.checkForActionRange( targetSprite.hitbox, sprite.direction ) ) {
+            if ( hitbox.checkForBlockedRange( targetSprite.hitbox, sprite.direction ) ) {
                 colliding = true;
             }
         })
     }
     else if ( 'hitbox' in targetSprite ) {
-        if ( sprite.hitbox.checkForActionRange( targetSprite.hitbox.activeAction != undefined ? targetSprite.hitbox.activeAction : targetSprite.hitbox, sprite.direction ) ) {
+        if ( sprite.hitbox.checkForBlockedRange( targetSprite.hitbox.activeAction != undefined ? targetSprite.hitbox.activeAction : targetSprite.hitbox, sprite.direction ) ) {
             return true;     
         }
     }
