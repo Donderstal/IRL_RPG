@@ -10,6 +10,7 @@ const globals = require('../game-data/globals');
 const { CONTROL_LEFT, CONTROL_RIGHT } = require('../game-data/battleGlobals');
 const { DEFAULT, EVENT_TALK, SPEAK } = require('../game-data/conditionGlobals');
 const { RoadNetwork } = require('./map/RoadNetwork');
+const pathFinder = require('../helpers/pathfindingHelpers')
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -244,24 +245,10 @@ class ForegroundCanvas extends I_CanvasWithGrid {
 
     generateRandomWalkingSprite( start, destination ) {
         let tile = this.getTileAtCell( start.col, start.row );
-        if ( start.col < 1 ) {
-            tile = this.getTileAtCell( start.col + 1, start.row )
-        }
-        else if ( start.row < 1 ) {
-            tile = this.getTileAtCell( start.col, start.row + 1 )
-        }
-        else if ( start.col > this.grid.cols ) {
-            tile = this.getTileAtCell( start.col - 1, start.row )
-        }
-        else if ( start.row > this.grid.rows ) {
-            tile = this.getTileAtCell( start.col, start.row - 1 )
-        }
-
         let pngs = globals.SPRITE_PNGS()
         let characterData = {
             "sprite": pngs[ Math.floor( Math.random( ) * pngs.length ) ], 
-            "direction": globals.FACING_RIGHT,
-            "hasAction": true,
+            "direction": globals.FACING_RIGHT, "hasAction": true,
             "action": [
                 {
                     "condition": {
@@ -278,23 +265,25 @@ class ForegroundCanvas extends I_CanvasWithGrid {
                 }                
             ]
         }
-        this.setCharacterSprite( tile, characterData )
-
-        let sprite = this.spriteDictionary[tile.spriteId];
-        if ( start.col < 1 ) {
-            sprite.x -= globals.GRID_BLOCK_PX
+        const grid = { 
+            'rows': this.grid.rows, 'cols': this.grid.cols,
+            'tiles': globals.GAME.BACK.grid.array.filter((tile) => {
+                return !globals.GAME.BACK.getTileAtIndex(tile.index).isBlocked && !this.tileHasBlockingSprite(tile.index);
+            })
+        };
+        if ( tile.offScreen ) {
+            grid.tiles.unshift(tile);
         }
-        else if ( start.row < 1 ) {
-            sprite.y -= globals.GRID_BLOCK_PX
+        const destinationTile = this.getTileAtCell( destination.col,  destination.row);
+        if ( destinationTile.offScreen ) {
+            grid.tiles.push( destinationTile );
         }
-        else if ( start.col > this.grid.cols ) {
-            sprite.x += globals.GRID_BLOCK_PX
+        const indexList = pathFinder.determineShortestPath(tile, destinationTile, grid, false);
+        if ( indexList ) {
+            this.setCharacterSprite( tile, characterData )
+            let sprite = this.spriteDictionary[tile.spriteId];
+            sprite.setDestination( destination, true )
         }
-        else if ( start.row > this.grid.rows ){
-            sprite.y += globals.GRID_BLOCK_PX
-        }
-
-        sprite.setDestination( destination, true )
     }
 }
 

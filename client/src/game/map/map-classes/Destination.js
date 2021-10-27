@@ -55,21 +55,25 @@ class Destination {
     calculatePath( ) {
         const grid = { 
             'rows': this.backClass.grid.rows, 'cols': this.backClass.grid.cols,
-            'tiles': this.backClass.grid.array.filter((tile) => {return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);})
+            'tiles': this.backClass.grid.array.filter((tile) => {
+                return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);
+            })
         };
         const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX(), this.sprite.baseY());
-        if ( startingTile.offScreen || grid.tiles.indexOf(startingTile) == -1  ) {
+        if ( startingTile.offScreen ) {
             grid.tiles.unshift(startingTile);
         }
         const destinationTile = this.frontClass.getTileAtCell(this.column, this.row);
-        if ( destinationTile.offScreen || grid.tiles.indexOf(destinationTile) == -1 ) {
+        if ( destinationTile.offScreen ) {
             grid.tiles.push( destinationTile );
         }
         const indexList = pathFinder.determineShortestPath(startingTile, destinationTile, grid, this.sprite.movementType == NPC_MOVE_TYPE_FLYING);
-        if ( !indexList && startingTile.offScreen ) {
-            this.unsetPath( );
-            if ( this.deleteSprite ) {
-                this.frontClass.deleteSprite(this.spriteId);                
+        if ( !indexList ) {
+            if ( startingTile.offScreen ) {
+                this.unsetPath( );
+                if ( this.deleteSprite ) {
+                    this.frontClass.deleteSprite(this.spriteId);                
+                }
             }
             return;
         }
@@ -96,7 +100,7 @@ class Destination {
             }
             return [ ...acc, step];             
         }, []);
-        this.currentPathIndex = 1;
+        this.currentPathIndex = 0;
     }
 
     unsetPath( ) {
@@ -106,6 +110,7 @@ class Destination {
 
     checkForNextStep( ) {
         if ( this.currentPathIndex + 1 < this.path.length ) {
+            this.snapSpriteToCurrentStepTile( );
             this.currentPathIndex += 1;  
         }        
         else if ( this.spriteHasReachedDestination ) { 
