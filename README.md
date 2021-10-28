@@ -13,7 +13,8 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### OCT 26, 2021
-* Movement State class for more consistent state management
+* Implementing new pathfinding with SpriteState class
+* SpriteState class for more consistent state management
 
 #### OCT 24, 2021
 * Improved pathfinding algorithm

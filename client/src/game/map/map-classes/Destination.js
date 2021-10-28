@@ -26,10 +26,10 @@ class Destination {
     get sprite() { return this.frontClass.spriteDictionary[this.spriteId]; };
 
     get currentStep() { return this.path[this.currentPathIndex]; };
-    get currentStepIsLeft() { return this.currentStep.x < this.sprite.left && this.currentStep.direction == FACING_LEFT; };
-    get currentStepIsRight() { return this.currentStep.x + GRID_BLOCK_PX > this.sprite.right && this.currentStep.direction == FACING_RIGHT; };
-    get currentStepIsUp() { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) < this.sprite.top && this.currentStep.direction == FACING_UP; };    
-    get currentStepIsDown() { return this.currentStep.y + GRID_BLOCK_PX > this.sprite.bottom && this.currentStep.direction == FACING_DOWN; };
+    get currentStepIsLeft() { return this.currentStep.x <= this.sprite.left - (globals.MOVEMENT_SPEED / 2) && this.currentStep.direction == FACING_LEFT; };
+    get currentStepIsRight() { return this.currentStep.x + GRID_BLOCK_PX >= this.sprite.right + (globals.MOVEMENT_SPEED / 2) && this.currentStep.direction == FACING_RIGHT; };
+    get currentStepIsUp() { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) <= this.sprite.top - (globals.MOVEMENT_SPEED / 2)&& this.currentStep.direction == FACING_UP; };    
+    get currentStepIsDown() { return this.currentStep.y + GRID_BLOCK_PX >= this.sprite.bottom + (globals.MOVEMENT_SPEED / 2) && this.currentStep.direction == FACING_DOWN; };
     
     get isBlocked( ) { return this.backTile.isBlocked || this.frontClass.tileHasBlockingSprite( this.frontTile.index ); };
     get spriteHasReachedDestination( ) { return this.currentPathIndex === this.path.length - 1; };
@@ -83,24 +83,23 @@ class Destination {
                 "x": currentLocation.x,
                 "y": currentLocation.y
             }
-            if ( index != 0 ) {
-                const lastLocation = acc[index - 1];
-                if ( currentLocation.x < lastLocation.x ) {
-                    step.direction = FACING_LEFT;
-                }
-                else if ( currentLocation.y < lastLocation.y ) {
-                    step.direction = FACING_UP;
-                }
-                else if ( currentLocation.x > lastLocation.x ) {
-                    step.direction = FACING_RIGHT;
-                }
-                else if ( currentLocation.y > lastLocation.y ) {
-                    step.direction = FACING_DOWN;
-                }
+            const lastLocation = index == 0 ? startingTile : acc[index - 1];
+            if ( currentLocation.x < lastLocation.x ) {
+                step.direction = FACING_LEFT;
+            }
+            else if ( currentLocation.y < lastLocation.y ) {
+                step.direction = FACING_UP;
+            }
+            else if ( currentLocation.x > lastLocation.x ) {
+                step.direction = FACING_RIGHT;
+            }
+            else if ( currentLocation.y > lastLocation.y ) {
+                step.direction = FACING_DOWN;
             }
             return [ ...acc, step];             
         }, []);
         this.currentPathIndex = 0;
+        this.sprite.direction = this.currentStep.direction; 
     }
 
     unsetPath( ) {
@@ -112,6 +111,7 @@ class Destination {
         if ( this.currentPathIndex + 1 < this.path.length ) {
             this.snapSpriteToCurrentStepTile( );
             this.currentPathIndex += 1;  
+            this.sprite.direction = this.currentStep.direction;
         }        
         else if ( this.spriteHasReachedDestination ) { 
             this.snapSpriteToCurrentStepTile( );

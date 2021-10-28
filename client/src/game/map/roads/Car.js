@@ -14,10 +14,10 @@ class Car extends MapObject {
         this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
         this.carHornSoundEffect.mute( );
         this.blockedCounter = new Counter( 5000, false );
-        this.waitingAtIntersection = false;
         this.crossedIntersectionIds = [];
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
+        this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
         this.roadId;
 
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
@@ -78,11 +78,11 @@ class Car extends MapObject {
     }
 
     setWaitAtIntersection( ) {
-        this.waitingAtIntersection = true;
+        this.State.set(globals.STATE_WAITING);
     }
 
     unsetWaitAtIntersection( ) {
-        this.waitingAtIntersection = false;
+        this.State.set(globals.STATE_MOVING);
     }
 
     setSpriteToGrid( tile, inConstructor = true ) {

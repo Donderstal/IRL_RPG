@@ -40,8 +40,8 @@ class Sprite {
         this.sheet          = globals.PNG_DICTIONARY[src]
         this.destination    = false;
         this.animationScript = {};
-        this.activeEffect = { active: false };
-        this.speed      = MOVEMENT_SPEED
+        this.activeEffect   = { active: false };
+        this.speed          = MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
 
         this.setSpriteToGrid( tile )
     }
