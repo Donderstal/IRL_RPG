@@ -86,7 +86,6 @@ const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
 
 // game Class holder and mode strings
 let GAME = {};
-const MAP_MODE = "MAP";
 
 // Item categories
 const ITEM_CATEGORY_WEAPON = "W";
@@ -280,7 +279,6 @@ module.exports = {
     SHEET_BATTLE_FACING_LEFT,
     SHEET_BATTLE_FACING_RIGHT,
     SHEET_BATTLE_PUNCH,
-    MAP_MODE,
     GAME,
 
     ITEM_CATEGORY_WEAPON,

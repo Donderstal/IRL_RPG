@@ -34,7 +34,6 @@ const startingItemIDs = [
 class Game {
     constructor( ) {
         this.isRunning = false;
-        this.mode; // 'MAP'  
         this.cinematicMode; // bool
         this.inCinematic = false;
         this.paused; // bool
@@ -188,7 +187,7 @@ class Game {
      */
     initControlsAndAnimation( ) {
         controls.listenForKeyPress();  
-        animationFrameController.startRequestingFrame( );
+        animationFrameController.animationFrameController( );
         this.isRunning = true;
     }
     /**

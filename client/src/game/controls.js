@@ -1,5 +1,4 @@
 const globals = require('../game-data/globals')
-const { MAP_MODE }     = require('../game-data/globals')
 const { initGameMenu, unsetGameMenu } = require('./MainMenu')
 const { handleMapKeyPress } = require('./map/mapControls')
 const { handleMenuKeyPress } = require('./menu/menuControls');
@@ -28,9 +27,7 @@ const stopListenForKeyPress = ( ) => {
     window.removeEventListener('keyup', removeKeyFromPressed)
     globals.GAME.listeningForPress = false;
 }
-/**
- * If pressed key is tab, open the main menu. Pass pressed key on to the correct function depending on GAME.mode.
- */
+
 const addKeyToPressed = ( ) => {
     event.preventDefault( );
     const GAME = globals.GAME
@@ -43,7 +40,7 @@ const addKeyToPressed = ( ) => {
         GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
     }
 
-    if ( GAME.mode == MAP_MODE && !GAME.inMenu && !GAME.inCinematic ) {
+    if ( !GAME.inMenu && !GAME.inCinematic ) {
         handleMapKeyPress( event )
     }
     else if ( GAME.inCinematic ) {

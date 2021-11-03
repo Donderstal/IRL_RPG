@@ -13,6 +13,7 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### NOV 3, 2021
+* Removed battle code
 * Neighbourhood class for overarching map settings
 
 #### OCT 26, 2021

@@ -1,32 +1,11 @@
 const { handleMapAnimations }      = require('./map/mapAnimation')
 const globals     = require('../game-data/globals')
-const { FRAMES_PER_SECOND, MAP_MODE }     = require('../game-data/globals')
+const { FRAMES_PER_SECOND }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 
 let lastDateNow, newDateNow;
 
-/**
- * Call startOverworldAnimation() and animationFrameController() to intialize the canvas animations
- */
-const startRequestingFrame = () => {
-    startOverworldAnimation()
-    animationFrameController()
-}
-/**
- * Set GAME.mode to MAP_MODE
- */
-const startOverworldAnimation = ( ) => {
-    globals.GAME.mode = MAP_MODE;
-}
-
-/**
- * Main channel for all interactivity in the game.
- * Recursive function using the in-browser requestAnimationFrame function.
- * Check if a new frame should be requested per FRAMES_PER_SECOND global.
- * If so, register the players key presses. 
- * Run animations for Map, Battle or Menu depending on GAME.mode and GAME.inMenu.
- */
 const animationFrameController = ( ) => {
     const GAME = globals.GAME;
 
@@ -42,7 +21,7 @@ const animationFrameController = ( ) => {
                 controls.listenForKeyPress()
             }            
 
-            if ( GAME.mode == MAP_MODE && !GAME.inMenu ) {
+            if ( !GAME.inMenu ) {
                 handleMapAnimations( GAME )
             }
             else if ( GAME.inMenu ) {
@@ -65,6 +44,5 @@ const animationFrameController = ( ) => {
 }
 
 module.exports = {
-    startRequestingFrame,
-    startOverworldAnimation
+    animationFrameController
 }

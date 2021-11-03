@@ -72,10 +72,7 @@ const setLoadingScreen = ( ) => {
 }
 
 const drawLoadingScreen = ( ) => {
-    const GAME = globals.GAME;
-    const loadingScreenIsActive = !GAME.isRunning && GAME.mode == undefined;
-
-    if ( loadingScreenIsActive ) {
+    if ( !globals.GAME.isRunning ) {
         GAME.loadingScreen.draw( );
         setTimeout( drawLoadingScreen, 50 )
     }
