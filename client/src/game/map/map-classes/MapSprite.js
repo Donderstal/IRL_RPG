@@ -23,27 +23,27 @@ class MapSprite extends Sprite {
     get nextTileBack( ) { 
         switch(this.direction) {
             case FACING_LEFT:
-                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX() - GRID_BLOCK_PX, this.baseY());
+                return globals.GAME.getTileOnCanvasAtXY( "BACK", this.centerX() - GRID_BLOCK_PX, this.baseY());
             case FACING_UP:
-                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX(), this.baseY() - GRID_BLOCK_PX);
+                return globals.GAME.getTileOnCanvasAtXY( "BACK", this.centerX(), this.baseY() - GRID_BLOCK_PX);
             case FACING_RIGHT:
-                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX() + GRID_BLOCK_PX, this.baseY());
+                return globals.GAME.getTileOnCanvasAtXY( "BACK", this.centerX() + GRID_BLOCK_PX, this.baseY());
             case FACING_DOWN:
-                return globals.GAME.getTileOnCanvasAtIndex( "BACK", this.centerX(), this.baseY() + GRID_BLOCK_PX);
+                return globals.GAME.getTileOnCanvasAtXY( "BACK", this.centerX(), this.baseY() + GRID_BLOCK_PX);
         }
      };
 
-    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX(), this.baseY()) };
+    get currentTileFront( ) { return globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX(), this.baseY()) };
     get nextTileFront( ) { 
         switch(this.direction) {
             case FACING_LEFT:
-                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX() - GRID_BLOCK_PX, this.baseY());
+                return globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX() - GRID_BLOCK_PX, this.baseY());
             case FACING_UP:
-                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX(), this.baseY() - GRID_BLOCK_PX);
+                return globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX(), this.baseY() - GRID_BLOCK_PX);
             case FACING_RIGHT:
-                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX() + GRID_BLOCK_PX, this.baseY());
+                return globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX() + GRID_BLOCK_PX, this.baseY());
             case FACING_DOWN:
-                return globals.GAME.getTileOnCanvasAtIndex( "FRONT", this.centerX(), this.baseY() + GRID_BLOCK_PX);
+                return globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX(), this.baseY() + GRID_BLOCK_PX);
         }
     };
 

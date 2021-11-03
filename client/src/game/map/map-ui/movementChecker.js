@@ -1,7 +1,6 @@
 const globals = require('../../../game-data/globals')
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
 const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
-const { ActionSelector } = require('../map-classes/ActionSelector')
 /**
  * Check if the given sprite collides with another sprite on the map
  * @param {I_Sprite} sprite 
