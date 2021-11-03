@@ -6,12 +6,20 @@ const A5 = require('./A5/northside-A5');
 const Z4 = require('./Z4/northside-Z4');
 
 module.exports = {
-
-    "Z4": Z4,
-
-    "A1": A1,
-    "A2": A2,
-    "A3": A3,
-    "A4": A4,
-    "A5": A5
+    "name": "Northside",
+    "horizontal_slots": ["A", "B", "C", "D", "E"], 
+    "vertical_slots": ["1", "2"],
+    "music": "game-jam.mp3",
+    "cars": [ "car_a", "car_d", "car_c", "bus" ], 
+    "cars_spawn_rate" : 10000,
+    "characters" : [
+        "monkey_ceo.png"
+    ],
+    "characters_spawn_rate": 2500,
+    "A2": A1,
+    "B2": A2,
+    "C2": A3,
+    "D1": Z4,
+    "D2": A4,
+    "E2": A5
 }

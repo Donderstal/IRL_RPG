@@ -2,13 +2,9 @@ const { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_MOVING, FACING_DOWN, FACING_RIGHT, FAC
 const { GRID } = require("./grid");
 
 module.exports = {
-    "mapName": "northside-Z4",
+    "mapName": "northside/D1",
     "tileSet": "downtown_2",
     "outdoors": true,
-    "music": "game-jam.mp3",
-    "neighbours": {
-        "down": "northside/A4"
-    },
     "rows": 16,
     "columns": 24,
     "grid": GRID,

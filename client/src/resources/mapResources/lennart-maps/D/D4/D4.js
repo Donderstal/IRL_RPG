@@ -4,12 +4,11 @@ const { D4Grid } = require("./D4-grid");
 module.exports = {
     "mapName": "lennart-neighbourhood/D4",
     "neighbourhood": "lennart-neighbourhood",
-    "neighbours": {
-        "right": "",
-        "left": "lennart-neighbourhood/C4",
-        "up": "lennart-neighbourhood/D3",
-        "down": ""
-    },
+    "tileSet": "starting_neighbourhood_clean",
+    "outdoors": true,
+    "rows": 16,
+    "columns": 24,
+    "grid": D4Grid,
     "spawnPoints": [
         {
             "col": 4,
@@ -80,12 +79,6 @@ module.exports = {
             "endRow": 16
         }
     ],
-    "tileSet": "starting_neighbourhood_clean",
-    "outdoors": true,
-    "music": 'Theme_Overworld_1_HDR.mp3',
-    "rows": 16,
-    "columns": 24,
-    "grid": D4Grid,
     "mapObjects": [
         {
             "type": "car_a",

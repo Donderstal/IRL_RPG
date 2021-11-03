@@ -2,15 +2,9 @@ const { FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_IDLE, NPC_MOVE_TYP
 const { GRID } = require("./grid");
 
 module.exports = {
-    "mapName": "northside/A4",
+    "mapName": "northside/D2",
     "tileSet": "downtown_2",
     "outdoors": true,
-    "music": "game-jam.mp3",
-    "neighbours": {
-        "left": "northside/A3",
-        "right": "northside/A5",
-        "up": "northside/Z4"
-    },
     "roads" : [
         { "alignment": "HORI", "topRow": 13, "bottomRow": 14, "direction": FACING_LEFT, "hasStart": true },
         { "alignment": "HORI", "topRow": 15, "bottomRow": 16, "direction": FACING_RIGHT, "hasStart": true }

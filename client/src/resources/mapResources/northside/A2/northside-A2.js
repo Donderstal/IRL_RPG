@@ -2,14 +2,9 @@ const { FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_IDLE, OUT_RIGHT, O
 const { GRID } = require("./grid");
 
 module.exports = {
-    "mapName": "northside/A2",
+    "mapName": "northside/B2",
     "tileSet": "downtown_2",
     "outdoors": true,
-    "music": "game-jam.mp3",
-    "neighbours": {
-        "left": "northside/A1",
-        "right": "northside/A3"
-    },
     "spawnPoints" : [
         { "col": OUT_LEFT, "row": 9, "direction": FACING_RIGHT },
         { "col": OUT_LEFT, "row": 10, "direction": FACING_RIGHT },

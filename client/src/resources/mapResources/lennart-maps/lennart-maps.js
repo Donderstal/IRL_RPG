@@ -12,11 +12,11 @@ module.exports = {
     "cars": [ "car_b", "car_c", "bus" ], 
     "cars_spawn_rate" : 15000,
     "characters" : [
-        "chad", "chad_recolour01", "chad_recolour02", "chad_recolour03",
-        "character_x1_recolour01", "characterx3", "characterx4", "fats",
-        "generic_balding_guy", "generic_blonde_guy", "neckbeard", "pony_tail",
-        "pony_tail_recolour", "tumbler_girl_recolour01", "tumblr_girl",
-        "tumbler_girl_recolour02"
+        "chad.png", "chad_recolour01.png", "chad_recolour02.png", "chad_recolour03.png",
+        "character_x1_recolour01.png", "characterx3.png", "characterx4.png", "fats.png",
+        "generic_balding_guy.png", "generic_blonde_guy.png", "neckbeard.png", "pony_tail.png",
+        "pony_tail_recolour.png", "tumbler_girl_recolour01.png", "tumblr_girl.png",
+        "tumbler_girl_recolour02.png"
     ],
     "characters_spawn_rate": 10000,
     "C4": C4,

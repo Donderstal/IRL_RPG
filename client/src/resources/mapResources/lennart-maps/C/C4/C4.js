@@ -4,12 +4,11 @@ const { C4Grid } = require("./C4-grid");
 module.exports = {
     "mapName": "lennart-neighbourhood/C4",
     "neighbourhood": "lennart-neighbourhood",
-    "neighbours": {
-        "right": "lennart-neighbourhood/D4",
-        "left": "",
-        "up": "",
-        "down": ""
-    },
+    "tileSet": "starting_neighbourhood_clean",
+    "outdoors": true,
+    "rows": 16,
+    "columns": 24,
+    "grid": C4Grid,
     "spawnPoints": [
         {
             "col": 19,
@@ -70,12 +69,6 @@ module.exports = {
             "endCol": 1
         }
     ],
-    "tileSet": "starting_neighbourhood_clean",
-    "outdoors": true,
-    "music": 'Theme_Overworld_1_HDR.mp3',
-    "rows": 16,
-    "columns": 24,
-    "grid": C4Grid,
     "mapObjects": [
         {
             "type": "yum_mart_sign",

@@ -4,12 +4,15 @@ const { D2grid } = require("./D2-grid");
 module.exports = {
     "mapName": "lennart-neighbourhood/D2",
     "neighbourhood": "lennart-neighbourhood",
-    "neighbours": {
-        "right": false,
-        "left": "lennart-neighbourhood/C2",
-        "up": "lennart-neighbourhood/D1",
-        "down": "lennart-neighbourhood/D3"
+    "tileSet": "starting_neighbourhood_clean",
+    "outdoors": true,
+    "rows": 16,
+    "columns": 24,
+    "playerStart" : {
+        'row': 8,
+        'col': 4
     },
+    "grid": D2grid,
     "spawnPoints": [
         {
             "col": 12,
@@ -85,16 +88,6 @@ module.exports = {
             "endRow": 16
         }
     ],
-    "tileSet": "starting_neighbourhood_clean",
-    "outdoors": true,
-    "music": 'Theme_Overworld_1_HDR.mp3',
-    "rows": 16,
-    "columns": 24,
-    "playerStart" : {
-        'row': 8,
-        'col': 4
-    },
-    "grid": D2grid,
     "mapObjects": [
         {
             "type": "Sign_03",

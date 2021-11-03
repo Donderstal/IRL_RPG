@@ -4,13 +4,12 @@ const { D3Grid } = require("./D3-grid");
 module.exports = {
     "mapName": "lennart-neighbourhood/D3",
     "neighbourhood": "lennart-neighbourhood",
-    "neighbours": {
-        "right": "lennart-neighbourhood/E3",
-        "left": "",
-        "up": "lennart-neighbourhood/D2",
-        "down": "lennart-neighbourhood/D4"
-    },
     "spawnPoints": [],
+    "tileSet": "starting_neighbourhood_clean",
+    "outdoors": true,
+    "rows": 16,
+    "columns": 24,
+    "grid": D3Grid,
     "roads": [
         {
             "direction": FACING_UP,
@@ -88,12 +87,6 @@ module.exports = {
             "endCol": 11
         }
     ],
-    "tileSet": "starting_neighbourhood_clean",
-    "outdoors": true,
-    "music": 'Theme_Overworld_1_HDR.mp3',
-    "rows": 16,
-    "columns": 24,
-    "grid": D3Grid,
     "mapObjects": [
         {
             "type": "tires_1",

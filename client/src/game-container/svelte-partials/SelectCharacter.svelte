@@ -263,16 +263,8 @@
         <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
         <p><label>Select starting location</label><select id="map-selection">
-            <option value="my-neighbourhood/A1/my-house">Standard</option>
             <option value="lennart-neighbourhood/D2">Lennart</option>
-            <option value="northside/A3">Northside</option>
-            <option value="test/double-roads-test">double-roads-test</option>
-            <option value="test/single-turns-test">test/single-turns-test</option>
-            <option value="test/test-collision">Collision Test</option>
-            <option value="test/crossing-test">Crossing Test</option>
-            <option value="test/pathfinding-test-2">Pathfinding Test 2</option>
-            <option value="test/newMapFormat">newMapFormat</option>
-            <option value="test/test-dungeon-outside">Test Dungeon</option>
+            <option value="northside/C2">Northside</option>
         </select></p>
     </div>
 </div>

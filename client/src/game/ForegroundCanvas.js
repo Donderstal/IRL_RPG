@@ -245,9 +245,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
 
     generateRandomWalkingSprite( start, destination ) {
         let tile = this.getTileAtCell( start.col, start.row );
-        let pngs = globals.SPRITE_PNGS()
+        let characters = globals.GAME.activeNeighbourhood.characters
         let characterData = {
-            "sprite": pngs[ Math.floor( Math.random( ) * pngs.length ) ], 
+            "sprite": characters[ Math.floor( Math.random( ) * characters.length ) ], 
             "direction": globals.FACING_RIGHT, "hasAction": true,
             "action": [
                 {

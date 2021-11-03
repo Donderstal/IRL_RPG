@@ -2,14 +2,13 @@ const { NPC_ANIM_TYPE_IDLE, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, O
 const { E3Grid } = require("./E3-grid");
 
 module.exports = {
-    "mapName": "lennart-neighbourhood/D3",
+    "mapName": "lennart-neighbourhood/E3",
     "neighbourhood": "lennart-neighbourhood",
-    "neighbours": {
-        "right": "",
-        "left": "lennart-neighbourhood/D3",
-        "up": "",
-        "down": ""
-    },
+    "tileSet": "starting_neighbourhood_clean",
+    "outdoors": true,
+    "rows": 16,
+    "columns": 24,
+    "grid": E3Grid,
     "spawnPoints": [
         {
             "col": OUT_LEFT,
@@ -61,12 +60,6 @@ module.exports = {
             "endCol": 1
         }
     ],
-    "tileSet": "starting_neighbourhood_clean",
-    "outdoors": true,
-    "music": 'Theme_Overworld_1_HDR.mp3',
-    "rows": 16,
-    "columns": 24,
-    "grid": E3Grid,
     "mapObjects": [
         {
             "type": "gang_z",
