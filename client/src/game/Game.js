@@ -24,6 +24,7 @@ const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
 const { Cinematic } = require('./cutscenes/Cinematic')
 const { FileLoader } = require('../helpers/Loader')
+const { Neighbourhood } = require('./Neighbourhood')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -58,6 +59,7 @@ class Game {
 
         this.activeMap; 
         this.activeMapName; // string
+        this.activeNeighbourhood;
         this.currentChapter;
 
         this.initGameCanvases( );
@@ -161,6 +163,7 @@ class Game {
      */
     startNewGame( name, className, startingMap, debugMode, disableStoryMode ) {
         this.initializePlayerParty( name, className )
+        this.setNeighbourhoodAndGetMapdata(startingMap);
         const mapData = getMapData(startingMap);
         this.storeMapData( mapData, startingMap );
         this.debugMode = debugMode;
@@ -172,6 +175,13 @@ class Game {
             this.story = new StoryProgression( );     
         }
         setTimeout( this.initControlsAndAnimation, 1000 );
+    }
+
+    setNeighbourhoodAndGetMapdata(startingMap) {
+        const key = startingMap.split('/')[0]
+        if ( this.activeNeighbourhood == undefined || this.activeNeighbourhood.key != key ) {
+            this.activeNeighbourhood = new Neighbourhood(key);
+        }
     }
     /**
      * Instantiate a Party class for the player and assign it to the this.party prop

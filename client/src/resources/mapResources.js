@@ -20,11 +20,16 @@ const getMapData = ( fullMapName ) => {
     const neighbourhoodName = mapNameArray[0]
     const mapName = mapNameArray[1]
 
-    const mapData = mapResources[neighbourhoodName][mapName]
     if ( mapNameArray[2] ) {
+        let mapData = mapResources[neighbourhoodName][mapName]
         return JSON.parse( JSON.stringify( mapData.subMaps[mapNameArray[2]] ) );
-    } else {
+    } 
+    else if ( mapNameArray[1] ) {
+        let mapData = mapResources[neighbourhoodName][mapName]
         return JSON.parse( JSON.stringify(mapData) )
+    }
+    else {
+        return JSON.parse( JSON.stringify(mapResources[neighbourhoodName]) )
     }
 }
 
