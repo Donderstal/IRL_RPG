@@ -5,6 +5,8 @@ const { COLOR_WHITE, COLOR_SECONDARY } = require('../game-data/uiGlobals')
 const { TypeWriter } = require('../helpers/TypeWriter')
 const globals = require('../game-data/globals');
 
+let loaderTimeout;
+
 class LoadingScreen {
     constructor( ) {
         this.displayText = "Loading...";
@@ -72,16 +74,17 @@ const setLoadingScreen = ( ) => {
 }
 
 const drawLoadingScreen = ( ) => {
-    if ( !globals.GAME.isRunning ) {
-        globals.GAME.loadingScreen.draw( );
-        setTimeout( drawLoadingScreen, 50 )
-    }
-    else {
-        globals.GAME.loadingScreen.clear( );
-        globals.GAME.loadingScreen = null;
-    }
+    globals.GAME.loadingScreen.draw( );
+    loaderTimeout = setTimeout( drawLoadingScreen, 50 )
 }
 
+const stopLoadingScreen = ( ) => {
+    clearTimeout(loaderTimeout);
+    globals.GAME.loadingScreen.clear( );
+    globals.GAME.loadingScreen = null; 
+} 
+
 module.exports = {
-    setLoadingScreen
+    setLoadingScreen,
+    stopLoadingScreen
 }

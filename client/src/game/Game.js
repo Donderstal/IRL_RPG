@@ -1,7 +1,6 @@
 const animationFrameController = require('./animationFrameController')
 const globals  = require('../game-data/globals')
 const controls      = require('./controls')
-const getMapData    = require('../resources/mapResources').getMapData
 const tilesheets    = require('../resources/tilesheetResources').sheets
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN,
@@ -18,7 +17,7 @@ const canvasHelpers = require('../helpers/canvasHelpers')
 const { triggerEvent } = require('../helpers/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
 const { getOppositeDirection } = require('../helpers/utilFunctions')
-const { setLoadingScreen } = require('./LoadingScreen')
+const { setLoadingScreen, stopLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
 const { Cinematic } = require('./cutscenes/Cinematic')
@@ -33,7 +32,6 @@ const startingItemIDs = [
 
 class Game {
     constructor( ) {
-        this.isRunning = false;
         this.cinematicMode; // bool
         this.inCinematic = false;
         this.paused; // bool
@@ -186,9 +184,9 @@ class Game {
      * Start listening for keypress in controls.js. Start requesting animationframe in animationframecontroller.js
      */
     initControlsAndAnimation( ) {
+        stopLoadingScreen( );
         controls.listenForKeyPress();  
         animationFrameController.animationFrameController( );
-        this.isRunning = true;
     }
     /**
      * Initialize map grids based on map dimensions. Set mapData to the Foreground and Background classes.
