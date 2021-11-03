@@ -10,7 +10,6 @@ class Neighbourhood {
         })
         this.activateMap( key );
         this.setNPCCounter( );
-        console.log( this );
     }
 
     get key( ) { return this.activeMapKey.split('/')[0]; }

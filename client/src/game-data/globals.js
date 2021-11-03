@@ -200,16 +200,6 @@ const SHEET_XY_VALUES = setSheetXyValues( 10000 );
 
 const PNG_DICTIONARY = {};
 const AUDIO_DICTIONARY = {};
-const SPRITE_PNGS = ( ) => { 
-    let returner = [];
-    Object.keys( PNG_DICTIONARY ).forEach( ( e ) => { 
-        if ( e.includes('/sprites/') && !e.includes('_fight.png') ) {
-            let pathList = e.split('/')
-            returner.push(pathList[pathList.length - 1])
-        }
-    }, []) 
-    return returner;
-};
 
 const OUT_LEFT = "O-L";
 const OUT_UP   = "O-T";
@@ -362,6 +352,5 @@ module.exports = {
     TEST_CLASSPROFILE_4,
 
     PNG_DICTIONARY,
-    SPRITE_PNGS,
     AUDIO_DICTIONARY
 }
