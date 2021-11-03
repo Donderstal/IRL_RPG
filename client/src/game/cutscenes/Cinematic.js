@@ -93,15 +93,6 @@ class Cinematic {
                 break;
             case ON_NPC_INTERACTION: 
                 let sprite = globals.GAME.FRONT.spriteDictionary[this.args[0]]
-                if ( sprite.wasMovingBeforeCinematic && this.args[1] != null && this.args[1] != false ) {
-                    let destination =  globals.GAME.FRONT.getValidSpawnDestination( null, this.args[1] )
-                    sprite.setDestination( 
-                        destination , false, 
-                        destination .col < 1 || destination .row < 1 
-                        || destination .col > globals.GAME.activeMap.cols || destination .row > globals.GAME.activeMap.rows
-                    );
-                    sprite.wasMovingBeforeCinematic = false;
-                }
                 globals.GAME.activeAction.dismiss( );
                 break;
         }

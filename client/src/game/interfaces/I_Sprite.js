@@ -128,7 +128,7 @@ class Sprite {
     }
 
     checkForMoveToDestination( ) {
-        if ( this.State.is(STATE_MOVING) ) {
+        if ( this.State.is(STATE_MOVING) && !this.State.inAnimation ) {
             this.destination.goTo( );   
             this.countFrame( ); 
         }
