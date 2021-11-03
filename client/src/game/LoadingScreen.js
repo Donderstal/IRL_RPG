@@ -73,12 +73,12 @@ const setLoadingScreen = ( ) => {
 
 const drawLoadingScreen = ( ) => {
     if ( !globals.GAME.isRunning ) {
-        GAME.loadingScreen.draw( );
+        globals.GAME.loadingScreen.draw( );
         setTimeout( drawLoadingScreen, 50 )
     }
     else {
-        GAME.loadingScreen.clear( );
-        GAME.loadingScreen = null;
+        globals.GAME.loadingScreen.clear( );
+        globals.GAME.loadingScreen = null;
     }
 }
 
