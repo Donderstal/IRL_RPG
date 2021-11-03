@@ -25,7 +25,7 @@ class Road {
         };
 
         this.activeCarIds = [];
-        this.carCounter = new Counter( 15000, true );
+        this.carCounter = new Counter( globals.GAME.activeNeighbourhood.cars_spawn_rate, true );
 
         if ( this.hasBusLine ) {
             this.setBusStopLocation( )
@@ -137,7 +137,7 @@ class Road {
     }
 
     getCarDataForTile( isBus = false ) {
-        const carNames = [ "car_a", "car_b", "car_c", "car_d", "bus" ]
+        const carNames = globals.GAME.activeNeighbourhood.cars;
         let randomIndex = Math.floor(Math.random() * carNames.length);
         return {
             "direction": this.direction,

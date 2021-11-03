@@ -1,9 +1,7 @@
 const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers')
 const mapControls = require('./mapControls');
-const { Counter } = require('../../helpers/Counter');
 
-const npcCounter = new Counter( 5000, true );
 /**
  * Wrapper function that runs on each animation frame if the game is in Map mode.
  * Call drawSpritesInOrder() and clearMargins().
@@ -45,14 +43,7 @@ const handleRoadNetworkFuncs = ( GAME ) => {
 }
 
 const handleNpcCounter = ( GAME ) => {
-    if ( GAME.activeMap.spawnPoints != undefined ) {
-        if ( npcCounter.countAndCheckLimit( ) && GAME.activeMap.spawnPoints.length > 0) {
-            GAME.FRONT.generateWalkingNPC( GAME.activeMap.spawnPoints );
-        }
-    }
-    else {
-        npcCounter.resetCounter( );
-    }
+    GAME.activeNeighbourhood.handleNPCCounter( );
 }
 /**
  * Clear the edges of the front canvas that are not currently in the active I_Grids' borders.
