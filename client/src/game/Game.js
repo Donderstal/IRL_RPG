@@ -57,8 +57,6 @@ class Game {
         this.battle; // class Battle
         this.party; // class Party
 
-        this.activeMap; 
-        this.activeMapName; // string
         this.activeNeighbourhood;
         this.currentChapter;
 
@@ -72,6 +70,9 @@ class Game {
     get PARTY_MEMBERS( ) { return this.party.members }
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
+
+    get activeMap( ) { return this.activeNeighbourhood.activeMap; }
+    get activeMapName( ) { return this.activeNeighbourhood.activeMapKey; }
 
     get activeText( ) {
         return this.typeWriter.activeText;
@@ -163,24 +164,24 @@ class Game {
      */
     startNewGame( name, className, startingMap, debugMode, disableStoryMode ) {
         this.initializePlayerParty( name, className )
-        this.setNeighbourhoodAndGetMapdata(startingMap);
-        const mapData = getMapData(startingMap);
-        this.storeMapData( mapData, startingMap );
+        this.setNeighbourhoodAndMap(startingMap);
         this.debugMode = debugMode;
         this.disableStoryMode = disableStoryMode;
-        mapData.playerStart.playerClass = className;
-        mapData.playerStart.name = name;
-        this.loadMapToCanvases( mapData, true );
+        this.activeMap.playerStart.playerClass = className;
+        this.activeMap.playerStart.name = name;
+        this.loadMapToCanvases( true );
         if ( !this.disableStoryMode ) {
             this.story = new StoryProgression( );     
         }
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
-    setNeighbourhoodAndGetMapdata(startingMap) {
-        const key = startingMap.split('/')[0]
-        if ( this.activeNeighbourhood == undefined || this.activeNeighbourhood.key != key ) {
-            this.activeNeighbourhood = new Neighbourhood(key);
+    setNeighbourhoodAndMap(map) {
+        if ( this.activeNeighbourhood == undefined || this.activeNeighbourhood.key != map ) {
+            this.activeNeighbourhood = new Neighbourhood(map);
+        }
+        else {
+            this.activeNeighbourhood.activateMap(map);
         }
     }
     /**
@@ -212,24 +213,24 @@ class Game {
      * Assign playerSprite to the Foreground spriteDictionary and play music.
      * @param {Object} mapData mapData object retrieved from mapResources.js
      */
-    loadMapToCanvases( mapData, isNewGame = false ) {
-        this.back.class.initGrid( mapData.rows, mapData.columns );
-        this.front.class.initGrid( mapData.rows, mapData.columns );
+    loadMapToCanvases( isNewGame = false ) {
+        this.back.class.initGrid( this.activeMap.rows, this.activeMap.columns );
+        this.front.class.initGrid( this.activeMap.rows, this.activeMap.columns );
     
-        const sheetData = tilesheets[mapData.tileSet];
+        const sheetData = tilesheets[this.activeMap.tileSet];
     
-        this.back.class.setBackgroundData( mapData, sheetData );
+        this.back.class.setBackgroundData( this.activeMap, sheetData );
         this.back.class.setEventsDoorsAndBlockedToTilesInGrid( );
         console.log('/static/tilesets/' + sheetData.src)
         console.log(globals.PNG_DICTIONARY)
         console.log('/static/tilesets/' + sheetData.src in globals.PNG_DICTIONARY)
         this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
     
-        this.front.class.setForegroundData( mapData, isNewGame );
+        this.front.class.setForegroundData( this.activeMap, isNewGame );
         //this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
-        this.sound.setActiveMusic( mapData.music );
+        this.sound.setActiveMusic( this.activeNeighbourhood.music );
         setTimeout( ( ) => {
             triggerEvent(ON_ENTER)     
         }, 250 )
@@ -259,14 +260,14 @@ class Game {
         controls.stopListenForKeyPress( );
         controls.clearPressedKeys( this.pressedKeys );
 
-        const newMapData = getMapData( destination );
+        this.setNeighbourhoodAndMap(destination);
         this.clearMapFromCanvases( );
-        this.loadMapToCanvases( newMapData );
+        this.loadMapToCanvases( );
         if ( type != EVENT_BUS ) {
-            this.setPlayerInNewMap( newMapData, type );
+            this.setPlayerInNewMap( this.activeMap, type );
         }
         else {
-            newMapData.mapObjects.forEach( ( object ) => {
+            this.activeMap.mapObjects.forEach( ( object ) => {
                 if ( object.action != undefined && object.action[0].action.type == EVENT_BUS ) {
                     object.action[0].action.events.forEach( ( e ) => {
                         if ( e["trigger"] == ON_ENTER ) {
@@ -277,21 +278,11 @@ class Game {
                 
             } )
         }
-        this.storeMapData( newMapData, destination );
         setTimeout( ( ) => {
             controls.listenForKeyPress( ); 
             this.paused = false;   
         }, 100 )
     }
-    /**
-     * Store the current map data and name as properties of game class
-     * @param {Object} mapData - mapData object retrieved from mapResources.js
-     * @param {String} mapName - name of the current map
-     */
-    storeMapData( mapData, mapName ) {
-        this.activeMapName = mapName;
-        this.activeMap = mapData;
-    };
     /**
      * Instantiate a Party class instance with partyData as argument.
      * Then assign a Battle instance to this.battle
@@ -354,29 +345,25 @@ class Game {
                 } )
                 break;
             case EVENT_NEIGHBOUR :
-                Object.keys( mapData.neighbours ).forEach( ( key ) => {
-                    if ( this.activeMapName == mapData.neighbours[key] ) {
-                        switch ( key ) {
-                            case 'up' : 
-                                newPlayerCell.row = 1;
-                                newPlayerCell.col = this.PLAYER.col;
-                                break;
-                            case 'right' :
-                                newPlayerCell.row = this.PLAYER.row;
-                                newPlayerCell.col = mapData.columns;
-                                break;
-                            case 'down' :
-                                newPlayerCell.row = mapData.rows;
-                                newPlayerCell.col = this.PLAYER.col;
-                                break;
-                            case 'left' :
-                                newPlayerCell.row = this.PLAYER.row;
-                                newPlayerCell.col = 1;
-                                break;
-                        }
-                        direction = this.PLAYER.direction
-                    }
-                })
+                switch (this.PLAYER.direction) {
+                    case globals.FACING_DOWN : 
+                        newPlayerCell.row = 1;
+                        newPlayerCell.col = this.PLAYER.col;
+                        break;
+                    case globals.FACING_LEFT :
+                        newPlayerCell.row = this.PLAYER.row;
+                        newPlayerCell.col = mapData.columns;
+                        break;
+                    case globals.FACING_UP :
+                        newPlayerCell.row = mapData.rows;
+                        newPlayerCell.col = this.PLAYER.col;
+                        break;
+                    case globals.FACING_RIGHT :
+                        newPlayerCell.row = this.PLAYER.row;
+                        newPlayerCell.col = 1;
+                        break;
+                }
+                direction = this.PLAYER.direction;
                 break;
             case EVENT_BUS :
                 mapData.mapObjects.forEach( ( object ) => {
