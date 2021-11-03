@@ -1,9 +1,8 @@
 const globals = require('../game-data/globals')
-const { BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
+const { MAP_MODE }     = require('../game-data/globals')
 const { initGameMenu, unsetGameMenu } = require('./MainMenu')
 const { handleMapKeyPress } = require('./map/mapControls')
 const { handleMenuKeyPress } = require('./menu/menuControls');
-const { handleBattleKeyPress } = require('./battle/battleControls');
 const { INTERACTION_YES, INTERACTION_NO } = require('../game-data/interactionGlobals');
 const { SPEAK_YES_NO } = require('../game-data/conditionGlobals');
 
@@ -46,9 +45,6 @@ const addKeyToPressed = ( ) => {
 
     if ( GAME.mode == MAP_MODE && !GAME.inMenu && !GAME.inCinematic ) {
         handleMapKeyPress( event )
-    }
-    else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu && !GAME.inCinematic  ) {
-        handleBattleKeyPress( event )
     }
     else if ( GAME.inCinematic ) {
         if ( event.key == " " && GAME.bubbleIsActive && !GAME.activeBubble.typeWriter.isWriting ) {

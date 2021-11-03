@@ -4,10 +4,8 @@ const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
 const { Car } = require('./map/roads/Car')
 const { getUniqueId } = require('../helpers/utilFunctions');
-const { BattleSlot } = require('./battle/BattleSlot');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
-const { CONTROL_LEFT, CONTROL_RIGHT } = require('../game-data/battleGlobals');
 const { DEFAULT, EVENT_TALK, SPEAK } = require('../game-data/conditionGlobals');
 const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers')
@@ -26,9 +24,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.activeEffects = [];
         this.roadNetwork;
     };
-
-    get playerSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_LEFT; } ); };
-    get opponentSlots( ) { return this.battleSlots.filter( ( element ) => { return element.side == CONTROL_RIGHT; } ); };
     /**
      * Return a effect Instance and push it to this.activeEffects
      */
@@ -130,38 +125,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites = [ ];
         this.roadNetwork = null;
         this.spriteDictionary = { };
-    }
-    /**
-     * 
-     */
-    prepareBattlePositions( ) {
-        this.battleSlots = [];
-        this.slotData = [ 
-            [ 0, CONTROL_LEFT ], [ 1, CONTROL_LEFT ], [ 2, CONTROL_LEFT ],
-            [ 0, CONTROL_RIGHT ], [ 1, CONTROL_RIGHT ], [ 2, CONTROL_RIGHT ] 
-        ];
-        this.slotData.forEach(  ( element ) => {
-            this.battleSlots.push( new BattleSlot( element[0], element[1] ) );
-        })
-    }
-    /**
-     * Instantiate sprites in appropriate battleslot for each member of given parties
-     * @param {Party} playerParty 
-     * @param {Party} opponentParty 
-     */
-    setSpritesToBattleSlots( playerParty, opponentParty ) {
-        const playerMembers = playerParty.members.filter( ( element, index ) => { return index < 3 } );
-
-        this.playerSlots.forEach( ( slot, index ) => { 
-            if ( playerMembers[index] != undefined ) {
-                slot.initializeSpriteInSlot( playerMembers[index] );                 
-            }
-        } );
-        this.opponentSlots.forEach( ( slot, index ) => { 
-            if ( opponentParty.members[index] != undefined ) {
-                slot.initializeSpriteInSlot( opponentParty.members[index]);              
-            }
-        } );
     }
 
     deleteSprite( spriteId ) {

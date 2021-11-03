@@ -5,7 +5,7 @@ const getMapData    = require('../resources/mapResources').getMapData
 const tilesheets    = require('../resources/tilesheetResources').sheets
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN,
-    TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5, BATTLE_MODE
+    TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5
 }  = require('../game-data/globals')
 const { 
     ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR
@@ -15,10 +15,9 @@ const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
-const { Battle } = require('./battle/Battle')
 const { triggerEvent } = require('../helpers/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
-const { fetchJSONWithCallback, getOppositeDirection } = require('../helpers/utilFunctions')
+const { getOppositeDirection } = require('../helpers/utilFunctions')
 const { setLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
@@ -35,7 +34,7 @@ const startingItemIDs = [
 class Game {
     constructor( ) {
         this.isRunning = false;
-        this.mode; // 'MAP' || 'BATTLE'        
+        this.mode; // 'MAP'  
         this.cinematicMode; // bool
         this.inCinematic = false;
         this.paused; // bool
@@ -54,7 +53,6 @@ class Game {
         this.front = { }; // class Foreground
         this.back  = { };  // class Background
         this.util  = { };
-        this.battle; // class Battle
         this.party; // class Party
 
         this.activeNeighbourhood;
@@ -95,12 +93,7 @@ class Game {
      */
     getTileOnCanvasAtIndex( canvasName, index) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
-        if ( this.mode == BATTLE_MODE ) {
-            return canvasClass.battleGrid.array[index];  
-        }
-        else {
-            return canvasClass.getTileAtIndex( index );            
-        }
+        return canvasClass.getTileAtIndex( index ); 
     }
     /**
      * Return the I_Tile instance at xy position on given canvas
@@ -110,12 +103,7 @@ class Game {
      */
     getTileOnCanvasAtXY( canvasName, x, y ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
-        if ( this.mode == BATTLE_MODE ) {
-            return canvasClass.battleGrid.getTileAtXY( x, y );
-        }
-        else {
-            return canvasClass.getTileAtXY( x, y );       
-        }
+        return canvasClass.getTileAtXY( x, y );
     }
     /**
      * Return the I_Tile instance at column row position on given canvas
@@ -125,12 +113,7 @@ class Game {
      */
     getTileOnCanvasAtCell( canvasName, column, row ) {
         const canvasClass = canvasName == 'FRONT' ? this.front.class : this.back.class
-        if ( this.mode == BATTLE_MODE ) {
-            return canvasClass.battleGrid.getTileAtCell( column, row );  
-        }
-        else {
-            return canvasClass.getTileAtCell( column, row );          
-        }
+        return canvasClass.getTileAtCell( column, row ); 
     }
     /**
      * Initialize game Canvases. FRONT, BACK and UTIL
@@ -282,48 +265,6 @@ class Game {
             controls.listenForKeyPress( ); 
             this.paused = false;   
         }, 100 )
-    }
-    /**
-     * Instantiate a Party class instance with partyData as argument.
-     * Then assign a Battle instance to this.battle
-     * @param {Object} partyData - actionData object retrieved from mapResources.js
-     */
-    initializeBattle( partyData, opponentName ) {
-        const opponentParty = new Party( partyData, false );
-        this.clearCanvases( );
-        this.loadBattleGraphicsToCanvases( opponentParty );
-        this.battle = new Battle( opponentParty, opponentName );
-        animationFrameController.startBattleAnimation( );
-    }
-    /**
-     * Initialize the Background and Foreground battlegrids to start battle animations.
-     * Set the tilesheet and draw the map on the background.
-     * Then, prepare battleSlots and initialize the battling sprites in then
-     */
-    loadBattleGraphicsToCanvases( opponentParty ) {
-        const battleMapData = getMapData("battle/downtown");
-        this.BACK.initBattleGrid( battleMapData.rows, battleMapData.columns );
-        this.FRONT.initBattleGrid( battleMapData.rows, battleMapData.columns );
-        
-        const sheetData = tilesheets[battleMapData.tileSet];
-        this.BACK.setBattleBackgroundData( battleMapData, sheetData );
-        this.BACK.drawBattleMapFromBattleGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
-        this.FRONT.prepareBattlePositions( );
-        this.FRONT.setSpritesToBattleSlots( this.party, opponentParty );
-    }
-    /**
-     * Clear battle data,  redraw the active map background.
-     * Then activate overWorldAnimation.
-     */
-    clearBattleData( playerLostBattle ) {
-        this.battle = [];
-        this.clearCanvases( );
-        this.BACK.clearBattleMap( );
-        this.FRONT.clearBattleMap( );
-        this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + tilesheets[this.activeMap.tileSet].src] );
-        this.activeAction.checkForEventOnBattleEnd( playerLostBattle );
-        this.activeAction = null;
-        animationFrameController.startOverworldAnimation( );   
     }
     /**
      * Determine the players location based on the type of arrival in the new map. Then set it to the Player sprite

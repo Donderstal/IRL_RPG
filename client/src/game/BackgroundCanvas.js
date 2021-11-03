@@ -104,20 +104,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.sheetImage = image;
         this.grid.drawMap( this.sheetImage );
     }    
-    /**
-     * Set the battle maps' tile list to the tilegrid
-     */
-    setBattleBackgroundData( battleMapData ) {
-        let oneDimensionalMapGrid = battleMapData.grid.flat(1);
-        this.battleGrid.setTileGridToArray( oneDimensionalMapGrid )
-    }
-    /**
-     * Draw the battlegrid with this.sheetImage as tilesheet
-     */
-    drawBattleMapFromBattleGridData( image ) {
-        this.sheetImage = image;
-        this.battleGrid.drawMap( this.sheetImage );
-    }
     setSavepoint( savepointData ) {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
         tile.hasEvent = true;

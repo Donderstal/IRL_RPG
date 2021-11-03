@@ -3,7 +3,7 @@ const {
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals')
 const { 
-    ON_NPC_INTERACTION, ON_BATTLE_START, ON_LEAVE
+    ON_NPC_INTERACTION, ON_LEAVE
 }  = require('../../game-data/conditionGlobals')
 const { Scene }     = require('./Scene')
 /**
@@ -90,9 +90,6 @@ class Cinematic {
         switch( this.trigger ) {
             case ON_LEAVE: 
                 globals.GAME.switchMap( this.args[0], this.args[1] )
-                break;
-            case ON_BATTLE_START: 
-                globals.GAME.initializeBattle( this.args[0], this.args[1] );
                 break;
             case ON_NPC_INTERACTION: 
                 let sprite = globals.GAME.FRONT.spriteDictionary[this.args[0]]

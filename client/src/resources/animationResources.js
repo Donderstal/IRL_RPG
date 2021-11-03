@@ -1,11 +1,8 @@
 const { 
     FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, 
     SHEET_COLUMN_ONE, SHEET_COLUMN_TWO,
-    SHEET_COLUMN_THREE, SHEET_COLUMN_FOUR
+    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT
 } = require('../game-data/globals');
-const { 
-    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT, SHEET_ROW_BATTLE_PUNCH
-} = require('../game-data/battleGlobals');
 
 const animationResources = { 
     "TURN_SINGLE_CIRCLE": [

@@ -1,7 +1,6 @@
 const { handleMapAnimations }      = require('./map/mapAnimation')
-const { handleBattleAnimations }   = require('./battle/battleAnimation')
 const globals     = require('../game-data/globals')
-const { FRAMES_PER_SECOND, BATTLE_MODE, MAP_MODE }     = require('../game-data/globals')
+const { FRAMES_PER_SECOND, MAP_MODE }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 
@@ -13,12 +12,6 @@ let lastDateNow, newDateNow;
 const startRequestingFrame = () => {
     startOverworldAnimation()
     animationFrameController()
-}
-/**
- * Set GAME.mode to BATTLE_MODE
- */
-const startBattleAnimation = ( ) => {
-    globals.GAME.mode = BATTLE_MODE;
 }
 /**
  * Set GAME.mode to MAP_MODE
@@ -52,10 +45,6 @@ const animationFrameController = ( ) => {
             if ( GAME.mode == MAP_MODE && !GAME.inMenu ) {
                 handleMapAnimations( GAME )
             }
-            else if ( GAME.mode == BATTLE_MODE && !GAME.inMenu ) {
-                canvasHelpers.clearEntireCanvas('FRONT')
-                handleBattleAnimations( GAME )
-            }
             else if ( GAME.inMenu ) {
                 GAME.MENU.draw( );
             }
@@ -77,6 +66,5 @@ const animationFrameController = ( ) => {
 
 module.exports = {
     startRequestingFrame,
-    startOverworldAnimation,
-    startBattleAnimation,
+    startOverworldAnimation
 }
