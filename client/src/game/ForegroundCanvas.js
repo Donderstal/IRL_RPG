@@ -211,7 +211,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         let characters = globals.GAME.activeNeighbourhood.characters
         let characterData = {
             "sprite": characters[ Math.floor( Math.random( ) * characters.length ) ], 
-            "direction": globals.FACING_RIGHT, "hasAction": true,
+            "direction": start.direction, "hasAction": true,
             "action": [
                 {
                     "condition": {
@@ -222,7 +222,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
                         "sfx": "voice-1.mp3",
                         "scenes": [
                             { "type": SPEAK, "text": "This is a random text!" },
-                            { "type": SPEAK, "text": "Omg so random..." }
+                            { "type": SPEAK, "text": "This is a much longer random text my man thank you for listening!" }
                         ]
                     } 
                 }                

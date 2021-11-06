@@ -1,9 +1,25 @@
 const canvas = require( '../../helpers/canvasHelpers' )
 const { 
     LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
-    SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT
+    SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT, GRID_BLOCK_PX
 } = require( '../../game-data/globals' );
+const globals = require( '../../game-data/globals' );
 const { TypeWriter } = require('../../helpers/TypeWriter');
+
+const bubbleStartOpenRightBottom = "/static/ui/bubble-template-open-right-bottom.png";
+const bubbleStartOpenRightTop = "/static/ui/bubble-template-open-right-top.png";
+const bubbleStartOpenRightBottomTop = "/static/ui/bubble-template-open-right-bottom-top.png";
+const bubbleStartOpenRight = "/static/ui/bubble-template-open-right.png";
+
+const bubbleMiddleOpenBottom = "/static/ui/bubble-template-middle-open-bottom.png";
+const bubbleMiddleOpenTop = "/static/ui/bubble-template-middle-open-top.png";
+const bubbleMiddle = "/static/ui/bubble-template-middle.png";
+
+const bubbleEndOpenBottom = "/static/ui/bubble-template-end-open-bottom.png";
+const bubbleEndOpenTop = "/static/ui/bubble-template-end-open-top.png";
+const bubbleEnd = "/static/ui/bubble-template-end.png";
+
+const singleCharacterBubble = "/static/ui/bubble-template.png";
 /**
  * The Textbox interface is the base class for displaying in-game textboxes, excluding the MainMenu
  */
@@ -26,7 +42,6 @@ class I_TextBox {
         this.buttonsText    = ( buttonsText == null ) ? [ "( Space ) OK" ] : buttonsText;
         this.buttonColor    = "white";
         this.animationFrame = 0;
-
         canvas.setFont(this.fontSize);
         this.drawTextBox( );
     }
@@ -59,31 +74,53 @@ class I_TextBox {
         this.writeText( );
         this.drawButtons( );
     }
+
+    drawBubblePart( name, x, y ) {
+        let pngs = globals.PNG_DICTIONARY;
+        canvas.drawFromImageToCanvas( 
+            "FRONT", pngs[name],
+            0, 0,
+            GRID_BLOCK_PX, GRID_BLOCK_PX,
+            x, y, 
+            GRID_BLOCK_PX, GRID_BLOCK_PX
+        )
+    }
     /**
      * Call canvas.drawRect twice to draw the I_Textbox background.
      */
     drawBox( ) {
-        canvas.drawRect( 
-            "FRONT", this.x, this.y, 
-            this.width, this.height, OUTER_TEXTBOX_RGBA
-        );
-        canvas.drawRect( 
-            "FRONT", this.innerBoxX, this.innerBoxY, 
-            this.innerBoxWidth, this.innerBoxHeight, INNER_TEXTBOX_RGBA
-        );
-        const front = canvas.getFrontCanvasContext( )
-        front.beginPath( )
-        front.strokeStyle = "white";
-        front.rect( this.x, this.y, this.width, this.height )
-        front.stroke( )
+        let index = 0;
+        let accumulator = 0;
+        for ( var i = 0; i < this.text.length; i++ ) {
+            const start = this.text.length == 1 ? bubbleStartOpenRight : 
+                i == 0 ? bubbleStartOpenRightBottom : 
+                i == this.text.length -1 ? bubbleStartOpenRightTop : bubbleStartOpenRightBottomTop;
+            const middle = this.text.length == 1 ? bubbleMiddle : 
+                i == 0 ? bubbleMiddleOpenBottom : bubbleMiddleOpenTop;
+            const end = this.text.length == 1 ? bubbleEnd : 
+                i == 0 ? bubbleEndOpenBottom : bubbleEndOpenTop;
+            while( accumulator < globals.GAME.front.ctx.measureText(this.typeWriter.fullText).width + (GRID_BLOCK_PX*2) && accumulator < globals.MAX_BUBBLE_WIDTH) {
+                if ( index == 0 ) {
+                    this.drawBubblePart( start, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));
+                }
+                else {
+                    this.drawBubblePart( middle, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));
+                }
+                index++;
+                accumulator += GRID_BLOCK_PX;
+            }
+            this.drawBubblePart( end, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));
+            index = 0;
+            accumulator = 0;
+        }
     }
     /**
-     * Set this.fontType as the activeFont.
+     * Set this.fontSize as the activeFont.
      * Get the yPosition of the text in the textbox.
      * Then, loop through the text lines and draw them below eachother in the textbox.
      */
     writeText( ) {
-        canvas.setFont(this.fontType);
+        canvas.setFont(this.fontSize);
         let yPositionInBox = this.y + this.lineHeight;
 
         if ( this.hasHeader ) {
@@ -92,7 +129,7 @@ class I_TextBox {
 
         for ( var i = 0; i < this.text.length; i++ ) {
             canvas.writeTextLine( 
-                this.text[i], this.x + this.fontSize, 
+                this.text[i], this.x + (GRID_BLOCK_PX * .66), 
                 yPositionInBox + ( this.lineHeight * i ), this.fontSize
             );
         }

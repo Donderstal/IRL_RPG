@@ -63,11 +63,7 @@ button:focus {
 	border-color: #666;
 }
 
-@font-face {
-    font-family: GameFont;
-    src: url('/static/Fipps-Regular.otf');
-}
-
+@import url('http://fonts.cdnfonts.com/css/common-pixel');
 canvas {
-	font-family: GameFont;
+	font-family: 'Common Pixel', sans-serif;
 }
