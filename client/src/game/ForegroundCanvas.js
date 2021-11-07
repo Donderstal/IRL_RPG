@@ -10,6 +10,7 @@ const { DEFAULT, EVENT_TALK, SPEAK, EMOTE } = require('../game-data/conditionGlo
 const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers');
 const { EMOTE_HEART } = require('../game-data/textboxGlobals');
+const { getAction } = require('../helpers/actionDtoFactory');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -214,22 +215,17 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             "sprite": characters[ Math.floor( Math.random( ) * characters.length ) ], 
             "direction": start.direction, "hasAction": true,
             "action": [
-                {
-                    "condition": {
-                        "type": DEFAULT
-                    },
-                    "action": { 
-                        "type": EVENT_TALK,
-                        "sfx": "voice-1.mp3",
-                        "scenes": [
-                            { "type": SPEAK, "text": "This is a random text!" },
-                            { "type": SPEAK, "text": "This is a much longer random text my man thank you for listening!" },
-                            { "type": EMOTE, "src": EMOTE_HEART }
-                        ]
-                    } 
-                }                
+                getAction( 
+                    [ DEFAULT, false ],
+                    [ EVENT_TALK, false, "voice-1.mp3", [ 
+                        [SPEAK, "This is a random text!", false],
+                        [SPEAK, "This is a much longer random text my man thank you for listening!", false],
+                        [EMOTE, EMOTE_HEART]
+                    ]]
+                )               
             ]
         }
+        console.log(characterData)
         const grid = { 
             'rows': this.grid.rows, 'cols': this.grid.cols,
             'tiles': globals.GAME.BACK.grid.array.filter((tile) => {
