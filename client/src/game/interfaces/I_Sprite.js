@@ -167,12 +167,11 @@ class Sprite {
         }
     }
 
-    speak( text, sfx, options = null ) {    
-        getSpeechBubble( {
-            'x' : this.x, 'y' : this.y,
-            'text' : text, 'name' : this.name,
-            'sfx' : sfx ? sfx : false, 'options' : options
-        } );
+    speak( text, sfx, options = null ) {
+        globals.GAME.speechBubbleController.setNewBubble( 
+            {'x': this.x, 'y': this.y}, 
+            {'text': text, 'name': this.name, 'options': options, 'sfx': sfx ? sfx : false}
+        );   
         if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
         }

@@ -22,12 +22,10 @@ const handleMapAnimations = ( GAME ) => {
     handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
 
-    if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.bubbleIsActive ) {
+    if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.speechBubbleController.isActive ) {
         mapControls.handleMovementKeys( );  
     }
-    if ( GAME.bubbleIsActive ) {
-        GAME.activeBubble.drawTextBox( )
-    }
+    GAME.speechBubbleController.drawBubbles( );
 
     GAME.FRONT.activeEffects.forEach( ( e ) => {
         e.drawAndMove( );

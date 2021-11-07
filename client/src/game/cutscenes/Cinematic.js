@@ -26,10 +26,10 @@ class Cinematic {
         let goToNextScene = false;
         switch( this.activeScene.type ) {
             case SPEAK:
-                goToNextScene = !globals.GAME.bubbleIsActive
+                goToNextScene = !globals.GAME.speechBubbleController.isActive
                 break;
             case SPEAK_YES_NO:
-                goToNextScene = !globals.GAME.bubbleIsActive
+                goToNextScene = !globals.GAME.speechBubbleController.isActive
                 break;
             case MOVE :
             case MOVE_CAR:
