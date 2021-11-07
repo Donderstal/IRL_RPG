@@ -1,5 +1,5 @@
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT 
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT, EMOTE
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals')
 const { 
@@ -26,9 +26,8 @@ class Cinematic {
         let goToNextScene = false;
         switch( this.activeScene.type ) {
             case SPEAK:
-                goToNextScene = !globals.GAME.speechBubbleController.isActive
-                break;
             case SPEAK_YES_NO:
+            case EMOTE:
                 goToNextScene = !globals.GAME.speechBubbleController.isActive
                 break;
             case MOVE :
@@ -73,7 +72,7 @@ class Cinematic {
         
         this.iterator++
         if ( this.scenes[this.iterator] ) {
-            if ( this.activeScene.is( SPEAK ) || this.activeScene.is( SPEAK_YES_NO ) ) {
+            if ( this.activeScene.is( SPEAK ) || this.activeScene.is( SPEAK_YES_NO )|| this.activeScene.is( EMOTE ) ) {
                 this.activeScene.unsetSpriteAnimation( )
             }
             this.activeScene = new Scene( this.scenes[this.iterator] );            

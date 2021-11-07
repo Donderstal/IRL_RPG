@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### NOV 7, 2021
+* SpeechBubble controller class
+* Added pixel speechBubbles and emotes
+
 #### NOV 3, 2021
 * Removed a ton of old / unused maps
 * Removed battle code

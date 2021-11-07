@@ -1,8 +1,8 @@
 module.exports = {
     EMOTE_HAPPY: "/static/ui/bubble-happy-face.png",
     EMOTE_SAD: "/static/ui/bubble-sad-face.png",
-    EMOTE_ANGRY: "/static/ui/bubble-angry.png",
-    EMOTE_SURPRISED: "/static/ui/bubble-surprised.png",
+    EMOTE_ANGRY: "/static/ui/bubble-angry-face.png",
+    EMOTE_SURPRISED: "/static/ui/bubble-surprised-face.png",
     EMOTE_HEART: "/static/ui/bubble-heart.png",
     EMOTE_QUESTIONMARK: "/static/ui/bubble-question.png",
     EMOTE_EXCLAMATIONMARK: "/static/ui/bubble-exclamation.png",

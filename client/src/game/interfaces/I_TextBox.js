@@ -102,7 +102,7 @@ class I_TextBox {
         let yPositionInBox = this.y + this.lineHeight;
 
         if ( this.hasHeader ) {
-            yPositionInBox += LARGE_FONT_SIZE;
+            yPositionInBox += SMALL_FONT_SIZE;
         }
 
         for ( var i = 0; i < this.text.length; i++ ) {

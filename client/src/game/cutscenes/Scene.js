@@ -1,6 +1,6 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, 
-    WAIT, EVENT_BUS
+    WAIT, EVENT_BUS, EMOTE
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { Counter } = require('../../helpers/Counter');
@@ -37,6 +37,9 @@ class Scene {
                 this.pathNo = data.pathNo;
                 setToSprite = true;
                 break;
+            case EMOTE:
+                this.src = data.src;
+                setToSprite = true;
             case MOVE :
                 this.initMoveScene( data );
                 setToSprite = true;

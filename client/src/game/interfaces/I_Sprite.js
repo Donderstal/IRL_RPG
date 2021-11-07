@@ -8,7 +8,7 @@ const {
     STATE_IDLE, STATE_MOVING, STATE_WAITING, STATE_BLOCKED
 } = require( '../../game-data/globals' )
 const { checkForCollision } = require('../map/map-ui/movementChecker')
-const { SPEAK_YES_NO, SPEAK, MOVE, ANIM } = require('../../game-data/conditionGlobals')
+const { SPEAK_YES_NO, SPEAK, MOVE, ANIM, EMOTE } = require('../../game-data/conditionGlobals')
 const { Destination } = require('../map/map-classes/Destination')
 const { SpriteState } = require('../../helpers/SpriteState')
 /**
@@ -157,6 +157,12 @@ class Sprite {
         }
         if ( scene.is( SPEAK ) ) {
             this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
+        }
+        if ( scene.is( EMOTE ) ) {
+            globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, scene.src );
+            if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
+                this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
+            }
         }
         if ( scene.is( MOVE ) ) {
             this.setDestination( scene.destination );

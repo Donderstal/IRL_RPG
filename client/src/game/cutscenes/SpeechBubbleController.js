@@ -3,9 +3,11 @@ const { getUniqueId } = require("../../helpers/utilFunctions");
 const { SpeechBubble } = require("./SpeechBubble");
 const { SPEAK_YES_NO } = require("../../game-data/conditionGlobals");
 const { INTERACTION_YES, INTERACTION_NO } = require("../../game-data/interactionGlobals");
+const { Emote } = require("./Emote");
 
 class SpeechBubbleController {
     constructor( ) {
+        this.emoteIds = [];
         this.activeBubbles = {};
         this.activeBubbleIds = [];
     }
@@ -13,7 +15,7 @@ class SpeechBubbleController {
     get isActive() { return this.activeBubbleIds.length > 0; }
     get isWriting() { 
         return this.activeBubbleIds.filter(
-            (e) => { return this.activeBubbles[e].typeWriter.isWriting }
+            (e) => { return this.emoteIds.indexOf(e) == -1 && this.activeBubbles[e].typeWriter.isWriting }
         ).length > 0;
     }
 
@@ -21,6 +23,13 @@ class SpeechBubbleController {
         const id = getUniqueId(this.activeBubbleIds);
         this.activeBubbles[id] = new SpeechBubble( location, contents, id );
         this.activeBubbleIds.push(id)
+    }
+
+    setNewEmote( location, imageSrc ) {
+        const id = getUniqueId(this.activeBubbleIds);
+        this.activeBubbles[id] = new Emote( location, imageSrc );
+        this.activeBubbleIds.push(id);
+        this.emoteIds.push(id);
     }
 
     bubbleIsActive( id ) {
@@ -53,6 +62,7 @@ class SpeechBubbleController {
     clearActiveBubbles( ) {
         this.activeBubbles = {};
         this.activeBubbleIds = [];
+        this.emoteIds = [];
     }
 
     drawBubbles( ) {
