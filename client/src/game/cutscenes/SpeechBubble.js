@@ -19,7 +19,7 @@ const getSpeechBubbleDimensions = ( contents ) => {
 }
 
 class SpeechBubble extends I_TextBox {
-    constructor( contents, location ) {
+    constructor( location, contents ) {
         const dimensions = getSpeechBubbleDimensions( contents );
 
         super( getSpeechBubbleXy( location, dimensions ), dimensions, 'LARGE', contents.text, contents.options )

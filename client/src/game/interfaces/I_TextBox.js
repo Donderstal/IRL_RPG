@@ -32,7 +32,7 @@ class I_TextBox {
         this.buttonColor    = "white";
         this.animationFrame = 0;
         canvas.setFont(this.fontSize);
-        this.drawTextBox( );
+        this.draw( );
     }
     set text( text ) {             
         this.typeWriter = new TypeWriter( text );
@@ -48,12 +48,8 @@ class I_TextBox {
 
         return returner;
     }
-    /**
-     * Increment this.animationFrame
-     * Call drawBox(), writeText() and drawButtons()
-     * If a header is set, call writeHeader()
-     */
-    drawTextBox( ) {
+
+    draw( ) {
         this.animationFrame++;
 
         this.drawBox( );
@@ -61,7 +57,6 @@ class I_TextBox {
             this.writeHeader( );
         }
         this.writeText( );
-        this.drawButtons( );
     }
 
     drawBubblePart( name, x, y ) {
@@ -74,9 +69,7 @@ class I_TextBox {
             GRID_BLOCK_PX, GRID_BLOCK_PX
         )
     }
-    /**
-     * Call canvas.drawRect twice to draw the I_Textbox background.
-     */
+
     drawBox( ) {
         let index = 0;
         let accumulator = 0;
@@ -103,11 +96,7 @@ class I_TextBox {
             accumulator = 0;
         }
     }
-    /**
-     * Set this.fontSize as the activeFont.
-     * Get the yPosition of the text in the textbox.
-     * Then, loop through the text lines and draw them below eachother in the textbox.
-     */
+
     writeText( ) {
         canvas.setFont(this.fontSize);
         let yPositionInBox = this.y + this.lineHeight;
@@ -123,49 +112,14 @@ class I_TextBox {
             );
         }
     }
-    /**
-     * Write the text set to this.headerText at the top of the textbox
-     */
+
     writeHeader( ) {
         canvas.writeTextLine( 
-            this.headerText, this.x + this.fontSize, 
+            this.headerText, this.x + (GRID_BLOCK_PX * .66),
             this.y + SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE
         );
     }
-    /**
-     * For each String in the this.buttonsText array, draw write the buttonText at the bottom of the textbox
-     */
-    drawButtons( ) {
-        let buttonX     = this.x + LARGE_FONT_SIZE;
-        let buttonsY    = (this.y + this.height) - ( LARGE_FONT_SIZE * .5 );
 
-        this.buttonsText.forEach( (buttonText) => {
-            canvas.writeTextLine(
-                buttonText, buttonX, buttonsY, SMALL_FONT_SIZE, this.buttonColor
-            )
-            buttonX += ( this.width / 2 ) ;
-        });
-    }
-    /**
-     * If this.animationFrame is over the FRAME_LIMIT * 2, toggle this.buttonColor and reset this.animationFrame
-     */
-    doButtonAnimation( ) {
-        if ( this.animationFrame > ( FRAME_LIMIT * 2 ) ) {
-            this.buttonColor = ( this.buttonColor == "black" ) ? "#800020" : "black";
-            this.animationFrame = 0;
-        }
-    }
-    /**
-     * Set given text to the this.text property
-     * @param {String} text 
-     */
-    setText( text ) {
-        this.text = text;
-    }
-    /**
-     * Set given text to the this.headerText property. Set this.hasHeader to true
-     * @param {String} text 
-     */
     setHeader( text ) {
         this.hasHeader  = true;
         this.headerText = text;

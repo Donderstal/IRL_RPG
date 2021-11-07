@@ -2,7 +2,6 @@ const canvasHelpers = require('../../helpers/canvasHelpers')
 const globals = require('../../game-data/globals')
 const { getEffect } = require('../../helpers/effectHelpers')
 const { getAnimationFrames } = require('../../resources/animationResources')
-const { getSpeechBubble } = require('../map/map-ui/displayText')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 

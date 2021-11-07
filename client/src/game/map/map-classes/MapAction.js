@@ -132,9 +132,7 @@ class MapAction extends I_Hitbox {
             this.resetAction( );   
         }
     }
-    /**
-     * Play the sound effect at the location of this.sfx. Call displayText.getSpeechBubble with this as argument
-     */
+
     startCinematicScript( ) {
         new Cinematic( this, ON_NPC_INTERACTION, [ this.spriteId ] );
     } 

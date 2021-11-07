@@ -2,7 +2,7 @@ const globals = require("../../game-data/globals");
 const { getUniqueId } = require("../../helpers/utilFunctions");
 const { SpeechBubble } = require("./SpeechBubble");
 const { SPEAK_YES_NO } = require("../../game-data/conditionGlobals");
-const { INTERACTION_NO } = require("../../game-data/interactionGlobals");
+const { INTERACTION_YES, INTERACTION_NO } = require("../../game-data/interactionGlobals");
 
 class SpeechBubbleController {
     constructor( ) {
@@ -17,7 +17,7 @@ class SpeechBubbleController {
         ).length > 0;
     }
 
-    setNewBubble( contents, location ) {
+    setNewBubble( location, contents ) {
         const id = getUniqueId(this.activeBubbleIds);
         this.activeBubbles[id] = new SpeechBubble( location, contents, id );
         this.activeBubbleIds.push(id)
@@ -57,7 +57,7 @@ class SpeechBubbleController {
 
     drawBubbles( ) {
         if ( this.isActive ) {
-            this.activeBubbleIds.forEach( e => this.activeBubbles[e].drawTextBox() );            
+            this.activeBubbleIds.forEach( e => this.activeBubbles[e].draw() );            
         }
     }
 }
