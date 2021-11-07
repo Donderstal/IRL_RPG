@@ -23,6 +23,7 @@ module.exports = {
     FADE_OUT: "FAO",
     FADE_OUT_IN: "FOI",
     WAIT: "WAI",
+    EMOTE: "EMO",
 
     ON_ENTER: "ON_EN",
     ON_LEAVE: "ON_LE",

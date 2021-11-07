@@ -1,25 +1,14 @@
 const canvas = require( '../../helpers/canvasHelpers' )
-const { 
-    LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
-    SMALL_FONT_SIZE, OUTER_TEXTBOX_RGBA, INNER_TEXTBOX_RGBA, FRAME_LIMIT, GRID_BLOCK_PX
-} = require( '../../game-data/globals' );
 const globals = require( '../../game-data/globals' );
 const { TypeWriter } = require('../../helpers/TypeWriter');
-
-const bubbleStartOpenRightBottom = "/static/ui/bubble-template-open-right-bottom.png";
-const bubbleStartOpenRightTop = "/static/ui/bubble-template-open-right-top.png";
-const bubbleStartOpenRightBottomTop = "/static/ui/bubble-template-open-right-bottom-top.png";
-const bubbleStartOpenRight = "/static/ui/bubble-template-open-right.png";
-
-const bubbleMiddleOpenBottom = "/static/ui/bubble-template-middle-open-bottom.png";
-const bubbleMiddleOpenTop = "/static/ui/bubble-template-middle-open-top.png";
-const bubbleMiddle = "/static/ui/bubble-template-middle.png";
-
-const bubbleEndOpenBottom = "/static/ui/bubble-template-end-open-bottom.png";
-const bubbleEndOpenTop = "/static/ui/bubble-template-end-open-top.png";
-const bubbleEnd = "/static/ui/bubble-template-end.png";
-
-const singleCharacterBubble = "/static/ui/bubble-template.png";
+const { 
+    LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
+    SMALL_FONT_SIZE, FRAME_LIMIT, GRID_BLOCK_PX
+} = require( '../../game-data/globals' );
+const { 
+    BUBBLE_START, BUBBLE_START_OPEN_BOTTOM, BUBBLE_START_OPEN_TOP, BUBBLE_START_OPEN_BOTTOM_TOP, BUBBLE_MIDDLE, 
+    BUBBLE_MIDDLE_OPEN_BOTTOM, BUBBLE_MIDDLE_OPEN_TOP, BUBBLE_END, BUBBLE_END_OPEN_BOTTOM, BUBBLE_END_OPEN_TOP 
+} = require('../../game-data/textboxGlobals');
 /**
  * The Textbox interface is the base class for displaying in-game textboxes, excluding the MainMenu
  */
@@ -92,13 +81,13 @@ class I_TextBox {
         let index = 0;
         let accumulator = 0;
         for ( var i = 0; i < this.text.length; i++ ) {
-            const start = this.text.length == 1 ? bubbleStartOpenRight : 
-                i == 0 ? bubbleStartOpenRightBottom : 
-                i == this.text.length -1 ? bubbleStartOpenRightTop : bubbleStartOpenRightBottomTop;
-            const middle = this.text.length == 1 ? bubbleMiddle : 
-                i == 0 ? bubbleMiddleOpenBottom : bubbleMiddleOpenTop;
-            const end = this.text.length == 1 ? bubbleEnd : 
-                i == 0 ? bubbleEndOpenBottom : bubbleEndOpenTop;
+            const start = this.text.length == 1 ? BUBBLE_START : 
+                i == 0 ? BUBBLE_START_OPEN_BOTTOM : 
+                i == this.text.length -1 ? BUBBLE_START_OPEN_TOP : BUBBLE_START_OPEN_BOTTOM_TOP;
+            const middle = this.text.length == 1 ? BUBBLE_MIDDLE : 
+                i == 0 ? BUBBLE_MIDDLE_OPEN_BOTTOM : BUBBLE_MIDDLE_OPEN_TOP;
+            const end = this.text.length == 1 ? BUBBLE_END : 
+                i == 0 ? BUBBLE_END_OPEN_BOTTOM : BUBBLE_END_OPEN_TOP;
             while( accumulator < globals.GAME.front.ctx.measureText(this.typeWriter.fullText).width + (GRID_BLOCK_PX*2) && accumulator < globals.MAX_BUBBLE_WIDTH) {
                 if ( index == 0 ) {
                     this.drawBubblePart( start, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));

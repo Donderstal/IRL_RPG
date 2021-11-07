@@ -6,9 +6,10 @@ const { Car } = require('./map/roads/Car')
 const { getUniqueId } = require('../helpers/utilFunctions');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
-const { DEFAULT, EVENT_TALK, SPEAK } = require('../game-data/conditionGlobals');
+const { DEFAULT, EVENT_TALK, SPEAK, EMOTE } = require('../game-data/conditionGlobals');
 const { RoadNetwork } = require('./map/RoadNetwork');
-const pathFinder = require('../helpers/pathfindingHelpers')
+const pathFinder = require('../helpers/pathfindingHelpers');
+const { EMOTE_HEART } = require('../game-data/textboxGlobals');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -222,7 +223,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
                         "sfx": "voice-1.mp3",
                         "scenes": [
                             { "type": SPEAK, "text": "This is a random text!" },
-                            { "type": SPEAK, "text": "This is a much longer random text my man thank you for listening!" }
+                            { "type": SPEAK, "text": "This is a much longer random text my man thank you for listening!" },
+                            { "type": EMOTE, "src": EMOTE_HEART }
                         ]
                     } 
                 }                
