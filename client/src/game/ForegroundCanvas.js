@@ -214,16 +214,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         let characterData = {
             "sprite": characters[ Math.floor( Math.random( ) * characters.length ) ], 
             "direction": start.direction, "hasAction": true,
-            "action": [
-                getAction( 
-                    [ DEFAULT, false ],
-                    [ EVENT_TALK, false, "voice-1.mp3", [ 
-                        [SPEAK, "This is a random text!", false],
-                        [SPEAK, "This is a much longer random text my man thank you for listening!", false],
-                        [EMOTE, EMOTE_HEART]
-                    ]]
-                )               
-            ]
+            "action": [globals.GAME.activeNeighbourhood.getRandomAction( )].map(a => {return {...a}})
         }
         console.log(characterData)
         const grid = { 

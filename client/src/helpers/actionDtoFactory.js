@@ -9,9 +9,9 @@ const getKeys = ( type ) => {
         case SPEAK:
             return [ "text", "spriteName", "sfx" ];
         case SPEAK_YES_NO:
-            return [ "text", "spriteName", "pathYes", "pathNo", "sfx" ];
+            return [ "text", "pathYes", "pathNo", "spriteName", "sfx" ];
         case EMOTE:
-            return [ "src", "sfx" ];
+            return [ "src", "spriteName", "sfx" ];
         case MOVE :
             return [ "spriteName", "destination" ];
         case MOVE_CAR:
@@ -39,7 +39,17 @@ const getActionSceneObject = ( type, options ) => {
     const sceneObject = { "type": type };
     const keys = getKeys( type );
     keys.forEach((key, index) => { 
-        sceneObject[key] = options[index] == undefined ? false : options[index];
+        if ( options[index] != undefined && (key == "pathYes" || key == "pathNo") ) { 
+            sceneObject[key] = [];
+            let innerScenes = options[index]
+            innerScenes.forEach((scene)=> { 
+                let type = scene.splice(0, 1)[0];
+                sceneObject[key].push(getActionSceneObject( type, scene ));
+            })
+        }
+        else {
+            sceneObject[key] = options[index] == undefined ? false : options[index];            
+        }
     });
     return sceneObject;
 };
@@ -55,6 +65,7 @@ const getActionObject = ( type, registryKey, sfx, scenes ) => {
         action["registryKey"] = registryKey;
     }
     scenes.forEach( ( scene )=> {
+        console.log(scene)
         let type = scene.splice(0, 1)[0];
         actionObject["scenes"].push(getActionSceneObject( type, scene ));
     } )

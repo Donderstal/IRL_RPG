@@ -16,6 +16,11 @@ class Neighbourhood {
     get activeMap( ) { return this[this.activeMapName]; }
     get activeMapName( ) { return this.activeMapKey.split('/')[1]; }
 
+    getRandomAction( ) {
+        let actions = this["spawnable_actions"];
+        return actions[Math.floor(Math.random()*actions.length)];
+    }
+
     activateMap( key ) {
         this.activeMapKey = key;
         this.setMapNeighbours( );
