@@ -80,6 +80,8 @@ class Scene {
                 break;
             default :
                 console.log( "Scene type " + this.type + " is not recognized")
+                console.log(data);
+                console.log(this);
         }
         if( setToSprite ) {
             this.setAnimToSprite( );            

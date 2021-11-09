@@ -57,7 +57,8 @@ class Cinematic {
                 goToNextScene = this.activeScene.counter.countAndCheckLimit( )
                 break;
             default :
-                console.log( "Scene type " + this.type + " is not recognized")
+                console.log( "Scene type " + this.activeScene.type + " is not recognized")
+                console.log(this.activeScene)
         }
 
         if ( goToNextScene ) {
