@@ -214,8 +214,8 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         let characterData = {
             "sprite": characters[ Math.floor( Math.random( ) * characters.length ) ], 
             "direction": start.direction, "hasAction": true,
-            "action": [globals.GAME.activeNeighbourhood.getRandomAction( )].map(a => {return {...a}})
-        }
+            "action": [globals.GAME.activeNeighbourhood.getRandomAction( )]
+        };
         console.log(characterData)
         const grid = { 
             'rows': this.grid.rows, 'cols': this.grid.cols,

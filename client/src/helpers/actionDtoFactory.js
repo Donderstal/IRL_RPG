@@ -4,7 +4,6 @@ const {
 } = require('../game-data/conditionGlobals');
 
 const getKeys = ( type ) => {
-    console.log(type)
     switch( type ) {
         case SPEAK:
             return [ "text", "spriteName", "sfx" ];
@@ -35,20 +34,20 @@ const getKeys = ( type ) => {
     }
 }
 
-const getActionSceneObject = ( type, options ) => {
-    const sceneObject = { "type": type };
-    const keys = getKeys( type );
+const getActionSceneObject = ( options ) => {
+    const sceneObject = { "type": options[0] };
+    const keys = getKeys( options[0] );
     keys.forEach((key, index) => { 
-        if ( options[index] != undefined && (key == "pathYes" || key == "pathNo") ) { 
+        let currentOption = options[index+1]
+        if ( currentOption != undefined && (key == "pathYes" || key == "pathNo") ) { 
+            let innerScenes = currentOption;
             sceneObject[key] = [];
-            let innerScenes = options[index]
             innerScenes.forEach((scene)=> { 
-                let type = scene.splice(0, 1)[0];
-                sceneObject[key].push(getActionSceneObject( type, scene ));
+                sceneObject[key].push(getActionSceneObject( scene ));
             })
         }
         else {
-            sceneObject[key] = options[index] == undefined ? false : options[index];            
+            sceneObject[key] = currentOption == undefined ? false : currentOption;            
         }
     });
     return sceneObject;
@@ -65,9 +64,7 @@ const getActionObject = ( type, registryKey, sfx, scenes ) => {
         action["registryKey"] = registryKey;
     }
     scenes.forEach( ( scene )=> {
-        console.log(scene)
-        let type = scene.splice(0, 1)[0];
-        actionObject["scenes"].push(getActionSceneObject( type, scene ));
+        actionObject["scenes"].push(getActionSceneObject( scene ));
     } )
     return actionObject
 }

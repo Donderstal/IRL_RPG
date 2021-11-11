@@ -1,4 +1,5 @@
 const globals = require("../game-data/globals");
+const { getAction } = require("../helpers/actionDtoFactory");
 const { Counter } = require("../helpers/Counter");
 const { getMapData } = require("../resources/mapResources")
 
@@ -18,7 +19,8 @@ class Neighbourhood {
 
     getRandomAction( ) {
         let actions = this["spawnable_actions"];
-        return actions[Math.floor(Math.random()*actions.length)];
+        let randomAction = actions[Math.floor(Math.random()*actions.length)];
+        return getAction( randomAction[0], randomAction[1] );
     }
 
     activateMap( key ) {

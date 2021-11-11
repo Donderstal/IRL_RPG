@@ -112,7 +112,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
  */
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
-    ctx.font = size + "px " + 'Common Pixel';
+    ctx.font = size + "px " + 'Minecraft';
 }
 /**
  * Write given text with the ctx.fillText function at given xy on the front context
