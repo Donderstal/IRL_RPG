@@ -32,7 +32,6 @@ class I_TextBox {
         this.buttonColor    = "white";
         this.animationFrame = 0;
         canvas.setFont(this.fontSize);
-        this.draw( );
     }
     set text( text ) {             
         this.typeWriter = new TypeWriter( text );
@@ -49,25 +48,15 @@ class I_TextBox {
         return returner;
     }
 
-    draw( ) {
-        this.animationFrame++;
-
-        this.drawBox( );
-        if ( this.hasHeader ) {
-            this.writeHeader( );
-        }
-        this.writeText( );
-    }
-
     drawBubblePart( name, x, y ) {
         let pngs = globals.PNG_DICTIONARY;
-        canvas.drawFromImageToCanvas( 
-            "FRONT", pngs[name],
+        this.innerCtx.drawImage(
+            pngs[name],
             0, 0,
             GRID_BLOCK_PX, GRID_BLOCK_PX,
             x, y, 
             GRID_BLOCK_PX, GRID_BLOCK_PX
-        )
+        );
     }
 
     drawBox( ) {
@@ -83,33 +72,17 @@ class I_TextBox {
                 i == 0 ? BUBBLE_END_OPEN_BOTTOM : BUBBLE_END_OPEN_TOP;
             while( accumulator < globals.GAME.front.ctx.measureText(this.typeWriter.fullText).width + (GRID_BLOCK_PX*2) && accumulator < globals.MAX_BUBBLE_WIDTH) {
                 if ( index == 0 ) {
-                    this.drawBubblePart( start, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));
+                    this.drawBubblePart( start, GRID_BLOCK_PX*index, GRID_BLOCK_PX*i);
                 }
                 else {
-                    this.drawBubblePart( middle, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));
+                    this.drawBubblePart( middle, GRID_BLOCK_PX*index, GRID_BLOCK_PX*i);
                 }
                 index++;
                 accumulator += GRID_BLOCK_PX;
             }
-            this.drawBubblePart( end, this.x + (GRID_BLOCK_PX*index), this.y + (GRID_BLOCK_PX*i));
+            this.drawBubblePart( end, GRID_BLOCK_PX*index, GRID_BLOCK_PX*i);
             index = 0;
             accumulator = 0;
-        }
-    }
-
-    writeText( ) {
-        canvas.setFont(this.fontSize);
-        let yPositionInBox = this.y + this.lineHeight;
-
-        if ( this.hasHeader ) {
-            yPositionInBox += SMALL_FONT_SIZE;
-        }
-
-        for ( var i = 0; i < this.text.length; i++ ) {
-            canvas.writeTextLine( 
-                this.text[i], this.x + (GRID_BLOCK_PX * .66), 
-                yPositionInBox + ( this.lineHeight * i ), this.fontSize
-            );
         }
     }
 
