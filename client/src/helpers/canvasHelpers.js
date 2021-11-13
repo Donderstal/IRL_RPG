@@ -55,7 +55,6 @@ const drawFromImageToCanvas = (
  * Return the lines of text in an array.
  * @param {String} text 
  * @param {String} fontSize 
- * @param {Number} MAX_BUBBLE_TEXT_WIDTH 
  */
 const breakTextIntoLines = ( text, fontSize ) => {
     let ctx = getFrontCanvasContext() 
@@ -113,7 +112,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
  */
 const setFont = ( size ) => {
     let ctx = getFrontCanvasContext()
-    ctx.font = size + "px " + 'Minecraft';
+    ctx.font = size + "px " + 'AuX DotBitC Xtra';
 }
 /**
  * Write given text with the ctx.fillText function at given xy on the front context

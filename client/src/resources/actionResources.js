@@ -41,10 +41,17 @@ const RANDOM_TALK_4 = [
         ],
     ]]
 ]
+const LONG_TALK_4 = [
+    [ DEFAULT, false ],
+    [ EVENT_TALK, false, "voice-1.mp3", [ 
+        [SPEAK, "Is it just me or do you also enjoy speaking in crazy long sentences that have little meaning to complete strangers??", false ],
+    ]]
+]
 
 module.exports = { 
     RANDOM_TALK_1,
     RANDOM_TALK_2,
     RANDOM_TALK_3,
-    RANDOM_TALK_4
+    RANDOM_TALK_4,
+    LONG_TALK_4
 }

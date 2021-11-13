@@ -232,9 +232,10 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         }
         const indexList = pathFinder.determineShortestPath(tile, destinationTile, grid, false);
         if ( indexList ) {
-            this.setCharacterSprite( tile, characterData )
+            this.setCharacterSprite( tile, characterData );
             let sprite = this.spriteDictionary[tile.spriteId];
-            sprite.setDestination( destination, true )
+            sprite.name = "Random person"
+            sprite.setDestination( destination, true );
         }
     }
 }

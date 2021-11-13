@@ -14,14 +14,10 @@ const {
  */
 class I_TextBox {
     constructor( xy, dimensions, fontSize, text ) {
-        this.fontSize       = ( fontSize == "LARGE" ) ? LARGE_FONT_SIZE : SMALL_FONT_SIZE;
-        this.lineHeight     = ( fontSize == "LARGE" ) ? LARGE_FONT_LINE_HEIGHT : SMALL_FONT_LINE_HEIGHT;
-
         this.x              = xy.x;
         this.y              = xy.y;
-        this.width          = dimensions.width + this.fontSize * 2;
+        this.width          = dimensions.width + (GRID_BLOCK_PX*33);
         this.height         = dimensions.height;
-
         this.text           = text
     }
     set text( text ) {             
@@ -32,7 +28,7 @@ class I_TextBox {
         const currentTextArray = canvas.breakTextIntoLines( this.typeWriter.activeText, LARGE_FONT_SIZE );
 
         let returner = [];
-        fullTextArray.forEach( ( line, index ) => {
+        fullTextArray.forEach( ( e, index ) => {
             returner.push( typeof currentTextArray[index] === 'undefined' ? " " : currentTextArray[index]  )
         })
 
@@ -40,7 +36,7 @@ class I_TextBox {
     }
     get textX() { return this.x + BUBBLE_INNER_PADDING - (this.horiFlip ? GRID_BLOCK_PX / 2 : 0); };
     get headerY() { return this.y + ( this.hasHeader ? SMALL_FONT_LINE_HEIGHT : 0 ) + ( this.vertFlip ? 8 : 0 ); }
-    get textY() { return this.headerY + this.lineHeight };
+    get textY() { return this.headerY + SMALL_FONT_LINE_HEIGHT };
 
     drawBubblePart( name, x, y ) {
         let pngs = globals.PNG_DICTIONARY;
@@ -78,7 +74,7 @@ class I_TextBox {
 
     writeHeader( ) {
         canvas.writeTextLine( 
-            this.headerText, this.textX, this.y + SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE
+            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE
         );
     }
 
