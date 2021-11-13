@@ -3,7 +3,7 @@ const globals = require( '../../game-data/globals' );
 const { TypeWriter } = require('../../helpers/TypeWriter');
 const { 
     LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, 
-    SMALL_FONT_SIZE, FRAME_LIMIT, GRID_BLOCK_PX
+    SMALL_FONT_SIZE, FRAME_LIMIT, GRID_BLOCK_PX, BUBBLE_INNER_PADDING
 } = require( '../../game-data/globals' );
 const { 
     BUBBLE_START, BUBBLE_START_OPEN_BOTTOM, BUBBLE_START_OPEN_TOP, BUBBLE_START_OPEN_BOTTOM_TOP, BUBBLE_MIDDLE, 
@@ -47,6 +47,8 @@ class I_TextBox {
 
         return returner;
     }
+    get textX() { return this.x + BUBBLE_INNER_PADDING - (this.horiFlip ? GRID_BLOCK_PX / 2 : 0); };
+    get textY() { return this.y + this.lineHeight + ( this.hasHeader ? SMALL_FONT_SIZE : 0 ); };
 
     drawBubblePart( name, x, y ) {
         let pngs = globals.PNG_DICTIONARY;
@@ -88,8 +90,7 @@ class I_TextBox {
 
     writeHeader( ) {
         canvas.writeTextLine( 
-            this.headerText, this.x + (GRID_BLOCK_PX * .66),
-            this.y + SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE
+            this.headerText, this.textX, this.y + SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE
         );
     }
 

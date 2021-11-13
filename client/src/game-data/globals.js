@@ -66,8 +66,9 @@ const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
 const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
 // speech bubbles 
-const MIN_BUBBLE_WIDTH              = GRID_BLOCK_PX * 5
 const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
+const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * .66;
+const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 2 );
 
 // canvas font sizes
 const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
@@ -262,8 +263,9 @@ module.exports = {
     STRD_SPRITE_WIDTH,
     STRD_SPRITE_HEIGHT,
 
-    MIN_BUBBLE_WIDTH,
     MAX_BUBBLE_WIDTH,
+    BUBBLE_INNER_PADDING,
+    MAX_BUBBLE_TEXT_WIDTH,
 
     SMALL_FONT_SIZE,
     LARGE_FONT_SIZE,

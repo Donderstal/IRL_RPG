@@ -1,6 +1,9 @@
 const canvas = require( '../../helpers/canvasHelpers' );
 const globals = require( '../../game-data/globals' );
-const { MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, STRD_SPRITE_WIDTH } = require( '../../game-data/globals' );
+const { 
+    MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING,
+    STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, MAX_BUBBLE_TEXT_WIDTH 
+} = require( '../../game-data/globals' );
 const { I_TextBox } = require( '../interfaces/I_TextBox' );
 
 const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
@@ -21,9 +24,11 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
 }
 
 const getSpeechBubbleDimensions = ( contents ) => {
-    var text = canvas.breakTextIntoLines( contents.text, globals.LARGE_FONT_SIZE )    
+    const text = canvas.breakTextIntoLines( contents.text, LARGE_FONT_SIZE, MAX_BUBBLE_TEXT_WIDTH )
+    const ctx = canvas.getFrontCanvasContext();   
+    ctx
     return {
-        'width' : MAX_BUBBLE_WIDTH,
+        'width' : text.length > 1 ? MAX_BUBBLE_WIDTH : ctx.measureText(text[0]).width + ( BUBBLE_INNER_PADDING * 2 ),
         'height': text.length * GRID_BLOCK_PX
     }
 }
@@ -65,16 +70,9 @@ class SpeechBubble extends I_TextBox {
 
     writeText( ) {
         canvas.setFont(this.fontSize);
-        let yPositionInBox = this.y + this.lineHeight;
-
-        if ( this.hasHeader ) {
-            yPositionInBox += SMALL_FONT_SIZE;
-        }
-
         for ( var i = 0; i < this.text.length; i++ ) {
             canvas.writeTextLine( 
-                this.text[i], (this.x + (GRID_BLOCK_PX * .66)) - (this.horiFlip ? GRID_BLOCK_PX / 2 : 0), 
-                yPositionInBox + ( this.lineHeight * i ), this.fontSize
+                this.text[i], this.textX, this.textY + (this.lineHeight * i), this.fontSize
             );
         }
     }
