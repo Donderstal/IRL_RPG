@@ -24,12 +24,12 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
 }
 
 const getSpeechBubbleDimensions = ( contents ) => {
-    const text = canvas.breakTextIntoLines( contents.text, LARGE_FONT_SIZE, MAX_BUBBLE_TEXT_WIDTH )
+    const text = canvas.breakTextIntoLines( contents.text, LARGE_FONT_SIZE )
     const ctx = canvas.getFrontCanvasContext();   
     ctx
     return {
         'width' : text.length > 1 ? MAX_BUBBLE_WIDTH : ctx.measureText(text[0]).width + ( BUBBLE_INNER_PADDING * 2 ),
-        'height': text.length * GRID_BLOCK_PX
+        'height': text.length > 1 ? GRID_BLOCK_PX * 2 : GRID_BLOCK_PX
     }
 }
 

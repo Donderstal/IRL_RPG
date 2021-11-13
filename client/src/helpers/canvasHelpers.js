@@ -1,4 +1,5 @@
 const globals = require('../game-data/globals')
+const { MAX_BUBBLE_TEXT_WIDTH } = require('../game-data/globals');
 /**
  * Return the ctx of the Foreground canvas
  */
@@ -50,16 +51,16 @@ const drawFromImageToCanvas = (
 }
 /**
  * Calculate the total width of given text.
- * If it is over the maxBubbleWidth, break it in to smaller lines.
+ * If it is over the MAX_BUBBLE_TEXT_WIDTH, break it in to smaller lines.
  * Return the lines of text in an array.
  * @param {String} text 
  * @param {String} fontSize 
- * @param {Number} maxBubbleWidth 
+ * @param {Number} MAX_BUBBLE_TEXT_WIDTH 
  */
-const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE_WIDTH ) => {
+const breakTextIntoLines = ( text, fontSize ) => {
     let ctx = getFrontCanvasContext() 
     setFont(fontSize)
-    if ( ctx.measureText( text ).width > maxBubbleWidth ) {
+    if ( ctx.measureText( text ).width > MAX_BUBBLE_TEXT_WIDTH ) {
         const textArray         = text.split(' ');
         let currentLineWidth    = 0;
         let textLine            = "";
@@ -67,9 +68,9 @@ const breakTextIntoLines = ( text, fontSize, maxBubbleWidth = globals.MAX_BUBBLE
 
         for ( var i = 0; i < textArray.length; i++ ) {
             setFont(fontSize);
-            let newWord = textArray[i] + " "            
-            let wordOverflowsTextbox = ( ( currentLineWidth + ctx.measureText(newWord + " ").width ) > ( maxBubbleWidth - globals.LARGE_FONT_SIZE ) )
-            let lastWordIsNext = i == textArray.length - 1
+            let newWord = textArray[i] + " ";
+            let wordOverflowsTextbox = currentLineWidth + ctx.measureText(newWord + " ").width > MAX_BUBBLE_TEXT_WIDTH;
+            let lastWordIsNext = i == textArray.length - 1;
 
             if ( wordOverflowsTextbox ) {
                 textLineArray.push( textLine )
