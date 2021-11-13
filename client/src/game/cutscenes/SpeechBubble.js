@@ -125,12 +125,6 @@ class SpeechBubble {
         canvas.writeTextLine( 
             this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE
         );
-        const ctx = canvas.getFrontCanvasContext();
-        ctx.beginPath();
-        ctx.strokeStyle = 'black';
-        ctx.moveTo(this.textX, this.headerY);
-        ctx.lineTo(this.textX+ctx.measureText(this.headerText).width, this.headerY);
-        ctx.stroke();
     }
 
     setHeader( text ) {

@@ -72,7 +72,7 @@ const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING 
 
 // canvas font sizes
 const SMALL_FONT_SIZE               = GRID_BLOCK_PX / 4.5
-const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.375
+const LARGE_FONT_SIZE               = GRID_BLOCK_PX / 3.5
 const BATTLE_FONT_SIZE              = GRID_BLOCK_PX / 2.5
 
 // in-game textbox color and opacity

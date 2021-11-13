@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### NOV 13, 2021
+* Dynamic speech bubble dimensions, positions and alignment
+
 #### NOV 11, 2021
 * Added semi-random interactions to spawned sprites
 

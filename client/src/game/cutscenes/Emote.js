@@ -6,7 +6,6 @@ class Emote {
         this.x = location.x;
         this.y = location.y - globals.GRID_BLOCK_PX
         this.image = globals.PNG_DICTIONARY[src];
-        console.log(this.image);
     }
 
     draw( ) {

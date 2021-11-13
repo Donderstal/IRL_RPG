@@ -216,7 +216,6 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             "direction": start.direction, "hasAction": true,
             "action": [globals.GAME.activeNeighbourhood.getRandomAction( )]
         };
-        console.log(characterData)
         const grid = { 
             'rows': this.grid.rows, 'cols': this.grid.cols,
             'tiles': globals.GAME.BACK.grid.array.filter((tile) => {
@@ -236,7 +235,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             let sprite = this.spriteDictionary[tile.spriteId];
             sprite.name = "Random person"
             sprite.setDestination( destination, true );
-        }
+        };
     }
 }
 
