@@ -1,6 +1,7 @@
 const globals = require('../../../game-data/globals')
 const pathFinder = require('../../../helpers/pathfindingHelpers')
-const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING, OUT_LEFT, OUT_UP, OUT_RIGHT, OUT_DOWN } = require( '../../../game-data/globals' )
+const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING } = require( '../../../game-data/globals' );
+
 
 class Destination {
     constructor( column, row, spriteId, deleteSprite = false ) {
