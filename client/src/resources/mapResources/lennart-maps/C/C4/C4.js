@@ -33,24 +33,6 @@ module.exports = {
     ],
     "roads": [
         {
-            "direction": FACING_UP,
-            "alignment": "VERT",
-            "hasStart": true,
-            "leftCol": 9,
-            "rightCol": 10,
-            "startRow": 16,
-            "endRow": 1
-        },
-        {
-            "direction": FACING_DOWN,
-            "alignment": "VERT",
-            "hasStart": true,
-            "leftCol": 7,
-            "rightCol": 8,
-            "startRow": 1,
-            "endRow": 16
-        },
-        {
             "direction": FACING_RIGHT,
             "alignment": "HORI",
             "hasStart": true,
