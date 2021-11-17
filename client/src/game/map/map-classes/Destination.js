@@ -120,6 +120,9 @@ class Destination {
             if ( this.deleteSprite ) {
                 this.frontClass.deleteSprite(this.spriteId)
             }
+            else {
+                this.sprite.destination = false;
+            }
         }
     }
 

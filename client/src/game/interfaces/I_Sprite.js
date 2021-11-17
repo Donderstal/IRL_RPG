@@ -105,7 +105,7 @@ class Sprite {
     }
 
     updateState( ) {
-        if ( this.State.is(STATE_IDLE) && this.destination && this.destination.path ) {
+        if ( (this.State.is(STATE_IDLE) && this.destination && this.destination.path) && !this.State.inCinematic ) {
             this.State.set(STATE_MOVING);
         }
         else if ( this.State.is(STATE_MOVING) && (!this.destination || !this.destination.path) ) {
@@ -127,7 +127,7 @@ class Sprite {
     }
 
     checkForMoveToDestination( ) {
-        if ( this.State.is(STATE_MOVING) && !this.State.inAnimation ) {
+        if ( this.State.is(STATE_MOVING) && !this.State.inAnimation && this.destination != false ) {
             this.destination.goTo( );   
             this.countFrame( ); 
         }

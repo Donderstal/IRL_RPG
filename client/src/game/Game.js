@@ -7,7 +7,7 @@ const {
     TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5
 }  = require('../game-data/globals')
 const { 
-    ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR
+    ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR, ON_NPC_INTERACTION
 }  = require('../game-data/conditionGlobals')
 const { SoundController } = require('./sound/SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
@@ -332,6 +332,10 @@ class Game {
     }
 
     activateCinematic( cinematic ) {
+        if ( cinematic.trigger === ON_NPC_INTERACTION ) {
+            const sprite = this.FRONT.spriteDictionary[cinematic.args[0]];
+            sprite.State.cinematicOn( sprite );
+        }
         this.activeCinematic = cinematic;
         this.inCinematic = true;
     }

@@ -85,7 +85,7 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) { 
-        this.startCinematicScript( )
+        new Cinematic( this, ON_NPC_INTERACTION, [ this.spriteId ] );
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered
@@ -132,10 +132,6 @@ class MapAction extends I_Hitbox {
             this.resetAction( );   
         }
     }
-
-    startCinematicScript( ) {
-        new Cinematic( this, ON_NPC_INTERACTION, [ this.spriteId ] );
-    } 
 
     checkForEventOnBattleEnd( playerLostBattle ) {
         if ( !playerLostBattle ) {
