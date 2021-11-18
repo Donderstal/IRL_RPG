@@ -76,15 +76,7 @@ class Car extends MapObject {
             this.movementSoundEffect.reset( );
         }        
     }
-
-    setWaitAtIntersection( ) {
-        this.State.set(globals.STATE_WAITING);
-    }
-
-    unsetWaitAtIntersection( ) {
-        this.State.set(globals.STATE_MOVING);
-    }
-
+    
     setSpriteToGrid( tile, inConstructor = true ) {
         this.row = tile.row;
         this.col = tile.col;

@@ -1,4 +1,4 @@
- const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN } = require("../../../game-data/globals");
+ const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN, STATE_WAITING } = require("../../../game-data/globals");
 const { TileSquare } = require("../../../helpers/TileSquare");
 const globals = require("../../../game-data/globals");
 
@@ -156,22 +156,22 @@ class I_Junction {
         this.intersectionCars.forEach( ( car ) => {
             if ( this.leftFacingInLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
                 && this.leftFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_LEFT] ) {
-                car.setWaitAtIntersection( );
+                car.State.addToPendingStateChanges(STATE_WAITING);
             }
             else if ( this.upFacingInLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
                 && this.upFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_UP]) {
-                car.setWaitAtIntersection( );
+                car.State.addToPendingStateChanges(STATE_WAITING);
             }
             else if ( this.rightFacingInLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
                 && this.rightFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_RIGHT]) {
-                car.setWaitAtIntersection( );
+                car.State.addToPendingStateChanges(STATE_WAITING);
             }
             else if ( this.downFacingInLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
                 && this.downFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[FACING_DOWN]) {
-                car.setWaitAtIntersection( ); 
+                car.State.addToPendingStateChanges(STATE_WAITING);
             }
-            else if ( car.unsetWaitAtIntersection == 'function') {
-                car.unsetWaitAtIntersection( );
+            else {
+                car.State.addToPendingStateChanges(STATE_MOVING);
             }
         });
     }

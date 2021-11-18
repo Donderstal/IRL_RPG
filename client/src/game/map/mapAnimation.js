@@ -125,6 +125,9 @@ const drawSpritesInOrder = ( GAME ) => {
     drawSpritesInArray( standardSprites, GAME );
     drawSpritesInArray( foregroundSprites, GAME );
     drawSpritesInArray( flyingSprites, GAME );
+
+    const cars = GAME.FRONT.allSprites.filter((e) => {return e.isCar;});
+    cars.forEach((car)=>{car.State.decideStateFromPendingStateChanges( )});
 }
 
 const drawSpritesInArray = ( array, GAME ) => {

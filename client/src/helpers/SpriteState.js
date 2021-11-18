@@ -1,4 +1,4 @@
-const { STATE_IDLE } = require("../game-data/globals");
+const { STATE_IDLE, STATE_BLOCKED, STATE_WAITING, STATE_MOVING } = require("../game-data/globals");
 
 class SpriteState {
     constructor( value = STATE_IDLE ) {
@@ -6,6 +6,7 @@ class SpriteState {
         this.inAnimation = false;
         this.storedState = false;
         this.storedDestination = false;
+        this.pendingStateChanges = [];
     }
 
     is( value ) {
@@ -53,6 +54,30 @@ class SpriteState {
     restoreState( ) {
         this.innerValue = this.storedState;
         this.storedState = false;
+    }
+
+    clearPendingStateChanges( ) {
+        this.pendingStateChanges = [];
+    }
+
+    addToPendingStateChanges( state ) {
+        this.pendingStateChanges.push( state );
+    }
+
+    decideStateFromPendingStateChanges( ) {
+        if ( this.pendingStateChanges.indexOf(STATE_BLOCKED) > -1 ) {
+            this.set(STATE_BLOCKED);
+        }
+        else if ( this.pendingStateChanges.indexOf(STATE_WAITING) > -1 ) {
+            this.set(STATE_WAITING);
+        }
+        else if ( this.pendingStateChanges.indexOf(STATE_MOVING) > -1 ) {
+            this.set(STATE_MOVING);
+        }
+        else if ( this.pendingStateChanges.indexOf(STATE_IDLE) > -1 ) {
+            this.set(STATE_IDLE);
+        }
+        this.clearPendingStateChanges( );
     }
 }
 
