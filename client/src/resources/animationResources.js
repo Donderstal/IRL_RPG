@@ -354,6 +354,9 @@ const getAnimationFrames = ( animationName, direction = null ) => {
         case SHEET_ROW_BATTLE_FACING_RIGHT:
             suffix = "_RIGHT"
             break;
+        default:
+            suffix = "_DOWN"
+            break;
     }
     if ( animationName + suffix in animationResources ) {
         return animationResources[animationName + suffix];        

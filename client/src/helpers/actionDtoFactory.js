@@ -16,11 +16,11 @@ const getKeys = ( type ) => {
         case MOVE_CAR:
             return [ "col", "row", "spriteName", "direction"];
         case ANIM: 
-            return [ "animName", "loop" ];
+            return [ "animName", "spriteName", "loop" ];
         case CREATE_CAR:
             return [ "sprite", "spriteName", "roadId" ];
         case CREATE_SPRITE:
-            return [ "direction", "sprite", "col", "row"];
+            return [ "direction", "sprite", "spriteName", "col", "row"];
         case DELETE_SPRITE:
             return [ "spriteName" ];
         case FADE_OUT:

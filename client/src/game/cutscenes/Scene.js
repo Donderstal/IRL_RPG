@@ -58,18 +58,19 @@ class Scene {
                     break;
                 case MOVE :
                 case MOVE_CAR:
-                    animationHasFinished = !e.walkingToDestination
+                    let moveSprite = e.getSpriteById( );
+                    animationHasFinished = !moveSprite.State.is(globals.STATE_MOVING)
                     break;
                 case ANIM: 
-                    const sprite = e.getSpriteByName( );
-                    animationHasFinished = !sprite.State.inAnimation
+                    let animSprite = e.getSpriteById( );
+                    animationHasFinished = !animSprite.State.inAnimation
                     break;
                 case CREATE_CAR:
                 case CREATE_SPRITE:
                     animationHasFinished = e.getSpriteByName( ) != undefined;
                     break;
                 case DELETE_SPRITE:
-                    animationHasFinished = e.getSpriteByName( ) == undefined;
+                    animationHasFinished = e.getSpriteById( ) == undefined;
                     break;
                 case FADE_OUT:
                 case FADE_IN :

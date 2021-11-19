@@ -11,7 +11,7 @@ class Animation {
         this.type   = animationDto.type;
         this.spriteName = animationDto.spriteName;
         if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) ) {
-            this.spriteId = "";
+            this.spriteId = undefined;
         }
         else {
             this.spriteId = animationDto.spriteId != undefined ? animationDto.spriteId : this.getSpriteByName().spriteId;            
@@ -168,7 +168,7 @@ class Animation {
     }
 
     getSpriteById( id = this.spriteId ) {
-        return globals.GAME.FRONT.spriteDictionary[id];
+        return this.spriteId == undefined ? globals.GAME.FRONT.spriteDictionary[this.getSpriteByName().id]: globals.GAME.FRONT.spriteDictionary[id];
     }
     
     setSelection( selection ) {
