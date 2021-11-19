@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### NOV 17, 2021
+* Reworking Cinematic code to allow simultaneous animations in a Scene
+
+#### NOV 17, 2021
 * Fixed some bugs in sprite in-cinematic behavior
 
 #### NOV 13, 2021

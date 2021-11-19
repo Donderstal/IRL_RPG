@@ -1,177 +1,99 @@
+const globals         = require('../../game-data/globals')
+const { getUniqueId } = require('../../helpers/utilFunctions');
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, 
-    WAIT, EVENT_BUS, EMOTE
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT, EMOTE
 } = require('../../game-data/conditionGlobals');
-const globals               = require('../../game-data/globals');
-const { Counter } = require('../../helpers/Counter');
+const { Animation } = require('./Animation');
 
 class Scene {
-    constructor( data ) {
-        this.type   = data.type;
-        this.spriteName = data.spriteName;
-        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) ) {
-            this.spriteId = "";
-        }
-        else {
-            this.spriteId = data.spriteId != undefined ? data.spriteId : this.getSpriteByName().spriteId;            
-        }
-
-        this.sfx = ( data.sfx ) ? data.sfx : false;
-        this.setAction( data )
-    }
-
-    is( value ) {
-        return this.type == value
-    }
-
-    setAction( data ) {
-        let setToSprite = false;
-        switch( this.type ) {
-            case SPEAK:
-                this.text = data.text;
-                setToSprite = true;
-                break;
-            case SPEAK_YES_NO:
-                this.text = data.text;
-                this.pathYes = data.pathYes;
-                this.pathNo = data.pathNo;
-                setToSprite = true;
-                break;
-            case EMOTE:
-                this.src = data.src;
-                setToSprite = true;
-            case MOVE :
-                this.initMoveScene( data );
-                setToSprite = true;
-                break;
-            case MOVE_CAR:
-                this.initMoveCarScene( data );
-                break;
-            case ANIM: 
-                this.animName = data.animName;
-                this.endDirection = ( data.endDirection ) ? globals[data.endDirection] : false;
-                this.loop = data.loop;
-                setToSprite = true;
-                break;
-            case CREATE_CAR:
-                this.initCreateCarScene( data );
-                break;
-            case CREATE_SPRITE:
-                this.initCreateSpriteScene( data );
-                break;
-            case DELETE_SPRITE:
-                setTimeout( ( ) => { globals.GAME.FRONT.deleteSprite( this.spriteId ) }, 250 )
-                break;
-            case FADE_OUT:
-                globals.GAME.sound.pauseMusic( );
-                globals.GAME.fader.startFadeToBlack(  );
-                globals.GAME.sound.playEffect( "relaxing_chord.wav" )
-                break;
-            case FADE_IN:
-                globals.GAME.fader.startFadeFromBlack( );
-                break;
-            case FADE_OUT_IN:
-                globals.GAME.sound.pauseMusic( );
-                globals.GAME.fader.startFadeToBlack( true );
-                globals.GAME.sound.playEffect( "relaxing_chord.wav" )
-                break;
-            case WAIT:
-                this.counter = new Counter( data.ms )
-                break;
-            default :
-                console.log( "Scene type " + this.type + " is not recognized")
-                console.log(data);
-                console.log(this);
-        }
-        if( setToSprite ) {
-            this.setAnimToSprite( );            
-        }
-    }
-
-    initMoveScene( data ) {
-        if ( typeof data.destination === 'string' || data.destination instanceof String ) {
-            const sprite = this.getSpriteById( this.getSpriteByName( data.destination ).spriteId );             
-            data.destination = {  'col': sprite.col,  'row': sprite.row  };
-            const startingCell = this.getSpriteCell( );
-
-            if ( startingCell.row < data.destination.row ) {
-                data.destination.row -= 1;
+    constructor( sceneDto, spriteId ) {
+        this.animations = [];
+        this.animationIds = [];
+        this.finishedAnimations = [];
+        sceneDto.forEach((animationDto) => {
+            const id = getUniqueId(this.animationIds);
+            if ( animationDto.spriteId === undefined && animationDto.spriteName == false && spriteId != false ) {
+                animationDto.spriteId = spriteId
             }
-            else if ( startingCell.row > data.destination.row ) {
-                data.destination.row += 1;
+            this.animations.push(new Animation(animationDto, id));
+            this.animationIds.push(id);
+        })
+    }
+
+    containsAnimationType( animationType ) {
+        let hasType = false;
+        this.animations.forEach((e)=>{
+            if( e.is(animationType) ) {
+                hasType = true;
             }
-            else if ( startingCell.col < data.destination.col ) {
-                data.destination.col -= 1;
+        })
+        return hasType;
+    }
+
+    getAnimationByType( animationType ) {
+        let animation = {};
+        this.animations.forEach((e)=>{
+            if( e.is(animationType) ) {
+                animation = e;
             }
-            else if ( startingCell.col > data.destination.col ) {
-                data.destination.col += 1;
-            }
-        }
-
-        this.destination = data.destination;
-        this.walkingToDestination = true;    
-    }
-
-    initMoveCarScene( data ) {
-        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadId == data.roadId; })
-        let road    = roads[0];
-
-        this.destination = road.isHorizontal ? { "row": road.topRow, "col": data.col } : { "row": data.row, "col": road.leftCol }
-        this.walkingToDestination = true;   
-        let car = this.getSpriteByName( )
-        car.initMovingSprite( this )
-    }
-
-    initCreateCarScene( data ) {
-        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadId == data.roadId; })
-        let roadData    = roads[0].getCarDataForTile( true );
-        roadData.name = this.spriteName;
-        globals.GAME.FRONT.setVehicleToTile( roadData )
-    }
-
-    initCreateSpriteScene( data ) {
-        if ( data.spriteName == "Player" ) {
-            globals.GAME.setPlayerInNewMap( globals.GAME.activeMap, EVENT_BUS )
-            return;
-        }
-
-        const tile = globals.GAME.FRONT.getTileAtCell( data.col, data.row );
-        data.name = data.spriteName;
-        globals.GAME.FRONT.setCharacterSprite( tile, data, true )   
-    }
-
-    getSpriteCell( ) {
-        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
-        return { 'row': sprite.row, 'col': sprite.col }
-    }
-
-    setAnimToSprite( ) {
-        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
-        sprite.setAnimation(this)      
+        })
+        return animation;
     }
 
     unsetSpriteAnimation( ) {
-        if ( this.is( DELETE_SPRITE ) || this.is( MOVE_CAR ) ) {
-            return;
-        }
-        
-        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
-        if ( sprite.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
-            sprite.unsetScriptedAnimation( )            
-        }
+        this.animations.forEach((e)=>{
+            e.unsetSpriteAnimation( );
+        })
     }
 
-    getSpriteByName( name = this.spriteName ) {
-        const spriteArray = globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
-        return spriteArray[0];
-    }
-
-    getSpriteById( id = this.spriteId ) {
-        return globals.GAME.FRONT.spriteDictionary[id];
-    }
-    
-    setSelection( selection ) {
-        this.selection = selection;
+    checkForScenePass( ) {
+        let activeAnimations = this.animations.filter((e) => { return this.finishedAnimations.indexOf(e.id) === -1; });
+        activeAnimations.forEach((e) => {
+            let animationHasFinished = false;
+            switch( e.type ) {
+                case SPEAK:
+                case SPEAK_YES_NO:
+                case EMOTE:
+                    animationHasFinished = !globals.GAME.speechBubbleController.isActive
+                    break;
+                case MOVE :
+                case MOVE_CAR:
+                    animationHasFinished = !e.walkingToDestination
+                    break;
+                case ANIM: 
+                    const sprite = e.getSpriteByName( );
+                    animationHasFinished = !sprite.State.inAnimation
+                    break;
+                case CREATE_CAR:
+                case CREATE_SPRITE:
+                    animationHasFinished = e.getSpriteByName( ) != undefined;
+                    break;
+                case DELETE_SPRITE:
+                    animationHasFinished = e.getSpriteByName( ) == undefined;
+                    break;
+                case FADE_OUT:
+                case FADE_IN :
+                    let fader = globals.GAME.fader
+                    animationHasFinished = ( fader.fadingFromBlack && fader.A <= 0 ) || ( fader.fadingToBlack && fader.A >= 1 ) || fader.holdBlackScreen
+                    break;
+                case FADE_IN_OUT:
+                    animationHasFinished = !globals.GAME.fader.inFadingAnimation
+                    break;
+                case WAIT:
+                    animationHasFinished = e.counter.countAndCheckLimit( )
+                    break;
+                default :
+                    console.log( "Scene type " + e.type + " is not recognized")
+                    console.log(e)
+            }
+            if ( animationHasFinished ) {
+                this.finishedAnimations.push( e.id )
+            }
+        })
+        if ( this.finishedAnimations.length === this.animations.length ) {
+            return true;
+        }
+        return false;
     }
 } 
 

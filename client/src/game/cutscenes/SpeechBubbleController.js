@@ -50,9 +50,10 @@ class SpeechBubbleController {
                 });
             }
             else {
-                if ( globals.GAME.activeCinematic.activeScene.is(SPEAK_YES_NO) ){
+                if ( globals.GAME.activeCinematic.activeScene.containsAnimationType(SPEAK_YES_NO) ){
                     globals.GAME.activeAction.registerSelection( key == " " ? INTERACTION_YES : INTERACTION_NO );
-                    globals.GAME.activeCinematic.activeScene.setSelection( key == " " ? "YES" : "NO" );
+                    let animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SPEAK_YES_NO);
+                    animation.setSelection( key == " " ? "YES" : "NO" );
                 }
                 this.clearActiveBubbles( );
             }

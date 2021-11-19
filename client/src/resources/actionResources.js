@@ -5,46 +5,46 @@ const { getAction } = require('../helpers/actionDtoFactory');
 const RANDOM_TALK_1 = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [SPEAK, "I can't believe the government took away my pet gorilla!", false],
-        [EMOTE, EMOTE_SAD],
-        [SPEAK, "Now who's gonna hold me in their big hairy arms?", false]
+        [[SPEAK, "I can't believe the government took away my pet gorilla!", false]],
+        [[EMOTE, EMOTE_SAD], [EMOTE, EMOTE_SURPRISED, "Player"]],
+        [[SPEAK, "Now who's gonna hold me in their big hairy arms?", false]]
     ]]
 ]
 const RANDOM_TALK_2 = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [SPEAK, "Another splendid day in this beautiful city", false],
-        [EMOTE, EMOTE_HEART],
-        [SPEAK, "This is a much longer random text my man thank you for listening!", false]
+        [[SPEAK, "Another splendid day in this beautiful city", false]],
+        [[EMOTE, EMOTE_HEART], [EMOTE, EMOTE_HEART, "Player"]],
+        [[SPEAK, "This is a much longer random text my man thank you for listening!", false]]
     ]]
 ]
 const RANDOM_TALK_3 = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [SPEAK, "I shot the sherrif!", false],
-        [EMOTE, EMOTE_SURPRISED, "Player"],
-        [SPEAK, "But I didn't shoot the deputy...", false],
-        [EMOTE, EMOTE_HAPPY, "Player"]
+        [[SPEAK, "I shot the sherrif!", false]],
+        [[EMOTE, EMOTE_SURPRISED, "Player"]],
+        [[SPEAK, "But I didn't shoot the deputy...", false]],
+        [[EMOTE, EMOTE_HAPPY, "Player"]]
     ]]
 ]
 const RANDOM_TALK_4 = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [SPEAK_YES_NO, "Do you like bothering people in the street, moron?", 
+        [[SPEAK_YES_NO, "Do you like bothering people in the street, moron?", 
             [
-                [EMOTE, EMOTE_ANGRY],
-                [SPEAK, "I hope your parents are proud of you."]
+                [[EMOTE, EMOTE_ANGRY]],
+                [[SPEAK, "I hope your parents are proud of you."]]
             ],
             [
-                [SPEAK, "Then why don't you piss off?", false]
+                [[EMOTE, EMOTE_ANGRY, "Player"], [SPEAK, "Then why don't you piss off?", false]]
             ]
-        ],
+        ]],
     ]]
 ]
 const LONG_TALK_4 = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [SPEAK, "Is it just me or do you also enjoy speaking in crazy long sentences that have little meaning to complete strangers??", false ],
+        [[SPEAK, "Is it just me or do you also enjoy speaking in crazy long sentences that have little meaning to complete strangers??", false ]],
     ]]
 ]
 

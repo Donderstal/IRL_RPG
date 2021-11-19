@@ -34,23 +34,29 @@ const getKeys = ( type ) => {
     }
 }
 
-const getActionSceneObject = ( options ) => {
-    const sceneObject = { "type": options[0] };
+const getActionAnimationObject = ( options ) => {
+    const animationObject = { "type": options[0] };
     const keys = getKeys( options[0] );
     keys.forEach((key, index) => { 
         let currentOption = options[index+1]
         if ( currentOption != undefined && (key == "pathYes" || key == "pathNo") ) { 
-            let innerScenes = currentOption;
-            sceneObject[key] = [];
-            innerScenes.forEach((scene)=> { 
-                sceneObject[key].push(getActionSceneObject( scene ));
+            let innerAnimations = currentOption;
+            animationObject[key] = [];
+            innerAnimations.forEach((animation)=> { 
+                animationObject[key].push(getActionSceneObject( animation ));
             })
         }
         else {
-            sceneObject[key] = currentOption == undefined ? false : currentOption;            
+            animationObject[key] = currentOption == undefined ? false : currentOption;            
         }
     });
-    return sceneObject;
+    return animationObject;
+}
+
+const getActionSceneObject = ( scene ) => {
+    const sceneArray = [];
+    scene.forEach((animation) => {sceneArray.push(getActionAnimationObject(animation))})
+    return sceneArray;
 };
 
 const getActionObject = ( type, registryKey, sfx, scenes ) => {
