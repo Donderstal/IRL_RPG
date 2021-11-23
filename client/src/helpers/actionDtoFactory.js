@@ -6,11 +6,11 @@ const {
 const getKeys = ( type ) => {
     switch( type ) {
         case SPEAK:
-            return [ "text", "spriteName", "sfx" ];
+            return [ "text", "spriteName", "speakWith", "sfx" ];
         case SPEAK_YES_NO:
-            return [ "text", "pathYes", "pathNo", "spriteName", "sfx" ];
+            return [ "text", "pathYes", "pathNo", "spriteName", "speakWith", "sfx" ];
         case EMOTE:
-            return [ "src", "spriteName", "sfx" ];
+            return [ "src", "spriteName", "speakWith", "sfx" ];
         case MOVE :
             return [ "spriteName", "destination" ];
         case MOVE_CAR:

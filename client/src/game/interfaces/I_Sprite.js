@@ -11,6 +11,7 @@ const { checkForCollision } = require('../map/map-ui/movementChecker')
 const { SPEAK_YES_NO, SPEAK, MOVE, ANIM, EMOTE } = require('../../game-data/conditionGlobals')
 const { Destination } = require('../map/map-classes/Destination')
 const { SpriteState } = require('../../helpers/SpriteState')
+const { getOppositeDirection } = require('../../helpers/utilFunctions')
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -151,24 +152,28 @@ class Sprite {
         }
     }
 
-    setAnimation( scene ) {
-        if ( scene.is( SPEAK_YES_NO ) ) {
-            this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false, [ "( Space ) YES", "( Z ) NO" ] )
+    setAnimation( animation ) {
+        if ( (animation.is( SPEAK_YES_NO ) || animation.is( SPEAK ) || animation.is( EMOTE )) && animation.speakWith ) {
+            const otherSprite = animation.getSpriteByName( animation.speakWith );
+            this.direction = getOppositeDirection( otherSprite.direction );
         }
-        if ( scene.is( SPEAK ) ) {
-            this.speak( scene.text, ( scene.sfx ) ? scene.sfx : false )
+        if ( animation.is( SPEAK_YES_NO ) ) {
+            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, [ "( Space ) YES", "( Z ) NO" ] )
         }
-        if ( scene.is( EMOTE ) ) {
-            globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, scene.src );
+        if ( animation.is( SPEAK ) ) {
+            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false )
+        }
+        if ( animation.is( EMOTE ) ) {
+            globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
             if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
                 this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
             }
         }
-        if ( scene.is( MOVE ) ) {
-            this.setDestination( scene.destination );
+        if ( animation.is( MOVE ) ) {
+            this.setDestination( animation.destination );
         }
-        if ( scene.is( ANIM ) ) {
-            this.setScriptedAnimation( scene, FRAME_LIMIT )
+        if ( animation.is( ANIM ) ) {
+            this.setScriptedAnimation( animation, FRAME_LIMIT )
         }
     }
 
@@ -182,14 +187,14 @@ class Sprite {
         }
     }
 
-    setScriptedAnimation( scene, frameRate, numberOfLoops = false ) {
+    setScriptedAnimation( animation, frameRate, numberOfLoops = false ) {
         if ( this.State.inAnimation ) {
             this.unsetScriptedAnimation( );
         } 
         this.originalDirection      = this.direction;
 
-        this.animationScript.loop           = scene.loop;
-        this.animationScript.frames         = getAnimationFrames( scene.animName, this.direction );   
+        this.animationScript.loop           = animation.loop;
+        this.animationScript.frames         = getAnimationFrames( animation.animName, this.direction );   
         this.animationScript.index          = 0;           
 
         this.animationScript.numberOfFrames = this.animationScript.frames.length;      
@@ -213,10 +218,10 @@ class Sprite {
             this.checkForLoop()
         }
         else {
-            let currentScene = this.animationScript.frames[this.animationScript.index];
+            let currentAnimation = this.animationScript.frames[this.animationScript.index];
 
-            this.sheetPosition  = currentScene.column;
-            this.direction      = currentScene.row;   
+            this.sheetPosition  = currentAnimation.column;
+            this.direction      = currentAnimation.row;   
             this.animationScript.index++ 
         }               
     }

@@ -30,16 +30,19 @@ class Animation {
         switch( this.type ) {
             case SPEAK:
                 this.text = animationDto.text;
+                this.speakWith = animationDto.speakWith;
                 setToSprite = true;
                 break;
             case SPEAK_YES_NO:
                 this.text = animationDto.text;
                 this.pathYes = animationDto.pathYes;
                 this.pathNo = animationDto.pathNo;
+                this.speakWith = animationDto.speakWith;
                 setToSprite = true;
                 break;
             case EMOTE:
                 this.src = animationDto.src;
+                this.speakWith = animationDto.speakWith;
                 setToSprite = true;
             case MOVE :
                 this.initMoveAnimation( animationDto );

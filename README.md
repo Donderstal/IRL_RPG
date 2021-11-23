@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### NOV 17, 2021
+* Sprites now face toward player when speaking
+
+#### NOV 17, 2021
 * Reworking Cinematic code to allow simultaneous animations in a Scene
 
 #### NOV 17, 2021
