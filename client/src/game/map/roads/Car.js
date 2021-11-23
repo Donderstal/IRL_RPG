@@ -13,7 +13,7 @@ class Car extends MapObject {
         this.movementSoundEffect.mute( );
         this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
         this.carHornSoundEffect.mute( );
-        this.blockedCounter = new Counter( 5000, false );
+        this.blockedCounter = new Counter( 5000, false, false );
         this.crossedIntersectionIds = [];
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;

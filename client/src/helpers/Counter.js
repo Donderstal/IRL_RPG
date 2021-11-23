@@ -4,9 +4,10 @@
  * the last call and the current is added up to counter.
  */
 class Counter { 
-    constructor( maximumLimit, hasSemiRandomLimit ) {
+    constructor( maximumLimit, hasSemiRandomLimit = false, hasMinimumLimit = true ) {
         this.maximumLimit   = maximumLimit;
         this.semiRandomLimit= hasSemiRandomLimit;
+        this.hasMinimumLimit= hasMinimumLimit;
 
         this.activeLimit    = 0;
         this.lastTimeStamp  = 0;
@@ -19,6 +20,9 @@ class Counter {
      */
     initLimit( ) {
         this.activeLimit = this.semiRandomLimit ? Math.ceil(Math.random( ) * this.maximumLimit ) : this.maximumLimit;
+        if ( this.activeLimit < 1000 && this.hasMinimumLimit ) {
+            this.initLimit( );
+        }
     }
     /**
      * Check the difference in milliseconds between the last timestmap and the new timestamp
