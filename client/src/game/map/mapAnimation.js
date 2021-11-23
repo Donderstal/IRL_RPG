@@ -22,7 +22,7 @@ const handleMapAnimations = ( GAME ) => {
     handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
 
-    if ( GAME.PLAYER != undefined && !GAME.paused && !GAME.speechBubbleController.isActive ) {
+    if ( GAME.PLAYER != undefined && !GAME.paused ) {
         mapControls.handleMovementKeys( );  
     }
     GAME.speechBubbleController.drawBubbles( );

@@ -158,10 +158,10 @@ class Sprite {
             this.direction = getOppositeDirection( otherSprite.direction );
         }
         if ( animation.is( SPEAK_YES_NO ) ) {
-            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, [ "( Space ) YES", "( Z ) NO" ] )
+            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, SPEAK_YES_NO )
         }
         if ( animation.is( SPEAK ) ) {
-            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false )
+            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, SPEAK )
         }
         if ( animation.is( EMOTE ) ) {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
@@ -177,10 +177,11 @@ class Sprite {
         }
     }
 
-    speak( text, sfx, options = null ) {
+    speak( text, sfx, type ) {
         globals.GAME.speechBubbleController.setNewBubble( 
             {'x': this.x, 'y': this.y}, 
-            {'text': text, 'name': this.name, 'options': options, 'sfx': sfx ? sfx : false}
+            {'text': text, 'name': this.name, 'sfx': sfx ? sfx : false},
+            type
         );   
         if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            

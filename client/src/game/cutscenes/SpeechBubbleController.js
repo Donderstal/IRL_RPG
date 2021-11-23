@@ -13,15 +13,16 @@ class SpeechBubbleController {
     }
 
     get isActive() { return this.activeBubbleIds.length > 0; }
+    get selectionBubble( ) { return Object.values(this.activeBubbles).find(x => x.type === SPEAK_YES_NO); }
     get isWriting() { 
         return this.activeBubbleIds.filter(
             (e) => { return this.emoteIds.indexOf(e) == -1 && this.activeBubbles[e].typeWriter.isWriting }
         ).length > 0;
     }
 
-    setNewBubble( location, contents ) {
+    setNewBubble( location, contents, type ) {
         const id = getUniqueId(this.activeBubbleIds);
-        this.activeBubbles[id] = new SpeechBubble( location, contents, id );
+        this.activeBubbles[id] = new SpeechBubble( location, contents, id, type );
         this.activeBubbleIds.push(id)
     }
 
@@ -42,21 +43,28 @@ class SpeechBubbleController {
         delete this.activeBubbles[id];
     }
 
-    handleButtonPress( key ) {
+    handleButtonPress( ) {
         if ( this.isActive ) {
             if ( this.isWriting ) {
                 this.activeBubbleIds.forEach((id) =>{
                     this.activeBubbles[id].typeWriter.displayFullText( );
                 });
             }
-            else {
-                if ( globals.GAME.activeCinematic.activeScene.containsAnimationType(SPEAK_YES_NO) ){
-                    globals.GAME.activeAction.registerSelection( key == " " ? INTERACTION_YES : INTERACTION_NO );
-                    let animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SPEAK_YES_NO);
-                    animation.setSelection( key == " " ? "YES" : "NO" );
-                }
+            else if(this.selectionBubble){
+                globals.GAME.activeAction.registerSelection( this.selectionBubble.activeButton );
+                let animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SPEAK_YES_NO);
+                animation.setSelection( this.selectionBubble.activeButton == INTERACTION_YES ? "YES" : "NO" );
                 this.clearActiveBubbles( );
             }
+            else {
+                this.clearActiveBubbles( );
+            }
+        }
+    }
+
+    handleSelectionKeys( ) {
+        if (this.selectionBubble) {
+            this.selectionBubble.moveCursor( );
         }
     }
 

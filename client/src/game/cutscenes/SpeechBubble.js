@@ -5,10 +5,12 @@ const {
     STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT
 } = require( '../../game-data/globals' );
 const { 
-    BUBBLE_START, BUBBLE_START_OPEN_BOTTOM, BUBBLE_START_OPEN_TOP, BUBBLE_START_OPEN_BOTTOM_TOP, BUBBLE_MIDDLE, 
-    BUBBLE_MIDDLE_OPEN_BOTTOM, BUBBLE_MIDDLE_OPEN_TOP, BUBBLE_END, BUBBLE_END_OPEN_BOTTOM, BUBBLE_END_OPEN_TOP 
+    BUBBLE_START, BUBBLE_START_OPEN_BOTTOM, BUBBLE_START_OPEN_TOP, BUBBLE_MIDDLE, 
+    BUBBLE_MIDDLE_OPEN_BOTTOM, BUBBLE_MIDDLE_OPEN_TOP, BUBBLE_END, BUBBLE_END_OPEN_BOTTOM, BUBBLE_END_OPEN_TOP, BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED 
 } = require('../../game-data/textboxGlobals');
 const { TypeWriter } = require('../../helpers/TypeWriter');
+const { SPEAK_YES_NO } = require('../../game-data/conditionGlobals');
+const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interactionGlobals');
 
 const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
     let bubbleLocation = {
@@ -39,15 +41,17 @@ const getSpeechBubbleDimensions = ( contents ) => {
 }
 
 class SpeechBubble {
-    constructor( location, contents ) {
+    constructor( location, contents, id, type ) {
         const dimensions = getSpeechBubbleDimensions( contents );
         const xyPosition = getSpeechBubbleXy( location, dimensions )
 
         this.x              = xyPosition.x;
-        this.position       = xyPosition.position;
         this.y              = xyPosition.y;
+        this.position       = xyPosition.position;
+        this.id             = id;
+        this.type           = type;
 
-        this.width          = dimensions.width + (GRID_BLOCK_PX*33);
+        this.width          = dimensions.width + (GRID_BLOCK_PX*.33);
         this.height         = dimensions.height;
         this.text           = contents.text;
 
@@ -64,6 +68,13 @@ class SpeechBubble {
         if ( contents.name ) {
             this.setHeader( contents.name + ": " )
         } 
+        if ( this.type == SPEAK_YES_NO ) {
+            this.bubbleY    = (this.y + this.height) - GRID_BLOCK_PX * .5;
+            this.middleX    = this.x + (this.width / 2);
+            this.yesBubbleX = this.middleX - GRID_BLOCK_PX;
+            this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
+            this.activeButton = INTERACTION_YES;
+        }
         this.draw( );
     }
     set text( text ) {             
@@ -139,6 +150,9 @@ class SpeechBubble {
             this.writeHeader( );
         }
         this.writeText( );
+        if ( this.type == SPEAK_YES_NO && !this.typeWriter.isWriting ) {
+            this.drawButtons( );
+        }
     }
 
     writeText( ) {
@@ -148,6 +162,25 @@ class SpeechBubble {
                 this.text[i], this.textX, this.textY + (LARGE_FONT_LINE_HEIGHT * i), LARGE_FONT_SIZE
             );
         }
+    }
+
+    drawButtons( ) {
+        let pngs = globals.PNG_DICTIONARY;
+        let frontCtx = canvas.getFrontCanvasContext()
+        frontCtx.drawImage(
+            this.activeButton == INTERACTION_YES ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
+            0, 0,
+            globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
+            this.yesBubbleX, this.bubbleY,
+            GRID_BLOCK_PX, GRID_BLOCK_PX
+        );
+        frontCtx.drawImage(
+            this.activeButton == INTERACTION_NO ? pngs[BUBBLE_NO] : pngs[BUBBLE_UNSELECTED],
+            0, 0,
+            globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
+            this.noBubbleX, this.bubbleY,
+            GRID_BLOCK_PX, GRID_BLOCK_PX
+        );
     }
 
     copyBubbleToGameCanvas( ) {
@@ -160,6 +193,10 @@ class SpeechBubble {
             this.vertFlip ? -this.height - this.y : this.y
         );
         frontCtx.restore( );
+    }
+
+    moveCursor( ) {
+        this.activeButton = this.activeButton == INTERACTION_YES ? INTERACTION_NO : INTERACTION_YES;
     }
 }
 

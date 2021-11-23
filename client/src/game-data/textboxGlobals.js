@@ -19,4 +19,8 @@ module.exports = {
     BUBBLE_END_OPEN_BOTTOM: "/static/ui/bubble-template-end-open-bottom.png",
     BUBBLE_END_OPEN_TOP: "/static/ui/bubble-template-end-open-top.png",  
     BUBBLE_END: "/static/ui/bubble-template-end.png",
+
+    BUBBLE_YES: "/static/ui/bubble-yes.png",
+    BUBBLE_NO: "/static/ui/bubble-no.png",
+    BUBBLE_UNSELECTED: "/static/ui/bubble-black.png"
 }

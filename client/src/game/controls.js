@@ -42,7 +42,12 @@ const addKeyToPressed = ( ) => {
         handleMapKeyPress( event )
     }
     else if ( GAME.inCinematic ) {
-        GAME.speechBubbleController.handleButtonPress(event.key);
+        if ( event.key == " " ) {
+            GAME.speechBubbleController.handleButtonPress(event.key);
+        }
+        else if (event.key == "a" || event.key == "ArrowLeft"||event.key == "d" || event.key == "ArrowRight") {
+            GAME.speechBubbleController.handleSelectionKeys( );
+        }
     }
     else if ( GAME.inMenu ) {
         handleMenuKeyPress( event );
