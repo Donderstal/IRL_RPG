@@ -48,6 +48,8 @@ const RANDOM_TALK_5 = [
     [ EVENT_TALK, false, "voice-1.mp3", [ 
         [[SPEAK, "Let's dance!", false, PLAYER_NAME]],
         [[ANIM, "TURN_SINGLE_CIRCLE"],[ANIM, "TURN_SINGLE_CIRCLE", PLAYER_NAME]],
+        [[ANIM, "POWER_UP_RIGHT"],[ANIM, "POWER_UP_RIGHT", PLAYER_NAME]],
+        [[ANIM, "LEFT_AND_RIGHT_STEP"],[ANIM, "LEFT_AND_RIGHT_STEP", PLAYER_NAME]],
         [[SPEAK, "That's funky baby!!!", false, PLAYER_NAME]],
         [[EMOTE, EMOTE_HEART, PLAYER_NAME]]
     ]]

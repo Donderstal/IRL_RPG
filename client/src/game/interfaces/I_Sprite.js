@@ -49,6 +49,9 @@ class Sprite {
     get pathIsBlocked() { 
         return checkForCollision( this, this == globals.GAME.PLAYER );
      }
+    get activeAnimationFrame() {
+        return this.animationScript.frames[this.animationScript.index];
+    }
 
     setSpriteToGrid( tile ) {
         this.row = tile.row;
@@ -192,17 +195,21 @@ class Sprite {
         if ( this.State.inAnimation ) {
             this.unsetScriptedAnimation( );
         } 
-        this.originalDirection      = this.direction;
-
+        const startingPositon = {
+            'direction': this.direction,
+            'sheetPosition': this.sheetPosition
+        }
         this.animationScript.loop           = animation.loop;
-        this.animationScript.frames         = getAnimationFrames( animation.animName, this.direction );   
+        this.animationScript.frames         = getAnimationFrames( animation.animName, this.direction ); 
         this.animationScript.index          = 0;           
+        this.sheetPosition  = this.activeAnimationFrame.column;
+        this.direction      = this.activeAnimationFrame.row;
 
         this.animationScript.numberOfFrames = this.animationScript.frames.length;      
         this.animationScript.frameRate      = frameRate;
         this.animationScript.numberOfLoops  = numberOfLoops;
         this.animationScript.currentLoop    = 0;
-        this.State.animationOn( );
+        this.State.animationOn( startingPositon );
     }
 
     doScriptedAnimation( ) {
@@ -243,10 +250,8 @@ class Sprite {
         if ( this.hasActiveEffect ) {
             this.unsetGraphicalEffect( );
         }
-        this.State.animationOff( );  
         this.animationScript        = { };
-        this.direction              = this.originalDirection;
-        this.sheetPosition          = 0;
+        this.State.animationOff( this );  
     }
 }
 

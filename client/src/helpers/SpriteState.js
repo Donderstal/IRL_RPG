@@ -6,6 +6,7 @@ class SpriteState {
         this.inAnimation = false;
         this.storedState = false;
         this.storedDestination = false;
+        this.storedAnimationPosition = false;
         this.pendingStateChanges = [];
     }
 
@@ -17,12 +18,19 @@ class SpriteState {
         this.innerValue = newValue
     }
 
-    animationOn( ) {
+    animationOn( sprite ) {
+        this.storedAnimationPosition = { 
+            'position': sprite.sheetPosition,
+            'direction': sprite.direction
+        }
         this.inAnimation = true;
     }
 
-    animationOff( ) {
+    animationOff( sprite ) {
         this.inAnimation = false;
+        sprite.sheetPosition = 0;
+        sprite.direction = this.storedAnimationPosition['direction'];
+        this.storedAnimationPosition = false;
     }
 
     cinematicOn( sprite ) {
