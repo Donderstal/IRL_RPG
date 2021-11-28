@@ -69,7 +69,7 @@ class SpeechBubble {
             this.setHeader( contents.name + ": " )
         } 
         if ( this.type == SPEAK_YES_NO ) {
-            this.bubbleY    = (this.y + this.height) - GRID_BLOCK_PX * .5;
+            this.bubbleY    = this.y + this.height;
             this.middleX    = this.x + (this.width / 2);
             this.yesBubbleX = this.middleX - GRID_BLOCK_PX;
             this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
