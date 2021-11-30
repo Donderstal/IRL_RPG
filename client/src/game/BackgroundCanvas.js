@@ -115,7 +115,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
      */
     drawMapFromGridData( image ) {
         this.sheetImage = image;
-        this.grid.drawMap( this.sheetImage, this.transparentTileGroups != undefined ? this.transparentTileGroups.flat() : []);
+        this.grid.drawMap( this.sheetImage );
     }    
     setSavepoint( savepointData ) {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
@@ -135,6 +135,8 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.blockedTiles = [ ];
         this.backgroundActions = [];
         this.savepoint = false;
+        this.hasTransparentTiles = false;
+        this.transparentTileGroups = [];
     }
 };
 

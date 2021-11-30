@@ -16,7 +16,11 @@ class TransparentTiles extends TileSquare {
             tile.ctx = globals.GAME.FRONT.ctx;
             let backTile = globals.GAME.BACK.getTileAtIndex(tile.index);
             tile.ID = backTile.ID
+            if ( this.spriteIsInTileSquare( globals.GAME.PLAYER ) ) {
+                tile.ctx.globalAlpha = 0.5;
+            }
             tile.drawTileInMap( this.sheetImage );
+            tile.ctx.globalAlpha = 1;
         })
     }
 }

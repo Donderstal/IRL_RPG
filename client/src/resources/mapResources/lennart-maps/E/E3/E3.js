@@ -103,6 +103,12 @@ module.exports = {
         }
     ],
     "transparentTiles": [
+        [
+            { 'col': 1, 'row': 14 },
+            { 'col': 2, 'row': 14 },
+            { 'col': 1, 'row': 15 },
+            { 'col': 2, 'row': 15 }
+        ],
         [ 
             { 'col': 3, 'row': 13 },
             { 'col': 4, 'row': 13 },

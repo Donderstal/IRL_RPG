@@ -105,6 +105,58 @@ module.exports = {
             "col": 8
         }
     ],
+    "transparentTiles": [
+        [
+            { 'col': 1, 'row': 3 },
+            { 'col': 2, 'row': 3 },
+        ],
+        [
+            { 'col': 1, 'row': 13 },
+            { 'col': 2, 'row': 13 },
+            { 'col': 1, 'row': 14 },
+            { 'col': 2, 'row': 14 },
+            { 'col': 1, 'row': 15 },
+            { 'col': 2, 'row': 15 }
+        ],
+        [ 
+            { 'col': 3, 'row': 1 },
+            { 'col': 4, 'row': 1 },
+            { 'col': 5, 'row': 1 },
+            { 'col': 6, 'row': 1 },
+            { 'col': 3, 'row': 2 },
+            { 'col': 4, 'row': 2 },
+            { 'col': 5, 'row': 2 },
+            { 'col': 6, 'row': 2 },
+            { 'col': 3, 'row': 3 },
+            { 'col': 4, 'row': 3 },
+            { 'col': 5, 'row': 3 },
+            { 'col': 6, 'row': 3 },
+        ],
+        [
+            { 'col': 15, 'row': 14 },
+            { 'col': 16, 'row': 14 },
+            { 'col': 17, 'row': 14 },
+            { 'col': 18, 'row': 14 }, 
+            { 'col': 15, 'row': 15 },
+            { 'col': 16, 'row': 15 },
+            { 'col': 17, 'row': 15 },
+            { 'col': 18, 'row': 15 }, 
+        ],
+        [
+            { 'col': 19, 'row': 14 },
+            { 'col': 20, 'row': 14 },
+            { 'col': 21, 'row': 14 },
+            { 'col': 22, 'row': 14 }, 
+            { 'col': 23, 'row': 14 },
+            { 'col': 24, 'row': 14 },
+            { 'col': 19, 'row': 15 },
+            { 'col': 20, 'row': 15 },
+            { 'col': 21, 'row': 15 },
+            { 'col': 22, 'row': 15 }, 
+            { 'col': 23, 'row': 15 },
+            { 'col': 24, 'row': 15 }
+        ]
+    ],
     "characters": [],
     "actions": [],
     "doors": []

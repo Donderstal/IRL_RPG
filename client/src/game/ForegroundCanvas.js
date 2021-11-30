@@ -22,6 +22,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.spriteDictionary = { };
         this.playerSprite = { };
         this.activeEffects = [];
+        this.transparentTileGroups = [];
         this.roadNetwork;
     };
     /**
@@ -134,6 +135,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.allSprites = [ ];
         this.roadNetwork = null;
         this.spriteDictionary = { };
+        this.transparentTileGroups = [];
     }
 
     deleteSprite( spriteId ) {

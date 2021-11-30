@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### NOV 30, 2021
+* Implented transparent tiles to walk behind buildings
+
 #### NOV 23, 2021
 * Sprites now face toward player when speaking
 * Added yes/no interaction speech bubbles
