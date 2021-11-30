@@ -6,11 +6,9 @@ const { Car } = require('./map/roads/Car')
 const { getUniqueId } = require('../helpers/utilFunctions');
 const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
-const { DEFAULT, EVENT_TALK, SPEAK, EMOTE } = require('../game-data/conditionGlobals');
 const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers');
-const { EMOTE_HEART } = require('../game-data/textboxGlobals');
-const { getAction } = require('../helpers/actionDtoFactory');
+const { TransparentTiles } = require('../helpers/TransparentTiles');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -45,8 +43,17 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.initPlayerCharacter( mapData.playerStart );
         if ( mapData.roads ) 
             this.roadNetwork = new RoadNetwork( mapData.roads );
+        if ( globals.GAME.BACK.hasTransparentTiles ) {
+            this.setTransparentTileGroups(globals.GAME.BACK.transparentTileGroups);
+        }
     }
-
+    setTransparentTileGroups(tileGroups) {
+        this.transparentTileGroups = [];
+        tileGroups.forEach((group)=> {
+            console.log(group)
+            this.transparentTileGroups.push( new TransparentTiles(group) );            
+        })
+    }
     /**
      * Instantiate a mapSprite to start location and mark it as the player sprite
      * @param {Object} start row - column location to set Player sprite to 

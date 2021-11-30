@@ -30,6 +30,13 @@ const handleMapAnimations = ( GAME ) => {
     GAME.FRONT.activeEffects.forEach( ( e ) => {
         e.drawAndMove( );
     })
+
+    if ( GAME.BACK.hasTransparentTiles ) {
+        GAME.FRONT.transparentTileGroups.forEach( ( e ) => {
+            e.draw();
+        })        
+    }
+    
 }
 
 const handleRoadNetworkFuncs = ( GAME ) => {

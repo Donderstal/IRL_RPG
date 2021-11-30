@@ -60,6 +60,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             })
             this.transparentTileGroups.push( tileIndexGroup);
         })
+        this.blockedExceptions = this.transparentTileGroups.flat();
     }
     /**
      * Set tile grid and various data for a new map as class properties
@@ -103,7 +104,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
                 })                
             }
             this.blockedTiles.forEach( blockedId => {
-                if ( tile.ID == blockedId ) {
+                if (tile.ID == blockedId && (!this.hasTransparentTiles || this.blockedExceptions.indexOf(tile.index) == -1)) {
                     tile.blocked = true;
                 }
             })
