@@ -102,6 +102,31 @@ module.exports = {
             "direction": FACING_LEFT
         }
     ],
+    "transparentTiles": [
+        [ 
+            { 'col': 3, 'row': 13 },
+            { 'col': 4, 'row': 13 },
+            { 'col': 5, 'row': 13 },
+            { 'col': 6, 'row': 13 },
+            { 'col': 7, 'row': 13 },
+            { 'col': 8, 'row': 13 },
+            { 'col': 9, 'row': 13 },
+            { 'col': 3, 'row': 14 },
+            { 'col': 4, 'row': 14 },
+            { 'col': 5, 'row': 14 },
+            { 'col': 6, 'row': 14 },
+            { 'col': 7, 'row': 14 },
+            { 'col': 8, 'row': 14 },
+            { 'col': 9, 'row': 14 },
+            { 'col': 3, 'row': 15 },
+            { 'col': 4, 'row': 15 },
+            { 'col': 5, 'row': 15 },
+            { 'col': 6, 'row': 15 },
+            { 'col': 7, 'row': 15 },
+            { 'col': 8, 'row': 15 },
+            { 'col': 9, 'row': 15 },
+        ]
+    ],
     "actions": [],
     "doors": []
 }

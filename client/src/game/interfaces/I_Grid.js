@@ -70,10 +70,10 @@ class I_Grid {
      * Then call this.drawRowInMap with the row and tilesheet as argument
      * @param {Image} tileSheet - Image instance of a tilesheet
      */
-    drawMap( tileSheet ) {
+    drawMap( tileSheet, exceptions ) {
         for ( var i = 0; i < this.array.length; i += this.cols ) {
             let row = this.array.slice( i, i + this.cols )
-            this.drawRowInMap( row, tileSheet )
+            this.drawRowInMap( row, tileSheet, exceptions )
         }
     }
     /**
@@ -81,10 +81,12 @@ class I_Grid {
      * @param {I_Tile[]} currentRow - List if I_Tile instance representing a row in the grid
      * @param {Image} tileSheet - Image instance of a tilesheet
      */
-    drawRowInMap( currentRow, tileSheet ) {
+    drawRowInMap( currentRow, tileSheet, exceptions ) {
         for ( var j = 0; j < this.cols; j++ ) {
             const currentTile = currentRow[j]
-            currentTile.drawTileInMap( tileSheet )
+            if( exceptions.indexOf(currentTile.index) == -1 ) {
+                currentTile.drawTileInMap( tileSheet )
+            }
         }
     }
     /**

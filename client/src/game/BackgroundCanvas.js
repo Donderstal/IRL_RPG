@@ -50,6 +50,17 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     setBlockedTiles( blockedTiles ) {
         this.blockedTiles = blockedTiles
     }
+
+    setTransparentTiles( tileGroupList ) {
+        this.hasTransparentTiles = true;
+        this.transparentTileGroups = [];
+        tileGroupList.forEach( (cellGroup) => {
+            let tileIndexGroup = cellGroup.map( ( cell ) => {
+                return this.getTileAtCell(cell.col, cell.row).index;
+            })
+            this.transparentTileGroups.push( tileIndexGroup);
+        })
+    }
     /**
      * Set tile grid and various data for a new map as class properties
      * @param {Object} mapData - data object from mapResources
@@ -62,11 +73,12 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             this.setActions( mapData.actions );
         if ( mapData.savepoint ) 
             this.setSavepoint( mapData.savepoint );
+        if ( mapData.transparentTiles )
+            this.setTransparentTiles( mapData.transparentTiles );
         if ( sheetData.blocked ) 
-            this.setBlockedTiles( sheetData.blocked )
-
+            this.setBlockedTiles( sheetData.blocked );
         let oneDimensionalMapGrid = mapData.grid.flat(1);
-        this.setTileGrid( oneDimensionalMapGrid )
+        this.setTileGrid( oneDimensionalMapGrid );
     }
     /**
      * Loop through the inner I_Grid array.
@@ -102,7 +114,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
      */
     drawMapFromGridData( image ) {
         this.sheetImage = image;
-        this.grid.drawMap( this.sheetImage );
+        this.grid.drawMap( this.sheetImage, this.transparentTileGroups != undefined ? this.transparentTileGroups.flat() : []);
     }    
     setSavepoint( savepointData ) {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
