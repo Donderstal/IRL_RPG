@@ -1,6 +1,6 @@
 const { NPC_ANIM_TYPE_IDLE, FACING_DOWN, FACING_UP, FACING_RIGHT, FACING_LEFT, OUT_UP, OUT_RIGHT, OUT_LEFT } = require("../../../../../game-data/globals");
 const { D4Grid } = require("./D4-grid");
-
+const { SHADY_MAN } = require("./D4-interactions")
 module.exports = {
     "mapName": "lennart-neighbourhood/D4",
     "neighbourhood": "lennart-neighbourhood",
@@ -149,7 +149,22 @@ module.exports = {
         }
     ],
     "characters": [
-        
+        {
+            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "row": 5,
+            "col": 23,
+            "sprite": "generic_balding_guy.png",
+            "direction": FACING_LEFT,
+            "action": SHADY_MAN
+        },
+    ],
+    "transparentTiles": [
+        [
+            { 'col': 22, 'row': 4 },
+            { 'col': 23, 'row': 4 },
+            { 'col': 22, 'row': 5 },
+            { 'col': 23, 'row': 5 },
+        ]
     ],
     "actions": [],
     "doors": []

@@ -1,151 +1,81 @@
-const D3Grid = [
+const C3Grid = [
     {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 800,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 801,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 801,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 802,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 627,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1060,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1061,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1061,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1079,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1060,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1061,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
+        "id": 883,
         "angle": 0,
         "mirrored": false
     },
     {
         "id": 873,
-        "angle": 90,
-        "mirrored": false
-    },
-    {
-        "id": 926,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 926,
+        "id": 875,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 873,
+        "id": 890,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
         "angle": 270,
         "mirrored": false
     },
@@ -155,46 +85,6 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 623,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 634,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 640,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
         "id": 750,
         "angle": 0,
         "mirrored": false
@@ -206,111 +96,6 @@ const D3Grid = [
     },
     {
         "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1052,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1053,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1053,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1053,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1052,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1053,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 793,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 794,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 873,
-        "angle": 90,
-        "mirrored": false
-    },
-    {
-        "id": 872,
-        "angle": 90,
-        "mirrored": false
-    },
-    {
-        "id": 874,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 873,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 653,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 764,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
         "angle": 0,
         "mirrored": false
     },
@@ -330,37 +115,272 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 1056,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1057,
+        "id": 926,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1057,
+        "id": 926,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1051,
+        "id": 926,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1056,
+        "id": 898,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1057,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 801,
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 749,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 875,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 879,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 883,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 890,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 641,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 643,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 792,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 926,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 926,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 926,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 898,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 800,
         "angle": 0,
         "mirrored": false
     },
@@ -370,22 +390,52 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 873,
-        "angle": 90,
+        "id": 419,
+        "angle": 270,
         "mirrored": false
     },
     {
-        "id": 926,
+        "id": 419,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 926,
+        "id": 419,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 873,
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
         "angle": 270,
         "mirrored": false
     },
@@ -395,43 +445,118 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 636,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 641,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 800,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 801,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 801,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 801,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 801,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 628,
+        "id": 873,
         "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 883,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 889,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 890,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 423,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 423,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 361,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 362,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
         "mirrored": false
     },
     {
@@ -440,42 +565,17 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 750,
+        "id": 223,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 750,
+        "id": 800,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1060,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1061,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1061,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1079,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1060,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 1061,
+        "id": 88,
         "angle": 0,
         "mirrored": false
     },
@@ -485,27 +585,97 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 90,
+        "id": 267,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 873,
-        "angle": 90,
+        "id": 267,
+        "angle": 0,
         "mirrored": false
     },
     {
-        "id": 872,
-        "angle": 90,
+        "id": 267,
+        "angle": 0,
         "mirrored": false
     },
     {
-        "id": 874,
+        "id": 461,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 462,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 463,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 473,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 442,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 443,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
         "angle": 270,
         "mirrored": false
     },
     {
-        "id": 873,
+        "id": 417,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
         "angle": 270,
         "mirrored": false
     },
@@ -515,43 +685,358 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 665,
+        "id": 198,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 656,
+        "id": 88,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 637,
+        "id": 88,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 69,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 89,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 96,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 97,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 628,
+        "id": 465,
         "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 466,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 467,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 477,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 446,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 447,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 608,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 611,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 385,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 386,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 419,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 608,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 611,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 417,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 202,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 92,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 88,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 122,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 123,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 100,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 101,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 469,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 470,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 471,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 481,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 612,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 615,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 389,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 390,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 612,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 615,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 92,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 126,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 127,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 104,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 105,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 90,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 90,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 90,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 726,
+        "angle": 90,
         "mirrored": false
     },
     {
@@ -600,77 +1085,12 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 98,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 90,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 873,
-        "angle": 90,
-        "mirrored": false
-    },
-    {
-        "id": 926,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 926,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 873,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 197,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 197,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
         "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
@@ -710,87 +1130,7 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 630,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 102,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 90,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 416,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 419,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 419,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 418,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 197,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 197,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 653,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
+        "id": 748,
         "angle": 0,
         "mirrored": false
     },
@@ -840,122 +1180,12 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 106,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 94,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 416,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 419,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 419,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 418,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 197,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 197,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
         "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 632,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 647,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 646,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
@@ -990,92 +1220,32 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 197,
+        "id": 641,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 197,
+        "id": 642,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 750,
+        "id": 642,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 636,
+        "id": 642,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
+        "id": 642,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
+        "id": 643,
         "angle": 0,
         "mirrored": false
     },
@@ -1086,6 +1256,16 @@ const D3Grid = [
     },
     {
         "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 629,
         "angle": 0,
         "mirrored": false
     },
@@ -1120,82 +1300,7 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
+        "id": 740,
         "angle": 0,
         "mirrored": false
     },
@@ -1211,231 +1316,6 @@ const D3Grid = [
     },
     {
         "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 636,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 654,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 623,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 634,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 634,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 634,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 640,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 655,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
         "angle": 0,
         "mirrored": false
     },
@@ -1455,297 +1335,7 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
-        "angle": 180,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 639,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 656,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 797,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 798,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 744,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
-        "angle": 180,
-        "mirrored": false
-    },
-    {
-        "id": 751,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 654,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 764,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 792,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 793,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 793,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 794,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 641,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 642,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 642,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 642,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 642,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 642,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 801,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 802,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 750,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 628,
-        "angle": 180,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 683,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 682,
+        "id": 630,
         "angle": 0,
         "mirrored": false
     },
@@ -1765,7 +1355,267 @@ const D3Grid = [
         "mirrored": false
     },
     {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
         "id": 802,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 802,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 418,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 442,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 443,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 418,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 418,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 418,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 1199,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 792,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 793,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 458,
+        "angle": 180,
+        "mirrored": false
+    },
+    {
+        "id": 468,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1144,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 446,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 447,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 416,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 1206,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
@@ -1795,17 +1645,167 @@ const D3Grid = [
         "mirrored": false
     },
     {
+        "id": 799,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 795,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
         "id": 797,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 945,
+        "id": 797,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 953,
+        "id": 797,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 467,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 468,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1164,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1165,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1217,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1164,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1165,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1165,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1165,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 1217,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 750,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 800,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 802,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 926,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 926,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 800,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 801,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 458,
+        "angle": 180,
+        "mirrored": false
+    },
+    {
+        "id": 468,
         "angle": 270,
         "mirrored": false
     },
@@ -1825,102 +1825,102 @@ const D3Grid = [
         "mirrored": false
     },
     {
-        "id": 628,
-        "angle": 180,
-        "mirrored": false
-    },
-    {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 683,
+        "id": 953,
+        "angle": 90,
+        "mirrored": false
+    },
+    {
+        "id": 961,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 252,
+        "id": 961,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 267,
+        "id": 945,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 267,
+        "id": 961,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 254,
+        "id": 953,
+        "angle": 270,
+        "mirrored": false
+    },
+    {
+        "id": 926,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 796,
+        "id": 926,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 797,
+        "id": 953,
+        "angle": 90,
+        "mirrored": false
+    },
+    {
+        "id": 961,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 797,
+        "id": 961,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 797,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 797,
-        "angle": 0,
-        "mirrored": false
-    },
-    {
-        "id": 797,
+        "id": 961,
         "angle": 0,
         "mirrored": false
     }
 ]
 
 module.exports = {
-    D3Grid
+    C3Grid
 }

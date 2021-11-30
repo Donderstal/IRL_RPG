@@ -90,14 +90,32 @@ module.exports = {
     "mapObjects": [
         {
             "type": "tires_1",
-            "row": 6,
+            "row": 4,
             "col": 8
         },
         {
             "type": "car_b",
-            "row": 6,
+            "row": 4,
             "col": 9,
             "direction": FACING_DOWN
+        },
+        {
+            "type": "door_4",
+            "row": 8,
+            "col": 4,
+            "hasDoor": false,
+            "directionIn": "",
+            "destination": ""
+        },
+        {
+            "type": "funz",
+            "row": 8,
+            "col": 5
+        },
+        {
+            "type": "wheelie_bin_right",
+            "row": 8,
+            "col": 7
         },
         {
             "type": "bench_a",

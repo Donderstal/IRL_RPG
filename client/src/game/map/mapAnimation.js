@@ -25,7 +25,6 @@ const handleMapAnimations = ( GAME ) => {
     if ( GAME.PLAYER != undefined && !GAME.paused ) {
         mapControls.handleMovementKeys( );  
     }
-    GAME.speechBubbleController.drawBubbles( );
 
     GAME.FRONT.activeEffects.forEach( ( e ) => {
         e.drawAndMove( );
@@ -36,7 +35,7 @@ const handleMapAnimations = ( GAME ) => {
             e.draw();
         })        
     }
-    
+    GAME.speechBubbleController.drawBubbles( );
 }
 
 const handleRoadNetworkFuncs = ( GAME ) => {

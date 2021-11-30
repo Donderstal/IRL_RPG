@@ -771,7 +771,7 @@ module.exports = {
         },
         "starting_neighbourhood_clean": {
             "src": "Starting_neighbourhood_2.png",
-            "uniqueTiles": 1144,
+            "uniqueTiles": 1300,
             "blocked": [
                 0,
                 1,
@@ -1750,7 +1750,9 @@ module.exports = {
                 1140,
                 1141,
                 1142,
-                1143
+                1143,
+                1145,
+                1165
             ]
         },
         "battle_downtown" : {

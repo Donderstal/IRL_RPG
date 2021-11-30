@@ -1,4 +1,4 @@
-const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT, OUT_RIGHT, OUT_LEFT } = require("../../../../../game-data/globals");
+const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT, OUT_RIGHT, OUT_LEFT, NPC_ANIM_TYPE_IDLE } = require("../../../../../game-data/globals");
 const { C4Grid } = require("./C4-grid");
 
 module.exports = {
@@ -53,6 +53,31 @@ module.exports = {
     ],
     "mapObjects": [
         {
+            "type": "bench_a",
+            "row": 2,
+            "col": 9
+        },
+        {
+            "type": "water_puddle",
+            "row": 3,
+            "col": 7
+        },
+        {
+            "type": "trash_4",
+            "row": 3,
+            "col": 9
+        },
+        {
+            "type": "bench_a",
+            "row": 4,
+            "col": 9
+        },
+        {
+            "type": "trash_1",
+            "row": 5,
+            "col": 10
+        },
+        {
             "type": "yum_mart_sign",
             "row": 6,
             "col": 13
@@ -66,6 +91,16 @@ module.exports = {
             "type": "funz",
             "row": 7,
             "col": 16
+        },
+        {
+            "type": "no_entry_sign",
+            "row": 9,
+            "col": 1
+        },
+        {
+            "type": "boxes",
+            "row": 11,
+            "col": 11
         },
         {
             "type": "car_a",
@@ -98,7 +133,22 @@ module.exports = {
             "direction": FACING_UP
         }
     ],
-    "characters": [],
+    "characters": [
+    {
+        "anim_type": NPC_ANIM_TYPE_IDLE,
+        "row": 2,
+        "col": 5,
+        "sprite": "robot.png",
+        "direction": FACING_DOWN
+    },
+    {
+        "anim_type": NPC_ANIM_TYPE_IDLE,
+        "row": 4,
+        "col": 11,
+        "sprite": "pigeon.png",
+        "direction": FACING_RIGHT
+    }
+],
     "actions": [],
     "doors": []
 }
