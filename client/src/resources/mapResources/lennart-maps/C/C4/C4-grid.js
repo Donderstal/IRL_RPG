@@ -1,21 +1,21 @@
 const C4Grid = [
     {
-        "id": 467,
+        "id": 712,
+        "angle": 180,
+        "mirrored": false
+    },
+    {
+        "id": 423,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 750,
+        "id": 423,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1144,
+        "id": 712,
         "angle": 0,
         "mirrored": false
     },
@@ -120,22 +120,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 458,
+        "id": 712,
         "angle": 180,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 750,
+        "id": 416,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1152,
+        "id": 418,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 712,
         "angle": 0,
         "mirrored": false
     },
@@ -240,22 +240,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 467,
+        "id": 712,
+        "angle": 180,
+        "mirrored": false
+    },
+    {
+        "id": 423,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 750,
+        "id": 423,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1156,
+        "id": 712,
         "angle": 0,
         "mirrored": false
     },
@@ -360,22 +360,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 458,
+        "id": 712,
         "angle": 180,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 750,
+        "id": 416,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1160,
+        "id": 418,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 712,
         "angle": 0,
         "mirrored": false
     },
@@ -480,22 +480,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 467,
+        "id": 712,
+        "angle": 180,
+        "mirrored": false
+    },
+    {
+        "id": 423,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 1005,
+        "id": 423,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1160,
+        "id": 712,
         "angle": 0,
         "mirrored": false
     },
@@ -600,22 +600,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 458,
+        "id": 712,
         "angle": 180,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 750,
+        "id": 416,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1164,
+        "id": 418,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 712,
         "angle": 0,
         "mirrored": false
     },
@@ -720,22 +720,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 418,
+        "id": 424,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 1005,
+        "id": 442,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1005,
+        "id": 443,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 426,
         "angle": 0,
         "mirrored": false
     },
@@ -840,22 +840,22 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 418,
+        "id": 428,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 468,
-        "angle": 270,
-        "mirrored": false
-    },
-    {
-        "id": 197,
+        "id": 446,
         "angle": 0,
         "mirrored": false
     },
     {
-        "id": 1005,
+        "id": 447,
+        "angle": 0,
+        "mirrored": false
+    },
+    {
+        "id": 430,
         "angle": 0,
         "mirrored": false
     },
@@ -965,7 +965,7 @@ const C4Grid = [
         "mirrored": false
     },
     {
-        "id": 197,
+        "id": 750,
         "angle": 0,
         "mirrored": false
     },

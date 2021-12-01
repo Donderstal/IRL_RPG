@@ -134,21 +134,29 @@ module.exports = {
         }
     ],
     "characters": [
-    {
-        "anim_type": NPC_ANIM_TYPE_IDLE,
-        "row": 2,
-        "col": 5,
-        "sprite": "robot.png",
-        "direction": FACING_DOWN
-    },
-    {
-        "anim_type": NPC_ANIM_TYPE_IDLE,
-        "row": 4,
-        "col": 11,
-        "sprite": "pigeon.png",
-        "direction": FACING_RIGHT
-    }
-],
+        {
+            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "row": 2,
+            "col": 5,
+            "sprite": "robot.png",
+            "direction": FACING_DOWN
+        },
+        {
+            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "row": 4,
+            "col": 11,
+            "sprite": "pigeon.png",
+            "direction": FACING_RIGHT
+        }
+    ],
+    "transparentTiles": [
+        [
+            { 'col': 1, 'row': 1 },
+            { 'col': 2, 'row': 1 },
+            { 'col': 3, 'row': 1 },
+            { 'col': 4, 'row': 1 },
+        ]
+    ],
     "actions": [],
     "doors": []
 }
