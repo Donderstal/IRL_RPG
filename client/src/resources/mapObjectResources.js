@@ -84,7 +84,6 @@ const BUS = {
             { "x": 128, "y": 768 }
         ]
     }
-    
 }
 
 const STANDARD_SHELVE = {
@@ -511,6 +510,14 @@ module.exports = {
     "trash_4" : {
         "src": "Trash_Z4.png",
         ...getBackgroundItem( 0.5625, 0.53125 )
+    },
+    "tree" : {
+        "src": "tree.png",
+        ...getGroundedAtBottom( 2, 3 )
+    },    
+    "tree_plus_base" : {
+        "src": "tree_plus_base.png",
+        ...getGroundedAtBottom( 2, 3 )
     },    
     "vent_1" : {
         "src": "Vent_Z1.png",

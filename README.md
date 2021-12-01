@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC , 2021
+* Updating maps, sprite assets
+
 #### NOV 30, 2021
 * Implented transparent tiles to walk behind buildings
 

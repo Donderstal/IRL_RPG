@@ -110,6 +110,16 @@ module.exports = {
             "col": 18
         }
     ],
+    "transparentTiles": [
+        [
+            { 'col': 1, 'row': 16 },
+            { 'col': 2, 'row': 16 },
+            { 'col': 3, 'row': 16 },
+            { 'col': 4, 'row': 16 },
+            { 'col': 5, 'row': 16 },
+            { 'col': 6, 'row': 16 },
+        ]
+    ],
     "characters": [],
     "actions": [],
     "doors": []

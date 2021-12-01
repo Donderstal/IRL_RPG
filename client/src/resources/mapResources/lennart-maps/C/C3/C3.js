@@ -75,7 +75,12 @@ module.exports = {
             { 'col': 4, 'row': 2 },
         ],
         [
-            { 'col': 6, 'row': 1 },
+            { 'col': 5, 'row': 3 },
+            { 'col': 6, 'row': 3 },
+            { 'col': 5, 'row': 4 },
+            { 'col': 6, 'row': 4 },
+        ],
+        [
             { 'col': 7, 'row': 1 },
             { 'col': 8, 'row': 1 },
             { 'col': 9, 'row': 1 },
@@ -86,7 +91,6 @@ module.exports = {
             { 'col': 14, 'row': 1 },
             { 'col': 15, 'row': 1 },
             { 'col': 16, 'row': 1 },
-            { 'col': 6, 'row': 2 },
             { 'col': 7, 'row': 2 },
             { 'col': 8, 'row': 2 },
             { 'col': 9, 'row': 2 },
@@ -154,6 +158,13 @@ module.exports = {
             { 'col': 23, 'row': 15 },
             { 'col': 24, 'row': 15 }
         ],
+        [
+            { 'col': 20, 'row': 3 },
+            { 'col': 21, 'row': 3 },
+            { 'col': 22, 'row': 3 },
+            { 'col': 23, 'row': 3 },
+            { 'col': 24, 'row': 3 }
+        ]
     ],
     "actions": [],
     "doors": []
