@@ -1,7 +1,7 @@
 const canvas = require( '../../helpers/canvasHelpers' );
 const globals = require( '../../game-data/globals' );
 const { 
-    MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING,
+    MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX,
     STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT
 } = require( '../../game-data/globals' );
 const { 
@@ -35,8 +35,9 @@ const getSpeechBubbleDimensions = ( contents ) => {
     let textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (contents.name != undefined ? SMALL_FONT_LINE_HEIGHT : 0);
     let firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
     return {
+        'textLines' : text.length,
         'width' : text.length > 1 ? MAX_BUBBLE_WIDTH : Math.ceil(firstLineWidth / GRID_BLOCK_PX) * GRID_BLOCK_PX,
-        'height': Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX
+        'height': (Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX) < (GRID_BLOCK_PX * 2 ) ? (GRID_BLOCK_PX * 2 ) : (Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX)
     }
 }
 
@@ -51,8 +52,9 @@ class SpeechBubble {
         this.id             = id;
         this.type           = type;
 
-        this.width          = dimensions.width + (GRID_BLOCK_PX*.33);
+        this.width          = dimensions.width;
         this.height         = dimensions.height;
+        this.textLines      = dimensions.textLines;
         this.text           = contents.text;
 
         this.innerCanvas = document.createElement('canvas');
@@ -92,18 +94,23 @@ class SpeechBubble {
         return returner;
     }
 
-    get textX() { return this.x + BUBBLE_INNER_PADDING - (this.horiFlip ? GRID_BLOCK_PX / 2 : 0); };
+    get textX() { return this.x + BUBBLE_INNER_PADDING; };
     get headerY() { return this.y + ( this.hasHeader ? SMALL_FONT_LINE_HEIGHT : 0 ) + ( this.vertFlip ? 8 : 0 ); }
-    get textY() { return this.headerY + SMALL_FONT_LINE_HEIGHT };
+    get textY() { return this.headerY + LARGE_FONT_LINE_HEIGHT };
     get horiFlip() { return this.position.includes("LEFT") };
     get vertFlip() { return this.position.includes("DOWN") };
+
+    setWidth( width ) {
+        this.width = width;
+        this.innerCanvas.width = width;
+    }
 
     drawBubblePart( name, x, y ) {
         let pngs = globals.PNG_DICTIONARY;
         this.innerCtx.drawImage(
             pngs[name],
             0, 0,
-            GRID_BLOCK_PX, GRID_BLOCK_PX,
+            GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             x, y, 
             GRID_BLOCK_PX, GRID_BLOCK_PX
         );
@@ -113,9 +120,9 @@ class SpeechBubble {
         let index = 0;
         let accumulator = 0;
         for ( var i = 0; i < this.height/GRID_BLOCK_PX; i++ ) {
-            const start = this.text.length == 1 ? BUBBLE_START : i == 0 ? BUBBLE_START_OPEN_BOTTOM : BUBBLE_START_OPEN_TOP;
-            const middle = this.text.length == 1 ? BUBBLE_MIDDLE : i == 0 ? BUBBLE_MIDDLE_OPEN_BOTTOM : BUBBLE_MIDDLE_OPEN_TOP;
-            const end = this.text.length == 1 ? BUBBLE_END : i == 0 ? BUBBLE_END_OPEN_BOTTOM : BUBBLE_END_OPEN_TOP;
+            const start = i == 0 ? BUBBLE_START_OPEN_BOTTOM : BUBBLE_START_OPEN_TOP;
+            const middle = i == 0 ? BUBBLE_MIDDLE_OPEN_BOTTOM : BUBBLE_MIDDLE_OPEN_TOP;
+            const end = i == 0 ? BUBBLE_END_OPEN_BOTTOM : BUBBLE_END_OPEN_TOP;
             while( accumulator < globals.GAME.front.ctx.measureText(this.typeWriter.fullText).width + (GRID_BLOCK_PX*2) && accumulator < globals.MAX_BUBBLE_WIDTH) {
                 if ( index == 0 ) {
                     this.drawBubblePart( start, GRID_BLOCK_PX*index, GRID_BLOCK_PX*i);
@@ -126,7 +133,8 @@ class SpeechBubble {
                 index++;
                 accumulator += GRID_BLOCK_PX;
             }
-            this.drawBubblePart( end, GRID_BLOCK_PX*index, GRID_BLOCK_PX*i);
+            this.innerCtx.clearRect(GRID_BLOCK_PX*(index-1), GRID_BLOCK_PX*i, GRID_BLOCK_PX, GRID_BLOCK_PX)
+            this.drawBubblePart( end, GRID_BLOCK_PX*(index-1), GRID_BLOCK_PX*i);
             index = 0;
             accumulator = 0;
         }

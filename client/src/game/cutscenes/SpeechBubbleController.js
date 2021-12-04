@@ -2,7 +2,7 @@ const globals = require("../../game-data/globals");
 const { getUniqueId } = require("../../helpers/utilFunctions");
 const { SpeechBubble } = require("./SpeechBubble");
 const { SPEAK_YES_NO } = require("../../game-data/conditionGlobals");
-const { INTERACTION_YES, INTERACTION_NO } = require("../../game-data/interactionGlobals");
+const { INTERACTION_YES } = require("../../game-data/interactionGlobals");
 const { Emote } = require("./Emote");
 
 class SpeechBubbleController {
@@ -12,6 +12,7 @@ class SpeechBubbleController {
         this.activeBubbleIds = [];
     }
 
+    get nonEmoteIds( ) { return this.activeBubbleIds.filter((e) => { return this.emoteIds.indexOf(e) == -1 })}
     get isActive() { return this.activeBubbleIds.length > 0; }
     get selectionBubble( ) { return Object.values(this.activeBubbles).find(x => x.type === SPEAK_YES_NO); }
     get isWriting() { 
@@ -76,7 +77,12 @@ class SpeechBubbleController {
 
     drawBubbles( ) {
         if ( this.isActive ) {
-            this.activeBubbleIds.forEach( e => this.activeBubbles[e].draw() );            
+            if ( this.emoteIds.length >= 1 ) {
+                this.emoteIds.forEach( e => this.activeBubbles[e].draw() );     
+            }     
+            if ( this.nonEmoteIds.length >= 1 ) {
+                this.nonEmoteIds.forEach( e => this.activeBubbles[e].draw() );     
+            }
         }
     }
 }
