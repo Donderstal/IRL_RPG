@@ -12,7 +12,7 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### DEC , 2021
+#### DEC 1, 2021
 * Updating maps, sprite assets
 
 #### NOV 30, 2021
@@ -22,7 +22,7 @@ Try the latest the game at: http://34.90.228.47/
 * Sprites now face toward player when speaking
 * Added yes/no interaction speech bubbles
 
-#### NOV 17, 2021
+#### NOV 20, 2021
 * Reworking Cinematic code to allow simultaneous animations in a Scene
 
 #### NOV 17, 2021
