@@ -5,7 +5,7 @@ const { getAnimationFrames } = require('../../resources/animationResources')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 
-    STATE_IDLE, STATE_MOVING, STATE_WAITING, STATE_BLOCKED
+    STATE_IDLE, STATE_MOVING, STATE_WAITING, STATE_BLOCKED, STATE_PATHFINDING
 } = require( '../../game-data/globals' )
 const { checkForCollision } = require('../map/map-ui/movementChecker')
 const { SPEAK_YES_NO, SPEAK, MOVE, ANIM, EMOTE } = require('../../game-data/conditionGlobals')
@@ -122,6 +122,9 @@ class Sprite {
         else if ( this.State.is(STATE_BLOCKED) && !this.pathIsBlocked ) {
             this.State.set(STATE_MOVING);
         }
+        else if ( this.State.is(STATE_PATHFINDING) ) {
+            this.destination.calculatePath();
+        }
     }
 
     checkForAnimation( ) {
@@ -138,6 +141,10 @@ class Sprite {
     }
 
     setDestination( destination, deleteWhenDestinationReached = false ) {
+        if ( !this.isCar ) {
+            this.State.set(STATE_PATHFINDING);            
+        }
+
         this.updateSpriteBorders( );
         this.destination = new Destination( destination.col, destination.row, this.spriteId, deleteWhenDestinationReached );
     }

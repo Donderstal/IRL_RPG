@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### DEC 8, 2021
+* Fixed fatal repathing error that caused the game to crash
+
 #### DEC 1, 2021
 * Updating maps, sprite assets
 

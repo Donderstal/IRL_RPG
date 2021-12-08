@@ -1,6 +1,6 @@
 const globals = require('../../../game-data/globals')
 const pathFinder = require('../../../helpers/pathfindingHelpers')
-const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING } = require( '../../../game-data/globals' );
+const { GRID_BLOCK_PX, FACING_LEFT, FACING_RIGHT, FACING_UP, FACING_DOWN, NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require( '../../../game-data/globals' );
 
 
 class Destination {
@@ -11,6 +11,7 @@ class Destination {
         this.deleteSprite   = deleteSprite;
 
         this.path = false;
+        this.foundPath = false;
         this.currentPathIndex;
         if ( this.sprite.isCar ) {
             this.setCarPath( );
@@ -101,6 +102,7 @@ class Destination {
         }, []);
         this.currentPathIndex = 0;
         this.sprite.direction = this.currentStep.direction; 
+        this.sprite.State.set(STATE_MOVING);
     }
 
     unsetPath( ) {

@@ -45,6 +45,7 @@ const STATE_IDLE                    = "IDLE";
 const STATE_WAITING                 = "WAITING";
 const STATE_BLOCKED                 = "BLOCKED";
 const STATE_MOVING                  = "MOVING";
+const STATE_PATHFINDING             = "PATHFINDING"
 // animation frame limit
 const FRAME_LIMIT                   = 8
 const FRAMES_PER_SECOND             = 60
@@ -244,6 +245,7 @@ module.exports = {
     STATE_BLOCKED,
     STATE_WAITING,
     STATE_MOVING,
+    STATE_PATHFINDING,
 
     FRAME_LIMIT,
     FRAMES_PER_SECOND,
