@@ -1,6 +1,6 @@
 const { 
     LEVEL_OVER, LEVEL_UNDER, CHAPTER_BEFORE, CHAPTER_IN, CHAPTER_AFTER, 
-    ITEM_OWNED, ITEM_NOT_OWNED, EVENT_HAS_FIRED, EVENT_RESPONSE_YES, EVENT_RESPONSE_NO, DEFAULT
+    ITEM_OWNED, ITEM_NOT_OWNED, EVENT_HAS_FIRED, DEFAULT
 } = require('../game-data/conditionGlobals')
 const { INTERACTION_YES, INTERACTION_NO } = require('../game-data/interactionGlobals');
 const { isInRegistry, isInRegistryWithValue } = require('./interactionRegistry');
@@ -32,10 +32,10 @@ const conditionIsTrue = ( conditionType, valueToCheck ) => {
       case EVENT_HAS_FIRED:
         returnBoolean = isInRegistry( valueToCheck );
         break;
-      case EVENT_RESPONSE_YES:
+      case INTERACTION_YES:
         returnBoolean = isInRegistryWithValue( valueToCheck, INTERACTION_YES );
         break;
-      case EVENT_RESPONSE_NO:
+      case INTERACTION_NO:
         returnBoolean = isInRegistryWithValue( valueToCheck, INTERACTION_NO );
         break;
       case DEFAULT:

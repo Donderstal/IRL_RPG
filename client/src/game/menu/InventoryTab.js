@@ -1,6 +1,7 @@
 const { MenuTab } = require('../interfaces/I_MenuTab')
 const globals = require('../../game-data/globals')
-const { MENU_BUTTON_REMOVE_FROM,  MENU_BUTTON_CONFIRM_TRANS, MENU_BUTTON_EQUIP, MENU_BUTTON_RETURN, MENU_TYPE_SELL, MENU_TYPE_INVENTORY, MENU_BUTTON_DISCARD, MENU_BUTTON_USE } = require('../../game-data/uiGlobals')
+const { MENU_BUTTON_REMOVE_FROM,  MENU_BUTTON_CONFIRM_TRANS, MENU_BUTTON_EQUIP, MENU_BUTTON_RETURN, MENU_TYPE_SELL, MENU_TYPE_INVENTORY, MENU_BUTTON_DISCARD, MENU_BUTTON_USE } = require('../../game-data/uiGlobals');
+const { INTERACTION_YES } = require('../../game-data/interactionGlobals');
 /**
  * In the inventorytab, the player can interact with all their items.
  * Items can be equipped, used or discarded.
@@ -81,7 +82,7 @@ class InventoryMenuTab extends MenuTab {
             }
             globals.GAME.PLAYER_INVENTORY.equipItem( selectedCharacter, this.activeItem.ItemTypeId );
         }
-        if ( this.activeOption == MENU_BUTTON_DISCARD && this.modal.activeButton.text == "YES" ) {
+        if ( this.activeOption == MENU_BUTTON_DISCARD && this.modal.activeButton.text == INTERACTION_YES ) {
             globals.GAME.PLAYER_INVENTORY.removeItemsFromInnerListByID( [ this.activeItem.ItemTypeId ] )
         }
         this.unsetModal( );

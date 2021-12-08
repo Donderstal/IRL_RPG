@@ -7,8 +7,6 @@ module.exports = {
     ITEM_OWNED: "IO",
     ITEM_NOT_OWNED: "IO",
     EVENT_HAS_FIRED: "EHF",
-    EVENT_RESPONSE_YES: "ERY",
-    EVENT_RESPONSE_NO: "ERN",
     DEFAULT: "DEF",
 
     SPEAK: "SPK",

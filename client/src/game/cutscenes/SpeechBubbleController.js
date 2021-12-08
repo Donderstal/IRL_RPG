@@ -54,7 +54,7 @@ class SpeechBubbleController {
             else if(this.selectionBubble){
                 globals.GAME.activeAction.registerSelection( this.selectionBubble.activeButton );
                 let animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SPEAK_YES_NO);
-                animation.setSelection( this.selectionBubble.activeButton == INTERACTION_YES ? "YES" : "NO" );
+                animation.setSelection( this.selectionBubble.activeButton );
                 this.clearActiveBubbles( );
             }
             else {

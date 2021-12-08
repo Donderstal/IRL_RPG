@@ -1,5 +1,3 @@
-const YES_OR_NO = [ { "text": "YES"}, { "text": " NO" } ];
-
 /**
  * Format data for display in Modal based on modalContentType
  * @param {string} modalContentType string representing the type of content the modal requests
@@ -8,7 +6,7 @@ const YES_OR_NO = [ { "text": "YES"}, { "text": " NO" } ];
 const getModalContent = ( modalContentType, contentSource = null ) => {
     switch( modalContentType ) {
         case "YES_OR_NO":
-            return YES_OR_NO;
+            return [ { "text": "YES"}, { "text": " NO" } ];
         case "SELECT_PARTY_MEMBER":
             return getPartyMembersForModal( contentSource );
         case "SELECT_ITEM":

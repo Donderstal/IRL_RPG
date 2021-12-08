@@ -1,6 +1,6 @@
 module.exports = {
-    INTERACTION_YES : "Y",
-    INTERACTION_NO  : "N",
+    INTERACTION_YES : "YES",
+    INTERACTION_NO  : "NO",
 
     LOGGABLE_INTERACTION_1 : "LI1",
     LOGGABLE_INTERACTION_2 : "LI2",

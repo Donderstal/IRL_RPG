@@ -5,7 +5,8 @@ const globals               = require('../../game-data/globals')
 const { 
     ON_NPC_INTERACTION, ON_LEAVE
 }  = require('../../game-data/conditionGlobals')
-const { Scene }     = require('./Scene')
+const { Scene }     = require('./Scene');
+const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interactionGlobals');
 /**
  * The Cinematic and Scene classes are no longer implemented and need to be reworked to the new Grid system
  */
@@ -65,10 +66,10 @@ class Cinematic {
         let scenesToAdd;
         let animation = this.activeScene.getAnimationByType( SPEAK_YES_NO )
         switch( animation.selection ) {
-            case "YES" :
+            case INTERACTION_YES :
                 scenesToAdd = animation.pathYes;
                 break;
-            case "NO" :
+            case INTERACTION_NO :
                 scenesToAdd = animation.pathNo;
                 break;
             default:
