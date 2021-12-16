@@ -47,6 +47,9 @@ class Intersection extends I_Junction {
         })
 
         this.checkForCarsOnIntersection( );
+        this.intersectionCars.forEach((car)=>{
+            car.isOnIntersection(this.id, this.roadIds);
+        })
         this.setCarsToWaitIfLaneIsClosed( );
         this.checkIfCarsCanTurn( );
     }

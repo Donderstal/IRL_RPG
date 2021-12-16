@@ -117,6 +117,33 @@ const getOppositeDirection = ( direction ) => {
             return FACING_UP;
     }
 }
+
+const getRelativeLeft = ( direction ) => {
+    switch( direction ) {
+        case FACING_LEFT:
+            return FACING_DOWN;
+        case FACING_UP:
+            return FACING_LEFT;
+        case FACING_RIGHT:
+            return FACING_UP;
+        case FACING_DOWN: 
+            return FACING_RIGHT;
+    }
+}
+
+const getRelativeRight = ( direction ) => {
+    switch( direction ) {
+        case FACING_LEFT:
+            return FACING_UP;
+        case FACING_UP:
+            return FACING_RIGHT;
+        case FACING_RIGHT:
+            return FACING_DOWN;
+        case FACING_DOWN: 
+            return FACING_LEFT;
+    }
+}
+
 module.exports = {
     getUniqueId,
     fetchJSONWithCallback,
@@ -124,5 +151,7 @@ module.exports = {
     getNextIndexInArray,
     getPreviousIndexInArray,
     cloneInstance,
-    getOppositeDirection
+    getOppositeDirection,
+    getRelativeLeft,
+    getRelativeRight
 }

@@ -3,6 +3,8 @@ const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Counter } = require("../../../helpers/Counter");
+const { getRelativeLeft, getRelativeRight } = require("../../../helpers/utilFunctions");
+const { INTERSECTION_STRAIGHT, INTERSECTION_LEFT, INTERSECTION_RIGHT } = require("../../../game-data/conditionGlobals");
 
 class Car extends MapObject {
     constructor( tile, spriteData, spriteId ) {
@@ -15,6 +17,7 @@ class Car extends MapObject {
         this.carHornSoundEffect.mute( );
         this.blockedCounter = new Counter( 5000, false, false );
         this.crossedIntersectionIds = [];
+        this.intersectionActions = {};
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
         this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
@@ -28,14 +31,12 @@ class Car extends MapObject {
         })
     }
     
+    get activeRoadId( ) { return this.carPath[this.carPathIndex]; };
     get nextRoadId( ) { return this.carPath[this.carPathIndex+1]; };
     get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
     get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
     get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
     get secondNextTileFront( ) { return this.hitboxGroups[0].secondNextTileFront };
-    get isBus( ) {
-        return this.sheetSrc.includes('bus');
-    }
 
     handleBlockedTimeCounter( ) {
         if ( this.blocked ) {
@@ -56,15 +57,13 @@ class Car extends MapObject {
         super.drawSprite( );
         this.checkForCollision( );
         
-        if ( !this.isBus ) {
-            this.checkForIntersection( );            
-        }
         this.checkForMoveToDestination( );
         this.handleSoundEffects( )
         this.handleBlockedTimeCounter( )
         if ( !this.State.is(globals.STATE_MOVING) ) {
             this.countFrame( );            
         }
+        this.activeIntersectionId = null;
     }
 
     handleSoundEffects( ) {
@@ -110,54 +109,6 @@ class Car extends MapObject {
         }        
     }
 
-    checkForIntersection( ) {
-          this.hitboxGroups.forEach( ( group ) => {
-            if ( group.middleIsOnIntersection && !this.handlingIntersection && group.middleTileFront.intersectionFrom == this.direction) {
-                this.handleIntersection( group.middleTileFront );
-            }
-        })
-    }
-
-    handleIntersection( intersectionTile ) {
-        const tile = Object.assign(Object.create(Object.getPrototypeOf(intersectionTile)), intersectionTile);
-        const directionFrom = intersectionTile.intersectionFrom;
-        const directionTo = intersectionTile.intersectionTo;
-        
-        if ( directionFrom == FACING_LEFT && directionTo == FACING_UP ) {
-            tile.x += GRID_BLOCK_PX;
-        }
-        else if ( directionFrom == FACING_UP && directionTo == FACING_RIGHT ) {
-            tile.y += GRID_BLOCK_PX;
-        }
-        else if ( directionFrom == FACING_RIGHT && directionTo == FACING_DOWN ) {
-            tile.x -= GRID_BLOCK_PX;
-        }
-        else if ( directionFrom == FACING_DOWN && directionTo == FACING_LEFT ) {
-            tile.y -= GRID_BLOCK_PX;
-        }
-
-        this.handlingIntersection = true;
-        Math.random( ) > .5 ? this.switchDirections( directionTo, tile ) : setTimeout(( )=> {this.handlingIntersection = false}, 500);
-    }
-
-    switchDirections( newDirection, intersectionTile ) {
-        this.direction = newDirection;
-        this.setSpriteToGrid( intersectionTile, false ) 
-        this.setObjectDimensionsBasedOnDirection( newDirection )
-        this.initHitboxGroups( );
-
-        globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => {
-            if ( road.direction == newDirection ) {
-                this.destination = road.endCell;
-            }
-        })
-
-        this.setDestinationList( );
-        setTimeout( ( )=> {
-            this.handlingIntersection = false;
-        }, 500 )
-    }
-
     turnToDirection( newDirection, road, turn, id ) {
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( e ) => {
             if ( e.id === this.roadId ) {
@@ -166,7 +117,6 @@ class Car extends MapObject {
         });
         this.roadId = road.id;
         road.activeCarIds.push(this.spriteId);
-        this.crossedIntersectionIds.push( id );
         this.direction = newDirection;
         this.setObjectDimensionsBasedOnDirection( newDirection );
         switch( newDirection ) {
@@ -202,6 +152,25 @@ class Car extends MapObject {
         })
 
         return isOnSquare;
+    }
+
+    isOnIntersection( id, intersectionRoadIds ) {
+        this.activeIntersectionId = id;
+        if ( this.crossedIntersectionIds.indexOf(id) == -1 && Object.keys(this.intersectionActions).indexOf(id) == -1 ) {
+            if ( intersectionRoadIds.indexOf(this.nextRoadId) == -1 ) {
+                this.intersectionActions[id] = INTERSECTION_STRAIGHT;
+                this.crossedIntersectionIds.push( id );
+            }
+            else {
+                const road = globals.GAME.FRONT.roadNetwork.getRoadById(this.nextRoadId);
+                if ( road.direction == getRelativeLeft(this.direction) ) {
+                    this.intersectionActions[id] = INTERSECTION_LEFT;
+                }
+                else if ( road.direction == getRelativeRight(this.direction) ) {
+                    this.intersectionActions[id] = INTERSECTION_RIGHT;
+                }
+            }
+        }
     }
 }
 
