@@ -3,7 +3,7 @@ const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Counter } = require("../../../helpers/Counter");
-const { getRelativeLeft, getRelativeRight } = require("../../../helpers/utilFunctions");
+const { getRelativeLeft, getRelativeRight, getOppositeDirection } = require("../../../helpers/utilFunctions");
 const { INTERSECTION_STRAIGHT, INTERSECTION_LEFT, INTERSECTION_RIGHT } = require("../../../game-data/conditionGlobals");
 
 class Car extends MapObject {
@@ -17,6 +17,7 @@ class Car extends MapObject {
         this.carHornSoundEffect.mute( );
         this.blockedCounter = new Counter( 5000, false, false );
         this.crossedIntersectionIds = [];
+        this.activeIntersectionId = null;
         this.intersectionActions = {};
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
@@ -33,6 +34,7 @@ class Car extends MapObject {
     
     get activeRoadId( ) { return this.carPath[this.carPathIndex]; };
     get nextRoadId( ) { return this.carPath[this.carPathIndex+1]; };
+    get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
     get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
     get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
     get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
@@ -56,7 +58,9 @@ class Car extends MapObject {
         this.updateState( );
         super.drawSprite( );
         this.checkForCollision( );
-        
+        if ( this.activeIntersectionId != null ) {
+            this.checkForIntersectionAction( )
+        }
         this.checkForMoveToDestination( );
         this.handleSoundEffects( )
         this.handleBlockedTimeCounter( )
@@ -117,6 +121,7 @@ class Car extends MapObject {
         });
         this.roadId = road.id;
         road.activeCarIds.push(this.spriteId);
+        this.crossedIntersectionIds.push( id );
         this.direction = newDirection;
         this.setObjectDimensionsBasedOnDirection( newDirection );
         switch( newDirection ) {
@@ -171,6 +176,140 @@ class Car extends MapObject {
                 }
             }
         }
+    }
+
+    checkForIntersectionAction( ) {
+        let carCanCross;
+        let turningSquare;
+        let nextDirection;
+        switch(this.intersectionActions[this.activeIntersectionId]) {
+            case INTERSECTION_STRAIGHT:
+                carCanCross = this.checkIfCarCanCrossStraight( );
+                break;
+            case INTERSECTION_LEFT:
+                carCanCross = this.checkIfCarCanTurnLeft( );
+                nextDirection = getRelativeLeft(this.direction)
+                turningSquare = this.activeIntersection.getTurningSquare( this.direction, nextDirection);
+                break;
+            case INTERSECTION_RIGHT:
+                carCanCross = this.checkIfCarCanTurnRight( );
+                nextDirection = getRelativeRight(this.direction);
+                turningSquare = this.activeIntersection.getTurningSquare( this.direction, nextDirection);
+                break;
+            default:
+                console.log(this.intersectionActions[this.activeIntersectionId] 
+                    + " not recognized as intersection action")
+                break;
+        }
+        if ( !carCanCross ) {
+            this.State.addToPendingStateChanges(globals.STATE_WAITING);
+        }
+        else {
+            this.State.addToPendingStateChanges(globals.STATE_MOVING);
+            if ( (this.intersectionActions[this.activeIntersectionId] == INTERSECTION_RIGHT || this.intersectionActions[this.activeIntersectionId] == INTERSECTION_LEFT) 
+            && turningSquare != undefined && turningSquare != false
+            && this.isOnSquare( turningSquare ) && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
+                this.turnToDirection(nextDirection, this.activeIntersection.getRoadByDirection(nextDirection), turningSquare, this.activeIntersectionId );
+            }
+        }
+    }
+
+    checkIfCarCanCrossStraight( ) {
+        let inLane = this.activeIntersection.getDirectionInLane(this.direction)
+        if ( this.checkForCarsComingFromRelativeRight( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
+            return false;
+        }
+        if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
+            return false;
+        }
+        return true;
+    }
+
+    checkIfCarCanTurnLeft( ) {
+        let inLane = this.activeIntersection.getDirectionInLane(this.direction)
+        let outLane = this.activeIntersection.getDirectionOutLane(getRelativeLeft(this.direction))
+        let turningSquare = this.activeIntersection.getTurningSquare(this.direction, getRelativeLeft(this.direction))
+        if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
+            return false;
+        }
+        if ( this.checkForCarsComingFromRelativeRight( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
+            return false;
+        }
+        if ( this.checkForSpritesOnTurningLocation( outLane ) && this.isOnSquare(turningSquare) ) {
+            return false;
+        }
+        if ( this.checkForSpritesFromOppositeDirection( this.direction, outLane ) && this.isOnSquare(turningSquare) ) {
+            return false;
+        }
+        return true;
+    }
+
+    checkIfCarCanTurnRight( ) {
+        let inLane = this.activeIntersection.getDirectionInLane(this.direction)
+        let outLane = this.activeIntersection.getDirectionOutLane(getRelativeRight(this.direction))
+        let turningSquare = this.activeIntersection.getTurningSquare(this.direction, getRelativeRight(this.direction))
+        if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
+            return false;
+        }
+        if ( this.checkForSpritesOnTurningLocation( outLane ) && this.isOnSquare(turningSquare) ) {
+            return false;
+        }
+        return true;
+    }
+
+    checkForCarsComingFromRelativeRight( direction ) {
+        const relativeRight = getRelativeRight(direction);
+        const relativeRightInLane = this.activeIntersection.getDirectionInLane( relativeRight );
+        let carComingFromRightLane = false;
+        if ( relativeRightInLane ) {
+            this.activeIntersection.intersectionCars.forEach((car)=>{
+                if ( (car.isOnSquare(relativeRightInLane) ) && car.spriteId != this.spriteId ) {
+                    carComingFromRightLane = true;
+                }
+            });        
+        }
+        return carComingFromRightLane;
+    }
+
+    checkForCarsComingFromRelativeLeft( direction ) {
+        const relativeLeft = getRelativeLeft(direction);
+        const relativeLeftInLane = this.activeIntersection.getDirectionInLane( relativeLeft );
+        let carComingFromLeftLane = false;
+        if ( relativeLeftInLane ) {
+            this.activeIntersection.intersectionCars.forEach((car)=>{
+                if ( car.isOnSquare(this.activeIntersection.core) && car.direction == relativeLeft && car.spriteId != this.spriteId ) {
+                    carComingFromLeftLane = true;
+                }
+            });           
+        }
+        return carComingFromLeftLane;
+    }
+
+    checkForSpritesOnTurningLocation( outLane ) {
+        let carInOutLane = false;
+        if ( outLane && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
+            this.activeIntersection.intersectionCars.forEach((car)=>{
+                if ( car.isOnSquare(outLane) && car.spriteId != this.spriteId ) {
+                    carInOutLane = true;
+                }
+            });
+        }
+        return carInOutLane;
+    } 
+
+    checkForSpritesFromOppositeDirection( direction, outLane ) {
+        const oppositeDirection = getOppositeDirection(direction);
+        const oppositeInLane = this.activeIntersection.getDirectionInLane( oppositeDirection );
+        const oppositeFacingCars = this.activeIntersection.intersectionCars.filter((e)=>{return e.direction == oppositeDirection})
+        let carInOppositeInLane = false;
+        if ( oppositeFacingCars.length > 0 && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
+            oppositeFacingCars.forEach((car)=>{
+                if ( car.isOnSquare(this.activeIntersection.core) || car.isOnSquare(oppositeInLane) ) {
+                    carInOppositeInLane = true;
+                }
+            });
+        }
+        return carInOppositeInLane;
     }
 }
 

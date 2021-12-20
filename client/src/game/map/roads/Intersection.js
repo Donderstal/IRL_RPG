@@ -38,6 +38,7 @@ class Intersection extends I_Junction {
         });
 
         this.core = new TileSquare( tileList );
+        this.core.draw('white')
     }
 
     updateIntersectionStatus( ) {
@@ -50,8 +51,6 @@ class Intersection extends I_Junction {
         this.intersectionCars.forEach((car)=>{
             car.isOnIntersection(this.id, this.roadIds);
         })
-        this.setCarsToWaitIfLaneIsClosed( );
-        this.checkIfCarsCanTurn( );
     }
 
     checkForCarsOnIntersection( ) {
@@ -225,6 +224,56 @@ class Intersection extends I_Junction {
 
     getRoadById( id ) {
         return this.roads.filter((e)=>{return e.id == id;})[0];
+    }
+
+    getRoadByDirection( direction ) {
+        return this.roads.filter((e)=>{return e.direction== direction;})[0];
+    }
+
+    getDirectionInLane( direction ) {
+        switch( direction ) {
+            case FACING_LEFT:
+                return this.leftFacingInLane;
+            case FACING_UP:
+                return this.upFacingInLane;
+            case FACING_RIGHT:
+                return this.rightFacingInLane;
+            case FACING_DOWN:
+                return this.downFacingInLane;
+        }
+    }
+
+    getDirectionOutLane( direction ) {
+        switch( direction ) {
+            case FACING_LEFT:
+                return this.leftFacingOutLane;
+            case FACING_UP:
+                return this.upFacingOutLane;
+            case FACING_RIGHT:
+                return this.rightFacingOutLane;
+            case FACING_DOWN:
+                return this.downFacingOutLane;
+        }
+    }
+
+    getTurningSquare( currentDirection, nextDirection ) {
+        if ( (currentDirection == FACING_LEFT && nextDirection == FACING_UP) 
+        || (currentDirection == FACING_UP && nextDirection == FACING_LEFT)) {
+            return this.leftUpSquare;
+        }
+        else if ( (currentDirection == FACING_LEFT && nextDirection == FACING_DOWN) 
+        || (currentDirection == FACING_DOWN && nextDirection == FACING_LEFT)) {
+            return this.leftDownSquare;
+        }
+        else if ( (currentDirection == FACING_RIGHT && nextDirection == FACING_UP) 
+        || (currentDirection == FACING_UP && nextDirection == FACING_RIGHT)) {
+            return this.rightUpSquare;
+        }
+        else if ( (currentDirection == FACING_RIGHT && nextDirection == FACING_DOWN) 
+        || (currentDirection == FACING_DOWN && nextDirection == FACING_RIGHT)) {
+            return this.rightDownSquare;
+        }
+        return false;
     }
 
     getIntersectingRoadIds( roadId ) {

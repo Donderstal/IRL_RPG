@@ -26,6 +26,10 @@ class RoadNetwork {
         return this.roads.filter((e) => {return e.id==id;})[0];
     }
 
+    getIntersectionById( id ) {
+        return this.intersections.filter((e) => {return e.id==id;})[0];
+    }
+
     getVehiclePath( startingRoadId ) {
         let activeRoadID = startingRoadId;
         let path = [ startingRoadId ];
