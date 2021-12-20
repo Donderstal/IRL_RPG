@@ -205,17 +205,35 @@ class Car extends MapObject {
             this.State.addToPendingStateChanges(globals.STATE_WAITING);
         }
         else {
-            this.State.addToPendingStateChanges(globals.STATE_MOVING);
-            if ( (this.intersectionActions[this.activeIntersectionId] == INTERSECTION_RIGHT || this.intersectionActions[this.activeIntersectionId] == INTERSECTION_LEFT) 
-            && turningSquare != undefined && turningSquare != false
-            && this.isOnSquare( turningSquare ) && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
-                this.turnToDirection(nextDirection, this.activeIntersection.getRoadByDirection(nextDirection), turningSquare, this.activeIntersectionId );
+            if ( this.intersectionActions[this.activeIntersectionId] != INTERSECTION_STRAIGHT && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
+                if ( this.isOnSquare( turningSquare )) {
+                    let outLane = this.activeIntersection.getDirectionOutLane(nextDirection)
+                    if ( this.intersectionActions[this.activeIntersectionId] == INTERSECTION_RIGHT &&
+                        !this.checkForSpritesOnTurningLocation( outLane ) ) {
+                        this.turnToDirection(nextDirection, this.activeIntersection.getRoadByDirection(nextDirection), turningSquare, this.activeIntersectionId );
+                        this.State.addToPendingStateChanges(globals.STATE_MOVING);
+                        return;
+                    }
+                    else if ( this.intersectionActions[this.activeIntersectionId] == INTERSECTION_LEFT &&
+                        !(this.checkForSpritesFromOppositeDirection( this.direction, outLane ) || this.checkForSpritesOnTurningLocation( outLane ) )) {
+                        this.turnToDirection(nextDirection, this.activeIntersection.getRoadByDirection(nextDirection), turningSquare, this.activeIntersectionId );
+                        this.State.addToPendingStateChanges(globals.STATE_MOVING);
+                        return;
+                    }
+                    else {
+                        this.State.addToPendingStateChanges(globals.STATE_WAITING);
+                    }
+                }
             }
+            this.State.addToPendingStateChanges(globals.STATE_MOVING);
         }
     }
 
     checkIfCarCanCrossStraight( ) {
         let inLane = this.activeIntersection.getDirectionInLane(this.direction)
+        if ( this.checkForOppositeCars( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core) ) {
+            return false;
+        }
         if ( this.checkForCarsComingFromRelativeRight( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
             return false;
         }
@@ -227,18 +245,13 @@ class Car extends MapObject {
 
     checkIfCarCanTurnLeft( ) {
         let inLane = this.activeIntersection.getDirectionInLane(this.direction)
-        let outLane = this.activeIntersection.getDirectionOutLane(getRelativeLeft(this.direction))
-        let turningSquare = this.activeIntersection.getTurningSquare(this.direction, getRelativeLeft(this.direction))
+        if ( this.checkForOppositeCars( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core) ) {
+            return false;
+        }
         if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
             return false;
         }
         if ( this.checkForCarsComingFromRelativeRight( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
-            return false;
-        }
-        if ( this.checkForSpritesOnTurningLocation( outLane ) && this.isOnSquare(turningSquare) ) {
-            return false;
-        }
-        if ( this.checkForSpritesFromOppositeDirection( this.direction, outLane ) && this.isOnSquare(turningSquare) ) {
             return false;
         }
         return true;
@@ -246,15 +259,28 @@ class Car extends MapObject {
 
     checkIfCarCanTurnRight( ) {
         let inLane = this.activeIntersection.getDirectionInLane(this.direction)
-        let outLane = this.activeIntersection.getDirectionOutLane(getRelativeRight(this.direction))
-        let turningSquare = this.activeIntersection.getTurningSquare(this.direction, getRelativeRight(this.direction))
+        if ( this.checkForOppositeCars( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core) ) {
+            return false;
+        }
         if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
             return false;
         }
-        if ( this.checkForSpritesOnTurningLocation( outLane ) && this.isOnSquare(turningSquare) ) {
-            return false;
-        }
         return true;
+    }
+
+    checkForOppositeCars( direction ) {
+        const relativeRight = getRelativeRight(direction);
+        const relativeLeft = getRelativeLeft(direction);
+        const cars = this.activeIntersection.intersectionCars.filter((car)=>{ 
+            return car.direction == relativeLeft || car.direction == relativeRight;
+        })
+        let oppositeCars = false;
+        cars.forEach((car)=>{
+            if ( car.isOnSquare(this.activeIntersection.core) && car.spriteId != this.spriteId ) {
+                oppositeCars = true;
+            }
+        });
+        return oppositeCars;
     }
 
     checkForCarsComingFromRelativeRight( direction ) {
@@ -287,7 +313,7 @@ class Car extends MapObject {
 
     checkForSpritesOnTurningLocation( outLane ) {
         let carInOutLane = false;
-        if ( outLane && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
+        if ( outLane ) {
             this.activeIntersection.intersectionCars.forEach((car)=>{
                 if ( car.isOnSquare(outLane) && car.spriteId != this.spriteId ) {
                     carInOutLane = true;
@@ -302,7 +328,7 @@ class Car extends MapObject {
         const oppositeInLane = this.activeIntersection.getDirectionInLane( oppositeDirection );
         const oppositeFacingCars = this.activeIntersection.intersectionCars.filter((e)=>{return e.direction == oppositeDirection})
         let carInOppositeInLane = false;
-        if ( oppositeFacingCars.length > 0 && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
+        if ( oppositeFacingCars.length > 0) {
             oppositeFacingCars.forEach((car)=>{
                 if ( car.isOnSquare(this.activeIntersection.core) || car.isOnSquare(oppositeInLane) ) {
                     carInOppositeInLane = true;

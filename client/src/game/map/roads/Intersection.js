@@ -38,7 +38,6 @@ class Intersection extends I_Junction {
         });
 
         this.core = new TileSquare( tileList );
-        this.core.draw('white')
     }
 
     updateIntersectionStatus( ) {
@@ -76,31 +75,7 @@ class Intersection extends I_Junction {
     carIsOnIntersection( car, lane ) {
         return this.checkForCarsOnSquare([car], lane) || this.checkForCarsOnSquare([car], this.core)
     }
-
-    setCarsToWaitIfLaneIsClosed( ) {
-        this.intersectionCars.forEach( ( car ) => {
-            if (this.leftFacingInLane && car.direction == FACING_LEFT && !this.core.spriteIsInTileSquare(car)
-                && this.leftFacingInLane.spriteIsInTileSquare(car) && (this.downFacingRoad != undefined && !this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.leftDownSquare))) {
-                car.State.addToPendingStateChanges(STATE_WAITING);
-            }
-            else if (this.upFacingInLane && car.direction == FACING_UP && !this.core.spriteIsInTileSquare(car)
-                && this.upFacingInLane.spriteIsInTileSquare(car) && (this.leftFacingRoad != undefined && !this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftUpSquare))) {
-                car.State.addToPendingStateChanges(STATE_WAITING);
-            }
-            else if (this.rightFacingInLane && car.direction == FACING_RIGHT && !this.core.spriteIsInTileSquare(car)
-                && this.rightFacingInLane.spriteIsInTileSquare(car) && (this.upFacingRoad != undefined && !this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.rightUpSquare))) {
-                car.State.addToPendingStateChanges(STATE_WAITING);
-            }
-            else if (this.downFacingInLane && car.direction == FACING_DOWN && !this.core.spriteIsInTileSquare(car)
-                && this.downFacingInLane.spriteIsInTileSquare(car) && ( this.rightFacingRoad != undefined && !this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightDownSquare))) {
-                car.State.addToPendingStateChanges(STATE_WAITING);
-            }
-            else {
-                car.State.addToPendingStateChanges(STATE_MOVING);
-            }
-        });
-    }
-
+    
     closeLane( direction ) {
         this.openLanes[direction] = false;
     }
@@ -153,72 +128,6 @@ class Intersection extends I_Junction {
         return this.core.tileList.filter( ( e ) => {
             return ( e.col == col1 || e.col == col2 ) 
             && ( e.row == row1 || e.row == row2 ) 
-        });
-    }
-
-    checkIfCarsCanTurn( ) {
-        const turnableCars = this.intersectionCars.filter( (car) => {return car.crossedIntersectionIds.indexOf(this.id) == -1})
-        turnableCars.forEach( ( car ) => {
-            switch( car.direction ) {
-                case FACING_LEFT:
-                    if ( this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.upFacingRoad.id) {
-                        car.turnToDirection(FACING_UP, this.upFacingRoad, this.leftUpSquare,this.id)
-                    }
-                    else if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.downFacingRoad.id ) {
-                        if (this.rightFacingRoad != undefined && !(this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightDownSquare) || this.squareHasNoCars(this.rightFacingRoad.carsOnRoad, this.rightFacingInLane))) {
-                            car.State.addToPendingStateChanges(STATE_WAITING);
-                        }
-                        else {
-                            car.State.addToPendingStateChanges(STATE_MOVING);
-                            car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.leftDownSquare,this.id)
-                        }
-                    }
-                    break;
-                case FACING_UP:
-                    if ( this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.rightFacingRoad.id) {
-                        car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightUpSquare,this.id);
-                    }
-                    else if (this.hasLeftUpTurn && car.isOnSquare( this.leftUpSquare ) && car.nextRoadId == this.leftFacingRoad.id) {
-                        if (this.downFacingRoad != undefined && !(this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.leftDownSquare) || this.squareHasNoCars(this.downFacingRoad.carsOnRoad, this.downFacingInLane))) {
-                            car.State.addToPendingStateChanges(STATE_WAITING);
-                        }
-                        else {
-                            car.State.addToPendingStateChanges(STATE_MOVING);
-                            car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftUpSquare,this.id);
-                        }
-                    }
-                    break;
-                case FACING_RIGHT:
-                    if ( this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.downFacingRoad.id) {
-                        car.turnToDirection(FACING_DOWN, this.downFacingRoad, this.rightDownSquare,this.id)
-                    }
-                    else if (this.hasRightUpTurn && car.isOnSquare( this.rightUpSquare ) && car.nextRoadId == this.upFacingRoad.id) {
-                        if (this.leftFacingRoad != undefined && !(this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftUpSquare) || this.squareHasNoCars(this.leftFacingRoad.carsOnRoad, this.leftFacingInLane))) {
-                            car.State.addToPendingStateChanges(STATE_WAITING);
-                        }
-                        else {
-                            car.State.addToPendingStateChanges(STATE_MOVING);
-                            car.turnToDirection(FACING_UP, this.upFacingRoad, this.rightUpSquare,this.id)
-                        }
-                    }
-                    break;
-                case FACING_DOWN:
-                    if ( this.hasLeftDownTurn && car.isOnSquare( this.leftDownSquare ) && car.nextRoadId == this.leftFacingRoad.id) {
-                        car.turnToDirection(FACING_LEFT, this.leftFacingRoad, this.leftDownSquare,this.id);
-                    }
-                    else if (this.hasRightDownTurn && car.isOnSquare( this.rightDownSquare ) && car.nextRoadId == this.rightFacingRoad.id ) {
-                        if (this.upFacingRoad != undefined && !(this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.rightUpSquare) || this.squareHasNoCars(this.upFacingRoad.carsOnRoad, this.upFacingInLane))) {
-                            car.State.addToPendingStateChanges(STATE_WAITING);
-                        }
-                        else {
-                            car.State.addToPendingStateChanges(STATE_MOVING);
-                            car.turnToDirection(FACING_RIGHT, this.rightFacingRoad, this.rightDownSquare,this.id);
-                        }
-                    }
-                    break;
-                default:
-                    console.log("direction " + car.direction + " not recognized");
-            }
         });
     }
 

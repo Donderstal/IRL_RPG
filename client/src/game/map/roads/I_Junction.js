@@ -92,13 +92,11 @@ class I_Junction {
                 this.leftFacingInLane = new TileSquare(
                     this.pushTilesToList(this.core.rightColumn, this.leftFacingRoad.topRow, this.core.rightColumn, this.leftFacingRoad.bottomRow, direction)
                 );         
-                this.leftFacingInLane.draw('yellow')
             }
             if (!this.directionEnds(FACING_LEFT) ) {
                 this.leftFacingOutLane = new TileSquare(
                     this.pushTilesToList(this.core.leftColumn - 3, this.leftFacingRoad.topRow, this.core.leftColumn - 3, this.leftFacingRoad.bottomRow, direction)
                 );
-                this.leftFacingOutLane.draw('orange')
             }
         }
         if ( direction == FACING_UP) {
@@ -106,13 +104,11 @@ class I_Junction {
                 this.upFacingInLane = new TileSquare(
                     this.pushTilesToList(this.upFacingRoad.leftCol, this.core.bottomRow, this.upFacingRoad.rightCol, this.core.bottomRow, direction)
                 );
-                this.upFacingInLane.draw('purple')
             }
             if (!this.directionEnds(FACING_UP)) {
                 this.upFacingOutLane = new TileSquare(
                     this.pushTilesToList(this.upFacingRoad.leftCol, this.core.topRow - 3, this.upFacingRoad.rightCol, this.core.topRow - 3, direction)
                 );
-                this.upFacingOutLane.draw('pink')
             }
         }
         if ( direction == FACING_RIGHT ) {
@@ -120,13 +116,11 @@ class I_Junction {
                 this.rightFacingInLane = new TileSquare(
                     this.pushTilesToList(this.core.leftColumn - 3, this.rightFacingRoad.topRow, this.core.leftColumn - 3, this.rightFacingRoad.bottomRow, direction)
                 );
-                this.rightFacingInLane.draw('grey')
             }
             if (!this.directionEnds(FACING_RIGHT)) {
                 this.rightFacingOutLane = new TileSquare(
                     this.pushTilesToList(this.core.rightColumn, this.rightFacingRoad.topRow, this.core.rightColumn, this.rightFacingRoad.bottomRow, direction)
                 );
-                this.rightFacingOutLane.draw('black')
             }         
         }
         if ( direction == FACING_DOWN ) {
@@ -134,13 +128,11 @@ class I_Junction {
                 this.downFacingInLane = new TileSquare(
                     this.pushTilesToList(this.downFacingRoad.leftCol, this.core.topRow - 3, this.downFacingRoad.rightCol, this.core.topRow - 3, direction)
                 );
-                this.downFacingInLane.draw('lightblue')
             }
             if ( !this.directionEnds(FACING_DOWN)) {
                 this.downFacingOutLane = new TileSquare(
                     this.pushTilesToList(this.downFacingRoad.leftCol, this.core.bottomRow, this.downFacingRoad.rightCol, this.core.bottomRow, direction)
                 );
-                this.downFacingOutLane.draw('blue')
             }
         }
     }
