@@ -118,7 +118,7 @@ const getOppositeDirection = ( direction ) => {
     }
 }
 
-const getRelativeLeft = ( direction ) => {
+const getRelativeRight = ( direction ) => {
     switch( direction ) {
         case FACING_LEFT:
             return FACING_DOWN;
@@ -131,7 +131,7 @@ const getRelativeLeft = ( direction ) => {
     }
 }
 
-const getRelativeRight = ( direction ) => {
+const getRelativeLeft = ( direction ) => {
     switch( direction ) {
         case FACING_LEFT:
             return FACING_UP;

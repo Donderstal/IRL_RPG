@@ -265,6 +265,7 @@
         <p><label>Select starting location</label><select id="map-selection">
             <option value="lennart-neighbourhood/D2">Lennart</option>
             <option value="northside/C2">Northside</option>
+            <option value="test/B4">Test intersection</option>
         </select></p>
     </div>
 </div>

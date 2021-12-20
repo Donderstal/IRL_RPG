@@ -63,7 +63,7 @@ module.exports = {
         {
             "direction": FACING_UP,
             "alignment": "VERT",
-            "hasStart": true,
+            "hasStart": false,
             "leftCol": 9,
             "rightCol": 10,
             "startRow": 16,

@@ -1,9 +1,11 @@
 const northside         = require('./mapResources/northside/northside');
 const lennartMaps       = require('./mapResources/lennart-maps/lennart-maps');
+const test              = require('./mapResources/test/test');
 
 const mapResources = {
     "northside":            northside,
-    "lennart-neighbourhood":lennartMaps
+    "lennart-neighbourhood":lennartMaps,
+    "test": test
 }
 
 const getMapData = ( fullMapName ) => {

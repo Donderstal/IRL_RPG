@@ -1,4 +1,5 @@
 const { GRID_BLOCK_PX } = require('../game-data/globals');
+const { drawRect } = require('./canvasHelpers');
 const { cloneInstance } = require('./utilFunctions');
 
 class TileSquare {
@@ -13,6 +14,12 @@ class TileSquare {
     get rightColumn( ) { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.col; } )); };
     get bottomRow( ) { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.row; } )); };
  
+    draw( color ) {
+        drawRect(
+            "BACK", this.left, this.top, this.width, this.height, color
+        );
+    }
+
     setTileList( list ) {
         list.forEach( ( tile ) => { 
             this.tileList.push( cloneInstance(tile) )
