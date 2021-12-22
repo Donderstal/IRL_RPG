@@ -1,158 +1,60 @@
-const { SPEAK, MOVE, ANIM } = require("../game-data/conditionGlobals")
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
 const { 
     ON_ENTER, ON_LEAVE, ON_POSITION
 }  = require('../game-data/conditionGlobals')
+const { DEFAULT, EVENT_TALK, SPEAK, EMOTE, SPEAK_YES_NO, ANIM, CREATE_SPRITE, FADE_IN, MOVE, DELETE_SPRITE } = require('../game-data/conditionGlobals');
+const { PLAYER_NAME } = require('../game-data/interactionGlobals');
+const { EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_QUESTIONMARK } = require('../game-data/textboxGlobals');
 
 const STORY_EVENTS = [
     {
-        mapName: "my-neighbourhood/A1",
+        mapName: "lennart-neighbourhood/D2",
         trigger: ON_ENTER,
-        scenes: [
-            { 
-                type: SPEAK, spriteName: "Mr. Business",
-                text: "Hey!", sfx: "voice-2.mp3"
-            },
-            { 
-                type: MOVE, spriteName: "Mr. Business",
-                destination: "Player", endDirection: FACING_UP
-            },
-            { 
-                type: SPEAK, spriteName: "Mr. Business",
-                text: "Don't you work at our branch a few blocks down the street?", sfx: "voice-2.mp3"
-            },
-            { 
-                type: SPEAK, spriteName: "Mr. Business",
-                text: "You better hurry up! Your shift's already begun...", sfx: "voice-2.mp3"
-            },
-            { 
-                type: ANIM, spriteName: "Mr. Business",
-                animName: "TURN_SINGLE_CIRCLE", loop: false
-            },
-            { 
-                type: SPEAK, spriteName: "Mr. Business",
-                text: "See ya later, wage cuck!", sfx: "lala.mp3"
-            },
-            { 
-                type: MOVE, spriteName: "Mr. Business",
-                destination: { "row": 6, "col": 22 }
-            }
+        condition: [ DEFAULT, false ],
+        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+                [[FADE_IN]],
+                [[SPEAK, "Another day in the big city!", PLAYER_NAME]],
+                [[EMOTE, EMOTE_HAPPY, PLAYER_NAME]],
+                [[SPEAK, "Another day at the Yum Mart...", PLAYER_NAME]],
+                [[EMOTE, EMOTE_SAD, PLAYER_NAME]],
+                [[SPEAK, "I better get to work!", PLAYER_NAME]]
+            ]
         ]
     },
     ////////////////////
     {
-        mapName: "my-neighbourhood/A2",
+        mapName: "lennart-neighbourhood/D4",
         trigger: ON_ENTER,
-        scenes: [
-            { 
-                type: SPEAK, spriteName: "Chaddy Chandler",
-                text: "Hey Nerd!", sfx: "battle-baba.mp3"
-            },
-            {
-                type: MOVE, spriteName: "Chaddy Chandler",
-                destination: { "row": 5, "col": 4 }
-            },
-            { 
-                type: MOVE, spriteName: "Chaddy Chandler",
-                destination: "Player",
-            },
-            { 
-                type: SPEAK, spriteName: "Chaddy Chandler",
-                text: "Come over here, will ya?", sfx: "voice-1.mp3"
-            },
-            { 
-                type: MOVE, spriteName: "Chaddy Chandler",
-                destination: { "row": 3, "col": 5 }, endDirection: FACING_DOWN
-            },
-            { 
-                type: ANIM, spriteName: "Chaddy Chandler",
-                animName: "TURN_SINGLE_CIRCLE", endDirection: FACING_DOWN, loop: false
-            }
+        condition: [ DEFAULT, false ],
+        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+                [[SPEAK, "There's just something off about this hotel...", PLAYER_NAME]]
+            ]   
         ]
     },
     //////////////////////////
     {
-        mapName: "my-neighbourhood/A3",
+        mapName: "lennart-neighbourhood/D4",
         trigger: ON_LEAVE,
-        scenes: [
-            { 
-                type: SPEAK, spriteName: "Dirk Chan",
-                text: "Why would you want to work at Yum-Mart?", sfx: "mauww.mp3"
-            },
-            { 
-                type: SPEAK, spriteName: "Dirk Chan",
-                text: "My Universal Basic Income covers most of my expenses...", sfx: "mauww.mp3"
-            }
+        condition: [ DEFAULT, false ],
+        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+            [[SPEAK, "Did I just see a ghost?", PLAYER_NAME]]
         ]
+    ]
     },
     //////////////////////////
     {
-        mapName: "my-neighbourhood/A4",
+        mapName: "lennart-neighbourhood/C4",
         trigger: ON_POSITION,
         position: {
-            "col": 12,
-            "direction": FACING_RIGHT
+            "col": 20,
+            "direction": FACING_LEFT
         },
-        scenes: [
-            { 
-                type: SPEAK, spriteName: "Player",
-                text: "I'm almost there, I hope Bob doesn't get mad at me!"
-            }
-        ]
-    },
-    //////////////////////////
-    {
-        mapName: "my-neighbourhood/A4/yum-mart",
-        trigger: ON_ENTER,
-        scenes: [
-            { 
-                type: SPEAK, spriteName: "Manager Bob",
-                text: "Better late than never!", sfx: "battle-baba.mp3"
-            },
-            { 
-                type: MOVE, spriteName: "Manager Bob",
-                destination: "Player"
-            },
-            { 
-                type: SPEAK, spriteName: "Manager Bob",
-                text: "Can we talk in the corner for a sec?", sfx: "voice-1.mp3"
-            },
-            { 
-                type: SPEAK, spriteName: "Player",
-                text: "Sure...!"
-            },
-            { 
-                type: MOVE, spriteName: "Player",
-                destination: { row: 13, col: 1  }, endDirection: FACING_RIGHT
-            },
-            { 
-                type: MOVE, spriteName: "Manager Bob",
-                destination: { row: 13, col: 2 }, endDirection: FACING_LEFT
-            },
-            { 
-                type: SPEAK, spriteName: "Manager Bob",
-                text: "I know you've been going through some things lately...", sfx: "voice-1.mp3"
-            },
-            { 
-                type: SPEAK, spriteName: "Manager Bob",
-                text: "But you can't keep coming late. I'm sorry but it just wouldn't be fair to the other employees.", sfx: "battle-baba.mp3"
-            },
-            { 
-                type: SPEAK, spriteName: "Player",
-                text: "I'm sorry Bob', I'll make sure it won't happen again."
-            },
-            { 
-                type: SPEAK, spriteName: "Manager Bob",
-                text: "Please do, because I'm happy to have you. Now let's stock those shelves!", sfx: "voice-1.mp3"
-            },
-            { 
-                type: MOVE, spriteName: "Manager Bob",
-                destination: { row: 10, col: 6 }, endDirection: FACING_DOWN
-            }
-        ]
-    }
-    
-    
+        condition: [ DEFAULT, false ],
+        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+            [[SPEAK, "It's the Yum Mart!", PLAYER_NAME]],
+            [[SPEAK, "I feel like skipping work today...", PLAYER_NAME]]
+        ]]
+    } 
 ]
 
 module.exports = {

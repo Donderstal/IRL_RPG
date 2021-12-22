@@ -253,7 +253,7 @@ class Game {
                 if ( object.action != undefined && object.action[0].action.type == EVENT_BUS ) {
                     object.action[0].action.events.forEach( ( e ) => {
                         if ( e["trigger"] == ON_ENTER ) {
-                            new Cinematic( e, ON_ENTER )
+                            new Cinematic( e.scenes, ON_ENTER )
                         }
                     })
                 }

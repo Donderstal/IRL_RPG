@@ -7,7 +7,7 @@ const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
 const { Inventory } = require('../../party/Inventory');
 const { initShopMenu } = require('../map-ui/ShopMenu');
 const { 
-    WAIT, FADE_IN_OUT, FADE_OUT, FADE_IN, ON_LEAVE, ON_BATTLE_END, ON_BATTLE_START, ON_NPC_INTERACTION, 
+    WAIT, FADE_OUT_IN, FADE_OUT, FADE_IN, ON_LEAVE, ON_BATTLE_END, ON_BATTLE_START, ON_NPC_INTERACTION, 
     EVENT_BUS, EVENT_BATTLE, EVENT_SHOP, EVENT_RESTORE, EVENT_TALK
 } = require('../../../game-data/conditionGlobals');
 /**
@@ -66,7 +66,7 @@ class MapAction extends I_Hitbox {
      */
     checkPropsForScenes( scenes ) {
         scenes.forEach( ( e ) => {
-            if ( !e.spriteName && e.type != FADE_IN_OUT && e.type != FADE_OUT && e.type != FADE_IN && e.type != WAIT ) {
+            if ( !e.spriteName && e.type != FADE_OUT_IN && e.type != FADE_OUT && e.type != FADE_IN && e.type != WAIT ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
                 e.spriteId = this.spriteId;
             }
@@ -85,7 +85,7 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) { 
-        new Cinematic( this, ON_NPC_INTERACTION, [ this.spriteId ] );
+        new Cinematic( this.scenes, ON_NPC_INTERACTION, [ this.spriteId ] );
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered
@@ -96,7 +96,7 @@ class MapAction extends I_Hitbox {
             case EVENT_BUS :
                 this.events.forEach( ( e ) => {
                     if ( e["trigger"] == ON_LEAVE ) {
-                        new Cinematic( e, e["trigger"], [ this.destination, EVENT_BUS ] );                            
+                        new Cinematic( e.scenes, e["trigger"], [ this.destination, EVENT_BUS ] );                            
                     }
                 } )
                 break;
@@ -104,7 +104,7 @@ class MapAction extends I_Hitbox {
                 if ( this.hasEvent ) {
                     this.events.forEach( ( e ) => {
                         if ( e["trigger"] == ON_BATTLE_START ) {
-                            new Cinematic( e, e.trigger, [ this.party, this.name ] );                            
+                            new Cinematic( e.scenes, e.trigger, [ this.party, this.name ] );                            
                         }
                     } )
                 }
@@ -139,7 +139,7 @@ class MapAction extends I_Hitbox {
         }
         this.events.forEach( ( e ) => {
             if ( e["trigger"] == ON_BATTLE_END ) {
-                new Cinematic( e, e.trigger, [ this.party, this.name ] );                            
+                new Cinematic( e.scenes, e.trigger, [ this.party, this.name ] );                            
             }
         } )
     }

@@ -1,6 +1,6 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, 
-    DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT, EMOTE
+    DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE
 } = require('../game-data/conditionGlobals');
 
 const getKeys = ( type ) => {
@@ -25,7 +25,7 @@ const getKeys = ( type ) => {
             return [ "spriteName" ];
         case FADE_OUT:
         case FADE_IN :
-        case FADE_IN_OUT:
+        case FADE_OUT_IN:
             return [ "sfx" ];
         case WAIT:
             return [ "ms" ];

@@ -11,9 +11,8 @@ const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interaction
  * The Cinematic and Scene classes are no longer implemented and need to be reworked to the new Grid system
  */
 class Cinematic {
-    constructor( data, trigger, args ) {
-        this.data = data;
-        this.scenes = data.scenes.slice();
+    constructor( scenes, trigger, args ) {
+        this.scenes = scenes.slice();
         this.trigger = trigger;
         this.args   = args;
         this.numberOfScenes = this.scenes.length

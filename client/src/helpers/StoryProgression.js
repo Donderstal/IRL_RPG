@@ -19,7 +19,7 @@ class StoryProgression {
     }
 
     setCurrentScriptedEvent( ) {
-        this.currentStoryEvent = new ScriptedEvent( STORY_EVENTS[this.activeSceneIndex]);
+        this.currentStoryEvent = STORY_EVENTS[this.activeSceneIndex] != undefined ? new ScriptedEvent( STORY_EVENTS[this.activeSceneIndex]) : false;
     }
 }
 

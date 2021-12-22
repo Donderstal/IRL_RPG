@@ -1,7 +1,7 @@
 const globals         = require('../../game-data/globals')
 const { getUniqueId } = require('../../helpers/utilFunctions');
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_IN_OUT, WAIT, EMOTE
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE
 } = require('../../game-data/conditionGlobals');
 const { Animation } = require('./Animation');
 
@@ -74,10 +74,7 @@ class Scene {
                     break;
                 case FADE_OUT:
                 case FADE_IN :
-                    let fader = globals.GAME.fader
-                    animationHasFinished = ( fader.fadingFromBlack && fader.A <= 0 ) || ( fader.fadingToBlack && fader.A >= 1 ) || fader.holdBlackScreen
-                    break;
-                case FADE_IN_OUT:
+                case FADE_OUT_IN:
                     animationHasFinished = !globals.GAME.fader.inFadingAnimation
                     break;
                 case WAIT:

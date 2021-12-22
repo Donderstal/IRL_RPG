@@ -61,10 +61,10 @@ class Door extends I_Hitbox {
     }
     handle( ) {
         if ( !this.meetsCondition ) {
-            new Cinematic( lockedDoorEvent, ON_NPC_INTERACTION )
+            new Cinematic( lockedDoorEvent.scenes, ON_NPC_INTERACTION )
         }
         else if ( this.condition ) {
-            new Cinematic( unlockDoorEvent, ON_LEAVE, [ this.destination, EVENT_DOOR] )
+            new Cinematic( unlockDoorEvent.scenes, ON_LEAVE, [ this.destination, EVENT_DOOR] )
             this.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry(this.registryString);
             this.dismiss( );

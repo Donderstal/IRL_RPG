@@ -22,13 +22,12 @@ const triggerEvent = ( TRIGGER, args = null ) => {
         else if ( TRIGGER == ON_POSITION && triggerOnPosition( ) ) {
             currentStoryEvent.fireEvent( );
         }
-        globals.GAME.story.goToNextStoryScene( );  
     }
 }
 
 const triggerOnPosition = ( ) => {
     const position = globals.GAME.story.currentStoryEvent.position;
-    if ( globals[position.direction] == globals.GAME.PLAYER.direction ) {
+    if ( position.direction == globals.GAME.PLAYER.direction ) {
         if ( position.direction == FACING_RIGHT && globals.GAME.PLAYER.col == position.col ) {
             return true;
         }
