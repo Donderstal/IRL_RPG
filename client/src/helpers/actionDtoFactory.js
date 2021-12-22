@@ -66,8 +66,8 @@ const getActionObject = ( type, registryKey, sfx, scenes ) => {
         "scenes": []
     };
     if ( registryKey ) {
-        action["shouldBeRegistered"] = true;
-        action["registryKey"] = registryKey;
+        actionObject["shouldBeRegistered"] = true;
+        actionObject["registryKey"] = registryKey;
     }
     scenes.forEach( ( scene )=> {
         actionObject["scenes"].push(getActionSceneObject( scene ));

@@ -15,7 +15,8 @@ class Cinematic {
         this.scenes = scenes.slice();
         this.trigger = trigger;
         this.args   = args;
-        this.numberOfScenes = this.scenes.length
+        this.numberOfScenes = this.scenes.length;
+        this.registeredSelection = false;
         this.iterator = 0;
         this.activeScene = new Scene( this.scenes[this.iterator], trigger == ON_NPC_INTERACTION ? args[0] : false );
 
@@ -63,7 +64,8 @@ class Cinematic {
 
     registerYesOrNoSelection( ) {
         let scenesToAdd;
-        let animation = this.activeScene.getAnimationByType( SPEAK_YES_NO )
+        let animation = this.activeScene.getAnimationByType( SPEAK_YES_NO );
+        this.registeredSelection = animation.selection;
         switch( animation.selection ) {
             case INTERACTION_YES :
                 scenesToAdd = animation.pathYes;

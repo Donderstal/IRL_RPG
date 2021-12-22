@@ -14,7 +14,6 @@ const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
 const { Party } = require('./party/Party');
 const canvasHelpers = require('../helpers/canvasHelpers')
-const { triggerEvent } = require('../helpers/triggerEvents')
 const { TypeWriter } = require('../helpers/TypeWriter')
 const { getOppositeDirection } = require('../helpers/utilFunctions')
 const { setLoadingScreen, stopLoadingScreen } = require('./LoadingScreen')
@@ -214,7 +213,7 @@ class Game {
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
         this.sound.setActiveMusic( this.activeNeighbourhood.music );
         setTimeout( ( ) => {
-            triggerEvent(ON_ENTER)     
+            this.story.checkForEventTrigger(ON_ENTER)     
         }, 250 )
     }
     /**
@@ -233,7 +232,7 @@ class Game {
      * @param {String} type - DOOR, BUS, NEIGHBOUR - indicates how the player is crossing to the new map
      */
     switchMap ( destination, type ) {
-        triggerEvent(ON_LEAVE, [ destination, type ]); 
+        this.story.checkForEventTrigger(ON_LEAVE, [ destination, type ]); 
         if ( this.inCinematic ) {
             return;
         }        
