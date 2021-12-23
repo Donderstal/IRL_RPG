@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### DEC 20, 2021
+* Restoring and updating Story event and event registry
+
+#### DEC 20, 2021
 * Implementing new car intersection algorithm
 
 #### DEC 8, 2021
