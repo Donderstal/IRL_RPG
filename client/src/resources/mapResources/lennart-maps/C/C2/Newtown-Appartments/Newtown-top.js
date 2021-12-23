@@ -10,6 +10,10 @@ module.exports = {
     "music": "game-jam-1.mp3",
     "rows": 8,
     "columns": 8,
+    "playerStart" : {
+        'row': 4,
+        'col': 3
+    },
     "grid": [
         {
             "id": 16,

@@ -384,7 +384,7 @@ module.exports ={
             "anim_type": NPC_ANIM_TYPE_IDLE,
             "row": 2,
             "col": 7,
-            "sprite": "CharacterX4.png",
+            "sprite": "characterx4.png",
             "direction": FACING_UP
         }
     ],

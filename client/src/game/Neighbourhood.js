@@ -9,6 +9,7 @@ class Neighbourhood {
         Object.keys( data ).forEach( ( key ) => {
             this[key] = data[key];
         })
+        this.activeMapKey = false;
         this.activateMap( key );
         this.setNPCCounter( );
     }
@@ -24,8 +25,11 @@ class Neighbourhood {
     }
 
     activateMap( key ) {
+        this.previousMapKey = this.activeMapKey
         this.activeMapKey = key;
-        this.setMapNeighbours( );
+        if ( this.activeMap.outdoors ) {
+            this.setMapNeighbours( );            
+        }
     }
 
     setMapNeighbours( ) {

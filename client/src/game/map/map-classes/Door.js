@@ -80,7 +80,7 @@ class Door extends I_Hitbox {
      * @param {String} targetDirection 
      */
     checkForBlockedRange( targetHitbox, targetDirection ) {
-        if ( super.checkForBlockedRange( targetHitbox, targetDirection ) ) {
+        if ( super.checkForBlockedRange( targetHitbox, getOppositeDirection(targetDirection) ) ) {
             if ( ( this.meetsCondition && this.metConditionAtLastCheck ) || !this.condition ) {
                 globals.GAME.switchMap( this.destination, EVENT_DOOR );
                 globals.GAME.sound.playEffect( "misc/random5.wav" );

@@ -69,6 +69,7 @@ class Game {
 
     get activeMap( ) { return this.activeNeighbourhood.activeMap; }
     get activeMapName( ) { return this.activeNeighbourhood.activeMapKey; }
+    get previousMapName( ) { return this.activeNeighbourhood.previousMapKey; }
 
     get activeText( ) {
         return this.typeWriter.activeText;
@@ -157,12 +158,12 @@ class Game {
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
-    setNeighbourhoodAndMap(map) {
-        if ( this.activeNeighbourhood == undefined || this.activeNeighbourhood.key != map ) {
-            this.activeNeighbourhood = new Neighbourhood(map);
+    setNeighbourhoodAndMap(mapName) {
+        if ( this.activeNeighbourhood == undefined || !mapName.includes(this.activeNeighbourhood.key) ) {
+            this.activeNeighbourhood = new Neighbourhood(mapName);
         }
         else {
-            this.activeNeighbourhood.activateMap(map);
+            this.activeNeighbourhood.activateMap(mapName);
         }
     }
     /**
@@ -276,7 +277,7 @@ class Game {
         switch ( type ) {
             case EVENT_DOOR :
                 [...mapData.doors, ...mapData.mapObjects.filter( ( e ) => { return e.hasDoor })].forEach( ( door ) => {
-                    if ( this.activeMapName == door.destination ) {
+                    if ( this.previousMapName == door.destination ) {
                         newPlayerCell.row = door.row;
                         newPlayerCell.col = door.col;
                         direction = getOppositeDirection(door.direction);

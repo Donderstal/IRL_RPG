@@ -12,7 +12,7 @@ const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
     {
-        mapName: "lennart-neighbourhood/D2",
+        mapName: "lennart-neighbourhood/Newtown-appartment-3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
@@ -27,21 +27,25 @@ const STORY_EVENTS = [
     },
     ////////////////////
     {
-        mapName: "lennart-neighbourhood/D4",
+        mapName: "lennart-neighbourhood/E3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
-                [[SPEAK, "There's just something off about this hotel...", PLAYER_NAME]]
+                [[SPEAK, "I hate the hotel on this street, it's always full of trashy tourists", PLAYER_NAME]]
             ]   
         ]
     },
     //////////////////////////
     {
-        mapName: "lennart-neighbourhood/D4",
-        trigger: ON_LEAVE,
+        mapName: "lennart-neighbourhood/Newtown-appartment-4",
+        trigger: ON_POSITION,
+        position: {
+            "col": 3,
+            "direction": FACING_RIGHT
+        },
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, KEY_STORY_1, "voice-1.mp3", [ 
-            [[SPEAK, "Did I just see a ghost?", PLAYER_NAME]]
+            [[SPEAK, "There's just something creepy about an empty appartment...", PLAYER_NAME]]
         ]
     ]
     },
@@ -55,7 +59,7 @@ const STORY_EVENTS = [
         },
         condition: [ EVENT_HAS_FIRED, KEY_STORY_1 ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
-            [[SPEAK, "Did I really see a ghost?", PLAYER_NAME]],
+            [[SPEAK, "Did I see a ghost?", PLAYER_NAME]],
             [[SPEAK, "It can't be real...", PLAYER_NAME]]
         ]]
     } 
