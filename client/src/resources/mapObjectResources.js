@@ -312,6 +312,75 @@ module.exports = {
         "src": "gate_right.png",
         ...ONE_BLOCK_SPRITE
     },
+    "gate_stuk1" : { 
+        "src": "gate_stuk1.png",
+        ...ONE_BLOCK_SPRITE
+        // border - bottom
+    },
+    "gate_stuk2" : { 
+        "src": "gate_stuk2.png",
+        ...TWO_WIDE_SPRITE
+        // border - bottom
+    },
+    "gate_stuk3" : { 
+        "src": "gate_stuk3.png",
+        ...ONE_BLOCK_SPRITE
+        // border - bottom/right
+    },
+    "gate_stuk4" : { 
+        "src": "gate_stuk4.png",
+        ...ONE_BLOCK_SPRITE
+        // border - bottom/right
+    },
+    "gate_stuk5" : {
+        "src": "gate_stuk5.png",
+        ...getTwoHighSprite( false )
+    },
+    "gate_stuk6" : { 
+        "src": "gate_stuk6.png",
+        ...ONE_BLOCK_SPRITE
+        // border - right
+    },
+    "gate_stuk7" : { 
+        "src": "gate_stuk7.png",
+        ...ONE_BLOCK_SPRITE
+        // border - right
+    },
+    "gate_stuk8" : { 
+        "src": "gate_stuk8.png",
+        ...ONE_BLOCK_SPRITE
+        // border - right/bottom
+    },
+    "gate_stuk9" : { 
+        "src": "gate_stuk9.png",
+        ...ONE_BLOCK_SPRITE
+        // border - left/bottom
+    },
+    "gate_stuk10" : { 
+        "src": "gate_stuk10.png",
+        ...ONE_BLOCK_SPRITE
+        // border - left
+    },
+    "gate_stuk11" : {
+        "src": "gate_stuk11.png",
+        ...getTwoHighSprite( false )
+        // border - left
+    },
+    "gate_stuk12" : { 
+        "src": "gate_stuk12.png",
+        ...ONE_BLOCK_SPRITE
+        // border - left
+    },
+    "gate_stuk13" : { 
+        "src": "gate_stuk13.png",
+        ...ONE_BLOCK_SPRITE
+        // border - left
+    },
+    "gate_stuk14" : { 
+        "src": "gate_stuk14.png",
+        ...ONE_BLOCK_SPRITE
+        // border - left/bottom
+    },
     "graff_z1": { 
         "src": "graff_z1.png",
         ...getBackgroundItem( 1.3125, 1.125 )

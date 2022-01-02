@@ -7,7 +7,7 @@ module.exports ={
     "roads": [],
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
-    "music": "game-jam-1.mp3",
+    "music": "game-jam-5-10-21.mp3",
     "rows": 8,
     "columns": 8,
     "grid": [

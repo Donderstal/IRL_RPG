@@ -112,7 +112,7 @@
 <div>
     { #if currentScreen != "NEW_GAME"}
         <Header/>
-        <audio id="main-audio" src="/static/music/game-jam.mp3"></audio>
+        <audio id="main-audio" src="/static/music/game-jam-5-10-21.mp3"></audio>
     { :else }        
         <SelectCharacter returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
     {/if}

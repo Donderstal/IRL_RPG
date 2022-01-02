@@ -26,14 +26,20 @@ class SoundController {
     }
 
     clearActiveSoundEffects( ) {
-        this.activeSoundEffects.forEach( ( sound ) =>{ sound.reset( ) });
+        this.activeSoundEffects.forEach( ( sound ) =>{ 
+            if ( !sound.audioNode.src.includes(this.activeMusicId) ) {
+                sound.reset( )
+            } 
+        });
         this.activeSoundEffects = []
     }
 
     setActiveMusic( filename ) {
         let src = musicFolder + filename;
         if (this.activeMusicId == src) {
-            this.playMusic( );
+            if ( this.activeMusic.isPaused || this.activeMusic.hasEnded ) {
+                this.playMusic( );                
+            }
             return;
         }
 

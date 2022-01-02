@@ -212,7 +212,7 @@ class Game {
         //this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
-        this.sound.setActiveMusic( this.activeNeighbourhood.music );
+        this.sound.setActiveMusic( this.activeMap.music != undefined ? this.activeMap.music : this.activeNeighbourhood.music );
         setTimeout( ( ) => {
             this.story.checkForEventTrigger(ON_ENTER)     
         }, 250 )

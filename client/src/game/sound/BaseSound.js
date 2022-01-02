@@ -10,6 +10,8 @@ class BaseSound {
         globals.GAME.sound.activeSoundEffects.push( this );
     }
 
+    get isNotPlaying() { return this.hasNotStartedPlaying || this.hasEnded || this.isPaused }
+
     get hasNotStartedPlaying( ) {
         return this.audioNode.currentTime == 0;
     }

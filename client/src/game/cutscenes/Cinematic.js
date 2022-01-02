@@ -2,6 +2,7 @@ const {
     SPEAK, SPEAK_YES_NO, EMOTE
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals')
+const controls             = require('../controls')
 const { 
     ON_NPC_INTERACTION, ON_LEAVE
 }  = require('../../game-data/conditionGlobals')
@@ -12,6 +13,7 @@ const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interaction
  */
 class Cinematic {
     constructor( scenes, trigger, args ) {
+        controls.clearPressedKeys( globals.GAME.pressedKeys );
         this.scenes = scenes.slice();
         this.trigger = trigger;
         this.args   = args;
