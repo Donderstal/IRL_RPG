@@ -7,6 +7,7 @@ module.exports = {
     LOGGABLE_INTERACTION_3 : "LI3",
     LOGGABLE_INTERACTION_4 : "LI4",
     LOGGABLE_INTERACTION_5 : "LI5",
+    UNLOCK_DOOR_TEST: "UDT",
 
     PLAYER_NAME: "Player",
     PLAYER_ID: "PLAYER",

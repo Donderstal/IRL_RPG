@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 4, 2022
+* Doors are now opened with action button
+* Restored functionality for ActionSelectors
+
 #### DEC 20, 2021
 * Restoring and updating Story event and event registry
 
