@@ -95,21 +95,24 @@ class Animation {
     initMoveAnimation( animationDto ) {
         if ( typeof animationDto.destination === 'string' || animationDto.destination instanceof String ) {
             const sprite = this.getSpriteById( this.getSpriteByName( animationDto.destination ).spriteId );             
-            animationDto.destination = {  'col': sprite.col,  'row': sprite.row  };
             const startingCell = this.getSpriteCell( );
 
-            if ( startingCell.row < animationDto.destination.row ) {
-                animationDto.destination.row -= 1;
-            }
-            else if ( startingCell.row > animationDto.destination.row ) {
-                animationDto.destination.row += 1;
-            }
-            else if ( startingCell.col < animationDto.destination.col ) {
-                animationDto.destination.col -= 1;
-            }
-            else if ( startingCell.col > animationDto.destination.col ) {
-                animationDto.destination.col += 1;
-            }
+            const cells = [
+                { row: sprite.row - 1, col: sprite.col - 1 },
+                { row: sprite.row - 1, col: sprite.col },
+                { row: sprite.row - 1, col: sprite.col + 1 },
+                { row: sprite.row, col: sprite.col - 1 },
+                { row: sprite.row, col: sprite.col + 1 },
+                { row: sprite.row + 1, col: sprite.col - 1 },
+                { row: sprite.row + 1, col: sprite.col },
+                { row: sprite.row + 1, col: sprite.col + 1 },
+            ].filter((cell)=>{ 
+                const tileB = globals.GAME.BACK.getTileAtCell( cell )
+                const tileF = globals.GAME.FRONT.getTileAtCell( cell )
+                return !tileB.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite(tileF.index);
+            });
+
+            animationDto.destination = cells[Math.floor(Math.random() * cells.length)];
         }
 
         this.destination = animationDto.destination;
