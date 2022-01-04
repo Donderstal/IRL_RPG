@@ -1,4 +1,5 @@
 const { NPC_ANIM_TYPE_IDLE, FACING_RIGHT , FACING_DOWN } = require("../../../../../../game-data/globals");
+const { KEY_GUY } = require("./Newtown-Appartments-interactions");
 
 module.exports = {
     "mapName": "lennart-neighbourhood/Newtown-appartment-1",
@@ -405,7 +406,8 @@ module.exports = {
             "row": 5,
             "col": 4,
             "sprite": "tumbler_girl_recolour02.png",
-            "direction": FACING_DOWN
+            "direction": FACING_DOWN,
+            "action": KEY_GUY
         }
     ],
     "actions": [],

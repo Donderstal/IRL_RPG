@@ -1,14 +1,18 @@
 const { EVENT_BATTLE, EVENT_SHOP, EVENT_SLEEP } = require("../../../game-data/conditionGlobals");
+const { getAction } = require("../../../helpers/actionDtoFactory");
 const { MapAction } = require("./MapAction");
 
 class ActionSelector {
     constructor( x, y, actionList, spriteId = null ) {
         this.spriteId = spriteId;
         this.activateAction;
-        this.actionList = JSON.parse(JSON.stringify(actionList));
+        this.actionList = actionList.map((e)=>{
+            console.log(e)
+            return getAction(e[0], e[1]);}
+        )
         this.conditionalActions = [];
 
-        this.initializeConditionList( x, y, actionList, spriteId );
+        this.initializeConditionList( x, y, spriteId );
         this.outerTop       = ( ) => { return this.action.outerTop() }
         this.outerLeft      = ( ) => { return this.action.outerLeft() }
         this.outerRight     = ( ) => { return this.action.outerRight() }
@@ -64,8 +68,8 @@ class ActionSelector {
         this.activeAction.checkForEventOnBattleEnd( );
     }
 
-    initializeConditionList( x, y, actionList, spriteId ) {
-        actionList.forEach( ( item ) =>{
+    initializeConditionList( x, y, spriteId ) {
+        this.actionList.forEach( ( item ) =>{
             this.conditionalActions.push( new MapAction( x, y, item.action, spriteId, item.condition ) );
         })
         this.checkForConditions( );

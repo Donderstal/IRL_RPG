@@ -1,4 +1,6 @@
+const { EVENT_HAS_FIRED } = require("../../../../../../game-data/conditionGlobals");
 const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT } = require("../../../../../../game-data/globals");
+const { UNLOCK_DOOR_TEST } = require("../../../../../../game-data/interactionGlobals");
 
 module.exports = {
     "mapName": "lennart-neighbourhood/Newtown-Hall",
@@ -326,6 +328,10 @@ module.exports = {
             "direction" : FACING_RIGHT
         },
         {
+            "condition": {
+                "type": EVENT_HAS_FIRED,
+                "value": UNLOCK_DOOR_TEST
+            },
             "row": 12, 
             "col": 2,
             "destination" : "lennart-neighbourhood/C2",
