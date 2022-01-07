@@ -4,6 +4,7 @@ const {
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { Counter } = require('../../helpers/Counter');
+const { getClosestCell } = require('../../helpers/utilFunctions');
 
 class Animation {
     constructor( animationDto, id ) {
@@ -95,24 +96,18 @@ class Animation {
     initMoveAnimation( animationDto ) {
         if ( typeof animationDto.destination === 'string' || animationDto.destination instanceof String ) {
             const sprite = this.getSpriteById( this.getSpriteByName( animationDto.destination ).spriteId );             
-            const startingCell = this.getSpriteCell( );
-
             const cells = [
-                { row: sprite.row - 1, col: sprite.col - 1 },
                 { row: sprite.row - 1, col: sprite.col },
-                { row: sprite.row - 1, col: sprite.col + 1 },
                 { row: sprite.row, col: sprite.col - 1 },
                 { row: sprite.row, col: sprite.col + 1 },
-                { row: sprite.row + 1, col: sprite.col - 1 },
-                { row: sprite.row + 1, col: sprite.col },
-                { row: sprite.row + 1, col: sprite.col + 1 },
+                { row: sprite.row + 1, col: sprite.col }
             ].filter((cell)=>{ 
-                const tileB = globals.GAME.BACK.getTileAtCell( cell )
-                const tileF = globals.GAME.FRONT.getTileAtCell( cell )
+                const tileB = globals.GAME.BACK.getTileAtCell( cell.col, cell.row )
+                const tileF = globals.GAME.FRONT.getTileAtCell( cell.col, cell.row )
                 return !tileB.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite(tileF.index);
             });
 
-            animationDto.destination = cells[Math.floor(Math.random() * cells.length)];
+            animationDto.destination = getClosestCell( this.getSpriteById(), cells );
         }
 
         this.destination = animationDto.destination;

@@ -5,13 +5,13 @@ const { getAnimationFrames } = require('../../resources/animationResources')
 const { 
     STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT,
     GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT, 
-    STATE_IDLE, STATE_MOVING, STATE_WAITING, STATE_BLOCKED, STATE_PATHFINDING
+    STATE_IDLE, STATE_MOVING, STATE_BLOCKED, STATE_PATHFINDING
 } = require( '../../game-data/globals' )
 const { checkForCollision } = require('../map/map-ui/movementChecker')
 const { SPEAK_YES_NO, SPEAK, MOVE, ANIM, EMOTE } = require('../../game-data/conditionGlobals')
 const { Destination } = require('../map/map-classes/Destination')
 const { SpriteState } = require('../../helpers/SpriteState')
-const { getOppositeDirection } = require('../../helpers/utilFunctions')
+const { faceTowardsTarget } = require('../../helpers/utilFunctions')
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -165,7 +165,7 @@ class Sprite {
     setAnimation( animation ) {
         if ( (animation.is( SPEAK_YES_NO ) || animation.is( SPEAK ) || animation.is( EMOTE )) && animation.speakWith ) {
             const otherSprite = animation.getSpriteByName( animation.speakWith );
-            this.direction = getOppositeDirection( otherSprite.direction );
+            this.direction = faceTowardsTarget( this, otherSprite );
         }
         if ( animation.is( SPEAK_YES_NO ) ) {
             this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, SPEAK_YES_NO )

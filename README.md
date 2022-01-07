@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 7, 2022
+* Better sprite positioning in talking, move-to animtions
+
 #### JAN 4, 2022
 * Doors are now opened with action button
 * Restored functionality for ActionSelectors

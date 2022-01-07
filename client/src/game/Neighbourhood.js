@@ -20,8 +20,7 @@ class Neighbourhood {
 
     getRandomAction( ) {
         let actions = this["spawnable_actions"];
-        let randomAction = actions[Math.floor(Math.random()*actions.length)];
-        return getAction( randomAction[0], randomAction[1] );
+        return actions[Math.floor(Math.random()*actions.length)];
     }
 
     activateMap( key ) {

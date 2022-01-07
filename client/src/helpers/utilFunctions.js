@@ -144,6 +144,40 @@ const getRelativeLeft = ( direction ) => {
     }
 }
 
+const cellDistanceSquared = ( cellA, cellB ) => {
+    const rowDiff = cellA.row - cellB.row;
+    const colDiff = cellA.col - cellB.col;
+    return (rowDiff*rowDiff) + (colDiff*colDiff);
+}
+
+const getClosestCell = ( start, cellList ) => {
+    let closestCell = cellList[0];
+    let shortestDistance = cellDistanceSquared(start, closestCell);
+    
+    for( var i = 0; i < cellList.length; i++ ) {
+        const currentCell =  cellList[i]
+        const currentDistance = cellDistanceSquared(start, currentCell);
+        if ( currentDistance < shortestDistance ) {
+            closestCell = currentCell;
+            shortestDistance = currentDistance;
+        }
+    }
+
+    return closestCell;
+}
+
+const faceTowardsTarget = ( subject, target ) => {
+    const colDiff = Math.abs( subject.col - target.col );
+    const rowDiff = Math.abs( subject.row - target.row );
+
+    if ( rowDiff > colDiff ) {
+        return ( subject.row > target.row ) ? FACING_UP : FACING_DOWN;
+    }
+    else {
+        return ( subject.col > target.col ) ? FACING_LEFT : FACING_RIGHT;
+    }
+}
+
 module.exports = {
     getUniqueId,
     fetchJSONWithCallback,
@@ -153,5 +187,7 @@ module.exports = {
     cloneInstance,
     getOppositeDirection,
     getRelativeLeft,
-    getRelativeRight
+    getRelativeRight,
+    getClosestCell,
+    faceTowardsTarget
 }
