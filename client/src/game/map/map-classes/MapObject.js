@@ -8,6 +8,7 @@ const mapObjectResources = require('../../../resources/mapObjectResources')
 const { HitboxGroup } = require('./HitboxGroup')
 const { Door } = require('./Door')
 const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
+const { BlockedArea } = require('./BlockedArea')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
@@ -65,6 +66,10 @@ class MapObject extends Sprite {
         }
         else if ( !this.onBackground && !this.notGrounded ) {
             this.initHitboxGroups( );
+        }
+        
+        if ( objectResource.hasOwnProperty("blockedArea") ) {
+            this.blockedArea = new BlockedArea(this, objectResource.blockedArea)
         }
 
         if ( objectResource.idle_animation ) {

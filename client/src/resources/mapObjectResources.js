@@ -314,72 +314,157 @@ module.exports = {
     },
     "gate_stuk1" : { 
         "src": "gate_stuk1.png",
-        ...ONE_BLOCK_SPRITE
-        // border - bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.6875,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - bottom = h20px w100%
     },
     "gate_stuk2" : { 
         "src": "gate_stuk2.png",
-        ...TWO_WIDE_SPRITE
-        // border - bottom
+        ...TWO_WIDE_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.6875,
+            "right": 2,
+            "bottom": 1
+        }
+        // border - bottom = h20px w100%
     },
     "gate_stuk3" : { 
         "src": "gate_stuk3.png",
-        ...ONE_BLOCK_SPRITE
-        // border - bottom/right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - bottom/right = h100% w20px
     },
     "gate_stuk4" : { 
         "src": "gate_stuk4.png",
-        ...ONE_BLOCK_SPRITE
-        // border - bottom/right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right = h100% w20px
     },
     "gate_stuk5" : {
         "src": "gate_stuk5.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( false ),
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0,
+            "right": 1,
+            "bottom": 2
+        }
+        // border - right = h100% w20px
     },
     "gate_stuk6" : { 
         "src": "gate_stuk6.png",
-        ...ONE_BLOCK_SPRITE
-        // border - right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0.875,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right/bottom = h8px w20px
     },
     "gate_stuk7" : { 
         "src": "gate_stuk7.png",
-        ...ONE_BLOCK_SPRITE
-        // border - right
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0.375,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right/bottom = h40px w20px
     },
     "gate_stuk8" : { 
         "src": "gate_stuk8.png",
-        ...ONE_BLOCK_SPRITE
-        // border - right/bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0.6875,
+            "top": 0.6875,
+            "right": 1,
+            "bottom": 1
+        }
+        // border - right/bottom = h20px w20px
     },
     "gate_stuk9" : { 
         "src": "gate_stuk9.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left/bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left/bottom = h100% w20px
     },
     "gate_stuk10" : { 
         "src": "gate_stuk10.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left = h100% w20px
     },
     "gate_stuk11" : {
         "src": "gate_stuk11.png",
-        ...getTwoHighSprite( false )
-        // border - left
+        ...getTwoHighSprite( false ),
+        "blockedArea": {
+            "left": 0,
+            "top": 0,
+            "right": 0.3125,
+            "bottom": 2
+        }
+        // border - left = h100% w20px
     },
     "gate_stuk12" : { 
         "src": "gate_stuk12.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.875,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left = h8px w20px
     },
     "gate_stuk13" : { 
         "src": "gate_stuk13.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.375,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left = h40px w20px
     },
     "gate_stuk14" : { 
         "src": "gate_stuk14.png",
-        ...ONE_BLOCK_SPRITE
-        // border - left/bottom
+        ...ONE_BLOCK_SPRITE,
+        "blockedArea": {
+            "left": 0,
+            "top": 0.6875,
+            "right": 0.3125,
+            "bottom": 1
+        }
+        // border - left/top = h20px w20px
     },
     "graff_z1": { 
         "src": "graff_z1.png",

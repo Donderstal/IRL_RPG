@@ -33,7 +33,10 @@ const checkForCollision = ( sprite, isPlayer ) => {
 
     globals.GAME.FRONT.allSprites.forEach( ( e ) => {
         if( e.spriteId != sprite.spriteId ) {
-            if ( checkIfSpritesCollide( sprite, e ) && !e.hasDoor ) {
+            if ( !e.hasOwnProperty("blockedArea") &&  !e.hasDoor && checkIfSpritesCollide( sprite, e )) {
+                colliding = true;
+            }
+            else if ( e.hasOwnProperty("blockedArea") && e.blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
                 colliding = true;
             }
         }
