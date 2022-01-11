@@ -84,6 +84,11 @@ class ActionSelector {
             }
         }
     }
+
+    evaluate( ) {
+        this.checkForConditions( );
+        return this.action;
+    }
 }
 
 module.exports = {

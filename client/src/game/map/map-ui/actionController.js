@@ -15,7 +15,7 @@ const handleActionButton = ( ) => {
 
     GAME.FRONT.allSprites.forEach( ( e ) => {
         if ( PLAYER.hitbox.checkForActionRange( e.hitbox, PLAYER.direction ) ) {
-            GAME.activeAction = e.hitbox;
+            GAME.activeAction = e.actionSelector.evaluate( );
         }
     } )
 

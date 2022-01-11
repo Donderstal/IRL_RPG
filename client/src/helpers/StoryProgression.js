@@ -8,18 +8,20 @@ const { conditionIsTrue } = require('./conditionalHelper');
 const globals = require("../game-data/globals")
 
 class StoryProgression {
-    constructor( ) { 
-        this.events = STORY_EVENTS.map((e)=>{ return new ScriptedEvent(e)})
+    constructor( eventIdList = [] ) { 
+        this.events = STORY_EVENTS.map((e)=>{ return new ScriptedEvent(e)});
+        this.triggeredEvents = eventIdList;
     }
 
     get activeMapEvents() { return this.events.filter((e)=>{return e.mapName == globals.GAME.activeMapName;}); }
 
     checkForEventTrigger( trigger, args = null ) {
         const activeMapStoryEvent = this.activeMapEvents.filter((e)=>{
-            return e.trigger == trigger && conditionIsTrue(e.condition.type, e.condition.value) && !e.fired;
+            return e.trigger == trigger && conditionIsTrue(e.condition.type, e.condition.value) && this.triggeredEvents.indexOf(e.id) == -1;
         })[0];
         if ( activeMapStoryEvent && ( trigger != ON_POSITION || this.checkForPositionTrigger( activeMapStoryEvent ) ) ) {
             activeMapStoryEvent.fireEvent( args );
+            this.triggeredEvents.push(activeMapStoryEvent.id);
         }
     }
 

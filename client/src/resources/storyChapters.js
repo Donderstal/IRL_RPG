@@ -65,6 +65,13 @@ const STORY_EVENTS = [
     } 
 ]
 
+const assignEventIds = () => { 
+    STORY_EVENTS.forEach( (event, index) => {
+        event.id = "STORY_EVENT_"+index
+    });
+};
+assignEventIds();
+
 module.exports = {
     STORY_EVENTS
 }
