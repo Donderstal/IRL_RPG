@@ -1,5 +1,6 @@
 const { EVENT_DOOR } = require('../../../game-data/conditionGlobals');
 const globals = require('../../../game-data/globals');
+const { tryCatch } = require('../../../helpers/errorHelpers');
 
 const handleActionButton = ( ) => {
     const GAME = globals.GAME;
@@ -34,7 +35,7 @@ const handleActionButton = ( ) => {
     }
 
     if ( GAME.activeAction != null ) {
-        GAME.activeAction.handle( );        
+        tryCatch(GAME.activeAction.handle.bind(GAME.activeAction));
     }
 }
 

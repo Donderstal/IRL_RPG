@@ -1,4 +1,5 @@
 const { EVENT_DOOR } = require('../game-data/conditionGlobals');
+const { tryCatch } = require('../helpers/errorHelpers');
 const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
 const { Savepoint } = require('./map/map-classes/SavePoint');
 /**
@@ -55,10 +56,12 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.hasTransparentTiles = true;
         this.transparentTileGroups = [];
         tileGroupList.forEach( (cellGroup) => {
-            let tileIndexGroup = cellGroup.map( ( cell ) => {
-                return this.getTileAtCell(cell.col, cell.row).index;
-            })
-            this.transparentTileGroups.push( tileIndexGroup);
+            tryCatch(((cellGroup)=>{
+                let tileIndexGroup = cellGroup.map( ( cell ) => {
+                    return this.getTileAtCell(cell.col, cell.row).index;
+                })
+                this.transparentTileGroups.push( tileIndexGroup);
+            }).bind(this), [cellGroup]);
         })
         this.blockedExceptions = this.transparentTileGroups.flat();
     }
@@ -87,27 +90,29 @@ class BackgroundCanvas extends I_CanvasWithGrid {
      */
     setEventsDoorsAndBlockedToTilesInGrid( ) {
         this.grid.array.forEach( ( tile ) => {
-            if ( this.hasDoors ) {
-                this.doors.forEach( ( door ) => {
-                    if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
-                        tile.setEventData( EVENT_DOOR, door );
-                        this.backgroundActions.push( tile.event )
-                    }
-                })                
-            }
-            if ( this.hasActions ) {
+            tryCatch(((tile)=>{
+                if ( this.hasDoors ) {
+                    this.doors.forEach( ( door ) => {
+                        if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
+                            tile.setEventData( EVENT_DOOR, door );
+                            this.backgroundActions.push( tile.event )
+                        }
+                    })                
+                }              
+                if ( this.hasActions ) {
                 this.actions.forEach( ( action ) => {
                     if ( tile.row == action[0].row && tile.col == action[0].col && !action.isSet ) {
                         tile.setEventData( "ACTION", action );
                         this.backgroundActions.push( tile.event )
                     }
                 })                
-            }
-            this.blockedTiles.forEach( blockedId => {
-                if (tile.ID == blockedId && (!this.hasTransparentTiles || this.blockedExceptions.indexOf(tile.index) == -1)) {
-                    tile.blocked = true;
                 }
-            })
+                this.blockedTiles.forEach( blockedId => {
+                    if (tile.ID == blockedId && (!this.hasTransparentTiles || this.blockedExceptions.indexOf(tile.index) == -1)) {
+                        tile.blocked = true;
+                    }
+                })
+            }).bind(this), [tile])
         } );
     }
     /**

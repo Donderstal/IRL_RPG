@@ -9,6 +9,7 @@ const globals = require('../game-data/globals');
 const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers');
 const { TransparentTiles } = require('../helpers/TransparentTiles');
+const { tryCatch } = require('../helpers/errorHelpers');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -51,8 +52,9 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     setTransparentTileGroups(tileGroups) {
         this.transparentTileGroups = [];
         tileGroups.forEach((group)=> {
-            console.log(group)
-            this.transparentTileGroups.push( new TransparentTiles(group) );            
+            tryCatch(((group)=>{
+                this.transparentTileGroups.push( new TransparentTiles(group) );
+            }).bind(this), [group] )
         })
     }
     /**
@@ -77,11 +79,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      */
     setCharacters( characters ) {
         characters.forEach( ( character ) => {
-            this.grid.array.forEach( ( tile ) => {
-                if ( tile.row == character.row && tile.col == character.col ) {
-                    this.setCharacterSprite( tile, character );
-                }
-            })
+            tryCatch(((character)=>{
+                this.grid.array.forEach( ( tile ) => {
+                    if ( tile.row == character.row && tile.col == character.col ) {
+                        this.setCharacterSprite( tile, character );
+                    }
+                }) 
+            }).bind(this), [character])
         })
     };
     /**
@@ -91,11 +95,13 @@ class ForegroundCanvas extends I_CanvasWithGrid {
      */
     setObjects( mapObjects ) {
         mapObjects.forEach( ( object ) => {
-            this.grid.array.forEach( ( tile ) => {
-                if ( tile.row == object.row && tile.col == object.col ) {
-                    this.setObjectSprite( tile, object, false )
-                }
-            })
+            tryCatch(((object)=>{
+                this.grid.array.forEach( ( tile ) => {
+                    if ( tile.row == object.row && tile.col == object.col ) {
+                        this.setObjectSprite( tile, object, false )
+                    }
+                })
+            }).bind(this), [object])
         })
     };
     /**

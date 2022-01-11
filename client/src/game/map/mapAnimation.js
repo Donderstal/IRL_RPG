@@ -1,5 +1,6 @@
 const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
-const canvas = require('../../helpers/canvasHelpers')
+const canvas = require('../../helpers/canvasHelpers');
+const { tryCatch } = require('../../helpers/errorHelpers');
 const mapControls = require('./mapControls');
 
 /**
@@ -139,10 +140,12 @@ const drawSpritesInOrder = ( GAME ) => {
 const drawSpritesInArray = ( array, GAME ) => {
     if ( !GAME.paused ) {
         array.forEach( ( sprite ) => {
-            if ( GAME.paused || sprite.deleted ) {
-                return;
-            }
-            sprite.drawSprite( );
+            tryCatch((GAME, sprite)=> {
+                if ( GAME.paused || sprite.deleted ) {
+                    return;
+                }
+                sprite.drawSprite( );
+            }, [GAME, sprite])
         })
     }
 }

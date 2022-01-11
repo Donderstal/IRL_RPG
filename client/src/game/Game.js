@@ -23,6 +23,7 @@ const { Cinematic } = require('./cutscenes/Cinematic')
 const { FileLoader } = require('../helpers/Loader')
 const { Neighbourhood } = require('./Neighbourhood')
 const { SpeechBubbleController } = require('./cutscenes/SpeechBubbleController')
+const { tryCatch } = require('../helpers/errorHelpers')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -146,12 +147,12 @@ class Game {
      */
     startNewGame( name, className, startingMap, debugMode, disableStoryMode ) {
         this.initializePlayerParty( name, className )
-        this.setNeighbourhoodAndMap(startingMap);
+        tryCatch(this.setNeighbourhoodAndMap.bind(this), [startingMap])
         this.debugMode = debugMode;
         this.disableStoryMode = disableStoryMode;
         this.activeMap.playerStart.playerClass = className;
         this.activeMap.playerStart.name = name;
-        this.loadMapToCanvases( true );
+        tryCatch(this.loadMapToCanvases.bind(this), [true])
         if ( !this.disableStoryMode ) {
             this.story = new StoryProgression( );     
         }
@@ -209,7 +210,6 @@ class Game {
         this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
     
         this.front.class.setForegroundData( this.activeMap, isNewGame );
-        //this.front.class.setSpritesToGrid( );
         
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
         this.sound.setActiveMusic( this.activeMap.music != undefined ? this.activeMap.music : this.activeNeighbourhood.music );
@@ -242,11 +242,11 @@ class Game {
         controls.stopListenForKeyPress( );
         controls.clearPressedKeys( this.pressedKeys );
 
-        this.setNeighbourhoodAndMap(destination);
+        tryCatch(this.setNeighbourhoodAndMap.bind(this), [destination]);
         this.clearMapFromCanvases( );
-        this.loadMapToCanvases( );
+        tryCatch(this.loadMapToCanvases.bind(this));
         if ( type != EVENT_BUS ) {
-            this.setPlayerInNewMap( this.activeMap, type );
+            tryCatch(this.setPlayerInNewMap.bind(this), [this.activeMap, type]);
         }
         else {
             this.activeMap.mapObjects.forEach( ( object ) => {

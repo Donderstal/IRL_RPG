@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 9, 2022
+* BlockedArea class for non-sprite or tile based collision
+* Implemented a Try-Catch pattern for smoother error handling
+
 #### JAN 7, 2022
 * Better sprite positioning in talking, move-to animtions
 

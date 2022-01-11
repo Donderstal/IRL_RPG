@@ -3,6 +3,7 @@ const globals     = require('../game-data/globals')
 const { FRAMES_PER_SECOND }     = require('../game-data/globals')
 const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
+const { tryCatch } = require('../helpers/errorHelpers')
 
 let lastDateNow, newDateNow;
 
@@ -18,18 +19,18 @@ const animationFrameController = ( ) => {
         lastDateNow = newDateNow;
         if ( !GAME.paused ) {
             if ( !GAME.listeningForPress ) {
-                controls.listenForKeyPress()
+                tryCatch(controls.listenForKeyPress);
             }            
 
             if ( !GAME.inMenu ) {
-                handleMapAnimations( GAME )
+                tryCatch(handleMapAnimations, [GAME]);
             }
             else if ( GAME.inMenu ) {
-                GAME.MENU.draw( );
+                tryCatch(GAME.MENU.draw)
             }
 
             if  ( GAME.inCinematic && GAME.activeCinematic ) {
-                GAME.activeCinematic.checkForScenePass( )
+                tryCatch(GAME.activeCinematic.checkForScenePass.bind(GAME.activeCinematic));
             } 
         }
         else {
