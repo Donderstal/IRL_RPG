@@ -74,6 +74,26 @@ const LONG_TALK_4 = [
     ]]
 ]
 
+const COLLECTIBLE_COIN = [
+    [ DEFAULT, false ],
+    [ EVENT_TALK, false, "voice-1.mp3", [ 
+        [[EMOTE, EMOTE_SURPRISED, PLAYER_NAME]],
+        [[SPEAK, "It's a rare coin!", false, PLAYER_NAME]],
+        [[SPEAK, "Crazy that people in the past used these to things to pay for stuff...", false, PLAYER_NAME]],
+        [[SPEAK, "I'll add this one to my collection!", false, PLAYER_NAME]]
+    ]]
+]
+
+const COLLECTIBLE_JUICE_CAN = [
+    [ DEFAULT, false ],
+    [ EVENT_TALK, false, "voice-1.mp3", [ 
+        [[EMOTE, EMOTE_SURPRISED, PLAYER_NAME]],
+        [[SPEAK, "It's a rare Diet Betes© can!", false, PLAYER_NAME]],
+        [[SPEAK, "Rumor has it that people used to drink plain water before Diet Betes© was invented.", false, PLAYER_NAME]],
+        [[SPEAK, "I'll add this one to my collection!", false, PLAYER_NAME]]
+    ]]
+]
+
 module.exports = { 
     RANDOM_TALK_1,
     RANDOM_TALK_2,
@@ -81,5 +101,7 @@ module.exports = {
     RANDOM_TALK_4,
     RANDOM_TALK_5,
     RANDOM_TALK_6,
-    LONG_TALK_4
+    LONG_TALK_4,
+    COLLECTIBLE_COIN,
+    COLLECTIBLE_JUICE_CAN
 }

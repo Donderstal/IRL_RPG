@@ -165,7 +165,7 @@ class Sprite {
     setAnimation( animation ) {
         if ( (animation.is( SPEAK_YES_NO ) || animation.is( SPEAK ) || animation.is( EMOTE )) && animation.speakWith ) {
             const otherSprite = animation.getSpriteByName( animation.speakWith );
-            this.direction = faceTowardsTarget( this, otherSprite );
+            this.direction = this.spriteId == otherSprite.spriteId ? this.direction : faceTowardsTarget( this, otherSprite );
         }
         if ( animation.is( SPEAK_YES_NO ) ) {
             this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, SPEAK_YES_NO )

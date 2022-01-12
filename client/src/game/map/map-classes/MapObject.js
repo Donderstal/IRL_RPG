@@ -7,8 +7,8 @@ const { ActionSelector } = require('./ActionSelector')
 const mapObjectResources = require('../../../resources/mapObjectResources')
 const { HitboxGroup } = require('./HitboxGroup')
 const { Door } = require('./Door')
-const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
 const { BlockedArea } = require('./BlockedArea')
+const { PLAYER_NAME } = require('../../../game-data/interactionGlobals')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
@@ -25,6 +25,7 @@ class MapObject extends Sprite {
             "width": spriteDimensionsInBlocks.hori * GRID_BLOCK_PX,
             "height": spriteDimensionsInBlocks.vert * GRID_BLOCK_PX 
         }
+        const hasAction = ( spriteData.action !== undefined );
 
         super( tile, dimensionsInMap, src, spriteData.hasDoor ? null : spriteData.direction )
 
@@ -42,12 +43,11 @@ class MapObject extends Sprite {
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
-        this.hasAction  = spriteData.hasAction;
         this.hasDoor = spriteData.hasDoor;
         this.spriteId = spriteId;
         this.type = "object"
 
-        if ( this.hasAction ) {
+        if ( hasAction ) {
             if ( !this.groundedAtBase ) {
                 this.actionSelector = new ActionSelector( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ), spriteData.action, spriteId )
             }
@@ -56,6 +56,7 @@ class MapObject extends Sprite {
             }            
             this.hitbox = this.actionSelector.activeAction;
             this.action = spriteData.action
+            this.action.name = PLAYER_NAME;
         }  
         else if ( spriteData.hasDoor ) {
             this.hitbox = new Door( this.x + ( ( GRID_BLOCK_PX * .75 ) / 2 ), this.y, spriteData );

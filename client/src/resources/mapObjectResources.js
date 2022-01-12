@@ -120,6 +120,16 @@ const getSignData = ( heightInBlocks ) => {
     }
 }
 
+const getCollectible = ( widthInBlocks, heightInBlocks, frames ) => {
+    return {
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": heightInBlocks,
+        "width_blocks": widthInBlocks,
+        "idle_animation": true,
+        "idle_animation_frames": frames
+    }
+}
+
 module.exports = {
     "banana" : {
         "src": "Banana.png",
@@ -773,6 +783,7 @@ module.exports = {
         "src": "yum_mart.png",
         ...getBackgroundItem( 3.46875, 0.65625 )
     },
+
     // cars
     "car_a" : {
         "src": "car_a.png",
@@ -793,5 +804,15 @@ module.exports = {
     "bus" : {
         "src": "bus.png",
         ...BUS
+    },
+
+    // collectible
+    "collectible_coin" : {
+        "src": "coin.png",
+        ...getCollectible( 0.5625, 0.5625, 3 )
+    },
+    "collectible_juice_can" : {
+        "src": "juice_can.png",
+        ...getCollectible( 0.375, 0.484375, 2 )
     }
 }

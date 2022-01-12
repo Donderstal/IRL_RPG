@@ -3,7 +3,7 @@ const { I_Hitbox }     = require('../../interfaces/I_Hitbox')
 const { Cinematic }     = require('../../cutscenes/Cinematic')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { addEventToRegistry } = require('../../../helpers/interactionRegistry');
-const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
+const { INTERACTION_YES, PLAYER_ID } = require('../../../game-data/interactionGlobals');
 const { Inventory } = require('../../party/Inventory');
 const { initShopMenu } = require('../map-ui/ShopMenu');
 const { 
@@ -66,7 +66,7 @@ class MapAction extends I_Hitbox {
      */
     checkPropsForScenes( scenes ) {
         scenes.forEach( ( e ) => {
-            if ( !e.spriteName && e.type != FADE_OUT_IN && e.type != FADE_OUT && e.type != FADE_IN && e.type != WAIT ) {
+            if ( e.spriteName != undefined && e.type != FADE_OUT_IN && e.type != FADE_OUT && e.type != FADE_IN && e.type != WAIT ) {
                 e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
                 e.spriteId = this.spriteId;
             }
@@ -85,7 +85,7 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) { 
-        new Cinematic( this.scenes, ON_NPC_INTERACTION, [ this.spriteId ] );
+        new Cinematic( this.scenes, ON_NPC_INTERACTION, [ (globals.GAME.FRONT.spriteDictionary[this.spriteId].type == "object" ? PLAYER_ID : this.spriteId) ] );
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered
