@@ -11,5 +11,7 @@ module.exports = {
 
     PLAYER_NAME: "Player",
     PLAYER_ID: "PLAYER",
-    SPEAK_SPEAKER: "Speaker"
+    SPEAK_SPEAKER: "Speaker",
+    COLLECTABLE_COIN: "COLL_COIN",
+    COLLECTABLE_JUICE_CAN: "COLL_JUICE_CAN"
 }

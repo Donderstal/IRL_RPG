@@ -47,6 +47,8 @@ class MapAction extends I_Hitbox {
     }
     get meetsCondition( ) { return conditionIsTrue( this.conditionType, this.conditionValue ) }
     get needsConfirmation( ) { return this.type != EVENT_TALK; }
+    get actionSprite( ) { return globals.GAME.FRONT.spriteDictionary[this.spriteId]; }
+    get isCollectable( ) { return this.actionSprite.hasOwnProperty("collectableType"); }
     /**
      * 
      */
@@ -67,7 +69,7 @@ class MapAction extends I_Hitbox {
     checkPropsForScenes( scenes ) {
         scenes.forEach( ( e ) => {
             if ( e.spriteName != undefined && e.type != FADE_OUT_IN && e.type != FADE_OUT && e.type != FADE_IN && e.type != WAIT ) {
-                e.spriteName = globals.GAME.FRONT.spriteDictionary[this.spriteId].name;
+                e.spriteName = this.actionSprite.name;
                 e.spriteId = this.spriteId;
             }
             if ( !e.sfx  && e.type != "WAIT" ) {
@@ -85,7 +87,11 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) { 
-        new Cinematic( this.scenes, ON_NPC_INTERACTION, [ (globals.GAME.FRONT.spriteDictionary[this.spriteId].type == "object" ? PLAYER_ID : this.spriteId) ] );
+        new Cinematic( this.scenes, ON_NPC_INTERACTION, [ this.spriteId ] );
+        if ( this.isCollectable ) {
+            const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.col, this.actionSprite.row, this.actionSprite.collectableType, globals.GAME.activeMapName)
+            globals.GAME.collectableRegistry.addToRegistry(id, this.actionSprite.collectableType)
+        }
     }
     /**
      * Confirm that the globals.GAME.activeAction set in the this.handle method should be triggered

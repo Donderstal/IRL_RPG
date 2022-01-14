@@ -24,6 +24,7 @@ const { FileLoader } = require('../helpers/Loader')
 const { Neighbourhood } = require('./Neighbourhood')
 const { SpeechBubbleController } = require('./cutscenes/SpeechBubbleController')
 const { tryCatch } = require('../helpers/errorHelpers')
+const { CollectableRegistry } = require('../helpers/collectableRegistry')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -40,6 +41,7 @@ class Game {
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
         this.speechBubbleController = new SpeechBubbleController( );
+        this.collectableRegistry = new CollectableRegistry( );
         this.sound = new SoundController( );
         this.audio = new AudioContext( );
         this.fader = new Fader( );

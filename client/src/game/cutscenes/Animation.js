@@ -65,7 +65,12 @@ class Animation {
                 this.initCreateSpriteAnimation( animationDto );
                 break;
             case DELETE_SPRITE:
-                setTimeout( ( ) => { globals.GAME.FRONT.deleteSprite( this.spriteId ) }, 250 )
+                setTimeout( ( ) => { 
+                    if ( animationDto.sfx ) {
+                        globals.GAME.sound.playEffect( animationDto.sfx )                        
+                    }
+                    globals.GAME.FRONT.deleteSprite( this.spriteId ) 
+                }, 250 )
                 break;
             case FADE_OUT:
                 globals.GAME.sound.pauseMusic( );

@@ -1,4 +1,5 @@
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, GRID_BLOCK_PX } = require("../game-data/globals")
+const { COLLECTABLE_COIN, COLLECTABLE_JUICE_CAN } = require("../game-data/interactionGlobals")
 
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": "STANDARD",
@@ -120,11 +121,12 @@ const getSignData = ( heightInBlocks ) => {
     }
 }
 
-const getCollectible = ( widthInBlocks, heightInBlocks, frames ) => {
+const getCollectible = ( widthInBlocks, heightInBlocks, frames, collectable_type ) => {
     return {
         "dimensional_alignment": "STANDARD",
         "height_blocks": heightInBlocks,
         "width_blocks": widthInBlocks,
+        "collectable_type": collectable_type,
         "idle_animation": true,
         "idle_animation_frames": frames
     }
@@ -807,12 +809,12 @@ module.exports = {
     },
 
     // collectible
-    "collectible_coin" : {
+    "collectable_coin" : {
         "src": "coin.png",
-        ...getCollectible( 0.5625, 0.5625, 3 )
+        ...getCollectible( 0.5625, 0.5625, 3, COLLECTABLE_COIN )
     },
-    "collectible_juice_can" : {
+    "collectable_juice_can" : {
         "src": "juice_can.png",
-        ...getCollectible( 0.375, 0.484375, 2 )
+        ...getCollectible( 0.375, 0.484375, 2, COLLECTABLE_JUICE_CAN )
     }
 }

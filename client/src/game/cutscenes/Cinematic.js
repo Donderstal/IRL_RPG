@@ -58,7 +58,9 @@ class Cinematic {
                 break;
             case ON_NPC_INTERACTION: 
                 let sprite = globals.GAME.FRONT.spriteDictionary[this.args[0]];
-                sprite.State.cinematicOff( sprite );
+                if ( sprite != undefined ) {
+                    sprite.State.cinematicOff( sprite );                    
+                }
                 globals.GAME.activeAction.dismiss( );
                 break;
         }

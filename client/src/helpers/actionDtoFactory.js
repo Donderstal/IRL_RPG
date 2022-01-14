@@ -22,7 +22,7 @@ const getKeys = ( type ) => {
         case CREATE_SPRITE:
             return [ "direction", "sprite", "spriteName", "col", "row"];
         case DELETE_SPRITE:
-            return [ "spriteName" ];
+            return [ "spriteName", "sfx" ];
         case FADE_OUT:
         case FADE_IN :
         case FADE_OUT_IN:

@@ -74,23 +74,25 @@ const LONG_TALK_4 = [
     ]]
 ]
 
-const COLLECTIBLE_COIN = [
+const COLLECTABLE_ACTION_COIN = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
         [[EMOTE, EMOTE_SURPRISED, PLAYER_NAME]],
-        [[SPEAK, "It's a rare coin!", false, PLAYER_NAME]],
-        [[SPEAK, "Crazy that people in the past used these to things to pay for stuff...", false, PLAYER_NAME]],
-        [[SPEAK, "I'll add this one to my collection!", false, PLAYER_NAME]]
+        [[SPEAK, "It's a rare coin!", PLAYER_NAME]],
+        [[SPEAK, "Crazy that people in the past used these things to pay for stuff...", PLAYER_NAME]],
+        [[SPEAK, "I'll add this one to my collection!", PLAYER_NAME]],
+        [[DELETE_SPRITE, false, "misc/random5.wav"]]
     ]]
 ]
 
-const COLLECTIBLE_JUICE_CAN = [
+const COLLECTABLE_ACTION_JUICE_CAN = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
         [[EMOTE, EMOTE_SURPRISED, PLAYER_NAME]],
-        [[SPEAK, "It's a rare Diet Betes© can!", false, PLAYER_NAME]],
-        [[SPEAK, "Rumor has it that people used to drink plain water before Diet Betes© was invented.", false, PLAYER_NAME]],
-        [[SPEAK, "I'll add this one to my collection!", false, PLAYER_NAME]]
+        [[SPEAK, "It's a rare Diet Betes© can!", PLAYER_NAME]],
+        [[SPEAK, "Rumor has it that people used to drink plain water before Diet Betes© was invented.", PLAYER_NAME]],
+        [[SPEAK, "I'll add this one to my collection!", PLAYER_NAME]],
+        [[DELETE_SPRITE, false, "misc/random5.wav"]]
     ]]
 ]
 
@@ -102,6 +104,6 @@ module.exports = {
     RANDOM_TALK_5,
     RANDOM_TALK_6,
     LONG_TALK_4,
-    COLLECTIBLE_COIN,
-    COLLECTIBLE_JUICE_CAN
+    COLLECTABLE_ACTION_COIN,
+    COLLECTABLE_ACTION_JUICE_CAN
 }

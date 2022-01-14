@@ -37,9 +37,10 @@ class MapObject extends Sprite {
             this.frames = false;
         }
 
-        this.onBackground   = objectResource.on_background
-        this.groundedAtBase = objectResource.grounded_at_bottom
-        this.notGrounded    = objectResource.not_grounded
+        this.onBackground   = objectResource.on_background;
+        this.groundedAtBase = objectResource.grounded_at_bottom;
+        this.notGrounded    = objectResource.not_grounded;
+        this.collectableType=  objectResource.collectable_type
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;

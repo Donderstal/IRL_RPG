@@ -12,6 +12,7 @@ const { SPEAK_YES_NO, SPEAK, MOVE, ANIM, EMOTE } = require('../../game-data/cond
 const { Destination } = require('../map/map-classes/Destination')
 const { SpriteState } = require('../../helpers/SpriteState')
 const { faceTowardsTarget } = require('../../helpers/utilFunctions')
+const { PLAYER_ID } = require('../../game-data/interactionGlobals')
 /**
  * The Sprite serves as a interface for sprites in the game. All sprite classes are extended from it.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -168,10 +169,10 @@ class Sprite {
             this.direction = this.spriteId == otherSprite.spriteId ? this.direction : faceTowardsTarget( this, otherSprite );
         }
         if ( animation.is( SPEAK_YES_NO ) ) {
-            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, SPEAK_YES_NO )
+            this.speak( animation.text, (animation.sfx ? animation.sfx : (this.sprite == PLAYER_ID ? "voice-1.mp3" : false)), SPEAK_YES_NO )
         }
         if ( animation.is( SPEAK ) ) {
-            this.speak( animation.text, ( animation.sfx ) ? animation.sfx : false, SPEAK )
+            this.speak( animation.text, (animation.sfx ? animation.sfx : (this.sprite == PLAYER_ID ? "voice-1.mp3" : false)), SPEAK )
         }
         if ( animation.is( EMOTE ) ) {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );

@@ -10,6 +10,7 @@ const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers');
 const { TransparentTiles } = require('../helpers/TransparentTiles');
 const { tryCatch } = require('../helpers/errorHelpers');
+const mapObjectResources = require('../resources/mapObjectResources');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
@@ -97,7 +98,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         mapObjects.forEach( ( object ) => {
             tryCatch(((object)=>{
                 this.grid.array.forEach( ( tile ) => {
-                    if ( tile.row == object.row && tile.col == object.col ) {
+                    if ( tile.row == object.row && tile.col == object.col && !this.spriteIsInRegistry( tile, object ) ) {
                         this.setObjectSprite( tile, object, false )
                     }
                 })
@@ -251,6 +252,16 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             sprite.name = "Random person"
             sprite.setDestination( destination, true );
         };
+    }
+
+    spriteIsInRegistry( tile, objectData ) {
+        if ( objectData.type.includes("collectable") ) {
+            let mapName = globals.GAME.activeMapName
+            let objectResource =  mapObjectResources[objectData.type]
+            let id = globals.GAME.collectableRegistry.getCollectableId(tile.col, tile.row, objectResource.collectable_type, mapName)
+            return globals.GAME.collectableRegistry.isInRegistry(id, objectResource.collectable_type);
+        }
+        return false;
     }
 }
 

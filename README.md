@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 12, 2022
+* Added collectable sprites and a collectable registry
+
 #### JAN 11, 2022
 * Registry for story events
 

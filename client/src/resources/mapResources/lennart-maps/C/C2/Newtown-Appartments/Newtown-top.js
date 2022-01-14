@@ -1,4 +1,5 @@
 const { FACING_DOWN } = require("../../../../../../game-data/globals");
+const { COLLECTABLE_ACTION_COIN, COLLECTABLE_ACTION_JUICE_CAN } = require("../../../../../actionResources");
 
 module.exports = {
     "mapName": "lennart-neighbourhood/Newtown-appartment-3",
@@ -406,6 +407,18 @@ module.exports = {
             "type": "newspaper_trash",
             "row": 8,
             "col": 8
+        },
+        {
+            "type": "collectable_coin",
+            "row": 1,
+            "col": 2,
+            "action": [COLLECTABLE_ACTION_COIN]
+        },
+        {
+            "type": "collectable_juice_can",
+            "row": 5,
+            "col": 3,
+            "action": [COLLECTABLE_ACTION_JUICE_CAN]
         }
     ],
     "characters": [],
