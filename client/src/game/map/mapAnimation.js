@@ -31,8 +31,9 @@ const handleMapAnimations = ( GAME ) => {
         e.drawAndMove( );
     })
 
-    if ( GAME.FRONT.hasFrontGrid ) {
-        GAME.FRONT.drawMapFromGridData( GAME.BACK.sheetImage ) 
+    if ( GAME.FRONTGRID.hasFrontGrid ) {
+        canvas.clearEntireCanvas("FRONT_GRID")
+        GAME.FRONTGRID.drawMapFromGridData( GAME.FRONTGRID.sheetImage );
     }
     GAME.speechBubbleController.drawBubbles( );
 }

@@ -3,6 +3,7 @@ const { EVENT_DOOR } = require('../../game-data/conditionGlobals')
 const { Door } = require('../map/map-classes/Door')
 const globals = require('../../game-data/globals');
 const { ActionSelector } = require('../map/map-classes/ActionSelector');
+const { getBackCanvasContext } = require('../../helpers/canvasHelpers');
 /**
  * The I_Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an I_Grid instance.
@@ -44,6 +45,10 @@ class I_Tile {
     get isBlocked( ) { 
         return this.index != globals.OUT_LEFT && this.index != globals.OUT_TOP && this.index != globals.OUT_RIGHT && this.index != globals.OUT_DOWN && this.blocked;
     }
+
+    get isEmpty( ) {
+        return this.ID === "E" || this.ID === null;
+    }
     setMovementCost( value ) {
         this.movementCost = value;
     }
@@ -54,25 +59,26 @@ class I_Tile {
      * @param {Image} sheetImage JS Image instance containing the current tilesheet png
      */
     drawTileInMap( sheetImage ) {
-        if ( this.ID === "E" || this.ID === null) {
+        if ( this.isEmpty ) {
             return;
         }
-
-        const tilesheetXy = SHEET_XY_VALUES[this.ID]
-        this.drawTileToUtilityCanvas( sheetImage, tilesheetXy );
-    
-        this.ctx.drawImage(
-            globals.GAME.util.canvas, 
-            0, 0,
-            GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
-            this.x, this.y,
-            GRID_BLOCK_PX, GRID_BLOCK_PX
-        )
-        if ( globals.GAME.debugMode ) {
-            this.ctx.beginPath( )
-            this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
-            this.ctx.stroke( )
-            this.ctx.fillText( this.ID, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .5, )
+        else {
+            const tilesheetXy = SHEET_XY_VALUES[this.ID]
+            this.drawTileToUtilityCanvas( sheetImage, tilesheetXy );
+        
+            this.ctx.drawImage(
+                this.ctx == getBackCanvasContext( ) ? globals.GAME.utilBack.canvas : globals.GAME.utilFront.canvas, 
+                0, 0,
+                GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
+                this.x, this.y,
+                GRID_BLOCK_PX, GRID_BLOCK_PX
+            )
+            if ( globals.GAME.debugMode ) {
+                this.ctx.beginPath( )
+                this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
+                this.ctx.stroke( )
+                this.ctx.fillText( this.ID, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .5, )
+            }            
         }
     }
     /**
@@ -82,7 +88,7 @@ class I_Tile {
      * @param {Object} tilesheetXy object with x and y Number properties
      */
     drawTileToUtilityCanvas( sheetImage, tilesheetXy ) {
-        const ctx = globals.GAME.util.ctx;
+        const ctx = this.ctx == getBackCanvasContext( ) ? globals.GAME.utilBack.ctx : globals.GAME.utilFront.ctx;
         ctx.clearRect(0,0,GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX)
         this.mirrored ? ctx.setTransform( -1, 0, 0, 1, GRID_BLOCK_IN_SHEET_PX, 0 ) : ctx.setTransform(1,0,0,1,0,0);
         switch( this.angle ) {

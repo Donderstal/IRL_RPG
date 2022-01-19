@@ -1,22 +1,20 @@
 const globals = require('../game-data/globals')
 const { MAX_BUBBLE_TEXT_WIDTH } = require('../game-data/globals');
+
+const getFrontgridCanvasContext = () => {
+    return document.getElementById('game-front-grid-canvas').getContext('2d');
+}
 /**
  * Return the ctx of the Foreground canvas
  */
 const getFrontCanvasContext = () => {
-    let canv = document.getElementsByTagName('canvas')[1]
-    let ctx = canv.getContext('2d')
-
-    return ctx
+    return document.getElementById('game-front-canvas').getContext('2d');
 }
 /**
  * Return the ctx of the Background canvas
  */
 const getBackCanvasContext = () => {
-    let canv = document.getElementsByTagName('canvas')[0]
-    let ctx = canv.getContext('2d')
-
-    return ctx
+    return document.getElementById('game-background-canvas').getContext('2d');
 }
 /**
  * Shorthand for drawing from a image on a canvas at given xy.
@@ -133,7 +131,7 @@ const writeTextLine = ( text, x, y, size, color = null ) => {
  * @param {String} canvas 
  */
 const clearEntireCanvas = ( canvas ) => {
-    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext();        
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : (canvas === "FRONT" ? getFrontCanvasContext() : getFrontgridCanvasContext());        
     ctx.clearRect( 
         0, 0,
         globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
@@ -143,6 +141,7 @@ const clearEntireCanvas = ( canvas ) => {
 module.exports = {
     drawFromImageToCanvas,
     clearEntireCanvas,
+    getFrontgridCanvasContext,
     getFrontCanvasContext,
     getBackCanvasContext,
     setFont,

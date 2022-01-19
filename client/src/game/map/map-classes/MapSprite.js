@@ -1,13 +1,14 @@
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Sprite } = require('../../interfaces/I_Sprite')
-const { I_Hitbox } = require('../../interfaces/I_Hitbox')
+const { I_Hitbox } = require('../../interfaces/I_Hitbox');
+const { VisionBox } = require('./VisionBox');
 /**
  * The MapSprite represents a 1-tile wide sprite on the Front grid
  * Logs its position on the grid and has a sound effect for movement
  */
 class MapSprite extends Sprite {
-    constructor ( tile, direction, spriteSize, src ) {       
+    constructor ( tile, direction, spriteSize, src, isPlayer = false ) {       
         super( tile, spriteSize, src, direction )   
         this.cell = {}
         this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
@@ -17,6 +18,9 @@ class MapSprite extends Sprite {
         this.spriteHeightInSheet = MAP_SPRITE_HEIGHT_IN_SHEET;
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "footsteps.wav", true );
         this.movementSoundEffect.mute( );
+        if ( isPlayer ) {
+            this.visionbox = new VisionBox( this.centerX( ), this.baseY( ) )
+        }
     }
 
     get currentTileBack( ) { return globals.GAME.getTileOnCanvasAtXY( "BACK", this.centerX(), this.baseY() ) };
@@ -67,6 +71,9 @@ class MapSprite extends Sprite {
         super.drawSprite( )
         if ( this.hitbox != undefined ) {
             this.hitbox.updateXy( this.centerX( ), this.baseY( ) );             
+        }
+        if ( this.visionbox != undefined ) {
+            this.visionbox.updateXy( this.centerX( ), this.baseY( ) );             
         }
         this.handleSoundEffects( );
     }

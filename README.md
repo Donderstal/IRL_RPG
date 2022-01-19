@@ -12,6 +12,10 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### JAN 19, 2022
+* Added a FrontgridCanvas class with element, for displaying the front tiles
+* Added a VisionBox class to the Player sprite, for looking behind the FrontgridCanvas
+
 #### JAN 12, 2022
 * Added collectable sprites and a collectable registry
 

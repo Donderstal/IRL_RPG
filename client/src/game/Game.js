@@ -25,6 +25,7 @@ const { Neighbourhood } = require('./Neighbourhood')
 const { SpeechBubbleController } = require('./cutscenes/SpeechBubbleController')
 const { tryCatch } = require('../helpers/errorHelpers')
 const { CollectableRegistry } = require('../helpers/collectableRegistry')
+const { FrontgridCanvas } = require('./FrontgridCanvas')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -51,9 +52,11 @@ class Game {
         this.activeText = "";
         this.bubbleIsActive;
 
-        this.front = { }; // class Foreground
-        this.back  = { };  // class Background
-        this.util  = { };
+        this.frontgrid = { };
+        this.utilFront  = { };
+        this.front = { };
+        this.back  = { };
+        this.utilBack  = { };
         this.party; // class Party
 
         this.activeNeighbourhood;
@@ -62,6 +65,7 @@ class Game {
         this.initGameCanvases( );
     }
 
+    get FRONTGRID( ) { return this.frontgrid.class }
     get FRONT( ) { return this.front.class }
     get BACK( ) { return this.back.class }
 
@@ -121,9 +125,11 @@ class Game {
      * Initialize game Canvases. FRONT, BACK and UTIL
      */
     initGameCanvases( ) {
+        this.initCanvas( 'FRONT_GRID' , this.frontgrid )
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
-        this.initCanvas( 'UTIL', this.util );
+        this.initCanvas( 'UTIL_BACK', this.utilBack );
+        this.initCanvas( 'UTIL_FRONT', this.utilFront );
     }
     /**
      * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate I_CanvasWithGrid class extension if necessary and set as property
@@ -131,16 +137,42 @@ class Game {
      * @param {Object} object 'wrapper' object to add the canvas and canvas context to as properties
      */
     initCanvas( type, object ) {
-        const id = type == 'FRONT' ? 'game-front-canvas' : type == 'BACK' ? 'game-background-canvas' : 'game-utility-canvas';
-        object.canvas = document.getElementById( id );
-        object.ctx = object.canvas.getContext( '2d' );
-        
-        if ( type != 'UTIL' ) {
-            object.canvas.width = CANVAS_WIDTH;
-            object.canvas.height = CANVAS_HEIGHT;
-            const xy = object.canvas.getBoundingClientRect( );
-            object.class = type == 'FRONT' ?  new ForegroundCanvas( xy.x, xy.y, object.ctx ) : new BackgroundCanvas( xy.x, xy.y, object.ctx );
-        }
+        switch( type ) {
+            case 'BACK':
+                object.canvas = document.getElementById( 'game-background-canvas' );
+                object.ctx = object.canvas.getContext( '2d' );
+                object.canvas.width = CANVAS_WIDTH;
+                object.canvas.height = CANVAS_HEIGHT;
+                var xy = object.canvas.getBoundingClientRect( );
+                object.class = new BackgroundCanvas( xy.x, xy.y, object.ctx );
+                break;
+            case 'FRONT':
+                object.canvas = document.getElementById( 'game-front-canvas' );
+                object.ctx = object.canvas.getContext( '2d' );
+                object.canvas.width = CANVAS_WIDTH;
+                object.canvas.height = CANVAS_HEIGHT;
+                var xy = object.canvas.getBoundingClientRect( );
+                object.class = new ForegroundCanvas( xy.x, xy.y, object.ctx );
+                break;
+            case 'FRONT_GRID':
+                object.canvas = document.getElementById( 'game-front-grid-canvas' );
+                object.ctx = object.canvas.getContext( '2d' );
+                object.canvas.width = CANVAS_WIDTH;
+                object.canvas.height = CANVAS_HEIGHT;
+                var xy = object.canvas.getBoundingClientRect( );
+                object.class = new FrontgridCanvas( xy.x, xy.y, object.ctx );
+                break;
+            case 'UTIL_BACK':
+                object.canvas = document.getElementById( 'game-utility-canvas-back' );
+                object.ctx = object.canvas.getContext( '2d' );
+                break;
+            case 'UTIL_FRONT':
+                object.canvas = document.getElementById( 'game-utility-canvas-front' );
+                object.ctx = object.canvas.getContext( '2d' );
+                break;
+            default:
+                console.log('error! canvas type ' + type + ' not known')
+        } 
     }
     /**
      * Wrapper method. Calls a sequentce of functions to start a new game
@@ -199,21 +231,22 @@ class Game {
      * @param {Object} mapData mapData object retrieved from mapResources.js
      */
     loadMapToCanvases( isNewGame = false ) {
-        this.back.class.initGrid( this.activeMap.rows, this.activeMap.columns );
-        this.front.class.initGrid( this.activeMap.rows, this.activeMap.columns );
+        this.BACK.initGrid( this.activeMap.rows, this.activeMap.columns );
+        this.FRONT.initGrid( this.activeMap.rows, this.activeMap.columns );
+        this.FRONTGRID.initGrid( this.activeMap.rows, this.activeMap.columns );
     
         const sheetData = tilesheets[this.activeMap.tileSet];
     
-        this.back.class.setBackgroundData( this.activeMap, sheetData );
-        this.back.class.setEventsDoorsAndBlockedToTilesInGrid( );
-        console.log('/static/tilesets/' + sheetData.src)
-        console.log(globals.PNG_DICTIONARY)
-        console.log('/static/tilesets/' + sheetData.src in globals.PNG_DICTIONARY)
+        this.BACK.setBackgroundData( this.activeMap, sheetData );
+        this.BACK.setEventsDoorsAndBlockedToTilesInGrid( );
         this.BACK.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
     
-        this.front.class.setForegroundData( this.activeMap, isNewGame );
-        
-        this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
+        this.FRONT.setForegroundData( this.activeMap, isNewGame );
+        this.FRONT.spriteDictionary["PLAYER"] = this.PLAYER;
+
+        this.FRONTGRID.setFrontgridData( this.activeMap, sheetData );
+        this.FRONTGRID.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
+
         this.sound.setActiveMusic( this.activeMap.music != undefined ? this.activeMap.music : this.activeNeighbourhood.music );
         setTimeout( ( ) => {
             this.story.checkForEventTrigger(ON_ENTER)     
