@@ -31,10 +31,8 @@ const handleMapAnimations = ( GAME ) => {
         e.drawAndMove( );
     })
 
-    if ( GAME.BACK.hasTransparentTiles ) {
-        GAME.FRONT.transparentTileGroups.forEach( ( e ) => {
-            e.draw();
-        })        
+    if ( GAME.FRONT.hasFrontGrid ) {
+        GAME.FRONT.drawMapFromGridData( GAME.BACK.sheetImage ) 
     }
     GAME.speechBubbleController.drawBubbles( );
 }

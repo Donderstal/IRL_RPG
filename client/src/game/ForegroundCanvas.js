@@ -26,6 +26,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.activeEffects = [];
         this.transparentTileGroups = [];
         this.roadNetwork;
+        this.hasFrontGrid = false;
     };
     /**
      * Return a effect Instance and push it to this.activeEffects
@@ -46,17 +47,10 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.initPlayerCharacter( mapData.playerStart );
         if ( mapData.roads ) 
             this.roadNetwork = new RoadNetwork( mapData.roads );
-        if ( globals.GAME.BACK.hasTransparentTiles ) {
-            this.setTransparentTileGroups(globals.GAME.BACK.transparentTileGroups);
+        if ( mapData.frontGrid ) {
+            this.hasFrontGrid = true;
+            this.setTileGrid( mapData.frontGrid );
         }
-    }
-    setTransparentTileGroups(tileGroups) {
-        this.transparentTileGroups = [];
-        tileGroups.forEach((group)=> {
-            tryCatch(((group)=>{
-                this.transparentTileGroups.push( new TransparentTiles(group) );
-            }).bind(this), [group] )
-        })
     }
     /**
      * Instantiate a mapSprite to start location and mark it as the player sprite

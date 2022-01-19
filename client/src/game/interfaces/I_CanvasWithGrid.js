@@ -77,6 +77,10 @@ class I_CanvasWithGrid {
     clearBattleMap( ) {
         this.battleGrid = null;
     }
+    drawMapFromGridData( image ) {
+        this.sheetImage = image;
+        this.grid.drawMap( this.sheetImage );
+    }    
 };
 
 module.exports = {

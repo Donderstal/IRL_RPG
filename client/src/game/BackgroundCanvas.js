@@ -51,20 +51,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     setBlockedTiles( blockedTiles ) {
         this.blockedTiles = blockedTiles
     }
-
-    setTransparentTiles( tileGroupList ) {
-        this.hasTransparentTiles = true;
-        this.transparentTileGroups = [];
-        tileGroupList.forEach( (cellGroup) => {
-            tryCatch(((cellGroup)=>{
-                let tileIndexGroup = cellGroup.map( ( cell ) => {
-                    return this.getTileAtCell(cell.col, cell.row).index;
-                })
-                this.transparentTileGroups.push( tileIndexGroup);
-            }).bind(this), [cellGroup]);
-        })
-        this.blockedExceptions = this.transparentTileGroups.flat();
-    }
     /**
      * Set tile grid and various data for a new map as class properties
      * @param {Object} mapData - data object from mapResources
@@ -77,8 +63,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
             this.setActions( mapData.actions );
         if ( mapData.savepoint ) 
             this.setSavepoint( mapData.savepoint );
-        if ( mapData.transparentTiles )
-            this.setTransparentTiles( mapData.transparentTiles );
         if ( sheetData.blocked ) 
             this.setBlockedTiles( sheetData.blocked );
         let oneDimensionalMapGrid = mapData.grid.flat(1);
@@ -118,10 +102,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
     /**
      * Call the drawMap function of the inner I_Grid Class with this.sheetImage as parameter
      */
-    drawMapFromGridData( image ) {
-        this.sheetImage = image;
-        this.grid.drawMap( this.sheetImage );
-    }    
     setSavepoint( savepointData ) {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
         tile.hasEvent = true;
