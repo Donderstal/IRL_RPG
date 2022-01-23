@@ -811,10 +811,10 @@ module.exports = {
     // collectible
     "collectable_coin" : {
         "src": "coin.png",
-        ...getCollectible( 0.5625, 0.5625, 3, COLLECTABLE_COIN )
+        ...getCollectible( 0.75, 0.75, 4, COLLECTABLE_COIN )
     },
     "collectable_juice_can" : {
         "src": "juice_can.png",
-        ...getCollectible( 0.375, 0.484375, 2, COLLECTABLE_JUICE_CAN )
+        ...getCollectible( 0.5625, 0.78125, 4, COLLECTABLE_JUICE_CAN )
     }
 }

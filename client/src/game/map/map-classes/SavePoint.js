@@ -1,15 +1,31 @@
 const { GRID_BLOCK_PX } = require("../../../game-data/globals");
+const globals = require("../../../game-data/globals");
 const { getEffect } = require("../../../helpers/effectHelpers");
-const { saveGame } = require("../../../helpers/saveSystemHelpers");
 const { MapAction } = require("./MapAction");
+const { EVENT_SAVE, SPEAK_YES_NO, SPEAK } = require("../../../game-data/conditionGlobals");
+const { getActionObject } = require("../../../helpers/actionDtoFactory");
+const { PLAYER_ID } = require("../../../game-data/interactionGlobals");
+
+const actionData = 
+    [ EVENT_SAVE, false, "voice-1.mp3", [
+        [[SPEAK_YES_NO, "Save the game?",
+            [
+                [[SPEAK, "Game saved!"]]
+            ],
+            [
+                [[SPEAK, "Why did you press the button then?"]]
+            ]
+        ]]
+    ]]
 
 class Savepoint extends MapAction { 
-    constructor( tile, action ) {
+    constructor( tile ) {
         let x = tile.x + ( GRID_BLOCK_PX / 2 )
         let y = tile.y + ( GRID_BLOCK_PX / 2 )
-        super( x, y, action )
+        super( x, y, getActionObject( actionData[0], actionData[1], actionData[2], actionData[3]  ) )
 
         this.initSavePointEffect( )
+        this.spriteId   = PLAYER_ID;
     }
 
     initSavePointEffect(  ) {
@@ -22,7 +38,8 @@ class Savepoint extends MapAction {
 
     confirm( ) {
         this.confirmingAction = true;
-        saveGame( );
+        globals.GAME.save( );
+        this.resetAction( );
     }
 }
 

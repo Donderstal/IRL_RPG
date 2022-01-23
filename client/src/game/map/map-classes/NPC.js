@@ -25,7 +25,7 @@ class NPC extends MapSprite {
         const hasAction = ( spriteData.action !== undefined );
         let src = '/static/sprites/'+ spriteData.sprite;
         super( tile, spriteData.direction, "STRD", src )   
-
+        this.spriteData = spriteData
         this.initialCol = this.col;
         this.initialRow = this.row;
         
@@ -34,6 +34,7 @@ class NPC extends MapSprite {
         this.animationName = spriteData.anim_name == undefined ? false : spriteData.anim_name;
         this.name = spriteData.name
         this.spriteId = spriteId;
+        this.type = 'character'
 
         if ( this.animationType == NPC_ANIM_TYPE_MOVING_IN_LOOP ) {
             this.setDestination( spriteData.destination, true );

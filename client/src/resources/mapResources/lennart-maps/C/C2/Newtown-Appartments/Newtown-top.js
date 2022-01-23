@@ -421,8 +421,6 @@ module.exports = {
             "action": [COLLECTABLE_ACTION_JUICE_CAN]
         }
     ],
-    "characters": [],
-    "actions": [],
     "doors": [        
         {
             "row": 8, 
@@ -430,5 +428,11 @@ module.exports = {
             "destination" : "lennart-neighbourhood/Newtown-Hall",
             "direction" : FACING_DOWN
         }
-    ]
+    ],
+    "characters": [],
+    "actions": [],
+    "savepoint": {
+        'col': 4,
+        'row': 4
+    }
 }

@@ -48,8 +48,8 @@ const effectsResources = {
     },
     "BLUE_SQUARE" : {
         "src": folder + "Square_fx.png",
-        "widthInBlocks": 4.3125,
-        "heightInBlocks": 3.46875,
+        "widthInBlocks": 4.3125 / 2,
+        "heightInBlocks": 3.46875 / 2,
         "frameWidth": 276,
         "frameHeight": 222,
         "frames": [
@@ -67,8 +67,8 @@ const effectsResources = {
     },
     "PURPLE_CROSS" : {
         "src": folder + "cross_fx.png",
-        "widthInBlocks": 4.3125,
-        "heightInBlocks": 3.46875,
+        "widthInBlocks": 4.3125 / 2,
+        "heightInBlocks": 3.46875 / 2,
         "frameWidth": 276,
         "frameHeight": 222,
         "frames": [

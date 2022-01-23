@@ -20,7 +20,7 @@ class Cinematic {
         this.numberOfScenes = this.scenes.length;
         this.registeredSelection = false;
         this.iterator = 0;
-        this.activeScene = new Scene( this.scenes[this.iterator], trigger == ON_NPC_INTERACTION ? args[0] : false );
+        this.activeScene = new Scene( this.scenes[this.iterator], (this.trigger == ON_NPC_INTERACTION ? args[0] : false) );
 
         globals.GAME.activateCinematic( this );
     }
@@ -41,7 +41,10 @@ class Cinematic {
             if ( this.activeScene.containsAnimationType( SPEAK ) || this.activeScene.containsAnimationType( SPEAK_YES_NO )|| this.activeScene.containsAnimationType( EMOTE ) ) {
                 this.activeScene.unsetSpriteAnimation( )
             }
-            this.activeScene = new Scene( this.scenes[this.iterator], this.trigger == ON_NPC_INTERACTION ? this.args[0] : false );            
+            this.activeScene = new Scene( 
+                this.scenes[this.iterator], 
+                (this.trigger == ON_NPC_INTERACTION ? this.args[0] : false)
+            );            
         }
         else {
             this.activeScene.unsetSpriteAnimation( )

@@ -13,6 +13,10 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### JAN 19, 2022
+* Restored Save points on the map
+* Refactored saving a game with a new Class
+
+#### JAN 19, 2022
 * Added a FrontgridCanvas class with element, for displaying the front tiles
 * Added a VisionBox class to the Player sprite, for looking behind the FrontgridCanvas
 

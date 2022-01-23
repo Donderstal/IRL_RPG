@@ -23,6 +23,7 @@ class Car extends MapObject {
         this.carPathIndex = 0;
         this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
         this.roadId;
+        this.type = 'car'
 
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( road ) => { 
             if ( road.startCell.col == tile.col && road.startCell.row == tile.row ) {

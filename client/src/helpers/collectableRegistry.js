@@ -21,8 +21,10 @@ class CollectableRegistry {
         switch( type ) {
             case COLLECTABLE_COIN: 
                 this.coins.push(collectableId);
+                break;
             case COLLECTABLE_JUICE_CAN:
                 this.juiceCans.push(collectableId);
+                break;
             default:
                 console.log(`${type} is not a valid collectable type`)
         }
@@ -41,6 +43,18 @@ class CollectableRegistry {
 
     getCollectableId( col, row, type, mapName ) {
         return `col_${col}_row_${row}_${mapName}_${type}`;
+    }
+
+    exportRegistry( ) {
+        return {
+            'coins': this.coins,
+            'juiceCans': this.juiceCans
+        }
+    }
+
+    loadRegistry( registryObject ) {
+        this.coins      = registryObject.coins;
+        this.juiceCans  = registryObject.juiceCans;
     }
 }
 

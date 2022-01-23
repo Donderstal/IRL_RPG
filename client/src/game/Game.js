@@ -26,6 +26,7 @@ const { SpeechBubbleController } = require('./cutscenes/SpeechBubbleController')
 const { tryCatch } = require('../helpers/errorHelpers')
 const { CollectableRegistry } = require('../helpers/collectableRegistry')
 const { FrontgridCanvas } = require('./FrontgridCanvas')
+const { SaveGameDto } = require('../game-data/SaveGameDto')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -378,6 +379,11 @@ class Game {
     deActivateCinematic( ) {
         this.activeCinematic = false;
         this.inCinematic = false;
+    }
+
+    save( ) {
+        let save = new SaveGameDto( );
+        save.saveGameToDto( this )
     }
 }
 

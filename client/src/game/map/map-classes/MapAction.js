@@ -24,6 +24,7 @@ class MapAction extends I_Hitbox {
 
         this.arcColor   = "#FF0000";
         this.spriteId   = spriteId;
+        this.trigger    = ON_NPC_INTERACTION
         this.registeredSelection = false;
         this.confirmingAction    = false;
 
@@ -87,7 +88,7 @@ class MapAction extends I_Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) { 
-        new Cinematic( this.scenes, ON_NPC_INTERACTION, [ this.spriteId ] );
+        new Cinematic( this.scenes, this.trigger, [ this.spriteId ] );
         if ( this.isCollectable ) {
             const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.col, this.actionSprite.row, this.actionSprite.collectableType, globals.GAME.activeMapName)
             globals.GAME.collectableRegistry.addToRegistry(id, this.actionSprite.collectableType)

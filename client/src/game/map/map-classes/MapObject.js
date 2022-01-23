@@ -28,7 +28,7 @@ class MapObject extends Sprite {
         const hasAction = ( spriteData.action !== undefined );
 
         super( tile, dimensionsInMap, src, spriteData.hasDoor ? null : spriteData.direction )
-
+        this.spriteData = spriteData;
         this.objectResource = objectResource;
         if( "movement_frames" in this.objectResource) {
             this.frames = this.objectResource["movement_frames"];            
@@ -76,6 +76,7 @@ class MapObject extends Sprite {
 
         if ( objectResource.idle_animation ) {
             this.hasIdleAnimation = true;
+            this.idle_animation_frames = objectResource.idle_animation_frames == undefined ? 2 : objectResource.idle_animation_frames;
             this.idleAnimationCounter = new Counter( 5000, true );
         }
     }
@@ -200,8 +201,15 @@ class MapObject extends Sprite {
     countIdleAnimationFrame( ) {
         this.idleAnimationFrame++
         if ( this.idleAnimationFrame > this.idleAnimationFrameLimit ) {
-            this.inIdleAnimation = false;
-            this.sheetPosition -= 1;
+            if ( this.idle_animation_frames == this.idleAnimationFramePosition ) {
+                this.inIdleAnimation = false;
+                this.sheetPosition = 0;
+            }
+            else {
+                this.sheetPosition += 1;
+                this.idleAnimationFramePosition += 1;
+            }
+
         }
     }
     /**
@@ -212,7 +220,8 @@ class MapObject extends Sprite {
         this.inIdleAnimation = true;
         this.sheetPosition += 1;
         this.idleAnimationFrame = 0;
-        this.idleAnimationFrameLimit = 10;
+        this.idleAnimationFrameLimit = 20;
+        this.idleAnimationFramePosition = 1;
     }
     /**
      * Set the width and height of this sprite in sheet and canvas when facing given direction.

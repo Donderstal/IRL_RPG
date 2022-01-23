@@ -60,6 +60,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         this.playerSprite = new MapSprite( startingTile[0], 0, 'STRD', spriteSrc, true )
         this.playerSprite.spriteId = "PLAYER"
         this.playerSprite.name = "Player";
+        this.playerSprite.class = start.playerClass;
         this.allSprites.push( this.playerSprite )
     }
     /**
@@ -219,7 +220,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
         let characterData = {
             "sprite": characters[ Math.floor( Math.random( ) * characters.length ) ], 
             "direction": start.direction, "hasAction": true,
-            "action": [globals.GAME.activeNeighbourhood.getRandomAction( )]
+            'randomGenerated': true, "action": [globals.GAME.activeNeighbourhood.getRandomAction( )]
         };
         const grid = { 
             'rows': this.grid.rows, 'cols': this.grid.cols,

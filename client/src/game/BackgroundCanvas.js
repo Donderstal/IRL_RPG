@@ -106,7 +106,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
         tile.hasEvent = true;
         tile.eventType = "SAVE"
-        tile.event = new Savepoint( tile, savepointData.action );
+        tile.event = new Savepoint( tile );
         this.savepoint = tile;
     }
     /**
