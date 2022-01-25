@@ -348,5 +348,9 @@ module.exports = {
             "destination" : "lennart-neighbourhood/Newtown-Hall",
             "direction" : FACING_LEFT
         }
-    ]
+    ],
+    "savepoint": {
+        'col': 6,
+        'row': 6
+    }
 }

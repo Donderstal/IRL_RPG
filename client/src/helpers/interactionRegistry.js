@@ -1,4 +1,4 @@
-const interactionRegistry = { };
+let interactionRegistry = { };
 
 const isInRegistry = ( key ) => {
     return key in interactionRegistry;
@@ -20,9 +20,14 @@ const getRegistry = ( ) => {
     return interactionRegistry;
 }
 
+const setInteractionRegistry = ( registryObject ) => {
+    interactionRegistry = registryObject;
+}
+
 module.exports = {
     isInRegistry,
     isInRegistryWithValue,
     addEventToRegistry,
-    getRegistry
+    getRegistry,
+    setInteractionRegistry
 }

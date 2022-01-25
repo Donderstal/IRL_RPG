@@ -2,7 +2,7 @@ const globals = require('../game-data/globals');
 const { fetchJSONWithCallback } = require('./utilFunctions');
 
 class FileLoader {
-    constructor( params ) {
+    constructor( params, gameType ) {
         this.params = params;
 
         this.pngs = [];
@@ -14,6 +14,8 @@ class FileLoader {
         this.pngLimit = 1;
         this.soundsLimit = 1;
 
+        this.gameType = gameType;
+
         fetchJSONWithCallback( "static/png-list.json", this.setPngs.bind(this) )
         fetchJSONWithCallback( "static/audio-list.json", this.setSounds.bind(this) )
         this.interval = setInterval(this.checkIfFilesLoaded.bind(this), 100)
@@ -21,7 +23,12 @@ class FileLoader {
 
     checkIfFilesLoaded( ) {
         if ( this.pngIndex == this.pngLimit && this.soundsIndex == this.soundsLimit ) {
-            globals.GAME.startNewGame( this.params[0], this.params[1], this.params[2], this.params[3], this.params[4] );
+            if ( this.gameType == "NEW" ) {
+                globals.GAME.startNewGame( this.params[0], this.params[1], this.params[2], this.params[3], this.params[4] );
+            }
+            else if ( this.gameType == "LOAD" ) {
+                globals.GAME.loadGame( this.params[0] );
+            }
             clearInterval(this.interval)
         }
     }

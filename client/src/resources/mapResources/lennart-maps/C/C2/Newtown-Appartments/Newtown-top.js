@@ -431,8 +431,4 @@ module.exports = {
     ],
     "characters": [],
     "actions": [],
-    "savepoint": {
-        'col': 4,
-        'row': 4
-    }
 }

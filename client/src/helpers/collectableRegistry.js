@@ -52,7 +52,7 @@ class CollectableRegistry {
         }
     }
 
-    loadRegistry( registryObject ) {
+    setRegistry( registryObject ) {
         this.coins      = registryObject.coins;
         this.juiceCans  = registryObject.juiceCans;
     }

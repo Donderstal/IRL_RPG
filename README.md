@@ -12,7 +12,11 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
-#### JAN 19, 2022
+#### JAN 25, 2022
+* New ( temporary ) load game screen for inputting JSON files
+* Functionalities for loading a game from a JSON save file
+
+#### JAN 23, 2022
 * Restored Save points on the map
 * Refactored saving a game with a new Class
 

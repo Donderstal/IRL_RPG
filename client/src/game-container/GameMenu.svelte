@@ -1,19 +1,18 @@
 <script>
-    import startGame from './../game/Game.js';
-    import globals from './../game-data/globals.js';
-    import utilFunctions from './../helpers/utilFunctions.js'
-
+    import { startGame, loadGame } from './../game/Game.js';
     import MainUiButton from './svelte-partials/MainUiButton.svelte'
     import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
     import Header from './header/Header.svelte'
+    import LoadGame from './svelte-partials/LoadGame.svelte'
 
     export let closeMainMenu;
-
+    let SaveFile = false;
     let currentScreen = "LOG_IN";
     let menuScreens = {
         "LOG_IN" : [ "Log in", "Sign up" ],
         "MAIN_MENU" : [ "New game", "Load game", "Options", "Help", "Quit" ],
         "NEW_GAME" : [ "Let's go!" ],
+        "LOAD_GAME" : [ "Let's go!" ],
         "OPTIONS" : [ "Audio", "Cinematics", "Difficulty", "Back" ],
         "HELP" : [ "About", "Controls", "Credits", "Back" ]
     }
@@ -30,8 +29,17 @@
         const disableStoryEvents = document.getElementById('disable-story').checked;
         closeMainMenu( )
         setTimeout( ( ) => {
-            startGame.startGame( characterName, characterClass, startingMap, runInDebugMode, disableStoryEvents );
+            startGame( characterName, characterClass, startingMap, runInDebugMode, disableStoryEvents );
         }, 1000)
+    }
+
+    const loadGameFromJSON = ( ) => {
+        if ( SaveFile ) {
+            closeMainMenu( );
+            setTimeout( ( ) => {
+                loadGame(SaveFile);
+            }, 1000);           
+        }
     }
     const getButtonAction = ( buttonId ) => {
         switch( buttonId ) {
@@ -47,7 +55,7 @@
                 currentScreen = "NEW_GAME";
                 break;
             case 'Load_game_button':
-                console.log('Loading game...');
+                currentScreen = "LOAD_GAME";
                 break;
             case 'Options_button':
                 currentScreen = "OPTIONS";
@@ -61,7 +69,12 @@
                 currentScreen ="LOG_IN";
                 break;
             case "Let's_go!_button" :
-                startGameWithParams();
+                if ( currentScreen == "NEW_GAME" ) {
+                    startGameWithParams();
+                }
+                else {
+                    loadGameFromJSON();
+                }
                 break;
             case "Audio_button" :
                 console.log("Audio");
@@ -109,12 +122,14 @@
     }
 </style>
 
-<div>
-    { #if currentScreen != "NEW_GAME"}
-        <Header/>
-        <audio id="main-audio" src="/static/music/game-jam-5-10-21.mp3"></audio>
-    { :else }        
+<div >
+    { #if currentScreen == "NEW_GAME"}
         <SelectCharacter returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
+    { :else if currentScreen == "LOAD_GAME"}
+        <LoadGame  bind:SaveFile={SaveFile} returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
+    { :else }  
+        <Header/>
+        <audio id="main-audio" src="/static/music/game-jam-5-10-21.mp3"></audio>      
     {/if}
     { #each menuScreens[currentScreen] as buttonText }
         { #if buttonText == "Sign up"}

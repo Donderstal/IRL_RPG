@@ -27,6 +27,8 @@ const { tryCatch } = require('../helpers/errorHelpers')
 const { CollectableRegistry } = require('../helpers/collectableRegistry')
 const { FrontgridCanvas } = require('./FrontgridCanvas')
 const { SaveGameDto } = require('../game-data/SaveGameDto')
+const { setInteractionRegistry } = require('../helpers/interactionRegistry')
+const { setUnlockedDoorsRegistry } = require('../helpers/doorRegistry')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -190,6 +192,22 @@ class Game {
         tryCatch(this.loadMapToCanvases.bind(this), [true])
         if ( !this.disableStoryMode ) {
             this.story = new StoryProgression( );     
+        }
+        setTimeout( this.initControlsAndAnimation, 1000 );
+    }
+
+    loadGame(JSON) {
+        console.log(JSON)
+        this.initializePlayerParty( "test", JSON.activeMap.playerStart.playerClass )
+        this.collectableRegistry.setRegistry( JSON.keyLists.collectableRegistry );
+        setInteractionRegistry( JSON.keyLists.interactionRegistry );
+        setUnlockedDoorsRegistry( JSON.keyLists.unlockedDoors )
+        tryCatch(this.setNeighbourhoodAndMap.bind(this), [JSON.activeMap.mapName])
+        this.activeMap.playerStart = JSON.activeMap.playerStart;
+        this.activeMap.playerStart.name = "test";
+        tryCatch(this.loadMapToCanvases.bind(this), [true]);
+        if ( !this.disableStoryMode ) {
+            this.story = new StoryProgression( JSON.keyLists.storyEvents );
         }
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
@@ -396,11 +414,18 @@ class Game {
  */
 const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
-    new FileLoader( [name, className, startingMap, debugMode, disableStoryMode] );
+    new FileLoader( [name, className, startingMap, debugMode, disableStoryMode], "NEW" );
+    setLoadingScreen( );
+}
+
+const loadGame = ( JSON ) => {
+    globals.GAME = new Game( );
+    new FileLoader( [JSON], "LOAD" );
     setLoadingScreen( );
 }
 
 module.exports = {
     Game,
-    startGame
+    startGame,
+    loadGame
 }

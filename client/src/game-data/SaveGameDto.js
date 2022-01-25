@@ -1,3 +1,4 @@
+const { getUnlockedDoorsRegistry } = require("../helpers/doorRegistry");
 const { getRegistry } = require("../helpers/interactionRegistry");
 
 class SaveGameDto {
@@ -36,7 +37,8 @@ class SaveGameDto {
         return { 
             'storyEvents': GAME.story.triggeredEvents,
             'interactionRegistry': getRegistry( ),
-            'collectableRegistry': GAME.collectableRegistry.exportRegistry( )
+            'collectableRegistry': GAME.collectableRegistry.exportRegistry( ),
+            'unlockedDoors': getUnlockedDoorsRegistry( )
         }
     }
 
@@ -52,10 +54,6 @@ class SaveGameDto {
         document.body.appendChild(downloadAnchorNode); // required for firefox
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
-    }
-
-    loadJSONToDto( JSON ) {
-
     }
 }
 
