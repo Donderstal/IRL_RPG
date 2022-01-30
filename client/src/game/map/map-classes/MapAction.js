@@ -3,9 +3,8 @@ const { I_Hitbox }     = require('../../interfaces/I_Hitbox')
 const { Cinematic }     = require('../../cutscenes/Cinematic')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { addEventToRegistry } = require('../../../helpers/interactionRegistry');
-const { INTERACTION_YES, PLAYER_ID } = require('../../../game-data/interactionGlobals');
+const { INTERACTION_YES } = require('../../../game-data/interactionGlobals');
 const { Inventory } = require('../../party/Inventory');
-const { initShopMenu } = require('../map-ui/ShopMenu');
 const { 
     WAIT, FADE_OUT_IN, FADE_OUT, FADE_IN, ON_LEAVE, ON_BATTLE_END, ON_BATTLE_START, ON_NPC_INTERACTION, 
     EVENT_BUS, EVENT_BATTLE, EVENT_SHOP, EVENT_RESTORE, EVENT_TALK
@@ -118,9 +117,6 @@ class MapAction extends I_Hitbox {
                 else {
                     globals.GAME.initializeBattle( this.party, this.name );                    
                 };
-                break;
-            case EVENT_SHOP :
-                initShopMenu( );
                 break;
             case EVENT_RESTORE :
                 this.healPlayerPartyOnRest( );
