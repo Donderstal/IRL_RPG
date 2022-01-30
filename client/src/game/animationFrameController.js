@@ -22,11 +22,11 @@ const animationFrameController = ( ) => {
                 tryCatch(controls.listenForKeyPress);
             }            
 
-            if ( !GAME.inMenu ) {
+            if ( !GAME.MENU.isActive ) {
                 tryCatch(handleMapAnimations, [GAME]);
             }
-            else if ( GAME.inMenu ) {
-                tryCatch(GAME.MENU.draw)
+            else if ( GAME.MENU.isActive ) {
+                tryCatch(GAME.MENU.draw.bind(GAME.MENU))
             }
 
             if  ( GAME.inCinematic && GAME.activeCinematic ) {

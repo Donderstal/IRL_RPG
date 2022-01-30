@@ -1,3 +1,5 @@
+const uiFolder = "/static/ui/"
+
 module.exports = {
     EMOTE_HAPPY: "/static/ui/bubble-happy-face.png",
     EMOTE_SAD: "/static/ui/bubble-sad-face.png",
@@ -7,20 +9,17 @@ module.exports = {
     EMOTE_QUESTIONMARK: "/static/ui/bubble-question.png",
     EMOTE_EXCLAMATIONMARK: "/static/ui/bubble-exclamation.png",
 
-    BUBBLE_START_OPEN_BOTTOM: "/static/ui/bubble-template-open-right-bottom.png",
-    BUBBLE_START_OPEN_TOP: "/static/ui/bubble-template-open-right-top.png",
-    BUBBLE_START_OPEN_BOTTOM_TOP: "/static/ui/bubble-template-open-right-bottom-top.png",
-    BUBBLE_START: "/static/ui/bubble-template-open-right.png",
-
-    BUBBLE_MIDDLE_OPEN_BOTTOM: "/static/ui/bubble-template-middle-open-bottom.png",
-    BUBBLE_MIDDLE_OPEN_TOP: "/static/ui/bubble-template-middle-open-top.png",  
-    BUBBLE_MIDDLE: "/static/ui/bubble-template-middle.png",
-    
-    BUBBLE_END_OPEN_BOTTOM: "/static/ui/bubble-template-end-open-bottom.png",
-    BUBBLE_END_OPEN_TOP: "/static/ui/bubble-template-end-open-top.png",  
-    BUBBLE_END: "/static/ui/bubble-template-end.png",
-
     BUBBLE_YES: "/static/ui/bubble-yes.png",
     BUBBLE_NO: "/static/ui/bubble-no.png",
-    BUBBLE_UNSELECTED: "/static/ui/bubble-black.png"
+    BUBBLE_UNSELECTED: "/static/ui/bubble-black.png",
+
+    BUBBLE_LEFT: uiFolder + "Links.png",
+    BUBBLE_LEFT_TOP: uiFolder + "LinksBoven.png",
+    BUBBLE_TOP: uiFolder + "Boven.png",
+    BUBBLE_RIGHT_TOP: uiFolder + "RechtsBoven.png",
+    BUBBLE_RIGHT: uiFolder + "Rechts.png",
+    BUBBLE_RIGHT_BOTTOM: uiFolder + "RechtsOnder.png",
+    BUBBLE_BOTTOM: uiFolder + "Onder.png",
+    BUBBLE_LEFT_BOTTOM: uiFolder + "LinksOnder.png",
+    BUBBLE_MIDDLE: uiFolder + "Midden.png"
 }

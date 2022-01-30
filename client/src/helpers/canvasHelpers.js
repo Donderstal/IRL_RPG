@@ -1,6 +1,10 @@
 const globals = require('../game-data/globals')
 const { MAX_BUBBLE_TEXT_WIDTH } = require('../game-data/globals');
 
+const getMenuCanvasContext = () => {
+    return document.getElementById('game-menu-canvas').getContext('2d');
+}
+
 const getFrontgridCanvasContext = () => {
     return document.getElementById('game-front-grid-canvas').getContext('2d');
 }
@@ -141,6 +145,7 @@ const clearEntireCanvas = ( canvas ) => {
 module.exports = {
     drawFromImageToCanvas,
     clearEntireCanvas,
+    getMenuCanvasContext,
     getFrontgridCanvasContext,
     getFrontCanvasContext,
     getBackCanvasContext,

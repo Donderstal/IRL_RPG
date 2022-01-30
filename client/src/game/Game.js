@@ -29,6 +29,7 @@ const { FrontgridCanvas } = require('./FrontgridCanvas')
 const { SaveGameDto } = require('../game-data/SaveGameDto')
 const { setInteractionRegistry } = require('../helpers/interactionRegistry')
 const { setUnlockedDoorsRegistry } = require('../helpers/doorRegistry')
+const { MenuCanvas } = require('./menuCanvas/MenuCanvas')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -55,6 +56,8 @@ class Game {
         this.activeText = "";
         this.bubbleIsActive;
 
+        this.menu = {}
+        this.utilMenu = {}
         this.frontgrid = { };
         this.utilFront  = { };
         this.front = { };
@@ -68,6 +71,7 @@ class Game {
         this.initGameCanvases( );
     }
 
+    get MENU( ) { return this.menu.class }
     get FRONTGRID( ) { return this.frontgrid.class }
     get FRONT( ) { return this.front.class }
     get BACK( ) { return this.back.class }
@@ -128,11 +132,12 @@ class Game {
      * Initialize game Canvases. FRONT, BACK and UTIL
      */
     initGameCanvases( ) {
+        this.initCanvas( 'UTIL_BACK', this.utilBack );
+        this.initCanvas( 'UTIL_FRONT', this.utilFront );
         this.initCanvas( 'FRONT_GRID' , this.frontgrid )
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
-        this.initCanvas( 'UTIL_BACK', this.utilBack );
-        this.initCanvas( 'UTIL_FRONT', this.utilFront );
+        this.initCanvas( 'MENU' , this.menu );
     }
     /**
      * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate I_CanvasWithGrid class extension if necessary and set as property
@@ -164,6 +169,13 @@ class Game {
                 object.canvas.height = CANVAS_HEIGHT;
                 var xy = object.canvas.getBoundingClientRect( );
                 object.class = new FrontgridCanvas( xy.x, xy.y, object.ctx );
+            case 'MENU':
+                object.canvas = document.getElementById( 'game-menu-canvas' );
+                object.ctx = object.canvas.getContext( '2d' );
+                object.canvas.width = CANVAS_WIDTH;
+                object.canvas.height = CANVAS_HEIGHT;
+                var xy = object.canvas.getBoundingClientRect( );
+                object.class = new MenuCanvas( xy.x, xy.y, object.ctx, object.canvas);
                 break;
             case 'UTIL_BACK':
                 object.canvas = document.getElementById( 'game-utility-canvas-back' );
@@ -172,7 +184,7 @@ class Game {
             case 'UTIL_FRONT':
                 object.canvas = document.getElementById( 'game-utility-canvas-front' );
                 object.ctx = object.canvas.getContext( '2d' );
-                break;
+                break;               
             default:
                 console.log('error! canvas type ' + type + ' not known')
         } 

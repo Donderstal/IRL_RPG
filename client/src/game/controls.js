@@ -35,10 +35,10 @@ const addKeyToPressed = ( ) => {
     }
     
     if ( event.key == "Tab" ) {
-        GAME.inMenu ? unsetGameMenu( ) : initGameMenu( );
+        GAME.MENU.isActive ? GAME.MENU.hide( ) : GAME.MENU.show( );
     }
 
-    if ( !GAME.inMenu && !GAME.inCinematic ) {
+    if ( !GAME.MENU.isActive && !GAME.inCinematic ) {
         handleMapKeyPress( event )
     }
     else if ( GAME.inCinematic ) {

@@ -45,6 +45,10 @@
         z-index: 6
     }
 
+    .game-menu-body {
+        z-index: 7
+    }
+
     .canvas-wrapper {
         margin: 0 auto;
         position: absolute;
@@ -68,6 +72,9 @@
 
         <canvas id='game-front-grid-canvas' class="game-front-tiles-body" on:click={logClick}
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
+
+        <canvas id='game-menu-canvas' class="game-menu-body"
+        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px; background-color: #00384D; visibility: hidden;"></canvas>    
     </div>
 
     <LetterBoxDiv isTop={false} height={globals.GRID_BLOCK_PX * 2}/>
@@ -75,5 +82,6 @@
     <div style="visibility:hidden; display:none;">
         <canvas id='game-utility-canvas-back'></canvas>
         <canvas id='game-utility-canvas-front'></canvas>
+        <canvas id='game-utility-canvas-menu'></canvas>
     </div>
 </div>
