@@ -1,7 +1,6 @@
 const globals = require('../game-data/globals')
-const { initGameMenu, unsetGameMenu } = require('./MainMenu')
 const { handleMapKeyPress } = require('./map/mapControls')
-const { handleMenuKeyPress } = require('./menu/menuControls');
+const { handleMenuKeyPress } = require('./menuCanvas/menuCanvasControls');
 
 /**
  * Add keydown listener with addKeyPressed callback. Add keyup listener with removeKeyFromPressed callback.
@@ -49,7 +48,7 @@ const addKeyToPressed = ( ) => {
             GAME.speechBubbleController.handleSelectionKeys( );
         }
     }
-    else if ( GAME.inMenu ) {
+    else if ( GAME.MENU.isActive ) {
         handleMenuKeyPress( event );
     }
 }

@@ -5,8 +5,8 @@ const {
     STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT
 } = require( '../../game-data/globals' );
 const { 
-    BUBBLE_START, BUBBLE_START_OPEN_BOTTOM, BUBBLE_START_OPEN_TOP, BUBBLE_MIDDLE, 
-    BUBBLE_MIDDLE_OPEN_BOTTOM, BUBBLE_MIDDLE_OPEN_TOP, BUBBLE_END, BUBBLE_END_OPEN_BOTTOM, BUBBLE_END_OPEN_TOP, BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED 
+    BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_BOTTOM, 
+    BUBBLE_TOP, BUBBLE_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_RIGHT_BOTTOM 
 } = require('../../game-data/textboxGlobals');
 const { TypeWriter } = require('../../helpers/TypeWriter');
 const { SPEAK_YES_NO } = require('../../game-data/conditionGlobals');
@@ -120,9 +120,9 @@ class SpeechBubble {
         let index = 0;
         let accumulator = 0;
         for ( var i = 0; i < this.height/GRID_BLOCK_PX; i++ ) {
-            const start = i == 0 ? BUBBLE_START_OPEN_BOTTOM : BUBBLE_START_OPEN_TOP;
-            const middle = i == 0 ? BUBBLE_MIDDLE_OPEN_BOTTOM : BUBBLE_MIDDLE_OPEN_TOP;
-            const end = i == 0 ? BUBBLE_END_OPEN_BOTTOM : BUBBLE_END_OPEN_TOP;
+            const start = i == 0 ? BUBBLE_LEFT_TOP : BUBBLE_LEFT_BOTTOM;
+            const middle = i == 0 ? BUBBLE_TOP : BUBBLE_BOTTOM;
+            const end = i == 0 ? BUBBLE_RIGHT_TOP : BUBBLE_RIGHT_BOTTOM;
             while( accumulator < globals.GAME.front.ctx.measureText(this.typeWriter.fullText).width + (GRID_BLOCK_PX*2) && accumulator < globals.MAX_BUBBLE_WIDTH) {
                 if ( index == 0 ) {
                     this.drawBubblePart( start, GRID_BLOCK_PX*index, GRID_BLOCK_PX*i);
