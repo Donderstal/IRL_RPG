@@ -4,11 +4,16 @@ const { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_RIGHT_
 const { drawBubblePart } = require("./menuHelpers");
 
 class I_MenuElement {
-    constructor( x, y, columns, rows, rowStyles ) {
+    constructor( x, y, columns, rows, rowStyles, borders = false, isActive = false ) {
         this.utilCanvas = document.getElementById( 'game-utility-canvas-menu' );
         this.utilCtx = this.utilCanvas.getContext( '2d' );
         this.utilCanvas.width = globals.CANVAS_WIDTH;
         this.utilCanvas.height = globals.CANVAS_HEIGHT;
+        this.isActive = isActive;
+        this.borders = borders;
+        this.frameCounter = 0;
+        this.frameLimit = 20;
+        this.animate = false;
 
         this.initElement( x, y, columns, rows, rowStyles );
     }
@@ -24,8 +29,6 @@ class I_MenuElement {
     }
 
     drawElement( ctx ) {
-        this.utilCtx.clearRect( 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT );
-
         for( var i = 0; i < this.rows; i++ ) {
             let rowStyle = this.rowStyles[i];
             if ( rowStyle == BUBBLE_TOP ) {
@@ -59,6 +62,60 @@ class I_MenuElement {
             else {
                 drawBubblePart( middle, { x: GRID_BLOCK_PX * i, y : rowCounter * GRID_BLOCK_PX }, this.utilCtx );                
             }
+        }
+    }
+
+    drawBorders( ctx ) {
+        this.borders.forEach((e) => {
+            let startX;
+            let startY;
+            let endX;
+            let endY;
+            switch(e) {
+                case "L":
+                    startX = this.x;
+                    startY = this.y;
+                    startX = this.x;
+                    startY = this.y + this.height;                    
+                    break;
+                case "T":
+                    startX = this.x;
+                    startY = this.y;
+                    startX = this.x + this.width;
+                    startY = this.y;     
+                    break;
+                case "R":
+                    startX = this.x + this.width;
+                    startY = this.y;
+                    startX = this.x + this.width;
+                    startY = this.y + this.height;     
+                    break;
+                case "B":
+                    startX = this.x;
+                    startY = this.y + this.height;
+                    startX = this.x + this.width;
+                    startY = this.y + this.height;   
+                    break;
+            }
+
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'black';
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+        })
+    }
+
+    countFrameForAnimation( ctx ) {
+        this.frameCounter++
+        if ( this.frameCounter > this.frameLimit ) {
+            this.frameCounter = 0;
+            this.animate = !this.animate;
+        }
+
+        if ( this.animate ) {
+            this.elementAnimation( ctx )
         }
     }
 }

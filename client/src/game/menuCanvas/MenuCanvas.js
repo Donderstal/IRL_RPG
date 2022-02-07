@@ -71,10 +71,10 @@ class MenuCanvas extends I_CanvasWithGrid {
     drawBackground( startingRow ) {
         this.grid.array.forEach((tile)=>{
             if ( tile.row == startingRow && tile.col == 1 ) {
-                this.drawBubblePart( BUBBLE_LEFT_TOP, tile, this.ctx )
+                this.drawBubblePart( BUBBLE_LEFT, tile, this.ctx )     
             }
             else if ( tile.row == startingRow && tile.col == 24 ) {
-                this.drawBubblePart( BUBBLE_RIGHT_TOP, tile, this.ctx )
+                this.drawBubblePart( BUBBLE_RIGHT, tile, this.ctx )
             }
             else if ( tile.row == 16 && tile.col == 1 ) {
                 this.drawBubblePart( BUBBLE_LEFT_BOTTOM, tile, this.ctx )
@@ -83,7 +83,7 @@ class MenuCanvas extends I_CanvasWithGrid {
                 this.drawBubblePart( BUBBLE_RIGHT_BOTTOM, tile, this.ctx )
             }
             else if ( tile.row == startingRow ) {
-                this.drawBubblePart( BUBBLE_TOP, tile, this.ctx )
+                this.drawBubblePart( BUBBLE_MIDDLE, tile, this.ctx )
             }
             else if ( tile.row == 16 ) {
                 this.drawBubblePart( BUBBLE_BOTTOM, tile, this.ctx )

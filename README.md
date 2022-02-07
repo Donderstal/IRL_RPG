@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### FEB 7, 2022
+* Basic new menu designs and classes
+
 #### JAN 25, 2022
 * New ( temporary ) load game screen for inputting JSON files
 * Functionalities for loading a game from a JSON save file

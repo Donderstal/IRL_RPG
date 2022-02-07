@@ -52,13 +52,20 @@ class MenuHeader {
 
 class HeaderButton extends I_MenuElement {
     constructor( x, isActive, text ) {
-        super( x, isActive ? 0 : GRID_BLOCK_PX, (isActive ? 12 : 4), isActive ? 3 : 2, isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE ] : [ BUBBLE_TOP, BUBBLE_BOTTOM ]  )
+        let y = isActive ? 0 : GRID_BLOCK_PX;
+        let columns = isActive ? 12 : 4;
+        let rows = isActive ? 2 : 1;
+        let rowStyles = isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ];
+
+        super( x, y, columns, rows, rowStyles, ["B"], isActive )
         this.isActive = isActive;
         this.text = text;
+    }
 
-        this.frameCounter = 0;
-        this.frameLimit = 20;
-        this.showToolTip = false;
+    elementAnimation( ctx ) {
+        var tooltipWidth = ctx.measureText("e > ").width;
+        ctx.fillText( " < q", this.x, (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
+        ctx.fillText( "e > ", (this.x + this.width) - tooltipWidth, (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
     }
 
     drawElement( ctx ) {
@@ -66,31 +73,24 @@ class HeaderButton extends I_MenuElement {
         ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
         ctx.fillStyle = "black";
         var textWidth = ctx.measureText(this.text).width;
-        ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
+        ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + BATTLE_FONT_LINE_HEIGHT + (this.isActive ? + (this.height / 2) : 0) );
 
         if ( this.isActive ) {
-            this.frameCounter++
-            if ( this.frameCounter > this.frameLimit ) {
-                this.frameCounter = 0;
-                this.showToolTip = !this.showToolTip;
-            }
-
-            if ( this.showToolTip ) {
-                var tooltipWidth = ctx.measureText("e > ").width;
-                ctx.fillText( " < q", this.x, (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
-                ctx.fillText( "e > ", (this.x + this.width) - tooltipWidth, (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
-            }
+            this.countFrameForAnimation( ctx );
+        }
+        else {
+            this.drawBorders( ctx );
         }
     }
 
     deActivate( ) {
         this.isActive = false;
-        this.initElement( 0, GRID_BLOCK_PX, 4, 2, [ BUBBLE_TOP, BUBBLE_BOTTOM ] );
+        this.initElement( 0, GRID_BLOCK_PX, 4, 1, [ BUBBLE_TOP ] );
     }
 
     activate( ) {
         this.isActive = true;
-        this.initElement( 0, 0, 12, 3, [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE ] );
+        this.initElement( 0, 0, 12, 2, [ BUBBLE_TOP, BUBBLE_MIDDLE ] );
     }
 
     setX( x ) {
