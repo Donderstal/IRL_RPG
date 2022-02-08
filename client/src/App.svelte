@@ -22,8 +22,6 @@
 		font-family: 'Retro Gaming', Fallback, sans-serif;
 		font-size: 3.33vh;
 	}
-	
-
 </style>
 
 <div>

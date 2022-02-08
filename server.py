@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, redirect, session
 import generatePNGList
 import json
 app = Flask(__name__)
@@ -7,6 +7,14 @@ app = Flask(__name__)
 @app.route("/")
 def base():
     return send_from_directory('client/public', 'index.html')
+
+@app.route("/login")
+def login():
+    return redirect("/", code=302) if False else send_from_directory('client/public', 'index.html');
+
+@app.route("/login-validate")
+def login_validate():
+    return redirect("/", code=302) if False else send_from_directory('client/public', 'index.html');
 
 # Path for all the static files (compiled JS/CSS, etc.)
 @app.route("/<path:path>")

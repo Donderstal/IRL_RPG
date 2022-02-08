@@ -1,12 +1,13 @@
 <style>
     h1 {
-        font-size: 120px;
+        font-size: 10vh;
         font-family: 'Stormfaze', Fallback, sans-serif;
         font: Regular 120px/144px Stormfaze;
         letter-spacing: 0px;
         opacity: 1;
         width: 100vw;
         margin-top: 0;
+        margin-bottom: 2vh;
     }
 
     .main-header {

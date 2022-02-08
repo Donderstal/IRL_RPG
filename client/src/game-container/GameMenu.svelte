@@ -7,9 +7,8 @@
 
     export let closeMainMenu;
     let SaveFile = false;
-    let currentScreen = "LOG_IN";
+    let currentScreen = "MAIN_MENU";
     let menuScreens = {
-        "LOG_IN" : [ "Log in", "Sign up" ],
         "MAIN_MENU" : [ "New game", "Load game", "Options", "Help", "Quit" ],
         "NEW_GAME" : [ "Let's go!" ],
         "LOAD_GAME" : [ "Let's go!" ],
@@ -43,14 +42,6 @@
     }
     const getButtonAction = ( buttonId ) => {
         switch( buttonId ) {
-            case 'Log_in_button': 
-                document.getElementsByClassName("background-large")[0].style.display = "block";
-                document.getElementsByClassName("background-small")[0].style.display = "none";
-                currentScreen = "MAIN_MENU";
-                break;
-            case 'Sign_up_button':
-                console.log('Sign up and give me money');
-                break;
             case 'New_game_button': 
                 currentScreen = "NEW_GAME";
                 break;
@@ -103,47 +94,21 @@
         }
     }
 </script>
-
 <style>
     div {
         z-index: 2;
         color: white;
     }
-
-    .dont-have-account {
-        font-family: "Lucida Console", Courier, monospace;
-        font-size: 24px;
-        margin-top: 5vh;
-    }
-
-    .or-div {
-        margin-top: 10vh;
-        margin-bottom: 10vh;
-    }
 </style>
-
 <div >
     { #if currentScreen == "NEW_GAME"}
         <SelectCharacter returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
     { :else if currentScreen == "LOAD_GAME"}
         <LoadGame  bind:SaveFile={SaveFile} returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
     { :else }  
-        <Header/>
-        <audio id="main-audio" src="/static/music/game-jam-5-10-21.mp3"></audio>      
+        <Header/>     
     {/if}
     { #each menuScreens[currentScreen] as buttonText }
-        { #if buttonText == "Sign up"}
-        <div class="or-div">
-            <p>
-            Or
-            </p>
-        </div>
-        <div>
-            <p class='dont-have-account'>
-            Dont have an account?
-            </p>
-        </div>
-        {/if}
         <MainUiButton 
             elementId={buttonText.replace(" ", "_") + "_button"} 
             action={ ( ) => {

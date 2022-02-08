@@ -1,12 +1,13 @@
 <script>   
     export let buttonText;
     export let elementId;
-    export let action;
+    export let action; 
 </script>
 
 <style>
     div {
         width: 100vw;
+        margin-top: 3vh;
         margin-bottom: 3vh;
     }
     button {
@@ -30,7 +31,7 @@
 </style>
 
 <div>
-    <button on:click={action} id={elementId} class="main-menu-button" >  
+    <button on:click|preventDefault={action} id={elementId} class="main-menu-button">  
         {buttonText} 
     </button>
 </div>
