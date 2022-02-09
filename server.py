@@ -1,7 +1,14 @@
-from flask import Flask, request, send_from_directory, redirect, session
-import generatePNGList
-import json
+from flask import Flask, request, send_from_directory, request;
+import users;
+
 app = Flask(__name__)
+
+app.config['MAIL_SERVER']= 'placeholder'
+app.config['MAIL_PORT'] = 'placeholder'
+app.config['MAIL_USERNAME'] = 'placeholder'
+app.config['MAIL_PASSWORD'] = 'placeholder'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
 # Path for our main Svelte page
 @app.route("/")
@@ -21,14 +28,21 @@ def login_validate():
 def home(path):
     return send_from_directory('client/public', path)
 
-# Catch save posted save game JSON files and store it
-@app.route("/save_game", methods=['GET', 'POST'])
-def save_game():
-    saveGame = request.json
-    print(saveGame)
-    with open('save_game.json', 'w') as json_file:
-        json.dump(saveGame, json_file)
-    return ("Success, (*&)er!")
+@app.route("/post-login", methods=['POST'])
+def post_login():
+    return users.login_user( request );
+
+@app.route("/post-sign-up", methods=['POST'])
+def post_registration():
+    return users.register_user( app, request );
+
+@app.route("/post-restore-password", methods=['POST'])
+def post_restore_password():
+    return users.restore_password( app, request );
+
+@app.route("/post-validate-account", methods=['POST'])
+def post_activate_account():
+    return users.activate_account( request );
 
 if __name__ == "__main__":
     app.run(debug=True)

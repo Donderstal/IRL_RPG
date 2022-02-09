@@ -32,7 +32,7 @@ import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
                 currentScreen = "RESTORE_PASSWORD"
                 break;
             case 'Log_in_button':
-                onSubmit("log-in-form", "/post-login");
+                onSubmit("log-in-form", validating ? "/post-validate-account" : "/post-login");
                 break;
             case 'Sign_up_button':
                 onSubmit("sign-up-form", "/post-sign-up");
@@ -74,7 +74,7 @@ import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
             headers: {'Content-Type': 'application/json'}, 
             body: JSON.stringify(data)
         }).then(res => {
-            console.log("Request complete! response:", res);
+            console.log("Request complete! response:", res.text());
         });
     }
 </script>
