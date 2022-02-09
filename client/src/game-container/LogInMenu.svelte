@@ -3,12 +3,14 @@
     import MainUiButton from './svelte-partials/MainUiButton.svelte'
     import LogIn from './svelte-partials/LogIn.svelte'
     import SignUp from './svelte-partials/SignUp.svelte'
+    import FormWarning from './svelte-partials/FormWarning.svelte'
     import { onMount } from 'svelte';
-import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
+    import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
 
     let url = ``;
     let validating;
     let currentScreen;
+    $ : userMessage = false;
 
     onMount(() => {
         url = window.location.href
@@ -20,6 +22,7 @@ import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
     const getButtonAction = ( buttonId ) => {
         document.getElementsByClassName("background-large")[0].style.display = "block";
         document.getElementsByClassName("background-small")[0].style.display = "none";
+        userMessage = false;
 
         switch( buttonId ) {
             case 'Log_in_screen_button': 
@@ -56,27 +59,59 @@ import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
 
     const onSubmit = (formId, url) => {
         const formData = new FormData(document.getElementById(formId));
-        console.log(document.getElementById(formId));
-        console.log(formData)
-
         const data = {};
         for (let field of formData) {
             const [key, value] = field;
             data[key] = value;
         }
-        console.log(data)
+
         postData( url, data )
     }
 
     const postData = ( url, data ) => {
+        let statusCode; 
         fetch(url, {
             method: "POST",
             headers: {'Content-Type': 'application/json'}, 
             body: JSON.stringify(data)
         }).then(res => {
-            console.log("Request complete! response:", res.text());
+            statusCode = res.status; 
+            res.json().then(jsonData => 
+                processPostReponse( statusCode, jsonData, url )
+            );
         });
     }
+
+    const processPostReponse = ( status, json, url ) => {
+        switch( status ) {
+            case 200:
+                if ( url == "/post-sign-up" || url == "/post-restore-password" ) {
+                    window.location.replace("http://localhost:5000/login");
+                }
+                else {
+                    window.location.replace("http://localhost:5000/");
+                }
+                break;
+            case 202: 
+                if ( json.error == 'USERNAME_TAKEN' ) {
+                    userMessage = "The username you submitted is already in use."  
+                }
+                else if ( json.error == 'EMAIL_TAKEN' ) {
+                    userMessage = "The email address you submitted is already in use."  
+                }
+                else {
+                    userMessage = "The information you submitted did not match with any of the users in our database. Please check if you are using the right credentials and try again."                    
+                }
+                console.log(userMessage)
+                break;
+            case 500:
+                userMessage = "Internal server error. Something went wrong processing your information, and it's probably the developers' fault. Please try again later. If the problem persists, please notify the developers at daanonderstal@hotmail.com"
+                break;
+            default:
+                console.error('unexpected http status code ' + status)
+        }
+    }
+
 </script>
 
 <style>
@@ -140,7 +175,10 @@ import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
     { :else if currentScreen == "RESTORE_PASSWORD"}
         <ForgotPassword
             action={ ( ) => { getButtonAction("Send_restore_email_button" )} }
-            returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } 
+            returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )}} 
         />      
+    {/if}
+    {#if userMessage} 
+        <FormWarning text={userMessage}/>
     {/if}
 </div>

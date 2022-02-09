@@ -63,7 +63,7 @@ def login_user( request ):
             returnValue = jsonify(user);
             statusCode = 200;
         else:
-            returnValue = jsonify({'error': 'UNKOWN_CREDENTIALS'});
+            returnValue = jsonify({'error': 'UNKNOWN_CREDENTIALS'});
             statusCode = 202;
     except Exception as e:
         returnValue = jsonify({'error': str(e)});
@@ -104,7 +104,7 @@ def restore_password( app, request ):
             returnValue = jsonify({'error': str(e)});
             statusCode = 500;
     else:
-        returnValue = jsonify({'error': 'UNKOWN_CREDENTIALS'});
+        returnValue = jsonify({'error': 'UNKNOWN_CREDENTIALS'});
         statusCode = 202;
 
     # close connection

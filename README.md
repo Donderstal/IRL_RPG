@@ -13,6 +13,7 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### FEB 9, 2022
+* Basic front-end reactivity to registration/inlogging errors
 * Flask back end for account system, including emails
 
 #### FEB 8, 2022
