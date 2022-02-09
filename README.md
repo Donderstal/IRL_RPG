@@ -12,7 +12,16 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### FEB 9, 2022
+* Flask back end for account system, including emails
+
+#### FEB 8, 2022
+* Svelte front end for logging, registering, recovering password
+
 #### FEB 7, 2022
+* Setting up a Postgres database locally and on server
+
+#### JAN 30, 2022
 * Basic new menu designs and classes
 
 #### JAN 25, 2022
