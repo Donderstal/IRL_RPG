@@ -169,6 +169,7 @@ class Game {
                 object.canvas.height = CANVAS_HEIGHT;
                 var xy = object.canvas.getBoundingClientRect( );
                 object.class = new FrontgridCanvas( xy.x, xy.y, object.ctx );
+                break;
             case 'MENU':
                 object.canvas = document.getElementById( 'game-menu-canvas' );
                 object.ctx = object.canvas.getContext( '2d' );

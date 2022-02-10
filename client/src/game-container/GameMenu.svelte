@@ -3,7 +3,8 @@
     import MainUiButton from './svelte-partials/MainUiButton.svelte'
     import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
     import Header from './header/Header.svelte'
-    import LoadGame from './svelte-partials/LoadGame.svelte'
+    import LoadGame from './svelte-partials/LoadGame.svelte';
+    import UserTab from './svelte-partials/UserTab.svelte'
 
     export let closeMainMenu;
     let SaveFile = false;
@@ -88,6 +89,15 @@
             case "Credits_button" :
                 console.log("Credits");
                 break;
+            case "Log_out_button" :
+                fetch( '/log-out', {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify({'logout': true})
+                }).then(res => {
+                    window.location.replace("http://localhost:5000/login");
+                });
+                break;
             default:
                 console.log("Unkown button ID: " + buttonId);
                 break;
@@ -101,6 +111,13 @@
     }
 </style>
 <div >
+    <UserTab
+        buttonId={"Log_out_button"} 
+        buttonAction={ ( ) => {
+            getButtonAction( "Log_out_button" )
+        } } 
+        buttonText={"Log out"} 
+    />
     { #if currentScreen == "NEW_GAME"}
         <SelectCharacter returnToPreviousScreen={ ( ) => { getButtonAction( "Back_button" )} } />
     { :else if currentScreen == "LOAD_GAME"}
@@ -109,12 +126,14 @@
         <Header/>     
     {/if}
     { #each menuScreens[currentScreen] as buttonText }
-        <MainUiButton 
-            elementId={buttonText.replace(" ", "_") + "_button"} 
-            action={ ( ) => {
-                getButtonAction( buttonText.replace(" ", "_") + "_button" )
-            } } 
-            buttonText={buttonText} 
-        />
+        <div>
+            <MainUiButton 
+                elementId={buttonText.replace(" ", "_") + "_button"} 
+                action={ ( ) => {
+                    getButtonAction( buttonText.replace(" ", "_") + "_button" )
+                } } 
+                buttonText={buttonText} 
+            />            
+        </div>
     {/each}
 </div>

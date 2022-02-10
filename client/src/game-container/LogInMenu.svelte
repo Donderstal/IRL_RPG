@@ -100,12 +100,12 @@
                     userMessage = "The email address you submitted is already in use."  
                 }
                 else {
-                    userMessage = "The information you submitted did not match with any of the users in our database. Please check if you are using the right credentials and try again."                    
+                    userMessage = "Are you sure about that?"                    
                 }
                 console.log(userMessage)
                 break;
             case 500:
-                userMessage = "Internal server error. Something went wrong processing your information, and it's probably the developers' fault. Please try again later. If the problem persists, please notify the developers at daanonderstal@hotmail.com"
+                userMessage = json['error']
                 break;
             default:
                 console.error('unexpected http status code ' + status)
@@ -135,7 +135,23 @@
 <div>
     { #if currentScreen == "WELCOME"}
         <Header/>
-        <br/>
+        <div>
+            <p class='dont-have-account'>
+                Playing is free and always will be!
+            </p>
+        </div>
+        <MainUiButton 
+            elementId={"Play!_button"} 
+            action={ ( ) => {
+                getButtonAction("Play!_button")
+            } } 
+            buttonText={"Play!"} 
+        />
+        <div>
+            <p class='dont-have-account'>
+                Want to save or load a game?
+            </p>
+        </div>
         <MainUiButton 
             elementId={"Log_in_screen_button"} 
             action={ ( ) => {
@@ -143,14 +159,9 @@
             } } 
             buttonText={"Log in"} 
         />
-        <div class="or-div">
-            <p>
-            Or
-            </p>
-        </div>
         <div>
             <p class='dont-have-account'>
-            Dont have an account?
+                Dont have an account?
             </p>
         </div>
         <MainUiButton 
@@ -159,6 +170,18 @@
                 getButtonAction("Sign_up_screen_button" )
             } } 
             buttonText={"Sign up"} 
+        />
+        <div>
+            <p class='dont-have-account'>
+                Who are you guys anyway?
+            </p>
+        </div>
+        <MainUiButton 
+            elementId={"Find_out_screen_button"} 
+            action={ ( ) => {
+                getButtonAction("Find_out_screen_button" )
+            } } 
+            buttonText={"Find out!"} 
         />    
     { :else if currentScreen == "LOG_IN"}
         <LogIn 

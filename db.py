@@ -3,7 +3,7 @@ import psycopg2
 import psycopg2.extras
 
 def get_connection():
-	return psycopg2.connect("placeholder");
+	return psycopg2.connect("dbname=postgres user=postgres password=4l3x105");
 
 def get_cursor(connection):
 	return connection.cursor(cursor_factory=psycopg2.extras.DictCursor);

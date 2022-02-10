@@ -52,18 +52,24 @@
             onChange={onSecretCodeChange} showWarning={false} warningText={""}
         />
     {/if}
-    <MainUiButton elementId={"Log_in_button"} action={() => {
-        if ( checkIfFormIsValid() ) {
-            action( )
-        }
-        else {
-            invalidForm = true;
-            window.setTimeout(()=>{ invalidForm = false; }, 2000)
-        }
-    }} buttonText={validating ? "Activate!" : "Log in"} />
     {#if invalidForm} 
+        <br/>
         <FormWarning text={"One or more fields are incorrect or empty!"}/>
+        <br/>
     {/if}
+    <div>
+        <MainUiButton elementId={"Log_in_button"} action={() => {
+            if ( checkIfFormIsValid() ) {
+                action( )
+            }
+            else {
+                invalidForm = true;
+                window.setTimeout(()=>{ invalidForm = false; }, 2000)
+            }
+        }} buttonText={validating ? "Activate!" : "Log in"} />
+    </div>
     <br/>
-    <MainUiButton elementId={"Restore_password_button"} action={restorePassword} buttonText={"Forgot password?"} />
+    <div>
+        <MainUiButton elementId={"Restore_password_button"} action={restorePassword} buttonText={"I forgot..."} />        
+    </div>
 </form>

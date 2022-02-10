@@ -39,6 +39,11 @@
         elementId={"email-input-restore-password"} placeholder={"Fill in your email address."} type={"email"} labelText={"Email:"}
         onChange={onEmailAddressChange} showWarning={!emailIsValid && emailIsDirty} warningText={"This is not a valid email address"}
     />
+    {#if invalidForm} 
+        <br/>
+        <FormWarning text={"One or more fields are incorrect or empty!"}/>
+        <br/>
+    {/if}
     <MainUiButton elementId={"Log_in_button"} action={() => {
         if ( checkIfFormIsValid() ) {
             action( )
@@ -48,7 +53,4 @@
             window.setTimeout(()=>{ invalidForm = false; }, 2000)
         }
     }} buttonText={"Send email"} />
-    {#if invalidForm} 
-        <FormWarning text={"One or more fields are incorrect or empty!"}/>
-    {/if}
 </form>

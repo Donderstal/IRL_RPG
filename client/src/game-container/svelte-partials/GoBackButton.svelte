@@ -7,7 +7,7 @@ export let returnToPreviousScreen
         background: #d82bba 0% 0% no-repeat padding-box;
         opacity: 1;
         color: #defff2;
-        width: 2vh;
+        width: 10vw;
         height: 4vh;
         margin: 0 auto;
         border: none;

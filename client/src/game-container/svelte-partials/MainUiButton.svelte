@@ -6,9 +6,8 @@
 
 <style>
     div {
-        width: 100vw;
-        margin-top: 3vh;
-        margin-bottom: 3vh;
+        width: fit-content;
+        display: inline-block;
     }
     button {
         background: #D82BBA 0% 0% no-repeat padding-box;

@@ -1,5 +1,6 @@
-import email
-from flask import jsonify, json;
+from flask import jsonify, make_response, session
+
+import tokens
 import string;
 import db;
 import random;
@@ -38,6 +39,7 @@ def register_user( app, request ):
             statusCode = 200;
             connection.commit();
         except Exception as e:
+            print('Caught this error: ' + repr(e))
             returnValue = jsonify({'error': str(e)});
             statusCode = 500;
 
@@ -45,11 +47,12 @@ def register_user( app, request ):
     db.close_cursor(cursor);
     db.close_connection(connection);
 
-    return returnValue, statusCode;
+    return make_response(returnValue, statusCode);
 
 def login_user( request ):
     returnValue = None;
     statusCode = None;
+    setCookie = False;
 
     # open connection
     connection = db.get_connection();
@@ -60,12 +63,15 @@ def login_user( request ):
         jsonUser = request.get_json(force=True);
         user = db.try_login_user(cursor, jsonUser["username-input-login"], jsonUser["password-input-login"]);
         if user:
+            tokens.set_user_session( user );
+            setCookie = True;
             returnValue = jsonify(user);
             statusCode = 200;
         else:
             returnValue = jsonify({'error': 'UNKNOWN_CREDENTIALS'});
             statusCode = 202;
     except Exception as e:
+        print('Caught this error: ' + repr(e))
         returnValue = jsonify({'error': str(e)});
         statusCode = 500;
     finally:
@@ -73,7 +79,10 @@ def login_user( request ):
         db.close_cursor(cursor);
         db.close_connection(connection);
 
-    return returnValue, statusCode;
+    response = make_response(returnValue, statusCode);
+    if setCookie:
+        tokens.set_user_cookie( response );
+    return response;
 
 def restore_password( app, request ):
     returnValue = None;
@@ -101,6 +110,7 @@ def restore_password( app, request ):
             statusCode = 200;
             connection.commit();
         except Exception as e:
+            print('Caught this error: ' + repr(e))
             returnValue = jsonify({'error': str(e)});
             statusCode = 500;
     else:
@@ -111,7 +121,7 @@ def restore_password( app, request ):
     db.close_cursor(cursor);
     db.close_connection(connection);
 
-    return returnValue, statusCode;
+    return make_response(returnValue, statusCode);
 
 def activate_account( request ):
     returnValue = None;
@@ -128,12 +138,14 @@ def activate_account( request ):
         connection.commit();
         user = db.try_login_user(cursor, jsonUser["username-input-login"], jsonUser["password-input-login"]);
         if user:
+            tokens.set_user_session( user );
             returnValue = jsonify(user);
             statusCode = 200;
         else:
             returnValue = jsonify(db.get_user(cursor, jsonUser["username-input-login"]));
             statusCode = 202;
     except Exception as e:
+        print('Caught this error: ' + repr(e))
         returnValue = jsonify({'error': str(e)});
         statusCode = 500;
     finally:
@@ -141,7 +153,17 @@ def activate_account( request ):
         db.close_cursor(cursor);
         db.close_connection(connection);
 
-    return returnValue, statusCode;
+    response = make_response(returnValue, statusCode);
+    tokens.set_user_cookie( response );
+    return response;
+
+def log_out_user( ):
+    session.clear();
+    response = make_response(jsonify({'succes': True}), 200);
+    response.delete_cookie('Username');
+    response.delete_cookie('Key');
+    response.location = '/';
+    return response;
 
 def generate_random_string( n ):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=n))

@@ -67,7 +67,11 @@
         elementId={"password-confirmation-sign-up"} placeholder={"Repeat your password."} type={"password"} labelText={"Repeat password:"} 
         onChange={onPasswordConfirmChange} showWarning={!passwordsMatch} warningText={"The passwords you inputted do not match."}
     />
-
+    {#if invalidForm} 
+        <br/>
+        <FormWarning text={"One or more fields are incorrect or empty!"}/>
+        <br/>
+    {/if}
     <MainUiButton elementId={"Sign_up_button"} action={() => {
         if ( checkIfFormIsValid() ) {
             action( )
@@ -77,7 +81,4 @@
             window.setTimeout(()=>{ invalidForm = false; }, 2000)
         }
     }} buttonText={"Sign up"}/>
-    {#if invalidForm} 
-        <FormWarning text={"One or more fields are incorrect or empty!"}/>
-    {/if}
 </form>
