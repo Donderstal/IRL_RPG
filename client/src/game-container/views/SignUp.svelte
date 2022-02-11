@@ -1,8 +1,8 @@
 <script>   
-    import InputDiv	from "./InputDiv.svelte"; 
-    import MainUiButton	from "./MainUiButton.svelte";
-    import FormWarning	from "./FormWarning.svelte";
-    import GoBackButton from "./GoBackButton.svelte";
+    import InputDiv	from "../svelte-partials/InputDiv.svelte"; 
+    import MainUiButton	from "../svelte-partials/MainUiButton.svelte";
+    import FormWarning	from "../svelte-partials/FormWarning.svelte";
+    import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     import SmallHeader from "../header/SmallHeader.svelte";
     
     export let action;

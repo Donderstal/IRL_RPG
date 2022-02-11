@@ -1,7 +1,7 @@
 <script>
     import globals from '../../game-data/globals.js';
     import { getAnimationFrames } from '../../resources/animationResources.js';
-    import GoBackButton from './GoBackButton.svelte'
+    import GoBackButton from '../svelte-partials/GoBackButton.svelte'
     import { onMount } from 'svelte';
 
     export let returnToPreviousScreen;

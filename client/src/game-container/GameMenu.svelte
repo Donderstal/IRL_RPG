@@ -1,9 +1,9 @@
 <script>
     import { startGame, loadGame } from './../game/Game.js';
     import MainUiButton from './svelte-partials/MainUiButton.svelte'
-    import SelectCharacter from './svelte-partials/SelectCharacter.svelte'
+    import SelectCharacter from './views/SelectCharacter.svelte'
     import Header from './header/Header.svelte'
-    import LoadGame from './svelte-partials/LoadGame.svelte';
+    import LoadGame from './views/LoadGame.svelte';
     import UserTab from './svelte-partials/UserTab.svelte'
 
     export let closeMainMenu;

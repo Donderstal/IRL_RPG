@@ -1,5 +1,5 @@
 <script>
-    import GoBackButton from "./GoBackButton.svelte";
+    import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     export let returnToPreviousScreen;  
     export let SaveFile;
 

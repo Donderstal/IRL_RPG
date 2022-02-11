@@ -1,11 +1,11 @@
 <script>
     import Header from './header/Header.svelte'
     import MainUiButton from './svelte-partials/MainUiButton.svelte'
-    import LogIn from './svelte-partials/LogIn.svelte'
-    import SignUp from './svelte-partials/SignUp.svelte'
+    import LogIn from './views/LogIn.svelte'
+    import SignUp from './views/SignUp.svelte'
     import FormWarning from './svelte-partials/FormWarning.svelte'
     import { onMount } from 'svelte';
-    import ForgotPassword from './svelte-partials/ForgotPassword.svelte';
+    import ForgotPassword from './views/ForgotPassword.svelte';
 
     let url = ``;
     let validating;
@@ -102,7 +102,6 @@
                 else {
                     userMessage = "Are you sure about that?"                    
                 }
-                console.log(userMessage)
                 break;
             case 500:
                 userMessage = json['error']
