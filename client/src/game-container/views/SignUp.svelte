@@ -6,7 +6,6 @@
     import SmallHeader from "../header/SmallHeader.svelte";
     
     export let action;
-    export let returnToPreviousScreen;
 
     let invalidForm = false;
     let passwordIsDirty = false;
@@ -49,7 +48,7 @@
 </script>
 
 <form id="sign-up-form">
-    <GoBackButton returnToPreviousScreen={returnToPreviousScreen}/>
+    <GoBackButton/>
     <SmallHeader text={"Sign up and play the game!"}/>
     <InputDiv 
         elementId={"username-input-sign-up"} placeholder={"Get a cheeky username."} type={"text"} labelText={"Username:"}

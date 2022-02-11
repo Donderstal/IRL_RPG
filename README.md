@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### FEB 11, 2022
+* Restructured front-end code in a more Svelte way
+
 #### FEB 10, 2022
 * Cookies and sessions for user log in
 

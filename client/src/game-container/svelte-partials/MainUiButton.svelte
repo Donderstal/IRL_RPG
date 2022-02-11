@@ -1,6 +1,5 @@
 <script>   
     export let buttonText;
-    export let elementId;
     export let action; 
 </script>
 
@@ -30,7 +29,7 @@
 </style>
 
 <div>
-    <button on:click|preventDefault={action} id={elementId} class="main-menu-button">  
+    <button on:click|preventDefault={action} class="main-menu-button">  
         {buttonText} 
     </button>
 </div>

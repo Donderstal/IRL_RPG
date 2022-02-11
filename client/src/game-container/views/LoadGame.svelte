@@ -1,7 +1,9 @@
 <script>
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
-    export let returnToPreviousScreen;  
-    export let SaveFile;
+    import MainUiButton from "../svelte-partials/MainUiButton.svelte";
+    import { loadGameFromJSON } from "../stores.js"
+
+    let SaveFile = false;
 
     const loadJsonFile = (event) => {
         let reader = new FileReader();
@@ -19,9 +21,16 @@
 </style>
 
 <div class="load-game-div">
-    <GoBackButton returnToPreviousScreen={returnToPreviousScreen}/>
+    <GoBackButton/>
     <div>
         <label id="save_file_label">Input a save file: </label>
         <input id="save_file" type="file" on:change|self={loadJsonFile}/>
     </div>
+    <MainUiButton action={
+        () => { 
+            if ( SaveFile ) {
+                loadGameFromJSON(SaveFile)
+            }
+        }
+    } buttonText={"Load game"}/>
 </div>

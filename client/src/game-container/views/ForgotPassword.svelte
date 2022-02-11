@@ -6,7 +6,6 @@
     import SmallHeader from "../header/SmallHeader.svelte";
 
     export let action;
-    export let returnToPreviousScreen;
 
     let invalidForm = false;
     let userNameIsDirty = false;
@@ -29,7 +28,7 @@
 </script>
 
 <form id="restore-password-form">
-    <GoBackButton returnToPreviousScreen={returnToPreviousScreen}/>
+    <GoBackButton/>
     <SmallHeader text={"Reset password"}/>
     <InputDiv 
         elementId={"username-input-restore-password"} placeholder={"Fill in your username"} type={"text"} labelText={"Username:"}

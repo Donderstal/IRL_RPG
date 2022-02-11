@@ -1,5 +1,5 @@
 <script>
-export let returnToPreviousScreen
+    import { returnToPreviousScreen } from "../stores.js";
 </script>
 
 <style>

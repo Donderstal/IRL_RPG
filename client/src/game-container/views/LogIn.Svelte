@@ -1,4 +1,5 @@
 <script>   
+    import { openForgotPasswordScreen } from "../stores.js";
     import InputDiv	from "../svelte-partials/InputDiv.svelte"; 
     import MainUiButton	from "../svelte-partials/MainUiButton.svelte";
     import FormWarning	from "../svelte-partials/FormWarning.svelte";
@@ -6,8 +7,6 @@
     import SmallHeader from "../header/SmallHeader.svelte";
 
     export let action;
-    export let restorePassword;
-    export let returnToPreviousScreen;
     export let validating;
 
     let invalidForm = false;
@@ -35,7 +34,7 @@
     {#if validating} 
         <SmallHeader text={"Validate your account"}/>
     {:else}
-        <GoBackButton returnToPreviousScreen={returnToPreviousScreen}/>
+        <GoBackButton/>
         <SmallHeader text={"Log in to your account"}/>
     {/if}
     <InputDiv 
@@ -58,7 +57,7 @@
         <br/>
     {/if}
     <div>
-        <MainUiButton elementId={"Log_in_button"} action={() => {
+        <MainUiButton action={() => {
             if ( checkIfFormIsValid() ) {
                 action( )
             }
@@ -70,6 +69,6 @@
     </div>
     <br/>
     <div>
-        <MainUiButton elementId={"Restore_password_button"} action={restorePassword} buttonText={"I forgot..."} />        
+        <MainUiButton action={openForgotPasswordScreen} buttonText={"I forgot..."} />        
     </div>
 </form>

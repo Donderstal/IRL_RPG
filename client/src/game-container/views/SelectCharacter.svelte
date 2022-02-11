@@ -2,9 +2,9 @@
     import globals from '../../game-data/globals.js';
     import { getAnimationFrames } from '../../resources/animationResources.js';
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'
+    import MainUiButton from "../svelte-partials/MainUiButton.svelte";
+    import { startGameWithParams } from "../stores.js"
     import { onMount } from 'svelte';
-
-    export let returnToPreviousScreen;
 
     const availableClasses = [ "LOREM", "IPSUM", "DOLOR", "SIT AMET" ]
     const descriptions = { 
@@ -244,7 +244,7 @@
 </style>
 
 <div class="select-character">
-    <GoBackButton returnToPreviousScreen={returnToPreviousScreen}/>
+    <GoBackButton/>
     <div class="select-character-inner">
         <h2>Enter your name</h2>
         <input id="name-input" type="text" placeholder="Player Name"/>
@@ -269,4 +269,5 @@
             <option value="test/layer-test">Lagen test</option>
         </select></p>
     </div>
+    <MainUiButton action={startGameWithParams} buttonText={"Let's go!"} />
 </div>

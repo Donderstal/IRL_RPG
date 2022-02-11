@@ -1,23 +1,7 @@
 <script>
-    import GameMenu from './GameMenu.svelte'
-    import LogInMenu from './LogInMenu.svelte'
-    import GfxContainer from './GfxContainer.svelte'
-    import { onMount } from 'svelte';
-
-    let inGame = false;
-    let inMainMenu = true;
-    let url = ``;
-    let loggedIn = false;
-
-    onMount(() => {
-        url = window.location.href
-        loggedIn = !url.includes('login')
-    });
-
-    export function startGame( ) {
-        inMainMenu = false;
-        inGame  = true;
-    }
+    import WebsiteContainer from './WebsiteContainer.svelte'
+    import GameContainer from './GameContainer.svelte'
+    import { websiteMode, gameMode } from './stores.js'
 </script>
 
 <style>
@@ -65,14 +49,10 @@
 </style>
 
 <div class="main-container" >
-    {#if inGame}
-        <GfxContainer/>
-    {:else if inMainMenu}
-        {#if loggedIn}
-            <GameMenu closeMainMenu={() => { startGame() }}/>
-        {:else}
-            <LogInMenu/>                
-        {/if}
+    {#if $gameMode}
+        <GameContainer/>
+    {:else if $websiteMode}
+        <WebsiteContainer/>
         <div class="background-div background-small">
         </div>
         <div class="background-div background-large">
