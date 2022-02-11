@@ -52,12 +52,7 @@ def get_activate_account_email( username, activation_code ):
                 </tr>
                 <tr>
                     <td style="color:white;text-align:center; vertical-align:middle" bgcolor="#00384D">
-                        Use the link below to activate your account:
-                    </td> 
-                </tr>
-                <tr>
-                    <td style="color:white;text-align:center; vertical-align:middle" bgcolor="#00384D">
-                        <a href="http://localhost:5000//login-validate">Activate your account and start playing!</a>
+                        Activate your account on our website and start playing!
                     </td> 
                 </tr>
             </table>
@@ -118,7 +113,7 @@ def get_restore_password_email( username, password ):
                 </tr>
                 <tr>
                     <td style="color:white;text-align:center; vertical-align:middle" bgcolor="#00384D">
-                        <a href="http://localhost:5000//login-validate">Recover your account and change your password ASAP! Godspeed, player!</a>
+                        Recover your account and don't forget to change your password!
                     </td> 
                 </tr>
             </table>

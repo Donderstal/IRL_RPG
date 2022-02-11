@@ -1,34 +1,39 @@
 <script>
+    // store globals and functions
+    import { currentScreen, loggedIn, activeUser, SCREEN_WELCOME } from '../stores.js';
+    //partials
     import MainUiButton from './MainUiButton.svelte'
 
-    export let buttonAction;
-    export let buttonText;
-    export let buttonId;
-
-    const cookiesAsStrings = document.cookie.split(';');
-    const cookieDictionary = {};
-    cookiesAsStrings.forEach((stringPair) => {
-        let cookieTuple =  stringPair.split('=')
-        let key = cookieTuple[0].trim();
-        let value = cookieTuple[1].trim();
-        cookieDictionary[key] = value;
-    })
+    export let logOut;
+    export let logIn;
 </script>
 <style>
-    div {
+    form {
         position: absolute;
-        left: 66%;
-        top: 33%;
+        left: 80%;
+        top: 5%;
         display: inline-block;
         background-color: transparent;
     }
 </style>
 
-<div>
-    <h3>Logged in as: {cookieDictionary['Username']}</h3>
-    <MainUiButton
-        elementId={buttonId} 
-        action={buttonAction} 
-        buttonText={buttonText} 
-    />
-</div>
+<form id="post-log-out">
+    { #if $loggedIn } 
+        <h3>Logged in as: {$activeUser}</h3>
+    { :else }
+        <h3>Not signed in</h3>
+    {/if}
+    { #if $currentScreen != SCREEN_WELCOME } 
+        { #if $loggedIn } 
+            <MainUiButton
+                action={logOut} 
+                buttonText={"Log out"} 
+            />
+        { :else }
+            <MainUiButton
+                action={logIn} 
+                buttonText={"Log in"} 
+            />
+        {/if}
+    {/if}
+</form>

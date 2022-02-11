@@ -154,14 +154,16 @@ def activate_account( request ):
         db.close_connection(connection);
 
     response = make_response(returnValue, statusCode);
-    tokens.set_user_cookie( response );
+    if user:
+        tokens.set_user_cookie( response );
     return response;
 
 def log_out_user( ):
     session.clear();
     response = make_response(jsonify({'succes': True}), 200);
-    response.delete_cookie('Username');
-    response.delete_cookie('Key');
+    response.set_cookie('sessionID', '', expires=0)
+    response.delete_cookie('Username')
+    response.delete_cookie('Key')
     response.location = '/';
     return response;
 

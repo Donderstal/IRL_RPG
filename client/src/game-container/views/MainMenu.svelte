@@ -1,9 +1,13 @@
 <script>
     import MainUiButton from '../svelte-partials/MainUiButton.svelte'    
+    import GoBackButton from '../svelte-partials/GoBackButton.svelte'    
     import Header from '../header/Header.svelte'    
-    import { openNewGameScreen, openLoadGameScreen, openOptionsScreen, openAboutScreen, returnToPreviousScreen } from "../stores.js";
+    import { openNewGameScreen, openLoadGameScreen, openOptionsScreen, openAboutScreen, loggedIn } from "../stores.js";
 </script>
 <div>
+    {#if !$loggedIn}
+        <GoBackButton/>
+    {/if}
     <Header/>
     <br/>
     <div>
@@ -20,9 +24,5 @@
     <br/>
     <div>
         <MainUiButton action={openAboutScreen} buttonText={"About"} />
-    </div>
-    <br/>
-    <div>
-        <MainUiButton action={returnToPreviousScreen} buttonText={"Quit"} />
     </div>
 </div>

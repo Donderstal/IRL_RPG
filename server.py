@@ -1,46 +1,38 @@
-from flask import Flask, request, send_from_directory, request, redirect;
+from flask import Flask, jsonify, request, send_from_directory, request, session, make_response;
 import users;
 import tokens;
 
 app = Flask(__name__)
-app.secret_key = b'ext2-0fma=2p3l4l4'
-app.config['MAIL_SERVER']='smtp.gmail.com'
+app.secret_key = 'test'
+app.config['MAIL_SERVER']= 'test'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'daanonderstal@gmail.com'
-app.config['MAIL_PASSWORD'] = 'likmereet'
+app.config['MAIL_USERNAME'] = 'test'
+app.config['MAIL_PASSWORD'] = 'test'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 # Path for our main Svelte page
 @app.route("/")
 def base():
-    if tokens.check_for_valid_cookie() and tokens.compare_session_and_cookie( ):
-        return send_from_directory('client/public', 'index.html')
-    else:
-        return redirect("/login", code=302);
-
-@app.route("/login")
-def login():
-    if tokens.check_for_valid_cookie() and tokens.compare_session_and_cookie( ):
-        return redirect("/", code=302);
-    else:
-        return send_from_directory('client/public', 'index.html');
-
-@app.route("/login-validate")
-def login_validate():
-    if tokens.check_for_valid_cookie() and tokens.compare_session_and_cookie( ):
-        return redirect("/", code=302);
-    else:
-        return send_from_directory('client/public', 'index.html');
+    return send_from_directory('client/public', 'index.html');
 
 # Path for all the static files (compiled JS/CSS, etc.)
 @app.route("/<path:path>")
 def home(path):
     return send_from_directory('client/public', path)
 
-@app.route("/post-logout", methods=['POST'])
+@app.route("/check-login", methods=['POST'])
+def check_login():
+    loggedIn = tokens.check_for_valid_cookie() and tokens.compare_session_and_cookie( );
+    if loggedIn :
+        response = make_response(jsonify({'loggedIn': loggedIn, 'user': session['username']}), 200);
+    else:
+        response = make_response(jsonify({'loggedIn': loggedIn}), 200);
+    return response;
+
+@app.route("/post-log-out", methods=['POST'])
 def post_logout():
-    return users.logout_user( );
+    return users.log_out_user( );
 
 @app.route("/post-login", methods=['POST'])
 def post_login():

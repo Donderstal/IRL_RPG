@@ -21,4 +21,7 @@ def check_for_valid_cookie( ):
     return get_cookie_key( ) == key and user != None;
 
 def compare_session_and_cookie( ):
-    return session['username'] == request.cookies.get('Username', None);
+    if session.get("username") != None:
+        return session['username'] == request.cookies.get('Username', None);
+    else:
+        return False;

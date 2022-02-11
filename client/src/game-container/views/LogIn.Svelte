@@ -1,5 +1,5 @@
 <script>   
-    import { openForgotPasswordScreen } from "../stores.js";
+    import { openForgotPasswordScreen, openValidateAccountScreen, userMessage } from "../stores.js";
     import InputDiv	from "../svelte-partials/InputDiv.svelte"; 
     import MainUiButton	from "../svelte-partials/MainUiButton.svelte";
     import FormWarning	from "../svelte-partials/FormWarning.svelte";
@@ -8,6 +8,10 @@
 
     export let action;
     export let validating;
+    let errorMessage = false;
+    userMessage.subscribe( value => {
+        errorMessage = value;
+    })
 
     let invalidForm = false;
     let passwordIsDirty = false;
@@ -31,10 +35,10 @@
 </script>
 
 <form id="log-in-form">
+    <GoBackButton/>
     {#if validating} 
         <SmallHeader text={"Validate your account"}/>
     {:else}
-        <GoBackButton/>
         <SmallHeader text={"Log in to your account"}/>
     {/if}
     <InputDiv 
@@ -52,8 +56,11 @@
         />
     {/if}
     {#if invalidForm} 
-        <br/>
         <FormWarning text={"One or more fields are incorrect or empty!"}/>
+        <br/>
+    {/if}
+    {#if errorMessage} 
+        <FormWarning text={errorMessage}/>
         <br/>
     {/if}
     <div>
@@ -67,8 +74,14 @@
             }
         }} buttonText={validating ? "Activate!" : "Log in"} />
     </div>
-    <br/>
-    <div>
-        <MainUiButton action={openForgotPasswordScreen} buttonText={"I forgot..."} />        
-    </div>
+    {#if !validating} 
+        <br/>
+        <div>
+            <MainUiButton action={openForgotPasswordScreen} buttonText={"I forgot..."} />        
+        </div>
+        <br/>
+        <div>
+            <MainUiButton action={openValidateAccountScreen} buttonText={"Activate"} />        
+        </div>
+    {/if}
 </form>

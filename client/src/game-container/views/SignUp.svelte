@@ -4,8 +4,13 @@
     import FormWarning	from "../svelte-partials/FormWarning.svelte";
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     import SmallHeader from "../header/SmallHeader.svelte";
-    
+
+    import { userMessage } from "../stores.js"
     export let action;
+    let errorMessage = false;
+    userMessage.subscribe( value => {
+        errorMessage = value;
+    })
 
     let invalidForm = false;
     let passwordIsDirty = false;
@@ -69,6 +74,9 @@
     {#if invalidForm} 
         <br/>
         <FormWarning text={"One or more fields are incorrect or empty!"}/>
+    {/if}
+    {#if errorMessage} 
+        <FormWarning text={errorMessage}/>
         <br/>
     {/if}
     <MainUiButton elementId={"Sign_up_button"} action={() => {

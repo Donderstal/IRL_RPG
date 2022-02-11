@@ -3,6 +3,7 @@ import { startGame, loadGame } from './../game/Game.js';
 
 export const SCREEN_WELCOME         = "WELCOME";
 export const SCREEN_LOG_IN          = "LOG_IN";
+export const SCREEN_VALIDATE_ACCOUNT= "VALIDATE";
 export const SCREEN_SIGN_UP         = "SIGN_UP";
 export const SCREEN_FORGOT_PASSWORD = "RESTORE_PASSWORD";
 export const SCREEN_MAIN_MENU       = "MAIN_MENU";
@@ -12,10 +13,32 @@ export const SCREEN_OPTIONS         = "OPTIONS"
 export const SCREEN_CREDITS         = "CREDITS"
 export const SCREEN_ABOUT           = "ABOUT"
 export const SCREEN_HELP            = "HELP"
+export const SCREEN_SIGNED_UP       = "SIGNED_UP"
+export const SCREEN_RESTORED_PASS   = "RESTORED_PASS"
 
-export const userMessage    = writable(false)
-export const loggedIn       = writable(false);
-export const currentScreen  = writable(SCREEN_WELCOME);
+const checkForUserSession = ( ) => {
+    fetch("/check-login", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}, 
+    }).then(res => {
+        res.json().then(jsonData => {
+            jsonData['loggedIn'] ? setUserDataToFrontEnd(jsonData['user']) : currentScreen.set(SCREEN_WELCOME)         
+        });
+    });
+}
+
+const setUserDataToFrontEnd = ( username ) => {
+    activeUser.set(username);
+    loggedIn.set(true);
+    currentScreen.set(SCREEN_MAIN_MENU)
+}
+
+export const loggedIn       = writable();
+export const activeUser     = writable();
+export const currentScreen  = writable();
+checkForUserSession();
+
+export const userMessage    = writable(false);
 export const websiteMode    = writable(true);
 export const gameMode       = writable(false);
 
@@ -31,6 +54,7 @@ const closeWebsite = ( ) => {
 
 export const openWelcomeScreen          = ( ) => {switchScreen(SCREEN_WELCOME)};
 export const openLogInScreen            = ( ) => {switchScreen(SCREEN_LOG_IN)};
+export const openValidateAccountScreen  = ( ) => {switchScreen(SCREEN_VALIDATE_ACCOUNT)};
 export const openSignUpScreen           = ( ) => {switchScreen(SCREEN_SIGN_UP)};
 export const openForgotPasswordScreen   = ( ) => {switchScreen(SCREEN_FORGOT_PASSWORD)};
 export const openMainMenuScreen         = ( ) => {switchScreen(SCREEN_MAIN_MENU)};
@@ -40,10 +64,13 @@ export const openOptionsScreen          = ( ) => {switchScreen(SCREEN_OPTIONS)};
 export const openCreditsScreen          = ( ) => {switchScreen(SCREEN_CREDITS)};
 export const openAboutScreen            = ( ) => {switchScreen(SCREEN_ABOUT)};
 export const openHelpScreen             = ( ) => {switchScreen(SCREEN_HELP)};
+export const openRestoredPassScreen     = ( ) => {switchScreen(SCREEN_RESTORED_PASS)};
+export const openSignedUpScreen         = ( ) => {switchScreen(SCREEN_SIGNED_UP)};
 
 export const returnToPreviousScreen     = ( ) => {
     switch( get(currentScreen) ) {
         case SCREEN_FORGOT_PASSWORD:
+        case SCREEN_VALIDATE_ACCOUNT:
             switchScreen(SCREEN_LOG_IN);
             break;
         case SCREEN_LOG_IN:
@@ -75,4 +102,8 @@ export const loadGameFromJSON = (saveFile) => {
     setTimeout( ( ) => {
         loadGame(saveFile);
     }, 100);  
+}
+
+export const setErrorMessage = (message) =>{
+    userMessage.set(message);
 }
