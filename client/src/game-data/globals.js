@@ -1,9 +1,14 @@
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSize = Math.floor(window.innerHeight / CANVAS_ROWS)
+    let blockSizeLandscape = Math.floor(window.innerHeight / CANVAS_ROWS);
+    let blockSizePortrait = Math.floor(window.innerWidth / CANVAS_COLUMNS);
+    let portraitMode = window.innerWidth <= 600;
+    let blockSize = portraitMode ? blockSizePortrait : blockSizeLandscape;
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
-    } 
+    } else if ( blockSize < 32 ) {
+        blockSize = 32;
+    }
     return blockSize;
 }
 

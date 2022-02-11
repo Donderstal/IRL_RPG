@@ -26,6 +26,12 @@
         transform: translateY(-.5vh) translateX(-.5vh);
         box-shadow: 1vh 1vh .25vh #64005380;
     }
+    @media only screen and (max-width: 600px) {
+        button {
+            width: 50vw;
+            font-size: 3vh;
+        }
+    }
 </style>
 
 <div>

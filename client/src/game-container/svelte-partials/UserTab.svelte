@@ -15,6 +15,12 @@
         display: inline-block;
         background-color: transparent;
     }
+    @media only screen and (max-width: 600px) {
+        form {
+            visibility: hidden;
+            display: none;
+        }
+    }
 </style>
 
 <form id="post-log-out">

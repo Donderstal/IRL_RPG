@@ -16,6 +16,10 @@ export const SCREEN_HELP            = "HELP"
 export const SCREEN_SIGNED_UP       = "SIGNED_UP"
 export const SCREEN_RESTORED_PASS   = "RESTORED_PASS"
 
+const classNames = {
+    "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
+};
+
 const checkForUserSession = ( ) => {
     fetch("/check-login", {
         method: "POST",
@@ -87,7 +91,7 @@ export const returnToPreviousScreen     = ( ) => {
 
 export const startGameWithParams = ( ) => {
     const characterName = document.getElementById('name-input').value;
-    const characterClass = "NECKBEARD".toLowerCase();
+    const characterClass = classNames[document.getElementById("active-class").innerText].toLowerCase();
     const startingMap = document.getElementById('map-selection').value
     const runInDebugMode = document.getElementById('enable-debug').checked;
     const disableStoryEvents = document.getElementById('disable-story').checked;

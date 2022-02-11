@@ -31,6 +31,11 @@
         background-color: transparent;
         margin-top: 5vh;
     }
+    @media only screen and (max-width: 600px) {
+        h1 {
+            font-size: 5vh;
+        }
+    }
 </style>
 
 <div> 

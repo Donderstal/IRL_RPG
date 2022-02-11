@@ -7,12 +7,6 @@
     import { onMount } from 'svelte';
 
     const availableClasses = [ "LOREM", "IPSUM", "DOLOR", "SIT AMET" ]
-    const descriptions = { 
-        "LOREM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
-        "IPSUM": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
-        "DOLOR": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", 
-        "SIT AMET": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
-    }
     const classNames = {
         "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
     };
@@ -119,15 +113,15 @@
                 }
                 else {
                     const frame = animationFrames[animationIndex];
-                    sheetPosition = frame.position;
-                    direction = frame.direction
+                    sheetPosition = frame.column;
+                    direction = frame.row;
                     animationIndex++
                 }
         }
     }
     
     const getAnimation = ( ) => {
-        switch ( Math.floor( Math.random( ) * 8 ) ) {
+        switch ( Math.floor( Math.random( ) * 7 ) ) {
             case 0 : 
                 animationFrames = getAnimationFrames("BACK_AND_FORTH");
                 animationType = "ANIM"
@@ -156,16 +150,7 @@
                 animationFrames = getAnimationFrames("LEFT_AND_RIGHT");
                 animationType = "ANIM"
             break;
-            case 7 : 
-                animationFrames = getAnimationFrames("LEFT_AND_RIGHT_STEP");
-                animationType = "ANIM"
-            break;
-            case 8 : 
-                animationFrames = getAnimationFrames("BACK_AND_FORTH_STEP");
-                animationType = "ANIM"
-            break;
         }
-
         inAnimation = true;
     }
 
@@ -241,6 +226,15 @@
         font-family: "Lucida Console", Courier, monospace;
         font-size: 24px;
     }
+    @media only screen and (max-width: 600px) {
+        #instance-settings {
+            visibility: hidden;
+            display: none;
+        }
+        .select-character-inner {
+            max-width: 100vw;
+        }
+    }
 </style>
 
 <div class="select-character">
@@ -255,10 +249,7 @@
         <canvas id="select-character-canvas"></canvas>
         <img id="right-arrow" class="arrow" src="/static/site_assets/arrow-right@2x.png" alt="Right arrow"on:click={() => handleArrowClick("R")} >
     </div>
-    <div class="select-character-inner">
-        <p>{descriptions[activeClass]}</p>
-    </div>
-    <div style="position:absolute; top:10%; left:5%;">
+    <div id="instance-settings" style="position:absolute; top:10%; left:5%;">
         <h4>Instance settings</h4>
         <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
