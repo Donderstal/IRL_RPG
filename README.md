@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### FEB 11, 2022
+* 'Camera' now follows the player around on smaller screens
+
+#### FEB 11, 2022
 * Restructured front-end code in a more Svelte way
 * Proper account system setup for SPA
 

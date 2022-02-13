@@ -30,6 +30,7 @@ const { SaveGameDto } = require('../game-data/SaveGameDto')
 const { setInteractionRegistry } = require('../helpers/interactionRegistry')
 const { setUnlockedDoorsRegistry } = require('../helpers/doorRegistry')
 const { MenuCanvas } = require('./menuCanvas/MenuCanvas')
+const { CameraFocus } = require('../helpers/cameraFocus')
 const startingItemIDs = [
     "pp_consumable_1", "pp_consumable_1",
     "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
@@ -46,6 +47,7 @@ class Game {
         this.listeningForPress; // bool
         this.pressedKeys = { }; //
         this.speechBubbleController = new SpeechBubbleController( );
+        this.cameraFocus = new CameraFocus( );
         this.collectableRegistry = new CollectableRegistry( );
         this.sound = new SoundController( );
         this.audio = new AudioContext( );
@@ -385,8 +387,8 @@ class Game {
                 console.log( "Type " + type + " not recognized." )
                 break;
         }
-
         this.PLAYER.setNewLocationInGrid( newPlayerCell, direction );
+        this.cameraFocus.centerOnColumn( newPlayerCell.col, mapData.columns );
         this.front.class.allSprites.push( this.PLAYER );
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
     }

@@ -12,7 +12,7 @@ class Emote {
         drawFromImageToCanvas( 
             "FRONT", this.image,
             0, 0, globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
-            this.x, this.y, globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX
+            this.x, this.y, globals.GRID_BLOCK_PX, globals.GRID_BLOCK_PX
         ) 
     }
 }

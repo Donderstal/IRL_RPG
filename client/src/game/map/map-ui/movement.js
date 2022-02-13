@@ -1,6 +1,7 @@
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
-const { EVENT_NEIGHBOUR } = require('../../../game-data/conditionGlobals')
+const { EVENT_NEIGHBOUR } = require('../../../game-data/conditionGlobals');
+
 /**
  * Call moveInDirection and then call sprite.countFrame
  * @param {I_Sprite} sprite 
@@ -21,14 +22,17 @@ const moveInDirection = ( sprite, direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
+    const cameraFocus = globals.GAME.cameraFocus;
 
     if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
         sprite.playerWalking = true;
         if ( direction == FACING_RIGHT ) {
-            sprite.x += MOVEMENT_SPEED        
+            sprite.x += MOVEMENT_SPEED
+            cameraFocus.updateValue( cameraFocus.value - MOVEMENT_SPEED );        
         }
         else if ( direction == FACING_LEFT ) {
             sprite.x -= MOVEMENT_SPEED    
+            cameraFocus.updateValue( cameraFocus.value + MOVEMENT_SPEED );   
         }
         else if ( direction == FACING_DOWN ) {
             sprite.y += MOVEMENT_SPEED        

@@ -1,13 +1,10 @@
+const DISPLAY_MODE_PORTRAIT = window.innerWidth <= 768;
+const DISPLAY_MODE_LANDSCAPE = !DISPLAY_MODE_PORTRAIT;
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSizeLandscape = Math.floor(window.innerHeight / CANVAS_ROWS);
-    let blockSizePortrait = Math.floor(window.innerWidth / CANVAS_COLUMNS);
-    let portraitMode = window.innerWidth <= 600;
-    let blockSize = portraitMode ? blockSizePortrait : blockSizeLandscape;
+    let blockSize = DISPLAY_MODE_LANDSCAPE ? Math.floor(window.innerWidth / CANVAS_COLUMNS) : 32;
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
-    } else if ( blockSize < 32 ) {
-        blockSize = 32;
     }
     return blockSize;
 }
@@ -61,8 +58,9 @@ const CANVAS_COLUMNS                = 24
 const CANVAS_ROWS                   = 16
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
 const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
-const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS)
-const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS) 
+
+const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS);
+const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS);
 
 // sheet dimensions
 const MAP_SPRITE_WIDTH_IN_SHEET     = 64
@@ -72,7 +70,7 @@ const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
 const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
 // speech bubbles 
-const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 8
+const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 6
 const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * .66;
 const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 2 );
 
@@ -216,6 +214,9 @@ const OUT_RIGHT= "O-R";
 const OUT_DOWN = "O-D";
 
 module.exports = {
+    DISPLAY_MODE_PORTRAIT,
+    DISPLAY_MODE_LANDSCAPE,
+    
     OUT_LEFT,
     OUT_UP,
     OUT_RIGHT,
