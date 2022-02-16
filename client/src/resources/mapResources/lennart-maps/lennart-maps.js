@@ -1,4 +1,4 @@
-const { RANDOM_TALK_6, RANDOM_TALK_2, RANDOM_TALK_3, RANDOM_TALK_4, RANDOM_TALK_1, RANDOM_TALK_5 } = require('../../actionResources')
+const { LONG_TALK_4, RANDOM_TALK_2, RANDOM_TALK_3, RANDOM_TALK_4, RANDOM_TALK_1, RANDOM_TALK_5 } = require('../../actionResources')
 const B4 = require('./B/B4/B4')
 const C2 = require('./C/C2/C2')
 const C3 = require('./C/C3/C3')
@@ -35,7 +35,7 @@ module.exports = {
         RANDOM_TALK_3,
         RANDOM_TALK_4, 
         RANDOM_TALK_5,
-        RANDOM_TALK_6
+        LONG_TALK_4
     ],
     "B4": B4,
     "C2": C2,

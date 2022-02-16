@@ -54,19 +54,7 @@ const RANDOM_TALK_5 = [
         [[EMOTE, EMOTE_HEART, PLAYER_NAME]]
     ]]
 ]
-const NAME_BOB = "My friend, Bob";
-const RANDOM_TALK_6 = [
-    [ DEFAULT, false ],
-    [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [[SPEAK, "Do you know my friend Bob? He works at the fish stick factory.", false, PLAYER_NAME ]],
-        [[EMOTE, EMOTE_QUESTIONMARK, PLAYER_NAME],[CREATE_SPRITE, FACING_RIGHT, "fats.png", NAME_BOB, OUT_LEFT, 10]],
-        [[SPEAK, "Ironically, he's a vegetarian. Never ate a fish in his life!", false, PLAYER_NAME],[MOVE, NAME_BOB, PLAYER_NAME]],
-        [[SPEAK, "I'm a walking contradiction bruh!", NAME_BOB, PLAYER_NAME]],
-        [[SPEAK, "See you later fellas!", NAME_BOB, PLAYER_NAME],[EMOTE, EMOTE_HEART, PLAYER_NAME],[EMOTE, EMOTE_HEART]],
-        [[ANIM, "TURN_SINGLE_CIRCLE", NAME_BOB]],
-        [[DELETE_SPRITE, NAME_BOB]],
-    ]]
-]
+
 const LONG_TALK_4 = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
@@ -102,7 +90,7 @@ module.exports = {
     RANDOM_TALK_3,
     RANDOM_TALK_4,
     RANDOM_TALK_5,
-    RANDOM_TALK_6,
+    LONG_TALK_4,
     LONG_TALK_4,
     COLLECTABLE_ACTION_COIN,
     COLLECTABLE_ACTION_JUICE_CAN

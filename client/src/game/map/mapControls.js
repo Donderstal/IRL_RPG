@@ -3,7 +3,6 @@ const actionController  = require('./map-ui/actionController')
 const globals           = require('../../game-data/globals');
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../game-data/globals');
 const { ON_POSITION } = require('../../game-data/conditionGlobals');
-const { SaveGameDto } = require('../../game-data/SaveGameDto');
 /**
  * Check the event.key prop and prevent its default.
  * If it is the spacebar, call handleActionButton() from the actionController.
@@ -13,8 +12,6 @@ const { SaveGameDto } = require('../../game-data/SaveGameDto');
  */
 const handleMapKeyPress = ( event ) => {
     const GAME = globals.GAME;
-
-    event.preventDefault()    
 
     if ( event.key == " " ) {
         actionController.handleActionButton( )        

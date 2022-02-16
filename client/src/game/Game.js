@@ -388,7 +388,7 @@ class Game {
                 break;
         }
         this.PLAYER.setNewLocationInGrid( newPlayerCell, direction );
-        this.cameraFocus.centerOnColumn( newPlayerCell.col, mapData.columns );
+        this.cameraFocus.centerOnCell( newPlayerCell, mapData )
         this.front.class.allSprites.push( this.PLAYER );
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
     }

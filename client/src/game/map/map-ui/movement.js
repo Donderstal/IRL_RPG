@@ -28,17 +28,19 @@ const moveInDirection = ( sprite, direction ) => {
         sprite.playerWalking = true;
         if ( direction == FACING_RIGHT ) {
             sprite.x += MOVEMENT_SPEED
-            cameraFocus.updateValue( cameraFocus.value - MOVEMENT_SPEED );        
+            cameraFocus.updateXValue( cameraFocus.xValue - MOVEMENT_SPEED );        
         }
         else if ( direction == FACING_LEFT ) {
             sprite.x -= MOVEMENT_SPEED    
-            cameraFocus.updateValue( cameraFocus.value + MOVEMENT_SPEED );   
+            cameraFocus.updateXValue( cameraFocus.xValue + MOVEMENT_SPEED );   
         }
         else if ( direction == FACING_DOWN ) {
             sprite.y += MOVEMENT_SPEED        
+            cameraFocus.updateYValue( cameraFocus.yValue + MOVEMENT_SPEED );  
         }
         else if ( direction == FACING_UP ){
-            sprite.y -= MOVEMENT_SPEED        
+            sprite.y -= MOVEMENT_SPEED      
+            cameraFocus.updateYValue( cameraFocus.yValue - MOVEMENT_SPEED );  
         }     
     }
     else {

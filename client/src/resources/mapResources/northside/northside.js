@@ -4,7 +4,7 @@ const A3 = require('./A3/northside-A3');
 const A4 = require('./A4/northside-A4');
 const A5 = require('./A5/northside-A5');
 const Z4 = require('./Z4/northside-Z4');
-const { RANDOM_TALK_6, RANDOM_TALK_2, RANDOM_TALK_3, RANDOM_TALK_4, RANDOM_TALK_1, RANDOM_TALK_5 } = require('../../actionResources')
+const { LONG_TALK_4, RANDOM_TALK_2, RANDOM_TALK_3, RANDOM_TALK_4, RANDOM_TALK_1, RANDOM_TALK_5 } = require('../../actionResources')
 
 module.exports = {
     "name": "Northside",
@@ -22,7 +22,7 @@ module.exports = {
         RANDOM_TALK_3,
         RANDOM_TALK_4, 
         RANDOM_TALK_5,
-        RANDOM_TALK_6
+        LONG_TALK_4
     ],
     "characters_spawn_rate": 2500,
     "A2": A1,

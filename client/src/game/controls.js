@@ -25,8 +25,11 @@ const stopListenForKeyPress = ( ) => {
     globals.GAME.listeningForPress = false;
 }
 
-const addKeyToPressed = ( ) => {
-    event.preventDefault( );
+const addKeyToPressed = ( event ) => {
+    if ( 'preventDefault' in event ) {
+        event.preventDefault( );        
+    }
+
     const GAME = globals.GAME
 
     if ( event.key == "m" ) {
@@ -55,7 +58,7 @@ const addKeyToPressed = ( ) => {
 /**
  * Clear current event.key from the GAME.pressedKeys object
  */
-const removeKeyFromPressed = () => {
+const removeKeyFromPressed = ( event ) => {
     globals.GAME.pressedKeys[event.key] = false
 }
 /**
@@ -70,5 +73,7 @@ const clearPressedKeys = ( pressedKeys ) => {
 module.exports = {
     listenForKeyPress,
     stopListenForKeyPress,
-    clearPressedKeys
+    clearPressedKeys,
+    addKeyToPressed,
+    removeKeyFromPressed
 }

@@ -5,9 +5,9 @@ const { SpatialSound } = require('./SpatialSound');
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
 
-const standardMusicVolume = 0.5;
-const menuMusicVolume = 0.25;
-const standardSFXVolume = 0.75;
+const standardMusicVolume = 1;
+const menuMusicVolume = 0.75;
+const standardSFXVolume = 0.5;
 
 /**
  * The SoundController functions like a registry for sounds and music in the game

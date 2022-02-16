@@ -44,7 +44,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
             this.setObjects( mapData.mapObjects );
         if ( mapData.playerStart && isNewGame ) {
             this.initPlayerCharacter( mapData.playerStart );
-            globals.GAME.cameraFocus.centerOnColumn( mapData.playerStart.col, mapData.columns );            
+            globals.GAME.cameraFocus.centerOnCell( mapData.playerStart, mapData.columns )      
         }
 
         if ( mapData.roads ) 
