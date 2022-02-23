@@ -23,6 +23,7 @@ const { Cinematic } = require('./cutscenes/Cinematic')
 const { FileLoader } = require('../helpers/Loader')
 const { Neighbourhood } = require('./Neighbourhood')
 const { SpeechBubbleController } = require('./cutscenes/SpeechBubbleController')
+const { SpeechBubbleCanvas } = require('./cutscenes/SpeechBubbleCanvas')
 const { tryCatch } = require('../helpers/errorHelpers')
 const { CollectableRegistry } = require('../helpers/collectableRegistry')
 const { FrontgridCanvas } = require('./FrontgridCanvas')
@@ -65,6 +66,7 @@ class Game {
         this.front = { };
         this.back  = { };
         this.utilBack  = { };
+        this.speechBubblesCanvas = { };
         this.party; // class Party
 
         this.activeNeighbourhood;
@@ -140,6 +142,9 @@ class Game {
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
         this.initCanvas( 'MENU' , this.menu );
+        if ( globals.DISPLAY_MODE_PORTRAIT ) {
+            this.initCanvas( 'SPEECH' , this.speechBubblesCanvas );
+        }
     }
     /**
      * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate I_CanvasWithGrid class extension if necessary and set as property
@@ -175,10 +180,19 @@ class Game {
             case 'MENU':
                 object.canvas = document.getElementById( 'game-menu-canvas' );
                 object.ctx = object.canvas.getContext( '2d' );
-                object.canvas.width = CANVAS_WIDTH;
-                object.canvas.height = CANVAS_HEIGHT;
+                if ( globals.DISPLAY_MODE_PORTRAIT ) {
+                    object.canvas.width = globals.GRID_BLOCK_PX * 8;
+                    object.canvas.height = globals.GRID_BLOCK_PX * 8;
+                    object.canvas.style.position = 'fixed';
+                    object.canvas.style.top = 0;
+                    object.canvas.style.left = 0;
+                }
+                else {
+                    object.canvas.width = CANVAS_WIDTH;
+                    object.canvas.height = CANVAS_HEIGHT;                  
+                }
                 var xy = object.canvas.getBoundingClientRect( );
-                object.class = new MenuCanvas( xy.x, xy.y, object.ctx, object.canvas);
+                object.class = new MenuCanvas( xy.x, xy.y, object.ctx, object.canvas);  
                 break;
             case 'UTIL_BACK':
                 object.canvas = document.getElementById( 'game-utility-canvas-back' );
@@ -187,11 +201,19 @@ class Game {
             case 'UTIL_FRONT':
                 object.canvas = document.getElementById( 'game-utility-canvas-front' );
                 object.ctx = object.canvas.getContext( '2d' );
-                break;               
+                break;  
+            case 'SPEECH':
+                object.canvas = document.getElementById( 'game-bubble-canvas' );
+                object.ctx = object.canvas.getContext( '2d' );
+                object.canvas.width = globals.GRID_BLOCK_PX * 8;
+                object.canvas.height = globals.GRID_BLOCK_PX * 8;
+                object.class = new SpeechBubbleCanvas( 0, 0, object.ctx, object.canvas);        
+                break;
             default:
                 console.log('error! canvas type ' + type + ' not known')
         } 
     }
+
     /**
      * Wrapper method. Calls a sequentce of functions to start a new game
      * @param {String} name name that the player chose in the starting menu

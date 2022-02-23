@@ -1,4 +1,4 @@
-const { GRID_BLOCK_PX, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } = require("../../game-data/globals")
+const { GRID_BLOCK_PX, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, DISPLAY_MODE_PORTRAIT, DISPLAY_MODE_LANDSCAPE } = require("../../game-data/globals")
 const { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM } = require("../../game-data/textboxGlobals")
 const { I_MenuElement } = require("./I_MenuElement")
 
@@ -14,9 +14,9 @@ class MenuHeader {
         this.activeIndex = 0
         this.buttons = [
             new HeaderButton(0, true, 'General'),
-            new HeaderButton(GRID_BLOCK_PX * 12, false, 'Inventory'),
-            new HeaderButton(GRID_BLOCK_PX * 16, false, 'Map'),
-            new HeaderButton(GRID_BLOCK_PX * 20, false, 'Game')
+            new HeaderButton(1, false, 'Inventory'),
+            new HeaderButton(2, false, 'Map'),
+            new HeaderButton(3, false, 'Game')
         ]
     }
 
@@ -45,17 +45,30 @@ class MenuHeader {
 
         headerTabSlotsPositions[this.activeIndex].forEach((e, index) => {
             let button = this.buttons[index];
-            button.setX(e);
+            DISPLAY_MODE_PORTRAIT ? button.setY(0) : button.setX(e);
         })
     }
 }
 
 class HeaderButton extends I_MenuElement {
-    constructor( x, isActive, text ) {
-        let y = isActive ? 0 : GRID_BLOCK_PX;
-        let columns = isActive ? 12 : 4;
-        let rows = isActive ? 2 : 1;
-        let rowStyles = isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ];
+    constructor( index, isActive, text ) {
+        let startingPositions = headerTabSlotsPositions[0];
+
+        let x = DISPLAY_MODE_PORTRAIT 
+            ? 0
+            : startingPositions[index]; 
+        let y = DISPLAY_MODE_PORTRAIT 
+            ? 0
+            : isActive ? 0 : GRID_BLOCK_PX;
+        let columns = DISPLAY_MODE_PORTRAIT 
+            ? 1 
+            : isActive ? 12 : 4;
+        let rows = DISPLAY_MODE_PORTRAIT 
+            ? isActive ? 8 : 1
+            : isActive ? 2 : 1;
+        let rowStyles = DISPLAY_MODE_PORTRAIT 
+            ? isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ]
+            : isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ];
 
         super( x, y, columns, rows, rowStyles, ["B"], isActive )
         this.isActive = isActive;
@@ -69,13 +82,24 @@ class HeaderButton extends I_MenuElement {
     }
 
     drawElement( ctx ) {
-        super.drawElement( ctx );
+        if ( ( DISPLAY_MODE_PORTRAIT && this.isActive ) || DISPLAY_MODE_LANDSCAPE ) {
+            super.drawElement( ctx );            
+        }
+
         ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
         ctx.fillStyle = "black";
         var textWidth = ctx.measureText(this.text).width;
-        ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + BATTLE_FONT_LINE_HEIGHT + (this.isActive ? + (this.height / 2) : 0) );
 
-        if ( this.isActive ) {
+        if ( DISPLAY_MODE_PORTRAIT && this.isActive ) {
+            this.text.split("").forEach( (e, index) => {
+                ctx.fillText( e, this.x + (BATTLE_FONT_SIZE / 2), this.y  + (BATTLE_FONT_LINE_HEIGHT / 2) + ( BATTLE_FONT_SIZE * index ) );  
+            })
+        }
+        else if ( DISPLAY_MODE_LANDSCAPE ) {
+            ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + BATTLE_FONT_LINE_HEIGHT + (this.isActive ? + (this.height / 2) : 0) );            
+        }
+
+        if ( this.isActive && DISPLAY_MODE_LANDSCAPE ) {
             this.countFrameForAnimation( ctx );
         }
         else {
@@ -85,16 +109,20 @@ class HeaderButton extends I_MenuElement {
 
     deActivate( ) {
         this.isActive = false;
-        this.initElement( 0, GRID_BLOCK_PX, 4, 1, [ BUBBLE_TOP ] );
+        DISPLAY_MODE_PORTRAIT ? this.initElement( 0, 0, 0, 0, [ BUBBLE_TOP ] ) : this.initElement( 0, GRID_BLOCK_PX, 4, 1, [ BUBBLE_TOP ] );
     }
 
     activate( ) {
         this.isActive = true;
-        this.initElement( 0, 0, 12, 2, [ BUBBLE_TOP, BUBBLE_MIDDLE ] );
+        DISPLAY_MODE_PORTRAIT ? this.initElement( 0, 0, 1, 8, [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE ] ) : this.initElement( 0, 0, 12, 2, [ BUBBLE_TOP, BUBBLE_MIDDLE ] );
     }
 
     setX( x ) {
         this.x = x;
+    }
+
+    setY( y ) {
+        this.y = y;
     }
 }
 

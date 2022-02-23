@@ -2,7 +2,7 @@ const DISPLAY_MODE_PORTRAIT = window.innerWidth <= 768;
 const DISPLAY_MODE_LANDSCAPE = !DISPLAY_MODE_PORTRAIT;
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSize = DISPLAY_MODE_LANDSCAPE ? Math.floor(window.innerWidth / CANVAS_COLUMNS) : 32;
+    let blockSize = Math.floor(window.innerWidth / (DISPLAY_MODE_LANDSCAPE ? CANVAS_COLUMNS : 8 ));
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
     }
@@ -71,13 +71,13 @@ const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
 // speech bubbles 
 const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( DISPLAY_MODE_PORTRAIT ? 8 : 6 )
-const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * .66;
-const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 2 );
+const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( DISPLAY_MODE_PORTRAIT ? .33 : .66 )
+const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 
 // canvas font sizes
-const SMALL_FONT_SIZE               = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 3.5 : GRID_BLOCK_PX / 4.5;
+const SMALL_FONT_SIZE               = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 4.5;
 const LARGE_FONT_SIZE               = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 2.5 : GRID_BLOCK_PX / 3.5;
-const BATTLE_FONT_SIZE              = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 1.5 : GRID_BLOCK_PX / 2.5;
+const BATTLE_FONT_SIZE              = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 2 : GRID_BLOCK_PX / 2.5;
 
 // in-game textbox color and opacity
 const INNER_TEXTBOX_RGBA            = "rgb(0, 56, 77)";

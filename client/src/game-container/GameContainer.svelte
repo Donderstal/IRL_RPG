@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import globals from '../game-data/globals.js';
+    import globals, { GRID_BLOCK_PX } from '../game-data/globals.js';
     import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
 
@@ -104,7 +104,6 @@
         }
 
         #buttons-div {
-            top: 384px;
             z-index: 10;
             position: fixed;
             background-color: #C0C0C0;
@@ -129,7 +128,12 @@
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
 
         <canvas id='game-menu-canvas' class="game-menu-body"
-        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px; background-color: #00384D; visibility: hidden;"></canvas>    
+        style="background-color: #00384D; visibility: hidden;"></canvas>    
+
+        {#if globals.DISPLAY_MODE_PORTRAIT}
+            <canvas id='game-bubble-canvas' class="game-menu-body"
+            style="width: {globals.GRID_BLOCK_PX * 8}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left: 0; background-color: transparent;"></canvas>   
+        {/if}
     </div>
 
     <LetterBoxDiv isTop={false} height={globals.GRID_BLOCK_PX * 2}/>
@@ -141,7 +145,7 @@
     </div>
 
     {#if globals.DISPLAY_MODE_PORTRAIT}
-        <div id="buttons-div">
+        <div id="buttons-div" style="top:{(GRID_BLOCK_PX * 8)}px;">
             <img alt="D pad image" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>
             <img alt="D pad image" id="d-pad-up" class="arrow-button-vert sprite-image" src="/static/ui/arrow-up.png"/>
             <img alt="D pad image" id="d-pad-right" class="arrow-button-hori sprite-image" src="/static/ui/arrow-right.png"/>

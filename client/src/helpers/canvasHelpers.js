@@ -1,6 +1,10 @@
 const globals = require('../game-data/globals')
 const { MAX_BUBBLE_TEXT_WIDTH } = require('../game-data/globals');
 
+const getBubbleCanvasContext = () => {
+    return document.getElementById('game-bubble-canvas').getContext('2d');
+}
+
 const getMenuCanvasContext = () => {
     return document.getElementById('game-menu-canvas').getContext('2d');
 }
@@ -112,8 +116,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
  * Set the ctx.font of frontcanvas to given font size
  * @param {String} size 
  */
-const setFont = ( size ) => {
-    let ctx = getFrontCanvasContext()
+const setFont = ( size, ctx = getFrontCanvasContext()  ) => {
     ctx.font = size + "px " + 'AuX DotBitC Xtra';
 }
 /**
@@ -124,10 +127,9 @@ const setFont = ( size ) => {
  * @param {Number} size 
  * @param {String} color 
  */
-const writeTextLine = ( text, x, y, size, color = null ) => {
-    let ctx = getFrontCanvasContext()
-    setFont( size )
-    ctx.fillStyle = (color != null) ? color : "black"
+const writeTextLine = ( text, x, y, size, ctx = getFrontCanvasContext() ) => {
+    setFont( size, ctx )
+    ctx.fillStyle = "black"
     ctx.fillText( text, x, y )
 }
 /**
@@ -135,7 +137,21 @@ const writeTextLine = ( text, x, y, size, color = null ) => {
  * @param {String} canvas 
  */
 const clearEntireCanvas = ( canvas ) => {
-    let ctx = canvas === "BACK" ? getBackCanvasContext() : (canvas === "FRONT" ? getFrontCanvasContext() : getFrontgridCanvasContext());        
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : (canvas === "FRONT" ? getFrontCanvasContext() : getFrontgridCanvasContext());       
+    switch(canvas) {
+        case "BACK":
+            ctx = getBackCanvasContext();
+            break;
+        case "FRONT":
+            ctx = getFrontCanvasContext();
+            break;
+        case "FRONT_GRID":
+            ctx = getFrontgridCanvasContext();
+            break;
+        case "SPEECH":
+            ctx = getBubbleCanvasContext();
+            break;
+    } 
     ctx.clearRect( 
         0, 0,
         globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
@@ -145,6 +161,7 @@ const clearEntireCanvas = ( canvas ) => {
 module.exports = {
     drawFromImageToCanvas,
     clearEntireCanvas,
+    getBubbleCanvasContext,
     getMenuCanvasContext,
     getFrontgridCanvasContext,
     getFrontCanvasContext,

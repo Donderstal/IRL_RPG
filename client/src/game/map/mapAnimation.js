@@ -12,6 +12,9 @@ const mapControls = require('./mapControls');
  * @param {Game} GAME Instance of the Game class in Game.js
  */
 const handleMapAnimations = ( GAME ) => {
+    canvas.clearEntireCanvas("FRONT")
+    canvas.clearEntireCanvas("SPEECH")
+    
     drawSpritesInOrder( GAME )
 
     clearMargins( GAME );      
@@ -32,7 +35,7 @@ const handleMapAnimations = ( GAME ) => {
     })
 
     if ( GAME.FRONTGRID.hasFrontGrid ) {
-        canvas.clearEntireCanvas("FRONT_GRID")
+        canvas.clearEntireCanvas("FRONT_GRID");
         GAME.FRONTGRID.drawMapFromGridData( GAME.FRONTGRID.sheetImage );
     }
     GAME.speechBubbleController.drawBubbles( );
@@ -92,8 +95,6 @@ const drawSpritesInOrder = ( GAME ) => {
             return 0
         }          
     })
-
-    canvas.clearEntireCanvas("FRONT")
 
     if ( GAME.debugMode ) {
         GAME.BACK.grid.array.forEach( ( tile ) => { 

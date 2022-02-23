@@ -1,7 +1,7 @@
 const globals = require( '../../game-data/globals' );
 const { I_CanvasWithGrid } = require("../interfaces/I_CanvasWithGrid");
 const { 
-    GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX
+    GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, DISPLAY_MODE_PORTRAIT
 } = require( '../../game-data/globals' );
 const { 
     BUBBLE_MIDDLE, BUBBLE_LEFT_TOP, BUBBLE_RIGHT_TOP, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT_BOTTOM, BUBBLE_TOP, BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT 
@@ -15,8 +15,11 @@ class MenuCanvas extends I_CanvasWithGrid {
 
         this.canvas = canvas;
         this.isActive = false;
-        
-        this.initGrid( 16, 24 );
+
+        this.columns    = DISPLAY_MODE_PORTRAIT ? 8 : 24
+        this.rows       = DISPLAY_MODE_PORTRAIT ? 8 : 16
+
+        this.initGrid( this.rows, this.columns );
 
         this.header = new MenuHeader( );
         this.textBox = new MenuTextBox( );
@@ -39,7 +42,7 @@ class MenuCanvas extends I_CanvasWithGrid {
 
     draw( ) {
         this.ctx.clearRect( 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT )
-        this.drawBackground( 3 );
+        DISPLAY_MODE_PORTRAIT ? this.drawBackground( 1, 2 ) : this.drawBackground( 3, 1 );
         this.header.draw( this.ctx );
         this.textBox.drawElement( this.ctx );
     }
@@ -68,30 +71,35 @@ class MenuCanvas extends I_CanvasWithGrid {
         );
     }
 
-    drawBackground( startingRow ) {
+    drawBackground( startingRow, startingCol ) {
         this.grid.array.forEach((tile)=>{
-            if ( tile.row == startingRow && tile.col == 1 ) {
+            if ( DISPLAY_MODE_PORTRAIT ) {
+                tile.x = ( tile.col * GRID_BLOCK_PX ) - GRID_BLOCK_PX;
+                tile.y = ( tile.row * GRID_BLOCK_PX ) - GRID_BLOCK_PX
+            }
+            
+            if ( tile.row == startingRow && tile.col == startingCol ) {
                 this.drawBubblePart( BUBBLE_LEFT, tile, this.ctx )     
             }
-            else if ( tile.row == startingRow && tile.col == 24 ) {
+            else if ( tile.row == startingRow && tile.col == this.columns ) {
                 this.drawBubblePart( BUBBLE_RIGHT, tile, this.ctx )
             }
-            else if ( tile.row == 16 && tile.col == 1 ) {
+            else if ( tile.row == this.rows && tile.col == startingCol ) {
                 this.drawBubblePart( BUBBLE_LEFT_BOTTOM, tile, this.ctx )
             }
-            else if ( tile.row == 16 && tile.col == 24 ) {
+            else if ( tile.row == this.rows && tile.col == this.columns ) {
                 this.drawBubblePart( BUBBLE_RIGHT_BOTTOM, tile, this.ctx )
             }
             else if ( tile.row == startingRow ) {
                 this.drawBubblePart( BUBBLE_MIDDLE, tile, this.ctx )
             }
-            else if ( tile.row == 16 ) {
+            else if ( tile.row == this.rows ) {
                 this.drawBubblePart( BUBBLE_BOTTOM, tile, this.ctx )
             }
-            else if ( tile.col == 1 && tile.row > startingRow) {
+            else if ( tile.col == startingCol && tile.row > startingRow) {
                 this.drawBubblePart( BUBBLE_LEFT, tile, this.ctx )                
             }
-            else if ( tile.col == 24 && tile.row > startingRow ) {
+            else if ( tile.col == this.columns && tile.row > startingRow ) {
                 this.drawBubblePart( BUBBLE_RIGHT, tile, this.ctx )
             }
             else if ( tile.row > startingRow ){

@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### FEB 23, 2022
+* Basic menu front end and speech bubbles for mobile phones
+
 #### FEB 16, 2022
 * Experimental setup for touch controls on mobile phones
 
