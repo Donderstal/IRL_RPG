@@ -254,7 +254,7 @@
         <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
         <p><label>Select starting location</label><select id="map-selection">
-            <option value="lennart-neighbourhood/Newtown-appartment-3">Lennart</option>
+            <option value="leonard_heights/Newtown-appartment-3">Lennart</option>
             <option value="northside/C2">Northside</option>
             <option value="test/B4">Test intersection</option>
             <option value="test/layer-test">Lagen test</option>

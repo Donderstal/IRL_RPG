@@ -1,0 +1,5 @@
+const globals = require('../../../../game-data/globals');
+const { GRID } = require('./grid.js');
+const { FRONT_GRID } = require('./frontgrid.js');
+module.exports =
+{"frontGrid":FRONT_GRID,"grid":GRID,"outdoors":true,"mapName":"leonard_heights/D4","rows":16,"columns":24,"tileSet":"starting_neighbourhood_clean","characters":[{"anim_type":globals.NPC_ANIM_TYPE_IDLE,"row":11,"col":14,"sprite":"Bench_Green","direction":false}],"mapObjects":[{"type":"gang_z","row":3,"col":20},{"type":"car_a","row":5,"col":11,"direction":globals.FACING_UP},{"type":"Sign_01","row":5,"col":14},{"type":"vent_4","row":5,"col":16},{"type":"car_d","row":6,"col":5,"direction":globals.FACING_DOWN},{"type":"wheelie_bin_right","row":7,"col":19},{"type":"Bollard","row":8,"col":15},{"type":"Bollard","row":8,"col":18},{"type":"funz","row":8,"col":22},{"type":"boxes","row":9,"col":22},{"type":"banana","row":11,"col":3},{"type":"office_chair","row":11,"col":4}],"spawnPoints":[],"roads":[],"actions":[]}

@@ -1,10 +1,10 @@
 const northside         = require('./mapResources/northside/northside');
-const lennartMaps       = require('./mapResources/lennart-maps/lennart-maps');
+const lennartMaps       = require('./mapResources/leonard_heights/leonard_heights');
 const test              = require('./mapResources/test/test');
 
 const mapResources = {
     "northside":            northside,
-    "lennart-neighbourhood":lennartMaps,
+    "leonard_heights":lennartMaps,
     "test": test
 }
 
