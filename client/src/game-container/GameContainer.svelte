@@ -20,6 +20,9 @@
     }
 
     onMount(()=>{
+        if ( !globals.DISPLAY_MODE_PORTRAIT ) {
+            return;
+        }
         const left = document.getElementById("d-pad-left");
         const up = document.getElementById("d-pad-up");
         const right = document.getElementById("d-pad-right");

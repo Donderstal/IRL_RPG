@@ -61,15 +61,15 @@ class I_Hitbox {
             if ( this.upFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
                 return true;
             }
-            else if ( this.downFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
+            if ( this.downFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
                 return true;
             }
         }
-        else if ( this.targetIsInHorizontalActionRange( targetHitbox ) ) {
+        if ( this.targetIsInHorizontalActionRange( targetHitbox ) ) {
             if ( this.leftFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
                 return true;
             }
-            else if ( this.rightFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
+            if ( this.rightFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
                 return true;
             }
         }
@@ -84,15 +84,38 @@ class I_Hitbox {
             if ( this.targetIsInUpBlockedRange( targetHitbox, direction ) ) {
                 return true;
             }
-            else if ( this.targetIsInDownBlockedRange( targetHitbox, direction ) ) {
+            if ( this.targetIsInDownBlockedRange( targetHitbox, direction ) ) {
                 return true;
             }
         }
-        else if ( this.targetIsInHorizontalBlockedRange( targetHitbox ) ) {
+        if ( this.targetIsInHorizontalBlockedRange( targetHitbox ) ) {
             if ( this.targetIsInLeftBlockedRange( targetHitbox, direction ) ) {
                 return true;
             }
-            else if ( this.targetIsInRightBlockedRange( targetHitbox, direction ) ) {
+            if ( this.targetIsInRightBlockedRange( targetHitbox, direction ) ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    checkForDoorRange( doorHitbox, direction ) {
+        if ( !doorHitbox ) {
+            return false;
+        }
+        if ( this.targetIsInVerticalActionRange( doorHitbox ) ) {
+            if ( this.targetIsInUpDoorRange( doorHitbox, direction ) ) {
+                return true;
+            }
+            if ( this.targetIsInDownDoorRange( doorHitbox, direction ) ) {
+                return true;
+            }
+        }
+        if ( this.targetIsInHorizontalActionRange( doorHitbox ) ) {
+            if ( this.targetIsInLeftDoorRange( doorHitbox, direction ) ) {
+                return true;
+            }
+            if ( this.targetIsInRightDoorRange( doorHitbox, direction ) ) {
                 return true;
             }
         }
@@ -133,6 +156,35 @@ class I_Hitbox {
     targetIsInRightBlockedRange( targetHitbox, direction ){
         const targetIsToTheRight  = this.right( ) < targetHitbox.right( );
         const rightCollidesWithTargetLeft = this.right( ) >= targetHitbox.left( );
+
+        return direction == FACING_RIGHT && rightCollidesWithTargetLeft && targetIsToTheRight;
+    }
+
+    //DOOR
+    targetIsInUpDoorRange( targetHitbox, direction ) {
+        const targetIsUp = this.top( ) > targetHitbox.top( );
+        const topCollidesWithTargetBottom = this.innerTop( ) <= targetHitbox.innerBottom( );
+
+        return direction == FACING_UP && topCollidesWithTargetBottom && targetIsUp;
+    }
+
+    targetIsInDownDoorRange( targetHitbox, direction ) {
+        const targetIsBelow    = this.bottom( ) < targetHitbox.bottom( );
+        const bottomCollidesWithTargetTop = this.innerBottom( ) >= targetHitbox.innerTop( )
+
+        return direction == FACING_DOWN && bottomCollidesWithTargetTop && targetIsBelow;
+    }
+
+    targetIsInLeftDoorRange( targetHitbox, direction ) {
+        const targetIsToTheLeft    = this.left( ) > targetHitbox.left( );
+        const leftCollidesWithTargetRight = this.innerLeft( ) <= targetHitbox.innerRight( );
+
+        return direction == FACING_LEFT && leftCollidesWithTargetRight && targetIsToTheLeft;
+    }
+
+    targetIsInRightDoorRange( targetHitbox, direction ){
+        const targetIsToTheRight  = this.right( ) < targetHitbox.right( );
+        const rightCollidesWithTargetLeft = this.innerRight( ) >= targetHitbox.innerLeft( );
 
         return direction == FACING_RIGHT && rightCollidesWithTargetLeft && targetIsToTheRight;
     }

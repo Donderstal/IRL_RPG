@@ -18,14 +18,6 @@ const handleActionButton = ( ) => {
             GAME.activeAction = e.actionSelector.evaluate( );
         }
     } )
-
-    GAME.BACK.grid.array.forEach( ( e ) => { 
-        if ( e.hasEvent && e.eventType == EVENT_DOOR) {
-            if ( PLAYER.hitbox.checkForActionRange( e.event.hitbox, PLAYER.direction ) && e.event.direction == PLAYER.direction) {
-                GAME.activeAction = e.event.hitbox;
-            }
-        }
-    })
     
     if ( PLAYER.currentTileBack != undefined && PLAYER.currentTileBack.hasEvent ) {
         GAME.activeAction =  PLAYER.currentTileBack.event

@@ -12,7 +12,7 @@ const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
     {
-        mapName: "lennart-neighbourhood/Newtown-appartment-3",
+        mapName: "leonard_heights/Newtown-appartment-3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
@@ -27,7 +27,7 @@ const STORY_EVENTS = [
     },
     ////////////////////
     {
-        mapName: "lennart-neighbourhood/E3",
+        mapName: "leonard_heights/E3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
@@ -37,7 +37,7 @@ const STORY_EVENTS = [
     },
     //////////////////////////
     {
-        mapName: "lennart-neighbourhood/Newtown-appartment-4",
+        mapName: "leonard_heights/Newtown-appartment-4",
         trigger: ON_POSITION,
         position: {
             "col": 3,
@@ -51,7 +51,7 @@ const STORY_EVENTS = [
     },
     //////////////////////////
     {
-        mapName: "lennart-neighbourhood/C4",
+        mapName: "leonard_heights/C4",
         trigger: ON_POSITION,
         position: {
             "col": 20,

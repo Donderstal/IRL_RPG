@@ -1,4 +1,5 @@
-const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
+const { EVENT_DOOR } = require('../../game-data/conditionGlobals');
+const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING, STATE_MOVING, DISPLAY_MODE_PORTRAIT } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers');
 const { tryCatch } = require('../../helpers/errorHelpers');
 const mapControls = require('./mapControls');
@@ -12,9 +13,13 @@ const mapControls = require('./mapControls');
  * @param {Game} GAME Instance of the Game class in Game.js
  */
 const handleMapAnimations = ( GAME ) => {
-    canvas.clearEntireCanvas("FRONT")
-    canvas.clearEntireCanvas("SPEECH")
-    
+    const PLAYER = GAME.PLAYER;
+    canvas.clearEntireCanvas("FRONT");
+
+    if ( DISPLAY_MODE_PORTRAIT ) {
+        canvas.clearEntireCanvas("SPEECH");
+    }
+
     drawSpritesInOrder( GAME )
 
     clearMargins( GAME );      
@@ -38,7 +43,16 @@ const handleMapAnimations = ( GAME ) => {
         canvas.clearEntireCanvas("FRONT_GRID");
         GAME.FRONTGRID.drawMapFromGridData( GAME.FRONTGRID.sheetImage );
     }
+
     GAME.speechBubbleController.drawBubbles( );
+
+    GAME.BACK.grid.array.forEach( ( e ) => { 
+        if ( e.hasEvent && e.eventType == EVENT_DOOR ) {
+            if ( e.event.direction == PLAYER.direction && PLAYER.hitbox.checkForDoorRange( e.event, PLAYER.direction ) ) {
+                e.event.handle( );
+            }
+        }
+    })
 }
 
 const handleRoadNetworkFuncs = ( GAME ) => {
