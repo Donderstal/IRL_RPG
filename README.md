@@ -13,6 +13,9 @@ Try the latest the game at: http://34.90.228.47/
 ### LOG
 
 #### FEB 27, 2022
+* Cleaning and simplifying equipment and inventory system
+
+#### FEB 27, 2022
 * Restored walk-in doors
 * Python script for quickly importing neighbourhood from mapmaker
 

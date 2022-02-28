@@ -1,5 +1,3 @@
-const { ATT_HEALTH_POINTS, ATT_POWER_POINTS } = require('../../game-data/globals');
-const { MOVE_TYPE_HEAL, MOVE_TYPE_SP_ATTACK } = require('../../game-data/moveGlobals');
 const { StackedItem } = require('./StackedItem');
 /**
  * An instance of the Inventory class is given to each Party instance in the game.
@@ -10,21 +8,8 @@ class Inventory {
     constructor( ) {
         this.ItemList = [];
         this.ActiveItemIDs = [];
-        this.Money = 0;
     }
-
     get activeItems( ) { return this.ItemList.filter( ( Item ) => { return Item.Quantity > 0 } ) };
-    get itemsAvailableInBattle( ) { return this.activeItems.filter( ( ItemStack ) => { return ItemStack.Item.canBeUsed } ) };
-
-    addMoney( value ) {
-        this.Money += value;
-    }
-    subtractMoney( value ) {
-        this.Money -= value;
-    }
-    canSpendAmount( amount ) {
-        return amount <= this.Money
-    }
     /**
      * Return true if the given String is in this.ActiveItemIDs.
      * @param {String} itemID 
@@ -33,11 +18,11 @@ class Inventory {
         return this.ActiveItemIDs.includes( itemID ); 
     }
     /**
-     * If one of the ItemStack in this.itemList has given string as ID, return it.
+     * If one of the ItemStacks in this.itemList has given string as ItemTypeID, return it.
      * @param {String} itemID 
      */
     getItemStackById( itemID ) {
-        let ItemStack;
+        let ItemStack = false;
         this.ItemList.forEach( ( e ) => {
             if ( e.ItemTypeId == itemID ) {
                 ItemStack = e;
@@ -46,73 +31,59 @@ class Inventory {
         return ItemStack
     }
     /**
+     * Get the Item instance associated to an ItemStack
+     * @param {string} itemID 
+     */
+    getItemInStack( itemID ) {
+        const stack = this.getItemStackById( itemID )
+        return stack ? stack.Item : stack;
+    }
+    /**
+     * Check if given itemID is already equipped to character
+     * If another item is equipped to character, enquip it
+     * Equip item associated width given id to character
+     * @param {Character} character 
+     * @param {String} itemID 
+     */
+    equipNewItemToCharacter( character, itemID ) {
+        try {
+            this.unequipItem( character );
+            this.equipItem( character, itemID );            
+        }
+        catch( ex ) {
+            console.log(ex)
+        }
+    }
+    /**
      * Get the ItemStack instance associated with given String.
-     * Then, call the ItemStacks' equipItem method with the given Character instance as argument.
+     * Then, call the equip methods of Character and ItemStack
      * @param {Character} character 
      * @param {String} itemID 
      */
     equipItem( character, itemID ) {
-        let ItemStack = this.getItemStackById( itemID );
-        ItemStack.equipItem( character );
-    }
-    /**
-     * Get the ItemStack instance associated with given String.
-     * Then, call the ItemStacks' unequipItem method with the given Character instance as argument.
-     * @param {Character} character 
-     * @param {String} itemID 
-     */
-    unequipItem( character, itemID ) {
-        let ItemStack = this.getItemStackById( itemID );
-        ItemStack.unequipItem( character );
-    }
-    /**
-     * Get the ItemStack instance associated with given String.
-     * Then handle the effect associated with the item and decrement the ItemStack
-     * @param {Character} character 
-     * @param {String} itemID 
-     */
-    useItem( targetCharacter, itemID ) {
-        let ItemStack = this.getItemStackById( itemID );
-        let resultText;
-
-        switch( ItemStack.Item.Type ) {
-            case MOVE_TYPE_HEAL:
-                ItemStack.Item.Effects.forEach( ( e ) => {
-                    console.log(e)
-                    if ( e[0] == ATT_HEALTH_POINTS ) {
-                        let pointsHealed = targetCharacter.heal( e[1] )
-                        resultText = targetCharacter.Name + " heals " + pointsHealed + " HP!";
-                    }
-                    else if ( e[0] == ATT_POWER_POINTS ) {
-                        let pointsHealed = targetCharacter.healPP( e[1] )
-                        resultText = targetCharacter.Name + " heals " + pointsHealed + " PP!";
-                    }
-                } )
-                break;
-            case MOVE_TYPE_SP_ATTACK:
-                ItemStack.Item.Effects.forEach( ( e ) => {
-                    console.log(e)
-                    if ( e[0] == ATT_HEALTH_POINTS ) {
-                        let pointsLost = targetCharacter.takeDamage( e[1] )
-                        resultText = targetCharacter.Name + " loses " + pointsLost + " HP!";
-                    }
-                    else if ( e[0] == ATT_POWER_POINTS ) {
-                        let pointsLost = targetCharacter.spendPP( e[1] )
-                        resultText = targetCharacter.Name + " loses " + pointsLost + " PP!";
-                    }
-                } )
-                break;
+        if ( itemID == character.EquippedItemId ) {
+            return;
         }
-        this.subtractItemFromStackAtIndex( this.ItemList.indexOf( ItemStack ) )
-        return resultText;
+        let ItemStack = this.getItemStackById( itemID );
+        if ( ItemStack && ItemStack.Quantity > 0 ) {
+            character.equipItem( itemID );
+            ItemStack.equipItem( );               
+        } 
     }
     /**
      * Get the ItemStack instance associated with given String.
-     * Then handle the effect associated with the item and decrement the ItemStack
+     * Then, call the unequip methods of Character and ItemStack
      * @param {Character} character 
      * @param {String} itemID 
      */
-    
+    unequipItem( character ) {
+        if ( character.equippedItem ) {
+            let id = character.EquippedItemId;
+            let ItemStack = this.getItemStackById( id );
+            character.unequipItem( );
+            ItemStack.unequipItem( id );
+        }
+    }
     /**
      * Loop through the given array of itemIDs.
      * If a itemID is alreay in this.ActiveItemIDs, call the addItem method from the associated ItemStack.
@@ -135,56 +106,36 @@ class Inventory {
         });
     }
     /**
-     * Initialize an empty array.
      * Loop through the given array of itemIDs.
-     * If the itemID is associated with a ItemStack instance, push the ItemStacks array index to the local array.
-     * Then, loop through the local array and call subtractItemFromStackAtIndex for each.
+     * If the itemID is associated with a ItemStack instance, push the ItemStacks array index to item index array.
+     * Then, loop through the item index array and call subtractItemFromStackAtIndex for each.
      * @param {String[]} itemIDsToRemove 
      */
     removeItemsFromInnerListByID( itemIDsToRemove ) {
-        let itemsToRemoveIndexes = [];
-        itemIDsToRemove.forEach( ( itemID ) => {
-            if ( this.hasItem( itemID ) ) {
-                this.ItemList.forEach( ( stackedItem, index ) => {
-                    if ( stackedItem.ItemTypeId == itemID ) {
-                        itemsToRemoveIndexes.push( index )
+        itemIDsToRemove.forEach( ( itemId ) => {
+            if ( this.hasItem( itemId ) ) {
+                this.ItemList.forEach( ( stackedItem ) => {
+                    if ( stackedItem.ItemTypeId == itemId ) {
+                        this.subtractItemFromStackAtIndex( itemId )
                     }   
                 })
             }
         } ) 
-
-        itemsToRemoveIndexes.forEach( ( itemIndex ) => {
-            this.subtractItemFromStackAtIndex( itemIndex )
-        } )
     }
     /**
-     * Call the subtractItem method of the ItemStack instance at given index.
-     * If stackedItem.Quantity is below one, remove the ItemStack and it's ID from the Inventory arrays.
+     * Call the subtractItem method of the ItemStack instance with given id.
+     * If stackedItem.Quantity is below one, remove the ItemStack and its ID from the Inventory arrays.
      * @param {Number} itemIndex 
      */
-    subtractItemFromStackAtIndex( itemIndex ) {
-        let stackedItem = this.ItemList[itemIndex]
-        stackedItem.subtractItem( );
-
-        if ( stackedItem.PendingForUsageQuantity > 0 ) {
-            stackedItem.subtractPendingForUsage( );
+    subtractItemFromStackAtIndex( itemId ) {
+        let stackedItem = this.getItemStackById( itemId );
+        if ( stackedItem.Quantity != 0 ) {
+            stackedItem.subtractItem( );            
         }
 
-        if ( stackedItem.Quantity < 1 ) {
-            this.ActiveItemIDs.splice( this.ActiveItemIDs.indexOf[stackedItem.ItemTypeId], 1 );
-            this.ItemList.splice( itemIndex, 1 )
-        }
-    }
-    /**
-     * Get the ID of the item in the given slot.
-     * Then, call the unequip item method with the itemId and given Character as arguments
-     * @param {String} slot name of an equipments slot from globals file
-     * @param {Character} character character to unequip item from
-     */
-    unequipItemAtCharacterEquipmentSlot( slot, character ) {
-        const ItemTypeId = character.getItemIdOfItemInEquipmentSlot( slot );
-        if ( ItemTypeId != null ) {
-            this.unequipItem( character, ItemTypeId );
+        if ( stackedItem.Quantity < 1 && stackedItem.EquippedQuantity == 0 ) {
+            this.ActiveItemIDs = this.ActiveItemIDs.filter((item)=>{ return item != itemId });
+            this.ItemList = this.ItemList.filter((item)=>{ return item.ItemTypeId != itemId });
         }
     }
 }

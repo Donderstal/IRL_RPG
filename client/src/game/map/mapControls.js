@@ -22,7 +22,24 @@ const handleMapKeyPress = ( event ) => {
         GAME.activeAction = null;
     }
     else if ( event.key == "1" ) {
-        GAME.save( );
+        GAME.PLAYER_INVENTORY.equipItem( GAME.PARTY_MEMBERS[0], "kitty_necklace_armor_3" );
+        console.log(GAME.PARTY_MEMBERS[0])
+    }
+    else if ( event.key == "2" ) {
+        GAME.PLAYER_INVENTORY.unequipItem( GAME.PARTY_MEMBERS[0] );
+        console.log(GAME.PARTY_MEMBERS[0]);
+    }
+    else if ( event.key == "3" ) {
+        GAME.PLAYER_INVENTORY.addItemsToInnerListByID( [ "kitty_necklace_armor_3" ] );
+    }
+    else if ( event.key == "4" ) {
+        GAME.PLAYER_INVENTORY.removeItemsFromInnerListByID( [ "kitty_necklace_armor_3", "phone_misc_1" ] )
+    }
+    else if ( event.key == "0" ) {
+        GAME.PLAYER_ITEMS.forEach((e)=>{
+            console.log(e.ItemTypeId);
+            console.log(e.Quantity)
+        });
     }
     else if ( !GAME.cinematicMode ) {
         GAME.pressedKeys[event.key] = true        

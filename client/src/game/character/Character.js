@@ -1,5 +1,5 @@
 const { BaseEntity } = require('../interfaces/I_BaseEntity')
-const { Equipment } = require('./Equipment')
+const { getItemDataById } = require('../../resources/itemResources')
 
 /**
  * ( INCOMPLETE )
@@ -10,8 +10,10 @@ class Character extends BaseEntity {
     constructor( name, className, level ) { 
         super( name, className, level ) 
         this.setExperiencePointsFromLevel( );
-        this.Equipment = new Equipment( );
+        this.EquippedItemId = false;
     }
+
+    get equippedItem() { return this.EquippedItemId ? getItemDataById(this.EquippedItemId) : this.EquippedItemId }
     get activeAttributeValues( ) { return this.getActiveAttributes( ) }
 
     getExperienceValue( ) {
@@ -64,24 +66,15 @@ class Character extends BaseEntity {
      * Call unequipItem method of this.Equipment with itemToUnequip as argument
      * @param {GameItem} itemToUnequip 
      */
-    unequipItem( itemToUnequip ) {
-        this.Equipment.unequipItem( itemToUnequip );
+    unequipItem( ) {
+        this.EquippedItemId = false;
     }
     /**
      * Call equipItem method of this.Equipment with itemToEquip as argument
      * @param {GameItem} itemToUnequip 
      */
     equipItem( itemToEquip ) {
-        this.Equipment.equipItem( itemToEquip );
-    }
-    /**
-     * Call this.unequip with the Id of the item at given slot
-     * @param {String} slotName string corresponding to a prop name of the Equipment class
-     */
-    getItemIdOfItemInEquipmentSlot( slotName ) {
-        if ( this.Equipment[slotName] != null ) {
-            return this.Equipment[slotName].ItemTypeId;
-        }
+        this.EquippedItemId = itemToEquip;
     }
 }
 

@@ -32,11 +32,9 @@ const { setInteractionRegistry } = require('../helpers/interactionRegistry')
 const { setUnlockedDoorsRegistry } = require('../helpers/doorRegistry')
 const { MenuCanvas } = require('./menuCanvas/MenuCanvas')
 const { CameraFocus } = require('../helpers/cameraFocus')
-const startingItemIDs = [
-    "pp_consumable_1", "pp_consumable_1",
-    "hp_consumable_1", "hp_consumable_1", "shirt_armor_1", "shirt_armor_2", "shirt_armor_3", "ranged_weapon_1",  
-    "phone_misc_1", "old_sneakers_armor_2", "dirty_beanie_armor_3", "kitty_necklace_armor_3",
-    "dirty_beanie_armor_3", "key_1", "usable_1", "usable_1", "ranged_weapon_1", "lower_body_armor_1", "lower_body_armor_1"
+
+const startingItemIDs = [  
+    "phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"
 ]
 
 class Game {
@@ -271,7 +269,6 @@ class Game {
             ], 
         true );
         this.party.addItemsToInventory( startingItemIDs )
-        this.party.inventory.addMoney( 50 );
     }
     /**
      * Start listening for keypress in controls.js. Start requesting animationframe in animationframecontroller.js
