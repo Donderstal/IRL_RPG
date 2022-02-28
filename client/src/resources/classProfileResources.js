@@ -1,245 +1,155 @@
-const { 
-    ATT_HEALTH_POINTS, ATT_POWER_POINTS, ATT_PH_ATTACK, ATT_PH_DEFENSE,
-    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK,
-    MODI_VERY_LOW, MODI_LOW, MODI_STANDARD, MODI_HIGH, MODI_VERY_HIGH,
+const FAT_FEDORA_GUY = "FAT FEDORA GUY";
+const TOUGH_GUY = "TOUGH GUY";
+const SUNGLASSES_LADY = "SUNGLASSES LADY";
+const GRANNY = "GRANNY";
+const TOUGH_GUY_WITH_COOL_HAIR = "TOUGH GUY WITH COOL HAIR";
+const PIGEON = "PIGEON";
+const BUSINESS_MAN = "BUSINESS MAN";
+const STRONG_GUY = "STRONG GUY";
+const BURLY_GUY = "BURLY GUY";
+const GREEN_SHIRTED_STRONG_GUY = "GREEN SHIRTED STRONG GUY";
+const DORKY_GUY = "DORKY GUY";
+const TOUGH_GUY_WITH_DARK_HAIR = "TOUGH GUY WITH DARK HAIR";
+const TOUGH_GUY_WITH_COOL_SHIRT = "TOUGH GUY WITH COOL SHIRT";
+const FAT_BUFF_GUY = "FAT BUFF GUY";
+const BALD_BEER_BELLY_GUY = "BALD BEER BELLY GUY";
+const BLONDE_BEER_BELLY_GUY = "BLONDE BEER BELLY GUY";
+const PINK_HAIRED_FAT_GUY = "PINK HAIRED FAT GUY";
+const YELLOW_SHIRT_LADY = "YELLOW SHIRT LADY";
+const GREEN_HAIR_LADY = "GREEN HAIR LADY";
+const SUPERMARKET_MANAGER = "SUPERMARKET MANAGER";
+const MONKEY_CEO = "MONKEY CEO";
+const WHITE_PONY_TAIL_LADY = "WHITE PONY TAIL LADY";
+const BLACK_PONY_TAIL_LADY = "BLACK PONY TAIL LADY";
+const ROBOT = "ROBOT";
+const PINK_HAIR_NERD_LADY = "PINK HAIR NERD LADY";
+const BLONDE_NERD_LADY = "BLONDE NERD LADY";
+const DARK_HAIR_NERD_LADY = "DARK HAIR NERD LADY";
 
-    TEST_CLASSNAME_1, TEST_CLASSNAME_2, TEST_CLASSNAME_3,
-    TEST_CLASSNAME_4, TEST_CLASSNAME_5, TEST_CLASSNAME_6,
-    TEST_CLASSNAME_7, TEST_CLASSNAME_8, TEST_CLASSNAME_9,
-    TEST_CLASSNAME_10, TEST_CLASSNAME_11, TEST_CLASSNAME_12, 
-    TEST_CLASSNAME_13, TEST_CLASSNAME_14, TEST_CLASSNAME_15,
-    TEST_CLASSNAME_16, TEST_CLASSNAME_17, TEST_CLASSNAME_18,
-    TEST_CLASSNAME_19, TEST_CLASSNAME_20, TEST_CLASSNAME_21,
-    TEST_CLASSNAME_22, TEST_CLASSNAME_23, TEST_CLASSNAME_24,
-    TEST_CLASSNAME_25, TEST_CLASSNAME_26, TEST_CLASSNAME_27,
-
-    TEST_CLASSPROFILE_1, TEST_CLASSPROFILE_2,
-    TEST_CLASSPROFILE_3, TEST_CLASSPROFILE_4
-}= require('../game-data/globals');
-
-const {
-    HEAL_SMALL, HEAL_LARGE, HEAL_PP,
-    SMALL_PH_ATTK_UP, SMALL_PH_ATTK_DOWN,
-    SMALL_PH_DEF_UP, SMALL_PH_DEF_DOWN, 
-    SMALL_SP_ATTK_UP, SMALL_SP_ATTK_DOWN,
-    SMALL_SP_DEF_UP, SMALL_SP_DEF_DOWN,
-    SMALL_SPEED_UP, SMALL_SPEED_DOWN,
-    SMALL_LUCK_UP, SMALL_LUCK_DOWN,
-    PH_ATTK_1, PH_ATTK_2,
-    SP_ATTK_1, SP_ATTK_2
-} = require('./battleMoveResources');
-const { getMoveAnimationData } = require('./moveAnimationScripts');
-
-const TEST_CLASSPROFILE_MODIFIERS_1 = {
-    [ATT_HEALTH_POINTS]: MODI_STANDARD,
-    [ATT_POWER_POINTS]: MODI_STANDARD,
-    [ATT_PH_ATTACK]: MODI_VERY_HIGH,
-    [ATT_PH_DEFENSE]: MODI_LOW,
-    [ATT_SP_ATTACK]: MODI_VERY_HIGH,
-    [ATT_SP_DEFENSE]: MODI_LOW,
-    [ATT_SPEED]: MODI_LOW,
-    [ATT_LUCK]: MODI_LOW 
-};
-const TEST_CLASSPROFILE_MOVES_1 = [
-    { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST"  },
-    { move : SMALL_PH_ATTK_UP, level: 5, animation: "STAT_UP" },
-    { move : PH_ATTK_1, level: 10, animation: "PHYISCAL_ATTACK_TEST_2" }
-];
-const TEST_CLASSPROFILE_MODIFIERS_2 = {
-    [ATT_HEALTH_POINTS]: MODI_LOW,
-    [ATT_POWER_POINTS]: MODI_LOW,
-    [ATT_PH_ATTACK]: MODI_STANDARD,
-    [ATT_PH_DEFENSE]: MODI_STANDARD,
-    [ATT_SP_ATTACK]: MODI_STANDARD,
-    [ATT_SP_DEFENSE]: MODI_STANDARD,
-    [ATT_SPEED]: MODI_VERY_HIGH,
-    [ATT_LUCK]: MODI_STANDARD 
-};
-const TEST_CLASSPROFILE_MOVES_2 = [
-    { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST" },
-    { move : SP_ATTK_1, level: 5, animation: "SPECIAL_ATTACK_TEST" },
-    { move : SMALL_SPEED_UP, level: 10, animation: "STAT_UP" }
-];
-const TEST_CLASSPROFILE_MODIFIERS_3 = {
-    [ATT_HEALTH_POINTS]: MODI_STANDARD,
-    [ATT_POWER_POINTS]: MODI_STANDARD,
-    [ATT_PH_ATTACK]: MODI_LOW,
-    [ATT_PH_DEFENSE]: MODI_VERY_HIGH,
-    [ATT_SP_ATTACK]: MODI_LOW,
-    [ATT_SP_DEFENSE]: MODI_VERY_HIGH,
-    [ATT_SPEED]: MODI_VERY_LOW,
-    [ATT_LUCK]: MODI_STANDARD 
-}
-const TEST_CLASSPROFILE_MOVES_3 = [
-    { move : PH_ATTK_1, level: 1, animation: "PHYISCAL_ATTACK_TEST" },
-    { move : SMALL_PH_DEF_UP, level: 5, animation: "STAT_UP" },
-    { move : SMALL_SP_DEF_UP, level: 10, animation: "STAT_UP" }
-];
-const TEST_CLASSPROFILE_MODIFIERS_4 = {
-    [ATT_HEALTH_POINTS]: MODI_VERY_LOW,
-    [ATT_POWER_POINTS]: MODI_VERY_HIGH,
-    [ATT_PH_ATTACK]: MODI_VERY_LOW,
-    [ATT_PH_DEFENSE]: MODI_VERY_LOW,
-    [ATT_SP_ATTACK]: MODI_VERY_HIGH,
-    [ATT_SP_DEFENSE]: MODI_VERY_HIGH,
-    [ATT_SPEED]: MODI_VERY_LOW,
-    [ATT_LUCK]: MODI_VERY_HIGH
-}
-const TEST_CLASSPROFILE_MOVES_4 = [
-    { move : HEAL_SMALL, level: 1, animation: "HEAL_TEST" },
-    { move : HEAL_PP, level: 5, animation: "HEAL_TEST" },
-    { move : SP_ATTK_2, level: 10, animation: "SPECIAL_ATTACK_TEST" }
-];
-const getAttributeModifierByClassProfile = ( classProfile ) => {
-    switch ( classProfile ) {
-        case TEST_CLASSPROFILE_1:
-            return TEST_CLASSPROFILE_MODIFIERS_1;
-        case TEST_CLASSPROFILE_2: 
-            return TEST_CLASSPROFILE_MODIFIERS_2;
-        case TEST_CLASSPROFILE_3: 
-            return TEST_CLASSPROFILE_MODIFIERS_3;
-        case TEST_CLASSPROFILE_4: 
-            return TEST_CLASSPROFILE_MODIFIERS_4;
-    }
-};
 const getClassProfile = ( className ) => {
-    switch ( className ) {
-        case TEST_CLASSNAME_2:
-        case TEST_CLASSNAME_5: 
-        case TEST_CLASSNAME_8:
-        case TEST_CLASSNAME_9:
-        case TEST_CLASSNAME_10:
-        case TEST_CLASSNAME_14:
-            return TEST_CLASSPROFILE_1;
-        case TEST_CLASSNAME_3: 
-        case TEST_CLASSNAME_6: 
-            return TEST_CLASSPROFILE_2;
-        case TEST_CLASSNAME_1: 
-        case TEST_CLASSNAME_15:
-        case TEST_CLASSNAME_16:
-            return TEST_CLASSPROFILE_3;
-        case TEST_CLASSNAME_7:
-        case TEST_CLASSNAME_4: 
-            return TEST_CLASSPROFILE_4;
-    }
+    return "HACKER"
 };
 const getClassSprite = ( className, getBattleSprite = false ) => {
     const spriteFolder = '/static/sprites/';
     let spriteSrc = "";
 
     switch ( className ) {
-        case TEST_CLASSNAME_1:
+        case FAT_FEDORA_GUY:
             spriteSrc = 'neckbeard';
             break;
-        case TEST_CLASSNAME_2: 
+        case TOUGH_GUY: 
             spriteSrc = 'chad';
             break;
-        case TEST_CLASSNAME_3: 
+        case SUNGLASSES_LADY: 
             spriteSrc = 'woman';
             break;
-        case TEST_CLASSNAME_4: 
+        case GRANNY: 
             spriteSrc = 'characterx3';
             break;
-        case TEST_CLASSNAME_5: 
+        case TOUGH_GUY_WITH_COOL_SHIRT: 
             spriteSrc = 'characterx5';
             break;
-        case TEST_CLASSNAME_6: 
+        case PIGEON: 
             spriteSrc = 'pigeon';
             break;
-        case TEST_CLASSNAME_7:
+        case BUSINESS_MAN:
             spriteSrc = 'business_man';
             break;
-        case TEST_CLASSNAME_8:
+        case STRONG_GUY:
             spriteSrc = 'chad_recolour01';
             break;
-        case TEST_CLASSNAME_9:
+        case BURLY_GUY:
             spriteSrc = 'chad_recolour02';
             break;
-        case TEST_CLASSNAME_10:
+        case GREEN_SHIRTED_STRONG_GUY:
             spriteSrc = 'chad_recolour03';
             break;
-        case TEST_CLASSNAME_11:
+        case DORKY_GUY:
             spriteSrc = 'character_x1_recolour01';
             break;
-        case TEST_CLASSNAME_12:
+        case TOUGH_GUY_WITH_DARK_HAIR:
             spriteSrc = 'character_x4';
             break;
-        case TEST_CLASSNAME_13:
+        case TOUGH_GUY_WITH_COOL_SHIRT:
             spriteSrc = 'character_x5_recolour';
             break;
-        case TEST_CLASSNAME_14:
+        case FAT_BUFF_GUY:
             spriteSrc = 'fats';
             break;
-        case TEST_CLASSNAME_15:
+        case BALD_BEER_BELLY_GUY:
             spriteSrc = 'generic_balding_guy';
             break;
-        case TEST_CLASSNAME_16:
+        case BLONDE_BEER_BELLY_GUY:
             spriteSrc = 'generic_blonde_guy';
             break;
-        case TEST_CLASSNAME_17:
+        case PINK_HAIRED_FAT_GUY:
             spriteSrc = 'fats_recolour';
             break;
-        case TEST_CLASSNAME_18:
+        case YELLOW_SHIRT_LADY:
             spriteSrc = 'new_girl';
             break;
-        case TEST_CLASSNAME_19:
+        case GREEN_HAIR_LADY:
             spriteSrc = 'new_girl_recolour';
             break;
-        case TEST_CLASSNAME_20:
+        case SUPERMARKET_MANAGER:
             spriteSrc = 'manager';
             break;
-        case TEST_CLASSNAME_21:
+        case MONKEY_CEO:
             spriteSrc = 'monkey_ceo';
             break;
-        case TEST_CLASSNAME_22:
+        case WHITE_PONY_TAIL_LADY:
             spriteSrc = 'pony_tail';
             break;
-        case TEST_CLASSNAME_23:
+        case BLACK_PONY_TAIL_LADY:
             spriteSrc = 'pony_tail_recolour';
             break;
-        case TEST_CLASSNAME_24:
+        case ROBOT:
             spriteSrc = 'robot';
             break;
-        case TEST_CLASSNAME_25:
+        case PINK_HAIR_NERD_LADY:
             spriteSrc = 'tumbler_girl';
             break;
-        case TEST_CLASSNAME_26:
+        case BLONDE_NERD_LADY:
             spriteSrc = 'tumbler_girl_recolour01';
             break;
-        case TEST_CLASSNAME_27:
+        case DARK_HAIR_NERD_LADY:
             spriteSrc = 'tumbler_girl_recolour02';
             break;
     }
 
     return spriteFolder + spriteSrc + ( getBattleSprite ? "_fight" : "") + '.png'; 
 };
-const getMoves = ( classProfile, level ) => {
-    switch ( classProfile ) {
-        case TEST_CLASSPROFILE_1:
-            return filterMoves( level, TEST_CLASSPROFILE_MOVES_1 );
-        case TEST_CLASSPROFILE_2: 
-            return filterMoves( level, TEST_CLASSPROFILE_MOVES_2 );
-        case TEST_CLASSPROFILE_3: 
-            return filterMoves( level, TEST_CLASSPROFILE_MOVES_3 );
-        case TEST_CLASSPROFILE_4: 
-            return filterMoves( level, TEST_CLASSPROFILE_MOVES_4 );
-    }
-}
-const filterMoves = ( level, moveObjectsList ) => {
-    let validMovesArray = [ ];
-    moveObjectsList.forEach( ( moveObject ) => {
-        if ( moveObject.level <= level ) {
-            let move = moveObject.move;
-            move.animation = getMoveAnimationData( moveObject.animation );
-            validMovesArray.push( move );
-        }
-    })
-    return validMovesArray;
-}
 module.exports = {
-    getAttributeModifierByClassProfile,
     getClassProfile,
     getClassSprite,
-    getMoves
+
+    // classes
+    FAT_FEDORA_GUY,
+    TOUGH_GUY,
+    SUNGLASSES_LADY,
+    GRANNY,
+    TOUGH_GUY_WITH_COOL_SHIRT,
+    PIGEON,
+    BUSINESS_MAN,
+    STRONG_GUY,
+    BURLY_GUY,
+    GREEN_SHIRTED_STRONG_GUY,
+    DORKY_GUY,
+    TOUGH_GUY_WITH_DARK_HAIR, 
+    TOUGH_GUY_WITH_COOL_SHIRT,
+    FAT_BUFF_GUY,
+    BALD_BEER_BELLY_GUY,
+    BLONDE_BEER_BELLY_GUY,
+    PINK_HAIRED_FAT_GUY,
+    YELLOW_SHIRT_LADY, 
+    GREEN_HAIR_LADY,
+    SUPERMARKET_MANAGER,
+    MONKEY_CEO,
+    WHITE_PONY_TAIL_LADY,
+    BLACK_PONY_TAIL_LADY,
+    ROBOT,
+    PINK_HAIR_NERD_LADY,
+    BLONDE_NERD_LADY,
+    DARK_HAIR_NERD_LADY
 }
 

@@ -8,7 +8,6 @@ const { getEffect } = require('../helpers/effectHelpers');
 const globals = require('../game-data/globals');
 const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers');
-const { TransparentTiles } = require('../helpers/TransparentTiles');
 const { tryCatch } = require('../helpers/errorHelpers');
 const mapObjectResources = require('../resources/mapObjectResources');
 /**

@@ -4,7 +4,7 @@ const controls      = require('./controls')
 const tilesheets    = require('../resources/tilesheetResources').sheets
 const { 
     CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN,
-    TEST_CLASSNAME_2, TEST_CLASSNAME_4, TEST_CLASSNAME_5
+    TOUGH_GUY, GRANNY, TOUGH_GUY_WITH_COOL_SHIRT
 }  = require('../game-data/globals')
 const { 
     ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR, ON_NPC_INTERACTION
@@ -261,13 +261,11 @@ class Game {
      * @param {String} className name of the class that the player selected
      */
     initializePlayerParty( name ) {
-        this.party = new Party( 
-            [ 
-                { name: name, className: TEST_CLASSNAME_2, level: 5 }, 
-                { name: "Roberto 'Rob' Felix", className: TEST_CLASSNAME_5, level: 5 }, 
-                { name: "Your nan", className: TEST_CLASSNAME_4, level: 5 } 
-            ], 
-        true );
+        this.party = new Party( [ 
+            { name: name, className: TOUGH_GUY }, 
+            { name: "Roberto 'Rob' Felix", className: TOUGH_GUY_WITH_COOL_SHIRT }, 
+            { name: "Your nan", className: GRANNY } 
+        ] );
         this.party.addItemsToInventory( startingItemIDs )
     }
     /**

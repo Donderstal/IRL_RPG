@@ -1,6 +1,5 @@
-const { Character } = require('../character/Character');
+const { Character } = require('./Character');
 const { Inventory } = require('./Inventory');
-const { handleMoveExecution } = require('../../helpers/moveHelpers')
 
 const globals = require('../../game-data/globals');
 /**
@@ -9,50 +8,16 @@ const globals = require('../../game-data/globals');
  * A Party is also instantiated for the opponents of the player when a battle begins.
  */
 class Party {
-    constructor( partyMembers, isPlayerParty ) {
-        this.isPlayer           = isPlayerParty;
-        this.inMoveSelection    = false;
+    constructor( partyMembers ) {
         this.members            = [ ];
         this.partySize          = partyMembers.length
         this.inventory          = new Inventory( );
         
-        partyMembers.forEach( ( newMember, index ) => {
-            this.members.push( new Character( newMember.name, newMember.className, newMember.level ) );
+        partyMembers.forEach( ( newMember ) => {
+            this.members.push( new Character( newMember.name, newMember.className ) );
         } );        
 
         this.memberActiveOnMapIndex = 0;
-    }
-
-    get isDefeated( ) {
-        for ( var i = 0; i < this.partySize; i++ ) {
-            if ( this.members[i].isLiving ) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    get Level( ) { 
-        let counter = 0;
-        this.members.forEach( ( member ) => {
-            counter += member.Level
-        } )
-
-        return Math.round( counter / this.members.length );
-    }
-    fullHealParty( ) {
-        this.members.forEach( ( member ) => {
-            member.fullHeal( );
-            member.fullHealPP( );
-        } )
-    }
-    getExperienceValue( ) {
-        let value = 0;
-        this.members.forEach( ( e ) => {
-            value += e.getExperienceValue( ); 
-        } )
-        return value;
     }
     /**
      * Set the active sprite on the map as the sprite of the party member at given index
@@ -76,10 +41,6 @@ class Party {
      */
     removeItemsFromInventory( itemIDList ) {
         this.inventory.removeItemsFromInnerListByID( itemIDList )
-    }
-
-    doMoveOnTarget( move, moveTarget, performer ) {
-        handleMoveExecution( move, moveTarget, performer )
     }
 }
 

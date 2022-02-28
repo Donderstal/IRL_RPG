@@ -92,7 +92,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
                 })                
                 }
                 this.blockedTiles.forEach( blockedId => {
-                    if (tile.ID == blockedId && (!this.hasTransparentTiles || this.blockedExceptions.indexOf(tile.index) == -1)) {
+                    if (tile.ID == blockedId) {
                         tile.blocked = true;
                     }
                 })
@@ -120,7 +120,6 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.blockedTiles = [ ];
         this.backgroundActions = [];
         this.savepoint = false;
-        this.hasTransparentTiles = false;
         this.transparentTileGroups = [];
     }
 };
