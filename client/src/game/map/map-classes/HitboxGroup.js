@@ -1,10 +1,10 @@
-const I_Hitbox      = require('../../interfaces/I_Hitbox').I_Hitbox;
+const Hitbox      = require('../../core/Hitbox').Hitbox;
 const globals       = require('../../../game-data/globals');
 const { GRID_BLOCK_PX, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 
 const radius = GRID_BLOCK_PX / 2;
 /**
- * A HitboxGroup is a grouping of I_Hitbox instances arranged to be attached to a I_Sprite extension.
+ * A HitboxGroup is a grouping of Hitbox instances arranged to be attached to a Sprite extension.
  * It allows for collision detection for sprites larger than one GRID_BLOCK_PX.
  */
 class HitboxGroup {
@@ -42,14 +42,14 @@ class HitboxGroup {
     /**
      * Initialize an empty array in this.hitboxes.
      * Get the desired xyvalues of the hitboxes from this.getHitboxXYValues.
-     * Loop through the array of xyvalues. For each XY pair, instantiate a I_Hitbox and push it to this.hitboxes.
+     * Loop through the array of xyvalues. For each XY pair, instantiate a Hitbox and push it to this.hitboxes.
      */
     initHitboxes( ) {
         this.hitboxes = [];
         let xyValues = this.getHitboxXYValues( );
 
         xyValues.forEach( ( xy ) => {
-            this.hitboxes.push( new I_Hitbox( xy.x, xy.y, radius ) );
+            this.hitboxes.push( new Hitbox( xy.x, xy.y, radius ) );
         })
     }
     /**
@@ -124,9 +124,9 @@ class HitboxGroup {
         return xyValues;
     }
     /**
-     * First, loop through activeTileIndexes and clear sprite data in each I_Tile associated with an index.
+     * First, loop through activeTileIndexes and clear sprite data in each Tile associated with an index.
      * Then, empty the activeTileIndexes array. Loop through the hitboxesXY array. 
-     * For each hitboxXy, get the I_Tile at that xy, push it to activeTileIndexes and set the spriteId to it.
+     * For each hitboxXy, get the Tile at that xy, push it to activeTileIndexes and set the spriteId to it.
      * Finally, set nextTileIndex by calling getNextTile
      * @param {Object[]} hitboxesXY list of xy pairs from getHitboxXYValues
      */
@@ -143,7 +143,7 @@ class HitboxGroup {
         this.nextTileIndex = nextTile == undefined ? undefined : nextTile.index;
     }
     /**
-     * Get the I_Tile instance that the HitboxGroup is facing and return it.
+     * Get the Tile instance that the HitboxGroup is facing and return it.
      * @param {Object} nextTileXY x y value pair representing a position on the fron canvas
      */
     getNextTile( nextTileXY ) {

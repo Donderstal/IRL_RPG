@@ -1,4 +1,4 @@
-const { GameItem } = require('../interfaces/I_GameItem')
+const { GameItem } = require('./GameItem')
 /**
  * A StackedItem class represents a stack of a GameItem in an Inventory instance
  * This class tracks how many of the GameItem are equipped or in the inventory

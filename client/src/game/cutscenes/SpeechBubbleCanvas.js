@@ -1,7 +1,7 @@
 const { DISPLAY_MODE_PORTRAIT } = require("../../game-data/globals");
-const { I_CanvasWithGrid } = require("../interfaces/I_CanvasWithGrid");
+const { CanvasWithGrid } = require("../core/CanvasWithGrid");
 
-class SpeechBubbleCanvas extends I_CanvasWithGrid {
+class SpeechBubbleCanvas extends CanvasWithGrid {
     constructor( x, y, ctx, canvas ) {
         super( x, y, ctx );
 

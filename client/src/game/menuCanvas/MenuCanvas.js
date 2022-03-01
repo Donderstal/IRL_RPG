@@ -1,5 +1,5 @@
 const globals = require( '../../game-data/globals' );
-const { I_CanvasWithGrid } = require("../interfaces/I_CanvasWithGrid");
+const { CanvasWithGrid } = require("../core/CanvasWithGrid");
 const { 
     GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, DISPLAY_MODE_PORTRAIT
 } = require( '../../game-data/globals' );
@@ -9,7 +9,7 @@ const {
 const { MenuHeader } = require('./menuHeader');
 const { MenuTextBox } = require('./menuTextBox');
 
-class MenuCanvas extends I_CanvasWithGrid {
+class MenuCanvas extends CanvasWithGrid {
     constructor( x, y, ctx, canvas ) {
         super( x, y, ctx );
 

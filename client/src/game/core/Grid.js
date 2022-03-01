@@ -1,13 +1,13 @@
 const { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS, OUT_LEFT, OUT_UP, OUT_RIGHT, OUT_DOWN } = require('../../game-data/globals')
-const { I_Tile } = require('./I_Tile');
+const { Tile } = require('./Tile');
 /**
- * The I_Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
- * It divides the canvas up in a grid of equally sized blocks, represented by an I_Tile instance.
- * These I_Tile instances are stored in the this.array property and are retrievable by array index, xy location and column-row location.
+ * The Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
+ * It divides the canvas up in a grid of equally sized blocks, represented by an Tile instance.
+ * These Tile instances are stored in the this.array property and are retrievable by array index, xy location and column-row location.
  * These tiles in turn register the presence of sprites, doors, action or blocked areas in said tile.
  * This setup is the bases of all interactivity on the game canvases.
  */
-class I_Grid {
+class Grid {
     constructor( x, y, rows, cols, ctx ) {
 
         this.rows = rows;
@@ -25,9 +25,9 @@ class I_Grid {
     get width( ) { return this.cols * GRID_BLOCK_PX }
     get height( ) { return this.rows * GRID_BLOCK_PX }
     /**
-     * Fill this.array with a number I_Tile instances  
+     * Fill this.array with a number Tile instances  
      * Length of array is dependent on this.rows and this.cols props
-     * Calculate the xy position for each new I_Tile instance
+     * Calculate the xy position for each new Tile instance
      */
     initializeGrid( ) {
         const limit = this.rows * this.cols
@@ -37,7 +37,7 @@ class I_Grid {
         let col = 1;
 
         for( var i = 0; i < limit; i++ ) {
-            this.array.push( new I_Tile( i, tileX, tileY, this.ctx, row, col ) )
+            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col ) )
 
             if ( ( i + 1 ) % this.cols == 0 ) {
                 tileX = this.getXOffset( );
@@ -66,7 +66,7 @@ class I_Grid {
 
     /**
      * Start drawing a map by looping through the rows of the grid based on this.cols
-     * For each row, slice the I_Tile instances in that row from this.array
+     * For each row, slice the Tile instances in that row from this.array
      * Then call this.drawRowInMap with the row and tilesheet as argument
      * @param {Image} tileSheet - Image instance of a tilesheet
      */
@@ -77,8 +77,8 @@ class I_Grid {
         }
     }
     /**
-     * For each I_Tile in the row, call I_Tile.drawTileInMap with the tilesheet as argument
-     * @param {I_Tile[]} currentRow - List if I_Tile instance representing a row in the grid
+     * For each Tile in the row, call Tile.drawTileInMap with the tilesheet as argument
+     * @param {Tile[]} currentRow - List if Tile instance representing a row in the grid
      * @param {Image} tileSheet - Image instance of a tilesheet
      */
     drawRowInMap( currentRow, tileSheet ) {
@@ -105,7 +105,7 @@ class I_Grid {
         return this.getTileAtCell( column, row )
     }
     /**
-     * Return the I_Tile instance at column-row position
+     * Return the Tile instance at column-row position
      * @param {Number} column column of tile in canvas
      * @param {Number} row row position of tile in canvas
      */
@@ -117,7 +117,7 @@ class I_Grid {
         return this.array[tileIndex]
     }
     /**
-     * Loop through the I_Tile instance in this.array
+     * Loop through the Tile instance in this.array
      * For each, set the tileID, representing a tile on this grids' tilehseet
      * If needed, set setting for the angle and mirrored props of the tile
      * @param {(Number|Object)[]} tileGrid 
@@ -137,16 +137,16 @@ class I_Grid {
     getDummyTile( column, row ) {
         let tile;
         if ( column == OUT_LEFT ){
-            tile = new I_Tile( OUT_LEFT, -GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, 0 )
+            tile = new Tile( OUT_LEFT, -GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, 0 )
         }
         else if ( row == OUT_UP ) {
-            tile = new I_Tile( OUT_UP, (column - 1) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column )
+            tile = new Tile( OUT_UP, (column - 1) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column )
         }
         else if ( column == OUT_RIGHT ) {
-            tile = new I_Tile( OUT_RIGHT, this.width + GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, this.cols + 1 )
+            tile = new Tile( OUT_RIGHT, this.width + GRID_BLOCK_PX, (row - 1) * GRID_BLOCK_PX, this.ctx, row, this.cols + 1 )
         }
         else if ( row == OUT_DOWN ) {
-            tile = new I_Tile( OUT_UP, (column - 1) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column )
+            tile = new Tile( OUT_UP, (column - 1) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column )
         }
         tile.offScreen = true;
         return tile;
@@ -154,5 +154,5 @@ class I_Grid {
 }
 
 module.exports = {
-    I_Grid
+    Grid
 }

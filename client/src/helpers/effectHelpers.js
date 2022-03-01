@@ -1,4 +1,4 @@
-const { I_Effect } = require("../game/interfaces/I_Effect");
+const { Effect } = require("../game/core/Effect");
 const { MOVEMENT_SPEED } = require("../game-data/globals");
 
 const scripts = { 
@@ -95,7 +95,7 @@ class GraphicalEffect {
         });
     }
     /**
-     * If there is an I_Effect instance in the back prop, call its draw method
+     * If there is an Effect instance in the back prop, call its draw method
      * @param {Number} x 
      * @param {Number} y 
      */
@@ -105,7 +105,7 @@ class GraphicalEffect {
         }
     }
     /**
-     * If there is an I_Effect instance in the front prop, call its draw method
+     * If there is an Effect instance in the front prop, call its draw method
      * @param {Number} x 
      * @param {Number} y 
      */
@@ -115,12 +115,12 @@ class GraphicalEffect {
         }
     }
     /**
-     * Instantiate a new I_Effect. Assign it to a prop depending on the value of layer and then push it to this.effects
+     * Instantiate a new Effect. Assign it to a prop depending on the value of layer and then push it to this.effects
      * @param {String} layer "B" || "F" indicates wether the effect should be assigned to front or back 
      * @param {Object} effectData object from the scripts constant in effectHelpers.js
      */
     initEffect( layer, effectData ) {
-        const newEffect = new I_Effect( effectData.name, this.x, this.y )        
+        const newEffect = new Effect( effectData.name, this.x, this.y )        
 
         if ( layer == "B" ) {
             this.back = newEffect;

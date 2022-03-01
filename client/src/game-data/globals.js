@@ -39,7 +39,7 @@ const NPC_ANIM_TYPE_MOVING          = "MOVING";
 const NPC_ANIM_TYPE_MOVING_IN_LOOP  = "MOVING_IN_LOOP";
 const NPC_ANIM_TYPE_ANIMATION_LOOP  = "ANIMATION_LOOP";
 
-// 'enum' to handle different movement anims in I_Sprite.drawSprite();
+// 'enum' to handle different movement anims in Sprite.drawSprite();
 const NPC_MOVE_TYPE_WALKING         = "WALKING";
 const NPC_MOVE_TYPE_FLYING          = "FLYING";
 

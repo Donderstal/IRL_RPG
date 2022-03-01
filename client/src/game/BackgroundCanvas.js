@@ -1,14 +1,14 @@
 const { EVENT_DOOR } = require('../game-data/conditionGlobals');
 const { tryCatch } = require('../helpers/errorHelpers');
-const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
+const { CanvasWithGrid } = require('./core/CanvasWithGrid');
 const { Savepoint } = require('./map/map-classes/SavePoint');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
+ * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
  * The BackgroundCanvas will contain all static elements of the current map and draw them if necessary.
  * For example, the background tiles, the doors and static actions
  */
-class BackgroundCanvas extends I_CanvasWithGrid {
+class BackgroundCanvas extends CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.backgroundActions = [];
@@ -69,7 +69,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.setTileGrid( oneDimensionalMapGrid );
     }
     /**
-     * Loop through the inner I_Grid array.
+     * Loop through the inner Grid array.
      * For each tile, check if a corresponding door, action or blocked tile is set in the BackgroundCanvas props
      */
     setEventsDoorsAndBlockedToTilesInGrid( ) {
@@ -100,7 +100,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         } );
     }
     /**
-     * Call the drawMap function of the inner I_Grid Class with this.sheetImage as parameter
+     * Call the drawMap function of the inner Grid Class with this.sheetImage as parameter
      */
     setSavepoint( savepointData ) {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
@@ -110,7 +110,7 @@ class BackgroundCanvas extends I_CanvasWithGrid {
         this.savepoint = tile;
     }
     /**
-     * Clear all data associated with the current map and the inner I_Grid
+     * Clear all data associated with the current map and the inner Grid
      */
     clearMap( ) {
         this.doors = [ ];

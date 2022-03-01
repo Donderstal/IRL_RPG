@@ -1,4 +1,4 @@
-const { Sprite }     = require('../../interfaces/I_Sprite')
+const { Sprite }     = require('../../core/Sprite')
 const { drawFromImageToCanvas } = require('../../../helpers/canvasHelpers')
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
@@ -151,7 +151,7 @@ class MapObject extends Sprite {
         this.sheetFrameLimit = this.activeFrames.length
     }   
     /**
-     * Instantiate on or more I_Hitboxgroup depending on the sprites alignment.
+     * Instantiate on or more Hitboxgroup depending on the sprites alignment.
      * Push these instances to the this.hitBoxGroups array.
      */
     initHitboxGroups( ) {

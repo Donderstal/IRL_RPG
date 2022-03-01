@@ -1,7 +1,7 @@
-const { I_CanvasWithGrid } = require("./interfaces/I_CanvasWithGrid");
+const { CanvasWithGrid } = require("./core/CanvasWithGrid");
 const globals = require('../game-data/globals')
 
-class FrontgridCanvas extends I_CanvasWithGrid {
+class FrontgridCanvas extends CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.hasFrontGrid = false;

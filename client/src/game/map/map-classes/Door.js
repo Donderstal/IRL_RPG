@@ -1,7 +1,7 @@
 const globals           = require('../../../game-data/globals')
 const { GRID_BLOCK_PX } = require('../../../game-data/globals')
 const { ON_NPC_INTERACTION, ON_LEAVE, EVENT_DOOR, SPEAK, EVENT_TALK } = require('../../../game-data/conditionGlobals')
-const { I_Hitbox }         = require('../../interfaces/I_Hitbox')
+const { Hitbox }         = require('../../core/Hitbox')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { Cinematic } = require('../../cutscenes/Cinematic');
 const { ITEM_OWNED } = require('../../../game-data/conditionGlobals');
@@ -21,10 +21,10 @@ const unlockDoorEvent = [
     ]   
 ]
 /**
- * I_Hitbox extension that trigger the GAME.switchMap function if the player is in blockedRange
+ * Hitbox extension that trigger the GAME.switchMap function if the player is in blockedRange
  * this.destination stores the name of the map where the door leads to.
  */
-class Door extends I_Hitbox {
+class Door extends Hitbox {
     constructor( x, y, door ) {
         super( x, y, GRID_BLOCK_PX * .75 )
         this.mapName        = globals.GAME.activeMapName;

@@ -3,9 +3,9 @@ const { drawFromImageToCanvas } = require("../../helpers/canvasHelpers");
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require("../../game-data/globals");
 const globals = require("../../game-data/globals");
 /**
- * I_Effect instances represent a ( part of ) a graphical effect in the game.
+ * Effect instances represent a ( part of ) a graphical effect in the game.
  */
-class I_Effect {
+class Effect {
     constructor( name, x, y ) {
         this.name   = name;
         this.x      = x;
@@ -114,7 +114,7 @@ class I_Effect {
 
 }
 /**
- * A Frame instace represents a single step in a I_Effect animation
+ * A Frame instace represents a single step in a Effect animation
  */
 class Frame { 
     constructor( x, y, width, height ) {
@@ -141,5 +141,5 @@ class Frame {
 }
 
 module.exports = {
-    I_Effect
+    Effect
 }

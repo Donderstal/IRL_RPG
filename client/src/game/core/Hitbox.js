@@ -5,12 +5,12 @@ const {
 const globals = require( '../../game-data/globals' );
 const { COLOR_WHITE } = require( '../../game-data/uiGlobals' );
 /**
- * The I_Hitbox interface is the base class of all in-game elements that should have collision detection.
+ * The Hitbox interface is the base class of all in-game elements that should have collision detection.
  * It consists out of three circles, the inner, middle and outer.
  * The radius of these circles is dependent on the size of the sprite that owns the hitbox.
  * Collision is detected by comparing the xy values of two hitboxes.
  */
-class I_Hitbox {
+class Hitbox {
     constructor( x, y, radius ) {
         this.x              = x;
         this.y              = y;
@@ -233,5 +233,5 @@ class I_Hitbox {
 }
 
 module.exports = {
-    I_Hitbox
+    Hitbox
 }

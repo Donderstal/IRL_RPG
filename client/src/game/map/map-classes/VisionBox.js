@@ -1,8 +1,8 @@
 const { GRID_BLOCK_PX } = require("../../../game-data/globals");
 const { getFrontgridCanvasContext } = require("../../../helpers/canvasHelpers");
-const { I_Hitbox } = require("../../interfaces/I_Hitbox");
+const { Hitbox } = require("../../core/Hitbox");
 
-class VisionBox extends I_Hitbox {
+class VisionBox extends Hitbox {
     constructor( x, y ) {
         super( x, y, GRID_BLOCK_PX * 2 );
         this.arcColor = "black"

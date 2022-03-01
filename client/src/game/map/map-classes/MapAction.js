@@ -1,5 +1,5 @@
 const globals       = require('../../../game-data/globals')
-const { I_Hitbox }     = require('../../interfaces/I_Hitbox')
+const { Hitbox }     = require('../../core/Hitbox')
 const { Cinematic }     = require('../../cutscenes/Cinematic')
 const { conditionIsTrue } = require("../../../helpers/conditionalHelper");
 const { addEventToRegistry } = require('../../../helpers/interactionRegistry');
@@ -10,10 +10,10 @@ const {
     EVENT_BUS, EVENT_BATTLE, EVENT_SHOP, EVENT_RESTORE, EVENT_TALK
 } = require('../../../game-data/conditionGlobals');
 /**
- * A Mapaction is a I_Hitbox extension that has an event tied to it.
+ * A Mapaction is a Hitbox extension that has an event tied to it.
  * If the player is in the action range of the MapAction and hits space, the event is triggered.
  */
-class MapAction extends I_Hitbox {
+class MapAction extends Hitbox {
     constructor ( x, y, action, spriteId = null, condition = null ) {
         super( x, y, globals.GRID_BLOCK_PX / 2 )
 

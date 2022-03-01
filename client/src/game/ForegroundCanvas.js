@@ -1,4 +1,4 @@
-const { I_CanvasWithGrid } = require('./interfaces/I_CanvasWithGrid');
+const { CanvasWithGrid } = require('./core/CanvasWithGrid');
 const { NPC } = require('./map/map-classes/NPC')
 const { MapObject } = require('./map/map-classes/MapObject')
 const { MapSprite } = require('./map/map-classes/MapSprite')
@@ -12,11 +12,11 @@ const { tryCatch } = require('../helpers/errorHelpers');
 const mapObjectResources = require('../resources/mapObjectResources');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base I_CanvasWithGrid class and contain an I_Grid instance with an array of I_Tile instances
+ * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
  * The BackgroundCanvas contains all non-static elements of the current map.
  * For example, the NPCs, mapObjects and cars
  */
-class ForegroundCanvas extends I_CanvasWithGrid {
+class ForegroundCanvas extends CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.allSprites = [ ];
@@ -67,7 +67,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
     /**
      * Loop through the array of character objects. 
-     * If character object row-column location corresponds with that of an I_Tile in the grid, set the character object as prop to the I_Tile
+     * If character object row-column location corresponds with that of an Tile in the grid, set the character object as prop to the Tile
      * @param {Object[]} characters - array of characters
      */
     setCharacters( characters ) {
@@ -83,7 +83,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     };
     /**
      * Loop through the array of mapObject objects. 
-     * If mapObject object row-column location corresponds with that of an I_Tile in the grid, set the mapObject object as prop to the I_Tile
+     * If mapObject object row-column location corresponds with that of an Tile in the grid, set the mapObject object as prop to the Tile
      * @param {Object[]} mapObjects - array of objects
      */
     setObjects( mapObjects ) {
@@ -99,7 +99,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     };
     /**
      * Instantiate a NPC instance at the given tile. Give it an unique ID and add it to the allSprites & spriteDictionary props
-     * @param {I_Tile} tile 
+     * @param {Tile} tile 
      */
     setCharacterSprite( tile, characterData ) {
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );
@@ -110,7 +110,7 @@ class ForegroundCanvas extends I_CanvasWithGrid {
     }
     /**
      * Instantiate a MapObject instance at the given tile. Give it an unique ID and add it to the allSprites & spriteDictionary props
-     * @param {I_Tile} tile 
+     * @param {Tile} tile 
      */
     setObjectSprite( tile, objectData, isCar ) {
         const newId = getUniqueId( Object.keys(this.spriteDictionary) );

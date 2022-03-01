@@ -3,7 +3,7 @@ const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../
 const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
 /**
  * Check if the given sprite collides with another sprite on the map
- * @param {I_Sprite} sprite 
+ * @param {Sprite} sprite 
  * @param {Boolean} isPlayer
  * @returns {Boolean} true if collison, false if not
  */
@@ -46,7 +46,7 @@ const checkForCollision = ( sprite, isPlayer ) => {
 }
 /**
  * Check if the given sprite collides with target sprite
- * @param {I_Sprite} sprite 
+ * @param {Sprite} sprite 
  * @param {String} targetSpriteId 
  * @returns {Boolean} true if collison, false if not
  */

@@ -102,7 +102,7 @@ class Game {
         this.activeText = text;
     }
     /**
-     * Return the I_Tile instance at index on given canvas
+     * Return the Tile instance at index on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
      * @param {Number} index array index of the tile in the grid array
      */
@@ -111,7 +111,7 @@ class Game {
         return canvasClass.getTileAtIndex( index ); 
     }
     /**
-     * Return the I_Tile instance at xy position on given canvas
+     * Return the Tile instance at xy position on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
      * @param {Number} x position of tile on X axis in canvas
      * @param {Number} y position of tile on Y axis in canvas
@@ -121,7 +121,7 @@ class Game {
         return canvasClass.getTileAtXY( x, y );
     }
     /**
-     * Return the I_Tile instance at column row position on given canvas
+     * Return the Tile instance at column row position on given canvas
      * @param {String} canvasName FRONT or BACK to indicate the desired canvas
      * @param {Number} column column of tile in canvas
      * @param {Number} row position of tile on Y axis in canvas
@@ -145,7 +145,7 @@ class Game {
         }
     }
     /**
-     * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate I_CanvasWithGrid class extension if necessary and set as property
+     * Set canvas dimensions. Assign canvas and canvas ctx as properties. Instantiate CanvasWithGrid class extension if necessary and set as property
      * @param {String} type FRONT, UTIL or BACK. Indicates which canvas to initialize
      * @param {Object} object 'wrapper' object to add the canvas and canvas context to as properties
      */

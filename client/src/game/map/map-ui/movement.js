@@ -4,7 +4,7 @@ const { EVENT_NEIGHBOUR } = require('../../../game-data/conditionGlobals');
 
 /**
  * Call moveInDirection and then call sprite.countFrame
- * @param {I_Sprite} sprite 
+ * @param {Sprite} sprite 
  * @param {Number} direction 
  */
 const handleMovementOfSprite = ( sprite, direction ) => {
@@ -13,7 +13,7 @@ const handleMovementOfSprite = ( sprite, direction ) => {
 }
 /**
  * If movement is allowed, increment or decrement the x or y value of given sprite appropriatly
- * @param {I_Sprite} sprite 
+ * @param {Sprite} sprite 
  * @param {Number} direction 
  */
 const moveInDirection = ( sprite, direction ) => {
@@ -49,7 +49,7 @@ const moveInDirection = ( sprite, direction ) => {
 }
 /**
  * Check if the sprite can move in the given direction from their current position
- * @param {I_Sprite} sprite 
+ * @param {Sprite} sprite 
  * @param {Number} direction 
  */
 const checkIfMovementAllowed = ( sprite, direction ) => {
@@ -95,7 +95,7 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
 /**
  * If there is a neighbouring map and the given sprite is over the map border
  * call GAME.switchMap to intialize the new map and return true.
- * @param {I_Sprite} sprite
+ * @param {Sprite} sprite
  */
 const checkForNeighbours = ( sprite ) => {
     const activeMap = globals.GAME.activeMap;

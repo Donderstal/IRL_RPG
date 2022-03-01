@@ -5,13 +5,13 @@ const globals = require('../../game-data/globals');
 const { ActionSelector } = require('../map/map-classes/ActionSelector');
 const { getBackCanvasContext } = require('../../helpers/canvasHelpers');
 /**
- * The I_Tile class is the most basic building block of the game.
- * Each map is divided up in a grid of rows and columns with an I_Grid instance.
- * Each cell in that map is represented by a I_Tile instance with an array-index and xy position.
- * The I_Tile stores information about a tile's state and interactivity
+ * The Tile class is the most basic building block of the game.
+ * Each map is divided up in a grid of rows and columns with an Grid instance.
+ * Each cell in that map is represented by a Tile instance with an array-index and xy position.
+ * The Tile stores information about a tile's state and interactivity
  * This could be the presence of a door or sprite or wether a tile can be crossed by sprites
  */
-class I_Tile {
+class Tile {
     constructor( index, x, y, ctx, row, col ) {
         this.x = x;
         this.y = y;
@@ -55,7 +55,7 @@ class I_Tile {
     /**
      * If this.ID is not null or empty, fetch the xy position of the this.ID property from SHEET_XY_VALUES.
      * Draw the tile from the sheetImage to the UTIL canvas with drawTileToUtilityCanvas().
-     * Then draw the I_Tile at the position of this.x and this.y props
+     * Then draw the Tile at the position of this.x and this.y props
      * @param {Image} sheetImage JS Image instance containing the current tilesheet png
      */
     drawTileInMap( sheetImage ) {
@@ -138,7 +138,7 @@ class I_Tile {
     }
     /**
      * Set this.hasEvent property to true and assign type to this.eventType.
-     * Then, set the Event to the I_Tile with a method depending on the type argument
+     * Then, set the Event to the Tile with a method depending on the type argument
      * @param {String} type 'enumerable' that decided how to set the given eventData. DOOR || ACTION
      * @param {Object} eventData A door or action object from the doors or actions in the active map
      */
@@ -197,7 +197,7 @@ class I_Tile {
         this.event = null;
     }
     /**
-     * Set wether the tilesheet tile in the I_Tile instance should be drawn flipped or mirrored
+     * Set wether the tilesheet tile in the Tile instance should be drawn flipped or mirrored
      * @param {Object} settings with the properties mirrored and angle 
      */
     setSettings( settings ) {
@@ -212,7 +212,7 @@ class I_Tile {
         this.ID = ID;
     };
     /**
-     * Set this.ID to empty, meaning that no tilesheet tile will de drawn in this I_Tile instance
+     * Set this.ID to empty, meaning that no tilesheet tile will de drawn in this Tile instance
      */
     clearTileID( ) {
         this.ID = "E"
@@ -220,5 +220,5 @@ class I_Tile {
 };
 
 module.exports = {
-    I_Tile
+    Tile
 }

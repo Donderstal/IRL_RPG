@@ -67,7 +67,7 @@ const handleNpcCounter = ( GAME ) => {
     GAME.activeNeighbourhood.handleNPCCounter( );
 }
 /**
- * Clear the edges of the front canvas that are not currently in the active I_Grids' borders.
+ * Clear the edges of the front canvas that are not currently in the active Grids' borders.
  * @param {Game} GAME Instance of the Game class in Game.js
  */
 const clearMargins = ( GAME ) => {

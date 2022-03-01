@@ -1,7 +1,7 @@
 const globals = require('../../../game-data/globals')
 const { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
-const { Sprite } = require('../../interfaces/I_Sprite')
-const { I_Hitbox } = require('../../interfaces/I_Hitbox');
+const { Sprite } = require('../../core/Sprite')
+const { Hitbox } = require('../../core/Hitbox');
 const { VisionBox } = require('./VisionBox');
 /**
  * The MapSprite represents a 1-tile wide sprite on the Front grid
@@ -11,7 +11,7 @@ class MapSprite extends Sprite {
     constructor ( tile, direction, spriteSize, src, isPlayer = false ) {       
         super( tile, spriteSize, src, direction )   
         this.cell = {}
-        this.hitbox = new I_Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
+        this.hitbox = new Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.spriteId;
         this.spriteWidthInSheet = MAP_SPRITE_WIDTH_IN_SHEET;
