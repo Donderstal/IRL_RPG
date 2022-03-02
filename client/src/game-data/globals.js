@@ -89,49 +89,10 @@ const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
 const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
 
-// game Class holder and mode strings
-let GAME = {};
-
 // Item categories
 const ITEM_CATEGORY_WEARABLE = "W";
 const ITEM_CATEGORY_KEY = "K";
 const ITEM_CATEGORY_MISC = "M";
-
-// Attribute name constants
-const ATT_HEALTH_POINTS = "HP";
-const ATT_POWER_POINTS = "PP";
-const ATT_PH_ATTACK = "PH_ATTACK";
-const ATT_PH_DEFENSE = "PH_DEFENSE";
-const ATT_SP_ATTACK = "SP_ATTACK";
-const ATT_SP_DEFENSE = "SP_DEFENSE";
-const ATT_SPEED = "SPEED";
-const ATT_LUCK = "LUCK";
-
-// Attribute modifier type names
-const MODI_VERY_LOW = "VL";
-const MODI_LOW = "L";
-const MODI_STANDARD = "S";
-const MODI_HIGH = "H";
-const MODI_VERY_HIGH = "VH";
-
-const EFFECT_TYPE_BUFF  = "BU"
-const EFFECT_TYPE_DEBUFF= "DB"
-
-const ATTRIBUTE_MENU_TEXTS = {
-    [ATT_HEALTH_POINTS]: "HP",
-    [ATT_POWER_POINTS]: "PP",
-    [ATT_PH_ATTACK]: "PHYSICAL ATTACK",
-    [ATT_PH_DEFENSE]: "PHYSICAL DEFENSE",
-    [ATT_SP_ATTACK]: "SPECIAL ATTACK",
-    [ATT_SP_DEFENSE]: "SPECIAL DEFENSE",
-    [ATT_SPEED]: "SPEED",
-    [ATT_LUCK]: "LUCK"
-}
-
-const ATTRIBUTE_LIST = [
-    ATT_HEALTH_POINTS, ATT_POWER_POINTS , ATT_PH_ATTACK, ATT_PH_DEFENSE, 
-    ATT_SP_ATTACK, ATT_SP_DEFENSE, ATT_SPEED, ATT_LUCK 
-]
 
 const setSheetXyValues = ( tilesInSheet ) => {
     let tileX = 0; let tileY = 0;
@@ -158,6 +119,8 @@ const OUT_LEFT = "O-L";
 const OUT_UP   = "O-T";
 const OUT_RIGHT= "O-R";
 const OUT_DOWN = "O-D";
+
+let GAME = {};
 
 module.exports = {
     DISPLAY_MODE_PORTRAIT,
@@ -235,33 +198,13 @@ module.exports = {
     SHEET_BATTLE_FACING_LEFT,
     SHEET_BATTLE_FACING_RIGHT,
     SHEET_BATTLE_PUNCH,
-    GAME,
 
     ITEM_CATEGORY_WEARABLE,
     ITEM_CATEGORY_KEY,
     ITEM_CATEGORY_MISC,
 
-    ATT_HEALTH_POINTS,
-    ATT_POWER_POINTS,
-    ATT_PH_ATTACK,
-    ATT_PH_DEFENSE,
-    ATT_SP_ATTACK,
-    ATT_SP_DEFENSE,
-    ATT_SPEED,
-    ATT_LUCK,
-
-    MODI_VERY_LOW, 
-    MODI_LOW, 
-    MODI_STANDARD, 
-    MODI_HIGH, 
-    MODI_VERY_HIGH,
-
-    EFFECT_TYPE_BUFF,
-    EFFECT_TYPE_DEBUFF,
-
-    ATTRIBUTE_MENU_TEXTS,
-    ATTRIBUTE_LIST,
-
     PNG_DICTIONARY,
-    AUDIO_DICTIONARY
+    AUDIO_DICTIONARY,
+
+    GAME
 }

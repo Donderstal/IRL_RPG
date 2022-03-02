@@ -26,9 +26,6 @@ const PINK_HAIR_NERD_LADY = "PINK HAIR NERD LADY";
 const BLONDE_NERD_LADY = "BLONDE NERD LADY";
 const DARK_HAIR_NERD_LADY = "DARK HAIR NERD LADY";
 
-const getClassProfile = ( className ) => {
-    return "HACKER"
-};
 const getClassSprite = ( className, getBattleSprite = false ) => {
     const spriteFolder = '/static/sprites/';
     let spriteSrc = "";
@@ -46,7 +43,7 @@ const getClassSprite = ( className, getBattleSprite = false ) => {
         case GRANNY: 
             spriteSrc = 'characterx3';
             break;
-        case TOUGH_GUY_WITH_COOL_SHIRT: 
+        case TOUGH_GUY_WITH_COOL_HAIR: 
             spriteSrc = 'characterx5';
             break;
         case PIGEON: 
@@ -120,7 +117,6 @@ const getClassSprite = ( className, getBattleSprite = false ) => {
     return spriteFolder + spriteSrc + ( getBattleSprite ? "_fight" : "") + '.png'; 
 };
 module.exports = {
-    getClassProfile,
     getClassSprite,
 
     // classes
