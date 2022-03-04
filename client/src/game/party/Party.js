@@ -15,7 +15,7 @@ class Party {
         this.inventory          = new Inventory( );
         this.characterOnMapId   = "";
 
-        partyMembers.forEach(addMember);        
+        partyMembers.forEach(this.addMember.bind(this));        
     }
     get characterActiveOnMap( ) { return this.members.filter((e)=>{ return e.Id == this.characterOnMapId })[0]; }
     get partySize() { return partyMembers.length; }

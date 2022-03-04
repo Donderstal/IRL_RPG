@@ -59,7 +59,7 @@ class CameraFocus {
             newYValue += difference
         }
 
-        this.updateYValue( newYValue );
+        this.updateYValue( newYValue + (GRID_BLOCK_PX * 2));
     }
 }
 
