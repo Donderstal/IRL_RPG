@@ -8,7 +8,7 @@ The *master* branch contains the previous stable version.
 The *next* branch contains the latest stable version.
 
 The *latest-build* branch contains the latest build that has been deployed online.
-Try the latest the game at: http://34.90.228.47/
+Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
