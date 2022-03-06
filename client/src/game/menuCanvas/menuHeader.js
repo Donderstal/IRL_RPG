@@ -61,13 +61,13 @@ class HeaderButton extends I_MenuElement {
             ? 0
             : isActive ? 0 : GRID_BLOCK_PX;
         let columns = DISPLAY_MODE_PORTRAIT 
-            ? 1 
+            ? 8 
             : isActive ? 12 : 4;
         let rows = DISPLAY_MODE_PORTRAIT 
-            ? isActive ? 8 : 1
+            ? 1
             : isActive ? 2 : 1;
         let rowStyles = DISPLAY_MODE_PORTRAIT 
-            ? isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ]
+            ? isActive ? [ BUBBLE_TOP ] : [ BUBBLE_TOP ]
             : isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ];
 
         super( x, y, columns, rows, rowStyles, ["B"], isActive )
@@ -89,15 +89,8 @@ class HeaderButton extends I_MenuElement {
         ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
         ctx.fillStyle = "black";
         var textWidth = ctx.measureText(this.text).width;
-
-        if ( DISPLAY_MODE_PORTRAIT && this.isActive ) {
-            this.text.split("").forEach( (e, index) => {
-                ctx.fillText( e, this.x + (BATTLE_FONT_SIZE / 2), this.y  + (BATTLE_FONT_LINE_HEIGHT / 2) + ( BATTLE_FONT_SIZE * index ) );  
-            })
-        }
-        else if ( DISPLAY_MODE_LANDSCAPE ) {
-            ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + BATTLE_FONT_LINE_HEIGHT + (this.isActive ? + (this.height / 2) : 0) );            
-        }
+        if ( DISPLAY_MODE_LANDSCAPE || ( DISPLAY_MODE_PORTRAIT && this.isActive ))
+        ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + BATTLE_FONT_LINE_HEIGHT + (this.isActive ? + (this.height / 2) : 0) ); 
 
         if ( this.isActive && DISPLAY_MODE_LANDSCAPE ) {
             this.countFrameForAnimation( ctx );
@@ -114,7 +107,7 @@ class HeaderButton extends I_MenuElement {
 
     activate( ) {
         this.isActive = true;
-        DISPLAY_MODE_PORTRAIT ? this.initElement( 0, 0, 1, 8, [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE ] ) : this.initElement( 0, 0, 12, 2, [ BUBBLE_TOP, BUBBLE_MIDDLE ] );
+        DISPLAY_MODE_PORTRAIT ? this.initElement( 0, 0, 8, 1, [ BUBBLE_TOP ] ) : this.initElement( 0, 0, 12, 2, [ BUBBLE_TOP, BUBBLE_MIDDLE ] );
     }
 
     setX( x ) {
