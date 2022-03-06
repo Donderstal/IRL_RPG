@@ -12,6 +12,9 @@ Try the latest the game at: http://34.90.228.47/
 
 ### LOG
 
+#### MAR 6, 2022
+* Cleaning up some menu code, globals for menu dimensions
+
 #### MAR 2, 2022
 * Refactored party/character to a more lightweight design
 * Removing a ton of obsolete code relating to characters and battles

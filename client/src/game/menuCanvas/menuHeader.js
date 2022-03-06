@@ -1,22 +1,29 @@
-const { GRID_BLOCK_PX, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, DISPLAY_MODE_PORTRAIT, DISPLAY_MODE_LANDSCAPE } = require("../../game-data/globals")
-const { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM } = require("../../game-data/textboxGlobals")
+const { 
+    GRID_BLOCK_PX, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, 
+    DISPLAY_MODE_PORTRAIT, DISPLAY_MODE_LANDSCAPE 
+} = require("../../game-data/globals")
+const { 
+    MENU_HEADER_INACTIVE_Y, MENU_HEADER_ACTIVE_COLUMNS, MENU_HEADER_INACTIVE_COLUMNS, 
+    MENU_HEADER_INACTIVE_ROWS, MENU_HEADER_ACTIVE_ROWS,
+    MENU_HEADER_ACTIVE_ROWSTYLES, MENU_HEADER_INACTIVE_ROWSTYLES 
+} = require("../../game-data/uiGlobals");
 const { I_MenuElement } = require("./I_MenuElement")
 
-const headerTabSlotsPositions = [
-    [ 0, GRID_BLOCK_PX * 12, GRID_BLOCK_PX * 16, GRID_BLOCK_PX * 20 ],
-    [ 0, GRID_BLOCK_PX * 4, GRID_BLOCK_PX * 16, GRID_BLOCK_PX * 20 ],
-    [ 0, GRID_BLOCK_PX * 4, GRID_BLOCK_PX * 8, GRID_BLOCK_PX * 20 ],
-    [ 0, GRID_BLOCK_PX * 4, GRID_BLOCK_PX * 8, GRID_BLOCK_PX * 12 ]
-];
+const getTabXPosition = ( index, activeIndex ) => {
+    if ( DISPLAY_MODE_PORTRAIT ) {
+        return 0;
+    }
+    return (index * ( 4 * GRID_BLOCK_PX )) + (( activeIndex < index ) ? 8 * GRID_BLOCK_PX : 0 * GRID_BLOCK_PX);
+}
 
 class MenuHeader {
     constructor( ) {
         this.activeIndex = 0
         this.buttons = [
-            new HeaderButton(0, true, 'General'),
-            new HeaderButton(1, false, 'Inventory'),
-            new HeaderButton(2, false, 'Map'),
-            new HeaderButton(3, false, 'Game')
+            new HeaderButton(0, 0, 'Party'),
+            new HeaderButton(1, 0, 'Inventory'),
+            new HeaderButton(2, 0, 'Map'),
+            new HeaderButton(3, 0, 'Game')
         ]
     }
 
@@ -38,76 +45,70 @@ class MenuHeader {
 
     setActiveButton( ) {
         this.buttons.forEach((e)=>{
-            e.deActivate( )
+            e.deActivate(this.activeIndex)
         });
 
-        this.buttons[this.activeIndex].activate( );
+        this.buttons[this.activeIndex].activate(this.activeIndex);
 
-        headerTabSlotsPositions[this.activeIndex].forEach((e, index) => {
-            let button = this.buttons[index];
-            DISPLAY_MODE_PORTRAIT ? button.setY(0) : button.setX(e);
+        this.buttons.forEach((e, index) => {
+            e.setX(getTabXPosition( index, this.activeIndex ));
         })
     }
 }
 
 class HeaderButton extends I_MenuElement {
-    constructor( index, isActive, text ) {
-        let startingPositions = headerTabSlotsPositions[0];
-
-        let x = DISPLAY_MODE_PORTRAIT 
-            ? 0
-            : startingPositions[index]; 
-        let y = DISPLAY_MODE_PORTRAIT 
-            ? 0
-            : isActive ? 0 : GRID_BLOCK_PX;
-        let columns = DISPLAY_MODE_PORTRAIT 
-            ? 8 
-            : isActive ? 12 : 4;
-        let rows = DISPLAY_MODE_PORTRAIT 
-            ? 1
-            : isActive ? 2 : 1;
-        let rowStyles = DISPLAY_MODE_PORTRAIT 
-            ? isActive ? [ BUBBLE_TOP ] : [ BUBBLE_TOP ]
-            : isActive ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP ];
-
-        super( x, y, columns, rows, rowStyles, ["B"], isActive )
-        this.isActive = isActive;
+    constructor( index, activeIndex, text ) {
+        const isActive = index == activeIndex;
+        super( 
+            getTabXPosition( index, activeIndex ), isActive ? 0 : MENU_HEADER_INACTIVE_Y, 
+            isActive ? MENU_HEADER_ACTIVE_COLUMNS : MENU_HEADER_INACTIVE_COLUMNS, 
+            isActive ? MENU_HEADER_ACTIVE_ROWS : MENU_HEADER_INACTIVE_ROWS, 
+            isActive ? MENU_HEADER_ACTIVE_ROWSTYLES : MENU_HEADER_INACTIVE_ROWSTYLES, 
+            ["B"], isActive 
+        );
+        this.index = index;
         this.text = text;
     }
 
     elementAnimation( ctx ) {
         var tooltipWidth = ctx.measureText("e > ").width;
-        ctx.fillText( " < q", this.x, (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
-        ctx.fillText( "e > ", (this.x + this.width) - tooltipWidth, (this.y + (this.height / 2)) + BATTLE_FONT_LINE_HEIGHT );
+        ctx.fillText( " < q", this.x, this.y + (this.height / 2) );
+        ctx.fillText( "e > ", (this.x + this.width) - tooltipWidth, this.y + (this.height / 2));
     }
 
     drawElement( ctx ) {
         if ( ( DISPLAY_MODE_PORTRAIT && this.isActive ) || DISPLAY_MODE_LANDSCAPE ) {
-            super.drawElement( ctx );            
-        }
-
-        ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
-        ctx.fillStyle = "black";
-        var textWidth = ctx.measureText(this.text).width;
-        if ( DISPLAY_MODE_LANDSCAPE || ( DISPLAY_MODE_PORTRAIT && this.isActive ))
-        ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + BATTLE_FONT_LINE_HEIGHT + (this.isActive ? + (this.height / 2) : 0) ); 
-
-        if ( this.isActive && DISPLAY_MODE_LANDSCAPE ) {
-            this.countFrameForAnimation( ctx );
-        }
-        else {
-            this.drawBorders( ctx );
+            super.drawElement( ctx );     
+            ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
+            ctx.fillStyle = "black";
+            var textWidth = ctx.measureText(this.text).width;
+            ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + this.height / 2); 
+    
+            if ( this.isActive ) {
+                this.countFrameForAnimation( ctx );
+            }
+            else {
+                this.drawBorders( ctx );
+            }       
         }
     }
 
-    deActivate( ) {
+    deActivate( activeIndex ) {
         this.isActive = false;
-        DISPLAY_MODE_PORTRAIT ? this.initElement( 0, 0, 0, 0, [ BUBBLE_TOP ] ) : this.initElement( 0, GRID_BLOCK_PX, 4, 1, [ BUBBLE_TOP ] );
+        this.initElement( 
+            getTabXPosition( this.index, activeIndex ), MENU_HEADER_INACTIVE_Y, 
+            MENU_HEADER_INACTIVE_COLUMNS, MENU_HEADER_INACTIVE_ROWS, 
+            MENU_HEADER_INACTIVE_ROWSTYLES 
+        );
     }
 
-    activate( ) {
+    activate( activeIndex ) {
         this.isActive = true;
-        DISPLAY_MODE_PORTRAIT ? this.initElement( 0, 0, 8, 1, [ BUBBLE_TOP ] ) : this.initElement( 0, 0, 12, 2, [ BUBBLE_TOP, BUBBLE_MIDDLE ] );
+        this.initElement( 
+            getTabXPosition( this.index, activeIndex ), 0, 
+            MENU_HEADER_ACTIVE_COLUMNS, MENU_HEADER_ACTIVE_ROWS, 
+            MENU_HEADER_ACTIVE_ROWSTYLES 
+        );
     }
 
     setX( x ) {

@@ -3,14 +3,12 @@ const { drawBubblePart } = require("./menuHelpers");
 const { 
     BUBBLE_MIDDLE, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT_BOTTOM, BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT 
 } = require('../../game-data/textboxGlobals');
+const { MENU_GRID_COLUMNS, MENU_GRID_ROWS } = require("../../game-data/uiGlobals");
 
 class MenuBackground {
-    constructor( columns, rows ) {
+    constructor( ) {
         this.startingRow = DISPLAY_MODE_PORTRAIT ? 2 : 3;
         this.startingCol = 1;
-
-        this.columns    = columns;
-        this.rows       = rows;
     }
 
     draw( tileArray, ctx ) {
@@ -26,25 +24,25 @@ class MenuBackground {
         if ( tile.row == this.startingRow && tile.col == this.startingCol ) {
             drawBubblePart( BUBBLE_LEFT, tile, ctx )     
         }
-        else if ( tile.row == this.startingRow && tile.col == this.columns ) {
+        else if ( tile.row == this.startingRow && tile.col == MENU_GRID_COLUMNS ) {
             drawBubblePart( BUBBLE_RIGHT, tile, ctx )
         }
-        else if ( tile.row == this.rows && tile.col == this.startingCol ) {
+        else if ( tile.row == MENU_GRID_ROWS && tile.col == this.startingCol ) {
             drawBubblePart( BUBBLE_LEFT_BOTTOM, tile, ctx )
         }
-        else if ( tile.row == this.rows && tile.col == this.columns ) {
+        else if ( tile.row == MENU_GRID_ROWS && tile.col == MENU_GRID_COLUMNS ) {
             drawBubblePart( BUBBLE_RIGHT_BOTTOM, tile, ctx )
         }
         else if ( tile.row == this.startingRow ) {
             drawBubblePart( BUBBLE_MIDDLE, tile, ctx )
         }
-        else if ( tile.row == this.rows ) {
+        else if ( tile.row == MENU_GRID_ROWS ) {
             drawBubblePart( BUBBLE_BOTTOM, tile, ctx )
         }
         else if ( tile.col == this.startingCol && tile.row > this.startingRow) {
             drawBubblePart( BUBBLE_LEFT, tile, ctx )                
         }
-        else if ( tile.col == this.columns && tile.row > this.startingRow ) {
+        else if ( tile.col == MENU_GRID_COLUMNS && tile.row > this.startingRow ) {
             drawBubblePart( BUBBLE_RIGHT, tile, ctx )
         }
         else if ( tile.row > this.startingRow ){

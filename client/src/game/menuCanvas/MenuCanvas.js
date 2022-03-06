@@ -1,9 +1,12 @@
-const globals = require( '../../game-data/globals' );
 const { CanvasWithGrid } = require("../core/CanvasWithGrid");
-const { DISPLAY_MODE_PORTRAIT } = require( '../../game-data/globals' );
 const { MenuHeader } = require('./menuHeader');
 const { MenuTextBox } = require('./menuTextBox');
 const { MenuBackground } = require('./MenuBackground');
+const { 
+    MENU_GRID_ROWS, MENU_GRID_COLUMNS, 
+    MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME 
+} = require('../../game-data/uiGlobals');
+const { CANVAS_WIDTH, CANVAS_HEIGHT } = require("../../game-data/globals");
 
 class MenuCanvas extends CanvasWithGrid {
     constructor( x, y, ctx, canvas ) {
@@ -12,21 +15,25 @@ class MenuCanvas extends CanvasWithGrid {
         this.canvas = canvas;
         this.isActive = false;
 
-        this.columns    = DISPLAY_MODE_PORTRAIT ? 8 : 24
-        this.rows       = DISPLAY_MODE_PORTRAIT ? 8 : 16
-
-        this.initGrid( this.rows, this.columns );
+        this.initGrid( MENU_GRID_ROWS, MENU_GRID_COLUMNS );
 
         this.header = new MenuHeader( );
         this.textBox = new MenuTextBox( );
         this.background = new MenuBackground( );
-
-        this.utilCanvas = document.getElementById( 'game-utility-canvas-menu' );
-        this.utilCtx = this.utilCanvas.getContext( '2d' );
-        this.utilCanvas.width = globals.CANVAS_WIDTH;
-        this.utilCanvas.height = globals.CANVAS_HEIGHT;
     }   
 
+    get activeTab( ) { 
+        switch( this.header.activeIndex ) {
+            case 0:
+                return MENU_TAB_PARTY;
+            case 1:
+                return MENU_TAB_INVENTORY;
+            case 2:
+                return MENU_TYPE_MAP;
+            case 3:
+                return MENU_TYPE_GAME;
+        }
+    }
     show( ) {
         this.isActive = true;
         this.canvas.style.visibility = 'visible';
@@ -38,7 +45,7 @@ class MenuCanvas extends CanvasWithGrid {
     }
 
     draw( ) {
-        this.ctx.clearRect( 0, 0, globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT )
+        this.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
         this.background.draw( this.grid.array, this.ctx )
         this.header.draw( this.ctx );
         this.textBox.drawElement( this.ctx );

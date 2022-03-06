@@ -1,5 +1,5 @@
 const globals = require("../../game-data/globals");
-const { GRID_BLOCK_PX } = require("../../game-data/globals");
+const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } = require("../../game-data/globals");
 const { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_RIGHT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT, BUBBLE_LEFT } = require("../../game-data/textboxGlobals");
 const { drawBubblePart } = require("./menuHelpers");
 
@@ -29,6 +29,7 @@ class I_MenuElement {
     }
 
     drawElement( ctx ) {
+        this.utilCtx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
         for( var i = 0; i < this.rows; i++ ) {
             let rowStyle = this.rowStyles[i];
             if ( rowStyle == BUBBLE_TOP ) {
