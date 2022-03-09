@@ -40,8 +40,8 @@ const handleMapAnimations = ( GAME ) => {
     })
 
     if ( GAME.FRONTGRID.hasFrontGrid ) {
-        canvas.clearEntireCanvas("FRONT_GRID");
-        GAME.FRONTGRID.drawMapFromGridData( GAME.FRONTGRID.sheetImage );
+        const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
+        GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
     }
 
     GAME.speechBubbleController.drawBubbles( );

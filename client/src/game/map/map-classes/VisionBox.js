@@ -10,6 +10,8 @@ class VisionBox extends Hitbox {
         this.previousArcY = false;
     }
 
+    get radiusWithMargin() { return this.outerRadius }
+
     clearArc( ) {
         const context = getFrontgridCanvasContext();
         context.globalCompositeOperation = 'destination-out'
@@ -18,6 +20,19 @@ class VisionBox extends Hitbox {
         context.fill();
         context.closePath();
         context.globalCompositeOperation = 'source-over'
+    }
+
+    getFrontGridTilesInArc( frontGrid ) {
+        const tilesInRangeArray = [];
+        for( var x = this.x - this.outerRadius; x <= this.x + this.outerRadius; x += GRID_BLOCK_PX ) {
+            for( var y = this.y - this.outerRadius; y <= this.y + this.outerRadius; y += GRID_BLOCK_PX ) {
+                const tile = frontGrid.getTileAtXY( x, y );
+                if ( !tile.isEmpty ) {
+                    tilesInRangeArray.push(tile);
+                }
+            }
+        }
+        return tilesInRangeArray;
     }
 }
 
