@@ -24,8 +24,8 @@ const getGroundedAtBottom = ( width, height ) => {
     return {
         "dimensional_alignment": "STANDARD",
         "grounded_at_bottom": true,
-        "height_blocks": width,
-        "width_blocks": height
+        "height_blocks": height,
+        "width_blocks": width
     }
 }
 
@@ -132,6 +132,38 @@ const getCollectible = ( widthInBlocks, heightInBlocks, frames, collectable_type
     }
 }
 
+const getStandardDoorEast = ( src ) => {
+    return {
+        "src": src,
+        "tile_alignment": "E",
+        ...getDoorOrWindow( 0.34375, 2.0625 )
+    }
+}
+
+const getStandardDoorNorth = ( src ) => {
+    return {
+        "src": src,
+        "tile_alignment": "N",
+        ...getDoorOrWindow( 1, .25 )
+    }
+}
+
+const getStandardDoorWest = ( src ) => {
+    return {
+        "src": src,
+        "tile_alignment": "W",
+        ...getDoorOrWindow( 0.34375, 2.0625 )
+    }
+}
+
+const getStandardDoorSouth = ( src ) => {
+    return {
+        "src": src,
+        "tile_alignment": "S",
+        ...getDoorOrWindow( 1, 1.53125 )
+    }
+}
+
 module.exports = {
     "banana" : {
         "src": "Banana.png",
@@ -173,6 +205,16 @@ module.exports = {
         "src": "blue_couch_right.png",
         ...THREE_HIGH_SPRITE
     },
+    "blue_couch_north" : {
+        "src": "blue_couch_north.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.3125, "width_blocks": 2.53125
+    },
+    "blue_couch_south" : {
+        "src": "blue_couch_south.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1.65625, "width_blocks": 2.53125
+    },
     "blue_double_bed" : {
         "src": "blue_double_bed.png",
         "dimensional_alignment": "STANDARD",
@@ -213,6 +255,18 @@ module.exports = {
         "src": "brown_chair.png",
         ...ONE_BLOCK_SPRITE
     },
+    "brown_chair_east" :{
+        "src": "brown_chair_east.png",
+        ...ONE_BLOCK_SPRITE
+    },
+    "brown_chair_south" :{
+        "src": "brown_chair_south.png",
+        ...ONE_BLOCK_SPRITE
+    },
+    "brown_chair_west" :{
+        "src": "brown_chair_west.png",
+        ...ONE_BLOCK_SPRITE
+    },
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
         "dimensional_alignment": "STANDARD",
@@ -244,9 +298,21 @@ module.exports = {
         "src": "couch_nice_left.png",
         ...THREE_HIGH_SPRITE
     },
+    "couch_nice_north" : {
+        "src": "couch_nice_north.png",
+        "grounded_at_bottom": true,
+        "height_blocks": 2.28125,
+        "width_blocks": 1.34375
+    },
     "couch_nice_right" : {
         "src": "couch_nice_right.png",
         ...THREE_HIGH_SPRITE
+    },
+    "couch_nice_south" : {
+        "src": "couch_nice_south.png",
+        "grounded_at_bottom": true,
+        "height_blocks": 2.28125,
+        "width_blocks": 1.59375
     },
     "couch_yello" : {
         "src": "couch_yello.png",
@@ -518,7 +584,14 @@ module.exports = {
     },
     "office_chair" : {
         "src": "office_chair.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
+    },
+    "office_chair_south" : {
+        "src": "office_chair_south.png",
+        "dimensional_alignment": "STANDARD",
+        "grounded_at_bottom": true,
+        "height_blocks": 1.21875,
+        "width_blocks": 0.96875
     },
     "phone_table" : {
         "src": "phone_table.png",
@@ -838,5 +911,50 @@ module.exports = {
     "collectable_juice_can" : {
         "src": "juice_can.png",
         ...getCollectible( 0.5625, 0.78125, 4, COLLECTABLE_JUICE_CAN )
+    },
+
+    // doors new
+    // West
+    "door_interior_west_blue" : {
+        ...getStandardDoorWest("Door_interior_west_blue.png")
+    },
+    "door_interior_west_green" : {
+        ...getStandardDoorWest("Door_interior_west_green.png")
+    },
+    "door_interior_west_light" : {
+        ...getStandardDoorWest("Door_interior_west_light.png")
+    },
+
+    // North
+    "door_interior_north_blue" : {
+        ...getStandardDoorNorth("Door_interior_north_blue.png")
+    },
+    "door_interior_north_green" : {
+        ...getStandardDoorNorth("Door_interior_north_green.png")
+    },
+    "door_interior_north_light" : {
+        ...getStandardDoorNorth("Door_interior_north_light.png")
+    },
+
+    // East
+    "door_interior_east_blue" : {
+        ...getStandardDoorEast("Door_interior_east_blue.png")
+    },
+    "door_interior_east_green" : {
+        ...getStandardDoorEast("Door_interior_east_green.png")
+    },
+    "door_interior_east_light" : {
+        ...getStandardDoorEast("Door_interior_east_light.png")
+    },
+
+    // South
+    "door_interior_south_blue" : {
+        ...getStandardDoorSouth("Door_interior_south_blue.png")
+    },
+    "door_interior_south_green" : {
+        ...getStandardDoorSouth("Door_interior_south_green.png")
+    },
+    "door_interior_south_light" : {
+        ...getStandardDoorSouth("Door_interior_south_light.png")
     }
 }
