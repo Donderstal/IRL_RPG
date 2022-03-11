@@ -54,7 +54,7 @@ class FileLoader {
             let path    = audioPath;
             let parent  = this;
             audio.preload = 'auto';
-            audio.oncanplaythrough = ( ) => {
+            audio.onloadedmetadata = ( ) => {
                 parent.soundsIndex++;
                 globals.AUDIO_DICTIONARY[path] = audio;
             }
