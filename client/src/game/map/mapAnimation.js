@@ -1,5 +1,4 @@
-const { EVENT_DOOR } = require('../../game-data/conditionGlobals');
-const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT, NPC_MOVE_TYPE_FLYING, STATE_MOVING, DISPLAY_MODE_PORTRAIT } = require('../../game-data/globals')
+const { NPC_MOVE_TYPE_FLYING, STATE_MOVING, DISPLAY_MODE_PORTRAIT } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers');
 const { tryCatch } = require('../../helpers/errorHelpers');
 const mapControls = require('./mapControls');
@@ -21,8 +20,6 @@ const handleMapAnimations = ( GAME ) => {
     }
 
     drawSpritesInOrder( GAME )
-
-    clearMargins( GAME );      
 
     GAME.BACK.backgroundActions.forEach( ( e ) => { 
         e.updateXy( e.x, e.y )
@@ -46,11 +43,9 @@ const handleMapAnimations = ( GAME ) => {
 
     GAME.speechBubbleController.drawBubbles( );
 
-    GAME.BACK.grid.array.forEach( ( e ) => { 
-        if ( e.hasEvent && e.eventType == EVENT_DOOR ) {
-            if ( e.event.direction == PLAYER.direction && PLAYER.hitbox.checkForDoorRange( e.event, PLAYER.direction ) ) {
-                e.event.handle( );
-            }
+    GAME.BACK.activeDoors.forEach( ( door ) => { 
+        if ( door.direction == PLAYER.direction && PLAYER.hitbox.checkForDoorRange( door, PLAYER.direction ) ) {
+            door.handle( );
         }
     })
 }
@@ -65,31 +60,6 @@ const handleRoadNetworkFuncs = ( GAME ) => {
 
 const handleNpcCounter = ( GAME ) => {
     GAME.activeNeighbourhood.handleNPCCounter( );
-}
-/**
- * Clear the edges of the front canvas that are not currently in the active Grids' borders.
- * @param {Game} GAME Instance of the Game class in Game.js
- */
-const clearMargins = ( GAME ) => {
-    const grid = GAME.FRONT.grid;
-    const overflowX = ( grid.overflowColumns * GRID_BLOCK_PX ) / 2
-    const overflowY = ( grid.overflowRows * GRID_BLOCK_PX ) / 2 
-    GAME.front.ctx.clearRect( 
-        0, 0, 
-        overflowX, CANVAS_HEIGHT 
-        );
-    GAME.front.ctx.clearRect( 
-        overflowX + ( grid.columns * GRID_BLOCK_PX ), 0, 
-        overflowX, CANVAS_HEIGHT 
-    );
-    GAME.front.ctx.clearRect( 
-        0, 0, 
-        CANVAS_WIDTH, overflowY 
-    );
-    GAME.front.ctx.clearRect( 
-        0, overflowY + ( grid.rows * GRID_BLOCK_PX ), 
-        CANVAS_WIDTH, overflowY
-    );
 }
 /**
  * First, sort GAME.FRONT.allSprites based on their location on the front canvas.

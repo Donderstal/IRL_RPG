@@ -12,6 +12,7 @@ class BackgroundCanvas extends CanvasWithGrid {
     constructor( x, y, ctx ) {
         super( x, y, ctx );
         this.backgroundActions = [];
+        this.activeDoors = [];
         this.savepoint = false;
     };
     /**
@@ -79,7 +80,8 @@ class BackgroundCanvas extends CanvasWithGrid {
                     this.doors.forEach( ( door ) => {
                         if ( tile.row == door.row && tile.col == door.col && !door.isSet ) {
                             tile.setEventData( EVENT_DOOR, door );
-                            this.backgroundActions.push( tile.event )
+                            this.backgroundActions.push( tile.event );
+                            this.activeDoors.push( tile.event );
                         }
                     })                
                 }              
@@ -115,6 +117,7 @@ class BackgroundCanvas extends CanvasWithGrid {
     clearMap( ) {
         this.doors = [ ];
         this.hasDoors = false;
+        this.activeDoors = [];
         this.actions = { };
         this.hasActions = false;
         this.blockedTiles = [ ];
