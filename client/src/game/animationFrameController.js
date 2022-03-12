@@ -7,10 +7,10 @@ const { tryCatch } = require('../helpers/errorHelpers')
 
 let lastDateNow, newDateNow;
 
-const animationFrameController = ( ) => {
+const animationFrameController = ( arg ) => {
     const GAME = globals.GAME;
 
-    newDateNow = Date.now();
+    newDateNow = arg;
     if ( !document.hasFocus() ) {
         controls.clearPressedKeys( GAME.pressedKeys );
     }

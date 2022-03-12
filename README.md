@@ -13,6 +13,9 @@ Try the latest the game at: http://34.147.64.145
 ### LOG
 
 #### MAR 6, 2022
+* Performance improvements, vision box update
+
+#### MAR 6, 2022
 * Cleaning up some menu code, globals for menu dimensions
 
 #### MAR 2, 2022
