@@ -19,7 +19,7 @@ const { PLAYER_ID } = require('../../game-data/interactionGlobals')
  *  and movement to a destination.
  */
 class Sprite {
-    constructor ( tile, spriteSize, src, direction ) {   
+    constructor ( tile, spriteSize, image, direction ) {   
         if ( spriteSize == "STRD" ) {
             this.width   = STRD_SPRITE_WIDTH;
             this.height  = STRD_SPRITE_HEIGHT;            
@@ -37,8 +37,7 @@ class Sprite {
         this.sheetPosition  = 0
         this.frameCount     = 0
         this.direction      = direction != null ? direction : 0
-        this.sheetSrc       = src
-        this.sheet          = globals.PNG_DICTIONARY[src]
+        this.sheet          = image;
         this.destination    = false;
         this.animationScript = {};
         this.activeEffect   = { active: false };
@@ -191,7 +190,7 @@ class Sprite {
     speak( text, sfx, type ) {
         globals.GAME.speechBubbleController.setNewBubble( 
             {'x': this.x, 'y': this.y}, 
-            {'text': text, 'name': this.name, 'sfx': sfx ? sfx : false},
+            {'text': text, 'name': this.name, 'sfx': sfx ? sfx : this.sfx},
             type
         );   
         if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {

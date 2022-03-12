@@ -8,12 +8,13 @@ const { VisionBox } = require('./VisionBox');
  * Logs its position on the grid and has a sound effect for movement
  */
 class MapSprite extends Sprite {
-    constructor ( tile, direction, spriteSize, src, isPlayer = false ) {       
-        super( tile, spriteSize, src, direction )   
+    constructor ( tile, direction, spriteSize, classProfile, isPlayer = false ) {       
+        super( tile, spriteSize, classProfile.png, direction )   
         this.cell = {}
         this.hitbox = new Hitbox( this.centerX( ), this.baseY( ), this.width / 2 );
         
         this.spriteId;
+        this.sfx = classProfile.sfx
         this.spriteWidthInSheet = MAP_SPRITE_WIDTH_IN_SHEET;
         this.spriteHeightInSheet = MAP_SPRITE_HEIGHT_IN_SHEET;
         this.movementSoundEffect = globals.GAME.sound.getSpatialEffect( "footsteps.wav", true );

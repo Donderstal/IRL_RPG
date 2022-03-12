@@ -1,3 +1,5 @@
+const globals = require('../game-data/globals');
+
 const FAT_FEDORA_GUY = "FAT FEDORA GUY";
 const TOUGH_GUY = "TOUGH GUY";
 const SUNGLASSES_LADY = "SUNGLASSES LADY";
@@ -26,98 +28,137 @@ const PINK_HAIR_NERD_LADY = "PINK HAIR NERD LADY";
 const BLONDE_NERD_LADY = "BLONDE NERD LADY";
 const DARK_HAIR_NERD_LADY = "DARK HAIR NERD LADY";
 
-const getClassSprite = ( className, getBattleSprite = false ) => {
-    const spriteFolder = '/static/sprites/';
-    let spriteSrc = "";
+const spriteFolder = '/static/sprites/';
 
+class ClassProfile {
+    constructor( className, spritePng, speakingSound, skill = false ) {
+        this.className  = className;
+        this.png        = globals.PNG_DICTIONARY[spriteFolder + spritePng];
+        this.sfx        = speakingSound;
+        this.skill      = skill
+    }
+}
+
+const getProfileName = ( pngName ) => {
+    switch( pngName ) {
+        case "neckbeard.png":
+            return FAT_FEDORA_GUY;
+        case 'chad.png': 
+            return TOUGH_GUY;
+        case 'woman.png': 
+            return SUNGLASSES_LADY;
+        case 'characterx3.png': 
+            return GRANNY;
+        case 'characterx5.png': 
+            return TOUGH_GUY_WITH_COOL_HAIR;
+        case 'pigeon.png': 
+            return PIGEON;
+        case 'business_man.png':
+            return BUSINESS_MAN;
+        case 'chad_recolour01.png':
+            return STRONG_GUY;
+        case 'chad_recolour02.png':
+            return BURLY_GUY;
+        case 'chad_recolour03.png':
+            return GREEN_SHIRTED_STRONG_GUY;
+        case 'character_x1_recolour01.png':
+            return DORKY_GUY;
+        case 'character_x4.png':
+            return TOUGH_GUY_WITH_DARK_HAIR;
+        case 'character_x5_recolour.png':
+            return TOUGH_GUY_WITH_COOL_SHIRT;
+        case 'fats.png':
+            return FAT_BUFF_GUY;
+        case 'generic_balding_guy.png':
+            return BALD_BEER_BELLY_GUY;
+        case 'generic_blonde_guy.png':
+            return BLONDE_BEER_BELLY_GUY;
+        case 'fats_recolour.png':
+            return PINK_HAIRED_FAT_GUY;
+        case 'new_girl.png':
+            return YELLOW_SHIRT_LADY;
+        case 'new_girl_recolour.png':
+            return GREEN_HAIR_LADY;
+        case 'manager.png':
+            return SUPERMARKET_MANAGER;
+        case 'monkey_ceo.png':
+            return MONKEY_CEO;
+        case 'pony_tail.png':
+            return WHITE_PONY_TAIL_LADY;
+        case 'pony_tail_recolour.png':
+            return BLACK_PONY_TAIL_LADY;
+        case 'robot.png':
+            return ROBOT;
+        case 'tumbler_girl.png':
+            return PINK_HAIR_NERD_LADY;
+        case 'tumbler_girl_recolour01.png':
+            return BLONDE_NERD_LADY;
+        case 'tumbler_girl_recolour02.png':
+            return DARK_HAIR_NERD_LADY;
+    }
+}
+
+const getClassProfile = ( className ) => {
     switch ( className ) {
         case FAT_FEDORA_GUY:
-            spriteSrc = 'neckbeard';
-            break;
+            return new ClassProfile( className, 'neckbeard.png', 'voice-1.mp3');
         case TOUGH_GUY: 
-            spriteSrc = 'chad';
-            break;
+            return new ClassProfile( className, 'chad.png', 'voice-1.mp3');
         case SUNGLASSES_LADY: 
-            spriteSrc = 'woman';
-            break;
+            return new ClassProfile( className, 'woman.png', 'voice-2.mp3');
         case GRANNY: 
-            spriteSrc = 'characterx3';
-            break;
+            return new ClassProfile( className, 'characterx3.png', 'voice-2.mp3');
         case TOUGH_GUY_WITH_COOL_HAIR: 
-            spriteSrc = 'characterx5';
-            break;
+            return new ClassProfile( className, 'characterx5.png', 'voice-1.mp3');
         case PIGEON: 
-            spriteSrc = 'pigeon';
-            break;
+            return new ClassProfile( className, 'pigeon.png', 'voice-3.mp3');
         case BUSINESS_MAN:
-            spriteSrc = 'business_man';
-            break;
+            return new ClassProfile( className, 'business_man.png', 'voice-1.mp3');
         case STRONG_GUY:
-            spriteSrc = 'chad_recolour01';
-            break;
+            return new ClassProfile( className, 'chad_recolour01.png', 'voice-1.mp3');
         case BURLY_GUY:
-            spriteSrc = 'chad_recolour02';
-            break;
+            return new ClassProfile( className, 'chad_recolour02.png', 'voice-1.mp3');
         case GREEN_SHIRTED_STRONG_GUY:
-            spriteSrc = 'chad_recolour03';
-            break;
+            return new ClassProfile( className, 'chad_recolour03.png', 'voice-1.mp3');
         case DORKY_GUY:
-            spriteSrc = 'character_x1_recolour01';
-            break;
+            return new ClassProfile( className, 'character_x1_recolour01.png', 'voice-1.mp3');
         case TOUGH_GUY_WITH_DARK_HAIR:
-            spriteSrc = 'character_x4';
-            break;
+            return new ClassProfile( className, 'character_x4.png', 'voice-1.mp3');
         case TOUGH_GUY_WITH_COOL_SHIRT:
-            spriteSrc = 'character_x5_recolour';
-            break;
+            return new ClassProfile( className, 'character_x5_recolour.png', 'voice-1.mp3');
         case FAT_BUFF_GUY:
-            spriteSrc = 'fats';
-            break;
+            return new ClassProfile( className, 'fats.png', 'voice-1.mp3');
         case BALD_BEER_BELLY_GUY:
-            spriteSrc = 'generic_balding_guy';
-            break;
+            return new ClassProfile( className, 'generic_balding_guy.png', 'voice-1.mp3');
         case BLONDE_BEER_BELLY_GUY:
-            spriteSrc = 'generic_blonde_guy';
-            break;
+            return new ClassProfile( className, 'generic_blonde_guy.png', 'voice-1.mp3');
         case PINK_HAIRED_FAT_GUY:
-            spriteSrc = 'fats_recolour';
-            break;
+            return new ClassProfile( className, 'fats_recolour.png', 'voice-1.mp3');
         case YELLOW_SHIRT_LADY:
-            spriteSrc = 'new_girl';
-            break;
+            return new ClassProfile( className, 'new_girl.png', 'voice-2.mp3');
         case GREEN_HAIR_LADY:
-            spriteSrc = 'new_girl_recolour';
-            break;
+            return new ClassProfile( className, 'new_girl_recolour.png', 'voice-2.mp3');
         case SUPERMARKET_MANAGER:
-            spriteSrc = 'manager';
-            break;
+            return new ClassProfile( className, 'manager.png', 'voice-4.mp3');
         case MONKEY_CEO:
-            spriteSrc = 'monkey_ceo';
-            break;
+            return new ClassProfile( className, 'monkey_ceo.png', 'voice-3.mp3');
         case WHITE_PONY_TAIL_LADY:
-            spriteSrc = 'pony_tail';
-            break;
+            return new ClassProfile( className, 'pony_tail.png', 'voice-2.mp3');
         case BLACK_PONY_TAIL_LADY:
-            spriteSrc = 'pony_tail_recolour';
-            break;
+            return new ClassProfile( className, 'pony_tail_recolour.png', 'voice-2.mp3');
         case ROBOT:
-            spriteSrc = 'robot';
-            break;
+            return new ClassProfile( className, 'robot.png', 'typing.mp3');
         case PINK_HAIR_NERD_LADY:
-            spriteSrc = 'tumbler_girl';
-            break;
+            return new ClassProfile( className, 'tumbler_girl.png', 'voice-2.mp3');
         case BLONDE_NERD_LADY:
-            spriteSrc = 'tumbler_girl_recolour01';
-            break;
+            return new ClassProfile( className, 'tumbler_girl_recolour01.png', 'voice-2.mp3');
         case DARK_HAIR_NERD_LADY:
-            spriteSrc = 'tumbler_girl_recolour02';
-            break;
+            return new ClassProfile( className, 'tumbler_girl_recolour02.png', 'voice-2.mp3');
     }
-
-    return spriteFolder + spriteSrc + ( getBattleSprite ? "_fight" : "") + '.png'; 
 };
 module.exports = {
-    getClassSprite,
+    getProfileName,
+    getClassProfile,
 
     // classes
     FAT_FEDORA_GUY,

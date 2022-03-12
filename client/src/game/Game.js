@@ -3,12 +3,14 @@ const globals  = require('../game-data/globals')
 const controls      = require('./controls')
 const tilesheets    = require('../resources/tilesheetResources').sheets
 const { 
-    CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN,
-    TOUGH_GUY, GRANNY, TOUGH_GUY_WITH_COOL_SHIRT
+    CANVAS_WIDTH, CANVAS_HEIGHT, FACING_DOWN
 }  = require('../game-data/globals')
 const { 
     ON_ENTER, ON_LEAVE, EVENT_BUS, EVENT_DOOR, EVENT_NEIGHBOUR, ON_NPC_INTERACTION
 }  = require('../game-data/conditionGlobals')
+const {
+    MONKEY_CEO, GRANNY, TOUGH_GUY_WITH_COOL_SHIRT
+} = require('../resources/classProfileResources')
 const { SoundController } = require('./sound/SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
@@ -262,7 +264,7 @@ class Game {
      */
     initializePlayerParty( name ) {
         this.party = new Party( [ 
-            { name: name, className: TOUGH_GUY }, 
+            { name: name, className: MONKEY_CEO }, 
             { name: "Roberto 'Rob' Felix", className: TOUGH_GUY_WITH_COOL_SHIRT }, 
             { name: "Your nan", className: GRANNY } 
         ] );

@@ -12,7 +12,10 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
-#### MAR 6, 2022
+#### MAR 12, 2022
+* Class profile structure for npcs
+
+#### MAR 11, 2022
 * Performance improvements, vision box update
 
 #### MAR 6, 2022
