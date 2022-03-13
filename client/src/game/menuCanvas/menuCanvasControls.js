@@ -13,6 +13,18 @@ const globals = require("../../game-data/globals")
         case "e" :
             MENU.switchTab( "RIGHT" )
             break;
+        case "a":
+        case "ArrowLeft":
+            break;
+        case "w":
+        case "ArrowUp":
+            break;
+        case "d":
+        case "ArrowRight":
+            break;
+        case "s":
+        case "ArrowDown":
+            break;
     }
 }
 
