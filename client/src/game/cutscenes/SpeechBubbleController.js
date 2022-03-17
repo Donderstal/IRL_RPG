@@ -25,7 +25,7 @@ class SpeechBubbleController {
         const id = getUniqueId(this.activeBubbleIds);
         this.activeBubbles[id] = new SpeechBubble( location, contents, id, type );
         this.activeBubbleIds.push(id);
-        globals.GAME.sound.playEffect("voice-1.mp3");
+        globals.GAME.sound.playEffect(contents.sfx);
     }
 
     setNewEmote( location, imageSrc ) {

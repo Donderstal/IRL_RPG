@@ -27,7 +27,7 @@ class MapObject extends Sprite {
         }
         const hasAction = ( spriteData.action !== undefined );
 
-        super( tile, dimensionsInMap, src, spriteData.hasDoor ? null : spriteData.direction )
+        super( tile, dimensionsInMap, globals.PNG_DICTIONARY["/static/sprite-assets/"+objectResource.src], spriteData.hasDoor ? null : spriteData.direction )
         this.spriteData = spriteData;
         this.objectResource = objectResource;
         if( "movement_frames" in this.objectResource) {

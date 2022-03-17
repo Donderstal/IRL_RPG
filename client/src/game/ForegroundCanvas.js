@@ -57,9 +57,7 @@ class ForegroundCanvas extends CanvasWithGrid {
         const startingTile = this.grid.array.filter( tile => {
             return tile.row == start.row && tile.col == start.col
           })
-        let mapSpritesFolder = '/static/sprites/';
-        let spriteSrc = mapSpritesFolder + start.playerClass.toLowerCase() + '.png'
-        this.playerSprite = new MapSprite( startingTile[0], 0, 'STRD', spriteSrc, true )
+        this.playerSprite = new MapSprite( startingTile[0], 0, 'STRD', globals.GAME.party.characterActiveOnMap.classProfile, true )
         this.playerSprite.spriteId = "PLAYER"
         this.playerSprite.name = "Player";
         this.playerSprite.class = start.playerClass;

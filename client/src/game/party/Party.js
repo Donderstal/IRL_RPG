@@ -15,7 +15,8 @@ class Party {
         this.inventory          = new Inventory( );
         this.characterOnMapId   = "";
 
-        partyMembers.forEach(this.addMember.bind(this));        
+        partyMembers.forEach(this.addMember.bind(this));
+        this.characterOnMapId = this.memberIds[0];        
     }
     get characterActiveOnMap( ) { return this.members.filter((e)=>{ return e.Id == this.characterOnMapId })[0]; }
     get partySize() { return partyMembers.length; }
@@ -25,6 +26,7 @@ class Party {
      */
     addMember( memberData ) {
         const id = getUniqueId( this.memberIds );
+        this.memberIds.push(id);
         this.members.push( new Character( memberData.name, memberData.className, id ) );
     }
     /**
