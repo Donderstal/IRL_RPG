@@ -301,6 +301,10 @@ class Game {
         this.FRONTGRID.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
 
         this.sound.setActiveMusic( this.activeMap.music != undefined ? this.activeMap.music : this.activeNeighbourhood.music );
+        this.cameraFocus.handleScreenFlip( 
+            {'col': this.PLAYER.col, 'row': this.PLAYER.row},
+            this.activeMap
+        )
         setTimeout( ( ) => {
             this.story.checkForEventTrigger(ON_ENTER)     
         }, 250 )
@@ -448,8 +452,42 @@ class Game {
  */
 const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) => {
     globals.GAME = new Game( );
+    screen.orientation.onchange = ( ) => {
+        if ( screen.orientation.type == "landscape-primary" ) {
+            if ( globals.GAME.loadingScreen != null ) {
+                globals.GAME.cameraFocus.handleScreenFlip( 
+                    { 'col': 12, 'row': 8 }, { 'columns': 24, 'rows': 16 } 
+                )                
+            }
+            else {
+                globals.GAME.cameraFocus.handleScreenFlip( 
+                    {'col': globals.GAME.PLAYER.col, 'row': globals.GAME.PLAYER.row}, globals.GAME.activeMap 
+                )
+            }
+            hideFlipScreenModal( );
+        }
+        else {
+            showFlipScreenModal( );
+        }
+    }
+    if( window.innerHeight > window.innerWidth ){
+        document.getElementById('app-div').requestFullscreen()
+        showFlipScreenModal( );
+    }
     new FileLoader( [name, className, startingMap, debugMode, disableStoryMode], "NEW" );
     setLoadingScreen( );
+}
+
+const showFlipScreenModal = ( ) =>{
+    let el = document.getElementById('flip-screen')
+    el.style.visibility = 'visible';
+    el.style.display = 'block';
+}
+
+const hideFlipScreenModal = ( ) => {
+    let el = document.getElementById('flip-screen')
+    el.style.visibility = 'hidden';
+    el.style.display = 'none';
 }
 
 const loadGame = ( JSON ) => {

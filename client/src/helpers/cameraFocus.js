@@ -2,8 +2,7 @@ const { CANVAS_WIDTH, CANVAS_HEIGHT, GRID_BLOCK_PX } = require('../game-data/glo
 
 class CameraFocus {
     constructor( ) {
-        this.startingXValue = (CANVAS_WIDTH - document.documentElement.clientWidth) / 2;
-        this.startingYValue = (CANVAS_HEIGHT - (GRID_BLOCK_PX * 12)) / 2;
+        this.setBaseValues( );
 
         this.xValue;
         this.yValue;
@@ -14,6 +13,11 @@ class CameraFocus {
 
     get xValueAsString() { return -this.xValue + 'px'}
     get yValueAsString() { return -this.yValue + 'px'}
+
+    setBaseValues( ) {
+        this.startingXValue = (CANVAS_WIDTH - document.documentElement.clientWidth) / 2;
+        this.startingYValue = (CANVAS_HEIGHT - (GRID_BLOCK_PX * 12)) / 2;
+    }
 
     updateXValue( newValue ) {
         this.xValue = newValue;
@@ -60,6 +64,11 @@ class CameraFocus {
         }
 
         this.updateYValue( newYValue + (GRID_BLOCK_PX * 2));
+    }
+
+    handleScreenFlip( cell, mapData ) {
+        this.setBaseValues( );
+        this.centerOnCell( cell, mapData )
     }
 }
 
