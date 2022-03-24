@@ -20,7 +20,7 @@
     }
 
     onMount(()=>{
-        if ( !globals.DISPLAY_MODE_PORTRAIT ) {
+        if ( !globals.DISPLAY_MODE_MOBILE ) {
             return;
         }
         const left = document.getElementById("d-pad-left");
@@ -41,6 +41,9 @@
         down.addEventListener("touchend", (e)=>{ e.preventDefault(); removeKeyFromPressed({ key: "ArrowDown"})}, false);
         action.addEventListener("touchend", (e)=>{ e.preventDefault(); removeKeyFromPressed({ key: " "})}, false);
     })
+
+    const phoneUICanvasLeftPosition = ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) / 2) - (globals.GRID_BLOCK_PX * 4);
+    const buttonsDivsMaxWidth = ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) - (globals.GRID_BLOCK_PX * 8)) / 2;
 </script>
 
 <style>
@@ -75,33 +78,38 @@
         position: absolute;
         user-select: none;
     }
+    .sprite-image-inner {
+        max-width: 2rem;
+        position: relative;
+        user-select: none;
+    }
     .arrow-button-hori {
-        max-width: 60px;
-        top: 60px;
+        max-width: 4rem;
+        top: 45%;
     }
     .arrow-button-vert { 
-        max-height: 60px;
-        left: 109px;
+        max-height: 4rem;
+        left: 37%;
     }
     #d-pad-left {
-        left: 60px;
+        left: 5%;
     }
     #d-pad-up{
-        top: 10px;
+        top: 32%;
     }
     #d-pad-right{
-        left: 140px;
+        left: 57%;
     }    
     #d-pad-down{
-        top: 91px;
+        top: 53%;
     }
     #action-button {
-        top: 30px;
-        left: 220px;
-        min-height: 90px;
-        min-width: 90px;
+        top: 40%;
+        right: 6vw;
+        min-height: 5rem;
+        min-width: 5rem;
     }
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 914px) {
         .canvas-wrapper {
             position: absolute;
         }
@@ -109,11 +117,51 @@
         #buttons-div {
             z-index: 10;
             position: fixed;
-            background-color: #C0C0C0;
-            border-top: 8px groove black;
+            background-color: transparent;
+            left: 0px;
             width: 100vw;
             height: 100vh;
         }
+
+        .right-buttons {
+            right: 0px;
+            position: absolute;
+            height: 100%;
+            width: 160px;
+        }
+
+        .left-buttons {
+            height: 100%;
+            width: 160px;
+            left: 0px;
+            position: absolute;
+        }
+
+        p {
+            margin-top: 0;
+            background-color: rgba(216,43,186,0.3);
+        }
+
+        span {
+            margin-top: 30vh;
+            display: block;
+        }
+        h3 {
+            margin-top: 33vh;
+            padding: 2vw;
+        }
+    }
+    #flip-screen {
+        position: fixed;
+        padding: 2vw;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        display: none;
+        background: #00384D 0% 0% no-repeat padding-box;
+        z-index: 100;
     }
 </style>
 
@@ -131,11 +179,11 @@
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
 
         <canvas id='game-menu-canvas' class="game-menu-body"
-        style="background-color: #00384D; visibility: hidden;"></canvas>    
+        style="left:{phoneUICanvasLeftPosition}px; background-color: #00384D; position: fixed; top: 0; visibility: hidden;" ></canvas>    
 
         {#if globals.DISPLAY_MODE_PORTRAIT}
             <canvas id='game-bubble-canvas' class="game-menu-body"
-            style="width: {globals.GRID_BLOCK_PX * 8}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left: 0; background-color: transparent;"></canvas>   
+            style="width: {globals.GRID_BLOCK_PX * 8}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left:{phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
         {/if}
     </div>
 
@@ -148,12 +196,24 @@
     </div>
 
     {#if globals.DISPLAY_MODE_PORTRAIT}
-        <div id="buttons-div" style="top:{(GRID_BLOCK_PX * 8)}px;">
-            <img alt="D pad image" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>
-            <img alt="D pad image" id="d-pad-up" class="arrow-button-vert sprite-image" src="/static/ui/arrow-up.png"/>
-            <img alt="D pad image" id="d-pad-right" class="arrow-button-hori sprite-image" src="/static/ui/arrow-right.png"/>
-            <img alt="D pad image" id="d-pad-down" class="arrow-button-vert sprite-image" src="/static/ui/arrow-down.png"/>
-            <img alt="action button image" id="action-button" class="sprite-image" src="/static/ui/bubble-black.png"/>
+        <div id="buttons-div" >
+            <p id="buttons-div-left" class="left-buttons" style="max-width:{buttonsDivsMaxWidth}px">
+                <img alt="D pad image" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>
+                <img alt="D pad image" id="d-pad-up" class="arrow-button-vert sprite-image" src="/static/ui/arrow-up.png"/>
+                <img alt="D pad image" id="d-pad-right" class="arrow-button-hori sprite-image" src="/static/ui/arrow-right.png"/>
+                <img alt="D pad image" id="d-pad-down" class="arrow-button-vert sprite-image" src="/static/ui/arrow-down.png"/>
+            </p>
+            <p id="buttons-div-right" class="right-buttons" style="max-width:{buttonsDivsMaxWidth}px">
+                <span>
+                    <img alt="D pad image" class="sprite-image-inner" src="/static/ui/arrow-right.png"/>
+                    <img alt="D pad image" class="sprite-image-inner" src="/static/ui/arrow-left.png"/>
+                </span>
+                <img alt="action button image" id="action-button" class="sprite-image" src="/static/ui/bubble-black.png"/>
+            </p>
         </div>
     {/if}
+
+    <div id="flip-screen">
+        <h3>Please flip your screen into landscape mode to play the game!</h3>
+    </div>
 </div>

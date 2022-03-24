@@ -24,7 +24,7 @@
 	}
 </style>
 
-<div>
+<div id="app-div">
 	<MainContainer />	
 </div>
 

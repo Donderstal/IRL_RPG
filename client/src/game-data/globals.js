@@ -1,8 +1,40 @@
-const DISPLAY_MODE_PORTRAIT = window.innerWidth <= 768;
+const GRID_BLOCK_IN_SHEET_PX        = 64
+const CANVAS_COLUMNS                = 24
+const CANVAS_ROWS                   = 16
+
+const detectMobilePhone = ( ) => {
+    if ("maxTouchPoints" in navigator) {
+        return navigator.maxTouchPoints > 0;
+    } else if ("msMaxTouchPoints" in navigator) {
+        return navigator.msMaxTouchPoints > 0;
+    } else {
+        var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
+        if (mQ && mQ.media === "(pointer:coarse)") {
+            return !!mQ.matches;
+        } else if ('orientation' in window) {
+            return true; // deprecated, but good fallback
+        } else {
+            // Only as a last resort, fall back to user agent sniffing
+            var UA = navigator.userAgent;
+            return (
+                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+            );
+        }
+    }
+}
+
+const DISPLAY_MODE_MOBILE = detectMobilePhone( )
+
+const DISPLAY_MODE_PORTRAIT = window.innerWidth < window.innerHeight;
 const DISPLAY_MODE_LANDSCAPE = !DISPLAY_MODE_PORTRAIT;
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSize = Math.floor(window.innerWidth / (DISPLAY_MODE_LANDSCAPE ? CANVAS_COLUMNS : 8 ));
+    let blockSize = Math.floor(
+        DISPLAY_MODE_MOBILE 
+        ? (window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth) / 8
+        : window.innerWidth / CANVAS_COLUMNS      
+    );
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
     }
@@ -53,9 +85,6 @@ const FRAME_LIMIT                   = 8
 const FRAMES_PER_SECOND             = 60
 
 // dynamic measurements for canvas
-const GRID_BLOCK_IN_SHEET_PX        = 64
-const CANVAS_COLUMNS                = 24
-const CANVAS_ROWS                   = 16
 const GRID_BLOCK_PX                 = getBasePixelBlockSize()
 const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
 
@@ -206,5 +235,6 @@ module.exports = {
     PNG_DICTIONARY,
     AUDIO_DICTIONARY,
 
-    GAME
+    GAME,
+    DISPLAY_MODE_MOBILE
 }

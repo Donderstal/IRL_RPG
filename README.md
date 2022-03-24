@@ -12,6 +12,12 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### MAR 17, 2022
+* Landscape mode for the game on mobile phones
+
+#### MAR 17, 2022
+* Structure with globals and classes for generic menu setup
+
 #### MAR 12, 2022
 * Class profile structure for npcs
 

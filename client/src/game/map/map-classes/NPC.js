@@ -7,7 +7,7 @@ const { MapSprite } = require('./MapSprite')
 const { ActionSelector } = require('./ActionSelector')
 const { Counter } = require('../../../helpers/Counter');
 const globals = require('../../../game-data/globals');
-const { getClassProfile } = require('../../../resources/classProfileResources');
+const { getClassProfile, getProfileName } = require('../../../resources/classProfileResources');
 
 const cellRadius = 2;
 const animationList = [
@@ -24,7 +24,7 @@ const animationList = [
 class NPC extends MapSprite {
     constructor( tile, spriteData, spriteId ) {
         const hasAction = ( spriteData.action !== undefined );
-        const classProfile = getClassProfile( spriteData.className ? getProfileName(spriteData.sprite) : spriteData.className )
+        const classProfile = getClassProfile( spriteData.className == undefined ? getProfileName(spriteData.sprite) : spriteData.className )
         super( tile, spriteData.direction, "STRD", classProfile )   
         this.spriteData = spriteData
         this.initialCol = this.col;
