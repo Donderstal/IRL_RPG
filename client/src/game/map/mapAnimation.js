@@ -1,4 +1,5 @@
-const { NPC_MOVE_TYPE_FLYING, STATE_MOVING, DISPLAY_MODE_PORTRAIT } = require('../../game-data/globals')
+const globals = require('../../game-data/globals')
+const { NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers');
 const { tryCatch } = require('../../helpers/errorHelpers');
 const mapControls = require('./mapControls');
@@ -15,7 +16,7 @@ const handleMapAnimations = ( GAME ) => {
     const PLAYER = GAME.PLAYER;
     canvas.clearEntireCanvas("FRONT");
 
-    if ( DISPLAY_MODE_PORTRAIT ) {
+    if ( globals.SCREEN.MOBILE ) {
         canvas.clearEntireCanvas("SPEECH");
     }
 

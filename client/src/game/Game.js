@@ -142,7 +142,7 @@ class Game {
         this.initCanvas( 'FRONT', this.front );
         this.initCanvas( 'BACK', this.back );
         this.initCanvas( 'MENU' , this.menu );
-        if ( globals.DISPLAY_MODE_PORTRAIT ) {
+        if ( globals.SCREEN.MOBILE ) {
             this.initCanvas( 'SPEECH' , this.speechBubblesCanvas );
         }
     }
@@ -180,7 +180,7 @@ class Game {
             case 'MENU':
                 object.canvas = document.getElementById( 'game-menu-canvas' );
                 object.ctx = object.canvas.getContext( '2d' );
-                if ( globals.DISPLAY_MODE_PORTRAIT ) {
+                if ( globals.SCREEN.MOBILE ) {
                     object.canvas.width = globals.GRID_BLOCK_PX * 8;
                     object.canvas.height = globals.GRID_BLOCK_PX * 8;
                     object.canvas.style.position = 'fixed';

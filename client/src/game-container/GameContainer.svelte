@@ -20,7 +20,7 @@
     }
 
     onMount(()=>{
-        if ( !globals.DISPLAY_MODE_MOBILE ) {
+        if ( !globals.SCREEN.MOBILE ) {
             return;
         }
         const left = document.getElementById("d-pad-left");
@@ -181,7 +181,7 @@
         <canvas id='game-menu-canvas' class="game-menu-body"
         style="left:{phoneUICanvasLeftPosition}px; background-color: #00384D; position: fixed; top: 0; visibility: hidden;" ></canvas>    
 
-        {#if globals.DISPLAY_MODE_PORTRAIT}
+        {#if globals.SCREEN.MOBILE}
             <canvas id='game-bubble-canvas' class="game-menu-body"
             style="width: {globals.GRID_BLOCK_PX * 8}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left:{phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
         {/if}
@@ -195,7 +195,7 @@
         <canvas id='game-utility-canvas-menu'></canvas>
     </div>
 
-    {#if globals.DISPLAY_MODE_PORTRAIT}
+    {#if globals.SCREEN.MOBILE}
         <div id="buttons-div" >
             <p id="buttons-div-left" class="left-buttons" style="max-width:{buttonsDivsMaxWidth}px">
                 <img alt="D pad image" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>

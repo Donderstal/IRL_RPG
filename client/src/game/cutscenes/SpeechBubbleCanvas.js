@@ -1,4 +1,4 @@
-const { DISPLAY_MODE_PORTRAIT } = require("../../game-data/globals");
+const globals = require("../../game-data/globals");
 const { CanvasWithGrid } = require("../core/CanvasWithGrid");
 
 class SpeechBubbleCanvas extends CanvasWithGrid {
@@ -8,8 +8,8 @@ class SpeechBubbleCanvas extends CanvasWithGrid {
         this.canvas = canvas;
         this.isActive = false;
 
-        this.columns    = DISPLAY_MODE_PORTRAIT ? 8 : 24
-        this.rows       = DISPLAY_MODE_PORTRAIT ? 8 : 16
+        this.columns    = globals.SCREEN.MOBILE ? 8 : 24
+        this.rows       = globals.SCREEN.MOBILE ? 8 : 16
 
         this.initGrid( this.rows, this.columns );
     }
