@@ -12,7 +12,10 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
-#### MAR 23, 2022
+#### MAR 24, 2022
+* Tweaking CameraFocus to new landscape orientation
+
+#### MAR 24, 2022
 * ScreenOrientation class
 
 #### MAR 23, 2022

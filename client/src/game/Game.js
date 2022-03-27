@@ -302,9 +302,9 @@ class Game {
 
         this.sound.setActiveMusic( this.activeMap.music != undefined ? this.activeMap.music : this.activeNeighbourhood.music );
         this.cameraFocus.handleScreenFlip( 
-            {'col': this.PLAYER.col, 'row': this.PLAYER.row},
-            this.activeMap
-        )
+            {'x': this.PLAYER.centerX( ), 'y': this.PLAYER.baseY( )}, this.activeMap
+        );
+        this.cameraFocus.setSpriteFocus( this.PLAYER.spriteId );
         setTimeout( ( ) => {
             this.story.checkForEventTrigger(ON_ENTER)     
         }, 250 )
@@ -411,7 +411,7 @@ class Game {
                 break;
         }
         this.PLAYER.setNewLocationInGrid( newPlayerCell, direction );
-        this.cameraFocus.centerOnCell( newPlayerCell, mapData )
+        this.cameraFocus.centerOnXY( this.PLAYER.centerX(), this.PLAYER.baseY() )
         this.front.class.allSprites.push( this.PLAYER );
         this.front.class.spriteDictionary["PLAYER"] = this.PLAYER
     }
@@ -454,23 +454,26 @@ const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) 
     globals.GAME = new Game( );
     screen.orientation.onchange = ( ) => {
         if ( screen.orientation.type == "landscape-primary" ) {
-            if ( globals.GAME.loadingScreen != null ) {
-                globals.GAME.cameraFocus.handleScreenFlip( 
-                    { 'col': 12, 'row': 8 }, { 'columns': 24, 'rows': 16 } 
-                )                
-            }
-            else {
-                globals.GAME.cameraFocus.handleScreenFlip( 
-                    {'col': globals.GAME.PLAYER.col, 'row': globals.GAME.PLAYER.row}, globals.GAME.activeMap 
-                )
-            }
-            hideFlipScreenModal( );
+            setTimeout(()=>{
+                if ( globals.GAME.loadingScreen != null ) {
+                    globals.GAME.cameraFocus.handleScreenFlip( 
+                        {'x': CANVAS_WIDTH / 2, 'y': CANVAS_HEIGHT / 2 }
+                    )                
+                }
+                else {
+                    globals.GAME.cameraFocus.handleScreenFlip( 
+                        {'x': globals.GAME.PLAYER.centerX( ), 'y': globals.GAME.PLAYER.baseY( )}
+                    )
+                }
+                hideFlipScreenModal( );
+            }, 100)
+
         }
         else {
             showFlipScreenModal( );
         }
     }
-    if( window.innerHeight > window.innerWidth ){
+    if( globals.SCREEN.PORTRAIT ){
         document.getElementById('app-div').requestFullscreen()
         showFlipScreenModal( );
     }
