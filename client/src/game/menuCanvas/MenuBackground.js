@@ -1,4 +1,5 @@
-const { DISPLAY_MODE_PORTRAIT, GRID_BLOCK_PX } = require("../../game-data/globals");
+const globals = require("../../game-data/globals");
+const { GRID_BLOCK_PX } = require("../../game-data/globals");
 const { drawBubblePart } = require("./menuHelpers");
 const { 
     BUBBLE_MIDDLE, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT_BOTTOM, BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT 
@@ -7,7 +8,7 @@ const { MENU_GRID_COLUMNS, MENU_GRID_ROWS } = require("../../game-data/uiGlobals
 
 class MenuBackground {
     constructor( ) {
-        this.startingRow = DISPLAY_MODE_PORTRAIT ? 2 : 3;
+        this.startingRow = globals.SCREEN.MOBILE ? 2 : 3;
         this.startingCol = 1;
     }
 
@@ -16,7 +17,7 @@ class MenuBackground {
     }
 
     drawBackgroundPart( tile, ctx ) {
-        if ( DISPLAY_MODE_PORTRAIT ) {
+        if ( globals.SCREEN.MOBILE ) {
             tile.x = ( tile.col * GRID_BLOCK_PX ) - GRID_BLOCK_PX;
             tile.y = ( tile.row * GRID_BLOCK_PX ) - GRID_BLOCK_PX
         }

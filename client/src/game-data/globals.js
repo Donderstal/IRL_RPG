@@ -1,37 +1,14 @@
+const { ScreenOrientation } = require("../helpers/screenOrientation")
+
+let SCREEN = new ScreenOrientation( );
+
 const GRID_BLOCK_IN_SHEET_PX        = 64
 const CANVAS_COLUMNS                = 24
 const CANVAS_ROWS                   = 16
 
-const detectMobilePhone = ( ) => {
-    if ("maxTouchPoints" in navigator) {
-        return navigator.maxTouchPoints > 0;
-    } else if ("msMaxTouchPoints" in navigator) {
-        return navigator.msMaxTouchPoints > 0;
-    } else {
-        var mQ = window.matchMedia && matchMedia("(pointer:coarse)");
-        if (mQ && mQ.media === "(pointer:coarse)") {
-            return !!mQ.matches;
-        } else if ('orientation' in window) {
-            return true; // deprecated, but good fallback
-        } else {
-            // Only as a last resort, fall back to user agent sniffing
-            var UA = navigator.userAgent;
-            return (
-                /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-                /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
-            );
-        }
-    }
-}
-
-const DISPLAY_MODE_MOBILE = detectMobilePhone( )
-
-const DISPLAY_MODE_PORTRAIT = window.innerWidth < window.innerHeight;
-const DISPLAY_MODE_LANDSCAPE = !DISPLAY_MODE_PORTRAIT;
-
 const getBasePixelBlockSize = ( ) => {
     let blockSize = Math.floor(
-        DISPLAY_MODE_MOBILE 
+        SCREEN.MOBILE
         ? (window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth) / 8
         : window.innerWidth / CANVAS_COLUMNS      
     );
@@ -99,14 +76,14 @@ const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
 const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
 // speech bubbles 
-const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( DISPLAY_MODE_PORTRAIT ? 8 : 6 )
-const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( DISPLAY_MODE_PORTRAIT ? .33 : .66 )
+const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( SCREEN.MOBILE ? 8 : 6 )
+const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( SCREEN.MOBILE ? .33 : .66 )
 const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 
 // canvas font sizes
-const SMALL_FONT_SIZE               = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 4.5;
-const LARGE_FONT_SIZE               = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 2.5 : GRID_BLOCK_PX / 3.5;
-const BATTLE_FONT_SIZE              = DISPLAY_MODE_PORTRAIT ? GRID_BLOCK_PX / 2 : GRID_BLOCK_PX / 2.5;
+const SMALL_FONT_SIZE               = SCREEN.MOBILE ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 4.5;
+const LARGE_FONT_SIZE               = SCREEN.MOBILE ? GRID_BLOCK_PX / 2.5 : GRID_BLOCK_PX / 3.5;
+const BATTLE_FONT_SIZE              = SCREEN.MOBILE ? GRID_BLOCK_PX / 2 : GRID_BLOCK_PX / 2.5;
 
 // in-game textbox color and opacity
 const INNER_TEXTBOX_RGBA            = "rgb(0, 56, 77)";
@@ -151,10 +128,7 @@ const OUT_DOWN = "O-D";
 
 let GAME = {};
 
-module.exports = {
-    DISPLAY_MODE_PORTRAIT,
-    DISPLAY_MODE_LANDSCAPE,
-    
+module.exports = {   
     OUT_LEFT,
     OUT_UP,
     OUT_RIGHT,
@@ -236,5 +210,5 @@ module.exports = {
     AUDIO_DICTIONARY,
 
     GAME,
-    DISPLAY_MODE_MOBILE
+    SCREEN
 }

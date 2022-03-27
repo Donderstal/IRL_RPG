@@ -9,8 +9,9 @@ const {
     MENU_BUTTON_PARTY_WIDTH, MENU_BUTTON_PARTY_HEIGHT, MENU_BUTTON_ROWSTYLES, 
     MENU_BUTTON_PARTY_ROWSTYLES
 } = require('../../game-data/uiGlobals');
-const { CANVAS_WIDTH, CANVAS_HEIGHT, DISPLAY_MODE_PORTRAIT } = require("../../game-data/globals");
+const { CANVAS_WIDTH, CANVAS_HEIGHT } = require("../../game-data/globals");
 const { ContentBubble } = require("./contentBubble");
+const globals = require("../../game-data/globals");
 
 const testParty = [ "party1", "party2", "party3", "party4", "party5" ];
 const testInventory = [ "Inventory1", "Inventory2", "Inventory3", "Inventory4", "Inventory5" ];
@@ -100,7 +101,7 @@ class MenuCanvas extends CanvasWithGrid {
             case MENU_TYPE_GAME:
                 testGame.forEach((e, index)=>{
                     this.contentBubbles.push( new ContentBubble( 
-                        DISPLAY_MODE_PORTRAIT ? MENU_MARGIN_SIDES : (MENU_MARGIN_SIDES * 2) + (MENU_BUTTON_STANDARD_WIDTH / 2), MENU_MARGIN_TOP_DOWN + MENU_HEADER_ACTIVE_ROWS + ( ( MENU_MARGIN_TOP_DOWN + MENU_BUTTON_STANDARD_HEIGHT ) * index ),
+                        globals.SCREEN.MOBILE ? MENU_MARGIN_SIDES : (MENU_MARGIN_SIDES * 2) + (MENU_BUTTON_STANDARD_WIDTH / 2), MENU_MARGIN_TOP_DOWN + MENU_HEADER_ACTIVE_ROWS + ( ( MENU_MARGIN_TOP_DOWN + MENU_BUTTON_STANDARD_HEIGHT ) * index ),
                         MENU_BUTTON_STANDARD_WIDTH, MENU_BUTTON_STANDARD_HEIGHT,
                         MENU_TYPE_GAME, e, MENU_BUTTON_ROWSTYLES
                     ) );

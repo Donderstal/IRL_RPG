@@ -2,8 +2,7 @@ const canvas = require( '../../helpers/canvasHelpers' );
 const globals = require( '../../game-data/globals' );
 const { 
     MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX,
-    STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT,
-    DISPLAY_MODE_PORTRAIT
+    STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT
 } = require( '../../game-data/globals' );
 const { 
     BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_BOTTOM, 
@@ -15,8 +14,8 @@ const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interaction
 
 const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
     let bubbleLocation = {
-        'x': globals.DISPLAY_MODE_PORTRAIT ? ( 0 + ( MAX_BUBBLE_WIDTH - dimensions.width ) / 2 ) : spawnLocation.x,
-        'y': globals.DISPLAY_MODE_PORTRAIT ? 0 : spawnLocation.y - dimensions.height,
+        'x': globals.SCREEN.MOBILE ? ( 0 + ( MAX_BUBBLE_WIDTH - dimensions.width ) / 2 ) : spawnLocation.x,
+        'y': globals.SCREEN.MOBILE ? 0 : spawnLocation.y - dimensions.height,
         'position': "UP-RIGHT"
     };
     if ( bubbleLocation.x + dimensions.width > 24 * GRID_BLOCK_PX ) {
@@ -32,7 +31,7 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
 
 const getSpeechBubbleDimensions = ( contents ) => {
     const text = canvas.breakTextIntoLines( contents.text, LARGE_FONT_SIZE )
-    const ctx = DISPLAY_MODE_PORTRAIT ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()  
+    const ctx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()  
     let textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (contents.name != undefined ? SMALL_FONT_LINE_HEIGHT : 0);
     let firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
     return {
@@ -166,7 +165,7 @@ class SpeechBubble {
 
     writeHeader( ) {
         canvas.writeTextLine( 
-            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, DISPLAY_MODE_PORTRAIT ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
         );
     }
 
@@ -188,17 +187,17 @@ class SpeechBubble {
     }
 
     writeText( ) {
-        canvas.setFont(LARGE_FONT_SIZE, DISPLAY_MODE_PORTRAIT ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext());
+        canvas.setFont(LARGE_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext());
         for ( var i = 0; i < this.text.length; i++ ) {
             canvas.writeTextLine( 
-                this.text[i], this.textX, this.textY + (LARGE_FONT_LINE_HEIGHT * i), LARGE_FONT_SIZE, DISPLAY_MODE_PORTRAIT ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+                this.text[i], this.textX, this.textY + (LARGE_FONT_LINE_HEIGHT * i), LARGE_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
             );
         }
     }
 
     drawButtons( ) {
         let pngs = globals.PNG_DICTIONARY;
-        let frontCtx = DISPLAY_MODE_PORTRAIT ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+        let frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
         frontCtx.drawImage(
             this.activeButton == INTERACTION_YES ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
             0, 0,
@@ -216,7 +215,7 @@ class SpeechBubble {
     }
 
     copyBubbleToGameCanvas( ) {
-        let frontCtx = DISPLAY_MODE_PORTRAIT ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+        let frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
         frontCtx.save( );
         frontCtx.scale( this.horiFlip ? -1 : 1, this.vertFlip ? -1 : 1 );
         frontCtx.drawImage(

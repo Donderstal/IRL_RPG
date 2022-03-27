@@ -1,6 +1,5 @@
 const { 
-    GRID_BLOCK_PX, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, 
-    DISPLAY_MODE_PORTRAIT, DISPLAY_MODE_LANDSCAPE 
+    GRID_BLOCK_PX, BATTLE_FONT_SIZE
 } = require("../../game-data/globals")
 const { 
     MENU_HEADER_INACTIVE_Y, MENU_HEADER_ACTIVE_COLUMNS, MENU_HEADER_INACTIVE_COLUMNS, 
@@ -8,9 +7,10 @@ const {
     MENU_HEADER_ACTIVE_ROWSTYLES, MENU_HEADER_INACTIVE_ROWSTYLES 
 } = require("../../game-data/uiGlobals");
 const { I_MenuElement } = require("./I_MenuElement")
+const globals = require("../../game-data/globals");
 
 const getTabXPosition = ( index, activeIndex ) => {
-    if ( DISPLAY_MODE_PORTRAIT ) {
+    if ( globals.SCREEN.MOBILE ) {
         return 0;
     }
     return (index * ( 4 * GRID_BLOCK_PX )) + (( activeIndex < index ) ? 8 * GRID_BLOCK_PX : 0 * GRID_BLOCK_PX);
@@ -77,7 +77,7 @@ class HeaderButton extends I_MenuElement {
     }
 
     drawElement( ctx ) {
-        if ( ( DISPLAY_MODE_PORTRAIT && this.isActive ) || DISPLAY_MODE_LANDSCAPE ) {
+        if ( ( globals.SCREEN.MOBILE && this.isActive ) || !globals.SCREEN.MOBILE ) {
             super.drawElement( ctx );     
             ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
             ctx.fillStyle = "black";

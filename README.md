@@ -12,7 +12,10 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
-#### MAR 17, 2022
+#### MAR 23, 2022
+* ScreenOrientation class
+
+#### MAR 23, 2022
 * Landscape mode for the game on mobile phones
 
 #### MAR 17, 2022
