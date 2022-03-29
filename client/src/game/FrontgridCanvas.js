@@ -31,6 +31,12 @@ class FrontgridCanvas extends CanvasWithGrid {
         this.lastTileList = tiles;
         globals.GAME.PLAYER.visionbox.clearArc( );
     }
+
+    clearMap( ) {
+        this.grid = [];
+        this.hasFrontGrid = false;
+        this.lastTileList = false;
+    }
 }
 
 module.exports = { 

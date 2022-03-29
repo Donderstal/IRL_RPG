@@ -129,6 +129,7 @@ class ForegroundCanvas extends CanvasWithGrid {
      * Then clear the inner tile grid
      */
     clearMap( ) {
+        this.grid = [];
         this.allSprites = [ ];
         this.roadNetwork = null;
         this.spriteDictionary = { };

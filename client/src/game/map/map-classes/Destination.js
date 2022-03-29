@@ -132,10 +132,10 @@ class Destination {
         if ( this.currentStepIsLeft  ) {
             this.sprite.moveSprite( FACING_LEFT );
         }
-        else if ( this.currentStepIsRight ) {
+        else if ( this.currentStepIsUp ) {
             this.sprite.moveSprite( FACING_UP );
         }
-        else if ( this.currentStepIsUp ) {
+        else if ( this.currentStepIsRight ) {
             this.sprite.moveSprite( FACING_RIGHT );
         }
         else if ( this.currentStepIsDown ) {

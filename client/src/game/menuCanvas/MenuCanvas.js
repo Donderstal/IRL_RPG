@@ -1,7 +1,6 @@
 const { CanvasWithGrid } = require("../core/CanvasWithGrid");
 const { MenuHeader } = require('./menuHeader');
 const { MenuTextBox } = require('./menuTextBox');
-const { MenuBackground } = require('./MenuBackground');
 const { 
     MENU_GRID_ROWS, MENU_GRID_COLUMNS, MENU_MARGIN_SIDES, MENU_MARGIN_TOP_DOWN,
     MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME, 
@@ -23,11 +22,11 @@ class MenuCanvas extends CanvasWithGrid {
         super( x, y, ctx );
 
         this.canvas = canvas;
+        this.canvas.style.backgroundColor = "transparent"
         this.isActive = false;
 
         this.initGrid( MENU_GRID_ROWS, MENU_GRID_COLUMNS );
 
-        this.background = new MenuBackground( );
         this.header = new MenuHeader( );
         this.textBox = new MenuTextBox( );
         this.contentBubbles = [];
@@ -59,7 +58,6 @@ class MenuCanvas extends CanvasWithGrid {
 
     draw( ) {
         this.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-        this.background.draw( this.grid.array, this.ctx );
         this.header.draw( this.ctx );
         this.contentBubbles.forEach(e=>e.draw(this.ctx));
         this.textBox.drawElement( this.ctx );
