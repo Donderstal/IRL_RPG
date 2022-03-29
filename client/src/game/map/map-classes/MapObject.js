@@ -6,9 +6,9 @@ const { Counter } = require('../../../helpers/Counter')
 const { ActionSelector } = require('./ActionSelector')
 const mapObjectResources = require('../../../resources/mapObjectResources')
 const { HitboxGroup } = require('./HitboxGroup')
-const { Door } = require('./Door')
 const { BlockedArea } = require('./BlockedArea')
 const { PLAYER_NAME } = require('../../../game-data/interactionGlobals')
+const { initDoorWithId } = require('../../../helpers/doorController')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
@@ -60,7 +60,7 @@ class MapObject extends Sprite {
             this.action.name = PLAYER_NAME;
         }  
         else if ( spriteData.hasDoor ) {
-            this.hitbox = new Door( this.x + ( ( GRID_BLOCK_PX * .75 ) / 2 ), this.y, spriteData );
+            this.hitbox = initDoorWithId( this.x + ( ( GRID_BLOCK_PX * .75 ) / 2 ), this.y, spriteData )
             for ( var i = 1; i == Math.floor( this.width  / GRID_BLOCK_PX); i++ ) {
                 let tileBack = globals.GAME.BACK.getTileAtXY( this.x + ( i * GRID_BLOCK_PX ) , this.y + this.height );
                 tileBack.blockedException = true;                

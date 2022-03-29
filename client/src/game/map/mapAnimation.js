@@ -1,6 +1,7 @@
 const globals = require('../../game-data/globals')
 const { NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
 const canvas = require('../../helpers/canvasHelpers');
+const { getActiveDoors, unsetPendingDoor, setDoorAsPending, getPendingDoor } = require('../../helpers/doorController');
 const { tryCatch } = require('../../helpers/errorHelpers');
 const mapControls = require('./mapControls');
 
@@ -44,11 +45,23 @@ const handleMapAnimations = ( GAME ) => {
 
     GAME.speechBubbleController.drawBubbles( );
 
-    GAME.BACK.activeDoors.forEach( ( door ) => { 
-        if ( door.direction == PLAYER.direction && PLAYER.hitbox.checkForDoorRange( door, PLAYER.direction ) ) {
-            door.handle( );
+    const doors = getActiveDoors( )
+    let inDoorRange = false;
+
+    doors.forEach( ( door ) => { 
+        if ( PLAYER.hitbox.checkForDoorRange( door ) ) {
+            let pendingDoor = getPendingDoor( );
+            inDoorRange = true;
+            if ( door.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.destination ) {
+                setDoorAsPending( door.id, door.destination )
+                door.handle( );
+            }
         }
     })
+
+    if ( !inDoorRange ) {
+        unsetPendingDoor( );
+    }
 }
 
 const handleRoadNetworkFuncs = ( GAME ) => {

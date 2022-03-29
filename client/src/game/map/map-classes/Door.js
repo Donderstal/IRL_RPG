@@ -25,14 +25,14 @@ const unlockDoorEvent = [
  * this.destination stores the name of the map where the door leads to.
  */
 class Door extends Hitbox {
-    constructor( x, y, door ) {
+    constructor( x, y, door, id ) {
         super( x, y, GRID_BLOCK_PX * .75 )
         this.mapName        = globals.GAME.activeMapName;
         this.destination    = door.destination;
         this.direction      = door.direction;
         this.locked         = door.locked;
-        this.inUse          = false;
         this.arcColor       = "#FFFF00";
+        this.id             = id;
 
         if ( door.condition && !inUnlockedDoorsRegistry(this.registryString) ) {
             this.condition = true;
@@ -52,12 +52,6 @@ class Door extends Hitbox {
         return !this.condition || conditionIsTrue( this.conditionType, this.conditionValue );
     }
     handle( ) {
-        if ( this.inUse ) {
-            return;
-        }
-        else {
-            this.inUse = true;
-        }
         if ( !this.meetsCondition ) {
             new Cinematic( 
                 getActionObject(lockedDoorEvent[0], lockedDoorEvent[1], lockedDoorEvent[2], lockedDoorEvent[3]).scenes, 

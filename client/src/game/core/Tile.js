@@ -1,9 +1,9 @@
 const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../game-data/globals')
 const { EVENT_DOOR } = require('../../game-data/conditionGlobals')
-const { Door } = require('../map/map-classes/Door')
 const globals = require('../../game-data/globals');
 const { ActionSelector } = require('../map/map-classes/ActionSelector');
 const { getBackCanvasContext } = require('../../helpers/canvasHelpers');
+const { initDoorWithId } = require('../../helpers/doorController');
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -180,7 +180,7 @@ class Tile {
                 xy.y = this.y + ( GRID_BLOCK_PX / 2 )
                 break;
         }
-        this.event = new Door( xy.x, xy.y, doorData );
+        this.event = initDoorWithId(xy.x, xy.y, doorData)
     }
     /**
      * Instantiate a Action instance and assign it to the event property
