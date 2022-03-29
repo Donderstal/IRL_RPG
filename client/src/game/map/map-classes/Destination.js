@@ -130,20 +130,16 @@ class Destination {
 
     goTo( ) {
         if ( this.currentStepIsLeft  ) {
-            this.sprite.direction = FACING_LEFT;
-            this.sprite.x -= this.sprite.speed;
+            this.sprite.moveSprite( FACING_LEFT );
         }
         else if ( this.currentStepIsRight ) {
-            this.sprite.direction = FACING_RIGHT;
-            this.sprite.x += this.sprite.speed;
+            this.sprite.moveSprite( FACING_UP );
         }
         else if ( this.currentStepIsUp ) {
-            this.sprite.direction = FACING_UP;
-            this.sprite.y -= this.sprite.speed;
+            this.sprite.moveSprite( FACING_RIGHT );
         }
         else if ( this.currentStepIsDown ) {
-            this.sprite.direction = FACING_DOWN;
-            this.sprite.y += this.sprite.speed;
+            this.sprite.moveSprite( FACING_DOWN );
         } 
         else {
             this.checkForNextStep( );

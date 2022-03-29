@@ -22,10 +22,8 @@ const handleMapKeyPress = ( event ) => {
         GAME.activeAction = null;
     }
     else if ( event.key == "1" ) {
-        GAME.cameraFocus.handleScreenFlip( 
-            {'col': GAME.PLAYER.col, 'row': GAME.PLAYER.row},
-            GAME.activeMap
-        )
+        console.log(GAME.PLAYER);
+        console.log(GAME.FRONT)
     }
     else if ( !GAME.cinematicMode ) {
         GAME.pressedKeys[event.key] = true        

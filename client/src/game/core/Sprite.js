@@ -45,7 +45,9 @@ class Sprite {
 
         this.setSpriteToGrid( tile )
     }
-
+    get isInCameraFocus() { 
+        return globals.GAME.cameraFocus.focusSpriteId == this.spriteId;
+    }
     get pathIsBlocked() { 
         return checkForCollision( this, this == globals.GAME.PLAYER );
      }
@@ -259,6 +261,25 @@ class Sprite {
         }
         this.animationScript        = { };
         this.State.animationOff( this );  
+    }
+
+    moveSprite( direction, movementSpeed = this.speed ) {
+        this.direction = direction;
+        if ( direction == globals.FACING_LEFT ) {
+            this.x -= movementSpeed;
+        }
+        if ( direction == globals.FACING_UP ) {
+            this.y -= movementSpeed;
+        }
+        if ( direction == globals.FACING_RIGHT ) {
+            this.x += movementSpeed;
+        }
+        if ( direction == globals.FACING_DOWN ) {
+            this.y += movementSpeed;
+        }
+        if ( this.isInCameraFocus ) {
+            globals.GAME.cameraFocus.moveCameraToDirection( direction, movementSpeed )
+        }
     }
 }
 

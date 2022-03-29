@@ -22,29 +22,9 @@ const moveInDirection = ( sprite, direction ) => {
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
-    const cameraFocus = globals.GAME.cameraFocus;
 
     if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
-        sprite.playerWalking = true;
-        if ( direction == FACING_RIGHT ) {
-            sprite.x += MOVEMENT_SPEED
-            cameraFocus.updateXValue( cameraFocus.xValue - MOVEMENT_SPEED );        
-        }
-        else if ( direction == FACING_LEFT ) {
-            sprite.x -= MOVEMENT_SPEED    
-            cameraFocus.updateXValue( cameraFocus.xValue + MOVEMENT_SPEED );   
-        }
-        else if ( direction == FACING_DOWN ) {
-            sprite.y += MOVEMENT_SPEED        
-            cameraFocus.updateYValue( cameraFocus.yValue + MOVEMENT_SPEED );  
-        }
-        else if ( direction == FACING_UP ){
-            sprite.y -= MOVEMENT_SPEED      
-            cameraFocus.updateYValue( cameraFocus.yValue - MOVEMENT_SPEED );  
-        }     
-    }
-    else {
-        sprite.playerWalking = false;
+        sprite.moveSprite( direction, MOVEMENT_SPEED );         
     }
 }
 /**
