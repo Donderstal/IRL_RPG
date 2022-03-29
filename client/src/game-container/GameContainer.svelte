@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import globals, { GRID_BLOCK_PX } from '../game-data/globals.js';
+    import globals, { CANVAS_WIDTH } from '../game-data/globals.js';
     import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
 
@@ -42,7 +42,9 @@
         action.addEventListener("touchend", (e)=>{ e.preventDefault(); removeKeyFromPressed({ key: " "})}, false);
     })
 
-    const phoneUICanvasLeftPosition = ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) / 2) - (globals.GRID_BLOCK_PX * 4);
+    const phoneUICanvasLeftPosition = globals.SCREEN.MOBILE 
+        ? ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) - (globals.GRID_BLOCK_PX * 8)) / 2 
+        : (window.innerWidth - CANVAS_WIDTH) / 2;
     const buttonsDivsMaxWidth = ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) - (globals.GRID_BLOCK_PX * 8)) / 2;
 </script>
 

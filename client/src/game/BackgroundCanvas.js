@@ -115,6 +115,7 @@ class BackgroundCanvas extends CanvasWithGrid {
      * Clear all data associated with the current map and the inner Grid
      */
     clearMap( ) {
+        this.grid = [];
         this.doors = [ ];
         this.hasDoors = false;
         this.activeDoors = [];

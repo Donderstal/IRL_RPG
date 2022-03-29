@@ -185,7 +185,6 @@ class Game {
                     object.canvas.height = globals.GRID_BLOCK_PX * 8;
                     object.canvas.style.position = 'fixed';
                     object.canvas.style.top = 0;
-                    object.canvas.style.left = 0;
                 }
                 else {
                     object.canvas.width = CANVAS_WIDTH;
@@ -313,9 +312,11 @@ class Game {
      * Clear currentmap data from Foreground and Background. Then clear the assets from both canvas contexts
      */
     clearMapFromCanvases( ) {
+        this.frontgrid.class.clearMap( );
         this.front.class.clearMap( );
         this.back.class.clearMap( );
 
+        this.frontgrid.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
         this.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
         this.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
     }
@@ -377,25 +378,24 @@ class Game {
                 } )
                 break;
             case EVENT_NEIGHBOUR :
-                switch (this.PLAYER.direction) {
-                    case globals.FACING_DOWN : 
-                        newPlayerCell.row = 1;
-                        newPlayerCell.col = this.PLAYER.col;
-                        break;
-                    case globals.FACING_LEFT :
-                        newPlayerCell.row = this.PLAYER.row;
-                        newPlayerCell.col = mapData.columns;
-                        break;
-                    case globals.FACING_UP :
-                        newPlayerCell.row = mapData.rows;
-                        newPlayerCell.col = this.PLAYER.col;
-                        break;
-                    case globals.FACING_RIGHT :
-                        newPlayerCell.row = this.PLAYER.row;
-                        newPlayerCell.col = 1;
-                        break;
-                }
+                let neighbours = this.activeMap.neighbours;
                 direction = this.PLAYER.direction;
+                if ( neighbours.left == this.previousMapName ) {
+                    newPlayerCell.row = this.PLAYER.row;
+                    newPlayerCell.col = 1;
+                }
+                else if ( neighbours.up == this.previousMapName ) {
+                    newPlayerCell.row = 1;
+                    newPlayerCell.col = this.PLAYER.col;
+                }
+                else if ( neighbours.right == this.previousMapName ) {
+                    newPlayerCell.row = this.PLAYER.row;
+                    newPlayerCell.col = mapData.columns;
+                }
+                else if ( neighbours.down == this.previousMapName ) {
+                    newPlayerCell.row = mapData.rows;
+                    newPlayerCell.col = this.PLAYER.col;
+                }
                 break;
             case EVENT_BUS :
                 mapData.mapObjects.forEach( ( object ) => {
