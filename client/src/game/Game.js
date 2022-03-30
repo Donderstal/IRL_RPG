@@ -303,7 +303,7 @@ class Game {
         this.cameraFocus.handleScreenFlip( 
             {'x': this.PLAYER.centerX( ), 'y': this.PLAYER.baseY( )}, this.activeMap
         );
-        this.cameraFocus.setSpriteFocus( this.PLAYER.spriteId );
+        this.cameraFocus.setSpriteFocus( this.PLAYER );
         setTimeout( ( ) => {
             this.story.checkForEventTrigger(ON_ENTER)     
         }, 250 )

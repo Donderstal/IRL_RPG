@@ -12,6 +12,9 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### MAR 30, 2022
+* Cinematic camera focus can snap to and follow different sprites
+
 #### MAR 29, 2022
 * Doorcontroller class, door id system
 

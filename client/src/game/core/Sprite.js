@@ -277,8 +277,8 @@ class Sprite {
         if ( direction == globals.FACING_DOWN ) {
             this.y += movementSpeed;
         }
-        if ( this.isInCameraFocus ) {
-            globals.GAME.cameraFocus.moveCameraToDirection( direction, movementSpeed )
+        if ( this.isInCameraFocus && !globals.GAME.cameraFocus.movingToNewFocus ) {
+            globals.GAME.cameraFocus.centerOnXY( this.centerX( ), this.baseY( ) );
         }
     }
 }

@@ -1,8 +1,11 @@
-const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require("../game-data/globals")
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, OUT_UP } = require("../game-data/globals")
 const { 
-    ON_ENTER, ON_LEAVE, ON_POSITION, EVENT_HAS_FIRED
+    ON_ENTER, ON_LEAVE, ON_POSITION, EVENT_HAS_FIRED, CREATE_CAR, MOVE_CAR
 }  = require('../game-data/conditionGlobals')
-const { DEFAULT, EVENT_TALK, SPEAK, EMOTE, SPEAK_YES_NO, ANIM, CREATE_SPRITE, FADE_IN, MOVE, DELETE_SPRITE } = require('../game-data/conditionGlobals');
+const { 
+    EMOTE, DEFAULT, EVENT_TALK, SPEAK, CREATE_SPRITE, MOVE, CAMERA_MOVE_TO_SPRITE,
+    SPEAK_YES_NO, ANIM, FADE_IN, DELETE_SPRITE
+ } = require('../game-data/conditionGlobals');
 const { PLAYER_NAME } = require('../game-data/interactionGlobals');
 const { EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_QUESTIONMARK } = require('../game-data/textboxGlobals');
 
@@ -11,6 +14,29 @@ const KEY_STORY_2 = "KEY_STORY_EVENT_2";
 const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
+    {
+        mapName: "test/B4",
+        trigger: ON_ENTER,
+        condition: [ DEFAULT, false ],
+        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+                [[SPEAK, "Another day in the big city!", PLAYER_NAME]],
+                [[MOVE, PLAYER_NAME, { 'row': 5, 'col': 6}]],
+                [[SPEAK, "Another day at the Yum Mart...", PLAYER_NAME]],
+                [[CREATE_SPRITE, FACING_LEFT ,"fats.png", "BOB", 10, 10]],
+                [[CAMERA_MOVE_TO_SPRITE, "BOB", false]],
+                [[SPEAK, "I hate the Yum Mart too!", "BOB"]],
+                [[MOVE, "BOB", { 'row': 6, 'col': 6}]],
+                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, false]],
+                [[EMOTE, EMOTE_HEART, PLAYER_NAME]],
+                [[MOVE, PLAYER_NAME, { 'row': 2, 'col': 2}]],
+                [[CREATE_CAR, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
+                [[CAMERA_MOVE_TO_SPRITE, "CIN_CAR_BUS", false], [MOVE_CAR, null, OUT_UP, "CIN_CAR_BUS", FACING_UP]],
+                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, true]],
+                [[SPEAK, "That's all, folks!", PLAYER_NAME]],
+            ]
+        ]
+    },
+    ///////////////
     {
         mapName: "leonard_heights/Newtown-appartment-3",
         trigger: ON_ENTER,

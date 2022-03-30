@@ -22,6 +22,8 @@ module.exports = {
     FADE_OUT_IN: "FOI",
     WAIT: "WAI",
     EMOTE: "EMO",
+    CAMERA_MOVE_TO_SPRITE: "CSTS",
+    CAMERA_FREE: "CFR",
 
     ON_ENTER: "ON_EN",
     ON_LEAVE: "ON_LE",
