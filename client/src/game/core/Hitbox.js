@@ -99,23 +99,23 @@ class Hitbox {
         return false;
     }
 
-    checkForDoorRange( doorHitbox, direction ) {
+    checkForDoorRange( doorHitbox ) {
         if ( !doorHitbox ) {
             return false;
         }
         if ( this.targetIsInVerticalActionRange( doorHitbox ) ) {
-            if ( this.targetIsInUpDoorRange( doorHitbox, direction ) ) {
+            if ( this.targetIsInUpDoorRange( doorHitbox ) ) {
                 return true;
             }
-            if ( this.targetIsInDownDoorRange( doorHitbox, direction ) ) {
+            if ( this.targetIsInDownDoorRange( doorHitbox ) ) {
                 return true;
             }
         }
         if ( this.targetIsInHorizontalActionRange( doorHitbox ) ) {
-            if ( this.targetIsInLeftDoorRange( doorHitbox, direction ) ) {
+            if ( this.targetIsInLeftDoorRange( doorHitbox ) ) {
                 return true;
             }
-            if ( this.targetIsInRightDoorRange( doorHitbox, direction ) ) {
+            if ( this.targetIsInRightDoorRange( doorHitbox ) ) {
                 return true;
             }
         }
@@ -161,32 +161,32 @@ class Hitbox {
     }
 
     //DOOR
-    targetIsInUpDoorRange( targetHitbox, direction ) {
+    targetIsInUpDoorRange( targetHitbox ) {
         const targetIsUp = this.top( ) > targetHitbox.top( );
         const topCollidesWithTargetBottom = this.innerTop( ) <= targetHitbox.innerBottom( );
 
-        return direction == FACING_UP && topCollidesWithTargetBottom && targetIsUp;
+        return topCollidesWithTargetBottom && targetIsUp;
     }
 
-    targetIsInDownDoorRange( targetHitbox, direction ) {
+    targetIsInDownDoorRange( targetHitbox ) {
         const targetIsBelow    = this.bottom( ) < targetHitbox.bottom( );
         const bottomCollidesWithTargetTop = this.innerBottom( ) >= targetHitbox.innerTop( )
 
-        return direction == FACING_DOWN && bottomCollidesWithTargetTop && targetIsBelow;
+        return bottomCollidesWithTargetTop && targetIsBelow;
     }
 
-    targetIsInLeftDoorRange( targetHitbox, direction ) {
+    targetIsInLeftDoorRange( targetHitbox ) {
         const targetIsToTheLeft    = this.left( ) > targetHitbox.left( );
         const leftCollidesWithTargetRight = this.innerLeft( ) <= targetHitbox.innerRight( );
 
-        return direction == FACING_LEFT && leftCollidesWithTargetRight && targetIsToTheLeft;
+        return leftCollidesWithTargetRight && targetIsToTheLeft;
     }
 
-    targetIsInRightDoorRange( targetHitbox, direction ){
+    targetIsInRightDoorRange( targetHitbox ){
         const targetIsToTheRight  = this.right( ) < targetHitbox.right( );
         const rightCollidesWithTargetLeft = this.innerRight( ) >= targetHitbox.innerLeft( );
 
-        return direction == FACING_RIGHT && rightCollidesWithTargetLeft && targetIsToTheRight;
+        return rightCollidesWithTargetLeft && targetIsToTheRight;
     }
 
     //ACTION//

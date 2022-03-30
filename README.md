@@ -12,7 +12,10 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
-#### MAR 24, 2022
+#### MAR 29, 2022
+* Doorcontroller class, door id system
+
+#### MAR 27, 2022
 * Tweaking CameraFocus to new landscape orientation
 
 #### MAR 24, 2022
