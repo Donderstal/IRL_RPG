@@ -111,7 +111,7 @@ const getClassProfile = ( className ) => {
         case TOUGH_GUY_WITH_COOL_HAIR: 
             return new ClassProfile( className, 'characterx5.png', 'voice-1.mp3');
         case PIGEON: 
-            return new ClassProfile( className, 'pigeon.png', 'voice-3.mp3');
+            return new ClassProfile( className, 'pigeon.png', 'poo-poo.mp3');
         case BUSINESS_MAN:
             return new ClassProfile( className, 'business_man.png', 'voice-1.mp3');
         case STRONG_GUY:
@@ -141,7 +141,7 @@ const getClassProfile = ( className ) => {
         case SUPERMARKET_MANAGER:
             return new ClassProfile( className, 'manager.png', 'voice-4.mp3');
         case MONKEY_CEO:
-            return new ClassProfile( className, 'monkey_ceo.png', 'voice-3.mp3');
+            return new ClassProfile( className, 'monkey_ceo.png', 'poo-poo.mp3');
         case WHITE_PONY_TAIL_LADY:
             return new ClassProfile( className, 'pony_tail.png', 'voice-2.mp3');
         case BLACK_PONY_TAIL_LADY:
