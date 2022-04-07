@@ -21,7 +21,6 @@ const { getOppositeDirection } = require('../helpers/utilFunctions')
 const { setLoadingScreen, stopLoadingScreen } = require('./LoadingScreen')
 const { StoryProgression } = require('../helpers/StoryProgression')
 const { Fader } = require('../helpers/Fader')
-const { Cinematic } = require('./cutscenes/Cinematic')
 const { FileLoader } = require('../helpers/Loader')
 const { Neighbourhood } = require('./Neighbourhood')
 const { SpeechBubbleController } = require('./cutscenes/SpeechBubbleController')
@@ -34,6 +33,7 @@ const { setInteractionRegistry } = require('../helpers/interactionRegistry')
 const { setUnlockedDoorsRegistry } = require('../helpers/doorRegistry')
 const { MenuCanvas } = require('./menuCanvas/MenuCanvas')
 const { CameraFocus } = require('../helpers/cameraFocus')
+const { Cinematic } = require('./cutscenes/Cinematic')
 
 const startingItemIDs = [  
     "phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"
@@ -76,18 +76,19 @@ class Game {
     }
 
     get MENU( ) { return this.menu.class }
-    get FRONTGRID( ) { return this.frontgrid.class }
-    get FRONT( ) { return this.front.class }
-    get BACK( ) { return this.back.class }
+    get FRONTGRID( ) { return this.useCinematicMap ? this.activeCinematic.frontGrid.class : this.frontgrid.class }
+    get FRONT( ) { return this.useCinematicMap ? this.activeCinematic.front.class : this.front.class }
+    get BACK( ) { return this.useCinematicMap ? this.activeCinematic.back.class : this.back.class }
 
     get PLAYER( ) { return this.front.class.playerSprite }
     get PARTY_MEMBERS( ) { return this.party.members }
     get PLAYER_INVENTORY( ) { return this.party.inventory }
     get PLAYER_ITEMS( ) { return this.party.inventory.ItemList }
 
-    get activeMap( ) { return this.activeNeighbourhood.activeMap; }
-    get activeMapName( ) { return this.activeNeighbourhood.activeMapKey; }
+    get activeMap( ) { return this.useCinematicMap ? this.activeCinematic.activeNeighbourhood.activeMap : this.activeNeighbourhood.activeMap; }
+    get activeMapName( ) { return this.useCinematicMap ? this.activeCinematic.activeNeighbourhood.activeMapKey : this.activeNeighbourhood.activeMapKey; }
     get previousMapName( ) { return this.activeNeighbourhood.previousMapKey; }
+    get useCinematicMap( ) { return this.inCinematic && this.activeCinematic.usingCinematicMap; }
 
     get activeText( ) {
         return this.typeWriter.activeText;
@@ -300,13 +301,16 @@ class Game {
         this.FRONTGRID.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
 
         this.sound.setActiveMusic( this.activeMap.music != undefined ? this.activeMap.music : this.activeNeighbourhood.music );
-        this.cameraFocus.handleScreenFlip( 
-            {'x': this.PLAYER.centerX( ), 'y': this.PLAYER.baseY( )}, this.activeMap
-        );
-        this.cameraFocus.setSpriteFocus( this.PLAYER );
-        setTimeout( ( ) => {
-            this.story.checkForEventTrigger(ON_ENTER)     
-        }, 250 )
+        
+        if ( !this.useCinematicMap ) {
+            this.cameraFocus.handleScreenFlip( 
+                {'x': this.PLAYER.centerX( ), 'y': this.PLAYER.baseY( )}, this.activeMap
+            );
+            this.cameraFocus.setSpriteFocus( this.PLAYER );
+            setTimeout( ( ) => {
+                this.story.checkForEventTrigger(ON_ENTER)     
+            }, 250 )            
+        }
     }
     /**
      * Clear currentmap data from Foreground and Background. Then clear the assets from both canvas contexts

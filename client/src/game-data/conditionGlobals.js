@@ -24,6 +24,7 @@ module.exports = {
     EMOTE: "EMO",
     CAMERA_MOVE_TO_SPRITE: "CSTS",
     CAMERA_FREE: "CFR",
+    LOAD_MAP: "LOM",
 
     ON_ENTER: "ON_EN",
     ON_LEAVE: "ON_LE",
