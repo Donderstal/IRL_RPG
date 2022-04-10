@@ -67,7 +67,7 @@ const loadMapToCanvases = ( isNewGame, back, front, frontgrid, mapData = globals
     }
 }
 
-const clearMapFromCanvases = ( source ) => {
+const clearMapFromCanvases = ( source = cinematicGrids ) => {
     source.frontgrid.class.clearMap( );
     source.front.class.clearMap( );
     source.back.class.clearMap( );
@@ -158,17 +158,18 @@ const setPlayerInNewMap = ( mapData, type ) => {
             console.log( "Type " + type + " not recognized." )
             break;
     }
-    setPlayerToCellInNewMap( newPlayerCell, direction, getCinematicFront() )
+    setPlayerToCellInNewMap( newPlayerCell, direction, globals.GAME.FRONT )
 }
 
 const setPlayerToCellInNewMap = ( newPlayerCell, spriteDirection, foreground ) => {
-    globals.GAME.PLAYER.setNewLocationInGrid( newPlayerCell, spriteDirection );
+    foreground.playerSprite.setNewLocationInGrid( newPlayerCell, spriteDirection );
     globals.GAME.cameraFocus.centerOnXY( globals.GAME.PLAYER.centerX(), globals.GAME.PLAYER.baseY() )
-    foreground.allSprites.push( globals.GAME.PLAYER );
-    foreground.spriteDictionary["PLAYER"] = globals.GAME.PLAYER
+    foreground.allSprites.push( foreground.playerSprite );
+    foreground.spriteDictionary["PLAYER"] = foreground.playerSprite;
 }
 
-const loadCinematicMap = ( mapName, setPlayer = false, playerLocationObject = {'row': globals.GAME.PLAYER.row, 'col': globals.GAME.PLAYER.col} ) => {
+const loadCinematicMap = ( mapName, setPlayer = false, playerLocationObject = false ) => {
+    getCinematicFront().playerSprite = globals.GAME.front.class.playerSprite;
     clearMapFromCanvases( cinematicGrids )
     let GAME = globals.GAME;
     GAME.sound.clearActiveSoundEffects( );
@@ -179,7 +180,7 @@ const loadCinematicMap = ( mapName, setPlayer = false, playerLocationObject = {'
     );
     if ( setPlayer ) {
         setPlayerToCellInNewMap(
-            playerLocationObject, GAME.PLAYER.direction, GAME.FRONT
+            playerLocationObject, playerStart.direction, getCinematicFront()
         )
     }
 }

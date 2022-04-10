@@ -1,7 +1,7 @@
 const globals         = require('../../game-data/globals')
 const { getUniqueId } = require('../../helpers/utilFunctions');
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
 } = require('../../game-data/conditionGlobals');
 const { Animation } = require('./Animation');
 
@@ -67,6 +67,7 @@ class Scene {
                     break;
                 case CREATE_CAR:
                 case CREATE_SPRITE:
+                case CREATE_OBJECT_SPRITE:
                     animationHasFinished = e.getSpriteByName( ) != undefined;
                     break;
                 case DELETE_SPRITE:

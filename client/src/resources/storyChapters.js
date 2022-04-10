@@ -1,9 +1,9 @@
 const globals = require("../game-data/globals")
-const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, OUT_UP } = require("../game-data/globals")
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, OUT_UP,OUT_DOWN } = require("../game-data/globals")
 const { 
     ON_ENTER, ON_LEAVE, ON_POSITION, EVENT_HAS_FIRED, CREATE_CAR, MOVE_CAR, LOAD_MAP, FADE_OUT,
     EMOTE, DEFAULT, EVENT_TALK, SPEAK, CREATE_SPRITE, MOVE, CAMERA_MOVE_TO_SPRITE,
-    SPEAK_YES_NO, ANIM, FADE_IN, DELETE_SPRITE
+    SPEAK_YES_NO, ANIM, FADE_IN, DELETE_SPRITE, CREATE_OBJECT_SPRITE, FADE_OUT_IN
 }  = require('../game-data/conditionGlobals')
 const { PLAYER_NAME } = require('../game-data/interactionGlobals');
 const { EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_QUESTIONMARK } = require('../game-data/textboxGlobals');
@@ -14,16 +14,24 @@ const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
     {
-        mapName: "leonard_heights/Newtown-appartment-3",
+        mapName: "aaaaaaaaaxx!!leonard_heights/Newtown-appartment-3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [
+                [[FADE_OUT]],
                 [[LOAD_MAP, "leonard_heights/B2"]],
+                [[FADE_IN]],
                 [[CREATE_CAR, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
                 [[CAMERA_MOVE_TO_SPRITE, "CIN_CAR_BUS", true], [MOVE_CAR, null, OUT_UP, "CIN_CAR_BUS", FACING_UP]],
+                [[FADE_OUT]],
                 [[LOAD_MAP, "leonard_heights/B1"]],
-                [[CREATE_CAR, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
-                [[CAMERA_MOVE_TO_SPRITE, "CIN_CAR_BUS", true], [MOVE_CAR, null, 3, "CIN_CAR_BUS", FACING_UP]],
+                [[CREATE_OBJECT_SPRITE, FACING_UP, "bus", "My cool car", 13, 13]],
+                [[FADE_IN]],
+                [[CAMERA_MOVE_TO_SPRITE, "My cool car", true]],
+                [[CREATE_SPRITE, FACING_UP, false, PLAYER_NAME, 15, 14], [CREATE_SPRITE, FACING_DOWN ,"fats.png", "BOB", 15, 13]],
+                [[SPEAK, "Was good seeing you dude!!", PLAYER_NAME], [EMOTE, EMOTE_HAPPY, "BOB"]],
+                [[SPEAK, "Yeah for sure, see you next week", "BOB"], [EMOTE, EMOTE_HAPPY, "BOB"]],
+                [[MOVE, PLAYER_NAME, { col: 15, row: OUT_DOWN}]]
             ]
         ]
     },

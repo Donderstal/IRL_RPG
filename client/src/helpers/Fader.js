@@ -39,11 +39,11 @@ class Fader {
     }
 
     fadeToBlack( ) {
-        this.A += .0075
+        this.A += .0150
     }
 
     fadeFromBlack( ) {
-        this.A -= .0075
+        this.A -= .0150
     }
     
     holdBlackMode( ) {

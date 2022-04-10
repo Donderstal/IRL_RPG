@@ -15,6 +15,7 @@ module.exports = {
     MOVE_CAR: "MOC",
     ANIM: "ANI",
     CREATE_CAR: "CRC",
+    CREATE_OBJECT_SPRITE: "COS",
     CREATE_SPRITE: "CRS",
     DELETE_SPRITE: "DEL",
     FADE_IN: "FAI",

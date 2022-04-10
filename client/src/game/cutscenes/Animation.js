@@ -1,11 +1,11 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, 
-    FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP
+    FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { PLAYER_NAME } = require('../../game-data/interactionGlobals');
 const { Counter } = require('../../helpers/Counter');
-const { loadCinematicMap, getCinematicFront } = require('../../helpers/loadMapHelpers');
+const { loadCinematicMap, getCinematicFront, setPlayerToCellInNewMap } = require('../../helpers/loadMapHelpers');
 const { getClosestCell } = require('../../helpers/utilFunctions');
 
 class Animation {
@@ -13,7 +13,8 @@ class Animation {
         this.id = id;
         this.type   = animationDto.type;
         this.spriteName = animationDto.spriteName;
-        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) || this.is( LOAD_MAP ) ) {
+        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) || this.is( CREATE_OBJECT_SPRITE ) 
+        || this.is( LOAD_MAP ) || this.is( FADE_IN ) || this.is( FADE_OUT ) || this.is( FADE_OUT_IN ) ) {
             this.spriteId = undefined;
         }
         else {
@@ -66,6 +67,9 @@ class Animation {
             case CREATE_SPRITE:
                 this.initCreateSpriteAnimation( animationDto );
                 break;
+            case CREATE_OBJECT_SPRITE:
+                this.initCreateObjectSpriteAnimation( animationDto );
+                break;
             case DELETE_SPRITE:
                 setTimeout( ( ) => { 
                     if ( animationDto.sfx ) {
@@ -77,7 +81,7 @@ class Animation {
             case FADE_OUT:
                 globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack(  );
-                globals.GAME.sound.playEffect( animationDto.sfx )
+                globals.GAME.sound.playEffect( animationDto.sfx == false ? "relaxing_chord.wav" : animationDto.sfx )
                 break;
             case FADE_IN:
                 globals.GAME.fader.startFadeFromBlack( );
@@ -85,7 +89,7 @@ class Animation {
             case FADE_OUT_IN:
                 globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack( true );
-                globals.GAME.sound.playEffect( animationDto.sfx )
+                globals.GAME.sound.playEffect( animationDto.sfx == false ? "relaxing_chord.wav" : animationDto.sfx )
                 break;
             case WAIT:
                 this.counter = new Counter( animationDto.ms )
@@ -149,7 +153,7 @@ class Animation {
     initCreateSpriteAnimation( animationDto ) {
         animationDto.name = animationDto.spriteName;
         if ( animationDto.spriteName == PLAYER_NAME ) {
-            globals.GAME.setPlayerToCellInNewMap( {
+            setPlayerToCellInNewMap( {
                 row: animationDto.row, col: animationDto.col }, 
                 animationDto.direction, getCinematicFront( )
             );
@@ -158,6 +162,12 @@ class Animation {
 
         const tile = globals.GAME.FRONT.getTileAtCell( animationDto.col, animationDto.row );
         globals.GAME.FRONT.setCharacterSprite( tile, animationDto, true )   
+    }
+
+    initCreateObjectSpriteAnimation( animationDto ) {
+        animationDto.name = animationDto.spriteName;
+        const tile = globals.GAME.FRONT.getTileAtCell( animationDto.col, animationDto.row );
+        globals.GAME.FRONT.setObjectSprite( tile, animationDto, false )   
     }
 
     getSpriteCell( ) {
