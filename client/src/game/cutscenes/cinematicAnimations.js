@@ -18,7 +18,7 @@ const handleCinematicAnimations = ( GAME ) => {
         e.drawAndMove( );
     })
 
-    if ( GAME.FRONTGRID.hasFrontGrid ) {
+    if ( GAME.FRONTGRID.hasFrontGrid && GAME.PLAYER.visionbox != undefined ) {
         const tilesFront = PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
         GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
     }

@@ -1,5 +1,6 @@
 const { BaseSound } = require('./BaseSound')
 const globals = require('../../game-data/globals');
+const { MapSprite } = require('../map/map-classes/MapSprite');
 /**
  * Spatial sound pans and plays a sound relative to the player
  */
@@ -43,7 +44,7 @@ class SpatialSound extends BaseSound {
         if ( this.isPaused || this.hasNotStartedPlaying ) {
             this.play( );
         }
-        else if ( sprite == PLAYER ) {
+        else if ( sprite == PLAYER || !(PLAYER instanceof MapSprite)  ) {
             this.setVolumeToFactor( 1 );
         }
         else {

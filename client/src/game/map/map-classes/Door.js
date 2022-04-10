@@ -8,6 +8,7 @@ const { ITEM_OWNED } = require('../../../game-data/conditionGlobals');
 const { inUnlockedDoorsRegistry, addDoorToUnlockedDoorsRegistry } = require('../../../helpers/doorRegistry');
 const { PLAYER_NAME, PLAYER_ID } = require('../../../game-data/interactionGlobals');
 const { getActionObject } = require('../../../helpers/actionDtoFactory');
+const { switchMap } = require('../../../helpers/loadMapHelpers');
 
 const lockedDoorEvent = [
         EVENT_TALK, false, "voice-1.mp3", [ 
@@ -68,7 +69,7 @@ class Door extends Hitbox {
             this.dismiss( );
         }
         else if (!this.condition) {
-            globals.GAME.switchMap( this.destination, EVENT_DOOR );
+            switchMap( this.destination, EVENT_DOOR );
             globals.GAME.sound.playEffect( "misc/random5.wav" );
             this.dismiss( );
         }

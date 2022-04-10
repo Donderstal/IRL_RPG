@@ -1,9 +1,11 @@
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, 
-    WAIT, EVENT_BUS, EMOTE, CAMERA_MOVE_TO_SPRITE
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, 
+    FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
+const { PLAYER_NAME } = require('../../game-data/interactionGlobals');
 const { Counter } = require('../../helpers/Counter');
+const { loadCinematicMap, getCinematicFront } = require('../../helpers/loadMapHelpers');
 const { getClosestCell } = require('../../helpers/utilFunctions');
 
 class Animation {
@@ -11,7 +13,7 @@ class Animation {
         this.id = id;
         this.type   = animationDto.type;
         this.spriteName = animationDto.spriteName;
-        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) ) {
+        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) || this.is( LOAD_MAP ) ) {
             this.spriteId = undefined;
         }
         else {
@@ -75,7 +77,7 @@ class Animation {
             case FADE_OUT:
                 globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack(  );
-                globals.GAME.sound.playEffect( "relaxing_chord.wav" )
+                globals.GAME.sound.playEffect( animationDto.sfx )
                 break;
             case FADE_IN:
                 globals.GAME.fader.startFadeFromBlack( );
@@ -83,7 +85,7 @@ class Animation {
             case FADE_OUT_IN:
                 globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack( true );
-                globals.GAME.sound.playEffect( "relaxing_chord.wav" )
+                globals.GAME.sound.playEffect( animationDto.sfx )
                 break;
             case WAIT:
                 this.counter = new Counter( animationDto.ms )
@@ -91,6 +93,10 @@ class Animation {
             case CAMERA_MOVE_TO_SPRITE:
                 let sprite = this.getSpriteByName( );
                 globals.GAME.cameraFocus.setSpriteFocus( sprite, animationDto.snapToSprite );
+                break;
+            case LOAD_MAP:
+                this.mapName = animationDto.mapName
+                loadCinematicMap( animationDto.mapName, animationDto.setPlayerSprite, animationDto.playerSpriteLocation );   
                 break;
             default :
                 console.log( "Animation type " + this.type + " is not recognized")
@@ -141,13 +147,16 @@ class Animation {
     }
 
     initCreateSpriteAnimation( animationDto ) {
-        if ( animationDto.spriteName == "Player" ) {
-            globals.GAME.setPlayerInNewMap( globals.GAME.activeMap, EVENT_BUS )
+        animationDto.name = animationDto.spriteName;
+        if ( animationDto.spriteName == PLAYER_NAME ) {
+            globals.GAME.setPlayerToCellInNewMap( {
+                row: animationDto.row, col: animationDto.col }, 
+                animationDto.direction, getCinematicFront( )
+            );
             return;
         }
 
         const tile = globals.GAME.FRONT.getTileAtCell( animationDto.col, animationDto.row );
-        animationDto.name = animationDto.spriteName;
         globals.GAME.FRONT.setCharacterSprite( tile, animationDto, true )   
     }
 
@@ -162,7 +171,8 @@ class Animation {
     }
 
     unsetSpriteAnimation( ) {
-        if ( this.is( DELETE_SPRITE ) || this.is( MOVE_CAR ) ) {
+        if ( this.is( DELETE_SPRITE ) || this.is( MOVE_CAR ) || this.is( LOAD_MAP ) 
+        || this.is( FADE_IN ) || this.is( FADE_OUT_IN ) || this.is( FADE_OUT ) || this.is( WAIT ) ) {
             return;
         }
         
