@@ -14,10 +14,11 @@ const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
     {
-        mapName: "aaaaaaaaaxx!!leonard_heights/Newtown-appartment-3",
+        mapName: "leonard_heights/Newtown-appartment-3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [
+                [[LOAD_MAP, "leonard_heights/Newtown-appartment-3", true]],
                 [[FADE_OUT]],
                 [[LOAD_MAP, "leonard_heights/B2"]],
                 [[FADE_IN]],
@@ -55,6 +56,7 @@ const STORY_EVENTS = [
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+                [[LOAD_MAP, "leonard_heights/C2", true]],
                 [[SPEAK, "Man, I remember that time I was just chilling out at home...", PLAYER_NAME]],
                 [[FADE_OUT, "relaxing_chord.wav"]],
                 [[LOAD_MAP, "leonard_heights/Newtown-appartment-3"]],
@@ -75,6 +77,7 @@ const STORY_EVENTS = [
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+                [[LOAD_MAP, "leonard_heights/E3", true]],
                 [[SPEAK, "I hate the hotel on this street, it's always full of trashy tourists", PLAYER_NAME]]
             ]   
         ]
@@ -89,6 +92,7 @@ const STORY_EVENTS = [
         },
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, KEY_STORY_1, "voice-1.mp3", [ 
+            [[LOAD_MAP, "leonard_heights/Newtown-appartment-4", true]],
             [[SPEAK, "There's just something creepy about an empty appartment...", PLAYER_NAME]]
         ]
     ]
@@ -103,6 +107,7 @@ const STORY_EVENTS = [
         },
         condition: [ EVENT_HAS_FIRED, KEY_STORY_1 ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+            [[LOAD_MAP, "leonard_heights/C4", true]],
             [[SPEAK, "Did I see a ghost?", PLAYER_NAME]],
             [[SPEAK, "It can't be real...", PLAYER_NAME]]
         ]]

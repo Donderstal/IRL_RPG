@@ -80,7 +80,7 @@ class Game {
     get activeMap( ) { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMap : this.activeNeighbourhood.activeMap; }
     get activeMapName( ) { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMapKey : this.activeNeighbourhood.activeMapKey; }
     get previousMapName( ) { return this.activeNeighbourhood.previousMapKey; }
-    get useCinematicMap( ) { return this.usingCinematicMap; }
+    get useCinematicMap( ) { return this.usingCinematicMap && this.inCinematic; }
 
     get activeNeighbourhood() {
         return (this.useCinematicMap ? this.cinematicNeighbourhood : this._activeNeighbourhood);
@@ -226,7 +226,7 @@ class Game {
         this.disableStoryMode = disableStoryMode;
         this.activeMap.playerStart.playerClass = className;
         this.activeMap.playerStart.name = name;
-        loadMapToCanvases( true, this.BACK, this.FRONT, this.FRONTGRID )
+        loadMapToCanvases( );
         if ( !this.disableStoryMode ) {
             this.story = new StoryProgression( );     
         }
@@ -242,7 +242,7 @@ class Game {
         setNeighbourhoodAndMap(JSON.activeMap.mapName)
         this.activeMap.playerStart = JSON.activeMap.playerStart;
         this.activeMap.playerStart.name = "test";
-        loadMapToCanvases( true, this.BACK, this.FRONT, this.FRONTGRID )
+        loadMapToCanvases( );
         if ( !this.disableStoryMode ) {
             this.story = new StoryProgression( JSON.keyLists.storyEvents );
         }

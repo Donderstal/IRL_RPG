@@ -4,6 +4,7 @@ const {
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
 } = require('../../game-data/conditionGlobals');
 const { Animation } = require('./Animation');
+const { hasCinematicMapLoaded } = require('../../helpers/loadMapHelpers');
 
 class Scene {
     constructor( sceneDto, spriteId ) {
@@ -88,7 +89,7 @@ class Scene {
                         (e.getSpriteByName( ).spriteId == globals.GAME.cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus);
                     break;
                 case LOAD_MAP:
-                    animationHasFinished = e.mapName == globals.GAME.cinematicNeighbourhood.activeMapKey
+                    animationHasFinished = hasCinematicMapLoaded( );
                     break;
                 default :
                     console.log( "Scene type " + e.type + " is not recognized")

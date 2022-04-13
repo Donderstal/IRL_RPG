@@ -5,7 +5,7 @@ const {
 const globals               = require('../../game-data/globals');
 const { PLAYER_NAME } = require('../../game-data/interactionGlobals');
 const { Counter } = require('../../helpers/Counter');
-const { loadCinematicMap, getCinematicFront, setPlayerToCellInNewMap } = require('../../helpers/loadMapHelpers');
+const { loadCinematicMap } = require('../../helpers/loadMapHelpers');
 const { getClosestCell } = require('../../helpers/utilFunctions');
 
 class Animation {
@@ -153,10 +153,7 @@ class Animation {
     initCreateSpriteAnimation( animationDto ) {
         animationDto.name = animationDto.spriteName;
         if ( animationDto.spriteName == PLAYER_NAME ) {
-            setPlayerToCellInNewMap( {
-                row: animationDto.row, col: animationDto.col }, 
-                animationDto.direction, getCinematicFront( )
-            );
+            globals.GAME.FRONT.initPlayerCharacter( animationDto );
             return;
         }
 

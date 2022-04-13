@@ -34,7 +34,7 @@ const getKeys = ( type ) => {
         case CAMERA_MOVE_TO_SPRITE:
             return [ "spriteName", "snapToSprite" ];
         case LOAD_MAP:
-            return [ "mapName", "setPlayerSprite", "playerSpriteLocation" ]
+            return [ "mapName", "setPlayerSprite" ]
         default :
             console.log( "Scene type " + type + " is not recognized")
     }

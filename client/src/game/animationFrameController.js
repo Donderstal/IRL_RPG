@@ -5,6 +5,7 @@ const controls                  = require('./controls')
 const canvasHelpers             = require('./../helpers/canvasHelpers')
 const { tryCatch } = require('../helpers/errorHelpers')
 const { handleCinematicAnimations } = require('./cutscenes/cinematicAnimations')
+const { hasCinematicMapLoaded } = require('../helpers/loadMapHelpers')
 
 let lastDateNow, newDateNow;
 
@@ -23,10 +24,10 @@ const animationFrameController = ( arg ) => {
                 tryCatch(controls.listenForKeyPress);
             }            
 
-            if ( !GAME.MENU.isActive && !GAME.inCinematic) {
+            if ( !GAME.MENU.isActive && !GAME.inCinematic || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
                 tryCatch(handleMapAnimations, [GAME]);
             }
-            else if ( !GAME.MENU.isActive && GAME.inCinematic) {
+            else if ( !GAME.MENU.isActive && GAME.inCinematic && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
                 tryCatch(handleCinematicAnimations, [GAME]);
             }
             else if ( GAME.MENU.isActive ) {

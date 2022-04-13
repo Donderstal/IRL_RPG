@@ -4,7 +4,6 @@ const tryCatch = ( functionToEvaluate, functionArguments = [] ) => {
     }
     catch( ex ) {
         console.error(ex.message);
-        console.trace();
     }
 }
 

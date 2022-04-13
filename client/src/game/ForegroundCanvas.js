@@ -10,6 +10,7 @@ const { RoadNetwork } = require('./map/RoadNetwork');
 const pathFinder = require('../helpers/pathfindingHelpers');
 const { tryCatch } = require('../helpers/errorHelpers');
 const mapObjectResources = require('../resources/mapObjectResources');
+const { PLAYER_ID, PLAYER_NAME } = require('../game-data/interactionGlobals');
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -36,12 +37,12 @@ class ForegroundCanvas extends CanvasWithGrid {
      * Set characters, mapObjects, roads and the playerstart as properties
      * @param {Object} mapData - data object from mapResources
      */
-    setForegroundData( mapData, isNewGame ) {
+    setForegroundData( mapData ) {
         if ( mapData.characters )
             this.setCharacters( mapData.characters );
         if ( mapData.mapObjects )
             this.setObjects( mapData.mapObjects );
-        if ( mapData.playerStart && isNewGame ) {
+        if ( mapData.playerStart ) {
             this.initPlayerCharacter( mapData.playerStart );
             globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX( ), this.playerSprite.baseY( ) )      
         }
@@ -56,12 +57,16 @@ class ForegroundCanvas extends CanvasWithGrid {
     initPlayerCharacter( start ) {
         const startingTile = this.grid.array.filter( tile => {
             return tile.row == start.row && tile.col == start.col
-          })
-        this.playerSprite = new MapSprite( startingTile[0], 0, 'STRD', globals.GAME.party.characterActiveOnMap.classProfile, true )
-        this.playerSprite.spriteId = "PLAYER"
-        this.playerSprite.name = "Player";
+        });
+        this.playerSprite = new MapSprite( 
+            startingTile[0], start.direction != undefined ? start.direction : 0, 'STRD', 
+            globals.GAME.party.characterActiveOnMap.classProfile, true 
+        );
+        this.playerSprite.spriteId = PLAYER_ID;
+        this.playerSprite.name = PLAYER_NAME;
         this.playerSprite.class = start.playerClass;
-        this.allSprites.push( this.playerSprite )
+        this.allSprites.push( this.playerSprite );
+        this.spriteDictionary[PLAYER_ID] = this.playerSprite;
     }
     /**
      * Loop through the array of character objects. 
