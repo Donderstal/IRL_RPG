@@ -53,19 +53,19 @@ class MapSprite extends Sprite {
     };
 
     get isInCenterFacingLeft( ) {
-        return this.centerX( ) < ( this.currentTileBack.x + ( GRID_BLOCK_PX * .55 ) );
+        return this.centerX( ) < ( this.currentTileBack.x + ( GRID_BLOCK_PX * .45 ) );
     }
 
     get isInCenterFacingRight( ) {
-        return this.centerX( ) > ( this.currentTileBack.x + ( GRID_BLOCK_PX * .45 ) ); 
+        return this.centerX( ) > ( this.currentTileBack.x + ( GRID_BLOCK_PX * .55 ) ); 
     }
 
     get isInCenterFacingUp( ) {
-        return this.baseY( ) < ( this.currentTileBack.y + ( GRID_BLOCK_PX * .55 ) );
+        return this.baseY( ) < ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) );
     }
 
     get isInCenterFacingDown( ) {
-        return this.baseY( ) > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); 
+        return this.baseY( ) > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .55 ) ); 
     }
 
     drawSprite( ) {
