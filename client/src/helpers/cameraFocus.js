@@ -13,20 +13,43 @@ class CameraFocus {
         this.xValue;
         this.yValue;
 
+        this.movingToNewFocus = false;
+        this.newFocusXy = { x: 0, y: 0 };
+        this.lastFocusXy = { x: 0, y: 0 };
+        this.mode = MODE_FOLLOW_SPRITE;
+
         this.updateXValue( this.startingXValue );
         this.updateYValue( this.startingYValue );
-
-        this.mode = MODE_FOLLOW_SPRITE;
     }
 
     get cinematicMode() { return mode == MODE_CINEMATIC; }
     get followingSprite() { return mode == MODE_FOLLOW_SPRITE; }
 
-    get xValueAsString() { return -this.xValue + 'px'}
-    get yValueAsString() { return -this.yValue + 'px'}
+    get xValueAsString() { 
+        const xBenchMark = document.documentElement.clientWidth > document.documentElement.clientHeight 
+        ? document.documentElement.clientWidth
+        : document.documentElement.clientHeight;
+        return -(this.xValue + ((-xBenchMark) / 2)) + 'px';
+    }
+    get yValueAsString() { 
+        const yBenchMark = document.documentElement.clientWidth < document.documentElement.clientHeight 
+        ? document.documentElement.clientWidth
+        : document.documentElement.clientHeight;
+        return -(this.yValue + ((-yBenchMark) / 2))+ 'px';
+    }
 
-    setSpriteFocus( spriteId ) {
-        this.focusSpriteId = spriteId;
+    get focusedSprite( ) {
+        return globals.GAME.FRONT.allSprites.filter((e)=>{ return e.spriteId == this.focusSpriteId })[0]
+    }
+
+    setSpriteFocus( sprite, snapToSprite ) {
+        this.focusSpriteId = sprite.spriteId;
+        if ( snapToSprite ) {
+            this.centerOnXY( sprite.centerX( ), sprite.baseY( ) );
+        }
+        else {
+            this.initMoveToXY( sprite.centerX( ), sprite.baseY( ) )
+        }
     }
 
     unsetSpriteFocus( ) {
@@ -40,29 +63,24 @@ class CameraFocus {
 
     updateXValue( newValue ) {
         this.xValue = newValue;
+        this.lastFocusXy.x = newValue;
         document.getElementById("canvas-wrapper").style.left = this.xValueAsString;
     }
 
     updateYValue( newValue ) {
         this.yValue = newValue;
+        this.lastFocusXy.y = newValue;
         document.getElementById("canvas-wrapper").style.top = this.yValueAsString;
     }
 
+    initMoveToXY( x, y ) {
+        this.movingToNewFocus = true;
+        this.newFocusXy = { 'x': x, 'y': y };
+    }
+
     centerOnXY( x, y, calcOffset = true ) {
-        let xValue = x;
-        let yValue = y;
-        if ( calcOffset ) {
-            const xBenchMark = document.documentElement.clientWidth > document.documentElement.clientHeight 
-                ? document.documentElement.clientWidth
-                : document.documentElement.clientHeight;
-            const yBenchMark = document.documentElement.clientWidth < document.documentElement.clientHeight 
-                ? document.documentElement.clientWidth
-                : document.documentElement.clientHeight;
-            xValue += ((-xBenchMark) / 2);
-            yValue += ((-yBenchMark) / 2);
-        }
-        this.updateXValue( xValue );
-        this.updateYValue( yValue  );
+        this.updateXValue( x );
+        this.updateYValue( y  );
     }
 
     handleScreenFlip( xy, calcOffset = true ) {
@@ -70,18 +88,42 @@ class CameraFocus {
         this.centerOnXY( xy.x, xy.y, calcOffset)
     }
 
-    moveCameraToDirection( direction, speed ) {
-        if ( direction == FACING_LEFT ) {
-            this.updateXValue( this.xValue - speed );
+
+    moveToNewFocus( ) {
+        if ( this.focusedSprite == undefined ||  this.focusedSprite == null ) {
+            this.movingToNewFocus = false;
+            return;
         }
-        if ( direction == FACING_UP ) {
-            this.updateYValue( this.yValue - speed );
+        this.newFocusXy = {
+            'x': this.focusedSprite.centerX( ),
+            'y': this.focusedSprite.baseY( )
         }
-        if ( direction == FACING_RIGHT ) {
-            this.updateXValue( this.xValue + speed );
+        let moveToX = this.lastFocusXy.x;
+        let moveToY = this.lastFocusXy.y;
+        if ( this.newFocusXy.x > moveToX ) {
+            moveToX = (moveToX + globals.MOVEMENT_SPEED) > this.newFocusXy.x 
+                ? this.newFocusXy.x
+                : moveToX + globals.MOVEMENT_SPEED;
         }
-        if ( direction == FACING_DOWN ) {
-            this.updateYValue( this.yValue + speed );
+        else if ( this.newFocusXy.x < moveToX ) {
+            moveToX = (moveToX - globals.MOVEMENT_SPEED) < this.newFocusXy.x 
+                ? this.newFocusXy.x
+                : moveToX - globals.MOVEMENT_SPEED;
+        }
+        if ( this.newFocusXy.y > moveToY ) {
+            moveToY = (moveToY + globals.MOVEMENT_SPEED) > this.newFocusXy.y 
+                ? this.newFocusXy.y
+                : moveToY + globals.MOVEMENT_SPEED;
+        }
+        else if ( this.newFocusXy.y < moveToY ) {
+            moveToY = (moveToY - globals.MOVEMENT_SPEED) < this.newFocusXy.y 
+                ? this.newFocusXy.y
+                : moveToY - globals.MOVEMENT_SPEED;
+        }
+        this.centerOnXY( moveToX, moveToY );
+        if ( moveToX == this.newFocusXy.x && moveToY == this.newFocusXy.y ) {
+            this.movingToNewFocus = false;
+            this.centerOnXY( this.focusedSprite.centerX( ), this.focusedSprite.baseY( ) );
         }
     }
 }

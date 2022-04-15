@@ -117,7 +117,7 @@ const drawRect = ( canvas, x, y, width, height, color = null ) => {
  * @param {String} size 
  */
 const setFont = ( size, ctx = getFrontCanvasContext()  ) => {
-    ctx.font = size + "px " + 'AuX DotBitC Xtra';
+    ctx.font = size + "px " + 'PFRondaSeven';
 }
 /**
  * Write given text with the ctx.fillText function at given xy on the front context

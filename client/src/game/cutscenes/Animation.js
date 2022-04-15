@@ -1,6 +1,6 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_OUT_IN, FADE_IN, 
-    WAIT, EVENT_BUS, EMOTE
+    WAIT, EVENT_BUS, EMOTE, CAMERA_MOVE_TO_SPRITE
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { Counter } = require('../../helpers/Counter');
@@ -88,6 +88,10 @@ class Animation {
             case WAIT:
                 this.counter = new Counter( animationDto.ms )
                 break;
+            case CAMERA_MOVE_TO_SPRITE:
+                let sprite = this.getSpriteByName( );
+                globals.GAME.cameraFocus.setSpriteFocus( sprite, animationDto.snapToSprite );
+                break;
             default :
                 console.log( "Animation type " + this.type + " is not recognized")
                 console.log(data);
@@ -120,20 +124,20 @@ class Animation {
     }
 
     initMoveCarAnimation( animationDto ) {
-        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadId == animationDto.roadId; })
+        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadName == animationDto.roadName; })
         let road    = roads[0];
 
         this.destination = road.isHorizontal ? { "row": road.topRow, "col": animationDto.col } : { "row": animationDto.row, "col": road.leftCol }
         this.walkingToDestination = true;   
-        let car = this.getSpriteByName( )
-        car.initMovingSprite( this )
+        let car = this.getSpriteByName( );
+        car.setDestination( this.destination, true );
     }
 
     initCreateCarAnimation( animationDto ) {
-        let roads   = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadId == animationDto.roadId; })
+        let roads       = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.name == animationDto.roadName })
         let roadData    = roads[0].getCarDataForTile( true );
-        roadData.name = this.spriteName;
-        globals.GAME.FRONT.setVehicleToTile( roadData )
+        roadData.name   = this.spriteName;
+        globals.GAME.FRONT.setVehicleToTile( roadData );
     }
 
     initCreateSpriteAnimation( animationDto ) {
@@ -148,12 +152,12 @@ class Animation {
     }
 
     getSpriteCell( ) {
-        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
+        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( );
         return { 'row': sprite.row, 'col': sprite.col }
     }
 
     setAnimToSprite( ) {
-        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
+        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( );
         sprite.setAnimation(this)      
     }
 
@@ -162,7 +166,7 @@ class Animation {
             return;
         }
         
-        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( )
+        const sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( );
         if ( sprite.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
             sprite.unsetScriptedAnimation( )            
         }

@@ -22,6 +22,7 @@ class Car extends MapObject {
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
         this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
+        this.baseY = () => { return  this.y + ( this.height / 2 ) };
         this.roadId;
         this.type = 'car'
 

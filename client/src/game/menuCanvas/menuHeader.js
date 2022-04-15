@@ -79,7 +79,7 @@ class HeaderButton extends I_MenuElement {
     drawElement( ctx ) {
         if ( ( globals.SCREEN.MOBILE && this.isActive ) || !globals.SCREEN.MOBILE ) {
             super.drawElement( ctx );     
-            ctx.font = BATTLE_FONT_SIZE + "px " + 'AuX DotBitC Xtra';
+            ctx.font = BATTLE_FONT_SIZE + "px " + 'PFRondaSeven';
             ctx.fillStyle = "black";
             var textWidth = ctx.measureText(this.text).width;
             ctx.fillText( this.text, (this.x + (this.width / 2)) - (textWidth / 2), this.y + this.height / 2); 

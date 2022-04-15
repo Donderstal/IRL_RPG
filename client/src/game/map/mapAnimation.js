@@ -62,6 +62,10 @@ const handleMapAnimations = ( GAME ) => {
     if ( !inDoorRange ) {
         unsetPendingDoor( );
     }
+
+    if ( GAME.cameraFocus.movingToNewFocus ) {
+        GAME.cameraFocus.moveToNewFocus( );
+    }
 }
 
 const handleRoadNetworkFuncs = ( GAME ) => {

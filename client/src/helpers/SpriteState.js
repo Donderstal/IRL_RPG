@@ -28,8 +28,12 @@ class SpriteState {
 
     animationOff( sprite ) {
         this.inAnimation = false;
-        sprite.sheetPosition = 0;
-        sprite.direction = this.storedAnimationPosition['direction'];
+        sprite.sheetPosition = this.storedAnimationPosition['position'] != undefined 
+            ? this.storedAnimationPosition['position'] 
+            : sprite.sheetPosition;
+        sprite.direction = this.storedAnimationPosition['direction'] != undefined 
+            ? this.storedAnimationPosition['direction'] 
+            : sprite.direction;
         this.storedAnimationPosition = false;
     }
 

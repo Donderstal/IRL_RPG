@@ -64,6 +64,13 @@ button:focus {
 }
 
 @import url('http://fonts.cdnfonts.com/css/aux-dotbitc');
+
+@font-face {
+	font-family: 'PFRondaSeven';
+	src: url('/static/fonts/rotorcap_neue/ROTORcapNeue-Regular.ttf')  format('truetype')
+}
+
+
 canvas {
-	font-family: 'AuX DotBitC Xtra', sans-serif;
+	font-family: 'PFRondaSeven', sans-serif;
 }
