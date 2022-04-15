@@ -3,7 +3,7 @@ const globals  = require('../game-data/globals')
 const controls      = require('./controls')
 const { CANVAS_WIDTH, CANVAS_HEIGHT }  = require('../game-data/globals')
 const { ON_NPC_INTERACTION }  = require('../game-data/conditionGlobals')
-const { MONKEY_CEO, GRANNY, TOUGH_GUY_WITH_COOL_SHIRT } = require('../resources/classProfileResources')
+const { MAIN_CHARACTER } = require('../resources/classProfileResources')
 const { SoundController } = require('./sound/SoundController');
 const { ForegroundCanvas } = require('./ForegroundCanvas');
 const { BackgroundCanvas } = require('./BackgroundCanvas');
@@ -251,9 +251,7 @@ class Game {
 
     initializePlayerParty( name ) {
         this.party = new Party( [ 
-            { name: name, className: MONKEY_CEO }, 
-            { name: "Roberto 'Rob' Felix", className: TOUGH_GUY_WITH_COOL_SHIRT }, 
-            { name: "Your nan", className: GRANNY } 
+            { name: name, className: MAIN_CHARACTER }
         ] );
         this.party.addItemsToInventory( startingItemIDs )
     }
@@ -292,6 +290,7 @@ class Game {
  * @param {boolean} disableStoryMode if true, no
  */
 const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) => {
+    setFaderDimensions( );
     globals.GAME = new Game( );
     screen.orientation.onchange = ( ) => {
         if ( screen.orientation.type == "landscape-primary" ) {
@@ -307,8 +306,8 @@ const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) 
                     )
                 }
                 hideFlipScreenModal( );
+                setFaderDimensions( );
             }, 100)
-
         }
         else {
             showFlipScreenModal( );
@@ -320,6 +319,12 @@ const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) 
     }
     new FileLoader( [name, className, startingMap, debugMode, disableStoryMode], "NEW" );
     setLoadingScreen( );
+}
+
+const setFaderDimensions = ( ) => {
+    const fader = document.getElementById('game-fader-canvas')
+    fader.style.width = window.innerWidth + "px";
+    fader.style.height = window.innerHeight + "px";
 }
 
 const showFlipScreenModal = ( ) =>{

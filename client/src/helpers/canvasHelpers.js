@@ -108,7 +108,7 @@ const breakTextIntoLines = ( text, fontSize ) => {
  * @param {String} color 
  */
 const drawRect = ( canvas, x, y, width, height, color = null ) => {
-    let ctx = canvas === "BACK" ? getBackCanvasContext() : getFrontCanvasContext()
+    let ctx = canvas === "BACK" ? getBackCanvasContext() : ( canvas ===  "FRONT" ? getFrontCanvasContext() : document.getElementById('game-fader-canvas').getContext('2d') )
     ctx.fillStyle = (color != null) ? color : "white"
     ctx.fillRect( x, y, width, height );
 }

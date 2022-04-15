@@ -47,6 +47,7 @@ class Animation {
             case EMOTE:
                 this.src = animationDto.src;
                 this.speakWith = animationDto.speakWith;
+                this.counter = new Counter( 1000 )
                 setToSprite = true;
             case MOVE :
                 this.initMoveAnimation( animationDto );
@@ -79,17 +80,21 @@ class Animation {
                 }, 250 )
                 break;
             case FADE_OUT:
-                globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack(  );
-                globals.GAME.sound.playEffect( animationDto.sfx == false ? "relaxing_chord.wav" : animationDto.sfx )
+                if ( animationDto.sfx ) {
+                    globals.GAME.sound.pauseMusic( );
+                    globals.GAME.sound.playEffect( animationDto.sfx )
+                }
                 break;
             case FADE_IN:
                 globals.GAME.fader.startFadeFromBlack( );
                 break;
             case FADE_OUT_IN:
-                globals.GAME.sound.pauseMusic( );
                 globals.GAME.fader.startFadeToBlack( true );
-                globals.GAME.sound.playEffect( animationDto.sfx == false ? "relaxing_chord.wav" : animationDto.sfx )
+                if ( animationDto.sfx ) {
+                    globals.GAME.sound.pauseMusic( );
+                    globals.GAME.sound.playEffect( animationDto.sfx )
+                }
                 break;
             case WAIT:
                 this.counter = new Counter( animationDto.ms )

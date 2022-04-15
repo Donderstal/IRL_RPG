@@ -1,5 +1,5 @@
 const globals = require("../game-data/globals")
-const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, OUT_UP,OUT_DOWN } = require("../game-data/globals")
+const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, OUT_UP, OUT_DOWN, OUT_RIGHT } = require("../game-data/globals")
 const { 
     ON_ENTER, ON_LEAVE, ON_POSITION, EVENT_HAS_FIRED, CREATE_CAR, MOVE_CAR, LOAD_MAP, FADE_OUT,
     EMOTE, DEFAULT, EVENT_TALK, SPEAK, CREATE_SPRITE, MOVE, CAMERA_MOVE_TO_SPRITE,
@@ -21,18 +21,34 @@ const STORY_EVENTS = [
                 [[LOAD_MAP, "leonard_heights/Newtown-appartment-3", true]],
                 [[FADE_OUT]],
                 [[LOAD_MAP, "leonard_heights/B2"]],
-                [[FADE_IN]],
                 [[CREATE_CAR, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
-                [[CAMERA_MOVE_TO_SPRITE, "CIN_CAR_BUS", true], [MOVE_CAR, null, OUT_UP, "CIN_CAR_BUS", FACING_UP]],
+                [[CAMERA_MOVE_TO_SPRITE, "CIN_CAR_BUS", true]],
+                [[FADE_IN]],
+                [[MOVE_CAR, null, OUT_UP, "CIN_CAR_BUS", FACING_UP]],
                 [[FADE_OUT]],
                 [[LOAD_MAP, "leonard_heights/B1"]],
                 [[CREATE_OBJECT_SPRITE, FACING_UP, "bus", "My cool car", 13, 13]],
+                [[CAMERA_MOVE_TO_SPRITE, "My cool car", true], [CREATE_SPRITE, FACING_RIGHT, false, PLAYER_NAME, 15, 14], [CREATE_SPRITE, FACING_LEFT,"fats.png", "BOB", 16, 14]],
                 [[FADE_IN]],
-                [[CAMERA_MOVE_TO_SPRITE, "My cool car", true]],
-                [[CREATE_SPRITE, FACING_UP, false, PLAYER_NAME, 15, 14], [CREATE_SPRITE, FACING_DOWN ,"fats.png", "BOB", 15, 13]],
                 [[SPEAK, "Was good seeing you dude!!", PLAYER_NAME], [EMOTE, EMOTE_HAPPY, "BOB"]],
-                [[SPEAK, "Yeah for sure, see you next week", "BOB"], [EMOTE, EMOTE_HAPPY, "BOB"]],
-                [[MOVE, PLAYER_NAME, { col: 15, row: OUT_DOWN}]]
+                [[SPEAK, "Yeah for sure, see you next week", "BOB"], [EMOTE, EMOTE_HAPPY, PLAYER_NAME]],
+                [[MOVE, PLAYER_NAME, { col: 15, row: OUT_DOWN }]],
+                [[FADE_OUT]],
+                [[LOAD_MAP, "leonard_heights/B2"]],
+                [[CREATE_SPRITE, FACING_DOWN, false, PLAYER_NAME, 15, 1]],
+                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, true]],
+                [[FADE_IN], [MOVE, PLAYER_NAME, { col: 15, row: 10 }]],
+                [[MOVE, PLAYER_NAME, { col: OUT_RIGHT, row: 10 }]],
+                [[FADE_OUT]],
+                [[LOAD_MAP, "leonard_heights/C2"]],
+                [[CREATE_SPRITE, FACING_RIGHT, false, PLAYER_NAME, 1, 10]],
+                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, true]],
+                [[FADE_IN]],
+                [[SPEAK, "I'm almost back home, can't wait to get some cold Diet Betes!", PLAYER_NAME]],
+                [[MOVE, PLAYER_NAME, { col: 12, row: 10 }]],
+                [[MOVE, PLAYER_NAME, { col: 12, row: 9 }], [FADE_OUT]],
+                [[LOAD_MAP, "leonard_heights/Newtown-appartment-3", true]],
+                [[FADE_IN]]
             ]
         ]
     },

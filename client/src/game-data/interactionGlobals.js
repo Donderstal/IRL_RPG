@@ -9,7 +9,7 @@ module.exports = {
     LOGGABLE_INTERACTION_5 : "LI5",
     UNLOCK_DOOR_TEST: "UDT",
 
-    PLAYER_NAME: "Player",
+    PLAYER_NAME: "Julius",
     PLAYER_ID: "PLAYER",
     SPEAK_SPEAKER: "Speaker",
     COLLECTABLE_COIN: "COLL_COIN",

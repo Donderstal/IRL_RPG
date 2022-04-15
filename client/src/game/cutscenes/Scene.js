@@ -1,4 +1,7 @@
 const globals         = require('../../game-data/globals')
+const {
+    STATE_PATHFINDING, STATE_MOVING, STATE_BLOCKED
+} = require('../../game-data/globals')
 const { getUniqueId } = require('../../helpers/utilFunctions');
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
@@ -54,13 +57,15 @@ class Scene {
             switch( e.type ) {
                 case SPEAK:
                 case SPEAK_YES_NO:
-                case EMOTE:
                     animationHasFinished = !globals.GAME.speechBubbleController.isActive
+                    break;    
+                case EMOTE:
+                    animationHasFinished = e.counter.countAndCheckLimit( );
                     break;
                 case MOVE :
                 case MOVE_CAR:
                     let moveSprite = e.getSpriteById( ) != undefined ? e.getSpriteById( ) : e.getSpriteByName( );
-                    animationHasFinished = moveSprite == undefined || !moveSprite.State.is(globals.STATE_MOVING)
+                    animationHasFinished = moveSprite == undefined || (!moveSprite.State.is(STATE_MOVING) && !moveSprite.State.is(STATE_BLOCKED) && !moveSprite.State.is(STATE_PATHFINDING))
                     break;
                 case ANIM: 
                     let animSprite = e.getSpriteById( );
@@ -82,7 +87,7 @@ class Scene {
                     animationHasFinished = !globals.GAME.fader.inFadingAnimation
                     break;
                 case WAIT:
-                    animationHasFinished = e.counter.countAndCheckLimit( )
+                    animationHasFinished = e.counter.countAndCheckLimit( );
                     break;
                 case CAMERA_MOVE_TO_SPRITE:
                     animationHasFinished = e.getSpriteByName( ) == undefined ||

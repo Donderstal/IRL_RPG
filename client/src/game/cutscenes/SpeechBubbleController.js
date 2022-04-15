@@ -33,6 +33,7 @@ class SpeechBubbleController {
         this.activeBubbles[id] = new Emote( location, imageSrc );
         this.activeBubbleIds.push(id);
         this.emoteIds.push(id);
+        setTimeout(()=>{ this.unsetActiveBubble( id ) }, 1000)
     }
 
     bubbleIsActive( id ) {
@@ -40,8 +41,13 @@ class SpeechBubbleController {
     }
 
     unsetActiveBubble( id ) {
-        const index = this.activeBubbleIds.indexOf(id);
-        this.activeBubbleIds.slice(index);
+        this.activeBubbleIds = this.activeBubbleIds.filter((e)=>{return e != id})
+        if ( this.emoteIds.indexOf(id) != -1 ) {
+            this.emoteIds = this.emoteIds.filter((e)=>{return e != id})
+        }
+        else if ( this.nonEmoteIds.indexOf(id) != -1 ) {
+            this.nonEmoteIds = this.nonEmoteIds.filter((e)=>{return e != id})
+        }
         delete this.activeBubbles[id];
     }
 

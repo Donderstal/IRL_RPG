@@ -165,6 +165,12 @@
         background: #00384D 0% 0% no-repeat padding-box;
         z-index: 100;
     }
+    #game-fader-canvas {
+        position: fixed;
+        z-index: 9;
+        left: 0;
+        top: 0;
+    }
 </style>
 
 <div class="game-gfx-container">
@@ -182,6 +188,8 @@
 
         <canvas id='game-menu-canvas' class="game-menu-body"
         style="left:{phoneUICanvasLeftPosition}px; background-color: #00384D; position: fixed; top: 0; visibility: hidden;" ></canvas>    
+
+        <canvas id='game-fader-canvas' style="background: transparent;" ></canvas>    
 
         {#if globals.SCREEN.MOBILE}
             <canvas id='game-bubble-canvas' class="game-menu-body"
