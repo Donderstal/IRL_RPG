@@ -27,6 +27,7 @@ const ROBOT = "ROBOT";
 const PINK_HAIR_NERD_LADY = "PINK HAIR NERD LADY";
 const BLONDE_NERD_LADY = "BLONDE NERD LADY";
 const DARK_HAIR_NERD_LADY = "DARK HAIR NERD LADY";
+const MAIN_CHARACTER = "MAIN CHARACTER"
 
 const spriteFolder = '/static/sprites/';
 
@@ -95,6 +96,8 @@ const getProfileName = ( pngName ) => {
             return BLONDE_NERD_LADY;
         case 'tumbler_girl_recolour02.png':
             return DARK_HAIR_NERD_LADY;
+        case 'Main_Character.png':
+            return MAIN_CHARACTER;
     }
 }
 
@@ -154,6 +157,8 @@ const getClassProfile = ( className ) => {
             return new ClassProfile( className, 'tumbler_girl_recolour01.png', 'voice-2.mp3');
         case DARK_HAIR_NERD_LADY:
             return new ClassProfile( className, 'tumbler_girl_recolour02.png', 'voice-2.mp3');
+        case MAIN_CHARACTER:
+            return new ClassProfile( className, 'Main_Character.png', 'voice-1.mp3');
     }
 };
 module.exports = {
@@ -187,6 +192,7 @@ module.exports = {
     ROBOT,
     PINK_HAIR_NERD_LADY,
     BLONDE_NERD_LADY,
-    DARK_HAIR_NERD_LADY
+    DARK_HAIR_NERD_LADY,
+    MAIN_CHARACTER
 }
 

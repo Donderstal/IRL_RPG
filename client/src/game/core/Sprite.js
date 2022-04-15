@@ -177,9 +177,6 @@ class Sprite {
         }
         if ( animation.is( EMOTE ) ) {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
-            if ( this.animationType != globals.NPC_ANIM_TYPE_ANIMATION_LOOP ) {
-                this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
-            }
         }
         if ( animation.is( MOVE ) ) {
             this.setDestination( animation.destination );

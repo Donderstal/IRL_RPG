@@ -1,16 +1,11 @@
-const { 
-    SPEAK, SPEAK_YES_NO, EMOTE
-} = require('../../game-data/conditionGlobals');
+const { SPEAK, SPEAK_YES_NO, EMOTE } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals')
 const controls             = require('../controls')
-const { 
-    ON_NPC_INTERACTION, ON_LEAVE
-}  = require('../../game-data/conditionGlobals')
+const { ON_NPC_INTERACTION, ON_LEAVE }  = require('../../game-data/conditionGlobals')
 const { Scene }     = require('./Scene');
 const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interactionGlobals');
-/**
- * The Cinematic and Scene classes are no longer implemented and need to be reworked to the new Grid system
- */
+const { switchMap } = require('../../helpers/loadMapHelpers');
+
 class Cinematic {
     constructor( scenes, trigger, args ) {
         controls.clearPressedKeys( globals.GAME.pressedKeys );
@@ -57,7 +52,7 @@ class Cinematic {
     handleEndOfCinematicTrigger( ) {
         switch( this.trigger ) {
             case ON_LEAVE: 
-                globals.GAME.switchMap( this.args[0], this.args[1] )
+                switchMap( this.args[0], this.args[1] )
                 break;
             case ON_NPC_INTERACTION: 
                 let sprite = globals.GAME.FRONT.spriteDictionary[this.args[0]];

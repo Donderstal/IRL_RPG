@@ -12,6 +12,11 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### MAR 15, 2022
+* Added in-cinematic map-switching
+* Moved map loading funcs out of Game class
+* Various small tweaks to Scenes/Animations
+
 #### MAR 30, 2022
 * Cinematic camera focus can snap to and follow different sprites
 

@@ -26,7 +26,8 @@ class Fader {
     }
 
     handleFade( ) {
-        drawRect( "FRONT", 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, this.RGBA )
+        document.getElementById('game-fader-canvas').getContext('2d').clearRect( 0, 0, window.innerWidth, window.innerHeight )
+        drawRect( "FADER", 0, 0, window.innerWidth, window.innerHeight, this.RGBA )
 
         if ( this.fadingFromBlack ) {
             this.fadeFromBlack( )
@@ -39,11 +40,11 @@ class Fader {
     }
 
     fadeToBlack( ) {
-        this.A += .0075
+        this.A += .0250
     }
 
     fadeFromBlack( ) {
-        this.A -= .0075
+        this.A -= .0250
     }
     
     holdBlackMode( ) {

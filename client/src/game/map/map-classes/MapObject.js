@@ -18,8 +18,7 @@ const { initDoorWithId } = require('../../../helpers/doorController')
  */
 class MapObject extends Sprite {
     constructor ( tile, spriteData, spriteId ){
-        const objectResource = mapObjectResources[spriteData.type]
-        const src = "/static/sprite-assets/" + objectResource.src
+        const objectResource = mapObjectResources[spriteData.sprite == undefined ? spriteData.type : spriteData.sprite]
         const spriteDimensionsInBlocks = getSpriteDimensions( objectResource, spriteData.hasDoor ? null : spriteData.direction );
         const dimensionsInMap = {
             "width": spriteDimensionsInBlocks.hori * GRID_BLOCK_PX,
@@ -46,6 +45,7 @@ class MapObject extends Sprite {
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
         this.hasDoor = spriteData.hasDoor;
         this.spriteId = spriteId;
+        this.name = spriteData.name;
         this.type = "object"
 
         if ( hasAction ) {

@@ -18,8 +18,10 @@ class FrontgridCanvas extends CanvasWithGrid {
     }
 
     drawMapFromGridData( image ) {
-        super.drawMapFromGridData( image )
-        globals.GAME.PLAYER.visionbox.clearArc( );
+        if ( globals.GAME.PLAYER.visionbox != undefined ) {
+            super.drawMapFromGridData( image )
+            globals.GAME.PLAYER.visionbox.clearArc( );            
+        }
     }
 
     drawTilesAndClearArc( tiles ) {

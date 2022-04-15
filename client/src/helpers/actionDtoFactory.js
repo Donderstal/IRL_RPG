@@ -1,6 +1,7 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, 
-    DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE
+    DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, 
+    CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
 } = require('../game-data/conditionGlobals');
 
 const getKeys = ( type ) => {
@@ -20,6 +21,7 @@ const getKeys = ( type ) => {
         case CREATE_CAR:
             return [ "sprite", "spriteName", "roadName" ];
         case CREATE_SPRITE:
+        case CREATE_OBJECT_SPRITE:
             return [ "direction", "sprite", "spriteName", "col", "row"];
         case DELETE_SPRITE:
             return [ "spriteName", "sfx" ];
@@ -31,6 +33,8 @@ const getKeys = ( type ) => {
             return [ "ms" ];
         case CAMERA_MOVE_TO_SPRITE:
             return [ "spriteName", "snapToSprite" ];
+        case LOAD_MAP:
+            return [ "mapName", "setPlayerSprite" ]
         default :
             console.log( "Scene type " + type + " is not recognized")
     }

@@ -153,5 +153,8 @@ const drawSpritesInArray = ( array, GAME ) => {
 }
 
 module.exports = {
-    handleMapAnimations
+    handleMapAnimations,
+    drawSpritesInOrder,
+    handleRoadNetworkFuncs,
+    handleNpcCounter
 }

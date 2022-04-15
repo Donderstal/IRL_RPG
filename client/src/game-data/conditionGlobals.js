@@ -15,6 +15,7 @@ module.exports = {
     MOVE_CAR: "MOC",
     ANIM: "ANI",
     CREATE_CAR: "CRC",
+    CREATE_OBJECT_SPRITE: "COS",
     CREATE_SPRITE: "CRS",
     DELETE_SPRITE: "DEL",
     FADE_IN: "FAI",
@@ -24,6 +25,7 @@ module.exports = {
     EMOTE: "EMO",
     CAMERA_MOVE_TO_SPRITE: "CSTS",
     CAMERA_FREE: "CFR",
+    LOAD_MAP: "LOM",
 
     ON_ENTER: "ON_EN",
     ON_LEAVE: "ON_LE",
@@ -40,6 +42,8 @@ module.exports = {
     EVENT_BATTLE: "EV_BA",
     EVENT_NEIGHBOUR: "EV_NE",
     EVENT_SAVE: "EV_SA",
+    EVENT_CINEMATIC: "EV_CI",
+    EVENT_CINEMATIC_END: "EV_CE",
 
     INTERSECTION_STRAIGHT: "IN_ST",
     INTERSECTION_LEFT: "IN_LE",
