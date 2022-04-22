@@ -328,10 +328,6 @@ module.exports = {
             "direction" : FACING_RIGHT
         },
         {
-            "condition": {
-                "type": EVENT_HAS_FIRED,
-                "value": UNLOCK_DOOR_TEST
-            },
             "row": 12, 
             "col": 2,
             "destination" : "leonard_heights/C2",

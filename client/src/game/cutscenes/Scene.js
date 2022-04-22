@@ -24,6 +24,8 @@ class Scene {
         })
     }
 
+    get scenePassAnimations() { return this.animations.filter((e)=>{return e.waitForAnimationEnd}) }
+
     containsAnimationType( animationType ) {
         let hasType = false;
         this.animations.forEach((e)=>{
@@ -51,7 +53,7 @@ class Scene {
     }
 
     checkForScenePass( ) {
-        let activeAnimations = this.animations.filter((e) => { return this.finishedAnimations.indexOf(e.id) === -1; });
+        let activeAnimations = this.scenePassAnimations.filter((e) => { return this.finishedAnimations.indexOf(e.id) === -1; });
         activeAnimations.forEach((e) => {
             let animationHasFinished = false;
             switch( e.type ) {
@@ -104,10 +106,7 @@ class Scene {
                 this.finishedAnimations.push( e.id )
             }
         })
-        if ( this.finishedAnimations.length === this.animations.length ) {
-            return true;
-        }
-        return false;
+        return this.finishedAnimations.length === this.scenePassAnimations.length;
     }
 } 
 
