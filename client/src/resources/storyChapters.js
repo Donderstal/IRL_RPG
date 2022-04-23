@@ -18,72 +18,55 @@ const STORY_EVENTS = [
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [
-                [[LOAD_MAP, "leonard_heights/Newtown-appartment-3", true]],
-                [[FADE_OUT]],
-                [[LOAD_MAP, "leonard_heights/B2"]],
-                [[CREATE_CAR, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
-                [[CAMERA_MOVE_TO_SPRITE, "CIN_CAR_BUS", true]],
-                [[FADE_IN]],
-                [[MOVE_CAR, null, OUT_UP, "CIN_CAR_BUS", FACING_UP]],
-                [[FADE_OUT]],
-                [[LOAD_MAP, "leonard_heights/B1"]],
-                [[CREATE_OBJECT_SPRITE, FACING_UP, "bus", "My cool car", 13, 13]],
-                [[CAMERA_MOVE_TO_SPRITE, "My cool car", true], [CREATE_SPRITE, FACING_RIGHT, false, PLAYER_NAME, 15, 14], [CREATE_SPRITE, FACING_LEFT,"fats.png", "BOB", 16, 14]],
-                [[FADE_IN]],
-                [[SPEAK, "Was good seeing you dude!!", PLAYER_NAME], [EMOTE, EMOTE_HAPPY, "BOB"]],
-                [[SPEAK, "Yeah for sure, see you next week", "BOB"], [EMOTE, EMOTE_HAPPY, PLAYER_NAME]],
-                [[MOVE, PLAYER_NAME, { col: 15, row: OUT_DOWN }]],
-                [[FADE_OUT]],
-                [[LOAD_MAP, "leonard_heights/B2"]],
-                [[CREATE_SPRITE, FACING_DOWN, false, PLAYER_NAME, 15, 1]],
-                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, true]],
-                [[FADE_IN], [MOVE, PLAYER_NAME, { col: 15, row: 10 }]],
-                [[MOVE, PLAYER_NAME, { col: OUT_RIGHT, row: 10 }]],
-                [[FADE_OUT]],
-                [[LOAD_MAP, "leonard_heights/C2"]],
-                [[CREATE_SPRITE, FACING_RIGHT, false, PLAYER_NAME, 1, 10]],
-                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, true]],
-                [[FADE_IN]],
-                [[SPEAK, "I'm almost back home, can't wait to get some cold Diet Betes!", PLAYER_NAME]],
-                [[MOVE, PLAYER_NAME, { col: 12, row: 10 }]],
-                [[MOVE, PLAYER_NAME, { col: 12, row: 9 }], [FADE_OUT]],
-                [[LOAD_MAP, "leonard_heights/Newtown-appartment-3", true]],
-                [[FADE_IN]]
+                [[LOAD_MAP, true, "leonard_heights/Newtown-appartment-3", true]],
+                [[FADE_OUT, true]],
+                [[LOAD_MAP, true, "leonard_heights/B2"]],
+                [[CREATE_CAR, true, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
+                [[CREATE_SPRITE, true, FACING_RIGHT, "characterx3.png", "Dancing granny", 15, 11]],
+                [[ANIM, false, "LEFT_AND_RIGHT_STEP", "Dancing granny", true]],
+                [[CAMERA_MOVE_TO_SPRITE, true, "CIN_CAR_BUS", true]],
+                [[FADE_IN, true]],
+                [[MOVE_CAR, true, null, OUT_UP, "CIN_CAR_BUS", FACING_UP]],
+                [[FADE_OUT, true]],
+                [[LOAD_MAP, true, "leonard_heights/B1"]],
+                [[CREATE_OBJECT_SPRITE, true, FACING_UP, "bus", "My cool car", 13, 13]],
+                [[CAMERA_MOVE_TO_SPRITE, true, "My cool car", true], [CREATE_SPRITE, true, FACING_RIGHT, false, PLAYER_NAME, 15, 14], [CREATE_SPRITE, true, FACING_LEFT,"fats.png", "BOB", 16, 14]],
+                [[FADE_IN, true]],
+                [[SPEAK, true, "Was good hanging out with you!", PLAYER_NAME], [EMOTE, false, EMOTE_HAPPY, "BOB"]],
+                [[SPEAK, true, "Yeah for sure. See you at work at the Yum Mart later!", "BOB"], [EMOTE, false, EMOTE_HAPPY, PLAYER_NAME]],
+                [[MOVE, true, PLAYER_NAME, { col: 15, row: OUT_DOWN }]],
+                [[FADE_OUT, true]],
+                [[LOAD_MAP, true, "leonard_heights/B2"]],
+                [[CREATE_SPRITE, true, FACING_DOWN, false, PLAYER_NAME, 15, 1]],
+                [[CREATE_SPRITE, true, FACING_RIGHT, "characterx3.png", "Dancing granny", 15, 11]],
+                [[ANIM, false, "LEFT_AND_RIGHT_STEP", "Dancing granny", true]],
+                [[CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, true]],
+                [[FADE_IN, false], [MOVE, true, PLAYER_NAME, { col: OUT_RIGHT, row: 10 }]],
+                [[FADE_OUT, true]],
+                [[LOAD_MAP, true, "leonard_heights/C2"]],
+                [[CREATE_SPRITE, true, FACING_RIGHT, false, PLAYER_NAME, 1, 10]],
+                [[CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, true]],
+                [[FADE_IN, true]],
+                [[SPEAK, true, "I'm almost back home, can't wait to get some cold Diet Betes before my shift begins!", PLAYER_NAME]],
+                [[MOVE, true, PLAYER_NAME, { col: 12, row: 9 }]],
+                [[FADE_OUT, true]],
+                [[LOAD_MAP, true, "leonard_heights/Newtown-appartment-3", true]],
+                [[FADE_IN, true]],
+                [[SPEAK, true, "Let's get to work now!", PLAYER_NAME]]
             ]
         ]
     },
-    /* {
-        mapName: "leonard_heights/Newtown-appartment-3",
-        trigger: ON_ENTER,
-        condition: [ DEFAULT, false ],
-        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
-                [[FADE_IN]],
-                [[SPEAK, "Another day in the big city!", PLAYER_NAME]],
-                [[EMOTE, EMOTE_HAPPY, PLAYER_NAME]],
-                [[SPEAK, "Another day at the Yum Mart...", PLAYER_NAME]],
-                [[EMOTE, EMOTE_SAD, PLAYER_NAME]],
-                [[SPEAK, "I better get to work!", PLAYER_NAME]]
-            ]
-        ]
-    }, */
     ////////////////////
     {
         mapName: "leonard_heights/C2",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
-                [[LOAD_MAP, "leonard_heights/C2", true]],
-                [[SPEAK, "Man, I remember that time I was just chilling out at home...", PLAYER_NAME]],
-                [[FADE_OUT, "relaxing_chord.wav"]],
-                [[LOAD_MAP, "leonard_heights/Newtown-appartment-3"]],
-                [[CREATE_SPRITE, FACING_DOWN, false, PLAYER_NAME, 4, 4], [CREATE_SPRITE, FACING_LEFT ,"fats.png", "BOB", 5, 5]],
-                [[FADE_IN, "relaxing_chord.wav"]],
-                [[SPEAK, "The Yum Mart sucks bro", PLAYER_NAME]],
-                [[CAMERA_MOVE_TO_SPRITE, "BOB", false]],
-                [[SPEAK, "I hate the Yum Mart too! Every last one of 'em", "BOB"], [EMOTE, EMOTE_ANGRY, PLAYER_NAME]],
-                [[SPEAK, "If I had the guts, I'd take a dump in front of their stores", "BOB"]],
-                [[CAMERA_MOVE_TO_SPRITE, PLAYER_NAME, false]],
-                [[SPEAK, "That's all, folks!", PLAYER_NAME]],
+                [[LOAD_MAP, true, "leonard_heights/C2", true]],
+                [[CREATE_SPRITE, true, FACING_LEFT, "fats.png", "BOB", 24, 10]],
+                [[CAMERA_MOVE_TO_SPRITE, true, "BOB", false], [MOVE, true, "BOB", PLAYER_NAME]],
+                [[SPEAK, true, "I heard there was some trouble at the Yum Mart down south...", "BOB"], [EMOTE, true, EMOTE_SURPRISED, PLAYER_NAME]],
+                [[CAMERA_MOVE_TO_SPRITE, true, "BOB", false], [SPEAK, true, "Oh no, I better get down there fast!", PLAYER_NAME]],
             ]
         ]
     },
@@ -93,8 +76,8 @@ const STORY_EVENTS = [
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
-                [[LOAD_MAP, "leonard_heights/E3", true]],
-                [[SPEAK, "I hate the hotel on this street, it's always full of trashy tourists", PLAYER_NAME]]
+                [[LOAD_MAP, true, "leonard_heights/E3", true]],
+                [[SPEAK, true, "I hate the hotel on this street, it's always full of trashy tourists", PLAYER_NAME]]
             ]   
         ]
     },
@@ -108,24 +91,27 @@ const STORY_EVENTS = [
         },
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, KEY_STORY_1, "voice-1.mp3", [ 
-            [[LOAD_MAP, "leonard_heights/Newtown-appartment-4", true]],
-            [[SPEAK, "There's just something creepy about an empty appartment...", PLAYER_NAME]]
+            [[LOAD_MAP, true, "leonard_heights/Newtown-appartment-4", true]],
+            [[SPEAK, true, "There's just something creepy about an empty appartment...", PLAYER_NAME]]
         ]
     ]
     },
     //////////////////////////
     {
         mapName: "leonard_heights/C4",
-        trigger: ON_POSITION,
-        position: {
-            "col": 20,
-            "direction": FACING_LEFT
-        },
-        condition: [ EVENT_HAS_FIRED, KEY_STORY_1 ],
+        trigger: ON_ENTER,
+        condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
-            [[LOAD_MAP, "leonard_heights/C4", true]],
-            [[SPEAK, "Did I see a ghost?", PLAYER_NAME]],
-            [[SPEAK, "It can't be real...", PLAYER_NAME]]
+            [[LOAD_MAP, true, "leonard_heights/C4", true]],
+            [[SPEAK, true, "There's something wrong here, I can feel it...", PLAYER_NAME], [CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, false], 
+                [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "BOB_A", 20, 8], [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "BOB_B", 19, 8]],
+            [[SPEAK, true, "I love being a thug, it's my dream job", "BOB_A"], [CAMERA_MOVE_TO_SPRITE, true, "BOB_A", false], [MOVE, true, PLAYER_NAME, "BOB_A"]],
+            [[SPEAK, true, "Yeah, my liberal arts degree is really paying off..", "BOB_B"]],
+            [[SPEAK, true, "What the hell are you guys doing here??", PLAYER_NAME]],
+            [[SPEAK, true, "We're here to keep nosy morons like you out.", "BOB_A"]],
+            [[SPEAK, true, "Yeah, piss of you wanker!", "BOB_B"]],
+            [[SPEAK, true, "You guys have to be kidding me...", PLAYER_NAME]],
+            [[SPEAK, true, "Yeah, piss of you wanker!", "BOB_B"]]
         ]]
     } 
 ]
@@ -138,5 +124,7 @@ const assignEventIds = () => {
 assignEventIds();
 
 module.exports = {
-    STORY_EVENTS
+    STORY_EVENTS,
+    KEY_STORY_2,
+    KEY_STORY_3
 }

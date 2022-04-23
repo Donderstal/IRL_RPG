@@ -13,6 +13,7 @@ class Animation {
         this.id = id;
         this.type   = animationDto.type;
         this.spriteName = animationDto.spriteName;
+        this.waitForAnimationEnd = animationDto.waitForAnimationEnd
         if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) || this.is( CREATE_OBJECT_SPRITE ) 
         || this.is( LOAD_MAP ) || this.is( FADE_IN ) || this.is( FADE_OUT ) || this.is( FADE_OUT_IN ) ) {
             this.spriteId = undefined;

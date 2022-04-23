@@ -41,10 +41,10 @@ const getKeys = ( type ) => {
 }
 
 const getActionAnimationObject = ( options ) => {
-    const animationObject = { "type": options[0] };
+    const animationObject = { "type": options[0], "waitForAnimationEnd": options[1] };
     const keys = getKeys( options[0] );
     keys.forEach((key, index) => { 
-        let currentOption = options[index+1]
+        let currentOption = options[index+2]
         if ( currentOption != undefined && (key == "pathYes" || key == "pathNo") ) { 
             let innerAnimations = currentOption;
             animationObject[key] = [];

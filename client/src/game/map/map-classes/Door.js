@@ -12,13 +12,13 @@ const { switchMap } = require('../../../helpers/loadMapHelpers');
 
 const lockedDoorEvent = [
         EVENT_TALK, false, "voice-1.mp3", [ 
-            [[SPEAK, "This door is locked!", PLAYER_NAME]],
-            [[SPEAK, "I need to find some way to open it...", PLAYER_NAME]]
+            [[SPEAK, true, "This door is locked!", PLAYER_NAME]],
+            [[SPEAK, true, "I need to find some way to open it...", PLAYER_NAME]]
         ]   
 ]
 const unlockDoorEvent = [
     EVENT_TALK, false, "voice-1.mp3", [ 
-        [[SPEAK, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
+        [[SPEAK, true, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
     ]   
 ]
 /**

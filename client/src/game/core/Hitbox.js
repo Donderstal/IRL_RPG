@@ -134,28 +134,28 @@ class Hitbox {
 
     targetIsInUpBlockedRange( targetHitbox, direction ) {
         const targetIsUp = this.top( ) > targetHitbox.top( );
-        const topCollidesWithTargetBottom = this.top( ) <= targetHitbox.bottom( );
+        const topCollidesWithTargetBottom = this.top( ) <= targetHitbox.innerBottom( );
 
         return direction == FACING_UP && topCollidesWithTargetBottom && targetIsUp;
     }
 
     targetIsInDownBlockedRange( targetHitbox, direction ) {
         const targetIsBelow    = this.bottom( ) < targetHitbox.bottom( );
-        const bottomCollidesWithTargetTop = this.bottom( ) >= targetHitbox.top( )
+        const bottomCollidesWithTargetTop = this.bottom( ) >= targetHitbox.innerTop( )
 
         return direction == FACING_DOWN && bottomCollidesWithTargetTop && targetIsBelow;
     }
 
     targetIsInLeftBlockedRange( targetHitbox, direction ) {
         const targetIsToTheLeft    = this.left( ) > targetHitbox.left( );
-        const leftCollidesWithTargetRight = this.left( ) <= targetHitbox.right( );
+        const leftCollidesWithTargetRight = this.left( ) <= targetHitbox.innerRight( );
 
         return direction == FACING_LEFT && leftCollidesWithTargetRight && targetIsToTheLeft;
     }
 
     targetIsInRightBlockedRange( targetHitbox, direction ){
         const targetIsToTheRight  = this.right( ) < targetHitbox.right( );
-        const rightCollidesWithTargetLeft = this.right( ) >= targetHitbox.left( );
+        const rightCollidesWithTargetLeft = this.right( ) >= targetHitbox.innerLeft( );
 
         return direction == FACING_RIGHT && rightCollidesWithTargetLeft && targetIsToTheRight;
     }
