@@ -33,7 +33,7 @@ class LoadingScreen {
         this.handleLoadingScreenText( )
     }
 
-    get activeText( ) { return this.typeWriter.activeText };
+    get activeText( ) { return this.typeWriter.activeText.map((e)=>{return e.activeWord;}).join('') };
     get availableTextLines( ) { return this.randomTextArray.filter( ( e ) => { return e != this.currentLoadingScreenText } )};
 
     handleLoadingScreenText( ) {
