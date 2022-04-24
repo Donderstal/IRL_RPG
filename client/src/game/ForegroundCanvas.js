@@ -37,18 +37,26 @@ class ForegroundCanvas extends CanvasWithGrid {
      * Set characters, mapObjects, roads and the playerstart as properties
      * @param {Object} mapData - data object from mapResources
      */
-    setForegroundData( mapData ) {
-        if ( mapData.characters )
-            this.setCharacters( mapData.characters );
-        if ( mapData.mapObjects )
-            this.setObjects( mapData.mapObjects );
-        if ( mapData.playerStart ) {
-            this.initPlayerCharacter( mapData.playerStart );
-            globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX( ), this.playerSprite.baseY( ) )      
-        }
-
+    setForegroundData( mapData, sprites ) {
         if ( mapData.roads ) 
             this.roadNetwork = new RoadNetwork( mapData.roads );
+
+        if ( sprites ) {
+            sprites.forEach((sprite)=>{
+                this.spriteDictionary[sprite.spriteId] = sprite;
+                this.allSprites.push(sprite);
+            });
+        }
+        else {
+            if ( mapData.characters )
+                this.setCharacters( mapData.characters );
+            if ( mapData.mapObjects )
+                this.setObjects( mapData.mapObjects );
+            if ( mapData.playerStart ) {
+                this.initPlayerCharacter( mapData.playerStart );
+                globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX( ), this.playerSprite.baseY( ) )      
+            }            
+        }
     }
     /**
      * Instantiate a mapSprite to start location and mark it as the player sprite

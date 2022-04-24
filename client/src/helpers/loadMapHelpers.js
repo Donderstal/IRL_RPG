@@ -51,7 +51,7 @@ const initCinematicGrids = ( ) => {
     GAME.initCanvas( 'FRONT_GRID', cinematicGrids.frontgrid );
 }
 
-const loadMapToCanvases = ( mapData = globals.GAME.activeMap, loadType, setPlayer = true, cinematic = false ) => {
+const loadMapToCanvases = ( mapData = globals.GAME.activeMap, loadType, setPlayer = true, cinematic = false, sprites = false ) => {
     const back = cinematic ? getCinematicBack() : globals.GAME.back.class;
     const front = cinematic ? getCinematicFront() : globals.GAME.front.class;
     const frontgrid = cinematic ? getCinematicFrontgrid() : globals.GAME.frontgrid.class;
@@ -73,7 +73,7 @@ const loadMapToCanvases = ( mapData = globals.GAME.activeMap, loadType, setPlaye
     back.setEventsDoorsAndBlockedToTilesInGrid( );
     back.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
 
-    front.setForegroundData(mapData);
+    front.setForegroundData(mapData, sprites);
 
     frontgrid.setFrontgridData(mapData, sheetData );
     frontgrid.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
@@ -184,7 +184,9 @@ const loadCinematicMap = ( mapName, setPlayer = false ) => {
     GAME.sound.clearActiveSoundEffects( );
     setCinematicNeighbourhoodAnMap(mapName, false);
     loadMapToCanvases( 
-        GAME.cinematicNeighbourhood.activeMap, EVENT_CINEMATIC, setPlayer, true
+        GAME.cinematicNeighbourhood.activeMap, EVENT_CINEMATIC, 
+        setPlayer, true,
+        GAME.cinematicNeighbourhood.activeMapKey == GAME._activeNeighbourhood.activeMapKey ? GAME.front.class.allSprites : false
     );
     setTimeout(()=> {
         loadedCinematicMap = true;        
@@ -217,11 +219,13 @@ const clearCinematicGrids = ( ) => {
         'row': getCinematicFront().playerSprite.row,
         'direction': getCinematicFront().playerSprite.direction
     }
+    const sprites = [ ...getCinematicFront().allSprites ];
     clearMapFromCanvases( );
     loadMapToCanvases( 
         GAME._activeNeighbourhood.activeMap, 
         GAME.cinematicNeighbourhood.activeMapKey == GAME._activeNeighbourhood.activeMapKey ? EVENT_CINEMATIC_END : EVENT_CINEMATIC, 
-        true
+        true, false,
+        sprites
     );
     cinematicGrids.back                 = {};
     cinematicGrids.front                = {};

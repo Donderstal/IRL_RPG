@@ -12,6 +12,9 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### APR 24, 2022
+* Now transferring active sprites to/from cinematic maps
+
 #### APR 23, 2022
 * Updating TypeWriter, new funcs for colored words in text
 

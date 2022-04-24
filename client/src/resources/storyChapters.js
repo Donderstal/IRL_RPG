@@ -66,7 +66,7 @@ const STORY_EVENTS = [
                 [[CREATE_SPRITE, true, FACING_LEFT, "fats.png", "BOB", 24, 10]],
                 [[CAMERA_MOVE_TO_SPRITE, true, "BOB", false], [MOVE, true, "BOB", PLAYER_NAME]],
                 [[SPEAK, true, "I heard there was some trouble at the {G}Yum {G}Mart down {R}south...", "BOB"], [EMOTE, true, EMOTE_SURPRISED, PLAYER_NAME]],
-                [[CAMERA_MOVE_TO_SPRITE, true, "BOB", false], [SPEAK, true, "Oh no, I better get down there fast!", PLAYER_NAME]],
+                [[CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, false], [SPEAK, true, "Oh no, I better get down there fast!", PLAYER_NAME], [MOVE, false, "BOB", { col: globals.OUT_LEFT, row: 10 }]]
             ]
         ]
     },
@@ -104,21 +104,22 @@ const STORY_EVENTS = [
         scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
             [[LOAD_MAP, true, "leonard_heights/C4", true]],
             [[SPEAK, true, "There's something wrong here, I can feel it...", PLAYER_NAME], [CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, false], 
-                [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "BOB_A", 20, 8], [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "BOB_B", 19, 8]],
-            [[SPEAK, true, "I love being a thug, it's my dream job", "BOB_A"], [CAMERA_MOVE_TO_SPRITE, true, "BOB_A", false], [MOVE, true, PLAYER_NAME, { col: 19, row: 9 }]],
-            [[SPEAK, true, "Yeah, my liberal arts degree is really paying off..", "BOB_B"]],
+                [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "Bob A", 20, 8], [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "Bob B", 19, 8]],
+            [[SPEAK, true, "I love being a thug, it's my dream job", "Bob A"], [CAMERA_MOVE_TO_SPRITE, true, "Bob A", false], [MOVE, true, PLAYER_NAME, { col: 19, row: 9 }]],
+            [[SPEAK, true, "Yeah, my liberal arts degree is really paying off..", "Bob B"]],
             [[SPEAK, true, "Who are you guys and what the hell are you doing here??", PLAYER_NAME]],
-            [[SPEAK, true, "We're here to keep nosy morons like you out.", "BOB_A"]],
-            [[SPEAK, true, "Yeah, piss of you wanker!", "BOB_B"]],
+            [[SPEAK, true, "We're here to keep nosy morons like you out.", "Bob A"]],
+            [[SPEAK, true, "Yeah, piss off you wanker!", "Bob B"]],
             [[SPEAK, true, "You guys have got to be kidding me...", PLAYER_NAME]],
-            [[SPEAK, true, "Yeah, piss of you wanker!", "BOB_B"]],
-            [[SPEAK, true, "You're repeating yourself, Bob...", "BOB_A"]],
+            [[SPEAK, true, "You wanker, why don't you piss off!!", "Bob B"]],
+            [[SPEAK, true, "You're repeating yourself, Bob...", "Bob A"]],
             [[SPEAK, true, "This has to be a joke right?", PLAYER_NAME]],
-            [[SPEAK, true, "You think we're taking a piss, wanker?", "BOB_B"]],
-            [[SPEAK, true, "If you want in kid, you gotta speak to our {R}boss {R}Big {R}Bubba", "BOB_A"]],
+            [[SPEAK, true, "You think we're taking a piss, wanker?", "Bob B"]],
+            [[SPEAK, true, "...", "Bob A"], [EMOTE, true, EMOTE_QUESTIONMARK, "Bob B"]],
+            [[SPEAK, true, "If you want in kid, you gotta speak to our {R}boss {R}Big {R}Bubba", "Bob A"]],
             [[SPEAK, true, "Where can I find him?", PLAYER_NAME]],
-            [[SPEAK, true, "He's a mob boss kid. You can't just walk into his office.", "BOB_A"]],
-            [[SPEAK, true, "Ask around or something. If you're a smart boy you'll find him!", "BOB_B"]]
+            [[SPEAK, true, "He's a mob boss kid. You can't just walk into his office.", "Bob A"]],
+            [[SPEAK, true, "Ask around or something. If you're a smart boy you'll find him!", "Bob B"]]
         ]]
     } 
 ]
