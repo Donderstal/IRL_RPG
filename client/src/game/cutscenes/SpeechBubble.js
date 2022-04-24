@@ -86,15 +86,7 @@ class SpeechBubble {
         this.typeWriter = new TypeWriter( text );
     }
     get text( ) {
-        const fullTextArray = canvas.breakTextIntoLines( this.typeWriter.fullText, LARGE_FONT_SIZE );
-        const currentTextArray = canvas.breakTextIntoLines( this.typeWriter.activeText, LARGE_FONT_SIZE );
-
-        let returner = [];
-        fullTextArray.forEach( ( e, index ) => {
-            returner.push( typeof currentTextArray[index] === 'undefined' ? " " : currentTextArray[index]  )
-        })
-
-        return returner;
+        return this.typeWriter.activeText;
     }
 
     get textX() { return this.x + BUBBLE_INNER_PADDING; };
@@ -161,8 +153,6 @@ class SpeechBubble {
         }
     }
 
-
-
     writeHeader( ) {
         canvas.writeTextLine( 
             this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
@@ -187,11 +177,23 @@ class SpeechBubble {
     }
 
     writeText( ) {
-        canvas.setFont(LARGE_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext());
+        const canvasCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext();
+        canvas.setFont(LARGE_FONT_SIZE, canvasCtx);
+
+        let textLineX = this.textX;
+        let textLineY = this.textY;
+        let sentenceWidth = BUBBLE_INNER_PADDING * 2;
         for ( var i = 0; i < this.text.length; i++ ) {
-            canvas.writeTextLine( 
-                this.text[i], this.textX, this.textY + (LARGE_FONT_LINE_HEIGHT * i), LARGE_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
-            );
+            let activeWord = this.text[i];
+            canvas.writeTextLine( activeWord.activeWord, textLineX, textLineY, LARGE_FONT_SIZE, canvasCtx, activeWord.color );
+            let wordWidth = canvasCtx.measureText(activeWord.activeWord).width;
+            textLineX += wordWidth;
+            sentenceWidth += wordWidth;
+            if ( sentenceWidth + wordWidth > this.width ) {
+                textLineX = this.textX;
+                textLineY += LARGE_FONT_LINE_HEIGHT;  
+                sentenceWidth = BUBBLE_INNER_PADDING * 2;
+            }
         }
     }
 

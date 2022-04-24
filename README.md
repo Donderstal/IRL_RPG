@@ -12,7 +12,10 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
-#### MAR 15, 2022
+#### APR 23, 2022
+* Updating TypeWriter, new funcs for colored words in text
+
+#### APR 15, 2022
 * Added in-cinematic map-switching
 * Moved map loading funcs out of Game class
 * Various small tweaks to Scenes/Animations

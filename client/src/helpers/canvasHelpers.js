@@ -127,9 +127,9 @@ const setFont = ( size, ctx = getFrontCanvasContext()  ) => {
  * @param {Number} size 
  * @param {String} color 
  */
-const writeTextLine = ( text, x, y, size, ctx = getFrontCanvasContext() ) => {
+const writeTextLine = ( text, x, y, size, ctx = getFrontCanvasContext(), color = "black" ) => {
     setFont( size, ctx )
-    ctx.fillStyle = "black"
+    ctx.fillStyle = color
     ctx.fillText( text, x, y )
 }
 /**

@@ -65,8 +65,8 @@ const LONG_TALK_4 = [
 const COLLECTABLE_ACTION_COIN = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
-        [[EMOTE, EMOTE_SURPRISED, PLAYER_NAME]],
-        [[SPEAK, true, "It's a rare coin!", PLAYER_NAME]],
+        [[EMOTE, true, EMOTE_SURPRISED, PLAYER_NAME]],
+        [[SPEAK, true, "It's a rare {R}coin!", PLAYER_NAME]],
         [[SPEAK, true, "Crazy that people in the past used these things to pay for stuff...", PLAYER_NAME]],
         [[SPEAK, true, "I'll add this one to my collection!", PLAYER_NAME]],
         [[DELETE_SPRITE, true, false, "misc/random5.wav"]]
@@ -77,8 +77,8 @@ const COLLECTABLE_ACTION_JUICE_CAN = [
     [ DEFAULT, false ],
     [ EVENT_TALK, false, "voice-1.mp3", [ 
         [[EMOTE, true, EMOTE_SURPRISED, PLAYER_NAME]],
-        [[SPEAK, true, "It's a rare Diet Betes© can!", PLAYER_NAME]],
-        [[SPEAK, true, "Rumor has it that people used to drink plain water before Diet Betes© was invented.", PLAYER_NAME]],
+        [[SPEAK, true, "It's a rare {R}Diet {R}Betes© can!", PLAYER_NAME]],
+        [[SPEAK, true, "Rumor has it that people used to drink plain water before {R}Diet {R}Betes© was invented.", PLAYER_NAME]],
         [[SPEAK, true, "I'll add this one to my collection!", PLAYER_NAME]],
         [[DELETE_SPRITE, true, false, "misc/random5.wav"]]
     ]]
