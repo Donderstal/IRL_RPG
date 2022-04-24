@@ -1,5 +1,6 @@
-const { EVENT_HAS_FIRED, SPEAK, EVENT_TALK, DEFAULT } = require("../../../../../game-data/conditionGlobals");
+const { EVENT_HAS_FIRED, SPEAK, EVENT_TALK, DEFAULT, EMOTE } = require("../../../../../game-data/conditionGlobals");
 const { UNLOCK_DOOR_TEST } = require("../../../../../game-data/interactionGlobals");
+const { EMOTE_ANGRY } = require("../../../../../game-data/textboxGlobals");
 
 const KEY_GUY = [
     [
@@ -19,6 +20,29 @@ const KEY_GUY = [
     ]
 ]
 
+const BODYGUARD = [
+    [
+        [ DEFAULT, false ],
+        [ EVENT_TALK, false, "voice-1.mp3", [
+            [[SPEAK, true, "I'm just here for the safety of my tenants."]],
+            [[SPEAK, true, "Some maniac left the door unlocked."]]
+        ]]
+    ]
+]
+
+const WAITING_BUSINESSMAN = [
+    [
+        [ DEFAULT, false ],
+        [ EVENT_TALK, false, "voice-1.mp3", [
+            [[SPEAK, true, "For some reason somebody locked the main door..."]],
+            [[EMOTE, true, EMOTE_ANGRY]],
+            [[SPEAK, true, "I don't have time for this! I've got important meetings to attend!!"]]
+        ]]
+    ]
+]
+
 module.exports = { 
-    KEY_GUY
+    KEY_GUY,
+    BODYGUARD,
+    WAITING_BUSINESSMAN
 }

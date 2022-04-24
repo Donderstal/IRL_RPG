@@ -97,5 +97,6 @@ const getAction = ( conditionData, actionData ) => {
 
 module.exports = {
     getAction,
-    getActionObject
+    getActionObject,
+    getConditionObject
 }

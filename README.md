@@ -13,6 +13,7 @@ Try the latest the game at: http://34.147.64.145
 ### LOG
 
 #### APR 24, 2022
+* Sprites can be set to a map conditionally
 * Now transferring active sprites to/from cinematic maps
 
 #### APR 23, 2022

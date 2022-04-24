@@ -1,5 +1,7 @@
+const { EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
 const { NPC_ANIM_TYPE_IDLE, FACING_RIGHT , FACING_DOWN } = require("../../../../../game-data/globals");
-const { KEY_GUY } = require("./Newtown-Appartments-interactions");
+const { UNLOCK_DOOR_TEST } = require("../../../../../game-data/interactionGlobals");
+const { KEY_GUY, BODYGUARD } = require("./Newtown-Appartments-interactions");
 
 module.exports = {
     "mapName": "leonard_heights/Newtown-appartment-1",
@@ -390,11 +392,6 @@ module.exports = {
             "col": 2
         },
         {
-            "type": "blue_couch_right",
-            "row": 8,
-            "col": 5
-        },
-        {
             "type": "pot_plant_a",
             "row": 8,
             "col": 8
@@ -408,6 +405,15 @@ module.exports = {
             "sprite": "tumbler_girl_recolour02.png",
             "direction": FACING_DOWN,
             "action": KEY_GUY
+        },
+        {
+            "condition": [ EVENT_HAS_FIRED, UNLOCK_DOOR_TEST ],
+            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "row": 2,
+            "col": 2,
+            "sprite": "fats.png",
+            "direction": FACING_DOWN,
+            "action": BODYGUARD
         }
     ],
     "actions": [],
