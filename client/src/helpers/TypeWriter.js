@@ -2,9 +2,10 @@ const canvas = require("./canvasHelpers");
 const globals = require("../game-data/globals");
 
 class TypeWriter {
-    constructor( text ) {
+    constructor( text, writingSoundEffect ) {
         this.index  = 0;
         this.speed  = 50;
+        this.writingSoundEffect = writingSoundEffect;
 
         this.fullText = [];
         this.displayFull = false;
@@ -41,6 +42,9 @@ class TypeWriter {
                 }
             })
             this.index++;
+            if ( this.index == this.totalTextCharacters ) {
+                this.displayFullText( )
+            }
             setTimeout( this.write.bind(this), this.speed );
         }
     }
@@ -63,6 +67,9 @@ class TypeWriter {
     }
 
     displayFullText( ) {
+        if ( this.writingSoundEffect ) {
+            globals.GAME.sound.clearSpeakingEffect( );
+        }
         this.fullText.forEach((e)=>{e.activeWord = e.word;});
         this.activeText = this.fullText;
         this.index = this.totalTextCharacters;

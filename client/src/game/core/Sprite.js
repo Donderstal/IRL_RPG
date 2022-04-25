@@ -170,10 +170,10 @@ class Sprite {
             this.direction = this.spriteId == otherSprite.spriteId ? this.direction : faceTowardsTarget( this, otherSprite );
         }
         if ( animation.is( SPEAK_YES_NO ) ) {
-            this.speak( animation.text, (animation.sfx ? animation.sfx : (this.sprite == PLAYER_ID ? "voice-1.mp3" : false)), SPEAK_YES_NO )
+            this.speak( animation.text, (animation.sfx ? animation.sfx : (this.sprite == PLAYER_ID ? "medium-text-blip.ogg" : false)), SPEAK_YES_NO )
         }
         if ( animation.is( SPEAK ) ) {
-            this.speak( animation.text, (animation.sfx ? animation.sfx : (this.sprite == PLAYER_ID ? "voice-1.mp3" : false)), SPEAK )
+            this.speak( animation.text, (animation.sfx ? animation.sfx : (this.sprite == PLAYER_ID ? "medium-text-blip.ogg" : false)), SPEAK )
         }
         if ( animation.is( EMOTE ) ) {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );

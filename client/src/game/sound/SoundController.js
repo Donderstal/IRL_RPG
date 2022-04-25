@@ -5,9 +5,9 @@ const { SpatialSound } = require('./SpatialSound');
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
 
-const standardMusicVolume = 1;
-const menuMusicVolume = 0.75;
-const standardSFXVolume = 0.5;
+const standardMusicVolume = 0.5;
+const menuMusicVolume = 0.5;
+const standardSFXVolume = 0.75;
 
 /**
  * The SoundController functions like a registry for sounds and music in the game
@@ -18,6 +18,7 @@ class SoundController {
         this.activeMusic = false;
         this.musicIsPlaying = false;
         this.activeSoundEffects = [];
+        this.speakingEffect = null;
         this.activeMusicId = "";
     }
 
@@ -72,6 +73,19 @@ class SoundController {
     playEffect( filename, loop = false ) {
         const newEffect = this.getEffect( filename, loop )
         newEffect.play();
+    }
+
+    playSpeakingEffect( fileName ) {
+        this.clearSpeakingEffect( );
+        this.speakingEffect = this.getEffect( fileName, true );
+        this.speakingEffect.play( );
+    }
+
+    clearSpeakingEffect( ) {
+        if ( this.speakingEffect != null ) {
+            this.speakingEffect.pause( );            
+        }
+        this.speakingEffect = null;
     }
 }
 

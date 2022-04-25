@@ -7,7 +7,7 @@ const { getActionObject } = require("../../../helpers/actionDtoFactory");
 const { PLAYER_ID } = require("../../../game-data/interactionGlobals");
 
 const actionData = 
-    [ EVENT_SAVE, false, "voice-1.mp3", [
+    [ EVENT_SAVE, false, "medium-text-blip.ogg", [
         [[SPEAK_YES_NO, "Save the game?",
             [
                 [[SPEAK, "Game saved!"]]

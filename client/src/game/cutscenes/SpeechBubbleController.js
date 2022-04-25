@@ -26,7 +26,7 @@ class SpeechBubbleController {
         const id = getUniqueId(this.activeBubbleIds);
         this.activeBubbles[id] = new SpeechBubble( location, contents, id, type );
         this.activeBubbleIds.push(id);
-        globals.GAME.sound.playEffect(contents.sfx);
+        globals.GAME.sound.playSpeakingEffect(contents.sfx);
     }
 
     setNewEmote( location, imageSrc ) {
@@ -74,6 +74,7 @@ class SpeechBubbleController {
                 this.nonEmoteIds.forEach((id) =>{
                     this.activeBubbles[id].typeWriter.displayFullText( );
                 });
+                globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3");
             }
             else if( this.selectionBubble ){
                 globals.GAME.activeAction.registerSelection( this.selectionBubble.activeButton );
@@ -84,6 +85,7 @@ class SpeechBubbleController {
             else {
                 this.clearActiveBubbles( );
             }
+            globals.GAME.sound.clearSpeakingEffect( );
         }
     }
 

@@ -55,6 +55,7 @@ class SpeechBubble {
         this.position       = xyPosition.position;
         this.id             = id;
         this.type           = type;
+        this.subtitleBubble = subtitleBubble;
 
         this.width          = dimensions.width;
         this.height         = dimensions.height;
@@ -68,10 +69,6 @@ class SpeechBubble {
         this.innerCanvas.width = this.width;
         this.innerCanvas.height = this.height;
         this.innerCtx = this.innerCanvas.getContext('2d');
-
-        if ( contents.sfx ) {
-            globals.GAME.sound.playEffect( contents.sfx );
-        }
 
         this.action = contents;
         if ( contents.name ) {
@@ -91,7 +88,7 @@ class SpeechBubble {
         this.draw( );
     }
     set text( text ) {             
-        this.typeWriter = new TypeWriter( text );
+        this.typeWriter = new TypeWriter( text, !this.subtitleBubble );
     }
     get text( ) {
         return this.typeWriter.activeText;
