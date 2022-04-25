@@ -64,9 +64,9 @@ const getProfileName = ( pngName ) => {
             return GREEN_SHIRTED_STRONG_GUY;
         case 'character_x1_recolour01.png':
             return DORKY_GUY;
-        case 'character_x4.png':
+        case 'characterx4.png':
             return TOUGH_GUY_WITH_DARK_HAIR;
-        case 'character_x5_recolour.png':
+        case 'characterx5_recolour.png':
             return TOUGH_GUY_WITH_COOL_SHIRT;
         case 'fats.png':
             return FAT_BUFF_GUY;
@@ -126,9 +126,9 @@ const getClassProfile = ( className ) => {
         case DORKY_GUY:
             return new ClassProfile( className, 'character_x1_recolour01.png', 'voice-1.mp3');
         case TOUGH_GUY_WITH_DARK_HAIR:
-            return new ClassProfile( className, 'character_x4.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'characterx4.png', 'voice-1.mp3');
         case TOUGH_GUY_WITH_COOL_SHIRT:
-            return new ClassProfile( className, 'character_x5_recolour.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'characterx5_recolour.png', 'voice-1.mp3');
         case FAT_BUFF_GUY:
             return new ClassProfile( className, 'fats.png', 'voice-1.mp3');
         case BALD_BEER_BELLY_GUY:

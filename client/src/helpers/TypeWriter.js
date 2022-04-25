@@ -91,8 +91,8 @@ class TypeWriterWord {
                 return "black";
             case "R":
                 return "red";
-            case "Y":
-                return "yellow";
+            case "O":
+                return "orange";
             case "G":
                 return "green";
         }

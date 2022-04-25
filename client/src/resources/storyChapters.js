@@ -5,7 +5,7 @@ const {
     EMOTE, DEFAULT, EVENT_TALK, SPEAK, CREATE_SPRITE, MOVE, CAMERA_MOVE_TO_SPRITE,
     SPEAK_YES_NO, ANIM, FADE_IN, DELETE_SPRITE, CREATE_OBJECT_SPRITE, FADE_OUT_IN
 }  = require('../game-data/conditionGlobals')
-const { PLAYER_NAME } = require('../game-data/interactionGlobals');
+const { PLAYER_NAME, LOGGABLE_INTERACTION_1, LOGGABLE_INTERACTION_2 } = require('../game-data/interactionGlobals');
 const { EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_QUESTIONMARK } = require('../game-data/textboxGlobals');
 
 const KEY_STORY_1 = "KEY_STORY_EVENT_1";
@@ -61,7 +61,7 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/C2",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
-        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+        scenes: [ EVENT_TALK, LOGGABLE_INTERACTION_1, "voice-1.mp3", [ 
                 [[LOAD_MAP, true, "leonard_heights/C2", true]],
                 [[CREATE_SPRITE, true, FACING_LEFT, "fats.png", "BOB", 24, 10]],
                 [[CAMERA_MOVE_TO_SPRITE, true, "BOB", false], [MOVE, true, "BOB", PLAYER_NAME]],
@@ -101,10 +101,9 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/C4",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
-        scenes: [ EVENT_TALK, false, "voice-1.mp3", [ 
+        scenes: [ EVENT_TALK, LOGGABLE_INTERACTION_2, "voice-1.mp3", [ 
             [[LOAD_MAP, true, "leonard_heights/C4", true]],
-            [[SPEAK, true, "There's something wrong here, I can feel it...", PLAYER_NAME], [CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, false], 
-                [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "Bob A", 20, 8], [CREATE_SPRITE, true, FACING_DOWN, "fats.png", "Bob B", 19, 8]],
+            [[SPEAK, true, "There's something wrong here, I can feel it...", PLAYER_NAME], [CAMERA_MOVE_TO_SPRITE, true, PLAYER_NAME, false]],
             [[SPEAK, true, "I love being a thug, it's my dream job", "Bob A"], [CAMERA_MOVE_TO_SPRITE, true, "Bob A", false], [MOVE, true, PLAYER_NAME, { col: 19, row: 9 }]],
             [[SPEAK, true, "Yeah, my liberal arts degree is really paying off..", "Bob B"]],
             [[SPEAK, true, "Who are you guys and what the hell are you doing here??", PLAYER_NAME]],

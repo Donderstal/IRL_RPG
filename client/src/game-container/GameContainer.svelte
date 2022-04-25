@@ -43,9 +43,9 @@
     })
 
     const phoneUICanvasLeftPosition = globals.SCREEN.MOBILE 
-        ? ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) - (globals.GRID_BLOCK_PX * 8)) / 2 
-        : (window.innerWidth - CANVAS_WIDTH) / 2;
-    const buttonsDivsMaxWidth = ((window.innerWidth < window.innerHeight ? window.innerHeight : window.innerWidth) - (globals.GRID_BLOCK_PX * 8)) / 2;
+        ? ((screen.width < screen.height ? screen.height : screen.width) - (globals.GRID_BLOCK_PX * 12)) / 2 
+        : (screen.width - CANVAS_WIDTH) / 2;
+    const buttonsDivsMaxWidth = ((screen.width < screen.height ? screen.height : screen.width) - (globals.GRID_BLOCK_PX * 8)) / 2;
 </script>
 
 <style>
@@ -141,7 +141,6 @@
 
         p {
             margin-top: 0;
-            background-color: rgba(216,43,186,0.3);
         }
 
         span {
@@ -193,7 +192,7 @@
 
         {#if globals.SCREEN.MOBILE}
             <canvas id='game-bubble-canvas' class="game-menu-body"
-            style="width: {globals.GRID_BLOCK_PX * 8}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left:{phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
+            style="width: {globals.GRID_BLOCK_PX * 12}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left:{phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
         {/if}
     </div>
 

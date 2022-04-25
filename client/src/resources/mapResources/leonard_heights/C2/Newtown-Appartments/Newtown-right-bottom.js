@@ -1,4 +1,5 @@
 const { FACING_LEFT, FACING_UP, NPC_ANIM_TYPE_IDLE } = require("../../../../../game-data/globals");
+const { NEIGHBOUR } = require("./Newtown-Appartments-interactions");
 
 module.exports ={
     "mapName": "leonard_heights/Newtown-appartment-5",
@@ -385,7 +386,8 @@ module.exports ={
             "row": 2,
             "col": 7,
             "sprite": "characterx4.png",
-            "direction": FACING_UP
+            "direction": FACING_UP,
+            "action": NEIGHBOUR
         }
     ],
     "actions": [],

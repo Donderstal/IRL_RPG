@@ -1,5 +1,5 @@
 const { EVENT_HAS_FIRED, SPEAK, EVENT_TALK, DEFAULT, EMOTE } = require("../../../../../game-data/conditionGlobals");
-const { UNLOCK_DOOR_TEST } = require("../../../../../game-data/interactionGlobals");
+const { UNLOCK_DOOR_TEST, LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3 } = require("../../../../../game-data/interactionGlobals");
 const { EMOTE_ANGRY } = require("../../../../../game-data/textboxGlobals");
 
 const KEY_GUY = [
@@ -30,6 +30,22 @@ const BODYGUARD = [
     ]
 ]
 
+const NEIGHBOUR = [
+    [
+        [ EVENT_HAS_FIRED, LOGGABLE_INTERACTION_2 ],
+        [ EVENT_TALK, LOGGABLE_INTERACTION_3, "voice-1.mp3", [
+            [[SPEAK, true, "Woah dude you did it!"]],
+            [[SPEAK, true, "I'm the {R}Mob {R}Boss."]]
+        ]]
+    ],
+    [
+        [ DEFAULT, false ],
+        [ EVENT_TALK, false, "voice-1.mp3", [
+            [[SPEAK, true, "Just hanging out in my appartment..."]]
+        ]]
+    ]
+]
+
 const WAITING_BUSINESSMAN = [
     [
         [ DEFAULT, false ],
@@ -44,5 +60,6 @@ const WAITING_BUSINESSMAN = [
 module.exports = { 
     KEY_GUY,
     BODYGUARD,
-    WAITING_BUSINESSMAN
+    WAITING_BUSINESSMAN,
+    NEIGHBOUR
 }
