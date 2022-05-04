@@ -35,7 +35,8 @@ const animationFrameController = ( arg ) => {
             }
 
             if  ( GAME.inCinematic && GAME.activeCinematic ) {
-                tryCatch(GAME.activeCinematic.checkForScenePass.bind(GAME.activeCinematic));
+                GAME.activeCinematic.checkForScenePass()
+                //tryCatch(GAME.activeCinematic.checkForScenePass.bind(GAME.activeCinematic));
             } 
         }
         else {

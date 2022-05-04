@@ -1,4 +1,5 @@
-const { DEFAULT, SPEAK, EVENT_TALK } = require('../../../../game-data/conditionGlobals');
+const { DEFAULT, SPEAK, EVENT_TALK, EMOTE } = require('../../../../game-data/conditionGlobals');
+const { EMOTE_HEART } = require('../../../../game-data/textboxGlobals');
 
 const LOOKING_FOR_APPARTMENT_LADY = [
     [
@@ -13,6 +14,19 @@ const LOOKING_FOR_APPARTMENT_LADY = [
     ]    
 ]
 
+const WHOLESOME_LIFTER_D2 = [
+    [
+        [ DEFAULT, false ],
+        [ EVENT_TALK, false, "medium-text-blip.ogg", [
+            [[SPEAK, true, "You know that a lot of people think that us buff guys are assholes?"]],
+            [[SPEAK, true, "Just shows that they've no idea what they're talking about!"]],
+            [[SPEAK, true, "I always visit my grandma, you know? Never skip a week!"]], 
+            [[EMOTE, true, EMOTE_HEART]]
+        ]]    
+    ]    
+]
+
 module.exports = {
-    LOOKING_FOR_APPARTMENT_LADY
+    LOOKING_FOR_APPARTMENT_LADY,
+    WHOLESOME_LIFTER_D2
 }

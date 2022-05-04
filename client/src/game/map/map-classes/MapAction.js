@@ -87,10 +87,12 @@ class MapAction extends Hitbox {
      * Handle and in-range actionbutton click by the player based on the this.type prop
      */
     handle( ) { 
-        new Cinematic( this.scenes, this.trigger, [ this.spriteId ] );
-        if ( this.isCollectable ) {
-            const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.col, this.actionSprite.row, this.actionSprite.collectableType, globals.GAME.activeMapName)
-            globals.GAME.collectableRegistry.addToRegistry(id, this.actionSprite.collectableType)
+        if ( !globals.GAME.story.checkForEventTrigger( ON_NPC_INTERACTION, [this.spriteId] ) ) {
+            new Cinematic( this.scenes, this.trigger, [ this.spriteId ] );
+            if ( this.isCollectable ) {
+                const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.col, this.actionSprite.row, this.actionSprite.collectableType, globals.GAME.activeMapName)
+                globals.GAME.collectableRegistry.addToRegistry(id, this.actionSprite.collectableType)
+            }
         }
     }
     /**

@@ -1,6 +1,6 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, 
-    FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
+    FADE_OUT, FADE_OUT_IN, FADE_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE, CAMERA_MOVE_TO_TILE
 } = require('../../game-data/conditionGlobals');
 const globals               = require('../../game-data/globals');
 const { PLAYER_NAME } = require('../../game-data/interactionGlobals');
@@ -14,12 +14,11 @@ class Animation {
         this.type   = animationDto.type;
         this.spriteName = animationDto.spriteName;
         this.waitForAnimationEnd = animationDto.waitForAnimationEnd
-        if ( this.is( CREATE_CAR ) || this.is( CREATE_SPRITE ) || this.is( CREATE_OBJECT_SPRITE ) 
-        || this.is( LOAD_MAP ) || this.is( FADE_IN ) || this.is( FADE_OUT ) || this.is( FADE_OUT_IN ) ) {
-            this.spriteId = undefined;
+        if ( this. hasSprite( ) ) {
+            this.spriteId = animationDto.spriteId != undefined ? animationDto.spriteId : this.getSpriteByName().spriteId;            
         }
         else {
-            this.spriteId = animationDto.spriteId != undefined ? animationDto.spriteId : this.getSpriteByName().spriteId;            
+            this.spriteId = undefined;
         }
 
         this.sfx = ( animationDto.sfx ) ? animationDto.sfx : false;
@@ -28,6 +27,12 @@ class Animation {
 
     is( value ) {
         return this.type == value
+    }
+
+    hasSprite( ) {
+        return this.is(SPEAK) || this.is(SPEAK_YES_NO) || this.is(EMOTE) 
+        || this.is(MOVE) || this.is(MOVE_CAR) || this.is(ANIM) 
+        || this.is(DELETE_SPRITE) || this.is(CAMERA_MOVE_TO_SPRITE);
     }
 
     setAction( animationDto ) {
@@ -104,8 +109,13 @@ class Animation {
                 let sprite = this.getSpriteByName( );
                 globals.GAME.cameraFocus.setSpriteFocus( sprite, animationDto.snapToSprite );
                 break;
+            case CAMERA_MOVE_TO_TILE:
+                let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", animationDto.col, animationDto.row );
+                this.tileIndex = tile.index;
+                globals.GAME.cameraFocus.setTileFocus( tile, animationDto.snapToTile );
+                break;
             case LOAD_MAP:
-                this.mapName = animationDto.mapName
+                this.mapName = animationDto.mapName;
                 loadCinematicMap( animationDto.mapName, animationDto.setPlayerSprite, animationDto.playerSpriteLocation );   
                 break;
             default :

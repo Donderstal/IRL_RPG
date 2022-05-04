@@ -26,8 +26,8 @@ module.exports = {
     FADE_OUT_IN: "FOI",
     WAIT: "WAI",
     EMOTE: "EMO",
-    CAMERA_MOVE_TO_SPRITE: "CSTS",
-    CAMERA_FREE: "CFR",
+    CAMERA_MOVE_TO_SPRITE: "CMTS",
+    CAMERA_MOVE_TO_TILE: "CMTT",
     LOAD_MAP: "LOM",
 
     // Cinematic trigger types

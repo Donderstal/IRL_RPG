@@ -1,7 +1,7 @@
 const { 
     SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, 
     DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, 
-    CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
+    CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE, CAMERA_MOVE_TO_TILE
 } = require('../game-data/conditionGlobals');
 
 const getKeys = ( type ) => {
@@ -33,6 +33,8 @@ const getKeys = ( type ) => {
             return [ "ms" ];
         case CAMERA_MOVE_TO_SPRITE:
             return [ "spriteName", "snapToSprite" ];
+        case CAMERA_MOVE_TO_TILE:
+            return [ "col", "row", "snapToTile" ];
         case LOAD_MAP:
             return [ "mapName", "setPlayerSprite" ]
         default :

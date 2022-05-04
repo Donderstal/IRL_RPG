@@ -1,4 +1,4 @@
-const { LOGGABLE_INTERACTION_1, LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3 } = require("../game-data/interactionGlobals");
+const { LOGGABLE_INTERACTION_1, LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3, LOGGABLE_INTERACTION_4, LOGGABLE_INTERACTION_7 } = require("../game-data/interactionGlobals");
 
 const Q1_A_CASE_OF_THE_MONDAYS_KEY = "Q1_A_CASE_OF_THE_MONDAYS"
 const Q1_A_CASE_OF_THE_MONDAYS = {
@@ -12,16 +12,27 @@ const Q1_A_CASE_OF_THE_MONDAYS = {
     endTrigger: LOGGABLE_INTERACTION_3
 }
 
+const Q2_LIFTING_UP_A_BRO_KEY = "Q2_LIFTING_UP_A_BRO" 
+const Q2_LIFTING_UP_A_BRO = {
+    name: "Lifting up a bro",
+    key: Q2_LIFTING_UP_A_BRO_KEY,
+    trigger: LOGGABLE_INTERACTION_4,
+    steps: {
+        [LOGGABLE_INTERACTION_4]: "A muscled man has begged you for help! Ask the bros around town for {R}dumbbells for his crying friend. You can recognize them easily, they're always {G}working {G}out!"
+    },
+    endTrigger: LOGGABLE_INTERACTION_7
+}
+
 const quests = [
-    Q1_A_CASE_OF_THE_MONDAYS
+    Q1_A_CASE_OF_THE_MONDAYS, Q2_LIFTING_UP_A_BRO
 ]
 
 const getQuestByTrigger = ( trigger ) => {
-    return quests.filter((e)=>{return e.trigger == trigger;})[0]
+    return quests.filter((e)=>{return e.trigger == trigger;})[0];
 }
 
 const getQuestByKey = ( key ) => {
-    return quests.filter((e)=>{return e.key == key;})[0]
+    return quests.filter((e)=>{return e.key == key;})[0];
 }
 
 module.exports = {

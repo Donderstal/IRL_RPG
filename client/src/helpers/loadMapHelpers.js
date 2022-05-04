@@ -75,8 +75,7 @@ const loadMapToCanvases = ( mapData = globals.GAME.activeMap, loadType, setPlaye
 
     front.setForegroundData(mapData, sprites);
 
-    frontgrid.setFrontgridData(mapData, sheetData );
-    frontgrid.drawMapFromGridData( globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src] );
+    frontgrid.setFrontgridData(mapData, globals.PNG_DICTIONARY['/static/tilesets/' + sheetData.src]);
 
     globals.GAME.sound.setActiveMusic( mapData.music != undefined ? mapData.music : globals.GAME.activeNeighbourhood.music );
     mapData.playerStart = undefined;
