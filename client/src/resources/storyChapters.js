@@ -14,7 +14,7 @@ const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
     {
-        mapName: "asd1leonard_heights/Newtown-appartment-3",
+        mapName: "leonard_heights/Newtown-appartment-3",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, false, "medium-text-blip.ogg", [
@@ -58,7 +58,7 @@ const STORY_EVENTS = [
     },
     ////////////////////
     {
-        mapName: "asd1leonard_heights/C2",
+        mapName: "leonard_heights/C2",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, LOGGABLE_INTERACTION_1, "medium-text-blip.ogg", [ 
@@ -98,7 +98,7 @@ const STORY_EVENTS = [
     },
     //////////////////////////
     {
-        mapName: "asd1leonard_heights/C4",
+        mapName: "leonard_heights/C4",
         trigger: ON_ENTER,
         condition: [ DEFAULT, false ],
         scenes: [ EVENT_TALK, LOGGABLE_INTERACTION_2, "medium-text-blip.ogg", [ 

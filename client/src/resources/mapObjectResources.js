@@ -29,6 +29,15 @@ const getGroundedAtBottom = ( width, height ) => {
     }
 }
 
+const getForeground = ( width, height ) => {
+    return {
+        "dimensional_alignment": "STANDARD",
+        "on_foreground": true,
+        "height_blocks": height,
+        "width_blocks": width
+    }
+}
+
 const THREE_HIGH_SPRITE = {
     "dimensional_alignment": "STANDARD",
     "height_blocks": 3, "width_blocks": 1
@@ -168,6 +177,35 @@ module.exports = {
     "banana" : {
         "src": "Banana.png",
         ...getBackgroundItem( .5, .40625 )
+    },
+    "bar": {
+        "src": "bar.png",
+        ...getGroundedAtBottom( 9, 9 )
+    },
+    "bar_versionB": {
+        "src": "bar_versionB.png",
+        ...getGroundedAtBottom( 9, 4 )
+    },
+    "bar_lights_off": {
+        "src": "bar_lights_off.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 4,
+        "not_grounded": true
+    },
+    "bar_lights_on": {
+        "src": "bar_lights_on.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 1,
+        "width_blocks": 4,
+        "not_grounded": true
+    },
+    "bar_sign_on": {
+        "src": "bar_sign_on.png",
+        "dimensional_alignment": "STANDARD",
+        "height_blocks": 2,
+        "width_blocks": 3,
+        "not_grounded": true
     },
     "bar_sign": {
         "dimensional_alignment": "STANDARD",

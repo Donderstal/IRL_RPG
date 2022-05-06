@@ -10,6 +10,16 @@ const FRIENDLY_CHAD = [
     ]
 ]
 
+const WHOLESOME_LIFTER = [
+    [
+        [ DEFAULT, false ],
+        [ EVENT_TALK, false, "medium-text-blip.ogg", [
+            [[SPEAK, true, "What could be better than pumping iron with your bros?"]],
+        ] ]
+    ]
+]
+
 module.exports = {
-    FRIENDLY_CHAD
+    FRIENDLY_CHAD,
+    WHOLESOME_LIFTER 
 }
