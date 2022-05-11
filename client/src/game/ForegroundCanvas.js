@@ -197,13 +197,6 @@ class ForegroundCanvas extends CanvasWithGrid {
             if ( sprite.hitbox != undefined && sprite.hitbox && !sprite.hasDoor ) {
                 allHitboxes.push( sprite.hitbox );
             }
-            else if ( sprite.hitboxGroups != undefined ) {
-                sprite.hitboxGroups.forEach( ( group ) => {
-                    group.hitboxes.forEach( ( hitbox ) => {
-                        allHitboxes.push( hitbox )
-                    })
-                })
-            }
         })
 
         let spriteIndex = 0;

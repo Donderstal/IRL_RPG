@@ -35,7 +35,7 @@ module.exports = {
         "chad.png", "chad_recolour01.png", "chad_recolour02.png", "chad_recolour03.png",
         "character_x1_recolour01.png", "characterx3.png", "characterx4.png", "fats.png",
         "generic_balding_guy.png", "generic_blonde_guy.png", "neckbeard.png", "pony_tail.png",
-        "pony_tail_recolour.png", "tumbler_girl_recolour01.png", "tumblr_girl.png",
+        "pony_tail_recolour.png", "tumbler_girl_recolour01.png", "tumbler_girl.png",
         "tumbler_girl_recolour02.png"
     ],
     "characters_spawn_rate": 10000,

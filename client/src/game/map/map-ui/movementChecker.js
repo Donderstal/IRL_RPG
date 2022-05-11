@@ -56,35 +56,10 @@ const checkIfSpritesCollide = ( sprite, targetSprite ) => {
         return colliding;
     }
 
-    if ( 'hitboxes' in targetSprite && 'hitboxes' in sprite ) {
-        sprite.hitboxes.forEach( ( hitbox ) => {
-            targetSprite.hitboxes.forEach( ( targetHitbox ) => {
-                if ( hitbox.checkForBlockedRange( targetHitbox, sprite.direction ) ) {
-                    colliding = true;
-                }
-            })
-        })
+    if ( sprite.hitbox.checkForBlockedRange( targetSprite.hitbox.activeAction != undefined ? targetSprite.hitbox.activeAction : targetSprite.hitbox, sprite.direction ) ) {
+        return true;     
     }
-    else if ( 'hitboxes' in targetSprite ) {
-        targetSprite.hitboxes.forEach( ( targetHitbox ) => {
-            if (  sprite.hitbox.checkForBlockedRange( targetHitbox, sprite.direction ) ) {
-                colliding = true;
-            }
-        })
-    }
-    else if ( 'hitboxes' in sprite ) {
-        sprite.hitboxes.forEach( ( hitbox ) => {
-            if ( hitbox.checkForBlockedRange( targetSprite.hitbox, sprite.direction ) ) {
-                colliding = true;
-            }
-        })
-    }
-    else if ( 'hitbox' in targetSprite ) {
-        if ( sprite.hitbox.checkForBlockedRange( targetSprite.hitbox.activeAction != undefined ? targetSprite.hitbox.activeAction : targetSprite.hitbox, sprite.direction ) ) {
-            return true;     
-        }
-    }
-
+    
     return colliding
 }
 

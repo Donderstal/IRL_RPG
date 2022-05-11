@@ -37,10 +37,8 @@ class Car extends MapObject {
     get activeRoadId( ) { return this.carPath[this.carPathIndex]; };
     get nextRoadId( ) { return this.carPath[this.carPathIndex+1]; };
     get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
-    get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
-    get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
-    get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
-    get secondNextTileFront( ) { return this.hitboxGroups[0].secondNextTileFront };
+    get currentTileFront( ) { return this.hitbox.currentTileFront };
+    get nextTileFront( ) { return this.hitbox.nextTileFront };
 
     handleBlockedTimeCounter( ) {
         if ( this.blocked ) {
@@ -109,10 +107,7 @@ class Car extends MapObject {
     }
 
     checkForCollision( ) {
-        this.blocked = checkForCollision( this.hitboxGroups[0], false )
-        if ( !this.blocked && this.hitboxGroups.length > 1 ) {
-            this.blocked = checkForCollision( this.hitboxGroups[1], false )
-        }        
+        this.blocked = checkForCollision( this, false ) 
     }
 
     turnToDirection( newDirection, road, turn, id ) {
@@ -145,19 +140,15 @@ class Car extends MapObject {
                 break;
         }
         this.carPathIndex++;
-        this.initHitboxGroups( );
+        this.initHitbox( );
         this.setDestination( road.endCell, true );
     }
 
     isOnSquare( square ) {
         let isOnSquare = true;
-        let firstTileMiddle = this.hitboxGroups[0].middleTileFront;
-        let secondTileMiddle = this.hitboxGroups[1].middleTileFront;
-        [firstTileMiddle, secondTileMiddle].forEach( ( tile ) => {
-            if ( !square.tileIsIncluded(tile) )
-                isOnSquare = false;
-        })
-
+        if ( !square.tileIsIncluded(currentTileFront) ) {
+            isOnSquare = false;                
+        }
         return isOnSquare;
     }
 
