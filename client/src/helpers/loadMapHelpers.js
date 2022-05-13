@@ -82,7 +82,7 @@ const loadMapToCanvases = ( mapData = globals.GAME.activeMap, loadType, setPlaye
 
     if ( !cinematic ) {
         globals.GAME.cameraFocus.handleScreenFlip( 
-            {'x': globals.GAME.PLAYER.centerX( ), 'y': globals.GAME.PLAYER.baseY( )},mapData
+            {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY},mapData
         );
         globals.GAME.cameraFocus.setSpriteFocus( globals.GAME.PLAYER );
         setTimeout( ( ) => {

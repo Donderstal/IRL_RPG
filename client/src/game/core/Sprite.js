@@ -19,7 +19,7 @@ const { PLAYER_ID } = require('../../game-data/interactionGlobals')
  *  and movement to a destination.
  */
 class Sprite {
-    constructor ( tile, spriteSize, image, direction ) {   
+    constructor ( tile, spriteSize, image, direction, isPlayer ) {   
         if ( spriteSize == "STRD" ) {
             this.width   = STRD_SPRITE_WIDTH;
             this.height  = STRD_SPRITE_HEIGHT;            
@@ -29,9 +29,6 @@ class Sprite {
             this.height = spriteSize.height;
         }
 
-        this.left, this.right, this.top, this.bottom;
-        this.centerX = () => { return this.x + ( this.width / 2 ) };
-        this.baseY = () => { return ( this.y + this.height ) - ( globals.GRID_BLOCK_PX / 2 ) };
         this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
@@ -41,19 +38,28 @@ class Sprite {
         this.destination    = false;
         this.animationScript = {};
         this.activeEffect   = { active: false };
-        this.speed          = MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
+        this.isPlayer       = isPlayer;
+        this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
+        this.type           = "sprite"
 
         this.setSpriteToGrid( tile )
     }
     get isInCameraFocus() { 
         return globals.GAME.cameraFocus.focusSpriteId == this.spriteId;
     }
-    get pathIsBlocked() { 
-        return checkForCollision( this, this == globals.GAME.PLAYER );
-     }
     get activeAnimationFrame() {
         return this.animationScript.frames[this.animationScript.index];
     }
+
+    get centerX() { return this.x + ( this.width / 2 ); };
+    get baseY() { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
+    get left() { return this.x; };
+    get top() { return this.y; };
+    get right() { return this.x + this.width; };
+    get bottom() { return this.y + this.height; };
+
+    get standing() { return this.groundedAtBase || (this.type != "object" && this.type != 'car') }
+    get dynamicTop( ) { return this.standing ? this.baseY : this.top }
 
     setSpriteToGrid( tile ) {
         this.row = tile.row;
@@ -79,17 +85,28 @@ class Sprite {
         this.setSpriteToGrid( newTile );
     }
 
-    updateSpriteBorders( ) {
-        this.left   = this.x
-        this.right  = this.x + this.width
-        this.top    = this.y
-        this.bottom = this.y + this.height
-
-        let cell = globals.GAME.getTileOnCanvasAtXY("FRONT", this.centerX(), this.baseY())
+    updateCell( ) {
+        let cell = globals.GAME.getTileOnCanvasAtXY("FRONT", this.centerX, this.baseY)
         this.row = cell.row;
         this.col = cell.col;
     }
 
+    nextPosition( direction = this.direction ) {
+        switch(direction) {
+            case globals.FACING_LEFT:
+                return this.left - this.speed;
+            case globals.FACING_UP:
+                return this.dynamicTop - this.speed;
+            case globals.FACING_RIGHT:
+                return this.right + this.speed;
+            case globals.FACING_DOWN:
+                return this.bottom + this.speed;
+            default:
+                console.log( "Error! Direction " + direction + " was not recognized.");
+                break;
+        }
+    }
+    
     drawSprite( ) {
         this.updateState( );
         if ( this.hasActiveEffect ) {
@@ -107,7 +124,7 @@ class Sprite {
         this.checkForMoveToDestination( );
         this.checkForAnimation( );
 
-        this.updateSpriteBorders( )
+        this.updateCell( )
     }
 
     updateState( ) {
@@ -117,13 +134,13 @@ class Sprite {
         else if ( this.State.is(STATE_MOVING) && (!this.destination || !this.destination.path) ) {
             this.State.set(STATE_IDLE);
         }
-        else if ( this.State.is(STATE_MOVING) && this.pathIsBlocked ) {
+        /* else if ( this.State.is(STATE_MOVING) && this.pathIsBlocked ) {
             this.State.set(STATE_BLOCKED);
             this.sheetPosition = 0;
         }
         else if ( this.State.is(STATE_BLOCKED) && !this.pathIsBlocked ) {
             this.State.set(STATE_MOVING);
-        }
+        } */
         else if ( this.State.is(STATE_PATHFINDING) ) {
             this.destination.calculatePath();
         }
@@ -147,7 +164,7 @@ class Sprite {
             this.State.set(STATE_PATHFINDING);            
         }
 
-        this.updateSpriteBorders( );
+        this.updateCell( );
         this.destination = new Destination( destination.col, destination.row, this.spriteId, deleteWhenDestinationReached );
     }
 
@@ -275,9 +292,14 @@ class Sprite {
             this.y += movementSpeed;
         }
         if ( this.isInCameraFocus && !globals.GAME.cameraFocus.movingToNewFocus ) {
-            globals.GAME.cameraFocus.centerOnXY( this.centerX( ), this.baseY( ) );
+            globals.GAME.cameraFocus.centerOnXY( this.centerX, this.baseY );
         }
     }
+
+    checkForCollision( ) {
+        return checkForCollision( this, false ) ;
+    }
+
 }
 
 module.exports = {

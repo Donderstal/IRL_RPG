@@ -142,6 +142,9 @@ const drawSpritesInOrder = ( GAME ) => {
 const drawSpritesInArray = ( array, GAME ) => {
     if ( !GAME.paused ) {
         array.forEach( ( sprite ) => {
+            if ( GAME.paused || sprite.deleted ) {
+                return;
+            }
             tryCatch((GAME, sprite)=> {
                 if ( GAME.paused || sprite.deleted ) {
                     return;

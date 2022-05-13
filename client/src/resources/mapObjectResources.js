@@ -29,15 +29,6 @@ const getGroundedAtBottom = ( width, height ) => {
     }
 }
 
-const getForeground = ( width, height ) => {
-    return {
-        "dimensional_alignment": "STANDARD",
-        "on_foreground": true,
-        "height_blocks": height,
-        "width_blocks": width
-    }
-}
-
 const THREE_HIGH_SPRITE = {
     "dimensional_alignment": "STANDARD",
     "height_blocks": 3, "width_blocks": 1

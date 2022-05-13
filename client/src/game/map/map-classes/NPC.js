@@ -50,7 +50,7 @@ class NPC extends MapSprite {
         // setting a timeout so the MapAction is instantiated after this sprite is added to FRONT.spritedictionary
         setTimeout( ( ) => { 
             if ( hasAction ) {
-                this.actionSelector = new ActionSelector( this.centerX( ), this.y, spriteData.action, spriteId );
+                this.actionSelector = new ActionSelector( this.centerX, this.y, spriteData.action, spriteId );
                 this.hitbox = this.actionSelector.activeAction;
                 this.action = spriteData.action
                 this.action.name = this.name

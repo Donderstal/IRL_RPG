@@ -8,39 +8,27 @@ const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
  * @returns {Boolean} true if collison, false if not
  */
 const checkForCollision = ( sprite, isPlayer ) => {
+    const allSprites =  globals.GAME.FRONT.allSprites.filter((e)=>{return !e.onBackground && !e.notGrounded;});
+    const allSpritesCount = allSprites.length;    
+
     let colliding = false; 
+    let collidingSpriteIndex;
+    let spriteIndex = 0;
 
-    if ( isPlayer && ( sprite.currentTileBack != undefined && sprite.nextTileBack != undefined ) ) {
-        if  ( sprite.currentTileBack.hasEvent && sprite.currentTileBack.eventType == EVENT_DOOR ) {
-            sprite.currentTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
-        }
-        else if  ( sprite.nextTileBack.hasEvent && sprite.nextTileBack.eventType == EVENT_DOOR ) {
-            sprite.nextTileBack.event.checkForBlockedRange( sprite.hitbox, sprite.direction );
-        }
-        if ( sprite.nextTileBack != undefined && sprite.nextTileBack.isBlocked ) {
-            switch ( sprite.direction ) {
-                case FACING_RIGHT :
-                    return sprite.isInCenterFacingRight;
-                case FACING_LEFT :
-                    return sprite.isInCenterFacingLeft;
-                case FACING_UP :
-                    return sprite.isInCenterFacingUp;
-                case FACING_DOWN :
-                    return sprite.isInCenterFacingDown;
+    while( colliding == false && spriteIndex < allSpritesCount ) {
+        const targetSprite = allSprites[spriteIndex];
+        if( targetSprite.spriteId != sprite.spriteId ) {
+            if ( !targetSprite.hasOwnProperty("blockedArea") &&  !targetSprite.hasDoor && checkIfSpritesCollide( sprite, targetSprite )) {
+                colliding = true;
+                collidingSpriteIndex = spriteIndex;
+            }
+            else if ( targetSprite.hasOwnProperty("blockedArea") && targetSprite.blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
+                colliding = true;
+                collidingSpriteIndex = spriteIndex;
             }
         }
+        spriteIndex++;
     }
-
-    globals.GAME.FRONT.allSprites.forEach( ( e ) => {
-        if( e.spriteId != sprite.spriteId ) {
-            if ( !e.hasOwnProperty("blockedArea") &&  !e.hasDoor && checkIfSpritesCollide( sprite, e )) {
-                colliding = true;
-            }
-            else if ( e.hasOwnProperty("blockedArea") && e.blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
-                colliding = true;
-            }
-        }
-    })
     
     return colliding;
 }
@@ -51,16 +39,32 @@ const checkForCollision = ( sprite, isPlayer ) => {
  * @returns {Boolean} true if collison, false if not
  */
 const checkIfSpritesCollide = ( sprite, targetSprite ) => {
-    let colliding = false;
-    if ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING ) {
-        return colliding;
+    const direction = sprite.direction;
+    if ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING || sprite.movementType == globals.NPC_MOVE_TYPE_FLYING ) {
+        return false;
     }
 
-    if ( sprite.hitbox.checkForBlockedRange( targetSprite.hitbox.activeAction != undefined ? targetSprite.hitbox.activeAction : targetSprite.hitbox, sprite.direction ) ) {
-        return true;     
+    switch(direction) {
+        case FACING_LEFT:
+            return sprite.nextPosition( direction ) < targetSprite.right
+            && ( sprite.baseY > targetSprite.top && sprite.baseY < targetSprite.bottom )
+            && sprite.centerX > targetSprite.centerX;
+        case FACING_UP:
+            return sprite.nextPosition( direction ) < targetSprite.bottom
+            && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
+            && sprite.baseY > targetSprite.baseY;
+        case FACING_RIGHT:
+            return sprite.nextPosition( direction ) > targetSprite.left
+            && ( sprite.baseY > targetSprite.top && sprite.baseY < targetSprite.bottom )
+            && sprite.centerX < targetSprite.centerX;
+        case FACING_DOWN:
+            return sprite.nextPosition( direction ) > targetSprite.baseY
+            && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
+            && sprite.baseY < targetSprite.baseY;
+        default:
+            console.log( "Error! Direction " + direction + " was not recognized.");
+            break;
     }
-    
-    return colliding
 }
 
 module.exports = {

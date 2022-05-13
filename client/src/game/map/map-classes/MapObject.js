@@ -38,6 +38,7 @@ class MapObject extends Sprite {
         this.onBackground   = objectResource.on_background;
         this.groundedAtBase = objectResource.grounded_at_bottom;
         this.notGrounded    = objectResource.not_grounded;
+        this.doorOrWindow   = objectResource.door_or_window
         this.collectableType=  objectResource.collectable_type
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
@@ -111,7 +112,7 @@ class MapObject extends Sprite {
             this.x, this.y, this.width, this.height
         )
         if ( this.hasDoor ) {
-            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );  
+            this.hitbox.updateXy( this.centerX, this.baseY );  
             this.hitbox.checkForBlockedRange( globals.GAME.PLAYER.hitbox, globals.GAME.PLAYER.direction );
         }
         if ( this.hasActiveEffect ) {
@@ -127,7 +128,7 @@ class MapObject extends Sprite {
             }
         }
 
-        this.updateSpriteBorders( )
+        this.updateCell( )
     }
     //
     setActiveFrames( ) {

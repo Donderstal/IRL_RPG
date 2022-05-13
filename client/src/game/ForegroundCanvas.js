@@ -56,7 +56,7 @@ class ForegroundCanvas extends CanvasWithGrid {
                 this.setObjects( mapData.mapObjects );
             if ( mapData.playerStart ) {
                 this.initPlayerCharacter( mapData.playerStart );
-                globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX( ), this.playerSprite.baseY( ) )      
+                globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX, this.playerSprite.baseY )      
             }            
         }
     }

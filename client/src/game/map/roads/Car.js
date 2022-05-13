@@ -22,7 +22,6 @@ class Car extends MapObject {
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
         this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
-        this.baseY = () => { return  this.y + ( this.height / 2 ) };
         this.roadId;
         this.type = 'car'
 
@@ -39,9 +38,10 @@ class Car extends MapObject {
     get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
     get currentTileFront( ) { return this.hitbox.currentTileFront };
     get nextTileFront( ) { return this.hitbox.nextTileFront };
+    get baseY( ) { return this.y + ( this.height / 2 )};
 
     handleBlockedTimeCounter( ) {
-        if ( this.blocked ) {
+        if ( this.checkForCollision( ) ) {
             if ( this.blockedCounter.countAndCheckLimit( ) ) {
                 this.carHornSoundEffect.play( );
             } 
@@ -57,7 +57,6 @@ class Car extends MapObject {
     drawSprite( ) {
         this.updateState( );
         super.drawSprite( );
-        this.checkForCollision( );
         if ( this.activeIntersectionId != null ) {
             this.checkForIntersectionAction( )
         }
@@ -104,10 +103,6 @@ class Car extends MapObject {
                 this.x += GRID_BLOCK_PX;
                 break;
         }
-    }
-
-    checkForCollision( ) {
-        this.blocked = checkForCollision( this, false ) 
     }
 
     turnToDirection( newDirection, road, turn, id ) {

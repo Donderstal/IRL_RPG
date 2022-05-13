@@ -61,7 +61,7 @@ class Destination {
                 return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);
             })
         };
-        const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX(), this.sprite.baseY());
+        const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX, this.sprite.baseY);
         if ( startingTile.offScreen ) {
             grid.tiles.unshift(startingTile);
         }
