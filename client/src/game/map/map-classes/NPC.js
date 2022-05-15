@@ -56,13 +56,10 @@ class NPC extends MapSprite {
                 this.action.name = this.name
             }
         }, 50 )
-
-        this.blockedCounter = new Counter( 2000 * Math.random( ), false, false )
     }
 
     drawSprite( ) {
         super.drawSprite( );
-        this.handleBlockedTimeCounter( );
 
         if ( this.State.is(globals.STATE_IDLE) ) {
             this.setRandomMovementOrAnimation( );
@@ -89,17 +86,6 @@ class NPC extends MapSprite {
             }
             this.doAnimationCounter.resetCounter( );
         }
-    }
-
-    handleBlockedTimeCounter( ) {
-        if ( this.State.is(STATE_BLOCKED) ) {
-            if ( this.blockedCounter.countAndCheckLimit( ) ) {
-                this.destination.calculatePath( this.destination.currentStep );
-            } 
-        }
-        else {
-            this.blockedCounter.resetCounter( );
-        }       
     }
 
     setRandomDestinationInRadius( ) {

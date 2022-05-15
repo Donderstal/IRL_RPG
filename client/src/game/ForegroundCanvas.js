@@ -183,21 +183,8 @@ class ForegroundCanvas extends CanvasWithGrid {
         })
     }
 
-    tileHasBlockingSprite( tileIndex ) {
-        if ( tileIndex == globals.OUT_LEFT || tileIndex == globals.OUT_LEFT || tileIndex == globals.OUT_RIGHT || tileIndex == globals.OUT_DOWN ) {
-            return false;
-        }
-        const tile = this.getTileAtIndex( tileIndex );
-        if ( tile == undefined ) {
-            return false;
-        }
-
-        const collisionSprites = this.allSprites.filter((e)=> { return !e.hasNoCollision; })
-        const filteredSprites = collisionSprites.filter((e)=> {
-            return e.centerX > tile.left && e.centerX < tile.left && e.baseY > tile.top && e.baseY < tile.bottom;
-        })
-
-        return filteredSprites.length > 0;
+    tileHasBlockingSprite( index ) {
+        return this.tilesBlockedBySprites.indexOf( index ) > -1;
     }
 
     generateWalkingNPC( ) {
@@ -266,6 +253,15 @@ class ForegroundCanvas extends CanvasWithGrid {
             return globals.GAME.collectableRegistry.isInRegistry(id, objectResource.collectable_type);
         }
         return false;
+    }
+
+    getTilesBlockedBySprite( sprite ) {
+        let blockedTileIndexes = sprite.getBlockedTiles( );
+        blockedTileIndexes.forEach( ( e )=> {
+            if ( this.tilesBlockedBySprites.indexOf( e ) == -1 ) {
+                this.tilesBlockedBySprites.push( e );
+            }
+        })
     }
 }
 

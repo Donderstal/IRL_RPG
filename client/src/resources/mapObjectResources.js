@@ -317,7 +317,7 @@ module.exports = {
     },
     "computer_table" : {
         "src": "computer_table.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "Couch_Blue" : {
         "src": "couch.png",
@@ -660,7 +660,7 @@ module.exports = {
     },
     "plant_yo" : {
         "src": "plant_yo.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "plants" : {
         "src": "plants.png",

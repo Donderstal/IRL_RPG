@@ -111,6 +111,8 @@ const drawSpritesInOrder = ( GAME ) => {
     const foregroundSprites = [];
     const flyingSprites     = [];
 
+    GAME.FRONT.tilesBlockedBySprites = [];
+
     GAME.FRONT.allSprites.forEach( ( sprite )  => {
         if ( sprite.onBackground ) {
             backgroundSprites.push( sprite );
@@ -123,6 +125,7 @@ const drawSpritesInOrder = ( GAME ) => {
         }
         else {
             standardSprites.push( sprite );
+            GAME.FRONT.getTilesBlockedBySprite( sprite );
         }
     })
     

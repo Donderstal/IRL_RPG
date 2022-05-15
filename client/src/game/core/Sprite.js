@@ -140,14 +140,8 @@ class Sprite {
             this.State.set(STATE_BLOCKED);
             this.sheetPosition = 0;
         }
-        else if ( this.State.is(STATE_BLOCKED) && this.checkForCollision( ) && !this.isCar ) {
-            this.State.set(STATE_PATHFINDING);
-        }
         else if ( this.State.is(STATE_BLOCKED) && !this.checkForCollision( ) ) {
             this.State.set(STATE_MOVING);
-        }
-        else if ( this.State.is(STATE_PATHFINDING) ) {
-            this.destination.calculatePath( globals.GAME.getTileOnCanvasAtXY( "FRONT", this.destination.currentStep.x, this.destination.currentStep.y ));
         }
     }
 
@@ -305,6 +299,23 @@ class Sprite {
         return checkForCollision( this, false ) ;
     }
 
+    getBlockedTiles( ) {
+        let x = this.x;
+        let y = this.dynamicTop;
+        let tileIndexes = [];
+
+        while( y <= this.bottom ) {
+            while( x <= this.right ) {
+                const tile = globals.GAME.FRONT.getTileAtXY( x, y );
+                x = (x + GRID_BLOCK_PX) > this.right && x != this.right ? this.right : x + GRID_BLOCK_PX;
+                if ( tileIndexes.indexOf( tile.index ) == -1 ) {
+                    tileIndexes.push( tile.index )
+                }
+            }
+            y = (y + GRID_BLOCK_PX) > this.bottom && y != this.bottom ? this.bottom : y + GRID_BLOCK_PX;
+        }
+        return tileIndexes;
+    }
 }
 
 module.exports = {
