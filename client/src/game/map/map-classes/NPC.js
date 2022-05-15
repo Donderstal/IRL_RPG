@@ -94,7 +94,7 @@ class NPC extends MapSprite {
     handleBlockedTimeCounter( ) {
         if ( this.State.is(STATE_BLOCKED) ) {
             if ( this.blockedCounter.countAndCheckLimit( ) ) {
-                this.destination.calculatePath( );
+                this.destination.calculatePath( this.destination.currentStep );
             } 
         }
         else {

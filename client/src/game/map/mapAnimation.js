@@ -87,10 +87,10 @@ const handleNpcCounter = ( GAME ) => {
  */
 const drawSpritesInOrder = ( GAME ) => {
     GAME.FRONT.allSprites.sort( ( a, b ) => {
-        if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
+        if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 
         }
-        else if (b.row > a.row || b.row === a.row && b.y > a.y ) {
+        else if (b.row > a.row || b.row === a.row && b.bottom > a.bottom ) {
             return -1
         }
         else {

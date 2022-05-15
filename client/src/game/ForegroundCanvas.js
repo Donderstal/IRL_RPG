@@ -188,25 +188,16 @@ class ForegroundCanvas extends CanvasWithGrid {
             return false;
         }
         const tile = this.getTileAtIndex( tileIndex );
-        let colliding = false;
         if ( tile == undefined ) {
             return false;
         }
-        let allHitboxes = [];
-        this.allSprites.forEach( ( sprite ) => {
-            if ( sprite.hitbox != undefined && sprite.hitbox && !sprite.hasDoor ) {
-                allHitboxes.push( sprite.hitbox );
-            }
+
+        const collisionSprites = this.allSprites.filter((e)=> { return !e.hasNoCollision; })
+        const filteredSprites = collisionSprites.filter((e)=> {
+            return e.centerX > tile.left && e.centerX < tile.left && e.baseY > tile.top && e.baseY < tile.bottom;
         })
 
-        let spriteIndex = 0;
-        while( colliding == false && allHitboxes[spriteIndex] != undefined ) {
-            let hitbox = allHitboxes[spriteIndex];
-            colliding = hitbox.x > tile.x && hitbox.y > tile.y 
-            && hitbox.x < tile.x + globals.GRID_BLOCK_PX && hitbox.y < tile.y + globals.GRID_BLOCK_PX 
-            spriteIndex++
-        }
-        return colliding;
+        return filteredSprites.length > 0;
     }
 
     generateWalkingNPC( ) {

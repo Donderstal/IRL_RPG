@@ -47,19 +47,19 @@ const checkIfSpritesCollide = ( sprite, targetSprite ) => {
     switch(direction) {
         case FACING_LEFT:
             return sprite.nextPosition( direction ) < targetSprite.right
-            && ( sprite.baseY > targetSprite.top && sprite.baseY < targetSprite.bottom )
+            && ( (sprite.baseY + sprite.speed) > targetSprite.dynamicTop && sprite.baseY < targetSprite.bottom )
             && sprite.centerX > targetSprite.centerX;
         case FACING_UP:
             return sprite.nextPosition( direction ) < targetSprite.bottom
-            && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
+            && ( (sprite.centerX  + sprite.speed) > targetSprite.left && sprite.centerX < (targetSprite.right + sprite.speed))
             && sprite.baseY > targetSprite.baseY;
         case FACING_RIGHT:
             return sprite.nextPosition( direction ) > targetSprite.left
-            && ( sprite.baseY > targetSprite.top && sprite.baseY < targetSprite.bottom )
+            && ( (sprite.baseY + sprite.speed) > targetSprite.dynamicTop && sprite.baseY < targetSprite.bottom )
             && sprite.centerX < targetSprite.centerX;
         case FACING_DOWN:
-            return sprite.nextPosition( direction ) > targetSprite.baseY
-            && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
+            return sprite.nextPosition( direction ) > targetSprite.dynamicTop
+            && ( (sprite.centerX  + sprite.speed) > targetSprite.left && sprite.centerX < (targetSprite.right + sprite.speed))
             && sprite.baseY < targetSprite.baseY;
         default:
             console.log( "Error! Direction " + direction + " was not recognized.");

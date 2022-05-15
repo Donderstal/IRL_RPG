@@ -53,13 +53,15 @@ class Sprite {
 
     get centerX() { return this.x + ( this.width / 2 ); };
     get baseY() { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
+    get topY() { return this.top + ( GRID_BLOCK_PX / 2 ); };
     get left() { return this.x; };
     get top() { return this.y; };
     get right() { return this.x + this.width; };
     get bottom() { return this.y + this.height; };
 
-    get standing() { return this.groundedAtBase || (this.type != "object" && this.type != 'car') }
-    get dynamicTop( ) { return this.standing ? this.baseY : this.top }
+    get noCollision ( ) { return this.onBackground || this.notGrounded || (this.movementType == globals.NPC_MOVE_TYPE_FLYING && this.State.is( STATE_MOVING )) }
+    get standing() { return this.groundedAtBase || (this.type != "object" && this.type != 'car') };
+    get dynamicTop( ) { return this.standing ? this.baseY : this.topY };
 
     setSpriteToGrid( tile ) {
         this.row = tile.row;
@@ -134,15 +136,18 @@ class Sprite {
         else if ( this.State.is(STATE_MOVING) && (!this.destination || !this.destination.path) ) {
             this.State.set(STATE_IDLE);
         }
-        /* else if ( this.State.is(STATE_MOVING) && this.pathIsBlocked ) {
+        else if ( this.State.is(STATE_MOVING) && this.checkForCollision( ) ) {
             this.State.set(STATE_BLOCKED);
             this.sheetPosition = 0;
         }
-        else if ( this.State.is(STATE_BLOCKED) && !this.pathIsBlocked ) {
+        else if ( this.State.is(STATE_BLOCKED) && this.checkForCollision( ) && !this.isCar ) {
+            this.State.set(STATE_PATHFINDING);
+        }
+        else if ( this.State.is(STATE_BLOCKED) && !this.checkForCollision( ) ) {
             this.State.set(STATE_MOVING);
-        } */
+        }
         else if ( this.State.is(STATE_PATHFINDING) ) {
-            this.destination.calculatePath();
+            this.destination.calculatePath( globals.GAME.getTileOnCanvasAtXY( "FRONT", this.destination.currentStep.x, this.destination.currentStep.y ));
         }
     }
 

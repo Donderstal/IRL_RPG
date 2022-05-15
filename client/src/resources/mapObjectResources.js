@@ -257,7 +257,7 @@ module.exports = {
         "src": "blue_lamp_right.png",
         ...getTwoHighSprite( true )
     },
-    "blue_lamp_right" : {
+    "blue_single_bed" : {
         "src": "blue_single_bed.png",
         ...getTwoHighSprite( false )
     },
@@ -282,19 +282,19 @@ module.exports = {
     },
     "brown_chair" :{
         "src": "brown_chair.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_east" :{
         "src": "brown_chair_east.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_south" :{
         "src": "brown_chair_south.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_west" :{
         "src": "brown_chair_west.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
@@ -401,7 +401,7 @@ module.exports = {
     },
     "Fridge" : {
         "src": "Fridge.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "funz": { 
         "src": "funz.png",
@@ -587,7 +587,7 @@ module.exports = {
     },
     "inside_bin" : {
         "src": "inside_bin.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "lamp_red" : {
         "src": "lamp_red.png",
@@ -759,7 +759,7 @@ module.exports = {
     },
     "Small_Table" : {
         "src": "small_table.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "tires_1" : {
         "src": "Tires_Z1.png",
