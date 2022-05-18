@@ -46,7 +46,7 @@ const checkIfSpritesCollide = ( sprite, targetSprite ) => {
 
     switch(direction) {
         case FACING_LEFT:
-            return sprite.nextPosition( direction ) < targetSprite.right
+            return sprite.centerX - sprite.speed < targetSprite.right
             && ( sprite.baseY + sprite.speed > targetSprite.dynamicTop - sprite.speed && sprite.baseY < targetSprite.bottom )
             && sprite.centerX > targetSprite.centerX;
         case FACING_UP:
@@ -54,7 +54,7 @@ const checkIfSpritesCollide = ( sprite, targetSprite ) => {
             && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
             && sprite.baseY > targetSprite.baseY;
         case FACING_RIGHT:
-            return sprite.nextPosition( direction ) > targetSprite.left
+            return sprite.right + sprite.speed > targetSprite.left
             && ( sprite.baseY + sprite.speed > targetSprite.dynamicTop - sprite.speed && sprite.baseY < targetSprite.bottom )
             && sprite.centerX < targetSprite.centerX;
         case FACING_DOWN:

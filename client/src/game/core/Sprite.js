@@ -61,7 +61,7 @@ class Sprite {
 
     get noCollision ( ) { return this.onBackground || this.notGrounded || (this.movementType == globals.NPC_MOVE_TYPE_FLYING && this.State.is( STATE_MOVING )) }
     get standing() { return this.groundedAtBase || (this.type != "object" && this.type != 'car') };
-    get dynamicTop( ) { return this.standing ? this.baseY : this.topY };
+    get dynamicTop( ) { return this.standing ? this.baseY - this.speed : this.topY };
 
     setSpriteToGrid( tile ) {
         this.row = tile.row;
