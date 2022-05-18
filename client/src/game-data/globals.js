@@ -7,10 +7,10 @@ const CANVAS_COLUMNS                = 24
 const CANVAS_ROWS                   = 16
 
 const getBasePixelBlockSize = ( ) => {
-    let blockSize = Math.floor(
+    let blockSize = Math.ceil(
         SCREEN.MOBILE
-        ? (window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth) / 8
-        : window.innerWidth / CANVAS_COLUMNS      
+        ? (screen.width > screen.height ? screen.height : screen.width) / 8
+        : screen.width / CANVAS_COLUMNS      
     );
     if ( blockSize > GRID_BLOCK_IN_SHEET_PX ) {
         blockSize = GRID_BLOCK_IN_SHEET_PX;
@@ -76,7 +76,7 @@ const STRD_SPRITE_WIDTH             = GRID_BLOCK_PX
 const STRD_SPRITE_HEIGHT            = STRD_SPRITE_WIDTH * 1.75
 
 // speech bubbles 
-const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( SCREEN.MOBILE ? 8 : 6 )
+const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( SCREEN.MOBILE ? 12 : 6 )
 const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( SCREEN.MOBILE ? .33 : .66 )
 const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 

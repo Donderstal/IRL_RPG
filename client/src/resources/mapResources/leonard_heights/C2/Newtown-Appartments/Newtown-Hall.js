@@ -1,6 +1,7 @@
-const { EVENT_HAS_FIRED } = require("../../../../../game-data/conditionGlobals");
-const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT } = require("../../../../../game-data/globals");
+const { EVENT_HAS_FIRED, EVENT_HAS_NOT_FIRED } = require("../../../../../game-data/conditionGlobals");
+const { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_SEMI_IDLE } = require("../../../../../game-data/globals");
 const { UNLOCK_DOOR_TEST } = require("../../../../../game-data/interactionGlobals");
+const { WAITING_BUSINESSMAN } = require("./Newtown-Appartments-interactions");
 
 module.exports = {
     "mapName": "leonard_heights/Newtown-Hall",
@@ -294,7 +295,18 @@ module.exports = {
             "col": 4
         }
     ],
-    "characters": [],
+    "characters": [
+        {
+            "condition": [ EVENT_HAS_NOT_FIRED, UNLOCK_DOOR_TEST ],
+            "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+            "row": 11,
+            "col": 3,
+            "name": "Impatient businessman",
+            "sprite": "business_man.png",
+            "direction": FACING_LEFT,
+            "action": WAITING_BUSINESSMAN
+        }
+    ],
     "actions": [],
     "doors": [
         {

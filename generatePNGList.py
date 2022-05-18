@@ -10,7 +10,7 @@ with open('static/png-list.json', 'w') as f:
     json.dump(trimmedFileList, f)
 
 with open('static/audio-list.json', 'w') as f:
-    fileList =  glob.glob("static/*/*.mp3") + glob.glob("static/*/*.wav") + glob.glob("static/*/*/*.mp3") + glob.glob("static/*/*/*.wav");
+    fileList =  glob.glob("static/*/*.mp3") + glob.glob("static/*/*.wav") + glob.glob("static/*/*.ogg") + glob.glob("static/*/*/*.mp3") + glob.glob("static/*/*/*.wav");
     trimmedAudioList = []
     for fileName in fileList:  
         trimmedAudioList.append("/" + fileName.replace("\\", "/"))

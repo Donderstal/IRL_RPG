@@ -1,8 +1,7 @@
 const globals = require("../../game-data/globals");
 const { getUniqueId } = require("../../helpers/utilFunctions");
 const { SpeechBubble } = require("./SpeechBubble");
-const { SPEAK_YES_NO } = require("../../game-data/conditionGlobals");
-const { INTERACTION_YES } = require("../../game-data/interactionGlobals");
+const { SPEAK_YES_NO, SPEAK } = require("../../game-data/conditionGlobals");
 const { Emote } = require("./Emote");
 
 class SpeechBubbleController {
@@ -10,10 +9,12 @@ class SpeechBubbleController {
         this.emoteIds = [];
         this.activeBubbles = {};
         this.activeBubbleIds = [];
+        this.subtitleBubbleId = false;
+        this.subtitleBubble = false;
     }
 
     get nonEmoteIds( ) { return this.activeBubbleIds.filter((e) => { return this.emoteIds.indexOf(e) == -1 })}
-    get isActive() { return this.activeBubbleIds.length > 0; }
+    get isActive() { return this.activeBubbleIds.length > 0 || this.subtitleBubble != false; }
     get selectionBubble( ) { return Object.values(this.activeBubbles).find(x => x.type === SPEAK_YES_NO); }
     get isWriting() { 
         return this.activeBubbleIds.filter(
@@ -25,7 +26,7 @@ class SpeechBubbleController {
         const id = getUniqueId(this.activeBubbleIds);
         this.activeBubbles[id] = new SpeechBubble( location, contents, id, type );
         this.activeBubbleIds.push(id);
-        globals.GAME.sound.playEffect(contents.sfx);
+        globals.GAME.sound.playSpeakingEffect(contents.sfx);
     }
 
     setNewEmote( location, imageSrc ) {
@@ -34,6 +35,22 @@ class SpeechBubbleController {
         this.activeBubbleIds.push(id);
         this.emoteIds.push(id);
         setTimeout(()=>{ this.unsetActiveBubble( id ) }, 1000)
+    }
+
+    setNewSubtitleBubble( contents ) {
+        this.subtitleBubbleId = getUniqueId(this.activeBubbleIds);
+        this.subtitleBubble = new SpeechBubble( 
+            {'x': 0, 'y': globals.CANVAS_HEIGHT - globals.BATTLE_FONT_LINE_HEIGHT}, 
+            contents, this.subtitleBubbleId, SPEAK, true
+        );
+    }
+
+    clearSubtitleBubble( ) {
+        this.subtitleBubble.setMoveToY( globals.SCREEN.MOBILE ? screen.height : globals.CANVAS_HEIGHT );
+        setTimeout(()=>{
+            this.subtitleBubble = false;       
+            this.subtitleBubbleId = false;
+        }, 1000);
     }
 
     bubbleIsActive( id ) {
@@ -54,11 +71,12 @@ class SpeechBubbleController {
     handleButtonPress( ) {
         if ( this.isActive ) {
             if ( this.isWriting ) {
-                this.activeBubbleIds.forEach((id) =>{
+                this.nonEmoteIds.forEach((id) =>{
                     this.activeBubbles[id].typeWriter.displayFullText( );
                 });
+                globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3");
             }
-            else if(this.selectionBubble){
+            else if( this.selectionBubble ){
                 globals.GAME.activeAction.registerSelection( this.selectionBubble.activeButton );
                 let animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SPEAK_YES_NO);
                 animation.setSelection( this.selectionBubble.activeButton );
@@ -67,6 +85,7 @@ class SpeechBubbleController {
             else {
                 this.clearActiveBubbles( );
             }
+            globals.GAME.sound.clearSpeakingEffect( );
         }
     }
 
@@ -77,7 +96,7 @@ class SpeechBubbleController {
     }
 
     clearActiveBubbles( ) {
-        this.activeBubbles = {};
+        this.activeBubbles = { };
         this.activeBubbleIds = [];
         this.emoteIds = [];
     }
@@ -89,6 +108,9 @@ class SpeechBubbleController {
             }     
             if ( this.nonEmoteIds.length >= 1 ) {
                 this.nonEmoteIds.forEach( e => this.activeBubbles[e].draw() );     
+            }
+            if ( this.subtitleBubbleId ) {
+                this.subtitleBubble.draw();
             }
         }
     }

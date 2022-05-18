@@ -45,7 +45,7 @@ class SpatialSound extends BaseSound {
             this.play( );
         }
         else if ( sprite == PLAYER || !(PLAYER instanceof MapSprite)  ) {
-            this.setVolumeToFactor( 1 );
+            this.setVolumeToFactor( 0.75 );
         }
         else {
             let hearingDistance = globals.GRID_BLOCK_PX * 3
@@ -75,7 +75,7 @@ class SpatialSound extends BaseSound {
                 modifiers.vert = 1;
             }
 
-            this.setVolumeToFactor( modifiers.hori * modifiers.vert );
+            this.setVolumeToFactor( modifiers.hori * modifiers.vert > 0.75 ? 0.75 : modifiers.hori * modifiers.vert );
         }
     }
 }

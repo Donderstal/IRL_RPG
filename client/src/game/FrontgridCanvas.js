@@ -9,7 +9,8 @@ class FrontgridCanvas extends CanvasWithGrid {
         this.lastTileList = false;
     }   
 
-    setFrontgridData( mapData ) {
+    setFrontgridData( mapData, image ) {
+        this.sheetImage = image;
         if ( mapData.frontGrid ) {
             this.hasFrontGrid = true;
             this.setTileGrid( mapData.frontGrid );

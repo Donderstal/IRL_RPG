@@ -12,6 +12,15 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### APR 25, 2022
+* Added new speaking sound effects
+* 
+
+#### APR 24, 2022
+* Quest system based on interaction triggers
+* Sprites can be set to a map conditionally
+* Now transferring active sprites to/from cinematic maps
+
 #### APR 23, 2022
 * Updating TypeWriter, new funcs for colored words in text
 

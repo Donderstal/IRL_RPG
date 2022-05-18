@@ -11,7 +11,8 @@ class ScriptedEvent {
         this.action         = eventScript.action;
         this.condition      = eventScript.condition;
         this.fired          = false;
-        this.id        = scriptedEventData.id;
+        this.name           = scriptedEventData.name
+        this.id             = scriptedEventData.id;
 
         if ( scriptedEventData.trigger == ON_POSITION ) {
             this.position = scriptedEventData.position

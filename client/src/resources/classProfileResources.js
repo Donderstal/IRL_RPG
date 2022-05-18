@@ -64,9 +64,9 @@ const getProfileName = ( pngName ) => {
             return GREEN_SHIRTED_STRONG_GUY;
         case 'character_x1_recolour01.png':
             return DORKY_GUY;
-        case 'character_x4.png':
+        case 'characterx4.png':
             return TOUGH_GUY_WITH_DARK_HAIR;
-        case 'character_x5_recolour.png':
+        case 'characterx5_recolour.png':
             return TOUGH_GUY_WITH_COOL_SHIRT;
         case 'fats.png':
             return FAT_BUFF_GUY;
@@ -104,61 +104,61 @@ const getProfileName = ( pngName ) => {
 const getClassProfile = ( className ) => {
     switch ( className ) {
         case FAT_FEDORA_GUY:
-            return new ClassProfile( className, 'neckbeard.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'neckbeard.png', 'medium-text-blip.ogg');
         case TOUGH_GUY: 
-            return new ClassProfile( className, 'chad.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'chad.png', 'medium-text-blip.ogg');
         case SUNGLASSES_LADY: 
-            return new ClassProfile( className, 'woman.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'woman.png', 'high-text-blip.ogg');
         case GRANNY: 
-            return new ClassProfile( className, 'characterx3.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'characterx3.png', 'high-text-blip.ogg');
         case TOUGH_GUY_WITH_COOL_HAIR: 
-            return new ClassProfile( className, 'characterx5.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'characterx5.png', 'medium-text-blip.ogg');
         case PIGEON: 
-            return new ClassProfile( className, 'pigeon.png', 'poo-poo.mp3');
+            return new ClassProfile( className, 'pigeon.png', 'lowblip.ogg');
         case BUSINESS_MAN:
-            return new ClassProfile( className, 'business_man.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'business_man.png', 'medium-text-blip.ogg');
         case STRONG_GUY:
-            return new ClassProfile( className, 'chad_recolour01.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'chad_recolour01.png', 'medium-text-blip.ogg');
         case BURLY_GUY:
-            return new ClassProfile( className, 'chad_recolour02.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'chad_recolour02.png', 'medium-text-blip.ogg');
         case GREEN_SHIRTED_STRONG_GUY:
-            return new ClassProfile( className, 'chad_recolour03.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'chad_recolour03.png', 'medium-text-blip.ogg');
         case DORKY_GUY:
-            return new ClassProfile( className, 'character_x1_recolour01.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'character_x1_recolour01.png', 'medium-text-blip.ogg');
         case TOUGH_GUY_WITH_DARK_HAIR:
-            return new ClassProfile( className, 'character_x4.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'characterx4.png', 'medium-text-blip.ogg');
         case TOUGH_GUY_WITH_COOL_SHIRT:
-            return new ClassProfile( className, 'character_x5_recolour.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'characterx5_recolour.png', 'medium-text-blip.ogg');
         case FAT_BUFF_GUY:
-            return new ClassProfile( className, 'fats.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'fats.png', 'lowblip.ogg');
         case BALD_BEER_BELLY_GUY:
-            return new ClassProfile( className, 'generic_balding_guy.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'generic_balding_guy.png', 'medium-text-blip.ogg');
         case BLONDE_BEER_BELLY_GUY:
-            return new ClassProfile( className, 'generic_blonde_guy.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'generic_blonde_guy.png', 'medium-text-blip.ogg');
         case PINK_HAIRED_FAT_GUY:
-            return new ClassProfile( className, 'fats_recolour.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'fats_recolour.png', 'lowblip.ogg');
         case YELLOW_SHIRT_LADY:
-            return new ClassProfile( className, 'new_girl.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'new_girl.png', 'high-text-blip.ogg');
         case GREEN_HAIR_LADY:
-            return new ClassProfile( className, 'new_girl_recolour.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'new_girl_recolour.png', 'high-text-blip.ogg');
         case SUPERMARKET_MANAGER:
-            return new ClassProfile( className, 'manager.png', 'voice-4.mp3');
+            return new ClassProfile( className, 'manager.png', 'lowblip.ogg');
         case MONKEY_CEO:
-            return new ClassProfile( className, 'monkey_ceo.png', 'poo-poo.mp3');
+            return new ClassProfile( className, 'monkey_ceo.png', 'lowblip.ogg');
         case WHITE_PONY_TAIL_LADY:
-            return new ClassProfile( className, 'pony_tail.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'pony_tail.png', 'high-text-blip.ogg');
         case BLACK_PONY_TAIL_LADY:
-            return new ClassProfile( className, 'pony_tail_recolour.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'pony_tail_recolour.png', 'high-text-blip.ogg');
         case ROBOT:
-            return new ClassProfile( className, 'robot.png', 'typing.mp3');
+            return new ClassProfile( className, 'robot.png', 'lowblip.ogg');
         case PINK_HAIR_NERD_LADY:
-            return new ClassProfile( className, 'tumbler_girl.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'tumbler_girl.png', 'high-text-blip.ogg');
         case BLONDE_NERD_LADY:
-            return new ClassProfile( className, 'tumbler_girl_recolour01.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'tumbler_girl_recolour01.png', 'high-text-blip.ogg');
         case DARK_HAIR_NERD_LADY:
-            return new ClassProfile( className, 'tumbler_girl_recolour02.png', 'voice-2.mp3');
+            return new ClassProfile( className, 'tumbler_girl_recolour02.png', 'high-text-blip.ogg');
         case MAIN_CHARACTER:
-            return new ClassProfile( className, 'Main_Character.png', 'voice-1.mp3');
+            return new ClassProfile( className, 'Main_Character.png', 'medium-text-blip.ogg');
     }
 };
 module.exports = {

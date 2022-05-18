@@ -1,3 +1,5 @@
+const { checkForQuestTrigger } = require("./questRegistry");
+
 let interactionRegistry = { };
 
 const isInRegistry = ( key ) => {
@@ -14,6 +16,7 @@ const isInRegistryWithValue = ( key, value ) => {
 
 const addEventToRegistry = ( eventKey, value = true ) => {
     interactionRegistry[eventKey] = value;
+    checkForQuestTrigger( eventKey );
 }
 
 const getRegistry = ( ) => {

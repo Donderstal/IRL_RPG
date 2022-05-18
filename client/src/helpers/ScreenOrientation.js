@@ -4,7 +4,7 @@ class ScreenOrientation {
         this.setScreenBenchmark( );
     }
 
-    get PORTRAIT() { return window.innerWidth < window.innerHeight; }
+    get PORTRAIT() { return screen.width < screen.height; }
     get LANDSCAPE() { return !this.portait; }
 
     detectMobilePhone( ) {
@@ -32,8 +32,8 @@ class ScreenOrientation {
     setScreenBenchmark( ) {
         this.BENCHMARK_WIDTH = 
             this.MOBILE 
-                ? window.innerWidth > window.innerHeight ? window.innerHeight : window.innerWidth
-                : window.innerWidth;
+                ? screen.width > screen.height ? screen.height : screen.width
+                : screen.width;
     }
 
     onFlip( ) {

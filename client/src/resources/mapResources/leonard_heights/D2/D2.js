@@ -1,15 +1,29 @@
 const globals = require('../../../../game-data/globals');
 const { GRID } = require('./grid.js');
 const { FRONT_GRID } = require('./frontgrid.js');
-const { LOOKING_FOR_APPARTMENT_LADY } = require('./D2-interactions');
+const { LOOKING_FOR_APPARTMENT_LADY, WHOLESOME_LIFTER_D2 } = require('./D2-interactions');
 module.exports =
 {"frontGrid":FRONT_GRID,"grid":GRID,"outdoors":true,"mapName":"leonard_heights/D2","rows":16,"columns":24,"tileSet":"starting_neighbourhood_clean",
-"characters":[{
-    "anim_type": globals.NPC_ANIM_TYPE_IDLE,
-    "sprite":"tumbler_girl_recolour02.png","direction":globals.FACING_LEFT,
-    "row": 9, "col": 18,
-    "action": LOOKING_FOR_APPARTMENT_LADY
-}],
+"characters":[
+    {
+        "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+        "sprite": "tumbler_girl_recolour02.png",
+        "direction":globals.FACING_LEFT,
+        "row": 9, 
+        "col": 18,
+        "action": LOOKING_FOR_APPARTMENT_LADY
+    },
+    {
+        "anim_type": globals.NPC_ANIM_TYPE_ANIMATION_LOOP,
+        "anim_name": "LIFT",
+        "row": 9,
+        "col": 8,
+        "sprite": "chad.png",
+        "direction": globals.FACING_LEFT,
+        "name": "Wholesome Lifter",
+        "action": WHOLESOME_LIFTER_D2
+    }
+],
 "mapObjects":[{"type":"Sign_03","row":6,"col":15},{"type":"pot_plant_a","row":9,"col":3},{"type":"boxes","row":9,"col":9},{"type":"hotel_sign","row":15,"col":18}],"spawnPoints": [
     {
         "col": 12,

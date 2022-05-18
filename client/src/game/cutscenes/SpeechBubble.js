@@ -37,20 +37,25 @@ const getSpeechBubbleDimensions = ( contents ) => {
     return {
         'textLines' : text.length,
         'width' : text.length > 1 ? MAX_BUBBLE_WIDTH : Math.ceil(firstLineWidth / GRID_BLOCK_PX) * GRID_BLOCK_PX,
-        'height': (Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX) < (GRID_BLOCK_PX * 2 ) ? (GRID_BLOCK_PX * 2 ) : (Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX)
+        'height': (Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX < GRID_BLOCK_PX * 2) ? GRID_BLOCK_PX * 2  : Math.ceil(textHeightAcc / GRID_BLOCK_PX) * GRID_BLOCK_PX
     }
 }
 
 class SpeechBubble {
-    constructor( location, contents, id, type ) {
-        const dimensions = getSpeechBubbleDimensions( contents );
-        const xyPosition = getSpeechBubbleXy( location, dimensions )
+    constructor( location, contents, id, type, subtitleBubble = false ) {
+        const dimensions = subtitleBubble
+            ? { textLines: 1, width: globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : globals.CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
+            : getSpeechBubbleDimensions( contents );
+        const xyPosition = subtitleBubble
+            ?  { 'x': globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 2 : globals.CANVAS_WIDTH / 4, 'y': globals.SCREEN.MOBILE ? screen.height : globals.CANVAS_HEIGHT, 'position': "UP-RIGHT" }
+            : getSpeechBubbleXy( location, dimensions );
 
         this.x              = xyPosition.x;
         this.y              = xyPosition.y;
         this.position       = xyPosition.position;
         this.id             = id;
         this.type           = type;
+        this.subtitleBubble = subtitleBubble;
 
         this.width          = dimensions.width;
         this.height         = dimensions.height;
@@ -65,10 +70,6 @@ class SpeechBubble {
         this.innerCanvas.height = this.height;
         this.innerCtx = this.innerCanvas.getContext('2d');
 
-        if ( contents.sfx ) {
-            globals.GAME.sound.playEffect( contents.sfx );
-        }
-
         this.action = contents;
         if ( contents.name ) {
             this.setHeader( contents.name + ": " )
@@ -80,10 +81,14 @@ class SpeechBubble {
             this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
             this.activeButton = INTERACTION_YES;
         }
+        if ( subtitleBubble ) {
+            this.setMoveToY( this.y - this.height );            
+        }
+
         this.draw( );
     }
     set text( text ) {             
-        this.typeWriter = new TypeWriter( text );
+        this.typeWriter = new TypeWriter( text, !this.subtitleBubble );
     }
     get text( ) {
         return this.typeWriter.activeText;
@@ -174,6 +179,33 @@ class SpeechBubble {
         if ( this.type == SPEAK_YES_NO && !this.typeWriter.isWriting ) {
             this.drawButtons( );
         }
+        if ( this.moving ) {
+            this.moveTo( );
+        }
+    }
+
+    setMoveToY( y ) {
+        this.moving = true;
+        this.destinationY = y;
+        this.destinationYIsUp = this.y > this.destinationY;
+    }
+
+    moveTo( ) {
+        if ( this.y > this.destinationY && this.destinationYIsUp ) {
+            this.y -= (GRID_BLOCK_PX / 8);          
+        }
+        else if ( this.y < this.destinationY && !this.destinationYIsUp ) {
+            this.y += (GRID_BLOCK_PX / 8);                      
+        }
+        else {
+            this.unsetMoveTo( );
+        }
+    }
+
+    unsetMoveTo( ) {
+        this.y = this.destinationY;
+        this.moving = false;
+        this.destinationY = false;
     }
 
     writeText( ) {

@@ -4,7 +4,7 @@ const {
 } = require('../../game-data/globals')
 const { getUniqueId } = require('../../helpers/utilFunctions');
 const { 
-    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE
+    SPEAK, SPEAK_YES_NO, MOVE, MOVE_CAR, ANIM, CREATE_CAR, CREATE_SPRITE, DELETE_SPRITE, FADE_OUT, FADE_IN, FADE_OUT_IN, WAIT, EMOTE, CAMERA_MOVE_TO_SPRITE, LOAD_MAP, CREATE_OBJECT_SPRITE, CAMERA_MOVE_TO_TILE
 } = require('../../game-data/conditionGlobals');
 const { Animation } = require('./Animation');
 const { hasCinematicMapLoaded } = require('../../helpers/loadMapHelpers');
@@ -94,6 +94,9 @@ class Scene {
                 case CAMERA_MOVE_TO_SPRITE:
                     animationHasFinished = e.getSpriteByName( ) == undefined ||
                         (e.getSpriteByName( ).spriteId == globals.GAME.cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus);
+                    break;
+                case CAMERA_MOVE_TO_TILE:
+                    animationHasFinished = (e.tileIndex == globals.GAME.cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus);
                     break;
                 case LOAD_MAP:
                     animationHasFinished = hasCinematicMapLoaded( );

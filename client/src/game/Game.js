@@ -205,7 +205,7 @@ class Game {
             case 'SPEECH':
                 object.canvas = document.getElementById( 'game-bubble-canvas' );
                 object.ctx = object.canvas.getContext( '2d' );
-                object.canvas.width = globals.GRID_BLOCK_PX * 8;
+                object.canvas.width = globals.GRID_BLOCK_PX * 12;
                 object.canvas.height = globals.GRID_BLOCK_PX * 8;
                 object.class = new SpeechBubbleCanvas( 0, 0, object.ctx, object.canvas);        
                 break;
@@ -323,8 +323,8 @@ const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) 
 
 const setFaderDimensions = ( ) => {
     const fader = document.getElementById('game-fader-canvas')
-    fader.style.width = window.innerWidth + "px";
-    fader.style.height = window.innerHeight + "px";
+    fader.style.width = screen.width + "px";
+    fader.style.height = screen.height + "px";
 }
 
 const showFlipScreenModal = ( ) =>{

@@ -43,6 +43,7 @@ class CameraFocus {
     }
 
     setSpriteFocus( sprite, snapToSprite ) {
+        this.unsetTileFocus( );
         this.focusSpriteId = sprite.spriteId;
         if ( snapToSprite ) {
             this.centerOnXY( sprite.centerX( ), sprite.baseY( ) );
@@ -52,8 +53,23 @@ class CameraFocus {
         }
     }
 
+    setTileFocus( tile, snapToTile ) {
+        this.unsetSpriteFocus( );
+        this.focusTileId = tile.index;
+        if ( snapToTile ) {
+            this.centerOnXY( tile.x, tile.y );
+        }
+        else {
+            this.initMoveToXY( tile.x, tile.y );
+        }
+    }
+
     unsetSpriteFocus( ) {
         this.focusSpriteId = false;
+    }
+
+    unsetTileFocus( ) {
+        this.focusTileId = false;
     }
 
     setBaseValues( ) {
@@ -88,16 +104,19 @@ class CameraFocus {
         this.centerOnXY( xy.x, xy.y, calcOffset)
     }
 
-
-    moveToNewFocus( ) {
-        if ( this.focusedSprite == undefined ||  this.focusedSprite == null ) {
-            this.movingToNewFocus = false;
-            return;
-        }
-        this.newFocusXy = {
+    getSpriteXY( ) {
+        return {
             'x': this.focusedSprite.centerX( ),
             'y': this.focusedSprite.baseY( )
         }
+    }
+
+    moveToNewFocus( ) {
+        if ( (this.focusedSprite == undefined ||  this.focusedSprite == null) && this.focusSpriteId != false ) {
+            this.movingToNewFocus = false;
+            return;
+        }
+        this.newFocusXy = this.focusSpriteId != false ? this.getSpriteXY( ) : this.newFocusXy;
         let moveToX = this.lastFocusXy.x;
         let moveToY = this.lastFocusXy.y;
         if ( this.newFocusXy.x > moveToX ) {
@@ -123,7 +142,9 @@ class CameraFocus {
         this.centerOnXY( moveToX, moveToY );
         if ( moveToX == this.newFocusXy.x && moveToY == this.newFocusXy.y ) {
             this.movingToNewFocus = false;
-            this.centerOnXY( this.focusedSprite.centerX( ), this.focusedSprite.baseY( ) );
+            this.focusSpriteId != false 
+                ? this.centerOnXY( this.focusedSprite.centerX( ), this.focusedSprite.baseY( ) )
+                : this.centerOnXY( this.newFocusXy.x, this.newFocusXy.y );
         }
     }
 }
