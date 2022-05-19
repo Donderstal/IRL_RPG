@@ -1,18 +1,11 @@
 const globals = require('../../../game-data/globals')
 const { FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals')
-const { EVENT_DOOR } = require('../../../game-data/conditionGlobals')
-/**
- * Check if the given sprite collides with another sprite on the map
- * @param {Sprite} sprite 
- * @param {Boolean} isPlayer
- * @returns {Boolean} true if collison, false if not
- */
-const checkForCollision = ( sprite, isPlayer ) => {
+
+const checkForCollision = ( sprite ) => {
     const allSprites =  globals.GAME.FRONT.allSprites.filter((e)=>{return !e.onBackground && !e.notGrounded;});
     const allSpritesCount = allSprites.length;    
 
     let colliding = false; 
-    let collidingSpriteIndex;
     let spriteIndex = 0;
 
     while( colliding == false && spriteIndex < allSpritesCount ) {
@@ -20,11 +13,9 @@ const checkForCollision = ( sprite, isPlayer ) => {
         if( targetSprite.spriteId != sprite.spriteId ) {
             if ( !targetSprite.hasOwnProperty("blockedArea") &&  !targetSprite.hasDoor && checkIfSpritesCollide( sprite, targetSprite )) {
                 colliding = true;
-                collidingSpriteIndex = spriteIndex;
             }
             else if ( targetSprite.hasOwnProperty("blockedArea") && targetSprite.blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
                 colliding = true;
-                collidingSpriteIndex = spriteIndex;
             }
         }
         spriteIndex++;
@@ -32,39 +23,89 @@ const checkForCollision = ( sprite, isPlayer ) => {
     
     return colliding;
 }
-/**
- * Check if the given sprite collides with target sprite
- * @param {Sprite} sprite 
- * @param {String} targetSpriteId 
- * @returns {Boolean} true if collison, false if not
- */
-const checkIfSpritesCollide = ( sprite, targetSprite ) => {
-    const direction = sprite.direction;
-    if ( targetSprite.movementType == globals.NPC_MOVE_TYPE_FLYING || sprite.movementType == globals.NPC_MOVE_TYPE_FLYING ) {
-        return false;
-    }
 
-    switch(direction) {
+const checkIfSpritesCollide = ( sprite, targetSprite ) => {
+    let colliding = false;
+    const spriteNextPosition = getSpriteNextPosition( sprite );
+    const targetNextPosition = getSpriteNextPosition( targetSprite );
+
+    const widestSprite = spriteNextPosition.width >= targetNextPosition.width ? spriteNextPosition : targetNextPosition;
+    const lessWideSprite = widestSprite == spriteNextPosition ? targetNextPosition : spriteNextPosition;
+    const highestSprite = spriteNextPosition.height >= targetNextPosition.height ? spriteNextPosition : targetNextPosition;
+    const lessHighSprite = highestSprite == spriteNextPosition ? targetNextPosition : spriteNextPosition;
+
+    switch ( sprite.direction ) {
         case FACING_LEFT:
-            return sprite.centerX - sprite.speed < targetSprite.right
-            && ( sprite.baseY + sprite.speed > targetSprite.dynamicTop - sprite.speed && sprite.baseY < targetSprite.bottom )
-            && sprite.centerX > targetSprite.centerX;
+            return spriteNextPosition.left <= targetNextPosition.right
+                && lessHighSprite.baseY > highestSprite.dynamicTop && lessHighSprite.baseY < highestSprite.bottom
+                && spriteNextPosition.centerX > targetNextPosition.centerX;
         case FACING_UP:
-            return sprite.baseY < targetSprite.bottom + sprite.speed
-            && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
-            && sprite.baseY > targetSprite.baseY;
+            return spriteNextPosition.dynamicTop <= targetNextPosition.bottom
+                && lessWideSprite.centerX > widestSprite.left && lessWideSprite.centerX < widestSprite.right
+                && spriteNextPosition.baseY > targetSprite.baseY;
         case FACING_RIGHT:
-            return sprite.right + sprite.speed > targetSprite.left
-            && ( sprite.baseY + sprite.speed > targetSprite.dynamicTop - sprite.speed && sprite.baseY < targetSprite.bottom )
-            && sprite.centerX < targetSprite.centerX;
+            return spriteNextPosition.right >= targetNextPosition.left
+                && lessHighSprite.baseY > highestSprite.dynamicTop && lessHighSprite.baseY < highestSprite.bottom
+                && spriteNextPosition.centerX < targetNextPosition.centerX;
         case FACING_DOWN:
-            return  sprite.bottom + sprite.speed  > targetSprite.dynamicTop - sprite.speed
-            && ( sprite.centerX > targetSprite.left && sprite.centerX < targetSprite.right )
-            && sprite.baseY < targetSprite.baseY;
+            return spriteNextPosition.bottom >= targetNextPosition.dynamicTop
+                && lessWideSprite.centerX > widestSprite.left && lessWideSprite.centerX < widestSprite.right
+                && spriteNextPosition.baseY < targetSprite.baseY;
         default:
-            console.log( "Error! Direction " + direction + " was not recognized.");
+            console.log( "Error! Direction " + direction + " was not recognized." );
             break;
     }
+
+    return colliding;
+}
+
+class SpritePosition {
+    constructor( x, y, width, height, standing, isCar ) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.isStanding = standing;
+        this.isCar = isCar
+
+        this.top = this.y;
+        this.left = this.x;
+        this.bottom = this.y + this.height;
+        this.right = this.x + this.width;
+
+        this.baseY = this.isStanding ? this.bottom - ( globals.GRID_BLOCK_PX / 4 ) : this.bottom - ( this.height / 2 );
+        this.centerX = this.x + ( this.width / 2 );
+        this.dynamicTop = this.isStanding
+            ? this.bottom - globals.GRID_BLOCK_PX
+            : this.top + ( this.isCar ? globals.GRID_BLOCK_PX : globals.GRID_BLOCK_PX / 4 );
+    }
+}
+
+const getSpriteNextPosition = ( sprite ) => {
+    let spriteX = sprite.x;
+    let spriteY = sprite.y;
+
+    if ( sprite.State.is(globals.STATE_MOVING) ) {
+        switch ( sprite.direction ) {
+            case FACING_LEFT:
+                spriteX = spriteX - sprite.speed;
+                break;
+            case FACING_UP:
+                spriteY = spriteY - sprite.speed;
+                break;
+            case FACING_RIGHT:
+                spriteX = spriteX + sprite.speed;
+                break;
+            case FACING_DOWN:
+                spriteY = spriteY + sprite.speed
+                break;
+            default:
+                console.log("Error! Direction " + direction + " was not recognized.");
+                break;
+        }
+    }
+
+    return new SpritePosition( spriteX, spriteY, sprite.width, sprite.height, sprite.standing, sprite.isCar );
 }
 
 module.exports = {
