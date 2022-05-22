@@ -85,23 +85,28 @@ const getSpriteNextPosition = ( sprite ) => {
     let spriteX = sprite.x;
     let spriteY = sprite.y;
 
+    if ( sprite.isCar && sprite.turnInNextFrame ) {
+        const next = sprite.turningPosition;
+        return new SpritePosition( next.x, next.y, next.width, next.height, sprite.standing , true );
+    }
+
     if ( sprite.State.is(globals.STATE_MOVING) ) {
         switch ( sprite.direction ) {
-            case FACING_LEFT:
-                spriteX = spriteX - sprite.speed;
-                break;
-            case FACING_UP:
-                spriteY = spriteY - sprite.speed;
-                break;
-            case FACING_RIGHT:
-                spriteX = spriteX + sprite.speed;
-                break;
-            case FACING_DOWN:
-                spriteY = spriteY + sprite.speed
-                break;
-            default:
-                console.log("Error! Direction " + direction + " was not recognized.");
-                break;
+        case FACING_LEFT:
+            spriteX = spriteX - sprite.speed;
+            break;
+        case FACING_UP:
+            spriteY = spriteY - sprite.speed;
+            break;
+        case FACING_RIGHT:
+            spriteX = spriteX + sprite.speed;
+            break;
+        case FACING_DOWN:
+            spriteY = spriteY + sprite.speed
+            break;
+        default:
+            console.log("Error! Direction " + direction + " was not recognized.");
+            break;
         }
     }
 

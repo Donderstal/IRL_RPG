@@ -1,4 +1,4 @@
-const { MapObject } = require("../map-classes/MapObject");
+const { MapObject, getSpriteDimensions } = require("../map-classes/MapObject");
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
@@ -16,9 +16,13 @@ class Car extends MapObject {
         this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
         this.carHornSoundEffect.mute( );
         this.blockedCounter = new Counter( 5000, false, false );
+
+        this.visitedIntersectionIds = [];
         this.crossedIntersectionIds = [];
         this.activeIntersectionId = null;
+        this.turnInNextFrame = false;
         this.intersectionActions = {};
+
         this.speed          = (MOVEMENT_SPEED * 2) * ((Math.random() * 0.5) + .75);
         this.roadId;
         this.type = 'car'
@@ -49,7 +53,7 @@ class Car extends MapObject {
         }       
     }
     
-    drawSprite( ) {
+    drawSprite() {
         this.updateState( );
         super.drawSprite( )
         this.checkForMoveToDestination( );
@@ -58,7 +62,26 @@ class Car extends MapObject {
         if ( !this.State.is(globals.STATE_MOVING) ) {
             this.countFrame( );            
         }
-        this.activeIntersectionId = null;
+        if ( this.activeIntersectionId !== null ) {
+            this.turnInNextFrame = this.checkForTurn();
+            this.activeIntersectionId = null;
+        }
+    }
+
+    checkForMoveToDestination() {
+        if ( this.turnInNextFrame ) {
+            if ( !checkForCollision( this ) ) {
+                let turnAction = this.intersectionActions[this.activeIntersectionId];
+                let newRoad = this.activeIntersection.getRoadByDirection( turnAction.direction );
+                this.turnToDirection( turnAction.direction, newRoad, turnAction.square, this.spriteId );
+            }
+            else {
+                this.State.set( globals.STATE_WAITING );
+            }
+        }
+        else {
+            super.checkForMoveToDestination();
+        }
     }
 
     handleSoundEffects( ) {
@@ -126,26 +149,111 @@ class Car extends MapObject {
                 this.y = turn.top;
                 break;
         }
+
+        this.turningPosition = {};
+        this.turnInNextFrame = false;
+        this.activeIntersectionId = null;
+
         this.initHitbox( );
         this.setDestination( road.endCell, true );
     }
 
-    isOnIntersection( id, intersectionRoadIds ) {
+    isOnIntersection( id ) {
         this.activeIntersectionId = id;
-        if ( this.crossedIntersectionIds.indexOf(id) == -1 && Object.keys(this.intersectionActions).indexOf(id) == -1 ) {
-            if ( intersectionRoadIds.indexOf(this.nextRoadId) == -1 ) {
-                this.intersectionActions[id] = INTERSECTION_STRAIGHT;
-                this.crossedIntersectionIds.push( id );
+        if ( this.visitedIntersectionIds.indexOf(id) == -1 ) {
+            this.visitedIntersectionIds.push( id );
+            let directionsOut = this.activeIntersection.directionsOut.filter( ( e ) => { return e !== getOppositeDirection( this.direction ) } );
+            let newDirection = directionsOut[Math.floor( Math.random() * directionsOut.length )];
+            if ( newDirection !== this.direction ) {
+                this.setTurningSquareOnActiveIntersection( newDirection );
             }
             else {
-                const road = globals.GAME.FRONT.roadNetwork.getRoadById(this.nextRoadId);
-                if ( road.direction == getRelativeLeft(this.direction) ) {
-                    this.intersectionActions[id] = INTERSECTION_LEFT;
-                }
-                else if ( road.direction == getRelativeRight(this.direction) ) {
-                    this.intersectionActions[id] = INTERSECTION_RIGHT;
-                }
+                this.intersectionActions[this.activeIntersectionId] = false;
             }
+        }
+    }
+
+    setTurningSquareOnActiveIntersection( turningDirection ) {
+        if ( ( turningDirection === FACING_LEFT || turningDirection === FACING_UP )
+            && ( this.direction === FACING_LEFT || this.direction === FACING_UP ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.leftUpSquare
+            };
+        }
+        else if ( ( turningDirection === FACING_RIGHT || turningDirection === FACING_UP )
+            && ( this.direction === FACING_RIGHT || this.direction === FACING_UP ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.rightUpSquare,
+            };
+        }
+        else if ( ( turningDirection === FACING_LEFT || turningDirection === FACING_DOWN )
+            && ( this.direction === FACING_LEFT || this.direction === FACING_DOWN ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.leftDownSquare,
+            };
+        }
+        else if ( ( turningDirection === FACING_RIGHT || turningDirection === FACING_DOWN )
+            && ( this.direction === FACING_RIGHT || this.direction === FACING_DOWN ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.rightDownSquare,
+            };
+        }
+
+        this.setTurningPosition();
+    }
+
+    checkForTurn() {
+        let turnAction = this.intersectionActions[this.activeIntersectionId];
+        if ( turnAction === false || this.crossedIntersectionIds.indexOf(this.activeIntersectionId) > -1 ) {
+            return;
+        }
+        else {
+            switch ( this.direction ) {
+            case FACING_LEFT:
+                return turnAction.square.left > this.left - ( this.speed / 2 ) && turnAction.square.left < this.left + ( this.speed / 2 );
+            case FACING_UP:
+                return turnAction.square.top > this.top - ( this.speed / 2 ) && turnAction.square.top < this.top + ( this.speed / 2 );
+            case FACING_RIGHT:
+                return turnAction.square.right > this.right - (this.speed / 2) && turnAction.square.right < this.right + (this.speed / 2);
+            case FACING_DOWN:
+                return turnAction.square.bottom > this.bottom - ( this.speed / 2 ) && turnAction.square.bottom < this.bottom + ( this.speed / 2 );
+            }
+        }
+    }
+
+    setTurningPosition() {
+        let turnAction = this.intersectionActions[this.activeIntersectionId];
+
+        const dimensions = getSpriteDimensions( this.objectResource, turnAction.direction );
+        const nextWidth = dimensions.hori * GRID_BLOCK_PX;
+        const nextHeight = dimensions.vert * GRID_BLOCK_PX;
+
+        this.turningPosition = {
+            width: nextWidth,
+            height: nextHeight,
+        }
+
+        switch ( turnAction.direction ) {
+        case FACING_LEFT:
+            this.turningPosition.x = turnAction.square.right - nextWidth;
+            this.turningPosition.y = turnAction.square.top;
+            break;
+        case FACING_UP:
+            this.turningPosition.x = turnAction.square.left;
+            this.turningPosition.y = turnAction.square.bottom - nextHeight;
+            break;
+        case FACING_RIGHT:
+            this.turningPosition.x = turnAction.square.left;
+            this.turningPosition.y = turnAction.square.top;
+            break;
+        case FACING_DOWN:
+            this.turningPosition.x = turnAction.square.left;
+            this.turningPosition.y = turnAction.square.top;
+            break;
         }
     }
 }
