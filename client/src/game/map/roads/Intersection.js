@@ -84,19 +84,6 @@ class Intersection extends I_Junction {
         this.openLanes[direction] = true;
     }
 
-    squareHasNoCars( cars, squareToCross ) {
-        let canTurn = true;
-        if ( cars == undefined ) {
-            return canTurn;
-        }
-        cars.forEach( (e) => {
-            if ( e.isOnSquare( squareToCross )) {
-                canTurn = false;
-            }
-        })
-        return canTurn;
-    }
-
     setTurns( ) {
         if ( this.hasLeftUpTurn ) {
             this.leftUpSquare = new TileSquare( this.getTilesFromCoreList(

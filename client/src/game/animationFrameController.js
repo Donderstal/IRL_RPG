@@ -25,7 +25,8 @@ const animationFrameController = ( arg ) => {
             }            
 
             if ( !GAME.MENU.isActive && !GAME.inCinematic || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
-                tryCatch(handleMapAnimations, [GAME]);
+                handleMapAnimations( GAME );
+                //tryCatch(handleMapAnimations, [GAME]);
             }
             else if ( !GAME.MENU.isActive && GAME.inCinematic && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
                 tryCatch(handleCinematicAnimations, [GAME]);

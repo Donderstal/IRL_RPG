@@ -88,7 +88,7 @@ class Sprite {
     }
 
     updateCell( ) {
-        let cell = globals.GAME.getTileOnCanvasAtXY("FRONT", this.centerX, this.baseY)
+        let cell = globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX, this.baseY )
         this.row = cell.row;
         this.col = cell.col;
     }
