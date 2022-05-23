@@ -56,7 +56,7 @@ class ForegroundCanvas extends CanvasWithGrid {
                 this.setObjects( mapData.mapObjects );
             if ( mapData.playerStart ) {
                 this.initPlayerCharacter( mapData.playerStart );
-                globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX( ), this.playerSprite.baseY( ) )      
+                globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX, this.playerSprite.baseY )      
             }            
         }
     }
@@ -183,37 +183,8 @@ class ForegroundCanvas extends CanvasWithGrid {
         })
     }
 
-    tileHasBlockingSprite( tileIndex ) {
-        if ( tileIndex == globals.OUT_LEFT || tileIndex == globals.OUT_LEFT || tileIndex == globals.OUT_RIGHT || tileIndex == globals.OUT_DOWN ) {
-            return false;
-        }
-        const tile = this.getTileAtIndex( tileIndex );
-        let colliding = false;
-        if ( tile == undefined ) {
-            return false;
-        }
-        let allHitboxes = [];
-        this.allSprites.forEach( ( sprite ) => {
-            if ( sprite.hitbox != undefined && sprite.hitbox && !sprite.hasDoor ) {
-                allHitboxes.push( sprite.hitbox );
-            }
-            else if ( sprite.hitboxGroups != undefined ) {
-                sprite.hitboxGroups.forEach( ( group ) => {
-                    group.hitboxes.forEach( ( hitbox ) => {
-                        allHitboxes.push( hitbox )
-                    })
-                })
-            }
-        })
-
-        let spriteIndex = 0;
-        while( colliding == false && allHitboxes[spriteIndex] != undefined ) {
-            let hitbox = allHitboxes[spriteIndex];
-            colliding = hitbox.x > tile.x && hitbox.y > tile.y 
-            && hitbox.x < tile.x + globals.GRID_BLOCK_PX && hitbox.y < tile.y + globals.GRID_BLOCK_PX 
-            spriteIndex++
-        }
-        return colliding;
+    tileHasBlockingSprite( index ) {
+        return this.tilesBlockedBySprites.indexOf( index ) > -1;
     }
 
     generateWalkingNPC( ) {
@@ -282,6 +253,15 @@ class ForegroundCanvas extends CanvasWithGrid {
             return globals.GAME.collectableRegistry.isInRegistry(id, objectResource.collectable_type);
         }
         return false;
+    }
+
+    getTilesBlockedBySprite( sprite ) {
+        let blockedTileIndexes = sprite.getBlockedTiles( );
+        blockedTileIndexes.forEach( ( e )=> {
+            if ( this.tilesBlockedBySprites.indexOf( e ) == -1 ) {
+                this.tilesBlockedBySprites.push( e );
+            }
+        })
     }
 }
 

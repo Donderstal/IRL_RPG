@@ -24,17 +24,17 @@ class SpatialSound extends BaseSound {
         if ( this.isPaused || this.hasNotStartedPlaying ) {
             this.play( );
         }
-        if ( PLAYER.centerX() >= sprite.right && sprite !== PLAYER) {
-            let modifier = (PLAYER.centerX( ) - sprite.right) / hearingDistance;
+        if ( PLAYER.centerX >= sprite.right && sprite !== PLAYER) {
+            let modifier = (PLAYER.centerX - sprite.right) / hearingDistance;
             modifier = modifier > 1 ? 1 : modifier;
             this.panner.pan.value = 0 - modifier;
         }
-        else if ( PLAYER.centerX() <= sprite.left && sprite !== PLAYER ) {
-            let modifier = (sprite.left - PLAYER.centerX( )) / hearingDistance;
+        else if ( PLAYER.centerX <= sprite.left && sprite !== PLAYER ) {
+            let modifier = (sprite.left - PLAYER.centerX) / hearingDistance;
             modifier = modifier > 1 ? 1 : modifier;
             this.panner.pan.value = 0 + modifier;
         }
-        else if (PLAYER.centerX() < sprite.right && PLAYER.centerX() > sprite.left) {
+        else if (PLAYER.centerX < sprite.right && PLAYER.centerX > sprite.left) {
             this.panner.pan.value = 0;
         }
     }
@@ -51,27 +51,27 @@ class SpatialSound extends BaseSound {
             let hearingDistance = globals.GRID_BLOCK_PX * 3
             let modifiers = { hori: 0, vert: 0}
 
-            if ( PLAYER.centerX() >= sprite.right ) {
-                let modifier = 1 - ((PLAYER.centerX( ) - sprite.right) / hearingDistance);
+            if ( PLAYER.centerX >= sprite.right ) {
+                let modifier = 1 - ((PLAYER.centerX - sprite.right) / hearingDistance);
                 modifiers.hori = modifier > 0 ? modifier : 0
             }
-            else if ( PLAYER.centerX() <= sprite.left ) {
-                let modifier = 1 - ((sprite.left - PLAYER.centerX( )) / hearingDistance);
+            else if ( PLAYER.centerX <= sprite.left ) {
+                let modifier = 1 - ((sprite.left - PLAYER.centerX) / hearingDistance);
                 modifiers.hori = modifier > 0 ? modifier : 0
             }
-            else if (PLAYER.centerX() < sprite.right && PLAYER.centerX() > sprite.left) {
+            else if (PLAYER.centerX < sprite.right && PLAYER.centerX > sprite.left) {
                 modifiers.hori = 1;
             }
 
-            if ( PLAYER.baseY( ) >= sprite.bottom ) {
-                let modifier = 1 - ((PLAYER.baseY( ) - sprite.bottom) / hearingDistance);
+            if ( PLAYER.baseY >= sprite.bottom ) {
+                let modifier = 1 - ((PLAYER.baseY - sprite.bottom) / hearingDistance);
                 modifiers.vert = modifier > 0 ? modifier : 0
             }
-            else if ( PLAYER.baseY( ) <= sprite.top ) {
-                let modifier = 1 - ((sprite.top - PLAYER.baseY()) / hearingDistance);
+            else if ( PLAYER.baseY <= sprite.top ) {
+                let modifier = 1 - ((sprite.top - PLAYER.baseY) / hearingDistance);
                 modifiers.vert = modifier > 0 ? modifier : 0
             }
-            else if ( PLAYER.baseY( ) < sprite.bottom && PLAYER.baseY( ) > sprite.top ) {
+            else if ( PLAYER.baseY < sprite.bottom && PLAYER.baseY > sprite.top ) {
                 modifiers.vert = 1;
             }
 

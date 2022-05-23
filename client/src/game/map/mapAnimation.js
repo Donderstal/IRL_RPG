@@ -87,10 +87,10 @@ const handleNpcCounter = ( GAME ) => {
  */
 const drawSpritesInOrder = ( GAME ) => {
     GAME.FRONT.allSprites.sort( ( a, b ) => {
-        if ( a.row > b.row || a.row === b.row && a.y > b.y ) {
+        if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 
         }
-        else if (b.row > a.row || b.row === a.row && b.y > a.y ) {
+        else if (b.row > a.row || b.row === a.row && b.bottom > a.bottom ) {
             return -1
         }
         else {
@@ -111,6 +111,8 @@ const drawSpritesInOrder = ( GAME ) => {
     const foregroundSprites = [];
     const flyingSprites     = [];
 
+    GAME.FRONT.tilesBlockedBySprites = [];
+
     GAME.FRONT.allSprites.forEach( ( sprite )  => {
         if ( sprite.onBackground ) {
             backgroundSprites.push( sprite );
@@ -123,6 +125,7 @@ const drawSpritesInOrder = ( GAME ) => {
         }
         else {
             standardSprites.push( sprite );
+            GAME.FRONT.getTilesBlockedBySprite( sprite );
         }
     })
     
@@ -142,6 +145,9 @@ const drawSpritesInOrder = ( GAME ) => {
 const drawSpritesInArray = ( array, GAME ) => {
     if ( !GAME.paused ) {
         array.forEach( ( sprite ) => {
+            if ( GAME.paused || sprite.deleted ) {
+                return;
+            }
             tryCatch((GAME, sprite)=> {
                 if ( GAME.paused || sprite.deleted ) {
                     return;

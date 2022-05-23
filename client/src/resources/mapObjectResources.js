@@ -29,15 +29,6 @@ const getGroundedAtBottom = ( width, height ) => {
     }
 }
 
-const getForeground = ( width, height ) => {
-    return {
-        "dimensional_alignment": "STANDARD",
-        "on_foreground": true,
-        "height_blocks": height,
-        "width_blocks": width
-    }
-}
-
 const THREE_HIGH_SPRITE = {
     "dimensional_alignment": "STANDARD",
     "height_blocks": 3, "width_blocks": 1
@@ -266,7 +257,7 @@ module.exports = {
         "src": "blue_lamp_right.png",
         ...getTwoHighSprite( true )
     },
-    "blue_lamp_right" : {
+    "blue_single_bed" : {
         "src": "blue_single_bed.png",
         ...getTwoHighSprite( false )
     },
@@ -291,19 +282,19 @@ module.exports = {
     },
     "brown_chair" :{
         "src": "brown_chair.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_east" :{
         "src": "brown_chair_east.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_south" :{
         "src": "brown_chair_south.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "brown_chair_west" :{
         "src": "brown_chair_west.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "Bus_Stop" : {
         "src": "Bus_Stop.png",
@@ -326,7 +317,7 @@ module.exports = {
     },
     "computer_table" : {
         "src": "computer_table.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "Couch_Blue" : {
         "src": "couch.png",
@@ -410,7 +401,7 @@ module.exports = {
     },
     "Fridge" : {
         "src": "Fridge.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "funz": { 
         "src": "funz.png",
@@ -596,7 +587,7 @@ module.exports = {
     },
     "inside_bin" : {
         "src": "inside_bin.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "lamp_red" : {
         "src": "lamp_red.png",
@@ -669,7 +660,7 @@ module.exports = {
     },
     "plant_yo" : {
         "src": "plant_yo.png",
-        ...getTwoHighSprite( false )
+        ...getTwoHighSprite( true )
     },
     "plants" : {
         "src": "plants.png",
@@ -768,7 +759,7 @@ module.exports = {
     },
     "Small_Table" : {
         "src": "small_table.png",
-        ...ONE_BLOCK_SPRITE
+        ...getGroundedAtBottom( 1, 1 )
     },
     "tires_1" : {
         "src": "Tires_Z1.png",

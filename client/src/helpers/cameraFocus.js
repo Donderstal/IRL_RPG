@@ -46,10 +46,10 @@ class CameraFocus {
         this.unsetTileFocus( );
         this.focusSpriteId = sprite.spriteId;
         if ( snapToSprite ) {
-            this.centerOnXY( sprite.centerX( ), sprite.baseY( ) );
+            this.centerOnXY( sprite.centerX, sprite.baseY );
         }
         else {
-            this.initMoveToXY( sprite.centerX( ), sprite.baseY( ) )
+            this.initMoveToXY( sprite.centerX, sprite.baseY )
         }
     }
 
@@ -106,8 +106,8 @@ class CameraFocus {
 
     getSpriteXY( ) {
         return {
-            'x': this.focusedSprite.centerX( ),
-            'y': this.focusedSprite.baseY( )
+            'x': this.focusedSprite.centerX,
+            'y': this.focusedSprite.baseY
         }
     }
 
@@ -143,7 +143,7 @@ class CameraFocus {
         if ( moveToX == this.newFocusXy.x && moveToY == this.newFocusXy.y ) {
             this.movingToNewFocus = false;
             this.focusSpriteId != false 
-                ? this.centerOnXY( this.focusedSprite.centerX( ), this.focusedSprite.baseY( ) )
+                ? this.centerOnXY( this.focusedSprite.centerX, this.focusedSprite.baseY )
                 : this.centerOnXY( this.newFocusXy.x, this.newFocusXy.y );
         }
     }

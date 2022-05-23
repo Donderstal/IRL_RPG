@@ -24,7 +24,7 @@ const moveInDirection = ( sprite, direction ) => {
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
 
-    if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.pathIsBlocked ) {
+    if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.checkForCollision( ) ) {
         sprite.moveSprite( direction, MOVEMENT_SPEED );         
     }
 }
@@ -83,19 +83,19 @@ const checkForNeighbours = ( sprite ) => {
     const activeGrid = globals.GAME.back.class.grid
 
     if ( activeMap.outdoors ) {
-        if ( activeGrid.x > sprite.centerX( ) && activeMap.neighbours.left ) {
+        if ( activeGrid.x > sprite.centerX && activeMap.neighbours.left ) {
             switchMap( activeMap.neighbours.left, EVENT_NEIGHBOUR )
             return true;
         }
-        if ( activeGrid.x + ( activeGrid.cols * GRID_BLOCK_PX ) < sprite.centerX( ) && activeMap.neighbours.right ) {
+        if ( activeGrid.x + ( activeGrid.cols * GRID_BLOCK_PX ) < sprite.centerX && activeMap.neighbours.right ) {
             switchMap( activeMap.neighbours.right, EVENT_NEIGHBOUR )
             return true;
         }
-        if ( activeGrid.y > sprite.baseY( ) && activeMap.neighbours.up ) {
+        if ( activeGrid.y > sprite.baseY && activeMap.neighbours.up ) {
             switchMap( activeMap.neighbours.up, EVENT_NEIGHBOUR )
             return true;
         }
-        if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY( ) && activeMap.neighbours.down ) {
+        if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY && activeMap.neighbours.down ) {
             switchMap( activeMap.neighbours.down, EVENT_NEIGHBOUR )
             return true;
         }

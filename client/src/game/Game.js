@@ -302,7 +302,7 @@ const startGame = ( name, className, startingMap, debugMode, disableStoryMode ) 
                 }
                 else {
                     globals.GAME.cameraFocus.handleScreenFlip( 
-                        {'x': globals.GAME.PLAYER.centerX( ), 'y': globals.GAME.PLAYER.baseY( )}
+                        {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY }
                     )
                 }
                 hideFlipScreenModal( );

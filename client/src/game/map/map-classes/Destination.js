@@ -54,14 +54,15 @@ class Destination {
         this.path = [ step ];
     }
 
-    calculatePath( ) {
+    calculatePath( exceptionTile = { row: false, col: false } ) {
         const grid = { 
             'rows': this.backClass.grid.rows, 'cols': this.backClass.grid.cols,
             'tiles': this.backClass.grid.array.filter((tile) => {
-                return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);
+                return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index)
+                && !( exceptionTile.row == tile.row && exceptionTile.col == tile.col );
             })
         };
-        const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX(), this.sprite.baseY());
+        const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX, this.sprite.baseY);
         if ( startingTile.offScreen ) {
             grid.tiles.unshift(startingTile);
         }

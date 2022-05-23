@@ -5,16 +5,15 @@ const { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, FACING_RIGHT, FACING_LEFT, FACING
 const { Counter } = require('../../../helpers/Counter')
 const { ActionSelector } = require('./ActionSelector')
 const mapObjectResources = require('../../../resources/mapObjectResources')
-const { HitboxGroup } = require('./HitboxGroup')
 const { BlockedArea } = require('./BlockedArea')
 const { PLAYER_NAME } = require('../../../game-data/interactionGlobals')
 const { initDoorWithId } = require('../../../helpers/doorController')
+const { Hitbox } = require('../../core/Hitbox')
 
 /**
  * A MapObject is a sprite extension instantiated from an object in a mapResources.js mapObjects array.
  * Their sizes can vary from the standard sprite sizes.
  * They can also contain a MapAction instance.
- * Larger MapObject sprites have a HitboxGroup instead of a single hitbox for collision and location detection.
  */
 class MapObject extends Sprite {
     constructor ( tile, spriteData, spriteId ){
@@ -39,10 +38,12 @@ class MapObject extends Sprite {
         this.onBackground   = objectResource.on_background;
         this.groundedAtBase = objectResource.grounded_at_bottom;
         this.notGrounded    = objectResource.not_grounded;
+        this.doorOrWindow   = objectResource.door_or_window
         this.collectableType=  objectResource.collectable_type
         this.widthInSheet   = spriteDimensionsInBlocks.hori * GRID_BLOCK_IN_SHEET_PX;
         this.heightInSheet  = spriteDimensionsInBlocks.vert * GRID_BLOCK_IN_SHEET_PX;
         this.spriteDimensionsInBlocks = spriteDimensionsInBlocks;
+        this.hitbox = false;
         this.hasDoor = spriteData.hasDoor;
         this.spriteId = spriteId;
         this.name = spriteData.name;
@@ -66,8 +67,8 @@ class MapObject extends Sprite {
                 tileBack.blockedException = true;                
             }
         }
-        else if ( !this.onBackground && !this.notGrounded ) {
-            this.initHitboxGroups( );
+        else {
+            this.initHitbox( );
         }
         
         if ( objectResource.hasOwnProperty("blockedArea") ) {
@@ -83,7 +84,7 @@ class MapObject extends Sprite {
     /**
      * Call this.setActiveFrames to determine which frames to draw.
      * Then, draw the sprite to canvas and update its' borders.
-     * If sprite is moving, call updateHitboxes, checkForCollision, checkForIntersection and goToDestination.
+     * If sprite is moving, call updateHitbox, checkForCollision, checkForIntersection and goToDestination.
      * Finally, countFrame if still sprite is still moving.
      */
     drawSprite( ) {
@@ -91,8 +92,8 @@ class MapObject extends Sprite {
             this.setActiveFrames( );            
         }
 
-        if ( this.hitboxGroups ) {
-            this.updateHitboxes( this.x + ( this.width * .5 ), this.y + ( this.height * .5 ) );            
+        if ( this.hitbox != false ) {
+            this.updateHitbox( );            
         }
 
         if ( this.hasActiveEffect ) {
@@ -111,7 +112,7 @@ class MapObject extends Sprite {
             this.x, this.y, this.width, this.height
         )
         if ( this.hasDoor ) {
-            this.hitbox.updateXy( this.centerX( ), this.baseY( ) );  
+            this.hitbox.updateXy( this.centerX, this.baseY );  
             this.hitbox.checkForBlockedRange( globals.GAME.PLAYER.hitbox, globals.GAME.PLAYER.direction );
         }
         if ( this.hasActiveEffect ) {
@@ -127,7 +128,7 @@ class MapObject extends Sprite {
             }
         }
 
-        this.updateSpriteBorders( )
+        this.updateCell( )
     }
     //
     setActiveFrames( ) {
@@ -150,49 +151,24 @@ class MapObject extends Sprite {
         
         this.sheetFrameLimit = this.activeFrames.length
     }   
-    /**
-     * Instantiate on or more Hitboxgroup depending on the sprites alignment.
-     * Push these instances to the this.hitBoxGroups array.
-     */
-    initHitboxGroups( ) {
-        this.hitbox = false;
+
+    initHitbox( ) {
         if ( this.groundedAtBase ) {
-            this.hitboxGroups = [ new HitboxGroup( this.x, ( this.y + this.height ) - GRID_BLOCK_PX, this.direction, { "hori": this.spriteDimensionsInBlocks.hori, "vert": 1 }, this.spriteId ) ]
-            if ( this.width > GRID_BLOCK_PX) {
-                this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, ( this.y + this.height ) - GRID_BLOCK_PX, this.direction, { "hori": this.spriteDimensionsInBlocks.hori, "vert": 1 }, this.spriteId ) )
-            }
+            this.hitbox = new Hitbox( this.x + (this.width / 2), (this.y + this.height) - ( GRID_BLOCK_PX / 2 ), GRID_BLOCK_PX / 2 )
         }
         else {
-            this.hitboxGroups = [ new HitboxGroup( this.x, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) ]
-            if ( ( this.direction == FACING_UP || this.direction == FACING_DOWN ) && this.width > GRID_BLOCK_PX) {
-                this.hitboxGroups.push( new HitboxGroup( this.x + GRID_BLOCK_PX, this.y, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
-            }
-            else if ( this.direction != FACING_UP && this.direction != FACING_DOWN ) {
-                this.hitboxGroups.push( new HitboxGroup( this.x, this.y + GRID_BLOCK_PX, this.direction, this.spriteDimensionsInBlocks, this.spriteId ) )
-            }            
+            this.hitbox = new Hitbox( this.x + (this.width / 2), this.y + (this.height / 2), (this.width > this.height ? this.width : this.height) /2 )     
         }
 
     }
-    /**
-     * Empty the this.hitboxes array.
-     * Loop through this.hitboxGroups.
-     * For each, call updateHitboxes.
-     * Then, push all hitboxes in the current group to this.hitboxes.
-     */
-    updateHitboxes( ) {        
-        this.hitboxes = []
-        this.hitboxGroups.forEach( ( group, index ) => {
-            if ( this.direction == FACING_UP || this.direction == FACING_DOWN || this.groundedAtBase ) {
-                group.updateHitboxes( this.x + GRID_BLOCK_PX * index, this.groundedAtBase ? ( this.y + this.height ) - GRID_BLOCK_PX : this.y )
-            }
-            else {
-                group.updateHitboxes( this.x, this.y + GRID_BLOCK_PX * index )
-            }
 
-            group.hitboxes.forEach( ( hitbox ) => {
-                this.hitboxes.push( hitbox )
-            } );        
-        })
+    updateHitbox( ) {      
+        if ( this.groundedAtBase ) {
+            this.hitbox.updateXy( this.x + (this.width / 2), (this.y + this.height) - ( GRID_BLOCK_PX / 2 ) )
+        }
+        else {
+            this.hitbox.updateXy( this.x + (this.width / 2), this.y + (this.height / 2) )    
+        }  
     }
     /**
      * Increment idleAnimationFrame and check if it is over limit

@@ -22,7 +22,6 @@ class Car extends MapObject {
         this.carPath = spriteData.carPath;
         this.carPathIndex = 0;
         this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
-        this.baseY = () => { return  this.y + ( this.height / 2 ) };
         this.roadId;
         this.type = 'car'
 
@@ -37,13 +36,12 @@ class Car extends MapObject {
     get activeRoadId( ) { return this.carPath[this.carPathIndex]; };
     get nextRoadId( ) { return this.carPath[this.carPathIndex+1]; };
     get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
-    get currentTileFront( ) { return this.hitboxGroups[0].currentTileFront };
-    get middleTileFront( ) { return this.hitboxGroups[0].middleTileFront };
-    get nextTileFront( ) { return this.hitboxGroups[0].nextTileFront };
-    get secondNextTileFront( ) { return this.hitboxGroups[0].secondNextTileFront };
+    get currentTileFront( ) { return this.hitbox.currentTileFront };
+    get nextTileFront( ) { return this.hitbox.nextTileFront };
+    get baseY( ) { return this.y + ( this.height / 2 )};
 
     handleBlockedTimeCounter( ) {
-        if ( this.blocked ) {
+        if ( this.checkForCollision( ) ) {
             if ( this.blockedCounter.countAndCheckLimit( ) ) {
                 this.carHornSoundEffect.play( );
             } 
@@ -59,7 +57,6 @@ class Car extends MapObject {
     drawSprite( ) {
         this.updateState( );
         super.drawSprite( );
-        this.checkForCollision( );
         if ( this.activeIntersectionId != null ) {
             this.checkForIntersectionAction( )
         }
@@ -108,13 +105,6 @@ class Car extends MapObject {
         }
     }
 
-    checkForCollision( ) {
-        this.blocked = checkForCollision( this.hitboxGroups[0], false )
-        if ( !this.blocked && this.hitboxGroups.length > 1 ) {
-            this.blocked = checkForCollision( this.hitboxGroups[1], false )
-        }        
-    }
-
     turnToDirection( newDirection, road, turn, id ) {
         globals.GAME.FRONT.roadNetwork.roads.forEach( ( e ) => {
             if ( e.id === this.roadId ) {
@@ -145,19 +135,15 @@ class Car extends MapObject {
                 break;
         }
         this.carPathIndex++;
-        this.initHitboxGroups( );
+        this.initHitbox( );
         this.setDestination( road.endCell, true );
     }
 
     isOnSquare( square ) {
         let isOnSquare = true;
-        let firstTileMiddle = this.hitboxGroups[0].middleTileFront;
-        let secondTileMiddle = this.hitboxGroups[1].middleTileFront;
-        [firstTileMiddle, secondTileMiddle].forEach( ( tile ) => {
-            if ( !square.tileIsIncluded(tile) )
-                isOnSquare = false;
-        })
-
+        if ( !square.tileIsIncluded(currentTileFront) ) {
+            isOnSquare = false;                
+        }
         return isOnSquare;
     }
 
