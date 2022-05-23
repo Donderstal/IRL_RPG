@@ -19,7 +19,7 @@ class RoadNetwork {
 
         this.pendingCrossings = [];
         this.crossings = [];
-        this.setCrossings( );
+        this.setCrossings();
     }
 
     getRoadById( id ) {
@@ -40,10 +40,6 @@ class RoadNetwork {
             this.roads.push( new Road( road, id ) )
             this.roadIds.push( id );
         });
-    }
-
-    handleRoadIntersections( ) {
-        this.intersections.forEach( ( intersection ) => { intersection.updateIntersectionStatus( ); })
     }
 
     handleRoadCrossings( ) {

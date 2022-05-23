@@ -19,7 +19,7 @@ class Car extends MapObject {
 
         this.visitedIntersectionIds = [];
         this.crossedIntersectionIds = [];
-        this.activeIntersectionId = null;
+        this.activeIntersectionId = false;
         this.turnInNextFrame = false;
         this.intersectionActions = {};
 
@@ -37,7 +37,9 @@ class Car extends MapObject {
     
     get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
     get nextTileFront( ) { return this.hitbox.nextTileFront };
-    get baseY( ) { return this.y + ( this.height / 2 )};
+    get baseY() { return this.y + ( this.height / 2 ) };
+    get speed() { return this.activeIntersectionId === false ? this._speed : this._speed / 2  }
+    set speed( value ) { this._speed = value }
 
     handleBlockedTimeCounter( ) {
         if ( this.checkForCollision( ) ) {
@@ -62,9 +64,57 @@ class Car extends MapObject {
         if ( !this.State.is(globals.STATE_MOVING) ) {
             this.countFrame( );            
         }
-        if ( this.activeIntersectionId !== null ) {
+        if ( this.activeIntersectionId !== false ) {
             this.turnInNextFrame = this.checkForTurn();
-            this.activeIntersectionId = null;
+        }
+    }
+
+    updateState() {
+        super.updateState();
+        this.checkForIntersection();
+    }
+
+    checkForIntersection() {
+        const intersections = globals.GAME.FRONT.roadNetwork.intersections;
+        let activeIntersection = [];
+        switch ( this.direction ) {
+            case FACING_LEFT:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.left < e.core.right && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.baseY > e.core.top && this.baseY < e.core.bottom;
+                } );
+                break;
+            case FACING_UP:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.top < e.core.bottom && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.centerX > e.core.left && this.centerX < e.core.right;
+                } );
+                break;
+            case FACING_RIGHT:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.right > e.core.left && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.baseY > e.core.top && this.baseY < e.core.bottom;
+                } );
+                break;
+            case FACING_DOWN:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.bottom > e.core.top && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.centerX > e.core.left && this.centerX < e.core.right;
+                } );
+                break;
+            default:
+                console.log('error bruh')
+                break;
+        }
+        if ( activeIntersection.length > 0 ) {
+            if ( activeIntersection.length > 1 ) {
+                console.log( activeIntersection );
+            }
+            activeIntersection = activeIntersection[0];
+            this.isOnIntersection( activeIntersection.id );
+        }
+        else {
+            this.activeIntersectionId = false;
         }
     }
 
@@ -73,7 +123,7 @@ class Car extends MapObject {
             if ( !checkForCollision( this ) ) {
                 let turnAction = this.intersectionActions[this.activeIntersectionId];
                 let newRoad = this.activeIntersection.getRoadByDirection( turnAction.direction );
-                this.turnToDirection( turnAction.direction, newRoad, turnAction.square, this.spriteId );
+                this.turnToDirection( turnAction.direction, newRoad, turnAction.square, this.activeIntersectionId );
             }
             else {
                 this.State.set( globals.STATE_WAITING );
@@ -152,15 +202,17 @@ class Car extends MapObject {
 
         this.turningPosition = {};
         this.turnInNextFrame = false;
-        this.activeIntersectionId = null;
+        this.activeIntersectionId = false;
 
         this.initHitbox( );
         this.setDestination( road.endCell, true );
     }
 
     isOnIntersection( id ) {
-        this.activeIntersectionId = id;
-        if ( this.visitedIntersectionIds.indexOf(id) == -1 ) {
+        if ( this.crossedIntersectionIds.indexOf( id ) === -1 ) {
+            this.activeIntersectionId = id;
+        }
+        if ( this.visitedIntersectionIds.indexOf(id) === -1 ) {
             this.visitedIntersectionIds.push( id );
             let directionsOut = this.activeIntersection.directionsOut.filter( ( e ) => { return e !== getOppositeDirection( this.direction ) } );
             let newDirection = directionsOut[Math.floor( Math.random() * directionsOut.length )];
@@ -169,6 +221,7 @@ class Car extends MapObject {
             }
             else {
                 this.intersectionActions[this.activeIntersectionId] = false;
+                this.crossedIntersectionIds.push( this.activeIntersectionId );
             }
         }
     }
