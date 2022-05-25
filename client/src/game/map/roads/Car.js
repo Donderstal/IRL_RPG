@@ -3,8 +3,7 @@ const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Counter } = require("../../../helpers/Counter");
-const { getRelativeLeft, getRelativeRight, getOppositeDirection } = require("../../../helpers/utilFunctions");
-const { INTERSECTION_STRAIGHT, INTERSECTION_LEFT, INTERSECTION_RIGHT } = require("../../../game-data/conditionGlobals");
+const { getOppositeDirection } = require("../../../helpers/utilFunctions");
 
 class Car extends MapObject {
     constructor( tile, spriteData, spriteId ) {
@@ -38,7 +37,8 @@ class Car extends MapObject {
     get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
     get nextTileFront( ) { return this.hitbox.nextTileFront };
     get baseY() { return this.y + ( this.height / 2 ) };
-    get speed() { return this.activeIntersectionId === false ? this._speed : this._speed / 2  }
+    get speed() { return this.activeIntersectionId === false ? this._speed : this._speed / 2 }
+    get activeTurn() { return this.intersectionActions[this.activeIntersectionId]; }
     set speed( value ) { this._speed = value }
 
     handleBlockedTimeCounter( ) {
@@ -267,13 +267,13 @@ class Car extends MapObject {
         else {
             switch ( this.direction ) {
             case FACING_LEFT:
-                return turnAction.square.left > this.left - ( this.speed / 2 ) && turnAction.square.left < this.left + ( this.speed / 2 );
+                return turnAction.square.left >= this.left - ( this.speed / 2 ) && turnAction.square.left <= this.left + ( this.speed / 2 );
             case FACING_UP:
-                return turnAction.square.top > this.top - ( this.speed / 2 ) && turnAction.square.top < this.top + ( this.speed / 2 );
+                return turnAction.square.top >= this.top - ( this.speed / 2 ) && turnAction.square.top <= this.top + ( this.speed / 2 );
             case FACING_RIGHT:
-                return turnAction.square.right > this.right - (this.speed / 2) && turnAction.square.right < this.right + (this.speed / 2);
+                return turnAction.square.right >= this.right - (this.speed / 2) && turnAction.square.right <= this.right + (this.speed / 2);
             case FACING_DOWN:
-                return turnAction.square.bottom > this.bottom - ( this.speed / 2 ) && turnAction.square.bottom < this.bottom + ( this.speed / 2 );
+                return turnAction.square.bottom >= this.bottom - ( this.speed / 2 ) && turnAction.square.bottom <= this.bottom + ( this.speed / 2 );
             }
         }
     }
@@ -286,6 +286,7 @@ class Car extends MapObject {
         const nextHeight = dimensions.vert * GRID_BLOCK_PX;
 
         this.turningPosition = {
+            direction: turnAction.direction,
             width: nextWidth,
             height: nextHeight,
         }

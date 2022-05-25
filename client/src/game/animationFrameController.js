@@ -25,8 +25,7 @@ const animationFrameController = ( arg ) => {
             }            
 
             if ( !GAME.MENU.isActive && !GAME.inCinematic || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
-                handleMapAnimations( GAME );
-                //tryCatch(handleMapAnimations, [GAME]);
+                tryCatch(handleMapAnimations, [GAME]);
             }
             else if ( !GAME.MENU.isActive && GAME.inCinematic && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
                 tryCatch(handleCinematicAnimations, [GAME]);
@@ -36,8 +35,7 @@ const animationFrameController = ( arg ) => {
             }
 
             if  ( GAME.inCinematic && GAME.activeCinematic ) {
-                GAME.activeCinematic.checkForScenePass()
-                //tryCatch(GAME.activeCinematic.checkForScenePass.bind(GAME.activeCinematic));
+                tryCatch(GAME.activeCinematic.checkForScenePass.bind(GAME.activeCinematic));
             } 
         }
         else {

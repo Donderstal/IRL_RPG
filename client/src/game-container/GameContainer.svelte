@@ -182,13 +182,13 @@
         <canvas id='game-front-canvas' class="game-front-body"
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
 
-        <canvas id='game-front-grid-canvas' class="game-front-tiles-body" on:click={logClick}
+        <canvas id='game-front-grid-canvas' class="game-front-tiles-body"
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
 
         <canvas id='game-menu-canvas' class="game-menu-body"
         style="left:{phoneUICanvasLeftPosition}px; background-color: #00384D; position: fixed; top: 0; visibility: hidden;" ></canvas>    
 
-        <canvas id='game-fader-canvas' style="background: transparent;" ></canvas>    
+        <canvas id='game-fader-canvas' style="background: transparent;" on:click={logClick}></canvas>    
 
         {#if globals.SCREEN.MOBILE}
             <canvas id='game-bubble-canvas' class="game-menu-body"
