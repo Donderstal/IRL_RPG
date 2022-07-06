@@ -148,8 +148,7 @@ class Road {
             "destination": { 
                 col: this.direction === FACING_LEFT ? globals.OUT_LEFT : this.direction === FACING_RIGHT ? globals.OUT_RIGHT : this.endCell.col, 
                 row: this.direction === FACING_UP ? globals.OUT_UP : this.direction === FACING_DOWN ? globals.OUT_DOWN : this.endCell.row, 
-            },
-            "carPath": globals.GAME.FRONT.roadNetwork.getVehiclePath( this.id )
+            }
         }
     }
 

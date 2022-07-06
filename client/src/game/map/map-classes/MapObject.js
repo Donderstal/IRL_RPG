@@ -239,5 +239,6 @@ const getSpriteDimensions = ( objectResource, spriteDirection ) => {
 }
 
 module.exports = {
-    MapObject
+    MapObject,
+    getSpriteDimensions
 }

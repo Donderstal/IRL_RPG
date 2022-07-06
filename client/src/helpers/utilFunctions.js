@@ -106,43 +106,43 @@ const cloneInstance = ( instance ) => {
  * @param {int} direction
  */
 const getOppositeDirection = ( direction ) => {
-    switch( direction ) {
-        case FACING_LEFT:
-            return FACING_RIGHT;
-        case FACING_UP:
-            return FACING_DOWN;
-        case FACING_RIGHT:
-            return FACING_LEFT;
-        case FACING_DOWN: 
-            return FACING_UP;
+    switch ( direction ) {
+    case FACING_LEFT:
+        return FACING_RIGHT;
+    case FACING_UP:
+        return FACING_DOWN;
+    case FACING_RIGHT:
+        return FACING_LEFT;
+    case FACING_DOWN:
+        return FACING_UP;
     }
-}
+};
 
 const getRelativeRight = ( direction ) => {
-    switch( direction ) {
-        case FACING_LEFT:
-            return FACING_DOWN;
-        case FACING_UP:
-            return FACING_LEFT;
-        case FACING_RIGHT:
-            return FACING_UP;
-        case FACING_DOWN: 
-            return FACING_RIGHT;
+    switch ( direction ) {
+    case FACING_LEFT:
+        return FACING_UP;
+    case FACING_UP:
+        return FACING_RIGHT;
+    case FACING_RIGHT:
+        return FACING_DOWN;
+    case FACING_DOWN:
+        return FACING_LEFT;
     }
-}
+};
 
 const getRelativeLeft = ( direction ) => {
-    switch( direction ) {
-        case FACING_LEFT:
-            return FACING_UP;
-        case FACING_UP:
-            return FACING_RIGHT;
-        case FACING_RIGHT:
-            return FACING_DOWN;
-        case FACING_DOWN: 
-            return FACING_LEFT;
+    switch ( direction ) {
+    case FACING_LEFT:
+        return FACING_DOWN;
+    case FACING_UP:
+        return FACING_LEFT;
+    case FACING_RIGHT:
+        return FACING_UP;
+    case FACING_DOWN:
+        return FACING_RIGHT;
     }
-}
+};
 
 const cellDistanceSquared = ( cellA, cellB ) => {
     const rowDiff = cellA.row - cellB.row;

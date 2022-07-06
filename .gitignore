@@ -7,4 +7,5 @@ client/src/resources/mapResources/test
 static
 creds.txt
 test.py
+.vs
 __pycache__

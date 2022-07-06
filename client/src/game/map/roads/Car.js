@@ -1,10 +1,9 @@
-const { MapObject } = require("../map-classes/MapObject");
+const { MapObject, getSpriteDimensions } = require("../map-classes/MapObject");
 const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Counter } = require("../../../helpers/Counter");
-const { getRelativeLeft, getRelativeRight, getOppositeDirection } = require("../../../helpers/utilFunctions");
-const { INTERSECTION_STRAIGHT, INTERSECTION_LEFT, INTERSECTION_RIGHT } = require("../../../game-data/conditionGlobals");
+const { getOppositeDirection } = require("../../../helpers/utilFunctions");
 
 class Car extends MapObject {
     constructor( tile, spriteData, spriteId ) {
@@ -16,12 +15,14 @@ class Car extends MapObject {
         this.carHornSoundEffect = globals.GAME.sound.getSpatialEffect( "car-horn.wav", false );
         this.carHornSoundEffect.mute( );
         this.blockedCounter = new Counter( 5000, false, false );
+
+        this.visitedIntersectionIds = [];
         this.crossedIntersectionIds = [];
-        this.activeIntersectionId = null;
+        this.activeIntersectionId = false;
+        this.turnInNextFrame = false;
         this.intersectionActions = {};
-        this.carPath = spriteData.carPath;
-        this.carPathIndex = 0;
-        this.speed          = MOVEMENT_SPEED * (Math.random() * (1.25 - .75) + .75);
+
+        this.speed          = (MOVEMENT_SPEED * 2) * ((Math.random() * 0.5) + .75);
         this.roadId;
         this.type = 'car'
 
@@ -33,12 +34,12 @@ class Car extends MapObject {
         })
     }
     
-    get activeRoadId( ) { return this.carPath[this.carPathIndex]; };
-    get nextRoadId( ) { return this.carPath[this.carPathIndex+1]; };
     get activeIntersection( ) { return globals.GAME.FRONT.roadNetwork.getIntersectionById(this.activeIntersectionId) }
-    get currentTileFront( ) { return this.hitbox.currentTileFront };
     get nextTileFront( ) { return this.hitbox.nextTileFront };
-    get baseY( ) { return this.y + ( this.height / 2 )};
+    get baseY() { return this.y + ( this.height / 2 ) };
+    get speed() { return this.activeIntersectionId === false ? this._speed : this._speed / 2 }
+    get activeTurn() { return this.intersectionActions[this.activeIntersectionId]; }
+    set speed( value ) { this._speed = value }
 
     handleBlockedTimeCounter( ) {
         if ( this.checkForCollision( ) ) {
@@ -54,19 +55,83 @@ class Car extends MapObject {
         }       
     }
     
-    drawSprite( ) {
+    drawSprite() {
         this.updateState( );
-        super.drawSprite( );
-        if ( this.activeIntersectionId != null ) {
-            this.checkForIntersectionAction( )
-        }
+        super.drawSprite( )
         this.checkForMoveToDestination( );
         this.handleSoundEffects( )
         this.handleBlockedTimeCounter( )
         if ( !this.State.is(globals.STATE_MOVING) ) {
             this.countFrame( );            
         }
-        this.activeIntersectionId = null;
+        if ( this.activeIntersectionId !== false ) {
+            this.turnInNextFrame = this.checkForTurn();
+        }
+    }
+
+    updateState() {
+        super.updateState();
+        this.checkForIntersection();
+    }
+
+    checkForIntersection() {
+        const intersections = globals.GAME.FRONT.roadNetwork.intersections;
+        let activeIntersection = [];
+        switch ( this.direction ) {
+            case FACING_LEFT:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.left < e.core.right && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.baseY > e.core.top && this.baseY < e.core.bottom;
+                } );
+                break;
+            case FACING_UP:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.top < e.core.bottom && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.centerX > e.core.left && this.centerX < e.core.right;
+                } );
+                break;
+            case FACING_RIGHT:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.right > e.core.left && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.baseY > e.core.top && this.baseY < e.core.bottom;
+                } );
+                break;
+            case FACING_DOWN:
+                activeIntersection = intersections.filter( ( e ) => {
+                    return this.bottom > e.core.top && this.crossedIntersectionIds.indexOf( e.id ) === -1
+                        && this.centerX > e.core.left && this.centerX < e.core.right;
+                } );
+                break;
+            default:
+                console.log('error bruh')
+                break;
+        }
+        if ( activeIntersection.length > 0 ) {
+            if ( activeIntersection.length > 1 ) {
+                console.log( activeIntersection );
+            }
+            activeIntersection = activeIntersection[0];
+            this.isOnIntersection( activeIntersection.id );
+        }
+        else {
+            this.activeIntersectionId = false;
+        }
+    }
+
+    checkForMoveToDestination() {
+        if ( this.turnInNextFrame ) {
+            if ( !checkForCollision( this ) ) {
+                let turnAction = this.intersectionActions[this.activeIntersectionId];
+                let newRoad = this.activeIntersection.getRoadByDirection( turnAction.direction );
+                this.turnToDirection( turnAction.direction, newRoad, turnAction.square, this.activeIntersectionId );
+            }
+            else {
+                this.State.set( globals.STATE_WAITING );
+            }
+        }
+        else {
+            super.checkForMoveToDestination();
+        }
     }
 
     handleSoundEffects( ) {
@@ -134,196 +199,116 @@ class Car extends MapObject {
                 this.y = turn.top;
                 break;
         }
-        this.carPathIndex++;
+
+        this.turningPosition = {};
+        this.turnInNextFrame = false;
+        this.activeIntersectionId = false;
+
         this.initHitbox( );
         this.setDestination( road.endCell, true );
     }
 
-    isOnSquare( square ) {
-        let isOnSquare = true;
-        if ( !square.tileIsIncluded(currentTileFront) ) {
-            isOnSquare = false;                
+    isOnIntersection( id ) {
+        if ( this.crossedIntersectionIds.indexOf( id ) === -1 ) {
+            this.activeIntersectionId = id;
         }
-        return isOnSquare;
-    }
-
-    isOnIntersection( id, intersectionRoadIds ) {
-        this.activeIntersectionId = id;
-        if ( this.crossedIntersectionIds.indexOf(id) == -1 && Object.keys(this.intersectionActions).indexOf(id) == -1 ) {
-            if ( intersectionRoadIds.indexOf(this.nextRoadId) == -1 ) {
-                this.intersectionActions[id] = INTERSECTION_STRAIGHT;
-                this.crossedIntersectionIds.push( id );
+        if ( this.visitedIntersectionIds.indexOf(id) === -1 ) {
+            this.visitedIntersectionIds.push( id );
+            let directionsOut = this.activeIntersection.directionsOut.filter( ( e ) => { return e !== getOppositeDirection( this.direction ) } );
+            let newDirection = directionsOut[Math.floor( Math.random() * directionsOut.length )];
+            if ( newDirection !== this.direction ) {
+                this.setTurningSquareOnActiveIntersection( newDirection );
             }
             else {
-                const road = globals.GAME.FRONT.roadNetwork.getRoadById(this.nextRoadId);
-                if ( road.direction == getRelativeLeft(this.direction) ) {
-                    this.intersectionActions[id] = INTERSECTION_LEFT;
-                }
-                else if ( road.direction == getRelativeRight(this.direction) ) {
-                    this.intersectionActions[id] = INTERSECTION_RIGHT;
-                }
+                this.intersectionActions[this.activeIntersectionId] = false;
+                this.crossedIntersectionIds.push( this.activeIntersectionId );
             }
         }
     }
 
-    checkForIntersectionAction( ) {
-        let carCanCross;
-        let turningSquare;
-        let nextDirection;
-        switch(this.intersectionActions[this.activeIntersectionId]) {
-            case INTERSECTION_STRAIGHT:
-                carCanCross = this.checkIfCarCanCrossStraight( );
-                break;
-            case INTERSECTION_LEFT:
-                carCanCross = this.checkIfCarCanTurnLeft( );
-                nextDirection = getRelativeLeft(this.direction)
-                turningSquare = this.activeIntersection.getTurningSquare( this.direction, nextDirection);
-                break;
-            case INTERSECTION_RIGHT:
-                carCanCross = this.checkIfCarCanTurnRight( );
-                nextDirection = getRelativeRight(this.direction);
-                turningSquare = this.activeIntersection.getTurningSquare( this.direction, nextDirection);
-                break;
-            default:
-                console.log(this.intersectionActions[this.activeIntersectionId] 
-                    + " not recognized as intersection action")
-                break;
+    setTurningSquareOnActiveIntersection( turningDirection ) {
+        if ( ( turningDirection === FACING_LEFT || turningDirection === FACING_UP )
+            && ( this.direction === FACING_LEFT || this.direction === FACING_UP ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.leftUpSquare
+            };
         }
-        if ( !carCanCross ) {
-            this.State.addToPendingStateChanges(globals.STATE_WAITING);
+        else if ( ( turningDirection === FACING_RIGHT || turningDirection === FACING_UP )
+            && ( this.direction === FACING_RIGHT || this.direction === FACING_UP ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.rightUpSquare,
+            };
+        }
+        else if ( ( turningDirection === FACING_LEFT || turningDirection === FACING_DOWN )
+            && ( this.direction === FACING_LEFT || this.direction === FACING_DOWN ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.leftDownSquare,
+            };
+        }
+        else if ( ( turningDirection === FACING_RIGHT || turningDirection === FACING_DOWN )
+            && ( this.direction === FACING_RIGHT || this.direction === FACING_DOWN ) ) {
+            this.intersectionActions[this.activeIntersectionId] = {
+                direction: turningDirection,
+                square: this.activeIntersection.rightDownSquare,
+            };
+        }
+
+        this.setTurningPosition();
+    }
+
+    checkForTurn() {
+        let turnAction = this.intersectionActions[this.activeIntersectionId];
+        if ( turnAction === false || this.crossedIntersectionIds.indexOf(this.activeIntersectionId) > -1 ) {
+            return;
         }
         else {
-            if ( this.intersectionActions[this.activeIntersectionId] != INTERSECTION_STRAIGHT && this.crossedIntersectionIds.indexOf(this.activeIntersectionId) == -1 ) {
-                if ( this.isOnSquare( turningSquare )) {
-                    let outLane = this.activeIntersection.getDirectionOutLane(nextDirection)
-                    if ( this.intersectionActions[this.activeIntersectionId] == INTERSECTION_RIGHT &&
-                        !this.checkForSpritesOnTurningLocation( outLane ) ) {
-                        this.turnToDirection(nextDirection, this.activeIntersection.getRoadByDirection(nextDirection), turningSquare, this.activeIntersectionId );
-                        this.State.addToPendingStateChanges(globals.STATE_MOVING);
-                        return;
-                    }
-                    else if ( this.intersectionActions[this.activeIntersectionId] == INTERSECTION_LEFT &&
-                        !(this.checkForSpritesFromOppositeDirection( this.direction, outLane ) || this.checkForSpritesOnTurningLocation( outLane ) )) {
-                        this.turnToDirection(nextDirection, this.activeIntersection.getRoadByDirection(nextDirection), turningSquare, this.activeIntersectionId );
-                        this.State.addToPendingStateChanges(globals.STATE_MOVING);
-                        return;
-                    }
-                    else {
-                        this.State.addToPendingStateChanges(globals.STATE_WAITING);
-                    }
-                }
+            switch ( this.direction ) {
+            case FACING_LEFT:
+                return turnAction.square.left >= this.left - ( this.speed / 2 ) && turnAction.square.left <= this.left + ( this.speed / 2 );
+            case FACING_UP:
+                return turnAction.square.top >= this.top - ( this.speed / 2 ) && turnAction.square.top <= this.top + ( this.speed / 2 );
+            case FACING_RIGHT:
+                return turnAction.square.right >= this.right - (this.speed / 2) && turnAction.square.right <= this.right + (this.speed / 2);
+            case FACING_DOWN:
+                return turnAction.square.bottom >= this.bottom - ( this.speed / 2 ) && turnAction.square.bottom <= this.bottom + ( this.speed / 2 );
             }
-            this.State.addToPendingStateChanges(globals.STATE_MOVING);
         }
     }
 
-    checkIfCarCanCrossStraight( ) {
-        let inLane = this.activeIntersection.getDirectionInLane(this.direction)
-        if ( this.checkForOppositeCars( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core) ) {
-            return false;
-        }
-        if ( this.checkForCarsComingFromRelativeRight( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
-            return false;
-        }
-        if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
-            return false;
-        }
-        return true;
-    }
+    setTurningPosition() {
+        let turnAction = this.intersectionActions[this.activeIntersectionId];
 
-    checkIfCarCanTurnLeft( ) {
-        let inLane = this.activeIntersection.getDirectionInLane(this.direction)
-        if ( this.checkForOppositeCars( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core) ) {
-            return false;
-        }
-        if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
-            return false;
-        }
-        if ( this.checkForCarsComingFromRelativeRight( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
-            return false;
-        }
-        return true;
-    }
+        const dimensions = getSpriteDimensions( this.objectResource, turnAction.direction );
+        const nextWidth = dimensions.hori * GRID_BLOCK_PX;
+        const nextHeight = dimensions.vert * GRID_BLOCK_PX;
 
-    checkIfCarCanTurnRight( ) {
-        let inLane = this.activeIntersection.getDirectionInLane(this.direction)
-        if ( this.checkForOppositeCars( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core) ) {
-            return false;
+        this.turningPosition = {
+            direction: turnAction.direction,
+            width: nextWidth,
+            height: nextHeight,
         }
-        if ( this.checkForCarsComingFromRelativeLeft( this.direction ) && this.isOnSquare(inLane) && !this.isOnSquare(this.activeIntersection.core)) {
-            return false;
-        }
-        return true;
-    }
 
-    checkForOppositeCars( direction ) {
-        const relativeRight = getRelativeRight(direction);
-        const relativeLeft = getRelativeLeft(direction);
-        const cars = this.activeIntersection.intersectionCars.filter((car)=>{ 
-            return car.direction == relativeLeft || car.direction == relativeRight;
-        })
-        let oppositeCars = false;
-        cars.forEach((car)=>{
-            if ( car.isOnSquare(this.activeIntersection.core) && car.spriteId != this.spriteId ) {
-                oppositeCars = true;
-            }
-        });
-        return oppositeCars;
-    }
-
-    checkForCarsComingFromRelativeRight( direction ) {
-        const relativeRight = getRelativeRight(direction);
-        const relativeRightInLane = this.activeIntersection.getDirectionInLane( relativeRight );
-        let carComingFromRightLane = false;
-        if ( relativeRightInLane ) {
-            this.activeIntersection.intersectionCars.forEach((car)=>{
-                if ( (car.isOnSquare(relativeRightInLane) ) && car.spriteId != this.spriteId ) {
-                    carComingFromRightLane = true;
-                }
-            });        
+        switch ( turnAction.direction ) {
+        case FACING_LEFT:
+            this.turningPosition.x = turnAction.square.right - nextWidth;
+            this.turningPosition.y = turnAction.square.top;
+            break;
+        case FACING_UP:
+            this.turningPosition.x = turnAction.square.left;
+            this.turningPosition.y = turnAction.square.bottom - nextHeight;
+            break;
+        case FACING_RIGHT:
+            this.turningPosition.x = turnAction.square.left;
+            this.turningPosition.y = turnAction.square.top;
+            break;
+        case FACING_DOWN:
+            this.turningPosition.x = turnAction.square.left;
+            this.turningPosition.y = turnAction.square.top;
+            break;
         }
-        return carComingFromRightLane;
-    }
-
-    checkForCarsComingFromRelativeLeft( direction ) {
-        const relativeLeft = getRelativeLeft(direction);
-        const relativeLeftInLane = this.activeIntersection.getDirectionInLane( relativeLeft );
-        let carComingFromLeftLane = false;
-        if ( relativeLeftInLane ) {
-            this.activeIntersection.intersectionCars.forEach((car)=>{
-                if ( car.isOnSquare(this.activeIntersection.core) && car.direction == relativeLeft && car.spriteId != this.spriteId ) {
-                    carComingFromLeftLane = true;
-                }
-            });           
-        }
-        return carComingFromLeftLane;
-    }
-
-    checkForSpritesOnTurningLocation( outLane ) {
-        let carInOutLane = false;
-        if ( outLane ) {
-            this.activeIntersection.intersectionCars.forEach((car)=>{
-                if ( car.isOnSquare(outLane) && car.spriteId != this.spriteId ) {
-                    carInOutLane = true;
-                }
-            });
-        }
-        return carInOutLane;
-    } 
-
-    checkForSpritesFromOppositeDirection( direction, outLane ) {
-        const oppositeDirection = getOppositeDirection(direction);
-        const oppositeInLane = this.activeIntersection.getDirectionInLane( oppositeDirection );
-        const oppositeFacingCars = this.activeIntersection.intersectionCars.filter((e)=>{return e.direction == oppositeDirection})
-        let carInOppositeInLane = false;
-        if ( oppositeFacingCars.length > 0) {
-            oppositeFacingCars.forEach((car)=>{
-                if ( car.isOnSquare(this.activeIntersection.core) || car.isOnSquare(oppositeInLane) ) {
-                    carInOppositeInLane = true;
-                }
-            });
-        }
-        return carInOppositeInLane;
     }
 }
 

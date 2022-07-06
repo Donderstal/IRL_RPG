@@ -95,10 +95,10 @@ class Grid {
     getTileAtXY( x, y ) {
         const column = Math.ceil( ( x - this.x ) / GRID_BLOCK_PX);
         const row = Math.ceil( ( y - this.y )  / GRID_BLOCK_PX);
-        if ( x > this.x + this.cols * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x < this.x || y < this.y ) {
+        if ( x > this.x + this.cols * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x <= this.x || y <= this.y ) {
             return this.getDummyTile( 
-                x < this.x ? OUT_LEFT : x > this.x + this.cols * GRID_BLOCK_PX ? OUT_RIGHT : column,
-                y < this.y ? OUT_UP :  y > this.y + this.rows * GRID_BLOCK_PX ? OUT_DOWN : row
+                x <= this.x ? OUT_LEFT : x > this.x + this.cols * GRID_BLOCK_PX ? OUT_RIGHT : column,
+                y <= this.y ? OUT_UP :  y > this.y + this.rows * GRID_BLOCK_PX ? OUT_DOWN : row
             );
         }
 

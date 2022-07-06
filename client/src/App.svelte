@@ -1,5 +1,5 @@
 <script>
-	import MainContainer from './game-container/MainContainer.svelte'
+	import MainContainer from "./game-container/MainContainer.svelte";
 </script>
 
 <style>

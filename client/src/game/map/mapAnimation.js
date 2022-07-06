@@ -71,7 +71,6 @@ const handleMapAnimations = ( GAME ) => {
 const handleRoadNetworkFuncs = ( GAME ) => {
     if ( GAME.FRONT.roadNetwork != null ) {
         GAME.FRONT.roadNetwork.handleCarCounter()
-        GAME.FRONT.roadNetwork.handleRoadIntersections();
         GAME.FRONT.roadNetwork.handleRoadCrossings();
     }
 }

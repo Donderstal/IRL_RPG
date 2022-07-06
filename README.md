@@ -12,8 +12,13 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### MAY 23, 2022
+* Implementing new collision system for cars
+* Refactored car pathfinding system
+
 #### MAY 18, 2022
 * Major overhaul of collision detection
+* Sprite pathfinding based on new collision detection
 
 #### APR 25, 2022
 * Added new speaking sound effects

@@ -88,7 +88,7 @@ class Sprite {
     }
 
     updateCell( ) {
-        let cell = globals.GAME.getTileOnCanvasAtXY("FRONT", this.centerX, this.baseY)
+        let cell = globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX, this.baseY )
         this.row = cell.row;
         this.col = cell.col;
     }
@@ -160,7 +160,10 @@ class Sprite {
 
     setDestination( destination, deleteWhenDestinationReached = false ) {
         if ( !this.isCar ) {
-            this.State.set(STATE_PATHFINDING);            
+            this.State.set( STATE_PATHFINDING );
+        }
+        else {
+            this.State.set( STATE_MOVING );
         }
 
         this.updateCell( );
