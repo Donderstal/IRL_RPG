@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import MainContainer from "./game-container/MainContainer.svelte";
 </script>
 

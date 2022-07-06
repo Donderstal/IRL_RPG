@@ -8,4 +8,5 @@ static
 creds.txt
 test.py
 .vs
+.vscode
 __pycache__
