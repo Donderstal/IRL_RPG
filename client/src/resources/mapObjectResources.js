@@ -301,7 +301,7 @@ module.exports = {
         "dimensional_alignment": "STANDARD",
         "grounded_at_bottom": true,
         "height_blocks": 4,
-        "width_blocks": 1
+        "width_blocks": 1,
     },   
     "can_red_1" : {
         "src": "Can_Z1.png",
@@ -310,6 +310,22 @@ module.exports = {
     "can_orange_1" : {
         "src": "Can_Z2.png",
         ...getBackgroundItem( 0.28125, 0.3125 )
+    },
+    "cashier_desk_a": {
+        "src": "cashier_desk_a.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1,
+        "height_blocks": 2.5625,
+    },
+    "cashier_desk_b": {
+        "src": "cashier_desk_b.png",
+        ...getGroundedAtBottom( 3, 1.75 ),
+    },
+    "cashier_desk_c": {
+        "src": "cashier_desk_c.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1,
+        "height_blocks": 2.5625,
     },
     "chair_red_cushion" :{
         "src": "chair_red_cushion.png",
@@ -394,6 +410,10 @@ module.exports = {
     "door_7": {
         "src": "Door_Z7.png",
         ...getDoorOrWindow( 1.875, 2.09375 )
+    },
+    "flowers_a": {
+        "src": "flowers_a.png",
+        ...getGroundedAtBottom( 1.9375, 1.96875 ),
     },
     "Fire_Hydrant" :{
         "src": "fire_hydrant.png",
@@ -600,6 +620,14 @@ module.exports = {
         "height_blocks": 5,
         "width_blocks": 1,
     },
+    "magazine_rack_a": {
+        "src": "magazine_rack_a.png",
+        ...getGroundedAtBottom( 2, 1.75 ),
+    },
+    "magazine_rack_b": {
+        "src": "magazine_rack_b.png",
+        ...getGroundedAtBottom( 1.78125, 1.15625 ),
+    },
     "newspaper_trash": { 
         "src": "newspaper.png",
         ...getBackgroundItem( 0.625, 0.4375 )
@@ -700,6 +728,46 @@ module.exports = {
         "src": "rug_g2.png",
         ...getBackgroundItem( 2, 2 )
     },
+    "shelves_a": {
+        "src": "shelves_a.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_b": {
+        "src": "shelves_b.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_c": {
+        "src": "shelves_c.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_d": {
+        "src": "shelves_d.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_e": {
+        "src": "shelves_e.png",
+        ...STANDARD_SHELVE,
+    },
+    "shelves_f": {
+        "src": "shelves_f.png",
+        ...getGroundedAtBottom( 2, 2.40625 ),
+    },
+    "shelves_side_a": {
+        "src": "shelves_side_a.png",
+        ...getGroundedAtBottom( 0.84375, 3 ),
+    },
+    "shelves_side_b": {
+        "src": "shelves_side_b.png",
+        ...getGroundedAtBottom( 0.5, 3 ),
+    },
+    "shelves_side_c": {
+        "src": "shelves_side_c.png",
+        ...getGroundedAtBottom( 0.5, 5 ),
+    },
+    "shelves_side_d": {
+        "src": "shelves_side_d.png",
+        ...getGroundedAtBottom( 0.84375, 3 ),
+    },
     "shop_cupboard_a" : {
         "src": "shop_cupboard_a.png",
         ...STANDARD_SHELVE
@@ -710,11 +778,11 @@ module.exports = {
     },
     "shop_shelves_a" : {
         "src": "shop_shelves_a.png",
-        ...STANDARD_SHELVE
+        ...STANDARD_SHELVE,
     },
     "shop_shelves_b" : {
         "src": "shop_shelves_b.png",
-        ...STANDARD_SHELVE
+        ...STANDARD_SHELVE,
     },
     "shop_window": { 
         "src": "shop_window.png",
@@ -773,6 +841,14 @@ module.exports = {
         "width_blocks": 0.78125, 
         "height_blocks": 0.6875
     },
+    "thing_a": {
+        "src": "thing_a.png",
+        ...getGroundedAtBottom( 1, 3 ),
+    },
+    "thing_b": {
+        "src": "thing_b.png",
+        ...getGroundedAtBottom( 1, 2.015625 ),
+    },
     "trash_1" : {
         "src": "Trash_Z1.png",
         ...getBackgroundItem( 0.375, 0.28125 )
@@ -808,7 +884,23 @@ module.exports = {
         "dimensional_alignment": "STANDARD",
         "width_blocks": 0.625, 
         "height_blocks": 1.84375
-    },   
+    },
+    "vegetables_a": {
+        "src": "vegetables_a.png",
+        ...getGroundedAtBottom( 1, 3 ),
+    },
+    "vegetables_b": {
+        "src": "vegetables_b.png",
+        ...getGroundedAtBottom( 1, 3 ),
+    },
+    "vegetables_c": {
+        "src": "vegetables_c.png",
+        ...getGroundedAtBottom( 1, 1.125 ),
+    },
+    "vegetables_d": {
+        "src": "vegetables_d.png",
+        ...getGroundedAtBottom( 1, 1.125 ),
+    },
     "vent_1" : {
         "src": "Vent_Z1.png",
         ...getBackgroundItem( 0.65625, 0.40625 )
@@ -828,7 +920,19 @@ module.exports = {
     "vent_5" : {
         "src": "Vent_Z5.png",
         ...getBackgroundItem( 0.65625, 0.5625 )
-    },    
+    },
+    "wall_thing": {
+        "src": "wall_thing.png",
+        ...getGroundedAtBottom( 2, 1.625 ),
+    },
+    "wall_thing_b": {
+        "src": "wall_thing_b.png",
+        ...getGroundedAtBottom( 1, 1.625 ),
+    },
+    "wall_thing_c": {
+        "src": "wall_thing_c.png",
+        ...getGroundedAtBottom( 0.5, 1.625 ),
+    },
     "water_puddle": {
         "src": "water_puddle.png",
         ...getBackgroundItem( 1, 1 )
@@ -897,8 +1001,8 @@ module.exports = {
         "src": "yellow_rug_a.png",
         ...getBackgroundItem( 4, 3 )
     },
-    "yellow_rug_a" : { 
-        "src": "yellow_rug_a.png",
+    "yellow_rug_b" : { 
+        "src": "yellow_rug_b.png",
         ...getBackgroundItem( 3, 2 )
     },
     "yellow_stand" : { 

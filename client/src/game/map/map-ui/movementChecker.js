@@ -44,7 +44,7 @@ const checkIfPositionsCollide = ( sprite, spriteNextPosition, targetNextPosition
     switch ( sprite.direction ) {
     case FACING_LEFT:
         return spriteNextPosition.left <= targetNextPosition.right
-            && lessHighSprite.baseY > highestSprite.dynamicTop && lessHighSprite.baseY < highestSprite.bottom
+            && lessHighSprite.baseY >= highestSprite.dynamicTop && lessHighSprite.baseY < highestSprite.bottom
             && spriteNextPosition.right > targetNextPosition.centerX;
     case FACING_UP:
         return spriteNextPosition.dynamicTop <= targetNextPosition.bottom
@@ -52,7 +52,7 @@ const checkIfPositionsCollide = ( sprite, spriteNextPosition, targetNextPosition
             && spriteNextPosition.bottom > targetNextPosition.bottom;
     case FACING_RIGHT:
         return spriteNextPosition.right >= targetNextPosition.left
-            && lessHighSprite.baseY > highestSprite.dynamicTop && lessHighSprite.baseY < highestSprite.bottom
+            && lessHighSprite.baseY >= highestSprite.dynamicTop && lessHighSprite.baseY < highestSprite.bottom
             && spriteNextPosition.left < targetNextPosition.centerX;
     case FACING_DOWN:
         return spriteNextPosition.bottom >= targetNextPosition.dynamicTop

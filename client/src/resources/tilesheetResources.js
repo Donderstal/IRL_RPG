@@ -12,6 +12,10 @@ module.exports = {
                 76, 77
             ]
         },
+        "Yum_Mart": {
+            "src": "Yum_mart.png",
+            "uniqueTiles": 40
+        },
         "downtown_2": {
             "src": "City5_Tiles.png",
             "uniqueTiles": 608,
