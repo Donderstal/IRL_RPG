@@ -1,11 +1,10 @@
 const globals = require("../game-data/globals");
-const { getAction } = require("../helpers/actionDtoFactory");
 const { Counter } = require("../helpers/Counter");
-const { getMapData } = require("../resources/mapResources")
+const { getNeighbourhood } = require("../resources/mapResources")
 
 class Neighbourhood {
     constructor( key ) {
-        const data = getMapData( key.split('/')[0] );
+        const data = getNeighbourhood( key.split('/')[0] );
         Object.keys( data ).forEach( ( key ) => {
             this[key] = data[key];
         })
@@ -15,7 +14,7 @@ class Neighbourhood {
     }
 
     get key( ) { return this.activeMapKey.split('/')[0]; }
-    get activeMap( ) { return this[this.activeMapName]; }
+    get activeMap( ) { return this.mapDictionary[this.activeMapName]; }
     get activeMapName( ) { return this.activeMapKey.split('/')[1]; }
 
     getRandomAction( ) {
