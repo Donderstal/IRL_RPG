@@ -1,7 +1,9 @@
+import type { QuestModel } from "../models/QuestModel";
+
 const { LOGGABLE_INTERACTION_1, LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3, LOGGABLE_INTERACTION_4, LOGGABLE_INTERACTION_7 } = require("../game-data/interactionGlobals");
 
 const Q1_A_CASE_OF_THE_MONDAYS_KEY = "Q1_A_CASE_OF_THE_MONDAYS"
-const Q1_A_CASE_OF_THE_MONDAYS = {
+const Q1_A_CASE_OF_THE_MONDAYS: QuestModel = {
     name: "A case of the mondays...",
     key: Q1_A_CASE_OF_THE_MONDAYS_KEY,
     trigger: LOGGABLE_INTERACTION_1,
@@ -13,7 +15,7 @@ const Q1_A_CASE_OF_THE_MONDAYS = {
 }
 
 const Q2_LIFTING_UP_A_BRO_KEY = "Q2_LIFTING_UP_A_BRO" 
-const Q2_LIFTING_UP_A_BRO = {
+const Q2_LIFTING_UP_A_BRO: QuestModel = {
     name: "Lifting up a bro",
     key: Q2_LIFTING_UP_A_BRO_KEY,
     trigger: LOGGABLE_INTERACTION_4,
@@ -27,15 +29,10 @@ const quests = [
     Q1_A_CASE_OF_THE_MONDAYS, Q2_LIFTING_UP_A_BRO
 ]
 
-const getQuestByTrigger = ( trigger ) => {
+export const getQuestByTrigger = ( trigger ) => {
     return quests.filter((e)=>{return e.trigger == trigger;})[0];
 }
 
-const getQuestByKey = ( key ) => {
+export const getQuestByKey = ( key ) => {
     return quests.filter((e)=>{return e.key == key;})[0];
-}
-
-module.exports = {
-    getQuestByTrigger,
-    getQuestByKey
 }

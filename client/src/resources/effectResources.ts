@@ -1,3 +1,6 @@
+import { initGraphicEffectModel } from "../helpers/modelFactory";
+import type { GraphicEffectModel } from "../models/GraphicEffectModel";
+
 const folder = "/static/effects/";
 
 const effectsResources = {
@@ -92,15 +95,8 @@ const effectsResources = {
  * If key cannot be found, throw an error
  * @param {String} name 
  */
-const getEffectData = ( name ) => {
-    try {
-        name in effectsResources;
-    } catch (error) {
-        throw(error)
+export const getEffectData = ( name ): GraphicEffectModel => {
+    if ( name in effectsResources ) {
+        return initGraphicEffectModel( effectsResources[name] );
     }
-    return effectsResources[name]
-}
-
-module.exports = {
-    getEffectData
 }
