@@ -2,6 +2,7 @@ import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_C1 } from './grid';
 import { FRONT_GRID_LEONARD_C1 } from './frontgrid';
 import { LOST_KEYS_INTERACTION } from './C1-interactions';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C1,
@@ -70,25 +71,25 @@ export default {
             "type": "car_b",
             "row": 5,
             "col": 3,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         },
         {
             "type": "car_a",
             "row": 5,
             "col": 7,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         },
         {
             "type": "car_c",
             "row": 5,
             "col": 17,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "type": "car_d",
             "row": 12,
             "col": 5,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "type": "vent_4",

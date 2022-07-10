@@ -15,6 +15,9 @@ import type { CinematicSceneModel } from "../models/CinematicSceneModel";
 import type { AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveCarScene, MoveScene, SceneAnimationModel, SpeakScene, SpeakYesNoScene, WaitScene } from "../models/SceneAnimationModel";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import type { InteractionModel } from "../models/InteractionModel";
+import type { GraphicEffectModel } from "../models/GraphicEffectModel";
+import type { SpriteFrameModel } from "../models/SpriteFrameModel";
+import type { ItemModel } from "../models/ItemModel";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
@@ -306,6 +309,44 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
             }
             return loadMap;
     }
+}
+
+export const initSpriteFrameModel = ( frameData ): SpriteFrameModel => {
+    const model: SpriteFrameModel = {
+        x: frameData.x,
+        y: frameData.y,
+        width: frameData.width,
+        height: frameData.height,
+        direction: frameData.direction
+    }
+    return model;
+}
+
+export const initGraphicEffectModel = ( effectData ): GraphicEffectModel => {
+    const model: GraphicEffectModel = {
+        src: effectData.src,
+        widthInBlocks: effectData.widthInBlocks,
+        heightInBlocks: effectData.heightInBlocks,
+        frameWidth: effectData.frameWidth,
+        frameHeight: effectData.frameHeight,
+        frames: effectData.frames.map( ( e ) => {
+            return initSpriteFrameModel( {
+                ...e, width: effectData.frameWidth, height: effectData.frameHeight
+            } )
+        } )
+    }
+    return model;
+}
+
+export const initItemModel = ( itemData ): ItemModel => {
+    const model: ItemModel = {
+        name: itemData.name,
+        key: itemData.key,
+        category: itemData.category,
+        png: itemData.png,
+        description: itemData.description
+    }
+    return model;
 }
 
 const directionStringHelper = ( direction: string | number ) => {

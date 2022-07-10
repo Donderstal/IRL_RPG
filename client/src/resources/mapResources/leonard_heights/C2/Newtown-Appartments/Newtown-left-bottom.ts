@@ -1,5 +1,6 @@
-import { EVENT_HAS_FIRED } from "../../../../../game-data/conditionGlobals";
-import { NPC_ANIM_TYPE_IDLE, FACING_RIGHT, FACING_DOWN } from "../../../../../game-data/globals";
+import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
+import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
+import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
 import { KEY_GUY, BODYGUARD } from "./Newtown-Appartments-interactions";
 
@@ -399,20 +400,20 @@ export default {
     ],
     "characters": [
         {
-            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 5,
             "col": 4,
             "sprite": "tumbler_girl_recolour02.png",
-            "direction": FACING_DOWN,
+            "direction": DirectionEnum.down,
             "action": KEY_GUY
         },
         {
-            "condition": [ EVENT_HAS_FIRED, UNLOCK_DOOR_TEST ],
-            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "condition": [ConditionType.interactionRegistered, UNLOCK_DOOR_TEST],
+            "anim_type": AnimationTypeEnum.idle,
             "row": 2,
             "col": 2,
             "sprite": "fats.png",
-            "direction": FACING_DOWN,
+            "direction": DirectionEnum.down,
             "action": BODYGUARD
         }
     ],
@@ -422,7 +423,7 @@ export default {
             "row": 4, 
             "col": 8,
             "destination" : "leonard_heights/Newtown-Hall",
-            "direction" : FACING_RIGHT
+            "direction": DirectionEnum.right,
         }
     ]
 }

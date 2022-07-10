@@ -1,4 +1,4 @@
-import { FACING_LEFT } from "../../../../../game-data/globals";
+import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 
 export default {
     "mapName": "leonard_heights/Newtown-appartment-4",
@@ -346,7 +346,7 @@ export default {
             "row": 4, 
             "col": 1,
             "destination" : "leonard_heights/Newtown-Hall",
-            "direction" : FACING_LEFT
+            "direction" : DirectionEnum.left
         }
     ],
     "savepoint": {

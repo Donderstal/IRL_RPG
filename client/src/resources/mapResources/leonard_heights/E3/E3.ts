@@ -1,6 +1,8 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_E3 } from './grid';
 import { FRONT_GRID_LEONARD_E3 } from './frontgrid';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E3,
@@ -12,11 +14,11 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 6,
             "col": 23,
             "sprite": "pigeon.png",
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         }
     ],
     "mapObjects": [
@@ -39,7 +41,7 @@ export default {
             "type": "car_b",
             "row": 9,
             "col": 7,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "type": "water_puddle",
@@ -49,24 +51,24 @@ export default {
     ],
     "spawnPoints": [
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 6,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "col": 10,
             "row": 6,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "col": 11,
             "row": 6,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "col": 11,
-            "row": globals.OUT_DOWN,
-            "direction": globals.FACING_UP
+            "row": OutOfMapEnum.down,
+            "direction": DirectionEnum.up
         }
     ],
     "roads": [

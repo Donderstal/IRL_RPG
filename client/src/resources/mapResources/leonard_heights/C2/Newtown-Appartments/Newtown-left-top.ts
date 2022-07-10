@@ -1,4 +1,5 @@
-import { NPC_ANIM_TYPE_IDLE, FACING_RIGHT } from "../../../../../game-data/globals";
+import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
+import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 
 export default {
     "mapName": "leonard_heights/Newtown-appartment-2",
@@ -391,11 +392,11 @@ export default {
     ],
     "characters": [
         {
-            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 4,
             "col": 3,
             "sprite": "generic_balding_guy.png",
-            "direction": FACING_RIGHT
+            "direction": DirectionEnum.right
         }
     ],
     "actions": [],
@@ -404,7 +405,7 @@ export default {
             "row": 4, 
             "col": 8,
             "destination" : "leonard_heights/Newtown-Hall",
-            "direction" : FACING_RIGHT
+            "direction": DirectionEnum.right
         }
     ]
 }

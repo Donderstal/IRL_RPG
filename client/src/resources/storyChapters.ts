@@ -13,9 +13,9 @@ import {
     EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_HAPPY, EMOTE_QUESTIONMARK
 } from '../game-data/textboxGlobals';
 
-const KEY_STORY_1 = "KEY_STORY_EVENT_1";
-const KEY_STORY_2 = "KEY_STORY_EVENT_2";
-const KEY_STORY_3 = "KEY_STORY_EVENT_3"
+export const KEY_STORY_1 = "KEY_STORY_EVENT_1";
+export const KEY_STORY_2 = "KEY_STORY_EVENT_2";
+export const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
 const STORY_EVENTS = [
     {

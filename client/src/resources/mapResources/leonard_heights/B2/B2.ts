@@ -1,6 +1,7 @@
-import { FACING_UP } from '../../../../game-data/globals';
 import { GRID_LEONARD_B2 } from './grid';
 import { FRONT_GRID_LEONARD_B2 } from './frontgrid';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B2,
@@ -36,8 +37,8 @@ export default {
     "roads": [
         {
             "name": "CIN_ROAD_1",
-            "direction": FACING_UP,
-            "alignment": "VERT",
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
             "hasStart": true,
             "leftCol": 13,
             "rightCol": 14,

@@ -1,6 +1,8 @@
 import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_A1 } from './grid';
 import { FRONT_GRID_LEONARD_A1 } from './frontgrid';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_A1,
@@ -12,18 +14,18 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 5,
             "col": 20,
             "sprite": "characterx5.png",
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 5,
             "col": 23,
             "sprite": "fats_recolour.png",
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         }
     ],
     "mapObjects": [

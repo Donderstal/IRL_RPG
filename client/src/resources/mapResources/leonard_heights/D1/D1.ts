@@ -1,9 +1,10 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_D1 } from './grid';
 import { FRONT_GRID_LEONARD_D1 } from './frontgrid';
 import { FRIENDLY_CHAD, WHOLESOME_LIFTER } from './D1-interactions';
 import { LOGGABLE_INTERACTION_7 } from '../../../../game-data/interactionGlobals';
-import { EVENT_HAS_NOT_FIRED, EVENT_HAS_FIRED } from '../../../../game-data/conditionGlobals';
+import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,
@@ -15,56 +16,56 @@ export default {
    "tileSet":"starting_neighbourhood_clean",
    "characters":[
       {
-         "anim_type":globals.NPC_ANIM_TYPE_IDLE,
+         "anim_type":AnimationTypeEnum.idle,
          "row":5,
          "col":21,
          "sprite":"chad_recolour01.png",
-         "direction":globals.FACING_RIGHT,
+         "direction":DirectionEnum.right,
          "name":"Helpful Bro",
          "action":FRIENDLY_CHAD,
          "condition":[
-            EVENT_HAS_NOT_FIRED,
+            ConditionType.interactionNotRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },
       {
-         "anim_type":globals.NPC_ANIM_TYPE_ANIMATION_LOOP,
+          "anim_type": AnimationTypeEnum.animationLoop,
          "anim_name":"BOP_UP",
          "row":5,
          "col":22,
          "sprite":"chad.png",
-         "direction":globals.FACING_UP,
+         "direction": DirectionEnum.up,
          "name":"Sad Bro",
          "condition":[
-            EVENT_HAS_NOT_FIRED,
+            ConditionType.interactionRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },
       {
-         "anim_type":globals.NPC_ANIM_TYPE_ANIMATION_LOOP,
+         "anim_type": AnimationTypeEnum.animationLoop,
          "anim_name":"LIFT",
          "row":5,
          "col":21,
          "sprite":"chad_recolour01.png",
-         "direction":globals.FACING_LEFT,
+         "direction": DirectionEnum.left,
          "name":"Wholesome Lifter",
          "action":WHOLESOME_LIFTER,
          "condition":[
-            EVENT_HAS_FIRED,
+            ConditionType.interactionRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },
       {
-         "anim_type":globals.NPC_ANIM_TYPE_ANIMATION_LOOP,
+         "anim_type": AnimationTypeEnum.animationLoop,
          "anim_name":"LIFT",
          "row":5,
          "col":22,
          "sprite":"chad.png",
-         "direction":globals.FACING_LEFT,
+          "direction": DirectionEnum.left,
          "name":"Wholesome Lifter",
          "action":WHOLESOME_LIFTER,
          "condition":[
-            EVENT_HAS_FIRED,
+            ConditionType.interactionRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },

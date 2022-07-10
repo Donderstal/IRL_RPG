@@ -2,6 +2,10 @@ import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_D2 } from './grid';
 import { FRONT_GRID_LEONARD_D2 } from './frontgrid';
 import { LOOKING_FOR_APPARTMENT_LADY, WHOLESOME_LIFTER_D2 } from './D2-interactions';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
+import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D2,
@@ -13,20 +17,20 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "sprite": "tumbler_girl_recolour02.png",
-            "direction": globals.FACING_LEFT,
+            "direction": DirectionEnum.left,
             "row": 9,
             "col": 18,
             "action": LOOKING_FOR_APPARTMENT_LADY
         },
         {
-            "anim_type": globals.NPC_ANIM_TYPE_ANIMATION_LOOP,
+            "anim_type": AnimationTypeEnum.animationLoop,
             "anim_name": "LIFT",
             "row": 9,
             "col": 8,
             "sprite": "chad.png",
-            "direction": globals.FACING_LEFT,
+            "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
             "action": WHOLESOME_LIFTER_D2
         }
@@ -56,44 +60,44 @@ export default {
     "spawnPoints": [
         {
             "col": 12,
-            "row": globals.OUT_UP,
-            "direction": globals.FACING_DOWN
+            "row": OutOfMapEnum.up,
+            "direction": DirectionEnum.down
         },
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 9,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "col": 18,
             "row": 10,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left,
         },
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 11,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "col": 9,
-            "row": globals.OUT_DOWN,
-            "direction": globals.FACING_UP
+            "row": OutOfMapEnum.down,
+            "direction": DirectionEnum.up
         },
         {
             "col": 17,
-            "row": globals.OUT_DOWN,
-            "direction": globals.FACING_UP
+            "row": OutOfMapEnum.down,
+            "direction": DirectionEnum.up
         },
         {
             "col": 18,
-            "row": globals.OUT_DOWN,
-            "direction": globals.FACING_UP
+            "row": OutOfMapEnum.down,
+            "direction": DirectionEnum.up
         }
     ],
     "roads": [
         {
-            "direction": globals.FACING_RIGHT,
-            "alignment": "HORI",
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
             "topRow": 14,
             "bottomRow": 15,
@@ -101,8 +105,8 @@ export default {
             "endCol": 12
         },
         {
-            "direction": globals.FACING_LEFT,
-            "alignment": "HORI",
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": false,
             "topRow": 12,
             "bottomRow": 13,
@@ -110,8 +114,8 @@ export default {
             "endCol": 1
         },
         {
-            "direction": globals.FACING_UP,
-            "alignment": "VERT",
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
             "hasStart": true,
             "leftCol": 13,
             "rightCol": 14,
@@ -119,8 +123,8 @@ export default {
             "endRow": 12
         },
         {
-            "direction": globals.FACING_DOWN,
-            "alignment": "VERT",
+            "direction": DirectionEnum.down,
+            "alignment": RoadAlignmentEnum.vertical,
             "hasStart": false,
             "leftCol": 11,
             "rightCol": 12,

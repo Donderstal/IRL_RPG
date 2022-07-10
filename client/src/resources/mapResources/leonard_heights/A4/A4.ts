@@ -1,6 +1,6 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_A4 } from './grid';
 import { FRONT_GRID_LEONARD_A4 } from './frontgrid';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_A4,
@@ -68,7 +68,7 @@ export default {
             "type": "car_a",
             "row": 7,
             "col": 11,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "type": "vent_4",
@@ -84,7 +84,7 @@ export default {
             "type": "car_b",
             "row": 9,
             "col": 11,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "type": "gang_z",
@@ -95,7 +95,7 @@ export default {
             "type": "car_d",
             "row": 11,
             "col": 11,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "type": "funz",
@@ -111,7 +111,7 @@ export default {
             "type": "car_b",
             "row": 15,
             "col": 11,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "type": "Sign_02",

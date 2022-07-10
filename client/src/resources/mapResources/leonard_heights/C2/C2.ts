@@ -1,6 +1,8 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_C2 } from './grid';
 import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C2,
@@ -12,11 +14,11 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 14,
             "col": 9,
             "sprite": "pigeon.png",
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         }
     ],
     "mapObjects": [
@@ -89,7 +91,7 @@ export default {
             "type": "car_b",
             "row": 7,
             "col": 8,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         },
         {
             "type": "vent_4",
@@ -139,30 +141,30 @@ export default {
     ],
     "spawnPoints": [
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 9,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 11,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
-            "col": globals.OUT_RIGHT,
+            "col": OutOfMapEnum.right,
             "row": 9,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
-            "col": globals.OUT_RIGHT,
+            "col": OutOfMapEnum.right,
             "row": 11,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
 
     ],
     "roads": [
         {
-            "direction": globals.FACING_RIGHT,
+            "direction": DirectionEnum.right,
             "alignment": "HORI",
             "hasStart": true,
             "topRow": 14,
@@ -171,7 +173,7 @@ export default {
             "endCol": 24
         },
         {
-            "direction": globals.FACING_LEFT,
+            "direction": DirectionEnum.left,
             "alignment": "HORI",
             "hasStart": true,
             "topRow": 12,
@@ -188,14 +190,14 @@ export default {
             "row": 8,
             "col": 12,
             "destination": "leonard_heights/Newtown-Hall",
-            "direction": globals.FACING_UP,
+            "direction": DirectionEnum.up,
 
         },
         {
             "row": 8,
             "col": 13,
             "destination": "leonard_heights/Newtown-Hall",
-            "direction": globals.FACING_UP,
+            "direction": DirectionEnum.up,
 
         }
     ]

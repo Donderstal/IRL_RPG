@@ -1,4 +1,4 @@
-import { FACING_DOWN } from "../../../../../game-data/globals";
+import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { COLLECTABLE_ACTION_COIN, COLLECTABLE_ACTION_JUICE_CAN } from "../../../../actionResources";
 
 export default {
@@ -426,7 +426,7 @@ export default {
             "row": 8, 
             "col": 4,
             "destination" : "leonard_heights/Newtown-Hall",
-            "direction" : FACING_DOWN
+            "direction" : DirectionEnum.down
         }
     ],
     "characters": [],

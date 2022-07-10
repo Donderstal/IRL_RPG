@@ -1,6 +1,6 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_B1 } from './grid';
 import { FRONT_GRID_LEONARD_B1 } from './frontgrid';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B1,
@@ -61,25 +61,25 @@ export default {
             "type": "car_b",
             "row": 4,
             "col": 7,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "type": "car_d",
             "row": 5,
             "col": 15,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.right
         },
         {
             "type": "car_b",
             "row": 5,
             "col": 19,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "type": "car_a",
             "row": 5,
             "col": 21,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         },
         {
             "type": "tires_2",
@@ -90,7 +90,7 @@ export default {
             "type": "bus",
             "row": 12,
             "col": 17,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "type": "tires_1",
@@ -104,7 +104,7 @@ export default {
     "roads": [
         {
             "name": "CIN_ROAD_1",
-            "direction": globals.FACING_UP,
+            "direction": DirectionEnum.up,
             "alignment": "VERT",
             "hasStart": false,
             "leftCol": 13,

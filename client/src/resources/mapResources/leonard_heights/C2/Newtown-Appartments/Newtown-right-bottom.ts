@@ -1,4 +1,5 @@
-import { FACING_LEFT, FACING_UP, NPC_ANIM_TYPE_IDLE } from "../../../../../game-data/globals";
+import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
+import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { NEIGHBOUR } from "./Newtown-Appartments-interactions";
 
 export default {
@@ -382,11 +383,11 @@ export default {
     ],
     "characters": [
         {
-            "anim_type": NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 2,
             "col": 7,
             "sprite": "characterx4.png",
-            "direction": FACING_UP,
+            "direction": DirectionEnum.up,
             "action": NEIGHBOUR
         }
     ],
@@ -396,7 +397,7 @@ export default {
             "row": 4, 
             "col": 1,
             "destination" : "leonard_heights/Newtown-Hall",
-            "direction" : FACING_LEFT
+            "direction": DirectionEnum.up
         }
     ]
 }

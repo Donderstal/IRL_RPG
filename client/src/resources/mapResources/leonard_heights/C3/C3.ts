@@ -1,6 +1,8 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_C3 } from './grid';
 import { FRONT_GRID_LEONARD_C3 } from './frontgrid';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -12,18 +14,18 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 12,
             "col": 11,
             "sprite": "pigeon.png",
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 14,
             "col": 15,
             "sprite": "pigeon.png",
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         }
     ],
     "mapObjects": [
@@ -112,28 +114,28 @@ export default {
     "spawnPoints": [
         {
             "col": 18,
-            "row": globals.OUT_UP,
-            "direction": globals.FACING_DOWN
+            "row": OutOfMapEnum.up,
+            "direction": DirectionEnum.down
         },
         {
             "col": 11,
             "row": 8,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
-            "col": globals.OUT_RIGHT,
+            "col": OutOfMapEnum.right,
             "row": 10,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 11,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "col": 8,
-            "row": globals.OUT_DOWN,
-            "direction": globals.FACING_UP
+            "row": OutOfMapEnum.down,
+            "direction": DirectionEnum.up
         }
     ],
     "roads": [

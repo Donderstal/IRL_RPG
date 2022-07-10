@@ -1,7 +1,8 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_E4 } from './grid';
 import { FRONT_GRID_LEONARD_E4 } from './frontgrid';
 import { WHOLESOME_LIFTER_E4 } from './E4-interactions';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E4,
@@ -13,12 +14,12 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_ANIMATION_LOOP,
+            "anim_type": AnimationTypeEnum.animationLoop,
             "anim_name": "LIFT",
             "row": 9,
             "col": 12,
             "sprite": "chad_recolour01.png",
-            "direction": globals.FACING_LEFT,
+            "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
             "action": WHOLESOME_LIFTER_E4
         }
@@ -51,7 +52,7 @@ export default {
             "type": "car_d",
             "row": 15,
             "col": 6,
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "type": "wheelie_bin_left",

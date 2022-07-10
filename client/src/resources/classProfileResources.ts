@@ -98,7 +98,7 @@ export const getProfileName = ( pngName ) => {
     }
 }
 
-const getCharacterSpriteModel = ( className ) => {
+export const getCharacterSpriteModel = ( className ) => {
     let png;
 
     switch ( className ) {

@@ -1,8 +1,11 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_C4 } from './grid';
 import { FRONT_GRID_LEONARD_C4 } from './frontgrid';
-import { EVENT_HAS_NOT_FIRED } from '../../../../game-data/conditionGlobals';
 import { LOGGABLE_INTERACTION_3 } from '../../../../game-data/interactionGlobals';
+import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
+import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C4,
@@ -14,33 +17,33 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 3,
             "col": 12,
             "sprite": "pigeon.png",
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 8,
             "col": 19,
             "sprite": "fats.png",
-            "direction": globals.FACING_DOWN,
+            "direction": DirectionEnum.down,
             "name": "Bob A",
             "condition": [
-                EVENT_HAS_NOT_FIRED,
+                ConditionType.interactionNotRegistered,
                 LOGGABLE_INTERACTION_3
             ]
         },
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 8,
             "col": 20,
             "sprite": "fats.png",
-            "direction": globals.FACING_DOWN,
+            "direction": DirectionEnum.down,
             "name": "Bob B",
             "condition": [
-                EVENT_HAS_NOT_FIRED,
+                ConditionType.interactionRegistered,
                 LOGGABLE_INTERACTION_3
             ]
         }
@@ -145,49 +148,49 @@ export default {
             "type": "car_a",
             "row": 12,
             "col": 7,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "type": "car_b",
             "row": 12,
             "col": 13,
-            "direction": globals.FACING_DOWN
+            "direction": DirectionEnum.down
         },
         {
             "type": "car_b",
             "row": 12,
             "col": 15,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         },
         {
             "type": "car_c",
             "row": 12,
             "col": 17,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         },
         {
             "type": "car_d",
             "row": 12,
             "col": 23,
-            "direction": globals.FACING_UP
+            "direction": DirectionEnum.up
         }
     ],
     "spawnPoints": [
         {
             "col": 9,
-            "row": globals.OUT_UP,
-            "direction": globals.FACING_LEFT
+            "row": OutOfMapEnum.up,
+            "direction": DirectionEnum.left
         },
         {
-            "col": globals.OUT_LEFT,
+            "col": OutOfMapEnum.left,
             "row": 10,
-            "direction": globals.FACING_RIGHT
+            "direction": DirectionEnum.right
         }
     ],
     "roads": [
         {
-            "direction": globals.FACING_RIGHT,
-            "alignment": "HORI",
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
             "topRow": 15,
             "bottomRow": 16,
@@ -195,8 +198,8 @@ export default {
             "endCol": 24
         },
         {
-            "direction": globals.FACING_LEFT,
-            "alignment": "HORI",
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
             "topRow": 13,
             "bottomRow": 14,

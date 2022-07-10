@@ -2,6 +2,8 @@ import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_B3 } from './grid';
 import { FRONT_GRID_LEONARD_B3 } from './frontgrid';
 import { GUY_WHO_LOST_HIS_KEYS } from './B3-interactions';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B3,
     "grid": GRID_LEONARD_B3,
@@ -12,17 +14,17 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "characters": [
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 2,
             "col": 4,
             "sprite": "pigeon.png",
-            "direction": globals.FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
-            "anim_type": globals.NPC_ANIM_TYPE_IDLE,
+            "anim_type": AnimationTypeEnum.idle,
             "row": 9,
             "col": 20,
-            "direction": globals.FACING_DOWN,
+            "direction": DirectionEnum.down,
             "sprite": "character_x1_recolour01.png",
             "action": GUY_WHO_LOST_HIS_KEYS
         }

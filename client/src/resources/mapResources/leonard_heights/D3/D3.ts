@@ -1,6 +1,7 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_D3 } from './grid';
 import { FRONT_GRID_LEONARD_D3 } from './frontgrid';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
 
 export default {
    "frontGrid":FRONT_GRID_LEONARD_D3,
@@ -23,7 +24,7 @@ export default {
          "type":"car_b",
          "row":4,
          "col":9,
-         "direction":globals.FACING_DOWN
+         "direction": DirectionEnum.down
       },
       {
          "type":"door_4",
@@ -54,8 +55,8 @@ export default {
    ],
    "roads":[
       {
-         "direction":globals.FACING_UP,
-         "alignment":"VERT",
+         "direction": DirectionEnum.up,
+         "alignment":RoadAlignmentEnum.vertical,
          "hasStart":false,
          "leftCol":13,
          "rightCol":14,
@@ -63,8 +64,8 @@ export default {
          "endRow":1
       },
       {
-         "direction":globals.FACING_DOWN,
-         "alignment":"VERT",
+         "direction": DirectionEnum.down,
+         "alignment":RoadAlignmentEnum.vertical,
          "hasStart":true,
          "leftCol":11,
          "rightCol":12,
@@ -72,8 +73,8 @@ export default {
          "endRow":13
       },
       {
-         "direction":globals.FACING_RIGHT,
-         "alignment":"HORI",
+          "direction": DirectionEnum.right,
+         "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
          "topRow":14,
          "bottomRow":15,
@@ -81,8 +82,8 @@ export default {
          "endCol":14
       },
       {
-         "direction":globals.FACING_LEFT,
-         "alignment":"HORI",
+         "direction": DirectionEnum.left,
+         "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
          "topRow":12,
          "bottomRow":13,
@@ -90,8 +91,8 @@ export default {
          "endCol":7
       },
       {
-         "direction":globals.FACING_DOWN,
-         "alignment":"VERT",
+          "direction": DirectionEnum.down,
+         "alignment":RoadAlignmentEnum.vertical,
          "hasStart":false,
          "leftCol":7,
          "rightCol":8,
@@ -99,8 +100,8 @@ export default {
          "endRow":16
       },
       {
-         "direction":globals.FACING_UP,
-         "alignment":"VERT",
+          "direction": DirectionEnum.up,
+         "alignment":RoadAlignmentEnum.vertical,
          "hasStart":true,
          "leftCol":9,
          "rightCol":10,
@@ -108,8 +109,8 @@ export default {
          "endRow":14
       },
       {
-         "direction":globals.FACING_RIGHT,
-         "alignment":"HORI",
+          "direction": DirectionEnum.right,
+         "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
          "topRow":10,
          "bottomRow":11,
@@ -117,8 +118,8 @@ export default {
          "endCol":24
       },
       {
-         "direction":globals.FACING_LEFT,
-         "alignment":"HORI",
+          "direction": DirectionEnum.left,
+         "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":true,
          "topRow":8,
          "bottomRow":9,

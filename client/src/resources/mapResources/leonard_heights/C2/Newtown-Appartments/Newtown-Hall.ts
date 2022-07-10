@@ -1,5 +1,6 @@
-import { EVENT_HAS_NOT_FIRED } from "../../../../../game-data/conditionGlobals";
-import { FACING_UP, FACING_DOWN, FACING_LEFT, FACING_RIGHT, NPC_ANIM_TYPE_SEMI_IDLE } from "../../../../../game-data/globals";
+import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
+import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
+import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
 import { WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
 
@@ -297,13 +298,13 @@ export default {
     ],
     "characters": [
         {
-            "condition": [ EVENT_HAS_NOT_FIRED, UNLOCK_DOOR_TEST ],
-            "anim_type": NPC_ANIM_TYPE_SEMI_IDLE,
+            "condition": [ ConditionType.interactionNotRegistered, UNLOCK_DOOR_TEST ],
+            "anim_type": AnimationTypeEnum.semiIdle,
             "row": 11,
             "col": 3,
             "name": "Impatient businessman",
             "sprite": "business_man.png",
-            "direction": FACING_LEFT,
+            "direction": DirectionEnum.left,
             "action": WAITING_BUSINESSMAN
         }
     ],
@@ -313,37 +314,37 @@ export default {
             "row": 10, 
             "col": 1,
             "destination" : "leonard_heights/Newtown-appartment-1",
-            "direction" : FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "row": 5, 
             "col": 1,
             "destination" : "leonard_heights/Newtown-appartment-2",
-            "direction" : FACING_LEFT
+            "direction": DirectionEnum.left
         },
         {
             "row": 2, 
             "col": 3,
             "destination"  : "leonard_heights/Newtown-appartment-3",
-            "direction": FACING_UP,
+            "direction": DirectionEnum.up
         },
         {
             "row": 5, 
             "col": 4,
             "destination" : "leonard_heights/Newtown-appartment-4",
-            "direction" : FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "row": 10, 
             "col": 4,
             "destination" : "leonard_heights/Newtown-appartment-5",
-            "direction" : FACING_RIGHT
+            "direction": DirectionEnum.right
         },
         {
             "row": 12, 
             "col": 2,
             "destination" : "leonard_heights/C2",
-            "direction" : FACING_DOWN
+            "direction": DirectionEnum.down
         }
     ]
 }
