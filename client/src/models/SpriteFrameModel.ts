@@ -5,5 +5,5 @@ export type SpriteFrameModel = {
     y: number,
     width: number,
     height: number,
-    direction: DirectionEnum
+    direction?: DirectionEnum
 }

@@ -1,0 +1,19 @@
+export enum SceneAnimationType {
+    speak,
+    speakYesNo,
+    move,
+    moveCar,
+    animation,
+    createCar,
+    createObjectSprite,
+    createCharacter,
+    deleteSprite,
+    fadeIn,
+    fadeOut,
+    fadeOutIn,
+    wait,
+    emote,
+    cameraMoveToSprite,
+    cameraMoveToTile,
+    loadMap
+}
