@@ -1,8 +1,7 @@
 import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
 
 export type SceneAnimationModel = {
-    id: string,
-    type: SceneAnimationType,
+    type: SceneAnimationType
 }
 
 export type SpeakScene = SceneAnimationModel & {
@@ -56,7 +55,7 @@ export type CreateCarScene = SceneAnimationModel & {
     roadName: string
 }
 
-export type CreateSprite = SceneAnimationModel & {
+export type CreateSpriteScene = SceneAnimationModel & {
     sprite: string,
     spriteName: string,
     column: number,
@@ -70,6 +69,10 @@ export type DeleteSpriteScene = SceneAnimationModel & {
 }
 
 export type FadeScene = SceneAnimationModel & {
+    sfx: number
+}
+
+export type WaitScene = SceneAnimationModel & {
     milliseconds: number
 }
 
@@ -84,7 +87,7 @@ export type CameraMoveToTileScene = SceneAnimationModel & {
     snapToTile: boolean
 }
 
-export type LoadMap = SceneAnimationModel & {
+export type LoadMapScene = SceneAnimationModel & {
     mapName: string,
     setPlayerSprite: boolean
 }

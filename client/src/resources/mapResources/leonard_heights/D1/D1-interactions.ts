@@ -1,20 +1,24 @@
-import { DEFAULT, EVENT_TALK, SPEAK } from "../../../../game-data/conditionGlobals"
+import { ConditionType } from "../../../../enumerables/ConditionTypeEnum"
+import { InteractionType } from "../../../../enumerables/InteractionType"
+import { SceneAnimationType } from "../../../../enumerables/SceneAnimationTypeEnum"
 
 export const FRIENDLY_CHAD = [
     [
-        [ DEFAULT, false ],
-        [ EVENT_TALK, false, "medium-text-blip.ogg", [
-            [[SPEAK, true, "My bro's having some rough feels man."]],
-            [[SPEAK, true, "We'd really appreciate you helping a bro out."]]
+        InteractionType.talk, false, null, "medium-text-blip.ogg",
+        [ConditionType.default, false],
+        [ [
+            [[SceneAnimationType.speak, true, "My bro's having some rough feels man."]],
+            [[SceneAnimationType.speak, true, "We'd really appreciate you helping a bro out."]]
         ] ]
     ]
 ]
 
 export const WHOLESOME_LIFTER = [
     [
-        [ DEFAULT, false ],
-        [ EVENT_TALK, false, "medium-text-blip.ogg", [
-            [[SPEAK, true, "What could be better than pumping iron with your bros?"]],
+        InteractionType.talk, false, null, "medium-text-blip.ogg",
+        [ConditionType.default, false],
+        [ [
+            [[SceneAnimationType.speak, true, "What could be better than pumping iron with your bros?"]],
         ] ]
     ]
 ]

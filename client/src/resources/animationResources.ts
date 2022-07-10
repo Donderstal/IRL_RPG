@@ -1,7 +1,11 @@
+import type { SpriteAnimationModel } from "../models/SpriteAnimationModel";
+import type { SpriteFrameModel } from "../models/SpriteFrameModel";
+
 const { 
     FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, 
     SHEET_COLUMN_ONE, SHEET_COLUMN_TWO,
-    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT
+    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT,
+    MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET
 } = require('../game-data/globals');
 
 const animationResources = { 
@@ -328,14 +332,9 @@ const animationResources = {
     ]
 }
 
-/**
- * Get the appropriate animation frames based on animation name and sprite derection
- * @param {String} animationName 
- * @param {Number} direction number representing the direction the sprite is currently facing
- */
-const getAnimationFrames = ( animationName, direction = null ) => {
+export const getAnimationByName = ( animationName: string, direction: number = null ): SpriteAnimationModel => {
     if ( animationName in animationResources ) {
-        return animationResources[animationName]
+        return getAnimationModel( animationName );
     } 
     
     let suffix;
@@ -359,16 +358,29 @@ const getAnimationFrames = ( animationName, direction = null ) => {
             break;
     }
     if ( animationName + suffix in animationResources ) {
-        return animationResources[animationName + suffix];        
+        return getAnimationModel(animationName + suffix);        
     }
     else {
         console.log("Error! Animation not found in animationResources")
         console.log("Animation name: " + animationName + suffix )
-        return animationResources["BOP" + suffix]
+        return getAnimationModel( "BOP" + suffix );
     }
 
 }
 
-module.exports = {
-    getAnimationFrames
+const getAnimationModel = ( name: string ): SpriteAnimationModel => {
+    const dto = animationResources[name];
+    const model: SpriteAnimationModel = {
+        name: name,
+        frames: dto.map( ( e ) => {
+            const model: SpriteFrameModel = {
+                x: e.column * MAP_SPRITE_WIDTH_IN_SHEET,
+                y: e.row * MAP_SPRITE_HEIGHT_IN_SHEET,
+                width: MAP_SPRITE_WIDTH_IN_SHEET,
+                height: MAP_SPRITE_HEIGHT_IN_SHEET
+            }
+            return model;
+        } )
+    }
+    return model;
 }

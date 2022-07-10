@@ -1,10 +1,10 @@
 import type { InteractionType } from "../enumerables/InteractionType"
-import type { CinematicSceneModel } from "./CinematicSceneModel"
+import type { CinematicModel } from "./CinematicModel";
 
 export type InteractionModel = {
     type: InteractionType,
     sfx: string,
-    scenes: CinematicSceneModel[];
+    cinematic: CinematicModel;
     shouldBeRegistered: boolean;
     registryKey?: string
 }
