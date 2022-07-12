@@ -1,3 +1,5 @@
+import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
+
 const { getEffectData } = require("../../resources/effectResources");
 const { drawFromImageToCanvas } = require("../../helpers/canvasHelpers");
 const { FRAME_LIMIT, GRID_BLOCK_PX } = require("../../game-data/globals");
@@ -5,8 +7,24 @@ const globals = require("../../game-data/globals");
 /**
  * Effect instances represent a ( part of ) a graphical effect in the game.
  */
-class Effect {
-    constructor( name, x, y ) {
+export class Effect {
+    name: string;
+    x: number;
+    y: number;
+    frameWidth: number;
+    frameHeight: number;
+    width: number;
+    height: number;
+
+    src: string;
+    sheet: HTMLImageElement;
+
+    frames: Frame[];
+    frameCount: number;
+    sheetFrameLimit: number;
+    activeFrameIndex: number;
+    active: boolean;
+    constructor( name: string, x: number, y: number ) {
         this.name   = name;
         this.x      = x;
         this.y      = y;
@@ -19,22 +37,15 @@ class Effect {
     }
 
     get activeFrame( ) { return this.frames[this.activeFrameIndex]; };
-    /**
-     * Call this.pushFramesToList for each object in the given frames array
-     * Set the sheetFrameLimit used in countFrame to the length of the frames array
-     * @param {Object[]} frames 
-     */
-    initialiseAnimationFrames( frames ) {
+
+    initialiseAnimationFrames( frames: { x: number, y: number }[] ): void {
         frames.forEach( ( frameData ) => {
             this.pushFramesToList( frameData );
         })
         this.sheetFrameLimit = frames.length;
     }
-    /**
-     * Instantiate a Frame with the given frameData and push it to this.frames
-     * @param {Object} frameData
-     */
-    pushFramesToList( frameData ) {
+
+    pushFramesToList( frameData: { x: number, y: number } ): void {
         this.frames.push( 
             new Frame( 
                 frameData.x, frameData.y, 
@@ -42,13 +53,8 @@ class Effect {
             )
         )
     }
-    /**
-     * Get the data associated with this.name.
-     * Assign the frame width and frame height from the data object
-     * Assign the width and height of the sprite in canvas from data object
-     * Then call setSprite and initialiseAnimationFrames
-     */
-    setEffectData( ) {
+
+    setEffectData(): void {
         const data      = getEffectData( this.name );
         this.frameWidth = data.frameWidth;
         this.frameHeight = data.frameHeight;
@@ -58,11 +64,8 @@ class Effect {
         this.setSprite( data.src );
         this.initialiseAnimationFrames( data.frames );
     }
-    /**
-     * Increment frameCount. If it is over frame limit,
-     *  reset frameCount and increment activeFrameIndex
-     */
-    countFrame( ) {
+
+    countFrame(): void {
         this.frameCount++ 
         
         if ( this.frameCount >= FRAME_LIMIT ) {
@@ -74,37 +77,23 @@ class Effect {
             }
         }
     }
-    /**
-     * Set this.active to false;
-     */
-    deActivate( ) {
+
+    deActivate(): void {
         this.active = false;
     }
-    /**
-     * Load an Image instance to this.sheet based on the given src.
-     * @param {String} src 
-     */
-    setSprite( src ) {
+
+    setSprite( src: string ): void {
         this.src        = src;
         this.sheet      = globals.PNG_DICTIONARY[this.src];
         this.active     = true;
     }
-    /**
-     * Set this.x and this.y to given values
-     * @param {Number} x 
-     * @param {Number} y 
-     */
-    updateXY( x, y ) {
+
+    updateXY( x: number, y: number ): void {
         this.x = x;
         this.y = y;
     }
-    /**
-     * Call this.updateXY with given arguments.
-     * Then, draw the active frame if the effect is active.
-     * @param {Number} x 
-     * @param {Number} y 
-     */
-    draw( x, y ) {
+
+    draw( x: number, y: number ): void {
         this.updateXY( x, y )
         if ( this.active ) {
             this.activeFrame.draw( this.sheet, this.x, this.y, this.width, this.height );
@@ -113,33 +102,23 @@ class Effect {
     }
 
 }
-/**
- * A Frame instace represents a single step in a Effect animation
- */
+
 class Frame { 
-    constructor( x, y, width, height ) {
-        this.x  = x;
-        this.y  = y;
-        this.width = width;
-        this.height = height;
+    model: SpriteFrameModel
+    constructor( x: number, y: number, width: number, height: number ) {
+        this.model = {
+            x: x,
+            y: y,
+            width: width,
+            height: height
+        }
     }
-    /**
-     * Draw the frame from given sheet at given location
-     * @param {Image} image HTML Image instance
-     * @param {Number} x 
-     * @param {Number} y 
-     * @param {Number} width 
-     * @param {Number} height 
-     */
-    draw( image, x, y, width, height ) {
+
+    draw( image: HTMLImageElement, x: number, y: number, width: number, height: number ): void {
         drawFromImageToCanvas( 
             "FRONT", image, 
-            this.x, this.y, this.width, this.height,
+            this.model.x, this.model.y, this.model.width, this.model.height,
             x, y, width, height
         );
     }
-}
-
-module.exports = {
-    Effect
 }

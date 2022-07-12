@@ -1,8 +1,7 @@
 .DS_Store
 node_modules
 client/node_modules
-client/public/out
-client/public/bundle.*
+client/public
 client/src/resources/mapResources/test
 static
 creds.txt
