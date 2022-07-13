@@ -1,7 +1,12 @@
-const globals = require("../../game-data/globals");
-const { CanvasWithGrid } = require("../core/CanvasWithGrid");
+import globals from "../../game-data/globals";
+import { CanvasWithGrid } from "../core/CanvasWithGrid";
 
-class SpeechBubbleCanvas extends CanvasWithGrid {
+export class SpeechBubbleCanvas extends CanvasWithGrid {
+    canvas: HTMLCanvasElement;
+    isActive: boolean;
+
+    columns: number;
+    rows: number;
     constructor( x, y, ctx, canvas ) {
         super( x, y, ctx );
 
@@ -13,8 +18,4 @@ class SpeechBubbleCanvas extends CanvasWithGrid {
 
         this.initGrid( this.rows, this.columns );
     }
-}
-
-module.exports = {
-    SpeechBubbleCanvas
 }

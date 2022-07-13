@@ -1,19 +1,16 @@
-const canvas = require( '../../helpers/canvasHelpers' );
-const globals = require( '../../game-data/globals' );
-const { 
-    MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX,
-    STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT
-} = require( '../../game-data/globals' );
-const { 
-    BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_BOTTOM, 
-    BUBBLE_TOP, BUBBLE_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT, BUBBLE_MIDDLE 
-} = require('../../game-data/textboxGlobals');
-const { TypeWriter } = require('../../helpers/TypeWriter');
-const { SPEAK_YES_NO } = require('../../game-data/conditionGlobals');
-const { INTERACTION_YES, INTERACTION_NO } = require('../../game-data/interactionGlobals');
+import globals from '../../game-data/globals';
+import canvas from '../../helpers/canvasHelpers';
+
+import { MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT } from '../../game-data/globals';
+import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_TOP, BUBBLE_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT, BUBBLE_MIDDLE } from '../../game-data/textboxGlobals';
+import { INTERACTION_YES, INTERACTION_NO } from '../../game-data/interactionGlobals';
+
+import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
+import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
+import { TypeWriter } from "../../helpers/TypeWriter";
 
 const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
-    let bubbleLocation = {
+    const bubbleLocation = {
         'x': globals.SCREEN.MOBILE ? ( 0 + ( MAX_BUBBLE_WIDTH - dimensions.width ) / 2 ) : spawnLocation.x,
         'y': globals.SCREEN.MOBILE ? 0 : spawnLocation.y - dimensions.height,
         'position': "UP-RIGHT"
@@ -24,7 +21,7 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
     }
     if ( bubbleLocation.y < 0 ) {
         bubbleLocation.y = spawnLocation.y + STRD_SPRITE_HEIGHT;
-        bubbleLocation.position = bubbleLocation.position == "UP-RIGHT" ? "DOWN-RIGHT" : "DOWN-LEFT";
+        bubbleLocation.position = bubbleLocation.position === "UP-RIGHT" ? "DOWN-RIGHT" : "DOWN-LEFT";
     }
     return bubbleLocation;
 }
@@ -32,8 +29,8 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
 const getSpeechBubbleDimensions = ( contents ) => {
     const text = canvas.breakTextIntoLines( contents.text, LARGE_FONT_SIZE )
     const ctx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()  
-    let textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (contents.name != undefined ? SMALL_FONT_LINE_HEIGHT : 0);
-    let firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
+    const  textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (contents.name !== undefined ? SMALL_FONT_LINE_HEIGHT : 0);
+    const firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
     return {
         'textLines' : text.length,
         'width' : text.length > 1 ? MAX_BUBBLE_WIDTH : Math.ceil(firstLineWidth / GRID_BLOCK_PX) * GRID_BLOCK_PX,
@@ -41,7 +38,36 @@ const getSpeechBubbleDimensions = ( contents ) => {
     }
 }
 
-class SpeechBubble {
+export class SpeechBubble {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    position: string;
+
+    id: string;
+    type: SceneAnimationType;
+    subtitleBubble: boolean;
+    hasHeader: boolean;
+
+    textLines: [];
+    headerText: string;
+
+    innerCanvas: HTMLCanvasElement;
+    innerCtx: CanvasRenderingContext2D;
+    typeWriter: TypeWriter;
+
+    columns: number;
+    rows: number;
+
+    bubbleY: number;
+    middleX: number;
+    yesBubbleX: number;
+    noBubbleX: number;
+    activeButton: InteractionAnswer;
+
+    moving: boolean;
+    destinationY: number;
     constructor( location, contents, id, type, subtitleBubble = false ) {
         const dimensions = subtitleBubble
             ? { textLines: 1, width: globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : globals.CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
@@ -68,18 +94,17 @@ class SpeechBubble {
         this.innerCanvas = document.createElement('canvas');
         this.innerCanvas.width = this.width;
         this.innerCanvas.height = this.height;
-        this.innerCtx = this.innerCanvas.getContext('2d');
+        this.innerCtx = this.innerCanvas.getContext( '2d' );
 
-        this.action = contents;
         if ( contents.name ) {
             this.setHeader( contents.name + ": " )
         } 
-        if ( this.type == SPEAK_YES_NO ) {
+        if ( this.type === SceneAnimationType.speakYesNo ) {
             this.bubbleY    = this.y + this.height;
             this.middleX    = this.x + (this.width / 2);
             this.yesBubbleX = this.middleX - GRID_BLOCK_PX;
             this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
-            this.activeButton = INTERACTION_YES;
+            this.activeButton = InteractionAnswer.yes
         }
         if ( subtitleBubble ) {
             this.setMoveToY( this.y - this.height );            
@@ -87,10 +112,10 @@ class SpeechBubble {
 
         this.draw( );
     }
-    set text( text ) {             
-        this.typeWriter = new TypeWriter( text, !this.subtitleBubble );
+    set text( text: any ) {             
+        this.typeWriter = new TypeWriter( text );
     }
-    get text( ) {
+    get text(): any {
         return this.typeWriter.activeText;
     }
 
@@ -99,14 +124,15 @@ class SpeechBubble {
     get textY() { return this.headerY + LARGE_FONT_LINE_HEIGHT };
     get horiFlip() { return this.position.includes("LEFT") };
     get vertFlip() { return this.position.includes("DOWN") };
+    get destinationYIsUp() { return this.y > this.destinationY; };
 
-    setWidth( width ) {
+    setWidth( width ): void {
         this.width = width;
         this.innerCanvas.width = width;
     }
 
-    drawBubblePart( name, x, y ) {
-        let pngs = globals.PNG_DICTIONARY;
+    drawBubblePart( name: string, x: number, y: number ): void {
+        const pngs = globals.PNG_DICTIONARY;
         this.innerCtx.drawImage(
             pngs[name],
             0, 0,
@@ -116,67 +142,63 @@ class SpeechBubble {
         );
     }
 
-    getBubblePart( col, row ) {
-        if ( col == 1 && row == 1 ) {
+    getBubblePart( column: number, row: number ): string {
+        if ( column === 1 && row === 1 ) {
             return BUBBLE_LEFT_TOP;
         }
-        else if ( col == this.columns && row == 1 ) {
+        else if ( column === this.columns && row === 1 ) {
             return BUBBLE_RIGHT_TOP;
         }
-        else if ( row == 1 ) {
+        else if ( row === 1 ) {
             return BUBBLE_TOP
         }
-
-        if ( col == 1 && row != 1 && row != this.rows ) {
+        else if ( column === 1 && row !== 1 && row !== this.rows ) {
             return BUBBLE_LEFT;
         }
-        else if ( col == this.columns && row != 1 && row != this.rows ) {
+        else if ( column === this.columns && row !== 1 && row !== this.rows ) {
             return BUBBLE_RIGHT;
         }
-        else if ( row != 1 && row != this.rows  ) {
+        else if ( row !== 1 && row !== this.rows  ) {
             return BUBBLE_MIDDLE;
         }
-
-        if ( col == 1 && row == this.rows ) {
+        else if ( column === 1 && row === this.rows ) {
             return BUBBLE_LEFT_BOTTOM;
         }
-        else if ( col == this.columns && row == this.rows ) {
+        else if ( column === this.columns && row === this.rows ) {
             return BUBBLE_RIGHT_BOTTOM;
         }
-        else if ( row == this.rows  ) {
+        else if ( row === this.rows  ) {
             return BUBBLE_BOTTOM
         }
-
-        console.log('no bubble part for position at col ' + col + ' , row ' + row)
     }
 
-    drawBox( ) {
+    drawBox( ): void {
         for( let row = 1; row <= this.rows; row++ ) {
-            for( let col = 1; col <= this.columns; col++ ) {
-                this.drawBubblePart( this.getBubblePart( col, row ), (GRID_BLOCK_PX * col) - GRID_BLOCK_PX, (GRID_BLOCK_PX * row) - GRID_BLOCK_PX );
+            for( let column = 1; column <= this.columns; column++ ) {
+                this.drawBubblePart( this.getBubblePart( column, row ), (GRID_BLOCK_PX * column) - GRID_BLOCK_PX, (GRID_BLOCK_PX * row) - GRID_BLOCK_PX );
             }
         }
     }
 
-    writeHeader( ) {
+    writeHeader( ): void {
         canvas.writeTextLine( 
             this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
         );
     }
 
-    setHeader( text ) {
+    setHeader( text: string ): void {
         this.hasHeader  = true;
         this.headerText = text;
     }
 
-    draw( ) {
+    draw( ): void {
         this.drawBox( );
         this.copyBubbleToGameCanvas( );
         if ( this.hasHeader ) {
             this.writeHeader( );
         }
         this.writeText( );
-        if ( this.type == SPEAK_YES_NO && !this.typeWriter.isWriting ) {
+        if ( this.type === SceneAnimationType.speakYesNo && !this.typeWriter.isWriting ) {
             this.drawButtons( );
         }
         if ( this.moving ) {
@@ -184,13 +206,12 @@ class SpeechBubble {
         }
     }
 
-    setMoveToY( y ) {
+    setMoveToY( y: number ): void {
         this.moving = true;
         this.destinationY = y;
-        this.destinationYIsUp = this.y > this.destinationY;
     }
 
-    moveTo( ) {
+    moveTo(): void {
         if ( this.y > this.destinationY && this.destinationYIsUp ) {
             this.y -= (GRID_BLOCK_PX / 8);          
         }
@@ -202,13 +223,13 @@ class SpeechBubble {
         }
     }
 
-    unsetMoveTo( ) {
+    unsetMoveTo(): void {
         this.y = this.destinationY;
         this.moving = false;
-        this.destinationY = false;
+        this.destinationY = null;
     }
 
-    writeText( ) {
+    writeText(): void {
         const canvasCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext();
         canvas.setFont(LARGE_FONT_SIZE, canvasCtx);
 
@@ -229,18 +250,18 @@ class SpeechBubble {
         }
     }
 
-    drawButtons( ) {
-        let pngs = globals.PNG_DICTIONARY;
-        let frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+    drawButtons(): void {
+        const pngs = globals.PNG_DICTIONARY;
+        const frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
         frontCtx.drawImage(
-            this.activeButton == INTERACTION_YES ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
+            this.activeButton === InteractionAnswer.yes ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
             0, 0,
             globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
             this.yesBubbleX, this.bubbleY,
             GRID_BLOCK_PX, GRID_BLOCK_PX
         );
         frontCtx.drawImage(
-            this.activeButton == INTERACTION_NO ? pngs[BUBBLE_NO] : pngs[BUBBLE_UNSELECTED],
+            this.activeButton === InteractionAnswer.no ? pngs[BUBBLE_NO] : pngs[BUBBLE_UNSELECTED],
             0, 0,
             globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
             this.noBubbleX, this.bubbleY,
@@ -248,8 +269,8 @@ class SpeechBubble {
         );
     }
 
-    copyBubbleToGameCanvas( ) {
-        let frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+    copyBubbleToGameCanvas(): void {
+        const frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
         frontCtx.save( );
         frontCtx.scale( this.horiFlip ? -1 : 1, this.vertFlip ? -1 : 1 );
         frontCtx.drawImage(
@@ -260,11 +281,7 @@ class SpeechBubble {
         frontCtx.restore( );
     }
 
-    moveCursor( ) {
-        this.activeButton = this.activeButton == INTERACTION_YES ? INTERACTION_NO : INTERACTION_YES;
+    moveCursor(): void {
+        this.activeButton = this.activeButton === INTERACTION_YES ? INTERACTION_NO : INTERACTION_YES;
     }
-}
-
-module.exports = {
-    SpeechBubble
 }

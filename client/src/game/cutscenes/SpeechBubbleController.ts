@@ -1,24 +1,34 @@
-const globals = require("../../game-data/globals");
-const { getUniqueId } = require("../../helpers/utilFunctions");
-const { SpeechBubble } = require("./SpeechBubble");
-const { SPEAK_YES_NO, SPEAK } = require("../../game-data/conditionGlobals");
-const { Emote } = require("./Emote");
+import globals from "../../game-data/globals";
+import { getUniqueId } from "../../helpers/utilFunctions";
+import { SpeechBubble } from "./SpeechBubble";
+import { Emote } from "./Emote";
+import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 
-class SpeechBubbleController {
+export class SpeechBubbleController {
+    emoteIds: string[];
+    activeBubbles: { [key: string]: SpeechBubble | Emote };
+    activeBubbleIds: string[];
+    subtitleBubbleId: string;
+    subtitleBubble: SpeechBubble;
     constructor( ) {
         this.emoteIds = [];
-        this.activeBubbles = {};
+        this.activeBubbles = null;
         this.activeBubbleIds = [];
-        this.subtitleBubbleId = false;
-        this.subtitleBubble = false;
+        this.subtitleBubbleId = null;
+        this.subtitleBubble = null;
     }
 
-    get nonEmoteIds( ) { return this.activeBubbleIds.filter((e) => { return this.emoteIds.indexOf(e) == -1 })}
-    get isActive() { return this.activeBubbleIds.length > 0 || this.subtitleBubble != false; }
-    get selectionBubble( ) { return Object.values(this.activeBubbles).find(x => x.type === SPEAK_YES_NO); }
-    get isWriting() { 
+    get nonEmoteIds( ): string[] { return this.activeBubbleIds.filter((e) => { return this.emoteIds.indexOf(e) === -1 })}
+    get isActive(): boolean { return this.activeBubbleIds.length > 0 || this.subtitleBubble !== null; }
+    get selectionBubble(): SpeechBubble {
+        for ( const key in this.activeBubbles ) {
+            if ( this.activeBubbles[key].type === SceneAnimationType.speakYesNo )
+                return this.activeBubbles[key] as SpeechBubble;
+        }
+    }
+    get isWriting(): boolean { 
         return this.activeBubbleIds.filter(
-            (e) => { return this.emoteIds.indexOf(e) == -1 && this.activeBubbles[e].typeWriter.isWriting }
+            ( e ) => { return this.emoteIds.indexOf( e ) === -1 && (this.activeBubbles[e] as SpeechBubble).typeWriter.isWriting }
         ).length > 0;
     }
 
@@ -41,15 +51,15 @@ class SpeechBubbleController {
         this.subtitleBubbleId = getUniqueId(this.activeBubbleIds);
         this.subtitleBubble = new SpeechBubble( 
             {'x': 0, 'y': globals.CANVAS_HEIGHT - globals.BATTLE_FONT_LINE_HEIGHT}, 
-            contents, this.subtitleBubbleId, SPEAK, true
+            contents, this.subtitleBubbleId, SceneAnimationType.speak, true
         );
     }
 
     clearSubtitleBubble( ) {
         this.subtitleBubble.setMoveToY( globals.SCREEN.MOBILE ? screen.height : globals.CANVAS_HEIGHT );
         setTimeout(()=>{
-            this.subtitleBubble = false;       
-            this.subtitleBubbleId = false;
+            this.subtitleBubble = null;       
+            this.subtitleBubbleId = null;     
         }, 1000);
     }
 
@@ -58,13 +68,8 @@ class SpeechBubbleController {
     }
 
     unsetActiveBubble( id ) {
-        this.activeBubbleIds = this.activeBubbleIds.filter((e)=>{return e != id})
-        if ( this.emoteIds.indexOf(id) != -1 ) {
-            this.emoteIds = this.emoteIds.filter((e)=>{return e != id})
-        }
-        else if ( this.nonEmoteIds.indexOf(id) != -1 ) {
-            this.nonEmoteIds = this.nonEmoteIds.filter((e)=>{return e != id})
-        }
+        this.activeBubbleIds = this.activeBubbleIds.filter( ( e ) => { return e !== id; } )
+        this.emoteIds = this.emoteIds.filter( ( e ) => { return e !== id; } );
         delete this.activeBubbles[id];
     }
 
@@ -72,13 +77,13 @@ class SpeechBubbleController {
         if ( this.isActive ) {
             if ( this.isWriting ) {
                 this.nonEmoteIds.forEach((id) =>{
-                    this.activeBubbles[id].typeWriter.displayFullText( );
+                    ( this.activeBubbles[id] as SpeechBubble ).typeWriter.displayFullText( );
                 });
                 globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3");
             }
             else if( this.selectionBubble ){
                 globals.GAME.activeAction.registerSelection( this.selectionBubble.activeButton );
-                let animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SPEAK_YES_NO);
+                const animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SceneAnimationType.speakYesNo);
                 animation.setSelection( this.selectionBubble.activeButton );
                 this.clearActiveBubbles( );
             }
@@ -96,7 +101,7 @@ class SpeechBubbleController {
     }
 
     clearActiveBubbles( ) {
-        this.activeBubbles = { };
+        this.activeBubbles = null;
         this.activeBubbleIds = [];
         this.emoteIds = [];
     }
@@ -114,8 +119,4 @@ class SpeechBubbleController {
             }
         }
     }
-}
-
-module.exports = {
-    SpeechBubbleController
 }

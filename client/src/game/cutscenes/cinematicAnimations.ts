@@ -1,8 +1,8 @@
-const globals = require('../../game-data/globals');
-const canvas = require('../../helpers/canvasHelpers');
-const { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } = require('../map/mapAnimation');
+import globals from '../../game-data/globals';
+import canvas from '../../helpers/canvasHelpers';
+import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
-const handleCinematicAnimations = ( GAME ) => {
+export const handleCinematicAnimations = ( GAME ): void => {
     const PLAYER = GAME.PLAYER;
     canvas.clearEntireCanvas("FRONT");
 
@@ -28,8 +28,4 @@ const handleCinematicAnimations = ( GAME ) => {
     if ( GAME.cameraFocus.movingToNewFocus ) {
         GAME.cameraFocus.moveToNewFocus( );
     }
-}
-
-module.exports = {
-    handleCinematicAnimations
 }
