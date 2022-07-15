@@ -6,4 +6,6 @@ export type SpriteFrameModel = {
     width: number,
     height: number,
     direction?: DirectionEnum
+    column?: number;
+    row?: number;
 }

@@ -1,6 +1,6 @@
-﻿import type { CharacterModel } from "./CharacterModel";
+﻿import type { CanvasObjectModel } from "./CanvasObjectModel";
 import type { DoorModel } from "./DoorModel";
-import type { MapObjectModel } from "./MapObjectModel";
+import type { InteractionModel } from "./InteractionModel";
 import type { RoadModel } from "./RoadModel";
 import type { SpawnPointModel } from "./SpawnPointModel";
 import type { TileModel } from "./TileModel";
@@ -13,17 +13,18 @@ export type MapModel = {
 
     outdoors: boolean;
     music?: string;
+    neighbours: { left: string, up: string, right: string, down: string}
+    playerStart: any;
 
     grid: TileModel[];
     frontGrid: TileModel[];
 
-    characters: CharacterModel[];
-    frontCharacters: CharacterModel[];
-
-    mapObjects: MapObjectModel[];
-    frontMapObjects: MapObjectModel[];
+    sprites: CanvasObjectModel[];
+    frontSprites: CanvasObjectModel[];
 
     spawnPoints: SpawnPointModel[];
     roads: RoadModel[];
     doors: DoorModel[];
+    actions: { column: number, row: number, action: InteractionModel }[];
+    savepoint: any;
 }

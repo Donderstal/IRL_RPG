@@ -1,3 +1,4 @@
+import type { InteractionModel } from "./InteractionModel";
 import type { MapModel } from "./MapModel";
 
 export type NeighbourhoodModel = {
@@ -6,11 +7,11 @@ export type NeighbourhoodModel = {
     horizontalSlots: string[];
     verticalSlots: string[];
 
-    charcters?: string[];
+    characterTypes?: string[];
     characterSpawnRate?: number;
-    cars?: string[];
+    carTypes?: string[];
     carSpawnRate?: number;
 
-    spawnableActions?: string[];
+    spawnableActions?: InteractionModel[];
     mapDictionary: { [key: string]: MapModel };
 }

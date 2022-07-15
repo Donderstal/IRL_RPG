@@ -1,8 +1,8 @@
 import type { CinematicTrigger } from "../enumerables/CinematicTriggerEnum";
-import type { CinematicModel } from "./CinematicModel";
+import type { InteractionModel } from "./InteractionModel";
 
 export type StoryEventModel = {
-    trigger: CinematicTrigger[],
+    trigger: CinematicTrigger,
     mapName: string,
-    cinematic: CinematicModel
+    interaction: InteractionModel
 }

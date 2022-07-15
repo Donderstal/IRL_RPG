@@ -1,7 +1,9 @@
 import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
 
 export type SceneAnimationModel = {
-    type: SceneAnimationType
+    type: SceneAnimationType,
+    waitForAnimationEnd: boolean,
+    spriteId?: string
 }
 
 export type SpeakScene = SceneAnimationModel & {
@@ -38,6 +40,7 @@ export type MoveScene = SceneAnimationModel & {
 
 export type MoveCarScene = SceneAnimationModel & {
     spriteName: string,
+    roadName: string,
     column: number,
     row: number,
     direction: number
@@ -89,5 +92,6 @@ export type CameraMoveToTileScene = SceneAnimationModel & {
 
 export type LoadMapScene = SceneAnimationModel & {
     mapName: string,
-    setPlayerSprite: boolean
+    setPlayerSprite: boolean,
+    playerSpriteLocation: {}
 }
