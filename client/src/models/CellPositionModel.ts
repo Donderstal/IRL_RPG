@@ -1,7 +1,8 @@
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
+import type { OutOfMapEnum } from "../enumerables/OutOfMapEnum";
 
 export type CellPosition = {
-    column: number;
-    row: number;
+    column: number|OutOfMapEnum;
+    row: number | OutOfMapEnum;
     direction?: DirectionEnum
 }

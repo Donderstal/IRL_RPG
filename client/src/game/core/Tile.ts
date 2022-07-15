@@ -25,6 +25,7 @@ export class Tile {
 
     model: TileModel;
     blocked: boolean;
+    offScreen: boolean;
     movementCost: number;
 
     hasEvent: boolean;

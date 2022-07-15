@@ -21,4 +21,7 @@ export type CanvasObjectModel = {
     condition?: ConditionModel;
     hasAction: boolean;
     action?: InteractionModel;
+
+    hasDoor: boolean;
+    destination?: string;
 }

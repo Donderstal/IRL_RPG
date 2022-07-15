@@ -73,7 +73,7 @@ export class Grid {
         }
     }
 
-    drawRowInMap( currentRow: number, tileSheet: HTMLImageElement ) {
+    drawRowInMap( currentRow: Tile[], tileSheet: HTMLImageElement ) {
         for ( let j = 0; j < this.columns; j++ ) {
             const currentTile = currentRow[j]
             currentTile.drawTileInMap( tileSheet )

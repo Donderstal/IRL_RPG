@@ -1,6 +1,9 @@
 import type { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
+import type { MapModel } from '../../models/MapModel';
 import type { TileModel } from '../../models/TileModel';
+import type { TilesheetModel } from '../../models/TilesheetModel';
 import { Grid } from './Grid';
+import type { Sprite } from './Sprite';
 import type { Tile } from './Tile';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
@@ -14,6 +17,10 @@ export class CanvasWithGrid {
     ctx: CanvasRenderingContext2D;
     grid: Grid;
     sheetImage: HTMLImageElement;
+    sheetModel: TilesheetModel;
+    model: MapModel;
+    playerSprite: Sprite;
+    allSprites: Sprite[];
     constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
         this.x = x;
         this.y = y;
@@ -40,8 +47,9 @@ export class CanvasWithGrid {
         return this.grid.getTileAtCell( column, row );
     };
 
-    drawMapFromGridData( image: HTMLImageElement ): void {
-        this.sheetImage = image;
-        this.grid.drawMap( this.sheetImage );
+    drawMapFromGridData( ): void {
+        this.grid.drawMap( this.sheetModel.image );
     }    
+
+    clearMap() { }
 };

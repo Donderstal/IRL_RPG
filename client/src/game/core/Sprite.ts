@@ -2,7 +2,7 @@ import canvasHelpers from '../../helpers/canvasHelpers'
 import globals from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { getAnimationByName } from '../../resources/animationResources'
-import { STRD_SPRITE_WIDTH, STRD_SPRITE_HEIGHT, GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
+import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/map-ui/movementChecker'
 import { Destination } from '../map/map-classes/Destination'
 import { SpriteState } from '../../helpers/SpriteState'
@@ -12,11 +12,12 @@ import type { AnimationScriptModel } from '../../models/AnimationScriptModel'
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum'
-import type { MapObjectSpriteModel } from '../../models/MapObjectSpriteModel'
 import { MovementType } from '../../enumerables/MovementTypeEnum'
 import type { GridCellModel } from '../../models/GridCellModel'
 import type { SpriteFrameModel } from '../../models/SpriteFrameModel'
 import type { Tile } from './Tile'
+import type { SpriteDataModel } from '../../models/SpriteDataModel'
+import { SpriteSheetAlignmentEnum } from '../../enumerables/SpriteSheetAlignmentEnum'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -30,10 +31,14 @@ export class Sprite {
     width: number;
     height: number;
 
+    model: SpriteDataModel;
+    activeFrames: SpriteFrameModel[];
+
     sheetFrameLimit: number;
     frameCount: number;
     sheetPosition: number;
     direction: DirectionEnum;
+    previousDirection: DirectionEnum;
     spriteWidthInSheet: number;
     spriteHeightInSheet: number;
 
@@ -54,26 +59,18 @@ export class Sprite {
     type: string;
     sfx: string;
     isCar: boolean;
-    model: {};
 
-    constructor( tile: Tile, spriteSize: any, image: HTMLImageElement, direction: DirectionEnum, isPlayer: boolean ) {   
-        if ( spriteSize == "STRD" ) {
-            this.width   = STRD_SPRITE_WIDTH;
-            this.height  = STRD_SPRITE_HEIGHT;            
-        }
-        else {
-            this.width  = spriteSize.width;
-            this.height = spriteSize.height;
-        }
+    constructor( tile: Tile, model: SpriteDataModel, direction: DirectionEnum, isPlayer: boolean ) {   
+        this.model = model;
+        this.setDimensions();
 
         this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction      = direction != null ? direction : 0
-        this.sheet          = image;
+        this.direction = direction != null ? direction : 0;
+        this.previousDirection = direction != null ? direction : 0;
         this.destination    = false;
-        this.animationScript= null;;
         this.activeEffect   = { active: false };
         this.isPlayer       = isPlayer;
         this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
@@ -87,17 +84,64 @@ export class Sprite {
     get centerX(): number { return this.x + ( this.width / 2 ); };
     get baseY(): number { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
     get topY(): number{ return this.top + ( GRID_BLOCK_PX / 2 ); };
-    get left: number { return this.x; };
-    get top: number { return this.y; };
-    get right: number { return this.x + this.width; };
-    get bottom: number { return this.y + this.height; };
-    get standing(): boolean { return ( this.model as MapObjectSpriteModel ).groundedAtBottom || (this.type != "object" && this.type != 'car') };
+    get left(): number { return this.x; };
+    get top(): number { return this.y; };
+    get right(): number { return this.x + this.width; };
+    get bottom(): number { return this.y + this.height; };
+    get standing(): boolean { return this.model.groundedAtBottom || (this.type != "object" && this.type != 'car') };
     get dynamicTop( ): number { return this.standing ? this.baseY - this.speed : this.topY };
     get noCollision(): boolean {
-        return ( this.model as MapObjectSpriteModel ).onBackground || ( this.model as MapObjectSpriteModel ).notGrounded
-            || ( this.movementType == MovementType.flying && this.State.is( SpriteStateEnum.moving ) )
+        return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.State.is( SpriteStateEnum.moving ) )
     }
 
+    changeDirection( direction: DirectionEnum ): void {
+        this.previousDirection = this.direction;
+        this.direction = direction;
+        if ( direction !== this.previousDirection && this.model.dimensionalAlignment !== SpriteSheetAlignmentEnum.standard ) {
+            this.setDimensions();
+        }
+    }
+
+    setDimensions(): void {
+        let model: SpriteDataModel = this.model;
+        switch ( model.dimensionalAlignment ) {
+            case SpriteSheetAlignmentEnum.standard:
+                this.width = model.widthBlocks * GRID_BLOCK_PX;
+                this.height = model.heightBlocks * GRID_BLOCK_PX;
+                break;
+            case SpriteSheetAlignmentEnum.horiVert:
+                if ( this.direction === DirectionEnum.up || this.direction === DirectionEnum.down ) {
+                    this.width = model.vertWidthBlocks * GRID_BLOCK_PX;
+                    this.height = model.vertHeightBlocks * GRID_BLOCK_PX;
+                }
+                else {
+                    this.width = model.horiWidthBlocks * GRID_BLOCK_PX;
+                    this.height = model.horiHeightBlocks * GRID_BLOCK_PX;
+                }
+                break;
+        }
+    }
+
+    setActiveFrames(): void {
+        switch ( this.direction ) {
+            case DirectionEnum.left:
+                this.activeFrames = this.model.movementFrames[this.direction];
+                break;
+            case DirectionEnum.up:
+                this.activeFrames = this.model.movementFrames[this.direction];
+                break;
+            case DirectionEnum.right:
+                this.activeFrames = this.model.movementFrames[this.direction];
+                break;
+            case DirectionEnum.down:
+                this.activeFrames = this.model.movementFrames[this.direction];
+                break;
+            default:
+                break;
+        }
+
+        this.sheetFrameLimit = this.activeFrames.length
+    }
 
     setSpriteToGrid( tile: Tile ): void {
         this.row = tile.row;
@@ -159,7 +203,7 @@ export class Sprite {
         this.checkForMoveToDestination( );
         this.checkForAnimation( );
 
-        this.updateCell( )
+        this.updateCell()
     }
 
     updateState(): void {
@@ -313,7 +357,7 @@ export class Sprite {
     }
 
     moveSprite( direction: DirectionEnum, movementSpeed: number = this.speed ): void {
-        this.direction = direction;
+        this.changeDirection( direction );
         if ( direction == DirectionEnum.left ) {
             this.x -= movementSpeed;
         }

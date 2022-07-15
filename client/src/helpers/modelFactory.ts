@@ -1,5 +1,3 @@
-import type { CharacterModel } from "../models/CharacterModel";
-import type { MapObjectModel } from "../models/MapObjectModel";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import type { SpawnPointModel } from "../models/SpawnPointModel";
@@ -18,11 +16,14 @@ import type { InteractionModel } from "../models/InteractionModel";
 import type { GraphicEffectModel } from "../models/GraphicEffectModel";
 import type { SpriteFrameModel } from "../models/SpriteFrameModel";
 import type { ItemModel } from "../models/ItemModel";
+import type { GridCellModel } from "../models/GridCellModel";
+import type { CanvasObjectModel } from "../models/CanvasObjectModel";
+import { getDataModelByKey } from "../resources/spriteDataResources";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
-        name: mapData.name == undefined ? mapData.mapName : mapData.name,
-        columns: mapData.columns == undefined ? mapData.cols : mapData.columns,
+        name: mapData.mapName,
+        columns: mapData.columns,
         rows: mapData.rows,
 
         tileSet: mapData.tileSet,
@@ -34,18 +35,8 @@ export const initMapModel = ( mapData ): MapModel => {
             ? mapData.frontGrid.map( ( tile ): TileModel => { return initTileModel( tile ) } )
             : mapData.grid.map( (): TileModel => { return initTileModel( "E" ) } ),
 
-        characters: mapData.characters != undefined
-            ? mapData.characters.map( ( character ): CharacterModel => { return initCharacterModel( character ) } )
-            : [],
-        mapObjects: mapData.mapObjects != undefined
-            ? mapData.mapObjects.map( ( mapObject ): MapObjectModel => { return initMapObjectModel( mapObject ) } )
-            : [],
-        frontCharacters: mapData.frontCharacters != undefined
-            ? mapData.frontCharacters.map( ( character ): CharacterModel => { return initCharacterModel( character ) } )
-            : [],
-        frontMapObjects: mapData.frontMapObjects != undefined
-            ? mapData.frontMapObjects.map( ( mapObject ): MapObjectModel => { return initMapObjectModel( mapObject ) } )
-            : [],
+        sprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
+        frontSprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
 
         spawnPoints: mapData.spawnPoints != undefined
             ? mapData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint ) } )
@@ -63,15 +54,22 @@ export const initMapModel = ( mapData ): MapModel => {
 export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel => {
     let mapDictionary = {};
     Object.keys(neighbourhoodData.mapDictionary).forEach( ( key ) => {
-        mapDictionary[key] = initMapModel( neighbourhoodData.mapDictionary [key] );
+        mapDictionary[key] = initMapModel( neighbourhoodData.mapDictionary[key] );
     } )
     const neighbourhoodModel: NeighbourhoodModel = {
         name: neighbourhoodData.name,
-
+        music: neighbourhoodData.music,
         horizontalSlots: neighbourhoodData.horizontal_slots,
         verticalSlots: neighbourhoodData.vertical_slots,
 
-        mapDictionary: mapDictionary
+        characterTypes: neighbourhoodData.characters,
+        characterSpawnRate: neighbourhoodData.character_spawn_rate,
+        carTypes: neighbourhoodData.cars,
+        carSpawnRate: neighbourhoodData.car_spawn_rate,
+
+        spawnableActions: neighbourhoodData.spawnable_actions.map( ( e ) => { return initInteractionModel( e ); }),
+
+        mapDictionary: mapDictionary,
     };
     return neighbourhoodModel;
 }
@@ -127,25 +125,34 @@ export const initSpawnPointModel = ( spawnPointData ): SpawnPointModel => {
     return spawnPointModel;
 }
 
-export const initCharacterModel = ( characterData ): CharacterModel => {
-    const characterModel: CharacterModel = {
-        animation_type: characterData.anim_type,
-        sprite: characterData.sprite,
-        row: characterData.row,
-        column: characterData.column == undefined ? characterData.col : characterData.column,
-        direction: directionStringHelper( characterData.direction )
-    };
-    return characterModel;
-}
+export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
+    const model: CanvasObjectModel = {
+        type: objectData.type,
+        row: objectData.row,
+        column: objectData.column,
 
-export const initMapObjectModel = ( mapObjectData ): MapObjectModel => {
-    const mapObjectModel: MapObjectModel = {
-        type: mapObjectData.type,
-        row: mapObjectData.row,
-        column: mapObjectData.column == undefined ? mapObjectData.col : mapObjectData.column,
-        direction: mapObjectData.direction == undefined ? DirectionEnum.down : directionStringHelper( mapObjectData.direction )
-    };
-    return mapObjectModel;
+        hasCondition: objectData.condition !== undefined,
+        hasAction: objectData.action !== undefined,
+        hasDoor: objectData.destination !== undefined,
+        spriteDataModel: getDataModelByKey( objectData.type ),
+
+        direction: objectData.direction,
+        animationType: objectData.anim_type,
+        movementType: objectData.move_type,
+        sfx: objectData.sfx
+    }
+
+    if ( model.hasAction ) {
+        model.action = initInteractionModel( objectData.action );
+    }
+    if ( model.hasCondition ) {
+        model.condition = initConditionModel( objectData.condition );
+    }
+    if ( model.hasDoor ) {
+        model.destination = objectData.destination
+    }
+
+    return model;
 }
 
 export const initDoorModel = ( doorData ): DoorModel => {
@@ -192,123 +199,101 @@ export const initCinematicSceneModel = ( sceneData ): CinematicSceneModel => {
 
 export const initSceneAnimationModel = ( animationData ): SceneAnimationModel => {
     const type = animationData[0] as SceneAnimationType;
+    var model: SceneAnimationModel = {
+        type: type,
+        waitForAnimationEnd: animationData[1]
+    };
+    var typedModel = null;
     switch ( type ) {
         case SceneAnimationType.speak:
-            var speak: SpeakScene = {
-                type: type,
-                text: animationData[1],
-                spriteName: animationData[2],
-                speakWith: animationData[3],
-                sfx: animationData[4]
-            }
-            return speak;
+            typedModel = model as SpeakYesNoScene;
+            typedModel.text = animationData[2];
+            typedModel.spriteName = animationData[3];
+            typedModel.speakWith = animationData[4];
+            typedModel.sfx = animationData[5];
+            break;
         case SceneAnimationType.speakYesNo:
-            var speakYesNo: SpeakYesNoScene = {
-                type: type,
-                text: animationData[1],
-                pathYes: animationData[2],
-                pathNo: animationData[3],
-                spriteName: animationData[4],
-                speakWith: animationData[5],
-                sfx: animationData[6]
-            }
-            return speakYesNo;
+            typedModel = model as SpeakYesNoScene;
+            typedModel.text = animationData[2];
+            typedModel.pathYes = animationData[3];
+            typedModel.pathNo = animationData[4];
+            typedModel.spriteName = animationData[5];
+            typedModel.speakWith = animationData[6];
+            typedModel.sfx = animationData[7];
+            break;
         case SceneAnimationType.emote:
-            var emote: EmoteScene = {
-                type: type,
-                src: animationData[1],
-                spriteName: animationData[2],
-                speakWith: animationData[3],
-                sfx: animationData[4]
-            }
-            return emote;
+            typedModel = model as EmoteScene;
+            typedModel.src = animationData[2];
+            typedModel.spriteName = animationData[3];
+            typedModel.speakWith = animationData[2];
+            typedModel.sfx = animationData[3];
+            break;
         case SceneAnimationType.move:
-            var move: MoveScene = {
-                type: type,
-                spriteName: animationData[1],
-                destination: animationData[2]
-            }
-            return move;
+            typedModel = model as MoveScene;
+            typedModel.spriteName = animationData[2];
+            typedModel.destination= animationData[3]
+            break;
         case SceneAnimationType.moveCar:
-            var moveCar: MoveCarScene = {
-                type: type,
-                column: animationData[1],
-                row: animationData[2],
-                spriteName: animationData[3],
-                direction: animationData[4]
-            }
-            return moveCar;
+            typedModel = model as MoveCarScene;
+            typedModel.column = animationData[2];
+            typedModel.row = animationData[3];
+            typedModel.spriteName = animationData[4];
+            typedModel.direction = animationData[5];
+            break;
         case SceneAnimationType.animation:
-            var animation: AnimateSpriteScene = {
-                type: type,
-                animationName: animationData[1],
-                spriteName: animationData[2],
-                loop: animationData[3]
-            }
-            return animation;
+            typedModel = model as AnimateSpriteScene;
+            typedModel.animationName = animationData[2];
+            typedModel.spriteName = animationData[3];
+            typedModel.loop = animationData[4];
+            break;
         case SceneAnimationType.createCar:
-            var createCar: CreateCarScene = {
-                type: type,
-                sprite: animationData[1],
-                spriteName: animationData[2],
-                roadName: animationData[3]
-            }
-            return createCar;
+            typedModel = model as CreateSpriteScene;
+            typedModel.sprite = animationData[2];
+            typedModel.spriteName = animationData[3];
+            typedModel.roadName = animationData[4];
+            break;
         case SceneAnimationType.createCharacter:
         case SceneAnimationType.createObjectSprite:
-            var createSprite: CreateSpriteScene = {
-                type: type,
-                direction: animationData[1],
-                sprite: animationData[2],
-                spriteName: animationData[3],
-                column: animationData[4],
-                row: animationData[5]
-            }
-            return createSprite;
+            typedModel = model as CreateSpriteScene;
+            typedModel.direction = animationData[2];
+            typedModel.sprite = animationData[3];
+            typedModel.spriteName = animationData[4];
+            typedModel.column = animationData[5];
+            typedModel.row = animationData[6];
+            break;
         case SceneAnimationType.deleteSprite:
-            var deleteSprite: DeleteSpriteScene = {
-                type: type,
-                spriteName: animationData[1],
-                sfx: animationData[2]
-            }
-            return deleteSprite;
+            typedModel = model as DeleteSpriteScene;
+            typedModel.spriteName = animationData[2];
+            typedModel.sfx = animationData[3]
+            break;
         case SceneAnimationType.fadeOut:
         case SceneAnimationType.fadeIn:
         case SceneAnimationType.fadeOutIn:
-            var fade: FadeScene = {
-                type: type,
-                sfx: animationData[1]
-            }
-            return fade;
+            typedModel = model as FadeScene;
+            typedModel.sfx = animationData[2];
+            break;
         case SceneAnimationType.wait:
-            var wait: WaitScene = {
-                type: type,
-                milliseconds: animationData[1]
-            }
-            return wait;
+            typedModel = model as WaitScene;
+            typedModel.milliseconds = animationData[2];
+            break;
         case SceneAnimationType.cameraMoveToSprite:
-            var cameraMoveToSprite: CameraMoveToSpriteScene = {
-                type: type,
-                spriteName: animationData[1],
-                snapToSprite: animationData[2]
-            }
-            return cameraMoveToSprite;
+            typedModel = model as CameraMoveToSpriteScene;
+            typedModel.spriteName = animationData[2];
+            typedModel.snapToSprite = animationData[3];
+            break;
         case SceneAnimationType.cameraMoveToTile:
-            var cameraMoveToTile: CameraMoveToTileScene = {
-                type: type,
-                column: animationData[1],
-                row: animationData[2],
-                snapToTile: animationData[3]
-            }
-            return cameraMoveToTile;
+            typedModel = model as CameraMoveToTileScene;
+            typedModel.column = animationData[2];
+            typedModel.row = animationData[3];
+            typedModel.snapToTile = animationData[4];
+            break;
         case SceneAnimationType.loadMap:
-            var loadMap: LoadMapScene = {
-                type: type,
-                mapName: animationData[1],
-                setPlayerSprite: animationData[2]
-            }
-            return loadMap;
+            typedModel = model as LoadMapScene;
+            typedModel.mapName = animationData[2];
+            typedModel.setPlayerSprite = animationData[3];
+            break;
     }
+    return typedModel;
 }
 
 export const initSpriteFrameModel = ( frameData ): SpriteFrameModel => {
@@ -345,6 +330,14 @@ export const initItemModel = ( itemData ): ItemModel => {
         category: itemData.category,
         png: itemData.png,
         description: itemData.description
+    }
+    return model;
+}
+
+export const initGridCellModel = ( column: number, row: number ): GridCellModel => {
+    const model: GridCellModel = {
+        row: row,
+        column: column
     }
     return model;
 }
