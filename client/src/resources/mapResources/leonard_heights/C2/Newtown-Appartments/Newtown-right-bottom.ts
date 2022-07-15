@@ -1,5 +1,6 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { TOUGH_GUY_WITH_DARK_HAIR } from "../../../../spriteTypeResources";
 import { NEIGHBOUR } from "./Newtown-Appartments-interactions";
 
 export default {
@@ -334,59 +335,57 @@ export default {
             "mirrored": false
         }
     ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "blue_lamp_right",
             "row": 3,
-            "col": 4
+            "column": 4
         },
         {
             "type": "rug_g2",
             "row": 5,
-            "col": 6
+            "column": 6
         },
         {
             "type": "Fridge",
             "row": 6,
-            "col": 1
+            "column": 1
         },
         {
             "type": "bin_hop",
             "row": 6,
-            "col": 2
+            "column": 2
         },
         {
             "type": "Small_Table",
             "row": 6,
-            "col": 7
+            "column": 7
         },
         {
             "type": "plant_yo",
             "row": 7,
-            "col": 5
+            "column": 5
         },
         {
             "type": "Sink",
             "row": 8,
-            "col": 4
+            "column": 4
         },
         {
             "type": "plant_yo",
             "row": 8,
-            "col": 5
+            "column": 5
         },
         {
             "type": "couch_nice_left",
             "row": 8,
-            "col": 8
-        }
-    ],
-    "characters": [
+            "column": 8
+        },
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 2,
-            "col": 7,
-            "sprite": "characterx4.png",
+            "column": 7,
+            "type": TOUGH_GUY_WITH_DARK_HAIR,
             "direction": DirectionEnum.up,
             "action": NEIGHBOUR
         }
@@ -395,7 +394,7 @@ export default {
     "doors": [
         {
             "row": 4, 
-            "col": 1,
+            "column": 1,
             "destination" : "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.up
         }

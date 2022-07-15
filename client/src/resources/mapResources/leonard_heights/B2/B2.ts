@@ -11,24 +11,21 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
-
-    ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "gang_z",
             "row": 5,
-            "col": 3
+            "column": 3
         },
         {
             "type": "yum_mart_sign",
             "row": 6,
-            "col": 3
+            "column": 3
         },
         {
             "type": "funz",
             "row": 7,
-            "col": 20
+            "column": 20
         }
     ],
     "spawnPoints": [
@@ -40,10 +37,10 @@ export default {
             "direction": DirectionEnum.up,
             "alignment": RoadAlignmentEnum.vertical,
             "hasStart": true,
-            "leftCol": 13,
-            "rightCol": 14,
-            "startRow": 16,
-            "endRow": 1
+            "primaryColumn": 13,
+            "secondaryColumn": 14,
+            "primaryRow": 16,
+            "secondaryRow": 1
         }
     ],
     "actions": [

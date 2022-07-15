@@ -337,98 +337,97 @@ export default {
             "mirrored": false
         }
     ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "lamp_red",
             "row": 2,
-            "col": 3
+            "column": 3
         },
         {
             "type": "shop_shelves_a",
             "row": 2,
-            "col": 4
+            "column": 4
         },
         {
             "type": "Fridge",
             "row": 2,
-            "col": 6
+            "column": 6
         },
         {
             "type": "Single_Bed",
             "row": 3,
-            "col": 1
+            "column": 1
         },
         {
             "type": "can_red_1",
             "row": 3,
-            "col": 7
+            "column": 7
         },
         {
             "type": "house_plant",
             "row": 4,
-            "col": 1
+            "column": 1
         },
         {
             "type": "Sink",
             "row": 4,
-            "col": 8
+            "column": 8
         },
         {
             "type": "inside_bin",
             "row": 5,
-            "col": 6
+            "column": 6
         },
         {
             "type": "computer_table",
             "row": 6,
-            "col": 7
+            "column": 7
         },
         {
             "type": "house_plant",
             "row": 6,
-            "col": 8
+            "column": 8
         },
         {
             "type": "couch_yello",
             "row": 7,
-            "col": 1
+            "column": 1
         },
         {
             "type": "rug_boo",
             "row": 7,
-            "col": 4
+            "column": 4
         },
         {
             "type": "office_chair",
             "row": 7,
-            "col": 8
+            "column": 8
         },
         {
             "type": "newspaper_trash",
             "row": 8,
-            "col": 8
+            "column": 8
         },
         {
             "type": "collectable_coin",
             "row": 1,
-            "col": 2,
+            "column": 2,
             "action": [COLLECTABLE_ACTION_COIN]
         },
         {
             "type": "collectable_juice_can",
             "row": 5,
-            "col": 3,
+            "column": 3,
             "action": [COLLECTABLE_ACTION_JUICE_CAN]
         }
     ],
     "doors": [        
         {
             "row": 8, 
-            "col": 4,
+            "column": 4,
             "destination" : "leonard_heights/Newtown-Hall",
             "direction" : DirectionEnum.down
         }
     ],
-    "characters": [],
     "actions": [],
 }

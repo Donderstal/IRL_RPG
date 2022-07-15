@@ -90,11 +90,7 @@ const effectsResources = {
         ]
     }
 }
-/**
- * Get the object at given key in the inner effectsResources object
- * If key cannot be found, throw an error
- * @param {String} name 
- */
+
 export const getEffectData = ( name ): GraphicEffectModel => {
     if ( name in effectsResources ) {
         return initGraphicEffectModel( effectsResources[name] );

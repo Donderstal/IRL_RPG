@@ -3,6 +3,7 @@ import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
+import { PIGEON } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C2,
@@ -12,151 +13,149 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
+    "sprites": [
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 14,
-            "col": 9,
-            "sprite": "pigeon.png",
+            "column": 9,
+            "sprite": PIGEON,
             "direction": DirectionEnum.left
-        }
-    ],
-    "mapObjects": [
+        },
         {
             "type": "vent_1",
             "row": 1,
-            "col": 7
+            "column": 7
         },
         {
             "type": "vent_4",
             "row": 1,
-            "col": 14
+            "column": 14
         },
         {
             "type": "vent_3",
             "row": 2,
-            "col": 2
+            "column": 2
         },
         {
             "type": "vent_1",
             "row": 2,
-            "col": 18
+            "column": 18
         },
         {
             "type": "vent_1",
             "row": 3,
-            "col": 7
+            "column": 7
         },
         {
             "type": "vent_4",
             "row": 3,
-            "col": 14
+            "column": 14
         },
         {
             "type": "hotel_sign",
             "row": 3,
-            "col": 16
+            "column": 16
         },
         {
             "type": "vent_3",
             "row": 4,
-            "col": 2
+            "column": 2
         },
         {
             "type": "vent_1",
             "row": 4,
-            "col": 18
+            "column": 18
         },
         {
             "type": "vent_1",
             "row": 5,
-            "col": 7
+            "column": 7
         },
         {
             "type": "vent_4",
             "row": 5,
-            "col": 14
+            "column": 14
         },
         {
             "type": "vent_3",
             "row": 6,
-            "col": 2
+            "column": 2
         },
         {
             "type": "vent_1",
             "row": 6,
-            "col": 18
+            "column": 18
         },
         {
             "type": "car_b",
             "row": 7,
-            "col": 8,
+            "column": 8,
             "direction": DirectionEnum.up
         },
         {
             "type": "vent_4",
             "row": 7,
-            "col": 14
+            "column": 14
         },
         {
             "type": "Sign_03",
             "row": 7,
-            "col": 19
+            "column": 19
         },
         {
             "type": "gang_z",
             "row": 7,
-            "col": 21
+            "column": 21
         },
         {
             "type": "water_puddle",
             "row": 8,
-            "col": 8
+            "column": 8
         },
         {
             "type": "funz",
             "row": 8,
-            "col": 11
+            "column": 11
         },
         {
             "type": "gate_right",
             "row": 8,
-            "col": 15
+            "column": 15
         },
         {
             "type": "gate_left",
             "row": 8,
-            "col": 16
+            "column": 16
         },
         {
             "type": "office_chair",
             "row": 11,
-            "col": 6
+            "column": 6
         },
         {
             "type": "banana",
             "row": 16,
-            "col": 1
+            "column": 1
         }
     ],
     "spawnPoints": [
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row": 9,
             "direction": DirectionEnum.right
         },
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row": 11,
             "direction": DirectionEnum.right
         },
         {
-            "col": OutOfMapEnum.right,
+            "column": OutOfMapEnum.right,
             "row": 9,
             "direction": DirectionEnum.left
         },
         {
-            "col": OutOfMapEnum.right,
+            "column": OutOfMapEnum.right,
             "row": 11,
             "direction": DirectionEnum.left
         },
@@ -167,19 +166,19 @@ export default {
             "direction": DirectionEnum.right,
             "alignment": "HORI",
             "hasStart": true,
-            "topRow": 14,
-            "bottomRow": 15,
-            "startCol": 1,
-            "endCol": 24
+            "primaryRow": 14,
+            "secondaryRow": 15,
+            "primaryColumn": 1,
+            "secondaryColumn": 24
         },
         {
             "direction": DirectionEnum.left,
             "alignment": "HORI",
             "hasStart": true,
-            "topRow": 12,
-            "bottomRow": 13,
-            "startCol": 24,
-            "endCol": 1
+            "primaryRow": 12,
+            "secondaryRow": 13,
+            "primaryColumn": 24,
+            "secondaryColumn": 1
         }
     ],
     "actions": [
@@ -188,14 +187,14 @@ export default {
     "doors": [
         {
             "row": 8,
-            "col": 12,
+            "column": 12,
             "destination": "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.up,
 
         },
         {
             "row": 8,
-            "col": 13,
+            "column": 13,
             "destination": "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.up,
 

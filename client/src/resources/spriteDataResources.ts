@@ -1,21 +1,29 @@
 import { COLLECTABLE_COIN, COLLECTABLE_JUICE_CAN } from "../game-data/interactionGlobals";
-import type { MapObjectSpriteModel } from "../models/MapObjectSpriteModel";
 import { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
+import {
+    BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, BUSINESS_MAN,
+    DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY,
+    MAIN_CHARACTER, MONKEY_CEO, PIGEON, PINK_HAIRED_FAT_GUY, PINK_HAIR_NERD_LADY, ROBOT, STRONG_GUY, SUNGLASSES_LADY,
+    SUPERMARKET_MANAGER, TOUGH_GUY, TOUGH_GUY_WITH_COOL_HAIR, TOUGH_GUY_WITH_COOL_SHIRT, TOUGH_GUY_WITH_DARK_HAIR,
+    WHITE_PONY_TAIL_LADY, YELLOW_SHIRT_LADY
+} from "./spriteTypeResources";
+import type { SpriteDataModel } from "../models/SpriteDataModel";
+import { getSpriteFrameForPosition } from "../helpers/modelConversionHelpers";
 
 const ONE_BLOCK_SPRITE = {
-    "dimensional_alignment": "STANDARD",
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
     "height_blocks": 1, "width_blocks": 1
 }
 
 const TWO_WIDE_SPRITE = {
-    "dimensional_alignment": "STANDARD",
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
     "height_blocks": 1, "width_blocks": 2
 }
 
 const getTwoHighSprite = ( isGrounded ) => {
     return {
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": isGrounded,
         "height_blocks": 2,
         "width_blocks": 1
@@ -24,7 +32,7 @@ const getTwoHighSprite = ( isGrounded ) => {
 
 const getGroundedAtBottom = ( width, height ) => {
     return {
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "height_blocks": height,
         "width_blocks": width
@@ -32,12 +40,12 @@ const getGroundedAtBottom = ( width, height ) => {
 }
 
 const THREE_HIGH_SPRITE = {
-    "dimensional_alignment": "STANDARD",
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
     "height_blocks": 3, "width_blocks": 1
 }
 
 const POSTER_SPRITE = {
-    "dimensional_alignment": "STANDARD", "not_grounded": true,
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard, "not_grounded": true,
     "height_blocks": 1.75, "width_blocks": 1.75,
 }
 
@@ -90,15 +98,48 @@ const BUS = {
 }
 
 const STANDARD_SHELVE = {
-    "dimensional_alignment": "STANDARD",
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
     "width_blocks": 2,
     "height_blocks": 2,
     "grounded_at_bottom": true
 }
 
+const STANDARD_CHARACTER = {
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+    "height_blocks": 1.75,
+    "width_blocks": 1,
+    "grounded_at_bottom": true,
+    "movement_frames": {
+        [DirectionEnum.left]: [
+            { "x": 0, "y": 64 },
+            { "x": 64, "y": 64 },
+            { "x": 128, "y": 64 },
+            { "x": 192, "y": 64 },
+        ],
+        [DirectionEnum.up]: [
+            { "x": 0, "y": 192 },
+            { "x": 64, "y": 192 },
+            { "x": 128, "y": 192 },
+            { "x": 192, "y": 192 }
+        ],
+        [DirectionEnum.right]: [
+            { "x": 0, "y": 128 },
+            { "x": 64, "y": 128 },
+            { "x": 128, "y": 128 },
+            { "x": 192, "y": 128 }
+        ],
+        [DirectionEnum.down]: [
+            { "x": 0, "y": 0 },
+            { "x": 64, "y": 0 },
+            { "x": 128, "y": 0 },
+            { "x": 192, "y": 0 },
+        ]
+    }
+}
+
 const getBackgroundItem = ( width, height ) => {
     return {
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "on_background": true,
         "height_blocks": height,
         "width_blocks": width
@@ -115,7 +156,7 @@ const getDoorOrWindow = ( width, height ) => {
 
 const getSignData = ( widthInBlocks, heightInBlocks ) => {
     return {
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": widthInBlocks,
         "height_blocks": heightInBlocks,
         "not_grounded": true,
@@ -125,7 +166,7 @@ const getSignData = ( widthInBlocks, heightInBlocks ) => {
 
 const getCollectible = ( widthInBlocks, heightInBlocks, frames, collectable_type ) => {
     return {
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": heightInBlocks,
         "width_blocks": widthInBlocks,
         "collectable_type": collectable_type,
@@ -188,7 +229,7 @@ export const spriteData = {
         ...getSignData( 3, 2 )
     },
     "bar_sign_old": {
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "src": "bar_sign_old.png",
         "height_blocks": 1,
         "width_blocks": 1.8125,
@@ -205,14 +246,14 @@ export const spriteData = {
     },
     "big_coffee_cup_left": {
         "src": "big_coffee_cup_left.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": 2,
         "width_blocks": 2,
         "not_grounded": true
     },
     "big_coffee_cup_right": {
         "src": "big_coffee_cup_right.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": 2,
         "width_blocks": 2,
         "not_grounded": true
@@ -239,17 +280,17 @@ export const spriteData = {
     },
     "blue_couch_north": {
         "src": "blue_couch_north.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": 1.3125, "width_blocks": 2.53125
     },
     "blue_couch_south": {
         "src": "blue_couch_south.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": 1.65625, "width_blocks": 2.53125
     },
     "blue_double_bed": {
         "src": "blue_double_bed.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": 2, "width_blocks": 2
     },
     "blue_lamp_left": {
@@ -278,7 +319,7 @@ export const spriteData = {
     },
     "boxes": {
         "src": "boxes.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 2.09375,
         "height_blocks": 1.46875,
         "grounded_at_bottom": true
@@ -301,7 +342,7 @@ export const spriteData = {
     },
     "Bus_Stop": {
         "src": "Bus_Stop.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "height_blocks": 4,
         "width_blocks": 1,
@@ -320,7 +361,7 @@ export const spriteData = {
     },
     "cashier_desk_a": {
         "src": "cashier_desk_a.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 1,
         "height_blocks": 2.5625,
     },
@@ -330,7 +371,7 @@ export const spriteData = {
     },
     "cashier_desk_c": {
         "src": "cashier_desk_c.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 1,
         "height_blocks": 2.5625,
     },
@@ -356,7 +397,7 @@ export const spriteData = {
     },
     "couch_nice_north": {
         "src": "couch_nice_north.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "width_blocks": 2.28125,
         "height_blocks": 1.34375
@@ -367,7 +408,7 @@ export const spriteData = {
     },
     "couch_nice_south": {
         "src": "couch_nice_south.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "width_blocks": 2.28125,
         "height_blocks": 1.59375
@@ -628,7 +669,7 @@ export const spriteData = {
     },
     "Lamppost_1": {
         "src": "lamppost.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "height_blocks": 5,
         "width_blocks": 1,
@@ -647,7 +688,7 @@ export const spriteData = {
     },
     "no_entry_sign": {
         "src": "no_entry.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "height_blocks": 1.375,
         "width_blocks": 2,
@@ -658,7 +699,7 @@ export const spriteData = {
     },
     "office_chair_south": {
         "src": "office_chair_south.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "grounded_at_bottom": true,
         "height_blocks": 1.21875,
         "width_blocks": 0.96875
@@ -725,7 +766,7 @@ export const spriteData = {
     },
     "Rug_01": {
         "src": "rug01.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "on_background": true,
         ...getBackgroundItem( 3, 4 )
     },
@@ -807,17 +848,17 @@ export const spriteData = {
     },
     "Sign_02": {
         "src": "sign2.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         ...getSignData( 1, 1.75 )
     },
     "Sign_03": {
         "src": "sign3.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         ...getSignData( 1, 1 )
     },
     "Sign_04": {
         "src": "sign4.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         ...getSignData( 1, 1 )
     },
     "Single_Bed": {
@@ -830,7 +871,7 @@ export const spriteData = {
     },
     "single_bed_side": {
         "src": "single_bed_side.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 1.5,
         "height_blocks": 1.3125
     },
@@ -844,13 +885,13 @@ export const spriteData = {
     },
     "tires_1": {
         "src": "Tires_Z1.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 0.84375,
         "height_blocks": 0.90625
     },
     "tires_2": {
         "src": "Tires_Z2.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 0.78125,
         "height_blocks": 0.6875
     },
@@ -888,13 +929,13 @@ export const spriteData = {
     },
     "tv": {
         "src": "tv.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 1.34375,
         "height_blocks": 1.5625
     },
     "tv_side": {
         "src": "tv_side.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 0.625,
         "height_blocks": 1.84375
     },
@@ -952,13 +993,13 @@ export const spriteData = {
     },
     "wheelie_bin_left": {
         "src": "wheelie_bin_Z1.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 1.25,
         "height_blocks": 1.9375
     },
     "wheelie_bin_right": {
         "src": "wheelie_bin_Z2.png",
-        "dimensional_alignment": "STANDARD",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 1.25,
         "height_blocks": 1.9375
     },
@@ -1111,24 +1152,144 @@ export const spriteData = {
     },
     "door_interior_south_light": {
         ...getStandardDoorSouth( "Door_interior_south_light.png" )
+    },
+
+    // characters
+    [FAT_FEDORA_GUY]: {
+        "src": "neckbeard.png",
+        ...STANDARD_CHARACTER
+    },
+    [TOUGH_GUY]: {
+        "src": "chad.png",
+        ...STANDARD_CHARACTER
+    },
+    [SUNGLASSES_LADY]: {
+        "src": "woman.png",
+        ...STANDARD_CHARACTER
+    },
+    [GRANNY]: {
+        "src": "characterx3.png",
+        ...STANDARD_CHARACTER
+    },
+    [TOUGH_GUY_WITH_COOL_HAIR]: {
+        "src": 'characterx5.png',
+        ...STANDARD_CHARACTER
+    },
+    [PIGEON]: {
+        "src": "pigeon.png",
+        ...STANDARD_CHARACTER
+    },
+    [BUSINESS_MAN]: {
+        "src": "business_man.png",
+        ...STANDARD_CHARACTER
+    },
+    [STRONG_GUY]: {
+        "src": "chad_recolour01.png",
+        ...STANDARD_CHARACTER
+    },
+    [BURLY_GUY]: {
+        "src": "chad_recolour02.png",
+        ...STANDARD_CHARACTER
+    },
+    [GREEN_SHIRTED_STRONG_GUY]: {
+        "src": "chad_recolour03.png",
+        ...STANDARD_CHARACTER
+    },
+    [DORKY_GUY]: {
+        "src": "character_x1_recolour01.png",
+        ...STANDARD_CHARACTER
+    },
+    [TOUGH_GUY_WITH_DARK_HAIR]: {
+        "src": "characterx4.png",
+        ...STANDARD_CHARACTER
+    },
+    [TOUGH_GUY_WITH_COOL_SHIRT]: {
+        "src": "characterx5_recolour.png",
+        ...STANDARD_CHARACTER
+    },
+    [FAT_BUFF_GUY]: {
+        "src": "fats.png",
+        ...STANDARD_CHARACTER
+    },
+    [BALD_BEER_BELLY_GUY]: {
+        "src": "generic_balding_guy.png",
+        ...STANDARD_CHARACTER
+    },
+    [BLONDE_BEER_BELLY_GUY]: {
+        "src": "generic_blonde_guy.png",
+        ...STANDARD_CHARACTER
+    },
+    [PINK_HAIRED_FAT_GUY]: {
+        "src": "fats_recolour.png",
+        ...STANDARD_CHARACTER
+    },
+    [YELLOW_SHIRT_LADY]: {
+        "src": "new_girl.png",
+        ...STANDARD_CHARACTER
+    },
+    [GREEN_HAIR_LADY]: {
+        "src": "new_girl_recolour.png",
+        ...STANDARD_CHARACTER
+    },
+    [SUPERMARKET_MANAGER]: {
+        "src": "manager.png",
+        ...STANDARD_CHARACTER
+    },
+    [MONKEY_CEO]: {
+        "src": "monkey_ceo.png",
+        ...STANDARD_CHARACTER
+    },
+    [WHITE_PONY_TAIL_LADY]: {
+        "src": "pony_tail.png",
+        ...STANDARD_CHARACTER
+    },
+    [BLACK_PONY_TAIL_LADY]: {
+        "src": "pony_tail_recolour.png",
+        ...STANDARD_CHARACTER
+    },
+    [ROBOT]: {
+        "src": "robot.png",
+        ...STANDARD_CHARACTER
+    },
+    [PINK_HAIR_NERD_LADY]: {
+        "src": "tumbler_girl.png",
+        ...STANDARD_CHARACTER
+    },
+    [BLONDE_NERD_LADY]: {
+        "src": "tumbler_girl_recolour01.png",
+        ...STANDARD_CHARACTER
+    },
+    [DARK_HAIR_NERD_LADY]: {
+        "src": "tumbler_girl_recolour02.png",
+        ...STANDARD_CHARACTER
+    },
+    [MAIN_CHARACTER]: {
+        "src": "tumbler_girl_recolour02.png",
+        ...STANDARD_CHARACTER
     }
 }
 
-export const getMapObjectSpriteModels = (): MapObjectSpriteModel[] => {
+export const getDataModels = (): SpriteDataModel[] => {
     return Object.entries( spriteData ).map( ( e ) => {
         const key = e[0];
         const value = e[1];
-
-        let model: MapObjectSpriteModel = {
+        const image = new Image();
+        let model: SpriteDataModel = null;
+        image.src = "/static/sprites" + value["src"];
+        model = {
             key: key,
             src: value["src"],
-            dimensionalAlignment: value["dimensional_alignment"],
+            image: image,
+            dimensionalAlignment: value["dimensional_alignment"] as SpriteSheetAlignmentEnum,
 
-            isCar: value["isCar"] !== undefined ? value["isCar"] : false,
-            idleAnimation: value["idle_animation"] !== undefined ? value["idle_animation"] : false,
-            onBackground: value["on_background"] !== undefined ? value["on_background"] : false,
-            notGrounded: value["not_grounded"] !== undefined ? value["not_grounded"] : false,
-            groundedAtBottom: value["grounded_at_bottom"] !== undefined ? value["grounded_at_bottom"] : false,
+            isCar: value["isCar"] !== undefined,
+            idleAnimation: value["idle_animation"] !== undefined,
+            canMove: value["movement_frames"] !== undefined,
+            onBackground: value["on_background"] !== undefined,
+            notGrounded: value["not_grounded"] !== undefined,
+            groundedAtBottom: value["grounded_at_bottom"] !== undefined,
+            hasBlockedArea: value["blocked_area"] !== undefined,
+            isCollectable: value["collectable_type"] !== undefined
         };
 
         if ( value["dimensional_alignment"] == SpriteSheetAlignmentEnum.standard ) {
@@ -1140,6 +1301,10 @@ export const getMapObjectSpriteModels = (): MapObjectSpriteModel[] => {
             model.horiHeightBlocks = value["hori_height_blocks"];
             model.vertWidthBlocks = value["vert_width_blocks"];
             model.vertHeightBlocks = value["vert_height_blocks"];
+        }
+
+        if ( "movement_frames" in value ) {
+            model.canMove = true;
             model.movementFrames = value["movement_frames"];
         }
 
@@ -1153,8 +1318,27 @@ export const getMapObjectSpriteModels = (): MapObjectSpriteModel[] => {
         if ( value["blocked_area"] !== undefined ) {
             model.blockedArea = value["blocked_area"];
         }
+        Object.keys( model.movementFrames ).forEach( ( key ): void => {
+            let directionKey = key as unknown as DirectionEnum;
+            model.movementFrames[directionKey] = model.movementFrames[key].map( ( e ) => {
+                return getSpriteFrameForPosition( e, model, directionKey )
+            } )
+        } )
+        model.idleAnimationFrames.map( ( e: { x: number, y: number }[] ) => {
+            return e.map( ( e ) => { return getSpriteFrameForPosition( e, model ) })
+        } )
         return model;
     } )
 }
 
-export const mapObjectSpriteModels = getMapObjectSpriteModels();
+const spriteDataModels: SpriteDataModel[] = getDataModels();
+
+export const getDataModelByKey = ( key: string ): SpriteDataModel => {
+    const filteredModels = spriteDataModels.filter( ( e ) => { return e.key === key } );
+    if ( filteredModels.length === 1 ) {
+        return filteredModels[0];
+    }
+    else {
+        return null;
+    }
+}

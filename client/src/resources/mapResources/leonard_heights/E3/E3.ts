@@ -3,6 +3,7 @@ import { FRONT_GRID_LEONARD_E3 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
+import { PIGEON } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E3,
@@ -12,61 +13,59 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
+    "sprites": [
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 6,
-            "col": 23,
-            "sprite": "pigeon.png",
+            "column": 23,
+            "type": PIGEON,
             "direction": DirectionEnum.left
-        }
-    ],
-    "mapObjects": [
+        },
         {
             "type": "gang_z",
             "row": 3,
-            "col": 4
+            "column": 4
         },
         {
             "type": "Sign_03",
             "row": 3,
-            "col": 13
+            "column": 13
         },
         {
             "type": "funz",
             "row": 6,
-            "col": 17
+            "column": 17
         },
         {
             "type": "car_b",
             "row": 9,
-            "col": 7,
+            "column": 7,
             "direction": DirectionEnum.right
         },
         {
             "type": "water_puddle",
             "row": 11,
-            "col": 10
+            "column": 10
         }
     ],
     "spawnPoints": [
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row": 6,
             "direction": DirectionEnum.right
         },
         {
-            "col": 10,
+            "column": 10,
             "row": 6,
             "direction": DirectionEnum.down
         },
         {
-            "col": 11,
+            "column": 11,
             "row": 6,
             "direction": DirectionEnum.down
         },
         {
-            "col": 11,
+            "column": 11,
             "row": OutOfMapEnum.down,
             "direction": DirectionEnum.up
         }

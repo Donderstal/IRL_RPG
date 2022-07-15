@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
+import { BUSINESS_MAN } from "../../../../spriteTypeResources";
 import { WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
 
 export default {
@@ -254,56 +255,54 @@ export default {
             "mirrored": false
         }
     ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "house_plant",
             "row": 3,
-            "col": 1
+            "column": 1
         },
         {
             "type": "house_plant",
             "row": 3,
-            "col": 4
+            "column": 4
         },
         {
             "type": "trash_2",
             "row": 4,
-            "col": 4
+            "column": 4
         },
         {
             "type": "crisps",
             "row": 7,
-            "col": 1
+            "column": 1
         },
         {
             "type": "house_plant",
             "row": 8,
-            "col": 1
+            "column": 1
         },
         {
             "type": "house_plant",
             "row": 8,
-            "col": 4
+            "column": 4
         },
         {
             "type": "Small_Table",
             "row": 12,
-            "col": 3
+            "column": 3
         },
         {
             "type": "newspaper_trash",
             "row": 12,
-            "col": 4
-        }
-    ],
-    "characters": [
+            "column": 4
+        },
         {
             "condition": [ ConditionType.interactionNotRegistered, UNLOCK_DOOR_TEST ],
             "anim_type": AnimationTypeEnum.semiIdle,
             "row": 11,
-            "col": 3,
+            "column": 3,
             "name": "Impatient businessman",
-            "sprite": "business_man.png",
+            "type": BUSINESS_MAN,
             "direction": DirectionEnum.left,
             "action": WAITING_BUSINESSMAN
         }
@@ -312,37 +311,37 @@ export default {
     "doors": [
         {
             "row": 10, 
-            "col": 1,
+            "column": 1,
             "destination" : "leonard_heights/Newtown-appartment-1",
             "direction": DirectionEnum.left
         },
         {
             "row": 5, 
-            "col": 1,
+            "column": 1,
             "destination" : "leonard_heights/Newtown-appartment-2",
             "direction": DirectionEnum.left
         },
         {
             "row": 2, 
-            "col": 3,
+            "column": 3,
             "destination"  : "leonard_heights/Newtown-appartment-3",
             "direction": DirectionEnum.up
         },
         {
             "row": 5, 
-            "col": 4,
+            "column": 4,
             "destination" : "leonard_heights/Newtown-appartment-4",
             "direction": DirectionEnum.right
         },
         {
             "row": 10, 
-            "col": 4,
+            "column": 4,
             "destination" : "leonard_heights/Newtown-appartment-5",
             "direction": DirectionEnum.right
         },
         {
             "row": 12, 
-            "col": 2,
+            "column": 2,
             "destination" : "leonard_heights/C2",
             "direction": DirectionEnum.down
         }

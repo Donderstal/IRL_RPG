@@ -94,3 +94,19 @@ export const COLLECTABLE_ACTION_JUICE_CAN = [
         [[SceneAnimationType.deleteSprite, true, false, "misc/random5.wav"]]
     ]
 ]
+
+export const lockedDoorEvent = [
+    InteractionType.talk, false, "medium-text-blip.ogg",
+    [ConditionType.default, false],
+    [
+        [[SceneAnimationType.speak, true, "This door is locked!", PLAYER_NAME]],
+        [[SceneAnimationType.speak, true, "I need to find some way to open it...", PLAYER_NAME]]
+    ]
+]
+export const unlockDoorEvent = [
+    InteractionType.talk, false, "medium-text-blip.ogg",
+    [ConditionType.default, false],
+    [
+        [[SceneAnimationType.speak, true, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
+    ]
+]

@@ -5,6 +5,7 @@ import { LOGGABLE_INTERACTION_7 } from '../../../../game-data/interactionGlobals
 import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,
@@ -14,12 +15,12 @@ export default {
    "rows":16,
    "columns":24,
    "tileSet":"starting_neighbourhood_clean",
-   "characters":[
+   "sprites":[
       {
          "anim_type":AnimationTypeEnum.idle,
          "row":5,
-         "col":21,
-         "sprite":"chad_recolour01.png",
+         "column":21,
+         "type": STRONG_GUY,
          "direction":DirectionEnum.right,
          "name":"Helpful Bro",
          "action":FRIENDLY_CHAD,
@@ -32,8 +33,8 @@ export default {
           "anim_type": AnimationTypeEnum.animationLoop,
          "anim_name":"BOP_UP",
          "row":5,
-         "col":22,
-         "sprite":"chad.png",
+         "column":22,
+         "type": TOUGH_GUY,
          "direction": DirectionEnum.up,
          "name":"Sad Bro",
          "condition":[
@@ -45,8 +46,8 @@ export default {
          "anim_type": AnimationTypeEnum.animationLoop,
          "anim_name":"LIFT",
          "row":5,
-         "col":21,
-         "sprite":"chad_recolour01.png",
+         "column":21,
+         "type": STRONG_GUY,
          "direction": DirectionEnum.left,
          "name":"Wholesome Lifter",
          "action":WHOLESOME_LIFTER,
@@ -59,378 +60,375 @@ export default {
          "anim_type": AnimationTypeEnum.animationLoop,
          "anim_name":"LIFT",
          "row":5,
-         "col":22,
-         "sprite":"chad.png",
-          "direction": DirectionEnum.left,
+         "column":22,
+         "type": TOUGH_GUY,
+         "direction": DirectionEnum.left,
          "name":"Wholesome Lifter",
-         "action":WHOLESOME_LIFTER,
+         "action": WHOLESOME_LIFTER,
          "condition":[
             ConditionType.interactionRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },
-      
-   ],
-   "mapObjects":[
       {
          "type":"funz",
          "row":1,
-         "col":6
+         "column":6
       },
       {
          "type":"gate_stuk8",
          "row":4,
-         "col":6
+         "column":6
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":7
+         "column":7
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":8
+         "column":8
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":9
+         "column":9
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":10
+         "column":10
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":11
+         "column":11
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":12
+         "column":12
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":13
+         "column":13
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":14
+         "column":14
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":15
+         "column":15
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":16
+         "column":16
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":17
+         "column":17
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":18
+         "column":18
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":19
+         "column":19
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":20
+         "column":20
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":21
+         "column":21
       },
       {
          "type":"gate_stuk1",
          "row":4,
-         "col":22
+         "column":22
       },
       {
          "type":"gate_stuk4",
          "row":5,
-         "col":6
+         "column":6
       },
       {
          "type":"gang_z",
          "row":5,
-         "col":24
+         "column":24
       },
       {
          "type":"gate_stuk4",
          "row":6,
-         "col":6
+         "column":6
       },
       {
          "type":"gate_stuk6",
          "row":6,
-         "col":9
+         "column":9
       },
       {
          "type":"trash_3",
          "row":6,
-         "col":11
+         "column":11
       },
       {
          "type":"gate_stuk12",
          "row":6,
-         "col":16
+         "column":16
       },
       {
          "type":"gate_stuk4",
          "row":7,
-         "col":6
+         "column":6
       },
       {
          "type":"plants",
          "row":7,
-         "col":7
+         "column":7
       },
       {
          "type":"gate_stuk4",
          "row":7,
-         "col":9
+         "column":9
       },
       {
          "type":"bench_a",
          "row":7,
-         "col":10
+         "column":10
       },
       {
          "type":"bench_a",
          "row":7,
-         "col":14
+         "column":14
       },
       {
          "type":"gate_stuk10",
          "row":7,
-         "col":16
+         "column":16
       },
       {
          "type":"plants",
          "row":7,
-         "col":18
+         "column":18
       },
       {
          "type":"gate_stuk4",
          "row":8,
-         "col":6
+         "column":6
       },
       {
          "type":"gate_stuk3",
          "row":8,
-         "col":9
+         "column":9
       },
       {
          "type":"gate_stuk1",
          "row":8,
-         "col":10
+         "column":10
       },
       {
          "type":"gate_stuk1",
          "row":8,
-         "col":11
+         "column":11
       },
       {
          "type":"gate_stuk1",
          "row":8,
-         "col":12
+         "column":12
       },
       {
          "type":"gate_stuk1",
          "row":8,
-         "col":13
+         "column":13
       },
       {
          "type":"gate_stuk1",
          "row":8,
-         "col":14
+         "column":14
       },
       {
          "type":"gate_stuk1",
          "row":8,
-         "col":15
+         "column":15
       },
       {
          "type":"gate_stuk9",
          "row":8,
-         "col":16
+         "column":16
       },
       {
          "type":"gate_stuk4",
          "row":9,
-         "col":6
+         "column":6
       },
       {
          "type":"vent_3",
          "row":10,
-         "col":4
+         "column":4
       },
       {
          "type":"gate_stuk4",
          "row":10,
-         "col":6
+         "column":6
       },
       {
          "type":"plants",
          "row":10,
-         "col":7
+         "column":7
       },
       {
          "type":"gate_stuk6",
          "row":10,
-         "col":10
+         "column":10
       },
       {
          "type":"gate_stuk12",
          "row":10,
-         "col":15
+         "column":15
       },
       {
          "type":"plants",
          "row":10,
-         "col":18
+         "column":18
       },
       {
          "type":"office_chair",
          "row":10,
-         "col":21
+         "column":21
       },
       {
          "type":"gate_stuk4",
          "row":11,
-         "col":6
+         "column":6
       },
       {
          "type":"gate_stuk3",
          "row":11,
-         "col":10
+         "column":10
       },
       {
          "type":"gate_stuk1",
          "row":11,
-         "col":11
+         "column":11
       },
       {
          "type":"gate_stuk14",
          "row":11,
-         "col":12
+         "column":12
       },
       {
          "type":"gate_stuk8",
          "row":11,
-         "col":13
+         "column":13
       },
       {
          "type":"gate_stuk1",
          "row":11,
-         "col":14
+         "column":14
       },
       {
          "type":"gate_stuk9",
          "row":11,
-         "col":15
+         "column":15
       },
       {
          "type":"gate_stuk3",
          "row":12,
-         "col":6
+         "column":6
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":7
+         "column":7
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":8
+         "column":8
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":9
+         "column":9
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":10
+         "column":10
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":11
+         "column":11
       },
       {
          "type":"gate_stuk9",
          "row":12,
-         "col":12
+         "column":12
       },
       {
          "type":"gate_stuk3",
          "row":12,
-         "col":13
+         "column":13
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":14
+         "column":14
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":15
+         "column":15
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":16
+         "column":16
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":17
+         "column":17
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":18
+         "column":18
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":19
+         "column":19
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":20
+         "column":20
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":21
+         "column":21
       },
       {
          "type":"gate_stuk1",
          "row":12,
-         "col":22
+         "column":22
       }
    ],
    "spawnPoints":[

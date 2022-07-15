@@ -12,94 +12,91 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
-
-    ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "collectable_coin",
             "row": 3,
-            "col": 19,
+            "column": 19,
             "action": LOST_KEYS_INTERACTION
         },
         {
             "type": "funz",
             "row": 1,
-            "col": 15
+            "column": 15
         },
         {
             "type": "Poster_Cola",
             "row": 2,
-            "col": 1
+            "column": 1
         },
         {
             "type": "Poster_Gronk",
             "row": 2,
-            "col": 5
+            "column": 5
         },
         {
             "type": "Poster_Cruise",
             "row": 2,
-            "col": 9
+            "column": 9
         },
         {
             "type": "Poster_Cola",
             "row": 2,
-            "col": 13
+            "column": 13
         },
         {
             "type": "Poster_Gronk",
             "row": 2,
-            "col": 17
+            "column": 17
         },
         {
             "type": "gate_right",
             "row": 2,
-            "col": 21
+            "column": 21
         },
         {
             "type": "gate_left",
             "row": 2,
-            "col": 22
+            "column": 22
         },
         {
             "type": "tires_2",
             "row": 4,
-            "col": 10
+            "column": 10
         },
         {
             "type": "car_b",
             "row": 5,
-            "col": 3,
+            "column": 3,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_a",
             "row": 5,
-            "col": 7,
+            "column": 7,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_c",
             "row": 5,
-            "col": 17,
+            "column": 17,
             "direction": DirectionEnum.down
         },
         {
             "type": "car_d",
             "row": 12,
-            "col": 5,
+            "column": 5,
             "direction": DirectionEnum.down
         },
         {
             "type": "vent_4",
             "row": 15,
-            "col": 14
+            "column": 14
         },
         {
             "type": "vent_1",
             "row": 16,
-            "col": 18
+            "column": 18
         }
     ],
     "spawnPoints": [

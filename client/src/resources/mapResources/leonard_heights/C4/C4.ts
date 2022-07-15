@@ -6,6 +6,7 @@ import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
 import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
+import { FAT_BUFF_GUY, PIGEON } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C4,
@@ -15,19 +16,19 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
+    "sprites": [
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 3,
-            "col": 12,
-            "sprite": "pigeon.png",
+            "column": 12,
+            "type": PIGEON,
             "direction": DirectionEnum.left
         },
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 8,
-            "col": 19,
-            "sprite": "fats.png",
+            "column": 19,
+            "type": FAT_BUFF_GUY,
             "direction": DirectionEnum.down,
             "name": "Bob A",
             "condition": [
@@ -38,151 +39,149 @@ export default {
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 8,
-            "col": 20,
-            "sprite": "fats.png",
+            "column": 20,
+            "type": FAT_BUFF_GUY,
             "direction": DirectionEnum.down,
             "name": "Bob B",
             "condition": [
                 ConditionType.interactionRegistered,
                 LOGGABLE_INTERACTION_3
             ]
-        }
-    ],
-    "mapObjects": [
-        {
-            "type": "vent_1",
-            "row": 1,
-            "col": 2
         },
         {
             "type": "vent_1",
             "row": 1,
-            "col": 4
+            "column": 2
         },
         {
             "type": "vent_1",
             "row": 1,
-            "col": 11
+            "column": 4
+        },
+        {
+            "type": "vent_1",
+            "row": 1,
+            "column": 11
         },
         {
             "type": "bench_a",
             "row": 2,
-            "col": 1
+            "column": 1
         },
         {
             "type": "bench_a",
             "row": 2,
-            "col": 4
+            "column": 4
         },
         {
             "type": "bench_a",
             "row": 2,
-            "col": 10
+            "column": 10
         },
         {
             "type": "trash_2",
             "row": 4,
-            "col": 5
+            "column": 5
         },
         {
             "type": "trash_4",
             "row": 4,
-            "col": 10
+            "column": 10
         },
         {
             "type": "bench_a",
             "row": 4,
-            "col": 11
+            "column": 11
         },
         {
             "type": "yum_mart_sign",
             "row": 6,
-            "col": 13
+            "column": 13
         },
         {
             "type": "yum_mart_sign",
             "row": 6,
-            "col": 21
+            "column": 21
         },
         {
             "type": "gang_z",
             "row": 7,
-            "col": 1
+            "column": 1
         },
         {
             "type": "tree_plus_base",
             "row": 7,
-            "col": 5
+            "column": 5
         },
         {
             "type": "tree_plus_base",
             "row": 7,
-            "col": 9
+            "column": 9
         },
         {
             "type": "tree_plus_base",
             "row": 7,
-            "col": 11
+            "column": 11
         },
         {
             "type": "Sign_03",
             "row": 7,
-            "col": 13
+            "column": 13
         },
         {
             "type": "funz",
             "row": 7,
-            "col": 16
+            "column": 16
         },
         {
             "type": "no_entry_sign",
             "row": 9,
-            "col": 1
+            "column": 1
         },
         {
             "type": "boxes",
             "row": 11,
-            "col": 11
+            "column": 11
         },
         {
             "type": "car_a",
             "row": 12,
-            "col": 7,
+            "column": 7,
             "direction": DirectionEnum.down
         },
         {
             "type": "car_b",
             "row": 12,
-            "col": 13,
+            "column": 13,
             "direction": DirectionEnum.down
         },
         {
             "type": "car_b",
             "row": 12,
-            "col": 15,
+            "column": 15,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_c",
             "row": 12,
-            "col": 17,
+            "column": 17,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_d",
             "row": 12,
-            "col": 23,
+            "column": 23,
             "direction": DirectionEnum.up
         }
     ],
     "spawnPoints": [
         {
-            "col": 9,
+            "column": 9,
             "row": OutOfMapEnum.up,
             "direction": DirectionEnum.left
         },
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row": 10,
             "direction": DirectionEnum.right
         }
@@ -192,19 +191,19 @@ export default {
             "direction": DirectionEnum.right,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
-            "topRow": 15,
-            "bottomRow": 16,
-            "startCol": 1,
-            "endCol": 24
+            "primaryRow": 15,
+            "secondaryRow": 16,
+            "primaryColumn": 1,
+            "secondaryColumn": 24
         },
         {
             "direction": DirectionEnum.left,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
-            "topRow": 13,
-            "bottomRow": 14,
-            "startCol": 24,
-            "endCol": 1
+            "primaryRow": 13,
+            "secondaryRow": 14,
+            "primaryColumn": 24,
+            "secondaryColumn": 1
         }
     ],
     "actions": [

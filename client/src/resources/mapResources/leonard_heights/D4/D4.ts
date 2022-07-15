@@ -12,107 +12,104 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
+    "sprites": [
         {
-            "anim_type": AnimationTypeEnum.idle,
             "row": 11,
-            "col": 14,
+            "column": 14,
             "sprite": "Bench_Green",
             "direction": false
-        }
-    ],
-    "mapObjects": [
+        },
         {
             "type": "gang_z",
             "row": 3,
-            "col": 20
+            "column": 20
         },
         {
             "type": "car_a",
             "row": 5,
-            "col": 11,
+            "column": 11,
             "direction": DirectionEnum.up
         },
         {
             "type": "Sign_01",
             "row": 5,
-            "col": 14
+            "column": 14
         },
         {
             "type": "vent_4",
             "row": 5,
-            "col": 16
+            "column": 16
         },
         {
             "type": "car_d",
             "row": 6,
-            "col": 5,
+            "column": 5,
             "direction": DirectionEnum.down
         },
         {
             "type": "wheelie_bin_right",
             "row": 7,
-            "col": 19
+            "column": 19
         },
         {
             "type": "Bollard",
             "row": 8,
-            "col": 15
+            "column": 15
         },
         {
             "type": "Bollard",
             "row": 8,
-            "col": 18
+            "column": 18
         },
         {
             "type": "funz",
             "row": 8,
-            "col": 22
+            "column": 22
         },
         {
             "type": "boxes",
             "row": 9,
-            "col": 22
+            "column": 22
         },
         {
             "type": "banana",
             "row": 11,
-            "col": 3
+            "column": 3
         },
         {
             "type": "office_chair",
             "row": 11,
-            "col": 4
+            "column": 4
         }
     ],
     "spawnPoints": [
         {
-            "col": 4,
+            "column": 4,
             "row": OutOfMapEnum.up,
             "direction": DirectionEnum.down
         },
         {
-            "col": 5,
+            "column": 5,
             "row": OutOfMapEnum.up,
             "direction": DirectionEnum.down
         },
         {
-            "col": 16,
+            "column": 16,
             "row": 7,
             "direction": DirectionEnum.down
         },
         {
-            "col": 17,
+            "column": 17,
             "row": 7,
             "direction": DirectionEnum.down
         },
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row": 9,
             "direction": DirectionEnum.right
         },
         {
-            "col": OutOfMapEnum.right,
+            "column": OutOfMapEnum.right,
             "row": 10,
             "direction": DirectionEnum.left
         }
@@ -122,37 +119,37 @@ export default {
             "direction": DirectionEnum.left,
             "alignment": "HORI",
             "hasStart": true,
-            "topRow": 13,
-            "bottomRow": 14,
-            "startCol": 24,
-            "endCol": 1
+            "primaryRow": 13,
+            "secondaryRow": 14,
+            "primaryColumn": 24,
+            "secondaryColumn": 1
         },
         {
             "direction": DirectionEnum.right,
             "alignment": "HORI",
             "hasStart": true,
-            "topRow": 15,
-            "bottomRow": 16,
-            "startCol": 1,
-            "endCol": 24
+            "primaryRow": 15,
+            "secondaryRow": 16,
+            "primaryColumn": 1,
+            "secondaryColumn": 24
         },
         {
             "direction": DirectionEnum.up,
             "alignment": "VERT",
             "hasStart": false,
-            "leftCol": 9,
-            "rightCol": 10,
-            "startRow": 16,
-            "endRow": 1
+            "primaryColumn": 9,
+            "secondaryColumn": 10,
+            "primaryRow": 16,
+            "secondaryRow": 1
         },
         {
             "direction": DirectionEnum.down,
             "alignment": "VERT",
             "hasStart": true,
-            "leftCol": 7,
-            "rightCol": 8,
-            "startRow": 1,
-            "endRow": 16
+            "primaryColumn": 7,
+            "secondaryColumn": 8,
+            "primaryRow": 1,
+            "secondaryRow": 16
         }
     ],
     "actions": [

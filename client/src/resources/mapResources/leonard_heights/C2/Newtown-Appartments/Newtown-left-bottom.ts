@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
+import { FAT_BUFF_GUY, PINK_HAIR_NERD_LADY } from "../../../../spriteTypeResources";
 import { KEY_GUY, BODYGUARD } from "./Newtown-Appartments-interactions";
 
 export default {
@@ -336,74 +337,72 @@ export default {
             "mirrored": false
         }
     ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "Fridge",
             "row": 2,
-            "col": 3
+            "column": 3
         },
         {
             "type": "blue_lamp_left",
             "row": 2,
-            "col": 5
+            "column": 5
         },
         {
             "type": "computer_table",
             "row": 2,
-            "col": 6
+            "column": 6
         },
         {
             "type": "bin_a",
             "row": 3,
-            "col": 1
+            "column": 1
         },
         {
             "type": "water_puddle",
             "row": 3,
-            "col": 3
+            "column": 3
         },
         {
             "type": "office_chair",
             "row": 3,
-            "col": 7
+            "column": 7
         },
         {
             "type": "Sink",
             "row": 4,
-            "col": 4
+            "column": 4
         },
         {
             "type": "yellow_rug_a",
             "row": 4,
-            "col": 5
+            "column": 5
         },
         {
             "type": "pot_plant_a",
             "row": 6,
-            "col": 8
+            "column": 8
         },
         {
             "type": "Small_Table",
             "row": 7,
-            "col": 8
+            "column": 8
         },
         {
             "type": "blue_double_bed",
             "row": 8,
-            "col": 2
+            "column": 2
         },
         {
             "type": "pot_plant_a",
             "row": 8,
-            "col": 8
-        }
-    ],
-    "characters": [
+            "column": 8
+        },
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 5,
-            "col": 4,
-            "sprite": "tumbler_girl_recolour02.png",
+            "column": 4,
+            "type": PINK_HAIR_NERD_LADY,
             "direction": DirectionEnum.down,
             "action": KEY_GUY
         },
@@ -411,8 +410,8 @@ export default {
             "condition": [ConditionType.interactionRegistered, UNLOCK_DOOR_TEST],
             "anim_type": AnimationTypeEnum.idle,
             "row": 2,
-            "col": 2,
-            "sprite": "fats.png",
+            "column": 2,
+            "type": FAT_BUFF_GUY,
             "direction": DirectionEnum.down,
             "action": BODYGUARD
         }
@@ -421,7 +420,7 @@ export default {
     "doors": [
         {
             "row": 4, 
-            "col": 8,
+            "column": 8,
             "destination" : "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.right,
         }

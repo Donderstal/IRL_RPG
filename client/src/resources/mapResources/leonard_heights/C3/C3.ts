@@ -3,6 +3,8 @@ import { FRONT_GRID_LEONARD_C3 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { MovementType } from '../../../../enumerables/MovementTypeEnum';
+import { PIGEON } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -12,32 +14,32 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
+    "sprites": [
         {
             "anim_type": AnimationTypeEnum.idle,
+            "move_type": MovementType.flying,
             "row": 12,
-            "col": 11,
-            "sprite": "pigeon.png",
+            "column": 11,
+            "type": PIGEON,
             "direction": DirectionEnum.right
         },
         {
             "anim_type": AnimationTypeEnum.idle,
+            "move_type": MovementType.flying,
             "row": 14,
-            "col": 15,
-            "sprite": "pigeon.png",
+            "column": 15,
+            "type": PIGEON,
             "direction": DirectionEnum.left
-        }
-    ],
-    "mapObjects": [
+        },
         {
             "type": "vent_3",
             "row": 5,
-            "col": 20
+            "column": 20
         },
         {
             "type": "door_1",
             "row": 7,
-            "col": 19,
+            "column": 19,
             "hasDoor": true,
             "directionIn": "",
             "destination": ""
@@ -45,12 +47,12 @@ export default {
         {
             "type": "gang_z",
             "row": 7,
-            "col": 21
+            "column": 21
         },
         {
             "type": "door_3",
             "row": 8,
-            "col": 4,
+            "column": 4,
             "hasDoor": true,
             "directionIn": "",
             "destination": ""
@@ -58,82 +60,82 @@ export default {
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 2
+            "column": 2
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 3
+            "column": 3
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 5
+            "column": 5
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 6
+            "column": 6
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 7
+            "column": 7
         },
         {
             "type": "Bench_Green",
             "row": 9,
-            "col": 8
+            "column": 8
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 10
+            "column": 10
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 13
+            "column": 13
         },
         {
             "type": "Bench_Green",
             "row": 9,
-            "col": 14
+            "column": 14
         },
         {
             "type": "pot_plant_a",
             "row": 9,
-            "col": 16
+            "column": 16
         },
         {
             "type": "boxes",
             "row": 9,
-            "col": 22
+            "column": 22
         }
     ],
     "spawnPoints": [
         {
-            "col": 18,
+            "column": 18,
             "row": OutOfMapEnum.up,
             "direction": DirectionEnum.down
         },
         {
-            "col": 11,
+            "column": 11,
             "row": 8,
             "direction": DirectionEnum.down
         },
         {
-            "col": OutOfMapEnum.right,
+            "column": OutOfMapEnum.right,
             "row": 10,
             "direction": DirectionEnum.left
         },
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row": 11,
             "direction": DirectionEnum.right
         },
         {
-            "col": 8,
+            "column": 8,
             "row": OutOfMapEnum.down,
             "direction": DirectionEnum.up
         }

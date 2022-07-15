@@ -332,19 +332,18 @@ export default {
             "mirrored": false
         }
     ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "inside_bin",
             "row": 3,
-            "col": 1
+            "column": 1
         }
     ],
-    "characters": [],
     "actions": [],
     "doors": [
         {
             "row": 4, 
-            "col": 1,
+            "column": 1,
             "destination" : "leonard_heights/Newtown-Hall",
             "direction" : DirectionEnum.left
         }

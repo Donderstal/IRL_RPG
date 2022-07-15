@@ -3,6 +3,7 @@ import { FRONT_GRID_LEONARD_E4 } from './frontgrid';
 import { WHOLESOME_LIFTER_E4 } from './E4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
+import { STRONG_GUY } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E4,
@@ -12,33 +13,31 @@ export default {
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
-    "characters": [
+    "sprites": [
         {
             "anim_type": AnimationTypeEnum.animationLoop,
             "anim_name": "LIFT",
             "row": 9,
-            "col": 12,
-            "sprite": "chad_recolour01.png",
+            "column": 12,
+            "type": STRONG_GUY,
             "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
             "action": WHOLESOME_LIFTER_E4
-        }
-    ],
-    "mapObjects": [
+        },
         {
             "type": "Sign_04",
             "row": 7,
-            "col": 4
+            "column": 4
         },
         {
             "type": "Sign_02",
             "row": 7,
-            "col": 13
+            "column": 13
         },
         {
             "type": "door_4",
             "row": 8,
-            "col": 5,
+            "column": 5,
             "hasDoor": true,
             "directionIn": "",
             "destination": ""
@@ -46,18 +45,18 @@ export default {
         {
             "type": "wheelie_bin_left",
             "row": 13,
-            "col": 10
+            "column": 10
         },
         {
             "type": "car_d",
             "row": 15,
-            "col": 6,
+            "column": 6,
             "direction": DirectionEnum.left
         },
         {
             "type": "wheelie_bin_left",
             "row": 15,
-            "col": 10
+            "column": 10
         }
     ],
     "spawnPoints": [

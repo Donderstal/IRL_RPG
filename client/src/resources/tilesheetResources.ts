@@ -1,3 +1,4 @@
+import type { Tile } from "../game/core/Tile";
 import type { TilesheetModel } from "../models/TilesheetModel";
 
 export const sheets = {
@@ -1634,12 +1635,15 @@ export const sheets = {
 
 const getTileSheetModels = () => {
     return Object.values( sheets ).map( ( e ) => {
+        const image = new Image();
+        image.src = "/static/tilesheets" + e.src;
         let model: TilesheetModel = {
             name: e.name,
             key: e.key,
             src: e.src,
             uniqueTiles: e.uniqueTiles,
-            blocked: e.blocked
+            blocked: e.blocked,
+            image: image
         }
 
         return model;
@@ -1647,3 +1651,13 @@ const getTileSheetModels = () => {
 }
 
 export const tileSheetModels: TilesheetModel[] = getTileSheetModels();
+
+export const getTilesheetModelByKey = ( key: string ): TilesheetModel => {
+    const filteredModels = tileSheetModels.filter( ( e ) => { return e.key === key } );
+    if ( filteredModels.length === 1 ) {
+        return filteredModels[0];
+    }
+    else {
+        return null;
+    }
+}

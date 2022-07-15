@@ -11,25 +11,22 @@ export default {
    "rows":16,
    "columns":24,
    "tileSet":"starting_neighbourhood_clean",
-   "characters":[
-      
-   ],
-   "mapObjects":[
+   "sprites":[
       {
          "type":"tires_1",
          "row":4,
-         "col":8
+         "column":8
       },
       {
          "type":"car_b",
          "row":4,
-         "col":9,
+         "column":9,
          "direction": DirectionEnum.down
       },
       {
          "type":"door_4",
          "row":8,
-         "col":4,
+         "column":4,
          "hasDoor":true,
          "directionIn":"",
          "destination":""
@@ -37,17 +34,17 @@ export default {
       {
          "type":"funz",
          "row":8,
-         "col":5
+         "column":5
       },
       {
          "type":"wheelie_bin_right",
          "row":8,
-         "col":7
+         "column":7
       },
       {
          "type":"bench_a",
          "row":11,
-         "col":8
+         "column":8
       }
    ],
    "spawnPoints":[
@@ -58,73 +55,73 @@ export default {
          "direction": DirectionEnum.up,
          "alignment":RoadAlignmentEnum.vertical,
          "hasStart":false,
-         "leftCol":13,
-         "rightCol":14,
-         "startRow":15,
-         "endRow":1
+         "primaryColumn":13,
+         "secondaryColumn":14,
+         "primaryRow":15,
+         "secondaryRow":1
       },
       {
          "direction": DirectionEnum.down,
          "alignment":RoadAlignmentEnum.vertical,
          "hasStart":true,
-         "leftCol":11,
-         "rightCol":12,
-         "startRow":1,
-         "endRow":13
+         "primaryColumn":11,
+         "secondaryColumn":12,
+         "primaryRow":1,
+         "secondaryRow":13
       },
       {
           "direction": DirectionEnum.right,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
-         "topRow":14,
-         "bottomRow":15,
-         "startCol":9,
-         "endCol":14
+         "primaryRow":14,
+         "secondaryRow":15,
+         "primaryColumn":9,
+         "secondaryColumn":14
       },
       {
          "direction": DirectionEnum.left,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
-         "topRow":12,
-         "bottomRow":13,
-         "startCol":12,
-         "endCol":7
+         "primaryRow":12,
+         "secondaryRow":13,
+         "primaryColumn":12,
+         "secondaryColumn":7
       },
       {
           "direction": DirectionEnum.down,
          "alignment":RoadAlignmentEnum.vertical,
          "hasStart":false,
-         "leftCol":7,
-         "rightCol":8,
-         "startRow":12,
-         "endRow":16
+         "primaryColumn":7,
+         "secondaryColumn":8,
+         "primaryRow":12,
+         "secondaryRow":16
       },
       {
           "direction": DirectionEnum.up,
          "alignment":RoadAlignmentEnum.vertical,
          "hasStart":true,
-         "leftCol":9,
-         "rightCol":10,
-         "startRow":16,
-         "endRow":14
+         "primaryColumn":9,
+         "secondaryColumn":10,
+         "primaryRow":16,
+         "secondaryRow":14
       },
       {
           "direction": DirectionEnum.right,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
-         "topRow":10,
-         "bottomRow":11,
-         "startCol":11,
-         "endCol":24
+         "primaryRow":10,
+         "secondaryRow":11,
+         "primaryColumn":11,
+         "secondaryColumn":24
       },
       {
           "direction": DirectionEnum.left,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":true,
-         "topRow":8,
-         "bottomRow":9,
-         "startCol":24,
-         "endCol":11
+         "primaryRow":8,
+         "secondaryRow":9,
+         "primaryColumn":24,
+         "secondaryColumn":11
       }
    ],
    "actions":[

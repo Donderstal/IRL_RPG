@@ -5,6 +5,7 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
+import { TOUGH_GUY } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B4,
@@ -14,94 +15,92 @@ export default {
     "rows":16,
     "columns":24,
     "tileSet":"starting_neighbourhood_clean",
-    "characters":[
+    "sprites":[
         {
             "anim_type": AnimationTypeEnum.animationLoop,
             "anim_name":"LIFT",
             "row":9,
-            "col":9,
-            "sprite":"chad.png",
+            "column":9,
+            "type": TOUGH_GUY,
             "direction": DirectionEnum.left,
             "name":"Wholesome Lifter",
             "action": WHOLESOME_LIFTER_B4
-        }
-    ],
-    "mapObjects":[
+        },
         {
             "type":"vent_4",
             "row":1,
-            "col":11
+            "column":11
         },
         {
             "type":"vent_4",
             "row":2,
-            "col":17
+            "column":17
         },
         {
             "type":"vent_4",
             "row":3,
-            "col":11
+            "column":11
         },
         {
             "type":"vent_4",
             "row":5,
-            "col":11
+            "column":11
         },
         {
             "type":"vent_3",
             "row":5,
-            "col":22
+            "column":22
         },
         {
             "type":"bar_sign",
             "row":6,
-            "col":7
+            "column":7
         },
         {
             "type":"gang_z",
             "row":6,
-            "col":18
+            "column":18
         },
         {
             "type":"Sign_03",
             "row":7,
-            "col":16
+            "column":16
         },
         {
             "type":"funz",
             "row":7,
-            "col":17
+            "column":17
         },
         {
             "type":"car_a",
             "row":12,
-            "col":3,
+            "column":3,
             "direction":DirectionEnum.left
         }
     ],
     "spawnPoints":[
         {
-            "col":24,
+            "column":24,
             "row": OutOfMapEnum.up,
             "direction":DirectionEnum.down
         },
         {
-            "col":13,
+            "column":13,
             "row":8,
             "direction": DirectionEnum.down
         },
         {
-            "col":18,
+            "column":18,
             "row":8,
             "direction": DirectionEnum.down
         },
         {
-            "col": OutOfMapEnum.right,
+            "column": OutOfMapEnum.right,
             "row":9,
             "direction": DirectionEnum.left
         },
         {
-            "col": OutOfMapEnum.left,
+            "column": OutOfMapEnum.left,
             "row":10,
             "direction": DirectionEnum.right
         }
@@ -111,19 +110,19 @@ export default {
             "direction": DirectionEnum.right,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart":true,
-            "topRow":15,
-            "bottomRow":16,
-            "startCol":1,
-            "endCol":24
+            "primaryRow":15,
+            "secondaryRow":16,
+            "primaryColumn":1,
+            "secondaryColumn":24
         },
         {
             "direction": DirectionEnum.left,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart":true,
-            "topRow":13,
-            "bottomRow":14,
-            "startCol":24,
-            "endCol":1
+            "primaryRow":13,
+            "secondaryRow":14,
+            "primaryColumn":24,
+            "secondaryColumn":1
         }
     ],
     "actions":[

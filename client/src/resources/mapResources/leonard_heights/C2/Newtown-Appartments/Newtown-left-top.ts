@@ -1,5 +1,6 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { BALD_BEER_BELLY_GUY } from "../../../../spriteTypeResources";
 
 export default {
     "mapName": "leonard_heights/Newtown-appartment-2",
@@ -333,69 +334,67 @@ export default {
             "mirrored": false
         }
     ],
-    "mapObjects": [
+    "sprites": [
         {
             "type": "Fridge",
             "row": 2,
-            "col": 3
+            "column": 3
         },
         {
             "type": "blue_lamp_left",
             "row": 2,
-            "col": 5
+            "column": 5
         },
         {
             "type": "inside_bin",
             "row": 3,
-            "col": 1
+            "column": 1
         },
         {
             "type": "yellow_chair",
             "row": 3,
-            "col": 6
+            "column": 6
         },
         {
             "type": "Sink",
             "row": 4,
-            "col": 4
+            "column": 4
         },
         {
             "type": "shop_cupboard_a",
             "row": 5,
-            "col": 4
+            "column": 4
         },
         {
             "type": "Rug_01",
             "row": 5,
-            "col": 6
+            "column": 6
         },
         {
             "type": "brown_chair",
             "row": 6,
-            "col": 2
+            "column": 2
         },
         {
             "type": "brown_chair",
             "row": 7,
-            "col": 1
+            "column": 1
         },
         {
             "type": "Small_Table",
             "row": 7,
-            "col": 2
+            "column": 2
         },
         {
             "type": "blue_lamp_right",
             "row": 8,
-            "col": 7
-        }
-    ],
-    "characters": [
+            "column": 7
+        },
         {
             "anim_type": AnimationTypeEnum.idle,
             "row": 4,
-            "col": 3,
-            "sprite": "generic_balding_guy.png",
+            "column": 3,
+            "type": BALD_BEER_BELLY_GUY,
             "direction": DirectionEnum.right
         }
     ],
@@ -403,7 +402,7 @@ export default {
     "doors": [
         {
             "row": 4, 
-            "col": 8,
+            "column": 8,
             "destination" : "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.right
         }

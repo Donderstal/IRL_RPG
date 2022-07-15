@@ -17,12 +17,12 @@ export const KEY_STORY_1 = "KEY_STORY_EVENT_1";
 export const KEY_STORY_2 = "KEY_STORY_EVENT_2";
 export const KEY_STORY_3 = "KEY_STORY_EVENT_3"
 
-const STORY_EVENTS = [
+export const STORY_EVENTS = [
     {
         id: "",
         mapName: "leonard_heights/Newtown-appartment-3",
         trigger: CinematicTrigger.enter,
-        cinematic: [
+        interaction: [
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
@@ -68,7 +68,7 @@ const STORY_EVENTS = [
         id: "",
         mapName: "leonard_heights/C2",
         trigger: CinematicTrigger.enter,
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, LOGGABLE_INTERACTION_1, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
@@ -84,7 +84,7 @@ const STORY_EVENTS = [
         id: "",
         mapName: "leonard_heights/E3",
         trigger: CinematicTrigger.enter,
-        cinematic: [
+        interaction: [
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
@@ -98,10 +98,10 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/Newtown-appartment-4",
         trigger: CinematicTrigger.position,
         position: {
-            "col": 3,
+            "column": 3,
             "direction": DirectionEnum.right
         },
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, KEY_STORY_1, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [ 
@@ -114,7 +114,7 @@ const STORY_EVENTS = [
         id: "",
         mapName: "leonard_heights/C4",
         trigger: CinematicTrigger.enter,
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, LOGGABLE_INTERACTION_2, "medium-text-blip.ogg",
             [ConditionType.default, false],
             [
@@ -143,7 +143,7 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/D1",
         trigger: CinematicTrigger.interaction,
         name: "Helpful Bro",
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, LOGGABLE_INTERACTION_4, "medium-text-blip.ogg", 
             [ConditionType.interactionNotRegistered, LOGGABLE_INTERACTION_4],
             [
@@ -187,7 +187,7 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/D2",
         trigger: CinematicTrigger.interaction,
         name: "Wholesome Lifter",
-        cinematic: [
+        interaction: [
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_4],
             [
@@ -217,7 +217,7 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/E4",
         trigger: CinematicTrigger.interaction,
         name: "Wholesome Lifter",
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, LOGGABLE_INTERACTION_5, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_4],
             [
@@ -241,7 +241,7 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/B4",
         trigger: CinematicTrigger.interaction,
         name: "Wholesome Lifter",
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, LOGGABLE_INTERACTION_6, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_5],
             [
@@ -266,7 +266,7 @@ const STORY_EVENTS = [
         mapName: "leonard_heights/D1",
         trigger: CinematicTrigger.interaction,
         name: "Helpful Bro",
-        cinematic: [
+        interaction: [
             InteractionType.talk, true, LOGGABLE_INTERACTION_7, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_6],
             [
@@ -299,9 +299,3 @@ const assignEventIds = () => {
     });
 };
 assignEventIds();
-
-module.exports = {
-    STORY_EVENTS,
-    KEY_STORY_2,
-    KEY_STORY_3
-}
