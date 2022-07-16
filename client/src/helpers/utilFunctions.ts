@@ -1,0 +1,109 @@
+import { DirectionEnum } from "../enumerables/DirectionEnum";
+import type { Sprite } from "../game/core/Sprite";
+import type { GridCellModel } from "../models/GridCellModel";
+
+export const fetchJSONWithCallback = ( url: string, callback: Function, callbackParams: any[] = [] ): void => {
+    fetch(url)
+        .then( (response) => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status + " on url " + url);
+            }
+            return response.json()
+        })
+        .then( (json) => {
+            callback(json, callbackParams) 
+        }
+    )
+}
+
+const idChars   = "abcdefghijklmnopqrstuvwxyz1234567890";
+const idLength  = 10;
+
+export const generateId = ( ): string => {
+    let id = "";
+
+    for( let i = 0; i < idLength; i++ ) {
+        const randomPosition = Math.floor( Math.random( ) * idChars.length );
+        id += idChars.slice( randomPosition, randomPosition + 1 )
+    }
+    return id
+}
+
+export const getUniqueId = ( idList: string[] ): string => {
+    const newId         = generateId( )
+    let isUniqueId    = true;
+
+    if ( idList.length > 1 ) {
+        for( let i = 0; i < idList.length; i++ ) {
+            if ( idList[i] === newId ) {
+                isUniqueId = false;
+            }
+        }
+    }
+
+    return ( isUniqueId ) ? newId : getUniqueId( idList );
+}
+
+export const getNextIndexInArray = ( currentIndex: number, array: any[] ): number => {
+    return ( currentIndex + 1 === array.length ) ? 0 : currentIndex += 1 ;
+};
+
+export const getPreviousIndexInArray = ( currentIndex: number, array: any[] ): number => {
+    return ( currentIndex - 1 < 0 ) ? array.length - 1 : currentIndex - 1
+};
+
+export const cloneInstance = ( instance: any ): any => {
+    return Object.assign(
+        Object.create(
+          Object.getPrototypeOf(instance),
+        ),
+        JSON.parse(JSON.stringify(instance)),
+    );
+}
+
+export const getOppositeDirection = ( direction: DirectionEnum ): DirectionEnum => {
+    switch ( direction ) {
+        case DirectionEnum.left:
+            return DirectionEnum.right;
+        case DirectionEnum.up:
+            return DirectionEnum.down;
+        case DirectionEnum.right:
+            return DirectionEnum.left;
+        case DirectionEnum.down:
+            return DirectionEnum.up;
+    }
+};
+
+export const cellDistanceSquared = ( cellA: GridCellModel, cellB: GridCellModel ): number => {
+    const rowDiff = cellA.row - cellB.row;
+    const colDiff = cellA.column - cellB.column;
+    return (rowDiff*rowDiff) + (colDiff*colDiff);
+}
+
+export const getClosestCell = ( start: GridCellModel, cellList: GridCellModel[] ): GridCellModel => {
+    let closestCell = cellList[0];
+    let shortestDistance = cellDistanceSquared(start, closestCell);
+    
+    for( var i = 0; i < cellList.length; i++ ) {
+        const currentCell =  cellList[i]
+        const currentDistance = cellDistanceSquared(start, currentCell);
+        if ( currentDistance < shortestDistance ) {
+            closestCell = currentCell;
+            shortestDistance = currentDistance;
+        }
+    }
+
+    return closestCell;
+}
+
+export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
+    const colDiff = Math.abs( subject.column - target.column );
+    const rowDiff = Math.abs( subject.row - target.row );
+
+    if ( rowDiff > colDiff ) {
+        return ( subject.row > target.row ) ? DirectionEnum.up : DirectionEnum.down;
+    }
+    else {
+        return ( subject.column > target.column ) ? DirectionEnum.left : DirectionEnum.right;
+    }
+}

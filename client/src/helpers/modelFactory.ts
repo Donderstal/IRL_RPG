@@ -1,16 +1,17 @@
-import { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import type { SpawnPointModel } from "../models/SpawnPointModel";
 import type { RoadModel } from "../models/RoadModel";
 import type { DoorModel } from "../models/DoorModel";
 import type { TileModel } from "../models/TileModel";
 import type { MapModel } from "../models/MapModel";
-import { RoadAlignmentEnum } from "../enumerables/RoadAlignmentEnum";
 import type { CinematicModel } from "../models/CinematicModel";
 import type { ConditionModel } from "../models/ConditionModel";
 import type { ConditionType } from "../enumerables/ConditionTypeEnum";
 import type { CinematicSceneModel } from "../models/CinematicSceneModel";
-import type { AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveCarScene, MoveScene, SceneAnimationModel, SpeakScene, SpeakYesNoScene, WaitScene } from "../models/SceneAnimationModel";
+import type {
+    AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene,
+    EmoteScene, FadeScene, LoadMapScene, MoveCarScene, MoveScene, SceneAnimationModel, SpeakScene, SpeakYesNoScene, WaitScene
+} from "../models/SceneAnimationModel";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import type { InteractionModel } from "../models/InteractionModel";
 import type { GraphicEffectModel } from "../models/GraphicEffectModel";
@@ -91,27 +92,10 @@ export const initRoadModel = ( roadData ): RoadModel => {
         alignment: roadData.alignment,
         hasStart: roadData.hasStart,
 
-        primaryColumn: roadData.primaryColumn == undefined ?
-            roadData.alignment == RoadAlignmentEnum.horizontal
-                ? roadData.startCol
-                : roadData.leftCol
-            : roadData.primaryColumn,
-        secondaryColumn: roadData.secondaryColumn == undefined ?
-            roadData.alignment == RoadAlignmentEnum.horizontal
-                ? roadData.endCol
-                : roadData.rightCol
-            : roadData.secondaryColumn,
-
-        primaryRow: roadData.primaryRow == undefined ?
-            roadData.alignment == RoadAlignmentEnum.horizontal
-                ? roadData.startRow
-                : roadData.topRow
-            : roadData.primaryRow,
-        secondaryRow: roadData.secondaryRow == undefined ?
-            roadData.alignment == RoadAlignmentEnum.horizontal
-                ? roadData.endRow
-                : roadData.bottomRow
-            : roadData.secondaryRow,
+        primaryColumn: roadData.primaryColumn,
+        secondaryColumn: roadData.secondaryColumn,
+        primaryRow: roadData.primaryRow,
+        secondaryRow: roadData.secondaryRow,
     };
     return roadModel;
 }
@@ -206,7 +190,7 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
     var typedModel = null;
     switch ( type ) {
         case SceneAnimationType.speak:
-            typedModel = model as SpeakYesNoScene;
+            typedModel = model as SpeakScene;
             typedModel.text = animationData[2];
             typedModel.spriteName = animationData[3];
             typedModel.speakWith = animationData[4];
@@ -247,7 +231,7 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
             typedModel.loop = animationData[4];
             break;
         case SceneAnimationType.createCar:
-            typedModel = model as CreateSpriteScene;
+            typedModel = model as CreateCarScene;
             typedModel.sprite = animationData[2];
             typedModel.spriteName = animationData[3];
             typedModel.roadName = animationData[4];
@@ -340,22 +324,4 @@ export const initGridCellModel = ( column: number, row: number ): GridCellModel 
         column: column
     }
     return model;
-}
-
-const directionStringHelper = ( direction: string | number ) => {
-    if ( typeof direction === "number" ) {
-        return direction as DirectionEnum;
-    }
-    if ( direction === "FACING_LEFT" ) {
-        return DirectionEnum.left;
-    }
-    if ( direction === "FACING_UP" ) {
-        return DirectionEnum.up;
-    }
-    if ( direction === "FACING_RIGHT" ) {
-        return DirectionEnum.right;
-    }
-    if ( direction === "FACING_DOWN" ) {
-        return DirectionEnum.down;
-    }
 }

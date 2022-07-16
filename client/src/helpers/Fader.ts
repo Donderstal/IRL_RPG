@@ -1,32 +1,37 @@
-const globals = require('../game-data/globals');
-const { CANVAS_WIDTH, CANVAS_HEIGHT } = require('../game-data/globals');
-const { drawRect } = require('./canvasHelpers');
+import globals from '../game-data/globals';
+import { drawRect } from './canvasHelpers';
 
-class Fader {
+export class Fader {
+    RGB: string;
+    A: number;
+    fadingToBlack: boolean;
+    fadingFromBlack: boolean;
+    fadeInAndOut: boolean;
+    holdBlackScreen: boolean;
     constructor( ) {
         this.RGB = "0, 0, 0, "
-        this.A = false;
+        this.A = null;
         this.fadingToBlack = false;
         this.fadingFromBlack = false;
         this.holdBlackScreen = false;
     }
 
-    get RGBA( ) { return "rgba( " + this.RGB + this.A + ")"; }
-    get inFadingAnimation( ) { return this.fadingFromBlack || this.fadingToBlack || this.holdBlackScreen; }
+    get RGBA( ): string { return "rgba( " + this.RGB + this.A + ")"; }
+    get inFadingAnimation(): boolean { return this.fadingFromBlack || this.fadingToBlack || this.holdBlackScreen; }
 
-    startFadeToBlack( fadeInAndOut = false ) {
+    startFadeToBlack( fadeInAndOut = false ): void {
         this.fadeInAndOut       = fadeInAndOut
         this.fadingToBlack      = true;
         this.A = 0;
     }
 
-    startFadeFromBlack( ) {
+    startFadeFromBlack(): void {
         this.fadingFromBlack    = true;
         this.A = 1;
     }
 
-    handleFade( ) {
-        document.getElementById('game-fader-canvas').getContext('2d').clearRect( 0, 0, screen.width, screen.height )
+    handleFade(): void {
+        (document.getElementById('game-fader-canvas') as HTMLCanvasElement).getContext('2d').clearRect( 0, 0, screen.width, screen.height )
         drawRect( "FADER", 0, 0, screen.width, screen.height, this.RGBA )
 
         if ( this.fadingFromBlack ) {
@@ -39,19 +44,19 @@ class Fader {
         this.checkForFadeEnd( )
     }
 
-    fadeToBlack( ) {
+    fadeToBlack(): void {
         this.A += .0250
     }
 
-    fadeFromBlack( ) {
+    fadeFromBlack(): void {
         this.A -= .0250
     }
     
-    holdBlackMode( ) {
+    holdBlackMode(): void {
         this.holdBlackScreen = true;
     }
 
-    checkForFadeEnd( ) {
+    checkForFadeEnd(): void {
         if ( this.fadingFromBlack && this.A <= 0 ) {
             this.unsetFadingAnimation( );
             globals.GAME.sound.playMusic( );
@@ -66,14 +71,10 @@ class Fader {
         }
     }
 
-    unsetFadingAnimation( ) {
+    unsetFadingAnimation(): void {
         this.holdBlackScreen    = false;
         this.fadingToBlack      = false;
         this.fadingFromBlack    = false;
         this.fadeInAndOut       = false;
     }
-}
-
-module.exports = {
-    Fader
 }

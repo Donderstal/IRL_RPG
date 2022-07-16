@@ -1,0 +1,158 @@
+let colsInGrid: number, rowsInGrid: number, tiles: {col: number, row: number}[];
+let queue: PriorityQueue, visitedTilesList: string[], foundPath: GridLocation[], movementCost: number, targetLocationIndex: string;
+
+enum TileStatus {
+    start,
+    invalid,
+    blocked,
+    valid
+}
+enum PathfindingDirection {
+    north,
+    east,
+    south,
+    west
+}
+
+type GridLocation = {
+    index: string;
+
+    status?: TileStatus;
+    row?: number;
+    column?: number;
+    movementCost?: number;
+    path?: GridLocation[];
+}
+
+type ItemWithPriority = {
+    item: GridLocation;
+    priority: number;
+}
+
+class PriorityQueue {
+    items: ItemWithPriority[];
+    constructor() {
+        this.items = [];
+    }
+
+    get isEmpty(): boolean { return this.items.length === 0; }
+
+    addItemToQueue( item: GridLocation, priority: number ): void {
+        const newItem: ItemWithPriority = { item: item, priority: priority };
+        let highestPriorityInList = true;
+
+        for ( let index = 0; index < this.items.length; index++ ) {
+            if ( this.items[index].priority > newItem.priority ) {
+                this.items.splice( index, 0, newItem )
+                highestPriorityInList = false;
+            }
+        }
+
+        if ( highestPriorityInList ) {
+            this.items.push( newItem )
+        }
+    }
+
+    getFirstItemFromQueue(): ItemWithPriority {
+        return this.items.shift()
+    }
+}
+
+const getLocationStatus = ( location: GridLocation ): TileStatus => {
+    if ( location.row < 0 || location.column < 0 || location.row > rowsInGrid + 1 || location.column > colsInGrid + 1 ) {
+        return TileStatus.invalid;
+    } else if ( visitedTilesList.indexOf( location.index ) > -1 ) {
+        return TileStatus.blocked;
+    } else {
+        return TileStatus.valid;
+    }
+}
+
+const exploreInDirection = ( currentLocation: GridLocation, direction: PathfindingDirection ): GridLocation => {
+    let row = currentLocation.row;
+    let col = currentLocation.column;
+
+    switch ( direction ) {
+        case PathfindingDirection.north:
+            row -= 1;
+            break;
+        case PathfindingDirection.east:
+            col += 1;
+            break;
+        case PathfindingDirection.south:
+            row += 1;
+            break;
+        case PathfindingDirection.west:
+            col -= 1;
+            break;
+    }
+
+    if ( tiles.filter( ( e ) => { return e.col === col && e.row === row; } ).length > 0 ) {
+        const newLocation: GridLocation = { row: row, column: col, movementCost: movementCost, index: "" };
+        newLocation.path = [...currentLocation.path.slice(), newLocation];
+        newLocation.status = getLocationStatus( newLocation );
+        if ( newLocation.status === TileStatus.valid )
+            visitedTilesList.push( newLocation.index )
+
+        return newLocation;
+    }
+    else {
+        const location: GridLocation = { index: 'x', status: TileStatus.valid };
+        return location;
+    }
+}
+
+const addTileInDirectionToQueueIfValid = ( currentLocation, direction ) => {
+    const newLocation = exploreInDirection( currentLocation.item, direction )
+    const movementCost = currentLocation.priority + newLocation.movementCost;
+    if ( newLocation.index === targetLocationIndex ) {
+        foundPath = newLocation.path;
+    }
+    else if ( newLocation.status === TileStatus.valid || movementCost < currentLocation.priority ) {
+        queue.addItemToQueue( newLocation, movementCost );
+    }
+}
+
+export const determineShortestPath = ( startingTile, targetTile, grid ) => {
+    queue = new PriorityQueue( );
+    visitedTilesList = [];
+    colsInGrid = grid.cols;
+    rowsInGrid = grid.rows;
+    tiles = grid.tiles;
+    foundPath = null;
+    targetLocationIndex = targetTile.col + "_" + targetTile.row;
+
+    const start: GridLocation = {
+        column: startingTile.col,
+        row: startingTile.row,
+        index: "",
+        movementCost: startingTile.movementCost,
+        status: TileStatus.start
+    };
+
+    movementCost = start.movementCost;
+    queue.addItemToQueue( start, movementCost );
+
+    while ( !queue.isEmpty ) {
+        const currentItem = queue.getFirstItemFromQueue();
+        const currentLocation = currentItem.item;
+
+        if ( currentLocation.row !== 1 ) {
+            addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.north )   
+        }
+        if ( currentLocation.column !== colsInGrid ) {
+            addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.east ) 
+        }
+        if ( currentLocation.row !== rowsInGrid ) {
+            addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.south )   
+        }
+        if  ( currentLocation.column !== 1 ) {
+            addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.west )            
+        }
+
+        if ( foundPath !== null )
+            return foundPath;
+    } 
+
+    return false;    
+}
