@@ -13,8 +13,8 @@ export type MapModel = {
 
     outdoors: boolean;
     music?: string;
-    neighbours: { left: string, up: string, right: string, down: string}
-    playerStart: any;
+    neighbours?: { left: string, up: string, right: string, down: string}
+    playerStart?: any;
 
     grid: TileModel[];
     frontGrid: TileModel[];
@@ -25,6 +25,6 @@ export type MapModel = {
     spawnPoints: SpawnPointModel[];
     roads: RoadModel[];
     doors: DoorModel[];
-    actions: { column: number, row: number, action: InteractionModel }[];
-    savepoint: any;
+    actions?: { column: number, row: number, action: InteractionModel }[];
+    savepoint?: any;
 }

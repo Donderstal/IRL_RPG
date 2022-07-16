@@ -103,6 +103,7 @@ export const lockedDoorEvent = [
         [[SceneAnimationType.speak, true, "I need to find some way to open it...", PLAYER_NAME]]
     ]
 ]
+
 export const unlockDoorEvent = [
     InteractionType.talk, false, "medium-text-blip.ogg",
     [ConditionType.default, false],

@@ -1,13 +1,13 @@
 import globals from '../../game-data/globals';
-import canvas from '../../helpers/canvasHelpers';
+import { clearEntireCanvas } from '../../helpers/canvasHelpers';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
 export const handleCinematicAnimations = ( GAME ): void => {
     const PLAYER = GAME.PLAYER;
-    canvas.clearEntireCanvas("FRONT");
+    clearEntireCanvas("FRONT");
 
     if ( globals.SCREEN.MOBILE ) {
-        canvas.clearEntireCanvas("SPEECH");
+        clearEntireCanvas("SPEECH");
     }
 
     drawSpritesInOrder( GAME )   

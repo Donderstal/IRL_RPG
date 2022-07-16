@@ -1,4 +1,4 @@
 export type GridCellModel = {
     row: number;
-    column;
+    column: number;
 }

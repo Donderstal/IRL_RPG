@@ -1,4 +1,4 @@
-import canvasHelpers from '../../helpers/canvasHelpers'
+import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import globals from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { getAnimationByName } from '../../resources/animationResources'
@@ -191,7 +191,7 @@ export class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
-        canvasHelpers.drawFromImageToCanvas(
+        drawFromImageToCanvas(
             "FRONT", this.sheet,
             this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 
             this.spriteWidthInSheet, this.spriteHeightInSheet,

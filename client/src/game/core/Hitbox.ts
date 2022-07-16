@@ -1,5 +1,5 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import canvasHelpers from '../../helpers/canvasHelpers';
+import { getFrontCanvasContext }  from '../../helpers/canvasHelpers';
 import globals from '../../game-data/globals';
 import { COLOR_WHITE } from '../../game-data/uiGlobals';
 /**
@@ -49,7 +49,7 @@ export class Hitbox {
     }
 
     draw( ): void {
-        const frontCtx: CanvasRenderingContext2D = canvasHelpers.getFrontCanvasContext( );
+        const frontCtx: CanvasRenderingContext2D = getFrontCanvasContext( );
         frontCtx.beginPath( );
         frontCtx.arc( this.x, this.y, this.outerRadius, 0, 2 * Math.PI );
         frontCtx.arc( this.x, this.y, this.radius, 0, 2 * Math.PI );

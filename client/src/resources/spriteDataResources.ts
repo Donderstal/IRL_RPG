@@ -1,4 +1,3 @@
-import { COLLECTABLE_COIN, COLLECTABLE_JUICE_CAN } from "../game-data/interactionGlobals";
 import { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import {
@@ -10,6 +9,8 @@ import {
 } from "./spriteTypeResources";
 import type { SpriteDataModel } from "../models/SpriteDataModel";
 import { getSpriteFrameForPosition } from "../helpers/modelConversionHelpers";
+import { CollectableType } from "../enumerables/CollectableTypeEnum";
+import { initSpriteFrameModel } from "../helpers/modelFactory";
 
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
@@ -1102,11 +1103,11 @@ export const spriteData = {
     // collectible
     "collectable_coin": {
         "src": "coin.png",
-        ...getCollectible( 0.75, 0.75, 4, COLLECTABLE_COIN )
+        ...getCollectible( 0.75, 0.75, 4, CollectableType.coin )
     },
     "collectable_juice_can": {
         "src": "juice_can.png",
-        ...getCollectible( 0.5625, 0.78125, 4, COLLECTABLE_JUICE_CAN )
+        ...getCollectible( 0.5625, 0.78125, 4, CollectableType.can )
     },
 
     // doors new
@@ -1303,19 +1304,32 @@ export const getDataModels = (): SpriteDataModel[] => {
             model.vertHeightBlocks = value["vert_height_blocks"];
         }
 
-        if ( "movement_frames" in value ) {
+        if ( model.canMove ) {
+            const frames = {
+                [DirectionEnum.left]: value["movement_frames"][DirectionEnum.left].map( ( e ) => { return initSpriteFrameModel( e ) } ),
+                [DirectionEnum.up]: value["movement_frames"][DirectionEnum.up].map( ( e ) => { return initSpriteFrameModel( e ) } ),
+                [DirectionEnum.right]: value["movement_frames"][DirectionEnum.right].map( ( e ) => { return initSpriteFrameModel( e ) } ),
+                [DirectionEnum.down]: value["movement_frames"][DirectionEnum.down].map( ( e ) => { return initSpriteFrameModel( e ) } )
+            }
             model.canMove = true;
-            model.movementFrames = value["movement_frames"];
+            model.movementFrames = frames
         }
 
-        if ( value["idle_animation_frames"] !== undefined )
-            model.idleAnimationFrames = value["idle_animation_frames"];
-        if ( value["collectable_type"] !== undefined ) {
+        if ( model.idleAnimation )
+            model.idleAnimationFrames = value["idle_animation_frames"].map(
+                ( frameArray ) => {
+                    return frameArray.map(
+                        ( e ) => {
+                            return initSpriteFrameModel( e )
+                        } );
+                }
+            );
+        if ( model.isCollectable ) {
             model.collectableType = value["collectable_type"];
         }
         if ( value["tile_alignment"] !== undefined )
             model.tileAlignment = value["tile_alignment"];
-        if ( value["blocked_area"] !== undefined ) {
+        if ( model.hasBlockedArea ) {
             model.blockedArea = value["blocked_area"];
         }
         Object.keys( model.movementFrames ).forEach( ( key ): void => {

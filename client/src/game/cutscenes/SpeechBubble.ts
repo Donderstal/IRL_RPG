@@ -1,6 +1,5 @@
 import globals from '../../game-data/globals';
-import canvas from '../../helpers/canvasHelpers';
-
+import { getFrontCanvasContext, getBubbleCanvasContext, breakTextIntoLines, writeTextLine, setFont } from '../../helpers/canvasHelpers';
 import { MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT } from '../../game-data/globals';
 import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_TOP, BUBBLE_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT, BUBBLE_MIDDLE } from '../../game-data/textboxGlobals';
 import { INTERACTION_YES, INTERACTION_NO } from '../../game-data/interactionGlobals';
@@ -27,8 +26,8 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
 }
 
 const getSpeechBubbleDimensions = ( contents ) => {
-    const text = canvas.breakTextIntoLines( contents.text, LARGE_FONT_SIZE )
-    const ctx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()  
+    const text = breakTextIntoLines( contents.text, LARGE_FONT_SIZE )
+    const ctx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()  
     const  textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (contents.name !== undefined ? SMALL_FONT_LINE_HEIGHT : 0);
     const firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
     return {
@@ -50,7 +49,7 @@ export class SpeechBubble {
     subtitleBubble: boolean;
     hasHeader: boolean;
 
-    textLines: [];
+    textLines: number;
     headerText: string;
 
     innerCanvas: HTMLCanvasElement;
@@ -181,8 +180,8 @@ export class SpeechBubble {
     }
 
     writeHeader( ): void {
-        canvas.writeTextLine( 
-            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+        writeTextLine( 
+            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
         );
     }
 
@@ -230,16 +229,16 @@ export class SpeechBubble {
     }
 
     writeText(): void {
-        const canvasCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext();
-        canvas.setFont(LARGE_FONT_SIZE, canvasCtx);
+        const canvasCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext();
+        setFont(LARGE_FONT_SIZE, canvasCtx);
 
         let textLineX = this.textX;
         let textLineY = this.textY;
         let sentenceWidth = BUBBLE_INNER_PADDING * 2;
-        for ( var i = 0; i < this.text.length; i++ ) {
-            let activeWord = this.text[i];
-            canvas.writeTextLine( activeWord.activeWord, textLineX, textLineY, LARGE_FONT_SIZE, canvasCtx, activeWord.color );
-            let wordWidth = canvasCtx.measureText(activeWord.activeWord).width;
+        for ( let i = 0; i < this.text.length; i++ ) {
+            const activeWord = this.text[i];
+            writeTextLine( activeWord.activeWord, textLineX, textLineY, LARGE_FONT_SIZE, canvasCtx, activeWord.color );
+            const wordWidth = canvasCtx.measureText(activeWord.activeWord).width;
             textLineX += wordWidth;
             sentenceWidth += wordWidth;
             if ( sentenceWidth + wordWidth > this.width ) {
@@ -252,7 +251,7 @@ export class SpeechBubble {
 
     drawButtons(): void {
         const pngs = globals.PNG_DICTIONARY;
-        const frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+        const frontCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
         frontCtx.drawImage(
             this.activeButton === InteractionAnswer.yes ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
             0, 0,
@@ -270,7 +269,7 @@ export class SpeechBubble {
     }
 
     copyBubbleToGameCanvas(): void {
-        const frontCtx = globals.SCREEN.MOBILE ? canvas.getBubbleCanvasContext() : canvas.getFrontCanvasContext()
+        const frontCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
         frontCtx.save( );
         frontCtx.scale( this.horiFlip ? -1 : 1, this.vertFlip ? -1 : 1 );
         frontCtx.drawImage(

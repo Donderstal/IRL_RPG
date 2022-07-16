@@ -7,6 +7,7 @@ import { ActionSelector } from '../map/map-classes/ActionSelector';
 import { getBackCanvasContext } from '../../helpers/canvasHelpers';
 import { initDoorWithId } from '../../helpers/doorController';
 import type { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
+import type { Door } from "../map/map-classes/Door";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -30,7 +31,7 @@ export class Tile {
 
     hasEvent: boolean;
     eventType: InteractionType;
-    event: typeof ActionSelector;
+    event: ActionSelector|Door;
     direction: DirectionEnum;
     constructor( index: number|OutOfMapEnum, x: number, y: number, ctx: CanvasRenderingContext2D, row: number, column: number ) {
         this.x = x;
