@@ -1,51 +1,39 @@
-const { StackedItem } = require('./StackedItem');
+import type { GameItem } from './GameItem';
+import { StackedItem } from './StackedItem';
 /**
  * An instance of the Inventory class is given to each Party instance in the game.
  * The Inventory class contains an array of StackedItem instances and an array of itemIDs.
  * It also contains several methods for adding or removing items to the Inventory or a characters' equipment
  */
-class Inventory {
+export class Inventory {
+    ItemList: StackedItem[];
+    ActiveItemIDs: string[];
     constructor( ) {
         this.ItemList = [];
         this.ActiveItemIDs = [];
     }
     get activeItems( ) { return this.ItemList.filter( ( Item ) => { return Item.Quantity > 0 } ) };
-    /**
-     * Return true if the given String is in this.ActiveItemIDs.
-     * @param {String} itemID 
-     */
-    hasItem( itemID ) { 
+
+    hasItem( itemID: string ): boolean { 
         return this.ActiveItemIDs.includes( itemID ); 
     }
-    /**
-     * If one of the ItemStacks in this.itemList has given string as ItemTypeID, return it.
-     * @param {String} itemID 
-     */
-    getItemStackById( itemID ) {
-        let ItemStack = false;
+
+    getItemStackById( itemID: string ): StackedItem {
+        let ItemStack: StackedItem;
         this.ItemList.forEach( ( e ) => {
-            if ( e.ItemTypeId == itemID ) {
+            if ( e.ItemTypeId === itemID ) {
                 ItemStack = e;
             }
         })
         return ItemStack
     }
-    /**
-     * Get the Item instance associated to an ItemStack
-     * @param {string} itemID 
-     */
-    getItemInStack( itemID ) {
+
+    getItemInStack( itemID: string ): GameItem {
         const stack = this.getItemStackById( itemID )
-        return stack ? stack.Item : stack;
+        return stack.Item;
     }
-    /**
-     * Check if given itemID is already equipped to character
-     * If another item is equipped to character, enquip it
-     * Equip item associated width given id to character
-     * @param {Character} character 
-     * @param {String} itemID 
-     */
-    equipNewItemToCharacter( character, itemID ) {
+
+    equipNewItemToCharacter( character, itemID: string ): void {
         try {
             this.unequipItem( character );
             this.equipItem( character, itemID );            
@@ -54,13 +42,8 @@ class Inventory {
             console.log(ex)
         }
     }
-    /**
-     * Get the ItemStack instance associated with given String.
-     * Then, call the equip methods of Character and ItemStack
-     * @param {Character} character 
-     * @param {String} itemID 
-     */
-    equipItem( character, itemID ) {
+
+    equipItem( character, itemID: string ): void {
         if ( itemID == character.EquippedItemId ) {
             return;
         }
@@ -70,27 +53,17 @@ class Inventory {
             ItemStack.equipItem( );               
         } 
     }
-    /**
-     * Get the ItemStack instance associated with given String.
-     * Then, call the unequip methods of Character and ItemStack
-     * @param {Character} character 
-     * @param {String} itemID 
-     */
-    unequipItem( character ) {
+
+    unequipItem( character ): void {
         if ( character.equippedItem ) {
             let id = character.EquippedItemId;
             let ItemStack = this.getItemStackById( id );
             character.unequipItem( );
-            ItemStack.unequipItem( id );
+            ItemStack.unequipItem( );
         }
     }
-    /**
-     * Loop through the given array of itemIDs.
-     * If a itemID is alreay in this.ActiveItemIDs, call the addItem method from the associated ItemStack.
-     * If not present, push a new StackedItem instance to this.ItemList and add the ID to this.ActiveItemIDs
-     * @param {String[]} newItemIDs 
-     */
-    addItemsToInnerListByID( newItemIDs ) {
+
+    addItemsToInnerListByID( newItemIDs: string[] ): void {
         newItemIDs.forEach( ( itemID ) => {
             if ( this.hasItem( itemID ) ) {
                 this.ItemList.forEach( ( stackedItem ) => {
@@ -105,13 +78,8 @@ class Inventory {
             }
         });
     }
-    /**
-     * Loop through the given array of itemIDs.
-     * If the itemID is associated with a ItemStack instance, push the ItemStacks array index to item index array.
-     * Then, loop through the item index array and call subtractItemFromStackAtIndex for each.
-     * @param {String[]} itemIDsToRemove 
-     */
-    removeItemsFromInnerListByID( itemIDsToRemove ) {
+
+    removeItemsFromInnerListByID( itemIDsToRemove: string[] ): void {
         itemIDsToRemove.forEach( ( itemId ) => {
             if ( this.hasItem( itemId ) ) {
                 this.ItemList.forEach( ( stackedItem ) => {
@@ -122,12 +90,8 @@ class Inventory {
             }
         } ) 
     }
-    /**
-     * Call the subtractItem method of the ItemStack instance with given id.
-     * If stackedItem.Quantity is below one, remove the ItemStack and its ID from the Inventory arrays.
-     * @param {Number} itemIndex 
-     */
-    subtractItemFromStackAtIndex( itemId ) {
+
+    subtractItemFromStackAtIndex( itemId: string ): void {
         let stackedItem = this.getItemStackById( itemId );
         if ( stackedItem.Quantity != 0 ) {
             stackedItem.subtractItem( );            
@@ -138,8 +102,4 @@ class Inventory {
             this.ItemList = this.ItemList.filter((item)=>{ return item.ItemTypeId != itemId });
         }
     }
-}
-
-module.exports = {
-    Inventory
 }

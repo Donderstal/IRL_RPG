@@ -1,6 +1,6 @@
-const globals = require('../../game-data/globals');
-const { BaseSound } = require('./BaseSound');
-const { SpatialSound } = require('./SpatialSound');
+import globals from '../../game-data/globals';
+import { SpatialSound } from './SpatialSound';
+import { BaseSound } from "./BaseSound";
 
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
@@ -13,20 +13,25 @@ const standardSFXVolume = 0.75;
  * The SoundController functions like a registry for sounds and music in the game
  * SoundController uses the AUDIO_DICTIONARY global as source for audio elements
  */
-class SoundController {
+export class SoundController {
+    activeMusic: BaseSound;
+    musicIsPlaying: boolean;
+    activeSoundEffects: BaseSound[];
+    speakingEffect: BaseSound;
+    activeMusicId: string;
     constructor( ) {
-        this.activeMusic = false;
+        this.activeMusic = null;
         this.musicIsPlaying = false;
         this.activeSoundEffects = [];
         this.speakingEffect = null;
         this.activeMusicId = "";
     }
 
-    get audioList( ) {
+    get audioList(): {[key: string]: HTMLAudioElement} {
         return globals.AUDIO_DICTIONARY;
     }
 
-    clearActiveSoundEffects( ) {
+    clearActiveSoundEffects( ): void {
         this.activeSoundEffects.forEach( ( sound ) =>{ 
             if ( !sound.audioNode.src.includes(this.activeMusicId) ) {
                 sound.reset( )
@@ -35,9 +40,9 @@ class SoundController {
         this.activeSoundEffects = []
     }
 
-    setActiveMusic( filename ) {
-        let src = musicFolder + filename;
-        if (this.activeMusicId == src) {
+    setActiveMusic( filename: string ): void {
+       const src = musicFolder + filename;
+        if (this.activeMusicId === src) {
             if ( this.activeMusic.isPaused || this.activeMusic.hasEnded ) {
                 this.playMusic( );                
             }
@@ -52,43 +57,39 @@ class SoundController {
         this.playMusic( );
     }
 
-    pauseMusic( ) {
+    pauseMusic(): void {
         this.activeMusic.pause( );        
     }
 
-    playMusic( ) {
+    playMusic(): void {
         this.activeMusic.play( );         
     }
 
-    getEffect( filename, loop = false ) {
-        let src = effectsFolder + filename;
+    getEffect( filename: string, loop = false ): BaseSound {
+        const src = effectsFolder + filename;
         return new BaseSound( this.audioList[src], standardSFXVolume, loop );
     }
 
-    getSpatialEffect( filename, loop = false ) {
-        let src = effectsFolder + filename; SpatialSound
+    getSpatialEffect( filename: string, loop = false ): SpatialSound {
+        const src = effectsFolder + filename;
         return new SpatialSound( this.audioList[src], standardSFXVolume, loop );
     }
 
-    playEffect( filename, loop = false ) {
+    playEffect( filename: string, loop = false ): void {
         const newEffect = this.getEffect( filename, loop )
         newEffect.play();
     }
 
-    playSpeakingEffect( fileName ) {
+    playSpeakingEffect( fileName: string ): void {
         this.clearSpeakingEffect( );
         this.speakingEffect = this.getEffect( fileName, true );
         this.speakingEffect.play( );
     }
 
-    clearSpeakingEffect( ) {
-        if ( this.speakingEffect != null ) {
+    clearSpeakingEffect(): void {
+        if ( this.speakingEffect !== null ) {
             this.speakingEffect.pause( );            
         }
         this.speakingEffect = null;
     }
-}
-
-module.exports = {
-    SoundController
 }

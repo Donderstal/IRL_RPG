@@ -1,6 +1,6 @@
-const { getItemDataById } = require('../../resources/itemResources');
-const { ITEM_CATEGORY_KEY, ITEM_CATEGORY_WEARABLE } = require('../../game-data/globals');
-const globals = require('../../game-data/globals');
+import globals from '../../game-data/globals';
+import { ItemCategoryEnum } from '../../enumerables/ItemCategoryEnum';
+import { getItemDataById } from '../../resources/itemResources';
 
 const uiSpritesFolder = "/static/ui/"
 /**
@@ -8,8 +8,15 @@ const uiSpritesFolder = "/static/ui/"
  * The ItemTypeId corresponds to an object key in the itemResources file
  * Its in-game use is dependent on the Type and Category properties.
  */
-class GameItem {
+export class GameItem {
+    ItemTypeId: string;
+    Name: string;
+    Category: ItemCategoryEnum;
+    SpriteSrc: string;
+    Description: string;
+    Image: HTMLImageElement;
     constructor( itemTypeId ) {
+
         const data = getItemDataById( itemTypeId )
 
         this.ItemTypeId = itemTypeId;
@@ -19,14 +26,10 @@ class GameItem {
         this.Description= data.description;
         this.Image      = globals.PNG_DICTIONARY[uiSpritesFolder + this.SpriteSrc + ".png"];
     }
-    get canBeEquipped( ) { 
-        return this.Category == ITEM_CATEGORY_WEARABLE; 
+    get canBeEquipped( ): boolean { 
+        return this.Category === ItemCategoryEnum.wearable; 
     };
-    get isKey( ) {
-        return this.Category == ITEM_CATEGORY_KEY;
+    get isKey(): boolean {
+        return this.Category === ItemCategoryEnum.key;
     };
-}
-
-module.exports = {
-    GameItem
 }

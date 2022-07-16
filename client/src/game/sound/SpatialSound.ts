@@ -1,10 +1,12 @@
-const { BaseSound } = require('./BaseSound')
-const globals = require('../../game-data/globals');
-const { MapSprite } = require('../map/map-classes/MapSprite');
+import { BaseSound } from './BaseSound';
+import globals from '../../game-data/globals';
+import type { Sprite } from '../core/Sprite';
 /**
  * Spatial sound pans and plays a sound relative to the player
  */
-class SpatialSound extends BaseSound {
+export class SpatialSound extends BaseSound {
+    track: MediaElementAudioSourceNode;
+    panner: StereoPannerNode;
     constructor( baseAudioElement, volume, loopSound = false ) {
         super(baseAudioElement, volume, loopSound)
   
@@ -13,12 +15,12 @@ class SpatialSound extends BaseSound {
         this.track.connect(this.panner).connect(globals.GAME.audio.destination);
     }
 
-    setVolumeAndPan( sprite ) {
+    setVolumeAndPan( sprite: Sprite ): void {
         this.setDistanceToPlayerVolume( sprite );
         this.setPan( sprite );
     }
 
-    setPan( sprite ) {
+    setPan( sprite: Sprite ): void {
         let PLAYER = globals.GAME.PLAYER;
         let hearingDistance = globals.GRID_BLOCK_PX * 3
         if ( this.isPaused || this.hasNotStartedPlaying ) {
@@ -39,12 +41,12 @@ class SpatialSound extends BaseSound {
         }
     }
 
-    setDistanceToPlayerVolume( sprite ) {
+    setDistanceToPlayerVolume( sprite: Sprite ): void {
         let PLAYER = globals.GAME.PLAYER;
         if ( this.isPaused || this.hasNotStartedPlaying ) {
             this.play( );
         }
-        else if ( sprite == PLAYER || !(PLAYER instanceof MapSprite)  ) {
+        else if ( sprite == PLAYER ) {
             this.setVolumeToFactor( 0.75 );
         }
         else {
@@ -78,8 +80,4 @@ class SpatialSound extends BaseSound {
             this.setVolumeToFactor( modifiers.hori * modifiers.vert > 0.75 ? 0.75 : modifiers.hori * modifiers.vert );
         }
     }
-}
-
-module.exports = {
-    SpatialSound
 }
