@@ -1,18 +1,22 @@
-const { GRID_BLOCK_PX } = require("../../../game-data/globals");
-const { getFrontgridCanvasContext } = require("../../../helpers/canvasHelpers");
-const { Hitbox } = require("../../core/Hitbox");
+import { GRID_BLOCK_PX } from "../../../game-data/globals";
+import { getFrontgridCanvasContext } from "../../../helpers/canvasHelpers";
+import type { Grid } from "../../core/Grid";
+import { Hitbox } from "../../core/Hitbox";
+import type { Tile } from "../../core/Tile";
 
-class VisionBox extends Hitbox {
+export class VisionBox extends Hitbox {
+    previousArcX: number;
+    previousArcY: number;
     constructor( x, y ) {
         super( x, y, GRID_BLOCK_PX * 2 );
         this.arcColor = "black"
-        this.previousArcX = false;
-        this.previousArcY = false;
+        this.previousArcX = null;
+        this.previousArcY = null;
     }
 
     get radiusWithMargin() { return this.radius }
 
-    clearArc( ) {
+    clearArc( ): void {
         const context = getFrontgridCanvasContext();
         context.globalCompositeOperation = 'destination-out'
         context.beginPath();
@@ -24,10 +28,10 @@ class VisionBox extends Hitbox {
         context.globalCompositeOperation = 'source-over'
     }
 
-    getFrontGridTilesInArc( frontGrid ) {
+    getFrontGridTilesInArc( frontGrid: Grid ): Tile[] {
         const tilesInRangeArray = [];
-        for( var x = this.x - this.radius; x <= this.x + this.radius; x += GRID_BLOCK_PX ) {
-            for( var y = this.y - this.radius; y <= this.y + this.radius; y += GRID_BLOCK_PX ) {
+        for( let x = this.x - this.radius; x <= this.x + this.radius; x += GRID_BLOCK_PX ) {
+            for( let y = this.y - this.radius; y <= this.y + this.radius; y += GRID_BLOCK_PX ) {
                 const tile = frontGrid.getTileAtXY( x, y );
                 if ( !tile.isEmpty ) {
                     tilesInRangeArray.push(tile);
@@ -36,8 +40,4 @@ class VisionBox extends Hitbox {
         }
         return tilesInRangeArray;
     }
-}
-
-module.exports = {
-    VisionBox
 }

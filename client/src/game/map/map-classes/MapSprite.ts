@@ -1,21 +1,28 @@
-const globals = require('../../../game-data/globals')
-const { 
-    GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, 
-    FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, STATE_BLOCKED
-} = require('../../../game-data/globals');
-const { Sprite } = require('../../core/Sprite')
-const { Hitbox } = require('../../core/Hitbox');
-const { VisionBox } = require('./VisionBox');
-const { Counter } = require('../../../helpers/Counter');
-
+import globals from '../../../game-data/globals';
+import { GRID_BLOCK_PX, MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN, STATE_BLOCKED } from '../../../game-data/globals';
+import { Sprite } from '../../core/Sprite';
+import { Hitbox } from '../../core/Hitbox';
+import type { BaseSound } from '../../sound/BaseSound';
+import { VisionBox } from './VisionBox';
+import { Counter } from '../../../helpers/Counter';
+import type { GridCellModel } from '../../../models/GridCellModel';
+import type { Tile } from '../../core/Tile';
+import type { DirectionEnum } from '../../../enumerables/DirectionEnum';
+import type { CharacterModel } from '../../../models/CharacterModel';
+import type { SpatialSound } from '../../sound/SpatialSound';
 /**
  * The MapSprite represents a 1-tile wide sprite on the Front grid
  * Logs its position on the grid and has a sound effect for movement
  */
-class MapSprite extends Sprite {
-    constructor ( tile, direction, spriteSize, classProfile, isPlayer = false ) {       
-        super( tile, spriteSize, classProfile.png, direction, isPlayer )   
-        this.cell = {}
+export class MapSprite extends Sprite {
+    cell: GridCellModel;
+    hitbox: Hitbox;
+    blockedCounter: Counter;
+    movementSoundEffect: SpatialSound;
+    visionbox: VisionBox
+    constructor ( tile: Tile, direction: DirectionEnum, spriteSize: any, classProfile: CharacterModel, isPlayer: boolean = false ) {       
+        super( tile, spriteSize, classProfile.sprite, direction, isPlayer )   
+        this.cell = null;
         this.hitbox = new Hitbox( this.centerX, this.baseY, this.width / 2 );
         
         this.spriteId;
@@ -111,8 +118,4 @@ class MapSprite extends Sprite {
             this.blockedCounter.resetCounter( );
         }       
     }
-} 
-
-module.exports = {
-    MapSprite
-} 
+}

@@ -1,23 +1,17 @@
-const globals = require('../../../game-data/globals')
-const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
-const { EVENT_NEIGHBOUR } = require('../../../game-data/conditionGlobals');
-const { switchMap } = require('../../../helpers/loadMapHelpers');
+import { DirectionEnum } from '../../../enumerables/DirectionEnum';
+import { InteractionType } from '../../../enumerables/InteractionType';
+import globals from '../../../game-data/globals';
+import { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } from '../../../game-data/globals';
+import { switchMap } from '../../../helpers/loadMapHelpers';
+import type { Sprite } from '../../core/Sprite';
+import type { MapSprite } from '../map-classes/MapSprite';
 
-/**
- * Call moveInDirection and then call sprite.countFrame
- * @param {Sprite} sprite 
- * @param {Number} direction 
- */
-const handleMovementOfSprite = ( sprite, direction ) => {
+export const handleMovementOfSprite = ( sprite: MapSprite, direction: DirectionEnum ): void => {
     moveInDirection( sprite, direction )
     sprite.countFrame( )
 }
-/**
- * If movement is allowed, increment or decrement the x or y value of given sprite appropriatly
- * @param {Sprite} sprite 
- * @param {Number} direction 
- */
-const moveInDirection = ( sprite, direction ) => {
+
+const moveInDirection = ( sprite: MapSprite, direction: DirectionEnum ): void => {
     const changedDirection = sprite.direction != direction;
     sprite.direction = direction   
 
@@ -28,21 +22,17 @@ const moveInDirection = ( sprite, direction ) => {
         sprite.moveSprite( direction, MOVEMENT_SPEED );         
     }
 }
-/**
- * Check if the sprite can move in the given direction from their current position
- * @param {Sprite} sprite 
- * @param {Number} direction 
- */
-const checkIfMovementAllowed = ( sprite, direction ) => {
+
+const checkIfMovementAllowed = ( sprite: MapSprite, direction: DirectionEnum ): boolean => {
     const activeMap = globals.GAME.activeMap;
     if ( sprite.currentTileBack == undefined ) {
         return true;
     }
 
-    const facingUpOnTopRow = sprite.currentTileBack.row == 1 && direction == FACING_UP;
-    const facingRightOnRightCol = sprite.currentTileBack.col == globals.GAME.back.class.grid.cols && direction == FACING_RIGHT;
-    const facingLeftOnLeftCol = sprite.currentTileBack.col == 1 && direction == FACING_LEFT;
-    const facingDownOnBottomRow = sprite.currentTileBack.row == globals.GAME.back.class.grid.rows && direction == FACING_DOWN;
+    const facingUpOnTopRow = sprite.currentTileBack.row == 1 && direction == DirectionEnum.up;
+    const facingRightOnRightCol = sprite.currentTileBack.column == globals.GAME.back.class.grid.columns && direction == DirectionEnum.right;
+    const facingLeftOnLeftCol = sprite.currentTileBack.column == 1 && direction == DirectionEnum.left;
+    const facingDownOnBottomRow = sprite.currentTileBack.row == globals.GAME.back.class.grid.rows && direction == DirectionEnum.down;
 
 
     if ( facingUpOnTopRow && ( !activeMap.outdoors || !activeMap.neighbours.up ) ) {
@@ -73,37 +63,29 @@ const checkIfMovementAllowed = ( sprite, direction ) => {
     
     return true
 }
-/**
- * If there is a neighbouring map and the given sprite is over the map border
- * call GAME.switchMap to intialize the new map and return true.
- * @param {Sprite} sprite
- */
-const checkForNeighbours = ( sprite ) => {
+
+const checkForNeighbours = ( sprite: Sprite ): boolean => {
     const activeMap = globals.GAME.activeMap;
     const activeGrid = globals.GAME.back.class.grid
 
     if ( activeMap.outdoors ) {
         if ( activeGrid.x > sprite.centerX && activeMap.neighbours.left ) {
-            switchMap( activeMap.neighbours.left, EVENT_NEIGHBOUR )
+            switchMap( activeMap.neighbours.left, InteractionType.neighbour )
             return true;
         }
-        if ( activeGrid.x + ( activeGrid.cols * GRID_BLOCK_PX ) < sprite.centerX && activeMap.neighbours.right ) {
-            switchMap( activeMap.neighbours.right, EVENT_NEIGHBOUR )
+        if ( activeGrid.x + ( activeGrid.columns * GRID_BLOCK_PX ) < sprite.centerX && activeMap.neighbours.right ) {
+            switchMap( activeMap.neighbours.right, InteractionType.neighbour )
             return true;
         }
         if ( activeGrid.y > sprite.baseY && activeMap.neighbours.up ) {
-            switchMap( activeMap.neighbours.up, EVENT_NEIGHBOUR )
+            switchMap( activeMap.neighbours.up, InteractionType.neighbour )
             return true;
         }
         if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY && activeMap.neighbours.down ) {
-            switchMap( activeMap.neighbours.down, EVENT_NEIGHBOUR )
+            switchMap( activeMap.neighbours.down, InteractionType.neighbour )
             return true;
         }
     }
 
     return false;
-}
-
-module.exports = {
-    handleMovementOfSprite
 }

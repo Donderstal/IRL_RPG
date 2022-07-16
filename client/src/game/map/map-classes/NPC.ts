@@ -1,13 +1,9 @@
-const { 
-    NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING,
-    NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_MOVE_TYPE_WALKING,
-    STATE_BLOCKED
-}  = require('../../../game-data/globals');
-const { MapSprite } = require('./MapSprite')
-const { ActionSelector } = require('./ActionSelector')
-const { Counter } = require('../../../helpers/Counter');
-const globals = require('../../../game-data/globals');
-const { getClassProfile, getProfileName } = require('../../../resources/classProfileResources');
+import { NPC_ANIM_TYPE_IDLE, NPC_ANIM_TYPE_SEMI_IDLE, NPC_ANIM_TYPE_MOVING, NPC_ANIM_TYPE_MOVING_IN_LOOP, NPC_ANIM_TYPE_ANIMATION_LOOP, NPC_MOVE_TYPE_WALKING, STATE_BLOCKED } from '../../../game-data/globals';
+import { MapSprite } from './MapSprite';
+import { ActionSelector } from './ActionSelector';
+import { Counter } from '../../../helpers/Counter';
+import globals from '../../../game-data/globals';
+import { getClassProfile, getProfileName } from '../../../resources/spriteTypeResources';
 
 const cellRadius = 2;
 const animationList = [
@@ -95,7 +91,7 @@ class NPC extends MapSprite {
         const newRow = this.initialRow + rowDistance;
 
         if ( newRow > 0 && newRow < globals.GAME.activeMap.rows + 1 && newColumn > 0 && newColumn < globals.GAME.activeMap.columns + 1 ) {
-            this.setDestination( { "col": newColumn, "row": newRow }  )
+            this.setDestination( { "column": newColumn, "row": newRow }  )
         }
         else {
             this.setRandomDestinationInRadius( )
