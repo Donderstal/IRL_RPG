@@ -1,9 +1,14 @@
-const { GRID_BLOCK_PX } = require("../../game-data/globals");
-const { MENU_MARGIN_TOP_DOWN, MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME } = require("../../game-data/uiGlobals");
-const { I_MenuElement } = require("./I_MenuElement");
+import { GRID_BLOCK_PX } from "../../game-data/globals";
+import { MENU_MARGIN_TOP_DOWN, MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME } from "../../game-data/uiGlobals";
+import { I_MenuElement } from "./I_MenuElement";
 
-class ContentBubble extends I_MenuElement {
-    constructor( startCol, startRow, cols, rows, type, content, rowStyles ) {
+export class ContentBubble extends I_MenuElement {
+    type: string;
+    content: string;
+    originalX: number;
+    originalY: number;
+    inAnimation: boolean;
+    constructor( startCol: number, startRow: number, cols: number, rows: number, type: string, content: string, rowStyles: string[] ) {
         super( startCol * GRID_BLOCK_PX, startRow * GRID_BLOCK_PX, cols, rows, rowStyles, ["B"] )
 
         this.type       = type;
@@ -12,7 +17,7 @@ class ContentBubble extends I_MenuElement {
         this.originalY  = this.y;
     }
 
-    draw( ctx ) {
+    draw( ctx: CanvasRenderingContext2D ): void {
         if ( this.isActive ) {
             this.countFrameForAnimation( ctx );
         }
@@ -21,17 +26,17 @@ class ContentBubble extends I_MenuElement {
         this.reset( )
     }
 
-    action( ) {
-        alert.log(this.type)
+    action(): void {
+        console.log(this.type)
     }
 
-    reset( ) {
+    reset(): void {
         this.inAnimation = false;
         this.x = this.originalX;
         this.y = this.originalY;
     }
 
-    drawContents( ctx ) {
+    drawContents( ctx: CanvasRenderingContext2D ): void {
         switch( this.type ) {
             case MENU_TAB_PARTY:
                 this.drawPartyBubble( ctx );
@@ -48,11 +53,9 @@ class ContentBubble extends I_MenuElement {
         }
     }
 
-    drawPartyBubble( ctx ) {
+    drawPartyBubble( ctx: CanvasRenderingContext2D ): void { }
 
-    }
-
-    drawInventoryBubble( ctx ) {
+    drawInventoryBubble( ctx: CanvasRenderingContext2D ): void {
         if ( this.inAnimation ) {
             ctx.fillStyle = "yellow";
             ctx.fillText(this.content, this.x + (MENU_MARGIN_TOP_DOWN * GRID_BLOCK_PX), this.y + ( this.height / 2));
@@ -65,11 +68,9 @@ class ContentBubble extends I_MenuElement {
         }
     }
 
-    drawMapBubble( ctx ) {
+    drawMapBubble( ctx: CanvasRenderingContext2D ): void { }
 
-    }
-
-    drawGameBubble( ctx ) {
+    drawGameBubble( ctx: CanvasRenderingContext2D ): void {
         if ( this.inAnimation ) {
             ctx.fillStyle = "yellow";
             ctx.fillText(this.content, (this.x + (this.width / 2)) - ( ctx.measureText(this.content).width) / 2, this.y + ( this.height / 2));
@@ -80,15 +81,11 @@ class ContentBubble extends I_MenuElement {
         }
     }
 
-    elementAnimation( ) {
+    elementAnimation( ): void {
         this.inAnimation = true;
     }
 
-    activate( ) {
+    activate(): void {
         this.isActive = true;
     }
-}
-
-module.exports = {
-    ContentBubble
 }

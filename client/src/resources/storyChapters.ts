@@ -12,6 +12,8 @@ import {
 import {
     EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_HAPPY, EMOTE_QUESTIONMARK
 } from '../game-data/textboxGlobals';
+import { initInteractionModel } from "../helpers/modelFactory";
+import type { StoryEventModel } from "../models/StoryEventModel";
 
 export const KEY_STORY_1 = "KEY_STORY_EVENT_1";
 export const KEY_STORY_2 = "KEY_STORY_EVENT_2";
@@ -98,8 +100,9 @@ export const STORY_EVENTS = [
         mapName: "leonard_heights/Newtown-appartment-4",
         trigger: CinematicTrigger.position,
         position: {
-            "column": 3,
-            "direction": DirectionEnum.right
+            row: null,
+            column: 3,
+            direction: DirectionEnum.right
         },
         interaction: [
             InteractionType.talk, true, KEY_STORY_1, "medium-text-blip.ogg", 
@@ -299,3 +302,27 @@ const assignEventIds = () => {
     });
 };
 assignEventIds();
+
+const getDataModels = (): StoryEventModel[] => {
+    return STORY_EVENTS.map( ( event ) => {
+        let model: StoryEventModel = {
+            id: event.id,
+            mapName: event.mapName,
+            trigger: event.trigger,
+            interaction: initInteractionModel( event.interaction )
+        }
+        if ( event.trigger === CinematicTrigger.interaction ) {
+            model.name = event.name;
+        }
+        if ( event.trigger === CinematicTrigger.position ) {
+            model.position = { row: event.position.row, column: event.position.column, direction: event.position.direction };
+        }
+        return model;
+    } )
+}
+
+const storyEventModels = getDataModels();
+
+export const getStoryEventModelsByMapName = ( mapName: string ): StoryEventModel[] => {
+    return storyEventModels.filter( ( e ) => { return e.mapName === mapName; } );
+}

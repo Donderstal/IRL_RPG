@@ -1,8 +1,10 @@
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { getAction } from '../../helpers/actionDtoFactory';
+import type { CellPosition } from '../../models/CellPositionModel';
 import type { ConditionModel } from '../../models/ConditionModel';
 import type { GridCellModel } from '../../models/GridCellModel';
 import type { InteractionModel } from '../../models/InteractionModel';
+import type { StoryEventModel } from '../../models/StoryEventModel';
 import { ScriptedInteraction } from './ScriptedInteraction';
 
 export class ScriptedEvent {
@@ -16,11 +18,10 @@ export class ScriptedEvent {
 
     fired: boolean;
     passScene: boolean;
-    position: GridCellModel;
-    constructor( scriptedEventData ) {
+    position: CellPosition;
+    constructor( scriptedEventData: StoryEventModel ) {
         this.mapName        = scriptedEventData.mapName;
         this.trigger        = scriptedEventData.trigger;
-        this.passScene      = scriptedEventData.passScene;
         const eventScript   = getAction(scriptedEventData.condition, scriptedEventData.scenes);
         this.action         = eventScript.action;
         this.condition      = eventScript.condition;

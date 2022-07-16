@@ -129,7 +129,7 @@ export class Animation {
                 break;
             case SceneAnimationType.loadMap:
                 this.model = this.model as LoadMapScene;
-                loadCinematicMap( this.loadMapScene.mapName, this.loadMapScene.setPlayerSprite, this.loadMapScene.playerSpriteLocation );   
+                loadCinematicMap( this.loadMapScene.mapName, this.loadMapScene.setPlayerSprite );   
                 break;
         }
         if( setToSprite ) {

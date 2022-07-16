@@ -1,17 +1,14 @@
-const globals = require("../../game-data/globals")
+import { DirectionEnum } from "../../enumerables/DirectionEnum";
+import globals from "../../game-data/globals";
 
-/**
- * Call the correct funtionality depending on the pressed key
- * @param {Event} event browser event bubbled from pressed key
- */
- const handleMenuKeyPress = ( event ) => {
+ export const handleMenuKeyPress = ( event: KeyboardEvent ) => {
     const MENU = globals.GAME.MENU;
     switch ( event.key ) {
         case "q" : 
-            MENU.switchTab( "LEFT" )
+            MENU.switchTab( DirectionEnum.left )
             break;
         case "e" :
-            MENU.switchTab( "RIGHT" )
+            MENU.switchTab( DirectionEnum.right )
             break;
         case "a":
         case "ArrowLeft":
@@ -26,8 +23,4 @@ const globals = require("../../game-data/globals")
         case "ArrowDown":
             break;
     }
-}
-
-module.exports = {
-    handleMenuKeyPress
 }

@@ -1,11 +1,26 @@
-const globals = require("../../game-data/globals");
-const { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } = require("../../game-data/globals");
-const { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_RIGHT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT, BUBBLE_LEFT } = require("../../game-data/textboxGlobals");
-const { drawBubblePart } = require("./menuHelpers");
+import globals from "../../game-data/globals";
+import { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../game-data/globals";
+import { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_RIGHT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT, BUBBLE_LEFT } from "../../game-data/textboxGlobals";
+import { drawBubblePart } from "./menuHelpers";
 
-class I_MenuElement {
-    constructor( x, y, columns, rows, rowStyles, borders = false, isActive = false ) {
-        this.utilCanvas = document.getElementById( 'game-utility-canvas-menu' );
+export class I_MenuElement {
+    utilCanvas: HTMLCanvasElement;
+    utilCtx: CanvasRenderingContext2D;
+    isActive: boolean;
+    borders: string[];
+    frameCounter: number;
+    frameLimit: number;
+    animate: boolean;
+
+    x: number;
+    y: number;
+    columns: number;
+    rows: number;
+    width: number;
+    height: number;
+    rowStyles: string[];
+    constructor( x: number, y, columns: number, rows: number, rowStyles: string[], borders: string[] = null, isActive = false ) {
+        this.utilCanvas = document.getElementById( 'game-utility-canvas-menu' ) as HTMLCanvasElement;
         this.utilCtx = this.utilCanvas.getContext( '2d' );
         this.utilCanvas.width = globals.CANVAS_WIDTH;
         this.utilCanvas.height = globals.CANVAS_HEIGHT;
@@ -18,7 +33,7 @@ class I_MenuElement {
         this.initElement( x, y, columns, rows, rowStyles );
     }
 
-    initElement( x, y, columns, rows, rowStyles ) {
+    initElement( x: number, y, columns: number, rows: number, rowStyles: string[] ): void {
         this.x = x;
         this.y = y;
         this.columns = columns;
@@ -28,17 +43,17 @@ class I_MenuElement {
         this.rowStyles = rowStyles;
     }
 
-    drawElement( ctx ) {
+    drawElement( ctx: CanvasRenderingContext2D ): void {
         this.utilCtx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
-        for( var i = 0; i < this.rows; i++ ) {
-            let rowStyle = this.rowStyles[i];
-            if ( rowStyle == BUBBLE_TOP ) {
+        for( let i = 0; i < this.rows; i++ ) {
+            const rowStyle = this.rowStyles[i];
+            if ( rowStyle === BUBBLE_TOP ) {
                 this.drawRow( BUBBLE_LEFT_TOP, BUBBLE_TOP, BUBBLE_RIGHT_TOP, i )
             }
-            else if ( rowStyle == BUBBLE_MIDDLE ) {
+            else if ( rowStyle === BUBBLE_MIDDLE ) {
                 this.drawRow( BUBBLE_LEFT, BUBBLE_MIDDLE, BUBBLE_RIGHT, i )            
             }
-            else if ( rowStyle == BUBBLE_BOTTOM ) {
+            else if ( rowStyle === BUBBLE_BOTTOM ) {
                 this.drawRow( BUBBLE_LEFT_BOTTOM, BUBBLE_BOTTOM, BUBBLE_RIGHT_BOTTOM, i )
             }
         }
@@ -52,12 +67,12 @@ class I_MenuElement {
         );
     }
 
-    drawRow( first, middle, last, rowCounter ) {
-        for( var i = 0; i < this.columns; i++ ) {
-            if ( i == 0 ) {
+    drawRow( first: string, middle: string, last: string, rowCounter: number ): void {
+        for( let i = 0; i < this.columns; i++ ) {
+            if ( i === 0 ) {
                 drawBubblePart( first, { x: GRID_BLOCK_PX * i, y : rowCounter * GRID_BLOCK_PX }, this.utilCtx );
             }
-            else if ( i == this.columns - 1 ) {
+            else if ( i === this.columns - 1 ) {
                 drawBubblePart( last, { x: GRID_BLOCK_PX * i, y : rowCounter * GRID_BLOCK_PX }, this.utilCtx );
             }
             else {
@@ -66,8 +81,8 @@ class I_MenuElement {
         }
     }
 
-    drawBorders( ctx ) {
-        this.borders.forEach((e) => {
+    drawBorders( ctx: CanvasRenderingContext2D ): void {
+        this.borders.forEach( ( e ): void => {
             let startX;
             let startY;
             let endX;
@@ -108,7 +123,7 @@ class I_MenuElement {
         })
     }
 
-    countFrameForAnimation( ctx ) {
+    countFrameForAnimation( ctx: CanvasRenderingContext2D ): void {
         this.frameCounter++
         if ( this.frameCounter > this.frameLimit ) {
             this.frameCounter = 0;
@@ -119,8 +134,6 @@ class I_MenuElement {
             this.elementAnimation( ctx )
         }
     }
-}
 
-module.exports = {
-    I_MenuElement
+    elementAnimation( ctx: CanvasRenderingContext2D ): void { }
 }

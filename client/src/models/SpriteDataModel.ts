@@ -1,5 +1,6 @@
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
+import type { SpriteFrameModel } from "./SpriteFrameModel";
 
 export type SpriteDataModel = {
     key: string;
@@ -8,10 +9,10 @@ export type SpriteDataModel = {
     image: HTMLImageElement;
 
     idleAnimation: boolean;
-    idleAnimationFrames?: { x: number, y: number }[][];
+    idleAnimationFrames?: SpriteFrameModel[][];
 
     canMove: boolean;
-    movementFrames?: { [key in DirectionEnum]: {x: number, y: number}[] };
+    movementFrames?: { [key in DirectionEnum]: SpriteFrameModel[] };
 
     onBackground: boolean;
     notGrounded: boolean;
