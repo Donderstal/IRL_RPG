@@ -1,8 +1,15 @@
-const { FACING_LEFT, FACING_UP, FACING_RIGHT, FACING_DOWN, STATE_WAITING, STATE_MOVING } = require("../../../game-data/globals");
-const { I_Junction } = require("./I_Junction");
-const { TileSquare } = require("../../../helpers/TileSquare");
+import { I_Junction } from "./I_Junction";
+import { TileSquare } from "../../../helpers/TileSquare";
+import { DirectionEnum } from "../../../enumerables/DirectionEnum";
+import type { Road } from "./Road";
 
-class Intersection extends I_Junction {
+export class Intersection extends I_Junction {
+    id: string;
+    roadIds: string[];
+    leftUpSquare: TileSquare;
+    rightUpSquare: TileSquare;
+    leftDownSquare: TileSquare;
+    rightDownSquare: TileSquare;
     constructor( pendingIntersections, id ) {
         super( );
         this.id = id;
@@ -14,12 +21,12 @@ class Intersection extends I_Junction {
         this.roadIds = this.roads.map( ( e ) => { return e.id; } );
     }
 
-    get hasLeftUpTurn( ) { return this.hasDirection(FACING_UP) && this.hasDirection(FACING_LEFT); };
-    get hasRightUpTurn( ) { return this.hasDirection(FACING_UP) && this.hasDirection(FACING_RIGHT); };
-    get hasLeftDownTurn( ) { return this.hasDirection(FACING_DOWN) && this.hasDirection(FACING_LEFT); };
-    get hasRightDownTurn( ) { return this.hasDirection(FACING_DOWN) && this.hasDirection(FACING_RIGHT); };
+    get hasLeftUpTurn( ) { return this.hasDirection(DirectionEnum.up) && this.hasDirection(DirectionEnum.left); };
+    get hasRightUpTurn( ) { return this.hasDirection(DirectionEnum.up) && this.hasDirection(DirectionEnum.right); };
+    get hasLeftDownTurn( ) { return this.hasDirection(DirectionEnum.down) && this.hasDirection(DirectionEnum.left); };
+    get hasRightDownTurn( ) { return this.hasDirection(DirectionEnum.down) && this.hasDirection(DirectionEnum.right); };
 
-    initIntersectionFromPendingList( pendingList ) {
+    initIntersectionFromPendingList( pendingList: { roads: Road[], directions: DirectionEnum[], square: TileSquare }[] ) {
         let tileList = [];
 
         pendingList.forEach( ( pending ) => {
@@ -39,15 +46,7 @@ class Intersection extends I_Junction {
         this.core = new TileSquare( tileList );
     }
 
-    closeLane( direction ) {
-        this.openLanes[direction] = false;
-    }
-
-    openLane( direction ) {
-        this.openLanes[direction] = true;
-    }
-
-    setTurns() {
+    setTurns(): void {
         if ( this.hasLeftUpTurn ) {
             this.leftUpSquare = new TileSquare( this.getTilesFromCoreList(
                 this.core.rightColumn, this.core.topRow,
@@ -74,66 +73,62 @@ class Intersection extends I_Junction {
         }
     }
 
-    getTilesFromCoreList( col1, row1, col2, row2 ) {
+    getTilesFromCoreList( col1: number, row1: number, col2: number, row2: number ) {
         return this.core.tileList.filter( ( e ) => {
-            return ( e.col == col1 || e.col == col2 ) 
-            && ( e.row == row1 || e.row == row2 ) 
+            return ( e.column === col1 || e.column === col2 ) 
+            && ( e.row === row1 || e.row === row2 ) 
         });
     }
 
-    getRoadById( id ) {
+    getRoadById( id: string ): Road {
         return this.roads.filter((e)=>{return e.id == id;})[0];
     }
 
-    getRoadByDirection( direction ) {
-        return this.roads.filter((e)=>{return e.direction== direction;})[0];
+    getRoadByDirection( direction: DirectionEnum ): Road {
+        return this.roads.filter( ( e ) =>{ return e.model.direction === direction; })[0];
     }
 
-    getDirectionInLane( direction ) {
+    getDirectionInLane( direction: DirectionEnum ): TileSquare {
         switch( direction ) {
-            case FACING_LEFT:
+            case DirectionEnum.left:
                 return this.leftFacingInLane;
-            case FACING_UP:
+            case DirectionEnum.up:
                 return this.upFacingInLane;
-            case FACING_RIGHT:
+            case DirectionEnum.right:
                 return this.rightFacingInLane;
-            case FACING_DOWN:
+            case DirectionEnum.down:
                 return this.downFacingInLane;
         }
     }
 
-    getDirectionOutLane( direction ) {
+    getDirectionOutLane( direction: DirectionEnum ): TileSquare {
         switch( direction ) {
-            case FACING_LEFT:
+            case DirectionEnum.left:
                 return this.leftFacingOutLane;
-            case FACING_UP:
+            case DirectionEnum.up:
                 return this.upFacingOutLane;
-            case FACING_RIGHT:
+            case DirectionEnum.right:
                 return this.rightFacingOutLane;
-            case FACING_DOWN:
+            case DirectionEnum.down:
                 return this.downFacingOutLane;
         }
     }
 
-    getIntersectingRoadIds( roadId ) {
-        let intersectingRoadIds = [];
+    getIntersectingRoadIds( roadId: string ): string[] {
+        const intersectingRoadIds = [];
         const road = this.getRoadById( roadId );
-        if (road.direction == FACING_DOWN || road.direction == FACING_UP){
-            if (this.hasDirection(FACING_RIGHT) && !this.directionEnds(FACING_RIGHT))
+        if (road.model.direction === DirectionEnum.down || road.model.direction === DirectionEnum.up){
+            if (this.hasDirection(DirectionEnum.right) && !this.directionEnds(DirectionEnum.right))
                 intersectingRoadIds.push(this.rightFacingRoad.id);
-                if (this.hasDirection(FACING_LEFT) && !this.directionEnds(FACING_LEFT))
+                if (this.hasDirection(DirectionEnum.left) && !this.directionEnds(DirectionEnum.left))
                 intersectingRoadIds.push(this.leftFacingRoad.id);
         }
-        else if (road.direction == FACING_RIGHT || road.direction == FACING_LEFT) {
-            if (this.hasDirection(FACING_UP) && !this.directionEnds(FACING_UP))
+        else if (road.model.direction === DirectionEnum.right || road.model.direction === DirectionEnum.left) {
+            if (this.hasDirection(DirectionEnum.up) && !this.directionEnds(DirectionEnum.up))
                 intersectingRoadIds.push(this.upFacingRoad.id);
-                if (this.hasDirection(FACING_DOWN) && !this.directionEnds(FACING_DOWN))
+                if (this.hasDirection(DirectionEnum.down) && !this.directionEnds(DirectionEnum.down))
                 intersectingRoadIds.push(this.downFacingRoad.id);
         }
         return intersectingRoadIds;
     }
-}
-
-module.exports = {
-    Intersection
 }

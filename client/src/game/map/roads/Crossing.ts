@@ -1,9 +1,11 @@
-const { I_Junction } = require("./I_Junction");
-const globals = require("../../../game-data/globals");
-const { TileSquare } = require("../../../helpers/TileSquare");
-const { NPC } = require('../map-classes/NPC')
+import { I_Junction } from "./I_Junction";
+import globals from "../../../game-data/globals";
+import { TileSquare } from "../../../helpers/TileSquare";
+import type { Sprite } from "../../core/Sprite";
+import type { Road } from "./Road";
 
-class Crossing extends I_Junction {
+export class Crossing extends I_Junction {
+    crossingSprites: Sprite[];
     constructor( pendingCrossings ) {
         super( )
         this.crossingSprites = [];
@@ -15,45 +17,45 @@ class Crossing extends I_Junction {
         globals.GAME.BACK.ctx.fillRect( this.core.left, this.core.top, this.core.width, this.core.height );
     }
 
-    initCrossingFromPendingList( pendingCrossings ) {
+    initCrossingFromPendingList( pendingCrossings: { road: Road, square: TileSquare }[] ): void {
         let tileList = [];
 
         pendingCrossings.forEach( ( pending ) => { 
             this.roads.push( pending.road );
-            this.directions.push( pending.road.direction );
+            this.directions.push( pending.road.model.direction );
             tileList = [ ...pending.square.tileList, ...tileList ]
         })
 
         this.core = new TileSquare(  tileList );
         this.core.tileList.forEach( ( tile ) => { 
-            let gridTile = globals.GAME.BACK.getTileAtCell( tile.col, tile.row );
+            let gridTile = globals.GAME.BACK.getTileAtCell( tile.column, tile.row );
             gridTile.setMovementCost( 0.1 ); 
         })
     }
 
-    updateCrossingStatus( ) {
+    updateCrossingStatus( ): void {
         this.openCrossing( );
         this.checkForSpritesOnCrossing( );
         this.checkForCarsNearCrossing( );
         this.setCarsToWaitIfLaneIsClosed( );
     }
 
-    openCrossing( ) {
+    openCrossing( ): void {
         this.directions.forEach((direction) => {
             this.openLanes[direction] = true;
         })
     }
 
-    closeCrossing( ) {
+    closeCrossing( ): void {
         this.directions.forEach((direction) => {
             this.openLanes[direction] = false;
         })
     }
 
-    checkForSpritesOnCrossing( ) {
+    checkForSpritesOnCrossing( ): void {
         this.crossingSprites = [];
         this.intersectionCars = [];
-        let sprites = globals.GAME.FRONT.allSprites.filter( ( e ) => { return e instanceof NPC || e.spriteId == 'PLAYER'; })
+        let sprites = globals.GAME.FRONT.allSprites;
         sprites.forEach( (sprite) => {
             if ( this.core.spriteIsInTileSquare(sprite) ) {
                 this.crossingSprites.push(sprite)
@@ -67,7 +69,7 @@ class Crossing extends I_Junction {
         };
     }
 
-    checkForCarsNearCrossing( ) {
+    checkForCarsNearCrossing( ): void {
         if ( this.leftFacingInLane ) {
             this.checkForCarsOnSquare( this.leftFacingRoad.carsOnRoad, this.leftFacingInLane )
         }
@@ -82,12 +84,8 @@ class Crossing extends I_Junction {
         }
     }
 
-    checkForCarsOnSquare( cars, square ) {
-        super.checkForCarsOnSquare( cars, square);
-        this.intersectionCars.push(cars);
+    checkForCarsOnSquare( cars: Sprite[], square: TileSquare ): boolean {
+        this.intersectionCars.push( ...cars );
+        return super.checkForCarsOnSquare( cars, square );
     }
-}
-
-module.exports = {
-    Crossing
 }

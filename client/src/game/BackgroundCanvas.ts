@@ -5,6 +5,7 @@ import type { InteractionModel } from '../models/InteractionModel';
 import type { MapModel } from '../models/MapModel';
 import type { TilesheetModel } from '../models/TilesheetModel';
 import { CanvasWithGrid } from './core/CanvasWithGrid';
+import type { Tile } from './core/Tile';
 import type { ActionSelector } from './map/map-classes/ActionSelector';
 import { Savepoint } from './map/map-classes/SavePoint';
 
@@ -22,7 +23,7 @@ export class BackgroundCanvas extends CanvasWithGrid {
     hasActions: boolean;
     doors: DoorModel[];
     hasDoors: boolean;
-    savepoint: Savepoint;
+    savepoint: Tile;
     blockedTiles: number[];
     constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
         super( x, y, ctx );
@@ -61,8 +62,8 @@ export class BackgroundCanvas extends CanvasWithGrid {
             this.setActions( this.model.actions );
         if ( this.model.savepoint ) 
             this.setSavepoint( this.model.savepoint );
-        if ( sheetData.blocked ) 
-            this.setBlockedTiles( sheetData.blocked );
+        if ( sheetModel.blocked ) 
+            this.setBlockedTiles( sheetModel.blocked );
         let oneDimensionalMapGrid = this.model.grid.flat(1);
         this.setTileGrid( oneDimensionalMapGrid );
     }
@@ -108,6 +109,6 @@ export class BackgroundCanvas extends CanvasWithGrid {
         this.hasActions = false;
         this.blockedTiles = [ ];
         this.backgroundActions = [];
-        this.savepoint = false;
+        this.savepoint = null;
     }
 };

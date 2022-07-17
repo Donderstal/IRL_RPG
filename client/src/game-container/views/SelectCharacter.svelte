@@ -1,6 +1,6 @@
 <script>
     import globals from '../../game-data/globals.js';
-    import { getAnimationFrames } from '../../resources/animationResources.js';
+    import { getAnimationByName } from '../../resources/animationResources.js';
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import { startGameWithParams } from "../stores.js"
@@ -123,7 +123,7 @@
     const getAnimation = ( ) => {
         switch ( Math.floor( Math.random( ) * 7 ) ) {
             case 0 : 
-                animationFrames = getAnimationFrames("BACK_AND_FORTH");
+                animationFrames = getAnimationByName("BACK_AND_FORTH");
                 animationType = "ANIM"
             break;
             case 1 :
@@ -131,7 +131,7 @@
                 animationType = "WALK"
             break;
             case 2 :
-                animationFrames = getAnimationFrames("TURN_SINGLE_CIRCLE");
+                animationFrames = getAnimationByName("TURN_SINGLE_CIRCLE");
                 animationType = "ANIM"
             break;
             case 3 :
@@ -147,7 +147,7 @@
                 animationType = "WALK"
             break;
             case 6 : 
-                animationFrames = getAnimationFrames("LEFT_AND_RIGHT");
+                animationFrames = getAnimationByName("LEFT_AND_RIGHT");
                 animationType = "ANIM"
             break;
         }

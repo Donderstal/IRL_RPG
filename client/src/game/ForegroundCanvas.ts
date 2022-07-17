@@ -1,17 +1,13 @@
 import { CanvasWithGrid } from './core/CanvasWithGrid';
-import { NPC } from './map/map-classes/NPC';
-import { MapSprite } from './map/map-classes/MapSprite';
-import { Car } from './map/roads/Car';
 import { getUniqueId } from '../helpers/utilFunctions';
-import { getEffect } from '../helpers/effectHelpers';
+import { getEffect, GraphicalEffect } from '../helpers/effectHelpers';
 import globals from '../game-data/globals';
 import { RoadNetwork } from './map/RoadNetwork';
 import { determineShortestPath } from '../helpers/pathfindingHelpers';
 import { getDataModelByKey } from '../resources/spriteDataResources';
 import { PLAYER_ID, PLAYER_NAME } from '../game-data/interactionGlobals';
 import { conditionIsTrue } from '../helpers/conditionalHelper';
-import type { Sprite } from './core/Sprite';
-import type { Effect } from './core/Effect';
+import { Sprite } from './core/Sprite';
 import type { Grid } from './core/Grid';
 import type { CanvasObjectModel } from '../models/CanvasObjectModel';
 import type { CellPosition } from '../models/CellPositionModel';
@@ -20,6 +16,7 @@ import type { MapModel } from '../models/MapModel';
 import type { SpawnPointModel } from '../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../helpers/modelFactory';
 import type { GridCellModel } from '../models/GridCellModel';
+import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -28,7 +25,7 @@ import type { GridCellModel } from '../models/GridCellModel';
  */
 export class ForegroundCanvas extends CanvasWithGrid {
     spriteDictionary: { [key: string]: Sprite };
-    activeEffects: Effect[];
+    activeEffects: GraphicalEffect[];
     grid: Grid;
     roadNetwork: RoadNetwork;
     tilesBlockedBySprites: number[];
@@ -68,9 +65,8 @@ export class ForegroundCanvas extends CanvasWithGrid {
 
     initPlayerCharacter( start: CellPosition, className: string ) {
         const startingTile = this.grid.array.filter( tile => { return tile.row == start.row && tile.column == start.column } )[0];
-        const getSpriteModel = getDataModelByKey( className );
-        this.playerSprite = new MapSprite( startingTile, start.direction, getSpriteModel, true );
-        this.playerSprite.spriteId = PLAYER_ID;
+        const spriteModel = getDataModelByKey( className );
+        this.playerSprite = new Sprite( startingTile, spriteModel, start.direction, PLAYER_ID, true );
         this.playerSprite.name = PLAYER_NAME;
         this.allSprites.push( this.playerSprite );
         this.spriteDictionary[PLAYER_ID] = this.playerSprite;
@@ -88,8 +84,9 @@ export class ForegroundCanvas extends CanvasWithGrid {
     };
 
     setSprite( tile: Tile, canvasObjectModel: CanvasObjectModel ): string {
-        const newId = getUniqueId( Object.keys(this.spriteDictionary) );
-        const newNPC = canvasObjectModel.spriteDataModel.isCar ? new Car( tile, canvasObjectModel, newId ) : new NPC( tile, canvasObjectModel, newId );
+        const newId = getUniqueId( Object.keys( this.spriteDictionary ) );
+        const spriteModel = getDataModelByKey( canvasObjectModel.type );
+        const newNPC = new Sprite( tile, spriteModel, canvasObjectModel.direction, newId );
         this.allSprites.push( newNPC )
         this.spriteDictionary[newId] = newNPC
         return newId;
@@ -109,7 +106,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
 
     deleteSprite( spriteId: string ): void {
         if ( this.spriteDictionary[spriteId].model.isCar ) {
-            (this.spriteDictionary[spriteId] as Car).movementSoundEffect.reset( );
+            (this.spriteDictionary[spriteId] as any).movementSoundEffect.reset( );
         };
         if ( this.spriteDictionary[spriteId].isCar ) {
             this.roadNetwork.roads.forEach( ( e ) => {
@@ -125,8 +122,8 @@ export class ForegroundCanvas extends CanvasWithGrid {
         })
     }
 
-    tileHasBlockingSprite( index: number ): boolean {
-        return this.tilesBlockedBySprites.indexOf( index ) > -1;
+    tileHasBlockingSprite( index: number|OutOfMapEnum ): boolean {
+        return this.tilesBlockedBySprites.indexOf( index as any ) > -1;
     }
 
     generateWalkingNPC( ): void {
@@ -159,9 +156,9 @@ export class ForegroundCanvas extends CanvasWithGrid {
 
     generateRandomWalkingSprite( start: SpawnPointModel, destination: SpawnPointModel ) {
         let tile = this.getTileAtCell( start.column, start.row );
-        let characters = globals.GAME.activeNeighbourhood.characters
+        let sprites = globals.GAME.activeNeighbourhood.model.characterTypes
         let characterDto = {
-            type: characters[Math.floor( Math.random() * characters.length )],
+            type: sprites[Math.floor( Math.random() * sprites.length )],
             column: tile.column,
             row: tile.row,
             direction: start.direction,

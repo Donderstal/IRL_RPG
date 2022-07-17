@@ -1,5 +1,5 @@
 import { BaseSound } from './BaseSound';
-import globals from '../../game-data/globals';
+import globals, { GRID_BLOCK_PX } from '../../game-data/globals';
 import type { Sprite } from '../core/Sprite';
 /**
  * Spatial sound pans and plays a sound relative to the player
@@ -22,7 +22,7 @@ export class SpatialSound extends BaseSound {
 
     setPan( sprite: Sprite ): void {
         let PLAYER = globals.GAME.PLAYER;
-        let hearingDistance = globals.GRID_BLOCK_PX * 3
+        let hearingDistance = GRID_BLOCK_PX * 3
         if ( this.isPaused || this.hasNotStartedPlaying ) {
             this.play( );
         }
@@ -50,7 +50,7 @@ export class SpatialSound extends BaseSound {
             this.setVolumeToFactor( 0.75 );
         }
         else {
-            let hearingDistance = globals.GRID_BLOCK_PX * 3
+            let hearingDistance = GRID_BLOCK_PX * 3
             let modifiers = { hori: 0, vert: 0}
 
             if ( PLAYER.centerX >= sprite.right ) {

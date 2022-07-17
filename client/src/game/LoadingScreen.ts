@@ -1,13 +1,19 @@
-const { 
-    CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT 
-} = require('../game-data/globals');
-const { COLOR_WHITE, COLOR_SECONDARY } = require('../game-data/uiGlobals')
-const { TypeWriter } = require('../helpers/TypeWriter')
-const globals = require('../game-data/globals');
+import { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } from '../game-data/globals';
+import { COLOR_WHITE, COLOR_SECONDARY } from '../game-data/uiGlobals';
+import { TypeWriter } from '../helpers/TypeWriter';
+import globals from '../game-data/globals';
 
 let loaderTimeout;
 
-class LoadingScreen {
+export class LoadingScreen {
+    displayText: string;
+    randomTextArray: string[];
+    mainText: string;
+    currentLoadingScreenText: string;
+
+    typeWriter: TypeWriter;
+    mainTextWidth: number;
+    activeTextWidth: number;
     constructor( ) {
         this.displayText = "Loading...";
         this.randomTextArray = [
@@ -34,10 +40,10 @@ class LoadingScreen {
     }
 
     get activeText( ) { return this.typeWriter.activeText.map((e)=>{return e.activeWord;}).join('') };
-    get availableTextLines( ) { return this.randomTextArray.filter( ( e ) => { return e != this.currentLoadingScreenText } )};
+    get availableTextLines( ) { return this.randomTextArray.filter( ( e ) => { return e !== this.currentLoadingScreenText } )};
 
     handleLoadingScreenText( ) {
-        if ( this.typeWriter == undefined || !this.typeWriter.isWriting ) {
+        if ( this.typeWriter === undefined || !this.typeWriter.isWriting ) {
             this.getNewLoadingScreenText( );
             this.typeWriter = new TypeWriter( this.currentLoadingScreenText + "          " );
             globals.GAME.front.ctx.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
@@ -68,23 +74,18 @@ class LoadingScreen {
     }
 }
 
-const setLoadingScreen = ( ) => {
-    globals.GAME.loadingScreen = new LoadingScreen( );
-    drawLoadingScreen( );
-}
-
-const drawLoadingScreen = ( ) => {
+const drawLoadingScreen = (): void => {
     globals.GAME.loadingScreen.draw( );
     loaderTimeout = setTimeout( drawLoadingScreen, 50 )
 }
 
-const stopLoadingScreen = ( ) => {
+export const setLoadingScreen = (): void => {
+    globals.GAME.loadingScreen = new LoadingScreen( );
+    drawLoadingScreen( );
+}
+
+export const stopLoadingScreen = ( ): void => {
     clearTimeout(loaderTimeout);
     globals.GAME.loadingScreen.clear( );
     globals.GAME.loadingScreen = null; 
 } 
-
-module.exports = {
-    setLoadingScreen,
-    stopLoadingScreen
-}

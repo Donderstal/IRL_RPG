@@ -3,7 +3,7 @@ const globals       = require('../../../game-data/globals')
 const checkForCollision = require('../map-ui/movementChecker').checkForCollision
 const { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } = require('../../../game-data/globals');
 const { Counter } = require("../../../helpers/Counter");
-const { getOppositeDirection } = require("../../../helpers/utilFunctions");
+import { getOppositeDirection } from "../../../helpers/utilFunctions";
 
 class Car extends MapObject {
     constructor( tile, spriteData, spriteId ) {

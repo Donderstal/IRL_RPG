@@ -1,37 +1,31 @@
-const globals = require('../../game-data/globals')
-const { NPC_MOVE_TYPE_FLYING, STATE_MOVING } = require('../../game-data/globals')
-const canvas = require('../../helpers/canvasHelpers');
-const { getActiveDoors, unsetPendingDoor, setDoorAsPending, getPendingDoor } = require('../../helpers/doorController');
-const { tryCatch } = require('../../helpers/errorHelpers');
-const mapControls = require('./mapControls');
+import { MovementType } from '../../enumerables/MovementTypeEnum';
+import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
+import globals from '../../game-data/globals';
+import { clearEntireCanvas } from '../../helpers/canvasHelpers';
+import { getActiveDoors, unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../../helpers/doorController';
+import type { Sprite } from '../core/Sprite';
+import type { Game } from "../Game";
+import { handleMovementKeys } from './mapControls';
 
-/**
- * Wrapper function that runs on each animation frame if the game is in Map mode.
- * Call drawSpritesInOrder() and clearMargins().
- * If there are roads on the current map, call handleCarGeneration()
- * If the game is not paused and there is a player sprite, check for movement key input
- * If there is a speech bubble active, draw it.
- * @param {Game} GAME Instance of the Game class in Game.js
- */
-const handleMapAnimations = ( GAME ) => {
+export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;
-    canvas.clearEntireCanvas("FRONT");
+    clearEntireCanvas("FRONT");
 
     if ( globals.SCREEN.MOBILE ) {
-        canvas.clearEntireCanvas("SPEECH");
+        clearEntireCanvas("SPEECH");
     }
 
     drawSpritesInOrder( GAME )
 
     GAME.BACK.backgroundActions.forEach( ( e ) => { 
-        e.updateXy( e.x, e.y )
+        e.updateXy( e.activeAction.x, e.activeAction.y )
     })
     
     handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
 
     if ( GAME.PLAYER != undefined && !GAME.paused ) {
-        mapControls.handleMovementKeys( );  
+        handleMovementKeys( );  
     }
 
     GAME.FRONT.activeEffects.forEach( ( e ) => {
@@ -52,8 +46,8 @@ const handleMapAnimations = ( GAME ) => {
         if ( PLAYER.hitbox.checkForDoorRange( door ) ) {
             let pendingDoor = getPendingDoor( );
             inDoorRange = true;
-            if ( door.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.destination ) {
-                setDoorAsPending( door.id, door.destination )
+            if ( door.model.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
+                setDoorAsPending( door.id, door.model.doorTo )
                 door.handle( );
             }
         }
@@ -68,23 +62,18 @@ const handleMapAnimations = ( GAME ) => {
     }
 }
 
-const handleRoadNetworkFuncs = ( GAME ) => {
+export const handleRoadNetworkFuncs = ( GAME: Game ): void => {
     if ( GAME.FRONT.roadNetwork != null ) {
         GAME.FRONT.roadNetwork.handleCarCounter()
         GAME.FRONT.roadNetwork.handleRoadCrossings();
     }
 }
 
-const handleNpcCounter = ( GAME ) => {
+export const handleNpcCounter = ( GAME: Game ): void => {
     GAME.activeNeighbourhood.handleNPCCounter( );
 }
-/**
- * First, sort GAME.FRONT.allSprites based on their location on the front canvas.
- * Then, clear the front Canvas.
- * Afterwards, draw allSprites in the sorted order, drawing flying sprites last. This gives the player the illusion of depth on the screen.
- * @param {Game} GAME Instance of the Game class in Game.js
- */
-const drawSpritesInOrder = ( GAME ) => {
+
+export const drawSpritesInOrder = ( GAME: Game ): void => {
     GAME.FRONT.allSprites.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 
@@ -113,13 +102,13 @@ const drawSpritesInOrder = ( GAME ) => {
     GAME.FRONT.tilesBlockedBySprites = [];
 
     GAME.FRONT.allSprites.forEach( ( sprite )  => {
-        if ( sprite.onBackground ) {
+        if ( sprite.model.onBackground ) {
             backgroundSprites.push( sprite );
         }
-        else if ( sprite.notGrounded ) {
+        else if ( sprite.model.notGrounded ) {
             foregroundSprites.push( sprite );
         }
-        else if ( sprite.movementType == NPC_MOVE_TYPE_FLYING && sprite.State.is( STATE_MOVING ) ) {
+        else if ( sprite.movementType == MovementType.flying && sprite.State.is( SpriteStateEnum.moving ) ) {
             flyingSprites.push( sprite );
         }
         else {
@@ -141,25 +130,13 @@ const drawSpritesInOrder = ( GAME ) => {
     cars.forEach((car)=>{car.State.decideStateFromPendingStateChanges( )});
 }
 
-const drawSpritesInArray = ( array, GAME ) => {
+export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
     if ( !GAME.paused ) {
         array.forEach( ( sprite ) => {
-            if ( GAME.paused || sprite.deleted ) {
+            if ( GAME.paused ) {
                 return;
             }
-            tryCatch((GAME, sprite)=> {
-                if ( GAME.paused || sprite.deleted ) {
-                    return;
-                }
-                sprite.drawSprite( );
-            }, [GAME, sprite])
+            sprite.drawSprite();
         })
     }
-}
-
-module.exports = {
-    handleMapAnimations,
-    drawSpritesInOrder,
-    handleRoadNetworkFuncs,
-    handleNpcCounter
 }

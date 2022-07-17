@@ -82,7 +82,7 @@ export class Neighbourhood {
     handleNPCCounter(): void {
         if ( this.activeMap.spawnPoints != undefined ) {
             if ( this.NPCCounter.countAndCheckLimit( ) && this.activeMap.spawnPoints.length > 0) {
-                globals.GAME.FRONT.generateWalkingNPC( this.activeMap.spawnPoints );
+                globals.GAME.FRONT.generateWalkingNPC( );
             }
         }
         else {
