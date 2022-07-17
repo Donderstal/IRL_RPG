@@ -33,7 +33,7 @@ export default {
             "column": 21,
             "hasDoor": true,
             "directionIn": "",
-            "destination": ""
+            "doorTo": ""
         }
     ],
     "spawnPoints": [

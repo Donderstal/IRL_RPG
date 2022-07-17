@@ -40,7 +40,7 @@ export default {
             "column": 5,
             "hasDoor": true,
             "directionIn": "",
-            "destination": ""
+            "doorTo": ""
         },
         {
             "type": "wheelie_bin_left",

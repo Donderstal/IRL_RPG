@@ -52,7 +52,7 @@ export default {
             "column": 5,
             "hasDoor": true,
             "directionIn": "",
-            "destination": ""
+            "doorTo": ""
         },
         {
             "type": "car_b",

@@ -312,37 +312,37 @@ export default {
         {
             "row": 10, 
             "column": 1,
-            "destination" : "leonard_heights/Newtown-appartment-1",
+            "doorTo" : "leonard_heights/Newtown-appartment-1",
             "direction": DirectionEnum.left
         },
         {
             "row": 5, 
             "column": 1,
-            "destination" : "leonard_heights/Newtown-appartment-2",
+            "doorTo" : "leonard_heights/Newtown-appartment-2",
             "direction": DirectionEnum.left
         },
         {
             "row": 2, 
             "column": 3,
-            "destination"  : "leonard_heights/Newtown-appartment-3",
+            "doorTo"  : "leonard_heights/Newtown-appartment-3",
             "direction": DirectionEnum.up
         },
         {
             "row": 5, 
             "column": 4,
-            "destination" : "leonard_heights/Newtown-appartment-4",
+            "doorTo" : "leonard_heights/Newtown-appartment-4",
             "direction": DirectionEnum.right
         },
         {
             "row": 10, 
             "column": 4,
-            "destination" : "leonard_heights/Newtown-appartment-5",
+            "doorTo" : "leonard_heights/Newtown-appartment-5",
             "direction": DirectionEnum.right
         },
         {
             "row": 12, 
             "column": 2,
-            "destination" : "leonard_heights/C2",
+            "doorTo" : "leonard_heights/C2",
             "direction": DirectionEnum.down
         }
     ]

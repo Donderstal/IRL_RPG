@@ -403,7 +403,7 @@ export default {
         {
             "row": 4, 
             "column": 8,
-            "destination" : "leonard_heights/Newtown-Hall",
+            "doorTo" : "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.right
         }
     ]

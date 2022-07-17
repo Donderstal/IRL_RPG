@@ -188,14 +188,14 @@ export default {
         {
             "row": 8,
             "column": 12,
-            "destination": "leonard_heights/Newtown-Hall",
+            "doorTo": "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.up,
 
         },
         {
             "row": 8,
             "column": 13,
-            "destination": "leonard_heights/Newtown-Hall",
+            "doorTo": "leonard_heights/Newtown-Hall",
             "direction": DirectionEnum.up,
 
         }

@@ -42,7 +42,7 @@ export default {
             "column": 19,
             "hasDoor": true,
             "directionIn": "",
-            "destination": ""
+            "doorTo": ""
         },
         {
             "type": "gang_z",
@@ -55,7 +55,7 @@ export default {
             "column": 4,
             "hasDoor": true,
             "directionIn": "",
-            "destination": ""
+            "doorTo": ""
         },
         {
             "type": "pot_plant_a",

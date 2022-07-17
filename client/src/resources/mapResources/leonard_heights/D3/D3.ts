@@ -29,7 +29,7 @@ export default {
          "column":4,
          "hasDoor":true,
          "directionIn":"",
-         "destination":""
+         "doorTo":""
       },
       {
          "type":"funz",

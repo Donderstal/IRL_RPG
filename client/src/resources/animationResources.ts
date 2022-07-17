@@ -1,51 +1,45 @@
+import { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { SpriteAnimationModel } from "../models/SpriteAnimationModel";
 import type { SpriteFrameModel } from "../models/SpriteFrameModel";
 
-const { 
-    FACING_DOWN, FACING_LEFT, FACING_UP, FACING_RIGHT, 
-    SHEET_COLUMN_ONE, SHEET_COLUMN_TWO,
-    SHEET_ROW_BATTLE_FACING_LEFT, SHEET_ROW_BATTLE_FACING_RIGHT,
-    MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET
-} = require('../game-data/globals');
-
 const animationResources = { 
     "TURN_SINGLE_CIRCLE": [
-        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
-        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
-        { row: FACING_UP , column: SHEET_COLUMN_ONE },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
-        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
-        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
-        { row: FACING_UP , column: SHEET_COLUMN_ONE },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE }
+        { row: 0, column: 0 },
+        { row: 1, column: 0 },
+        { row: 3, column: 0 },
+        { row: 2, column: 0 },
+        { row: 0, column: 0 },
+        { row: 1, column: 0 },
+        { row: 3, column: 0 },
+        { row: 2, column: 0 }
     ],
     "BACK_AND_FORTH": [
-        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
-        { row: FACING_UP , column: SHEET_COLUMN_ONE }
+        { row: 0, column: 0 },
+        { row: 3, column: 0 }
     ],
     "LEFT_AND_RIGHT": [
-        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE }
+        { row: 1, column: 0 },
+        { row: 2, column: 0 }
     ],
     "BACK_AND_FORTH_STEP": [
-        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
-        { row: FACING_DOWN , column: SHEET_COLUMN_TWO },
-        { row: FACING_UP , column: SHEET_COLUMN_ONE },
-        { row: FACING_UP , column: SHEET_COLUMN_TWO },
-        { row: FACING_DOWN , column: SHEET_COLUMN_ONE },
-        { row: FACING_DOWN , column: SHEET_COLUMN_TWO },
-        { row: FACING_UP , column: SHEET_COLUMN_ONE },
-        { row: FACING_UP , column: SHEET_COLUMN_TWO }
+        { row: 0, column: 0 },
+        { row: 0, column: 1 },
+        { row: 3, column: 0 },
+        { row: 3, column: 1 },
+        { row: 0, column: 0 },
+        { row: 0, column: 1 },
+        { row: 3, column: 0 },
+        { row: 3, column: 1 }
     ],
     "LEFT_AND_RIGHT_STEP": [
-        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
-        { row: FACING_LEFT , column: SHEET_COLUMN_TWO },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_TWO },
-        { row: FACING_LEFT , column: SHEET_COLUMN_ONE },
-        { row: FACING_LEFT , column: SHEET_COLUMN_TWO },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_ONE },
-        { row: FACING_RIGHT , column: SHEET_COLUMN_TWO }
+        { row: 1, column: 0 },
+        { row: 1, column: 1 },
+        { row: 2, column: 0 },
+        { row: 2, column: 1 },
+        { row: 1, column: 0 },
+        { row: 1, column: 1 },
+        { row: 2, column: 0 },
+        { row: 2, column: 1 }
     ],
     "PUNCH_LEFT" : [
         { row: 6, column: 0 },
@@ -332,52 +326,47 @@ const animationResources = {
     ]
 }
 
-export const getAnimationByName = ( animationName: string, direction: number = null ): SpriteAnimationModel => {
+export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number = null ): SpriteAnimationModel => {
     if ( animationName in animationResources ) {
-        return getAnimationModel( animationName );
+        return getAnimationModel( animationName, width, height );
     } 
     
     let suffix;
     switch( direction ) {
-        case FACING_DOWN: 
+        case DirectionEnum.down: 
             suffix = "_DOWN"
             break;
-        case FACING_LEFT:
-        case SHEET_ROW_BATTLE_FACING_LEFT:
+        case DirectionEnum.left:
             suffix = "_LEFT"
             break;
-        case FACING_UP: 
+        case DirectionEnum.up: 
             suffix = "_UP"
             break;
-        case FACING_RIGHT:
-        case SHEET_ROW_BATTLE_FACING_RIGHT:
+        case DirectionEnum.right:
             suffix = "_RIGHT"
-            break;
-        default:
-            suffix = "_DOWN"
             break;
     }
     if ( animationName + suffix in animationResources ) {
-        return getAnimationModel(animationName + suffix);        
+        return getAnimationModel( animationName + suffix, width, height );        
     }
     else {
         console.log("Error! Animation not found in animationResources")
         console.log("Animation name: " + animationName + suffix )
-        return getAnimationModel( "BOP" + suffix );
+        return getAnimationModel( "BOP" + suffix, width, height );
     }
 
 }
 
-const getAnimationModel = ( name: string ): SpriteAnimationModel => {
+const getAnimationModel = ( name: string, width: number, height: number ): SpriteAnimationModel => {
     const dto = animationResources[name];
     const model: SpriteAnimationModel = {
         name: name,
         frames: dto.map( ( e ) => {
             const model: SpriteFrameModel = {
-                x: e.column * MAP_SPRITE_WIDTH_IN_SHEET,
-                y: e.row * MAP_SPRITE_HEIGHT_IN_SHEET,
-                width: MAP_SPRITE_WIDTH_IN_SHEET,
-                height: MAP_SPRITE_HEIGHT_IN_SHEET
+                x: e.column * width,
+                y: e.row * height,
+                width: width,
+                height: height
             }
             return model;
         } )

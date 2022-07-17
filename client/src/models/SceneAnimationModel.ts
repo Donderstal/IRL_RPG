@@ -72,7 +72,7 @@ export type DeleteSpriteScene = SceneAnimationModel & {
 }
 
 export type FadeScene = SceneAnimationModel & {
-    sfx: number
+    sfx: string
 }
 
 export type WaitScene = SceneAnimationModel & {

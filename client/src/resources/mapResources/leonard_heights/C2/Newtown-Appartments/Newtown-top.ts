@@ -425,7 +425,7 @@ export default {
         {
             "row": 8, 
             "column": 4,
-            "destination" : "leonard_heights/Newtown-Hall",
+            "doorTo" : "leonard_heights/Newtown-Hall",
             "direction" : DirectionEnum.down
         }
     ],
