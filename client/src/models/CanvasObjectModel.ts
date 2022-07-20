@@ -22,7 +22,7 @@ export type CanvasObjectModel = {
     hasCondition: boolean;
     condition?: ConditionModel;
     hasAction: boolean;
-    action?: InteractionModel;
+    action?: InteractionModel[];
 
     hasDoor: boolean;
     doorTo?: string;

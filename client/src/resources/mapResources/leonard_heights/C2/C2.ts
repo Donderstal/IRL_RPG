@@ -18,7 +18,7 @@ export default {
             "anim_type": AnimationTypeEnum.idle,
             "row": 14,
             "column": 9,
-            "sprite": PIGEON,
+            "type": PIGEON,
             "direction": DirectionEnum.left
         },
         {

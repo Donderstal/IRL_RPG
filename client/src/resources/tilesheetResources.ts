@@ -1636,7 +1636,7 @@ export const sheets = {
 const getTileSheetModels = () => {
     return Object.values( sheets ).map( ( e ) => {
         const image = new Image();
-        image.src = "/static/tilesheets" + e.src;
+        image.src = "/static/tilesets/" + e.src;
         let model: TilesheetModel = {
             name: e.name,
             key: e.key,

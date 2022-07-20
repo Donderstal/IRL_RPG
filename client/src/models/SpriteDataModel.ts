@@ -1,3 +1,4 @@
+import type { CollectableType } from "../enumerables/CollectableTypeEnum";
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
 import type { SpriteFrameModel } from "./SpriteFrameModel";
@@ -9,7 +10,7 @@ export type SpriteDataModel = {
     image: HTMLImageElement;
 
     idleAnimation: boolean;
-    idleAnimationFrames?: SpriteFrameModel[][];
+    idleAnimationFrames?: SpriteFrameModel[];
 
     canMove: boolean;
     movementFrames?: { [key in DirectionEnum]: SpriteFrameModel[] };
@@ -28,7 +29,7 @@ export type SpriteDataModel = {
     vertHeightBlocks?: number;
 
     isCollectable: boolean;
-    collectableType?: string;
+    collectableType?: CollectableType;
 
     hasBlockedArea: boolean;
     tileAlignment?: string;

@@ -12,6 +12,6 @@ export type NeighbourhoodModel = {
     carTypes?: string[];
     carSpawnRate?: number;
 
-    spawnableActions?: InteractionModel[];
+    spawnableActions?: InteractionModel[][];
     mapDictionary: { [key: string]: MapModel };
 }

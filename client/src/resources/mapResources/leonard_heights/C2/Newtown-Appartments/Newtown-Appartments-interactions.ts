@@ -14,7 +14,7 @@ export const KEY_GUY = [
         ]
     ],
     [
-        InteractionType.talk, UNLOCK_DOOR_TEST, "medium-text-blip.ogg",
+        InteractionType.talk, false, UNLOCK_DOOR_TEST, "medium-text-blip.ogg",
         [ConditionType.default, false],
         [
             [[SceneAnimationType.speak, true, "I guess you want to go outside, right?"]],

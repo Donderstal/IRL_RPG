@@ -5,7 +5,7 @@ import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import { PLAYER_NAME } from '../game-data/interactionGlobals';
 import { EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_ANGRY, EMOTE_HAPPY } from '../game-data/textboxGlobals';
 
-export const RANDOM_TALK_1 = [
+export const RANDOM_TALK_1 = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
@@ -13,8 +13,8 @@ export const RANDOM_TALK_1 = [
         [[SceneAnimationType.emote, true, EMOTE_SAD], [SceneAnimationType.emote, false, EMOTE_SURPRISED, PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "Now who's gonna hold me in their big hairy arms?", false, PLAYER_NAME]]
     ]
-]
-export const RANDOM_TALK_2 = [
+]]
+export const RANDOM_TALK_2 = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
@@ -22,8 +22,8 @@ export const RANDOM_TALK_2 = [
         [[SceneAnimationType.emote, true, EMOTE_HEART], [SceneAnimationType.emote, false, EMOTE_HEART, PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "This is a much longer random text my man thank you for listening!", false, PLAYER_NAME]]
     ]
-]
-export const RANDOM_TALK_3 = [
+]]
+export const RANDOM_TALK_3 = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [ 
@@ -32,8 +32,8 @@ export const RANDOM_TALK_3 = [
         [[SceneAnimationType.speak, true, "But I didn't shoot the deputy...", false, PLAYER_NAME]],
         [[SceneAnimationType.emote, true, EMOTE_HAPPY, PLAYER_NAME]]
     ]
-]
-export const RANDOM_TALK_4 = [
+]]
+export const RANDOM_TALK_4 = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
@@ -48,9 +48,9 @@ export const RANDOM_TALK_4 = [
             false, PLAYER_NAME
         ]],
     ]
-]
+]]
 
-export const RANDOM_TALK_5 = [
+export const RANDOM_TALK_5 = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
@@ -61,17 +61,17 @@ export const RANDOM_TALK_5 = [
         [[SceneAnimationType.speak, true, "That's funky baby!!!", false, PLAYER_NAME]],
         [[SceneAnimationType.emote, true, EMOTE_HEART, PLAYER_NAME]]
     ]
-]
+]]
 
-export const LONG_TALK_4 = [
+export const LONG_TALK_4 = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
         [[SceneAnimationType.speak, true, "Is it just me or do you also enjoy speaking in crazy long sentences that have little meaning to complete strangers??", false, PLAYER_NAME]],
     ]
-]
+]]
 
-export const COLLECTABLE_ACTION_COIN = [
+export const COLLECTABLE_ACTION_COIN = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
@@ -81,9 +81,9 @@ export const COLLECTABLE_ACTION_COIN = [
         [[SceneAnimationType.speak, true, "I'll add this one to my collection!", PLAYER_NAME]],
         [[SceneAnimationType.deleteSprite, true, false, "misc/random5.wav"]]
     ]
-]
+]]
 
-export const COLLECTABLE_ACTION_JUICE_CAN = [
+export const COLLECTABLE_ACTION_JUICE_CAN = [[
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
@@ -93,21 +93,21 @@ export const COLLECTABLE_ACTION_JUICE_CAN = [
         [[SceneAnimationType.speak, true, "I'll add this one to my collection!", PLAYER_NAME]],
         [[SceneAnimationType.deleteSprite, true, false, "misc/random5.wav"]]
     ]
-]
+]]
 
-export const lockedDoorEvent = [
-    InteractionType.talk, false, "medium-text-blip.ogg",
+export const lockedDoorEvent = [[
+    InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
         [[SceneAnimationType.speak, true, "This door is locked!", PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "I need to find some way to open it...", PLAYER_NAME]]
     ]
-]
+]]
 
-export const unlockDoorEvent = [
-    InteractionType.talk, false, "medium-text-blip.ogg",
+export const unlockDoorEvent = [[
+    InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
     [
         [[SceneAnimationType.speak, true, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
     ]
-]
+]]

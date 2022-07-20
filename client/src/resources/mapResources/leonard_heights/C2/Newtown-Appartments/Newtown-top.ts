@@ -13,7 +13,7 @@ export default {
     "columns": 8,
     "playerStart" : {
         'row': 4,
-        'col': 3
+        'column': 3
     },
     "grid": [
         {
@@ -412,13 +412,13 @@ export default {
             "type": "collectable_coin",
             "row": 1,
             "column": 2,
-            "action": [COLLECTABLE_ACTION_COIN]
+            "action": COLLECTABLE_ACTION_COIN
         },
         {
             "type": "collectable_juice_can",
             "row": 5,
             "column": 3,
-            "action": [COLLECTABLE_ACTION_JUICE_CAN]
+            "action": COLLECTABLE_ACTION_JUICE_CAN
         }
     ],
     "doors": [        

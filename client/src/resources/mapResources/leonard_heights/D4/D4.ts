@@ -16,8 +16,7 @@ export default {
         {
             "row": 11,
             "column": 14,
-            "sprite": "Bench_Green",
-            "direction": false
+            "type": "Bench_Green"
         },
         {
             "type": "gang_z",

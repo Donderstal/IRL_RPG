@@ -21,11 +21,11 @@ export const WHOLESOME_LIFTER_D2 = [
     [
         InteractionType.talk, false, null, "medium-text-blip.ogg",
         [ConditionType.default, false],
-        [ [
+        [
             [[SceneAnimationType.speak, true, "You know that a lot of people think that us buff guys are assholes?"]],
             [[SceneAnimationType.speak, true, "Just shows that they've no idea what they're talking about!"]],
             [[SceneAnimationType.speak, true, "I always visit my grandma, you know? Never skip a week!"]], 
             [[SceneAnimationType.emote, true, EMOTE_HEART]]
-        ]]    
+        ] 
     ]    
 ]

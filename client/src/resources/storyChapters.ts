@@ -14,6 +14,7 @@ import {
 } from '../game-data/textboxGlobals';
 import { initInteractionModel } from "../helpers/modelFactory";
 import type { StoryEventModel } from "../models/StoryEventModel";
+import { FAT_BUFF_GUY, GRANNY, MAIN_CHARACTER } from "./spriteTypeResources";
 
 export const KEY_STORY_1 = "KEY_STORY_EVENT_1";
 export const KEY_STORY_2 = "KEY_STORY_EVENT_2";
@@ -24,22 +25,22 @@ export const STORY_EVENTS = [
         id: "",
         mapName: "leonard_heights/Newtown-appartment-3",
         trigger: CinematicTrigger.enter,
-        interaction: [
+        interaction: [[
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
                 [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-3", true]],
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/B2"]],
-                [[SceneAnimationType.createCar, true, "bus.png", "CIN_CAR_BUS", "CIN_ROAD_1"]],
-                [[SceneAnimationType.createSprite, true, DirectionEnum.right, "characterx3.png", "Dancing granny", 15, 11]],
+                [[SceneAnimationType.createCar, true, "bus", "CIN_CAR_BUS", "CIN_ROAD_1"]],
+                [[SceneAnimationType.createSprite, true, DirectionEnum.right, GRANNY, "Dancing granny", 15, 11]],
                 [[SceneAnimationType.animation, false, "LEFT_AND_RIGHT_STEP", "Dancing granny", true]],
                 [[SceneAnimationType.cameraMoveToSprite, true, "CIN_CAR_BUS", true]],
                 [[SceneAnimationType.fadeIn, true]],
                 [[SceneAnimationType.moveCar, true, null, OutOfMapEnum.up, "CIN_CAR_BUS", DirectionEnum.up]],
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/B1"]],
-                [[SceneAnimationType.createSprite, true, DirectionEnum.right, false, PLAYER_NAME, 15, 14], [SceneAnimationType.createSprite, true, DirectionEnum.left, "fats.png", "BOB", 16, 14], [SceneAnimationType.createSprite, true, DirectionEnum.up, "bus", "My cool car", 13, 13]],
+                [[SceneAnimationType.createSprite, true, DirectionEnum.right, MAIN_CHARACTER, PLAYER_NAME, 15, 14], [SceneAnimationType.createSprite, true, DirectionEnum.left, FAT_BUFF_GUY, "BOB", 16, 14], [SceneAnimationType.createSprite, true, DirectionEnum.up, "bus", "My cool car", 13, 13]],
                 [[SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, true]],
                 [[SceneAnimationType.fadeIn, true]],
                 [[SceneAnimationType.speak, true, "Was good hanging out with you!", PLAYER_NAME], [SceneAnimationType.emote, false, EMOTE_HAPPY, "BOB"]],
@@ -48,7 +49,7 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/B2"]],
                 [[SceneAnimationType.createSprite, true, DirectionEnum.down, false, PLAYER_NAME, 15, 1]],
-                [[SceneAnimationType.createSprite, true, DirectionEnum.right, "characterx3.png", "Dancing granny", 15, 11]],
+                [[SceneAnimationType.createSprite, true, DirectionEnum.right, GRANNY, "Dancing granny", 15, 11]],
                 [[SceneAnimationType.animation, false, "LEFT_AND_RIGHT_STEP", "Dancing granny", true]],
                 [[SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, true]],
                 [[SceneAnimationType.fadeIn, false], [SceneAnimationType.move, true, PLAYER_NAME, { col: OutOfMapEnum.right, row: 10 }]],
@@ -64,36 +65,36 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.fadeIn, true]],
                 [[SceneAnimationType.speak, true, "Let's get to work now!", PLAYER_NAME]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/C2",
         trigger: CinematicTrigger.enter,
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, LOGGABLE_INTERACTION_1, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
                 [[SceneAnimationType.loadMap, true, "leonard_heights/C2", true]],
-                [[SceneAnimationType.createSprite, true, DirectionEnum.left, "fats.png", "BOB", 24, 10]],
+                [[SceneAnimationType.createSprite, true, DirectionEnum.left, FAT_BUFF_GUY, "BOB", 24, 10]],
                 [[SceneAnimationType.cameraMoveToSprite, true, "BOB", false], [SceneAnimationType.move, true, "BOB", PLAYER_NAME]],
                 [[SceneAnimationType.speak, true, "I heard there was some trouble at the {G}Yum {G}Mart down {R}south...", "BOB"], [SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
                 [[SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false], [SceneAnimationType.speak, true, "Oh no, I better get down there fast!", PLAYER_NAME], [SceneAnimationType.move, false, "BOB", { col: OutOfMapEnum.left, row: 10 }]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/E3",
         trigger: CinematicTrigger.enter,
-        interaction: [
+        interaction: [[
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
                 [[SceneAnimationType.loadMap, true, "leonard_heights/E3", true]],
                 [[SceneAnimationType.speak, true, "I hate the hotel on this street, it's always full of trashy tourists", PLAYER_NAME]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
@@ -104,20 +105,20 @@ export const STORY_EVENTS = [
             column: 3,
             direction: DirectionEnum.right
         },
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, KEY_STORY_1, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [ 
                 [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-4", true]],
                 [[SceneAnimationType.speak, true, "There's just something creepy about an empty appartment...", PLAYER_NAME]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/C4",
         trigger: CinematicTrigger.enter,
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, LOGGABLE_INTERACTION_2, "medium-text-blip.ogg",
             [ConditionType.default, false],
             [
@@ -139,14 +140,14 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.speak, true, "He's a mob boss kid. You can't just walk into his office.", "Bob A"], [SceneAnimationType.cameraMoveToSprite, true, "Bob A", false]],
                 [[SceneAnimationType.speak, true, "Ask around or something. If you're a smart boy you'll find him!", "Bob B"], [SceneAnimationType.cameraMoveToSprite, true, "Bob B", false]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/D1",
         trigger: CinematicTrigger.interaction,
         name: "Helpful Bro",
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, LOGGABLE_INTERACTION_4, "medium-text-blip.ogg", 
             [ConditionType.interactionNotRegistered, LOGGABLE_INTERACTION_4],
             [
@@ -183,14 +184,14 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.speak, true, "No problem, I guess...", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "Don't worry bro, we'll get you those dumbbells!", "Helpful Bro", "Sad Bro"], [SceneAnimationType.cameraMoveToSprite, true, "Helpful Bro", false]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/D2",
         trigger: CinematicTrigger.interaction,
         name: "Wholesome Lifter",
-        interaction: [
+        interaction: [[
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_4],
             [
@@ -213,14 +214,14 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.speak, true, "Thanks I guess!", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
             ]
 
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/E4",
         trigger: CinematicTrigger.interaction,
         name: "Wholesome Lifter",
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, LOGGABLE_INTERACTION_5, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_4],
             [
@@ -237,14 +238,14 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.speak, true, "Yeah for real! Here, you can have it. Send some TLC to my crying bro when you see him!", "Wholesome Lifter"], [SceneAnimationType.cameraMoveToSprite, true, "Wholesome Lifter", false]],
                 [[SceneAnimationType.speak, true, "I'll tell the other bros about you. You're helping a bro, they'll be happy to help you now!", "Wholesome Lifter"]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/B4",
         trigger: CinematicTrigger.interaction,
         name: "Wholesome Lifter",
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, LOGGABLE_INTERACTION_6, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_5],
             [
@@ -262,14 +263,14 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.speak, true, "Thanks bro you're the best!!", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "Now I've got two dumbbells. Better get back to the park and give 'em to the bro there.", PLAYER_NAME]]
             ]
-        ]
+        ]]
     },
     {
         id: "",
         mapName: "leonard_heights/D1",
         trigger: CinematicTrigger.interaction,
         name: "Helpful Bro",
-        interaction: [
+        interaction: [[
             InteractionType.talk, true, LOGGABLE_INTERACTION_7, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_6],
             [
@@ -292,7 +293,7 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.emote, true, EMOTE_HEART, "Helpful Bro"], [SceneAnimationType.emote, true, EMOTE_HEART, "Sad Bro"]],
                 [[SceneAnimationType.speak, true, "No problem bros, I'll remember you guys when I need some muscle!", PLAYER_NAME, "Sad Bro"], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]]
             ]
-        ]
+        ]]
     }
 ]
 
@@ -309,7 +310,7 @@ const getDataModels = (): StoryEventModel[] => {
             id: event.id,
             mapName: event.mapName,
             trigger: event.trigger,
-            interaction: initInteractionModel( event.interaction )
+            interaction: event.interaction.map(initInteractionModel)
         }
         if ( event.trigger === CinematicTrigger.interaction ) {
             model.name = event.name;

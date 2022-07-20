@@ -155,13 +155,14 @@ const getDoorOrWindow = ( width, height ) => {
 }
 
 
-const getSignData = ( widthInBlocks, heightInBlocks ) => {
+const getSignData = ( widthInBlocks, heightInBlocks, frames ) => {
     return {
         "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": widthInBlocks,
         "height_blocks": heightInBlocks,
         "not_grounded": true,
-        "idle_animation": true
+        "idle_animation": true,
+        "idle_animation_frames": frames
     }
 }
 
@@ -223,19 +224,15 @@ export const spriteData = {
     },
     "bar_lights": {
         "src": "bar_lights.png",
-        ...getSignData( 4, 1 )
+        ...getSignData( 4, 1, [{ x: 256, y: 0 }, { x: 256, y: 0 }, { x: 0, y: 0 }, { x: 256, y: 0 }] )
     },
     "bar_sign": {
         "src": "bar_sign.png",
-        ...getSignData( 3, 2 )
+        ...getSignData( 3, 2, [{ x: 192, y: 0 }, { x: 192, y: 0 }, { x: 0, y: 0 }, { x: 192, y: 0 }] )
     },
     "bar_sign_old": {
-        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "src": "bar_sign_old.png",
-        "height_blocks": 1,
-        "width_blocks": 1.8125,
-        "not_grounded": true,
-        "idle_animation": true
+        ...getSignData( 1.8125, 1, [{ x: 0, y: 64 }, { x: 0, y: 64 }, { x: 0, y: 0 }, { x: 0, y: 64 }] )
     },
     "bench_a": {
         "src": "bench_a.png",
@@ -654,7 +651,7 @@ export const spriteData = {
     },
     "hotel_sign": {
         "src": "hotel_sign.png",
-        ...getSignData( 1, 2.21875 )
+        ...getSignData( 1, 2.21875, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
     },
     "house_plant": {
         "src": "house_plant.png",
@@ -845,22 +842,19 @@ export const spriteData = {
     },
     "Sign_01": {
         "src": "sign1.png",
-        ...getSignData( 1, 1.75 )
+        ...getSignData( 1, 1.75, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
     },
     "Sign_02": {
         "src": "sign2.png",
-        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
-        ...getSignData( 1, 1.75 )
+        ...getSignData( 1, 1.75, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
     },
     "Sign_03": {
         "src": "sign3.png",
-        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
-        ...getSignData( 1, 1 )
+        ...getSignData( 1, 1, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
     },
     "Sign_04": {
         "src": "sign4.png",
-        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
-        ...getSignData( 1, 1 )
+        ...getSignData( 1, 1, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
     },
     "Single_Bed": {
         "src": "single_bed.png",
@@ -1103,11 +1097,11 @@ export const spriteData = {
     // collectible
     "collectable_coin": {
         "src": "coin.png",
-        ...getCollectible( 0.75, 0.75, 4, CollectableType.coin )
+        ...getCollectible( 0.75, 0.75, [{ x: 48, y: 0 }, { x: 96, y: 0 }, { x: 144, y: 0 }], CollectableType.coin )
     },
     "collectable_juice_can": {
         "src": "juice_can.png",
-        ...getCollectible( 0.5625, 0.78125, 4, CollectableType.can )
+        ...getCollectible( 0.5625, 0.78125, [{ x: 36, y: 0 }, { x: 72, y: 0 }, { x: 108, y: 0 }], CollectableType.can )
     },
 
     // doors new
@@ -1253,7 +1247,7 @@ export const spriteData = {
         ...STANDARD_CHARACTER
     },
     [PINK_HAIR_NERD_LADY]: {
-        "src": "tumbler_girl.png",
+        "src": "tumblr_girl.png",
         ...STANDARD_CHARACTER
     },
     [BLONDE_NERD_LADY]: {
@@ -1265,7 +1259,7 @@ export const spriteData = {
         ...STANDARD_CHARACTER
     },
     [MAIN_CHARACTER]: {
-        "src": "tumbler_girl_recolour02.png",
+        "src": "Main_Character.png",
         ...STANDARD_CHARACTER
     }
 }
@@ -1276,7 +1270,7 @@ export const getDataModels = (): SpriteDataModel[] => {
         const value = e[1];
         const image = new Image();
         let model: SpriteDataModel = null;
-        image.src = "/static/sprites" + value["src"];
+        image.src = "/static/sprites/" + value["src"];
         model = {
             key: key,
             src: value["src"],
@@ -1305,25 +1299,22 @@ export const getDataModels = (): SpriteDataModel[] => {
         }
 
         if ( model.canMove ) {
+            const dto = value["movement_frames"];
             const frames = {
-                [DirectionEnum.left]: value["movement_frames"][DirectionEnum.left].map( ( e ) => { return initSpriteFrameModel( e ) } ),
-                [DirectionEnum.up]: value["movement_frames"][DirectionEnum.up].map( ( e ) => { return initSpriteFrameModel( e ) } ),
-                [DirectionEnum.right]: value["movement_frames"][DirectionEnum.right].map( ( e ) => { return initSpriteFrameModel( e ) } ),
-                [DirectionEnum.down]: value["movement_frames"][DirectionEnum.down].map( ( e ) => { return initSpriteFrameModel( e ) } )
+                [DirectionEnum.left]: dto[DirectionEnum.left].map( ( e ) => { return getSpriteFrameForPosition( e, model ) } ),
+                [DirectionEnum.up]: dto[DirectionEnum.up].map( ( e ) => { return getSpriteFrameForPosition( e, model ) } ),
+                [DirectionEnum.right]: dto[DirectionEnum.right].map( ( e ) => { return getSpriteFrameForPosition( e, model ) } ),
+                [DirectionEnum.down]: dto[DirectionEnum.down].map( ( e ) => { return getSpriteFrameForPosition( e, model ) } )
             }
             model.canMove = true;
             model.movementFrames = frames
         }
 
-        if ( model.idleAnimation )
-            model.idleAnimationFrames = value["idle_animation_frames"].map(
-                ( frameArray ) => {
-                    return frameArray.map(
-                        ( e ) => {
-                            return initSpriteFrameModel( e )
-                        } );
-                }
-            );
+        if ( model.idleAnimation ) {
+            const dto = value["idle_animation_frames"];
+            model.idleAnimationFrames = dto.map( ( e: { x: number, y: number } ) => { return getSpriteFrameForPosition( e, model ) } )
+        }
+
         if ( model.isCollectable ) {
             model.collectableType = value["collectable_type"];
         }
@@ -1332,15 +1323,7 @@ export const getDataModels = (): SpriteDataModel[] => {
         if ( model.hasBlockedArea ) {
             model.blockedArea = value["blocked_area"];
         }
-        Object.keys( model.movementFrames ).forEach( ( key ): void => {
-            let directionKey = key as unknown as DirectionEnum;
-            model.movementFrames[directionKey] = model.movementFrames[key].map( ( e ) => {
-                return getSpriteFrameForPosition( e, model, directionKey )
-            } )
-        } )
-        model.idleAnimationFrames.map( ( e: { x: number, y: number }[] ) => {
-            return e.map( ( e ) => { return getSpriteFrameForPosition( e, model ) })
-        } )
+
         return model;
     } )
 }

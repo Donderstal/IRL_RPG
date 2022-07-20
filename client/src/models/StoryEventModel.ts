@@ -6,7 +6,7 @@ export type StoryEventModel = {
     id: string,
     trigger: CinematicTrigger,
     mapName: string,
-    interaction: InteractionModel,
+    interaction: InteractionModel[],
 
     name?: string,
     position?: CellPosition

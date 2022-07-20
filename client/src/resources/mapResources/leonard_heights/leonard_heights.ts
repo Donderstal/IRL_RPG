@@ -23,6 +23,7 @@ import NewtownAppartment2 from './C2/Newtown-Appartments/Newtown-left-top';
 import NewtownAppartment3 from './C2/Newtown-Appartments/Newtown-top';
 import NewtownAppartment4 from './C2/Newtown-Appartments/Newtown-right-top';
 import NewtownAppartment5 from './C2/Newtown-Appartments/Newtown-right-bottom';
+import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 
 export default {
     "name": "Leonard Heights",
@@ -32,11 +33,10 @@ export default {
     "cars": [ "car_b", "car_c", "bus" ], 
     "cars_spawn_rate" : 15000,
     "characters" : [
-        "chad.png", "chad_recolour01.png", "chad_recolour02.png", "chad_recolour03.png",
-        "character_x1_recolour01.png", "characterx3.png", "characterx4.png", "fats.png",
-        "generic_balding_guy.png", "generic_blonde_guy.png", "neckbeard.png", "pony_tail.png",
-        "pony_tail_recolour.png", "tumbler_girl_recolour01.png", "tumbler_girl.png",
-        "tumbler_girl_recolour02.png"
+        TOUGH_GUY, STRONG_GUY, BURLY_GUY, GREEN_HAIR_LADY,
+        DORKY_GUY, GRANNY, TOUGH_GUY_WITH_DARK_HAIR, FAT_BUFF_GUY,
+        BALD_BEER_BELLY_GUY, BLONDE_BEER_BELLY_GUY, FAT_FEDORA_GUY, WHITE_PONY_TAIL_LADY,
+        BLACK_PONY_TAIL_LADY, PINK_HAIR_NERD_LADY, BLONDE_NERD_LADY, DARK_HAIR_NERD_LADY
     ],
     "characters_spawn_rate": 10000,
     "spawnable_actions": [
