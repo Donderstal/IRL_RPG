@@ -1,5 +1,5 @@
 import { setFont, getBubbleCanvasContext, getFrontCanvasContext } from "./canvasHelpers";
-import globals from "../game-data/globals";
+import globals, { LARGE_FONT_SIZE } from "../game-data/globals";
 
 class TypeWriterWord {
     startingPosition: number;
@@ -17,7 +17,7 @@ class TypeWriterWord {
 
     initWord( word: string, colorCode: string ): void {
         const canvasCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext();
-        setFont( globals.LARGE_FONT_SIZE, canvasCtx );
+        setFont( LARGE_FONT_SIZE, canvasCtx );
         this.word = word + " ";
         this.color = this.getTextColor( colorCode );
         this.width = canvasCtx.measureText( word ).width;

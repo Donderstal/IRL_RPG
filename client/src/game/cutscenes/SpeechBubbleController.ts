@@ -1,4 +1,4 @@
-import globals from "../../game-data/globals";
+import globals, { BATTLE_FONT_LINE_HEIGHT, CANVAS_HEIGHT } from "../../game-data/globals";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import { SpeechBubble } from "./SpeechBubble";
 import { Emote } from "./Emote";
@@ -50,13 +50,13 @@ export class SpeechBubbleController {
     setNewSubtitleBubble( contents ) {
         this.subtitleBubbleId = getUniqueId(this.activeBubbleIds);
         this.subtitleBubble = new SpeechBubble( 
-            {'x': 0, 'y': globals.CANVAS_HEIGHT - globals.BATTLE_FONT_LINE_HEIGHT}, 
+            {'x': 0, 'y': CANVAS_HEIGHT - BATTLE_FONT_LINE_HEIGHT}, 
             contents, this.subtitleBubbleId, SceneAnimationType.speak, true
         );
     }
 
     clearSubtitleBubble( ) {
-        this.subtitleBubble.setMoveToY( globals.SCREEN.MOBILE ? screen.height : globals.CANVAS_HEIGHT );
+        this.subtitleBubble.setMoveToY( globals.SCREEN.MOBILE ? screen.height : CANVAS_HEIGHT );
         setTimeout(()=>{
             this.subtitleBubble = null;       
             this.subtitleBubbleId = null;     

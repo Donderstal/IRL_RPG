@@ -2,14 +2,14 @@ import globals from '../game-data/globals';
 import { fetchJSONWithCallback } from './utilFunctions';
 
 export class FileLoader {
-    params: string[];
+    params: any[];
     pngIndex: number;
     pngsLimit: number;
     soundIndex: number;
     soundsLimit: number;
     gameType: string;
     interval: NodeJS.Timer;
-    constructor( params, gameType ) {
+    constructor( params: any[], gameType: string ) {
         this.params = params;
 
         this.pngIndex = 0;

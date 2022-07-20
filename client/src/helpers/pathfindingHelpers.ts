@@ -1,4 +1,6 @@
-let colsInGrid: number, rowsInGrid: number, tiles: {col: number, row: number}[];
+import type { Tile } from "../game/core/Tile";
+
+let colsInGrid: number, rowsInGrid: number, tiles: Tile[];
 let queue: PriorityQueue, visitedTilesList: string[], foundPath: GridLocation[], movementCost: number, targetLocationIndex: string;
 
 enum TileStatus {
@@ -70,25 +72,27 @@ const getLocationStatus = ( location: GridLocation ): TileStatus => {
 
 const exploreInDirection = ( currentLocation: GridLocation, direction: PathfindingDirection ): GridLocation => {
     let row = currentLocation.row;
-    let col = currentLocation.column;
+    let column = currentLocation.column;
 
     switch ( direction ) {
         case PathfindingDirection.north:
             row -= 1;
             break;
         case PathfindingDirection.east:
-            col += 1;
+            column += 1;
             break;
         case PathfindingDirection.south:
             row += 1;
             break;
         case PathfindingDirection.west:
-            col -= 1;
+            column -= 1;
             break;
     }
 
-    if ( tiles.filter( ( e ) => { return e.col === col && e.row === row; } ).length > 0 ) {
-        const newLocation: GridLocation = { row: row, column: col, movementCost: movementCost, index: "" };
+    let tile = tiles.filter( ( e ) => { return e.column === column && e.row === row; } )[0]
+    if ( tile !== undefined ) {
+        const newLocation: GridLocation = { row: row, column: column, movementCost: movementCost, index: tile.column + "_" + tile.row };
+        console.log( newLocation.index )
         newLocation.path = [...currentLocation.path.slice(), newLocation];
         newLocation.status = getLocationStatus( newLocation );
         if ( newLocation.status === TileStatus.valid )
@@ -97,13 +101,13 @@ const exploreInDirection = ( currentLocation: GridLocation, direction: Pathfindi
         return newLocation;
     }
     else {
-        const location: GridLocation = { index: 'x', status: TileStatus.valid };
+        const location: GridLocation = { index: 'x', status: TileStatus.invalid };
         return location;
     }
 }
 
 const addTileInDirectionToQueueIfValid = ( currentLocation, direction ) => {
-    const newLocation = exploreInDirection( currentLocation.item, direction )
+    const newLocation = exploreInDirection( currentLocation, direction )
     const movementCost = currentLocation.priority + newLocation.movementCost;
     if ( newLocation.index === targetLocationIndex ) {
         foundPath = newLocation.path;
@@ -113,21 +117,22 @@ const addTileInDirectionToQueueIfValid = ( currentLocation, direction ) => {
     }
 }
 
-export const determineShortestPath = ( startingTile, targetTile, grid ) => {
+export const determineShortestPath = ( startingTile, targetTile, grid: {columns: number, rows: number, tiles: Tile[]} ) => {
     queue = new PriorityQueue( );
     visitedTilesList = [];
-    colsInGrid = grid.cols;
+    colsInGrid = grid.columns;
     rowsInGrid = grid.rows;
     tiles = grid.tiles;
     foundPath = null;
-    targetLocationIndex = targetTile.col + "_" + targetTile.row;
-
+    targetLocationIndex = targetTile.column + "_" + targetTile.row; 
+    console.log(targetLocationIndex)
     const start: GridLocation = {
-        column: startingTile.col,
+        column: startingTile.column,
         row: startingTile.row,
         index: "",
         movementCost: startingTile.movementCost,
-        status: TileStatus.start
+        status: TileStatus.start,
+        path: []
     };
 
     movementCost = start.movementCost;
@@ -137,16 +142,16 @@ export const determineShortestPath = ( startingTile, targetTile, grid ) => {
         const currentItem = queue.getFirstItemFromQueue();
         const currentLocation = currentItem.item;
 
-        if ( currentLocation.row !== 1 ) {
+        if ( currentLocation.row !== 1 || targetTile.row === 0 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.north )   
         }
-        if ( currentLocation.column !== colsInGrid ) {
+        if ( currentLocation.column !== colsInGrid || targetTile.column === colsInGrid + 1 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.east ) 
         }
-        if ( currentLocation.row !== rowsInGrid ) {
+        if ( currentLocation.row !== rowsInGrid || targetTile.row === rowsInGrid + 1 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.south )   
         }
-        if  ( currentLocation.column !== 1 ) {
+        if ( currentLocation.column !== 1 || targetTile.column === 0 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.west )            
         }
 

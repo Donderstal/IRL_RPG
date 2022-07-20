@@ -34,23 +34,23 @@ export class Door extends Hitbox {
         this.metConditionAtLastCheck = this.isUnlocked || ( this.meetsCondition && this.model.condition != undefined && this.model.condition.type != ConditionType.ownsItem );
     }
     get registryString(): string {
-        return this.mapName + "_" + this.model.direction + "_" + this.model.destination;
+        return this.mapName + "_" + this.model.direction + "_" + this.model.doorTo;
     }
     get meetsCondition(): boolean { 
-        return this.isUnlocked || !this.model.condition === undefined || conditionIsTrue( this.model.condition.type, this.model.condition.value );
+        return this.isUnlocked || this.model.condition === undefined || conditionIsTrue( this.model.condition.type, this.model.condition.value );
     }
     handle( ): void {
         if ( !this.meetsCondition ) {
             new Interaction( initInteractionModel(lockedDoorEvent), CinematicTrigger.interaction, [ PLAYER_ID ] );
         }
         else if ( this.model.condition !== undefined ) {
-            new Interaction( initInteractionModel(unlockDoorEvent), CinematicTrigger.leave, [ this.model.destination, InteractionType.door.toString() ]);
+            new Interaction( initInteractionModel(unlockDoorEvent), CinematicTrigger.leave, [ this.model.doorTo, InteractionType.door.toString() ]);
             this.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry(this.registryString);
             this.dismiss( );
         }
         else {
-            switchMap( this.model.destination, InteractionType.door );
+            switchMap( this.model.doorTo, InteractionType.door );
             globals.GAME.sound.playEffect( "misc/random5.wav" );
             this.dismiss( );
         }

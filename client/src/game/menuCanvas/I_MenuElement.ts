@@ -22,8 +22,8 @@ export class I_MenuElement {
     constructor( x: number, y, columns: number, rows: number, rowStyles: string[], borders: string[] = null, isActive = false ) {
         this.utilCanvas = document.getElementById( 'game-utility-canvas-menu' ) as HTMLCanvasElement;
         this.utilCtx = this.utilCanvas.getContext( '2d' );
-        this.utilCanvas.width = globals.CANVAS_WIDTH;
-        this.utilCanvas.height = globals.CANVAS_HEIGHT;
+        this.utilCanvas.width = CANVAS_WIDTH;
+        this.utilCanvas.height = CANVAS_HEIGHT;
         this.isActive = isActive;
         this.borders = borders;
         this.frameCounter = 0;

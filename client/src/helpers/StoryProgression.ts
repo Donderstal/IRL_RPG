@@ -18,7 +18,7 @@ export class StoryProgression {
                 id: e.id,
                 trigger: e.trigger as CinematicTrigger,
                 mapName: e.mapName,
-                interaction: initInteractionModel( e )
+                interaction: e.interaction.map(initInteractionModel)
             }
             return new ScriptedEvent( model );
         } );
@@ -27,7 +27,10 @@ export class StoryProgression {
 
     get activeMapEvents(): ScriptedEvent[] { return this.events.filter((e)=>{return e.mapName == globals.GAME.activeMapName;}); }
 
-    checkForEventTrigger( trigger: CinematicTrigger, args: string[] = null ): boolean {
+    checkForEventTrigger( trigger: CinematicTrigger, args: any[] = null ): boolean {
+        if ( globals.GAME.disableStoryMode ) {
+            return false;
+        }
         const activeMapStoryEvent = this.activeMapEvents.filter((e)=>{
             return e.trigger == trigger && conditionIsTrue(e.condition.type, e.condition.value) && this.triggeredEvents.indexOf(e.id) == -1;
         })[0];

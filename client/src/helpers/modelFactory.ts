@@ -47,8 +47,11 @@ export const initMapModel = ( mapData ): MapModel => {
             : [],
         doors: mapData.doors != undefined
             ? mapData.doors.map( ( door ): DoorModel => { return initDoorModel( door ) } )
-            : []
+            : [],
+
+        playerStart: mapData.playerStart
     };
+    console.log( mapModel );
     return mapModel;
 }
 
@@ -64,11 +67,11 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
         verticalSlots: neighbourhoodData.vertical_slots,
 
         characterTypes: neighbourhoodData.characters,
-        characterSpawnRate: neighbourhoodData.character_spawn_rate,
+        characterSpawnRate: neighbourhoodData.characters_spawn_rate,
         carTypes: neighbourhoodData.cars,
-        carSpawnRate: neighbourhoodData.car_spawn_rate,
+        carSpawnRate: neighbourhoodData.cars_spawn_rate,
 
-        spawnableActions: neighbourhoodData.spawnable_actions.map( ( e ) => { return initInteractionModel( e ); }),
+        spawnableActions: neighbourhoodData.spawnable_actions,
 
         mapDictionary: mapDictionary,
     };
@@ -91,7 +94,7 @@ export const initRoadModel = ( roadData ): RoadModel => {
         direction: roadData.direction,
         alignment: roadData.alignment,
         hasStart: roadData.hasStart,
-
+        name: roadData.name,
         primaryColumn: roadData.primaryColumn,
         secondaryColumn: roadData.secondaryColumn,
         primaryRow: roadData.primaryRow,
@@ -120,6 +123,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
         hasDoor: objectData.destination !== undefined,
         spriteDataModel: getDataModelByKey( objectData.type ),
 
+        name: objectData.name,
         direction: objectData.direction,
         animationType: objectData.anim_type,
         movementType: objectData.move_type,
@@ -127,15 +131,17 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
     }
 
     if ( model.hasAction ) {
-        model.action = initInteractionModel( objectData.action );
+        model.action = objectData.action.map(initInteractionModel);
     }
     if ( model.hasCondition ) {
         model.condition = initConditionModel( objectData.condition );
     }
     if ( model.hasDoor ) {
-        model.destination = objectData.destination
+        model.doorTo = objectData.doorTo
     }
-
+    if ( objectData.destination !== undefined )
+        model.destination = { column: objectData.destination.column, row: objectData.destination.row };
+    console.log( model );
     return model;
 }
 
@@ -143,7 +149,7 @@ export const initDoorModel = ( doorData ): DoorModel => {
     const doorModel: DoorModel = {
         row: doorData.row,
         column: doorData.column == undefined ? doorData.col : doorData.column,
-        destination: doorData.destination,
+        doorTo: doorData.doorTo,
         direction: doorData.direction
     };
     return doorModel;
@@ -155,6 +161,7 @@ export const initInteractionModel = ( interactionData ): InteractionModel => {
         shouldBeRegistered: interactionData[1],
         registryKey: interactionData[2],
         sfx: interactionData[3],
+        condition: initConditionModel( interactionData[4] ),
         cinematic: initCinematicModel( interactionData[5] )
     }
     return model
@@ -162,8 +169,7 @@ export const initInteractionModel = ( interactionData ): InteractionModel => {
 
 export const initCinematicModel = ( cinematicData ): CinematicModel => {
     const model: CinematicModel = {
-        condition: initConditionModel( cinematicData.condition ),
-        scenes: cinematicData.scenes.map( initCinematicSceneModel )
+        scenes: cinematicData.map( initCinematicSceneModel )
     }
     return model;
 }
@@ -177,7 +183,9 @@ export const initConditionModel = ( conditionData ): ConditionModel => {
 }
 
 export const initCinematicSceneModel = ( sceneData ): CinematicSceneModel => {
-    const model: CinematicSceneModel = sceneData.map( ( e ): SceneAnimationModel[] => { return e.map( initSceneAnimationModel ) }  );
+    const model: CinematicSceneModel = sceneData.map( ( e ): SceneAnimationModel => {
+        return initSceneAnimationModel( e );
+    } );
     return model;
 }
 
@@ -236,8 +244,8 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
             typedModel.spriteName = animationData[3];
             typedModel.roadName = animationData[4];
             break;
-        case SceneAnimationType.createCharacter:
-        case SceneAnimationType.createObjectSprite:
+        case SceneAnimationType.createSprite:
+        case SceneAnimationType.createSprite:
             typedModel = model as CreateSpriteScene;
             typedModel.direction = animationData[2];
             typedModel.sprite = animationData[3];

@@ -1,8 +1,7 @@
-import globals from '../../game-data/globals';
+import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../game-data/globals';
 import { getFrontCanvasContext, getBubbleCanvasContext, breakTextIntoLines, writeTextLine, setFont } from '../../helpers/canvasHelpers';
-import { MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, STRD_SPRITE_HEIGHT, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, STRD_SPRITE_WIDTH, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT } from '../../game-data/globals';
+import { MAX_BUBBLE_WIDTH, GRID_BLOCK_PX, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT } from '../../game-data/globals';
 import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_TOP, BUBBLE_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_RIGHT_BOTTOM, BUBBLE_LEFT, BUBBLE_RIGHT, BUBBLE_MIDDLE } from '../../game-data/textboxGlobals';
-import { INTERACTION_YES, INTERACTION_NO } from '../../game-data/interactionGlobals';
 
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
@@ -15,11 +14,11 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
         'position': "UP-RIGHT"
     };
     if ( bubbleLocation.x + dimensions.width > 24 * GRID_BLOCK_PX ) {
-        bubbleLocation.x = (spawnLocation.x - dimensions.width) + STRD_SPRITE_WIDTH;
+        bubbleLocation.x = (spawnLocation.x - dimensions.width) + GRID_BLOCK_PX;
         bubbleLocation.position = "UP-LEFT";
     }
     if ( bubbleLocation.y < 0 ) {
-        bubbleLocation.y = spawnLocation.y + STRD_SPRITE_HEIGHT;
+        bubbleLocation.y = spawnLocation.y + (GRID_BLOCK_PX * 1.75);
         bubbleLocation.position = bubbleLocation.position === "UP-RIGHT" ? "DOWN-RIGHT" : "DOWN-LEFT";
     }
     return bubbleLocation;
@@ -69,10 +68,10 @@ export class SpeechBubble {
     destinationY: number;
     constructor( location, contents, id, type, subtitleBubble = false ) {
         const dimensions = subtitleBubble
-            ? { textLines: 1, width: globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : globals.CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
+            ? { textLines: 1, width: globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
             : getSpeechBubbleDimensions( contents );
         const xyPosition = subtitleBubble
-            ?  { 'x': globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 2 : globals.CANVAS_WIDTH / 4, 'y': globals.SCREEN.MOBILE ? screen.height : globals.CANVAS_HEIGHT, 'position': "UP-RIGHT" }
+            ?  { 'x': globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 2 : CANVAS_WIDTH / 4, 'y': globals.SCREEN.MOBILE ? screen.height : CANVAS_HEIGHT, 'position': "UP-RIGHT" }
             : getSpeechBubbleXy( location, dimensions );
 
         this.x              = xyPosition.x;
@@ -255,14 +254,14 @@ export class SpeechBubble {
         frontCtx.drawImage(
             this.activeButton === InteractionAnswer.yes ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
             0, 0,
-            globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
+            GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.yesBubbleX, this.bubbleY,
             GRID_BLOCK_PX, GRID_BLOCK_PX
         );
         frontCtx.drawImage(
             this.activeButton === InteractionAnswer.no ? pngs[BUBBLE_NO] : pngs[BUBBLE_UNSELECTED],
             0, 0,
-            globals.GRID_BLOCK_IN_SHEET_PX, globals.GRID_BLOCK_IN_SHEET_PX,
+            GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.noBubbleX, this.bubbleY,
             GRID_BLOCK_PX, GRID_BLOCK_PX
         );
@@ -281,6 +280,6 @@ export class SpeechBubble {
     }
 
     moveCursor(): void {
-        this.activeButton = this.activeButton === INTERACTION_YES ? INTERACTION_NO : INTERACTION_YES;
+        this.activeButton = this.activeButton === InteractionAnswer.yes ? InteractionAnswer.no : InteractionAnswer.yes;
     }
 }

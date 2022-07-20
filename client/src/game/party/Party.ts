@@ -12,7 +12,7 @@ export class Party {
     inventory: Inventory;
     characterOnMapId: string;
     characterOnMapIndex; number;
-    constructor( partyMembers ) {
+    constructor( partyMembers: { name: string; className: string }[] ) {
         this.memberIds          = [ ];
         this.members            = [ ];
         this.inventory          = new Inventory( );

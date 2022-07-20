@@ -20,13 +20,13 @@ export class ScriptedEvent {
     constructor( scriptedEventData: StoryEventModel ) {
         this.mapName        = scriptedEventData.mapName;
         this.trigger        = scriptedEventData.trigger;
-        this.action         = scriptedEventData.interaction;
-        this.condition      = scriptedEventData.interaction.cinematic.condition;
+        this.action         = scriptedEventData.interaction[0];
+        this.condition      = scriptedEventData.interaction[0].condition;
         this.fired          = false;
         this.name           = scriptedEventData.name
         this.id             = scriptedEventData.id;
 
-        if ( scriptedEventData.trigger == CinematicTrigger.interaction ) {
+        if ( scriptedEventData.trigger == CinematicTrigger.position ) {
             this.position = scriptedEventData.position
         }
     }
@@ -37,8 +37,4 @@ export class ScriptedEvent {
             this.fired = true;           
         }
     }
-}
-
-module.exports = {
-    ScriptedEvent
 }

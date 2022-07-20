@@ -16,6 +16,10 @@ export class ActionSelector {
         this.initializeConditionList( x, y, spriteId );
     }
 
+    get x(): number { return this.action.x }
+    get y(): number { return this.action.y }
+
+    get needsConfirmation(): boolean { return this.action.needsConfirmation }
     get outerTop(): number { return this.action.outerTop }
     get outerLeft(): number { return this.action.outerLeft }
     get outerRight(): number { return this.action.outerRight }

@@ -1,9 +1,9 @@
 import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
 
-const { getEffectData } = require("../../resources/effectResources");
-const { drawFromImageToCanvas } = require("../../helpers/canvasHelpers");
-const { FRAME_LIMIT, GRID_BLOCK_PX } = require("../../game-data/globals");
-const globals = require("../../game-data/globals");
+import { getEffectData } from "../../resources/effectResources";
+import { drawFromImageToCanvas } from "../../helpers/canvasHelpers";
+import { FRAME_LIMIT, GRID_BLOCK_PX } from "../../game-data/globals";
+import globals from "../../game-data/globals";
 /**
  * Effect instances represent a ( part of ) a graphical effect in the game.
  */

@@ -76,8 +76,7 @@ export class Scene {
                     animationHasFinished = !animSprite.State.inAnimation
                     break;
                 case SceneAnimationType.createCar:
-                case SceneAnimationType.createCharacter:
-                case SceneAnimationType.createObjectSprite:
+                case SceneAnimationType.createSprite:
                     animationHasFinished = e.getSpriteByName( ) != undefined;
                     break;
                 case SceneAnimationType.deleteSprite:

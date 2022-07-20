@@ -1,4 +1,4 @@
-import globals from '../game-data/globals';
+import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
 import { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
 
 export const getBubbleCanvasContext = (): CanvasRenderingContext2D => {
@@ -118,6 +118,6 @@ export const clearEntireCanvas = ( canvas: string ): void => {
     } 
     ctx.clearRect( 
         0, 0,
-        globals.CANVAS_WIDTH, globals.CANVAS_HEIGHT
+        CANVAS_WIDTH, CANVAS_HEIGHT
     )
 }

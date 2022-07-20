@@ -1,4 +1,4 @@
-import globals from '../../../game-data/globals';
+import globals, { MOVEMENT_SPEED } from '../../../game-data/globals';
 import { determineShortestPath } from '../../../helpers/pathfindingHelpers';
 import { GRID_BLOCK_PX } from '../../../game-data/globals';
 import type { BackgroundCanvas } from '../../BackgroundCanvas';
@@ -41,10 +41,10 @@ export class Destination {
     get sprite(): Sprite { return this.frontClass.spriteDictionary[this.spriteId]; };
 
     get currentStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex]; };
-    get currentStepIsLeft(): boolean { return this.currentStep.x <= this.sprite.left - (globals.MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.left; };
-    get currentStepIsRight(): boolean { return this.currentStep.x + GRID_BLOCK_PX >= this.sprite.right + (globals.MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.right; };
-    get currentStepIsUp(): boolean { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) <= this.sprite.top - (globals.MOVEMENT_SPEED / 2)&& this.currentStep.direction == DirectionEnum.up; };    
-    get currentStepIsDown(): boolean { return this.currentStep.y + GRID_BLOCK_PX >= this.sprite.bottom + (globals.MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.down; };
+    get currentStepIsLeft(): boolean { return this.currentStep.x <= this.sprite.left - (MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.left; };
+    get currentStepIsRight(): boolean { return this.currentStep.x + GRID_BLOCK_PX >= this.sprite.right + (MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.right; };
+    get currentStepIsUp(): boolean { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) <= this.sprite.top - (MOVEMENT_SPEED / 2)&& this.currentStep.direction == DirectionEnum.up; };    
+    get currentStepIsDown(): boolean { return this.currentStep.y + GRID_BLOCK_PX >= this.sprite.bottom + (MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.down; };
     
     get isBlocked( ): boolean { return this.backTile.isBlocked || this.frontClass.tileHasBlockingSprite( this.frontTile.index ); };
     get spriteHasReachedDestination( ): boolean { return this.currentPathIndex === this.path.length - 1; };

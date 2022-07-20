@@ -51,8 +51,8 @@ export class Road {
 
     get startCellIsBlocked( ): boolean { 
         let FRONT = globals.GAME.FRONT;
-        let firstTile = globals.GAME.getTileOnCanvasAtCell(  "FRONT", this.startCell.column, this.startCell.row )
-        let secondTile = globals.GAME.getTileOnCanvasAtCell(  "FRONT", this.secondCell.column, this.secondCell.row )
+        let firstTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.model.primaryColumn, this.model.primaryRow )
+        let secondTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.isHorizontal ? this.model.primaryColumn : this.model.secondaryColumn, this.isHorizontal ? this.model.secondaryRow : this.model.primaryRow )
         return FRONT.tileHasBlockingSprite( firstTile.index ) || FRONT.tileHasBlockingSprite( secondTile.index )
     }
 

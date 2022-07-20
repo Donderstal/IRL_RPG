@@ -1,4 +1,4 @@
-import globals from '../../../game-data/globals';
+import globals, { GRID_BLOCK_PX } from '../../../game-data/globals';
 import { Hitbox } from '../../core/Hitbox';
 import { Interaction } from '../../cutscenes/Interaction';
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
@@ -25,7 +25,7 @@ export class MapAction extends Hitbox {
     idList: string[];
     model: InteractionModel;
     constructor ( x: number, y: number, action: InteractionModel, spriteId: string = null, condition: ConditionModel = null ) {
-        super( x, y, globals.GRID_BLOCK_PX / 2 )
+        super( x, y, GRID_BLOCK_PX / 2 )
         this.model      = action;
         this.arcColor   = "#FF0000";
         this.spriteId   = spriteId;
@@ -104,10 +104,6 @@ export class MapAction extends Hitbox {
         else if ( this.model.shouldBeRegistered ) {
             addEventToRegistry( this.model.registryKey )   
         }
-    }
-
-    healPlayerPartyOnRest(): void {
-        globals.GAME.party.fullHealParty( );
     }
 
     resetAction(): void {

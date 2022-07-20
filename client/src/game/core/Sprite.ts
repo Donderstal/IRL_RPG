@@ -1,5 +1,5 @@
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
-import globals from '../../game-data/globals'
+import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { getAnimationByName } from '../../resources/animationResources'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
@@ -18,6 +18,9 @@ import type { SpriteFrameModel } from '../../models/SpriteFrameModel'
 import type { Tile } from './Tile'
 import type { SpriteDataModel } from '../../models/SpriteDataModel'
 import { SpriteSheetAlignmentEnum } from '../../enumerables/SpriteSheetAlignmentEnum'
+import { Hitbox } from './Hitbox'
+import { VisionBox } from '../map/map-classes/VisionBox'
+import type { ActionSelector } from '../map/map-classes/ActionSelector'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -60,36 +63,52 @@ export class Sprite {
     sfx: string;
     isCar: boolean;
 
-    constructor( tile: Tile, model: SpriteDataModel, direction: DirectionEnum, isPlayer: boolean ) {   
+    hitbox?: Hitbox;
+    visionbox: VisionBox;
+    actionSelector: ActionSelector;
+    currentTileBack: Tile;
+    nextTileBack: Tile;
+    constructor( tile: Tile, model: SpriteDataModel, direction: DirectionEnum, spriteId: string, isPlayer = false ) {   
         this.model = model;
         this.setDimensions();
-
+        this.spriteId       = spriteId;
         this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
         this.direction = direction != null ? direction : 0;
         this.previousDirection = direction != null ? direction : 0;
-        this.destination    = false;
+        this.destination    = null;
         this.activeEffect   = { active: false };
         this.isPlayer       = isPlayer;
         this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
-        this.type           = "sprite"
-
-        this.setSpriteToGrid( tile )
+        this.setSpriteToGrid( tile );
+        this.hitbox = new Hitbox( this.centerX, this.baseY, this.width / 2 );
+        if ( this.isPlayer ) {
+            this.visionbox = new VisionBox( this.centerX, this.baseY );
+        }
     }
 
     get isInCameraFocus(): boolean { return globals.GAME.cameraFocus.focusSpriteId == this.spriteId;}
     get activeAnimationFrame(): SpriteFrameModel { return this.animationScript.frames[this.animationScript.index]; }
+
     get centerX(): number { return this.x + ( this.width / 2 ); };
     get baseY(): number { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
     get topY(): number{ return this.top + ( GRID_BLOCK_PX / 2 ); };
+
     get left(): number { return this.x; };
     get top(): number { return this.y; };
     get right(): number { return this.x + this.width; };
     get bottom(): number { return this.y + this.height; };
+
     get standing(): boolean { return this.model.groundedAtBottom || (this.type != "object" && this.type != 'car') };
-    get dynamicTop( ): number { return this.standing ? this.baseY - this.speed : this.topY };
+    get dynamicTop(): number { return this.standing ? this.baseY - this.speed : this.topY };
+
+    get isInCenterFacingLeft() { return this.centerX < ( this.currentTileBack.x + ( GRID_BLOCK_PX * .45 ) ); }
+    get isInCenterFacingRight() { return this.centerX > ( this.currentTileBack.x + ( GRID_BLOCK_PX * .55 ) ); }
+    get isInCenterFacingUp() { return this.baseY < ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); }
+    get isInCenterFacingDown() { return this.baseY > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .55 ) ); }
+
     get noCollision(): boolean {
         return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.State.is( SpriteStateEnum.moving ) )
     }
@@ -108,15 +127,21 @@ export class Sprite {
             case SpriteSheetAlignmentEnum.standard:
                 this.width = model.widthBlocks * GRID_BLOCK_PX;
                 this.height = model.heightBlocks * GRID_BLOCK_PX;
+                this.spriteWidthInSheet = model.widthBlocks * GRID_BLOCK_IN_SHEET_PX;
+                this.spriteHeightInSheet = model.heightBlocks * GRID_BLOCK_IN_SHEET_PX;
                 break;
             case SpriteSheetAlignmentEnum.horiVert:
                 if ( this.direction === DirectionEnum.up || this.direction === DirectionEnum.down ) {
                     this.width = model.vertWidthBlocks * GRID_BLOCK_PX;
                     this.height = model.vertHeightBlocks * GRID_BLOCK_PX;
+                    this.spriteWidthInSheet = model.vertWidthBlocks * GRID_BLOCK_IN_SHEET_PX;
+                    this.spriteHeightInSheet = model.vertHeightBlocks * GRID_BLOCK_IN_SHEET_PX;
                 }
                 else {
                     this.width = model.horiWidthBlocks * GRID_BLOCK_PX;
                     this.height = model.horiHeightBlocks * GRID_BLOCK_PX;
+                    this.spriteWidthInSheet = model.horiWidthBlocks * GRID_BLOCK_IN_SHEET_PX;
+                    this.spriteHeightInSheet = model.horiHeightBlocks * GRID_BLOCK_IN_SHEET_PX;
                 }
                 break;
         }
@@ -170,7 +195,7 @@ export class Sprite {
     updateCell( ): void {
         let cell = globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX, this.baseY )
         this.row = cell.row;
-        this.column = cell.col;
+        this.column = cell.column;
     }
 
     nextPosition( direction: DirectionEnum = this.direction ):number {
@@ -187,12 +212,16 @@ export class Sprite {
     }
     
     drawSprite(): void {
-        this.updateState( );
+        this.updateState();
+        if ( this.isPlayer ) {
+            this.visionbox.updateXy( this.centerX, this.baseY );
+        }
+        this.hitbox.updateXy( this.centerX, this.baseY );
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
         drawFromImageToCanvas(
-            "FRONT", this.sheet,
+            "FRONT", this.model.image,
             this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 
             this.spriteWidthInSheet, this.spriteHeightInSheet,
             this.x, this.y, this.width, this.height
@@ -229,7 +258,7 @@ export class Sprite {
     }
 
     checkForMoveToDestination(): void {
-        if ( this.State.is( SpriteStateEnum.moving ) && !this.State.inAnimation && this.destination != false ) {
+        if ( this.State.is( SpriteStateEnum.moving ) && !this.State.inAnimation && this.destination !== null ) {
             this.destination.goTo( );   
             this.countFrame( ); 
         }
@@ -297,7 +326,7 @@ export class Sprite {
         if ( this.State.inAnimation )
             this.unsetScriptedAnimation();
 
-        const animationModel = getAnimationByName( animation.animName, this.direction );
+        const animationModel = getAnimationByName( animation.animName, this.width, this.height, this.direction );
         this.animationScript = {
             loop: animation.loop,
             frames: animationModel.frames,
@@ -376,7 +405,7 @@ export class Sprite {
     }
 
     checkForCollision( ): boolean {
-        return checkForCollision( this, false ) ;
+        return checkForCollision( this ) ;
     }
 
     getBlockedTiles( ): number[] {

@@ -35,6 +35,7 @@ import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
 import type { ActionSelector } from './map/map-classes/ActionSelector'
 import type { MapAction } from './map/map-classes/MapAction'
+import type { CanvasWithGrid } from './core/CanvasWithGrid'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -159,90 +160,75 @@ export class Game {
     }
 
     initGameCanvases( ): void {
-        this.initCanvas( 'UTIL_BACK', this.utilBack );
-        this.initCanvas( 'UTIL_FRONT', this.utilFront );
-        this.initCanvas( 'FRONT_GRID' , this.frontgrid )
-        this.initCanvas( 'FRONT', this.front );
-        this.initCanvas( 'BACK', this.back );
-        this.initCanvas( 'MENU' , this.menu );
+        this.utilBack = this.initCanvas( 'UTIL_BACK' );
+        this.utilFront = this.initCanvas( 'UTIL_FRONT' );
+        this.frontgrid = this.initCanvas( 'FRONT_GRID')
+        this.front = this.initCanvas( 'FRONT', );
+        this.back = this.initCanvas( 'BACK' );
+        this.menu = this.initCanvas( 'MENU' );
         if ( globals.SCREEN.MOBILE ) {
-            this.initCanvas( 'SPEECH' , this.speechBubblesCanvas );
+            this.speechBubblesCanvas = this.initCanvas( 'SPEECH' );
         }
     }
 
-    initCanvas( type, object: CanvasContextModel ): void {
+    initCanvas( type: string ): CanvasContextModel {
         switch( type ) {
             case 'BACK':
-                object.canvas = document.getElementById( 'game-background-canvas' ) as HTMLCanvasElement;
-                object.ctx = object.canvas.getContext( '2d' );
-                object.canvas.width = CANVAS_WIDTH;
-                object.canvas.height = CANVAS_HEIGHT;
-                var xy = object.canvas.getBoundingClientRect( );
-                object.class = new BackgroundCanvas( xy.x, xy.y, object.ctx );
-                break;
+                return this.initializeGameCanvas( 'game-background-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, BackgroundCanvas );
             case 'FRONT':
-                object.canvas = document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement;
-                object.ctx = object.canvas.getContext( '2d' );
-                object.canvas.width = CANVAS_WIDTH;
-                object.canvas.height = CANVAS_HEIGHT;
-                var xy = object.canvas.getBoundingClientRect( );
-                object.class = new ForegroundCanvas( xy.x, xy.y, object.ctx );
-                break;
+                return this.initializeGameCanvas( 'game-front-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, ForegroundCanvas );
             case 'FRONT_GRID':
-                object.canvas = document.getElementById( 'game-front-grid-canvas' ) as HTMLCanvasElement;
-                object.ctx = object.canvas.getContext( '2d' );
-                object.canvas.width = CANVAS_WIDTH;
-                object.canvas.height = CANVAS_HEIGHT;
-                var xy = object.canvas.getBoundingClientRect( );
-                object.class = new FrontgridCanvas( xy.x, xy.y, object.ctx );
-                break;
+                return this.initializeGameCanvas( 'game-front-grid-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, FrontgridCanvas );
             case 'MENU':
-                object.canvas = document.getElementById( 'game-menu-canvas' ) as HTMLCanvasElement;
-                object.ctx = object.canvas.getContext( '2d' );
+                let object = this.initializeGameCanvas(
+                    'game-menu-canvas',
+                    globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH,
+                    globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT,
+                    true, MenuCanvas
+                );
                 if ( globals.SCREEN.MOBILE ) {
-                    object.canvas.width = GRID_BLOCK_PX * 8;
-                    object.canvas.height = GRID_BLOCK_PX * 8;
                     object.canvas.style.position = 'fixed';
                     object.canvas.style.top = "0";
                 }
-                else {
-                    object.canvas.width = CANVAS_WIDTH;
-                    object.canvas.height = CANVAS_HEIGHT;                  
-                }
-                var xy = object.canvas.getBoundingClientRect( );
-                object.class = new MenuCanvas( xy.x, xy.y, object.ctx, object.canvas);  
-                break;
+                return object;
             case 'UTIL_BACK':
-                object.canvas = document.getElementById( 'game-utility-canvas-back' ) as HTMLCanvasElement;;
-                object.ctx = object.canvas.getContext( '2d' );
-                break;
+                return this.initializeGameCanvas( 'game-utility-canvas-back', GRID_BLOCK_PX, GRID_BLOCK_PX, false  );
             case 'UTIL_FRONT':
-                object.canvas = document.getElementById( 'game-utility-canvas-front' ) as HTMLCanvasElement;;
-                object.ctx = object.canvas.getContext( '2d' );
-                break;  
-            case 'SPEECH':
-                object.canvas = document.getElementById( 'game-bubble-canvas' ) as HTMLCanvasElement;;
-                object.ctx = object.canvas.getContext( '2d' );
-                object.canvas.width = GRID_BLOCK_PX * 12;
-                object.canvas.height = GRID_BLOCK_PX * 8;
-                object.class = new SpeechBubbleCanvas( 0, 0, object.ctx, object.canvas);        
-                break;
-            default:
-                console.log('error! canvas type ' + type + ' not known')
+                return this.initializeGameCanvas( 'game-utility-canvas-front', GRID_BLOCK_PX, GRID_BLOCK_PX, false );
+            case 'SPEECH':  
+                return this.initializeGameCanvas( 'game-bubble-canvas', GRID_BLOCK_PX * 12, GRID_BLOCK_PX * 8, true, SpeechBubbleCanvas );
         } 
     }
 
+    initializeGameCanvas( id: string, width: number, height: number, hasClass: boolean, ClassType: typeof CanvasWithGrid = null ): CanvasContextModel {
+        const canvas = document.getElementById( id ) as HTMLCanvasElement;
+        const ctx = canvas.getContext( '2d' );
+        canvas.width = width;
+        canvas.height = height;
+        if ( hasClass ) {
+            var xy = canvas.getBoundingClientRect();
+            return {
+                canvas: canvas,
+                ctx: ctx,
+                class: new ClassType( xy.x, xy.y, ctx, canvas )
+            }
+        }
+        else {
+            return {
+                canvas: canvas,
+                ctx: ctx
+            }
+        }
+
+    }
+
     startNewGame( name: string, spriteKey: string, startingMapName: string, debugMode: boolean, disableStoryMode: boolean ): void {
-        this.initializePlayerParty( name )    
+        this.initializePlayerParty( name );
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
         this.disableStoryMode = disableStoryMode;
-        this.activeMap.playerStart.playerClass = spriteKey;
-        this.activeMap.playerStart.name = name;
         loadMapToCanvases( this.activeMap, "NEW", true );
-        if ( !this.disableStoryMode ) {
-            this.story = new StoryProgression( );     
-        }
+        this.story = new StoryProgression(); 
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
@@ -256,9 +242,7 @@ export class Game {
         this.activeMap.playerStart = JSON.activeMap.playerStart;
         this.activeMap.playerStart.name = "test";
         loadMapToCanvases( this.activeMap, "LOAD", true );
-        if ( !this.disableStoryMode ) {
-            this.story = new StoryProgression( JSON.keyLists.storyEvents );
-        }
+        this.story = new StoryProgression( JSON.keyLists.storyEvents );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 

@@ -17,6 +17,7 @@ import type { SpawnPointModel } from '../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../helpers/modelFactory';
 import type { GridCellModel } from '../models/GridCellModel';
 import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
+import { DirectionEnum } from '../enumerables/DirectionEnum';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -57,7 +58,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
             if ( this.model.sprites )
                 this.setSprites( this.model.sprites );
             if ( this.model.playerStart ) {
-                this.initPlayerCharacter( this.model.playerStart, this.model.playerStart.className );
+                this.initPlayerCharacter( this.model.playerStart, globals.GAME.party.characterActiveOnMap.ClassName );
                 globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX, this.playerSprite.baseY )      
             }            
         }
@@ -66,7 +67,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
     initPlayerCharacter( start: CellPosition, className: string ) {
         const startingTile = this.grid.array.filter( tile => { return tile.row == start.row && tile.column == start.column } )[0];
         const spriteModel = getDataModelByKey( className );
-        this.playerSprite = new Sprite( startingTile, spriteModel, start.direction, PLAYER_ID, true );
+        this.playerSprite = new Sprite( startingTile, spriteModel, DirectionEnum.down, PLAYER_ID, true );
         this.playerSprite.name = PLAYER_NAME;
         this.allSprites.push( this.playerSprite );
         this.spriteDictionary[PLAYER_ID] = this.playerSprite;
@@ -74,7 +75,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
 
     setSprites( sprites: CanvasObjectModel[] ): void {
         sprites = sprites.filter((e)=>{
-            return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : false;
+            return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
         })
         sprites.forEach( ( sprite ) => {
             const tile = this.getTileAtCell( sprite.column, sprite.row );
@@ -89,6 +90,9 @@ export class ForegroundCanvas extends CanvasWithGrid {
         const newNPC = new Sprite( tile, spriteModel, canvasObjectModel.direction, newId );
         this.allSprites.push( newNPC )
         this.spriteDictionary[newId] = newNPC
+        if ( canvasObjectModel.name ) {
+            newNPC.name = canvasObjectModel.name;
+        }
         return newId;
     }
 
@@ -166,8 +170,8 @@ export class ForegroundCanvas extends CanvasWithGrid {
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
         const grid = { 
-            'rows': this.grid.rows, 'cols': this.grid.columns,
-            'tiles': globals.GAME.BACK.grid.array.filter((tile) => {
+            rows: this.grid.rows, columns: this.grid.columns,
+            tiles: globals.GAME.BACK.grid.array.filter((tile) => {
                 return !globals.GAME.BACK.getTileAtIndex(tile.index).isBlocked && !this.tileHasBlockingSprite(tile.index);
             })
         };
@@ -190,9 +194,9 @@ export class ForegroundCanvas extends CanvasWithGrid {
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {
         if ( dataModel.spriteDataModel.isCollectable ) {
             let mapName = globals.GAME.activeMapName
-            let objectResource = getDataModelByKey[dataModel.type]
-            let id = globals.GAME.collectableRegistry.getCollectableId(tile.column, tile.row, objectResource.collectable_type, mapName)
-            return globals.GAME.collectableRegistry.isInRegistry(id, objectResource.collectable_type);
+            let objectResource = getDataModelByKey( dataModel.type );
+            let id = globals.GAME.collectableRegistry.getCollectableId(tile.column, tile.row, objectResource.collectableType, mapName)
+            return globals.GAME.collectableRegistry.isInRegistry( id, objectResource.collectableType );
         }
         return false;
     }

@@ -21,21 +21,21 @@ export class CanvasWithGrid {
     model: MapModel;
     playerSprite: Sprite;
     allSprites: Sprite[];
-    constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
+    constructor( x: number, y: number, ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement = null ) {
         this.x = x;
         this.y = y;
         this.ctx = ctx;
     };
 
-    initGrid( rows: number, cols: number ): void {
-        this.grid       = new Grid( rows, cols, this.ctx );
+    initGrid( columns: number, rows: number  ): void {
+        this.grid       = new Grid( columns, rows, this.ctx );
     };
 
     setTileGrid( tileModelArray: TileModel[] ): void {
         this.grid.setTileGridToArray( tileModelArray );
     }
 
-    getTileAtIndex( index: number ): Tile {
+    getTileAtIndex( index: number | OutOfMapEnum ): Tile {
         return this.grid.array[index];
     }
 

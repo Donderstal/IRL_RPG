@@ -26,7 +26,7 @@ export class MenuCanvas extends CanvasWithGrid {
         this.canvas.style.backgroundColor = "transparent"
         this.isActive = false;
 
-        this.initGrid( MENU_GRID_ROWS, MENU_GRID_COLUMNS );
+        this.initGrid( MENU_GRID_COLUMNS, MENU_GRID_ROWS );
 
         this.header = new MenuHeader( );
         this.textBox = new MenuTextBox( );

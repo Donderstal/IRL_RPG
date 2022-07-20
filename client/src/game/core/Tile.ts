@@ -6,8 +6,10 @@ import globals from '../../game-data/globals';
 import { ActionSelector } from '../map/map-classes/ActionSelector';
 import { getBackCanvasContext } from '../../helpers/canvasHelpers';
 import { initDoorWithId } from '../../helpers/doorController';
-import type { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
+import { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
 import type { Door } from "../map/map-classes/Door";
+import type { Savepoint } from "../map/map-classes/SavePoint";
+import type { MapAction } from "../map/map-classes/MapAction";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -31,7 +33,7 @@ export class Tile {
 
     hasEvent: boolean;
     eventType: InteractionType;
-    event: ActionSelector|Door;
+    event: ActionSelector|MapAction;
     direction: DirectionEnum;
     constructor( index: number|OutOfMapEnum, x: number, y: number, ctx: CanvasRenderingContext2D, row: number, column: number ) {
         this.x = x;
@@ -62,7 +64,7 @@ export class Tile {
     };
 
     get isBlocked( ): boolean { 
-        return this.index != globals.OUT_LEFT && this.index != globals.OUT_TOP && this.index != globals.OUT_RIGHT && this.index != globals.OUT_DOWN && this.blocked;
+        return this.index != OutOfMapEnum.left && this.index != OutOfMapEnum.up && this.index != OutOfMapEnum.right && this.index != OutOfMapEnum.down && this.blocked;
     }
 
     get isEmpty( ): boolean {
@@ -176,7 +178,7 @@ export class Tile {
                 xy.y = this.y + ( GRID_BLOCK_PX / 2 )
                 break;
         }
-        this.event = initDoorWithId(xy.x, xy.y, doorData)
+        this.event = initDoorWithId(xy.x, xy.y, doorData) as unknown as MapAction;
     }
 
     setAction( actionData: {} ): void {

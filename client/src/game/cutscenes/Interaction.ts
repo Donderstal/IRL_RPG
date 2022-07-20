@@ -1,5 +1,5 @@
 import globals from '../../game-data/globals';
-import controls from '../controls';
+import { clearPressedKeys } from '../controls';
 import { Scene } from './Scene';
 import { switchMap } from '../../helpers/loadMapHelpers';
 import type { CinematicSceneModel } from "../../models/CinematicSceneModel";
@@ -20,7 +20,8 @@ export class Interaction {
 
     model: InteractionModel;
     constructor( model: InteractionModel, trigger: CinematicTrigger, args: string[] ) {
-        controls.clearPressedKeys( globals.GAME.pressedKeys );
+        clearPressedKeys( globals.GAME.pressedKeys );
+        this.model = model;
         this.trigger = trigger;
         this.args   = args;
         this.numberOfScenes = this.model.cinematic.scenes.length;
@@ -56,7 +57,7 @@ export class Interaction {
         }
         else {
             this.activeScene.unsetSpriteAnimation( )
-            globals.GAME.deActivateCinematic( this );
+            globals.GAME.deActivateCinematic( );
             globals.GAME.activeCinematic = null;
             this.handleEndOfCinematicTrigger( );
         }

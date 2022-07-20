@@ -6,8 +6,8 @@ export const handleActionButton = ( ): void => {
 
     if ( GAME.activeAction !== undefined && GAME.activeAction.needsConfirmation ) {
         GAME.activeAction.confirm( );
-        GAME.activeBubble = {}
-        GAME.bubbleIsActive = false
+        GAME.activeBubble = null;
+        GAME.bubbleIsActive = false;
         return;
     }
 

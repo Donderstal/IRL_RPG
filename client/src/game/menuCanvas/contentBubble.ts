@@ -8,8 +8,8 @@ export class ContentBubble extends I_MenuElement {
     originalX: number;
     originalY: number;
     inAnimation: boolean;
-    constructor( startCol: number, startRow: number, cols: number, rows: number, type: string, content: string, rowStyles: string[] ) {
-        super( startCol * GRID_BLOCK_PX, startRow * GRID_BLOCK_PX, cols, rows, rowStyles, ["B"] )
+    constructor( primaryColumn: number, primaryRow: number, cols: number, rows: number, type: string, content: string, rowStyles: string[] ) {
+        super( primaryColumn * GRID_BLOCK_PX, primaryRow * GRID_BLOCK_PX, cols, rows, rowStyles, ["B"] )
 
         this.type       = type;
         this.content    = content;

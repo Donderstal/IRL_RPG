@@ -1,4 +1,4 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, MOVEMENT_SPEED } from '../game-data/globals';
 import globals from '../game-data/globals';
 import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
@@ -134,24 +134,24 @@ export class CameraFocus {
         let moveToX = this.lastFocusXy.x;
         let moveToY = this.lastFocusXy.y;
         if ( this.newFocusXy.x > moveToX ) {
-            moveToX = (moveToX + globals.MOVEMENT_SPEED) > this.newFocusXy.x 
+            moveToX = (moveToX + MOVEMENT_SPEED) > this.newFocusXy.x 
                 ? this.newFocusXy.x
-                : moveToX + globals.MOVEMENT_SPEED;
+                : moveToX + MOVEMENT_SPEED;
         }
         else if ( this.newFocusXy.x < moveToX ) {
-            moveToX = (moveToX - globals.MOVEMENT_SPEED) < this.newFocusXy.x 
+            moveToX = (moveToX - MOVEMENT_SPEED) < this.newFocusXy.x 
                 ? this.newFocusXy.x
-                : moveToX - globals.MOVEMENT_SPEED;
+                : moveToX - MOVEMENT_SPEED;
         }
         if ( this.newFocusXy.y > moveToY ) {
-            moveToY = (moveToY + globals.MOVEMENT_SPEED) > this.newFocusXy.y 
+            moveToY = (moveToY + MOVEMENT_SPEED) > this.newFocusXy.y 
                 ? this.newFocusXy.y
-                : moveToY + globals.MOVEMENT_SPEED;
+                : moveToY + MOVEMENT_SPEED;
         }
         else if ( this.newFocusXy.y < moveToY ) {
-            moveToY = (moveToY - globals.MOVEMENT_SPEED) < this.newFocusXy.y 
+            moveToY = (moveToY - MOVEMENT_SPEED) < this.newFocusXy.y 
                 ? this.newFocusXy.y
-                : moveToY - globals.MOVEMENT_SPEED;
+                : moveToY - MOVEMENT_SPEED;
         }
         this.centerOnXY( moveToX, moveToY );
         if ( moveToX == this.newFocusXy.x && moveToY == this.newFocusXy.y ) {

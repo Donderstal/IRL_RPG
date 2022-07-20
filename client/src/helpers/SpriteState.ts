@@ -45,7 +45,7 @@ export class SpriteState {
     cinematicOn( sprite: Sprite ): void {
         this.inCinematic = true;
         this.storeState( );
-        if ( sprite.destination != false ) {
+        if ( sprite.destination !== null ) {
             this.storedDestination = { 
                 'column': sprite.destination.column, 
                 'row': sprite.destination.row

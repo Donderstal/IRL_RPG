@@ -19,10 +19,10 @@ export const addEventToRegistry = ( eventKey: string, value: InteractionAnswer =
     checkForQuestTrigger( eventKey );
 }
 
-export const getRegistry = (): { [key: string]: boolean } => {
+export const getRegistry = (): { [key: string]: InteractionAnswer } => {
     return interactionRegistry;
 }
 
-export const setInteractionRegistry = ( registryObject: { [key: string]: boolean } ): void => {
+export const setInteractionRegistry = ( registryObject: { [key: string]: InteractionAnswer } ): void => {
     interactionRegistry = registryObject;
 }

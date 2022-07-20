@@ -1,4 +1,4 @@
-import { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS, OUT_LEFT, OUT_UP, OUT_RIGHT, OUT_DOWN } from '../../game-data/globals';
+import { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS} from '../../game-data/globals';
 import { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
 import { Tile } from './Tile';
 import type { TileModel } from '../../models/TileModel';
@@ -86,7 +86,7 @@ export class Grid {
         if ( x > this.x + this.columns * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x <= this.x || y <= this.y ) {
             return this.getDummyTile( 
                 x <= this.x ? OutOfMapEnum.left : x > this.x + this.columns * GRID_BLOCK_PX ? OutOfMapEnum.right : column,
-                y <= this.y ? OutOfMapEnum.up : y > this.y + this.rows * GRID_BLOCK_PX ? OUT_DOWN : OutOfMapEnum.down
+                y <= this.y ? OutOfMapEnum.up : y > this.y + this.rows * GRID_BLOCK_PX ? OutOfMapEnum.down : row
             );
         }
 

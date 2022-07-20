@@ -1,10 +1,11 @@
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
-import globals from '../../../game-data/globals';
+import { SpriteStateEnum } from '../../../enumerables/SpriteStateEnum';
+import globals, { GRID_BLOCK_PX } from '../../../game-data/globals';
 import type { Sprite } from '../../core/Sprite';
 import type { MapSprite } from '../map-classes/MapSprite';
 
 export const checkForCollision = ( sprite: MapSprite ): boolean => {
-    const allSprites =  globals.GAME.FRONT.allSprites.filter((e)=>{return !e.onBackground && !e.notGrounded;});
+    const allSprites = globals.GAME.FRONT.allSprites.filter( ( e ) => { return !e.model.onBackground && !e.model.notGrounded;});
     const allSpritesCount = allSprites.length;    
 
     let colliding = false; 
@@ -13,10 +14,10 @@ export const checkForCollision = ( sprite: MapSprite ): boolean => {
     while( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = allSprites[spriteIndex];
         if( targetSprite.spriteId != sprite.spriteId ) {
-            if ( !targetSprite.hasOwnProperty("blockedArea") &&  !targetSprite.hasDoor && checkIfSpritesCollide( sprite, targetSprite )) {
+            if ( !targetSprite.hasOwnProperty("blockedArea") &&  !(targetSprite as any).hasDoor && checkIfSpritesCollide( sprite, targetSprite )) {
                 colliding = true;
             }
-            else if ( targetSprite.hasOwnProperty("blockedArea") && targetSprite.blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
+            else if ( targetSprite.hasOwnProperty( "blockedArea" ) && ( targetSprite as any ).blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
                 colliding = true;
             }
         }
@@ -91,11 +92,11 @@ class SpritePosition {
         this.bottom = this.y + this.height;
         this.right = this.x + this.width;
 
-        this.baseY = this.isStanding ? this.bottom - ( globals.GRID_BLOCK_PX / 4 ) : this.bottom - ( this.height / 2 );
+        this.baseY = this.isStanding ? this.bottom - ( GRID_BLOCK_PX / 4 ) : this.bottom - ( this.height / 2 );
         this.centerX = this.x + ( this.width / 2 );
         this.dynamicTop = this.isStanding
-            ? this.bottom - globals.GRID_BLOCK_PX
-            : this.top + ( this.isCar ? globals.GRID_BLOCK_PX : globals.GRID_BLOCK_PX / 4 );
+            ? this.bottom - GRID_BLOCK_PX
+            : this.top + ( this.isCar ? GRID_BLOCK_PX : GRID_BLOCK_PX / 4 );
     }
 }
 
@@ -108,7 +109,7 @@ const getSpriteNextPosition = ( sprite: Sprite ) => {
         return new SpritePosition( next.x, next.y, next.width, next.height, sprite.standing , true );
     }
 
-    if ( sprite.State.is(globals.STATE_MOVING) ) {
+    if ( sprite.State.is(SpriteStateEnum.moving) ) {
         switch ( sprite.direction ) {
             case DirectionEnum.left:
                 spriteX = spriteX - sprite.speed;

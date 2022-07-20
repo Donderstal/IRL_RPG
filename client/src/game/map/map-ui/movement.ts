@@ -1,12 +1,12 @@
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { InteractionType } from '../../../enumerables/InteractionType';
 import globals from '../../../game-data/globals';
-import { GRID_BLOCK_PX, MOVEMENT_SPEED, FACING_RIGHT, FACING_LEFT, FACING_UP, FACING_DOWN } from '../../../game-data/globals';
+import { GRID_BLOCK_PX, MOVEMENT_SPEED } from '../../../game-data/globals';
 import { switchMap } from '../../../helpers/loadMapHelpers';
 import type { Sprite } from '../../core/Sprite';
 import type { MapSprite } from '../map-classes/MapSprite';
 
-export const handleMovementOfSprite = ( sprite: MapSprite, direction: DirectionEnum ): void => {
+export const handleMovementOfSprite = ( sprite: Sprite, direction: DirectionEnum ): void => {
     moveInDirection( sprite, direction )
     sprite.countFrame( )
 }
@@ -23,7 +23,7 @@ const moveInDirection = ( sprite: MapSprite, direction: DirectionEnum ): void =>
     }
 }
 
-const checkIfMovementAllowed = ( sprite: MapSprite, direction: DirectionEnum ): boolean => {
+const checkIfMovementAllowed = ( sprite: Sprite, direction: DirectionEnum ): boolean => {
     const activeMap = globals.GAME.activeMap;
     if ( sprite.currentTileBack == undefined ) {
         return true;
@@ -50,13 +50,13 @@ const checkIfMovementAllowed = ( sprite: MapSprite, direction: DirectionEnum ): 
 
     if ( sprite.nextTileBack != undefined && ( sprite.nextTileBack.isBlocked || sprite.nextTileFront.isBlocked ) ) {
         switch ( direction ) {
-            case FACING_RIGHT :
+            case DirectionEnum.right:
                 return !sprite.isInCenterFacingRight;
-            case FACING_LEFT :
+            case DirectionEnum.left:
                 return !sprite.isInCenterFacingLeft;
-            case FACING_UP :
+            case DirectionEnum.up:
                 return !sprite.isInCenterFacingUp;
-            case FACING_DOWN :
+            case DirectionEnum.down:
                 return !sprite.isInCenterFacingDown;
         }
     }

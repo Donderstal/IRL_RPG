@@ -1,5 +1,5 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
-import { initGridCellModel } from "../../helpers/modelFactory";
+import { initCanvasObjectModel, initGridCellModel } from "../../helpers/modelFactory";
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene,
     DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveCarScene, MoveScene, SceneAnimationModel,
@@ -14,6 +14,10 @@ import globals from '../../game-data/globals';
 import { PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { loadCinematicMap } from '../../helpers/loadMapHelpers';
 import { getClosestCell } from '../../helpers/utilFunctions';
+import { getDataModelByKey } from "../../resources/spriteDataResources";
+import type { CellPosition } from "../../models/CellPositionModel";
+import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
+import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 
 export class Animation {
     id: string;
@@ -83,11 +87,8 @@ export class Animation {
             case SceneAnimationType.createCar:
                 this.initCreateCarAnimation( this.createCarScene );
                 break;
-            case SceneAnimationType.createCharacter:
+            case SceneAnimationType.createSprite:
                 this.initCreateSpriteAnimation( this.createSpriteScene );
-                break;
-            case SceneAnimationType.createObjectSprite:
-                this.initCreateObjectSpriteAnimation( this.createSpriteScene );
                 break;
             case SceneAnimationType.deleteSprite:
                 setTimeout( ( ) => { 
@@ -157,17 +158,17 @@ export class Animation {
     }
 
     initMoveCarAnimation( sceneModel: MoveCarScene ): void {
-        let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.roadName == sceneModel.roadName; })
+        let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName; })
         let road    = roads[0];
 
-        this.destination = road.isHorizontal ? { "row": road.topRow, "column": sceneModel.column } : { "row": sceneModel.row, "column": road.leftCol }
+        this.destination = road.isHorizontal ? { "row": road.model.primaryRow, "column": sceneModel.column } : { "row": sceneModel.row, "column": road.model.primaryColumn }
         this.walkingToDestination = true;   
         let car = this.getSpriteByName( );
         car.setDestination( this.destination, true );
     }
 
     initCreateCarAnimation( sceneModel: CreateCarScene ): void {
-        let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.name == sceneModel.roadName })
+        let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName })
         let roadData = roads[0].getCarDataForTile( true );
         roadData.name = sceneModel.spriteName;
         globals.GAME.FRONT.setVehicleToTile( roadData );
@@ -175,17 +176,20 @@ export class Animation {
 
     initCreateSpriteAnimation( sceneModel: CreateSpriteScene ): void {
         if ( sceneModel.spriteName == PLAYER_NAME ) {
-            globals.GAME.FRONT.initPlayerCharacter( sceneModel );
+            let position: CellPosition = {
+                column: sceneModel.column,
+                row: sceneModel.row
+            };
+            globals.GAME.FRONT.initPlayerCharacter( position, MAIN_CHARACTER );
             return;
         }
 
         const tile = globals.GAME.FRONT.getTileAtCell( sceneModel.column, sceneModel.row );
-        globals.GAME.FRONT.setCharacterSprite( tile, sceneModel, true )   
-    }
-
-    initCreateObjectSpriteAnimation( sceneModel: CreateSpriteScene ) {
-        const tile = globals.GAME.FRONT.getTileAtCell( sceneModel.column, sceneModel.row );
-        globals.GAME.FRONT.setObjectSprite( tile, sceneModel, false )   
+        const model: CanvasObjectModel = initCanvasObjectModel( {
+            type: sceneModel.sprite, direction: sceneModel.direction,
+            row: sceneModel.row, column: sceneModel.column, name: sceneModel.spriteName
+        } );
+        globals.GAME.FRONT.setSprite( tile, model );
     }
 
     getSpriteCell( ): GridCellModel {

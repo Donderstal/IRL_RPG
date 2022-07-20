@@ -21,7 +21,7 @@ export class Neighbourhood {
     get activeMap(): MapModel { return this.model.mapDictionary[this.activeMapName]; }
     get activeMapName(): string { return this.activeMapKey.split('/')[1]; }
 
-    getRandomAction(): InteractionModel {
+    getRandomAction(): InteractionModel[] {
         let interactions = this.model.spawnableActions;
         return interactions[Math.floor( Math.random() * interactions.length)];
     }
