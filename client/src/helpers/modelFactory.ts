@@ -48,6 +48,9 @@ export const initMapModel = ( mapData ): MapModel => {
         doors: mapData.doors != undefined
             ? mapData.doors.map( ( door ): DoorModel => { return initDoorModel( door ) } )
             : [],
+        actions: mapData.actions != undefined
+            ? mapData.actions.map( ( actionList ): InteractionModel[] => { return actionList.map( initInteractionModel ); } )
+            : [],
 
         playerStart: mapData.playerStart
     };
@@ -137,7 +140,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
         model.condition = initConditionModel( objectData.condition );
     }
     if ( model.hasDoor ) {
-        model.doorTo = objectData.doorTo
+        model.door = initDoorModel( { doorTo: objectData.doorTo, direction: objectData.directionIn } );
     }
     if ( objectData.destination !== undefined )
         model.destination = { column: objectData.destination.column, row: objectData.destination.row };
@@ -148,7 +151,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
 export const initDoorModel = ( doorData ): DoorModel => {
     const doorModel: DoorModel = {
         row: doorData.row,
-        column: doorData.column == undefined ? doorData.col : doorData.column,
+        column: doorData.column,
         doorTo: doorData.doorTo,
         direction: doorData.direction
     };

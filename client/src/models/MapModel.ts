@@ -1,6 +1,6 @@
 ﻿import type { CanvasObjectModel } from "./CanvasObjectModel";
 import type { DoorModel } from "./DoorModel";
-import type { InteractionModel } from "./InteractionModel";
+import type { MapActionModel } from "./MapActionModel";
 import type { RoadModel } from "./RoadModel";
 import type { SpawnPointModel } from "./SpawnPointModel";
 import type { TileModel } from "./TileModel";
@@ -25,6 +25,6 @@ export type MapModel = {
     spawnPoints: SpawnPointModel[];
     roads: RoadModel[];
     doors: DoorModel[];
-    actions?: { column: number, row: number, action: InteractionModel }[];
+    actions?: MapActionModel[];
     savepoint?: any;
 }

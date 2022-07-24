@@ -110,6 +110,7 @@ const STANDARD_CHARACTER = {
     "height_blocks": 1.75,
     "width_blocks": 1,
     "grounded_at_bottom": true,
+    "is_character": true,
     "movement_frames": {
         [DirectionEnum.left]: [
             { "x": 0, "y": 64 },
@@ -1278,6 +1279,7 @@ export const getDataModels = (): SpriteDataModel[] => {
             dimensionalAlignment: value["dimensional_alignment"] as SpriteSheetAlignmentEnum,
 
             isCar: value["isCar"] !== undefined,
+            isCharacter: value["is_character"] !== undefined,
             idleAnimation: value["idle_animation"] !== undefined,
             canMove: value["movement_frames"] !== undefined,
             onBackground: value["on_background"] !== undefined,

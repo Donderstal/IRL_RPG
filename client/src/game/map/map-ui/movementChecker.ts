@@ -2,9 +2,9 @@ import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { SpriteStateEnum } from '../../../enumerables/SpriteStateEnum';
 import globals, { GRID_BLOCK_PX } from '../../../game-data/globals';
 import type { Sprite } from '../../core/Sprite';
-import type { MapSprite } from '../map-classes/MapSprite';
+import { getAssociatedHitbox } from '../../modules/hitboxModule';
 
-export const checkForCollision = ( sprite: MapSprite ): boolean => {
+export const checkForCollision = ( sprite: Sprite ): boolean => {
     const allSprites = globals.GAME.FRONT.allSprites.filter( ( e ) => { return !e.model.onBackground && !e.model.notGrounded;});
     const allSpritesCount = allSprites.length;    
 
@@ -13,11 +13,12 @@ export const checkForCollision = ( sprite: MapSprite ): boolean => {
 
     while( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = allSprites[spriteIndex];
-        if( targetSprite.spriteId != sprite.spriteId ) {
+        if ( targetSprite.spriteId != sprite.spriteId ) {
+            const hitbox = getAssociatedHitbox( targetSprite.spriteId );
             if ( !targetSprite.hasOwnProperty("blockedArea") &&  !(targetSprite as any).hasDoor && checkIfSpritesCollide( sprite, targetSprite )) {
                 colliding = true;
             }
-            else if ( targetSprite.hasOwnProperty( "blockedArea" ) && ( targetSprite as any ).blockedArea.checkForCollision( sprite.hitbox, sprite.direction ) ) {
+            else if ( targetSprite.hasOwnProperty( "blockedArea" ) && ( targetSprite as any ).blockedArea.checkForCollision( hitbox, sprite.direction ) ) {
                 colliding = true;
             }
         }

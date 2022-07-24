@@ -1,14 +1,19 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
 import globals from '../../game-data/globals';
+import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { clearEntireCanvas } from '../../helpers/canvasHelpers';
-import { getActiveDoors, unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../../helpers/doorController';
+import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../../helpers/doorController';
 import type { Sprite } from '../core/Sprite';
 import type { Game } from "../Game";
+import { getAllDoors } from '../modules/doorModule';
+import { getAssociatedHitbox } from '../modules/hitboxModule';
 import { handleMovementKeys } from './mapControls';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;
+    const playerHitbox = getAssociatedHitbox( PLAYER_ID );
+
     clearEntireCanvas("FRONT");
 
     if ( globals.SCREEN.MOBILE ) {
@@ -16,10 +21,6 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     }
 
     drawSpritesInOrder( GAME )
-
-    GAME.BACK.backgroundActions.forEach( ( e ) => { 
-        e.updateXy( e.activeAction.x, e.activeAction.y )
-    })
     
     handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
@@ -39,12 +40,12 @@ export const handleMapAnimations = ( GAME: Game ): void => {
 
     GAME.speechBubbleController.drawBubbles( );
 
-    const doors = getActiveDoors( )
+    const doors = getAllDoors();
     let inDoorRange = false;
 
     doors.forEach( ( door ) => { 
-        if ( PLAYER.hitbox.checkForDoorRange( door ) ) {
-            let pendingDoor = getPendingDoor( );
+        if ( playerHitbox.checkForDoorRange( door ) ) {
+            let pendingDoor = getPendingDoor();
             inDoorRange = true;
             if ( door.model.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
                 setDoorAsPending( door.id, door.model.doorTo )
@@ -118,7 +119,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     })
     
     if ( GAME.BACK.savepoint ) {
-        GAME.BACK.savepoint.event.draw( )
+        GAME.BACK.savepoint.draw( )
     }
     
     drawSpritesInArray( backgroundSprites, GAME );

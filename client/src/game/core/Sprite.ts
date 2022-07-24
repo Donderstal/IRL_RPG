@@ -18,9 +18,11 @@ import type { SpriteFrameModel } from '../../models/SpriteFrameModel'
 import type { Tile } from './Tile'
 import type { SpriteDataModel } from '../../models/SpriteDataModel'
 import { SpriteSheetAlignmentEnum } from '../../enumerables/SpriteSheetAlignmentEnum'
-import { Hitbox } from './Hitbox'
 import { VisionBox } from '../map/map-classes/VisionBox'
-import type { ActionSelector } from '../map/map-classes/ActionSelector'
+import { initializeHitboxForSprite, updateAssociatedHitbox } from '../modules/hitboxModule'
+import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
+import { initializeActionForSprite, updateSpriteAssociatedAction } from '../modules/actionModule'
+import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/doorModule'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -58,32 +60,58 @@ export class Sprite {
     name: string;
     spriteId: string;
     isPlayer: boolean;
+    hasDoor: boolean;
+    hasAction: boolean;
     speed: number;
     type: string;
     sfx: string;
     isCar: boolean;
 
-    hitbox?: Hitbox;
     visionbox: VisionBox;
-    actionSelector: ActionSelector;
     currentTileBack: Tile;
     nextTileBack: Tile;
-    constructor( tile: Tile, model: SpriteDataModel, direction: DirectionEnum, spriteId: string, isPlayer = false ) {   
-        this.model = model;
+
+    plugins: {
+        movement: { set: boolean, active: boolean },
+        carMovement: { set: boolean, active: boolean },
+        idleAnimation: { set: boolean, active: boolean },
+        randomAnimation: { set: boolean, active: boolean },
+        hitbox: { set: boolean, active: boolean },
+        mapAction: { set: boolean, active: boolean },
+        door: { set: boolean, active: boolean },
+        collision: { set: boolean, active: boolean },
+        animation: { set: boolean, active: boolean }
+    }
+
+    constructor( tile: Tile, canvasObjectModel: CanvasObjectModel, spriteId: string, isPlayer = false ) {   
+        this.plugins = {
+            movement: { set: false, active: false },
+            carMovement: { set: false, active: false },
+            idleAnimation: { set: false, active: false },
+            randomAnimation: { set: false, active: false },
+            hitbox: { set: false, active: false },
+            mapAction: { set: false, active: false },
+            door: { set: false, active: false },
+            collision: { set: false, active: false },
+            animation: { set: false, active: false }
+        }
+        this.model = canvasObjectModel.spriteDataModel;
         this.setDimensions();
         this.spriteId       = spriteId;
         this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction = direction != null ? direction : 0;
-        this.previousDirection = direction != null ? direction : 0;
+        this.direction      = canvasObjectModel.direction != null ? canvasObjectModel.direction : 0;
+        this.previousDirection = canvasObjectModel.direction != null ? canvasObjectModel.direction : 0;
         this.destination    = null;
         this.activeEffect   = { active: false };
         this.isPlayer       = isPlayer;
+        this.hasDoor        = canvasObjectModel.hasDoor;
+        this.hasAction      = canvasObjectModel.hasAction;
         this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
         this.setSpriteToGrid( tile );
-        this.hitbox = new Hitbox( this.centerX, this.baseY, this.width / 2 );
+        this.setPlugins( canvasObjectModel );
         if ( this.isPlayer ) {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
         }
@@ -111,6 +139,67 @@ export class Sprite {
 
     get noCollision(): boolean {
         return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.State.is( SpriteStateEnum.moving ) )
+    }
+
+    pluginIsRunning( pluginConfig: { set: boolean, active: boolean } ) {
+        return pluginConfig.set && pluginConfig.active;
+    }
+
+    setPlugins( canvasObjectModel: CanvasObjectModel ): void {
+        let model = this.model;
+        if ( model.idleAnimation ) {
+            this.plugins.idleAnimation.set = true;
+        }
+
+        if ( !this.isPlayer && this.model.isCharacter ) {
+            this.plugins.randomAnimation.set = true;
+        }
+
+        if ( model.canMove && model.isCar ) {
+            this.plugins.carMovement.set = true;
+        }
+        else if ( model.canMove ) {
+            this.plugins.movement.set = true;
+            this.plugins.movement.active = true;
+        }
+
+        if ( this.hasDoor ) {
+            this.plugins.door.set = true;
+            this.plugins.door.active = true;
+            initializeDoorForSprite( this, canvasObjectModel.door );
+        }
+        else if ( this.hasAction ) {
+            this.plugins.mapAction.set = true;
+            this.plugins.mapAction.active = true;
+            initializeActionForSprite( this, canvasObjectModel.action );
+        }
+        else {
+            this.plugins.hitbox.set = true;
+            this.plugins.hitbox.active = true;
+            initializeHitboxForSprite( this );
+        }
+
+        if ( this.model.canMove || this.model.idleAnimation ) {
+            this.plugins.animation.set = true;
+        }
+    }
+
+    handlePlugins(): void {
+        let plugins = this.plugins
+        if ( this.isPlayer ) {
+            updateAssociatedHitbox( this );
+        }
+        if ( this.pluginIsRunning( plugins.movement ) ) {
+            if ( this.pluginIsRunning( plugins.door ) ) {
+                updateSpriteAssociatedDoor
+            }
+            else if ( this.pluginIsRunning( plugins.mapAction ) ) {
+                updateSpriteAssociatedAction( this )
+            }
+            else {
+                updateAssociatedHitbox( this );
+            }
+        }
     }
 
     changeDirection( direction: DirectionEnum ): void {
@@ -213,10 +302,10 @@ export class Sprite {
     
     drawSprite(): void {
         this.updateState();
+        this.handlePlugins();
         if ( this.isPlayer ) {
             this.visionbox.updateXy( this.centerX, this.baseY );
         }
-        this.hitbox.updateXy( this.centerX, this.baseY );
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
@@ -264,7 +353,7 @@ export class Sprite {
         }
     }
 
-    setDestination( destination: GridCellModel, deleteWhenDestinationReached: boolean = false ): void {
+    setDestination( destination: GridCellModel, deleteWhenDestinationReached: false ): void {
         if ( !this.isCar ) {
             this.State.set( SpriteStateEnum.pathfinding );
         }
@@ -304,7 +393,7 @@ export class Sprite {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
         }
         if ( animation.is( SceneAnimationType.move ) ) {
-            this.setDestination( animation.destination );
+            this.setDestination( animation.destination, false );
         }
         if ( animation.is( SceneAnimationType.animation ) ) {
             this.setScriptedAnimation( animation, FRAME_LIMIT )

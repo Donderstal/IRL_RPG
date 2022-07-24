@@ -109,20 +109,17 @@ export class Grid {
     }
 
     getDummyTile( column: number | OutOfMapEnum, row: number | OutOfMapEnum ): Tile {
-        let tile;
         if ( column == OutOfMapEnum.left ){
-            tile = new Tile( OutOfMapEnum.left, -GRID_BLOCK_PX, ( row as number - 1 ) * GRID_BLOCK_PX, this.ctx, row as number, 0 )
+            return new Tile( OutOfMapEnum.left, -GRID_BLOCK_PX, ( row as number - 1 ) * GRID_BLOCK_PX, this.ctx, row as number, 0 )
         }
         else if ( row == OutOfMapEnum.up ) {
-            tile = new Tile( OutOfMapEnum.up, ( column as number - 1 ) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column as number )
+            return new Tile( OutOfMapEnum.up, ( column as number - 1 ) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column as number )
         }
         else if ( column == OutOfMapEnum.right ) {
-            tile = new Tile( OutOfMapEnum.right, this.width + GRID_BLOCK_PX, ( row as number - 1 ) * GRID_BLOCK_PX, this.ctx, row as number, this.columns + 1 )
+            return new Tile( OutOfMapEnum.right, this.width + GRID_BLOCK_PX, ( row as number - 1 ) * GRID_BLOCK_PX, this.ctx, row as number, this.columns + 1 )
         }
         else if ( row == OutOfMapEnum.down ) {
-            tile = new Tile( OutOfMapEnum.down, ( column as number - 1 ) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column as number )
+            return new Tile( OutOfMapEnum.down, ( column as number - 1 ) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column as number )
         }
-        tile.offScreen = true;
-        return tile;
     }
 }

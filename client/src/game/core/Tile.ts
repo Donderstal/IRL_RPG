@@ -1,15 +1,9 @@
-import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import { InteractionType } from "../../enumerables/InteractionType";
+import type { DirectionEnum } from "../../enumerables/DirectionEnum";
 import type { TileModel } from "../../models/TileModel";
 import { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } from '../../game-data/globals';
 import globals from '../../game-data/globals';
-import { ActionSelector } from '../map/map-classes/ActionSelector';
 import { getBackCanvasContext } from '../../helpers/canvasHelpers';
-import { initDoorWithId } from '../../helpers/doorController';
 import { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
-import type { Door } from "../map/map-classes/Door";
-import type { Savepoint } from "../map/map-classes/SavePoint";
-import type { MapAction } from "../map/map-classes/MapAction";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -28,12 +22,8 @@ export class Tile {
 
     model: TileModel;
     blocked: boolean;
-    offScreen: boolean;
     movementCost: number;
 
-    hasEvent: boolean;
-    eventType: InteractionType;
-    event: ActionSelector|MapAction;
     direction: DirectionEnum;
     constructor( index: number|OutOfMapEnum, x: number, y: number, ctx: CanvasRenderingContext2D, row: number, column: number ) {
         this.x = x;
@@ -53,22 +43,18 @@ export class Tile {
         this.direction = null;
 
         this.movementCost = 1;
-
-        this.hasEvent = false;
-        this.eventType;
-        this.event;
-    };
-
-    get hasDoor( ): boolean { 
-        return this.hasEvent && this.eventType == InteractionType.door; 
     };
 
     get isBlocked( ): boolean { 
-        return this.index != OutOfMapEnum.left && this.index != OutOfMapEnum.up && this.index != OutOfMapEnum.right && this.index != OutOfMapEnum.down && this.blocked;
+        return !this.offScreen && this.blocked;
     }
 
     get isEmpty( ): boolean {
         return this.model.id === "E" || this.model.id === null;
+    }
+
+    get offScreen(): boolean {
+        return this.index === OutOfMapEnum.left || this.index === OutOfMapEnum.up || this.index === OutOfMapEnum.right || this.index === OutOfMapEnum.down;
     }
 
     setMovementCost( value: number ): void {
@@ -147,47 +133,6 @@ export class Tile {
             default:
                 alert('Error in flipping tile. Call the police!')
         }
-    }
-
-    setEventData( type: InteractionType, eventData: {} ): void {
-        this.hasEvent = true;
-        this.eventType = type;
-        if ( type === InteractionType.door ) {
-            this.setDoor( eventData );
-        }
-    }
-
-    setDoor( doorData ): void {
-        const direction = doorData.direction
-        let xy: { x: number, y: number } = {x: 0, y: 0};
-        switch ( direction ) {
-            case DirectionEnum.up :
-                xy.x = this.x + ( GRID_BLOCK_PX / 2 )
-                xy.y = this.y
-                break;
-            case DirectionEnum.right :
-                xy.x = this.x + GRID_BLOCK_PX
-                xy.y = this.y + ( GRID_BLOCK_PX / 2 )
-                break;
-            case DirectionEnum.down :
-                xy.x = this.x + ( GRID_BLOCK_PX / 2 )
-                xy.y = this.y + GRID_BLOCK_PX
-                break;
-            case DirectionEnum.left :
-                xy.x = this.x
-                xy.y = this.y + ( GRID_BLOCK_PX / 2 )
-                break;
-        }
-        this.event = initDoorWithId(xy.x, xy.y, doorData) as unknown as MapAction;
-    }
-
-    setAction( actionData: {} ): void {
-        this.event = new ActionSelector( this.x + ( GRID_BLOCK_PX / 2 ), this.y + ( GRID_BLOCK_PX / 2 ), actionData );
-    }
-
-    clearEventData( ): void {
-        this.hasEvent = false;
-        this.event = null;
     }
 
     setSettings( settings: {} ): void {

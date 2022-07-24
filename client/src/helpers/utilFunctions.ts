@@ -80,6 +80,12 @@ export const cellDistanceSquared = ( cellA: GridCellModel, cellB: GridCellModel 
     return (rowDiff*rowDiff) + (colDiff*colDiff);
 }
 
+export const xyDistanceSquared = ( positionA: { x: number, y: number }, positionB: { x: number, y: number } ) => {
+    const xDiff = positionA.x - positionB.x;
+    const yDiff = positionA.y - positionB.y
+    return ( xDiff * xDiff ) + ( yDiff * yDiff );
+}
+
 export const getClosestCell = ( start: GridCellModel, cellList: GridCellModel[] ): GridCellModel => {
     let closestCell = cellList[0];
     let shortestDistance = cellDistanceSquared(start, closestCell);

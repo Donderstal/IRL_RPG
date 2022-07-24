@@ -18,7 +18,9 @@ export type SpriteDataModel = {
     onBackground: boolean;
     notGrounded: boolean;
     groundedAtBottom: boolean;
+
     isCar: boolean;
+    isCharacter: boolean;
 
     widthBlocks?: number;
     heightBlocks?: number;

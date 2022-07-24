@@ -14,6 +14,9 @@ import type { ForegroundCanvas } from '../game/ForegroundCanvas';
 import type { FrontgridCanvas } from '../game/FrontgridCanvas';
 import type { BackgroundCanvas } from '../game/BackgroundCanvas';
 import type { CanvasContextModel } from '../models/CanvasContextModel';
+import { clearHitboxes } from '../game/modules/hitboxModule';
+import { clearDoors } from '../game/modules/doorModule';
+import { clearActions } from '../game/modules/actionModule';
 
 const cinematicGrids: { back: CanvasContextModel, front: CanvasContextModel, frontgrid: CanvasContextModel } = {
     back: null,
@@ -76,7 +79,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
     const sheetData = getTilesheetModelByKey( mapData.tileSet );
 
     back.setBackgroundData( mapData, sheetData );
-    back.setEventsDoorsAndBlockedToTilesInGrid( );
     back.drawMapFromGridData( );
 
     front.setForegroundData(mapData, sprites);
@@ -98,6 +100,10 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 }
 
 export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
+    clearHitboxes();
+    clearDoors();
+    clearActions();
+
     source.frontgrid.class.clearMap( );
     source.front.class.clearMap( );
     source.back.class.clearMap( );

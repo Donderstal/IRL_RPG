@@ -59,9 +59,6 @@ export class Hitbox {
     }
 
     checkForActionRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        if ( !targetHitbox ) {
-            return false;
-        }
         if ( this.targetIsInVerticalActionRange( targetHitbox ) ) {
             if ( this.upFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
                 return true;
@@ -201,16 +198,16 @@ export class Hitbox {
     }
 
     upFacingTargetIsInActionRadius( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsFacingUp          = direction === DirectionEnum.up;
-        const thisIsAboveTarget         = targetHitbox.top > this.innerTop;
-        const topIsInTargetOuterBottom  = targetHitbox.top <= this.outerBottom;
+        const targetIsFacingUp = direction === DirectionEnum.up;
+        const thisIsAboveTarget = this.innerTop > targetHitbox.top;
+        const topIsInTargetOuterBottom = targetHitbox.top <= this.outerBottom;
 
         return targetIsFacingUp && topIsInTargetOuterBottom && thisIsAboveTarget;
     }
 
     downFacingTargetIsInActionRadius( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
         const targetIsFacingDown        = direction === DirectionEnum.down;
-        const thisIsBelowTarget         = targetHitbox.bottom < this.innerBottom;
+        const thisIsBelowTarget         = this.innerBottom < targetHitbox.bottom;
         const bottomIsInTargetOuterTop  = targetHitbox.bottom > this.outerTop;
 
         return targetIsFacingDown && bottomIsInTargetOuterTop && thisIsBelowTarget;

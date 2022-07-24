@@ -1,5 +1,5 @@
 import { handleMovementOfSprite } from './map-ui/movement';
-import { handleActionButton } from './map-ui/actionController';
+import { handleActionButton, dismissActiveAction } from './map-ui/actionController';
 import globals from '../../game-data/globals';
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
@@ -13,7 +13,7 @@ export const handleMapKeyPress = ( event: KeyboardEvent ) => {
     else if ( event.key === "e" && GAME.bubbleIsActive ) {
         GAME.activeBubble = null;
         GAME.bubbleIsActive = false
-        GAME.activeAction = null;
+        dismissActiveAction();
     }
     else if ( event.key === "1" ) {
         console.log(GAME.PLAYER);

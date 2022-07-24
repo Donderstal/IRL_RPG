@@ -47,15 +47,10 @@ export class Door extends Hitbox {
             new Interaction( initInteractionModel(unlockDoorEvent), CinematicTrigger.leave, [ this.model.doorTo, InteractionType.door.toString() ]);
             this.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry(this.registryString);
-            this.dismiss( );
         }
         else {
             switchMap( this.model.doorTo, InteractionType.door );
             globals.GAME.sound.playEffect( "misc/random5.wav" );
-            this.dismiss( );
         }
-    }
-    dismiss(): void {
-        globals.GAME.activeAction = null;
     }
 }

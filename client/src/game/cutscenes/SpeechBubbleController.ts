@@ -3,6 +3,7 @@ import { getUniqueId } from "../../helpers/utilFunctions";
 import { SpeechBubble } from "./SpeechBubble";
 import { Emote } from "./Emote";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
+import { registerActionSelection } from "../map/map-ui/actionController";
 
 export class SpeechBubbleController {
     emoteIds: string[];
@@ -81,8 +82,8 @@ export class SpeechBubbleController {
                 });
                 globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3");
             }
-            else if( this.selectionBubble ){
-                globals.GAME.activeAction.registerSelection( this.selectionBubble.activeButton );
+            else if ( this.selectionBubble ) {
+                registerActionSelection( this.selectionBubble.activeButton )
                 const animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SceneAnimationType.speakYesNo);
                 animation.setSelection( this.selectionBubble.activeButton );
                 this.clearActiveBubbles( );

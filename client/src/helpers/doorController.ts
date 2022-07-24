@@ -24,10 +24,6 @@ export const getDoorById = ( id: string ): Door => {
     return activeDoors.filter( e => e.id = id )[0];
 }
 
-export const getActiveDoors = ( ): Door[] => {
-    return activeDoors;
-}
-
 export const setDoorAsPending = ( id: string, destination: string ) => {
     pendingDoorId = id;
     pendingDestination = destination

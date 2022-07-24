@@ -1,13 +1,12 @@
-import { InteractionType } from '../enumerables/InteractionType';
 import { resetDoors } from '../helpers/doorController';
 import type { DoorModel } from '../models/DoorModel';
-import type { InteractionModel } from '../models/InteractionModel';
+import type { MapActionModel } from '../models/MapActionModel';
 import type { MapModel } from '../models/MapModel';
 import type { TilesheetModel } from '../models/TilesheetModel';
 import { CanvasWithGrid } from './core/CanvasWithGrid';
-import type { Tile } from './core/Tile';
-import type { ActionSelector } from './map/map-classes/ActionSelector';
 import { Savepoint } from './map/map-classes/SavePoint';
+import { initializeActionForTile } from './modules/actionModule';
+import { initializeDoorForTile } from './modules/doorModule';
 
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
@@ -16,18 +15,14 @@ import { Savepoint } from './map/map-classes/SavePoint';
  */
 export class BackgroundCanvas extends CanvasWithGrid {
     model: MapModel;
-    backgroundActions: ActionSelector[];
     mapName: string;
     neighbourhood: string;
-    actions: { column: number, row: number, action: InteractionModel }[];
     hasActions: boolean;
-    doors: DoorModel[];
     hasDoors: boolean;
-    savepoint: Tile;
+    savepoint: Savepoint;
     blockedTiles: number[];
     constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
         super( x, y, ctx );
-        this.backgroundActions = [];
         this.savepoint = null;
     };
 
@@ -39,23 +34,37 @@ export class BackgroundCanvas extends CanvasWithGrid {
         this.neighbourhood = neighbourhood
     }
 
-    setActions( actions: { column: number, row: number, action: InteractionModel }[] ): void {
-        this.actions = actions;
+    setActions( actions: MapActionModel[] ): void {
+        actions.forEach( ( action ) => {
+            const tile = this.getTileAtCell( action.column, action.row );
+            initializeActionForTile( tile, action.action )
+        } )
         this.hasActions = true;
     }
 
     setDoors( doors: DoorModel[] ): void {
-        this.doors = doors;
+        doors.forEach( ( door ) => {
+            const tile = this.getTileAtCell( door.column, door.row );
+            initializeDoorForTile( tile, door );
+        } )
         this.hasDoors = true;
     }
 
-    setBlockedTiles( blockedTiles: number[] ): void {
-        this.blockedTiles = blockedTiles
+    setBlockedTiles( blockedTileIndexes: number[] ): void {
+        this.grid.array.forEach(
+            ( tile ) => {
+                if ( blockedTileIndexes.indexOf( tile.index ) > - 1 )
+                    tile.blocked = true;
+            }
+        )
     }
 
     setBackgroundData( mapModel: MapModel, sheetModel: TilesheetModel ): void {
         this.model = mapModel;
         this.sheetModel = sheetModel;
+        let oneDimensionalMapGrid = this.model.grid.flat( 1 );
+        this.setTileGrid( oneDimensionalMapGrid );
+
         if ( this.model.doors )
             this.setDoors( this.model.doors );
         if ( this.model.actions )
@@ -64,48 +73,17 @@ export class BackgroundCanvas extends CanvasWithGrid {
             this.setSavepoint( this.model.savepoint );
         if ( sheetModel.blocked ) 
             this.setBlockedTiles( sheetModel.blocked );
-        let oneDimensionalMapGrid = this.model.grid.flat(1);
-        this.setTileGrid( oneDimensionalMapGrid );
-    }
-
-    setEventsDoorsAndBlockedToTilesInGrid( ): void {
-        this.grid.array.forEach( ( tile ) => {
-            if ( this.hasDoors ) {
-                this.doors.forEach( ( door ) => {
-                    if ( tile.row == door.row && tile.column == door.column ) {
-                        tile.setEventData( InteractionType.door, door );
-                    }
-                } )
-            }
-            if ( this.hasActions ) {
-                this.actions.forEach( ( action ) => {
-                    if ( tile.row == action.row && tile.column == action.column ) {
-                        tile.setEventData( action.action.type, action );
-                        this.backgroundActions.push( tile.event as unknown as ActionSelector )
-                    }
-                } )
-            }
-            this.blockedTiles.forEach( blockedId => {
-                if ( tile.model.id == blockedId ) {
-                    tile.blocked = true;
-                }
-            } )
-        } );
     }
 
     setSavepoint( savepointData: any ): void {
         const tile = this.getTileAtCell( savepointData.col, savepointData.row )
-        tile.hasEvent = true;
-        tile.event = new Savepoint( tile );
-        this.savepoint = tile;
+        this.savepoint = new Savepoint( tile );
     }
 
-    clearMap( ): void {
-        resetDoors( );
+    clearMap(): void {
+        resetDoors();
         this.grid = null;
-        this.doors = [ ];
         this.hasDoors = false;
-        this.actions = null;
         this.hasActions = false;
         this.blockedTiles = [ ];
         this.backgroundActions = [];

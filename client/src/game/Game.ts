@@ -34,7 +34,6 @@ import type { Inventory } from './party/Inventory'
 import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
 import type { ActionSelector } from './map/map-classes/ActionSelector'
-import type { MapAction } from './map/map-classes/MapAction'
 import type { CanvasWithGrid } from './core/CanvasWithGrid'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
@@ -72,7 +71,6 @@ export class Game {
     story: StoryProgression;
     typeWriter: TypeWriter;
     loadingScreen: LoadingScreen;
-    activeAction: MapAction|ActionSelector;
 
     party: Party;
     _activeNeighbourhood: Neighbourhood;

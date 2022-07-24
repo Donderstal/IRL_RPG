@@ -9,6 +9,7 @@ import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import type { InteractionModel } from '../../models/InteractionModel';
 import { initCinematicSceneModel } from '../../helpers/modelFactory';
+import { dismissActiveAction } from '../map/map-ui/actionController';
 
 export class Interaction {
     trigger: CinematicTrigger;
@@ -72,7 +73,7 @@ export class Interaction {
             if ( sprite != undefined ) {
                 sprite.State.cinematicOff( sprite );
             }
-            globals.GAME.activeAction.dismiss();
+            dismissActiveAction();
         }
     }
 

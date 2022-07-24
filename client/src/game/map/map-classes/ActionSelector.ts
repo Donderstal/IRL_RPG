@@ -1,90 +1,97 @@
-import { MapAction } from "./MapAction";
 import type { InteractionModel } from "../../../models/InteractionModel";
-import type { InteractionAnswer } from "../../../enumerables/InteractionAnswer";
+import { InteractionAnswer } from "../../../enumerables/InteractionAnswer";
 import { initInteractionModel } from "../../../helpers/modelFactory";
+import { Hitbox } from "../../core/Hitbox";
+import globals, { GRID_BLOCK_PX } from "../../../game-data/globals";
+import { conditionIsTrue } from "../../../helpers/conditionalHelper";
+import type { Sprite } from "../../core/Sprite";
+import { InteractionType } from "../../../enumerables/InteractionType";
+import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
+import { Interaction } from "../../cutscenes/Interaction";
+import { addEventToRegistry } from "../../../helpers/interactionRegistry";
+import { SceneAnimationType } from "../../../enumerables/SceneAnimationTypeEnum";
 
-export class ActionSelector {
-    activeAction: MapAction;
+export class ActionSelector extends Hitbox {
+    activeAction: InteractionModel;
     spriteId: string;
     actionList: InteractionModel[];
-    conditionalActions: any[]
-    constructor( x, y, actionList, spriteId = null ) {
+    conditionalActions: any[];
+    idList: string[];
+    arcColor: string;
+    trigger: CinematicTrigger;
+    registeredSelection: InteractionAnswer;
+    confirmingAction: boolean;
+    constructor( x, y, actionList: InteractionModel[], spriteId = null ) {
+        super( x, y, GRID_BLOCK_PX / 2 );
         this.spriteId = spriteId;
-        this.actionList = actionList.map( ( e ) => { return initInteractionModel( e ); } );
+        this.actionList = actionList;
         this.conditionalActions = [];
-
-        this.initializeConditionList( x, y, spriteId );
+        this.trigger = CinematicTrigger.interaction;
+        this.arcColor = "#FF0000";
+        this.registeredSelection = null;
+        this.confirmingAction = false;
     }
 
-    get x(): number { return this.action.x }
-    get y(): number { return this.action.y }
+    get meetsCondition(): boolean { return conditionIsTrue( this.activeAction.condition.type, this.activeAction.condition.value ) }
+    get needsConfirmation(): boolean { return this.activeAction.type != InteractionType.talk; }
+    get actionSprite(): Sprite { return globals.GAME.FRONT.spriteDictionary[this.spriteId]; }
+    get isCollectable(): boolean { return this.actionSprite.hasOwnProperty( "collectableType" ); }
 
-    get needsConfirmation(): boolean { return this.action.needsConfirmation }
-    get outerTop(): number { return this.action.outerTop }
-    get outerLeft(): number { return this.action.outerLeft }
-    get outerRight(): number { return this.action.outerRight }
-    get outerBottom(): number { return this.action.outerBottom }
-    get top(): number { return this.action.top }
-    get left(): number { return this.action.left }
-    get right(): number { return this.action.right }
-    get bottom(): number { return this.action.bottom }
-    get innerTop(): number { return this.action.innerTop }
-    get innerLeft(): number { return this.action.innerLeft }
-    get innerRight(): number { return this.action.innerRight }
-    get innerBottom(): number { return this.action.innerBottom }
-
-    get action(): MapAction { return this.activeAction; };
-
-    draw( ): void {
-        this.activeAction.draw( );
-    }
 
     updateXy( x: number, y: number ): void {
         this.checkForConditions( );
-        this.conditionalActions.forEach( ( action: MapAction ) => { 
-            action.updateXy( x, y );
-        })
-    }
-
-    registerSelection( selection: InteractionAnswer ): void {
-        this.activeAction.registerSelection( selection );
-    }
-
-    handle( ): void {
-        this.activeAction.handle( );
-    }
-
-    confirm(): void {
-        this.activeAction.dismiss( );
-    }
-
-    dismiss(): void {
-        this.activeAction.dismiss( );
-    }
-
-    resetAction(): void {
-        this.activeAction.resetAction( );
-    }
-
-    initializeConditionList( x: number, y: number, spriteId: string ): void {
-        this.actionList.forEach( ( item ) =>{
-            this.conditionalActions.push( new MapAction( x, y, item, spriteId, item.cinematic.condition ) );
-        })
-        this.checkForConditions( );
+        super.updateXy( x, y );
     }
 
     checkForConditions(): void {
         for( var i = 0; i < this.conditionalActions.length; i++ ) {
             let currentAction = this.conditionalActions[i];
-            if ( currentAction.meetsCondition ) {
+            if ( conditionIsTrue( currentAction.condition.type, currentAction.condition.value ) ) {
                 this.activeAction = currentAction;
                 return;
             }
         }
     }
 
-    evaluate(): MapAction {
-        this.checkForConditions( );
-        return this.action;
+    handle(): void {
+        if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
+            new Interaction( this.activeAction, this.trigger, [this.spriteId] );
+            if ( this.isCollectable ) {
+                const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.column, this.actionSprite.row, ( this.actionSprite as any ).collectableType, globals.GAME.activeMapName )
+                globals.GAME.collectableRegistry.addToRegistry( id, ( this.actionSprite as any ).collectableType )
+            }
+        }
+    }
+
+    confirm(): void {
+        this.confirmingAction = true;
+    }
+
+    dismiss(): void {
+        if ( this.needsConfirmation && this.registeredSelection == InteractionAnswer.yes && !this.confirmingAction ) {
+            this.confirm()
+        }
+        else {
+            this.resetAction();
+        }
+    }
+
+    registerSelection( selection: InteractionAnswer ): void {
+        this.registeredSelection = selection;
+    }
+
+    addEventToRegistry(): void {
+        if ( this.activeAction.shouldBeRegistered && this.registeredSelection ) {
+            addEventToRegistry( this.activeAction.registryKey, this.registeredSelection )
+        }
+        else if ( this.activeAction.shouldBeRegistered ) {
+            addEventToRegistry( this.activeAction.registryKey )
+        }
+    }
+
+    resetAction(): void {
+        this.addEventToRegistry();
+        this.confirmingAction = false;
+        this.checkForConditions();
     }
 }

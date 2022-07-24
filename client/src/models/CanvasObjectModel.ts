@@ -4,6 +4,7 @@ import type { MovementType } from "../enumerables/MovementTypeEnum";
 import type { OutOfMapEnum } from "../enumerables/OutOfMapEnum";
 import type { CellPosition } from "./CellPositionModel";
 import type { ConditionModel } from "./ConditionModel";
+import type { DoorModel } from "./DoorModel";
 import type { InteractionModel } from "./InteractionModel";
 import type { SpriteDataModel } from "./SpriteDataModel";
 
@@ -25,7 +26,7 @@ export type CanvasObjectModel = {
     action?: InteractionModel[];
 
     hasDoor: boolean;
-    doorTo?: string;
+    door?: DoorModel;
 
     destination?: CellPosition; 
 }
