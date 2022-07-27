@@ -1,5 +1,5 @@
 export type TileModel = {
-    id: number | string;
+    id: number;
     angle: number;
     mirrored: boolean;
 }

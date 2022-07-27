@@ -92,7 +92,6 @@ const exploreInDirection = ( currentLocation: GridLocation, direction: Pathfindi
     let tile = tiles.filter( ( e ) => { return e.column === column && e.row === row; } )[0]
     if ( tile !== undefined ) {
         const newLocation: GridLocation = { row: row, column: column, movementCost: movementCost, index: tile.column + "_" + tile.row };
-        console.log( newLocation.index )
         newLocation.path = [...currentLocation.path.slice(), newLocation];
         newLocation.status = getLocationStatus( newLocation );
         if ( newLocation.status === TileStatus.valid )
@@ -106,8 +105,8 @@ const exploreInDirection = ( currentLocation: GridLocation, direction: Pathfindi
     }
 }
 
-const addTileInDirectionToQueueIfValid = ( currentLocation, direction ) => {
-    const newLocation = exploreInDirection( currentLocation, direction )
+const addTileInDirectionToQueueIfValid = ( currentLocation: ItemWithPriority, direction: PathfindingDirection ): void => {
+    const newLocation = exploreInDirection( currentLocation.item, direction )
     const movementCost = currentLocation.priority + newLocation.movementCost;
     if ( newLocation.index === targetLocationIndex ) {
         foundPath = newLocation.path;
@@ -117,7 +116,7 @@ const addTileInDirectionToQueueIfValid = ( currentLocation, direction ) => {
     }
 }
 
-export const determineShortestPath = ( startingTile, targetTile, grid: {columns: number, rows: number, tiles: Tile[]} ) => {
+export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, grid: { columns: number, rows: number, tiles: Tile[] } ) => {
     queue = new PriorityQueue( );
     visitedTilesList = [];
     colsInGrid = grid.columns;
@@ -125,11 +124,11 @@ export const determineShortestPath = ( startingTile, targetTile, grid: {columns:
     tiles = grid.tiles;
     foundPath = null;
     targetLocationIndex = targetTile.column + "_" + targetTile.row; 
-    console.log(targetLocationIndex)
+
     const start: GridLocation = {
         column: startingTile.column,
         row: startingTile.row,
-        index: "",
+        index: startingTile.column + "_" + startingTile.row,
         movementCost: startingTile.movementCost,
         status: TileStatus.start,
         path: []
@@ -139,24 +138,23 @@ export const determineShortestPath = ( startingTile, targetTile, grid: {columns:
     queue.addItemToQueue( start, movementCost );
 
     while ( !queue.isEmpty ) {
-        const currentItem = queue.getFirstItemFromQueue();
-        const currentLocation = currentItem.item;
-
-        if ( currentLocation.row !== 1 || targetTile.row === 0 ) {
+        const currentLocation = queue.getFirstItemFromQueue();
+        if ( currentLocation.item.row !== 1 || targetTile.row === 0 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.north )   
         }
-        if ( currentLocation.column !== colsInGrid || targetTile.column === colsInGrid + 1 ) {
+        if ( currentLocation.item.column !== colsInGrid || targetTile.column === colsInGrid + 1 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.east ) 
         }
-        if ( currentLocation.row !== rowsInGrid || targetTile.row === rowsInGrid + 1 ) {
+        if ( currentLocation.item.row !== rowsInGrid || targetTile.row === rowsInGrid + 1 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.south )   
         }
-        if ( currentLocation.column !== 1 || targetTile.column === 0 ) {
+        if ( currentLocation.item.column !== 1 || targetTile.column === 0 ) {
             addTileInDirectionToQueueIfValid( currentLocation, PathfindingDirection.west )            
         }
 
-        if ( foundPath !== null )
+        if ( foundPath !== null ) {
             return foundPath;
+        }
     } 
 
     return false;    

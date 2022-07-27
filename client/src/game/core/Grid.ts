@@ -85,16 +85,16 @@ export class Grid {
         const row = Math.ceil( ( y - this.y )  / GRID_BLOCK_PX);
         if ( x > this.x + this.columns * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x <= this.x || y <= this.y ) {
             return this.getDummyTile( 
-                x <= this.x ? OutOfMapEnum.left : x > this.x + this.columns * GRID_BLOCK_PX ? OutOfMapEnum.right : column,
-                y <= this.y ? OutOfMapEnum.up : y > this.y + this.rows * GRID_BLOCK_PX ? OutOfMapEnum.down : row
+                x <= this.x ? 0 : x > this.x + this.columns * GRID_BLOCK_PX ? this.columns + 1 : column,
+                y <= this.y ? 0 : y > this.y + this.rows * GRID_BLOCK_PX ? this.rows + 1 : row
             );
         }
 
         return this.getTileAtCell( column, row );
     }
 
-    getTileAtCell( column: number|OutOfMapEnum, row: number|OutOfMapEnum ): Tile {
-        if ( column === OutOfMapEnum.left || row === OutOfMapEnum.up || column === OutOfMapEnum.right || row === OutOfMapEnum.down ){
+    getTileAtCell( column: number, row: number ): Tile {
+        if ( column === 0 || row === 0 || column === this.columns + 1 || row === this.rows + 1 ){
             return this.getDummyTile( column, row );
         }
         const tileIndex = ( ( (row as number ) * this.columns ) - ( this.columns - (column as number)) ) - 1;
@@ -108,17 +108,17 @@ export class Grid {
         })
     }
 
-    getDummyTile( column: number | OutOfMapEnum, row: number | OutOfMapEnum ): Tile {
-        if ( column == OutOfMapEnum.left ){
+    getDummyTile( column: number, row: number ): Tile {
+        if ( column == 0 ){
             return new Tile( OutOfMapEnum.left, -GRID_BLOCK_PX, ( row as number - 1 ) * GRID_BLOCK_PX, this.ctx, row as number, 0 )
         }
-        else if ( row == OutOfMapEnum.up ) {
+        else if ( row == 0 ) {
             return new Tile( OutOfMapEnum.up, ( column as number - 1 ) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column as number )
         }
-        else if ( column == OutOfMapEnum.right ) {
+        else if ( this.columns + 1 ) {
             return new Tile( OutOfMapEnum.right, this.width + GRID_BLOCK_PX, ( row as number - 1 ) * GRID_BLOCK_PX, this.ctx, row as number, this.columns + 1 )
         }
-        else if ( row == OutOfMapEnum.down ) {
+        else if ( this.rows + 1 ) {
             return new Tile( OutOfMapEnum.down, ( column as number - 1 ) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column as number )
         }
     }

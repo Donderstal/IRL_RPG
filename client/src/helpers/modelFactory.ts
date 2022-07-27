@@ -20,6 +20,7 @@ import type { ItemModel } from "../models/ItemModel";
 import type { GridCellModel } from "../models/GridCellModel";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import { getDataModelByKey } from "../resources/spriteDataResources";
+import { OutOfMapEnum } from "../enumerables/OutOfMapEnum";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
@@ -34,13 +35,13 @@ export const initMapModel = ( mapData ): MapModel => {
         grid: mapData.grid.map( ( tile ): TileModel => { return initTileModel( tile ) } ),
         frontGrid: mapData.frontGrid != undefined
             ? mapData.frontGrid.map( ( tile ): TileModel => { return initTileModel( tile ) } )
-            : mapData.grid.map( (): TileModel => { return initTileModel( "E" ) } ),
+            : mapData.grid.map( (): TileModel => { return initTileModel( {id: null, angle: 0, mirroreD: false} ) } ),
 
         sprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
         frontSprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
 
         spawnPoints: mapData.spawnPoints != undefined
-            ? mapData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint ) } )
+            ? mapData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint, mapData.columns, mapData.rows ) } )
             : [],
         roads: mapData.roads != undefined
             ? mapData.roads.map( ( road ): RoadModel => { return initRoadModel( road ) } )
@@ -82,11 +83,10 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
 }
 
 export const initTileModel = ( tileData ): TileModel => {
-    const isDataObject = typeof tileData !== "string" && typeof tileData !== "number"
     const tileModel: TileModel = {
-        id: isDataObject ? tileData.id : tileData,
-        angle: isDataObject ? tileData.angle : 0,
-        mirrored: isDataObject ? tileData.mirrored : false,
+        id: tileData !== "E" ? tileData.id : null,
+        angle: tileData !== "E" ? tileData.angle : 0,
+        mirrored: tileData !== "E" ? tileData.mirrored : false
 
     };
     return tileModel;
@@ -106,10 +106,10 @@ export const initRoadModel = ( roadData ): RoadModel => {
     return roadModel;
 }
 
-export const initSpawnPointModel = ( spawnPointData ): SpawnPointModel => {
+export const initSpawnPointModel = ( spawnPointData, columns: number | OutOfMapEnum, rows: number | OutOfMapEnum ): SpawnPointModel => {
     const spawnPointModel: SpawnPointModel = {
-        row: spawnPointData.row,
-        column: spawnPointData.column == undefined ? spawnPointData.col : spawnPointData.column,
+        row: spawnPointData.row === OutOfMapEnum.up ? 0 : spawnPointData.row === OutOfMapEnum.down ? rows + 1 : spawnPointData.row,
+        column: spawnPointData.column === OutOfMapEnum.left ? 0 : spawnPointData.column === OutOfMapEnum.right ? columns + 1 : spawnPointData.column,
         direction: spawnPointData.direction
     };
     return spawnPointModel;
@@ -226,7 +226,7 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
         case SceneAnimationType.move:
             typedModel = model as MoveScene;
             typedModel.spriteName = animationData[2];
-            typedModel.destination= animationData[3]
+            typedModel.destination = animationData[3];
             break;
         case SceneAnimationType.moveCar:
             typedModel = model as MoveCarScene;

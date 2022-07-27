@@ -1,6 +1,6 @@
 export enum OutOfMapEnum {
-	left = -9999,
-	up = -9999,
-	right = 9999,
-	down = 9999
+	left = -1111,
+	up = -2222,
+	right = 3333,
+	down = 4444
 }

@@ -31,7 +31,7 @@ export class Tile {
         this.ctx = ctx;
         this.index = index;  
         this.model = {
-            id: "E",
+            id: null,
             angle: 0,
             mirrored: false
         }
@@ -145,6 +145,6 @@ export class Tile {
     };
 
     clearTileID( ): void {
-        this.model.id = "E"
+        this.model.id = null;
     };
 };

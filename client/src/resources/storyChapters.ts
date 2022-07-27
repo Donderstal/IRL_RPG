@@ -37,7 +37,7 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.animation, false, "LEFT_AND_RIGHT_STEP", "Dancing granny", true]],
                 [[SceneAnimationType.cameraMoveToSprite, true, "CIN_CAR_BUS", true]],
                 [[SceneAnimationType.fadeIn, true]],
-                [[SceneAnimationType.moveCar, true, null, OutOfMapEnum.up, "CIN_CAR_BUS", DirectionEnum.up]],
+                [[SceneAnimationType.moveCar, true, null, 0, "CIN_CAR_BUS", DirectionEnum.up]],
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/B1"]],
                 [[SceneAnimationType.createSprite, true, DirectionEnum.right, MAIN_CHARACTER, PLAYER_NAME, 15, 14], [SceneAnimationType.createSprite, true, DirectionEnum.left, FAT_BUFF_GUY, "BOB", 16, 14], [SceneAnimationType.createSprite, true, DirectionEnum.up, "bus", "My cool car", 13, 13]],
@@ -45,14 +45,14 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.fadeIn, true]],
                 [[SceneAnimationType.speak, true, "Was good hanging out with you!", PLAYER_NAME], [SceneAnimationType.emote, false, EMOTE_HAPPY, "BOB"]],
                 [[SceneAnimationType.speak, true, "Yeah for sure. See you at work at the {G}Yum {G}Mart later!", "BOB"], [SceneAnimationType.cameraMoveToSprite, true, "BOB", false], [SceneAnimationType.emote, false, EMOTE_HAPPY, PLAYER_NAME]],
-                [[SceneAnimationType.move, true, PLAYER_NAME, { col: 15, row: OutOfMapEnum.down }], [SceneAnimationType.cameraMoveToSprite, false, PLAYER_NAME, false]],
+                [[SceneAnimationType.move, true, PLAYER_NAME, { col: 15, row: 17 }], [SceneAnimationType.cameraMoveToSprite, false, PLAYER_NAME, false]],
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/B2"]],
                 [[SceneAnimationType.createSprite, true, DirectionEnum.down, false, PLAYER_NAME, 15, 1]],
                 [[SceneAnimationType.createSprite, true, DirectionEnum.right, GRANNY, "Dancing granny", 15, 11]],
                 [[SceneAnimationType.animation, false, "LEFT_AND_RIGHT_STEP", "Dancing granny", true]],
                 [[SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, true]],
-                [[SceneAnimationType.fadeIn, false], [SceneAnimationType.move, true, PLAYER_NAME, { col: OutOfMapEnum.right, row: 10 }]],
+                [[SceneAnimationType.fadeIn, false], [SceneAnimationType.move, true, PLAYER_NAME, { col: 25, row: 10 }]],
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/C2"]],
                 [[SceneAnimationType.createSprite, true, DirectionEnum.right, false, PLAYER_NAME, 1, 10]],
@@ -79,7 +79,7 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.createSprite, true, DirectionEnum.left, FAT_BUFF_GUY, "BOB", 24, 10]],
                 [[SceneAnimationType.cameraMoveToSprite, true, "BOB", false], [SceneAnimationType.move, true, "BOB", PLAYER_NAME]],
                 [[SceneAnimationType.speak, true, "I heard there was some trouble at the {G}Yum {G}Mart down {R}south...", "BOB"], [SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
-                [[SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false], [SceneAnimationType.speak, true, "Oh no, I better get down there fast!", PLAYER_NAME], [SceneAnimationType.move, false, "BOB", { col: OutOfMapEnum.left, row: 10 }]]
+                [[SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false], [SceneAnimationType.speak, true, "Oh no, I better get down there fast!", PLAYER_NAME], [SceneAnimationType.move, false, "BOB", { col: 0, row: 10 }]]
             ]
         ]]
     },

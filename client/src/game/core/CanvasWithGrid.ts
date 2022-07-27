@@ -1,4 +1,3 @@
-import type { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
 import type { MapModel } from '../../models/MapModel';
 import type { TileModel } from '../../models/TileModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
@@ -35,7 +34,7 @@ export class CanvasWithGrid {
         this.grid.setTileGridToArray( tileModelArray );
     }
 
-    getTileAtIndex( index: number | OutOfMapEnum ): Tile {
+    getTileAtIndex( index: number  ): Tile {
         return this.grid.array[index];
     }
 
@@ -43,7 +42,7 @@ export class CanvasWithGrid {
         return this.grid.getTileAtXY( x, y );
     };
  
-    getTileAtCell( column: number | OutOfMapEnum, row: number | OutOfMapEnum ): Tile {
+    getTileAtCell( column: number, row: number ): Tile {
         return this.grid.getTileAtCell( column, row );
     };
 

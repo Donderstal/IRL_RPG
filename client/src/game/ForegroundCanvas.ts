@@ -3,7 +3,6 @@ import { getUniqueId } from '../helpers/utilFunctions';
 import { getEffect, GraphicalEffect } from '../helpers/effectHelpers';
 import globals from '../game-data/globals';
 import { RoadNetwork } from './map/RoadNetwork';
-import { determineShortestPath } from '../helpers/pathfindingHelpers';
 import { getDataModelByKey } from '../resources/spriteDataResources';
 import { PLAYER_ID, PLAYER_NAME } from '../game-data/interactionGlobals';
 import { conditionIsTrue } from '../helpers/conditionalHelper';
@@ -17,7 +16,7 @@ import type { SpawnPointModel } from '../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../helpers/modelFactory';
 import type { GridCellModel } from '../models/GridCellModel';
 import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
-import { DirectionEnum } from '../enumerables/DirectionEnum';
+import { initializeSpriteMovement } from './modules/spriteMovementModule';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -126,8 +125,8 @@ export class ForegroundCanvas extends CanvasWithGrid {
         })
     }
 
-    tileHasBlockingSprite( index: number|OutOfMapEnum ): boolean {
-        return this.tilesBlockedBySprites.indexOf( index as any ) > -1;
+    tileHasBlockingSprite( index: number | OutOfMapEnum ): boolean {
+        return this.tilesBlockedBySprites.indexOf( index ) > -1;
     }
 
     generateWalkingNPC( ): void {
@@ -166,29 +165,13 @@ export class ForegroundCanvas extends CanvasWithGrid {
             column: tile.column,
             row: tile.row,
             direction: start.direction,
+            name: "Random person",
             action: globals.GAME.activeNeighbourhood.getRandomAction()
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
-        const grid = { 
-            rows: this.grid.rows, columns: this.grid.columns,
-            tiles: globals.GAME.BACK.grid.array.filter((tile) => {
-                return !globals.GAME.BACK.getTileAtIndex(tile.index).isBlocked && !this.tileHasBlockingSprite(tile.index);
-            })
-        };
-        if ( tile.offScreen ) {
-            grid.tiles.unshift(tile);
-        }
-        const destinationTile = this.getTileAtCell( destination.column,  destination.row);
-        if ( destinationTile.offScreen ) {
-            grid.tiles.push( destinationTile );
-        }
-        const indexList = determineShortestPath(tile, destinationTile, grid);
-        if ( indexList ) {
-            let spriteId = this.setSprite( tile, model );
-            let sprite = this.spriteDictionary[spriteId];
-            sprite.name = "Random person"
-            sprite.setDestination( destination as GridCellModel, true );
-        };
+        const id = this.setSprite( tile, model );
+        const sprite = this.spriteDictionary[id];
+        initializeSpriteMovement( sprite, destination as GridCellModel, true );
     }
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {
@@ -208,5 +191,9 @@ export class ForegroundCanvas extends CanvasWithGrid {
                 this.tilesBlockedBySprites.push( e );
             }
         })
+    }
+
+    resetTilesBlockedBySprites() {
+        this.tilesBlockedBySprites = [];
     }
 }
