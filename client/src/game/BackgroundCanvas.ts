@@ -53,7 +53,7 @@ export class BackgroundCanvas extends CanvasWithGrid {
     setBlockedTiles( blockedTileIndexes: number[] ): void {
         this.grid.array.forEach(
             ( tile ) => {
-                if ( blockedTileIndexes.indexOf( tile.index ) > - 1 )
+                if ( blockedTileIndexes.indexOf( tile.model.id ) > - 1 )
                     tile.blocked = true;
             }
         )

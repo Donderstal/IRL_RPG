@@ -18,6 +18,7 @@ import { getDataModelByKey } from "../../resources/spriteDataResources";
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
+import { initializeCarMovement } from "../modules/carMovementModule";
 
 export class Animation {
     id: string;
@@ -161,10 +162,12 @@ export class Animation {
         let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName; })
         let road    = roads[0];
 
-        this.destination = road.isHorizontal ? { "row": road.model.primaryRow, "column": sceneModel.column } : { "row": sceneModel.row, "column": road.model.primaryColumn }
+        this.destination = road.isHorizontal
+            ? { "row": road.model.primaryRow, "column": sceneModel.column }
+            : { "row": sceneModel.row, "column": road.model.primaryColumn };
         this.walkingToDestination = true;   
-        let car = this.getSpriteByName( );
-        car.setDestination( this.destination, true );
+        let car = this.getSpriteByName();
+        initializeCarMovement( car, this.destination )
     }
 
     initCreateCarAnimation( sceneModel: CreateCarScene ): void {

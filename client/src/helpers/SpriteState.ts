@@ -1,5 +1,7 @@
 import { SpriteStateEnum } from "../enumerables/SpriteStateEnum";
 import type { Sprite } from "../game/core/Sprite";
+import { initializeCarMovement } from "../game/modules/carMovementModule";
+import { initializeSpriteMovement } from "../game/modules/spriteMovementModule";
 import type { GridCellModel } from "../models/GridCellModel";
 
 export class SpriteState {
@@ -58,7 +60,7 @@ export class SpriteState {
         this.inCinematic = false;
         this.restoreState( );
         if ( this.storedDestination !== null ) {
-            sprite.setDestination( this.storedDestination );
+            sprite.isCar ? initializeCarMovement( sprite, this.storedDestination ) : initializeSpriteMovement( sprite, this.storedDestination )
             this.storedDestination = null;
         } 
     }

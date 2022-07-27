@@ -1,9 +1,8 @@
-import globals, { MOVEMENT_SPEED } from '../../../game-data/globals';
+import globals from '../../../game-data/globals';
 import { determineShortestPath } from '../../../helpers/pathfindingHelpers';
 import { GRID_BLOCK_PX } from '../../../game-data/globals';
 import type { BackgroundCanvas } from '../../BackgroundCanvas';
 import type { ForegroundCanvas } from '../../ForegroundCanvas';
-import type { Tile } from '../../core/Tile';
 import type { Sprite } from '../../core/Sprite';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { SpriteStateEnum } from '../../../enumerables/SpriteStateEnum';
@@ -11,71 +10,58 @@ import { SpriteStateEnum } from '../../../enumerables/SpriteStateEnum';
 export class Destination {
     column: number;
     row: number;
-    spriteId: string;
     deleteSprite: boolean;
 
     path: { x: number, y: number, direction: number }[];
     foundPath: boolean;
     currentPathIndex: number;
-    constructor( column: number, row: number, spriteId: string, deleteSprite = false ) {
+    constructor( column: number, row: number, sprite: Sprite, deleteSprite = false ) {
         this.column         = column;
         this.row            = row;
-        this.spriteId       = spriteId;
         this.deleteSprite   = deleteSprite;
 
         this.path = null;
         this.foundPath = false;
         this.currentPathIndex;
-        if ( this.sprite.isCar ) {
-            this.setCarPath( );
+        if ( sprite.isCar ) {
+            this.setCarPath( sprite );
         }
         else {
-            this.calculatePath( );            
+            this.calculatePath( sprite );            
         }
     }
 
     get backClass(): BackgroundCanvas { return globals.GAME.BACK; };
     get frontClass(): ForegroundCanvas { return globals.GAME.FRONT; };
-    get backTile(): Tile { return this.backClass.getTileAtCell(this.column, this.row); };
-    get frontTile(): Tile { return this.frontClass.getTileAtCell(this.column, this.row); };
-    get sprite(): Sprite { return this.frontClass.spriteDictionary[this.spriteId]; };
-
     get currentStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex]; };
-    get currentStepIsLeft(): boolean { return this.currentStep.x <= this.sprite.left - (MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.left; };
-    get currentStepIsRight(): boolean { return this.currentStep.x + GRID_BLOCK_PX >= this.sprite.right + (MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.right; };
-    get currentStepIsUp(): boolean { return this.currentStep.y - ( this.sprite.height - GRID_BLOCK_PX ) <= this.sprite.top - (MOVEMENT_SPEED / 2)&& this.currentStep.direction == DirectionEnum.up; };    
-    get currentStepIsDown(): boolean { return this.currentStep.y + GRID_BLOCK_PX >= this.sprite.bottom + (MOVEMENT_SPEED / 2) && this.currentStep.direction == DirectionEnum.down; };
-    
-    get isBlocked( ): boolean { return this.backTile.isBlocked || this.frontClass.tileHasBlockingSprite( this.frontTile.index ); };
     get spriteHasReachedDestination( ): boolean { return this.currentPathIndex === this.path.length - 1; };
 
-    snapSpriteToCurrentStepTile(): void {
-        this.sprite.y = this.currentStep.y - (this.sprite.height - GRID_BLOCK_PX);
-        this.sprite.x = this.currentStep.x     
+    snapSpriteToCurrentStepTile( sprite: Sprite ): void {
+        sprite.y = this.currentStep.y - (sprite.height - GRID_BLOCK_PX);
+        sprite.x = this.currentStep.x     
     }
 
-    setCarPath(): void  {
+    setCarPath( sprite: Sprite ): void  {
         this.currentPathIndex = 0;
         const currentLocation = this.frontClass.getTileAtCell(this.column, this.row);
         const step = { 
-            x: this.sprite.direction == DirectionEnum.left ? currentLocation.x - this.sprite.width: 
-                this.sprite.direction == DirectionEnum.right ? currentLocation.x + this.sprite.width : currentLocation.x,
-            y: this.sprite.direction == DirectionEnum.up ? currentLocation.y - this.sprite.width: 
-                this.sprite.direction == DirectionEnum.down ? currentLocation.y + this.sprite.width : currentLocation.y,
-            direction: this.sprite.direction
+            x: sprite.direction == DirectionEnum.left ? currentLocation.x - sprite.width: 
+                sprite.direction == DirectionEnum.right ? currentLocation.x + sprite.width : currentLocation.x,
+            y: sprite.direction == DirectionEnum.up ? currentLocation.y - sprite.width: 
+                sprite.direction == DirectionEnum.down ? currentLocation.y + sprite.width : currentLocation.y,
+            direction: sprite.direction
         };
         this.path = [ step ];
     }
 
-    calculatePath( exceptionTile = { row: null, column: null } ): void {
+    calculatePath( sprite: Sprite ): void {
         const grid = { 
-            'rows': this.backClass.grid.rows, 'cols': this.backClass.grid.columns,
-            'tiles': this.backClass.grid.array.filter((tile) => {
-                return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index)
-                && !( exceptionTile.row == tile.row && exceptionTile.column == tile.column );
+            'rows': this.backClass.grid.rows, 'columns': this.backClass.grid.columns,
+            'tiles': this.backClass.grid.array.filter( ( tile ) => {
+                return !this.backClass.getTileAtIndex(tile.index).isBlocked && !this.frontClass.tileHasBlockingSprite(tile.index);
             })
         };
-        const startingTile = this.frontClass.getTileAtXY(this.sprite.centerX, this.sprite.baseY);
+        const startingTile = this.frontClass.getTileAtXY(sprite.centerX, sprite.baseY);
         if ( startingTile.offScreen ) {
             grid.tiles.unshift(startingTile);
         }
@@ -83,17 +69,17 @@ export class Destination {
         if ( destinationTile.offScreen ) {
             grid.tiles.push( destinationTile );
         }
-        const indexList = determineShortestPath(startingTile, destinationTile, grid);
-        if ( !indexList ) {
+        const gridLocationList = determineShortestPath(startingTile, destinationTile, grid);
+        if ( !gridLocationList ) {
             if ( startingTile.offScreen ) {
-                this.unsetPath( );
+                this.unsetPath( sprite );
                 if ( this.deleteSprite ) {
-                    this.frontClass.deleteSprite(this.spriteId);                
+                    this.frontClass.deleteSprite(sprite.spriteId);                
                 }
             }
             return;
         }
-        this.path = indexList.reduce( (acc, cur, index) => {
+        this.path = gridLocationList.reduce( (acc, cur, index) => {
             const currentLocation = this.frontClass.getTileAtCell(cur.column, cur.row);
             const step = { 
                 x: currentLocation.x,
@@ -114,50 +100,47 @@ export class Destination {
                 step.direction = DirectionEnum.down;
             }
             return [ ...acc, step];             
-        }, []);
+        }, [] );
+        console.log( this.path[0] );
+        console.log( this.path[this.path.length - 2] )
+        console.log( this.path[this.path.length - 1] );
         this.currentPathIndex = 0;
-        this.sprite.direction = this.currentStep.direction; 
-        this.sprite.State.set(SpriteStateEnum.moving);
+        sprite.activateMovementModule( this.currentStep.direction );
+        sprite.direction = this.currentStep.direction; 
+        sprite.State.set(SpriteStateEnum.moving);
     }
 
-    unsetPath( ): void {
+    unsetPath( sprite: Sprite ): void {
         this.currentPathIndex = 0;
         this.path = null;
+        sprite.deactivateMovementModule();
     }
 
-    checkForNextStep(): void {
-        if ( this.currentPathIndex + 1 < this.path.length ) {
-            this.snapSpriteToCurrentStepTile( );
-            this.currentPathIndex += 1;  
-            this.sprite.direction = this.currentStep.direction;
-        }        
-        else if ( this.spriteHasReachedDestination ) { 
-            this.snapSpriteToCurrentStepTile( );
-            this.unsetPath( );
-            if ( this.deleteSprite ) {
-                this.frontClass.deleteSprite(this.spriteId)
-            }
-            else {
-                this.sprite.destination = null;
-            }
-        }
+    hasNextStep(): boolean {
+        return this.currentPathIndex + 1 < this.path.length;
     }
 
-    goTo(): void {
-        if ( this.currentStepIsLeft  ) {
-            this.sprite.moveSprite( DirectionEnum.left );
+    setNextStep( sprite: Sprite ): void {
+        this.snapSpriteToCurrentStepTile( sprite );
+        this.currentPathIndex += 1;
+        sprite.changeDirection( this.currentStep.direction );
+    }
+
+    getNextStepDirection( sprite: Sprite ): DirectionEnum {
+        if ( this.currentStep.x <= sprite.left - ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.left ) {
+            return DirectionEnum.left;
         }
-        else if ( this.currentStepIsUp ) {
-            this.sprite.moveSprite( DirectionEnum.up );
+        else if ( this.currentStep.y - ( sprite.height - GRID_BLOCK_PX ) <= sprite.top - ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.up ) {
+            return DirectionEnum.up;
         }
-        else if ( this.currentStepIsRight ) {
-            this.sprite.moveSprite( DirectionEnum.right );
+        else if ( this.currentStep.x + GRID_BLOCK_PX >= sprite.right + ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.right ) {
+            return DirectionEnum.right;
         }
-        else if ( this.currentStepIsDown ) {
-            this.sprite.moveSprite( DirectionEnum.down );
-        } 
+        else if ( this.currentStep.y + GRID_BLOCK_PX >= sprite.bottom + ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.down ) {
+            return DirectionEnum.down;
+        }
         else {
-            this.checkForNextStep( );
+            return null;
         }
     }
 }

@@ -17,6 +17,7 @@ import type { CanvasContextModel } from '../models/CanvasContextModel';
 import { clearHitboxes } from '../game/modules/hitboxModule';
 import { clearDoors } from '../game/modules/doorModule';
 import { clearActions } from '../game/modules/actionModule';
+import { clearRandomAnimationCounters } from '../game/modules/randomAnimationModule';
 
 const cinematicGrids: { back: CanvasContextModel, front: CanvasContextModel, frontgrid: CanvasContextModel } = {
     back: null,
@@ -103,6 +104,7 @@ export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
     clearHitboxes();
     clearDoors();
     clearActions();
+    clearRandomAnimationCounters();
 
     source.frontgrid.class.clearMap( );
     source.front.class.clearMap( );

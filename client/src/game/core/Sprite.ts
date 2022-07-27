@@ -4,7 +4,6 @@ import { getEffect } from '../../helpers/effectHelpers'
 import { getAnimationByName } from '../../resources/animationResources'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/map-ui/movementChecker'
-import { Destination } from '../map/map-classes/Destination'
 import { SpriteState } from '../../helpers/SpriteState'
 import { faceTowardsTarget } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
@@ -23,6 +22,9 @@ import { initializeHitboxForSprite, updateAssociatedHitbox } from '../modules/hi
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
 import { initializeActionForSprite, updateSpriteAssociatedAction } from '../modules/actionModule'
 import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/doorModule'
+import { handleSpriteMovement, initializeSpriteMovement } from '../modules/spriteMovementModule'
+import { handleCarMovement, initializeCarMovement } from '../modules/carMovementModule'
+import { handleRandomAnimationCounter, initializeRandomAnimationCounter } from '../modules/randomAnimationModule'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -33,6 +35,8 @@ export class Sprite {
     y: number;
     row: number;
     column: number;
+    initialRow: number;
+    initialColumn: number;
     width: number;
     height: number;
 
@@ -50,7 +54,6 @@ export class Sprite {
     State: SpriteState;
     sheet: HTMLImageElement;
 
-    destination: Destination;
     animationScript: AnimationScriptModel;
     activeEffect: any;
     hasActiveEffect: boolean;
@@ -68,9 +71,6 @@ export class Sprite {
     isCar: boolean;
 
     visionbox: VisionBox;
-    currentTileBack: Tile;
-    nextTileBack: Tile;
-
     plugins: {
         movement: { set: boolean, active: boolean },
         carMovement: { set: boolean, active: boolean },
@@ -96,6 +96,8 @@ export class Sprite {
             animation: { set: false, active: false }
         }
         this.model = canvasObjectModel.spriteDataModel;
+        this.animationType = canvasObjectModel.animationType;
+        this.movementType = canvasObjectModel.movementType;
         this.setDimensions();
         this.spriteId       = spriteId;
         this.State          = new SpriteState( );
@@ -104,12 +106,13 @@ export class Sprite {
         this.frameCount     = 0
         this.direction      = canvasObjectModel.direction != null ? canvasObjectModel.direction : 0;
         this.previousDirection = canvasObjectModel.direction != null ? canvasObjectModel.direction : 0;
-        this.destination    = null;
         this.activeEffect   = { active: false };
         this.isPlayer       = isPlayer;
         this.hasDoor        = canvasObjectModel.hasDoor;
         this.hasAction      = canvasObjectModel.hasAction;
-        this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * (Math.random() * (.75 - .5) + .5);
+        this.speed = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * ( Math.random() * ( .75 - .5 ) + .5 );
+        this.initialColumn = canvasObjectModel.column;
+        this.initialRow = canvasObjectModel.row;
         this.setSpriteToGrid( tile );
         this.setPlugins( canvasObjectModel );
         if ( this.isPlayer ) {
@@ -132,11 +135,6 @@ export class Sprite {
     get standing(): boolean { return this.model.groundedAtBottom || (this.type != "object" && this.type != 'car') };
     get dynamicTop(): number { return this.standing ? this.baseY - this.speed : this.topY };
 
-    get isInCenterFacingLeft() { return this.centerX < ( this.currentTileBack.x + ( GRID_BLOCK_PX * .45 ) ); }
-    get isInCenterFacingRight() { return this.centerX > ( this.currentTileBack.x + ( GRID_BLOCK_PX * .55 ) ); }
-    get isInCenterFacingUp() { return this.baseY < ( this.currentTileBack.y + ( GRID_BLOCK_PX * .45 ) ); }
-    get isInCenterFacingDown() { return this.baseY > ( this.currentTileBack.y + ( GRID_BLOCK_PX * .55 ) ); }
-
     get noCollision(): boolean {
         return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.State.is( SpriteStateEnum.moving ) )
     }
@@ -151,8 +149,12 @@ export class Sprite {
             this.plugins.idleAnimation.set = true;
         }
 
-        if ( !this.isPlayer && this.model.isCharacter ) {
+        if ( ( !this.isPlayer && this.model.isCharacter )
+            && this.animationType !== AnimationTypeEnum.movingLoop
+            && this.animationType !== AnimationTypeEnum.animationLoop ) {
             this.plugins.randomAnimation.set = true;
+            this.plugins.randomAnimation.active = true;
+            initializeRandomAnimationCounter( this );
         }
 
         if ( model.canMove && model.isCar ) {
@@ -160,22 +162,18 @@ export class Sprite {
         }
         else if ( model.canMove ) {
             this.plugins.movement.set = true;
-            this.plugins.movement.active = true;
         }
 
         if ( this.hasDoor ) {
             this.plugins.door.set = true;
-            this.plugins.door.active = true;
             initializeDoorForSprite( this, canvasObjectModel.door );
         }
         else if ( this.hasAction ) {
             this.plugins.mapAction.set = true;
-            this.plugins.mapAction.active = true;
             initializeActionForSprite( this, canvasObjectModel.action );
         }
         else {
             this.plugins.hitbox.set = true;
-            this.plugins.hitbox.active = true;
             initializeHitboxForSprite( this );
         }
 
@@ -189,9 +187,9 @@ export class Sprite {
         if ( this.isPlayer ) {
             updateAssociatedHitbox( this );
         }
-        if ( this.pluginIsRunning( plugins.movement ) ) {
+        if ( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.carMovement ) ) {
             if ( this.pluginIsRunning( plugins.door ) ) {
-                updateSpriteAssociatedDoor
+                updateSpriteAssociatedDoor( this )
             }
             else if ( this.pluginIsRunning( plugins.mapAction ) ) {
                 updateSpriteAssociatedAction( this )
@@ -199,6 +197,19 @@ export class Sprite {
             else {
                 updateAssociatedHitbox( this );
             }
+
+            if ( this.pluginIsRunning( plugins.movement ) ) {
+                handleSpriteMovement( this );
+            }
+            else {
+                handleCarMovement( this );
+            }
+        }
+        if ( this.pluginIsRunning( plugins.idleAnimation ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.animation ) ) ) {
+
+        }
+        if ( this.pluginIsRunning( plugins.randomAnimation ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.animation ) ) ) {
+            handleRandomAnimationCounter( this );
         }
     }
 
@@ -318,17 +329,17 @@ export class Sprite {
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
-        this.checkForMoveToDestination( );
         this.checkForAnimation( );
 
         this.updateCell()
     }
 
     updateState(): void {
-        if ( (this.State.is( SpriteStateEnum.idle ) && this.destination && this.destination.path) && !this.State.inCinematic ) {
+        let plugins = this.plugins
+        if ( ( this.State.is( SpriteStateEnum.idle ) && ( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.carMovement ) )) && !this.State.inCinematic ) {
             this.State.set( SpriteStateEnum.moving );
         }
-        else if ( this.State.is( SpriteStateEnum.moving ) && (!this.destination || !this.destination.path) ) {
+        else if ( this.State.is( SpriteStateEnum.moving ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.carMovement ) ) ) {
             this.State.set( SpriteStateEnum.idle );
         }
         else if ( this.State.is( SpriteStateEnum.moving ) && this.checkForCollision( ) ) {
@@ -344,25 +355,6 @@ export class Sprite {
         if ( this.State.inAnimation ) {
             this.doScriptedAnimation( );
         }
-    }
-
-    checkForMoveToDestination(): void {
-        if ( this.State.is( SpriteStateEnum.moving ) && !this.State.inAnimation && this.destination !== null ) {
-            this.destination.goTo( );   
-            this.countFrame( ); 
-        }
-    }
-
-    setDestination( destination: GridCellModel, deleteWhenDestinationReached: false ): void {
-        if ( !this.isCar ) {
-            this.State.set( SpriteStateEnum.pathfinding );
-        }
-        else {
-            this.State.set( SpriteStateEnum.moving );
-        }
-
-        this.updateCell( );
-        this.destination = new Destination( destination.column, destination.row, this.spriteId, deleteWhenDestinationReached );
     }
 
     countFrame( ): void {
@@ -393,7 +385,7 @@ export class Sprite {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
         }
         if ( animation.is( SceneAnimationType.move ) ) {
-            this.setDestination( animation.destination, false );
+            this.isCar ? initializeCarMovement( this, animation.destination ) : initializeSpriteMovement( this, animation.destination, false );
         }
         if ( animation.is( SceneAnimationType.animation ) ) {
             this.setScriptedAnimation( animation, FRAME_LIMIT )
@@ -474,25 +466,6 @@ export class Sprite {
         this.State.animationOff( this );  
     }
 
-    moveSprite( direction: DirectionEnum, movementSpeed: number = this.speed ): void {
-        this.changeDirection( direction );
-        if ( direction == DirectionEnum.left ) {
-            this.x -= movementSpeed;
-        }
-        if ( direction == DirectionEnum.up ) {
-            this.y -= movementSpeed;
-        }
-        if ( direction == DirectionEnum.right ) {
-            this.x += movementSpeed;
-        }
-        if ( direction == DirectionEnum.down ) {
-            this.y += movementSpeed;
-        }
-        if ( this.isInCameraFocus && !globals.GAME.cameraFocus.movingToNewFocus ) {
-            globals.GAME.cameraFocus.centerOnXY( this.centerX, this.baseY );
-        }
-    }
-
     checkForCollision( ): boolean {
         return checkForCollision( this ) ;
     }
@@ -513,5 +486,16 @@ export class Sprite {
             y = (y + GRID_BLOCK_PX) > this.bottom && y != this.bottom ? this.bottom : y + GRID_BLOCK_PX;
         }
         return tileIndexes;
+    }
+
+    activateMovementModule( direction: DirectionEnum ): void {
+        this.direction = direction;
+        this.State.set( SpriteStateEnum.moving );
+        !this.isCar ? this.plugins.movement.active = true : this.plugins.carMovement.active = true;
+    }
+
+    deactivateMovementModule() {
+        !this.isCar ? this.plugins.movement.active = false : this.plugins.carMovement.active = false;
+        this.sheetPosition = 0;
     }
 }

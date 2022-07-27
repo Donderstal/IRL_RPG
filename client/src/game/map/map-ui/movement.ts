@@ -4,22 +4,22 @@ import globals from '../../../game-data/globals';
 import { GRID_BLOCK_PX, MOVEMENT_SPEED } from '../../../game-data/globals';
 import { switchMap } from '../../../helpers/loadMapHelpers';
 import type { Sprite } from '../../core/Sprite';
-import type { MapSprite } from '../map-classes/MapSprite';
+import { moveSpriteInDirection } from '../../modules/spriteMovementModule';
 
 export const handleMovementOfSprite = ( sprite: Sprite, direction: DirectionEnum ): void => {
     moveInDirection( sprite, direction )
     sprite.countFrame( )
 }
 
-const moveInDirection = ( sprite: MapSprite, direction: DirectionEnum ): void => {
+const moveInDirection = ( sprite: Sprite, direction: DirectionEnum ): void => {
     const changedDirection = sprite.direction != direction;
     sprite.direction = direction   
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
 
-    if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.checkForCollision( ) ) {
-        sprite.moveSprite( direction, MOVEMENT_SPEED );         
+    if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.checkForCollision() ) {
+        moveSpriteInDirection( sprite, direction );          
     }
 }
 

@@ -100,8 +100,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     const foregroundSprites = [];
     const flyingSprites     = [];
 
-    GAME.FRONT.tilesBlockedBySprites = [];
-
+    GAME.FRONT.resetTilesBlockedBySprites();
     GAME.FRONT.allSprites.forEach( ( sprite )  => {
         if ( sprite.model.onBackground ) {
             backgroundSprites.push( sprite );
@@ -117,7 +116,6 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
             GAME.FRONT.getTilesBlockedBySprite( sprite );
         }
     })
-    
     if ( GAME.BACK.savepoint ) {
         GAME.BACK.savepoint.draw( )
     }

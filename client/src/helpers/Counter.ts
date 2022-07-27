@@ -32,19 +32,22 @@ export class Counter {
     }
 
     countAndCheckLimit( ): boolean {
+        this.count();
+        return this.isCounterOverLimit( ); 
+    }
+
+    count(): void {
         let count = false;
         if ( this.newTimeStamp !== 0 ) {
             this.oldTimeStamp = this.newTimeStamp;
             count = true;
         }
 
-        this.newTimeStamp = Date.now( );
+        this.newTimeStamp = Date.now();
 
         if ( count ) {
             this.counter += ( this.newTimeStamp - this.oldTimeStamp );
         }
-
-        return this.isCounterOverLimit( ); 
     }
 
     isCounterOverLimit( ): boolean {

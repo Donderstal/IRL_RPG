@@ -255,9 +255,7 @@
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
         <p><label>Select starting location</label><select id="map-selection">
             <option value="leonard_heights/Newtown-appartment-3">Lennart</option>
-            <option value="northside/C2">Northside</option>
-            <option value="test/B4">Test intersection</option>
-            <option value="test/layer-test">Lagen test</option>
+            <option value="test-maps/A1">Test movement</option>
         </select></p>
     </div>
     <MainUiButton action={startGameWithParams} buttonText={"Let's go!"} />
