@@ -88,7 +88,7 @@ export default {
         },
         {
             "type": "car_b",
-            "row": 7,
+            "row": 6,
             "column": 8,
             "direction": DirectionEnum.up
         },
@@ -168,8 +168,8 @@ export default {
             "hasStart": true,
             "primaryRow": 14,
             "secondaryRow": 15,
-            "primaryColumn": 1,
-            "secondaryColumn": 24
+            "primaryColumn": 0,
+            "secondaryColumn": 25
         },
         {
             "direction": DirectionEnum.left,
@@ -177,8 +177,8 @@ export default {
             "hasStart": true,
             "primaryRow": 12,
             "secondaryRow": 13,
-            "primaryColumn": 24,
-            "secondaryColumn": 1
+            "primaryColumn": 25,
+            "secondaryColumn": 0
         }
     ],
     "actions": [

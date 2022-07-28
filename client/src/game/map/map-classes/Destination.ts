@@ -101,9 +101,6 @@ export class Destination {
             }
             return [ ...acc, step];             
         }, [] );
-        console.log( this.path[0] );
-        console.log( this.path[this.path.length - 2] )
-        console.log( this.path[this.path.length - 1] );
         this.currentPathIndex = 0;
         sprite.activateMovementModule( this.currentStep.direction );
         sprite.direction = this.currentStep.direction; 
@@ -123,7 +120,7 @@ export class Destination {
     setNextStep( sprite: Sprite ): void {
         this.snapSpriteToCurrentStepTile( sprite );
         this.currentPathIndex += 1;
-        sprite.changeDirection( this.currentStep.direction );
+        sprite.setDirection( this.currentStep.direction );
     }
 
     getNextStepDirection( sprite: Sprite ): DirectionEnum {

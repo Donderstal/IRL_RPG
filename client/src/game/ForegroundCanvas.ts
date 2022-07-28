@@ -66,7 +66,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
     initPlayerCharacter( start: CellPosition, className: string ) {
         const startingTile = this.grid.array.filter( tile => { return tile.row == start.row && tile.column == start.column } )[0];
         const spriteModel = getDataModelByKey( className );
-        const canvasObjectModel = initCanvasObjectModel( { type: className, column: start.column, row: start.row, spriteDataModel: spriteModel } );
+        const canvasObjectModel = initCanvasObjectModel( { type: className, direction: start.direction ?? 0, column: start.column, row: start.row, spriteDataModel: spriteModel } );
         this.playerSprite = new Sprite( startingTile, canvasObjectModel, PLAYER_ID, true );
         this.playerSprite.name = PLAYER_NAME;
         this.allSprites.push( this.playerSprite );

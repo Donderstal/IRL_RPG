@@ -144,7 +144,6 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
     }
     if ( objectData.destination !== undefined )
         model.destination = { column: objectData.destination.column, row: objectData.destination.row };
-    console.log( model );
     return model;
 }
 

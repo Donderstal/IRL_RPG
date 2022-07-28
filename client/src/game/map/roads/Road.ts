@@ -1,6 +1,5 @@
 import globals from '../../../game-data/globals';
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
-import { OutOfMapEnum } from "../../../enumerables/OutOfMapEnum";
 import { Counter } from "../../../helpers/Counter";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
 import type { CellPosition } from "../../../models/CellPositionModel";
@@ -104,8 +103,12 @@ export class Road {
             column: this.model.primaryColumn,
             row: this.model.primaryRow,
             destination: { 
-                column: this.model.direction === DirectionEnum.left ? OutOfMapEnum.left : this.model.direction === DirectionEnum.right ? OutOfMapEnum.right : this.model.primaryColumn, 
-                row: this.model.direction === DirectionEnum.up ? OutOfMapEnum.up : this.model.direction === DirectionEnum.down ?OutOfMapEnum.down : this.model.primaryRow, 
+                column: this.model.direction === DirectionEnum.left
+                    ? 0 : this.model.direction === DirectionEnum.right
+                        ? globals.GAME.BACK.grid.columns + 1 : this.model.primaryColumn, 
+                row: this.model.direction === DirectionEnum.up
+                    ? 0 : this.model.direction === DirectionEnum.down
+                        ? globals.GAME.BACK.grid.rows + 1 : this.model.secondaryRow, 
             },
             hasCondition: false,
             hasDoor: false,

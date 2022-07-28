@@ -8,17 +8,16 @@ import { moveSpriteInDirection } from '../../modules/spriteMovementModule';
 
 export const handleMovementOfSprite = ( sprite: Sprite, direction: DirectionEnum ): void => {
     moveInDirection( sprite, direction )
-    sprite.countFrame( )
+    sprite.countFrame();
 }
 
 const moveInDirection = ( sprite: Sprite, direction: DirectionEnum ): void => {
-    const changedDirection = sprite.direction != direction;
-    sprite.direction = direction   
+    sprite.setDirection( direction );
 
     const movementIsAllowed = checkIfMovementAllowed( sprite, direction )
     const movingToNeighbour = checkForNeighbours(sprite)
 
-    if ( movementIsAllowed && !movingToNeighbour && !changedDirection && !sprite.checkForCollision() ) {
+    if ( movementIsAllowed && !movingToNeighbour && !sprite.checkForCollision() ) {
         moveSpriteInDirection( sprite, direction );          
     }
 }

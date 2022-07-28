@@ -98,19 +98,21 @@ export class Sprite {
         this.model = canvasObjectModel.spriteDataModel;
         this.animationType = canvasObjectModel.animationType;
         this.movementType = canvasObjectModel.movementType;
-        this.setDimensions();
+
         this.spriteId       = spriteId;
         this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.direction      = canvasObjectModel.direction != null ? canvasObjectModel.direction : 0;
-        this.previousDirection = canvasObjectModel.direction != null ? canvasObjectModel.direction : 0;
+        this.setDirection(canvasObjectModel.direction ?? 0);
+
         this.activeEffect   = { active: false };
         this.isPlayer       = isPlayer;
         this.hasDoor        = canvasObjectModel.hasDoor;
-        this.hasAction      = canvasObjectModel.hasAction;
+        this.hasAction  = canvasObjectModel.hasAction;
+        this.isCar = this.model.isCar;
         this.speed = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * ( Math.random() * ( .75 - .5 ) + .5 );
+
         this.initialColumn = canvasObjectModel.column;
         this.initialRow = canvasObjectModel.row;
         this.setSpriteToGrid( tile );
@@ -213,11 +215,12 @@ export class Sprite {
         }
     }
 
-    changeDirection( direction: DirectionEnum ): void {
+    setDirection( direction: DirectionEnum ): void {
         this.previousDirection = this.direction;
         this.direction = direction;
-        if ( direction !== this.previousDirection && this.model.dimensionalAlignment !== SpriteSheetAlignmentEnum.standard ) {
+        if ( direction !== this.previousDirection ) {
             this.setDimensions();
+            this.setActiveFrames();
         }
     }
 
@@ -248,32 +251,47 @@ export class Sprite {
     }
 
     setActiveFrames(): void {
-        switch ( this.direction ) {
-            case DirectionEnum.left:
-                this.activeFrames = this.model.movementFrames[this.direction];
-                break;
-            case DirectionEnum.up:
-                this.activeFrames = this.model.movementFrames[this.direction];
-                break;
-            case DirectionEnum.right:
-                this.activeFrames = this.model.movementFrames[this.direction];
-                break;
-            case DirectionEnum.down:
-                this.activeFrames = this.model.movementFrames[this.direction];
-                break;
-            default:
-                break;
+        if ( !this.model.canMove ) {
+            this.activeFrames = [{ x: 0, y: 0, width: this.spriteWidthInSheet, height: this.spriteHeightInSheet }];
+            return;
         }
-
-        this.sheetFrameLimit = this.activeFrames.length
+        this.activeFrames = [...this.model.movementFrames[this.direction]];
+        this.activeFrames.forEach( ( e ) => { e.width = this.spriteWidthInSheet; e.height = this.spriteHeightInSheet; })
+        this.sheetFrameLimit = this.activeFrames.length;
     }
 
     setSpriteToGrid( tile: Tile ): void {
         this.row = tile.row;
         this.column = tile.column;
-        
-        this.x = tile.x;
-        this.y = tile.y - ( this.height - GRID_BLOCK_PX )
+
+        if ( this.isCar ) {
+            this.setCarToGrid( tile );
+        }
+        else {
+            this.x = tile.x;
+            this.y = tile.y - ( this.height - GRID_BLOCK_PX );
+        }
+    }
+
+    setCarToGrid( tile: Tile ): void {
+        switch ( this.direction ) {
+            case DirectionEnum.left:
+                this.x = tile.x;
+                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
+                break;
+            case DirectionEnum.up:
+                this.x = tile.x;
+                this.y = tile.y;
+                break;
+            case DirectionEnum.right:
+                this.x = tile.x - this.width;
+                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
+                break;
+            case DirectionEnum.down:
+                this.x = tile.x;
+                this.y = tile.y - this.height;
+                break;
+        }
     }
 
     setGraphicalEffect( name ): void {
@@ -312,6 +330,7 @@ export class Sprite {
     }
     
     drawSprite(): void {
+        const frame = this.activeFrames[this.sheetPosition]; 
         this.updateState();
         this.handlePlugins();
         if ( this.isPlayer ) {
@@ -322,8 +341,8 @@ export class Sprite {
         }
         drawFromImageToCanvas(
             "FRONT", this.model.image,
-            this.sheetPosition * this.spriteWidthInSheet, this.direction * this.spriteHeightInSheet, 
-            this.spriteWidthInSheet, this.spriteHeightInSheet,
+            frame.x, frame.y, 
+            frame.width, frame.height,
             this.x, this.y, this.width, this.height
         )
         if ( this.hasActiveEffect ) {

@@ -44,7 +44,7 @@ const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
     }
 };
 export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum ) => {
-    sprite.changeDirection( direction );
+    sprite.setDirection( direction );
     switch ( direction ) {
         case DirectionEnum.left:
             sprite.x -= sprite.speed;
