@@ -4,15 +4,16 @@ import globals from "../../game-data/globals";
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
 import { Destination } from "../map/map-classes/Destination";
+import { destroySpriteAnimation, spriteHasAnimation } from "./animationModule";
 
 let movementDictionary: { [key in string]: Destination } = {};
 
 export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: GridCellModel, deleteAfterMovement: boolean ): void => {
+    if ( spriteHasAnimation( sprite.spriteId ) ) {
+        destroySpriteAnimation( sprite );
+    }
     movementDictionary[sprite.spriteId] = new Destination( destinationCell.column, destinationCell.row, sprite, deleteAfterMovement );
     sprite.State.set( SpriteStateEnum.pathfinding );
-};
-export const getAssociatedSpriteMovementDestination = ( spriteId: string ): Destination => {
-    return movementDictionary[spriteId];
 };
 export const handleSpriteMovement = ( sprite: Sprite ): void => {
     const destination = getAssociatedSpriteMovementDestination( sprite.spriteId );
@@ -29,6 +30,9 @@ export const destroySpriteMovement = ( sprite: Sprite ): void => {
 };
 export const clearSpriteMovementDictionary = (): void => {
     movementDictionary = {}
+};
+const getAssociatedSpriteMovementDestination = ( spriteId: string ): Destination => {
+    return movementDictionary[spriteId];
 };
 const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
     const direction = destination.getNextStepDirection( sprite );
@@ -62,5 +66,5 @@ export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum 
     if ( sprite.isInCameraFocus && !globals.GAME.cameraFocus.movingToNewFocus ) {
         globals.GAME.cameraFocus.centerOnXY( sprite.centerX, sprite.baseY );
     }
-    sprite.countFrame();
+    sprite.movementFrameCounter();
 };

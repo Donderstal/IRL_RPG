@@ -323,10 +323,66 @@ const animationResources = {
         { row: 9, column: 2 },
         { row: 9, column: 1 },
         { row: 9, column: 0 }
+    ],
+    "SIGN_IDLE_HORI": [
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 0 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 0 },
+        { row: 0, column: 1 }
+    ],
+    "SIGN_IDLE_HORI_LONG": [
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 1 }
+    ],
+    "SIGN_IDLE_VERT": [
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 0, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 0, column: 0 },
+        { row: 1, column: 0 }
+    ],
+    "SIGN_IDLE_VERT_LONG": [
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 },
+        { row: 1, column: 0 }
+    ],
+    "COLLECTABLE_IDLE": [
+        { row: 0, column: 1 },
+        { row: 0, column: 2 },
+        { row: 0, column: 3 },
+        { row: 0, column: 1 },
+        { row: 0, column: 2 },
+        { row: 0, column: 3 }
+    ],
+    "COLLECTABLE_IDLE_LONG": [
+        { row: 0, column: 1 },
+        { row: 0, column: 1 },
+        { row: 0, column: 2 },
+        { row: 0, column: 2 },
+        { row: 0, column: 3 },
+        { row: 0, column: 3 }
     ]
 }
 
-export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number = null ): SpriteAnimationModel => {
+export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number = null, options: { looped: boolean, loops: number } = null ): SpriteAnimationModel => {
     if ( animationName in animationResources ) {
         return getAnimationModel( animationName, width, height );
     } 
@@ -357,7 +413,7 @@ export const getAnimationByName = ( animationName: string, width: number, height
 
 }
 
-const getAnimationModel = ( name: string, width: number, height: number ): SpriteAnimationModel => {
+const getAnimationModel = ( name: string, width: number, height: number, looped: boolean = false, loops: number = null ): SpriteAnimationModel => {
     const dto = animationResources[name];
     const model: SpriteAnimationModel = {
         name: name,
@@ -369,7 +425,9 @@ const getAnimationModel = ( name: string, width: number, height: number ): Sprit
                 height: height
             }
             return model;
-        } )
+        } ),
+        looped: looped,
+        loops: loops
     }
     return model;
 }

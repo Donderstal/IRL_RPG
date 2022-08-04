@@ -974,19 +974,24 @@ export default {
 	],
 	"sprites": [
 		{
-			"anim_type": AnimationTypeEnum.moving,
+			"anim_type": AnimationTypeEnum.semiIdle,
 			"direction": DirectionEnum.down,
 			"type": FAT_BUFF_GUY,
 			"row": 5,
 			"column": 11
 		},
 		{
-			"anim_type": AnimationTypeEnum.moving,
+			"anim_type": AnimationTypeEnum.semiIdle,
 			"direction": DirectionEnum.down,
 			"type": FAT_BUFF_GUY,
 			"row": 5,
 			"column": 3
-		}
+		},
+		{
+			"type": "bar_lights",
+			"row": 1,
+			"column": 1
+        }
 	],
 	"playerStart": {
 		"column": 7,

@@ -1,13 +1,11 @@
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
-import { getAnimationByName } from '../../resources/animationResources'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/map-ui/movementChecker'
 import { SpriteState } from '../../helpers/SpriteState'
 import { faceTowardsTarget } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
-import type { AnimationScriptModel } from '../../models/AnimationScriptModel'
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum'
@@ -25,6 +23,9 @@ import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/
 import { handleSpriteMovement, initializeSpriteMovement } from '../modules/spriteMovementModule'
 import { handleCarMovement, initializeCarMovement } from '../modules/carMovementModule'
 import { handleRandomAnimationCounter, initializeRandomAnimationCounter } from '../modules/randomAnimationModule'
+import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
+import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
+import { handleIdleAnimationCounter, initializeIdleAnimationCounter } from '../modules/idleAnimationModule'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -54,11 +55,12 @@ export class Sprite {
     State: SpriteState;
     sheet: HTMLImageElement;
 
-    animationScript: AnimationScriptModel;
     activeEffect: any;
     hasActiveEffect: boolean;
-    animationType: AnimationTypeEnum
-    movementType: MovementType
+    animationType: AnimationTypeEnum;
+    movementType: MovementType;
+    animationName: string;
+    activeFrame: SpriteFrameModel;
 
     name: string;
     spriteId: string;
@@ -95,9 +97,11 @@ export class Sprite {
             collision: { set: false, active: false },
             animation: { set: false, active: false }
         }
-        this.model = canvasObjectModel.spriteDataModel;
-        this.animationType = canvasObjectModel.animationType;
-        this.movementType = canvasObjectModel.movementType;
+
+        this.model          = canvasObjectModel.spriteDataModel;
+        this.animationType  = canvasObjectModel.animationType;
+        this.movementType   = canvasObjectModel.movementType;
+        this.animationName  = canvasObjectModel.animationName;
 
         this.spriteId       = spriteId;
         this.State          = new SpriteState( );
@@ -123,7 +127,6 @@ export class Sprite {
     }
 
     get isInCameraFocus(): boolean { return globals.GAME.cameraFocus.focusSpriteId == this.spriteId;}
-    get activeAnimationFrame(): SpriteFrameModel { return this.animationScript.frames[this.animationScript.index]; }
 
     get centerX(): number { return this.x + ( this.width / 2 ); };
     get baseY(): number { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
@@ -147,12 +150,13 @@ export class Sprite {
 
     setPlugins( canvasObjectModel: CanvasObjectModel ): void {
         let model = this.model;
-        if ( model.idleAnimation ) {
+        if ( model.idleAnimation && !this.model.isCharacter ) {
             this.plugins.idleAnimation.set = true;
+            this.plugins.idleAnimation.active = true;
+            initializeIdleAnimationCounter( this );
         }
 
-        if ( ( !this.isPlayer && this.model.isCharacter )
-            && this.animationType !== AnimationTypeEnum.movingLoop
+        if ( this.model.isCharacter && this.animationType !== AnimationTypeEnum.movingLoop
             && this.animationType !== AnimationTypeEnum.animationLoop ) {
             this.plugins.randomAnimation.set = true;
             this.plugins.randomAnimation.active = true;
@@ -181,6 +185,9 @@ export class Sprite {
 
         if ( this.model.canMove || this.model.idleAnimation ) {
             this.plugins.animation.set = true;
+            if ( this.animationType === AnimationTypeEnum.animationLoop ) {
+                initializeSpriteAnimation( this, this.animationName, { looped: true, loops: 0 } );
+            }
         }
     }
 
@@ -207,8 +214,11 @@ export class Sprite {
                 handleCarMovement( this );
             }
         }
+        if ( this.pluginIsRunning( plugins.animation ) ) {
+            handleSpriteAnimation( this );
+        }
         if ( this.pluginIsRunning( plugins.idleAnimation ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.animation ) ) ) {
-
+            handleIdleAnimationCounter( this );
         }
         if ( this.pluginIsRunning( plugins.randomAnimation ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.animation ) ) ) {
             handleRandomAnimationCounter( this );
@@ -253,11 +263,14 @@ export class Sprite {
     setActiveFrames(): void {
         if ( !this.model.canMove ) {
             this.activeFrames = [{ x: 0, y: 0, width: this.spriteWidthInSheet, height: this.spriteHeightInSheet }];
-            return;
         }
-        this.activeFrames = [...this.model.movementFrames[this.direction]];
-        this.activeFrames.forEach( ( e ) => { e.width = this.spriteWidthInSheet; e.height = this.spriteHeightInSheet; })
-        this.sheetFrameLimit = this.activeFrames.length;
+        else {
+            this.activeFrames = [...this.model.movementFrames[this.direction]];
+            this.activeFrames.forEach( ( e ) => { e.width = this.spriteWidthInSheet; e.height = this.spriteHeightInSheet; })
+            this.sheetFrameLimit = this.activeFrames.length;
+        }
+
+        this.setActiveFrame();
     }
 
     setSpriteToGrid( tile: Tile ): void {
@@ -330,7 +343,6 @@ export class Sprite {
     }
     
     drawSprite(): void {
-        const frame = this.activeFrames[this.sheetPosition]; 
         this.updateState();
         this.handlePlugins();
         if ( this.isPlayer ) {
@@ -341,14 +353,13 @@ export class Sprite {
         }
         drawFromImageToCanvas(
             "FRONT", this.model.image,
-            frame.x, frame.y, 
-            frame.width, frame.height,
+            this.activeFrame.x, this.activeFrame.y, 
+            this.activeFrame.width, this.activeFrame.height,
             this.x, this.y, this.width, this.height
         )
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawFront( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
-        this.checkForAnimation( );
 
         this.updateCell()
     }
@@ -370,23 +381,32 @@ export class Sprite {
         }
     }
 
-    checkForAnimation(): void {
-        if ( this.State.inAnimation ) {
-            this.doScriptedAnimation( );
-        }
+    movementFrameCounter() {
+        this.countFrame();
+        this.checkFrameLimit();
+        this.checkSheetLimit();
+        this.setActiveFrame();
     }
 
     countFrame( ): void {
         this.frameCount++;  
-    
-        if ( this.frameCount >= FRAME_LIMIT) {
+    }
+
+    checkFrameLimit(): void {
+        if ( this.frameCount >= FRAME_LIMIT ) {
             this.frameCount = 0;
             this.sheetPosition++;
-    
-            if (this.sheetPosition >= this.sheetFrameLimit) {
-                this.sheetPosition = 0;
-            }
         }
+    }
+
+    checkSheetLimit(): void {
+        if ( this.sheetPosition >= this.sheetFrameLimit ) {
+            this.sheetPosition = 0;
+        }
+    }
+
+    setActiveFrame( frame = this.activeFrames[this.sheetPosition] ) {
+        this.activeFrame = frame;
     }
 
     setAnimation( animation: any ): void {
@@ -407,7 +427,9 @@ export class Sprite {
             this.isCar ? initializeCarMovement( this, animation.destination ) : initializeSpriteMovement( this, animation.destination, false );
         }
         if ( animation.is( SceneAnimationType.animation ) ) {
-            this.setScriptedAnimation( animation, FRAME_LIMIT )
+            const animateSpriteScene = animation as AnimateSpriteScene;
+            const options = { looped: animateSpriteScene.loop, loops: 0 };
+            initializeSpriteAnimation( this, animateSpriteScene.animationName, options );
         }
     }
 
@@ -418,71 +440,8 @@ export class Sprite {
             type
         );   
         if ( this.animationType != AnimationTypeEnum.animationLoop ) {
-            this.setScriptedAnimation( { animName: "TALK", loop: true }, FRAME_LIMIT )            
+            initializeSpriteAnimation( this, "TALK", { looped: true, loops: 0 } );    
         }
-    }
-
-    setScriptedAnimation( animation: any, frameRate: number, numberOfLoops: number = null ): void {
-        if ( this.State.inAnimation )
-            this.unsetScriptedAnimation();
-
-        const animationModel = getAnimationByName( animation.animName, this.width, this.height, this.direction );
-        this.animationScript = {
-            loop: animation.loop,
-            frames: animationModel.frames,
-            index: 0,
-            numberOfFrames: animationModel.frames.length,
-            frameRate: frameRate,
-            numberOfLoops: numberOfLoops,
-            currentLoop: 0
-        }
-       
-        this.sheetPosition  = this.activeAnimationFrame.column;
-        this.direction      = this.activeAnimationFrame.row;
-
-        this.State.animationOn( this.direction, this.sheetPosition );
-    }
-
-    doScriptedAnimation( ): void {
-        this.frameCount++;  
-    
-        if ( this.animationScript.frames != undefined &&this.frameCount >= this.animationScript.frameRate ) {
-            this.frameCount = 0;
-            this.updateAnimationIndex( );
-        }
-    }
-
-    updateAnimationIndex( ): void {
-        if ( this.animationScript.index + 1 == this.animationScript.numberOfFrames ) {
-            this.checkForLoop()
-        }
-        else {
-            let currentAnimation = this.animationScript.frames[this.animationScript.index];
-
-            this.sheetPosition  = currentAnimation.column;
-            this.direction      = currentAnimation.row;   
-            this.animationScript.index++ 
-        }               
-    }
-
-    checkForLoop( ): void {
-        const currentLoopIsLast = this.animationScript.numberOfLoops == this.animationScript.currentLoop
-
-        if ( this.animationScript.loop && ( !this.animationScript.numberOfLoops || !currentLoopIsLast ) ) {
-            this.animationScript.currentLoop++
-            this.animationScript.index = 0;
-        }
-        else {
-            this.unsetScriptedAnimation( );
-        }
-    }
-
-    unsetScriptedAnimation( ): void {
-        if ( this.hasActiveEffect ) {
-            this.unsetGraphicalEffect( );
-        }
-        this.animationScript = null;
-        this.State.animationOff( this );  
     }
 
     checkForCollision( ): boolean {
@@ -509,6 +468,7 @@ export class Sprite {
 
     activateMovementModule( direction: DirectionEnum ): void {
         this.direction = direction;
+        this.setActiveFrames();
         this.State.set( SpriteStateEnum.moving );
         !this.isCar ? this.plugins.movement.active = true : this.plugins.carMovement.active = true;
     }
@@ -516,5 +476,16 @@ export class Sprite {
     deactivateMovementModule() {
         !this.isCar ? this.plugins.movement.active = false : this.plugins.carMovement.active = false;
         this.sheetPosition = 0;
+        this.setActiveFrame();
+    }
+
+    activateAnimationModule() {
+        this.plugins.animation.active = true;
+    }
+
+    deactivateAnimationModule() {
+        this.plugins.animation.active = false;
+        this.sheetPosition = 0;
+        this.setActiveFrames();
     }
 }

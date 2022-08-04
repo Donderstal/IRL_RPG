@@ -16,6 +16,7 @@ export type CanvasObjectModel = {
     name?: string
     sfx?: string;
     animationType?: AnimationTypeEnum;
+    animationName?: string;
     movementType?: MovementType;
     direction?: DirectionEnum;
 

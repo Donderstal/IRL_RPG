@@ -4,11 +4,14 @@ import globals from '../../../game-data/globals';
 import { GRID_BLOCK_PX, MOVEMENT_SPEED } from '../../../game-data/globals';
 import { switchMap } from '../../../helpers/loadMapHelpers';
 import type { Sprite } from '../../core/Sprite';
+import { destroySpriteAnimation, spriteHasAnimation } from '../../modules/animationModule';
 import { moveSpriteInDirection } from '../../modules/spriteMovementModule';
 
 export const handleMovementOfSprite = ( sprite: Sprite, direction: DirectionEnum ): void => {
+    if ( spriteHasAnimation( sprite.spriteId ) ) {
+        destroySpriteAnimation( sprite );
+    }
     moveInDirection( sprite, direction )
-    sprite.countFrame();
 }
 
 const moveInDirection = ( sprite: Sprite, direction: DirectionEnum ): void => {

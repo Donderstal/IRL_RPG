@@ -111,6 +111,13 @@ const STANDARD_CHARACTER = {
     "width_blocks": 1,
     "grounded_at_bottom": true,
     "is_character": true,
+    "idle_animation": true,
+    "idle_animations": [
+        "BACK_AND_FORTH",
+        "LEFT_AND_RIGHT",
+        "BOP",
+        "BLINK"
+    ],
     "movement_frames": {
         [DirectionEnum.left]: [
             { "x": 0, "y": 112 },
@@ -156,25 +163,25 @@ const getDoorOrWindow = ( width, height ) => {
 }
 
 
-const getSignData = ( widthInBlocks, heightInBlocks, frames ) => {
+const getSignData = ( widthInBlocks, heightInBlocks, name ) => {
     return {
         "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": widthInBlocks,
         "height_blocks": heightInBlocks,
         "not_grounded": true,
         "idle_animation": true,
-        "idle_animation_frames": frames
+        "idle_animations": name
     }
 }
 
-const getCollectible = ( widthInBlocks, heightInBlocks, frames, collectable_type ) => {
+const getCollectible = ( widthInBlocks, heightInBlocks, name, collectable_type ) => {
     return {
         "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "height_blocks": heightInBlocks,
         "width_blocks": widthInBlocks,
         "collectable_type": collectable_type,
         "idle_animation": true,
-        "idle_animation_frames": frames
+        "idle_animations": name
     }
 }
 
@@ -225,15 +232,15 @@ export const spriteData = {
     },
     "bar_lights": {
         "src": "bar_lights.png",
-        ...getSignData( 4, 1, [{ x: 256, y: 0 }, { x: 256, y: 0 }, { x: 0, y: 0 }, { x: 256, y: 0 }] )
+        ...getSignData( 4, 1, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "bar_sign": {
         "src": "bar_sign.png",
-        ...getSignData( 3, 2, [{ x: 192, y: 0 }, { x: 192, y: 0 }, { x: 0, y: 0 }, { x: 192, y: 0 }] )
+        ...getSignData( 3, 2, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "bar_sign_old": {
         "src": "bar_sign_old.png",
-        ...getSignData( 1.8125, 1, [{ x: 0, y: 64 }, { x: 0, y: 64 }, { x: 0, y: 0 }, { x: 0, y: 64 }] )
+        ...getSignData( 1.8125, 1, ["SIGN_IDLE_VERT", "SIGN_IDLE_HORI_VERT"] )
     },
     "bench_a": {
         "src": "bench_a.png",
@@ -652,7 +659,7 @@ export const spriteData = {
     },
     "hotel_sign": {
         "src": "hotel_sign.png",
-        ...getSignData( 1, 2.21875, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
+        ...getSignData( 1, 2.21875, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "house_plant": {
         "src": "house_plant.png",
@@ -843,19 +850,19 @@ export const spriteData = {
     },
     "Sign_01": {
         "src": "sign1.png",
-        ...getSignData( 1, 1.75, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
+        ...getSignData( 1, 1.75, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "Sign_02": {
         "src": "sign2.png",
-        ...getSignData( 1, 1.75, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
+        ...getSignData( 1, 1.75, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "Sign_03": {
         "src": "sign3.png",
-        ...getSignData( 1, 1, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
+        ...getSignData( 1, 1, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "Sign_04": {
         "src": "sign4.png",
-        ...getSignData( 1, 1, [{ x: 64, y: 0 }, { x: 64, y: 0 }, { x: 0, y: 0 }, { x: 64, y: 0 }] )
+        ...getSignData( 1, 1, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
     },
     "Single_Bed": {
         "src": "single_bed.png",
@@ -1098,11 +1105,11 @@ export const spriteData = {
     // collectible
     "collectable_coin": {
         "src": "coin.png",
-        ...getCollectible( 0.75, 0.75, [{ x: 48, y: 0 }, { x: 96, y: 0 }, { x: 144, y: 0 }], CollectableType.coin )
+        ...getCollectible( 0.75, 0.75, ["COLLECTABLE_IDLE", "COLLECTABLE_IDLE_LONG"], CollectableType.coin )
     },
     "collectable_juice_can": {
         "src": "juice_can.png",
-        ...getCollectible( 0.5625, 0.78125, [{ x: 36, y: 0 }, { x: 72, y: 0 }, { x: 108, y: 0 }], CollectableType.can )
+        ...getCollectible( 0.5625, 0.78125, ["COLLECTABLE_IDLE", "COLLECTABLE_IDLE_LONG"], CollectableType.can )
     },
 
     // doors new
@@ -1313,8 +1320,7 @@ export const getDataModels = (): SpriteDataModel[] => {
         }
 
         if ( model.idleAnimation ) {
-            const dto = value["idle_animation_frames"];
-            model.idleAnimationFrames = dto.map( ( e: { x: number, y: number } ) => { return getSpriteFrameForPosition( e, model ) } )
+            model.idleAnimations = value["idle_animations"];
         }
 
         if ( model.isCollectable ) {

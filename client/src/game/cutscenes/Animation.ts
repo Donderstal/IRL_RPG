@@ -214,7 +214,7 @@ export class Animation {
         
         const sprite: Sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( );
         if ( sprite.animationType !== AnimationTypeEnum.animationLoop ) {
-            sprite.unsetScriptedAnimation( )            
+            //sprite.unsetScriptedAnimation( )            
         }
     }
 

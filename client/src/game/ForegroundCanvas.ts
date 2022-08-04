@@ -17,6 +17,7 @@ import { initCanvasObjectModel } from '../helpers/modelFactory';
 import type { GridCellModel } from '../models/GridCellModel';
 import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
 import { initializeSpriteMovement } from './modules/spriteMovementModule';
+import { AnimationTypeEnum } from '../enumerables/AnimationTypeEnum';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -66,7 +67,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
     initPlayerCharacter( start: CellPosition, className: string ) {
         const startingTile = this.grid.array.filter( tile => { return tile.row == start.row && tile.column == start.column } )[0];
         const spriteModel = getDataModelByKey( className );
-        const canvasObjectModel = initCanvasObjectModel( { type: className, direction: start.direction ?? 0, column: start.column, row: start.row, spriteDataModel: spriteModel } );
+        const canvasObjectModel = initCanvasObjectModel( { type: className, direction: start.direction ?? 0, column: start.column, row: start.row, spriteDataModel: spriteModel, anim_type: AnimationTypeEnum.idle } );
         this.playerSprite = new Sprite( startingTile, canvasObjectModel, PLAYER_ID, true );
         this.playerSprite.name = PLAYER_NAME;
         this.allSprites.push( this.playerSprite );

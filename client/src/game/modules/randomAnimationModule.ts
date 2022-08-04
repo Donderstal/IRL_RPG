@@ -1,28 +1,18 @@
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import globals, { FRAME_LIMIT } from "../../game-data/globals";
+import globals from "../../game-data/globals";
 import { Counter } from "../../helpers/Counter";
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
+import { initializeSpriteAnimation } from "./animationModule";
 import { initializeSpriteMovement } from "./spriteMovementModule";
 
 let counterDictionary: { [key in string]: Counter } = {};
 const cellRadius = 2;
-const animationList = [
-    "BACK_AND_FORTH",
-    "LEFT_AND_RIGHT",
-    "BOP",
-    "BLINK"
-];
 
 export const initializeRandomAnimationCounter = ( sprite: Sprite ): void => {
     counterDictionary[sprite.spriteId] = new Counter( 7500, true );
 };
-
-export const getAssociatedCounter = ( spriteId: string ): Counter => {
-    return counterDictionary[spriteId];
-}
-
 export const handleRandomAnimationCounter = ( sprite: Sprite ): void => {
     const counter = getAssociatedCounter( sprite.spriteId );
     counter.count();
@@ -30,12 +20,17 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ): void => {
         setRandomDestinationOrAnimation( sprite );
         counter.resetCounter();
     }
-}
-
+};
 export const clearRandomAnimationCounters = (): void => {
     counterDictionary = {};
-}
-
+};
+export const resetIdleAnimationCounter = ( spriteId: string ): void => {
+    const counter = getAssociatedCounter( spriteId );
+    counter.resetCounter();
+};
+const getAssociatedCounter = ( spriteId: string ): Counter => {
+    return counterDictionary[spriteId];
+};
 const setRandomDestinationInRadius = ( sprite: Sprite ) => {
     const colDistance = Math.floor( Math.random() * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
     const rowDistance = Math.floor( Math.random() * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
@@ -48,14 +43,13 @@ const setRandomDestinationInRadius = ( sprite: Sprite ) => {
     else {
         setRandomDestinationInRadius( sprite )
     }
-}
-
+};
 const setRandomAnimation = ( sprite: Sprite ) => {
-    const animation = animationList[Math.floor( Math.random() * animationList.length )];
+    const animationList = sprite.model.idleAnimations;
+    let animationName = animationList[Math.floor( Math.random() * animationList.length )];
     const direction = sprite.direction;
-    let animationName;
 
-    switch ( animation ) {
+    switch ( animationName ) {
         case "BOP":
             animationName = direction == DirectionEnum.up ? "BOP_UP" : DirectionEnum.down ? "BOP_DOWN" : direction == DirectionEnum.left ? "BOP_LEFT" : "BOP_RIGHT";
             break;
@@ -63,14 +57,11 @@ const setRandomAnimation = ( sprite: Sprite ) => {
             animationName = direction == DirectionEnum.down ? "BLINK_DOWN" : direction == DirectionEnum.left ? "BLINK_LEFT" : "BLINK_RIGHT";
             break;
         default:
-            animationName = animation
+            animationName = animationName
     }
 
-    sprite.setScriptedAnimation(
-        { "animName": animationName, "loop": false }, FRAME_LIMIT
-    )
-}
-
+    initializeSpriteAnimation( sprite, animationName, { looped: false, loops: 0 } );
+};
 const setRandomDestinationOrAnimation = ( sprite: Sprite ) => {
     switch ( sprite.animationType ) {
         case AnimationTypeEnum.idle:
@@ -83,4 +74,4 @@ const setRandomDestinationOrAnimation = ( sprite: Sprite ) => {
             setRandomDestinationInRadius( sprite );
             break;
     }
-}
+};
