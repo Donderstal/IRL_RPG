@@ -8,7 +8,7 @@ import { destroySpriteAnimation, spriteHasAnimation } from "./animationModule";
 
 let movementDictionary: { [key in string]: Destination } = {};
 
-export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: GridCellModel, deleteAfterMovement: boolean ): void => {
+export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: GridCellModel, deleteAfterMovement: boolean = false ): void => {
     if ( spriteHasAnimation( sprite.spriteId ) ) {
         destroySpriteAnimation( sprite );
     }

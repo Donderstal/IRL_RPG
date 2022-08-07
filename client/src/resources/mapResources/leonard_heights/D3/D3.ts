@@ -58,7 +58,7 @@ export default {
          "primaryColumn":13,
          "secondaryColumn":14,
          "primaryRow":15,
-         "secondaryRow":1
+         "secondaryRow":0
       },
       {
          "direction": DirectionEnum.down,
@@ -66,15 +66,15 @@ export default {
          "hasStart":true,
          "primaryColumn":11,
          "secondaryColumn":12,
-         "primaryRow":1,
+         "primaryRow":0,
          "secondaryRow":13
       },
       {
           "direction": DirectionEnum.right,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
-         "primaryRow":14,
-         "secondaryRow":15,
+         "primaryRow":15,
+         "secondaryRow":14,
          "primaryColumn":9,
          "secondaryColumn":14
       },
@@ -82,8 +82,8 @@ export default {
          "direction": DirectionEnum.left,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
-         "primaryRow":12,
-         "secondaryRow":13,
+         "primaryRow":13,
+         "secondaryRow":12,
          "primaryColumn":12,
          "secondaryColumn":7
       },
@@ -94,7 +94,7 @@ export default {
          "primaryColumn":7,
          "secondaryColumn":8,
          "primaryRow":12,
-         "secondaryRow":16
+         "secondaryRow":17
       },
       {
           "direction": DirectionEnum.up,
@@ -102,25 +102,25 @@ export default {
          "hasStart":true,
          "primaryColumn":9,
          "secondaryColumn":10,
-         "primaryRow":16,
+         "primaryRow":17,
          "secondaryRow":14
       },
       {
           "direction": DirectionEnum.right,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":false,
-         "primaryRow":10,
-         "secondaryRow":11,
+         "primaryRow":11,
+         "secondaryRow":10,
          "primaryColumn":11,
-         "secondaryColumn":24
+         "secondaryColumn":25
       },
       {
           "direction": DirectionEnum.left,
          "alignment":RoadAlignmentEnum.horizontal,
          "hasStart":true,
-         "primaryRow":8,
-         "secondaryRow":9,
-         "primaryColumn":24,
+         "primaryRow":9,
+         "secondaryRow":8,
+         "primaryColumn":25,
          "secondaryColumn":11
       }
    ],

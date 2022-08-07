@@ -191,19 +191,19 @@ export default {
             "direction": DirectionEnum.right,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
-            "primaryRow": 15,
-            "secondaryRow": 16,
-            "primaryColumn": 1,
-            "secondaryColumn": 24
+            "primaryRow": 16,
+            "secondaryRow": 15,
+            "primaryColumn": 0,
+            "secondaryColumn": 25
         },
         {
             "direction": DirectionEnum.left,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
-            "primaryRow": 13,
-            "secondaryRow": 14,
-            "primaryColumn": 24,
-            "secondaryColumn": 1
+            "primaryRow": 14,
+            "secondaryRow": 13,
+            "primaryColumn": 25,
+            "secondaryColumn": 0
         }
     ],
     "actions": [

@@ -973,32 +973,80 @@ export default {
 		}
 	],
 	"sprites": [
-		{
-			"anim_type": AnimationTypeEnum.semiIdle,
-			"direction": DirectionEnum.down,
-			"type": FAT_BUFF_GUY,
-			"row": 5,
-			"column": 11
-		},
-		{
-			"anim_type": AnimationTypeEnum.semiIdle,
-			"direction": DirectionEnum.down,
-			"type": FAT_BUFF_GUY,
-			"row": 5,
-			"column": 3
-		},
+		//{
+		//	"anim_type": AnimationTypeEnum.semiIdle,
+		//	"direction": DirectionEnum.down,
+		//	"type": FAT_BUFF_GUY,
+		//	"row": 2,
+		//	"column": 11
+		//},
+		//{
+		//	"anim_type": AnimationTypeEnum.semiIdle,
+		//	"direction": DirectionEnum.down,
+		//	"type": FAT_BUFF_GUY,
+		//	"row": 2,
+		//	"column": 3
+		//},
 		{
 			"type": "bar_lights",
 			"row": 1,
 			"column": 1
-        }
+		},
+		//{
+		//	"type": "car_b",
+		//	"row": 3,
+		//	"column": 1,
+		//	"direction": DirectionEnum.left
+		//},
+		//{
+		//	"type": "car_b",
+		//	"row": 3,
+		//	"column": 8,
+		//	"direction": DirectionEnum.right
+		//},
+		//{
+		//	"type": "bar_lights",
+		//	"row": 1,
+		//	"column": 8
+		//},
+		//{
+		//	"type": "car_b",
+		//	"row": 4,
+		//	"column": 1,
+		//	"direction": DirectionEnum.up
+		//},
+		//{
+		//	"type": "car_b",
+		//	"row": 4,
+		//	"column": 8,
+		//	"direction": DirectionEnum.down
+		//}
 	],
 	"playerStart": {
 		"column": 7,
-		"row": 5
+		"row": 2
     },
 	"frontSprites": [],
 	"spawnPoints": [],
-	"roads": [],
+	"roads": [
+		{
+			"direction": DirectionEnum.right,
+			"alignment": "HORI",
+			"hasStart": true,
+			"primaryRow": 8,
+			"secondaryRow": 7,
+			"primaryColumn": 1,
+			"secondaryColumn": 13
+		},
+		{
+			"direction": DirectionEnum.left,
+			"alignment": "HORI",
+			"hasStart": true,
+			"primaryRow": 6,
+			"secondaryRow": 5,
+			"primaryColumn": 12,
+			"secondaryColumn": 0
+		}
+	],
 	"doors": []
 }

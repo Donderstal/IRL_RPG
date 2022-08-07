@@ -109,16 +109,16 @@ export class ForegroundCanvas extends CanvasWithGrid {
     }
 
     deleteSprite( spriteId: string ): void {
-        if ( this.spriteDictionary[spriteId].model.isCar ) {
-            (this.spriteDictionary[spriteId] as any).movementSoundEffect.reset( );
-        };
-        if ( this.spriteDictionary[spriteId].isCar ) {
-            this.roadNetwork.roads.forEach( ( e ) => {
-                if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
-                    e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
-                }
-            });
-        }
+        //if ( this.spriteDictionary[spriteId].model.isCar ) {
+        //    (this.spriteDictionary[spriteId] as any).movementSoundEffect.reset( );
+        //};
+        //if ( this.spriteDictionary[spriteId].isCar ) {
+        //    this.roadNetwork.roads.forEach( ( e ) => {
+        //        if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
+        //            e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
+        //        }
+        //    });
+        //}
         delete this.spriteDictionary[spriteId];
         this.allSprites = [];
         Object.keys( this.spriteDictionary ).forEach ( ( e ) => {

@@ -39,8 +39,8 @@ export default {
             "hasStart": true,
             "primaryColumn": 13,
             "secondaryColumn": 14,
-            "primaryRow": 16,
-            "secondaryRow": 1
+            "primaryRow": 17,
+            "secondaryRow": 0
         }
     ],
     "actions": [

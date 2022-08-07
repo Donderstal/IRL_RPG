@@ -118,19 +118,19 @@ export default {
             "direction": DirectionEnum.left,
             "alignment": "HORI",
             "hasStart": true,
-            "primaryRow": 13,
-            "secondaryRow": 14,
-            "primaryColumn": 24,
-            "secondaryColumn": 1
+            "primaryRow": 14,
+            "secondaryRow": 13,
+            "primaryColumn": 25,
+            "secondaryColumn": 0
         },
         {
             "direction": DirectionEnum.right,
             "alignment": "HORI",
             "hasStart": true,
-            "primaryRow": 15,
-            "secondaryRow": 16,
-            "primaryColumn": 1,
-            "secondaryColumn": 24
+            "primaryRow": 16,
+            "secondaryRow": 15,
+            "primaryColumn": 0,
+            "secondaryColumn": 25
         },
         {
             "direction": DirectionEnum.up,
@@ -138,8 +138,8 @@ export default {
             "hasStart": false,
             "primaryColumn": 9,
             "secondaryColumn": 10,
-            "primaryRow": 16,
-            "secondaryRow": 1
+            "primaryRow": 17,
+            "secondaryRow": 0
         },
         {
             "direction": DirectionEnum.down,
@@ -147,8 +147,8 @@ export default {
             "hasStart": true,
             "primaryColumn": 7,
             "secondaryColumn": 8,
-            "primaryRow": 1,
-            "secondaryRow": 16
+            "primaryRow": 0,
+            "secondaryRow": 17
         }
     ],
     "actions": [

@@ -28,7 +28,6 @@ export class I_Junction {
         this.roads      = [];
 
         this.core;
-        this.openLanes = null
         this.intersectionCars = [];
 
         this.directionsIn = [];
@@ -99,9 +98,6 @@ export class I_Junction {
         this.directions.forEach( ( e ) => {
             this.setLane( e )
         });
-        this.directions.forEach((direction) => {
-            this.openLanes[direction] = true;
-        })
     }
 
     setLane( direction: DirectionEnum ): void {

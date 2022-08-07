@@ -98,19 +98,19 @@ export default {
             "direction": DirectionEnum.right,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": true,
-            "primaryRow": 14,
-            "secondaryRow": 15,
-            "primaryColumn": 1,
+            "primaryRow": 15,
+            "secondaryRow": 14,
+            "primaryColumn": 0,
             "secondaryColumn": 12
         },
         {
             "direction": DirectionEnum.left,
             "alignment": RoadAlignmentEnum.horizontal,
             "hasStart": false,
-            "primaryRow": 12,
-            "secondaryRow": 13,
+            "primaryRow": 13,
+            "secondaryRow": 12,
             "primaryColumn": 14,
-            "secondaryColumn": 1
+            "secondaryColumn": 0
         },
         {
             "direction": DirectionEnum.up,
@@ -118,7 +118,7 @@ export default {
             "hasStart": true,
             "primaryColumn": 13,
             "secondaryColumn": 14,
-            "primaryRow": 16,
+            "primaryRow": 17,
             "secondaryRow": 12
         },
         {
@@ -128,7 +128,7 @@ export default {
             "primaryColumn": 11,
             "secondaryColumn": 12,
             "primaryRow": 14,
-            "secondaryRow": 16
+            "secondaryRow": 17
         }
     ],
     "actions": [

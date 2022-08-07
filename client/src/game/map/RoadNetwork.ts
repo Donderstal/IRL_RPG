@@ -1,5 +1,7 @@
+import { start } from 'repl';
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 import globals from '../../game-data/globals';
+import { getValidCarDestination } from '../../helpers/roadPathfindingHelpers';
 import { TileSquare } from '../../helpers/TileSquare';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import type { CellPosition } from '../../models/CellPositionModel';
@@ -14,12 +16,14 @@ export class RoadNetwork {
     intersections: Intersection[];
     intersectionIds: string[];
     crossings: Crossing[];
+    roadDestinations: CellPosition[];
 
     pendingIntersections: { roads: Road[]; roadIds: string[]; directions: DirectionEnum[]; square: TileSquare }[]
     pendingCrossings: { road: Road; square: TileSquare; location: CellPosition[] }[]
     constructor( roads: RoadModel[] ) {
         this.roads = [];
         this.roadIds = [];
+        this.roadDestinations = [];
         this.initRoads( roads );
 
         this.pendingIntersections = [];
@@ -46,9 +50,11 @@ export class RoadNetwork {
 
     initRoads( roads: RoadModel[] ): void {
         roads.forEach( ( road ) => {
-            const id = getUniqueId(this.roadIds);
-            this.roads.push( new Road( road, id ) )
+            const id = getUniqueId( this.roadIds );
+            const roadInstance =  new Road( road, id )
+            this.roads.push( roadInstance );
             this.roadIds.push( id );
+            this.roadDestinations.push( roadInstance.getRoadEndPosition() );
         });
     }
 
@@ -57,7 +63,18 @@ export class RoadNetwork {
     }
 
     handleCarCounter( ): void {
-        this.roads.forEach( ( e ) => { e.handleCarCounter( ); })
+        this.roads.forEach( ( e ) => {
+            if ( e.model.hasStart && e.carCounter.countAndCheckLimit() ) {
+                this.generateCar( e );
+            }
+        } )
+    }
+
+    generateCar( road: Road ): void {
+        const carObjectModel = road.getRandomCarObjectModel();
+        const startLocation = road.getRoadStartPosition();
+        carObjectModel.destination = getValidCarDestination( startLocation, road );
+        globals.GAME.FRONT.setVehicleToTile( carObjectModel );
     }
 
     roadsIntersect( horizontalRoad: Road, verticalRoad: Road ): boolean {

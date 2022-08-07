@@ -8,6 +8,7 @@ import { getDataModelByKey } from "../../../resources/spriteDataResources";
 import type { Sprite } from "../../core/Sprite";
 import type { Tile } from "../../core/Tile";
 import type { I_Junction } from "./I_Junction";
+import type { GridCellModel } from '../../../models/GridCellModel';
 
 export class Road {
     id: string;
@@ -59,19 +60,6 @@ export class Road {
         return this.activeCarIds.map( ( id ) => { return globals.GAME.FRONT.spriteDictionary[id]; })
     }
 
-    handleCarCounter( ): void {
-        if ( this.model.hasStart && this.carCounter.countAndCheckLimit( ) ) {
-            this.generateCar( );
-            this.carCounter.resetCounter( );
-        }
-    }
-
-    generateCar(): void {
-        if ( !this.startCellIsBlocked ) {
-            globals.GAME.FRONT.setVehicleToTile( this.getCarDataForTile( ) )
-        }
-    }
-
     setMovementCostToRoadTiles(): void {
         const tiles = this.getTilesInRoad();
         tiles.forEach( tile => tile.setMovementCost(5) );
@@ -90,26 +78,56 @@ export class Road {
                     && ( e.column === this.model.primaryColumn || e.column === this.model.secondaryColumn ) );
             } )
         }
-
     }
 
-    getCarDataForTile( isBus = false ): CanvasObjectModel {
-        const carNames = globals.GAME.activeNeighbourhood.model.carTypes;
-        let randomIndex = Math.floor(Math.random() * carNames.length);
-        let model: CanvasObjectModel = {
-            direction: this.model.direction,
-            type: isBus ? "bus" : carNames[randomIndex],
-            spriteDataModel: getDataModelByKey( isBus ? "bus" : carNames[randomIndex] ),
+    cellIsInRoad( cellPosition: CellPosition ): boolean {
+        let model = this.model;
+        let inColumns = false;
+        let inRows = false;
+
+        if ( this.isHorizontal ) {
+            inRows = ( cellPosition.row === model.primaryRow || cellPosition.row === model.secondaryRow );
+            inColumns = ( model.direction === DirectionEnum.left )
+                ? ( cellPosition.column >= model.secondaryColumn && cellPosition.column <= model.primaryColumn )
+                : ( cellPosition.column <= model.secondaryColumn && cellPosition.column >= model.primaryColumn );
+        }
+        else {
+            inColumns = ( cellPosition.column === model.primaryColumn || cellPosition.column === model.secondaryColumn );
+            inRows = ( model.direction === DirectionEnum.up )
+                ? ( cellPosition.row >= model.secondaryRow && cellPosition.row <= model.primaryRow )
+                : ( cellPosition.row <= model.secondaryRow && cellPosition.row >= model.primaryRow );
+        }
+        return inColumns && inRows;
+    }
+
+    getRoadEndPosition(): CellPosition {
+        const model: CellPosition = {
+            column: this.isHorizontal ? this.model.secondaryColumn : this.model.primaryColumn,
+            row: this.isHorizontal ? this.model.primaryRow : this.model.secondaryRow,
+            direction: this.model.direction
+        };
+        return model;
+    }
+
+    getRoadStartPosition(): CellPosition {
+        const model: CellPosition = {
             column: this.model.primaryColumn,
             row: this.model.primaryRow,
-            destination: { 
-                column: this.model.direction === DirectionEnum.left
-                    ? 0 : this.model.direction === DirectionEnum.right
-                        ? globals.GAME.BACK.grid.columns + 1 : this.model.primaryColumn, 
-                row: this.model.direction === DirectionEnum.up
-                    ? 0 : this.model.direction === DirectionEnum.down
-                        ? globals.GAME.BACK.grid.rows + 1 : this.model.secondaryRow, 
-            },
+            direction: this.model.direction
+        };
+        return model;
+    }
+
+    getRandomCarObjectModel( isBus = false ): CanvasObjectModel {
+        const carNames = globals.GAME.activeNeighbourhood.model.carTypes;
+        const startLocation = this.getRoadStartPosition();
+        let randomIndex = Math.floor(Math.random() * carNames.length);
+        let model: CanvasObjectModel = {
+            direction: startLocation.direction,
+            type: isBus ? "bus" : carNames[randomIndex],
+            spriteDataModel: getDataModelByKey( isBus ? "bus" : carNames[randomIndex] ),
+            column: startLocation.column,
+            row: startLocation.row,
             hasCondition: false,
             hasDoor: false,
             hasAction: false

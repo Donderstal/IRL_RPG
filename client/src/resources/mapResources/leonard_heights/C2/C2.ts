@@ -166,8 +166,8 @@ export default {
             "direction": DirectionEnum.right,
             "alignment": "HORI",
             "hasStart": true,
-            "primaryRow": 14,
-            "secondaryRow": 15,
+            "primaryRow": 15,
+            "secondaryRow": 14,
             "primaryColumn": 0,
             "secondaryColumn": 25
         },
@@ -175,8 +175,8 @@ export default {
             "direction": DirectionEnum.left,
             "alignment": "HORI",
             "hasStart": true,
-            "primaryRow": 12,
-            "secondaryRow": 13,
+            "primaryRow": 13,
+            "secondaryRow": 12,
             "primaryColumn": 25,
             "secondaryColumn": 0
         }

@@ -1,4 +1,5 @@
 import testMovement from './test-movement/test-movement';
+import testRoads from './test-roads';
 
 export default {
     "name": "test-maps",
@@ -11,6 +12,7 @@ export default {
     "characters": [],
     "spawnable_actions": [],
     "mapDictionary": {
-        "A1": testMovement
+        "A1": testMovement,
+        "B1": testRoads
     }
 }
