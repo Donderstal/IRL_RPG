@@ -14,11 +14,10 @@ import globals from '../../game-data/globals';
 import { PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { loadCinematicMap } from '../../helpers/loadMapHelpers';
 import { getClosestCell } from '../../helpers/utilFunctions';
-import { getDataModelByKey } from "../../resources/spriteDataResources";
+import { initializeSpriteMovement } from '../modules/spriteMovementModule';
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
-import { initializeCarMovement } from "../modules/carMovementModule";
 
 export class Animation {
     id: string;
@@ -167,7 +166,7 @@ export class Animation {
             : { "row": sceneModel.row, "column": road.model.primaryColumn };
         this.walkingToDestination = true;   
         let car = this.getSpriteByName();
-        initializeCarMovement( car, this.destination )
+        initializeSpriteMovement( car, this.destination )
     }
 
     initCreateCarAnimation( sceneModel: CreateCarScene ): void {

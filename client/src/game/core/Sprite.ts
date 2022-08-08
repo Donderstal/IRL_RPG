@@ -21,7 +21,6 @@ import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
 import { initializeActionForSprite, updateSpriteAssociatedAction } from '../modules/actionModule'
 import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/doorModule'
 import { handleSpriteMovement, initializeSpriteMovement } from '../modules/spriteMovementModule'
-import { handleCarMovement, initializeCarMovement } from '../modules/carMovementModule'
 import { handleRandomAnimationCounter, initializeRandomAnimationCounter } from '../modules/randomAnimationModule'
 import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
 import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
@@ -75,7 +74,6 @@ export class Sprite {
     visionbox: VisionBox;
     plugins: {
         movement: { set: boolean, active: boolean },
-        carMovement: { set: boolean, active: boolean },
         idleAnimation: { set: boolean, active: boolean },
         randomAnimation: { set: boolean, active: boolean },
         hitbox: { set: boolean, active: boolean },
@@ -88,7 +86,6 @@ export class Sprite {
     constructor( tile: Tile, canvasObjectModel: CanvasObjectModel, spriteId: string, isPlayer = false ) {   
         this.plugins = {
             movement: { set: false, active: false },
-            carMovement: { set: false, active: false },
             idleAnimation: { set: false, active: false },
             randomAnimation: { set: false, active: false },
             hitbox: { set: false, active: false },
@@ -123,6 +120,9 @@ export class Sprite {
         this.setPlugins( canvasObjectModel );
         if ( this.isPlayer ) {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
+        }
+        if ( canvasObjectModel.destination && this.animationType !== AnimationTypeEnum.movingLoop ) {
+            initializeSpriteMovement( this, canvasObjectModel.destination as GridCellModel, true );
         }
     }
 
@@ -163,10 +163,7 @@ export class Sprite {
             initializeRandomAnimationCounter( this );
         }
 
-        if ( model.canMove && model.isCar ) {
-            this.plugins.carMovement.set = true;
-        }
-        else if ( model.canMove ) {
+        if ( model.canMove ) {
             this.plugins.movement.set = true;
         }
 
@@ -196,7 +193,7 @@ export class Sprite {
         if ( this.isPlayer ) {
             updateAssociatedHitbox( this );
         }
-        if ( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.carMovement ) ) {
+        if ( this.pluginIsRunning( plugins.movement ) ) {
             if ( this.pluginIsRunning( plugins.door ) ) {
                 updateSpriteAssociatedDoor( this )
             }
@@ -207,12 +204,7 @@ export class Sprite {
                 updateAssociatedHitbox( this );
             }
 
-            if ( this.pluginIsRunning( plugins.movement ) ) {
-                handleSpriteMovement( this );
-            }
-            else {
-                handleCarMovement( this );
-            }
+            handleSpriteMovement( this );
         }
         if ( this.pluginIsRunning( plugins.animation ) ) {
             handleSpriteAnimation( this );
@@ -297,12 +289,12 @@ export class Sprite {
                 this.y = tile.y;
                 break;
             case DirectionEnum.right:
-                this.x = tile.x - this.width;
+                this.x = ( tile.x + GRID_BLOCK_PX ) - this.width;
                 this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
                 break;
             case DirectionEnum.down:
                 this.x = tile.x;
-                this.y = tile.y - this.height;
+                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
                 break;
         }
     }
@@ -366,10 +358,10 @@ export class Sprite {
 
     updateState(): void {
         let plugins = this.plugins
-        if ( ( this.State.is( SpriteStateEnum.idle ) && ( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.carMovement ) )) && !this.State.inCinematic ) {
+        if ( ( this.State.is( SpriteStateEnum.idle ) && this.pluginIsRunning( plugins.movement ) && !this.State.inCinematic ) ) {
             this.State.set( SpriteStateEnum.moving );
         }
-        else if ( this.State.is( SpriteStateEnum.moving ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.carMovement ) ) ) {
+        else if ( this.State.is( SpriteStateEnum.moving ) && !this.pluginIsRunning( plugins.movement ) ) {
             this.State.set( SpriteStateEnum.idle );
         }
         else if ( this.State.is( SpriteStateEnum.moving ) && this.checkForCollision( ) ) {
@@ -424,7 +416,7 @@ export class Sprite {
             globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
         }
         if ( animation.is( SceneAnimationType.move ) ) {
-            this.isCar ? initializeCarMovement( this, animation.destination ) : initializeSpriteMovement( this, animation.destination, false );
+            initializeSpriteMovement( this, animation.destination, false );
         }
         if ( animation.is( SceneAnimationType.animation ) ) {
             const animateSpriteScene = animation as AnimateSpriteScene;
@@ -470,11 +462,11 @@ export class Sprite {
         this.direction = direction;
         this.setActiveFrames();
         this.State.set( SpriteStateEnum.moving );
-        !this.isCar ? this.plugins.movement.active = true : this.plugins.carMovement.active = true;
+        this.plugins.movement.active = true;
     }
 
     deactivateMovementModule() {
-        !this.isCar ? this.plugins.movement.active = false : this.plugins.carMovement.active = false;
+        this.plugins.movement.active = false;
         this.sheetPosition = 0;
         this.setActiveFrame();
     }

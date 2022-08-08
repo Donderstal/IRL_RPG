@@ -6,13 +6,17 @@ import type { ForegroundCanvas } from '../../ForegroundCanvas';
 import type { Sprite } from '../../core/Sprite';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { SpriteStateEnum } from '../../../enumerables/SpriteStateEnum';
+import type { GridLocation } from '../../../models/GridLocation';
+import type { Tile } from '../../core/Tile';
+import type { DirectionXy } from '../../../models/DirectionXyModel';
+import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHelpers';
 
 export class Destination {
     column: number;
     row: number;
     deleteSprite: boolean;
 
-    path: { x: number, y: number, direction: number }[];
+    path: DirectionXy[];
     foundPath: boolean;
     currentPathIndex: number;
     constructor( column: number, row: number, sprite: Sprite, deleteSprite = false ) {
@@ -23,12 +27,7 @@ export class Destination {
         this.path = null;
         this.foundPath = false;
         this.currentPathIndex;
-        if ( sprite.isCar ) {
-            this.setCarPath( sprite );
-        }
-        else {
-            this.calculatePath( sprite );            
-        }
+        this.setPath(sprite);
     }
 
     get backClass(): BackgroundCanvas { return globals.GAME.BACK; };
@@ -36,25 +35,25 @@ export class Destination {
     get currentStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex]; };
     get spriteHasReachedDestination( ): boolean { return this.currentPathIndex === this.path.length - 1; };
 
+    setPath(sprite: Sprite) {
+        const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
+        let gridLocationList = ( sprite.isCar ) ? this.calculateCarPath( sprite ) : this.calculatePath( sprite );
+        this.startPath( sprite, startingTile, gridLocationList );
+    }
+
     snapSpriteToCurrentStepTile( sprite: Sprite ): void {
         sprite.y = this.currentStep.y - (sprite.height - GRID_BLOCK_PX);
         sprite.x = this.currentStep.x     
     }
 
-    setCarPath( sprite: Sprite ): void  {
+    calculateCarPath( sprite: Sprite ): GridLocation[]  {
         this.currentPathIndex = 0;
-        const currentLocation = this.frontClass.getTileAtCell(this.column, this.row);
-        const step = { 
-            x: sprite.direction == DirectionEnum.left ? currentLocation.x - sprite.width: 
-                sprite.direction == DirectionEnum.right ? currentLocation.x + sprite.width : currentLocation.x,
-            y: sprite.direction == DirectionEnum.up ? currentLocation.y - sprite.width: 
-                sprite.direction == DirectionEnum.down ? currentLocation.y + sprite.width : currentLocation.y,
-            direction: sprite.direction
-        };
-        this.path = [ step ];
+        const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
+        const destinationTile = this.frontClass.getTileAtCell(this.column, this.row);
+        return getRoadPathGridLocationList( startingTile, sprite.direction, destinationTile );
     }
 
-    calculatePath( sprite: Sprite ): void {
+    calculatePath( sprite: Sprite ): GridLocation[] {
         const grid = { 
             'rows': this.backClass.grid.rows, 'columns': this.backClass.grid.columns,
             'tiles': this.backClass.grid.array.filter( ( tile ) => {
@@ -69,19 +68,20 @@ export class Destination {
         if ( destinationTile.offScreen ) {
             grid.tiles.push( destinationTile );
         }
-        const gridLocationList = determineShortestPath(startingTile, destinationTile, grid);
-        if ( !gridLocationList ) {
-            if ( startingTile.offScreen ) {
-                this.unsetPath( sprite );
-                if ( this.deleteSprite ) {
-                    this.frontClass.deleteSprite(sprite.spriteId);                
-                }
-            }
-            return;
-        }
-        this.path = gridLocationList.reduce( (acc, cur, index) => {
-            const currentLocation = this.frontClass.getTileAtCell(cur.column, cur.row);
-            const step = { 
+        return determineShortestPath(startingTile, destinationTile, grid);
+    }
+
+    startPath( sprite: Sprite, startingTile: Tile, gridLocationList: GridLocation[] ) {
+        this.path = this.reduceGridLocationList( startingTile, gridLocationList );
+        console.log( this.path );
+        this.currentPathIndex = 0;
+        this.activateSpriteMovementModule( sprite );
+    }
+
+    reduceGridLocationList( startingTile: Tile, gridLocationList: GridLocation[] ): DirectionXy[] {
+        return gridLocationList.reduce( ( acc, cur, index ) => {
+            const currentLocation = this.frontClass.getTileAtCell( cur.column, cur.row );
+            const step = {
                 x: currentLocation.x,
                 y: currentLocation.y,
                 direction: null
@@ -99,12 +99,14 @@ export class Destination {
             else if ( currentLocation.y > lastLocation.y ) {
                 step.direction = DirectionEnum.down;
             }
-            return [ ...acc, step];             
+            return [...acc, step];
         }, [] );
-        this.currentPathIndex = 0;
+    }
+
+    activateSpriteMovementModule( sprite : Sprite): void {
         sprite.activateMovementModule( this.currentStep.direction );
-        sprite.direction = this.currentStep.direction; 
-        sprite.State.set(SpriteStateEnum.moving);
+        sprite.direction = this.currentStep.direction;
+        sprite.State.set( SpriteStateEnum.moving );
     }
 
     unsetPath( sprite: Sprite ): void {

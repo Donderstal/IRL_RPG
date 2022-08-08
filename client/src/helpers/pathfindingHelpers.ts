@@ -1,4 +1,5 @@
 import type { Tile } from "../game/core/Tile";
+import type { GridLocation } from "../models/GridLocation";
 
 let colsInGrid: number, rowsInGrid: number, tiles: Tile[];
 let queue: PriorityQueue, visitedTilesList: string[], foundPath: GridLocation[], movementCost: number, targetLocationIndex: string;
@@ -14,16 +15,6 @@ enum PathfindingDirection {
     east,
     south,
     west
-}
-
-type GridLocation = {
-    index: string;
-
-    status?: TileStatus;
-    row?: number;
-    column?: number;
-    movementCost?: number;
-    path?: GridLocation[];
 }
 
 type ItemWithPriority = {
@@ -116,7 +107,7 @@ const addTileInDirectionToQueueIfValid = ( currentLocation: ItemWithPriority, di
     }
 }
 
-export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, grid: { columns: number, rows: number, tiles: Tile[] } ) => {
+export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, grid: { columns: number, rows: number, tiles: Tile[] } ): GridLocation[] => {
     queue = new PriorityQueue( );
     visitedTilesList = [];
     colsInGrid = grid.columns;
@@ -157,5 +148,5 @@ export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, gri
         }
     } 
 
-    return false;    
+    return null;    
 }
