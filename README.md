@@ -12,6 +12,32 @@ Try the latest the game at: http://34.147.64.145
 
 ### LOG
 
+#### AUG 8, 2022
+* Cleaning code for cars, roads. Implementing models, enums.
+* New car pathfinding algorithm. Car movement streamlined with sprite movement.
+* Deleting old Car, MapObject, NPC, MapSprite classes
+
+#### AUG, 4, 2022
+* Implementing animationmodule and idleanimationModule
+* Using SpriteFrame model for all sprite animations
+
+#### JUL 27, 2022
+* RandomAnimation and spriteMovement modules
+
+#### JUL 24, 2022
+* Basic setup for the new module system
+* Implementing hitbox, action, door modules
+
+#### JUL 20, 2022
+* Finished javascript-to-typescript translation
+* Scrapped distinction between MapObjects and Sprite classes
+
+#### JUL 10, 2022
+* Implementing typescript models and enumerables
+
+#### JUL 6, 2022
+* Started javascript-to-typescript translation
+
 #### MAY 23, 2022
 * Implementing new collision system for cars
 * Refactored car pathfinding system

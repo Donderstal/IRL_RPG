@@ -105,7 +105,7 @@ export class Sprite {
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
-        this.setDirection(canvasObjectModel.direction ?? 0);
+        this.setDirection( canvasObjectModel.direction ?? 0, tile );
 
         this.activeEffect   = { active: false };
         this.isPlayer       = isPlayer;
@@ -217,12 +217,19 @@ export class Sprite {
         }
     }
 
-    setDirection( direction: DirectionEnum ): void {
+    setDirection( direction: DirectionEnum, tile: Tile ): void {
         this.previousDirection = this.direction;
         this.direction = direction;
         if ( direction !== this.previousDirection ) {
             this.setDimensions();
             this.setActiveFrames();
+            if ( this.isCar ) {
+                let tileCopy = { x: tile.x, y: tile.y };
+                if ( direction === DirectionEnum.down ) {
+                    tileCopy.y -= GRID_BLOCK_PX
+                }
+                this.setCarToGrid( tileCopy );
+            }
         }
     }
 
@@ -278,7 +285,7 @@ export class Sprite {
         }
     }
 
-    setCarToGrid( tile: Tile ): void {
+    setCarToGrid( tile: {x: number, y: number} ): void {
         switch ( this.direction ) {
             case DirectionEnum.left:
                 this.x = tile.x;

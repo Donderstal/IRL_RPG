@@ -73,12 +73,12 @@ export class Destination {
 
     startPath( sprite: Sprite, startingTile: Tile, gridLocationList: GridLocation[] ) {
         this.path = this.reduceGridLocationList( startingTile, gridLocationList );
-        console.log( this.path );
         this.currentPathIndex = 0;
         this.activateSpriteMovementModule( sprite );
     }
 
     reduceGridLocationList( startingTile: Tile, gridLocationList: GridLocation[] ): DirectionXy[] {
+        let previousDirection = null;
         return gridLocationList.reduce( ( acc, cur, index ) => {
             const currentLocation = this.frontClass.getTileAtCell( cur.column, cur.row );
             const step = {
@@ -87,17 +87,21 @@ export class Destination {
                 direction: null
             }
             const lastLocation = index == 0 ? startingTile : acc[index - 1];
-            if ( currentLocation.x < lastLocation.x ) {
+            if ( currentLocation.x < lastLocation.x && (previousDirection === null || previousDirection !== DirectionEnum.right) ) {
                 step.direction = DirectionEnum.left;
+                previousDirection = DirectionEnum.left;
             }
-            else if ( currentLocation.y < lastLocation.y ) {
+            else if ( currentLocation.y < lastLocation.y && ( previousDirection === null || previousDirection !== DirectionEnum.down ) ) {
                 step.direction = DirectionEnum.up;
+                previousDirection = DirectionEnum.up;
             }
-            else if ( currentLocation.x > lastLocation.x ) {
+            else if ( currentLocation.x > lastLocation.x && ( previousDirection === null || previousDirection !== DirectionEnum.left ) ) {
                 step.direction = DirectionEnum.right;
+                previousDirection = DirectionEnum.right;
             }
-            else if ( currentLocation.y > lastLocation.y ) {
+            else if ( currentLocation.y > lastLocation.y && ( previousDirection === null || previousDirection !== DirectionEnum.up ) ) {
                 step.direction = DirectionEnum.down;
+                previousDirection = DirectionEnum.down;
             }
             return [...acc, step];
         }, [] );
@@ -120,9 +124,13 @@ export class Destination {
     }
 
     setNextStep( sprite: Sprite ): void {
-        this.snapSpriteToCurrentStepTile( sprite );
         this.currentPathIndex += 1;
-        sprite.setDirection( this.currentStep.direction );
+        sprite.setDirection( this.currentStep.direction, this.getNextStepTile() );
+    }
+
+    getNextStepTile(): Tile {
+        const nextStep = this.path[this.currentPathIndex + 1];
+        return nextStep !== undefined ? globals.GAME.getTileOnCanvasAtXY( "BACK", nextStep.x + ( GRID_BLOCK_PX / 2 ), nextStep.y + ( GRID_BLOCK_PX / 2 ) ) : null;
     }
 
     getNextStepDirection( sprite: Sprite ): DirectionEnum {

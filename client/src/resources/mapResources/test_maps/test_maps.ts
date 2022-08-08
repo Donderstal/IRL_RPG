@@ -7,7 +7,7 @@ export default {
     "vertical_slots": ["1", "2", "3", "4"],
     "music": "Theme_Overworld_1_HDR.mp3",
     "cars": ["car_b", "car_c", "bus"],
-    "cars_spawn_rate": 15000,
+    "cars_spawn_rate": 20000,
     "characters_spawn_rate": 10000,
     "characters": [],
     "spawnable_actions": [],

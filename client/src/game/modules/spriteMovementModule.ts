@@ -3,6 +3,7 @@ import { SpriteStateEnum } from "../../enumerables/SpriteStateEnum";
 import globals from "../../game-data/globals";
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
+import type { Tile } from "../core/Tile";
 import { Destination } from "../map/map-classes/Destination";
 import { destroySpriteAnimation, spriteHasAnimation } from "./animationModule";
 
@@ -36,8 +37,9 @@ const getAssociatedSpriteMovementDestination = ( spriteId: string ): Destination
 };
 const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
     const direction = destination.getNextStepDirection( sprite );
+    const tile = destination.getNextStepTile();
     if ( direction !== null ) {
-        moveSpriteInDirection( sprite, direction );
+        moveSpriteInDirection( sprite, direction, tile );
     }
     else if ( destination.hasNextStep() ) {
         destination.setNextStep( sprite );
@@ -47,8 +49,8 @@ const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
         destroySpriteMovement( sprite );
     }
 };
-export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum ) => {
-    sprite.setDirection( direction );
+export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum, tile: Tile ) => {
+    sprite.setDirection( direction, tile );
     switch ( direction ) {
         case DirectionEnum.left:
             sprite.x -= sprite.speed;

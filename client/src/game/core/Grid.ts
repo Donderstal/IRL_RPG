@@ -109,17 +109,19 @@ export class Grid {
     }
 
     getDummyTile( column: number, row: number ): Tile {
-        if ( column === 0 ){
-            return new Tile( OutOfMapEnum.left, -GRID_BLOCK_PX, ( row - 1 ) * GRID_BLOCK_PX, this.ctx, row, 0 )
+        const x = ( column - 1 ) * GRID_BLOCK_PX;
+        const y = ( row - 1 ) * GRID_BLOCK_PX;
+        if ( column <= 0 ){
+            return new Tile( OutOfMapEnum.left, x, y, this.ctx, row, 0 )
         }
-        else if ( row === 0 ) {
-            return new Tile( OutOfMapEnum.up, ( column - 1 ) * GRID_BLOCK_PX, -GRID_BLOCK_PX, this.ctx, 0, column )
+        else if ( row <= 0 ) {
+            return new Tile( OutOfMapEnum.up, x, y, this.ctx, 0, column )
         }
-        else if ( column === this.columns + 1 ) {
-            return new Tile( OutOfMapEnum.right, this.width + GRID_BLOCK_PX, ( row - 1 ) * GRID_BLOCK_PX, this.ctx, row, this.columns + 1 )
+        else if ( column >= this.columns + 1 ) {
+            return new Tile( OutOfMapEnum.right, x, y, this.ctx, row, this.columns + 1 )
         }
-        else if ( row === this.rows + 1 ) {
-            return new Tile( OutOfMapEnum.down, ( column - 1 ) * GRID_BLOCK_PX, this.height + GRID_BLOCK_PX, this.ctx, this.rows + 1, column )
+        else if ( row >= this.rows + 1 ) {
+            return new Tile( OutOfMapEnum.down, x, y, this.ctx, this.rows + 1, column )
         }
     }
 }
