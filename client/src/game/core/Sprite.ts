@@ -264,9 +264,14 @@ export class Sprite {
             this.activeFrames = [{ x: 0, y: 0, width: this.spriteWidthInSheet, height: this.spriteHeightInSheet }];
         }
         else {
-            this.activeFrames = [...this.model.movementFrames[this.direction]];
-            this.activeFrames.forEach( ( e ) => { e.width = this.spriteWidthInSheet; e.height = this.spriteHeightInSheet; })
-            this.sheetFrameLimit = this.activeFrames.length;
+            if ( Symbol.iterator in Object( this.model.movementFrames[this.direction] ) ) {
+                this.activeFrames = [...this.model.movementFrames[this.direction]];
+                this.activeFrames.forEach( ( e ) => { e.width = this.spriteWidthInSheet; e.height = this.spriteHeightInSheet; })
+                this.sheetFrameLimit = this.activeFrames.length;
+            }
+            else {
+                console.log( this.model.movementFrames )
+            }
         }
 
         this.setActiveFrame();

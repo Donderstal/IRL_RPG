@@ -1,6 +1,5 @@
 import type { InteractionModel } from "../../../models/InteractionModel";
 import { InteractionAnswer } from "../../../enumerables/InteractionAnswer";
-import { initInteractionModel } from "../../../helpers/modelFactory";
 import { Hitbox } from "../../core/Hitbox";
 import globals, { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
@@ -9,13 +8,11 @@ import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { Interaction } from "../../cutscenes/Interaction";
 import { addEventToRegistry } from "../../../helpers/interactionRegistry";
-import { SceneAnimationType } from "../../../enumerables/SceneAnimationTypeEnum";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
     spriteId: string;
-    actionList: InteractionModel[];
-    conditionalActions: any[];
+    conditionalActions: InteractionModel[];
     idList: string[];
     arcColor: string;
     trigger: CinematicTrigger;
@@ -24,12 +21,12 @@ export class ActionSelector extends Hitbox {
     constructor( x, y, actionList: InteractionModel[], spriteId = null ) {
         super( x, y, GRID_BLOCK_PX / 2 );
         this.spriteId = spriteId;
-        this.actionList = actionList;
-        this.conditionalActions = [];
+        this.conditionalActions = actionList;
         this.trigger = CinematicTrigger.interaction;
         this.arcColor = "#FF0000";
         this.registeredSelection = null;
         this.confirmingAction = false;
+        this.checkForConditions();
     }
 
     get meetsCondition(): boolean { return conditionIsTrue( this.activeAction.condition.type, this.activeAction.condition.value ) }

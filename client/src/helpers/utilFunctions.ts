@@ -1,4 +1,5 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
+import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import type { GridCellModel } from "../models/GridCellModel";
 
@@ -100,6 +101,22 @@ export const getClosestCell = ( start: GridCellModel, cellList: GridCellModel[] 
     }
 
     return closestCell;
+}
+
+export const getClosestHitbox = ( start: Hitbox, hitboxList: Hitbox[] ): Hitbox => {
+    let closestHitbox = hitboxList[0];
+    let shortestDistance = xyDistanceSquared( start, closestHitbox );
+
+    for ( var i = 0; i < hitboxList.length; i++ ) {
+        const current = hitboxList[i]
+        const currentDistance = xyDistanceSquared( start, current );
+        if ( currentDistance < shortestDistance ) {
+            closestHitbox = current;
+            shortestDistance = currentDistance;
+        }
+    }
+
+    return closestHitbox;
 }
 
 export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {

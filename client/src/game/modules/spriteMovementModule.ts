@@ -13,8 +13,17 @@ export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: GridC
     if ( spriteHasAnimation( sprite.spriteId ) ) {
         destroySpriteAnimation( sprite );
     }
-    movementDictionary[sprite.spriteId] = new Destination( destinationCell.column, destinationCell.row, sprite, deleteAfterMovement );
-    sprite.State.set( SpriteStateEnum.pathfinding );
+    try {
+        movementDictionary[sprite.spriteId] = new Destination( destinationCell.column, destinationCell.row, sprite, deleteAfterMovement );
+        sprite.State.set( SpriteStateEnum.pathfinding );
+    }
+    catch ( ex ) {
+        console.log( 'error generating path for destination c' + destinationCell.column + ' r' + destinationCell.row );
+        console.log( ex );
+        if ( deleteAfterMovement ) {
+            globals.GAME.FRONT.deleteSprite( sprite.spriteId );
+        } 
+    }
 };
 export const handleSpriteMovement = ( sprite: Sprite ): void => {
     const destination = getAssociatedSpriteMovementDestination( sprite.spriteId );

@@ -125,7 +125,13 @@ export class Destination {
 
     setNextStep( sprite: Sprite ): void {
         this.currentPathIndex += 1;
-        sprite.setDirection( this.currentStep.direction, this.getNextStepTile() );
+        if ( this.getNextStepTile() === null ) {
+            console.log( this.currentStep );
+        }
+        else {
+            sprite.setDirection( this.currentStep.direction, this.getNextStepTile() );
+        }
+
     }
 
     getNextStepTile(): Tile {
