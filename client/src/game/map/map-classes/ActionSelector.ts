@@ -6,8 +6,8 @@ import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import type { Sprite } from "../../core/Sprite";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
-import { Interaction } from "../../cutscenes/Interaction";
 import { addEventToRegistry } from "../../../helpers/interactionRegistry";
+import { setActiveCinematic } from "../../controllers/cinematicController";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -52,7 +52,9 @@ export class ActionSelector extends Hitbox {
 
     handle(): void {
         if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
-            new Interaction( this.activeAction, this.trigger, [this.spriteId] );
+            setActiveCinematic(
+                this.activeAction, this.trigger, [this.spriteId]
+            );
             if ( this.isCollectable ) {
                 const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.column, this.actionSprite.row, ( this.actionSprite as any ).collectableType, globals.GAME.activeMapName )
                 globals.GAME.collectableRegistry.addToRegistry( id, ( this.actionSprite as any ).collectableType )

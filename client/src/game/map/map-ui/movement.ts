@@ -2,7 +2,6 @@ import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { InteractionType } from '../../../enumerables/InteractionType';
 import globals from '../../../game-data/globals';
 import { GRID_BLOCK_PX, MOVEMENT_SPEED } from '../../../game-data/globals';
-import { switchMap } from '../../../helpers/loadMapHelpers';
 import type { Sprite } from '../../core/Sprite';
 import { destroySpriteAnimation, spriteHasAnimation } from '../../modules/animationModule';
 import { moveSpriteInDirection } from '../../modules/spriteMovementModule';
@@ -72,19 +71,19 @@ const checkForNeighbours = ( sprite: Sprite ): boolean => {
 
     if ( activeMap.outdoors ) {
         if ( activeGrid.x > sprite.centerX && activeMap.neighbours.left ) {
-            switchMap( activeMap.neighbours.left, InteractionType.neighbour )
+            globals.GAME.switchMap( activeMap.neighbours.left, InteractionType.neighbour )
             return true;
         }
         if ( activeGrid.x + ( activeGrid.columns * GRID_BLOCK_PX ) < sprite.centerX && activeMap.neighbours.right ) {
-            switchMap( activeMap.neighbours.right, InteractionType.neighbour )
+            globals.GAME.switchMap( activeMap.neighbours.right, InteractionType.neighbour )
             return true;
         }
         if ( activeGrid.y > sprite.baseY && activeMap.neighbours.up ) {
-            switchMap( activeMap.neighbours.up, InteractionType.neighbour )
+            globals.GAME.switchMap( activeMap.neighbours.up, InteractionType.neighbour )
             return true;
         }
         if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY && activeMap.neighbours.down ) {
-            switchMap( activeMap.neighbours.down, InteractionType.neighbour )
+            globals.GAME.switchMap( activeMap.neighbours.down, InteractionType.neighbour )
             return true;
         }
     }

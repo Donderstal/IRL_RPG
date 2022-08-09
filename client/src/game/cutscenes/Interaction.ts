@@ -1,15 +1,10 @@
-import globals from '../../game-data/globals';
-import { clearPressedKeys } from '../controls';
 import { Scene } from './Scene';
-import { switchMap } from '../../helpers/loadMapHelpers';
 import type { CinematicSceneModel } from "../../models/CinematicSceneModel";
-
 import { CinematicTrigger } from "../../enumerables/CinematicTriggerEnum";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import type { InteractionModel } from '../../models/InteractionModel';
 import { initCinematicSceneModel } from '../../helpers/modelFactory';
-import { dismissActiveAction } from '../map/map-ui/actionController';
 
 export class Interaction {
     trigger: CinematicTrigger;
@@ -18,19 +13,18 @@ export class Interaction {
     registeredSelection: InteractionAnswer;
     iterator: number;
     activeScene: Scene;
+    ended: boolean;
 
     model: InteractionModel;
     constructor( model: InteractionModel, trigger: CinematicTrigger, args: string[] ) {
-        clearPressedKeys( globals.GAME.pressedKeys );
         this.model = model;
         this.trigger = trigger;
         this.args   = args;
         this.numberOfScenes = this.model.cinematic.scenes.length;
         this.registeredSelection = null;
         this.iterator = 0;
-        this.activeScene = new Scene( this.model.cinematic.scenes[this.iterator], (this.trigger === CinematicTrigger.interaction ? args[0] : null) );
-
-        globals.GAME.activateCinematic( this );
+        this.activeScene = new Scene( this.model.cinematic.scenes[this.iterator], ( this.trigger === CinematicTrigger.interaction ? args[0] : null ) );
+        this.ended = false;
     }
 
     checkForScenePass( ): void {
@@ -57,23 +51,7 @@ export class Interaction {
             );            
         }
         else {
-            this.activeScene.unsetSpriteAnimation( )
-            globals.GAME.deActivateCinematic( );
-            globals.GAME.activeCinematic = null;
-            this.handleEndOfCinematicTrigger( );
-        }
-    }
-
-    handleEndOfCinematicTrigger(): void {
-        if ( this.trigger === CinematicTrigger.leave ) {
-            switchMap( this.args[0], this.args[1] );
-        }
-        else if ( this.trigger === CinematicTrigger.interaction ) {
-            let sprite = globals.GAME.FRONT.spriteDictionary[this.args[0]];
-            if ( sprite != undefined ) {
-                sprite.State.cinematicOff( sprite );
-            }
-            dismissActiveAction();
+            this.ended = true;
         }
     }
 

@@ -12,7 +12,6 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import globals from '../../game-data/globals';
 import { PLAYER_NAME } from '../../game-data/interactionGlobals';
-import { loadCinematicMap } from '../../helpers/loadMapHelpers';
 import { getClosestCell } from '../../helpers/utilFunctions';
 import { initializeSpriteMovement } from '../modules/spriteMovementModule';
 import type { CellPosition } from "../../models/CellPositionModel";
@@ -130,7 +129,7 @@ export class Animation {
                 break;
             case SceneAnimationType.loadMap:
                 this.model = this.model as LoadMapScene;
-                loadCinematicMap( this.loadMapScene.mapName, this.loadMapScene.setPlayerSprite );   
+                globals.GAME.loadCinematicMap( this.loadMapScene );   
                 break;
         }
         if( setToSprite ) {

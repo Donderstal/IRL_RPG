@@ -1,20 +1,20 @@
+import globals, { FRAMES_PER_SECOND } from '../game-data/globals'
 import { handleMapAnimations } from './map/mapAnimation'
-import globals from '../game-data/globals'
-import { FRAMES_PER_SECOND } from '../game-data/globals'
 import { clearPressedKeys, listenForKeyPress} from './controls'
-import { clearEntireCanvas } from './../helpers/canvasHelpers'
+import { clearEntireCanvas } from '../helpers/canvasHelpers'
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations'
 import { hasCinematicMapLoaded } from '../helpers/loadMapHelpers'
+import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
 
 let lastDateNow: number;
 let newDateNow: number;
 
-export const animationFrameController = ( ): void => {
+export const animationLoop = ( ): void => {
     const GAME = globals.GAME;
 
     newDateNow = Date.now();
     if ( !document.hasFocus() ) {
-        clearPressedKeys( GAME.pressedKeys );
+        clearPressedKeys( );
     }
     
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
@@ -24,18 +24,18 @@ export const animationFrameController = ( ): void => {
                 listenForKeyPress();
             }            
 
-            if ( !GAME.MENU.isActive && !GAME.inCinematic || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
+            if ( !GAME.MENU.isActive && !cinematicIsActive() || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
                 handleMapAnimations( GAME );
             }
-            else if ( !GAME.MENU.isActive && GAME.inCinematic && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
+            else if ( !GAME.MENU.isActive && cinematicIsActive() && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
                 handleCinematicAnimations( GAME );
             }
             else if ( GAME.MENU.isActive ) {
                 GAME.MENU.draw();
             }
 
-            if  ( GAME.inCinematic && GAME.activeCinematic ) {
-                GAME.activeCinematic.checkForScenePass();
+            if  ( cinematicIsActive( ) ) {
+                handleActiveCinematic();
             } 
         }
         else {
@@ -46,5 +46,5 @@ export const animationFrameController = ( ): void => {
         } 
     }
 
-    requestAnimationFrame(animationFrameController)
+    requestAnimationFrame( animationLoop )
 }

@@ -14,13 +14,15 @@ import type { ForegroundCanvas } from '../game/ForegroundCanvas';
 import type { FrontgridCanvas } from '../game/FrontgridCanvas';
 import type { BackgroundCanvas } from '../game/BackgroundCanvas';
 import type { CanvasContextModel } from '../models/CanvasContextModel';
-import { clearHitboxes } from '../game/modules/hitboxModule';
-import { clearDoors } from '../game/modules/doorModule';
-import { clearActions } from '../game/modules/actionModule';
-import { clearRandomAnimationCounters } from '../game/modules/randomAnimationModule';
-import { clearIdleAnimationCounters } from '../game/modules/idleAnimationModule';
-import { clearSpriteMovementDictionary } from '../game/modules/spriteMovementModule';
-import { dismissActiveAction } from '../game/map/map-ui/actionController';
+
+//import { clearHitboxes } from '../game/modules/hitboxModule';
+//import { clearDoors } from '../game/modules/doorModule';
+//import { clearActions } from '../game/modules/actionModule';
+//import { clearRandomAnimationCounters } from '../game/modules/randomAnimationModule';
+//import { clearIdleAnimationCounters } from '../game/modules/idleAnimationModule';
+//import { clearSpriteMovementDictionary } from '../game/modules/spriteMovementModule';
+//import { dismissActiveAction } from '../game/controllers/actionController';
+import { cinematicIsActive } from '../game/controllers/cinematicController';
 
 const cinematicGrids: { back: CanvasContextModel, front: CanvasContextModel, frontgrid: CanvasContextModel } = {
     back: null,
@@ -104,14 +106,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 }
 
 export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
-    clearHitboxes();
-    clearDoors();
-    clearActions();
-    clearRandomAnimationCounters();
-    clearIdleAnimationCounters();
-    clearSpriteMovementDictionary();
-
-    dismissActiveAction();
 
     source.frontgrid.class.clearMap( );
     source.front.class.clearMap( );
@@ -124,13 +118,13 @@ export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
 
 export const switchMap = ( destinationName: string, type: InteractionType ): void => {
     globals.GAME.story.checkForEventTrigger(CinematicTrigger.leave, [ destinationName, type ]); 
-    if ( globals.GAME.inCinematic ) {
+    if ( cinematicIsActive() ) {
         return;
     }        
     globals.GAME.sound.clearActiveSoundEffects( );
     globals.GAME.paused = true;
     stopListenForKeyPress( );
-    clearPressedKeys( globals.GAME.pressedKeys );
+    clearPressedKeys( );
 
     setNeighbourhoodAndMap( destinationName );
     clearMapFromCanvases( globals.GAME );

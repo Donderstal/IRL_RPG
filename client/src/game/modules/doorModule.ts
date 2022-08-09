@@ -3,7 +3,7 @@ import { GRID_BLOCK_PX } from "../../game-data/globals";
 import type { Sprite } from "../core/Sprite";
 import type { Tile } from "../core/Tile";
 import type { DoorModel } from "../../models/DoorModel";
-import { initDoorWithId } from "../../helpers/doorController";
+import { initDoorWithId } from "../controllers/doorController";
 
 let spriteDoorDictionary: { [key in string]: Door } = {};
 let tileDoorDictionary: { [key in string]: Door } = {};

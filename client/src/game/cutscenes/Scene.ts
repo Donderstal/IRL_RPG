@@ -1,7 +1,6 @@
 import globals from '../../game-data/globals';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import { Animation } from './Animation';
-import { hasCinematicMapLoaded } from '../../helpers/loadMapHelpers';
 import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
 import type { SceneAnimationModel } from '../../models/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
@@ -100,7 +99,7 @@ export class Scene {
                     animationHasFinished = (e.tileIndex == globals.GAME.cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus);
                     break;
                 case SceneAnimationType.loadMap:
-                    animationHasFinished = hasCinematicMapLoaded( );
+                    animationHasFinished = globals.GAME.hasCinematicMapLoaded( );
                     break;
             }
             if ( animationHasFinished ) {

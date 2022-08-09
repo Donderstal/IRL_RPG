@@ -1,4 +1,4 @@
-import { resetDoors } from '../helpers/doorController';
+import { resetDoors } from './controllers/doorController';
 import type { DoorModel } from '../models/DoorModel';
 import type { MapActionModel } from '../models/MapActionModel';
 import type { MapModel } from '../models/MapModel';

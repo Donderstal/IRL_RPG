@@ -3,7 +3,8 @@ import { getUniqueId } from "../../helpers/utilFunctions";
 import { SpeechBubble } from "./SpeechBubble";
 import { Emote } from "./Emote";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
-import { registerActionSelection } from "../map/map-ui/actionController";
+import { registerActionSelection } from "../controllers/actionController";
+import { registerPlayerAnswer } from "../controllers/cinematicController";
 
 export class SpeechBubbleController {
     emoteIds: string[];
@@ -84,8 +85,7 @@ export class SpeechBubbleController {
             }
             else if ( this.selectionBubble ) {
                 registerActionSelection( this.selectionBubble.activeButton )
-                const animation = globals.GAME.activeCinematic.activeScene.getAnimationByType(SceneAnimationType.speakYesNo);
-                animation.setSelection( this.selectionBubble.activeButton );
+                registerPlayerAnswer( this.selectionBubble.activeButton );
                 this.clearActiveBubbles( );
             }
             else {

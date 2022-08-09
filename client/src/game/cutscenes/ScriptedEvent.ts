@@ -3,7 +3,7 @@ import type { CellPosition } from '../../models/CellPositionModel';
 import type { ConditionModel } from '../../models/ConditionModel';
 import type { InteractionModel } from '../../models/InteractionModel';
 import type { StoryEventModel } from '../../models/StoryEventModel';
-import { ScriptedInteraction } from './ScriptedInteraction';
+import { setActiveCinematic } from '../controllers/cinematicController';
 
 export class ScriptedEvent {
     mapName: string;
@@ -33,7 +33,7 @@ export class ScriptedEvent {
 
     fireEvent( args = null ) {
         if ( !this.fired ) {
-            new ScriptedInteraction( this.action, this.trigger, args );
+            setActiveCinematic( this.action, this.trigger, args, true );
             this.fired = true;           
         }
     }

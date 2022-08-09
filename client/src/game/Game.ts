@@ -1,6 +1,6 @@
-import { animationFrameController } from './animationFrameController'
+import { animationLoop } from './animationLoop'
 import globals, { GRID_BLOCK_PX } from '../game-data/globals'
-import { listenForKeyPress } from './controls'
+import { clearPressedKeys, listenForKeyPress } from './controls'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals'
 import { MAIN_CHARACTER } from '../resources/spriteTypeResources'
 import { SoundController } from './sound/SoundController'
@@ -20,28 +20,33 @@ import { setInteractionRegistry } from '../helpers/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
 import { MenuCanvas } from './menuCanvas/MenuCanvas'
 import { CameraFocus } from '../helpers/cameraFocus'
-import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid } from '../helpers/loadMapHelpers'
-import type { Interaction } from './cutscenes/Interaction'
+import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded } from '../helpers/loadMapHelpers'
 import { SpeechBubbleController } from './cutscenes/SpeechBubbleController'
 import type { SpeechBubble } from './cutscenes/SpeechBubble'
 import type { CanvasContextModel } from '../models/CanvasContextModel'
 import type { Neighbourhood } from './Neighbourhood'
 import type { Tile } from './core/Tile'
-import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { Sprite } from './core/Sprite'
 import type { Character } from './party/Character'
 import type { Inventory } from './party/Inventory'
 import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
-import type { ActionSelector } from './map/map-classes/ActionSelector'
 import type { CanvasWithGrid } from './core/CanvasWithGrid'
+import { cinematicIsActive } from './controllers/cinematicController'
+import { dismissActiveAction } from './controllers/actionController'
+import { clearSpriteMovementDictionary } from './modules/spriteMovementModule'
+import { clearIdleAnimationCounters } from './modules/idleAnimationModule'
+import { clearRandomAnimationCounters } from './modules/randomAnimationModule'
+import { clearActions } from './modules/actionModule'
+import { clearDoors } from './modules/doorModule'
+import { clearHitboxes } from './modules/hitboxModule'
+import type { InteractionType } from '../enumerables/InteractionType'
+import type { LoadMapScene } from '../models/SceneAnimationModel'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
 export class Game {
     cinematicMode: boolean;
-    inCinematic: boolean;
-    activeCinematic: Interaction;
     usingCinematicMap: boolean;
 
     debugMode: boolean;
@@ -50,7 +55,6 @@ export class Game {
     inMenu: boolean;
     listeningForPress: boolean;
 
-    pressedKeys: { [key in string]: boolean };
     speechBubbleController: SpeechBubbleController;
     activeBubble: SpeechBubble;
     bubbleIsActive: boolean;
@@ -77,13 +81,10 @@ export class Game {
     cinematicNeighbourhood: Neighbourhood;
     currentChapter: string;
     constructor( ) {
-        this.inCinematic = false;
-        this.activeCinematic = null;
         this.usingCinematicMap = false;
         this.paused; // bool
         this.inMenu;
         this.listeningForPress; // bool
-        this.pressedKeys = { }; //
         this.speechBubbleController = new SpeechBubbleController( );
         this.cameraFocus = new CameraFocus( );
         this.collectableRegistry = new CollectableRegistry( );
@@ -124,7 +125,7 @@ export class Game {
     get activeMap( ): MapModel { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMap : this.activeNeighbourhood.activeMap; }
     get activeMapName( ): string { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMapKey : this.activeNeighbourhood.activeMapKey; }
     get previousMapName( ): string { return this.activeNeighbourhood.previousMapKey; }
-    get useCinematicMap( ): boolean { return this.usingCinematicMap && this.inCinematic; }
+    get useCinematicMap(): boolean { return this.usingCinematicMap && cinematicIsActive(); }
 
     get activeNeighbourhood() {
         return (this.useCinematicMap ? this.cinematicNeighbourhood : this._activeNeighbourhood);
@@ -254,21 +255,27 @@ export class Game {
     initControlsAndAnimation(): void {
         stopLoadingScreen( );
         listenForKeyPress();  
-        animationFrameController( );
-    }
-    
-    activateCinematic( interaction: Interaction ): void {
-        if ( interaction.trigger === CinematicTrigger.interaction ) {
-            const sprite = this.FRONT.spriteDictionary[interaction.args[0]];
-            sprite.State.cinematicOn( sprite );
-        }
-        this.activeCinematic = interaction;
-        this.inCinematic = true;
+        animationLoop( );
     }
 
-    deActivateCinematic(): void {
-        this.activeCinematic = null;
-        this.inCinematic = false;
+    switchMap( destinationName: string, type: InteractionType ): void {
+        clearHitboxes();
+        clearDoors();
+        clearActions();
+        clearRandomAnimationCounters();
+        clearIdleAnimationCounters();
+        clearSpriteMovementDictionary();
+        dismissActiveAction();
+        clearPressedKeys();
+        switchMap( destinationName, type );
+    }
+
+    loadCinematicMap( loadMapScene: LoadMapScene ) {
+        loadCinematicMap( loadMapScene.mapName, loadMapScene.setPlayerSprite );   
+    }
+
+    hasCinematicMapLoaded(): boolean {
+        return hasCinematicMapLoaded();
     }
 
     save(): void {

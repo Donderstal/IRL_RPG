@@ -10,7 +10,6 @@ import {
 import type { SpriteDataModel } from "../models/SpriteDataModel";
 import { getSpriteFrameForPosition } from "../helpers/modelConversionHelpers";
 import { CollectableType } from "../enumerables/CollectableTypeEnum";
-import { initSpriteFrameModel } from "../helpers/modelFactory";
 
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": SpriteSheetAlignmentEnum.standard,

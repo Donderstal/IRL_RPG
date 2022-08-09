@@ -3,12 +3,12 @@ import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
 import globals from '../../game-data/globals';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { clearEntireCanvas } from '../../helpers/canvasHelpers';
-import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../../helpers/doorController';
+import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
 import type { Sprite } from '../core/Sprite';
 import type { Game } from "../Game";
 import { getAllDoors } from '../modules/doorModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
-import { handleMovementKeys } from './mapControls';
+import { handleMovementKeys } from '../controls';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;

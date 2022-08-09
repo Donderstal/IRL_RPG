@@ -1,63 +1,88 @@
 import globals from '../game-data/globals';
-import { handleMapKeyPress } from './map/mapControls';
-import { handleMenuKeyPress } from './menuCanvas/menuCanvasControls';
+import { handleMovementOfSprite } from './map/map-ui/movement';
+import { handleActionButton, dismissActiveAction } from './controllers/actionController';
+import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
+import { DirectionEnum } from './../enumerables/DirectionEnum';
+
+let pressedKeys: { [key in string]: boolean } = {};
 
 export const addKeyToPressed = ( event: KeyboardEvent ): void => {
+    pressedKeys[event.key] = true;
+
     if ( 'preventDefault' in event ) {
-        event.preventDefault( );        
+        event.preventDefault();
     }
 
     const GAME = globals.GAME
 
-    if ( event.key === "m" ) {
-        console.log(globals.AUDIO_DICTIONARY)
-    }
-    
     if ( event.key === "Tab" ) {
-        GAME.MENU.isActive ? GAME.MENU.hide( ) : GAME.MENU.show( );
+        GAME.MENU.isActive ? GAME.MENU.hide() : GAME.MENU.show();
     }
 
-    if ( !GAME.MENU.isActive && !GAME.inCinematic ) {
-        handleMapKeyPress( event )
+    if ( event.key === " " ) {
+        handleActionButton()
     }
-    else if ( GAME.inCinematic ) {
-        if ( event.key === " " ) {
-            GAME.speechBubbleController.handleButtonPress();
-        }
-        else if (event.key === "a" || event.key === "ArrowLeft"||event.key === "d" || event.key === "ArrowRight") {
-            GAME.speechBubbleController.handleSelectionKeys( );
-        }
-    }
-    else if ( GAME.MENU.isActive ) {
-        handleMenuKeyPress( event );
-    }
-}
 
+    if ( event.key === "e" && GAME.bubbleIsActive ) {
+        GAME.activeBubble = null;
+        GAME.bubbleIsActive = false
+        dismissActiveAction();
+    }
+
+    if ( event.key === "1" ) {
+        console.log( GAME.PLAYER );
+        console.log( GAME.FRONT )
+    }
+
+    if ( event.key === " " ) {
+        GAME.speechBubbleController.handleButtonPress();
+    }
+
+    if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {
+        GAME.speechBubbleController.handleSelectionKeys();
+    }
+};
+export const handleMovementKeys = () => {
+    const GAME = globals.GAME;
+    const PLAYER = GAME.PLAYER;
+
+    if ( PLAYER !== undefined ) {
+        if ( pressedKeys.w || pressedKeys.ArrowUp ) {
+            handleMovementOfSprite( PLAYER, DirectionEnum.up );
+        }
+        else if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
+            handleMovementOfSprite( PLAYER, DirectionEnum.left );
+        }
+        else if ( pressedKeys.s || pressedKeys.ArrowDown ) {
+            handleMovementOfSprite( PLAYER, DirectionEnum.down );
+        }
+        else if ( pressedKeys.d || pressedKeys.ArrowRight ) {
+            handleMovementOfSprite( PLAYER, DirectionEnum.right );
+        }
+        GAME.story.checkForEventTrigger( CinematicTrigger.position );
+    }
+};
 export const removeKeyFromPressed = ( event: KeyboardEvent ): void => {
-    globals.GAME.pressedKeys[event.key] = false
-}
-
-export const clearPressedKeys = ( pressedKeys: { [key in string]: boolean } ): void => {
-    Object.keys( pressedKeys ).forEach( (key) => {
+    pressedKeys[event.key] = false
+};
+export const clearPressedKeys = (): void => {
+    Object.keys( pressedKeys ).forEach( ( key ) => {
         pressedKeys[key] = null;
-    })
-}
-
+    } )
+};
 export const stopListenForKeyPress = (): void => {
     window.removeEventListener( 'keydown', addKeyToPressed )
     window.removeEventListener( 'keyup', removeKeyFromPressed )
     globals.GAME.listeningForPress = false;
-}
-
-
+};
 export const listenForKeyPress = (): void => {
     window.addEventListener( 'keydown', addKeyToPressed )
     window.addEventListener( 'keyup', removeKeyFromPressed )
     window.addEventListener( 'mousedown', ( event ) => {
         if ( event.which === 3 ) {
             // clear pressed keys on right click
-            clearPressedKeys( globals.GAME.pressedKeys );
+            clearPressedKeys();
         }
     } )
     globals.GAME.listeningForPress = true;
-}
+};
