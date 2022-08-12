@@ -3,6 +3,7 @@ import { handleMovementOfSprite } from './map/map-ui/movement';
 import { handleActionButton, dismissActiveAction } from './controllers/actionController';
 import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
+import { clearActiveBubbles, handleBubbleButtonPress, handleSelectionKeys, hasActiveBubbles } from './controllers/bubbleController';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -23,9 +24,8 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
         handleActionButton()
     }
 
-    if ( event.key === "e" && GAME.bubbleIsActive ) {
-        GAME.activeBubble = null;
-        GAME.bubbleIsActive = false
+    if ( event.key === "e" && hasActiveBubbles() ) {
+        clearActiveBubbles();
         dismissActiveAction();
     }
 
@@ -35,11 +35,11 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     }
 
     if ( event.key === " " ) {
-        GAME.speechBubbleController.handleButtonPress();
+        handleBubbleButtonPress();
     }
 
     if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {
-        GAME.speechBubbleController.handleSelectionKeys();
+        handleSelectionKeys();
     }
 };
 export const handleMovementKeys = () => {

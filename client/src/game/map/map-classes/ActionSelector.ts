@@ -8,6 +8,7 @@ import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { addEventToRegistry } from "../../../helpers/interactionRegistry";
 import { setActiveCinematic } from "../../controllers/cinematicController";
+import { checkForQuestTrigger } from "../../../helpers/questRegistry";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -32,8 +33,7 @@ export class ActionSelector extends Hitbox {
     get meetsCondition(): boolean { return conditionIsTrue( this.activeAction.condition.type, this.activeAction.condition.value ) }
     get needsConfirmation(): boolean { return this.activeAction.type != InteractionType.talk; }
     get actionSprite(): Sprite { return globals.GAME.FRONT.spriteDictionary[this.spriteId]; }
-    get isCollectable(): boolean { return this.actionSprite.hasOwnProperty( "collectableType" ); }
-
+    get isCollectable(): boolean { return this.actionSprite.model.isCollectable; }
 
     updateXy( x: number, y: number ): void {
         this.checkForConditions( );
@@ -84,8 +84,9 @@ export class ActionSelector extends Hitbox {
             addEventToRegistry( this.activeAction.registryKey, this.registeredSelection )
         }
         else if ( this.activeAction.shouldBeRegistered ) {
-            addEventToRegistry( this.activeAction.registryKey )
+            addEventToRegistry( this.activeAction.registryKey );
         }
+        checkForQuestTrigger( this.activeAction.registryKey );
     }
 
     resetAction(): void {

@@ -5,6 +5,7 @@ import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
 import type { SceneAnimationModel } from '../../models/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
+import { hasActiveBubbles } from '../controllers/bubbleController';
 
 export class Scene {
     animations: Animation[];
@@ -59,7 +60,7 @@ export class Scene {
             switch( e.model.type ) {
                 case SceneAnimationType.speak:
                 case SceneAnimationType.speakYesNo:
-                    animationHasFinished = !globals.GAME.speechBubbleController.isActive
+                    animationHasFinished = !hasActiveBubbles();
                     break;    
                 case SceneAnimationType.emote:
                     animationHasFinished = e.counter.countAndCheckLimit( );

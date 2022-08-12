@@ -3,7 +3,7 @@ import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import globals from "../../game-data/globals";
 import { addEventToRegistry } from "../../helpers/interactionRegistry";
-import { clearCinematicGrids, clearMapFromCanvases, initCinematicGrids } from "../../helpers/loadMapHelpers";
+import { checkForQuestTrigger } from "../../helpers/questRegistry";
 import type { InteractionModel } from "../../models/InteractionModel";
 import { Interaction } from "../cutscenes/Interaction";
 import { dismissActiveAction } from "./actionController";
@@ -15,7 +15,7 @@ export const setActiveCinematic = ( interaction: InteractionModel, trigger: Cine
     if ( activeCinematic === null ) {
         activeCinematicIsScripted = isScripted
         if ( activeCinematicIsScripted ) {
-            initCinematicGrids();
+            globals.GAME.initCinematicGrids();
             activeCinematic = new Interaction( interaction, trigger, options )
         }
         else {
@@ -31,17 +31,19 @@ export const cinematicMapIsActive = (): boolean => {
 }
 export const dismissActiveCinematic = (): void => {
     if ( activeCinematicIsScripted ) {
-        clearMapFromCanvases( );
+        globals.GAME.clearMapFromCanvases( );
         if ( activeCinematic.model.shouldBeRegistered ) {
             if ( activeCinematic.registeredSelection !== null ) {
                 addEventToRegistry( activeCinematic.model.registryKey, activeCinematic.registeredSelection )
+                checkForQuestTrigger( activeCinematic.model.registryKey );
             }
             else {
-                addEventToRegistry( activeCinematic.model.registryKey )
+                addEventToRegistry( activeCinematic.model.registryKey );
             }
+            checkForQuestTrigger( activeCinematic.model.registryKey );
         }
 
-        clearCinematicGrids();
+        globals.GAME.clearCinematicGrids();
     }
     if ( activeCinematic.trigger === CinematicTrigger.leave ) {
         globals.GAME.switchMap( activeCinematic.args[0], activeCinematic.args[1] );

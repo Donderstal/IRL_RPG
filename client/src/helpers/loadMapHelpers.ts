@@ -15,15 +15,6 @@ import type { FrontgridCanvas } from '../game/FrontgridCanvas';
 import type { BackgroundCanvas } from '../game/BackgroundCanvas';
 import type { CanvasContextModel } from '../models/CanvasContextModel';
 
-//import { clearHitboxes } from '../game/modules/hitboxModule';
-//import { clearDoors } from '../game/modules/doorModule';
-//import { clearActions } from '../game/modules/actionModule';
-//import { clearRandomAnimationCounters } from '../game/modules/randomAnimationModule';
-//import { clearIdleAnimationCounters } from '../game/modules/idleAnimationModule';
-//import { clearSpriteMovementDictionary } from '../game/modules/spriteMovementModule';
-//import { dismissActiveAction } from '../game/controllers/actionController';
-import { cinematicIsActive } from '../game/controllers/cinematicController';
-
 const cinematicGrids: { back: CanvasContextModel, front: CanvasContextModel, frontgrid: CanvasContextModel } = {
     back: null,
     front: null,
@@ -117,10 +108,7 @@ export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
 }
 
 export const switchMap = ( destinationName: string, type: InteractionType ): void => {
-    globals.GAME.story.checkForEventTrigger(CinematicTrigger.leave, [ destinationName, type ]); 
-    if ( cinematicIsActive() ) {
-        return;
-    }        
+    globals.GAME.story.checkForEventTrigger(CinematicTrigger.leave, [ destinationName, type ]);     
     globals.GAME.sound.clearActiveSoundEffects( );
     globals.GAME.paused = true;
     stopListenForKeyPress( );

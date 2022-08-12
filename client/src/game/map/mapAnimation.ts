@@ -9,6 +9,7 @@ import type { Game } from "../Game";
 import { getAllDoors } from '../modules/doorModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 import { handleMovementKeys } from '../controls';
+import { drawBubbles } from '../controllers/bubbleController';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;
@@ -38,7 +39,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
         GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
     }
 
-    GAME.speechBubbleController.drawBubbles( );
+    drawBubbles();
 
     const doors = getAllDoors();
     let inDoorRange = false;

@@ -9,7 +9,7 @@ let tileActionDictionary: { [key in string]: ActionSelector } = {};
 
 export const initializeActionForSprite = ( sprite: Sprite, interactionList: InteractionModel[] ): void => {
     spriteActionDictionary[sprite.spriteId] = new ActionSelector(
-        sprite.centerX, sprite.baseY, interactionList
+        sprite.centerX, sprite.baseY, interactionList, sprite.spriteId
     );
     sprite.plugins.mapAction.active = true;
 };

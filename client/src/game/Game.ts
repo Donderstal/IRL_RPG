@@ -20,9 +20,7 @@ import { setInteractionRegistry } from '../helpers/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
 import { MenuCanvas } from './menuCanvas/MenuCanvas'
 import { CameraFocus } from '../helpers/cameraFocus'
-import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded } from '../helpers/loadMapHelpers'
-import { SpeechBubbleController } from './cutscenes/SpeechBubbleController'
-import type { SpeechBubble } from './cutscenes/SpeechBubble'
+import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded, clearCinematicGrids, clearMapFromCanvases, initCinematicGrids } from '../helpers/loadMapHelpers'
 import type { CanvasContextModel } from '../models/CanvasContextModel'
 import type { Neighbourhood } from './Neighbourhood'
 import type { Tile } from './core/Tile'
@@ -55,9 +53,6 @@ export class Game {
     inMenu: boolean;
     listeningForPress: boolean;
 
-    speechBubbleController: SpeechBubbleController;
-    activeBubble: SpeechBubble;
-    bubbleIsActive: boolean;
     cameraFocus: CameraFocus;
     collectableRegistry: CollectableRegistry;
 
@@ -85,16 +80,12 @@ export class Game {
         this.paused; // bool
         this.inMenu;
         this.listeningForPress; // bool
-        this.speechBubbleController = new SpeechBubbleController( );
         this.cameraFocus = new CameraFocus( );
         this.collectableRegistry = new CollectableRegistry( );
         this.sound = new SoundController( );
         this.audio = new AudioContext( );
         this.fader = new Fader( );
         this.story;
-
-        this.activeBubble = null
-        this.bubbleIsActive;
 
         this.menu = null;
         this.frontgrid = null;
@@ -276,6 +267,18 @@ export class Game {
 
     hasCinematicMapLoaded(): boolean {
         return hasCinematicMapLoaded();
+    }
+
+    clearCinematicGrids() {
+        clearCinematicGrids();
+    }
+
+    clearMapFromCanvases() {
+        clearMapFromCanvases();
+    }
+
+    initCinematicGrids() {
+        initCinematicGrids();
     }
 
     save(): void {

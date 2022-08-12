@@ -1,5 +1,6 @@
 import globals from '../../game-data/globals';
 import { clearEntireCanvas } from '../../helpers/canvasHelpers';
+import { drawBubbles } from '../controllers/bubbleController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
 export const handleCinematicAnimations = ( GAME ): void => {
@@ -23,7 +24,7 @@ export const handleCinematicAnimations = ( GAME ): void => {
         GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
     }
 
-    GAME.speechBubbleController.drawBubbles( );
+    drawBubbles();
 
     if ( GAME.cameraFocus.movingToNewFocus ) {
         GAME.cameraFocus.moveToNewFocus( );

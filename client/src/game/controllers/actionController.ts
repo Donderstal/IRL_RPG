@@ -5,6 +5,7 @@ import { getClosestHitbox } from '../../helpers/utilFunctions';
 import { getAllActions } from '../modules/actionModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 import type { ActionSelector } from '../map/map-classes/ActionSelector';
+import { clearActiveBubbles } from './bubbleController';
 
 let activeAction: ActionSelector = null; 
 
@@ -46,8 +47,7 @@ export const dismissActiveAction = (): void => {
 
 export const confirmActiveAction = (): void => {
     activeAction.confirm();
-    globals.GAME.activeBubble = null;
-    globals.GAME.bubbleIsActive = false;
+    clearActiveBubbles();
 }
 
 export const registerActionSelection = ( selection: InteractionAnswer ): void => {

@@ -25,6 +25,7 @@ import { handleRandomAnimationCounter, initializeRandomAnimationCounter } from '
 import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
 import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
 import { handleIdleAnimationCounter, initializeIdleAnimationCounter } from '../modules/idleAnimationModule'
+import { setNewBubble, setNewEmote } from '../controllers/bubbleController'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -425,7 +426,7 @@ export class Sprite {
             this.speak( animation.text, ( animation.sfx ?? "medium-text-blip.ogg" ), SceneAnimationType.speak )
         }
         if ( animation.is( SceneAnimationType.emote ) ) {
-            globals.GAME.speechBubbleController.setNewEmote( { x: this.x, y: this.y }, animation.src );
+            setNewEmote( { x: this.x, y: this.y }, animation.src );
         }
         if ( animation.is( SceneAnimationType.move ) ) {
             initializeSpriteMovement( this, animation.destination, false );
@@ -438,7 +439,7 @@ export class Sprite {
     }
 
     speak( text: string, sfx: string, type: SceneAnimationType ): void {
-        globals.GAME.speechBubbleController.setNewBubble( 
+        setNewBubble( 
             {'x': this.x, 'y': this.y}, 
             {'text': text, 'name': this.name, 'sfx': sfx ?? this.sfx},
             type
