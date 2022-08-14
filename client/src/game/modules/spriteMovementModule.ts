@@ -79,3 +79,6 @@ export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum,
     }
     sprite.movementFrameCounter();
 };
+export const spriteHasMovement = ( spriteId: string ): boolean => {
+    return spriteId in movementDictionary;
+}

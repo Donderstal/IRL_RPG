@@ -21,10 +21,10 @@ import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
 import { initializeActionForSprite, updateSpriteAssociatedAction } from '../modules/actionModule'
 import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/doorModule'
 import { handleSpriteMovement, initializeSpriteMovement } from '../modules/spriteMovementModule'
-import { handleRandomAnimationCounter, initializeRandomAnimationCounter } from '../modules/randomAnimationModule'
+import { handleRandomAnimationCounter, initializeRandomAnimationCounter, resetRandomAnimationCounter } from '../modules/randomAnimationModule'
 import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
 import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
-import { handleIdleAnimationCounter, initializeIdleAnimationCounter } from '../modules/idleAnimationModule'
+import { handleIdleAnimationCounter, initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
 import { setNewBubble, setNewEmote } from '../controllers/bubbleController'
 /**
  * The Sprite serves as a base class for all sprites in the game.
@@ -206,15 +206,26 @@ export class Sprite {
             }
 
             handleSpriteMovement( this );
+            this.resetCounters();
         }
         if ( this.pluginIsRunning( plugins.animation ) ) {
             handleSpriteAnimation( this );
+            this.resetCounters();
         }
-        if ( this.pluginIsRunning( plugins.idleAnimation ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.animation ) ) ) {
+        if ( this.pluginIsRunning( plugins.idleAnimation ) && !this.pluginIsRunning( plugins.movement ) && !this.pluginIsRunning( plugins.animation ) ) {
             handleIdleAnimationCounter( this );
         }
-        if ( this.pluginIsRunning( plugins.randomAnimation ) && !( this.pluginIsRunning( plugins.movement ) || this.pluginIsRunning( plugins.animation ) ) ) {
+        if ( this.pluginIsRunning( plugins.randomAnimation ) && !this.pluginIsRunning( plugins.movement ) && !this.pluginIsRunning( plugins.animation ) ) {
             handleRandomAnimationCounter( this );
+        }
+    }
+
+    resetCounters() {
+        if ( this.pluginIsRunning( this.plugins.idleAnimation ) ) {
+            resetIdleAnimationCounter( this.spriteId );
+        }
+        if ( this.pluginIsRunning( this.plugins.randomAnimation ) ) {
+            resetRandomAnimationCounter( this.spriteId );
         }
     }
 

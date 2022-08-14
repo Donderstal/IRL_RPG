@@ -34,17 +34,13 @@ export class Interaction {
     }
 
     activateNextScene(): void {
-        if ( this.activeScene.containsAnimationType( SceneAnimationType.speak ) ) {
+        if ( this.activeScene.containsAnimationType( SceneAnimationType.speakYesNo ) ) {
             this.registerYesOrNoSelection( )
         }
         
         this.iterator++
         if ( this.model.cinematic.scenes[this.iterator] ) {
-            if ( this.activeScene.containsAnimationType( SceneAnimationType.speak )
-                || this.activeScene.containsAnimationType( SceneAnimationType.speakYesNo )
-                || this.activeScene.containsAnimationType( SceneAnimationType.emote ) ) {
-                this.activeScene.unsetSpriteAnimation( )
-            }
+            this.activeScene.unsetSceneAnimations();
             this.activeScene = new Scene( 
                 this.model.cinematic.scenes[this.iterator], 
                 ( this.trigger == CinematicTrigger.interaction ? this.args[0] : false)

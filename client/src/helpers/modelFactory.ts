@@ -247,7 +247,6 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
             typedModel.roadName = animationData[4];
             break;
         case SceneAnimationType.createSprite:
-        case SceneAnimationType.createSprite:
             typedModel = model as CreateSpriteScene;
             typedModel.direction = animationData[2];
             typedModel.sprite = animationData[3];

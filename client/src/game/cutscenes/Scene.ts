@@ -16,8 +16,11 @@ export class Scene {
         this.animationIds = [];
         this.finishedAnimations = [];
         sceneModel.forEach((animationModel: SceneAnimationModel): void => {
-            const id = getUniqueId(this.animationIds);
-            if ( animationModel.spriteId === undefined && spriteId !== null ) {
+            const id = getUniqueId( this.animationIds );
+            if ( animationModel.spriteName !== null ) {
+                animationModel.spriteId = this.getSpriteIdByName( animationModel.spriteName );
+            }
+            else if ( spriteId !== null ) {
                 animationModel.spriteId = spriteId
             }
             this.animations.push(new Animation(animationModel, id));
@@ -47,10 +50,8 @@ export class Scene {
         return animation;
     }
 
-    unsetSpriteAnimation( ): void {
-        this.animations.forEach( ( e: Animation ): void => {
-            e.unsetSpriteAnimation();
-        } );
+    unsetSceneAnimations() {
+        this.animations.forEach( ( e: Animation ): void => { e.unsetSpriteAnimation(); } );
     }
 
     checkForScenePass( ): boolean {
@@ -108,5 +109,10 @@ export class Scene {
             }
         })
         return this.finishedAnimations.length === this.scenePassAnimations.length;
+    }
+
+    getSpriteIdByName( name: string ): string {
+        const sprite = globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name; } )[0];
+        return sprite.spriteId;
     }
 } 

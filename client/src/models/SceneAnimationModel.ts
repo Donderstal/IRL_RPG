@@ -1,97 +1,85 @@
 import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
 
 export type SceneAnimationModel = {
-    type: SceneAnimationType,
-    waitForAnimationEnd: boolean,
-    spriteId?: string
+    type: SceneAnimationType;
+    waitForAnimationEnd: boolean;
+    spriteId?: string;
+    spriteName?: string;
 }
 
 export type SpeakScene = SceneAnimationModel & {
-    text: string,
-    spriteName: string,
-
-    speakWith?: string,
-    sfx?: string,
+    text: string;
+    speakWith?: string;
+    sfx?: string;
 }
 
 export type SpeakYesNoScene = SceneAnimationModel & {
-    text: string,
-    spriteName: string,
+    text: string;
+    speakWith?: string;
+    sfx?: string;
 
-    speakWith?: string,
-    sfx?: string,
-
-    pathYes?: SceneAnimationModel[],
-    pathNo?: SceneAnimationModel[]
+    pathYes?: SceneAnimationModel[];
+    pathNo?: SceneAnimationModel[];
 }
 
 export type EmoteScene = SceneAnimationModel & {
-    src: string,
-    spriteName: string,
-
-    speakWith?: string,
-    sfx?: string,
+    src: string;
+    speakWith?: string;
+    sfx?: string;
 }
 
 export type MoveScene = SceneAnimationModel & {
-    spriteName: string,
-    destination: { column: number, row: number }
+    destination: { column: number, row: number };
 }
 
 export type MoveCarScene = SceneAnimationModel & {
-    spriteName: string,
-    roadName: string,
-    column: number,
-    row: number,
-    direction: number
+    roadName: string;
+    column: number;
+    row: number;
+    direction: number;
 }
 
 export type AnimateSpriteScene = SceneAnimationModel & {
-    animationName: string,
-    spriteName: string,
-    loop: boolean
+    animationName: string;
+    loop: boolean;
 }
 
 export type CreateCarScene = SceneAnimationModel & {
-    sprite: string,
-    spriteName: string,
-    roadName: string
+    sprite: string;
+    roadName: string;
 }
 
 export type CreateSpriteScene = SceneAnimationModel & {
-    sprite: string,
-    spriteName: string,
-    column: number,
-    row: number,
-    direction: number
+    sprite: string;
+    column: number;
+    row: number;
+    direction: number;
 }
 
 export type DeleteSpriteScene = SceneAnimationModel & {
-    spriteName: string,
-    sfx?: string,
+    sfx?: string;
 }
 
 export type FadeScene = SceneAnimationModel & {
-    sfx: string
+    sfx: string;
 }
 
 export type WaitScene = SceneAnimationModel & {
-    milliseconds: number
+    milliseconds: number;
 }
 
 export type CameraMoveToSpriteScene = SceneAnimationModel & {
-    spriteName: string,
-    snapToSprite: boolean
+    snapToSprite: boolean;
 }
 
 export type CameraMoveToTileScene = SceneAnimationModel & {
-    column: number,
-    row: number,
-    snapToTile: boolean
+    column: number;
+    row: number;
+    snapToTile: boolean;
 }
 
 export type LoadMapScene = SceneAnimationModel & {
-    mapName: string,
-    setPlayerSprite: boolean,
-    playerSpriteLocation: {}
+    mapName: string;
+    setPlayerSprite: boolean;
+    playerSpriteLocation: {};
 }

@@ -6,6 +6,7 @@ import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED, BUBBLE_LEFT_TOP, BUBBLE_LEFT_
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TypeWriter } from "../../helpers/TypeWriter";
+import type { SceneAnimationModel, SpeakScene, SpeakYesNoScene } from '../../models/SceneAnimationModel';
 
 const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
     const bubbleLocation = {
@@ -24,10 +25,11 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
     return bubbleLocation;
 }
 
-const getSpeechBubbleDimensions = ( contents ) => {
-    const text = breakTextIntoLines( contents.text, LARGE_FONT_SIZE )
+const getSpeechBubbleDimensions = ( contentModel: SceneAnimationModel, type: SceneAnimationType ) => {
+    let content = type === SceneAnimationType.speak ? contentModel as SpeakScene : contentModel as SpeakYesNoScene;
+    const text = breakTextIntoLines( content.text, LARGE_FONT_SIZE )
     const ctx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()  
-    const  textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (contents.name !== undefined ? SMALL_FONT_LINE_HEIGHT : 0);
+    const  textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (content.spriteName !== undefined ? SMALL_FONT_LINE_HEIGHT : 0);
     const firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
     return {
         'textLines' : text.length,
@@ -66,13 +68,15 @@ export class SpeechBubble {
 
     moving: boolean;
     destinationY: number;
-    constructor( location, contents, id, type, subtitleBubble = false ) {
+    constructor( location: {x: number, y: number}, contentModel: SceneAnimationModel, id: string, type: SceneAnimationType, subtitleBubble = false ) {
         const dimensions = subtitleBubble
             ? { textLines: 1, width: globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
-            : getSpeechBubbleDimensions( contents );
+            : getSpeechBubbleDimensions( contentModel, type );
         const xyPosition = subtitleBubble
             ?  { 'x': globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 2 : CANVAS_WIDTH / 4, 'y': globals.SCREEN.MOBILE ? screen.height : CANVAS_HEIGHT, 'position': "UP-RIGHT" }
             : getSpeechBubbleXy( location, dimensions );
+
+        let content = type === SceneAnimationType.speak ? contentModel as SpeakScene : contentModel as SpeakYesNoScene;
 
         this.x              = xyPosition.x;
         this.y              = xyPosition.y;
@@ -84,7 +88,7 @@ export class SpeechBubble {
         this.width          = dimensions.width;
         this.height         = dimensions.height;
         this.textLines      = dimensions.textLines;
-        this.text           = contents.text;
+        this.text           = content.text;
 
         this.columns        = this.width / GRID_BLOCK_PX;
         this.rows           = this.height / GRID_BLOCK_PX;
@@ -94,8 +98,8 @@ export class SpeechBubble {
         this.innerCanvas.height = this.height;
         this.innerCtx = this.innerCanvas.getContext( '2d' );
 
-        if ( contents.name ) {
-            this.setHeader( contents.name + ": " )
+        if ( content.spriteName ) {
+            this.setHeader( content.spriteName + ": " )
         } 
         if ( this.type === SceneAnimationType.speakYesNo ) {
             this.bubbleY    = this.y + this.height;

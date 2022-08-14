@@ -24,7 +24,7 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ): void => {
 export const clearRandomAnimationCounters = (): void => {
     counterDictionary = {};
 };
-export const resetIdleAnimationCounter = ( spriteId: string ): void => {
+export const resetRandomAnimationCounter = ( spriteId: string ): void => {
     const counter = getAssociatedCounter( spriteId );
     counter.resetCounter();
 };

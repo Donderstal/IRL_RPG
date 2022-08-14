@@ -7,9 +7,9 @@ export const WHOLESOME_LIFTER_B4 = [
         InteractionType.talk, false, null, "medium-text-blip.ogg",
         [ConditionType.default, false],
         [
-            [[SceneAnimationType.speak, true, "Just another day lifting and being handsome!"]],
-            [[SceneAnimationType.speak, true, "If you need some dumbbells I can't help ya though..."]],
-            [[SceneAnimationType.speak, true, "I only hand them out to my bros, or bros of my bros!"]]
+            [[SceneAnimationType.speak, true, "Just another day lifting and being handsome!", null]],
+            [[SceneAnimationType.speak, true, "If you need some dumbbells I can't help ya though...", null]],
+            [[SceneAnimationType.speak, true, "I only hand them out to my bros, or bros of my bros!", null]]
         ]
     ]
 ]

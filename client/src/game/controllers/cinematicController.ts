@@ -30,29 +30,26 @@ export const cinematicMapIsActive = (): boolean => {
     return activeCinematicIsScripted === false;
 }
 export const dismissActiveCinematic = (): void => {
-    if ( activeCinematicIsScripted ) {
-        globals.GAME.clearMapFromCanvases( );
-        if ( activeCinematic.model.shouldBeRegistered ) {
-            if ( activeCinematic.registeredSelection !== null ) {
-                addEventToRegistry( activeCinematic.model.registryKey, activeCinematic.registeredSelection )
-                checkForQuestTrigger( activeCinematic.model.registryKey );
-            }
-            else {
-                addEventToRegistry( activeCinematic.model.registryKey );
-            }
+    if ( activeCinematic.model.shouldBeRegistered ) {
+        if ( activeCinematic.registeredSelection !== null ) {
+            addEventToRegistry( activeCinematic.model.registryKey, activeCinematic.registeredSelection )
             checkForQuestTrigger( activeCinematic.model.registryKey );
         }
+        else {
+            addEventToRegistry( activeCinematic.model.registryKey );
+        }
+        checkForQuestTrigger( activeCinematic.model.registryKey );
+    }
 
+    if ( activeCinematicIsScripted ) {
+        globals.GAME.clearMapFromCanvases( );
         globals.GAME.clearCinematicGrids();
     }
+
     if ( activeCinematic.trigger === CinematicTrigger.leave ) {
         globals.GAME.switchMap( activeCinematic.args[0], activeCinematic.args[1] );
     }
     else if ( activeCinematic.trigger === CinematicTrigger.interaction ) {
-        let sprite = globals.GAME.FRONT.spriteDictionary[activeCinematic.args[0]];
-        if ( sprite != undefined ) {
-            sprite.State.cinematicOff( sprite );
-        }
         dismissActiveAction();
     }
 

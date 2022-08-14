@@ -20,8 +20,11 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
         GAME.MENU.isActive ? GAME.MENU.hide() : GAME.MENU.show();
     }
 
-    if ( event.key === " " ) {
+    if ( event.key === " " && !hasActiveBubbles() ) {
         handleActionButton()
+    }
+    else if ( event.key === " " && hasActiveBubbles() ) {
+        handleBubbleButtonPress();
     }
 
     if ( event.key === "e" && hasActiveBubbles() ) {
@@ -32,10 +35,6 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     if ( event.key === "1" ) {
         console.log( GAME.PLAYER );
         console.log( GAME.FRONT )
-    }
-
-    if ( event.key === " " ) {
-        handleBubbleButtonPress();
     }
 
     if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {
