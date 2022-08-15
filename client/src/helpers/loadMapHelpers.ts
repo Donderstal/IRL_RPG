@@ -97,7 +97,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 }
 
 export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
-
     source.frontgrid.class.clearMap( );
     source.front.class.clearMap( );
     source.back.class.clearMap( );
@@ -176,6 +175,7 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
 
 export const loadCinematicMap = ( mapName, setPlayer = false ) => {
     loadedCinematicMap = false;
+    globals.GAME.paused = true;
     getCinematicFront().playerSprite = globals.GAME.front.class.playerSprite;
     clearMapFromCanvases( cinematicGrids )
     let GAME = globals.GAME;
@@ -186,9 +186,8 @@ export const loadCinematicMap = ( mapName, setPlayer = false ) => {
         setPlayer, true,
         GAME.cinematicNeighbourhood.activeMapKey == GAME._activeNeighbourhood.activeMapKey ? GAME.front.class.allSprites : null
     );
-    setTimeout(()=> {
-        loadedCinematicMap = true;        
-    }, 250 )
+    loadedCinematicMap = true;
+    globals.GAME.paused = false;
 
 }
 
@@ -210,14 +209,18 @@ const setCinematicNeighbourhoodAndMap = (mapName) => {
     }
 }
 
-export const clearCinematicGrids = ( ) => {
+export const clearCinematicGrids = () => {
+    console.log('clear em...')
     const GAME = globals.GAME;
+    GAME.paused = true;
+    const front = getCinematicFront()
     playerLocationAtEndOfCinematic = { 
-        column: getCinematicFront().playerSprite.column,
-        row: getCinematicFront().playerSprite.row,
-        direction: getCinematicFront().playerSprite.direction as DirectionEnum
+        column: front.playerSprite.column,
+        row: front.playerSprite.row,
+        direction: front.playerSprite.direction
     }
-    const sprites = [ ...getCinematicFront().allSprites ];
+    const sprites = [...front.allSprites];
+    loadedCinematicMap = false;
     clearMapFromCanvases( );
     loadMapToCanvases( 
         GAME._activeNeighbourhood.activeMap, 
@@ -230,5 +233,5 @@ export const clearCinematicGrids = ( ) => {
     cinematicGrids.frontgrid = null;
     playerLocationAtStartOfCinematic = null;
     playerLocationAtEndOfCinematic = null;
-    loadedCinematicMap = false;
+    GAME.paused = false;
 }

@@ -42,7 +42,6 @@ export const dismissActiveCinematic = (): void => {
     }
 
     if ( activeCinematicIsScripted ) {
-        globals.GAME.clearMapFromCanvases( );
         globals.GAME.clearCinematicGrids();
     }
 

@@ -21,7 +21,7 @@ const selectionBubble = (): SpeechBubble => {
 };
 const isWriting = (): boolean => {
     return nonEmoteIds().filter(
-        ( e ) => { ( activeBubbles[e] as SpeechBubble ).typeWriter.isWriting }
+        ( e ) => { return ( activeBubbles[e] as SpeechBubble ).typeWriter.isWriting }
     ).length > 0;
 };
 export const hasActiveBubbles = (): boolean => { return activeBubbleIds.length > 0 || subtitleBubble !== null; };
@@ -92,33 +92,3 @@ export const drawBubbles = (): void => {
         subtitleBubble.draw();
     }
 };
-
-//const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
-//    const bubbleLocation = {
-//        'x': globals.SCREEN.MOBILE ? ( 0 + ( MAX_BUBBLE_WIDTH - dimensions.width ) / 2 ) : spawnLocation.x,
-//        'y': globals.SCREEN.MOBILE ? 0 : spawnLocation.y - dimensions.height,
-//        'position': "UP-RIGHT"
-//    };
-//    if ( bubbleLocation.x + dimensions.width > 24 * GRID_BLOCK_PX ) {
-//        bubbleLocation.x = ( spawnLocation.x - dimensions.width ) + GRID_BLOCK_PX;
-//        bubbleLocation.position = "UP-LEFT";
-//    }
-//    if ( bubbleLocation.y < 0 ) {
-//        bubbleLocation.y = spawnLocation.y + ( GRID_BLOCK_PX * 1.75 );
-//        bubbleLocation.position = bubbleLocation.position === "UP-RIGHT" ? "DOWN-RIGHT" : "DOWN-LEFT";
-//    }
-//    return bubbleLocation;
-//}
-
-//const getSpeechBubbleDimensions = ( contentModel: SceneAnimationModel, type: SceneAnimationType ) => {
-//    let content = type === SceneAnimationType.speak ? contentModel as SpeakScene : contentModel as SpeakYesNoScene;
-//    const text = breakTextIntoLines( content.text, LARGE_FONT_SIZE )
-//    const ctx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
-//    const textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + ( content.spriteName !== undefined ? SMALL_FONT_LINE_HEIGHT : 0 );
-//    const firstLineWidth = ctx.measureText( text[0] ).width + ( BUBBLE_INNER_PADDING * 2 );
-//    return {
-//        'textLines': text.length,
-//        'width': text.length > 1 ? MAX_BUBBLE_WIDTH : Math.ceil( firstLineWidth / GRID_BLOCK_PX ) * GRID_BLOCK_PX,
-//        'height': ( Math.ceil( textHeightAcc / GRID_BLOCK_PX ) * GRID_BLOCK_PX < GRID_BLOCK_PX * 2 ) ? GRID_BLOCK_PX * 2 : Math.ceil( textHeightAcc / GRID_BLOCK_PX ) * GRID_BLOCK_PX
-//    }
-//}

@@ -2,7 +2,7 @@ import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { initCanvasObjectModel, initGridCellModel } from "../../helpers/modelFactory";
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene,
-    DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveCarScene, MoveScene, SceneAnimationModel,
+    DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, SceneAnimationModel,
     SpeakScene, SpeakYesNoScene, WaitScene
 } from "../../models/SceneAnimationModel";
 import { Counter } from '../../helpers/Counter';
@@ -11,7 +11,7 @@ import type { Sprite } from "../core/Sprite";
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import globals from '../../game-data/globals';
-import { PLAYER_NAME } from '../../game-data/interactionGlobals';
+import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { getClosestCell } from '../../helpers/utilFunctions';
 import { destroySpriteMovement, initializeSpriteMovement, spriteHasMovement } from '../modules/spriteMovementModule';
 import type { CellPosition } from "../../models/CellPositionModel";
@@ -26,7 +26,6 @@ export class Animation {
     spriteId: string;
     counter: Counter;
     tileIndex: number;
-    walkingToDestination: boolean;
     destination: GridCellModel;
     selection: InteractionAnswer;
     constructor( animationModel: SceneAnimationModel, id: string ) {
@@ -41,7 +40,6 @@ export class Animation {
     get speakYesNoScene(): SpeakYesNoScene { return this.model as SpeakYesNoScene; }
     get emoteScene(): EmoteScene { return this.model as EmoteScene; }
     get moveScene(): MoveScene { return this.model as MoveScene; }
-    get moveCarScene(): MoveCarScene { return this.model as MoveCarScene; }
     get animationScene(): AnimateSpriteScene { return this.model as AnimateSpriteScene; }
     get createCarScene(): CreateCarScene { return this.model as CreateCarScene; }
     get createSpriteScene(): CreateSpriteScene { return this.model as CreateSpriteScene; }
@@ -58,12 +56,15 @@ export class Animation {
         return this.model.type == value
     }
 
+    hasSpriteSet() {
+        return this.spriteId !== null && this.spriteId !== undefined;
+    }
+
     setSpriteId() {
         this.spriteId = this.model.spriteId;
     }
 
     setAction( ): void {
-        let setToSprite = false;
         switch( this.model.type ) {
             case SceneAnimationType.speak:
             case SceneAnimationType.speakYesNo:
@@ -74,13 +75,9 @@ export class Animation {
                 break;
             case SceneAnimationType.move:
                 this.initMoveAnimation( this.moveScene );
-                setToSprite = true;
-                break;
-            case SceneAnimationType.moveCar:
-                this.initMoveCarAnimation( this.moveCarScene );
                 break;
             case SceneAnimationType.animation: 
-                setToSprite = true;
+                this.initAnimationAnimation( this.animationScene );
                 break;
             case SceneAnimationType.createCar:
                 this.initCreateCarAnimation( this.createCarScene );
@@ -131,9 +128,6 @@ export class Animation {
                 globals.GAME.loadCinematicMap( this.loadMapScene );   
                 break;
         }
-        if( setToSprite ) {
-            this.setAnimToSprite( );            
-        }
     }
 
     initSpeakAnimation( type: SceneAnimationType ): void {
@@ -151,41 +145,41 @@ export class Animation {
     }
 
     initMoveAnimation( sceneModel: MoveScene ): void {
+        const sprite = this.getSpriteById();
+
         if ( typeof sceneModel.destination === 'string' || sceneModel.destination instanceof String ) {
-            const sprite: Sprite = this.getSpriteById( this.getSpriteByName( sceneModel.spriteName ).spriteId );             
+            const targetSprite = this.getSpriteByName( sceneModel.destination as string );             
             const cells = [
-                initGridCellModel( sprite.column, sprite.row - 1 ),
-                initGridCellModel( sprite.column - 1, sprite.row ),
-                initGridCellModel( sprite.column + 1, sprite.row ),
-                initGridCellModel( sprite.column, sprite.row + 1 ),
+                initGridCellModel( targetSprite.column, targetSprite.row - 1 ),
+                initGridCellModel( targetSprite.column - 1, targetSprite.row ),
+                initGridCellModel( targetSprite.column + 1, targetSprite.row ),
+                initGridCellModel( targetSprite.column, targetSprite.row + 1 ),
             ].filter((cell): boolean =>{ 
                 const tileB = globals.GAME.BACK.getTileAtCell( cell.column, cell.row )
                 const tileF = globals.GAME.FRONT.getTileAtCell( cell.column, cell.row )
                 return !tileB.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite(tileF.index);
             });
 
-            sceneModel.destination = getClosestCell( this.getSpriteById(), cells );
+            sceneModel.destination = getClosestCell( sprite, cells );
         }
-        this.walkingToDestination = true;    
+
+        initializeSpriteMovement( sprite, sceneModel.destination );
     }
 
-    initMoveCarAnimation( sceneModel: MoveCarScene ): void {
-        let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName; })
-        let road    = roads[0];
-
-        this.destination = road.isHorizontal
-            ? { "row": road.model.primaryRow, "column": sceneModel.column }
-            : { "row": sceneModel.row, "column": road.model.primaryColumn };
-        this.walkingToDestination = true;   
-        let car = this.getSpriteByName();
-        initializeSpriteMovement( car, this.destination )
+    initAnimationAnimation( sceneModel: AnimateSpriteScene ): void {
+        const sprite = this.getSpriteById();
+        initializeSpriteAnimation( sprite, sceneModel.animationName, { looped: sceneModel.loop, loops: 0 } );
     }
 
     initCreateCarAnimation( sceneModel: CreateCarScene ): void {
-        let roads = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName })
-        let roadData = roads[0].getCarDataForTile( true );
-        roadData.name = sceneModel.spriteName;
-        globals.GAME.FRONT.setVehicleToTile( roadData );
+        let road = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName } )[0];
+        let startCell = road.getRoadStartPosition();
+        let model = initCanvasObjectModel( {
+            column: startCell.column, row: startCell.row,
+            type: sceneModel.sprite, name: sceneModel.spriteName,
+            direction: road.model.direction
+        } );
+        this.spriteId = globals.GAME.FRONT.getTileAndSetSprite( model );
     }
 
     initCreateSpriteAnimation( sceneModel: CreateSpriteScene ): void {
@@ -195,20 +189,13 @@ export class Animation {
                 row: sceneModel.row
             };
             globals.GAME.FRONT.initPlayerCharacter( position, MAIN_CHARACTER );
-            return;
+            this.spriteId = PLAYER_ID;
         }
-
-        const tile = globals.GAME.FRONT.getTileAtCell( sceneModel.column, sceneModel.row );
         const model: CanvasObjectModel = initCanvasObjectModel( {
             type: sceneModel.sprite, direction: sceneModel.direction,
             row: sceneModel.row, column: sceneModel.column, name: sceneModel.spriteName
         } );
-        this.spriteId = globals.GAME.FRONT.setSprite( tile, model );
-    }
-
-    getSpriteCell( ): GridCellModel {
-        const sprite: Sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( );
-        return { 'row': sprite.row, 'column': sprite.column }
+        this.spriteId = globals.GAME.FRONT.getTileAndSetSprite( model );
     }
 
     setAnimToSprite( ): void {
@@ -218,21 +205,17 @@ export class Animation {
 
     unsetSpriteAnimation(): void {
         const sprite = this.getAnimationSprite();
-        if ( spriteHasAnimation( sprite.spriteId ) ) {
+        if ( spriteHasAnimation( sprite.spriteId ) && !this.animationScene.isPermanent ) {
             destroySpriteAnimation( sprite );
-        }
-        if ( spriteHasMovement( sprite.spriteId ) ) {
-            destroySpriteMovement( sprite );
         }
     }
 
     getSpriteByName( name: string = this.speakScene.spriteName ): Sprite {
-        const spriteArray = globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} );
-        return spriteArray[0];
+        return globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name;} )[0];
     }
 
     getSpriteById( id: string = this.spriteId ): Sprite {
-        return this.spriteId == undefined ? globals.GAME.FRONT.spriteDictionary[this.getSpriteByName().spriteId]: globals.GAME.FRONT.spriteDictionary[id];
+        return globals.GAME.FRONT.spriteDictionary[id];
     }
     
     setSelection( selection: InteractionAnswer ): void {

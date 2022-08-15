@@ -74,7 +74,7 @@ export class RoadNetwork {
         const carObjectModel = road.getRandomCarObjectModel();
         const startLocation = road.getRoadStartPosition();
         carObjectModel.destination = getValidCarDestination( startLocation, road );
-        globals.GAME.FRONT.setVehicleToTile( carObjectModel );
+        globals.GAME.FRONT.getTileAndSetSprite( carObjectModel );
     }
 
     roadsIntersect( horizontalRoad: Road, verticalRoad: Road ): boolean {

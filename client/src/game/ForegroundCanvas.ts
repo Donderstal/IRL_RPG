@@ -45,7 +45,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
 
     setForegroundData( mapModel: MapModel, sprites: Sprite[] = null ) {
         this.model = mapModel;
-        if ( this.model.roads ) 
+        if ( this.model.roads.length > 0 ) 
             this.roadNetwork = new RoadNetwork( this.model.roads );
 
         if ( sprites ) {
@@ -65,10 +65,10 @@ export class ForegroundCanvas extends CanvasWithGrid {
     }
 
     initPlayerCharacter( start: CellPosition, className: string ) {
-        const startingTile = this.grid.array.filter( tile => { return tile.row == start.row && tile.column == start.column } )[0];
+        const tile = super.getTileAtCell( start.column, start.row );
         const spriteModel = getDataModelByKey( className );
         const canvasObjectModel = initCanvasObjectModel( { type: className, direction: start.direction ?? 0, column: start.column, row: start.row, spriteDataModel: spriteModel, anim_type: AnimationTypeEnum.idle } );
-        this.playerSprite = new Sprite( startingTile, canvasObjectModel, PLAYER_ID, true );
+        this.playerSprite = new Sprite( tile, canvasObjectModel, PLAYER_ID, true );
         this.playerSprite.name = PLAYER_NAME;
         this.allSprites.push( this.playerSprite );
         this.spriteDictionary[PLAYER_ID] = this.playerSprite;
@@ -78,12 +78,17 @@ export class ForegroundCanvas extends CanvasWithGrid {
         sprites = sprites.filter((e)=>{
             return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
         })
-        sprites.forEach( ( sprite ) => {
-            const tile = this.getTileAtCell( sprite.column, sprite.row );
-            if ( !this.spriteIsInRegistry( tile, sprite ) )
-                this.setSprite( tile, sprite );
-        })
+        sprites.forEach( this.getTileAndSetSprite.bind( this ) );
     };
+
+    getTileAndSetSprite( canvasObjectModel: CanvasObjectModel ): string {
+        const tile = super.getTileAtCell( canvasObjectModel.column, canvasObjectModel.row );
+        let id = "";
+        if ( !this.spriteIsInRegistry( tile, canvasObjectModel ) ) {
+            id = this.setSprite( tile, canvasObjectModel )   
+        }
+        return id;
+    }
 
     setSprite( tile: Tile, canvasObjectModel: CanvasObjectModel ): string {
         const newId = getUniqueId( Object.keys( this.spriteDictionary ) );
@@ -96,10 +101,6 @@ export class ForegroundCanvas extends CanvasWithGrid {
         return newId;
     }
 
-    setVehicleToTile( canvasObjectModel: CanvasObjectModel ): void {
-        const tile = super.getTileAtCell( canvasObjectModel.column, canvasObjectModel.row );
-        this.setSprite( tile, canvasObjectModel )   
-    }
 
     clearMap( ): void {
         this.grid = null;
@@ -109,16 +110,13 @@ export class ForegroundCanvas extends CanvasWithGrid {
     }
 
     deleteSprite( spriteId: string ): void {
-        //if ( this.spriteDictionary[spriteId].model.isCar ) {
-        //    (this.spriteDictionary[spriteId] as any).movementSoundEffect.reset( );
-        //};
-        //if ( this.spriteDictionary[spriteId].isCar ) {
-        //    this.roadNetwork.roads.forEach( ( e ) => {
-        //        if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
-        //            e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
-        //        }
-        //    });
-        //}
+        if ( this.spriteDictionary[spriteId].model.isCar ) {
+            this.roadNetwork.roads.forEach( ( e ) => {
+                if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
+                    e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
+                }
+            });
+        }
         delete this.spriteDictionary[spriteId];
         this.allSprites = [];
         Object.keys( this.spriteDictionary ).forEach ( ( e ) => {

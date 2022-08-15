@@ -10,7 +10,7 @@ import type { ConditionType } from "../enumerables/ConditionTypeEnum";
 import type { CinematicSceneModel } from "../models/CinematicSceneModel";
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene,
-    EmoteScene, FadeScene, LoadMapScene, MoveCarScene, MoveScene, SceneAnimationModel, SpeakScene, SpeakYesNoScene, WaitScene
+    EmoteScene, FadeScene, LoadMapScene, MoveScene, SceneAnimationModel, SpeakScene, SpeakYesNoScene, WaitScene
 } from "../models/SceneAnimationModel";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import type { InteractionModel } from "../models/InteractionModel";
@@ -227,18 +227,12 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
             typedModel.spriteName = animationData[2];
             typedModel.destination = animationData[3];
             break;
-        case SceneAnimationType.moveCar:
-            typedModel = model as MoveCarScene;
-            typedModel.column = animationData[2];
-            typedModel.row = animationData[3];
-            typedModel.spriteName = animationData[4];
-            typedModel.direction = animationData[5];
-            break;
         case SceneAnimationType.animation:
             typedModel = model as AnimateSpriteScene;
             typedModel.animationName = animationData[2];
             typedModel.spriteName = animationData[3];
             typedModel.loop = animationData[4];
+            typedModel.isPermanent = animationData[5];
             break;
         case SceneAnimationType.createCar:
             typedModel = model as CreateCarScene;

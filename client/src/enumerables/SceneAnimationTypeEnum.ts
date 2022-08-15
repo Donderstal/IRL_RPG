@@ -2,7 +2,6 @@ export enum SceneAnimationType {
     speak,
     speakYesNo,
     move,
-    moveCar,
     animation,
     createCar,
     createSprite,

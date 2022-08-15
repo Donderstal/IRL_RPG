@@ -29,19 +29,13 @@ export type EmoteScene = SceneAnimationModel & {
 }
 
 export type MoveScene = SceneAnimationModel & {
-    destination: { column: number, row: number };
-}
-
-export type MoveCarScene = SceneAnimationModel & {
-    roadName: string;
-    column: number;
-    row: number;
-    direction: number;
+    destination: { column: number, row: number } | string;
 }
 
 export type AnimateSpriteScene = SceneAnimationModel & {
     animationName: string;
     loop: boolean;
+    isPermanent: boolean;
 }
 
 export type CreateCarScene = SceneAnimationModel & {

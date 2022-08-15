@@ -39,11 +39,11 @@ export class Interaction {
         }
         
         this.iterator++
+        this.activeScene.unsetSceneAnimations();
         if ( this.model.cinematic.scenes[this.iterator] ) {
-            this.activeScene.unsetSceneAnimations();
             this.activeScene = new Scene( 
                 this.model.cinematic.scenes[this.iterator], 
-                ( this.trigger == CinematicTrigger.interaction ? this.args[0] : false)
+                ( this.trigger == CinematicTrigger.interaction ? this.args[0] : null )
             );            
         }
         else {

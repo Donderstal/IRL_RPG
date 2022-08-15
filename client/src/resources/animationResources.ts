@@ -384,7 +384,7 @@ const animationResources = {
 
 export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number = null, options: { looped: boolean, loops: number } = null ): SpriteAnimationModel => {
     if ( animationName in animationResources ) {
-        return getAnimationModel( animationName, width, height );
+        return getAnimationModel( animationName, width, height, options.looped, options.loops );
     } 
     
     let suffix;
@@ -403,12 +403,12 @@ export const getAnimationByName = ( animationName: string, width: number, height
             break;
     }
     if ( animationName + suffix in animationResources ) {
-        return getAnimationModel( animationName + suffix, width, height );        
+        return getAnimationModel( animationName + suffix, width, height, options.looped, options.loops );        
     }
     else {
         console.log("Error! Animation not found in animationResources")
         console.log("Animation name: " + animationName + suffix )
-        return getAnimationModel( "BOP" + suffix, width, height );
+        return getAnimationModel( "BOP" + suffix, width, height, options.looped, options.loops );
     }
 
 }

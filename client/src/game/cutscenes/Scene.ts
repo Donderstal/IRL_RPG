@@ -6,6 +6,9 @@ import type { SceneAnimationModel } from '../../models/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
 import { hasActiveBubbles } from '../controllers/bubbleController';
+import { hasCinematicMapLoaded } from '../../helpers/loadMapHelpers';
+import { spriteHasMovement } from '../modules/spriteMovementModule';
+import { spriteHasAnimation } from '../modules/animationModule';
 
 export class Scene {
     animations: Animation[];
@@ -17,7 +20,8 @@ export class Scene {
         this.finishedAnimations = [];
         sceneModel.forEach((animationModel: SceneAnimationModel): void => {
             const id = getUniqueId( this.animationIds );
-            if ( animationModel.spriteName !== null ) {
+            if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
+                && animationModel.type !== SceneAnimationType.createCar && animationModel.type !== SceneAnimationType.createSprite ) {
                 animationModel.spriteId = this.getSpriteIdByName( animationModel.spriteName );
             }
             else if ( spriteId !== null ) {
@@ -51,7 +55,11 @@ export class Scene {
     }
 
     unsetSceneAnimations() {
-        this.animations.forEach( ( e: Animation ): void => { e.unsetSpriteAnimation(); } );
+        this.animations.forEach( ( e ): void => {
+            if ( e.hasSpriteSet() && e.model.type !== SceneAnimationType.deleteSprite) {
+                e.unsetSpriteAnimation();
+            }
+        } );
     }
 
     checkForScenePass( ): boolean {
@@ -67,21 +75,17 @@ export class Scene {
                     animationHasFinished = e.counter.countAndCheckLimit( );
                     break;
                 case SceneAnimationType.move:
-                case SceneAnimationType.moveCar:
-                    let moveSprite = e.getSpriteById( ) != undefined ? e.getSpriteById( ) : e.getSpriteByName( );
-                    animationHasFinished = moveSprite == undefined
-                        || ( !moveSprite.State.is( SpriteStateEnum.moving ) && !moveSprite.State.is( SpriteStateEnum.blocked ) && !moveSprite.State.is( SpriteStateEnum.pathfinding ) )
+                    animationHasFinished = !spriteHasMovement( e.spriteId );
                     break;
                 case SceneAnimationType.animation:
-                    let animSprite = e.getSpriteById( );
-                    animationHasFinished = !animSprite.State.inAnimation
+                    animationHasFinished = !spriteHasAnimation( e.spriteId );
                     break;
                 case SceneAnimationType.createCar:
                 case SceneAnimationType.createSprite:
-                    animationHasFinished = e.getSpriteByName( ) != undefined;
+                    animationHasFinished = e.hasSpriteSet();
                     break;
                 case SceneAnimationType.deleteSprite:
-                    animationHasFinished = e.getSpriteById( ) == undefined;
+                    animationHasFinished = e.getSpriteById( ) === undefined;
                     break;
                 case SceneAnimationType.fadeOut:
                     animationHasFinished = !globals.GAME.fader.fadingToBlack && globals.GAME.fader.holdBlackScreen;
@@ -94,14 +98,13 @@ export class Scene {
                     animationHasFinished = e.counter.countAndCheckLimit( );
                     break;
                 case SceneAnimationType.cameraMoveToSprite:
-                    animationHasFinished = e.getSpriteByName( ) == undefined ||
-                        (e.getSpriteByName( ).spriteId == globals.GAME.cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus);
+                    animationHasFinished = e.spriteId == globals.GAME.cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus;
                     break;
                 case SceneAnimationType.cameraMoveToTile:
-                    animationHasFinished = (e.tileIndex == globals.GAME.cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus);
+                    animationHasFinished = e.tileIndex == globals.GAME.cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus;
                     break;
                 case SceneAnimationType.loadMap:
-                    animationHasFinished = globals.GAME.hasCinematicMapLoaded( );
+                    animationHasFinished = hasCinematicMapLoaded();
                     break;
             }
             if ( animationHasFinished ) {

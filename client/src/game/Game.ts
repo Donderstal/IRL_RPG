@@ -40,6 +40,7 @@ import { clearDoors } from './modules/doorModule'
 import { clearHitboxes } from './modules/hitboxModule'
 import type { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
+import { clearSpriteAnimations } from './modules/animationModule'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -116,7 +117,7 @@ export class Game {
     get activeMap( ): MapModel { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMap : this.activeNeighbourhood.activeMap; }
     get activeMapName( ): string { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMapKey : this.activeNeighbourhood.activeMapKey; }
     get previousMapName( ): string { return this.activeNeighbourhood.previousMapKey; }
-    get useCinematicMap(): boolean { return this.usingCinematicMap && cinematicIsActive(); }
+    get useCinematicMap(): boolean { return hasCinematicMapLoaded() && cinematicIsActive(); }
 
     get activeNeighbourhood() {
         return (this.useCinematicMap ? this.cinematicNeighbourhood : this._activeNeighbourhood);
@@ -256,6 +257,7 @@ export class Game {
         clearRandomAnimationCounters();
         clearIdleAnimationCounters();
         clearSpriteMovementDictionary();
+        clearSpriteAnimations();
         dismissActiveAction();
         clearPressedKeys();
         switchMap( destinationName, type );
@@ -263,10 +265,6 @@ export class Game {
 
     loadCinematicMap( loadMapScene: LoadMapScene ) {
         loadCinematicMap( loadMapScene.mapName, loadMapScene.setPlayerSprite );   
-    }
-
-    hasCinematicMapLoaded(): boolean {
-        return hasCinematicMapLoaded();
     }
 
     clearCinematicGrids() {

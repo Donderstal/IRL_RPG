@@ -9,12 +9,16 @@ export class SpriteAnimation {
     currentLoop: number;
     framesInAnimation: number
     animationFinished: boolean;
+    loops: number;
+    looped: boolean;
     constructor( model: SpriteAnimationModel ) {
         this.model = model;
         this.index = 0;
         this.currentLoop = 0;
         this.framesInAnimation = model.frames.length;
         this.animationFinished = false;
+        this.loops = model.loops;
+        this.looped = model.looped;
     }
 
     spriteAnimationCounter( sprite: Sprite ): void {
@@ -37,20 +41,16 @@ export class SpriteAnimation {
 
     checkForAnimationEnd(): void {
         if ( this.index + 1 == this.framesInAnimation ) {
-            this.checkForLoop()
-        }
-    }
-
-    checkForLoop(): void {
-        const currentLoopIsLast = this.model.loops == this.currentLoop
-
-        if ( this.model.looped && ( this.model.loops == null || !currentLoopIsLast ) ) {
-            this.currentLoop++
+            if ( !this.looped ) {
+                if ( this.loops === this.currentLoop ) {
+                    this.animationFinished = true;
+                    return;
+                }
+                else {
+                    this.currentLoop++;
+                }
+            }
             this.index = 0;
         }
-        else {
-            this.animationFinished = true;
-        }
     }
-
 }
