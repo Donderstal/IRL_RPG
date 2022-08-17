@@ -2,7 +2,7 @@ import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
-import { checkForCollision } from '../map/map-ui/movementChecker'
+import { checkForCollision } from '../map/collision'
 import { SpriteState } from '../../helpers/SpriteState'
 import { faceTowardsTarget } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
@@ -138,7 +138,7 @@ export class Sprite {
     get right(): number { return this.x + this.width; };
     get bottom(): number { return this.y + this.height; };
 
-    get standing(): boolean { return this.model.groundedAtBottom || (this.type != "object" && this.type != 'car') };
+    get standing(): boolean { return this.model.groundedAtBottom };
     get dynamicTop(): number { return this.standing ? this.baseY - this.speed : this.topY };
 
     get noCollision(): boolean {
@@ -461,7 +461,7 @@ export class Sprite {
     }
 
     checkForCollision( ): boolean {
-        return checkForCollision( this ) ;
+        return checkForCollision( this, this.isPlayer ) ;
     }
 
     getBlockedTiles( ): number[] {

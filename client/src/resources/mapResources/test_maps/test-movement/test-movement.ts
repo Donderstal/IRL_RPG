@@ -1,5 +1,6 @@
 import { AnimationTypeEnum } from "../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../enumerables/DirectionEnum";
+import { RoadAlignmentEnum } from "../../../../enumerables/RoadAlignmentEnum";
 import { FAT_BUFF_GUY } from "../../../spriteTypeResources";
 
 export default {
@@ -973,20 +974,20 @@ export default {
 		}
 	],
 	"sprites": [
-		//{
-		//	"anim_type": AnimationTypeEnum.semiIdle,
-		//	"direction": DirectionEnum.down,
-		//	"type": FAT_BUFF_GUY,
-		//	"row": 2,
-		//	"column": 11
-		//},
-		//{
-		//	"anim_type": AnimationTypeEnum.semiIdle,
-		//	"direction": DirectionEnum.down,
-		//	"type": FAT_BUFF_GUY,
-		//	"row": 2,
-		//	"column": 3
-		//},
+		{
+			"anim_type": AnimationTypeEnum.semiIdle,
+			"direction": DirectionEnum.down,
+			"type": FAT_BUFF_GUY,
+			"row": 2,
+			"column": 11
+		},
+		{
+			"anim_type": AnimationTypeEnum.semiIdle,
+			"direction": DirectionEnum.down,
+			"type": FAT_BUFF_GUY,
+			"row": 2,
+			"column": 3
+		},
 		{
 			"type": "bar_lights",
 			"row": 1,
@@ -1029,24 +1030,24 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [
-		{
-			"direction": DirectionEnum.right,
-			"alignment": "HORI",
-			"hasStart": true,
-			"primaryRow": 8,
-			"secondaryRow": 7,
-			"primaryColumn": 1,
-			"secondaryColumn": 13
-		},
-		{
-			"direction": DirectionEnum.left,
-			"alignment": "HORI",
-			"hasStart": true,
-			"primaryRow": 6,
-			"secondaryRow": 5,
-			"primaryColumn": 12,
-			"secondaryColumn": 0
-		}
+		//{
+		//	"direction": DirectionEnum.right,
+		//	"alignment": RoadAlignmentEnum.horizontal,
+		//	"hasStart": true,
+		//	"primaryRow": 8,
+		//	"secondaryRow": 7,
+		//	"primaryColumn": 0,
+		//	"secondaryColumn": 13
+		//},
+		//{
+		//	"direction": DirectionEnum.left,
+		//	"alignment": RoadAlignmentEnum.horizontal,
+		//	"hasStart": true,
+		//	"primaryRow": 6,
+		//	"secondaryRow": 5,
+		//	"primaryColumn": 13,
+		//	"secondaryColumn": 0
+		//}
 	],
 	"doors": []
 }

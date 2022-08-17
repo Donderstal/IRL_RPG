@@ -1,9 +1,11 @@
-import globals from '../game-data/globals';
-import { handleMovementOfSprite } from './map/map-ui/movement';
+import globals, { GRID_BLOCK_PX } from '../game-data/globals';
 import { handleActionButton, dismissActiveAction } from './controllers/actionController';
 import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
 import { clearActiveBubbles, handleBubbleButtonPress, handleSelectionKeys, hasActiveBubbles } from './controllers/bubbleController';
+import { InteractionType } from '../enumerables/InteractionType';
+import type { Sprite } from './core/Sprite';
+import { moveSpriteInDirection } from './modules/spriteMovementModule';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -47,18 +49,20 @@ export const handleMovementKeys = () => {
 
     if ( PLAYER !== undefined ) {
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-            handleMovementOfSprite( PLAYER, DirectionEnum.up );
+            moveSpriteInDirection( PLAYER, DirectionEnum.up );
         }
         else if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-            handleMovementOfSprite( PLAYER, DirectionEnum.left );
+            moveSpriteInDirection( PLAYER, DirectionEnum.left );
         }
         else if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-            handleMovementOfSprite( PLAYER, DirectionEnum.down );
+            moveSpriteInDirection( PLAYER, DirectionEnum.down );
         }
         else if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-            handleMovementOfSprite( PLAYER, DirectionEnum.right );
+            moveSpriteInDirection( PLAYER, DirectionEnum.right );
         }
-        GAME.story.checkForEventTrigger( CinematicTrigger.position );
+        const eventTrigger = GAME.story.checkForEventTrigger( CinematicTrigger.position );
+        if ( eventTrigger ) return;
+        checkForNeighbours( PLAYER );
     }
 };
 export const removeKeyFromPressed = ( event: KeyboardEvent ): void => {
@@ -84,4 +88,23 @@ export const listenForKeyPress = (): void => {
         }
     } )
     globals.GAME.listeningForPress = true;
+};
+const checkForNeighbours = ( sprite: Sprite ): void => {
+    const activeMap = globals.GAME.activeMap;
+    const activeGrid = globals.GAME.back.class.grid
+
+    if ( activeMap.outdoors ) {
+        if ( activeGrid.x > sprite.centerX && activeMap.neighbours.left ) {
+            globals.GAME.switchMap( activeMap.neighbours.left, InteractionType.neighbour )
+        }
+        if ( activeGrid.x + ( activeGrid.columns * GRID_BLOCK_PX ) < sprite.centerX && activeMap.neighbours.right ) {
+            globals.GAME.switchMap( activeMap.neighbours.right, InteractionType.neighbour )
+        }
+        if ( activeGrid.y > sprite.baseY && activeMap.neighbours.up ) {
+            globals.GAME.switchMap( activeMap.neighbours.up, InteractionType.neighbour )
+        }
+        if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY && activeMap.neighbours.down ) {
+            globals.GAME.switchMap( activeMap.neighbours.down, InteractionType.neighbour )
+        }
+    }
 };

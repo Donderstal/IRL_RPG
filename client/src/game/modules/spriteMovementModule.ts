@@ -5,6 +5,7 @@ import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
 import type { Tile } from "../core/Tile";
 import { Destination } from "../map/map-classes/Destination";
+import { checkForCollision } from "../map/collision";
 import { destroySpriteAnimation, spriteHasAnimation } from "./animationModule";
 
 let movementDictionary: { [key in string]: Destination } = {};
@@ -26,6 +27,9 @@ export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: GridC
     }
 };
 export const handleSpriteMovement = ( sprite: Sprite ): void => {
+    if ( spriteHasAnimation( sprite.spriteId ) ) {
+        destroySpriteAnimation( sprite );
+    }
     const destination = getAssociatedSpriteMovementDestination( sprite.spriteId );
     checkIfSpriteCanMove( sprite, destination );
 };
@@ -58,8 +62,9 @@ const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
         destroySpriteMovement( sprite );
     }
 };
-export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum, tile: Tile ) => {
+export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum, tile: Tile = null ) => {
     sprite.setDirection( direction, tile );
+    if ( checkForCollision( sprite, sprite.isPlayer ) ) return;
     switch ( direction ) {
         case DirectionEnum.left:
             sprite.x -= sprite.speed;
