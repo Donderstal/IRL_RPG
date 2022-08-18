@@ -5,11 +5,8 @@ import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 
-let playerCheckingForCollision = false;
-
-export const checkForCollision = ( sprite: Sprite, spriteIsPlayer = false ): boolean => {
+export const checkForCollision = ( sprite: Sprite ): boolean => {
     const spriteNextPosition = getSpriteNextPosition( sprite );
-    playerCheckingForCollision = spriteIsPlayer;
     const staticCollision = checkForStaticCollision( spriteNextPosition, sprite );
     const dynamicCollision = staticCollision ? true : checkForDynamicCollision( spriteNextPosition, sprite );
     return staticCollision || dynamicCollision;
@@ -23,24 +20,28 @@ const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sp
     switch ( sprite.direction ) {
         case DirectionEnum.left:
             nextTileIsOffscreen = currentTile.column === 1;
+            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index - 1;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.left < currentTile.x;
+            return nextTile.isBlocked && hitbox.left < currentTile.x;
         case DirectionEnum.up:
             nextTileIsOffscreen = currentTile.row === 1;
+            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index - globals.GAME.BACK.grid.columns;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.top < currentTile.y;
+            return nextTile.isBlocked && hitbox.top < currentTile.y;
         case DirectionEnum.right:
             nextTileIsOffscreen = currentTile.column === globals.GAME.BACK.grid.columns;
+            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index + 1;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.right > currentTile.x + GRID_BLOCK_PX;
+            return nextTile.isBlocked && hitbox.right > currentTile.x + GRID_BLOCK_PX;
         case DirectionEnum.down:
             nextTileIsOffscreen = currentTile.row === globals.GAME.BACK.grid.rows;
+            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index + globals.GAME.BACK.grid.columns;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return ( nextTileIsOffscreen || nextTile.isBlocked) && hitbox.innerBottom > currentTile.y + GRID_BLOCK_PX;
+            return nextTile.isBlocked && hitbox.innerBottom > currentTile.y + GRID_BLOCK_PX;
     }
 }
 
@@ -82,27 +83,27 @@ const checkIfPositionsCollide = ( spriteNextPosition: SpritePosition, targetNext
     const highestSprite = spriteNextPosition.height >= targetNextPosition.height ? spriteNextPosition : targetNextPosition;
     const lessHighSprite = highestSprite == spriteNextPosition ? targetNextPosition : spriteNextPosition;
 
+    const inHorizontalRange = lessHighSprite.baseY >= highestSprite.dynamicTop && lessHighSprite.baseY <= highestSprite.bottom;
+    const inVerticalRange = lessWideSprite.centerX >= widestSprite.left && lessWideSprite.centerX <= widestSprite.right;
+
+    const targetIsLeftOfSprite = spriteNextPosition.right > targetNextPosition.centerX;
+    const targetIsAboveSprite = spriteNextPosition.bottom > targetNextPosition.bottom;
+    const targetIsRightOfSprite = spriteNextPosition.left < targetNextPosition.centerX;
+    const targetIsBelowSprite = spriteNextPosition.baseY < targetNextPosition.baseY;
+
     switch ( direction ) {
-    case DirectionEnum.left:
-        return spriteNextPosition.left <= targetNextPosition.right
-            && lessHighSprite.dynamicTop >= highestSprite.dynamicTop
-            && lessHighSprite.baseY < highestSprite.bottom
-            && spriteNextPosition.right > targetNextPosition.centerX;
-    case DirectionEnum.up:
-        return spriteNextPosition.baseY <= targetNextPosition.bottom
-            && lessWideSprite.centerX > widestSprite.left
-            && lessWideSprite.centerX < widestSprite.right
-            && spriteNextPosition.bottom > targetNextPosition.bottom;
-    case DirectionEnum.right:
-        return spriteNextPosition.right >= targetNextPosition.left
-            && lessHighSprite.dynamicTop >= highestSprite.dynamicTop
-            && lessHighSprite.baseY < highestSprite.bottom
-            && spriteNextPosition.left < targetNextPosition.centerX;
-    case DirectionEnum.down:
-        return spriteNextPosition.bottom >= targetNextPosition.dynamicTop
-            && lessWideSprite.centerX > widestSprite.left 
-            && lessWideSprite.centerX < widestSprite.right
-            && spriteNextPosition.baseY < targetNextPosition.baseY;
+        case DirectionEnum.left:
+            return spriteNextPosition.left <= targetNextPosition.right
+                && targetIsLeftOfSprite && inHorizontalRange;
+        case DirectionEnum.up:
+            return spriteNextPosition.dynamicTop <= targetNextPosition.bottom
+                && targetIsAboveSprite && inVerticalRange;
+        case DirectionEnum.right:
+            return spriteNextPosition.right >= targetNextPosition.left
+                && targetIsRightOfSprite && inHorizontalRange;
+        case DirectionEnum.down:
+            return spriteNextPosition.bottom >= targetNextPosition.dynamicTop
+                && targetIsBelowSprite && inVerticalRange;
     }
 }
 
@@ -135,7 +136,7 @@ class SpritePosition {
         this.bottom = this.y + this.height;
         this.right = this.x + this.width;
 
-        this.baseY = this.isStanding ? this.bottom - ( GRID_BLOCK_PX / 4 ) : this.bottom - ( this.height / 2 );
+        this.baseY = this.bottom - ( GRID_BLOCK_PX / 2 );
         this.centerX = this.x + ( this.width / 2 );
         this.dynamicTop = this.isStanding
             ? this.bottom - GRID_BLOCK_PX
@@ -144,25 +145,5 @@ class SpritePosition {
 }
 
 const getSpriteNextPosition = ( sprite: Sprite ) => {
-    let spriteX = sprite.x;
-    let spriteY = sprite.y;
-
-    if ( sprite.pluginIsRunning(sprite.plugins.movement) || playerCheckingForCollision ) {
-        switch ( sprite.direction ) {
-            case DirectionEnum.left:
-                spriteX = spriteX - sprite.speed;
-                break;
-            case DirectionEnum.up:
-                spriteY = spriteY - sprite.speed;
-                break;
-            case DirectionEnum.right:
-                spriteX = spriteX + sprite.speed;
-                break;
-            case DirectionEnum.down:
-                spriteY = spriteY + sprite.speed
-                break;
-        }
-    }
-
-    return new SpritePosition( spriteX, spriteY, sprite.width, sprite.height, sprite.standing, sprite.isCar );
+    return new SpritePosition( sprite.x, sprite.y, sprite.width, sprite.height, sprite.standing, sprite.isCar );
 }

@@ -461,24 +461,30 @@ export class Sprite {
     }
 
     checkForCollision( ): boolean {
-        return checkForCollision( this, this.isPlayer ) ;
+        return checkForCollision( this ) ;
     }
 
-    getBlockedTiles( ): number[] {
-        let x = this.x;
-        let y = this.dynamicTop;
+    getBlockedTiles(): number[] {
         let tileIndexes = [];
+        let x = this.x + (GRID_BLOCK_PX / 2);
+        let y = this.y + ( GRID_BLOCK_PX / 2 );
+        let front = globals.GAME.FRONT;
 
-        while( y <= this.bottom ) {
-            while( x <= this.right ) {
-                const tile = globals.GAME.FRONT.getTileAtXY( x, y );
-                x = (x + GRID_BLOCK_PX) > this.right && x != this.right ? this.right : x + GRID_BLOCK_PX;
-                if ( tileIndexes.indexOf( tile.index ) == -1 ) {
-                    tileIndexes.push( tile.index )
-                }
-            }
-            y = (y + GRID_BLOCK_PX) > this.bottom && y != this.bottom ? this.bottom : y + GRID_BLOCK_PX;
+        if ( this.isCar && (this.direction === DirectionEnum.left || this.direction === DirectionEnum.right) ) {
+            y += GRID_BLOCK_PX;
         }
+        else if ( this.standing ) {
+            y = ( this.y + this.height ) - ( GRID_BLOCK_PX / 2 );
+        }
+
+        while ( y < ( this.y + this.height ) ) {
+            while ( x < ( this.x + this.width ) ) {
+                tileIndexes.push( front.getTileAtXY( x, y ).index );
+                x += GRID_BLOCK_PX;
+            }
+            y += GRID_BLOCK_PX;
+        }
+
         return tileIndexes;
     }
 

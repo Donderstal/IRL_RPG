@@ -64,7 +64,7 @@ const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
 };
 export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum, tile: Tile = null ) => {
     sprite.setDirection( direction, tile );
-    if ( checkForCollision( sprite, sprite.isPlayer ) ) return;
+    if ( checkForCollision( sprite ) ) return;
     switch ( direction ) {
         case DirectionEnum.left:
             sprite.x -= sprite.speed;

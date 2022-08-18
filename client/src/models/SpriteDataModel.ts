@@ -10,7 +10,7 @@ export type SpriteDataModel = {
     image: HTMLImageElement;
 
     idleAnimation: boolean;
-    idleAnimations: string[];
+    idleAnimations?: string[];
 
     canMove: boolean;
     movementFrames?: { [key in DirectionEnum]: SpriteFrameModel[] };

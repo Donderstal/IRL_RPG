@@ -57,7 +57,7 @@ export class Destination {
         const grid = { 
             'rows': this.backClass.grid.rows, 'columns': this.backClass.grid.columns,
             'tiles': this.backClass.grid.array.filter( ( tile ) => {
-                return !tile.isBlocked;
+                return !tile.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite( tile.index );
             })
         };
         const startingTile = this.frontClass.getTileAtXY(sprite.centerX, sprite.baseY);

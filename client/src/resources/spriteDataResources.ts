@@ -1284,15 +1284,15 @@ export const getDataModels = (): SpriteDataModel[] => {
             image: image,
             dimensionalAlignment: value["dimensional_alignment"] as SpriteSheetAlignmentEnum,
 
-            isCar: value["isCar"] !== undefined,
-            isCharacter: value["is_character"] !== undefined,
-            idleAnimation: value["idle_animation"] !== undefined,
+            isCar: value["isCar"] !== undefined && value["isCar"],
+            isCharacter: value["is_character"] !== undefined && value["is_character"],
+            idleAnimation: value["idle_animation"] !== undefined && value["idle_animation"],
             canMove: value["movement_frames"] !== undefined,
-            onBackground: value["on_background"] !== undefined,
-            notGrounded: value["not_grounded"] !== undefined,
-            groundedAtBottom: value["grounded_at_bottom"] !== undefined,
-            hasBlockedArea: value["blocked_area"] !== undefined,
-            isCollectable: value["collectable_type"] !== undefined
+            onBackground: value["on_background"] !== undefined && value["on_background"],
+            notGrounded: value["not_grounded"] !== undefined && value["not_grounded"],
+            groundedAtBottom: value["grounded_at_bottom"] !== undefined && value["grounded_at_bottom"],
+            hasBlockedArea: value["blocked_area"] !== undefined && value["blocked_area"],
+            isCollectable: value["collectable_type"] !== undefined && value["collectable_type"]
         };
 
         if ( value["dimensional_alignment"] == SpriteSheetAlignmentEnum.standard ) {

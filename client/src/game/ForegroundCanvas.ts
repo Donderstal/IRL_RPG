@@ -152,7 +152,8 @@ export class ForegroundCanvas extends CanvasWithGrid {
     filterSpawnPoints( startLocation: SpawnPointModel = null ): SpawnPointModel[] {
         return this.model.spawnPoints.filter( ( e) => {
             let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.column, e.row )
-            return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index )) && startLocation != null ? e.direction != startLocation.direction : true
+            return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
+                && startLocation != null ? e.column != startLocation.column && e.row !== startLocation.row : true;
         })
     }
 
