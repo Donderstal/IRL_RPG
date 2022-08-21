@@ -46,7 +46,11 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     let inDoorRange = false;
 
     doors.forEach( ( door ) => { 
-        if ( playerHitbox.checkForDoorRange( door ) ) {
+        if ( GAME.debugMode ) {
+            door.draw();
+        }
+
+        if ( playerHitbox.doorInRange( door ) ) {
             let pendingDoor = getPendingDoor();
             inDoorRange = true;
             if ( door.model.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {

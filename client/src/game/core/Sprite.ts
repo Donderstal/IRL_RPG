@@ -197,7 +197,7 @@ export class Sprite {
         if ( this.isPlayer ) {
             updateAssociatedHitbox( this );
         }
-        if ( this.pluginIsRunning( plugins.movement ) ) {
+        if ( this.pluginIsRunning( plugins.movement ) || globals.GAME.debugMode ) {
             if ( this.pluginIsRunning( plugins.door ) ) {
                 updateSpriteAssociatedDoor( this )
             }
@@ -207,7 +207,8 @@ export class Sprite {
             else {
                 updateAssociatedHitbox( this );
             }
-
+        }
+        if ( this.pluginIsRunning( plugins.movement ) ) {
             handleSpriteMovement( this );
             this.resetCounters();
         }

@@ -158,3 +158,7 @@ export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): 
         return null;
     }
 }
+
+export const isHorizontal = ( direction: DirectionEnum ): boolean => {
+    return direction === DirectionEnum.left || direction === DirectionEnum.right;
+}

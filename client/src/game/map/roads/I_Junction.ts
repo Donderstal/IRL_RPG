@@ -4,6 +4,7 @@ import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import type { Road } from './Road';
 import type { Sprite } from "../../core/Sprite";
 import { SpriteStateEnum } from "../../../enumerables/SpriteStateEnum";
+import { isHorizontal } from "../../../helpers/utilFunctions";
 
 export class I_Junction {
     directions: DirectionEnum[];
@@ -156,11 +157,11 @@ export class I_Junction {
         let tileList = [];
         for( var i = 1; i <= this.laneDepth; i++ ) {
             tileList.push( FRONT.getTileAtCell( 
-                direction == DirectionEnum.left || direction == DirectionEnum.right ? col1 + i : col1, 
-                direction == DirectionEnum.up || direction == DirectionEnum.down ? row1 + i : row1, 
+                isHorizontal( direction ) ? col1 + i : col1, 
+                !isHorizontal( direction ) ? row1 + i : row1, 
             ), FRONT.getTileAtCell( 
-                direction == DirectionEnum.left || direction == DirectionEnum.right ? col2 + i : col2, 
-                direction == DirectionEnum.up || direction == DirectionEnum.down ? row2 + i : row2, 
+                isHorizontal( direction ) ? col2 + i : col2, 
+                !isHorizontal( direction ) ? row2 + i : row2, 
             ) )
         }
         return tileList;

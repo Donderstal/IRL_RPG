@@ -3,6 +3,7 @@ import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
 import { GRID_BLOCK_IN_SHEET_PX } from "../game-data/globals";
 import type { SpriteDataModel } from "../models/SpriteDataModel";
+import { isHorizontal } from "./utilFunctions";
 
 export const getSpriteFrameForPosition = ( framePosition: { x: number, y: number }, dataModel: SpriteDataModel, direction: DirectionEnum = null ): SpriteFrameModel => {
     let width = getFrameWidth( dataModel, direction );
@@ -22,7 +23,7 @@ export const getFrameWidth = ( dataModel: SpriteDataModel, direction: DirectionE
          return dataModel.widthBlocks * GRID_BLOCK_IN_SHEET_PX
     }
     else if ( dataModel.dimensionalAlignment === SpriteSheetAlignmentEnum.horiVert ) {
-        if ( direction == DirectionEnum.down || direction == DirectionEnum.up ) {
+        if ( !isHorizontal( direction ) ) {
             return dataModel.vertWidthBlocks * GRID_BLOCK_IN_SHEET_PX
         }
         else {
@@ -36,7 +37,7 @@ export const getFrameHeight = ( dataModel: SpriteDataModel, direction: Direction
         return dataModel.heightBlocks * GRID_BLOCK_IN_SHEET_PX
     }
     else if ( dataModel.dimensionalAlignment === SpriteSheetAlignmentEnum.horiVert ) {
-        if ( direction == DirectionEnum.down || direction == DirectionEnum.up ) {
+        if ( !isHorizontal( direction ) ) {
             return dataModel.vertHeightBlocks * GRID_BLOCK_IN_SHEET_PX
         }
         else {

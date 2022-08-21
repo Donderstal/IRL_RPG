@@ -58,66 +58,66 @@ export class Hitbox {
         frontCtx.stroke( );
     }
 
-    checkForActionRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        if ( this.targetIsInVerticalActionRange( targetHitbox ) ) {
-            if ( this.upFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
+    actionInRange( action: Hitbox, direction: DirectionEnum ): boolean {
+        if ( this.actionInVerticalRange( action ) ) {
+            if ( direction === DirectionEnum.up && this.actionInUpRange( action ) ) {
                 return true;
             }
-            if ( this.downFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
+            if ( direction === DirectionEnum.down && this.actionInDownRange( action ) ) {
                 return true;
             }
         }
-        if ( this.targetIsInHorizontalActionRange( targetHitbox ) ) {
-            if ( this.leftFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
+        if ( this.actionInHorizontalRange( action ) ) {
+            if ( direction === DirectionEnum.left && this.actionInLeftRange( action ) ) {
                 return true;
             }
-            if ( this.rightFacingTargetIsInActionRadius( targetHitbox, direction ) ) {
+            if ( direction === DirectionEnum.right && this.actionInRightRange( action ) ) {
                 return true;
             }
         }
         return false;
     }
 
-    checkForBlockedRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        if ( !targetHitbox ) {
+    hitboxIsColliding( hitbox: Hitbox, direction: DirectionEnum ): boolean {
+        if ( !hitbox ) {
             return false;
         }
-        if ( this.targetIsInVerticalBlockedRange( targetHitbox ) ) {
-            if ( this.targetIsInUpBlockedRange( targetHitbox, direction ) ) {
+        if ( this.hitboxInVerticalRange( hitbox ) ) {
+            if ( direction === DirectionEnum.up && this.hitboxInUpRange( hitbox ) ) {
                 return true;
             }
-            if ( this.targetIsInDownBlockedRange( targetHitbox, direction ) ) {
+            if ( direction === DirectionEnum.down && this.hitboxInDownRange( hitbox ) ) {
                 return true;
             }
         }
-        if ( this.targetIsInHorizontalBlockedRange( targetHitbox ) ) {
-            if ( this.targetIsInLeftBlockedRange( targetHitbox, direction ) ) {
+        if ( this.targetIsInHorizontalBlockedRange( hitbox ) ) {
+            if ( direction === DirectionEnum.left && this.hitboxInLeftRange( hitbox ) ) {
                 return true;
             }
-            if ( this.targetIsInRightBlockedRange( targetHitbox, direction ) ) {
+            if ( direction === DirectionEnum.right && this.hitboxInRightRange( hitbox ) ) {
                 return true;
             }
         }
         return false;
     }
 
-    checkForDoorRange( doorHitbox: Hitbox ): boolean {  
+    doorInRange( doorHitbox: Hitbox ): boolean {  
         if ( !doorHitbox ) {
             return false;
         }
-        if ( this.targetIsInVerticalActionRange( doorHitbox ) ) {
-            if ( this.targetIsInUpDoorRange( doorHitbox ) ) {
+        if ( this.hitboxInVerticalRange( doorHitbox ) ) {
+            if ( this.doorIsInUpRange( doorHitbox ) ) {
                 return true;
             }
-            if ( this.targetIsInDownDoorRange( doorHitbox ) ) {
+            if ( this.doorIsInDownRange( doorHitbox ) ) {
                 return true;
             }
         }
-        if ( this.targetIsInHorizontalActionRange( doorHitbox ) ) {
-            if ( this.targetIsInLeftDoorRange( doorHitbox ) ) {
+        if ( this.targetIsInHorizontalBlockedRange( doorHitbox ) ) {
+            if ( this.doorIsInLeftRange( doorHitbox ) ) {
                 return true;
             }
-            if ( this.targetIsInRightDoorRange( doorHitbox ) ) {
+            if ( this.doorIsInRightRange( doorHitbox ) ) {
                 return true;
             }
         }
@@ -125,107 +125,94 @@ export class Hitbox {
     }
 
     //BLOCKED//
-    targetIsInVerticalBlockedRange( targetHitbox: Hitbox ): boolean {   
+    hitboxInVerticalRange( targetHitbox: Hitbox ): boolean {   
         return this.x > targetHitbox.left && this.x < targetHitbox.right;
     }
     targetIsInHorizontalBlockedRange( targetHitbox: Hitbox ): boolean {   
         return this.y > targetHitbox.top && this.y < targetHitbox.bottom;
     }
 
-    targetIsInUpBlockedRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsUp = this.top > targetHitbox.top;
-        const topCollidesWithTargetBottom = this.top <= targetHitbox.innerBottom;
+    hitboxInUpRange( hitbox: Hitbox ): boolean {
+        const targetIsUp = this.top > hitbox.top;
+        const inRange = this.top <= hitbox.innerBottom;
 
-        return direction === DirectionEnum.up && topCollidesWithTargetBottom && targetIsUp;
+        return inRange && targetIsUp;
     }
+    hitboxInDownRange( hitbox: Hitbox ): boolean {
+        const targetIsDown    = this.bottom < hitbox.bottom;
+        const inRange = this.bottom >= hitbox.innerTop
 
-    targetIsInDownBlockedRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsBelow    = this.bottom < targetHitbox.bottom;
-        const bottomCollidesWithTargetTop = this.bottom >= targetHitbox.innerTop
-
-        return direction === DirectionEnum.down && bottomCollidesWithTargetTop && targetIsBelow;
+        return inRange && targetIsDown;
     }
+    hitboxInLeftRange( hitbox: Hitbox ): boolean {
+        const targetIsLeft    = this.left > hitbox.left;
+        const inRange = this.left <= hitbox.innerRight;
 
-    targetIsInLeftBlockedRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsToTheLeft    = this.left > targetHitbox.left;
-        const leftCollidesWithTargetRight = this.left <= targetHitbox.innerRight;
-
-        return direction === DirectionEnum.left && leftCollidesWithTargetRight && targetIsToTheLeft;
+        return inRange && targetIsLeft;
     }
+    hitboxInRightRange( hitbox: Hitbox ): boolean {
+        const targetIsRight  = this.right < hitbox.right;
+        const inRange = this.right >= hitbox.innerLeft;
 
-    targetIsInRightBlockedRange( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsToTheRight  = this.right < targetHitbox.right;
-        const rightCollidesWithTargetLeft = this.right >= targetHitbox.innerLeft;
-
-        return direction === DirectionEnum.right && rightCollidesWithTargetLeft && targetIsToTheRight;
+        return inRange && targetIsRight;
     }
 
     //DOOR
-    targetIsInUpDoorRange( targetHitbox: Hitbox ): boolean {   
-        const targetIsUp = this.top > targetHitbox.top;
-        const topCollidesWithTargetBottom = this.innerTop <= targetHitbox.innerBottom;
+    doorIsInUpRange( doorHitbox: Hitbox ): boolean {   
+        const doorIsUp = this.top > doorHitbox.top;
+        const inRange = this.innerTop <= doorHitbox.y;
 
-        return topCollidesWithTargetBottom && targetIsUp;
+        return inRange && doorIsUp;
     }
+    doorIsInDownRange( doorHitbox: Hitbox ): boolean {   
+        const doorIsDown    = this.bottom < doorHitbox.bottom;
+        const inRange = this.innerBottom >= doorHitbox.y
 
-    targetIsInDownDoorRange( targetHitbox: Hitbox ): boolean {   
-        const targetIsBelow    = this.bottom < targetHitbox.bottom;
-        const bottomCollidesWithTargetTop = this.innerBottom >= targetHitbox.innerTop
-
-        return bottomCollidesWithTargetTop && targetIsBelow;
+        return inRange && doorIsDown;
     }
+    doorIsInLeftRange( doorHitbox: Hitbox ): boolean {   
+        const doorIsLeft    = this.left > doorHitbox.left;
+        const inRange = this.innerLeft <= doorHitbox.x;
 
-    targetIsInLeftDoorRange( targetHitbox: Hitbox ): boolean {   
-        const targetIsToTheLeft    = this.left > targetHitbox.left;
-        const leftCollidesWithTargetRight = this.innerLeft <= targetHitbox.innerRight;
-
-        return leftCollidesWithTargetRight && targetIsToTheLeft;
+        return inRange && doorIsLeft;
     }
+    doorIsInRightRange( doorHitbox: Hitbox ): boolean {   
+        const doorIsRight  = this.right < doorHitbox.right;
+        const inRange = this.innerRight >= doorHitbox.x;
 
-    targetIsInRightDoorRange( targetHitbox: Hitbox ): boolean {   
-        const targetIsToTheRight  = this.right < targetHitbox.right;
-        const rightCollidesWithTargetLeft = this.innerRight >= targetHitbox.innerLeft;
-
-        return rightCollidesWithTargetLeft && targetIsToTheRight;
+        return inRange && doorIsRight;
     }
 
     //ACTION//
-    targetIsInVerticalActionRange( targetHitbox: Hitbox ): boolean {        
-        return targetHitbox.x > this.outerLeft && targetHitbox.x < this.outerRight;
+    actionInVerticalRange( action: Hitbox ): boolean {        
+        return action.x > this.outerLeft && action.x < this.outerRight;
     }
-    targetIsInHorizontalActionRange( targetHitbox: Hitbox ): boolean {       
-        return targetHitbox.y > this.outerTop && targetHitbox.y < this.outerBottom;
-    }
-
-    upFacingTargetIsInActionRadius( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsFacingUp = direction === DirectionEnum.up;
-        const thisIsAboveTarget = this.innerTop > targetHitbox.top;
-        const topIsInTargetOuterBottom = targetHitbox.top <= this.outerBottom;
-
-        return targetIsFacingUp && topIsInTargetOuterBottom && thisIsAboveTarget;
+    actionInHorizontalRange( action: Hitbox ): boolean {       
+        return action.y > this.outerTop && action.y < this.outerBottom;
     }
 
-    downFacingTargetIsInActionRadius( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsFacingDown        = direction === DirectionEnum.down;
-        const thisIsBelowTarget         = this.innerBottom < targetHitbox.bottom;
-        const bottomIsInTargetOuterTop  = targetHitbox.bottom > this.outerTop;
+    actionInUpRange( action: Hitbox ): boolean {
+        const actionIsUp = this.top > action.top;
+        const inRange = this.outerTop <= action.bottom;
 
-        return targetIsFacingDown && bottomIsInTargetOuterTop && thisIsBelowTarget;
+        return inRange && actionIsUp;
     }
+    actionInDownRange( action: Hitbox ): boolean {
+        const actionIsDown = this.bottom < action.bottom;
+        const inRange = this.outerBottom >= action.top
 
-    leftFacingTargetIsInActionRadius( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsFacingLeft        = direction === DirectionEnum.left;
-        const thisIsLeftOfTarget        = targetHitbox.left > this.innerLeft;
-        const leftIsInTargetOuterRight  = targetHitbox.left < this.outerRight;
-
-        return targetIsFacingLeft && leftIsInTargetOuterRight  && thisIsLeftOfTarget;
+        return inRange && actionIsDown;
     }
+    actionInLeftRange( action: Hitbox ): boolean {
+        const actionIsLeft = this.left > action.left;
+        const inRange = this.outerLeft <= action.right;
 
-    rightFacingTargetIsInActionRadius( targetHitbox: Hitbox, direction: DirectionEnum ): boolean {
-        const targetIsFacingRight       = direction === DirectionEnum.right;
-        const thisIsRightOfTarget       = targetHitbox.right < this.innerRight;
-        const rightIsInTargetOuterLeft  = targetHitbox.right > this.outerLeft;
+        return inRange && actionIsLeft;
+    }
+    actionInRightRange( action: Hitbox ): boolean {
+        const actionIsRight = this.right < action.right;
+        const inRange = this.outerRight >= action.left;
 
-        return targetIsFacingRight && rightIsInTargetOuterLeft && thisIsRightOfTarget;
+        return inRange && actionIsRight;
     }
 }

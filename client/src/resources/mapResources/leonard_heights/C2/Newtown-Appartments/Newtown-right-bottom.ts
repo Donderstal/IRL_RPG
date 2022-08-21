@@ -396,7 +396,7 @@ export default {
             "row": 4, 
             "column": 1,
             "doorTo" : "leonard_heights/Newtown-Hall",
-            "direction": DirectionEnum.up
+            "direction": DirectionEnum.left
         }
     ]
 }
