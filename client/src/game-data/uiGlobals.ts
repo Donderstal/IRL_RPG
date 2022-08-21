@@ -1,3 +1,4 @@
+import { mobileAgent } from '../helpers/screenOrientation';
 import globals from './globals';
 import { GRID_BLOCK_PX } from './globals';
 import { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM } from './textboxGlobals';
@@ -37,36 +38,36 @@ export const MENU_TAB_INVENTORY = "MTI";
 export const MENU_TAB_MAP = "MTM";
 export const MENU_TAB_GAME = "MTG";
 
-export const MENU_GRID_COLUMNS = globals.SCREEN.MOBILE ? 8 : 24;
-export const MENU_GRID_ROWS = globals.SCREEN.MOBILE ? 8 : 16;
+export const MENU_GRID_COLUMNS = mobileAgent ? 8 : 24;
+export const MENU_GRID_ROWS = mobileAgent ? 8 : 16;
 
-export const MENU_WIDTH = globals.SCREEN.MOBILE ? 8 : 24;
-export const MENU_HEIGHT = globals.SCREEN.MOBILE ? 8 : 16;
+export const MENU_WIDTH = mobileAgent ? 8 : 24;
+export const MENU_HEIGHT = mobileAgent ? 8 : 16;
 
-export const MENU_HEADER_HEIGHT = globals.SCREEN.MOBILE ? GRID_BLOCK_PX : GRID_BLOCK_PX * 2;
+export const MENU_HEADER_HEIGHT = mobileAgent ? GRID_BLOCK_PX : GRID_BLOCK_PX * 2;
 
-export const MENU_HEADER_ACTIVE_COLUMNS = globals.SCREEN.MOBILE ? 8 : 12;
-export const MENU_HEADER_ACTIVE_ROWS = globals.SCREEN.MOBILE ? 1 : 2;
-export const MENU_HEADER_ACTIVE_ROWSTYLES = globals.SCREEN.MOBILE ? [ BUBBLE_TOP ] : [ BUBBLE_TOP, BUBBLE_MIDDLE ];
+export const MENU_HEADER_ACTIVE_COLUMNS = mobileAgent ? 8 : 12;
+export const MENU_HEADER_ACTIVE_ROWS = mobileAgent ? 1 : 2;
+export const MENU_HEADER_ACTIVE_ROWSTYLES = mobileAgent ? [ BUBBLE_TOP ] : [ BUBBLE_TOP, BUBBLE_MIDDLE ];
 
-export const MENU_HEADER_INACTIVE_COLUMNS = globals.SCREEN.MOBILE ? 0 : 4;
-export const MENU_HEADER_INACTIVE_ROWS = globals.SCREEN.MOBILE ? 0 : 1;
-export const MENU_HEADER_INACTIVE_Y = globals.SCREEN.MOBILE? 0 : GRID_BLOCK_PX;
+export const MENU_HEADER_INACTIVE_COLUMNS = mobileAgent ? 0 : 4;
+export const MENU_HEADER_INACTIVE_ROWS = mobileAgent ? 0 : 1;
+export const MENU_HEADER_INACTIVE_Y = mobileAgent? 0 : GRID_BLOCK_PX;
 export const MENU_HEADER_INACTIVE_ROWSTYLES = [ BUBBLE_TOP ];
 
-export const MENU_MARGIN_SIDES = globals.SCREEN.MOBILE ? 0.5 : 1;
-export const MENU_MARGIN_TOP_DOWN = globals.SCREEN.MOBILE ? 0.25 : 0.5;
+export const MENU_MARGIN_SIDES = mobileAgent ? 0.5 : 1;
+export const MENU_MARGIN_TOP_DOWN = mobileAgent ? 0.25 : 0.5;
 
-export const MENU_BUTTON_STANDARD_WIDTH = globals.SCREEN.MOBILE ? 7 : 10;
-export const MENU_BUTTON_STANDARD_HEIGHT = globals.SCREEN.MOBILE ? 1 : 1.5; 
+export const MENU_BUTTON_STANDARD_WIDTH = mobileAgent ? 7 : 10;
+export const MENU_BUTTON_STANDARD_HEIGHT = mobileAgent ? 1 : 1.5; 
 export const MENU_BUTTON_ROWSTYLES = [ BUBBLE_TOP, BUBBLE_BOTTOM ];
 
-export const MENU_TEXTBOX_ROWS = globals.SCREEN.MOBILE? GRID_BLOCK_PX * 2 : GRID_BLOCK_PX * 3;
-export const MENU_TEXTBOX_Y = globals.SCREEN.MOBILE ? 6 * GRID_BLOCK_PX : 13 * GRID_BLOCK_PX;
-export const MENU_TEXTBOX_ROWSTYLES = globals.SCREEN.MOBILE ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE ];
+export const MENU_TEXTBOX_ROWS = mobileAgent? GRID_BLOCK_PX * 2 : GRID_BLOCK_PX * 3;
+export const MENU_TEXTBOX_Y = mobileAgent ? 6 * GRID_BLOCK_PX : 13 * GRID_BLOCK_PX;
+export const MENU_TEXTBOX_ROWSTYLES = mobileAgent ? [ BUBBLE_TOP, BUBBLE_MIDDLE ] : [ BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE ];
 
-export const MENU_BUTTON_PARTY_WIDTH = globals.SCREEN.MOBILE ? 6 : 7;
-export const MENU_BUTTON_PARTY_HEIGHT = globals.SCREEN.MOBILE ? 5 : 11; 
-export const MENU_BUTTON_PARTY_ROWSTYLES = globals.SCREEN.MOBILE 
+export const MENU_BUTTON_PARTY_WIDTH = mobileAgent ? 6 : 7;
+export const MENU_BUTTON_PARTY_HEIGHT = mobileAgent ? 5 : 11; 
+export const MENU_BUTTON_PARTY_ROWSTYLES = mobileAgent 
     ? [BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE]
     : [BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE, BUBBLE_MIDDLE];

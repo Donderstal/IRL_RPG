@@ -99,10 +99,10 @@ export class Scene {
                     animationHasFinished = e.counter.countAndCheckLimit( );
                     break;
                 case SceneAnimationType.cameraMoveToSprite:
-                    animationHasFinished = e.spriteId == cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus;
+                    animationHasFinished = cameraFocus.isFocusedOnSprite( e.spriteId );
                     break;
                 case SceneAnimationType.cameraMoveToTile:
-                    animationHasFinished = e.tileIndex == cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus;
+                    animationHasFinished = cameraFocus.isFocusedOnTile( e.tileIndex );
                     break;
                 case SceneAnimationType.loadMap:
                     animationHasFinished = hasCinematicMapLoaded();

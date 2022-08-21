@@ -1,4 +1,4 @@
-import globals from "../../game-data/globals";
+import { mobileAgent } from "../../helpers/screenOrientation";
 import { CanvasWithGrid } from "../core/CanvasWithGrid";
 
 export class SpeechBubbleCanvas extends CanvasWithGrid {
@@ -13,8 +13,8 @@ export class SpeechBubbleCanvas extends CanvasWithGrid {
         this.canvas = canvas;
         this.isActive = false;
 
-        this.columns    = globals.SCREEN.MOBILE ? 12 : 24
-        this.rows       = globals.SCREEN.MOBILE ? 8 : 16
+        this.columns    = mobileAgent ? 12 : 24
+        this.rows       = mobileAgent ? 8 : 16
 
         this.initGrid( this.rows, this.columns );
     }

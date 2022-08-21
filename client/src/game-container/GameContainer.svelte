@@ -1,8 +1,9 @@
 <script>
     import { onMount } from 'svelte';
-    import globals, { CANVAS_WIDTH } from '../game-data/globals.js';
+    import globals, { CANVAS_WIDTH, GRID_BLOCK_PX } from '../game-data/globals.js';
     import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
+    import { mobileAgent } from '../helpers/screenOrientation'
 
     const logClick = ( event ) => {
         globals.GAME.FRONT.allSprites.forEach( ( e ) => {
@@ -20,7 +21,7 @@
     }
 
     onMount(()=>{
-        if ( !globals.SCREEN.MOBILE ) {
+        if ( !mobileAgent ) {
             return;
         }
         const left = document.getElementById("d-pad-left");
@@ -42,10 +43,10 @@
         action.addEventListener("touchend", (e)=>{ e.preventDefault(); removeKeyFromPressed({ key: " "})}, false);
     })
 
-    const phoneUICanvasLeftPosition = globals.SCREEN.MOBILE 
-        ? ((screen.width < screen.height ? screen.height : screen.width) - (globals.GRID_BLOCK_PX * 12)) / 2 
+    const phoneUICanvasLeftPosition = mobileAgent 
+        ? ((screen.width < screen.height ? screen.height : screen.width) - (GRID_BLOCK_PX * 12)) / 2 
         : (screen.width - CANVAS_WIDTH) / 2;
-    const buttonsDivsMaxWidth = ((screen.width < screen.height ? screen.height : screen.width) - (globals.GRID_BLOCK_PX * 8)) / 2;
+    const buttonsDivsMaxWidth = ((screen.width < screen.height ? screen.height : screen.width) - (GRID_BLOCK_PX * 8)) / 2;
 </script>
 
 <style>
@@ -190,9 +191,9 @@
 
         <canvas id='game-fader-canvas' style="background: transparent;" on:click={logClick}></canvas>    
 
-        {#if globals.SCREEN.MOBILE}
+        {#if mobileAgent}
             <canvas id='game-bubble-canvas' class="game-menu-body"
-            style="width: {globals.GRID_BLOCK_PX * 12}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left:{phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
+            style="width: {globals.GRID_BLOCK_PX * 12}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left: {phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
         {/if}
     </div>
 
@@ -204,7 +205,7 @@
         <canvas id='game-utility-canvas-menu'></canvas>
     </div>
 
-    {#if globals.SCREEN.MOBILE}
+    {#if mobileAgent}
         <div id="buttons-div" >
             <p id="buttons-div-left" class="left-buttons" style="max-width:{buttonsDivsMaxWidth}px">
                 <img alt="D pad image" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>

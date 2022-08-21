@@ -1,7 +1,8 @@
 import { MENU_HEADER_INACTIVE_Y, MENU_HEADER_ACTIVE_COLUMNS, MENU_HEADER_INACTIVE_COLUMNS, MENU_HEADER_INACTIVE_ROWS, MENU_HEADER_ACTIVE_ROWS, MENU_HEADER_ACTIVE_ROWSTYLES, MENU_HEADER_INACTIVE_ROWSTYLES } from "../../game-data/uiGlobals";
 import { I_MenuElement } from "./I_MenuElement";
-import globals, { BATTLE_FONT_SIZE } from "../../game-data/globals";
+import { BATTLE_FONT_SIZE } from "../../game-data/globals";
 import { getTabXPosition } from "./menuHelpers";
+import { mobileAgent } from "../../helpers/screenOrientation";
 
 class HeaderButton extends I_MenuElement {
     index: number;
@@ -26,7 +27,7 @@ class HeaderButton extends I_MenuElement {
     }
 
     drawElement( ctx: CanvasRenderingContext2D ): void {
-        if ( ( globals.SCREEN.MOBILE && this.isActive ) || !globals.SCREEN.MOBILE ) {
+        if ( ( mobileAgent && this.isActive ) || !mobileAgent ) {
             super.drawElement( ctx );     
             ctx.font = BATTLE_FONT_SIZE + "px " + 'PFRondaSeven';
             ctx.fillStyle = "black";

@@ -1,5 +1,5 @@
-import globals from '../../game-data/globals';
 import { clearEntireCanvas } from '../../helpers/canvasHelpers';
+import { mobileAgent } from '../../helpers/screenOrientation';
 import { cameraFocus } from '../cameraFocus';
 import { drawBubbles } from '../controllers/bubbleController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
@@ -8,7 +8,7 @@ export const handleCinematicAnimations = ( GAME ): void => {
     const PLAYER = GAME.PLAYER;
     clearEntireCanvas("FRONT");
 
-    if ( globals.SCREEN.MOBILE ) {
+    if ( mobileAgent ) {
         clearEntireCanvas("SPEECH");
     }
 

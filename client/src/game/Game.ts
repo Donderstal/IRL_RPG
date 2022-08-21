@@ -1,5 +1,5 @@
 import { animationLoop } from './animationLoop'
-import globals, { GRID_BLOCK_PX } from '../game-data/globals'
+import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from '../game-data/globals'
 import { clearPressedKeys, listenForKeyPress } from './controls'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals'
 import { MAIN_CHARACTER } from '../resources/spriteTypeResources'
@@ -40,7 +40,8 @@ import { clearHitboxes } from './modules/hitboxModule'
 import type { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
-import { cameraFocus } from './cameraFocus'
+import { cameraFocus, initializeCameraFocus } from './cameraFocus'
+import { mobileAgent, portraitOrientation } from '../helpers/screenOrientation'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -155,7 +156,7 @@ export class Game {
         this.front = this.initCanvas( 'FRONT', );
         this.back = this.initCanvas( 'BACK' );
         this.menu = this.initCanvas( 'MENU' );
-        if ( globals.SCREEN.MOBILE ) {
+        if ( mobileAgent ) {
             this.speechBubblesCanvas = this.initCanvas( 'SPEECH' );
         }
     }
@@ -171,19 +172,19 @@ export class Game {
             case 'MENU':
                 let object = this.initializeGameCanvas(
                     'game-menu-canvas',
-                    globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH,
-                    globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT,
+                    mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH,
+                    mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT,
                     true, MenuCanvas
                 );
-                if ( globals.SCREEN.MOBILE ) {
+                if ( mobileAgent ) {
                     object.canvas.style.position = 'fixed';
                     object.canvas.style.top = "0";
                 }
                 return object;
             case 'UTIL_BACK':
-                return this.initializeGameCanvas( 'game-utility-canvas-back', GRID_BLOCK_PX, GRID_BLOCK_PX, false  );
+                return this.initializeGameCanvas( 'game-utility-canvas-back', GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, false  );
             case 'UTIL_FRONT':
-                return this.initializeGameCanvas( 'game-utility-canvas-front', GRID_BLOCK_PX, GRID_BLOCK_PX, false );
+                return this.initializeGameCanvas( 'game-utility-canvas-front', GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, false );
             case 'SPEECH':  
                 return this.initializeGameCanvas( 'game-bubble-canvas', GRID_BLOCK_PX * 12, GRID_BLOCK_PX * 8, true, SpeechBubbleCanvas );
         } 
@@ -284,7 +285,8 @@ export class Game {
 }
 
 export const startGame = ( name: string, className: string, startingMap: string, debugMode: boolean, disableStoryMode: boolean ): void => {
-    setFaderDimensions( );
+    initializeCameraFocus();
+    setFaderDimensions();
     globals.GAME = new Game( );
     screen.orientation.onchange = ( ) => {
         if ( screen.orientation.type == "landscape-primary" ) {
@@ -307,7 +309,7 @@ export const startGame = ( name: string, className: string, startingMap: string,
             showFlipScreenModal( );
         }
     }
-    if( globals.SCREEN.PORTRAIT ){
+    if( portraitOrientation() ){
         document.getElementById('app-div').requestFullscreen()
         showFlipScreenModal( );
     }

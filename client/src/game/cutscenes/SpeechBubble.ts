@@ -7,11 +7,12 @@ import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TypeWriter } from "../../helpers/TypeWriter";
 import type { SceneAnimationModel, SpeakScene, SpeakYesNoScene } from '../../models/SceneAnimationModel';
+import { mobileAgent } from '../../helpers/screenOrientation';
 
 const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
     const bubbleLocation = {
-        'x': globals.SCREEN.MOBILE ? ( 0 + ( MAX_BUBBLE_WIDTH - dimensions.width ) / 2 ) : spawnLocation.x,
-        'y': globals.SCREEN.MOBILE ? 0 : spawnLocation.y - dimensions.height,
+        'x': mobileAgent ? ( 0 + ( MAX_BUBBLE_WIDTH - dimensions.width ) / 2 ) : spawnLocation.x,
+        'y': mobileAgent ? 0 : spawnLocation.y - dimensions.height,
         'position': "UP-RIGHT"
     };
     if ( bubbleLocation.x + dimensions.width > 24 * GRID_BLOCK_PX ) {
@@ -28,7 +29,7 @@ const getSpeechBubbleXy = ( spawnLocation, dimensions ) => {
 const getSpeechBubbleDimensions = ( contentModel: SceneAnimationModel, type: SceneAnimationType ) => {
     let content = type === SceneAnimationType.speak ? contentModel as SpeakScene : contentModel as SpeakYesNoScene;
     const text = breakTextIntoLines( content.text, LARGE_FONT_SIZE )
-    const ctx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()  
+    const ctx = mobileAgent ? getBubbleCanvasContext() : getFrontCanvasContext()  
     const  textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + (content.spriteName !== undefined ? SMALL_FONT_LINE_HEIGHT : 0);
     const firstLineWidth = ctx.measureText(text[0]).width + (BUBBLE_INNER_PADDING * 2);
     return {
@@ -70,10 +71,10 @@ export class SpeechBubble {
     destinationY: number;
     constructor( location: {x: number, y: number}, contentModel: SceneAnimationModel, id: string, type: SceneAnimationType, subtitleBubble = false ) {
         const dimensions = subtitleBubble
-            ? { textLines: 1, width: globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
+            ? { textLines: 1, width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
             : getSpeechBubbleDimensions( contentModel, type );
         const xyPosition = subtitleBubble
-            ?  { 'x': globals.SCREEN.MOBILE ? GRID_BLOCK_PX * 2 : CANVAS_WIDTH / 4, 'y': globals.SCREEN.MOBILE ? screen.height : CANVAS_HEIGHT, 'position': "UP-RIGHT" }
+            ?  { 'x': mobileAgent ? GRID_BLOCK_PX * 2 : CANVAS_WIDTH / 4, 'y': mobileAgent ? screen.height : CANVAS_HEIGHT, 'position': "UP-RIGHT" }
             : getSpeechBubbleXy( location, dimensions );
 
         let content = type === SceneAnimationType.speak ? contentModel as SpeakScene : contentModel as SpeakYesNoScene;
@@ -184,7 +185,7 @@ export class SpeechBubble {
 
     writeHeader( ): void {
         writeTextLine( 
-            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
+            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, mobileAgent ? getBubbleCanvasContext() : getFrontCanvasContext()
         );
     }
 
@@ -232,7 +233,7 @@ export class SpeechBubble {
     }
 
     writeText(): void {
-        const canvasCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext();
+        const canvasCtx = mobileAgent ? getBubbleCanvasContext() : getFrontCanvasContext();
         setFont(LARGE_FONT_SIZE, canvasCtx);
 
         let textLineX = this.textX;
@@ -254,7 +255,7 @@ export class SpeechBubble {
 
     drawButtons(): void {
         const pngs = globals.PNG_DICTIONARY;
-        const frontCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
+        const frontCtx = mobileAgent ? getBubbleCanvasContext() : getFrontCanvasContext()
         frontCtx.drawImage(
             this.activeButton === InteractionAnswer.yes ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
             0, 0,
@@ -272,7 +273,7 @@ export class SpeechBubble {
     }
 
     copyBubbleToGameCanvas(): void {
-        const frontCtx = globals.SCREEN.MOBILE ? getBubbleCanvasContext() : getFrontCanvasContext()
+        const frontCtx = mobileAgent ? getBubbleCanvasContext() : getFrontCanvasContext()
         frontCtx.save( );
         frontCtx.scale( this.horiFlip ? -1 : 1, this.vertFlip ? -1 : 1 );
         frontCtx.drawImage(

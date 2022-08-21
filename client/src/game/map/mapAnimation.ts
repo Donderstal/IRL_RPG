@@ -1,6 +1,5 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
-import globals from '../../game-data/globals';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { clearEntireCanvas } from '../../helpers/canvasHelpers';
 import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
@@ -11,6 +10,7 @@ import { getAssociatedHitbox } from '../modules/hitboxModule';
 import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
+import { mobileAgent } from '../../helpers/screenOrientation';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;
@@ -18,7 +18,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
 
     clearEntireCanvas("FRONT");
 
-    if ( globals.SCREEN.MOBILE ) {
+    if ( mobileAgent ) {
         clearEntireCanvas("SPEECH");
     }
 

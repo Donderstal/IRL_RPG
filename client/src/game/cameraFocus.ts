@@ -56,6 +56,14 @@ export class CameraFocus {
         return globals.GAME.FRONT.allSprites.filter((e)=>{ return e.spriteId === this.focusSpriteId })[0]
     }
 
+    isFocusedOnSprite( spriteId: string ): boolean {
+        return this.focusSpriteId === spriteId && !cameraFocus.movingToNewFocus;
+    }
+
+    isFocusedOnTile( tileIndex: number ): boolean {
+        return this.focusTileId === tileIndex && !cameraFocus.movingToNewFocus;
+    }
+
     setSpriteFocus( sprite: Sprite, snapToSprite: boolean ): void {
         this.unsetTileFocus( );
         this.focusSpriteId = sprite.spriteId;
@@ -163,4 +171,8 @@ export class CameraFocus {
     }
 }
 
-export const cameraFocus = new CameraFocus();
+export let cameraFocus = null;
+
+export const initializeCameraFocus = () => {
+    cameraFocus = new CameraFocus();
+}

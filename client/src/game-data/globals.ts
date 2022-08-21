@@ -1,7 +1,5 @@
 import type { Game } from "../game/Game";
-import { ScreenOrientation } from "../helpers/screenOrientation";
-
-export let SCREEN = new ScreenOrientation( );
+import { mobileAgent } from "../helpers/screenOrientation";
 
 export const GRID_BLOCK_IN_SHEET_PX        = 64
 export const CANVAS_COLUMNS                = 24
@@ -9,7 +7,7 @@ export const CANVAS_ROWS                   = 16
 
 const getBasePixelBlockSize = ( ) => {
     let blockSize = Math.ceil(
-        SCREEN.MOBILE
+        mobileAgent
         ? (screen.width > screen.height ? screen.height : screen.width) / 8
         : screen.width / CANVAS_COLUMNS      
     );
@@ -34,14 +32,14 @@ export const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS);
 export const MAP_SPRITE_WIDTH_IN_SHEET     = 64
 export const MAP_SPRITE_HEIGHT_IN_SHEET    = 112
 // speech bubbles 
-export const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( SCREEN.MOBILE ? 12 : 6 )
-export const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( SCREEN.MOBILE ? .33 : .66 )
+export const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( mobileAgent ? 12 : 6 )
+export const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( mobileAgent ? .33 : .66 )
 export const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 
 // canvas font sizes
-export const SMALL_FONT_SIZE               = SCREEN.MOBILE ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 4.5;
-export const LARGE_FONT_SIZE               = SCREEN.MOBILE ? GRID_BLOCK_PX / 2.5 : GRID_BLOCK_PX / 3.5;
-export const BATTLE_FONT_SIZE              = SCREEN.MOBILE ? GRID_BLOCK_PX / 2 : GRID_BLOCK_PX / 2.5;
+export const SMALL_FONT_SIZE               = mobileAgent ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 4.5;
+export const LARGE_FONT_SIZE               = mobileAgent ? GRID_BLOCK_PX / 2.5 : GRID_BLOCK_PX / 3.5;
+export const BATTLE_FONT_SIZE              = mobileAgent ? GRID_BLOCK_PX / 2 : GRID_BLOCK_PX / 2.5;
 
 // in-game textbox color and opacity
 export const INNER_TEXTBOX_RGBA            = "rgb(0, 56, 77)";
@@ -78,6 +76,5 @@ let GAME: Game = null;
 export default {
     GAME,
     PNG_DICTIONARY,
-    AUDIO_DICTIONARY,
-    SCREEN
+    AUDIO_DICTIONARY
 }

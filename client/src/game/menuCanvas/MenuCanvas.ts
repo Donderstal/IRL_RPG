@@ -4,8 +4,8 @@ import { MenuTextBox } from './menuTextBox';
 import { MENU_GRID_ROWS, MENU_GRID_COLUMNS, MENU_MARGIN_SIDES, MENU_MARGIN_TOP_DOWN, MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME, MENU_BUTTON_STANDARD_HEIGHT, MENU_BUTTON_STANDARD_WIDTH, MENU_HEADER_ACTIVE_ROWS, MENU_BUTTON_PARTY_WIDTH, MENU_BUTTON_PARTY_HEIGHT, MENU_BUTTON_ROWSTYLES, MENU_BUTTON_PARTY_ROWSTYLES } from '../../game-data/uiGlobals';
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../game-data/globals";
 import { ContentBubble } from "./contentBubble";
-import globals from "../../game-data/globals";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
+import { mobileAgent } from "../../helpers/screenOrientation";
 
 const testParty = [ "party1", "party2", "party3", "party4", "party5" ];
 const testInventory = [ "Inventory1", "Inventory2", "Inventory3", "Inventory4", "Inventory5" ];
@@ -101,7 +101,7 @@ export class MenuCanvas extends CanvasWithGrid {
             case MENU_TYPE_GAME:
                 testGame.forEach((e, index)=>{
                     this.contentBubbles.push( new ContentBubble( 
-                        globals.SCREEN.MOBILE ? MENU_MARGIN_SIDES : (MENU_MARGIN_SIDES * 2) + (MENU_BUTTON_STANDARD_WIDTH / 2), MENU_MARGIN_TOP_DOWN + MENU_HEADER_ACTIVE_ROWS + ( ( MENU_MARGIN_TOP_DOWN + MENU_BUTTON_STANDARD_HEIGHT ) * index ),
+                        mobileAgent ? MENU_MARGIN_SIDES : (MENU_MARGIN_SIDES * 2) + (MENU_BUTTON_STANDARD_WIDTH / 2), MENU_MARGIN_TOP_DOWN + MENU_HEADER_ACTIVE_ROWS + ( ( MENU_MARGIN_TOP_DOWN + MENU_BUTTON_STANDARD_HEIGHT ) * index ),
                         MENU_BUTTON_STANDARD_WIDTH, MENU_BUTTON_STANDARD_HEIGHT,
                         MENU_TYPE_GAME, e, MENU_BUTTON_ROWSTYLES
                     ) );

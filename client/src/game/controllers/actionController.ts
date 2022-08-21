@@ -24,6 +24,7 @@ export const handleActionButton = ( ): void => {
     }
 
     const actions = getAllActions();
+    if ( actions.length === 0 ) return;
     const closestAction = getClosestHitbox( playerHitbox, actions );
     if ( playerHitbox.checkForActionRange( closestAction, PLAYER.direction ) ) {
         setActiveAction( closestAction as ActionSelector );

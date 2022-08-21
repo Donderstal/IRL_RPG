@@ -1,5 +1,6 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import globals, { BATTLE_FONT_LINE_HEIGHT, CANVAS_HEIGHT } from "../../game-data/globals";
+import { mobileAgent } from "../../helpers/screenOrientation";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
@@ -46,7 +47,7 @@ export const setNewSubtitleBubble = ( contents ): void => {
     );
 };
 export const clearSubtitleBubble = (): void => {
-    subtitleBubble.setMoveToY( globals.SCREEN.MOBILE ? screen.height : CANVAS_HEIGHT );
+    subtitleBubble.setMoveToY( mobileAgent ? screen.height : CANVAS_HEIGHT );
     setTimeout( () => {
         subtitleBubble = null;
         subtitleBubbleId = null;
