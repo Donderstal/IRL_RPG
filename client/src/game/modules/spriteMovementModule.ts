@@ -9,6 +9,7 @@ import { checkForCollision } from "../map/collision";
 import { destroySpriteAnimation, spriteHasAnimation } from "./animationModule";
 import { blockedSpriteCounterIsOverLimit, destroyBlockedSpriteCounter, handleBlockedSpriteCounter } from "./blockedSpritesModule";
 import { getRandomDestinationInRadius } from "../../helpers/utilFunctions";
+import { cameraFocus } from "../cameraFocus";
 
 let movementDictionary: { [key in string]: Destination } = {};
 
@@ -98,8 +99,8 @@ export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum,
             sprite.y += sprite.speed;
             break;
     }
-    if ( sprite.isInCameraFocus && !globals.GAME.cameraFocus.movingToNewFocus ) {
-        globals.GAME.cameraFocus.centerOnXY( sprite.centerX, sprite.baseY );
+    if ( cameraFocus.focusSpriteId == sprite.spriteId && !cameraFocus.movingToNewFocus ) {
+        cameraFocus.centerOnXY( sprite.centerX, sprite.baseY );
     }
     sprite.movementFrameCounter();
 };

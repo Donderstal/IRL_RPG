@@ -9,6 +9,7 @@ import { hasActiveBubbles } from '../controllers/bubbleController';
 import { hasCinematicMapLoaded } from '../../helpers/loadMapHelpers';
 import { spriteHasMovement } from '../modules/spriteMovementModule';
 import { spriteHasAnimation } from '../modules/animationModule';
+import { cameraFocus } from '../cameraFocus';
 
 export class Scene {
     animations: Animation[];
@@ -98,10 +99,10 @@ export class Scene {
                     animationHasFinished = e.counter.countAndCheckLimit( );
                     break;
                 case SceneAnimationType.cameraMoveToSprite:
-                    animationHasFinished = e.spriteId == globals.GAME.cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus;
+                    animationHasFinished = e.spriteId == cameraFocus.focusSpriteId && !globals.GAME.cameraFocus.movingToNewFocus;
                     break;
                 case SceneAnimationType.cameraMoveToTile:
-                    animationHasFinished = e.tileIndex == globals.GAME.cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus;
+                    animationHasFinished = e.tileIndex == cameraFocus.focusTileId && !globals.GAME.cameraFocus.movingToNewFocus;
                     break;
                 case SceneAnimationType.loadMap:
                     animationHasFinished = hasCinematicMapLoaded();

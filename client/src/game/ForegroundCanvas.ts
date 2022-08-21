@@ -19,6 +19,7 @@ import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
 import { initializeSpriteMovement } from './modules/spriteMovementModule';
 import { AnimationTypeEnum } from '../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../helpers/pathfindingHelpers';
+import { cameraFocus } from './cameraFocus';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -60,7 +61,7 @@ export class ForegroundCanvas extends CanvasWithGrid {
                 this.setSprites( this.model.sprites );
             if ( this.model.playerStart ) {
                 this.initPlayerCharacter( this.model.playerStart, globals.GAME.party.characterActiveOnMap.ClassName );
-                globals.GAME.cameraFocus.centerOnXY( this.playerSprite.centerX, this.playerSprite.baseY )      
+                cameraFocus.centerOnXY( this.playerSprite.centerX, this.playerSprite.baseY )      
             }            
         }
     }

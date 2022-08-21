@@ -19,6 +19,7 @@ import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 import { setNewBubble, setNewEmote } from "../controllers/bubbleController";
 import { destroySpriteAnimation, initializeSpriteAnimation, spriteHasAnimation } from "../modules/animationModule";
+import { cameraFocus } from "../cameraFocus";
 
 export class Animation {
     id: string;
@@ -115,13 +116,13 @@ export class Animation {
                 break;
             case SceneAnimationType.cameraMoveToSprite:
                 let sprite = this.getSpriteByName( );
-                globals.GAME.cameraFocus.setSpriteFocus( sprite, this.cameraMoveToSpriteScene.snapToSprite );
+                cameraFocus.setSpriteFocus( sprite, this.cameraMoveToSpriteScene.snapToSprite );
                 break;
             case SceneAnimationType.cameraMoveToTile:
                 this.model = this.model as CameraMoveToTileScene
                 let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.cameraMoveToTileScene.column, this.cameraMoveToTileScene.row );
                 this.tileIndex = tile.index;
-                globals.GAME.cameraFocus.setTileFocus( tile, this.cameraMoveToTileScene.snapToTile );
+                cameraFocus.setTileFocus( tile, this.cameraMoveToTileScene.snapToTile );
                 break;
             case SceneAnimationType.loadMap:
                 this.model = this.model as LoadMapScene;

@@ -10,6 +10,7 @@ import { getAllDoors } from '../modules/doorModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
+import { cameraFocus } from '../cameraFocus';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;
@@ -59,8 +60,8 @@ export const handleMapAnimations = ( GAME: Game ): void => {
         unsetPendingDoor( );
     }
 
-    if ( GAME.cameraFocus.movingToNewFocus ) {
-        GAME.cameraFocus.moveToNewFocus( );
+    if ( cameraFocus.movingToNewFocus ) {
+        cameraFocus.moveToNewFocus( );
     }
 }
 

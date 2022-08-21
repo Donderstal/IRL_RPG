@@ -14,6 +14,7 @@ import type { ForegroundCanvas } from '../game/ForegroundCanvas';
 import type { FrontgridCanvas } from '../game/FrontgridCanvas';
 import type { BackgroundCanvas } from '../game/BackgroundCanvas';
 import type { CanvasContextModel } from '../models/CanvasContextModel';
+import { cameraFocus } from '../game/cameraFocus';
 
 const cinematicGrids: { back: CanvasContextModel, front: CanvasContextModel, frontgrid: CanvasContextModel } = {
     back: null,
@@ -86,10 +87,10 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
     mapData.playerStart = undefined;
 
     if ( !cinematic ) {
-        globals.GAME.cameraFocus.handleScreenFlip( 
+        cameraFocus.handleScreenFlip( 
             {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY}
         );
-        globals.GAME.cameraFocus.setSpriteFocus( globals.GAME.PLAYER, true );
+        cameraFocus.setSpriteFocus( globals.GAME.PLAYER, true );
         setTimeout( ( ) => {
             globals.GAME.story.checkForEventTrigger(CinematicTrigger.enter)     
         }, 250 )            

@@ -19,7 +19,6 @@ import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../helpers/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
 import { MenuCanvas } from './menuCanvas/MenuCanvas'
-import { CameraFocus } from '../helpers/cameraFocus'
 import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded, clearCinematicGrids, clearMapFromCanvases, initCinematicGrids } from '../helpers/loadMapHelpers'
 import type { CanvasContextModel } from '../models/CanvasContextModel'
 import type { Neighbourhood } from './Neighbourhood'
@@ -41,6 +40,7 @@ import { clearHitboxes } from './modules/hitboxModule'
 import type { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
+import { cameraFocus } from './cameraFocus'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -54,7 +54,6 @@ export class Game {
     inMenu: boolean;
     listeningForPress: boolean;
 
-    cameraFocus: CameraFocus;
     collectableRegistry: CollectableRegistry;
 
     menu: CanvasContextModel;
@@ -81,7 +80,6 @@ export class Game {
         this.paused; // bool
         this.inMenu;
         this.listeningForPress; // bool
-        this.cameraFocus = new CameraFocus( );
         this.collectableRegistry = new CollectableRegistry( );
         this.sound = new SoundController( );
         this.audio = new AudioContext( );
@@ -292,12 +290,12 @@ export const startGame = ( name: string, className: string, startingMap: string,
         if ( screen.orientation.type == "landscape-primary" ) {
             setTimeout(()=>{
                 if ( globals.GAME.loadingScreen != null ) {
-                    globals.GAME.cameraFocus.handleScreenFlip( 
+                    cameraFocus.handleScreenFlip( 
                         {'x': CANVAS_WIDTH / 2, 'y': CANVAS_HEIGHT / 2 }
                     )                
                 }
                 else {
-                    globals.GAME.cameraFocus.handleScreenFlip( 
+                    cameraFocus.handleScreenFlip( 
                         {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY }
                     )
                 }

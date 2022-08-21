@@ -162,3 +162,5 @@ export class CameraFocus {
         }
     }
 }
+
+export const cameraFocus = new CameraFocus();

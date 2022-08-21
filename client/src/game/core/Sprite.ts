@@ -132,8 +132,6 @@ export class Sprite {
         }
     }
 
-    get isInCameraFocus(): boolean { return globals.GAME.cameraFocus.focusSpriteId == this.spriteId;}
-
     get centerX(): number { return this.x + ( this.width / 2 ); };
     get baseY(): number { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
     get topY(): number{ return this.top + ( GRID_BLOCK_PX / 2 ); };
