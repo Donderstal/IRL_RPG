@@ -25,8 +25,6 @@ export class Destination {
     tryingForPath: boolean;
     inSideStep: boolean;
     constructor( column: number, row: number, sprite: Sprite, deleteSprite = false ) {
-        console.log( `new destination c${column} r${row} for ${sprite.spriteId} from c${sprite.column} r${sprite.row}` )
-        this.originalDestination = { column: column, row: row };
         this.column         = column;
         this.row = row;
         this.inSideStep = false;

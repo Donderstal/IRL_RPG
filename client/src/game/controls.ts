@@ -6,6 +6,8 @@ import { clearActiveBubbles, handleBubbleButtonPress, handleSelectionKeys, hasAc
 import { InteractionType } from '../enumerables/InteractionType';
 import type { Sprite } from './core/Sprite';
 import { moveSpriteInDirection } from './modules/spriteMovementModule';
+import { PLAYER_ID } from '../game-data/interactionGlobals';
+import { resetRandomAnimationCounter } from './modules/randomAnimationModule';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -49,15 +51,19 @@ export const handleMovementKeys = () => {
 
     if ( PLAYER !== undefined ) {
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
+            resetRandomAnimationCounter( PLAYER_ID )
             moveSpriteInDirection( PLAYER, DirectionEnum.up );
         }
         else if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
+            resetRandomAnimationCounter( PLAYER_ID )
             moveSpriteInDirection( PLAYER, DirectionEnum.left );
         }
         else if ( pressedKeys.s || pressedKeys.ArrowDown ) {
+            resetRandomAnimationCounter( PLAYER_ID )
             moveSpriteInDirection( PLAYER, DirectionEnum.down );
         }
         else if ( pressedKeys.d || pressedKeys.ArrowRight ) {
+            resetRandomAnimationCounter( PLAYER_ID )
             moveSpriteInDirection( PLAYER, DirectionEnum.right );
         }
         const eventTrigger = GAME.story.checkForEventTrigger( CinematicTrigger.position );

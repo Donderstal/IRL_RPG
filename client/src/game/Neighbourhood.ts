@@ -38,34 +38,35 @@ export class Neighbourhood {
         const horizontalSlot = this.activeMapName[0];
         const verticalSlot = this.activeMapName[1];
         const horiIndex = this.model.horizontalSlots.indexOf(horizontalSlot);
-        const vertIndex = this.model.verticalSlots.indexOf(verticalSlot)
+        const vertIndex = this.model.verticalSlots.indexOf( verticalSlot )
+        const mapsBySlot = this.model.mapDictionary;
         let neighbours = {left: null, up: null, right: null, down: null};
 
         if ( horiIndex + 1 != this.model.horizontalSlots.length ) {
             const slotKey = this.model.horizontalSlots[horiIndex + 1] + verticalSlot;
-            if ( this[slotKey] != undefined ) {
+            if ( mapsBySlot[slotKey] != undefined ) {
                 neighbours.right = this.model.mapDictionary[slotKey].name
             }
         }
         if ( vertIndex + 1 != this.model.verticalSlots.length ) {
             const slotKey = horizontalSlot + this.model.verticalSlots[vertIndex + 1];
-            if ( this[slotKey] != undefined ) {
+            if ( mapsBySlot[slotKey] != undefined ) {
                 neighbours.down = this.model.mapDictionary[slotKey].name
             }
         }
         if ( horiIndex - 1 != -1 ) {
             const slotKey = this.model.horizontalSlots[horiIndex - 1] + verticalSlot;
-            if ( this[slotKey] != undefined ) {
+            if ( mapsBySlot[slotKey] != undefined ) {
                 neighbours.left = this.model.mapDictionary[slotKey].name
             }
         }
         if ( vertIndex + 1 != -1 ) {
             const slotKey = horizontalSlot + this.model.verticalSlots[vertIndex - 1];
-            if ( this[slotKey] != undefined ) {
+            if ( mapsBySlot[slotKey] != undefined ) {
                 neighbours.up = this.model.mapDictionary[slotKey].name
             }
         }
-        this.model.mapDictionary[this.activeMapName].neighbours = neighbours;
+        mapsBySlot[this.activeMapName].neighbours = neighbours;
     }
 
     setPlayerStart( name: string, className: string ): void {

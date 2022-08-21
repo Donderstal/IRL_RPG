@@ -186,16 +186,19 @@ export class Animation {
         if ( sceneModel.spriteName == PLAYER_NAME ) {
             let position: CellPosition = {
                 column: sceneModel.column,
-                row: sceneModel.row
+                row: sceneModel.row,
+                direction: sceneModel.direction
             };
             globals.GAME.FRONT.initPlayerCharacter( position, MAIN_CHARACTER );
             this.spriteId = PLAYER_ID;
         }
-        const model: CanvasObjectModel = initCanvasObjectModel( {
-            type: sceneModel.sprite, direction: sceneModel.direction,
-            row: sceneModel.row, column: sceneModel.column, name: sceneModel.spriteName
-        } );
-        this.spriteId = globals.GAME.FRONT.getTileAndSetSprite( model );
+        else {
+            const model: CanvasObjectModel = initCanvasObjectModel( {
+                type: sceneModel.sprite, direction: sceneModel.direction,
+                row: sceneModel.row, column: sceneModel.column, name: sceneModel.spriteName
+            } );
+            this.spriteId = globals.GAME.FRONT.getTileAndSetSprite( model );
+        }
     }
 
     setAnimToSprite( ): void {

@@ -26,6 +26,7 @@ import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/ani
 import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
 import { handleIdleAnimationCounter, initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
 import { setNewBubble, setNewEmote } from '../controllers/bubbleController'
+import { MAIN_CHARACTER } from '../../resources/spriteTypeResources'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -119,6 +120,10 @@ export class Sprite {
         this.initialRow = canvasObjectModel.row;
         this.setSpriteToGrid( tile );
         this.setPlugins( canvasObjectModel );
+        if ( canvasObjectModel.type === MAIN_CHARACTER ) {
+            console.log( `main` )
+            console.trace();
+        }
         if ( this.isPlayer ) {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
         }
