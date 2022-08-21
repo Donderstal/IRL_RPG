@@ -140,22 +140,22 @@ export default {
     ],
     "spawnPoints": [
         {
-            "column": OutOfMapEnum.left,
+            "column": 1,
             "row": 9,
             "direction": DirectionEnum.right
         },
         {
-            "column": OutOfMapEnum.left,
+            "column": 1,
             "row": 11,
             "direction": DirectionEnum.right
         },
         {
-            "column": OutOfMapEnum.right,
+            "column": 24,
             "row": 9,
             "direction": DirectionEnum.left
         },
         {
-            "column": OutOfMapEnum.right,
+            "column": 24,
             "row": 11,
             "direction": DirectionEnum.left
         },

@@ -7,6 +7,8 @@ import type { Tile } from "../core/Tile";
 import { Destination } from "../map/map-classes/Destination";
 import { checkForCollision } from "../map/collision";
 import { destroySpriteAnimation, spriteHasAnimation } from "./animationModule";
+import { blockedSpriteCounterIsOverLimit, destroyBlockedSpriteCounter, handleBlockedSpriteCounter } from "./blockedSpritesModule";
+import { getRandomDestinationInRadius } from "../../helpers/utilFunctions";
 
 let movementDictionary: { [key in string]: Destination } = {};
 
@@ -54,8 +56,13 @@ const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
     if ( direction !== null ) {
         moveSpriteInDirection( sprite, direction, tile );
     }
-    else if ( destination.hasNextStep() ) {
+    else if ( destination.hasNextStep() ) { 
         destination.setNextStep( sprite );
+        if ( sprite.isCar ) return;
+        destination.setPath( sprite );
+    }
+    else if ( destination.inSideStep ) {
+        destination.resetOriginalDestination( sprite );
     }
     else {
         sprite.deactivateMovementModule();
@@ -64,7 +71,19 @@ const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
 };
 export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum, tile: Tile = null ) => {
     sprite.setDirection( direction, tile );
-    if ( checkForCollision( sprite ) ) return;
+    if ( checkForCollision( sprite ) ) {
+        if ( sprite.isPlayer || sprite.isCar ) return;
+        handleBlockedSpriteCounter( sprite );
+        if ( blockedSpriteCounterIsOverLimit( sprite.spriteId ) ) {
+            destroyBlockedSpriteCounter( sprite.spriteId );
+            if ( !sprite.isCar ) {
+                const destination = getAssociatedSpriteMovementDestination( sprite.spriteId );
+                const sideStepDestination = getRandomDestinationInRadius( sprite, 2 );
+                if ( sideStepDestination === null ) return;
+                destination.setSideStep( sideStepDestination, sprite );
+            }
+        }
+    }
     switch ( direction ) {
         case DirectionEnum.left:
             sprite.x -= sprite.speed;

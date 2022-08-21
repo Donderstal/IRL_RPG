@@ -1,4 +1,5 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
+import globals from "../game-data/globals";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import type { GridCellModel } from "../models/GridCellModel";
@@ -128,5 +129,32 @@ export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
     }
     else {
         return ( subject.column > target.column ) ? DirectionEnum.left : DirectionEnum.right;
+    }
+}
+
+export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): GridCellModel => {
+    const back = globals.GAME.BACK;
+    const front = globals.GAME.FRONT;
+    const leftBorderColumn = sprite.column - radius;
+    const rightBorderColumn = sprite.column + radius;
+    const topBorderRow = sprite.row - radius;
+    const bottomBorderRow = sprite.row + radius;
+
+    const tiles = back.grid.array.filter( ( e ) => {
+        return ( e.column > leftBorderColumn && e.column < rightBorderColumn )
+            && ( e.row > topBorderRow && e.row < bottomBorderRow )
+            && !( e.row === sprite.row && e.column === sprite.column );
+    } );
+
+    const availableTiles = tiles.filter( ( e ) => {
+        return !e.isBlocked && !front.tileHasBlockingSprite( e.index );
+    } );
+
+    if ( availableTiles.length > 0 ) {
+        let randomTile = availableTiles[Math.floor( Math.random() * availableTiles.length )];
+        return { column: randomTile.column, row: randomTile.row };
+    }
+    else {
+        return null;
     }
 }

@@ -18,6 +18,7 @@ import type { GridCellModel } from '../models/GridCellModel';
 import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
 import { initializeSpriteMovement } from './modules/spriteMovementModule';
 import { AnimationTypeEnum } from '../enumerables/AnimationTypeEnum';
+import { determineShortestPath } from '../helpers/pathfindingHelpers';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
  * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
@@ -129,9 +130,51 @@ export class ForegroundCanvas extends CanvasWithGrid {
     }
 
     generateWalkingNPC( ): void {
-        let start = this.getValidSpawnStart( );
-        let end = this.getValidSpawnDestination( start )
-        this.generateRandomWalkingSprite( start, end )
+        let start: SpawnPointModel;
+        let end: SpawnPointModel;
+
+        const grid = {
+            'rows': this.grid.rows, 'columns': this.grid.columns,
+            'tiles': globals.GAME.BACK.grid.array.filter( ( tile ) => {
+                return !tile.isBlocked && !this.tileHasBlockingSprite( tile.index );
+            } )
+        };
+
+        let visitedStarts = [];
+        let visitedEnds = [];
+        let validPath = false;
+
+        while ( visitedStarts.length < this.model.spawnPoints.length && !validPath ) {
+            start = this.getValidSpawnPoint( visitedStarts );
+            while ( visitedEnds.length < this.model.spawnPoints.length - 1 && !validPath ) {
+                end = this.getValidSpawnPoint( [start, ...visitedEnds] );
+                if ( end === undefined ) return;
+                let tileStart = this.getTileAtCell( start.column, start.row );
+                let tileEnd = this.getTileAtCell( end.column, end.row );
+                validPath = determineShortestPath( tileStart, tileEnd, grid ) !== null;
+
+                visitedEnds.push( end );
+            }
+            visitedEnds = [];
+            visitedStarts.push( start );
+        }
+        if ( validPath ) {
+            this.generateRandomWalkingSprite( start, end );
+        }
+    }
+
+    getValidSpawnPoint( spawnPointsToFilter: SpawnPointModel[] = [] ): SpawnPointModel {
+        let availableSpawnPoints = this.model.spawnPoints.filter( ( e ) => {
+            let point = e;
+            return spawnPointsToFilter.length !== 0 ? spawnPointsToFilter.filter( ( x ) => {
+                return point.column === x.column && point.row === x.row
+            } ).length === 0 : true;
+        } );
+        let unblockedSpawnPoints = availableSpawnPoints.filter( ( e ) => {
+            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.column, e.row );
+            return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
+        } );
+        return unblockedSpawnPoints[Math.floor( Math.random() * unblockedSpawnPoints.length )];
     }
 
     getValidSpawnStart(): SpawnPointModel {
@@ -139,21 +182,16 @@ export class ForegroundCanvas extends CanvasWithGrid {
         return validLocations[ Math.floor( Math.random( ) * validLocations.length ) ];
     }
 
-    getValidSpawnDestination( startLocation: SpawnPointModel = null, oldDestination: SpawnPointModel = null ): SpawnPointModel {
+    getValidSpawnDestination( startLocation: SpawnPointModel ): SpawnPointModel {
         let validLocations = this.filterSpawnPoints( startLocation );
-        if ( oldDestination ) {
-            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", oldDestination.column, oldDestination.row )
-            if (!( tile.isBlocked || this.tileHasBlockingSprite( tile.index )))
-                return oldDestination
-        }
         return validLocations[ Math.floor( Math.random( ) * validLocations.length ) ];
     }
 
     filterSpawnPoints( startLocation: SpawnPointModel = null ): SpawnPointModel[] {
         return this.model.spawnPoints.filter( ( e) => {
-            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.column, e.row )
+            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.column, e.row );
             return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
-                && startLocation != null ? e.column != startLocation.column && e.row !== startLocation.row : true;
+                && (startLocation != null ? e.column != startLocation.column && e.row !== startLocation.row : true);
         })
     }
 

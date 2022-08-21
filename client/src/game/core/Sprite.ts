@@ -388,7 +388,7 @@ export class Sprite {
         else if ( this.State.is( SpriteStateEnum.moving ) && !this.pluginIsRunning( plugins.movement ) ) {
             this.State.set( SpriteStateEnum.idle );
         }
-        else if ( this.State.is( SpriteStateEnum.moving ) && this.checkForCollision( ) ) {
+        else if ( this.State.is( SpriteStateEnum.moving ) && this.checkForCollision() ) {
             this.State.set( SpriteStateEnum.blocked );
             this.sheetPosition = 0;
         }

@@ -10,24 +10,36 @@ import type { GridLocation } from '../../../models/GridLocation';
 import type { Tile } from '../../core/Tile';
 import type { DirectionXy } from '../../../models/DirectionXyModel';
 import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHelpers';
+import type { GridCellModel } from '../../../models/GridCellModel';
 
 export class Destination {
     column: number;
     row: number;
+    originalDestination: { column: number, row: number }
     deleteSprite: boolean;
 
     path: DirectionXy[];
     foundPath: boolean;
     currentPathIndex: number;
+    pathfindingTries: number;
+    tryingForPath: boolean;
+    inSideStep: boolean;
     constructor( column: number, row: number, sprite: Sprite, deleteSprite = false ) {
+        console.log( `new destination c${column} r${row} for ${sprite.spriteId} from c${sprite.column} r${sprite.row}` )
+        this.originalDestination = { column: column, row: row };
         this.column         = column;
-        this.row            = row;
+        this.row = row;
+        this.inSideStep = false;
         this.deleteSprite   = deleteSprite;
 
         this.path = null;
         this.foundPath = false;
         this.currentPathIndex;
-        this.setPath(sprite);
+        this.setPath( sprite );
+
+        this.pathfindingTries = 0;
+        this.tryingForPath = false;
+        this.activateSpriteMovementModule( sprite );
     }
 
     get backClass(): BackgroundCanvas { return globals.GAME.BACK; };
@@ -38,7 +50,34 @@ export class Destination {
     setPath(sprite: Sprite) {
         const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
         let gridLocationList = ( sprite.isCar ) ? this.calculateCarPath( sprite ) : this.calculatePath( sprite );
-        this.startPath( sprite, startingTile, gridLocationList );
+        if ( gridLocationList !== null ) {
+            this.startPath( sprite, startingTile, gridLocationList );
+            this.pathfindingTries = 0
+        }
+        else if ( !this.tryingForPath && this.pathfindingTries < 5 ) {
+            this.tryingForPath = true;
+            this.pathfindingTries++
+            setTimeout( () => {
+                this.tryingForPath = false;
+                this.setPath( sprite )
+            }, 1200 )
+        }
+        else if ( !this.tryingForPath && this.pathfindingTries >= 5 ) {
+            if ( !this.deleteSprite ) {
+                this.pathfindingTries = 0;
+                this.tryingForPath = false;
+            }
+            else {
+                globals.GAME.FRONT.deleteSprite( sprite.spriteId );
+            }
+        }
+    }
+
+    setSideStep( sideStepDestination: GridCellModel, sprite: Sprite ): void {
+        this.column = sideStepDestination.column;
+        this.row = sideStepDestination.row;
+        this.inSideStep = true;
+        this.setPath( sprite );
     }
 
     snapSpriteToCurrentStepTile( sprite: Sprite ): void {
@@ -74,7 +113,6 @@ export class Destination {
     startPath( sprite: Sprite, startingTile: Tile, gridLocationList: GridLocation[] ) {
         this.path = this.reduceGridLocationList( startingTile, gridLocationList );
         this.currentPathIndex = 0;
-        this.activateSpriteMovementModule( sprite );
     }
 
     reduceGridLocationList( startingTile: Tile, gridLocationList: GridLocation[] ): DirectionXy[] {
@@ -155,5 +193,12 @@ export class Destination {
         else {
             return null;
         }
+    }
+
+    resetOriginalDestination( sprite: Sprite ): void {
+        this.column = this.originalDestination.column;
+        this.row = this.originalDestination.row;
+        this.inSideStep = false;
+        this.setPath( sprite );
     }
 }

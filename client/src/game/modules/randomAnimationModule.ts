@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import globals from "../../game-data/globals";
 import { Counter } from "../../helpers/Counter";
+import { getRandomDestinationInRadius } from "../../helpers/utilFunctions";
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
 import { initializeSpriteAnimation } from "./animationModule";
@@ -32,17 +33,10 @@ const getAssociatedCounter = ( spriteId: string ): Counter => {
     return counterDictionary[spriteId];
 };
 const setRandomDestinationInRadius = ( sprite: Sprite ) => {
-    const colDistance = Math.floor( Math.random() * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
-    const rowDistance = Math.floor( Math.random() * ( ( cellRadius * 2 ) + 1 ) ) - cellRadius;
-    const newColumn = sprite.initialColumn + colDistance;
-    const newRow = sprite.initialRow + rowDistance;
+    const randomDestinationCell = getRandomDestinationInRadius( sprite, cellRadius );
+    if ( randomDestinationCell === null ) return;
 
-    if ( newRow > 0 && newRow < globals.GAME.activeMap.rows + 1 && newColumn > 0 && newColumn < globals.GAME.activeMap.columns + 1 ) {
-        initializeSpriteMovement( sprite, { "column": newColumn, "row": newRow } as GridCellModel, false );
-    }
-    else {
-        setRandomDestinationInRadius( sprite )
-    }
+    initializeSpriteMovement( sprite, randomDestinationCell, false );
 };
 const setRandomAnimation = ( sprite: Sprite ) => {
     const animationList = sprite.model.idleAnimations;

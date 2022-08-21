@@ -3856,49 +3856,49 @@ export default {
 	],
 	"sprites": [
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 4,
 			"column": 4
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 6,
 			"column": 4
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 16,
 			"column": 6
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 13,
 			"column": 5
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 14,
 			"column": 6
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 7,
 			"column": 3
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 7,
 			"column": 2
 		},
 		{
-			"type": "plants",
+			"type": "pot_plant_a",
 			"direction": DirectionEnum.down,
 			"row": 7,
 			"column": 1

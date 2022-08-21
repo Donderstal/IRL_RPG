@@ -96,7 +96,7 @@ const checkIfPositionsCollide = ( spriteNextPosition: SpritePosition, targetNext
             return spriteNextPosition.left <= targetNextPosition.right
                 && targetIsLeftOfSprite && inHorizontalRange;
         case DirectionEnum.up:
-            return spriteNextPosition.dynamicTop <= targetNextPosition.bottom
+            return spriteNextPosition.dynamicTop <= targetNextPosition.baseY
                 && targetIsAboveSprite && inVerticalRange;
         case DirectionEnum.right:
             return spriteNextPosition.right >= targetNextPosition.left
