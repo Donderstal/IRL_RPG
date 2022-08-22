@@ -1,15 +1,15 @@
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import type { Hitbox } from "../../core/Hitbox";
-import type { MapObject } from "./MapObject";
 
 import { GRID_BLOCK_PX } from '../../../game-data/globals';
+import type { Sprite } from "../../core/Sprite";
 
 export class BlockedArea {
     blockedCoordinates: { left: number, top: number, right: number, bottom: number };
     parentX: number;
     parentY: number;
 
-    constructor( parent: MapObject, blockedCoordinates: { left: number, top: number, right: number, bottom: number } ) {
+    constructor( parent: Sprite, blockedCoordinates: { left: number, top: number, right: number, bottom: number } ) {
         this.blockedCoordinates = blockedCoordinates;
         this.parentX = parent.x;
         this.parentY = parent.y;        
@@ -20,22 +20,22 @@ export class BlockedArea {
     get rightBorderPosition(): number { return this.parentX + ( this.blockedCoordinates.right * GRID_BLOCK_PX ) };
     get bottomBorderPosition(): number { return this.parentY + ( this.blockedCoordinates.bottom * GRID_BLOCK_PX ) };
 
-    updateParentLocation( parent: MapObject ) {
+    updateParentLocation( parent: Sprite ) {
         this.parentX = parent.x;
         this.parentY = parent.y;
     }
 
-    checkForCollision( hitbox: Hitbox, direction: DirectionEnum ): boolean {
-        if (this.spriteIsLeftAndFacingRight( hitbox, direction ) && this.spriteInVerticalRange(hitbox)) {
+    checkForCollision( hitbox: Hitbox, spriteDirection: DirectionEnum ): boolean {
+        if (this.spriteIsLeftAndFacingRight( hitbox, spriteDirection ) && this.spriteInVerticalRange(hitbox)) {
             return hitbox.right > this.leftBorderPosition;
         }
-        else if (this.spriteIsAboveAndFacingDown( hitbox, direction ) && this.spriteInHorizontalRange(hitbox)) {
+        else if (this.spriteIsAboveAndFacingDown( hitbox, spriteDirection ) && this.spriteInHorizontalRange(hitbox)) {
             return hitbox.bottom > this.topBorderPosition;
         }
-        else if (this.spriteIsRightAndFacingLeft( hitbox, direction ) && this.spriteInVerticalRange(hitbox)) {
+        else if (this.spriteIsRightAndFacingLeft( hitbox, spriteDirection ) && this.spriteInVerticalRange(hitbox)) {
             return hitbox.left < this.rightBorderPosition;
         }
-        else if (this.spriteIsBelowAndFacingUp( hitbox, direction ) && this.spriteInHorizontalRange(hitbox)) {
+        else if (this.spriteIsBelowAndFacingUp( hitbox, spriteDirection ) && this.spriteInHorizontalRange(hitbox)) {
             return hitbox.top < this.bottomBorderPosition;
         }
     }

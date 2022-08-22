@@ -9,6 +9,7 @@ import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { addEventToRegistry } from "../../../helpers/interactionRegistry";
 import { setActiveCinematic } from "../../controllers/cinematicController";
 import { checkForQuestTrigger } from "../../../helpers/questRegistry";
+import { getSpriteDestination, spriteHasMovement } from "../../modules/spriteMovementModule";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -19,6 +20,7 @@ export class ActionSelector extends Hitbox {
     trigger: CinematicTrigger;
     registeredSelection: InteractionAnswer;
     confirmingAction: boolean;
+    wasMoving: boolean;
     constructor( x, y, actionList: InteractionModel[], spriteId = null ) {
         super( x, y, GRID_BLOCK_PX / 2 );
         this.spriteId = spriteId;
@@ -27,6 +29,7 @@ export class ActionSelector extends Hitbox {
         this.arcColor = "#FF0000";
         this.registeredSelection = null;
         this.confirmingAction = false;
+        this.wasMoving = false;
         this.checkForConditions();
     }
 
@@ -51,6 +54,11 @@ export class ActionSelector extends Hitbox {
     }
 
     handle(): void {
+        if ( spriteHasMovement( this.spriteId ) ) {
+            console.log( `dismiss movement for ${this.spriteId}` )
+            const sprite = globals.GAME.FRONT.spriteDictionary[this.spriteId];
+            sprite.deactivateMovementModule();
+        }
         if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
             setActiveCinematic(
                 this.activeAction, this.trigger, [this.spriteId]
@@ -67,8 +75,16 @@ export class ActionSelector extends Hitbox {
     }
 
     dismiss(): void {
+        if ( spriteHasMovement( this.spriteId ) ) {
+            console.log(`resume movement for ${this.spriteId}`)
+            const destination = getSpriteDestination( this.spriteId );
+            const sprite = globals.GAME.FRONT.spriteDictionary[this.spriteId];
+            destination.setPath( sprite );
+            sprite.activateMovementModule( destination.currentStep.direction );
+        }
+
         if ( this.needsConfirmation && this.registeredSelection == InteractionAnswer.yes && !this.confirmingAction ) {
-            this.confirm()
+            this.confirm();
         }
         else {
             this.resetAction();

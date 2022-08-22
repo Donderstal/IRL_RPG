@@ -25,8 +25,12 @@ export class Destination {
     tryingForPath: boolean;
     inSideStep: boolean;
     constructor( column: number, row: number, sprite: Sprite, deleteSprite = false ) {
-        this.column         = column;
+        this.column = column;
         this.row = row;
+        this.originalDestination = {
+            column: column,
+            row: row
+        };
         this.inSideStep = false;
         this.deleteSprite   = deleteSprite;
 

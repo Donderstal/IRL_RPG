@@ -35,7 +35,7 @@ export const initMapModel = ( mapData ): MapModel => {
         grid: mapData.grid.map( ( tile ): TileModel => { return initTileModel( tile ) } ),
         frontGrid: mapData.frontGrid != undefined
             ? mapData.frontGrid.map( ( tile ): TileModel => { return initTileModel( tile ) } )
-            : mapData.grid.map( (): TileModel => { return initTileModel( {id: null, angle: 0, mirroreD: false} ) } ),
+            : mapData.grid.map( (): TileModel => { return initTileModel( {id: null, angle: 0, mirrored: false} ) } ),
 
         sprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
         frontSprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
@@ -129,6 +129,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
         name: objectData.name,
         direction: objectData.direction,
         animationType: objectData.anim_type,
+        animationName: objectData.anim_name,
         movementType: objectData.move_type,
         sfx: objectData.sfx
     }

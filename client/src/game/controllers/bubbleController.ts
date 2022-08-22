@@ -58,6 +58,7 @@ export const bubbleIsActive = ( id ): boolean => {
 };
 export const unsetActiveBubble = ( id ): void => {
     activeBubbleIds = activeBubbleIds.filter( ( e ) => { return e !== id; } )
+    delete activeBubbles[id];
 };
 export const handleBubbleButtonPress = (): void => {
     if ( hasActiveBubbles() ) {

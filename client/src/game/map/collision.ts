@@ -55,11 +55,11 @@ const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: S
     while( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = allSprites[spriteIndex];
         if ( targetSprite.spriteId != sprite.spriteId ) {
-            const hitbox = getAssociatedHitbox( targetSprite.spriteId );
-            if ( !targetSprite.hasOwnProperty( "blockedArea" ) && !( targetSprite as any ).hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction )) {
+            const hitbox = getAssociatedHitbox( sprite.spriteId );
+            if ( !targetSprite.model.hasBlockedArea && !targetSprite.hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction )) {
                 colliding = true;
             }
-            else if ( targetSprite.hasOwnProperty( "blockedArea" ) && ( targetSprite as any ).blockedArea.checkForCollision( hitbox, sprite.direction ) ) {
+            else if ( targetSprite.model.hasBlockedArea && targetSprite.blockedArea.checkForCollision( hitbox, sprite.direction ) ) {
                 colliding = true;
             }
         }

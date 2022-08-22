@@ -4,7 +4,7 @@ import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/collision'
 import { SpriteState } from '../../helpers/SpriteState'
-import { faceTowardsTarget } from '../../helpers/utilFunctions'
+import { faceTowardsTarget, isHorizontal } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
@@ -27,6 +27,7 @@ import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
 import { handleIdleAnimationCounter, initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
 import { setNewBubble, setNewEmote } from '../controllers/bubbleController'
 import { MAIN_CHARACTER } from '../../resources/spriteTypeResources'
+import { BlockedArea } from '../map/map-classes/BlockedArea'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -43,6 +44,7 @@ export class Sprite {
     height: number;
 
     model: SpriteDataModel;
+    blockedArea: BlockedArea;
     activeFrames: SpriteFrameModel[];
 
     sheetFrameLimit: number;
@@ -120,9 +122,8 @@ export class Sprite {
         this.initialRow = canvasObjectModel.row;
         this.setSpriteToGrid( tile );
         this.setPlugins( canvasObjectModel );
-        if ( canvasObjectModel.type === MAIN_CHARACTER ) {
-            console.log( `main` )
-            console.trace();
+        if ( this.model.hasBlockedArea ) {
+            this.blockedArea = new BlockedArea( this, this.model.blockedArea );
         }
         if ( this.isPlayer ) {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
@@ -133,7 +134,7 @@ export class Sprite {
     }
 
     get centerX(): number { return this.x + ( this.width / 2 ); };
-    get baseY(): number { return this.bottom - ( GRID_BLOCK_PX / 2 ); };
+    get baseY(): number { return (this.isCar && !isHorizontal(this.direction) ) ? this.bottom - ( this.height / 2): this.bottom - ( GRID_BLOCK_PX / 2 ); };
     get topY(): number{ return this.top + ( GRID_BLOCK_PX / 2 ); };
 
     get left(): number { return this.x; };
@@ -187,7 +188,7 @@ export class Sprite {
         if ( this.model.canMove || this.model.idleAnimation ) {
             this.plugins.animation.set = true;
             if ( this.animationType === AnimationTypeEnum.animationLoop ) {
-                initializeSpriteAnimation( this, this.animationName, { looped: true, loops: 0 } );
+                initializeSpriteAnimation( this, canvasObjectModel.animationName, { looped: true, loops: 0 } );
             }
         }
     }

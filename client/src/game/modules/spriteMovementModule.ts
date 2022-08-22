@@ -33,7 +33,7 @@ export const handleSpriteMovement = ( sprite: Sprite ): void => {
     if ( spriteHasAnimation( sprite.spriteId ) ) {
         destroySpriteAnimation( sprite );
     }
-    const destination = getAssociatedSpriteMovementDestination( sprite.spriteId );
+    const destination = getSpriteDestination( sprite.spriteId );
     checkIfSpriteCanMove( sprite, destination );
 };
 export const destroySpriteMovement = ( sprite: Sprite ): void => {
@@ -48,7 +48,7 @@ export const destroySpriteMovement = ( sprite: Sprite ): void => {
 export const clearSpriteMovementDictionary = (): void => {
     movementDictionary = {}
 };
-const getAssociatedSpriteMovementDestination = ( spriteId: string ): Destination => {
+export const getSpriteDestination = ( spriteId: string ): Destination => {
     return movementDictionary[spriteId];
 };
 const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ) => {
@@ -78,7 +78,7 @@ export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum,
         if ( blockedSpriteCounterIsOverLimit( sprite.spriteId ) ) {
             destroyBlockedSpriteCounter( sprite.spriteId );
             if ( !sprite.isCar ) {
-                const destination = getAssociatedSpriteMovementDestination( sprite.spriteId );
+                const destination = getSpriteDestination( sprite.spriteId );
                 const sideStepDestination = getRandomDestinationInRadius( sprite, 2 );
                 if ( sideStepDestination === null ) return;
                 destination.setSideStep( sideStepDestination, sprite );

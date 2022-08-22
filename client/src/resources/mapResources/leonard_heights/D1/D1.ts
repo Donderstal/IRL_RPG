@@ -23,22 +23,22 @@ export default {
          "type": STRONG_GUY,
          "direction":DirectionEnum.right,
          "name":"Helpful Bro",
-         "action":FRIENDLY_CHAD,
+         "action": FRIENDLY_CHAD,
          "condition":[
             ConditionType.interactionNotRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },
       {
-          "anim_type": AnimationTypeEnum.animationLoop,
-         "anim_name":"BOP_UP",
+         "anim_type": AnimationTypeEnum.animationLoop,
+         "anim_name":"BOP",
          "row":5,
          "column":22,
          "type": TOUGH_GUY,
          "direction": DirectionEnum.up,
          "name":"Sad Bro",
          "condition":[
-            ConditionType.interactionRegistered,
+            ConditionType.interactionNotRegistered,
             LOGGABLE_INTERACTION_7
          ]
       },

@@ -35,12 +35,6 @@ export const STORY_EVENTS = [
         interaction: [[
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
-            //[
-            //    [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-3", true]],
-            //    [[SceneAnimationType.createSprite, true, DirectionEnum.right, GRANNY, DANCING_GRANNY_SPRITE, 6, 8]],
-            //    [[SceneAnimationType.animation, false, "LEFT_AND_RIGHT_STEP", DANCING_GRANNY_SPRITE, true, true]],
-            //    [[SceneAnimationType.speak, true, "You're a good dancer granny!!", PLAYER_NAME]]
-            //],
             [
                 [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-3", true]],
                 [[SceneAnimationType.fadeOut, true]],

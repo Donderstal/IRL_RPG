@@ -6,6 +6,7 @@ import { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../../game-data/globals";
 let animationDictionary: { [key in string]: SpriteAnimation } = {};
 
 export const initializeSpriteAnimation = ( sprite: Sprite, animationName: string, options: { looped: boolean, loops: number } ): void => {
+    console.log( animationName );
     const frameWidth = ( sprite.width / GRID_BLOCK_PX ) * GRID_BLOCK_IN_SHEET_PX;
     const frameHeight = ( sprite.height / GRID_BLOCK_PX ) * GRID_BLOCK_IN_SHEET_PX;
     const animationScript = getAnimationByName( animationName, frameWidth, frameHeight, sprite.direction, options );

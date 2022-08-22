@@ -64,7 +64,7 @@ export default {
             "type": "car_d",
             "row": 5,
             "column": 15,
-            "direction": DirectionEnum.right
+            "direction": DirectionEnum.down
         },
         {
             "type": "car_b",
@@ -74,7 +74,7 @@ export default {
         },
         {
             "type": "car_a",
-            "row": 5,
+            "row": 3,
             "column": 21,
             "direction": DirectionEnum.up
         },

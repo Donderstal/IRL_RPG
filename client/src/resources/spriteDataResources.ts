@@ -1285,14 +1285,14 @@ export const getDataModels = (): SpriteDataModel[] => {
             dimensionalAlignment: value["dimensional_alignment"] as SpriteSheetAlignmentEnum,
 
             isCar: value["isCar"] !== undefined && value["isCar"],
-            isCharacter: value["is_character"] !== undefined && value["is_character"],
-            idleAnimation: value["idle_animation"] !== undefined && value["idle_animation"],
+            isCharacter: value["is_character"] !== undefined || value["is_character"],
+            idleAnimation: value["idle_animation"] !== undefined || value["idle_animation"],
             canMove: value["movement_frames"] !== undefined,
-            onBackground: value["on_background"] !== undefined && value["on_background"],
-            notGrounded: value["not_grounded"] !== undefined && value["not_grounded"],
-            groundedAtBottom: value["grounded_at_bottom"] !== undefined && value["grounded_at_bottom"],
-            hasBlockedArea: value["blocked_area"] !== undefined && value["blocked_area"],
-            isCollectable: value["collectable_type"] !== undefined && value["collectable_type"]
+            onBackground: value["on_background"] !== undefined || value["on_background"],
+            notGrounded: value["not_grounded"] !== undefined || value["not_grounded"],
+            groundedAtBottom: value["grounded_at_bottom"] !== undefined || value["grounded_at_bottom"],
+            hasBlockedArea: value["blockedArea"] !== undefined || value["blockedArea"],
+            isCollectable: value["collectable_type"] !== undefined || value["collectable_type"]
         };
 
         if ( value["dimensional_alignment"] == SpriteSheetAlignmentEnum.standard ) {
@@ -1328,7 +1328,7 @@ export const getDataModels = (): SpriteDataModel[] => {
         if ( value["tile_alignment"] !== undefined )
             model.tileAlignment = value["tile_alignment"];
         if ( model.hasBlockedArea ) {
-            model.blockedArea = value["blocked_area"];
+            model.blockedArea = value["blockedArea"];
         }
 
         return model;

@@ -35,5 +35,5 @@ export type SpriteDataModel = {
 
     hasBlockedArea: boolean;
     tileAlignment?: string;
-    blockedArea?: object[];
+    blockedArea?: { left: number, top: number, right: number, bottom: number };
 }
