@@ -1,14 +1,15 @@
-import { CanvasWithGrid } from "./core/CanvasWithGrid";
-import globals from '../game-data/globals';
-import type { Tile } from "./core/Tile";
-import type { MapModel } from "../models/MapModel";
-import type { TilesheetModel } from "../models/TilesheetModel";
+import { CanvasWithGrid } from "../core/CanvasWithGrid";
+import globals from '../../game-data/globals';
+import type { Tile } from "../core/Tile";
+import type { MapModel } from "../../models/MapModel";
+import type { TilesheetModel } from "../../models/TilesheetModel";
+import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 
-export class FrontgridCanvas extends CanvasWithGrid {
+export class FrontTilesCanvas extends CanvasWithGrid {
     hasFrontGrid: boolean;
     lastTileList: Tile[];
-    constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
-        super( x, y, ctx );
+    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+        super( x, y, canvas, type );
         this.hasFrontGrid = false;
         this.lastTileList = null;
     }   

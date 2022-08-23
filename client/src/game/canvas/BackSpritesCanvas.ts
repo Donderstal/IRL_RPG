@@ -1,39 +1,35 @@
-import { CanvasWithGrid } from './core/CanvasWithGrid';
-import { getUniqueId } from '../helpers/utilFunctions';
-import { getEffect, GraphicalEffect } from '../helpers/effectHelpers';
-import globals from '../game-data/globals';
-import { RoadNetwork } from './map/RoadNetwork';
-import { getDataModelByKey } from '../resources/spriteDataResources';
-import { PLAYER_ID, PLAYER_NAME } from '../game-data/interactionGlobals';
-import { conditionIsTrue } from '../helpers/conditionalHelper';
-import { Sprite } from './core/Sprite';
-import type { Grid } from './core/Grid';
-import type { CanvasObjectModel } from '../models/CanvasObjectModel';
-import type { CellPosition } from '../models/CellPositionModel';
-import type { Tile } from './core/Tile';
-import type { MapModel } from '../models/MapModel';
-import type { SpawnPointModel } from '../models/SpawnPointModel';
-import { initCanvasObjectModel } from '../helpers/modelFactory';
-import type { GridCellModel } from '../models/GridCellModel';
-import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
-import { initializeSpriteMovement } from './modules/spriteMovementModule';
-import { AnimationTypeEnum } from '../enumerables/AnimationTypeEnum';
-import { determineShortestPath } from '../helpers/pathfindingHelpers';
-import { cameraFocus } from './cameraFocus';
-/**
- * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
- * The BackgroundCanvas contains all non-static elements of the current map.
- * For example, the NPCs, mapObjects and cars
- */
-export class ForegroundCanvas extends CanvasWithGrid {
+import { CanvasWithGrid } from '../core/CanvasWithGrid';
+import { getUniqueId } from '../../helpers/utilFunctions';
+import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
+import globals from '../../game-data/globals';
+import { RoadNetwork } from '../map/RoadNetwork';
+import { getDataModelByKey } from '../../resources/spriteDataResources';
+import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
+import { conditionIsTrue } from '../../helpers/conditionalHelper';
+import { Sprite } from '../core/Sprite';
+import type { Grid } from '../core/Grid';
+import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
+import type { CellPosition } from '../../models/CellPositionModel';
+import type { Tile } from '../core/Tile';
+import type { MapModel } from '../../models/MapModel';
+import type { SpawnPointModel } from '../../models/SpawnPointModel';
+import { initCanvasObjectModel } from '../../helpers/modelFactory';
+import type { GridCellModel } from '../../models/GridCellModel';
+import type { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
+import { initializeSpriteMovement } from '../modules/spriteMovementModule';
+import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
+import { determineShortestPath } from '../../helpers/pathfindingHelpers';
+import { cameraFocus } from '../cameraFocus';
+import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+
+export class BackSpritesCanvas extends CanvasWithGrid {
     spriteDictionary: { [key: string]: Sprite };
     activeEffects: GraphicalEffect[];
     grid: Grid;
     roadNetwork: RoadNetwork;
     tilesBlockedBySprites: number[];
-    constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
-        super( x, y, ctx );
+    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+        super( x, y, canvas, type );
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = null;

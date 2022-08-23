@@ -1,19 +1,15 @@
-import { resetDoors } from './controllers/doorController';
-import type { DoorModel } from '../models/DoorModel';
-import type { MapActionModel } from '../models/MapActionModel';
-import type { MapModel } from '../models/MapModel';
-import type { TilesheetModel } from '../models/TilesheetModel';
-import { CanvasWithGrid } from './core/CanvasWithGrid';
-import { Savepoint } from './map/map-classes/SavePoint';
-import { initializeActionForTile } from './modules/actionModule';
-import { initializeDoorForTile } from './modules/doorModule';
+import { resetDoors } from '../controllers/doorController';
+import type { DoorModel } from '../../models/DoorModel';
+import type { MapActionModel } from '../../models/MapActionModel';
+import type { MapModel } from '../../models/MapModel';
+import type { TilesheetModel } from '../../models/TilesheetModel';
+import { CanvasWithGrid } from '../core/CanvasWithGrid';
+import { Savepoint } from '../map/map-classes/SavePoint';
+import { initializeActionForTile } from '../modules/actionModule';
+import { initializeDoorForTile } from '../modules/doorModule';
+import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 
-/**
- * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
- * Both are instantiated as an extension of the base CanvasWithGrid class and contain an Grid instance with an array of Tile instances
- * The BackgroundCanvas will contain all static elements of the current map and draw them if necessary.
- */
-export class BackgroundCanvas extends CanvasWithGrid {
+export class BackTilesCanvas extends CanvasWithGrid {
     model: MapModel;
     mapName: string;
     neighbourhood: string;
@@ -21,8 +17,8 @@ export class BackgroundCanvas extends CanvasWithGrid {
     hasDoors: boolean;
     savepoint: Savepoint;
     blockedTiles: number[];
-    constructor( x: number, y: number, ctx: CanvasRenderingContext2D ) {
-        super( x, y, ctx );
+    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+        super( x, y, canvas, type );
         this.savepoint = null;
     };
 

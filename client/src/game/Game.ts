@@ -4,21 +4,21 @@ import { clearPressedKeys, listenForKeyPress } from './controls'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals'
 import { MAIN_CHARACTER } from '../resources/spriteTypeResources'
 import { SoundController } from './sound/SoundController'
-import { ForegroundCanvas } from './ForegroundCanvas'
-import { BackgroundCanvas } from './BackgroundCanvas'
+import { BackSpritesCanvas } from './canvas/BackSpritesCanvas'
+import { BackTilesCanvas } from './canvas/BackTilesCanvas'
 import { Party } from './party/Party'
 import { TypeWriter } from '../helpers/TypeWriter'
 import { setLoadingScreen, stopLoadingScreen, LoadingScreen } from './LoadingScreen'
 import { StoryProgression } from '../helpers/StoryProgression'
 import { Fader } from '../helpers/Fader'
 import { FileLoader } from '../helpers/Loader'
-import { SpeechBubbleCanvas } from './cutscenes/SpeechBubbleCanvas'
+import { SpeechBubbleCanvas } from './canvas/SpeechBubbleCanvas'
 import { CollectableRegistry } from '../helpers/collectableRegistry'
-import { FrontgridCanvas } from './FrontgridCanvas'
+import { FrontTilesCanvas } from './canvas/FrontTilesCanvas'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../helpers/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
-import { MenuCanvas } from './menuCanvas/MenuCanvas'
+import { MenuCanvas } from './canvas/MenuCanvas'
 import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded, clearCinematicGrids, clearMapFromCanvases, initCinematicGrids } from '../helpers/loadMapHelpers'
 import type { CanvasContextModel } from '../models/CanvasContextModel'
 import type { Neighbourhood } from './Neighbourhood'
@@ -104,9 +104,9 @@ export class Game {
     }
 
     get MENU(): MenuCanvas { return this.menu.class as MenuCanvas }
-    get FRONTGRID(): FrontgridCanvas { return ( this.useCinematicMap ? getCinematicFrontgrid() : this.frontgrid.class ) as FrontgridCanvas }
-    get FRONT(): ForegroundCanvas { return ( this.useCinematicMap ? getCinematicFront() : this.front.class ) as ForegroundCanvas }
-    get BACK( ): BackgroundCanvas { return (this.useCinematicMap ? getCinematicBack() : this.back.class) as BackgroundCanvas }
+    get FRONTGRID(): FrontTilesCanvas { return ( this.useCinematicMap ? getCinematicFrontgrid() : this.frontgrid.class ) as FrontTilesCanvas }
+    get FRONT(): BackSpritesCanvas { return ( this.useCinematicMap ? getCinematicFront() : this.front.class ) as BackSpritesCanvas }
+    get BACK(): BackTilesCanvas { return ( this.useCinematicMap ? getCinematicBack() : this.back.class ) as BackTilesCanvas }
 
     get PLAYER( ): Sprite { return this.useCinematicMap ? getCinematicFront().playerSprite : this.front.class.playerSprite }
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
@@ -164,11 +164,11 @@ export class Game {
     initCanvas( type: string ): CanvasContextModel {
         switch( type ) {
             case 'BACK':
-                return this.initializeGameCanvas( 'game-background-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, BackgroundCanvas );
+                return this.initializeGameCanvas( 'game-background-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, BackTilesCanvas );
             case 'FRONT':
-                return this.initializeGameCanvas( 'game-front-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, ForegroundCanvas );
+                return this.initializeGameCanvas( 'game-front-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, BackSpritesCanvas );
             case 'FRONT_GRID':
-                return this.initializeGameCanvas( 'game-front-grid-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, FrontgridCanvas );
+                return this.initializeGameCanvas( 'game-front-grid-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, FrontTilesCanvas );
             case 'MENU':
                 let object = this.initializeGameCanvas(
                     'game-menu-canvas',

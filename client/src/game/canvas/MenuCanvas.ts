@@ -1,9 +1,9 @@
 import { CanvasWithGrid } from "../core/CanvasWithGrid";
-import { MenuHeader } from './menuHeader';
-import { MenuTextBox } from './menuTextBox';
+import { MenuHeader } from '../menu/menuHeader';
+import { MenuTextBox } from '../menu/menuTextBox';
 import { MENU_GRID_ROWS, MENU_GRID_COLUMNS, MENU_MARGIN_SIDES, MENU_MARGIN_TOP_DOWN, MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME, MENU_BUTTON_STANDARD_HEIGHT, MENU_BUTTON_STANDARD_WIDTH, MENU_HEADER_ACTIVE_ROWS, MENU_BUTTON_PARTY_WIDTH, MENU_BUTTON_PARTY_HEIGHT, MENU_BUTTON_ROWSTYLES, MENU_BUTTON_PARTY_ROWSTYLES } from '../../game-data/uiGlobals';
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../game-data/globals";
-import { ContentBubble } from "./contentBubble";
+import { ContentBubble } from "../menu/contentBubble";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import { mobileAgent } from "../../helpers/screenOrientation";
 
@@ -20,7 +20,7 @@ export class MenuCanvas extends CanvasWithGrid {
     contentBubbles: ContentBubble[];
     activeButtonIndex: number;
     constructor( x, y, ctx, canvas ) {
-        super( x, y, ctx );
+        super( x, y, ctx, canvas );
 
         this.canvas = canvas;
         this.canvas.style.backgroundColor = "transparent"

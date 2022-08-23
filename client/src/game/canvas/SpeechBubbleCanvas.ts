@@ -8,7 +8,7 @@ export class SpeechBubbleCanvas extends CanvasWithGrid {
     columns: number;
     rows: number;
     constructor( x, y, ctx, canvas ) {
-        super( x, y, ctx );
+        super( x, y, ctx, canvas );
 
         this.canvas = canvas;
         this.isActive = false;
