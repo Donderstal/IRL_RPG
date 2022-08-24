@@ -1,14 +1,12 @@
 import { GRID_BLOCK_PX } from '../game-data/globals';
 import { drawRect } from './canvasHelpers';
 import { cloneInstance } from './utilFunctions';
-
 import type { Tile } from '../game/core/Tile';
 import type { Sprite } from '../game/core/Sprite';
-import { getCanvasWithType } from '../game/controllers/gridCanvasController';
-import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 
 export class TileSquare {
     tileList: Tile[];
+    canvas: HTMLCanvasElement;
 
     left: number;
     top: number;
@@ -17,7 +15,8 @@ export class TileSquare {
 
     width: number;
     height: number;
-    constructor( tileList ) {
+    constructor( tileList: Tile[], canvas: HTMLCanvasElement ) {
+        this.canvas = canvas;
         this.tileList = [];
         this.setTileList( tileList );
         this.setSquareDimensions( );
@@ -30,7 +29,7 @@ export class TileSquare {
  
     draw( color: string ): void {
         drawRect(
-            getCanvasWithType( CanvasTypeEnum.background ).canvas, this.left, this.top, this.width, this.height, color
+            this.canvas, this.left, this.top, this.width, this.height, color
         );
     }
 

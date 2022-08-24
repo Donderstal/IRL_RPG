@@ -36,7 +36,7 @@ export const getDoorById = ( id: string ): Door => {
 
 export const setDoorAsPending = ( id: string, destination: string ) => {
     pendingDoorId = id;
-    pendingDestination = destination
+    pendingDestination = destination;
 }
 
 export const unsetPendingDoor = ( ): void => {

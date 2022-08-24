@@ -6,9 +6,6 @@ import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import type { Sprite } from "../../core/Sprite";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
-import { addEventToRegistry } from "../../../helpers/interactionRegistry";
-import { setActiveCinematic } from "../../controllers/cinematicController";
-import { checkForQuestTrigger } from "../../../helpers/questRegistry";
 import { getSpriteDestination, spriteHasMovement } from "../../modules/spriteMovementModule";
 
 export class ActionSelector extends Hitbox {
@@ -60,7 +57,7 @@ export class ActionSelector extends Hitbox {
             sprite.deactivateMovementModule();
         }
         if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
-            setActiveCinematic(
+            globals.GAME.setActiveCinematic(
                 this.activeAction, this.trigger, [this.spriteId]
             );
             if ( this.isCollectable ) {
@@ -95,18 +92,7 @@ export class ActionSelector extends Hitbox {
         this.registeredSelection = selection;
     }
 
-    addEventToRegistry(): void {
-        if ( this.activeAction.shouldBeRegistered && this.registeredSelection ) {
-            addEventToRegistry( this.activeAction.registryKey, this.registeredSelection )
-        }
-        else if ( this.activeAction.shouldBeRegistered ) {
-            addEventToRegistry( this.activeAction.registryKey );
-        }
-        checkForQuestTrigger( this.activeAction.registryKey );
-    }
-
     resetAction(): void {
-        this.addEventToRegistry();
         this.confirmingAction = false;
         this.checkForConditions();
     }

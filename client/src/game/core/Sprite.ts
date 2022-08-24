@@ -3,9 +3,8 @@ import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/collision'
 import { SpriteState } from '../../helpers/SpriteState'
-import { faceTowardsTarget, isHorizontal } from '../../helpers/utilFunctions'
+import { isHorizontal } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
-import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum'
 import { MovementType } from '../../enumerables/MovementTypeEnum'
@@ -22,11 +21,8 @@ import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/
 import { handleSpriteMovement, initializeSpriteMovement } from '../modules/spriteMovementModule'
 import { handleRandomAnimationCounter, initializeRandomAnimationCounter, resetRandomAnimationCounter } from '../modules/randomAnimationModule'
 import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
-import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
 import { handleIdleAnimationCounter, initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
-import { setNewBubble, setNewEmote } from '../controllers/bubbleController'
 import { BlockedArea } from '../map/map-classes/BlockedArea'
-import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 /**
  * The Sprite serves as a base class for all sprites in the game.
@@ -428,41 +424,6 @@ export class Sprite {
 
     setActiveFrame( frame = this.activeFrames[this.sheetPosition] ) {
         this.activeFrame = frame;
-    }
-
-    setAnimation( animation: any ): void {
-        if ( ( animation.is( SceneAnimationType.speakYesNo ) || animation.is( SceneAnimationType.speak ) || animation.is( SceneAnimationType.emote )) && animation.speakWith ) {
-            const otherSprite = animation.getSpriteByName( animation.speakWith );
-            this.direction = this.spriteId == otherSprite.spriteId ? this.direction : faceTowardsTarget( this, otherSprite );
-        }
-        if ( animation.is( SceneAnimationType.speakYesNo ) ) {
-            this.speak( animation.text, ( animation.sfx ?? "medium-text-blip.ogg" ), SceneAnimationType.speakYesNo )
-        }
-        if ( animation.is( SceneAnimationType.speak ) ) {
-            this.speak( animation.text, ( animation.sfx ?? "medium-text-blip.ogg" ), SceneAnimationType.speak )
-        }
-        if ( animation.is( SceneAnimationType.emote ) ) {
-            setNewEmote( { x: this.x, y: this.y }, animation.src );
-        }
-        if ( animation.is( SceneAnimationType.move ) ) {
-            initializeSpriteMovement( this, animation.destination, false );
-        }
-        if ( animation.is( SceneAnimationType.animation ) ) {
-            const animateSpriteScene = animation as AnimateSpriteScene;
-            const options = { looped: animateSpriteScene.loop, loops: 0 };
-            initializeSpriteAnimation( this, animateSpriteScene.animationName, options );
-        }
-    }
-
-    speak( text: string, sfx: string, type: SceneAnimationType ): void {
-        setNewBubble( 
-            {'x': this.x, 'y': this.y}, 
-            {'text': text, 'name': this.name, 'sfx': sfx ?? this.sfx},
-            type
-        );   
-        if ( this.animationType != AnimationTypeEnum.animationLoop ) {
-            initializeSpriteAnimation( this, "TALK", { looped: true, loops: 0 } );    
-        }
     }
 
     checkForCollision( ): boolean {

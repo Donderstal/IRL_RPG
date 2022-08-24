@@ -4,9 +4,7 @@ import { Animation } from './Animation';
 import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
 import type { SceneAnimationModel } from '../../models/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
-import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
 import { hasActiveBubbles } from '../controllers/bubbleController';
-import { hasCinematicMapLoaded } from '../../helpers/loadMapHelpers';
 import { spriteHasMovement } from '../modules/spriteMovementModule';
 import { spriteHasAnimation } from '../modules/animationModule';
 import { cameraFocus } from '../cameraFocus';
@@ -105,7 +103,7 @@ export class Scene {
                     animationHasFinished = cameraFocus.isFocusedOnTile( e.tileIndex );
                     break;
                 case SceneAnimationType.loadMap:
-                    animationHasFinished = hasCinematicMapLoaded();
+                    animationHasFinished = globals.GAME.hasCinematicMapLoaded;
                     break;
             }
             if ( animationHasFinished ) {

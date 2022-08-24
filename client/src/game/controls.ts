@@ -11,6 +11,7 @@ import { resetRandomAnimationCounter } from './modules/randomAnimationModule';
 import { registerPlayerAnswer } from './controllers/cinematicController';
 import { getCanvasWithType } from './controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
+import { getMenuCanvas } from './controllers/utilityCanvasController';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -24,7 +25,8 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     const GAME = globals.GAME
 
     if ( event.key === "Tab" ) {
-        GAME.MENU.isActive ? GAME.MENU.hide() : GAME.MENU.show();
+        const menu = getMenuCanvas();
+        menu.isActive ? menu.hide() : menu.show();
     }
 
     if ( event.key === " " && !hasActiveBubbles() ) {

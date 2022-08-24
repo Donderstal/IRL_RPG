@@ -6,6 +6,9 @@ import { getAllActions } from '../modules/actionModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 import type { ActionSelector } from '../map/map-classes/ActionSelector';
 import { clearActiveBubbles } from './bubbleController';
+import type { InteractionModel } from '../../models/InteractionModel';
+import { addEventToRegistry } from '../../helpers/interactionRegistry';
+import { checkForQuestTrigger } from '../../helpers/questRegistry';
 
 let activeAction: ActionSelector = null; 
 
@@ -41,6 +44,7 @@ const setActiveAction = ( action: ActionSelector ): void => {
 
 export const dismissActiveAction = (): void => {
     if ( activeAction !== null ) {
+        addActionSelectorEventToRegistry( activeAction );
         activeAction.dismiss();
         activeAction = null;
     }
@@ -53,4 +57,14 @@ export const confirmActiveAction = (): void => {
 
 export const registerActionSelection = ( selection: InteractionAnswer ): void => {
     activeAction.registerSelection( selection );
+}
+
+const addActionSelectorEventToRegistry = ( actionSelector: ActionSelector): void => {
+    if ( actionSelector.activeAction.shouldBeRegistered && actionSelector.registeredSelection ) {
+        addEventToRegistry( actionSelector.activeAction.registryKey, actionSelector.registeredSelection )
+    }
+    else if ( actionSelector.activeAction.shouldBeRegistered ) {
+        addEventToRegistry( actionSelector.activeAction.registryKey );
+    }
+    checkForQuestTrigger( actionSelector.activeAction.registryKey );
 }

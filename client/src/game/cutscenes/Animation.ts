@@ -13,7 +13,7 @@ import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import globals from '../../game-data/globals';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { getClosestCell } from '../../helpers/utilFunctions';
-import { destroySpriteMovement, initializeSpriteMovement, spriteHasMovement } from '../modules/spriteMovementModule';
+import { initializeSpriteMovement } from '../modules/spriteMovementModule';
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
@@ -200,11 +200,6 @@ export class Animation {
             } );
             this.spriteId = globals.GAME.FRONT.getTileAndSetSprite( model );
         }
-    }
-
-    setAnimToSprite( ): void {
-        const sprite: Sprite = this.spriteId != undefined ? this.getSpriteById( ) : this.getSpriteByName( );
-        sprite.setAnimation(this)      
     }
 
     unsetSpriteAnimation(): void {

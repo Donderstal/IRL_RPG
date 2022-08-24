@@ -12,9 +12,14 @@ import { cameraFocus } from '../cameraFocus';
 import { mobileAgent } from '../../helpers/screenOrientation';
 import { clearCanvasOfType } from '../controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import { initInteractionModel } from '../../helpers/modelFactory';
+import { setActiveCinematic } from '../controllers/cinematicController';
+import { lockedDoorEvent, unlockDoorEvent } from '../../resources/actionResources';
+import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
+import { InteractionType } from '../../enumerables/InteractionType';
+import { addDoorToUnlockedDoorsRegistry } from '../../helpers/doorRegistry';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
-    const PLAYER = GAME.PLAYER;
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
     clearCanvasOfType( CanvasTypeEnum.backSprites );
@@ -52,12 +57,8 @@ export const handleMapAnimations = ( GAME: Game ): void => {
         }
 
         if ( playerHitbox.doorInRange( door ) ) {
-            let pendingDoor = getPendingDoor();
             inDoorRange = true;
-            if ( door.model.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
-                setDoorAsPending( door.id, door.model.doorTo )
-                door.handle( );
-            }
+            handleDoor( door, GAME );
         }
     })
 
@@ -67,6 +68,31 @@ export const handleMapAnimations = ( GAME: Game ): void => {
 
     if ( cameraFocus.movingToNewFocus ) {
         cameraFocus.moveToNewFocus( );
+    }
+}
+
+const handleDoor = ( GAME, door ): void => {
+    const PLAYER = GAME.PLAYER;
+    let pendingDoor = getPendingDoor();
+
+    if ( door.model.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
+        setDoorAsPending( door.id, door.model.doorTo )
+        if ( !door.meetsCondition ) {
+            setActiveCinematic(
+                initInteractionModel( lockedDoorEvent ), CinematicTrigger.interaction, [PLAYER_ID]
+            );
+        }
+        else if ( door.model.condition !== undefined ) {
+            setActiveCinematic(
+                initInteractionModel( unlockDoorEvent ), CinematicTrigger.leave, [door.model.doorTo, InteractionType.door.toString()]
+            );
+            door.metConditionAtLastCheck = true;
+            addDoorToUnlockedDoorsRegistry( door.registryString );
+        }
+        else {
+            GAME.switchMap( door.model.doorTo, InteractionType.door );
+            GAME.sound.playEffect( "misc/random5.wav" );
+        }
     }
 }
 

@@ -6,12 +6,14 @@ import { hasCinematicMapLoaded } from '../helpers/loadMapHelpers'
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { clearCanvasOfType } from './controllers/gridCanvasController'
+import { getMenuCanvas } from './controllers/utilityCanvasController'
 
 let lastDateNow: number;
 let newDateNow: number;
 
 export const animationLoop = ( ): void => {
     const GAME = globals.GAME;
+    const menuCanvas = getMenuCanvas();
 
     newDateNow = Date.now();
     if ( !document.hasFocus() ) {
@@ -25,14 +27,14 @@ export const animationLoop = ( ): void => {
                 listenForKeyPress();
             }            
 
-            if ( !GAME.MENU.isActive && !cinematicIsActive() || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
+            if ( !menuCanvas.isActive && !cinematicIsActive() || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
                 handleMapAnimations( GAME );
             }
-            else if ( !GAME.MENU.isActive && cinematicIsActive() && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
+            else if ( !menuCanvas.isActive && cinematicIsActive() && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
                 handleCinematicAnimations( GAME );
             }
-            else if ( GAME.MENU.isActive ) {
-                GAME.MENU.draw();
+            else if ( menuCanvas.isActive ) {
+                menuCanvas.draw();
             }
 
             if  ( cinematicIsActive( ) ) {

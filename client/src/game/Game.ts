@@ -1,26 +1,20 @@
 import { animationLoop } from './animationLoop'
-import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from '../game-data/globals'
+import globals from '../game-data/globals'
 import { clearPressedKeys, listenForKeyPress } from './controls'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals'
 import { MAIN_CHARACTER } from '../resources/spriteTypeResources'
 import { SoundController } from './sound/SoundController'
-import { BackSpritesCanvas } from './canvas/BackSpritesCanvas'
-import { BackTilesCanvas } from './canvas/BackTilesCanvas'
 import { Party } from './party/Party'
 import { TypeWriter } from '../helpers/TypeWriter'
 import { setLoadingScreen, stopLoadingScreen, LoadingScreen } from './LoadingScreen'
 import { StoryProgression } from '../helpers/StoryProgression'
 import { Fader } from '../helpers/Fader'
 import { FileLoader } from '../helpers/Loader'
-import { SpeechBubbleCanvas } from './canvas/SpeechBubbleCanvas'
 import { CollectableRegistry } from '../helpers/collectableRegistry'
-import { FrontTilesCanvas } from './canvas/FrontTilesCanvas'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../helpers/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
-import { MenuCanvas } from './canvas/MenuCanvas'
 import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded, clearCinematicGrids, clearMapFromCanvases, initCinematicGrids } from '../helpers/loadMapHelpers'
-import type { CanvasContextModel } from '../models/CanvasContextModel'
 import type { Neighbourhood } from './Neighbourhood'
 import type { Tile } from './core/Tile'
 import type { Sprite } from './core/Sprite'
@@ -28,8 +22,7 @@ import type { Character } from './party/Character'
 import type { Inventory } from './party/Inventory'
 import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
-import type { CanvasWithGrid } from './core/CanvasWithGrid'
-import { cinematicIsActive } from './controllers/cinematicController'
+import { cinematicIsActive, setActiveCinematic } from './controllers/cinematicController'
 import { dismissActiveAction } from './controllers/actionController'
 import { clearSpriteMovementDictionary } from './modules/spriteMovementModule'
 import { clearIdleAnimationCounters } from './modules/idleAnimationModule'
@@ -41,10 +34,16 @@ import type { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
 import { cameraFocus, initializeCameraFocus } from './cameraFocus'
-import { mobileAgent, portraitOrientation } from '../helpers/screenOrientation'
+import { portraitOrientation } from '../helpers/screenOrientation'
 import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
 import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
+import { instantiateUICanvases } from './controllers/utilityCanvasController'
+import type { FrontTilesCanvas } from './canvas/FrontTilesCanvas'
+import type { BackSpritesCanvas } from './canvas/BackSpritesCanvas'
+import type { BackTilesCanvas } from './canvas/BackTilesCanvas'
+import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
+import type { InteractionModel } from '../models/InteractionModel'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -59,14 +58,6 @@ export class Game {
     listeningForPress: boolean;
 
     collectableRegistry: CollectableRegistry;
-
-    menu: CanvasContextModel;
-    frontgrid: CanvasContextModel;
-    utilFront: CanvasContextModel;
-    front: CanvasContextModel;
-    back: CanvasContextModel;
-    utilBack: CanvasContextModel;
-    speechBubblesCanvas: CanvasContextModel;
 
     sound: SoundController;
     audio: AudioContext;
@@ -90,13 +81,6 @@ export class Game {
         this.fader = new Fader( );
         this.story;
 
-        this.menu = null;
-        this.frontgrid = null;
-        this.utilFront = null;
-        this.front = null;
-        this.back = null;
-        this.utilBack = null;
-        this.speechBubblesCanvas = null;
         this.party; // class Party
 
         this._activeNeighbourhood;
@@ -106,10 +90,9 @@ export class Game {
         this.initGameCanvases( );
     }
 
-    get MENU(): MenuCanvas { return this.menu.class as MenuCanvas }
-    get FRONTGRID(): FrontTilesCanvas { return this.useCinematicMap ? getCinematicFrontgrid() : getCanvasWithType( CanvasTypeEnum.foreground ); }
-    get FRONT(): BackSpritesCanvas { return this.useCinematicMap ? getCinematicFront() : getCanvasWithType( CanvasTypeEnum.backSprites ); }
-    get BACK(): BackTilesCanvas { return this.useCinematicMap ? getCinematicBack() : getCanvasWithType( CanvasTypeEnum.background ); }
+    get FRONTGRID(): FrontTilesCanvas { return this.useCinematicMap ? getCinematicFrontgrid() : getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTilesCanvas; }
+    get FRONT(): BackSpritesCanvas { return this.useCinematicMap ? getCinematicFront() : getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpritesCanvas; }
+    get BACK(): BackTilesCanvas { return this.useCinematicMap ? getCinematicBack() : getCanvasWithType( CanvasTypeEnum.background ) as BackTilesCanvas; }
 
     get PLAYER( ): Sprite { return this.useCinematicMap ? getCinematicFront().playerSprite : this.FRONT.playerSprite }
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
@@ -119,8 +102,8 @@ export class Game {
     get activeMap( ): MapModel { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMap : this.activeNeighbourhood.activeMap; }
     get activeMapName( ): string { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMapKey : this.activeNeighbourhood.activeMapKey; }
     get previousMapName( ): string { return this.activeNeighbourhood.previousMapKey; }
-    get useCinematicMap(): boolean { return hasCinematicMapLoaded() && cinematicIsActive(); }
-
+    get useCinematicMap(): boolean { return this.hasCinematicMapLoaded && cinematicIsActive(); }
+    get hasCinematicMapLoaded(): boolean { return hasCinematicMapLoaded() }
     get activeNeighbourhood() {
         return (this.useCinematicMap ? this.cinematicNeighbourhood : this._activeNeighbourhood);
     }
@@ -155,62 +138,7 @@ export class Game {
     initGameCanvases(): void {
         instantiateUtilityCanvases();
         instantiateGridCanvases();
-
-        this.menu = this.initCanvas( 'MENU' );
-        if ( mobileAgent ) {
-            this.speechBubblesCanvas = this.initCanvas( 'SPEECH' );
-        }
-    }
-
-    initCanvas( type: string ): CanvasContextModel {
-        switch( type ) {
-            case 'BACK':
-                return this.initializeGameCanvas( 'game-background-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, BackTilesCanvas );
-            case 'FRONT':
-                return this.initializeGameCanvas( 'game-front-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, BackSpritesCanvas );
-            case 'FRONT_GRID':
-                return this.initializeGameCanvas( 'game-front-grid-canvas', CANVAS_WIDTH, CANVAS_HEIGHT, true, FrontTilesCanvas );
-            case 'MENU':
-                let object = this.initializeGameCanvas(
-                    'game-menu-canvas',
-                    mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH,
-                    mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT,
-                    true, MenuCanvas
-                );
-                if ( mobileAgent ) {
-                    object.canvas.style.position = 'fixed';
-                    object.canvas.style.top = "0";
-                }
-                return object;
-            case 'UTIL_BACK':
-                return this.initializeGameCanvas( 'game-utility-canvas-back', GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, false  );
-            case 'UTIL_FRONT':
-                return this.initializeGameCanvas( 'game-utility-canvas-front', GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX, false );
-            case 'SPEECH':  
-                return this.initializeGameCanvas( 'game-bubble-canvas', GRID_BLOCK_PX * 12, GRID_BLOCK_PX * 8, true, SpeechBubbleCanvas );
-        } 
-    }
-
-    initializeGameCanvas( id: string, width: number, height: number, hasClass: boolean, ClassType: typeof CanvasWithGrid = null ): CanvasContextModel {
-        const canvas = document.getElementById( id ) as HTMLCanvasElement;
-        const ctx = canvas.getContext( '2d' );
-        canvas.width = width;
-        canvas.height = height;
-        if ( hasClass ) {
-            var xy = canvas.getBoundingClientRect();
-            return {
-                canvas: canvas,
-                ctx: ctx,
-                class: new ClassType( xy.x, xy.y, canvas, CanvasTypeEnum.overview )
-            }
-        }
-        else {
-            return {
-                canvas: canvas,
-                ctx: ctx
-            }
-        }
-
+        instantiateUICanvases();
     }
 
     startNewGame( name: string, spriteKey: string, startingMapName: string, debugMode: boolean, disableStoryMode: boolean ): void {
@@ -277,6 +205,10 @@ export class Game {
 
     initCinematicGrids() {
         initCinematicGrids();
+    }
+
+    setActiveCinematic( action: InteractionModel, trigger: CinematicTrigger, options: any[] ): void {
+        setActiveCinematic( action, trigger, options );
     }
 
     save(): void {

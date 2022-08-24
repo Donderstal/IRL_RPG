@@ -1,5 +1,6 @@
 import type { Door } from "../map/map-classes/Door";
-import { GRID_BLOCK_PX } from "../../game-data/globals";
+import{ GRID_BLOCK_PX } from "../../game-data/globals";
+
 import type { Sprite } from "../core/Sprite";
 import type { Tile } from "../core/Tile";
 import type { DoorModel } from "../../models/DoorModel";

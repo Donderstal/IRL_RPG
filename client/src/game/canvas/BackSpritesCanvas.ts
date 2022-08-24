@@ -44,7 +44,7 @@ export class BackSpritesCanvas extends CanvasWithGrid {
     setForegroundData( mapModel: MapModel, sprites: Sprite[] = null ) {
         this.model = mapModel;
         if ( this.model.roads.length > 0 ) 
-            this.roadNetwork = new RoadNetwork( this.model.roads );
+            this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas );
 
         if ( sprites ) {
             sprites.forEach( ( sprite: Sprite ): void => {

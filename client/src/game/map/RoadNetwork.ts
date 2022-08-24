@@ -11,6 +11,8 @@ import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
 
 export class RoadNetwork {
+    canvas: HTMLCanvasElement;
+
     roads: Road[];
     roadIds: string[];
     intersections: Intersection[];
@@ -20,7 +22,9 @@ export class RoadNetwork {
 
     pendingIntersections: { roads: Road[]; roadIds: string[]; directions: DirectionEnum[]; square: TileSquare }[]
     pendingCrossings: { road: Road; square: TileSquare; location: CellPosition[] }[]
-    constructor( roads: RoadModel[] ) {
+    constructor( roads: RoadModel[], canvas: HTMLCanvasElement ) {
+        this.canvas = canvas;
+
         this.roads = [];
         this.roadIds = [];
         this.roadDestinations = [];
@@ -115,7 +119,7 @@ export class RoadNetwork {
                     FRONT.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.primaryRow ),
                     FRONT.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.secondaryRow ),
                     FRONT.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.secondaryRow )
-                ] )
+                ], this.canvas )
             } )                            
         }
     }
@@ -204,7 +208,7 @@ export class RoadNetwork {
                             FRONT.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.secondaryColumn, road.isHorizontal ? crossing[0] : road.model.secondaryRow ),
                             FRONT.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.primaryColumn, road.isHorizontal ? crossing[1] : road.model.primaryRow ),
                             FRONT.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.secondaryColumn, road.isHorizontal ? crossing[1] : road.model.secondaryRow )
-                        ] )
+                        ], this.canvas )
                     } )                     
                 });
             };

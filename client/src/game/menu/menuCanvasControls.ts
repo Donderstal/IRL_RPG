@@ -1,8 +1,8 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import globals from "../../game-data/globals";
+import { getMenuCanvas } from "../controllers/utilityCanvasController";
 
  export const handleMenuKeyPress = ( event: KeyboardEvent ) => {
-    const MENU = globals.GAME.MENU;
+    const MENU = getMenuCanvas();
     switch ( event.key ) {
         case "q" : 
             MENU.switchTab( DirectionEnum.left )

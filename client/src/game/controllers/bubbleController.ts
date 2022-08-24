@@ -1,9 +1,12 @@
+import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import globals, { BATTLE_FONT_LINE_HEIGHT, CANVAS_HEIGHT } from "../../game-data/globals";
 import { mobileAgent } from "../../helpers/screenOrientation";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
+import { getCanvasWithType } from "./gridCanvasController";
+import { getSpeechBubbleCanvas } from "./utilityCanvasController";
 
 let activeBubbleIds: string[] = [];
 let subtitleBubbleId: string = null;
@@ -11,7 +14,8 @@ let subtitleBubbleId: string = null;
 let activeBubbles: { [key: string]: SpeechBubble | Emote } = {}; 
 let subtitleBubble: SpeechBubble = null;
 
-const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !(activeBubbles[e] instanceof Emote); } ) };
+const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !( activeBubbles[e] instanceof Emote ); } ) };
+const getActiveBubbleContext = () => { return mobileAgent ? getSpeechBubbleCanvas().ctx : getCanvasWithType( CanvasTypeEnum.backSprites ).ctx }
 export const selectionBubble = (): SpeechBubble => {
     for ( const key in activeBubbles ) {
         if ( activeBubbles[key].type === SceneAnimationType.speakYesNo )
@@ -26,7 +30,7 @@ export const isWriting = (): boolean => {
 export const hasActiveBubbles = (): boolean => { return activeBubbleIds.length > 0 || subtitleBubble !== null; };
 export const setNewBubble = ( location, contents, type, sfx ): void => {
     const id = getUniqueId( activeBubbleIds );
-    activeBubbles[id] = new SpeechBubble( location, contents, id, type );
+    activeBubbles[id] = new SpeechBubble( location, contents, id, type, getActiveBubbleContext() );
     activeBubbleIds.push( id );
     globals.GAME.sound.playSpeakingEffect( sfx );
 };
@@ -41,7 +45,8 @@ export const setNewSubtitleBubble = ( contents ): void => {
     subtitleBubbleId = getUniqueId( activeBubbleIds );
     subtitleBubble = new SpeechBubble(
         { 'x': 0, 'y': CANVAS_HEIGHT - BATTLE_FONT_LINE_HEIGHT },
-        contents, subtitleBubbleId, SceneAnimationType.speak, true
+        contents, subtitleBubbleId, SceneAnimationType.speak,
+        getActiveBubbleContext(), true
     );
 };
 export const clearSubtitleBubble = (): void => {
@@ -74,8 +79,9 @@ export const clearActiveBubbles = (): void => {
     activeBubbleIds = [];
 };
 export const drawBubbles = (): void => {
-    Object.values(activeBubbles).forEach( ( e ) => { e.draw(); } );
+    const activeContext = mobileAgent ? getSpeechBubbleCanvas().ctx : getCanvasWithType( CanvasTypeEnum.backSprites ).ctx;
+    Object.values( activeBubbles ).forEach( ( e ) => { e.draw( activeContext ); } );
     if ( subtitleBubbleId !== null ) {
-        subtitleBubble.draw();
+        subtitleBubble.draw( activeContext );
     }
 };
