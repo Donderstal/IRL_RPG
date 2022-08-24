@@ -42,6 +42,9 @@ import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
 import { cameraFocus, initializeCameraFocus } from './cameraFocus'
 import { mobileAgent, portraitOrientation } from '../helpers/screenOrientation'
+import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
+import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
+import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -104,11 +107,11 @@ export class Game {
     }
 
     get MENU(): MenuCanvas { return this.menu.class as MenuCanvas }
-    get FRONTGRID(): FrontTilesCanvas { return ( this.useCinematicMap ? getCinematicFrontgrid() : this.frontgrid.class ) as FrontTilesCanvas }
-    get FRONT(): BackSpritesCanvas { return ( this.useCinematicMap ? getCinematicFront() : this.front.class ) as BackSpritesCanvas }
-    get BACK(): BackTilesCanvas { return ( this.useCinematicMap ? getCinematicBack() : this.back.class ) as BackTilesCanvas }
+    get FRONTGRID(): FrontTilesCanvas { return this.useCinematicMap ? getCinematicFrontgrid() : getCanvasWithType( CanvasTypeEnum.foreground ); }
+    get FRONT(): BackSpritesCanvas { return this.useCinematicMap ? getCinematicFront() : getCanvasWithType( CanvasTypeEnum.backSprites ); }
+    get BACK(): BackTilesCanvas { return this.useCinematicMap ? getCinematicBack() : getCanvasWithType( CanvasTypeEnum.background ); }
 
-    get PLAYER( ): Sprite { return this.useCinematicMap ? getCinematicFront().playerSprite : this.front.class.playerSprite }
+    get PLAYER( ): Sprite { return this.useCinematicMap ? getCinematicFront().playerSprite : this.FRONT.playerSprite }
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
     get PLAYER_INVENTORY( ): Inventory { return this.party.inventory }
     get PLAYER_ITEMS( ): StackedItem[] { return this.party.inventory.ItemList }
@@ -149,12 +152,10 @@ export class Game {
         return canvasClass.getTileAtCell( column, row ); 
     }
 
-    initGameCanvases( ): void {
-        this.utilBack = this.initCanvas( 'UTIL_BACK' );
-        this.utilFront = this.initCanvas( 'UTIL_FRONT' );
-        this.frontgrid = this.initCanvas( 'FRONT_GRID')
-        this.front = this.initCanvas( 'FRONT', );
-        this.back = this.initCanvas( 'BACK' );
+    initGameCanvases(): void {
+        instantiateUtilityCanvases();
+        instantiateGridCanvases();
+
         this.menu = this.initCanvas( 'MENU' );
         if ( mobileAgent ) {
             this.speechBubblesCanvas = this.initCanvas( 'SPEECH' );
@@ -200,7 +201,7 @@ export class Game {
             return {
                 canvas: canvas,
                 ctx: ctx,
-                class: new ClassType( xy.x, xy.y, ctx, canvas )
+                class: new ClassType( xy.x, xy.y, canvas, CanvasTypeEnum.overview )
             }
         }
         else {

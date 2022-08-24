@@ -1,6 +1,6 @@
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
 import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from '../../game-data/globals';
-import { drawFromImageToCanvas } from "../../helpers/canvasHelpers";
+import { drawFromImageToCanvas } from '../../helpers/canvasHelpers';
 
 export class Emote { 
     x: number;
@@ -16,7 +16,7 @@ export class Emote {
 
     draw( ): void {
         drawFromImageToCanvas( 
-            "FRONT", this.image,
+            this.image,
             0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.x, this.y, GRID_BLOCK_PX, GRID_BLOCK_PX
         ) 

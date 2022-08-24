@@ -31,8 +31,9 @@ export class Fader {
     }
 
     handleFade(): void {
-        (document.getElementById('game-fader-canvas') as HTMLCanvasElement).getContext('2d').clearRect( 0, 0, screen.width, screen.height )
-        drawRect( "FADER", 0, 0, screen.width, screen.height, this.RGBA )
+        const canvas = ( document.getElementById( 'game-fader-canvas' ) as HTMLCanvasElement );
+        canvas.getContext('2d').clearRect( 0, 0, screen.width, screen.height )
+        drawRect( canvas, 0, 0, screen.width, screen.height, this.RGBA )
 
         if ( this.fadingFromBlack ) {
             this.fadeFromBlack( )

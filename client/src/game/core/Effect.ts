@@ -1,9 +1,10 @@
 import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
 
 import { getEffectData } from "../../resources/effectResources";
-import { drawFromImageToCanvas } from "../../helpers/canvasHelpers";
 import { FRAME_LIMIT, GRID_BLOCK_PX } from "../../game-data/globals";
 import globals from "../../game-data/globals";
+import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
+import { drawFromImageToCanvas } from "../../helpers/canvasHelpers";
 /**
  * Effect instances represent a ( part of ) a graphical effect in the game.
  */
@@ -116,7 +117,7 @@ class Frame {
 
     draw( image: HTMLImageElement, x: number, y: number, width: number, height: number ): void {
         drawFromImageToCanvas( 
-            "FRONT", image, 
+            image, 
             this.model.x, this.model.y, this.model.width, this.model.height,
             x, y, width, height
         );

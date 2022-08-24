@@ -4,6 +4,8 @@ import { cloneInstance } from './utilFunctions';
 
 import type { Tile } from '../game/core/Tile';
 import type { Sprite } from '../game/core/Sprite';
+import { getCanvasWithType } from '../game/controllers/gridCanvasController';
+import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 
 export class TileSquare {
     tileList: Tile[];
@@ -28,7 +30,7 @@ export class TileSquare {
  
     draw( color: string ): void {
         drawRect(
-            "BACK", this.left, this.top, this.width, this.height, color
+            getCanvasWithType( CanvasTypeEnum.background ).canvas, this.left, this.top, this.width, this.height, color
         );
     }
 

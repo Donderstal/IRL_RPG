@@ -2,8 +2,9 @@ import type { DirectionEnum } from "../../enumerables/DirectionEnum";
 import type { TileModel } from "../../models/TileModel";
 import { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } from '../../game-data/globals';
 import globals from '../../game-data/globals';
-import { getBackCanvasContext } from '../../helpers/canvasHelpers';
 import { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
+import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
+import { drawTileToUtilityCanvas, getUtilityCanvas } from "../controllers/uiCanvasController";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -23,13 +24,15 @@ export class Tile {
     model: TileModel;
     blocked: boolean;
     movementCost: number;
+    canvasType: CanvasTypeEnum
 
     direction: DirectionEnum;
-    constructor( index: number|OutOfMapEnum, x: number, y: number, ctx: CanvasRenderingContext2D, row: number, column: number ) {
+    constructor( index: number | OutOfMapEnum, x: number, y: number, ctx: CanvasRenderingContext2D, row: number, column: number, canvasType: CanvasTypeEnum ) {
         this.x = x;
         this.y = y;
         this.ctx = ctx;
         this.index = index;  
+        this.canvasType = canvasType;
         this.model = {
             id: null,
             angle: 0,
@@ -66,11 +69,11 @@ export class Tile {
             return;
         }
         else {
-            const tilesheetXy = SHEET_XY_VALUES[this.model.id]
-            this.drawTileToUtilityCanvas( sheetImage, tilesheetXy );
+            const tilesheetXy = SHEET_XY_VALUES[this.model.id];
+            drawTileToUtilityCanvas( this, sheetImage, this.canvasType );
         
             this.ctx.drawImage(
-                this.ctx == getBackCanvasContext( ) ? globals.GAME.utilBack.canvas : globals.GAME.utilFront.canvas, 
+                getUtilityCanvas( this.canvasType ), 
                 0, 0,
                 GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
                 this.x, this.y,
@@ -82,56 +85,6 @@ export class Tile {
                 this.ctx.stroke( )
                 this.ctx.fillText( this.model.id.toString(), this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .5, )
             }            
-        }
-    }
-
-    drawTileToUtilityCanvas( sheetImage: HTMLImageElement, tilesheetXy: {x: number, y: number} ): void {
-        const ctx = this.ctx == getBackCanvasContext( ) ? globals.GAME.utilBack.ctx : globals.GAME.utilFront.ctx;
-        ctx.clearRect(0,0,GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX)
-        this.model.mirrored ? ctx.setTransform( -1, 0, 0, 1, GRID_BLOCK_IN_SHEET_PX, 0 ) : ctx.setTransform(1,0,0,1,0,0);
-        switch( this.model.angle ) {
-            case 0: 
-                ctx.drawImage( 
-                    sheetImage, 
-                    tilesheetXy.x, tilesheetXy.y, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
-                    0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX 
-                );
-                break;
-            case 90:
-                ctx.translate( 0 + GRID_BLOCK_IN_SHEET_PX, 0 );
-                ctx.rotate( 90 * ( Math.PI / 180 ) );
-                ctx.drawImage( 
-                    sheetImage, 
-                    tilesheetXy.x, tilesheetXy.y, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
-                    0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX 
-                );  
-                ctx.rotate( -(90 * ( Math.PI / 180 ) ))
-                ctx.setTransform(1,0,0,1,0,0);
-                break;
-            case 180:
-                ctx.translate( 0 + GRID_BLOCK_IN_SHEET_PX, 0 + GRID_BLOCK_IN_SHEET_PX );
-                ctx.rotate( Math.PI );
-                ctx.drawImage( 
-                    sheetImage, 
-                    tilesheetXy.x, tilesheetXy.y, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
-                    0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX 
-                ); 
-                ctx.rotate( -Math.PI )
-                ctx.setTransform(1,0,0,1,0,0);
-                break;
-            case 270:
-                ctx.translate( 0, 0 + GRID_BLOCK_IN_SHEET_PX );
-                ctx.rotate( 270 * ( Math.PI / 180 ) )
-                ctx.drawImage( 
-                    sheetImage, 
-                    tilesheetXy.x, tilesheetXy.y, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
-                    0, 0, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX 
-                );     
-                ctx.rotate( -(270 * ( Math.PI / 180 )) )
-                ctx.setTransform(1,0,0,1,0,0);
-                break;
-            default:
-                alert('Error in flipping tile. Call the police!')
         }
     }
 

@@ -6,6 +6,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../../game-data/globals";
 import { ContentBubble } from "../menu/contentBubble";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import { mobileAgent } from "../../helpers/screenOrientation";
+import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 
 const testParty = [ "party1", "party2", "party3", "party4", "party5" ];
 const testInventory = [ "Inventory1", "Inventory2", "Inventory3", "Inventory4", "Inventory5" ];
@@ -19,8 +20,8 @@ export class MenuCanvas extends CanvasWithGrid {
     textBox: MenuTextBox;
     contentBubbles: ContentBubble[];
     activeButtonIndex: number;
-    constructor( x, y, ctx, canvas ) {
-        super( x, y, ctx, canvas );
+    constructor( x: number, y: number, canvas: HTMLCanvasElement, canvasType: CanvasTypeEnum ) {
+        super( x, y, canvas, canvasType );
 
         this.canvas = canvas;
         this.canvas.style.backgroundColor = "transparent"

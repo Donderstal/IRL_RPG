@@ -1,3 +1,4 @@
+import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { mobileAgent } from "../../helpers/screenOrientation";
 import { CanvasWithGrid } from "../core/CanvasWithGrid";
 
@@ -7,8 +8,8 @@ export class SpeechBubbleCanvas extends CanvasWithGrid {
 
     columns: number;
     rows: number;
-    constructor( x, y, ctx, canvas ) {
-        super( x, y, ctx, canvas );
+    constructor( x: number, y: number, canvas: HTMLCanvasElement, canvasType: CanvasTypeEnum ) {
+        super( x, y, canvas, canvasType );
 
         this.canvas = canvas;
         this.isActive = false;

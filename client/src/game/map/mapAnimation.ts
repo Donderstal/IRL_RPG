@@ -1,7 +1,6 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
 import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
-import { clearEntireCanvas } from '../../helpers/canvasHelpers';
 import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
 import type { Sprite } from '../core/Sprite';
 import type { Game } from "../Game";
@@ -11,15 +10,17 @@ import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
 import { mobileAgent } from '../../helpers/screenOrientation';
+import { clearCanvasOfType } from '../controllers/gridCanvasController';
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const PLAYER = GAME.PLAYER;
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
-    clearEntireCanvas("FRONT");
+    clearCanvasOfType( CanvasTypeEnum.backSprites );
 
     if ( mobileAgent ) {
-        clearEntireCanvas("SPEECH");
+        clearCanvasOfType( CanvasTypeEnum.overview );
     }
 
     drawSpritesInOrder( GAME )
@@ -31,9 +32,9 @@ export const handleMapAnimations = ( GAME: Game ): void => {
         handleMovementKeys( );  
     }
 
-    GAME.FRONT.activeEffects.forEach( ( e ) => {
-        e.drawAndMove( );
-    })
+    //GAME.FRONT.activeEffects.forEach( ( e ) => {
+    //    e.drawAndMove( );
+    //})
 
     if ( GAME.FRONTGRID.hasFrontGrid ) {
         const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );

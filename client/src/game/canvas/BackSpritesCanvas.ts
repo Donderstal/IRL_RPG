@@ -1,6 +1,6 @@
 import { CanvasWithGrid } from '../core/CanvasWithGrid';
 import { getUniqueId } from '../../helpers/utilFunctions';
-import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
+//import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
 import globals from '../../game-data/globals';
 import { RoadNetwork } from '../map/RoadNetwork';
 import { getDataModelByKey } from '../../resources/spriteDataResources';
@@ -24,7 +24,7 @@ import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 
 export class BackSpritesCanvas extends CanvasWithGrid {
     spriteDictionary: { [key: string]: Sprite };
-    activeEffects: GraphicalEffect[];
+    //activeEffects: GraphicalEffect[];
     grid: Grid;
     roadNetwork: RoadNetwork;
     tilesBlockedBySprites: number[];
@@ -33,12 +33,12 @@ export class BackSpritesCanvas extends CanvasWithGrid {
         this.allSprites = [ ];
         this.spriteDictionary = { };
         this.playerSprite = null;
-        this.activeEffects = [];
+        //this.activeEffects = [];
         this.roadNetwork;
     };
 
     addEffect( name: string, x: number, y: number, endX: number = null, endY: number = null ): void {
-        this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
+        //this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
     }
 
     setForegroundData( mapModel: MapModel, sprites: Sprite[] = null ) {

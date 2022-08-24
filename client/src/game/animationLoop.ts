@@ -1,10 +1,11 @@
 import globals, { FRAMES_PER_SECOND } from '../game-data/globals'
 import { handleMapAnimations } from './map/mapAnimation'
 import { clearPressedKeys, listenForKeyPress} from './controls'
-import { clearEntireCanvas } from '../helpers/canvasHelpers'
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations'
 import { hasCinematicMapLoaded } from '../helpers/loadMapHelpers'
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
+import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
+import { clearCanvasOfType } from './controllers/gridCanvasController'
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -39,7 +40,7 @@ export const animationLoop = ( ): void => {
             } 
         }
         else {
-            clearEntireCanvas('FRONT')
+            clearCanvasOfType( CanvasTypeEnum.backSprites );
         }       
         if ( GAME.fader.inFadingAnimation ) {
             GAME.fader.handleFade( )

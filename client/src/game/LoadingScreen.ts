@@ -4,6 +4,8 @@ import { TypeWriter } from '../helpers/TypeWriter';
 import globals from '../game-data/globals';
 
 let loaderTimeout;
+let canvas;
+let canvasContext;
 
 export class LoadingScreen {
     displayText: string;
@@ -14,7 +16,9 @@ export class LoadingScreen {
     typeWriter: TypeWriter;
     mainTextWidth: number;
     activeTextWidth: number;
-    constructor( ) {
+    constructor() {
+        canvas = document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement;
+        canvasContext = canvas.getContext( "2d" );
         this.displayText = "Loading...";
         this.randomTextArray = [
             "Explaining relativity to kindergartners...",
@@ -31,8 +35,8 @@ export class LoadingScreen {
         ]
 
         this.mainText = "Loading..."
-        globals.GAME.front.ctx.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
-        this.mainTextWidth = globals.GAME.front.ctx.measureText(this.mainText).width;
+        canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
+        this.mainTextWidth = canvasContext.measureText(this.mainText).width;
 
         this.currentLoadingScreenText;
         this.activeTextWidth;
@@ -46,8 +50,8 @@ export class LoadingScreen {
         if ( this.typeWriter === undefined || !this.typeWriter.isWriting ) {
             this.getNewLoadingScreenText( );
             this.typeWriter = new TypeWriter( this.currentLoadingScreenText + "          " );
-            globals.GAME.front.ctx.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-            this.activeTextWidth = globals.GAME.front.ctx.measureText(this.currentLoadingScreenText).width;
+            canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
+            this.activeTextWidth = canvasContext.measureText(this.currentLoadingScreenText).width;
         }
     }
 
@@ -56,21 +60,21 @@ export class LoadingScreen {
     }
 
     draw( ) {
-        globals.GAME.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
-        globals.GAME.front.ctx.fillStyle = COLOR_SECONDARY;
-        globals.GAME.front.ctx.fillRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
-        globals.GAME.front.ctx.fillStyle = COLOR_WHITE;
+        canvasContext.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
+        canvasContext.fillStyle = COLOR_SECONDARY;
+        canvasContext.fillRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
+        canvasContext.fillStyle = COLOR_WHITE;
         
-        globals.GAME.front.ctx.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
-        globals.GAME.front.ctx.fillText( this.mainText, ( CANVAS_WIDTH / 2 ) - ( this.mainTextWidth / 2 ), CANVAS_HEIGHT / 2 );
-        globals.GAME.front.ctx.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-        globals.GAME.front.ctx.fillText(this.activeText, ( CANVAS_WIDTH / 2 ) - ( this.activeTextWidth / 2 ) , ( CANVAS_HEIGHT / 2 ) + BATTLE_FONT_LINE_HEIGHT );
+        canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
+        canvasContext.fillText( this.mainText, ( CANVAS_WIDTH / 2 ) - ( this.mainTextWidth / 2 ), CANVAS_HEIGHT / 2 );
+        canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
+        canvasContext.fillText(this.activeText, ( CANVAS_WIDTH / 2 ) - ( this.activeTextWidth / 2 ) , ( CANVAS_HEIGHT / 2 ) + BATTLE_FONT_LINE_HEIGHT );
 
         this.handleLoadingScreenText( );
     }
 
     clear( ) {
-        globals.GAME.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT ) 
+        canvasContext.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT ) 
     }
 }
 

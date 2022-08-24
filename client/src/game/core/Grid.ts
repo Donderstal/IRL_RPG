@@ -2,6 +2,7 @@ import { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS} from '../../game-data/globa
 import { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
 import { Tile } from './Tile';
 import type { TileModel } from '../../models/TileModel';
+import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 /**
  * The Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
  * It divides the canvas up in a grid of equally sized blocks, represented by an Tile instance.
@@ -16,11 +17,11 @@ export class Grid {
     rows: number;
     overflowColumns: number;
     overflowRows: number;
-
+    canvasType: CanvasTypeEnum;
     ctx: CanvasRenderingContext2D
     array: Tile[]
-    constructor( columns: number, rows: number, ctx: CanvasRenderingContext2D ) {
-
+    constructor( columns: number, rows: number, ctx: CanvasRenderingContext2D, canvasType: CanvasTypeEnum ) {
+        this.canvasType = canvasType;
         this.rows = rows;
         this.columns = columns;        
         this.overflowColumns = CANVAS_COLUMNS - this.columns;
@@ -44,7 +45,7 @@ export class Grid {
         let col = 1;
 
         for( let i = 0; i < limit; i++ ) {
-            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col ) )
+            this.array.push( new Tile( i, tileX, tileY, this.ctx, row, col, this.canvasType ) )
 
             if ( ( i + 1 ) % this.columns === 0 ) {
                 tileX = this.getXOffset( );

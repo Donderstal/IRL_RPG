@@ -1,4 +1,3 @@
-import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
@@ -26,8 +25,9 @@ import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/ani
 import type { AnimateSpriteScene } from '../../models/SceneAnimationModel'
 import { handleIdleAnimationCounter, initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
 import { setNewBubble, setNewEmote } from '../controllers/bubbleController'
-import { MAIN_CHARACTER } from '../../resources/spriteTypeResources'
 import { BlockedArea } from '../map/map-classes/BlockedArea'
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
+import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -373,7 +373,7 @@ export class Sprite {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )
         }
         drawFromImageToCanvas(
-            "FRONT", this.model.image,
+            this.model.image,
             this.activeFrame.x, this.activeFrame.y, 
             this.activeFrame.width, this.activeFrame.height,
             this.x, this.y, this.width, this.height

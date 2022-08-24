@@ -4,8 +4,6 @@ import { mobileAgent } from "../../helpers/screenOrientation";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
-import { registerActionSelection } from "./actionController";
-import { registerPlayerAnswer } from "./cinematicController";
 
 let activeBubbleIds: string[] = [];
 let subtitleBubbleId: string = null;
@@ -14,13 +12,13 @@ let activeBubbles: { [key: string]: SpeechBubble | Emote } = {};
 let subtitleBubble: SpeechBubble = null;
 
 const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !(activeBubbles[e] instanceof Emote); } ) };
-const selectionBubble = (): SpeechBubble => {
+export const selectionBubble = (): SpeechBubble => {
     for ( const key in activeBubbles ) {
         if ( activeBubbles[key].type === SceneAnimationType.speakYesNo )
             return activeBubbles[key] as SpeechBubble;
     }
 };
-const isWriting = (): boolean => {
+export const isWriting = (): boolean => {
     return nonEmoteIds().filter(
         ( e ) => { return ( activeBubbles[e] as SpeechBubble ).typeWriter.isWriting }
     ).length > 0;
@@ -60,25 +58,12 @@ export const unsetActiveBubble = ( id ): void => {
     activeBubbleIds = activeBubbleIds.filter( ( e ) => { return e !== id; } )
     delete activeBubbles[id];
 };
-export const handleBubbleButtonPress = (): void => {
-    if ( hasActiveBubbles() ) {
-        if ( isWriting() ) {
-            nonEmoteIds().forEach( ( id ) => {
-                ( activeBubbles[id] as SpeechBubble ).typeWriter.displayFullText();
-            } );
-            globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3" );
-        }
-        else if ( selectionBubble() ) {
-            registerActionSelection( selectionBubble().activeButton )
-            registerPlayerAnswer( selectionBubble().activeButton );
-            clearActiveBubbles();
-        }
-        else {
-            clearActiveBubbles();
-        }
-        globals.GAME.sound.clearSpeakingEffect();
-    }
-};
+export const displayFullText = (): void => {
+    nonEmoteIds().forEach( ( id ) => {
+        ( activeBubbles[id] as SpeechBubble ).typeWriter.displayFullText();
+    } );
+    globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3" );
+}
 export const handleSelectionKeys = (): void => {
     if ( selectionBubble() ) {
         selectionBubble().moveCursor();

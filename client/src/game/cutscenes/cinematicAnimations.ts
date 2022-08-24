@@ -1,24 +1,25 @@
-import { clearEntireCanvas } from '../../helpers/canvasHelpers';
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { mobileAgent } from '../../helpers/screenOrientation';
 import { cameraFocus } from '../cameraFocus';
 import { drawBubbles } from '../controllers/bubbleController';
+import { clearCanvasOfType } from '../controllers/gridCanvasController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
 export const handleCinematicAnimations = ( GAME ): void => {
     const PLAYER = GAME.PLAYER;
-    clearEntireCanvas("FRONT");
+    clearCanvasOfType( CanvasTypeEnum.backSprites );
 
     if ( mobileAgent ) {
-        clearEntireCanvas("SPEECH");
+        clearCanvasOfType( CanvasTypeEnum.overview );
     }
 
     drawSpritesInOrder( GAME )   
     handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
 
-    GAME.FRONT.activeEffects.forEach( ( e ) => {
-        e.drawAndMove( );
-    })
+    //GAME.FRONT.activeEffects.forEach( ( e ) => {
+    //    e.drawAndMove( );
+    //})
 
     if ( GAME.FRONTGRID.hasFrontGrid && GAME.PLAYER.visionbox != undefined ) {
         const tilesFront = PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );

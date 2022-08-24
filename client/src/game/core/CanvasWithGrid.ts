@@ -1,3 +1,4 @@
+import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import type { MapModel } from '../../models/MapModel';
 import type { TileModel } from '../../models/TileModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
@@ -13,21 +14,25 @@ import type { Tile } from './Tile';
 export class CanvasWithGrid {
     x: number;
     y: number;
+    canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
+    type: CanvasTypeEnum;
     grid: Grid;
     sheetImage: HTMLImageElement;
     sheetModel: TilesheetModel;
     model: MapModel;
     playerSprite: Sprite;
     allSprites: Sprite[];
-    constructor( x: number, y: number, ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement = null ) {
+    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
         this.x = x;
         this.y = y;
-        this.ctx = ctx;
+        this.type = type;
+        this.canvas = canvas;
+        this.ctx = canvas.getContext("2d");
     };
 
     initGrid( columns: number, rows: number  ): void {
-        this.grid       = new Grid( columns, rows, this.ctx );
+        this.grid       = new Grid( columns, rows, this.ctx, this.type );
     };
 
     setTileGrid( tileModelArray: TileModel[] ): void {

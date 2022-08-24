@@ -1,13 +1,16 @@
 import globals, { GRID_BLOCK_PX } from '../game-data/globals';
-import { handleActionButton, dismissActiveAction } from './controllers/actionController';
+import { handleActionButton, dismissActiveAction, registerActionSelection } from './controllers/actionController';
 import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
-import { clearActiveBubbles, handleBubbleButtonPress, handleSelectionKeys, hasActiveBubbles } from './controllers/bubbleController';
+import { clearActiveBubbles, displayFullText, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
 import { InteractionType } from '../enumerables/InteractionType';
 import type { Sprite } from './core/Sprite';
 import { moveSpriteInDirection } from './modules/spriteMovementModule';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { resetRandomAnimationCounter } from './modules/randomAnimationModule';
+import { registerPlayerAnswer } from './controllers/cinematicController';
+import { getCanvasWithType } from './controllers/gridCanvasController';
+import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -28,7 +31,18 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
         handleActionButton()
     }
     else if ( event.key === " " && hasActiveBubbles() ) {
-        handleBubbleButtonPress();
+        if ( isWriting() ) {
+            displayFullText()
+        }
+        else {
+            const activeSelectionBubble = selectionBubble();
+            if ( activeSelectionBubble !== undefined ) {
+                registerActionSelection( activeSelectionBubble.activeButton )
+                registerPlayerAnswer( activeSelectionBubble.activeButton );
+            }
+            clearActiveBubbles();
+        }
+        globals.GAME.sound.clearSpeakingEffect();
     }
 
     if ( event.key === "e" && hasActiveBubbles() ) {
@@ -97,7 +111,7 @@ export const listenForKeyPress = (): void => {
 };
 const checkForNeighbours = ( sprite: Sprite ): void => {
     const activeMap = globals.GAME.activeMap;
-    const activeGrid = globals.GAME.back.class.grid
+    const activeGrid = getCanvasWithType( CanvasTypeEnum.background ).grid;
 
     if ( activeMap.outdoors ) {
         if ( activeGrid.x > sprite.centerX && activeMap.neighbours.left ) {
@@ -111,6 +125,6 @@ const checkForNeighbours = ( sprite: Sprite ): void => {
         }
         if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY && activeMap.neighbours.down ) {
             globals.GAME.switchMap( activeMap.neighbours.down, InteractionType.neighbour )
-        }
+        } 
     }
 };

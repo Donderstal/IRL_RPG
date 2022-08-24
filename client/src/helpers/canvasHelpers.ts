@@ -1,4 +1,3 @@
-import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
 import { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
 
 export const getBubbleCanvasContext = (): CanvasRenderingContext2D => {
@@ -20,22 +19,20 @@ export const getFrontCanvasContext = (): CanvasRenderingContext2D => {
 export const getBackCanvasContext = (): CanvasRenderingContext2D => {
     return ( document.getElementById( 'game-background-canvas' ) as HTMLCanvasElement).getContext('2d');
 }
-
 export const drawFromImageToCanvas = (
-    canvas: string,
-    image: HTMLImageElement, 
-    imageX: number, imageY: number, 
+    image: HTMLImageElement,
+    imageX: number, imageY: number,
     widthInImage: number, heightInImage: number,
     canvasX: number, canvasY: number,
     widthInCanvas: number, heightInCanvas: number
 ): void => {
-    const ctx = canvas === "BACK" ? globals.GAME.back.ctx : globals.GAME.front.ctx  
+    const ctx = (document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement).getContext("2d")
     ctx.drawImage(
-        image, 
-        imageX, imageY, 
+        image,
+        imageX, imageY,
         widthInImage, heightInImage,
         canvasX, canvasY,
-        widthInCanvas, heightInCanvas 
+        widthInCanvas, heightInCanvas
     )
 }
 
@@ -80,12 +77,8 @@ export const breakTextIntoLines = ( text: string, fontSize: number ): string[] =
     return [ text ]
 }
 
-export const drawRect = ( canvas: string, x: number, y: number, width: number, height: number, color: string = null ): void => {
-    const ctx = canvas === "BACK"
-        ? getBackCanvasContext()
-        : ( canvas === "FRONT"
-            ? getFrontCanvasContext()
-            : ( document.getElementById( 'game-fader-canvas' ) as HTMLCanvasElement ).getContext( '2d' ) )
+export const drawRect = ( canvas: HTMLCanvasElement, x: number, y: number, width: number, height: number, color: string = null ): void => {
+    const ctx = canvas.getContext( '2d' );
     ctx.fillStyle = (color !== null) ? color : "white"
     ctx.fillRect( x, y, width, height );
 }
@@ -94,30 +87,4 @@ export const writeTextLine = ( text: string, x: number, y: number, size: number,
     setFont( size, ctx );
     ctx.fillStyle = color;
     ctx.fillText( text, x, y );
-}
-
-export const clearEntireCanvas = ( canvas: string ): void => {
-    let ctx = canvas === "BACK"
-        ? getBackCanvasContext()
-        : ( canvas === "FRONT"
-            ? getFrontCanvasContext()
-            : getFrontgridCanvasContext() );       
-    switch(canvas) {
-        case "BACK":
-            ctx = getBackCanvasContext();
-            break;
-        case "FRONT":
-            ctx = getFrontCanvasContext();
-            break;
-        case "FRONT_GRID":
-            ctx = getFrontgridCanvasContext();
-            break;
-        case "SPEECH":
-            ctx = getBubbleCanvasContext();
-            break;
-    } 
-    ctx.clearRect( 
-        0, 0,
-        CANVAS_WIDTH, CANVAS_HEIGHT
-    )
 }
