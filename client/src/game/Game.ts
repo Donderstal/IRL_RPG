@@ -14,7 +14,7 @@ import { CollectableRegistry } from '../helpers/collectableRegistry'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../helpers/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
-import { setNeighbourhoodAndMap, loadMapToCanvases, getCinematicBack, getCinematicFront, getCinematicFrontgrid, switchMap, loadCinematicMap, hasCinematicMapLoaded, clearCinematicGrids, clearMapFromCanvases, initCinematicGrids } from '../helpers/loadMapHelpers'
+import { setNeighbourhoodAndMap, loadMapToCanvases, switchMap, loadCinematicMap } from '../helpers/loadMapHelpers'
 import type { Neighbourhood } from './Neighbourhood'
 import type { Tile } from './core/Tile'
 import type { Sprite } from './core/Sprite'
@@ -22,7 +22,7 @@ import type { Character } from './party/Character'
 import type { Inventory } from './party/Inventory'
 import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
-import { cinematicIsActive, setActiveCinematic } from './controllers/cinematicController'
+import { setActiveCinematic } from './controllers/cinematicController'
 import { dismissActiveAction } from './controllers/actionController'
 import { clearSpriteMovementDictionary } from './modules/spriteMovementModule'
 import { clearIdleAnimationCounters } from './modules/idleAnimationModule'
@@ -30,12 +30,12 @@ import { clearRandomAnimationCounters } from './modules/randomAnimationModule'
 import { clearActions } from './modules/actionModule'
 import { clearDoors } from './modules/doorModule'
 import { clearHitboxes } from './modules/hitboxModule'
-import type { InteractionType } from '../enumerables/InteractionType'
+import { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
 import { cameraFocus, initializeCameraFocus } from './cameraFocus'
 import { portraitOrientation } from '../helpers/screenOrientation'
-import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
+import { clearGridCanvases, clearGrids, getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
 import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { instantiateUICanvases } from './controllers/utilityCanvasController'
@@ -44,6 +44,7 @@ import type { BackSpritesCanvas } from './canvas/BackSpritesCanvas'
 import type { BackTilesCanvas } from './canvas/BackTilesCanvas'
 import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { InteractionModel } from '../models/InteractionModel'
+import type { CellPosition } from '../models/CellPositionModel'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -67,9 +68,12 @@ export class Game {
     loadingScreen: LoadingScreen;
 
     party: Party;
-    _activeNeighbourhood: Neighbourhood;
-    cinematicNeighbourhood: Neighbourhood;
+    activeNeighbourhood: Neighbourhood;
     currentChapter: string;
+
+    activeMapAtStartOfCinematic: string;
+    activeSpritesAtStartOfCinematic: Sprite[];
+    playerLocationAtStartOfCinematic: CellPosition;
     constructor( ) {
         this.usingCinematicMap = false;
         this.paused; // bool
@@ -83,34 +87,24 @@ export class Game {
 
         this.party; // class Party
 
-        this._activeNeighbourhood;
-        this.cinematicNeighbourhood;
+        this.activeNeighbourhood;
         this.currentChapter;
 
         this.initGameCanvases( );
     }
 
-    get FRONTGRID(): FrontTilesCanvas { return this.useCinematicMap ? getCinematicFrontgrid() : getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTilesCanvas; }
-    get FRONT(): BackSpritesCanvas { return this.useCinematicMap ? getCinematicFront() : getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpritesCanvas; }
-    get BACK(): BackTilesCanvas { return this.useCinematicMap ? getCinematicBack() : getCanvasWithType( CanvasTypeEnum.background ) as BackTilesCanvas; }
+    get FRONTGRID(): FrontTilesCanvas { return getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTilesCanvas; }
+    get FRONT(): BackSpritesCanvas { return getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpritesCanvas; }
+    get BACK(): BackTilesCanvas { return getCanvasWithType( CanvasTypeEnum.background ) as BackTilesCanvas; }
 
-    get PLAYER( ): Sprite { return this.useCinematicMap ? getCinematicFront().playerSprite : this.FRONT.playerSprite }
+    get PLAYER( ): Sprite { return this.FRONT.playerSprite }
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
     get PLAYER_INVENTORY( ): Inventory { return this.party.inventory }
     get PLAYER_ITEMS( ): StackedItem[] { return this.party.inventory.ItemList }
 
-    get activeMap( ): MapModel { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMap : this.activeNeighbourhood.activeMap; }
-    get activeMapName( ): string { return this.useCinematicMap ? this.cinematicNeighbourhood.activeMapKey : this.activeNeighbourhood.activeMapKey; }
+    get activeMap( ): MapModel { return this.activeNeighbourhood.activeMap; }
+    get activeMapName( ): string { return this.activeNeighbourhood.activeMapKey; }
     get previousMapName( ): string { return this.activeNeighbourhood.previousMapKey; }
-    get useCinematicMap(): boolean { return this.hasCinematicMapLoaded && cinematicIsActive(); }
-    get hasCinematicMapLoaded(): boolean { return hasCinematicMapLoaded() }
-    get activeNeighbourhood() {
-        return (this.useCinematicMap ? this.cinematicNeighbourhood : this._activeNeighbourhood);
-    }
-
-    set activeNeighbourhood( value ) {
-        this._activeNeighbourhood = value;
-    }
 
     get activeText(): string {
         return this.typeWriter.activeText.map( ( ( e ) => { return e.activeWord; } )).toString();
@@ -146,7 +140,7 @@ export class Game {
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
         this.disableStoryMode = disableStoryMode;
-        loadMapToCanvases( this.activeMap, "NEW", true );
+        loadMapToCanvases( this.activeMap, "NEW" );
         this.story = new StoryProgression(); 
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
@@ -160,7 +154,7 @@ export class Game {
         setNeighbourhoodAndMap(JSON.activeMap.mapName)
         this.activeMap.playerStart = JSON.activeMap.playerStart;
         this.activeMap.playerStart.name = "test";
-        loadMapToCanvases( this.activeMap, "LOAD", true );
+        loadMapToCanvases( this.activeMap, "LOAD" );
         this.story = new StoryProgression( JSON.keyLists.storyEvents );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
@@ -178,7 +172,7 @@ export class Game {
         animationLoop( );
     }
 
-    switchMap( destinationName: string, type: InteractionType ): void {
+    clearActiveMap() {
         clearHitboxes();
         clearDoors();
         clearActions();
@@ -188,23 +182,33 @@ export class Game {
         clearSpriteAnimations();
         dismissActiveAction();
         clearPressedKeys();
+    }
+
+    switchMap( destinationName: string, type: InteractionType ): void {
+        this.clearActiveMap()
         switchMap( destinationName, type );
     }
 
     loadCinematicMap( loadMapScene: LoadMapScene ) {
-        loadCinematicMap( loadMapScene.mapName, loadMapScene.setPlayerSprite );   
+        clearGrids();
+        clearGridCanvases();
+        this.clearActiveMap();
+        loadCinematicMap( loadMapScene.mapName, loadMapScene.setPlayerSprite, loadMapScene.playerStart );   
     }
 
-    clearCinematicGrids() {
-        clearCinematicGrids();
+    handleCinematicEnd() {
+        if ( this.activeMapAtStartOfCinematic !== this.activeMapName ) {
+            this.clearActiveMap();
+            setNeighbourhoodAndMap( this.activeMapAtStartOfCinematic );
+            this.activeMap.playerStart = this.playerLocationAtStartOfCinematic;
+            loadMapToCanvases( this.activeMap, InteractionType.cinematic_end, true );
+        }
     }
 
-    clearMapFromCanvases() {
-        clearMapFromCanvases();
-    }
-
-    initCinematicGrids() {
-        initCinematicGrids();
+    saveActiveMap() {
+        this.activeMapAtStartOfCinematic = this.activeMapName;
+        this.activeSpritesAtStartOfCinematic = [...this.FRONT.allSprites];
+        this.playerLocationAtStartOfCinematic = { column: this.PLAYER.column, row: this.PLAYER.row, direction: this.PLAYER.direction }
     }
 
     setActiveCinematic( action: InteractionModel, trigger: CinematicTrigger, options: any[] ): void {

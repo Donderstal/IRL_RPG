@@ -58,7 +58,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
 
         if ( playerHitbox.doorInRange( door ) ) {
             inDoorRange = true;
-            handleDoor( door, GAME );
+            handleDoor( GAME, door );
         }
     })
 

@@ -36,7 +36,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-3", true]],
                 [[SceneAnimationType.fadeOut, true]],
                 [[SceneAnimationType.loadMap, true, "leonard_heights/B2"]],
                 [[SceneAnimationType.createCar, true, "bus", "CIN_CAR_BUS", "CIN_ROAD_1"]],
@@ -67,10 +66,10 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.fadeIn, true]],
                 [[SceneAnimationType.speak, true, "I'm almost back home, can't wait to get some cold Diet Betes before my shift begins!", PLAYER_NAME]],
                 [[SceneAnimationType.move, true, PLAYER_NAME, { column: 12, row: 9 }]],
-                [[SceneAnimationType.fadeOut, true]],
-                [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-3", true]],
-                [[SceneAnimationType.fadeIn, true]],
-                [[SceneAnimationType.speak, true, "Let's get to work now!", PLAYER_NAME]]
+                //[[SceneAnimationType.fadeOut, true]],
+                //[[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-3", true, { column: 3, row: 4 }]],
+                //[[SceneAnimationType.fadeIn, true]],
+                //[[SceneAnimationType.speak, true, "Let's get to work now!", PLAYER_NAME]]
             ]
         ]]
     },
@@ -82,7 +81,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, LOGGABLE_INTERACTION_1, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/C2", true]],
                 [[SceneAnimationType.createSprite, true, DirectionEnum.left, FAT_BUFF_GUY, MAIN_CHAR_FRIEND_SPRITE, 24, 10]],
                 [[SceneAnimationType.cameraMoveToSprite, true, MAIN_CHAR_FRIEND_SPRITE, false], [SceneAnimationType.move, true, MAIN_CHAR_FRIEND_SPRITE, PLAYER_NAME]],
                 [[SceneAnimationType.speak, true, "I heard there was some trouble at the {G}Yum {G}Mart down {R}south...", MAIN_CHAR_FRIEND_SPRITE], [SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
@@ -98,7 +96,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/E3", true]],
                 [[SceneAnimationType.speak, true, "I hate the hotel on this street, it's always full of trashy tourists", PLAYER_NAME]]
             ]
         ]]
@@ -116,7 +113,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, KEY_STORY_1, "medium-text-blip.ogg", 
             [ConditionType.default, false],
             [ 
-                [[SceneAnimationType.loadMap, true, "leonard_heights/Newtown-appartment-4", true]],
                 [[SceneAnimationType.speak, true, "There's just something creepy about an empty appartment...", PLAYER_NAME]]
             ]
         ]]
@@ -129,7 +125,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, LOGGABLE_INTERACTION_2, "medium-text-blip.ogg",
             [ConditionType.default, false],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/C4", true]],
                 [[SceneAnimationType.speak, true, "There's something wrong here, I can feel it...", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "I love being a thug, it's my dream job", THUG_A, THUG_B], [SceneAnimationType.cameraMoveToSprite, true, THUG_A, false], [SceneAnimationType.move, true, PLAYER_NAME, { column: 19, row: 9 }]],
                 [[SceneAnimationType.speak, true, "Yeah, my liberal arts degree is really paying off..", THUG_B, THUG_A], [SceneAnimationType.cameraMoveToSprite, true, THUG_B, false]],
@@ -158,7 +153,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, LOGGABLE_INTERACTION_4, "medium-text-blip.ogg", 
             [ConditionType.interactionNotRegistered, LOGGABLE_INTERACTION_4],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/D1", true]],
                 [[SceneAnimationType.speak, true, "What's going on over here?", PLAYER_NAME]],
                 [[SceneAnimationType.speak, true, "My bro is having a real tough time bro...", HELPFUL_BRO, PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, HELPFUL_BRO, false]],
                 [[SceneAnimationType.speak, true, "He used to be the fittest, the nicest, the sexiest bro in town.", HELPFUL_BRO]],
@@ -202,7 +196,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, false, null, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_4],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/D2", true]],
                 [[SceneAnimationType.speak, true, "Are you one of those friendly lifter bros?", PLAYER_NAME]],
                 [[SceneAnimationType.speak, true, "Woah dude, how did you know? Yeah, I roll with my bros, for sure!", WHOLESOME_LIFTER, PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, WHOLESOME_LIFTER, false]],
                 [[SceneAnimationType.speak, true, "I don't know, could be the fact that you're out on the street working out.", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
@@ -232,7 +225,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, LOGGABLE_INTERACTION_5, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_4],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/E4", true]],
                 [[SceneAnimationType.speak, true, "Are you one of those friendly lifter bros?", PLAYER_NAME]],
                 [[SceneAnimationType.speak, true, "Yeah, for sure bro! I'm always lifting and being a bro.", WHOLESOME_LIFTER, PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, WHOLESOME_LIFTER, false]],
                 [[SceneAnimationType.speak, true, "One of your friends is having a hard time. He lost his dumbbells.", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
@@ -256,7 +248,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, LOGGABLE_INTERACTION_6, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_5],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/B4", true]],
                 [[SceneAnimationType.speak, true, "Are you one of those friendly lifter bros?", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "Yeah, for sure bro! Though I'm the least friendly of them.", WHOLESOME_LIFTER, PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, WHOLESOME_LIFTER, false]],
                 [[SceneAnimationType.speak, true, "One of your friends is having a hard time. He lost his dumbbells.", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
@@ -281,7 +272,6 @@ export const STORY_EVENTS = [
             InteractionType.talk, true, LOGGABLE_INTERACTION_7, "medium-text-blip.ogg", 
             [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_6],
             [
-                [[SceneAnimationType.loadMap, true, "leonard_heights/D1", true]],
                 [[SceneAnimationType.speak, true, "We can't wait much longer bro, I can see his muscles shrinking!", HELPFUL_BRO, PLAYER_NAME], [SceneAnimationType.emote, false, EMOTE_SAD, SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, HELPFUL_BRO, false]],
                 [[SceneAnimationType.speak, true, "Don't worry bros! I've got the dumbbells!", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "Quick quick!! Give 'em to my man! He doesn't have much time left...", HELPFUL_BRO, SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, HELPFUL_BRO, false]],

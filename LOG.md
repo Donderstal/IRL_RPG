@@ -1,5 +1,13 @@
 ### LOG
 
+#### AUG 25, 2022
+* Cleaning up loadmaphelpers
+* Removed seperation between cinematic and non-cinematic grids
+
+#### AUG 24, 2022
+* Controller files for different Canvas elements
+* Removing canvas references from Game class
+
 #### AUG 21, 2022
 * Retry and sidestep policy for pathfinding to avoid sprites getting stuck
 * Restored neighbour map loading, fixing some bug in player sprite init

@@ -32,7 +32,7 @@ export class Animation {
     constructor( animationModel: SceneAnimationModel, id: string ) {
         this.id = id;
         this.model = animationModel;
-
+        console.log( `new animation of type with ${animationModel.type} animation` )
         this.setSpriteId();
         this.setAction();
     }

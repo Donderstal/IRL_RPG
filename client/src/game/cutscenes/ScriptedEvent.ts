@@ -33,7 +33,7 @@ export class ScriptedEvent {
 
     fireEvent( args = null ) {
         if ( !this.fired ) {
-            setActiveCinematic( this.action, this.trigger, args, true );
+            setActiveCinematic( this.action, this.trigger, args );
             this.fired = true;           
         }
     }

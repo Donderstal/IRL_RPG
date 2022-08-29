@@ -2,7 +2,6 @@ import globals, { FRAMES_PER_SECOND } from '../game-data/globals'
 import { handleMapAnimations } from './map/mapAnimation'
 import { clearPressedKeys, listenForKeyPress} from './controls'
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations'
-import { hasCinematicMapLoaded } from '../helpers/loadMapHelpers'
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { clearCanvasOfType } from './controllers/gridCanvasController'
@@ -27,10 +26,10 @@ export const animationLoop = ( ): void => {
                 listenForKeyPress();
             }            
 
-            if ( !menuCanvas.isActive && !cinematicIsActive() || (GAME.useCinematicMap && !hasCinematicMapLoaded())) {
+            if ( !menuCanvas.isActive && !cinematicIsActive() ) {
                 handleMapAnimations( GAME );
             }
-            else if ( !menuCanvas.isActive && cinematicIsActive() && ((!GAME.useCinematicMap) || (GAME.useCinematicMap && hasCinematicMapLoaded()))) {
+            else if ( !menuCanvas.isActive && cinematicIsActive() ) {
                 handleCinematicAnimations( GAME );
             }
             else if ( menuCanvas.isActive ) {

@@ -17,6 +17,7 @@ export class Scene {
         this.animations = [];
         this.animationIds = [];
         this.finishedAnimations = [];
+        console.log(`new scene with ${sceneModel.length} animation`)
         sceneModel.forEach((animationModel: SceneAnimationModel): void => {
             const id = getUniqueId( this.animationIds );
             if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
@@ -103,7 +104,7 @@ export class Scene {
                     animationHasFinished = cameraFocus.isFocusedOnTile( e.tileIndex );
                     break;
                 case SceneAnimationType.loadMap:
-                    animationHasFinished = globals.GAME.hasCinematicMapLoaded;
+                    animationHasFinished = globals.GAME.activeMapName === e.loadMapScene.mapName;
                     break;
             }
             if ( animationHasFinished ) {

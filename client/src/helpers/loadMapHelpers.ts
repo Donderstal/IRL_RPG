@@ -1,5 +1,4 @@
 import globals from '../game-data/globals';
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals';
 import { listenForKeyPress, stopListenForKeyPress, clearPressedKeys } from '../game/controls';
 import { Neighbourhood } from '../game/Neighbourhood';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
@@ -10,7 +9,6 @@ import type { MapModel } from '../models/MapModel';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../enumerables/InteractionType';
 import { DirectionEnum } from '../enumerables/DirectionEnum';
-import type { CanvasContextModel } from '../models/CanvasContextModel';
 import { cameraFocus } from '../game/cameraFocus';
 import { clearGridCanvases, clearGrids, getCanvasWithType } from '../game/controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
@@ -18,50 +16,10 @@ import type { BackTilesCanvas } from '../game/canvas/BackTilesCanvas';
 import type { BackSpritesCanvas } from '../game/canvas/BackSpritesCanvas';
 import type { FrontTilesCanvas } from '../game/canvas/FrontTilesCanvas';
 
-const cinematicGrids: { back: CanvasContextModel, front: CanvasContextModel, frontgrid: CanvasContextModel } = {
-    back: null,
-    front: null,
-    frontgrid: null 
-};
-
-let playerLocationAtStartOfCinematic: CellPosition = null;
-let playerLocationAtEndOfCinematic: CellPosition = null;
-let loadedCinematicMap: boolean = false;
-
-export const hasCinematicMapLoaded = ( ): boolean => {
-    return loadedCinematicMap;
-}
-
-export const getCinematicFrontgrid = (): FrontTilesCanvas => {
-    return cinematicGrids.frontgrid.class as FrontTilesCanvas;
-}
-
-export const getCinematicFront = (): BackSpritesCanvas => {
-    return cinematicGrids.front.class as BackSpritesCanvas;
-}
-
-export const getCinematicBack = (): BackTilesCanvas => {
-    return cinematicGrids.back.class as BackTilesCanvas;
-}
-
-export const initCinematicGrids = ( ): void => {
-    let GAME = globals.GAME;
-    playerLocationAtStartOfCinematic = {
-        column: GAME.PLAYER.column,
-        row: GAME.PLAYER.row,
-        direction: GAME.PLAYER.direction
-    }
-    clearGridCanvases();
-
-    cinematicGrids.back = GAME.initCanvas( 'BACK' );
-    cinematicGrids.front = GAME.initCanvas( 'FRONT' );
-    cinematicGrids.frontgrid = GAME.initCanvas( 'FRONT_GRID' );
-}
-
-export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, cinematic = false, sprites: Sprite[] = null ): void => {
-    const back: BackTilesCanvas = cinematic ? getCinematicBack() : getCanvasWithType( CanvasTypeEnum.background );
-    const front: BackSpritesCanvas = cinematic ? getCinematicFront() : getCanvasWithType( CanvasTypeEnum.backSprites );
-    const frontgrid: FrontTilesCanvas = cinematic ? getCinematicFrontgrid() : getCanvasWithType( CanvasTypeEnum.foreground );
+export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
+    const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTilesCanvas;
+    const front = getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpritesCanvas;
+    const frontgrid = getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTilesCanvas;
 
     if (setPlayer) {
         mapData.playerStart = mapData.playerStart != undefined ? mapData.playerStart : getPlayerCellInNewMap( mapData, loadType );        
@@ -86,7 +44,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
     globals.GAME.sound.setActiveMusic( mapData.music != undefined ? mapData.music : globals.GAME.activeNeighbourhood.model.music );
     mapData.playerStart = undefined;
 
-    if ( !cinematic ) {
+    if ( setPlayer ) {
         cameraFocus.handleScreenFlip( 
             {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY}
         );
@@ -95,16 +53,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
             globals.GAME.story.checkForEventTrigger(CinematicTrigger.enter)     
         }, 250 )            
     }
-}
-
-export const clearMapFromCanvases = ( source: any = cinematicGrids ): void => {
-    source.frontgrid.class.clearMap( );
-    source.front.class.clearMap( );
-    source.back.class.clearMap( );
-
-    source.frontgrid.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-    source.front.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
-    source.back.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
 }
 
 export const switchMap = ( destinationName: string, type: InteractionType ): void => {
@@ -165,76 +113,30 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
                 }
             } )
             break;
-        case InteractionType.cinematic:
-            newPlayerCell = playerLocationAtStartOfCinematic;
-            break;
-        case InteractionType.cinematic_end:
-            newPlayerCell = playerLocationAtEndOfCinematic;
-            break;
     }
     return newPlayerCell
 }
 
-export const loadCinematicMap = ( mapName, setPlayer = false ) => {
-    loadedCinematicMap = false;
+export const loadCinematicMap = ( mapName, setPlayer = false, playerStart = null ) => {
     globals.GAME.paused = true;
-    getCinematicFront().playerSprite = globals.GAME.front.class.playerSprite;
-    clearMapFromCanvases( cinematicGrids )
     let GAME = globals.GAME;
     GAME.sound.clearActiveSoundEffects( );
-    setCinematicNeighbourhoodAndMap(mapName);
+    setNeighbourhoodAndMap( mapName );
+    if ( setPlayer ) {
+        GAME.activeNeighbourhood.activeMap.playerStart = playerStart;
+    }
     loadMapToCanvases( 
-        GAME.cinematicNeighbourhood.activeMap, InteractionType.cinematic, 
-        setPlayer, true,
-        GAME.cinematicNeighbourhood.activeMapKey == GAME._activeNeighbourhood.activeMapKey ? getCanvasWithType( CanvasTypeEnum.backSprites ).allSprites : null
+        GAME.activeNeighbourhood.activeMap, InteractionType.cinematic, setPlayer
     );
-    loadedCinematicMap = true;
     globals.GAME.paused = false;
 
 }
 
 export const setNeighbourhoodAndMap = ( mapName: string ): void => {
-    if ( globals.GAME._activeNeighbourhood == undefined || !mapName.includes(globals.GAME._activeNeighbourhood.key) ) {
-        globals.GAME._activeNeighbourhood = new Neighbourhood(mapName);
+    if ( globals.GAME.activeNeighbourhood == undefined || !mapName.includes(globals.GAME.activeNeighbourhood.key) ) {
+        globals.GAME.activeNeighbourhood = new Neighbourhood(mapName);
     }
     else {
-        globals.GAME._activeNeighbourhood.activateMap(mapName);
+        globals.GAME.activeNeighbourhood.activateMap(mapName);
     }
-}
-
-const setCinematicNeighbourhoodAndMap = (mapName) => {
-    if ( globals.GAME.cinematicNeighbourhood == undefined || !mapName.includes(globals.GAME.cinematicNeighbourhood.key) ) {
-        globals.GAME.cinematicNeighbourhood = new Neighbourhood(mapName);
-    }
-    else {
-        globals.GAME.cinematicNeighbourhood.activateMap(mapName);
-    }
-}
-
-export const clearCinematicGrids = () => {
-    console.log('clear em...')
-    const GAME = globals.GAME;
-    GAME.paused = true;
-    const front = getCinematicFront()
-    playerLocationAtEndOfCinematic = { 
-        column: front.playerSprite.column,
-        row: front.playerSprite.row,
-        direction: front.playerSprite.direction
-    }
-    const sprites = [...front.allSprites];
-    loadedCinematicMap = false;
-    clearGrids();
-    clearGridCanvases();
-    loadMapToCanvases( 
-        GAME._activeNeighbourhood.activeMap, 
-        GAME.cinematicNeighbourhood.activeMapKey == GAME._activeNeighbourhood.activeMapKey ? InteractionType.cinematic_end : InteractionType.cinematic, 
-        true, false,
-        sprites
-    );
-    cinematicGrids.back = null;
-    cinematicGrids.front = null;
-    cinematicGrids.frontgrid = null;
-    playerLocationAtStartOfCinematic = null;
-    playerLocationAtEndOfCinematic = null;
-    GAME.paused = false;
 }

@@ -279,6 +279,7 @@ export const initSceneAnimationModel = ( animationData ): SceneAnimationModel =>
             typedModel = model as LoadMapScene;
             typedModel.mapName = animationData[2];
             typedModel.setPlayerSprite = animationData[3];
+            typedModel.playerStart = animationData[4];
             break;
     }
     return typedModel;

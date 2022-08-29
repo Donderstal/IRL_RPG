@@ -75,5 +75,5 @@ export type CameraMoveToTileScene = SceneAnimationModel & {
 export type LoadMapScene = SceneAnimationModel & {
     mapName: string;
     setPlayerSprite: boolean;
-    playerSpriteLocation: {};
+    playerStart: {};
 }
