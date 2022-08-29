@@ -55,16 +55,20 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
     }
 }
 
-export const switchMap = ( destinationName: string, type: InteractionType ): void => {
-    globals.GAME.story.checkForEventTrigger(CinematicTrigger.leave, [ destinationName, type ]);     
-    globals.GAME.sound.clearActiveSoundEffects( );
+export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {
+    globals.GAME.story.checkForEventTrigger( CinematicTrigger.leave, [destinationName, type] );
+    globals.GAME.sound.clearActiveSoundEffects();
     globals.GAME.paused = true;
-    stopListenForKeyPress( );
-    clearPressedKeys( );
-
+    stopListenForKeyPress();
+    clearPressedKeys();
     setNeighbourhoodAndMap( destinationName );
     clearGrids();
     clearGridCanvases();
+
+    if ( playerStart !== null ) {
+        globals.GAME.activeMap.playerStart = playerStart;
+    }
+
     loadMapToCanvases( globals.GAME.activeMap, type );
     setTimeout( ( ) => {
         listenForKeyPress( ); 

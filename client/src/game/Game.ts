@@ -184,9 +184,9 @@ export class Game {
         clearPressedKeys();
     }
 
-    switchMap( destinationName: string, type: InteractionType ): void {
+    switchMap( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void {
         this.clearActiveMap()
-        switchMap( destinationName, type );
+        switchMap( destinationName, type, playerStart );
     }
 
     loadCinematicMap( loadMapScene: LoadMapScene ) {
@@ -198,10 +198,7 @@ export class Game {
 
     handleCinematicEnd() {
         if ( this.activeMapAtStartOfCinematic !== this.activeMapName ) {
-            this.clearActiveMap();
-            setNeighbourhoodAndMap( this.activeMapAtStartOfCinematic );
-            this.activeMap.playerStart = this.playerLocationAtStartOfCinematic;
-            loadMapToCanvases( this.activeMap, InteractionType.cinematic_end, true );
+            this.switchMap( this.activeMapAtStartOfCinematic, InteractionType.cinematic_end, this.playerLocationAtStartOfCinematic )
         }
     }
 
