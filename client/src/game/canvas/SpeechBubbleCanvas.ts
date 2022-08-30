@@ -1,8 +1,8 @@
 import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { mobileAgent } from "../../helpers/screenOrientation";
-import { CanvasWithGrid } from "../core/CanvasWithGrid";
+import { CanvasGrid } from "../core/CanvasGrid";
 
-export class SpeechBubbleCanvas extends CanvasWithGrid {
+export class SpeechBubbleCanvas extends CanvasGrid {
     canvas: HTMLCanvasElement;
     isActive: boolean;
 

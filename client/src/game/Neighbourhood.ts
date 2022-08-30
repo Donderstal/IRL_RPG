@@ -4,6 +4,7 @@ import { getNeighbourhood } from "../resources/mapResources";
 import type { InteractionModel } from "../models/InteractionModel";
 import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
+import type { CanvasGrid } from "./core/CanvasGrid";
 
 export class Neighbourhood {
     model: NeighbourhoodModel;
@@ -11,6 +12,7 @@ export class Neighbourhood {
     previousMapKey: string;
     playerData: { name: string, className: string };
     NPCCounter: Counter;
+    mapGrid: {[key in string]: CanvasGrid}
     constructor( mapKey: string ) {
         this.model = getNeighbourhood( mapKey.split('/')[0] );
         this.activateMap( mapKey );

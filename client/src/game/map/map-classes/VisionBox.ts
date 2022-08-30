@@ -1,6 +1,6 @@
 import { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { getFrontgridCanvasContext } from "../../../helpers/canvasHelpers";
-import type { CanvasWithGrid } from "../../core/CanvasWithGrid";
+import type { CanvasGrid } from "../../core/CanvasGrid";
 import { Hitbox } from "../../core/Hitbox";
 import type { Tile } from "../../core/Tile";
 
@@ -28,7 +28,7 @@ export class VisionBox extends Hitbox {
         context.globalCompositeOperation = 'source-over'
     }
 
-    getFrontGridTilesInArc( frontGrid: CanvasWithGrid ): Tile[] {
+    getFrontGridTilesInArc( frontGrid: CanvasGrid ): Tile[] {
         const tilesInRangeArray = [];
         for( let x = this.x - this.radius; x <= this.x + this.radius; x += GRID_BLOCK_PX ) {
             for( let y = this.y - this.radius; y <= this.y + this.radius; y += GRID_BLOCK_PX ) {

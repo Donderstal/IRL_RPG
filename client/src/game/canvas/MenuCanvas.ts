@@ -1,4 +1,4 @@
-import { CanvasWithGrid } from "../core/CanvasWithGrid";
+import { CanvasGrid } from "../core/CanvasGrid";
 import { MenuHeader } from '../menu/menuHeader';
 import { MenuTextBox } from '../menu/menuTextBox';
 import { MENU_GRID_ROWS, MENU_GRID_COLUMNS, MENU_MARGIN_SIDES, MENU_MARGIN_TOP_DOWN, MENU_TAB_PARTY, MENU_TAB_INVENTORY, MENU_TYPE_MAP, MENU_TYPE_GAME, MENU_BUTTON_STANDARD_HEIGHT, MENU_BUTTON_STANDARD_WIDTH, MENU_HEADER_ACTIVE_ROWS, MENU_BUTTON_PARTY_WIDTH, MENU_BUTTON_PARTY_HEIGHT, MENU_BUTTON_ROWSTYLES, MENU_BUTTON_PARTY_ROWSTYLES } from '../../game-data/uiGlobals';
@@ -13,7 +13,7 @@ const testInventory = [ "Inventory1", "Inventory2", "Inventory3", "Inventory4", 
 const testMap = [ "Map1", "Map2", "Map3", "Map4", "Map5" ];
 const testGame = [ "Game1", "Game2", "Game3", "Game4", "Game5", "Game6" ];
 
-export class MenuCanvas extends CanvasWithGrid {
+export class MenuCanvas extends CanvasGrid {
     canvas: HTMLCanvasElement;
     header: MenuHeader;
     isActive: boolean;

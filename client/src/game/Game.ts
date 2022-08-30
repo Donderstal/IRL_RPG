@@ -39,9 +39,9 @@ import { clearGridCanvases, clearGrids, getCanvasWithType, instantiateGridCanvas
 import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { instantiateUICanvases } from './controllers/utilityCanvasController'
-import type { FrontTilesCanvas } from './canvas/FrontTilesCanvas'
-import type { BackSpritesCanvas } from './canvas/BackSpritesCanvas'
-import type { BackTilesCanvas } from './canvas/BackTilesCanvas'
+import type { FrontTileGrid } from './canvas/FrontTileGrid'
+import type { BackSpriteGrid } from './canvas/BackSpriteGrid'
+import type { BackTileGrid } from './canvas/BackTileGrid'
 import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { InteractionModel } from '../models/InteractionModel'
 import type { CellPosition } from '../models/CellPositionModel'
@@ -93,9 +93,9 @@ export class Game {
         this.initGameCanvases( );
     }
 
-    get FRONTGRID(): FrontTilesCanvas { return getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTilesCanvas; }
-    get FRONT(): BackSpritesCanvas { return getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpritesCanvas; }
-    get BACK(): BackTilesCanvas { return getCanvasWithType( CanvasTypeEnum.background ) as BackTilesCanvas; }
+    get FRONTGRID(): FrontTileGrid { return getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTileGrid; }
+    get FRONT(): BackSpriteGrid { return getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpriteGrid; }
+    get BACK(): BackTileGrid { return getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid; }
 
     get PLAYER( ): Sprite { return this.FRONT.playerSprite }
     get PARTY_MEMBERS( ): Character[] { return this.party.members }

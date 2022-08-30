@@ -12,14 +12,14 @@ import { DirectionEnum } from '../enumerables/DirectionEnum';
 import { cameraFocus } from '../game/cameraFocus';
 import { clearGridCanvases, clearGrids, getCanvasWithType } from '../game/controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
-import type { BackTilesCanvas } from '../game/canvas/BackTilesCanvas';
-import type { BackSpritesCanvas } from '../game/canvas/BackSpritesCanvas';
-import type { FrontTilesCanvas } from '../game/canvas/FrontTilesCanvas';
+import type { BackTileGrid } from '../game/canvas/BackTileGrid';
+import type { BackSpriteGrid } from '../game/canvas/BackSpriteGrid';
+import type { FrontTileGrid } from '../game/canvas/FrontTileGrid';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
-    const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTilesCanvas;
-    const front = getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpritesCanvas;
-    const frontgrid = getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTilesCanvas;
+    const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid;
+    const front = getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpriteGrid;
+    const frontgrid = getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTileGrid;
 
     if (setPlayer) {
         mapData.playerStart = mapData.playerStart != undefined ? mapData.playerStart : getPlayerCellInNewMap( mapData, loadType );        

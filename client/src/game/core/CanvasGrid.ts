@@ -11,7 +11,7 @@ import type { Tile } from './Tile';
  * CanvasWithGrid contains core functionalities for interacting with the canvas context based on a Grid instance.
  * These include locating and returning a tile from the grid and instantiating a new grid.
  */
-export class CanvasWithGrid {
+export class CanvasGrid {
     x: number;
     y: number;
     canvas: HTMLCanvasElement;

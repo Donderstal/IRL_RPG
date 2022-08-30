@@ -1,4 +1,4 @@
-import { CanvasWithGrid } from '../core/CanvasWithGrid';
+import { CanvasGrid } from '../core/CanvasGrid';
 import { getUniqueId } from '../../helpers/utilFunctions';
 //import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
 import globals from '../../game-data/globals';
@@ -22,7 +22,7 @@ import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 
-export class BackSpritesCanvas extends CanvasWithGrid {
+export class BackSpriteGrid extends CanvasGrid {
     spriteDictionary: { [key: string]: Sprite };
     //activeEffects: GraphicalEffect[];
     grid: Grid;
