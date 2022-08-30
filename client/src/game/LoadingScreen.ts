@@ -1,4 +1,4 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT } from '../game-data/globals';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, BUBBLE_CANVAS_HEIGHT, BUBBLE_CANVAS_WIDTH } from '../game-data/globals';
 import { COLOR_WHITE, COLOR_SECONDARY } from '../game-data/uiGlobals';
 import { TypeWriter } from '../helpers/TypeWriter';
 import globals from '../game-data/globals';
@@ -17,8 +17,9 @@ export class LoadingScreen {
     mainTextWidth: number;
     activeTextWidth: number;
     constructor() {
-        canvas = document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement;
+        canvas = document.getElementById( 'game-bubble-canvas' ) as HTMLCanvasElement;
         canvasContext = canvas.getContext( "2d" );
+
         this.displayText = "Loading...";
         this.randomTextArray = [
             "Explaining relativity to kindergartners...",
@@ -60,21 +61,21 @@ export class LoadingScreen {
     }
 
     draw( ) {
-        canvasContext.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
+        canvasContext.clearRect( 0, 0, BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT )
         canvasContext.fillStyle = COLOR_SECONDARY;
-        canvasContext.fillRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
+        canvasContext.fillRect( 0, 0, BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT )
         canvasContext.fillStyle = COLOR_WHITE;
         
         canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
-        canvasContext.fillText( this.mainText, ( CANVAS_WIDTH / 2 ) - ( this.mainTextWidth / 2 ), CANVAS_HEIGHT / 2 );
+        canvasContext.fillText( this.mainText, ( BUBBLE_CANVAS_WIDTH / 2 ) - ( this.mainTextWidth / 2 ), BUBBLE_CANVAS_HEIGHT / 2 );
         canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-        canvasContext.fillText(this.activeText, ( CANVAS_WIDTH / 2 ) - ( this.activeTextWidth / 2 ) , ( CANVAS_HEIGHT / 2 ) + BATTLE_FONT_LINE_HEIGHT );
+        canvasContext.fillText( this.activeText, ( BUBBLE_CANVAS_WIDTH / 2 ) - ( this.activeTextWidth / 2 ), ( BUBBLE_CANVAS_HEIGHT / 2 ) + BATTLE_FONT_LINE_HEIGHT );
 
         this.handleLoadingScreenText( );
     }
 
     clear( ) {
-        canvasContext.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT ) 
+        canvasContext.clearRect( 0, 0, BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT ) 
     }
 }
 

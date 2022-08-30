@@ -8,5 +8,6 @@ export enum CanvasTypeEnum {
     utilityFront,
     overview,
     spriteCanvas,
-    faderCanvas
+    faderCanvas,
+    speechBubbleCanvas
 }

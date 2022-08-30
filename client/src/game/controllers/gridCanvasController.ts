@@ -57,9 +57,9 @@ export const clearGrids = (): void => {
     clearGridOfType( CanvasTypeEnum.foreground );
 }
 export const clearGridCanvases = (): void => {
-    clearCanvasOfType( CanvasTypeEnum.background );
-    clearCanvasOfType( CanvasTypeEnum.backSprites );
-    clearCanvasOfType( CanvasTypeEnum.foreground );
+    clearGridCanvasOfType( CanvasTypeEnum.background );
+    clearGridCanvasOfType( CanvasTypeEnum.backSprites );
+    clearGridCanvasOfType( CanvasTypeEnum.foreground );
 }
 export const clearGridOfType = ( type: CanvasTypeEnum ): void => {
     switch ( type ) {
@@ -76,7 +76,7 @@ export const clearGridOfType = ( type: CanvasTypeEnum ): void => {
             console.log( `Canvastype ${type} not recognized` );
     }
 }
-export const clearCanvasOfType = ( type: CanvasTypeEnum ): void => {
+export const clearGridCanvasOfType = ( type: CanvasTypeEnum ): void => {
     switch ( type ) {
         case CanvasTypeEnum.background:
             backTiles.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );

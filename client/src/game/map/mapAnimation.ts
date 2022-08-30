@@ -9,8 +9,7 @@ import { getAssociatedHitbox } from '../modules/hitboxModule';
 import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
-import { mobileAgent } from '../../helpers/screenOrientation';
-import { clearCanvasOfType } from '../controllers/gridCanvasController';
+import { clearGridCanvasOfType } from '../controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { initInteractionModel } from '../../helpers/modelFactory';
 import { setActiveCinematic } from '../controllers/cinematicController';
@@ -18,15 +17,13 @@ import { lockedDoorEvent, unlockDoorEvent } from '../../resources/actionResource
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../../enumerables/InteractionType';
 import { addDoorToUnlockedDoorsRegistry } from '../../helpers/doorRegistry';
+import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
-    clearCanvasOfType( CanvasTypeEnum.backSprites );
-
-    if ( mobileAgent ) {
-        clearCanvasOfType( CanvasTypeEnum.overview );
-    }
+    clearGridCanvasOfType( CanvasTypeEnum.backSprites );
+    clearUtilityCanvasOfType( CanvasTypeEnum.speechBubbleCanvas );
 
     drawSpritesInOrder( GAME )
     

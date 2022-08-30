@@ -76,6 +76,7 @@
     }
     .canvas-wrapper {
         margin: 0 auto;
+        position: absolute;
     }
     .sprite-image {
         position: absolute;
@@ -113,10 +114,6 @@
         min-width: 5rem;
     }
     @media only screen and (max-width: 914px) {
-        .canvas-wrapper {
-            position: absolute;
-        }
-
         #buttons-div {
             z-index: 10;
             position: fixed;
@@ -191,10 +188,9 @@
 
         <canvas id='game-fader-canvas' style="background: transparent;" on:click={logClick}></canvas>    
 
-        {#if mobileAgent}
-            <canvas id='game-bubble-canvas' class="game-menu-body"
-            style="width: {globals.GRID_BLOCK_PX * 12}px; height: {globals.GRID_BLOCK_PX * 8}px; position: fixed; top: 0; left: {phoneUICanvasLeftPosition}px; background-color: transparent;"></canvas>   
-        {/if}
+        <canvas id='game-bubble-canvas' class="game-menu-body"
+            style="position: fixed; top: 0; left: {phoneUICanvasLeftPosition}px; background-color: transparent;">
+        </canvas>   
     </div>
 
     <LetterBoxDiv isTop={false} height={globals.GRID_BLOCK_PX * 2}/>

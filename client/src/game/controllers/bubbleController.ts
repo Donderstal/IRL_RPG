@@ -15,7 +15,7 @@ let activeBubbles: { [key: string]: SpeechBubble | Emote } = {};
 let subtitleBubble: SpeechBubble = null;
 
 const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !( activeBubbles[e] instanceof Emote ); } ) };
-const getActiveBubbleContext = () => { return mobileAgent ? getSpeechBubbleCanvas().ctx : getCanvasWithType( CanvasTypeEnum.backSprites ).ctx }
+const getBubbleContext = () => { return getSpeechBubbleCanvas().ctx; }
 export const selectionBubble = (): SpeechBubble => {
     for ( const key in activeBubbles ) {
         if ( activeBubbles[key].type === SceneAnimationType.speakYesNo )
@@ -28,9 +28,9 @@ export const isWriting = (): boolean => {
     ).length > 0;
 };
 export const hasActiveBubbles = (): boolean => { return activeBubbleIds.length > 0 || subtitleBubble !== null; };
-export const setNewBubble = ( location, contents, type, sfx ): void => {
+export const setNewBubble = ( contents, type, sfx ): void => {
     const id = getUniqueId( activeBubbleIds );
-    activeBubbles[id] = new SpeechBubble( location, contents, id, type, getActiveBubbleContext() );
+    activeBubbles[id] = new SpeechBubble( contents, id, type, getBubbleContext() );
     activeBubbleIds.push( id );
     globals.GAME.sound.playSpeakingEffect( sfx );
 };
@@ -44,13 +44,12 @@ export const setNewEmote = ( location, imageSrc ): void => {
 export const setNewSubtitleBubble = ( contents ): void => {
     subtitleBubbleId = getUniqueId( activeBubbleIds );
     subtitleBubble = new SpeechBubble(
-        { 'x': 0, 'y': CANVAS_HEIGHT - BATTLE_FONT_LINE_HEIGHT },
         contents, subtitleBubbleId, SceneAnimationType.speak,
-        getActiveBubbleContext(), true
+        getBubbleContext(), true
     );
 };
 export const clearSubtitleBubble = (): void => {
-    subtitleBubble.setMoveToY( mobileAgent ? screen.height : CANVAS_HEIGHT );
+    subtitleBubble.setMoveToY( screen.height );
     setTimeout( () => {
         subtitleBubble = null;
         subtitleBubbleId = null;
@@ -79,7 +78,7 @@ export const clearActiveBubbles = (): void => {
     activeBubbleIds = [];
 };
 export const drawBubbles = (): void => {
-    const activeContext = mobileAgent ? getSpeechBubbleCanvas().ctx : getCanvasWithType( CanvasTypeEnum.backSprites ).ctx;
+    const activeContext = getBubbleContext();
     Object.values( activeBubbles ).forEach( ( e ) => { e.draw( activeContext ); } );
     if ( subtitleBubbleId !== null ) {
         subtitleBubble.draw( activeContext );

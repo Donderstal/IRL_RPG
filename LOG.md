@@ -1,5 +1,9 @@
 ### LOG
 
+#### AUG 30, 2022
+* Implementing camerafocus for non-mobile screens
+* Now using SpeechbubbleCanvas for non-mobile screens
+
 #### AUG 25, 2022
 * Cleaning up loadmaphelpers
 * Removed seperation between cinematic and non-cinematic grids

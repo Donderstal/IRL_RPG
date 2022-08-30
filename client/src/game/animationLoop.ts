@@ -4,7 +4,7 @@ import { clearPressedKeys, listenForKeyPress} from './controls'
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations'
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
-import { clearCanvasOfType } from './controllers/gridCanvasController'
+import { clearGridCanvasOfType } from './controllers/gridCanvasController'
 import { getMenuCanvas } from './controllers/utilityCanvasController'
 
 let lastDateNow: number;
@@ -41,7 +41,7 @@ export const animationLoop = ( ): void => {
             } 
         }
         else {
-            clearCanvasOfType( CanvasTypeEnum.backSprites );
+            clearGridCanvasOfType( CanvasTypeEnum.backSprites );
         }       
         if ( GAME.fader.inFadingAnimation ) {
             GAME.fader.handleFade( )

@@ -28,11 +28,14 @@ export const MOVEMENT_SPEED                = GRID_BLOCK_PX / ( 60 / 8 )
 export const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS);
 export const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS);
 
+export const BUBBLE_CANVAS_WIDTH           = mobileAgent ? 12 * GRID_BLOCK_PX : CANVAS_WIDTH;
+export const BUBBLE_CANVAS_HEIGHT          = mobileAgent ? 8 * GRID_BLOCK_PX : CANVAS_HEIGHT;
+
 // sheet dimensions
 export const MAP_SPRITE_WIDTH_IN_SHEET     = 64
 export const MAP_SPRITE_HEIGHT_IN_SHEET    = 112
 // speech bubbles 
-export const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * ( mobileAgent ? 12 : 6 )
+export const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 12
 export const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( mobileAgent ? .33 : .66 )
 export const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 

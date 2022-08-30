@@ -1,17 +1,14 @@
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { mobileAgent } from '../../helpers/screenOrientation';
 import { cameraFocus } from '../cameraFocus';
 import { drawBubbles } from '../controllers/bubbleController';
-import { clearCanvasOfType } from '../controllers/gridCanvasController';
+import { clearGridCanvasOfType } from '../controllers/gridCanvasController';
+import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
 export const handleCinematicAnimations = ( GAME ): void => {
     const PLAYER = GAME.PLAYER;
-    clearCanvasOfType( CanvasTypeEnum.backSprites );
-
-    if ( mobileAgent ) {
-        clearCanvasOfType( CanvasTypeEnum.overview );
-    }
+    clearGridCanvasOfType( CanvasTypeEnum.backSprites );
+    clearUtilityCanvasOfType( CanvasTypeEnum.speechBubbleCanvas );
 
     drawSpritesInOrder( GAME )   
     handleRoadNetworkFuncs(GAME)
