@@ -190,10 +190,7 @@ export class Game {
     }
 
     loadCinematicMap( loadMapScene: LoadMapScene ) {
-        clearGrids();
-        clearGridCanvases();
-        this.clearActiveMap();
-        loadCinematicMap( loadMapScene.mapName, loadMapScene.setPlayerSprite, loadMapScene.playerStart );   
+        this.switchMap( loadMapScene.mapName, InteractionType.cinematic );
     }
 
     handleCinematicEnd() {

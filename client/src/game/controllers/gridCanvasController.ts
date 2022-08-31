@@ -61,6 +61,29 @@ export const clearGridCanvases = (): void => {
     clearGridCanvasOfType( CanvasTypeEnum.backSprites );
     clearGridCanvasOfType( CanvasTypeEnum.foreground );
 }
+export const setCanvasesDimensions = ( width: number, height: number ): void => {
+    setCanvasDimensions( CanvasTypeEnum.background, width, height );
+    setCanvasDimensions( CanvasTypeEnum.backSprites, width, height );
+    setCanvasDimensions( CanvasTypeEnum.foreground, width, height );
+}
+const setCanvasDimensions = ( type: CanvasTypeEnum, width: number, height: number ): void => {
+    switch ( type ) {
+        case CanvasTypeEnum.background:
+            backTiles.canvas.width = width;
+            backTiles.canvas.height = height;
+            break;
+        case CanvasTypeEnum.backSprites:
+            backSprites.canvas.width = width;
+            backSprites.canvas.height = height;
+            break;
+        case CanvasTypeEnum.foreground:
+            frontTiles.canvas.width = width;
+            frontTiles.canvas.height = height;
+            break;
+        default:
+            console.log( `Canvastype ${type} not recognized` );
+    }
+}
 export const clearGridOfType = ( type: CanvasTypeEnum ): void => {
     switch ( type ) {
         case CanvasTypeEnum.background:
@@ -79,13 +102,13 @@ export const clearGridOfType = ( type: CanvasTypeEnum ): void => {
 export const clearGridCanvasOfType = ( type: CanvasTypeEnum ): void => {
     switch ( type ) {
         case CanvasTypeEnum.background:
-            backTiles.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+            backTiles.ctx.clearRect( 0, 0, backTiles.canvas.width, backTiles.canvas.height );
             break;
         case CanvasTypeEnum.backSprites:
-            backSprites.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+            backSprites.ctx.clearRect( 0, 0, backSprites.canvas.width, backSprites.canvas.height );
             break;
         case CanvasTypeEnum.foreground:
-            frontTiles.ctx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT );
+            frontTiles.ctx.clearRect( 0, 0, frontTiles.canvas.width, frontTiles.canvas.height );
             break;
         default:
             console.log( `Canvastype ${type} not recognized` );

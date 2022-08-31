@@ -1,5 +1,8 @@
 ### LOG
 
+#### AUG 31, 2022
+* Basic larger scrollable map for outside neighbourhood environments
+
 #### AUG 30, 2022
 * Implementing camerafocus for non-mobile screens
 * Now using SpeechbubbleCanvas for non-mobile screens

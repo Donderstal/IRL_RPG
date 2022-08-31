@@ -38,10 +38,10 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     //    e.drawAndMove( );
     //})
 
-    if ( GAME.FRONTGRID.hasFrontGrid ) {
-        const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
-        GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
-    }
+    //if ( GAME.FRONTGRID.hasFrontGrid ) {
+    //    const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
+    //    GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
+    //}
 
     drawBubbles();
 

@@ -383,7 +383,6 @@ const animationResources = {
 }
 
 export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number = null, options: { looped: boolean, loops: number } = null ): SpriteAnimationModel => {
-    console.log(animationName)
     if ( animationName in animationResources ) {
         return getAnimationModel( animationName, width, height, options.looped, options.loops );
     } 

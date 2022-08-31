@@ -1,4 +1,4 @@
-import globals from '../game-data/globals';
+import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
 import { listenForKeyPress, stopListenForKeyPress, clearPressedKeys } from '../game/controls';
 import { Neighbourhood } from '../game/Neighbourhood';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
@@ -10,7 +10,7 @@ import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../enumerables/InteractionType';
 import { DirectionEnum } from '../enumerables/DirectionEnum';
 import { cameraFocus } from '../game/cameraFocus';
-import { clearGridCanvases, clearGrids, getCanvasWithType } from '../game/controllers/gridCanvasController';
+import { clearGridCanvases, clearGrids, getCanvasWithType, setCanvasesDimensions } from '../game/controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import type { BackTileGrid } from '../game/canvas/BackTileGrid';
 import type { BackSpriteGrid } from '../game/canvas/BackSpriteGrid';
@@ -61,7 +61,10 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     globals.GAME.paused = true;
     stopListenForKeyPress();
     clearPressedKeys();
+
     setNeighbourhoodAndMap( destinationName );
+    setCanvasDimensions( );
+
     clearGrids();
     clearGridCanvases();
 
@@ -142,5 +145,18 @@ export const setNeighbourhoodAndMap = ( mapName: string ): void => {
     }
     else {
         globals.GAME.activeNeighbourhood.activateMap(mapName);
+    }
+}
+
+const setCanvasDimensions = (): void => {
+    if ( globals.GAME.activeMap.outdoors ) {
+        let neighbourhoodModel = globals.GAME.activeNeighbourhood.model;
+        const width = neighbourhoodModel.horizontalSlots.length * CANVAS_WIDTH;
+        const height = neighbourhoodModel.verticalSlots.length * CANVAS_HEIGHT;
+
+        setCanvasesDimensions( width, height );
+    }
+    else {
+        setCanvasesDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );
     }
 }

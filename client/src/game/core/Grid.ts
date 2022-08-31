@@ -24,8 +24,8 @@ export class Grid {
         this.canvasType = canvasType;
         this.rows = rows;
         this.columns = columns;        
-        this.overflowColumns = CANVAS_COLUMNS - this.columns;
-        this.overflowRows = CANVAS_ROWS - this.rows;
+        this.overflowColumns = this.columns >= CANVAS_COLUMNS ? 0 : CANVAS_COLUMNS - this.columns;
+        this.overflowRows = this.rows >= CANVAS_ROWS ? 0 : CANVAS_ROWS - this.rows;
         this.x = this.getXOffset( );
         this.y = this.getYOffset( );
         this.array = [];
