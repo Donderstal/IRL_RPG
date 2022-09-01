@@ -46,7 +46,7 @@ const THREE_HIGH_SPRITE = {
 
 const POSTER_SPRITE = {
     "dimensional_alignment": SpriteSheetAlignmentEnum.standard, "not_grounded": true,
-    "height_blocks": 1.75, "width_blocks": 1.75,
+    "on_background": true, "height_blocks": 1.75, "width_blocks": 1.75,
 }
 
 const STANDARD_CAR = {

@@ -52,7 +52,7 @@ export default {
             "column":22
         },
         {
-            "type":"bar_sign",
+            "type":"bar_sign_old",
             "row":6,
             "column":7
         },

@@ -1,4 +1,4 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT, MOVEMENT_SPEED } from '../game-data/globals';
+import { CANVAS_WIDTH, CANVAS_HEIGHT, MOVEMENT_SPEED, GRID_BLOCK_PX } from '../game-data/globals';
 import globals from '../game-data/globals';
 import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
@@ -17,12 +17,12 @@ export class CameraFocus {
 
     movingToNewFocus: boolean;
     focusSpriteId: string;
-    focusTileId: number|OutOfMapEnum;
+    focusTileId: number | OutOfMapEnum;
     newFocusXy: { x: number; y: number }
     lastFocusXy: { x: number; y: number }
     mode: CameraFocusMode;
-    constructor( ) {
-        this.setBaseValues( );
+    constructor() {
+        this.setBaseValues();
 
         this.xValue;
         this.yValue;
@@ -39,17 +39,27 @@ export class CameraFocus {
     get cinematicMode(): boolean { return this.mode === CameraFocusMode.cinematic; }
     get followingSprite(): boolean { return this.mode === CameraFocusMode.followSprite; }
 
+    get xOffset(): number {
+        return (document.documentElement.clientWidth > document.documentElement.clientHeight
+            ? document.documentElement.clientWidth
+            : document.documentElement.clientHeight) / 2;
+    }
+    get yOffset(): number {
+        return (document.documentElement.clientWidth < document.documentElement.clientHeight
+            ? document.documentElement.clientWidth
+            : document.documentElement.clientHeight) / 2;
+    }
+    get offsettedXValue(): number {
+        return this.xValue + -this.xOffset
+    }
+    get offsettedYValue(): number {
+        return this.yValue + -this.yOffset
+    }
     get xValueAsString(): string { 
-        const xBenchMark = document.documentElement.clientWidth > document.documentElement.clientHeight 
-        ? document.documentElement.clientWidth
-        : document.documentElement.clientHeight;
-        return -(this.xValue + ((-xBenchMark) / 2)) + 'px';
+        return -this.offsettedXValue + 'px';
     }
     get yValueAsString(): string { 
-        const yBenchMark = document.documentElement.clientWidth < document.documentElement.clientHeight 
-        ? document.documentElement.clientWidth
-        : document.documentElement.clientHeight;
-        return -(this.yValue + ((-yBenchMark) / 2))+ 'px';
+        return -this.offsettedYValue + 'px';
     }
 
     get focusedSprite( ): Sprite {
@@ -169,9 +179,15 @@ export class CameraFocus {
                 : this.centerOnXY( this.newFocusXy.x, this.newFocusXy.y );
         }
     }
+
+    xyValueIsInView( x: number, y: number ): boolean {
+        const viewMargin = GRID_BLOCK_PX * 2;
+        return x + viewMargin >= this.offsettedXValue && x - viewMargin <= ( this.offsettedXValue + window.innerWidth )
+            && y + viewMargin >= this.offsettedYValue && y - viewMargin <= ( this.offsettedYValue + window.innerHeight );
+    }
 }
 
-export let cameraFocus = null;
+export let cameraFocus: CameraFocus = null;
 
 export const initializeCameraFocus = () => {
     cameraFocus = new CameraFocus();

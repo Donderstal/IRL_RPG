@@ -91,7 +91,7 @@ export default {
         {
             "type": "car_d",
             "row": 11,
-            "column": 11,
+            "column": 14,
             "direction": DirectionEnum.right
         },
         {

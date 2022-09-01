@@ -2,7 +2,6 @@ import { GRID_LEONARD_C2 } from './grid';
 import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 import { PIGEON } from '../../../spriteTypeResources';
 
 export default {
@@ -88,7 +87,7 @@ export default {
         },
         {
             "type": "car_b",
-            "row": 6,
+            "row": 5,
             "column": 8,
             "direction": DirectionEnum.up
         },

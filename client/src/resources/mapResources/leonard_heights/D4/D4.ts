@@ -1,6 +1,5 @@
 import { GRID_LEONARD_D4 } from './grid';
 import { FRONT_GRID_LEONARD_D4 } from './frontgrid';
-import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 
@@ -25,7 +24,7 @@ export default {
         },
         {
             "type": "car_a",
-            "row": 5,
+            "row": 3,
             "column": 11,
             "direction": DirectionEnum.up
         },

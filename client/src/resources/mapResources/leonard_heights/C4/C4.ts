@@ -157,19 +157,19 @@ export default {
         },
         {
             "type": "car_b",
-            "row": 12,
+            "row": 10,
             "column": 15,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_c",
-            "row": 12,
+            "row": 10,
             "column": 17,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_d",
-            "row": 12,
+            "row": 10,
             "column": 23,
             "direction": DirectionEnum.up
         }

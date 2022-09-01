@@ -9,9 +9,10 @@ import { moveSpriteInDirection } from './modules/spriteMovementModule';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { resetRandomAnimationCounter } from './modules/randomAnimationModule';
 import { registerPlayerAnswer } from './controllers/cinematicController';
-import { getCanvasWithType } from './controllers/gridCanvasController';
+import { getCanvasWithType, getTileOnCanvasByCell } from './controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import { getMenuCanvas } from './controllers/utilityCanvasController';
+import { cameraFocus } from './cameraFocus';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -59,6 +60,16 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
 
     if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {
         handleSelectionKeys();
+    }
+
+    if ( event.key === "c" ) {
+        console.log( `Camerfocused on x:${cameraFocus.xValue}, y:${cameraFocus.yValue}` );
+        console.log( `Camera focus offset is x:${cameraFocus.xOffset}, y:${cameraFocus.yOffset}` );
+        console.log( `Css strings x:${cameraFocus.xValueAsString}, y:${cameraFocus.yValueAsString}` );
+        console.log( `Window dimensions width:${window.innerWidth}, y:${window.innerHeight}` );
+        const tile = getTileOnCanvasByCell( { column: 2, row: 2 }, CanvasTypeEnum.background );
+        console.log( `Tile at c:2, r:2 on Screen?` )
+        console.log( cameraFocus.xyValueIsInView(tile.x, tile.y) )
     }
 };
 export const handleMovementKeys = () => {

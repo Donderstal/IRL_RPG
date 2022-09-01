@@ -105,7 +105,15 @@ export const handleNpcCounter = ( GAME: Game ): void => {
 }
 
 export const drawSpritesInOrder = ( GAME: Game ): void => {
-    GAME.FRONT.allSprites.sort( ( a, b ) => {
+    console.log( `${GAME.FRONT.allSprites.length} sprites total` )
+    const spritesInView = GAME.FRONT.allSprites.filter( ( e ) => {
+        return cameraFocus.xyValueIsInView( e.left, e.top )
+            || cameraFocus.xyValueIsInView( e.left, e.bottom )
+            || cameraFocus.xyValueIsInView( e.right, e.top )
+            || cameraFocus.xyValueIsInView( e.right, e.bottom )
+    } )
+    console.log( `${spritesInView.length} in view` )
+    spritesInView.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 
         }
@@ -131,7 +139,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     const flyingSprites     = [];
 
     GAME.FRONT.resetTilesBlockedBySprites();
-    GAME.FRONT.allSprites.forEach( ( sprite )  => {
+    spritesInView.forEach( ( sprite )  => {
         if ( sprite.model.onBackground ) {
             backgroundSprites.push( sprite );
         }
@@ -155,7 +163,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     drawSpritesInArray( foregroundSprites, GAME );
     drawSpritesInArray( flyingSprites, GAME );
 
-    const cars = GAME.FRONT.allSprites.filter((e) => {return e.isCar;});
+    const cars = spritesInView.filter((e) => {return e.isCar;});
     cars.forEach((car)=>{car.State.decideStateFromPendingStateChanges( )});
 }
 

@@ -39,7 +39,7 @@ export default {
         {
             "type": "car_b",
             "row": 9,
-            "column": 7,
+            "column": 10,
             "direction": DirectionEnum.right
         },
         {

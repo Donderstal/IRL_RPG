@@ -1,4 +1,3 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_C1 } from './grid';
 import { FRONT_GRID_LEONARD_C1 } from './frontgrid';
 import { LOST_KEYS_INTERACTION } from './C1-interactions';
@@ -66,13 +65,13 @@ export default {
         },
         {
             "type": "car_b",
-            "row": 5,
+            "row": 3,
             "column": 3,
             "direction": DirectionEnum.up
         },
         {
             "type": "car_a",
-            "row": 5,
+            "row": 3,
             "column": 7,
             "direction": DirectionEnum.up
         },
