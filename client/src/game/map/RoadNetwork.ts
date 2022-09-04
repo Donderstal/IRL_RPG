@@ -1,11 +1,14 @@
-import { start } from 'repl';
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 import globals from '../../game-data/globals';
+import { Counter } from '../../helpers/Counter';
 import { getValidCarDestination } from '../../helpers/roadPathfindingHelpers';
 import { TileSquare } from '../../helpers/TileSquare';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import type { CellPosition } from '../../models/CellPositionModel';
 import type { RoadModel } from '../../models/RoadModel';
+import { cameraFocus } from '../cameraFocus';
+import { getTileOnCanvasByCell } from '../controllers/gridCanvasController';
 import { Crossing } from './roads/Crossing';
 import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
@@ -19,7 +22,7 @@ export class RoadNetwork {
     intersectionIds: string[];
     crossings: Crossing[];
     roadDestinations: CellPosition[];
-
+    carCounter: Counter;
     pendingIntersections: { roads: Road[]; roadIds: string[]; directions: DirectionEnum[]; square: TileSquare }[]
     pendingCrossings: { road: Road; square: TileSquare; location: CellPosition[] }[]
     constructor( roads: RoadModel[], canvas: HTMLCanvasElement ) {
@@ -38,6 +41,7 @@ export class RoadNetwork {
         this.pendingCrossings = [];
         this.crossings = [];
         this.setCrossings();
+        this.carCounter = new Counter( globals.GAME.activeNeighbourhood.model.carSpawnRate, true );
     }
 
     getRoadById( id: string ): Road {
@@ -66,19 +70,34 @@ export class RoadNetwork {
         this.crossings.forEach( ( intersection ) => { intersection.updateCrossingStatus( ); })
     }
 
-    handleCarCounter( ): void {
-        this.roads.forEach( ( e ) => {
-            if ( e.model.hasStart && e.carCounter.countAndCheckLimit() ) {
-                this.generateCar( e );
-            }
+    handleCarCounter(): void {
+        if ( this.carCounter.countAndCheckLimit() ) {
+            const validRoads = this.roads.filter( ( e ) => { return e.model.hasStart; } );
+            const randomRoad = validRoads[Math.floor( Math.random() * validRoads.length )];
+            this.generateCar( randomRoad );
+        }
+    }
+
+    getValidCarStart(): CellPosition {
+        const validRoads = this.roads.filter( ( e ) => { return e.model.hasStart; } );
+        const allStarts = validRoads.map( ( e ) => { return e.getRoadStartPosition(); } );
+        const validStarts = allStarts.filter( ( e ) => {
+            const tile = getTileOnCanvasByCell( { column: e.column, row: e.row }, CanvasTypeEnum.background );
+            return !tile.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite( tile.index ) && !cameraFocus.xyValueIsInView( tile.x, tile.y ); 
         } )
+        return validStarts[Math.floor( Math.random() * validStarts.length )];
     }
 
     generateCar( road: Road ): void {
         const carObjectModel = road.getRandomCarObjectModel();
-        const startLocation = road.getRoadStartPosition();
-        carObjectModel.destination = getValidCarDestination( startLocation, road );
-        globals.GAME.FRONT.getTileAndSetSprite( carObjectModel );
+        const startLocation = this.getValidCarStart();
+        if ( startLocation === null || startLocation === undefined ) return;
+
+        const destination = getValidCarDestination( startLocation, road );
+        if ( destination !== null && destination !== undefined ) {
+            carObjectModel.destination = getValidCarDestination( startLocation, road );
+            globals.GAME.FRONT.getTileAndSetSprite( carObjectModel );
+        }
     }
 
     roadsIntersect( horizontalRoad: Road, verticalRoad: Road ): boolean {

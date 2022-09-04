@@ -1,5 +1,6 @@
 import type { InteractionModel } from "./InteractionModel";
 import type { MapModel } from "./MapModel";
+import type { RoadModel } from "./RoadModel";
 
 export type NeighbourhoodModel = {
     name: string;
@@ -14,4 +15,5 @@ export type NeighbourhoodModel = {
 
     spawnableActions?: InteractionModel[][];
     mapDictionary: { [key: string]: MapModel };
+    roads: RoadModel[];
 }

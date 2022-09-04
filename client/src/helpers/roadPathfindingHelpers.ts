@@ -51,9 +51,7 @@ export const getValidCarDestination = ( start: CellPosition, road: Road ): CellP
             } )
         } )
 
-        if ( roadEndsOutOfMap( road ) ) {
-            validDestinations.push( road.getRoadEndPosition() );
-        }
+        validDestinations.push( road.getRoadEndPosition() );
     }
 
     const randomIndex = Math.floor( Math.random() * validDestinations.length );
@@ -178,15 +176,6 @@ const getIntersectingTile = ( roadId: string, road2Id: string ): CellPosition =>
         cell.row = road1.model.direction === DirectionEnum.left ? road2.model.primaryRow : road2.model.secondaryRow;
     }
     return cell;
-}
-
-const roadEndsOutOfMap = ( road: Road ): boolean => {
-    const columnOutOfMap = globals.GAME.activeMap.columns + 1;
-    const rowOutOfMap = globals.GAME.activeMap.rows + 1;
-    return ( DirectionEnum.left && road.model.secondaryColumn === 0 )
-        || ( DirectionEnum.up && road.model.secondaryRow === 0 )
-        || ( DirectionEnum.right && road.model.secondaryColumn === columnOutOfMap )
-        || ( DirectionEnum.right && road.model.secondaryRow === rowOutOfMap );
 }
 
 const findClosestIntersection = ( roadId: string, cellPosition: CellPosition, direction: DirectionEnum ): Intersection => {

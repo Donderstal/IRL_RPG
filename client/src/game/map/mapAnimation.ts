@@ -105,14 +105,13 @@ export const handleNpcCounter = ( GAME: Game ): void => {
 }
 
 export const drawSpritesInOrder = ( GAME: Game ): void => {
-    console.log( `${GAME.FRONT.allSprites.length} sprites total` )
-    const spritesInView = GAME.FRONT.allSprites.filter( ( e ) => {
-        return cameraFocus.xyValueIsInView( e.left, e.top )
-            || cameraFocus.xyValueIsInView( e.left, e.bottom )
-            || cameraFocus.xyValueIsInView( e.right, e.top )
-            || cameraFocus.xyValueIsInView( e.right, e.bottom )
-    } )
-    console.log( `${spritesInView.length} in view` )
+    const spritesInView = GAME.FRONT.allSprites;
+    //.filter( ( e ) => {
+    //    return cameraFocus.xyValueIsInView( e.left, e.top )
+    //        || cameraFocus.xyValueIsInView( e.left, e.bottom )
+    //        || cameraFocus.xyValueIsInView( e.right, e.top )
+    //        || cameraFocus.xyValueIsInView( e.right, e.bottom )
+    //} )
     spritesInView.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 

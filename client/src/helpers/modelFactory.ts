@@ -43,9 +43,6 @@ export const initMapModel = ( mapData ): MapModel => {
         spawnPoints: mapData.spawnPoints != undefined
             ? mapData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint, mapData.columns, mapData.rows ) } )
             : [],
-        roads: mapData.roads != undefined
-            ? mapData.roads.map( ( road ): RoadModel => { return initRoadModel( road ) } )
-            : [],
         doors: mapData.doors != undefined
             ? mapData.doors.map( ( door ): DoorModel => { return initDoorModel( door ) } )
             : [],
@@ -78,6 +75,9 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
         spawnableActions: neighbourhoodData.spawnable_actions,
 
         mapDictionary: mapDictionary,
+        roads: neighbourhoodData.roads != undefined
+            ? neighbourhoodData.roads.map( ( road ): RoadModel => { return initRoadModel( road ) } )
+            : [],
     };
     return neighbourhoodModel;
 }

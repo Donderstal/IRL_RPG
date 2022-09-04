@@ -123,7 +123,7 @@ export class Neighbourhood {
             doors: doors,
             actions: actions,
             spawnPoints: [],
-            roads: []
+            roads: this.model.roads
         }
 
         console.log( mapModel );

@@ -154,17 +154,12 @@ export class I_Junction {
 
     pushTilesToList( col1: number, row1: number, col2: number, row2: number, direction: DirectionEnum ) {
         const FRONT = globals.GAME.FRONT
-        let tileList = [];
-        for( var i = 1; i <= this.laneDepth; i++ ) {
-            tileList.push( FRONT.getTileAtCell( 
-                isHorizontal( direction ) ? col1 + i : col1, 
-                !isHorizontal( direction ) ? row1 + i : row1, 
-            ), FRONT.getTileAtCell( 
-                isHorizontal( direction ) ? col2 + i : col2, 
-                !isHorizontal( direction ) ? row2 + i : row2, 
-            ) )
-        }
-        return tileList;
+        return [
+            FRONT.getTileAtCell( col1, row1 ),
+            FRONT.getTileAtCell( col1, row2 ),
+            FRONT.getTileAtCell( col2, row1 ),
+            FRONT.getTileAtCell( col2, row2 ),
+        ];
     }
 
     setCarsToWaitIfLaneIsClosed( ): void {

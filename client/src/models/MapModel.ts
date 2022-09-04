@@ -23,7 +23,7 @@ export type MapModel = {
     frontSprites: CanvasObjectModel[];
 
     spawnPoints: SpawnPointModel[];
-    roads: RoadModel[];
+    roads?: RoadModel[];
     doors: DoorModel[];
     actions?: MapActionModel[];
     savepoint?: any;

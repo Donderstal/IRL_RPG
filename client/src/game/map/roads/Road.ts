@@ -1,6 +1,5 @@
 import globals from '../../../game-data/globals';
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
-import { Counter } from "../../../helpers/Counter";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
 import type { CellPosition } from "../../../models/CellPositionModel";
 import type { RoadModel } from "../../../models/RoadModel";
@@ -8,7 +7,6 @@ import { getDataModelByKey } from "../../../resources/spriteDataResources";
 import type { Sprite } from "../../core/Sprite";
 import type { Tile } from "../../core/Tile";
 import type { I_Junction } from "./I_Junction";
-import type { GridCellModel } from '../../../models/GridCellModel';
 
 export class Road {
     id: string;
@@ -21,7 +19,6 @@ export class Road {
     activeCarIds: string[];
     hasBusLine: boolean;
     isHorizontal: boolean
-    carCounter: Counter;
     crossings: [];
     constructor ( roadModel: RoadModel, id: string ) {
         this.id = id;
@@ -42,7 +39,6 @@ export class Road {
         };
 
         this.activeCarIds = [];
-        this.carCounter = new Counter( globals.GAME.activeNeighbourhood.model.carSpawnRate, true );
 
         if ( this.hasBusLine ) {
             this.setBusStopLocation( )

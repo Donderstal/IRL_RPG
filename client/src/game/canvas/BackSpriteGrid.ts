@@ -43,7 +43,7 @@ export class BackSpriteGrid extends CanvasGrid {
 
     setForegroundData( mapModel: MapModel, sprites: Sprite[] = null ) {
         this.model = mapModel;
-        if ( this.model.roads.length > 0 ) 
+        if ( this.model.roads !== undefined ) 
             this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas );
 
         if ( sprites ) {

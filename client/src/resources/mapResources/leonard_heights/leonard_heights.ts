@@ -24,6 +24,8 @@ import NewtownAppartment3 from './C2/Newtown-Appartments/Newtown-top';
 import NewtownAppartment4 from './C2/Newtown-Appartments/Newtown-right-top';
 import NewtownAppartment5 from './C2/Newtown-Appartments/Newtown-right-bottom';
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
+import { DirectionEnum } from '../../../enumerables/DirectionEnum';
+import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
 
 export default {
     "name": "Leonard Heights",
@@ -77,5 +79,222 @@ export default {
         "Newtown-appartment-3": NewtownAppartment3,
         "Newtown-appartment-4": NewtownAppartment4,
         "Newtown-appartment-5": NewtownAppartment5
-    }
+    },
+    "roads": [
+        // Baker street / A2 - D2
+        {
+            "name": `Baker street ${DirectionEnum.left}`,
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": true,
+            "primaryRow": 29,
+            "secondaryRow": 28,
+            "primaryColumn": 86,
+            "secondaryColumn": 5
+        },
+        {
+            "name": `Baker street ${DirectionEnum.right}`,
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": true,
+            "primaryRow": 31,
+            "secondaryRow": 30,
+            "primaryColumn": 7,
+            "secondaryColumn": 84
+        },
+
+        // Morgan street / D2 - D4
+        {
+            "name": `Morgan street A ${DirectionEnum.up}`,
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 85,
+            "secondaryColumn": 86,
+            "primaryRow": 48,
+            "secondaryRow": 28
+        },
+        {
+            "name": `Morgan street A ${DirectionEnum.down}`,
+            "direction": DirectionEnum.down,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 83,
+            "secondaryColumn": 84,
+            "primaryRow": 30,
+            "secondaryRow": 46
+        },
+
+        {
+            "name": `Morgan street B ${DirectionEnum.left}`,
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": false,
+            "primaryRow": 46,
+            "secondaryRow": 45,
+            "primaryColumn": 84,
+            "secondaryColumn": 79
+        },
+        {
+            "name": `Morgan street B ${DirectionEnum.right}`,
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": false,
+            "primaryRow": 48,
+            "secondaryRow": 47,
+            "primaryColumn": 81,
+            "secondaryColumn": 86
+        },
+
+        {
+            "name": `Morgan street C ${DirectionEnum.up}`,
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 81,
+            "secondaryColumn": 82,
+            "primaryRow": 63,
+            "secondaryRow": 47
+        },
+        {
+            "name": `Morgan street C ${DirectionEnum.down}`,
+            "direction": DirectionEnum.down,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 79,
+            "secondaryColumn": 80,
+            "primaryRow": 45,
+            "secondaryRow": 63
+        },
+
+        // Hotel street / D3 - E3
+        {
+            "name": `Hotel street ${DirectionEnum.left}`,
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": true,
+            "primaryRow": 41,
+            "secondaryRow": 40,
+            "primaryColumn": 105,
+            "secondaryColumn": 83
+        },
+        {
+            "name": `Hotel street ${DirectionEnum.right}`,
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": false,
+            "primaryRow": 43,
+            "secondaryRow": 42,
+            "primaryColumn": 83,
+            "secondaryColumn": 105
+        },
+
+        // South Leonard Drive / D3 - E3
+        {
+            "name": `South Leonard Drive ${DirectionEnum.left}`,
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": true,
+            "primaryRow": 62,
+            "secondaryRow": 61,
+            "primaryColumn": 101,
+            "secondaryColumn": 17
+        },
+        {
+            "name": `South Leonard Drive ${DirectionEnum.right}`,
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": false,
+            "primaryRow": 64,
+            "secondaryRow": 63,
+            "primaryColumn": 15,
+            "secondaryColumn": 101
+        },
+        {
+            "name": `South Leonard Drive ${DirectionEnum.up}`,
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": false,
+            "primaryColumn": 17,
+            "secondaryColumn": 18,
+            "primaryRow": 61,
+            "secondaryRow": 44
+        },
+        {
+            "name": `South Leonard Drive ${DirectionEnum.down}`,
+            "direction": DirectionEnum.down,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 15,
+            "secondaryColumn": 16,
+            "primaryRow": 44,
+            "secondaryRow": 63
+        },
+
+        // West Leonard Drive / B1 - B3
+        {
+            "name": `West Leonard Drive ${DirectionEnum.up}`,
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": false,
+            "primaryColumn": 37,
+            "secondaryColumn": 38,
+            "primaryRow": 47,
+            "secondaryRow": 6
+        },
+        {
+            "name": `West Leonard Drive ${DirectionEnum.down}`,
+            "direction": DirectionEnum.down,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 35,
+            "secondaryColumn": 36,
+            "primaryRow": 6,
+            "secondaryRow": 45
+        },
+
+        // Boxing street / A2 - A3
+        {
+            "name": `Boxing street ${DirectionEnum.up}`,
+            "direction": DirectionEnum.up,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 7,
+            "secondaryColumn": 8,
+            "primaryRow": 45,
+            "secondaryRow": 30
+        },
+        {
+            "name": `Boxing street ${DirectionEnum.down}`,
+            "direction": DirectionEnum.down,
+            "alignment": RoadAlignmentEnum.vertical,
+            "hasStart": true,
+            "primaryColumn": 5,
+            "secondaryColumn": 6,
+            "primaryRow": 28,
+            "secondaryRow": 47
+        },
+
+        // Towers street / A3 - B3
+        {
+            "name": `Towers street ${DirectionEnum.left}`,
+            "direction": DirectionEnum.left,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": true,
+            "primaryRow": 45,
+            "secondaryRow": 44,
+            "primaryColumn": 36,
+            "secondaryColumn": 7
+        },
+        {
+            "name": `Towers street ${DirectionEnum.right}`,
+            "direction": DirectionEnum.right,
+            "alignment": RoadAlignmentEnum.horizontal,
+            "hasStart": true,
+            "primaryRow": 47,
+            "secondaryRow": 46,
+            "primaryColumn": 5,
+            "secondaryColumn": 38
+        },
+    ],
 }
