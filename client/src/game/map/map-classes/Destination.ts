@@ -5,7 +5,6 @@ import type { BackgroundCanvas } from '../../BackgroundCanvas';
 import type { ForegroundCanvas } from '../../ForegroundCanvas';
 import type { Sprite } from '../../core/Sprite';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
-import { SpriteStateEnum } from '../../../enumerables/SpriteStateEnum';
 import type { GridLocation } from '../../../models/GridLocation';
 import type { Tile } from '../../core/Tile';
 import type { DirectionXy } from '../../../models/DirectionXyModel';
@@ -162,7 +161,6 @@ export class Destination {
     activateSpriteMovementModule( sprite : Sprite): void {
         sprite.activateMovementModule( this.currentStep.direction );
         sprite.direction = this.currentStep.direction;
-        sprite.State.set( SpriteStateEnum.moving );
     }
 
     unsetPath( sprite: Sprite ): void {

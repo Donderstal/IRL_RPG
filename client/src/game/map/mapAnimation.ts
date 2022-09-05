@@ -1,5 +1,4 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
-import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
 import type { Sprite } from '../core/Sprite';
@@ -145,7 +144,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         else if ( sprite.model.notGrounded ) {
             foregroundSprites.push( sprite );
         }
-        else if ( sprite.movementType == MovementType.flying && sprite.State.is( SpriteStateEnum.moving ) ) {
+        else if ( sprite.movementType == MovementType.flying && sprite.pluginIsRunning( sprite.plugins.movement ) ) {
             flyingSprites.push( sprite );
         }
         else {
@@ -161,9 +160,6 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     drawSpritesInArray( standardSprites, GAME );
     drawSpritesInArray( foregroundSprites, GAME );
     drawSpritesInArray( flyingSprites, GAME );
-
-    const cars = spritesInView.filter((e) => {return e.isCar;});
-    cars.forEach((car)=>{car.State.decideStateFromPendingStateChanges( )});
 }
 
 export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {

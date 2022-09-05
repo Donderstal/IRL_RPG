@@ -2,11 +2,9 @@ import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/collision'
-import { SpriteState } from '../../helpers/SpriteState'
 import { isHorizontal } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
-import { SpriteStateEnum } from '../../enumerables/SpriteStateEnum'
 import { MovementType } from '../../enumerables/MovementTypeEnum'
 import type { GridCellModel } from '../../models/GridCellModel'
 import type { SpriteFrameModel } from '../../models/SpriteFrameModel'
@@ -51,9 +49,7 @@ export class Sprite {
     spriteWidthInSheet: number;
     spriteHeightInSheet: number;
 
-    State: SpriteState;
     sheet: HTMLImageElement;
-
     activeEffect: any;
     hasActiveEffect: boolean;
     animationType: AnimationTypeEnum;
@@ -101,7 +97,6 @@ export class Sprite {
         this.animationName  = canvasObjectModel.animationName;
 
         this.spriteId       = spriteId;
-        this.State          = new SpriteState( );
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
@@ -142,7 +137,7 @@ export class Sprite {
     get dynamicTop(): number { return this.standing ? this.baseY - this.speed : this.topY };
 
     get noCollision(): boolean {
-        return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.State.is( SpriteStateEnum.moving ) )
+        return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.pluginIsRunning(this.plugins.movement) )
     }
 
     pluginIsRunning( pluginConfig: { set: boolean, active: boolean } ) {
@@ -230,7 +225,7 @@ export class Sprite {
         }
     }
 
-    setDirection( direction: DirectionEnum, tile: Tile ): void {
+    setDirection( direction: DirectionEnum, tile: Tile = null ): void {
         this.previousDirection = this.direction;
         this.direction = direction;
         if ( direction !== this.previousDirection ) {
@@ -360,7 +355,6 @@ export class Sprite {
     }
     
     drawSprite(): void {
-        this.updateState();
         this.handlePlugins();
         if ( this.isPlayer ) {
             this.visionbox.updateXy( this.centerX, this.baseY );
@@ -379,23 +373,6 @@ export class Sprite {
         }
 
         this.updateCell()
-    }
-
-    updateState(): void {
-        let plugins = this.plugins
-        if ( ( this.State.is( SpriteStateEnum.idle ) && this.pluginIsRunning( plugins.movement ) && !this.State.inCinematic ) ) {
-            this.State.set( SpriteStateEnum.moving );
-        }
-        else if ( this.State.is( SpriteStateEnum.moving ) && !this.pluginIsRunning( plugins.movement ) ) {
-            this.State.set( SpriteStateEnum.idle );
-        }
-        else if ( this.State.is( SpriteStateEnum.moving ) && this.checkForCollision() ) {
-            this.State.set( SpriteStateEnum.blocked );
-            this.sheetPosition = 0;
-        }
-        else if ( this.State.is( SpriteStateEnum.blocked ) && !this.checkForCollision( ) ) {
-            this.State.set( SpriteStateEnum.moving );
-        }
     }
 
     movementFrameCounter() {
@@ -456,8 +433,8 @@ export class Sprite {
 
     activateMovementModule( direction: DirectionEnum ): void {
         this.direction = direction;
+        this.setDirection( direction );
         this.setActiveFrames();
-        this.State.set( SpriteStateEnum.moving );
         this.plugins.movement.active = true;
     }
 

@@ -1,5 +1,4 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import { SpriteStateEnum } from "../../enumerables/SpriteStateEnum";
 import globals from "../../game-data/globals";
 import type { Sprite } from "../core/Sprite";
 import type { Tile } from "../core/Tile";
@@ -20,7 +19,6 @@ export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: Desti
     }
     try {
         movementDictionary[sprite.spriteId] = new Destination( destinationCell, sprite );
-        sprite.State.set( SpriteStateEnum.pathfinding );
     }
     catch ( ex ) {
         console.log( 'error generating path for destination c' + destinationCell.column + ' r' + destinationCell.row );

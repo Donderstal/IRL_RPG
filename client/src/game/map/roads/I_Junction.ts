@@ -3,8 +3,6 @@ import globals from "../../../game-data/globals";
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import type { Road } from './Road';
 import type { Sprite } from "../../core/Sprite";
-import { SpriteStateEnum } from "../../../enumerables/SpriteStateEnum";
-import { isHorizontal } from "../../../helpers/utilFunctions";
 
 export class I_Junction {
     directions: DirectionEnum[];
@@ -160,30 +158,6 @@ export class I_Junction {
             FRONT.getTileAtCell( col2, row1 ),
             FRONT.getTileAtCell( col2, row2 ),
         ];
-    }
-
-    setCarsToWaitIfLaneIsClosed( ): void {
-        this.intersectionCars.forEach( ( car ) => {
-            if ( this.leftFacingInLane && car.direction == DirectionEnum.left && !this.core.spriteIsInTileSquare(car)
-                && this.leftFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[DirectionEnum.left] ) {
-                car.State.addToPendingStateChanges(SpriteStateEnum.waiting);
-            }
-            else if ( this.upFacingInLane && car.direction == DirectionEnum.up && !this.core.spriteIsInTileSquare(car)
-                && this.upFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[DirectionEnum.up]) {
-                car.State.addToPendingStateChanges(SpriteStateEnum.waiting);
-            }
-            else if ( this.rightFacingInLane && car.direction == DirectionEnum.right && !this.core.spriteIsInTileSquare(car)
-                && this.rightFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[DirectionEnum.right]) {
-                car.State.addToPendingStateChanges(SpriteStateEnum.waiting);
-            }
-            else if ( this.downFacingInLane && car.direction == DirectionEnum.down && !this.core.spriteIsInTileSquare(car)
-                && this.downFacingInLane.spriteIsInTileSquare(car) && !this.openLanes[DirectionEnum.down]) {
-                car.State.addToPendingStateChanges(SpriteStateEnum.waiting);
-            }
-            else {
-                car.State.addToPendingStateChanges( SpriteStateEnum.moving );
-            }
-        });
     }
 
     checkForCarsOnSquare( cars: Sprite[], square: TileSquare ): boolean {
