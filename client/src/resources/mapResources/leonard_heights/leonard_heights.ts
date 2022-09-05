@@ -33,7 +33,7 @@ export default {
     "vertical_slots": ["1", "2", "3", "4"],
     "music": "Theme_Overworld_1_HDR.mp3",
     "cars": [ "car_b", "car_c", "bus" ], 
-    "cars_spawn_rate" : 15000,
+    "cars_spawn_rate" : 5000,
     "characters" : [
         TOUGH_GUY, STRONG_GUY, BURLY_GUY, GREEN_HAIR_LADY,
         DORKY_GUY, GRANNY, TOUGH_GUY_WITH_DARK_HAIR, FAT_BUFF_GUY,

@@ -10,13 +10,16 @@ import type { GridLocation } from '../../../models/GridLocation';
 import type { Tile } from '../../core/Tile';
 import type { DirectionXy } from '../../../models/DirectionXyModel';
 import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHelpers';
-import type { GridCellModel } from '../../../models/GridCellModel';
+import type { DestinationCellModel } from '../../../models/DestinationCellModel';
+import { DestinationType } from '../../../enumerables/DestinationType';
+import { getTileOnCanvasByXy } from '../../controllers/gridCanvasController';
+import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
 
 export class Destination {
     column: number;
     row: number;
+    type: DestinationType;
     originalDestination: { column: number, row: number }
-    deleteSprite: boolean;
 
     path: DirectionXy[];
     foundPath: boolean;
@@ -24,58 +27,59 @@ export class Destination {
     pathfindingTries: number;
     tryingForPath: boolean;
     inSideStep: boolean;
-    constructor( column: number, row: number, sprite: Sprite, deleteSprite = false ) {
-        this.column = column;
-        this.row = row;
-        this.originalDestination = {
-            column: column,
-            row: row
-        };
+    reachedDestination: boolean;
+    spriteId: string;
+    constructor( destination: DestinationCellModel, sprite: Sprite ) {
+        this.column = destination.column;
+        this.row = destination.row;
+        this.type = destination.type;
+
+        this.originalDestination = destination;
         this.inSideStep = false;
-        this.deleteSprite   = deleteSprite;
+        this.reachedDestination = false;
 
         this.path = null;
         this.foundPath = false;
-        this.currentPathIndex;
-        this.setPath( sprite );
+        this.currentPathIndex = 0;
 
         this.pathfindingTries = 0;
         this.tryingForPath = false;
-        this.activateSpriteMovementModule( sprite );
+        this.spriteId = sprite.spriteId;
+
+        this.setPath( sprite );
     }
 
     get backClass(): BackgroundCanvas { return globals.GAME.BACK; };
     get frontClass(): ForegroundCanvas { return globals.GAME.FRONT; };
     get currentStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex]; };
+    get nextStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex + 1]; };
+    get hasNextStep(): boolean { return this.nextStep !== undefined; }
     get spriteHasReachedDestination( ): boolean { return this.currentPathIndex === this.path.length - 1; };
 
-    setPath(sprite: Sprite) {
+    setPath( sprite: Sprite ) {
         const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
         let gridLocationList = ( sprite.isCar ) ? this.calculateCarPath( sprite ) : this.calculatePath( sprite );
-        if ( gridLocationList !== null ) {
-            this.startPath( sprite, startingTile, gridLocationList );
-            this.pathfindingTries = 0
-        }
-        else if ( !this.tryingForPath && this.pathfindingTries < 5 ) {
-            this.tryingForPath = true;
-            this.pathfindingTries++
-            setTimeout( () => {
-                this.tryingForPath = false;
-                this.setPath( sprite )
-            }, 1200 )
-        }
-        else if ( !this.tryingForPath && this.pathfindingTries >= 5 ) {
-            if ( !this.deleteSprite ) {
-                this.pathfindingTries = 0;
-                this.tryingForPath = false;
+
+        if ( gridLocationList === null ) {
+            if ( this.pathfindingTries >= 5 ) {
+                this.unsetPath( sprite );
+                if ( this.type === DestinationType.randomGeneratedSprite ) {
+                    globals.GAME.FRONT.deleteSprite( sprite.spriteId );
+                };
             }
             else {
-                globals.GAME.FRONT.deleteSprite( sprite.spriteId );
+                this.pathfindingTries++;
+                this.setPath( sprite )
             }
+        }
+        else {
+            this.pathfindingTries = 0;
+            this.startPath( sprite, startingTile, gridLocationList );
+            this.activateSpriteMovementModule( sprite );
         }
     }
 
-    setSideStep( sideStepDestination: GridCellModel, sprite: Sprite ): void {
+    setSideStep( sideStepDestination: DestinationCellModel, sprite: Sprite ): void {
         this.column = sideStepDestination.column;
         this.row = sideStepDestination.row;
         this.inSideStep = true;
@@ -90,8 +94,16 @@ export class Destination {
     calculateCarPath( sprite: Sprite ): GridLocation[]  {
         this.currentPathIndex = 0;
         const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
-        const destinationTile = this.frontClass.getTileAtCell(this.column, this.row);
-        return getRoadPathGridLocationList( startingTile, sprite.direction, destinationTile );
+        const destinationTile = this.frontClass.getTileAtCell( this.column, this.row );
+        console.log( `Start c${sprite.column} r${sprite.row}, destination c${this.column}, r${this.row}` )
+        const path = getRoadPathGridLocationList( startingTile, sprite.direction, destinationTile );
+        if ( path === null ) {
+            this.unsetPath( sprite );
+            if ( this.type === DestinationType.randomGeneratedSprite ) {
+                globals.GAME.FRONT.deleteSprite( sprite.spriteId );
+            };
+        }
+        return path; 
     }
 
     calculatePath( sprite: Sprite ): GridLocation[] {
@@ -159,13 +171,10 @@ export class Destination {
         sprite.deactivateMovementModule();
     }
 
-    hasNextStep(): boolean {
-        return this.currentPathIndex + 1 < this.path.length;
-    }
-
     setNextStep( sprite: Sprite ): void {
         this.currentPathIndex += 1;
-        if ( this.getNextStepTile() === null ) {
+        if ( !this.hasNextStep ) {
+            this.reachedDestination = true;
             console.log( this.currentStep );
         }
         else {
@@ -175,8 +184,16 @@ export class Destination {
     }
 
     getNextStepTile(): Tile {
-        const nextStep = this.path[this.currentPathIndex + 1];
-        return nextStep !== undefined ? globals.GAME.getTileOnCanvasAtXY( "BACK", nextStep.x + ( GRID_BLOCK_PX / 2 ), nextStep.y + ( GRID_BLOCK_PX / 2 ) ) : null;
+        if ( this.nextStep == undefined ) {
+            console.log( `${this.spriteId} at final index ${this.currentPathIndex}` )
+            return null;
+        }
+        else {
+            return getTileOnCanvasByXy(
+                { x: this.nextStep.x + ( GRID_BLOCK_PX / 2 ), y: this.nextStep.y + ( GRID_BLOCK_PX / 2 ) },
+                CanvasTypeEnum.background
+            );
+        }
     }
 
     getNextStepDirection( sprite: Sprite ): DirectionEnum {

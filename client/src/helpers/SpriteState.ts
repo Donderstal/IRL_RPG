@@ -48,8 +48,8 @@ export class SpriteState {
         this.storeState( );
         if ( sprite.destination !== null ) {
             this.storedDestination = { 
-                'column': sprite.destination.column, 
-                'row': sprite.destination.row
+                column: sprite.destination.column, 
+                row: sprite.destination.row
             }
         }
         this.set( SpriteStateEnum.idle );        

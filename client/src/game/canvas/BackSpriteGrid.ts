@@ -21,6 +21,8 @@ import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import type { DestinationCellModel } from '../../models/DestinationCellModel';
+import { DestinationType } from '../../enumerables/DestinationType';
 
 export class BackSpriteGrid extends CanvasGrid {
     spriteDictionary: { [key: string]: Sprite };
@@ -108,18 +110,8 @@ export class BackSpriteGrid extends CanvasGrid {
     }
 
     deleteSprite( spriteId: string ): void {
-        if ( this.spriteDictionary[spriteId].model.isCar ) {
-            this.roadNetwork.roads.forEach( ( e ) => {
-                if ( e.activeCarIds.indexOf( spriteId ) > - 1 ) {
-                    e.activeCarIds.splice( e.activeCarIds.indexOf( spriteId ), 1 )
-                }
-            });
-        }
         delete this.spriteDictionary[spriteId];
-        this.allSprites = [];
-        Object.keys( this.spriteDictionary ).forEach ( ( e ) => {
-            this.allSprites.push( this.spriteDictionary[e] )
-        })
+        this.allSprites = this.allSprites.filter( ( e ) => { return e.spriteId !== spriteId; });
     }
 
     tileHasBlockingSprite( index: number | OutOfMapEnum ): boolean {
@@ -204,9 +196,16 @@ export class BackSpriteGrid extends CanvasGrid {
             action: globals.GAME.activeNeighbourhood.getRandomAction()
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
+
+        const destinationModel: DestinationCellModel = {
+            column: destination.column,
+            row: destination.row,
+            direction: destination.direction,
+            type: DestinationType.randomGeneratedSprite
+        }
         const id = this.setSprite( tile, model );
         const sprite = this.spriteDictionary[id];
-        initializeSpriteMovement( sprite, destination as GridCellModel, true );
+        initializeSpriteMovement( sprite, destinationModel );
     }
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {

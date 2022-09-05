@@ -1,5 +1,8 @@
 ### LOG
 
+#### SEP 5, 2022
+* Moving roadnetwork data / functionalities to Neighbourhood
+
 #### AUG 31, 2022
 * Basic larger scrollable map for outside neighbourhood environments
 

@@ -95,7 +95,7 @@ export class RoadNetwork {
 
         const destination = getValidCarDestination( startLocation, road );
         if ( destination !== null && destination !== undefined ) {
-            carObjectModel.destination = getValidCarDestination( startLocation, road );
+            carObjectModel.destination = destination;
             globals.GAME.FRONT.getTileAndSetSprite( carObjectModel );
         }
     }

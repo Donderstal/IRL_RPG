@@ -20,6 +20,8 @@ import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 import { setNewBubble, setNewEmote } from "../controllers/bubbleController";
 import { destroySpriteAnimation, initializeSpriteAnimation, spriteHasAnimation } from "../modules/animationModule";
 import { cameraFocus } from "../cameraFocus";
+import type { DestinationCellModel } from "../../models/DestinationCellModel";
+import { DestinationType } from "../../enumerables/DestinationType";
 
 export class Animation {
     id: string;
@@ -160,11 +162,16 @@ export class Animation {
                 const tileF = globals.GAME.FRONT.getTileAtCell( cell.column, cell.row )
                 return !tileB.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite(tileF.index);
             });
-
             sceneModel.destination = getClosestCell( sprite, cells );
         }
 
-        initializeSpriteMovement( sprite, sceneModel.destination );
+        const destination: DestinationCellModel = {
+            column: sceneModel.destination.column,
+            row: sceneModel.destination.row,
+            type: DestinationType.cinematic
+        }
+
+        initializeSpriteMovement( sprite, destination );
     }
 
     initAnimationAnimation( sceneModel: AnimateSpriteScene ): void {

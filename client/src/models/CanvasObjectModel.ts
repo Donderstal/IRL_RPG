@@ -1,8 +1,8 @@
 import type { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { MovementType } from "../enumerables/MovementTypeEnum";
-import type { CellPosition } from "./CellPositionModel";
 import type { ConditionModel } from "./ConditionModel";
+import type { DestinationCellModel } from "./DestinationCellModel";
 import type { DoorModel } from "./DoorModel";
 import type { InteractionModel } from "./InteractionModel";
 import type { SpriteDataModel } from "./SpriteDataModel";
@@ -28,5 +28,5 @@ export type CanvasObjectModel = {
     hasDoor: boolean;
     door?: DoorModel;
 
-    destination?: CellPosition; 
+    destination?: DestinationCellModel; 
 }

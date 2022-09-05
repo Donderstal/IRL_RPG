@@ -1,9 +1,7 @@
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import globals from "../../game-data/globals";
 import { Counter } from "../../helpers/Counter";
 import { getRandomDestinationInRadius } from "../../helpers/utilFunctions";
-import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
 import { initializeSpriteAnimation } from "./animationModule";
 import { initializeSpriteMovement } from "./spriteMovementModule";
@@ -36,7 +34,7 @@ const setRandomDestinationInRadius = ( sprite: Sprite ) => {
     const randomDestinationCell = getRandomDestinationInRadius( sprite, cellRadius );
     if ( randomDestinationCell === null ) return;
 
-    initializeSpriteMovement( sprite, randomDestinationCell, false );
+    initializeSpriteMovement( sprite, randomDestinationCell );
 };
 const setRandomAnimation = ( sprite: Sprite ) => {
     const animationList = sprite.model.idleAnimations;

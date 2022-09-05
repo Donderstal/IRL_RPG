@@ -125,7 +125,7 @@ export class Sprite {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
         }
         if ( canvasObjectModel.destination && this.animationType !== AnimationTypeEnum.movingLoop ) {
-            initializeSpriteMovement( this, canvasObjectModel.destination as GridCellModel, true );
+            initializeSpriteMovement( this, canvasObjectModel.destination );
         }
     }
 
@@ -462,6 +462,7 @@ export class Sprite {
     }
 
     deactivateMovementModule() {
+        console.log( `Deactivate movement for sprite ${this.spriteId}` );
         this.plugins.movement.active = false;
         this.sheetPosition = 0;
         this.setActiveFrame();

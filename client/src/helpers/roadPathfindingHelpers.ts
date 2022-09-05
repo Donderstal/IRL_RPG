@@ -1,18 +1,50 @@
+import { DestinationType } from "../enumerables/DestinationType";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import globals from "../game-data/globals";
+import type { Sprite } from "../game/core/Sprite";
 import type { Intersection } from "../game/map/roads/Intersection";
 import type { Road } from "../game/map/roads/Road";
 import type { CellPosition } from "../models/CellPositionModel";
+import type { DestinationCellModel } from "../models/DestinationCellModel";
 import type { GridLocation } from "../models/GridLocation";
 
 export const getRoadPathGridLocationList = ( start: CellPosition, startingDirection: DirectionEnum, destination: CellPosition ): GridLocation[] => {
     const roadNetwork = globals.GAME.FRONT.roadNetwork;
     const startingRoad = roadNetwork.roads.filter( ( e ) => { return e.cellIsInRoad( start ) && e.model.direction === startingDirection; } )[0];
     const roadIdPath = findRoadPathToDestination( start, startingRoad, destination );
+    console.log(`Convert path to c${destination.column} r${destination.row} to gridlocation list...`)
     return convertRoadIdPathToGridLocationList( start, destination, roadIdPath, roadNetwork.roads );
 }
 
-export const getValidCarDestination = ( start: CellPosition, road: Road ): CellPosition => {
+export const getRoadOfCar = ( sprite: Sprite ): Road => {
+    const roadNetwork = globals.GAME.FRONT.roadNetwork;
+    const roadsWithDirection = roadNetwork.roads.filter( ( e ) => { return e.model.direction === sprite.direction; } );
+    let road = null;
+    while ( road === null && roadsWithDirection.length > 0 ) {
+        let roadToCheck = roadsWithDirection.shift();
+        if ( roadToCheck.isHorizontal ) {
+            const minColumn = Math.min( roadToCheck.model.primaryColumn, roadToCheck.model.secondaryColumn );
+            const maxColumn = Math.max( roadToCheck.model.primaryColumn, roadToCheck.model.secondaryColumn );
+            if ( sprite.row === roadToCheck.model.primaryRow && sprite.column > minColumn && sprite.column < maxColumn) {
+                road = roadToCheck;
+            }
+        }
+        else {
+            const minRow = Math.min( roadToCheck.model.primaryRow, roadToCheck.model.secondaryRow );
+            const maxRow = Math.max( roadToCheck.model.primaryRow, roadToCheck.model.secondaryRow );
+            if ( sprite.column === roadToCheck.model.primaryColumn && sprite.row > minRow && sprite.row < maxRow ) {
+                road = roadToCheck;
+            }
+        }
+    }
+    if ( road === null ) {
+        console.log(sprite)
+    }
+    return road;
+    
+}
+
+export const getValidCarDestination = ( start: CellPosition, road: Road ): DestinationCellModel => {
     const validDestinations = [];
 
     const roadStack = [road];
@@ -56,7 +88,12 @@ export const getValidCarDestination = ( start: CellPosition, road: Road ): CellP
 
     const randomIndex = Math.floor( Math.random() * validDestinations.length );
     const destination = validDestinations[randomIndex];
-    return destination;
+    const destinationModel: DestinationCellModel = {
+        column: destination.column,
+        row: destination.row,
+        type: DestinationType.randomGeneratedSprite
+    }
+    return destinationModel;
 }
 
 const findRoadPathToDestination = ( start: CellPosition, startRoad: Road, destination: CellPosition ): string[] => {
@@ -122,33 +159,38 @@ const convertRoadIdPathToGridLocationList = ( start: CellPosition, destination: 
     let activeRoadId = null;
     let lastLocation = start;
     let currentLocation = null;
-    while ( !foundPath ) {
+    while ( roadIdPath.length > 0 && !foundPath ) {
         activeRoadId = roadIdPath.shift();
         const activeRoad = roads.filter( ( e ) => { return e.id === activeRoadId; } )[0];
         const nextRoad = roads.filter( ( e ) => { return e.id === roadIdPath[0]; } )[0];
         let reachedCrossingWithNextRoad = false;
-        while ( !reachedCrossingWithNextRoad && !foundPath) {
+        let reachedEndOfRoad = false;
+        while ( !reachedCrossingWithNextRoad && !foundPath && !reachedEndOfRoad ) {
             currentLocation = { direction: activeRoad.model.direction }
             switch ( currentLocation.direction ) {
                 case DirectionEnum.left:
                     currentLocation.column = lastLocation.column - 1;
                     currentLocation.row = lastLocation.row;
                     reachedCrossingWithNextRoad = nextRoad !== undefined && currentLocation.column === nextRoad.model.primaryColumn;
+                    reachedEndOfRoad = currentLocation.column < activeRoad.model.secondaryColumn;
                     break;
                 case DirectionEnum.up:
                     currentLocation.column = lastLocation.column;
                     currentLocation.row = lastLocation.row - 1;
                     reachedCrossingWithNextRoad = nextRoad !== undefined && currentLocation.row === nextRoad.model.primaryRow;
+                    reachedEndOfRoad = currentLocation.row < activeRoad.model.secondaryRow;
                     break;
                 case DirectionEnum.right:
                     currentLocation.column = lastLocation.column + 1;
                     currentLocation.row = lastLocation.row;
                     reachedCrossingWithNextRoad = nextRoad !== undefined && currentLocation.column === nextRoad.model.secondaryColumn;
+                    reachedEndOfRoad = currentLocation.column > activeRoad.model.secondaryColumn;
                     break;
                 case DirectionEnum.down:
                     currentLocation.column = lastLocation.column;
                     currentLocation.row = lastLocation.row + 1;
                     reachedCrossingWithNextRoad = nextRoad !== undefined && currentLocation.row === nextRoad.model.secondaryRow;
+                    reachedEndOfRoad = currentLocation.row > activeRoad.model.secondaryRow;
                     break;
             }
             gridLocationList.push(currentLocation)
@@ -156,11 +198,10 @@ const convertRoadIdPathToGridLocationList = ( start: CellPosition, destination: 
                 column: ( reachedCrossingWithNextRoad && !nextRoad.isHorizontal ) ? nextRoad.model.primaryColumn : currentLocation.column,
                 row: ( reachedCrossingWithNextRoad && nextRoad.isHorizontal ) ? nextRoad.model.primaryRow : currentLocation.row
             }
-            currentLocation;
             foundPath = currentLocation.column === destination.column && currentLocation.row === destination.row;
         }
     }
-    return gridLocationList;
+    return foundPath ? gridLocationList : null;
 }
 
 const getIntersectingTile = ( roadId: string, road2Id: string ): CellPosition => {

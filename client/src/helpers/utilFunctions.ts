@@ -1,7 +1,9 @@
+import { DestinationType } from "../enumerables/DestinationType";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import globals from "../game-data/globals";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
+import type { DestinationCellModel } from "../models/DestinationCellModel";
 import type { GridCellModel } from "../models/GridCellModel";
 
 export const fetchJSONWithCallback = ( url: string, callback: Function, callbackParams: any[] = [] ): void => {
@@ -132,7 +134,7 @@ export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
     }
 }
 
-export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): GridCellModel => {
+export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): DestinationCellModel => {
     const back = globals.GAME.BACK;
     const front = globals.GAME.FRONT;
     const leftBorderColumn = sprite.column - radius;
@@ -152,7 +154,7 @@ export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): 
 
     if ( availableTiles.length > 0 ) {
         let randomTile = availableTiles[Math.floor( Math.random() * availableTiles.length )];
-        return { column: randomTile.column, row: randomTile.row };
+        return { column: randomTile.column, row: randomTile.row, type: DestinationType.randomInRange };
     }
     else {
         return null;
