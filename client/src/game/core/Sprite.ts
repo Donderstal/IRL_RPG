@@ -2,7 +2,7 @@ import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { checkForCollision } from '../map/collision'
-import { isHorizontal } from '../../helpers/utilFunctions'
+import { isHorizontal, spriteIsPlayer } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
 import { MovementType } from '../../enumerables/MovementTypeEnum'
@@ -79,7 +79,7 @@ export class Sprite {
         animation: { set: boolean, active: boolean }
     }
 
-    constructor( tile: Tile, canvasObjectModel: CanvasObjectModel, spriteId: string, isPlayer = false ) {   
+    constructor( tile: Tile, canvasObjectModel: CanvasObjectModel, spriteId: string ) {   
         this.plugins = {
             movement: { set: false, active: false },
             idleAnimation: { set: false, active: false },
@@ -97,17 +97,18 @@ export class Sprite {
         this.animationName  = canvasObjectModel.animationName;
 
         this.spriteId       = spriteId;
+        this.name           = canvasObjectModel.name
         this.sheetFrameLimit= 4
         this.sheetPosition  = 0
         this.frameCount     = 0
         this.setDirection( canvasObjectModel.direction ?? 0, tile );
 
         this.activeEffect   = { active: false };
-        this.isPlayer       = isPlayer;
+        this.isPlayer = spriteIsPlayer( spriteId );
         this.hasDoor        = canvasObjectModel.hasDoor;
-        this.hasAction  = canvasObjectModel.hasAction;
-        this.isCar = this.model.isCar;
-        this.speed = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * ( Math.random() * ( .75 - .5 ) + .5 );
+        this.hasAction      = canvasObjectModel.hasAction;
+        this.isCar          = this.model.isCar;
+        this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * ( Math.random() * ( .75 - .5 ) + .5 );
 
         this.initialColumn = canvasObjectModel.column;
         this.initialRow = canvasObjectModel.row;

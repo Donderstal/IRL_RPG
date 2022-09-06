@@ -9,6 +9,7 @@ import type { CellPosition } from '../../models/CellPositionModel';
 import type { RoadModel } from '../../models/RoadModel';
 import { cameraFocus } from '../cameraFocus';
 import { getTileOnCanvasByCell } from '../controllers/gridCanvasController';
+import { createSpriteFromCanvasObjectModel } from '../controllers/spriteController';
 import { Crossing } from './roads/Crossing';
 import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
@@ -96,7 +97,7 @@ export class RoadNetwork {
         const destination = getValidCarDestination( startLocation, road );
         if ( destination !== null && destination !== undefined ) {
             carObjectModel.destination = destination;
-            globals.GAME.FRONT.getTileAndSetSprite( carObjectModel );
+            createSpriteFromCanvasObjectModel( carObjectModel, CanvasTypeEnum.backSprites );
         }
     }
 

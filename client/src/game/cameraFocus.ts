@@ -1,8 +1,8 @@
 import { CANVAS_WIDTH, CANVAS_HEIGHT, MOVEMENT_SPEED, GRID_BLOCK_PX } from '../game-data/globals';
-import globals from '../game-data/globals';
 import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
 import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
+import { getSpriteById } from './controllers/spriteController';
 
 enum CameraFocusMode {
     followSprite,
@@ -63,7 +63,7 @@ export class CameraFocus {
     }
 
     get focusedSprite( ): Sprite {
-        return globals.GAME.FRONT.allSprites.filter((e)=>{ return e.spriteId === this.focusSpriteId })[0]
+        return getSpriteById( this.focusSpriteId );
     }
 
     isFocusedOnSprite( spriteId: string ): boolean {

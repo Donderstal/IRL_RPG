@@ -54,7 +54,7 @@ export class Crossing extends I_Junction {
     checkForSpritesOnCrossing( ): void {
         this.crossingSprites = [];
         this.intersectionCars = [];
-        let sprites = globals.GAME.FRONT.allSprites;
+        let sprites = null;
         sprites.forEach( (sprite) => {
             if ( this.core.spriteIsInTileSquare(sprite) ) {
                 this.crossingSprites.push(sprite)
@@ -69,18 +69,7 @@ export class Crossing extends I_Junction {
     }
 
     checkForCarsNearCrossing( ): void {
-        if ( this.leftFacingInLane ) {
-            this.checkForCarsOnSquare( this.leftFacingRoad.carsOnRoad, this.leftFacingInLane )
-        }
-        if ( this.upFacingInLane ) {
-            this.checkForCarsOnSquare( this.upFacingRoad.carsOnRoad, this.upFacingInLane)
-        }
-        if ( this.rightFacingInLane ) {
-            this.checkForCarsOnSquare(this.rightFacingRoad.carsOnRoad, this.rightFacingInLane)
-        }
-        if ( this.downFacingInLane ) {
-            this.checkForCarsOnSquare(this.downFacingRoad.carsOnRoad, this.downFacingInLane)   
-        }
+        
     }
 
     checkForCarsOnSquare( cars: Sprite[], square: TileSquare ): boolean {

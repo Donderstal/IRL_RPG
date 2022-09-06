@@ -1,6 +1,7 @@
 import { DestinationType } from "../enumerables/DestinationType";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import globals from "../game-data/globals";
+import { PLAYER_ID } from "../game-data/interactionGlobals";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import type { DestinationCellModel } from "../models/DestinationCellModel";
@@ -163,4 +164,8 @@ export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): 
 
 export const isHorizontal = ( direction: DirectionEnum ): boolean => {
     return direction === DirectionEnum.left || direction === DirectionEnum.right;
+}
+
+export const spriteIsPlayer = ( id: string ): boolean => {
+    return id === PLAYER_ID;
 }

@@ -1,20 +1,17 @@
 import type { InteractionAnswer } from '../../enumerables/InteractionAnswer';
-import globals from '../../game-data/globals';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { getClosestHitbox } from '../../helpers/utilFunctions';
 import { getAllActions } from '../modules/actionModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 import type { ActionSelector } from '../map/map-classes/ActionSelector';
 import { clearActiveBubbles } from './bubbleController';
-import type { InteractionModel } from '../../models/InteractionModel';
 import { addEventToRegistry } from '../../helpers/interactionRegistry';
 import { checkForQuestTrigger } from '../../helpers/questRegistry';
+import { getPlayer } from './spriteController';
 
 let activeAction: ActionSelector = null; 
 
 export const handleActionButton = ( ): void => {
-    const GAME = globals.GAME;
-    const PLAYER = GAME.PLAYER;
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
     if ( activeAction !== null ) {
@@ -29,7 +26,7 @@ export const handleActionButton = ( ): void => {
     const actions = getAllActions();
     if ( actions.length === 0 ) return;
     const closestAction = getClosestHitbox( playerHitbox, actions );
-    if ( playerHitbox.actionInRange( closestAction, PLAYER.direction ) ) {
+    if ( playerHitbox.actionInRange( closestAction, getPlayer().direction ) ) {
         setActiveAction( closestAction as ActionSelector );
     }
     else {

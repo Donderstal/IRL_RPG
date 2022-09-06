@@ -4,9 +4,10 @@
     import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
     import { mobileAgent } from '../helpers/screenOrientation'
+import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
 
     const logClick = ( event ) => {
-        globals.GAME.FRONT.allSprites.forEach( ( e ) => {
+        getAllSpritesAsList().forEach( ( e ) => {
             if ( e.x <= event.offsetX && e.x + e.width >= event.offsetX 
             && e.y <= event.offsetY && e.y + e.height >= event.offsetY  ) {
                 console.log(e)

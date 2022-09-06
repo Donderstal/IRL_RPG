@@ -52,10 +52,6 @@ export class Road {
         return FRONT.tileHasBlockingSprite( firstTile.index ) || FRONT.tileHasBlockingSprite( secondTile.index )
     }
 
-    get carsOnRoad( ): Sprite[] {
-        return this.activeCarIds.map( ( id ) => { return globals.GAME.FRONT.spriteDictionary[id]; })
-    }
-
     setMovementCostToRoadTiles(): void {
         const tiles = this.getTilesInRoad();
         tiles.forEach( tile => tile.setMovementCost(5) );

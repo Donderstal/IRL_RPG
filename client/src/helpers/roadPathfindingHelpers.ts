@@ -12,7 +12,6 @@ export const getRoadPathGridLocationList = ( start: CellPosition, startingDirect
     const roadNetwork = globals.GAME.FRONT.roadNetwork;
     const startingRoad = roadNetwork.roads.filter( ( e ) => { return e.cellIsInRoad( start ) && e.model.direction === startingDirection; } )[0];
     const roadIdPath = findRoadPathToDestination( start, startingRoad, destination );
-    console.log(`Convert path to c${destination.column} r${destination.row} to gridlocation list...`)
     return convertRoadIdPathToGridLocationList( start, destination, roadIdPath, roadNetwork.roads );
 }
 

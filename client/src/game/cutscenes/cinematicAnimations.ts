@@ -2,6 +2,7 @@ import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { cameraFocus } from '../cameraFocus';
 import { drawBubbles } from '../controllers/bubbleController';
 import { clearGridCanvasOfType } from '../controllers/gridCanvasController';
+import { getPlayer } from '../controllers/spriteController';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
@@ -18,8 +19,8 @@ export const handleCinematicAnimations = ( GAME ): void => {
     //    e.drawAndMove( );
     //})
 
-    if ( GAME.FRONTGRID.hasFrontGrid && GAME.PLAYER.visionbox != undefined ) {
-        const tilesFront = PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
+    if ( GAME.FRONTGRID.hasFrontGrid && getPlayer().visionbox != undefined ) {
+        const tilesFront = getPlayer().visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
         GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
     }
 

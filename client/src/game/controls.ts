@@ -13,6 +13,7 @@ import { getCanvasWithType, getTileOnCanvasByCell } from './controllers/gridCanv
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import { getMenuCanvas } from './controllers/utilityCanvasController';
 import { cameraFocus } from './cameraFocus';
+import { getPlayer } from './controllers/spriteController';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -54,7 +55,7 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     }
 
     if ( event.key === "1" ) {
-        console.log( GAME.PLAYER );
+        console.log( getPlayer() );
         console.log( GAME.FRONT )
     }
 
@@ -74,28 +75,28 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
 };
 export const handleMovementKeys = () => {
     const GAME = globals.GAME;
-    const PLAYER = GAME.PLAYER;
+    const player = getPlayer();
 
-    if ( PLAYER !== undefined ) {
+    if ( player !== undefined ) {
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
             resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( PLAYER, DirectionEnum.up );
+            moveSpriteInDirection( player, DirectionEnum.up );
         }
         else if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
             resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( PLAYER, DirectionEnum.left );
+            moveSpriteInDirection( player, DirectionEnum.left );
         }
         else if ( pressedKeys.s || pressedKeys.ArrowDown ) {
             resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( PLAYER, DirectionEnum.down );
+            moveSpriteInDirection( player, DirectionEnum.down );
         }
         else if ( pressedKeys.d || pressedKeys.ArrowRight ) {
             resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( PLAYER, DirectionEnum.right );
+            moveSpriteInDirection( player, DirectionEnum.right );
         }
         const eventTrigger = GAME.story.checkForEventTrigger( CinematicTrigger.position );
         if ( eventTrigger ) return;
-        checkForNeighbours( PLAYER );
+        checkForNeighbours( player );
     }
 };
 export const removeKeyFromPressed = ( event: KeyboardEvent ): void => {

@@ -4,6 +4,7 @@ import type { Tile } from "../core/Tile";
 import type { MapModel } from "../../models/MapModel";
 import type { TilesheetModel } from "../../models/TilesheetModel";
 import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
+import { getPlayer } from "../controllers/spriteController";
 
 export class FrontTileGrid extends CanvasGrid {
     hasFrontGrid: boolean;
@@ -13,6 +14,8 @@ export class FrontTileGrid extends CanvasGrid {
         this.hasFrontGrid = false;
         this.lastTileList = null;
     }   
+
+    get playerVisionBox() { return getPlayer().visionbox;  }
 
     setFrontgridData( mapModel: MapModel, sheetData: TilesheetModel ): void {
         this.model = mapModel;
@@ -25,9 +28,9 @@ export class FrontTileGrid extends CanvasGrid {
     }
 
     drawMapFromGridData( ): void {
-        if ( globals.GAME.PLAYER.visionbox != undefined ) {
+        if ( this.playerVisionBox != undefined ) {
             super.drawMapFromGridData( )
-            globals.GAME.PLAYER.visionbox.clearArc( );            
+            this.playerVisionBox.clearArc( );            
         }
     }
 
@@ -38,7 +41,7 @@ export class FrontTileGrid extends CanvasGrid {
             })            
         }
         this.lastTileList = tiles;
-        globals.GAME.PLAYER.visionbox.clearArc( );
+        this.playerVisionBox.clearArc( );
     }
 
     clearMap(): void {

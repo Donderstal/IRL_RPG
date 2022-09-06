@@ -3,7 +3,6 @@ import type { MapModel } from '../../models/MapModel';
 import type { TileModel } from '../../models/TileModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
 import { Grid } from './Grid';
-import type { Sprite } from './Sprite';
 import type { Tile } from './Tile';
 /**
  * The game at its core consists out of two HTML5 Canvases: the Background and Foreground.
@@ -21,8 +20,6 @@ export class CanvasGrid {
     sheetImage: HTMLImageElement;
     sheetModel: TilesheetModel;
     model: MapModel;
-    playerSprite: Sprite;
-    allSprites: Sprite[];
     constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
         this.x = x;
         this.y = y;

@@ -7,6 +7,7 @@ import type { Sprite } from "../../core/Sprite";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { getSpriteDestination, spriteHasMovement } from "../../modules/spriteMovementModule";
+import { getSpriteById } from "../../controllers/spriteController";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -32,7 +33,7 @@ export class ActionSelector extends Hitbox {
 
     get meetsCondition(): boolean { return conditionIsTrue( this.activeAction.condition.type, this.activeAction.condition.value ) }
     get needsConfirmation(): boolean { return this.activeAction.type != InteractionType.talk; }
-    get actionSprite(): Sprite { return globals.GAME.FRONT.spriteDictionary[this.spriteId]; }
+    get actionSprite(): Sprite { return getSpriteById( this.spriteId );; }
     get isCollectable(): boolean { return this.actionSprite.model.isCollectable; }
 
     updateXy( x: number, y: number ): void {
@@ -52,9 +53,7 @@ export class ActionSelector extends Hitbox {
 
     handle(): void {
         if ( spriteHasMovement( this.spriteId ) ) {
-            console.log( `dismiss movement for ${this.spriteId}` )
-            const sprite = globals.GAME.FRONT.spriteDictionary[this.spriteId];
-            sprite.deactivateMovementModule();
+            this.actionSprite.deactivateMovementModule();
         }
         if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
             globals.GAME.setActiveCinematic(
@@ -73,11 +72,9 @@ export class ActionSelector extends Hitbox {
 
     dismiss(): void {
         if ( spriteHasMovement( this.spriteId ) ) {
-            console.log(`resume movement for ${this.spriteId}`)
             const destination = getSpriteDestination( this.spriteId );
-            const sprite = globals.GAME.FRONT.spriteDictionary[this.spriteId];
-            destination.setPath( sprite );
-            sprite.activateMovementModule( destination.currentStep.direction );
+            destination.setPath( this.actionSprite );
+            this.actionSprite.activateMovementModule( destination.currentStep.direction );
         }
 
         if ( this.needsConfirmation && this.registeredSelection == InteractionAnswer.yes && !this.confirmingAction ) {

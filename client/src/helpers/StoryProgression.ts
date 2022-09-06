@@ -8,6 +8,7 @@ import type { StoryEventModel } from '../models/StoryEventModel';
 import type { Sprite } from '../game/core/Sprite';
 import { initInteractionModel } from './modelFactory';
 import type { CellPosition } from '../models/CellPositionModel';
+import { getPlayer, getSpriteById } from '../game/controllers/spriteController';
 
 export class StoryProgression {
     events: ScriptedEvent[];
@@ -52,19 +53,19 @@ export class StoryProgression {
     }
 
     checkForNPCInteractionType( activeEvent: ScriptedEvent, NPCid: string ): boolean {
-        const NPC: Sprite = globals.GAME.FRONT.spriteDictionary[NPCid];
+        const NPC: Sprite = getSpriteById( NPCid );
         return ( activeEvent.name == NPC.name);
     }
 
     checkForPositionTrigger( activeEvent: ScriptedEvent ): boolean {
         const position: CellPosition = activeEvent.position;
-        const PLAYER: Sprite = globals.GAME.PLAYER;
-        if ( position.direction === PLAYER.direction ) {
+        const player: Sprite = getPlayer();
+        if ( position.direction === player.direction ) {
             if ( position.direction === DirectionEnum.right || position.direction === DirectionEnum.left ) {
-                return PLAYER.column === position.column;
+                return player.column === position.column;
             }
             if ( position.direction === DirectionEnum.up || position.direction === DirectionEnum.down ) {
-                return PLAYER.row === position.row;
+                return player.row === position.row;
             }
         }
     

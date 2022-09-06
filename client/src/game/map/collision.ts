@@ -1,5 +1,6 @@
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 import globals, { GRID_BLOCK_PX } from '../../game-data/globals';
+import { getAllSpritesAsList } from '../controllers/spriteController';
 import { Hitbox } from '../core/Hitbox';
 import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
@@ -46,14 +47,15 @@ const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sp
 }
 
 const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: Sprite ): boolean => {
-    const allSprites = globals.GAME.FRONT.allSprites.filter( ( e ) => { return !e.model.onBackground && !e.model.notGrounded;});
-    const allSpritesCount = allSprites.length;
+    const allSprites = getAllSpritesAsList();
+    const spritesToCheck = allSprites.filter( ( e ) => { return !e.model.onBackground && !e.model.notGrounded;});
+    const allSpritesCount = spritesToCheck.length;
 
     let colliding = false; 
     let spriteIndex = 0;
 
     while( colliding == false && spriteIndex < allSpritesCount ) {
-        const targetSprite = allSprites[spriteIndex];
+        const targetSprite = spritesToCheck[spriteIndex];
         if ( targetSprite.spriteId != sprite.spriteId ) {
             const hitbox = getAssociatedHitbox( sprite.spriteId );
             if ( !targetSprite.model.hasBlockedArea && !targetSprite.hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction )) {

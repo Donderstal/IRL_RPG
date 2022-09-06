@@ -1,12 +1,10 @@
 import { CanvasGrid } from '../core/CanvasGrid';
-import { getUniqueId } from '../../helpers/utilFunctions';
 //import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
 import globals from '../../game-data/globals';
 import { RoadNetwork } from '../map/RoadNetwork';
 import { getDataModelByKey } from '../../resources/spriteDataResources';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { conditionIsTrue } from '../../helpers/conditionalHelper';
-import { Sprite } from '../core/Sprite';
 import type { Grid } from '../core/Grid';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { CellPosition } from '../../models/CellPositionModel';
@@ -14,27 +12,23 @@ import type { Tile } from '../core/Tile';
 import type { MapModel } from '../../models/MapModel';
 import type { SpawnPointModel } from '../../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../../helpers/modelFactory';
-import type { GridCellModel } from '../../models/GridCellModel';
 import type { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
-import { initializeSpriteMovement } from '../modules/spriteMovementModule';
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import type { DestinationCellModel } from '../../models/DestinationCellModel';
 import { DestinationType } from '../../enumerables/DestinationType';
+import { createSpriteFromCanvasObjectModel, getPlayer, setSpritesList } from '../controllers/spriteController';
+import type { Sprite } from '../core/Sprite';
 
 export class BackSpriteGrid extends CanvasGrid {
-    spriteDictionary: { [key: string]: Sprite };
     //activeEffects: GraphicalEffect[];
     grid: Grid;
     roadNetwork: RoadNetwork;
     tilesBlockedBySprites: number[];
     constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
-        this.allSprites = [ ];
-        this.spriteDictionary = { };
-        this.playerSprite = null;
         //this.activeEffects = [];
         this.roadNetwork;
     };
@@ -49,69 +43,43 @@ export class BackSpriteGrid extends CanvasGrid {
             this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas );
 
         if ( sprites ) {
-            sprites.forEach( ( sprite: Sprite ): void => {
-                this.spriteDictionary[sprite.spriteId] = sprite;
-                this.allSprites.push(sprite);
-            });
+            setSpritesList( sprites );
         }
         else {
             if ( this.model.sprites )
                 this.setSprites( this.model.sprites );
             if ( this.model.playerStart ) {
                 this.initPlayerCharacter( this.model.playerStart, globals.GAME.party.characterActiveOnMap.ClassName );
-                cameraFocus.centerOnXY( this.playerSprite.centerX, this.playerSprite.baseY )      
+                const player = getPlayer();
+                cameraFocus.centerOnXY( player.centerX, player.baseY )      
             }            
         }
     }
 
     initPlayerCharacter( start: CellPosition, className: string ) {
-        const tile = super.getTileAtCell( start.column, start.row );
-        const spriteModel = getDataModelByKey( className );
-        const canvasObjectModel = initCanvasObjectModel( { type: className, direction: start.direction ?? 0, column: start.column, row: start.row, spriteDataModel: spriteModel, anim_type: AnimationTypeEnum.idle } );
-        this.playerSprite = new Sprite( tile, canvasObjectModel, PLAYER_ID, true );
-        this.playerSprite.name = PLAYER_NAME;
-        this.allSprites.push( this.playerSprite );
-        this.spriteDictionary[PLAYER_ID] = this.playerSprite;
+        const canvasObjectModel = initCanvasObjectModel(
+            {
+                type: className,
+                direction: start.direction ?? 0,
+                column: start.column,
+                row: start.row,
+                anim_type: AnimationTypeEnum.idle,
+                name: PLAYER_NAME
+            }
+        );
+        createSpriteFromCanvasObjectModel( canvasObjectModel, this.type, PLAYER_ID );
     }
 
     setSprites( sprites: CanvasObjectModel[] ): void {
-        sprites = sprites.filter((e)=>{
+        let models = sprites.filter((e)=>{
             return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
         })
-        sprites.forEach( this.getTileAndSetSprite.bind( this ) );
+        models.forEach( e => createSpriteFromCanvasObjectModel( e, this.type ) );
     };
-
-    getTileAndSetSprite( canvasObjectModel: CanvasObjectModel ): string {
-        const tile = super.getTileAtCell( canvasObjectModel.column, canvasObjectModel.row );
-        let id = "";
-        if ( !this.spriteIsInRegistry( tile, canvasObjectModel ) ) {
-            id = this.setSprite( tile, canvasObjectModel )   
-        }
-        return id;
-    }
-
-    setSprite( tile: Tile, canvasObjectModel: CanvasObjectModel ): string {
-        const newId = getUniqueId( Object.keys( this.spriteDictionary ) );
-        const newNPC = new Sprite( tile, canvasObjectModel, newId );
-        this.allSprites.push( newNPC )
-        this.spriteDictionary[newId] = newNPC
-        if ( canvasObjectModel.name ) {
-            newNPC.name = canvasObjectModel.name;
-        }
-        return newId;
-    }
-
 
     clearMap( ): void {
         this.grid = null;
-        this.allSprites = [ ];
         this.roadNetwork = null;
-        this.spriteDictionary = { };
-    }
-
-    deleteSprite( spriteId: string ): void {
-        delete this.spriteDictionary[spriteId];
-        this.allSprites = this.allSprites.filter( ( e ) => { return e.spriteId !== spriteId; });
     }
 
     tileHasBlockingSprite( index: number | OutOfMapEnum ): boolean {
@@ -193,19 +161,17 @@ export class BackSpriteGrid extends CanvasGrid {
             row: tile.row,
             direction: start.direction,
             name: "Random person",
-            action: globals.GAME.activeNeighbourhood.getRandomAction()
+            action: globals.GAME.activeNeighbourhood.getRandomAction(),
+            destination: {
+                column: destination.column,
+                row: destination.row,
+                direction: destination.direction,
+                type: DestinationType.randomGeneratedSprite
+            }
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
 
-        const destinationModel: DestinationCellModel = {
-            column: destination.column,
-            row: destination.row,
-            direction: destination.direction,
-            type: DestinationType.randomGeneratedSprite
-        }
-        const id = this.setSprite( tile, model );
-        const sprite = this.spriteDictionary[id];
-        initializeSpriteMovement( sprite, destinationModel );
+        createSpriteFromCanvasObjectModel( model, this.type )
     }
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {

@@ -94,7 +94,6 @@ export class Destination {
         this.currentPathIndex = 0;
         const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
         const destinationTile = this.frontClass.getTileAtCell( this.column, this.row );
-        console.log( `Start c${sprite.column} r${sprite.row}, destination c${this.column}, r${this.row}` )
         const path = getRoadPathGridLocationList( startingTile, sprite.direction, destinationTile );
         if ( path === null ) {
             this.unsetPath( sprite );

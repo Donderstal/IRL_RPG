@@ -8,6 +8,7 @@ import { hasActiveBubbles } from '../controllers/bubbleController';
 import { spriteHasMovement } from '../modules/spriteMovementModule';
 import { spriteHasAnimation } from '../modules/animationModule';
 import { cameraFocus } from '../cameraFocus';
+import { getSpriteById, getSpriteByName } from '../controllers/spriteController';
 
 export class Scene {
     animations: Animation[];
@@ -22,7 +23,8 @@ export class Scene {
             const id = getUniqueId( this.animationIds );
             if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
                 && animationModel.type !== SceneAnimationType.createCar && animationModel.type !== SceneAnimationType.createSprite ) {
-                animationModel.spriteId = this.getSpriteIdByName( animationModel.spriteName );
+                const sprite = getSpriteByName( animationModel.spriteName );
+                animationModel.spriteId = sprite.spriteId;
             }
             else if ( spriteId !== null ) {
                 animationModel.spriteId = spriteId
@@ -85,7 +87,7 @@ export class Scene {
                     animationHasFinished = e.hasSpriteSet();
                     break;
                 case SceneAnimationType.deleteSprite:
-                    animationHasFinished = e.getSpriteById( ) === undefined;
+                    animationHasFinished = getSpriteById( e.spriteId ) === undefined;
                     break;
                 case SceneAnimationType.fadeOut:
                     animationHasFinished = !globals.GAME.fader.fadingToBlack && globals.GAME.fader.holdBlackScreen;
@@ -112,10 +114,5 @@ export class Scene {
             }
         })
         return this.finishedAnimations.length === this.scenePassAnimations.length;
-    }
-
-    getSpriteIdByName( name: string ): string {
-        const sprite = globals.GAME.FRONT.allSprites.filter( ( e ) => { return e.name == name; } )[0];
-        return sprite.spriteId;
     }
 } 

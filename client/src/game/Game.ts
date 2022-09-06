@@ -35,7 +35,7 @@ import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
 import { cameraFocus, initializeCameraFocus } from './cameraFocus'
 import { portraitOrientation } from '../helpers/screenOrientation'
-import { clearGridCanvases, clearGrids, getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
+import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
 import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { instantiateUICanvases } from './controllers/utilityCanvasController'
@@ -45,6 +45,7 @@ import type { BackTileGrid } from './canvas/BackTileGrid'
 import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { InteractionModel } from '../models/InteractionModel'
 import type { CellPosition } from '../models/CellPositionModel'
+import { getBackSprites, getPlayer } from './controllers/spriteController'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -97,7 +98,6 @@ export class Game {
     get FRONT(): BackSpriteGrid { return getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpriteGrid; }
     get BACK(): BackTileGrid { return getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid; }
 
-    get PLAYER( ): Sprite { return this.FRONT.playerSprite }
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
     get PLAYER_INVENTORY( ): Inventory { return this.party.inventory }
     get PLAYER_ITEMS( ): StackedItem[] { return this.party.inventory.ItemList }
@@ -200,9 +200,10 @@ export class Game {
     }
 
     saveActiveMap() {
+        const player = getPlayer();
         this.activeMapAtStartOfCinematic = this.activeMapName;
-        this.activeSpritesAtStartOfCinematic = [...this.FRONT.allSprites];
-        this.playerLocationAtStartOfCinematic = { column: this.PLAYER.column, row: this.PLAYER.row, direction: this.PLAYER.direction }
+        this.activeSpritesAtStartOfCinematic = [...getBackSprites()];
+        this.playerLocationAtStartOfCinematic = { column: player.column, row: player.row, direction: player.direction }
     }
 
     setActiveCinematic( action: InteractionModel, trigger: CinematicTrigger, options: any[] ): void {
@@ -221,7 +222,8 @@ export const startGame = ( name: string, className: string, startingMap: string,
     globals.GAME = new Game( );
     screen.orientation.onchange = ( ) => {
         if ( screen.orientation.type == "landscape-primary" ) {
-            setTimeout(()=>{
+            setTimeout( () => {
+                const player = getPlayer()
                 if ( globals.GAME.loadingScreen != null ) {
                     cameraFocus.handleScreenFlip( 
                         {'x': CANVAS_WIDTH / 2, 'y': CANVAS_HEIGHT / 2 }
@@ -229,7 +231,7 @@ export const startGame = ( name: string, className: string, startingMap: string,
                 }
                 else {
                     cameraFocus.handleScreenFlip( 
-                        {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY }
+                        { 'x': player.centerX, 'y': player.baseY }
                     )
                 }
                 hideFlipScreenModal( );

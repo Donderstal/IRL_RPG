@@ -15,6 +15,8 @@ import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import type { BackTileGrid } from '../game/canvas/BackTileGrid';
 import type { BackSpriteGrid } from '../game/canvas/BackSpriteGrid';
 import type { FrontTileGrid } from '../game/canvas/FrontTileGrid';
+import { clearAllSprites, getPlayer } from '../game/controllers/spriteController';
+import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid;
@@ -45,10 +47,11 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
     mapData.playerStart = undefined;
 
     if ( setPlayer ) {
+        const player = getPlayer();
         cameraFocus.handleScreenFlip( 
-            {'x': globals.GAME.PLAYER.centerX, 'y': globals.GAME.PLAYER.baseY}
+            { 'x': player.centerX, 'y': player.baseY}
         );
-        cameraFocus.setSpriteFocus( globals.GAME.PLAYER, true );
+        cameraFocus.setSpriteFocus( player, true );
         setTimeout( ( ) => {
             globals.GAME.story.checkForEventTrigger(CinematicTrigger.enter)     
         }, 250 )            
@@ -67,6 +70,9 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
 
     clearGrids();
     clearGridCanvases();
+
+    clearAllSpriteModules();
+    clearAllSprites();
 
     if ( playerStart !== null ) {
         globals.GAME.activeMap.playerStart = playerStart;
@@ -92,23 +98,24 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
             } )
             break;
         case InteractionType.neighbour:
+            const player = getPlayer()
             let neighbours = globals.GAME.activeMap.neighbours;
-            newPlayerCell.direction = globals.GAME.PLAYER.direction;
+            newPlayerCell.direction = player.direction;
             if ( neighbours.left == globals.GAME.previousMapName ) {
-                newPlayerCell.row = globals.GAME.PLAYER.row;
+                newPlayerCell.row = player.row;
                 newPlayerCell.column = 1;
             }
             else if ( neighbours.up == globals.GAME.previousMapName ) {
                 newPlayerCell.row = 1;
-                newPlayerCell.column = globals.GAME.PLAYER.column;
+                newPlayerCell.column = player.column;
             }
             else if ( neighbours.right == globals.GAME.previousMapName ) {
-                newPlayerCell.row = globals.GAME.PLAYER.row;
+                newPlayerCell.row = player.row;
                 newPlayerCell.column = mapData.columns;
             }
             else if ( neighbours.down == globals.GAME.previousMapName ) {
                 newPlayerCell.row = mapData.rows;
-                newPlayerCell.column = globals.GAME.PLAYER.column;
+                newPlayerCell.column = player.column;
             }
             break;
         case InteractionType.bus:

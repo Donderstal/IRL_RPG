@@ -52,7 +52,6 @@ export const initMapModel = ( mapData ): MapModel => {
 
         playerStart: mapData.playerStart
     };
-    console.log( mapModel );
     return mapModel;
 }
 
@@ -144,7 +143,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
         model.door = initDoorModel( { doorTo: objectData.doorTo, direction: objectData.directionIn } );
     }
     if ( objectData.destination !== undefined )
-        model.destination = { column: objectData.destination.column, row: objectData.destination.row };
+        model.destination = objectData.destination;
     return model;
 }
 

@@ -17,6 +17,8 @@ import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../../enumerables/InteractionType';
 import { addDoorToUnlockedDoorsRegistry } from '../../helpers/doorRegistry';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
+import { getBackSprites, getPlayer } from '../controllers/spriteController';
+import type { Door } from './map-classes/Door';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -29,7 +31,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     handleRoadNetworkFuncs(GAME)
     handleNpcCounter(GAME)
 
-    if ( GAME.PLAYER != undefined && !GAME.paused ) {
+    if ( getPlayer() != undefined && !GAME.paused ) {
         handleMovementKeys( );  
     }
 
@@ -67,11 +69,11 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     }
 }
 
-const handleDoor = ( GAME, door ): void => {
-    const PLAYER = GAME.PLAYER;
+const handleDoor = ( GAME: Game, door: Door ): void => {
+    const player = getPlayer();
     let pendingDoor = getPendingDoor();
 
-    if ( door.model.direction == PLAYER.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
+    if ( door.model.direction == player.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
         setDoorAsPending( door.id, door.model.doorTo )
         if ( !door.meetsCondition ) {
             setActiveCinematic(
@@ -104,13 +106,12 @@ export const handleNpcCounter = ( GAME: Game ): void => {
 }
 
 export const drawSpritesInOrder = ( GAME: Game ): void => {
-    const spritesInView = GAME.FRONT.allSprites;
-    //.filter( ( e ) => {
-    //    return cameraFocus.xyValueIsInView( e.left, e.top )
-    //        || cameraFocus.xyValueIsInView( e.left, e.bottom )
-    //        || cameraFocus.xyValueIsInView( e.right, e.top )
-    //        || cameraFocus.xyValueIsInView( e.right, e.bottom )
-    //} )
+    const spritesInView = getBackSprites().filter( ( e ) => {
+        return cameraFocus.xyValueIsInView( e.left, e.top )
+            || cameraFocus.xyValueIsInView( e.left, e.bottom )
+            || cameraFocus.xyValueIsInView( e.right, e.top )
+            || cameraFocus.xyValueIsInView( e.right, e.bottom )
+    } )
     spritesInView.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 
@@ -122,14 +123,6 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
             return 0
         }          
     })
-
-    if ( GAME.debugMode ) {
-        GAME.BACK.grid.array.forEach( ( tile ) => { 
-            if ( tile.hasEvent ) {
-                tile.event.updateXy( tile.event.x, tile.event.y );
-            }
-        })
-    }
 
     const backgroundSprites = [];
     const standardSprites   = [];
