@@ -17,7 +17,7 @@ import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../../enumerables/InteractionType';
 import { addDoorToUnlockedDoorsRegistry } from '../../helpers/doorRegistry';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
-import { getBackSprites, getPlayer } from '../controllers/spriteController';
+import { getBackSprites, getPlayer, getSpriteById } from '../controllers/spriteController';
 import type { Door } from './map-classes/Door';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
@@ -65,7 +65,8 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     }
 
     if ( cameraFocus.movingToNewFocus ) {
-        cameraFocus.moveToNewFocus( );
+        const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
+        cameraFocus.moveToNewFocus( spriteInFocus );
     }
 }
 

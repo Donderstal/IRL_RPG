@@ -2,7 +2,7 @@ import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { cameraFocus } from '../cameraFocus';
 import { drawBubbles } from '../controllers/bubbleController';
 import { clearGridCanvasOfType } from '../controllers/gridCanvasController';
-import { getPlayer } from '../controllers/spriteController';
+import { getPlayer, getSpriteById } from '../controllers/spriteController';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 
@@ -27,6 +27,7 @@ export const handleCinematicAnimations = ( GAME ): void => {
     drawBubbles();
 
     if ( cameraFocus.movingToNewFocus ) {
-        cameraFocus.moveToNewFocus( );
+        const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
+        cameraFocus.moveToNewFocus( spriteInFocus );
     }
 }

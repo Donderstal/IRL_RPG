@@ -7,7 +7,8 @@ import type { ActionSelector } from '../map/map-classes/ActionSelector';
 import { clearActiveBubbles } from './bubbleController';
 import { addEventToRegistry } from '../../helpers/interactionRegistry';
 import { checkForQuestTrigger } from '../../helpers/questRegistry';
-import { getPlayer } from './spriteController';
+import { getPlayer, getSpriteById } from './spriteController';
+import { getSpriteDestination, spriteHasMovement } from '../modules/spriteMovementModule';
 
 let activeAction: ActionSelector = null; 
 
@@ -36,11 +37,19 @@ export const handleActionButton = ( ): void => {
 
 const setActiveAction = ( action: ActionSelector ): void => {
     activeAction = action;
-    activeAction.handle();
+    const sprite = getSpriteById( activeAction.spriteId );
+    if ( spriteHasMovement( activeAction.spriteId ) ) {
+        sprite.deactivateMovementModule();
+    }
+    activeAction.handle( sprite );
 }
 
 export const dismissActiveAction = (): void => {
     if ( activeAction !== null ) {
+        if ( spriteHasMovement( activeAction.spriteId ) ) {
+            const destination = getSpriteDestination( activeAction.spriteId );
+            destination.setPath( activeAction.actionSprite );
+        }
         addActionSelectorEventToRegistry( activeAction );
         activeAction.dismiss();
         activeAction = null;

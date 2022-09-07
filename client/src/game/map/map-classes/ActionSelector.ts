@@ -3,11 +3,8 @@ import { InteractionAnswer } from "../../../enumerables/InteractionAnswer";
 import { Hitbox } from "../../core/Hitbox";
 import globals, { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
-import type { Sprite } from "../../core/Sprite";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
-import { getSpriteDestination, spriteHasMovement } from "../../modules/spriteMovementModule";
-import { getSpriteById } from "../../controllers/spriteController";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -33,8 +30,6 @@ export class ActionSelector extends Hitbox {
 
     get meetsCondition(): boolean { return conditionIsTrue( this.activeAction.condition.type, this.activeAction.condition.value ) }
     get needsConfirmation(): boolean { return this.activeAction.type != InteractionType.talk; }
-    get actionSprite(): Sprite { return getSpriteById( this.spriteId );; }
-    get isCollectable(): boolean { return this.actionSprite.model.isCollectable; }
 
     updateXy( x: number, y: number ): void {
         this.checkForConditions( );
@@ -51,17 +46,14 @@ export class ActionSelector extends Hitbox {
         }
     }
 
-    handle(): void {
-        if ( spriteHasMovement( this.spriteId ) ) {
-            this.actionSprite.deactivateMovementModule();
-        }
+    handle( sprite ): void {
         if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
             globals.GAME.setActiveCinematic(
                 this.activeAction, this.trigger, [this.spriteId]
             );
-            if ( this.isCollectable ) {
-                const id = globals.GAME.collectableRegistry.getCollectableId( this.actionSprite.column, this.actionSprite.row, ( this.actionSprite as any ).collectableType, globals.GAME.activeMapName )
-                globals.GAME.collectableRegistry.addToRegistry( id, ( this.actionSprite as any ).collectableType )
+            if ( sprite.model.isCollectable ) {
+                const id = globals.GAME.collectableRegistry.getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, globals.GAME.activeMapName )
+                globals.GAME.collectableRegistry.addToRegistry( id, ( sprite as any ).collectableType )
             }
         }
     }
@@ -71,12 +63,6 @@ export class ActionSelector extends Hitbox {
     }
 
     dismiss(): void {
-        if ( spriteHasMovement( this.spriteId ) ) {
-            const destination = getSpriteDestination( this.spriteId );
-            destination.setPath( this.actionSprite );
-            this.actionSprite.activateMovementModule( destination.currentStep.direction );
-        }
-
         if ( this.needsConfirmation && this.registeredSelection == InteractionAnswer.yes && !this.confirmingAction ) {
             this.confirm();
         }

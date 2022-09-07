@@ -1,7 +1,6 @@
 import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
-import { spriteNextPositionIsBlocked } from '../map/collision'
 import { isHorizontal, spriteIsPlayer } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
@@ -402,10 +401,6 @@ export class Sprite {
 
     setActiveFrame( frame = this.activeFrames[this.sheetPosition] ) {
         this.activeFrame = frame;
-    }
-
-    checkForCollision( ): boolean {
-        return spriteNextPositionIsBlocked( this ) ;
     }
 
     getBlockedTiles(): number[] {

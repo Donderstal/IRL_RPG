@@ -1,5 +1,9 @@
 ### LOG
 
+#### SEP 7, 2022
+* Spritecontroller file for setting, getting and destroying sprites
+* SpriteModuleController file now handles all in/output for spritemodule files
+
 #### SEP 5, 2022
 * Moving roadnetwork data / functionalities to Neighbourhood
 
