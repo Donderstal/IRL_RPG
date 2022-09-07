@@ -37,8 +37,8 @@ export const updateSpriteAssociatedAction = ( sprite: Sprite ): void => {
     action.updateXy( sprite.centerX, sprite.baseY );
 };
 
-export const destroySpriteAssociatedAction = ( sprite: Sprite ): void => {
-    delete spriteActionDictionary[sprite.spriteId];
+export const destroySpriteAssociatedAction = ( spriteId: string ): void => {
+    delete spriteActionDictionary[spriteId];
 };
 
 export const destroyTileAssociatedAction = ( tile: Tile ): void => {

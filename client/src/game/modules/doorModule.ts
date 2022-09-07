@@ -31,8 +31,8 @@ export const updateSpriteAssociatedDoor = ( sprite: Sprite ): void => {
     door.updateXy( sprite.centerX, sprite.baseY );
 };
 
-export const destroySpriteAssociatedDoor = ( sprite: Sprite ): void => {
-    delete spriteDoorDictionary[sprite.spriteId];
+export const destroySpriteAssociatedDoor = ( spriteId: string ): void => {
+    delete spriteDoorDictionary[spriteId];
 };
 
 export const destroyTileAssociatedDoor = ( tile: Tile ): void => {

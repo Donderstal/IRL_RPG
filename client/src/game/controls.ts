@@ -5,15 +5,17 @@ import { DirectionEnum } from './../enumerables/DirectionEnum';
 import { clearActiveBubbles, displayFullText, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
 import { InteractionType } from '../enumerables/InteractionType';
 import type { Sprite } from './core/Sprite';
-import { moveSpriteInDirection } from './modules/spriteMovementModule';
+import { checkIfSpriteCanMove, moveSpriteInDirection } from './modules/spriteMovementModule';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
-import { resetRandomAnimationCounter } from './modules/randomAnimationModule';
 import { registerPlayerAnswer } from './controllers/cinematicController';
 import { getCanvasWithType, getTileOnCanvasByCell } from './controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import { getMenuCanvas } from './controllers/utilityCanvasController';
 import { cameraFocus } from './cameraFocus';
 import { getPlayer } from './controllers/spriteController';
+import { resetIdleAnimationCounter } from './modules/idleAnimationModule';
+import { destroySpriteAnimation, spriteHasAnimation } from './modules/animationModule';
+import { spriteNextPositionIsBlocked } from './map/collision';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -78,27 +80,39 @@ export const handleMovementKeys = () => {
     const player = getPlayer();
 
     if ( player !== undefined ) {
+        let direction = null;
         if ( pressedKeys.w || pressedKeys.ArrowUp ) {
-            resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( player, DirectionEnum.up );
+            direction = DirectionEnum.up;
         }
         else if ( pressedKeys.a || pressedKeys.ArrowLeft ) {
-            resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( player, DirectionEnum.left );
+            direction = DirectionEnum.left;
         }
         else if ( pressedKeys.s || pressedKeys.ArrowDown ) {
-            resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( player, DirectionEnum.down );
+            direction = DirectionEnum.down;
         }
         else if ( pressedKeys.d || pressedKeys.ArrowRight ) {
-            resetRandomAnimationCounter( PLAYER_ID )
-            moveSpriteInDirection( player, DirectionEnum.right );
+            direction = DirectionEnum.right;
+        }
+
+        if ( direction !== null ) {
+            preparePlayerForMovement();
+            player.setDirection( direction );
+            if ( !spriteNextPositionIsBlocked( player ) ) {
+                moveSpriteInDirection( player, direction );
+            }
         }
         const eventTrigger = GAME.story.checkForEventTrigger( CinematicTrigger.position );
         if ( eventTrigger ) return;
         checkForNeighbours( player );
     }
 };
+export const preparePlayerForMovement = (): void => {
+    resetIdleAnimationCounter( PLAYER_ID );
+    if ( spriteHasAnimation( PLAYER_ID ) ) {
+        const player = getPlayer();
+        destroySpriteAnimation( player );
+    }
+} 
 export const removeKeyFromPressed = ( event: KeyboardEvent ): void => {
     pressedKeys[event.key] = false
 };

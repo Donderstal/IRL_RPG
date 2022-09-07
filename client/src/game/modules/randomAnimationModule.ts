@@ -1,10 +1,8 @@
-import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import { Counter } from "../../helpers/Counter";
 import { getRandomDestinationInRadius } from "../../helpers/utilFunctions";
+import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import type { Sprite } from "../core/Sprite";
-import { initializeSpriteAnimation } from "./animationModule";
-import { initializeSpriteMovement } from "./spriteMovementModule";
 
 let counterDictionary: { [key in string]: Counter } = {};
 const cellRadius = 2;
@@ -12,14 +10,14 @@ const cellRadius = 2;
 export const initializeRandomAnimationCounter = ( sprite: Sprite ): void => {
     counterDictionary[sprite.spriteId] = new Counter( 7500, true );
 };
-export const handleRandomAnimationCounter = ( sprite: Sprite ): void => {
-    const counter = getAssociatedCounter( sprite.spriteId );
+export const incrementRandomAnimationCounter = ( spriteId: string ): void => {
+    const counter = getAssociatedCounter( spriteId );
     counter.count();
-    if ( counter.isCounterOverLimit() ) {
-        setRandomDestinationOrAnimation( sprite );
-        counter.resetCounter();
-    }
 };
+export const randomAnimationCounterIsOverLimit = ( spriteId: string ): boolean => {
+    const counter = getAssociatedCounter( spriteId );
+    return counter.isCounterOverLimit();
+}
 export const clearRandomAnimationCounters = (): void => {
     counterDictionary = {};
 };
@@ -27,16 +25,16 @@ export const resetRandomAnimationCounter = ( spriteId: string ): void => {
     const counter = getAssociatedCounter( spriteId );
     counter.resetCounter();
 };
+export const destroyAssociatedRandomCounter = ( spriteId: string ): void => {
+    delete counterDictionary[spriteId];
+};
 const getAssociatedCounter = ( spriteId: string ): Counter => {
     return counterDictionary[spriteId];
 };
-const setRandomDestinationInRadius = ( sprite: Sprite ) => {
-    const randomDestinationCell = getRandomDestinationInRadius( sprite, cellRadius );
-    if ( randomDestinationCell === null ) return;
-
-    initializeSpriteMovement( sprite, randomDestinationCell );
+export const getRandomDestination = ( sprite: Sprite ): DestinationCellModel => {
+    return getRandomDestinationInRadius( sprite, cellRadius );
 };
-const setRandomAnimation = ( sprite: Sprite ) => {
+export const getRandomAnimation = ( sprite: Sprite ): string => {
     const animationList = sprite.model.idleAnimations;
     let animationName = animationList[Math.floor( Math.random() * animationList.length )];
     const direction = sprite.direction;
@@ -52,18 +50,5 @@ const setRandomAnimation = ( sprite: Sprite ) => {
             animationName = animationName
     }
 
-    initializeSpriteAnimation( sprite, animationName, { looped: false, loops: 0 } );
-};
-const setRandomDestinationOrAnimation = ( sprite: Sprite ) => {
-    switch ( sprite.animationType ) {
-        case AnimationTypeEnum.idle:
-            setRandomAnimation( sprite );
-            break;
-        case AnimationTypeEnum.semiIdle:
-            Math.random() < .33 ? setRandomDestinationInRadius( sprite ) : setRandomAnimation( sprite );
-            break;
-        case AnimationTypeEnum.moving:
-            setRandomDestinationInRadius( sprite );
-            break;
-    }
+    return animationName;
 };

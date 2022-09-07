@@ -6,7 +6,7 @@ import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 
-export const checkForCollision = ( sprite: Sprite ): boolean => {
+export const spriteNextPositionIsBlocked = ( sprite: Sprite ): boolean => {
     const spriteNextPosition = getSpriteNextPosition( sprite );
     const staticCollision = checkForStaticCollision( spriteNextPosition, sprite );
     const dynamicCollision = staticCollision ? true : checkForDynamicCollision( spriteNextPosition, sprite );

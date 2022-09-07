@@ -19,8 +19,7 @@ export const updateAssociatedHitbox = ( sprite: Sprite ): void => {
     hitbox.updateXy( sprite.centerX, sprite.baseY );
 };
 
-export const destroyAssociatedHitbox = ( sprite: Sprite ): void => {
-    const spriteId = sprite.spriteId;
+export const destroyAssociatedHitbox = ( spriteId: string ): void => {
     delete hitboxDictionary[spriteId];
 };
 

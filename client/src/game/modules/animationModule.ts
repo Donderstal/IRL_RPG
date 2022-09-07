@@ -18,7 +18,7 @@ export const handleSpriteAnimation = ( sprite: Sprite ): void => {
     destroyAnimationIfFinished( sprite, animation );
 };
 export const destroySpriteAnimation = ( sprite: Sprite ): void => {
-    sprite.deactivateAnimationModule();
+    sprite.deactivateAnimationModule()
     delete animationDictionary[sprite.spriteId];
 };
 export const getSpriteAnimationById = ( spriteId: string ): SpriteAnimation => {

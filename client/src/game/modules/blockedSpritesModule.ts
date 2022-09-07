@@ -17,6 +17,10 @@ export const handleBlockedSpriteCounter = ( sprite: Sprite ): void => {
     }
 }
 
+export const clearBlockedSpriteCounters = () => {
+    blockedSpriteCounterDictionary = {};
+}
+
 export const destroyBlockedSpriteCounter = ( spriteId: string ): void => {
     delete blockedSpriteCounterDictionary[spriteId];
 }

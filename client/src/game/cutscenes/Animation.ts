@@ -13,7 +13,6 @@ import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import globals from '../../game-data/globals';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { getClosestCell } from '../../helpers/utilFunctions';
-import { initializeSpriteMovement } from '../modules/spriteMovementModule';
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
@@ -24,6 +23,7 @@ import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import { DestinationType } from "../../enumerables/DestinationType";
 import { createSpriteFromCanvasObjectModel, getSpriteById, getSpriteByName, removeSpriteById } from "../controllers/spriteController";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
+import { tryInitializeSpriteMovement } from "../controllers/spriteModuleController";
 
 export class Animation {
     id: string;
@@ -167,8 +167,7 @@ export class Animation {
             row: sceneModel.destination.row,
             type: DestinationType.cinematic
         }
-
-        initializeSpriteMovement( this.sprite, destination );
+        tryInitializeSpriteMovement( this.sprite, destination )
     }
 
     initAnimationAnimation( sceneModel: AnimateSpriteScene ): void {

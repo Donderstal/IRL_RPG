@@ -1,7 +1,7 @@
 import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
-import { checkForCollision } from '../map/collision'
+import { spriteNextPositionIsBlocked } from '../map/collision'
 import { isHorizontal, spriteIsPlayer } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
@@ -16,12 +16,12 @@ import { initializeHitboxForSprite, updateAssociatedHitbox } from '../modules/hi
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
 import { initializeActionForSprite, updateSpriteAssociatedAction } from '../modules/actionModule'
 import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/doorModule'
-import { handleSpriteMovement, initializeSpriteMovement } from '../modules/spriteMovementModule'
-import { handleRandomAnimationCounter, initializeRandomAnimationCounter, resetRandomAnimationCounter } from '../modules/randomAnimationModule'
+import { initializeRandomAnimationCounter, resetRandomAnimationCounter } from '../modules/randomAnimationModule'
 import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
-import { handleIdleAnimationCounter, initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
+import { initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
 import { BlockedArea } from '../map/map-classes/BlockedArea'
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
+import { handleIdleAnimationCounter, handleRandomAnimationCounter, handleSpriteMoveToDestination, tryInitializeSpriteMovement } from '../controllers/spriteModuleController'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -121,7 +121,7 @@ export class Sprite {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
         }
         if ( canvasObjectModel.destination && this.animationType !== AnimationTypeEnum.movingLoop ) {
-            initializeSpriteMovement( this, canvasObjectModel.destination );
+            tryInitializeSpriteMovement( this, canvasObjectModel.destination );
         }
     }
 
@@ -147,7 +147,7 @@ export class Sprite {
 
     setPlugins( canvasObjectModel: CanvasObjectModel ): void {
         let model = this.model;
-        if ( model.idleAnimation && !this.model.isCharacter ) {
+        if ( model.idleAnimation && (!this.model.isCharacter || this.isPlayer) ) {
             this.plugins.idleAnimation.set = true;
             this.plugins.idleAnimation.active = true;
             initializeIdleAnimationCounter( this );
@@ -202,7 +202,7 @@ export class Sprite {
             }
         }
         if ( this.pluginIsRunning( plugins.movement ) ) {
-            handleSpriteMovement( this );
+            handleSpriteMoveToDestination( this );
             this.resetCounters();
         }
         if ( this.pluginIsRunning( plugins.animation ) ) {
@@ -405,7 +405,7 @@ export class Sprite {
     }
 
     checkForCollision( ): boolean {
-        return checkForCollision( this ) ;
+        return spriteNextPositionIsBlocked( this ) ;
     }
 
     getBlockedTiles(): number[] {
