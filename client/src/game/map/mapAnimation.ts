@@ -113,6 +113,15 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
             || cameraFocus.xyValueIsInView( e.right, e.top )
             || cameraFocus.xyValueIsInView( e.right, e.bottom )
     } )
+
+    const movingSpritesOutOfView = getBackSprites().filter( ( e ) => {
+        return !(cameraFocus.xyValueIsInView( e.left, e.top )
+            || cameraFocus.xyValueIsInView( e.left, e.bottom )
+            || cameraFocus.xyValueIsInView( e.right, e.top )
+            || cameraFocus.xyValueIsInView( e.right, e.bottom ) )
+            && e.pluginIsRunning(e.plugins.movement)
+    } )
+
     spritesInView.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {
             return 1 
@@ -154,6 +163,8 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     drawSpritesInArray( standardSprites, GAME );
     drawSpritesInArray( foregroundSprites, GAME );
     drawSpritesInArray( flyingSprites, GAME );
+
+    handleSpriteModules( movingSpritesOutOfView, GAME );
 }
 
 export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
@@ -164,5 +175,17 @@ export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
             }
             sprite.drawSprite();
         })
+    }
+}
+
+export const handleSpriteModules = ( array: Sprite[], GAME: Game ): void => {
+    if ( !GAME.paused ) {
+        array.forEach( ( sprite ) => {
+            if ( GAME.paused ) {
+                return;
+            }
+            sprite.handlePlugins();
+            sprite.updateCell();
+        } )
     }
 }

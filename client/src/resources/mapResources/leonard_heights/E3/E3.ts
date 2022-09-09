@@ -48,31 +48,6 @@ export default {
             "column": 10
         }
     ],
-    "spawnPoints": [
-        {
-            "column": OutOfMapEnum.left,
-            "row": 6,
-            "direction": DirectionEnum.right
-        },
-        {
-            "column": 10,
-            "row": 6,
-            "direction": DirectionEnum.down
-        },
-        {
-            "column": 11,
-            "row": 6,
-            "direction": DirectionEnum.down
-        },
-        {
-            "column": 11,
-            "row": OutOfMapEnum.down,
-            "direction": DirectionEnum.up
-        }
-    ],
-    "roads": [
-
-    ],
     "actions": [
 
     ]

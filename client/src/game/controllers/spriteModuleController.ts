@@ -10,7 +10,7 @@ import { clearDoors, destroySpriteAssociatedDoor } from "../modules/doorModule";
 import { clearHitboxes, destroyAssociatedHitbox } from "../modules/hitboxModule";
 import { clearIdleAnimationCounters, destroyAssociatedIdleCounter, getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "../modules/idleAnimationModule";
 import { clearRandomAnimationCounters, destroyAssociatedRandomCounter, getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "../modules/randomAnimationModule"
-import { checkIfSpriteCanMove, clearSpriteMovementDictionary, destroySpriteMovement, getSpriteDestination, initializeSpriteMovement, setSideStepDestination, spriteFailedToFindPath } from "../modules/spriteMovementModule";
+import { checkIfSpriteCanMove, clearSpriteMovementDictionary, destroySpriteMovement, getSpriteDestination, initializeSpriteMovement, setSideStepDestination, spriteFailedToFindPath, spriteIsAtDestination } from "../modules/spriteMovementModule";
 import { removeSpriteById } from "./spriteController";
 
 const destroyAssociatedAnimationIfExists = ( sprite: Sprite ): void => {
@@ -36,6 +36,11 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     }
 
     if ( spriteNextPositionIsBlocked( sprite ) ) {
+        if ( spriteIsAtDestination( sprite ) ) {
+            destroySpriteMovementToDestination( sprite );
+            return;
+        }
+
         handleBlockedSpriteCounter( sprite );
         if ( blockedSpriteCounterIsOverLimit( sprite.spriteId ) ) {
             destroyBlockedSpriteCounter( sprite.spriteId );

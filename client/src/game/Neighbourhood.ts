@@ -4,9 +4,6 @@ import { getNeighbourhood } from "../resources/mapResources";
 import type { InteractionModel } from "../models/InteractionModel";
 import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
-import type { CanvasGrid } from "./core/CanvasGrid";
-import { each } from "svelte/internal";
-import { initMapModel } from "../helpers/modelFactory";
 
 export class Neighbourhood {
     model: NeighbourhoodModel;
@@ -122,7 +119,7 @@ export class Neighbourhood {
             frontSprites: frontSprites,
             doors: doors,
             actions: actions,
-            spawnPoints: [],
+            spawnPoints: this.model.spawnPoints,
             roads: this.model.roads
         }
 

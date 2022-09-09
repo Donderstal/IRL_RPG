@@ -129,9 +129,6 @@ export default {
     "spawnPoints": [
 
     ],
-    "roads": [
-
-    ],
     "actions": [
 
     ]

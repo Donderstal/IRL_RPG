@@ -137,49 +137,6 @@ export default {
             "column": 1
         }
     ],
-    "spawnPoints": [
-        {
-            "column": 1,
-            "row": 9,
-            "direction": DirectionEnum.right
-        },
-        {
-            "column": 1,
-            "row": 11,
-            "direction": DirectionEnum.right
-        },
-        {
-            "column": 24,
-            "row": 9,
-            "direction": DirectionEnum.left
-        },
-        {
-            "column": 24,
-            "row": 11,
-            "direction": DirectionEnum.left
-        },
-
-    ],
-    "roads": [
-        {
-            "direction": DirectionEnum.right,
-            "alignment": "HORI",
-            "hasStart": true,
-            "primaryRow": 15,
-            "secondaryRow": 14,
-            "primaryColumn": 0,
-            "secondaryColumn": 25
-        },
-        {
-            "direction": DirectionEnum.left,
-            "alignment": "HORI",
-            "hasStart": true,
-            "primaryRow": 13,
-            "secondaryRow": 12,
-            "primaryColumn": 25,
-            "secondaryColumn": 0
-        }
-    ],
     "actions": [
 
     ],

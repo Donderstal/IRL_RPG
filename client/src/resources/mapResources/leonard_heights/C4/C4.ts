@@ -174,38 +174,6 @@ export default {
             "direction": DirectionEnum.up
         }
     ],
-    "spawnPoints": [
-        {
-            "column": 9,
-            "row": OutOfMapEnum.up,
-            "direction": DirectionEnum.left
-        },
-        {
-            "column": OutOfMapEnum.left,
-            "row": 10,
-            "direction": DirectionEnum.right
-        }
-    ],
-    "roads": [
-        {
-            "direction": DirectionEnum.right,
-            "alignment": RoadAlignmentEnum.horizontal,
-            "hasStart": true,
-            "primaryRow": 16,
-            "secondaryRow": 15,
-            "primaryColumn": 0,
-            "secondaryColumn": 25
-        },
-        {
-            "direction": DirectionEnum.left,
-            "alignment": RoadAlignmentEnum.horizontal,
-            "hasStart": true,
-            "primaryRow": 14,
-            "secondaryRow": 13,
-            "primaryColumn": 25,
-            "secondaryColumn": 0
-        }
-    ],
     "actions": [
 
     ]

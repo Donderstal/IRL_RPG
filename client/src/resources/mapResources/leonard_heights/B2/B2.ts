@@ -28,21 +28,6 @@ export default {
             "column": 20
         }
     ],
-    "spawnPoints": [
-
-    ],
-    "roads": [
-        {
-            "name": "CIN_ROAD_1",
-            "direction": DirectionEnum.up,
-            "alignment": RoadAlignmentEnum.vertical,
-            "hasStart": true,
-            "primaryColumn": 13,
-            "secondaryColumn": 14,
-            "primaryRow": 17,
-            "secondaryRow": 0
-        }
-    ],
     "actions": [
 
     ]

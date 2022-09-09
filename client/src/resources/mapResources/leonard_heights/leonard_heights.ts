@@ -80,6 +80,74 @@ export default {
         "Newtown-appartment-4": NewtownAppartment4,
         "Newtown-appartment-5": NewtownAppartment5
     },
+    /////
+    "spawnPoints": [
+        {
+            "column": 4,
+            "row": 60,
+            "direction": DirectionEnum.down
+        },
+        //
+        {
+            "column": 21,
+            "row": 39,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 24,
+            "row": 56,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 29,
+            "row": 4,
+            "direction": DirectionEnum.down
+        },
+        //
+        {
+            "column": 37,
+            "row": 56,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 41,
+            "row": 56,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 42,
+            "row": 56,
+            "direction": DirectionEnum.down
+        },
+        //
+        {
+            "column": 48,
+            "row": 24,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 54,
+            "row": 24,
+            "direction": DirectionEnum.down
+        },
+        //
+        {
+            "column": 59,
+            "row": 40,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 88,
+            "row": 55,
+            "direction": DirectionEnum.down
+        },
+        {
+            "column": 107,
+            "row": 38,
+            "direction": DirectionEnum.down
+        }
+    ],
+    //////
     "roads": [
         // Baker street / A2 - D2
         {

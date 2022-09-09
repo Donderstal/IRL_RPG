@@ -431,12 +431,6 @@ export default {
          "column":22
       }
    ],
-   "spawnPoints":[
-      
-   ],
-   "roads":[
-      
-   ],
    "actions":[
       
    ]

@@ -32,7 +32,6 @@ export const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination )
     else if ( destination.hasNextStep ) { 
         destination.setNextStep( sprite );
         if ( sprite.isCar ) return true;
-        destination.setPath( sprite );
         return true;
     }
     else if ( destination.inSideStep ) {
@@ -72,9 +71,12 @@ export const setSideStepDestination = ( sprite: Sprite ): void => {
 }
 export const spriteHasMovement = ( spriteId: string ): boolean => {
     return spriteId in movementDictionary;
-}
-
+};
 export const spriteFailedToFindPath = ( spriteId: string ): boolean => {
     const destination = getSpriteDestination( spriteId );
     return destination.failedToFindPath;
+};
+export const spriteIsAtDestination = ( sprite: Sprite ): boolean => {
+    const destination = getSpriteDestination( sprite.spriteId );
+    return destination.column === sprite.column && destination.row === sprite.row;
 }

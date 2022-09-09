@@ -95,21 +95,6 @@ export default {
             "column": 20
         }
     ],
-    "spawnPoints": [
-
-    ],
-    "roads": [
-        {
-            "name": "CIN_ROAD_1",
-            "direction": DirectionEnum.up,
-            "alignment": "VERT",
-            "hasStart": false,
-            "primaryColumn": 13,
-            "secondaryColumn": 14,
-            "primaryRow": 17,
-            "secondaryRow": 3
-        }
-    ],
     "actions": [
 
     ]

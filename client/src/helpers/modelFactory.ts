@@ -20,7 +20,6 @@ import type { ItemModel } from "../models/ItemModel";
 import type { GridCellModel } from "../models/GridCellModel";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import { getDataModelByKey } from "../resources/spriteDataResources";
-import { OutOfMapEnum } from "../enumerables/OutOfMapEnum";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
@@ -40,9 +39,6 @@ export const initMapModel = ( mapData ): MapModel => {
         sprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
         frontSprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
 
-        spawnPoints: mapData.spawnPoints != undefined
-            ? mapData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint, mapData.columns, mapData.rows ) } )
-            : [],
         doors: mapData.doors != undefined
             ? mapData.doors.map( ( door ): DoorModel => { return initDoorModel( door ) } )
             : [],
@@ -77,6 +73,9 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
         roads: neighbourhoodData.roads != undefined
             ? neighbourhoodData.roads.map( ( road ): RoadModel => { return initRoadModel( road ) } )
             : [],
+        spawnPoints: neighbourhoodData.spawnPoints != undefined
+            ? neighbourhoodData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint ) } )
+            : []
     };
     return neighbourhoodModel;
 }
@@ -105,10 +104,10 @@ export const initRoadModel = ( roadData ): RoadModel => {
     return roadModel;
 }
 
-export const initSpawnPointModel = ( spawnPointData, columns: number | OutOfMapEnum, rows: number | OutOfMapEnum ): SpawnPointModel => {
+export const initSpawnPointModel = ( spawnPointData ): SpawnPointModel => {
     const spawnPointModel: SpawnPointModel = {
-        row: spawnPointData.row === OutOfMapEnum.up ? 0 : spawnPointData.row === OutOfMapEnum.down ? rows + 1 : spawnPointData.row,
-        column: spawnPointData.column === OutOfMapEnum.left ? 0 : spawnPointData.column === OutOfMapEnum.right ? columns + 1 : spawnPointData.column,
+        row: spawnPointData.row,
+        column: spawnPointData.column,
         direction: spawnPointData.direction
     };
     return spawnPointModel;

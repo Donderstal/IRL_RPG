@@ -36,12 +36,6 @@ export default {
             "doorTo": ""
         }
     ],
-    "spawnPoints": [
-
-    ],
-    "roads": [
-
-    ],
     "actions": [
 
     ]

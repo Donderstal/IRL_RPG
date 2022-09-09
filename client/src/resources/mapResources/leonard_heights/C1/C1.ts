@@ -98,12 +98,6 @@ export default {
             "column": 18
         }
     ],
-    "spawnPoints": [
-
-    ],
-    "roads": [
-
-    ],
     "actions": [
 
     ]
