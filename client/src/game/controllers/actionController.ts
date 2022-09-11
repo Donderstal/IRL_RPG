@@ -48,7 +48,8 @@ export const dismissActiveAction = (): void => {
     if ( activeAction !== null ) {
         if ( spriteHasMovement( activeAction.spriteId ) ) {
             const destination = getSpriteDestination( activeAction.spriteId );
-            destination.setPath( activeAction.actionSprite );
+            const sprite = getSpriteById( activeAction.spriteId );
+            destination.setPath( sprite );
         }
         addActionSelectorEventToRegistry( activeAction );
         activeAction.dismiss();

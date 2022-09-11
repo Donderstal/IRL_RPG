@@ -1343,6 +1343,7 @@ export const getDataModelByKey = ( key: string ): SpriteDataModel => {
         return filteredModels[0];
     }
     else {
+        console.log(`Datamodel with key ${key} cannot be found.`)
         return null;
     }
 }

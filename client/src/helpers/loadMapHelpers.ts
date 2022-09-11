@@ -74,6 +74,7 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearAllSpriteModules();
     clearAllSprites();
 
+    console.log( playerStart )
     if ( playerStart !== null ) {
         globals.GAME.activeMap.playerStart = playerStart;
     }
@@ -87,6 +88,7 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
 
 const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
     let newPlayerCell: CellPosition = { row: null, column: null, direction: null };
+    console.log( type )
     switch ( type ) {
         case InteractionType.door:
             [...mapData.doors, ...mapData.sprites.filter( ( e ) => { return e.hasDoor })].forEach( ( door ) => {
@@ -128,6 +130,7 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
             } )
             break;
     }
+    console.log(newPlayerCell)
     return newPlayerCell
 }
 

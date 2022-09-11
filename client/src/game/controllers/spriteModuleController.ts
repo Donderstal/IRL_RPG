@@ -44,7 +44,8 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
         handleBlockedSpriteCounter( sprite );
         if ( blockedSpriteCounterIsOverLimit( sprite.spriteId ) ) {
             destroyBlockedSpriteCounter( sprite.spriteId );
-            setSideStepDestination( sprite );
+            destination.setPath( sprite );
+            //setSideStepDestination( sprite );
         }
     }
     else {

@@ -25,30 +25,6 @@ export default {
             "direction": DirectionEnum.left
         },
         {
-            "anim_type": AnimationTypeEnum.idle,
-            "row": 8,
-            "column": 19,
-            "type": FAT_BUFF_GUY,
-            "direction": DirectionEnum.down,
-            "name": "Bob A",
-            "condition": [
-                ConditionType.interactionNotRegistered,
-                LOGGABLE_INTERACTION_3
-            ]
-        },
-        {
-            "anim_type": AnimationTypeEnum.idle,
-            "row": 8,
-            "column": 20,
-            "type": FAT_BUFF_GUY,
-            "direction": DirectionEnum.down,
-            "name": "Bob B",
-            "condition": [
-                ConditionType.interactionRegistered,
-                LOGGABLE_INTERACTION_3
-            ]
-        },
-        {
             "type": "vent_1",
             "row": 1,
             "column": 2
@@ -172,6 +148,22 @@ export default {
             "row": 10,
             "column": 23,
             "direction": DirectionEnum.up
+        }
+    ],
+    "doors": [
+        {
+            "row": 7,
+            "column": 19,
+            "doorTo": "leonard_heights/yum-mart-ground-floor",
+            "direction": DirectionEnum.up,
+
+        },
+        {
+            "row": 7,
+            "column": 20,
+            "doorTo": "leonard_heights/yum-mart-ground-floor",
+            "direction": DirectionEnum.up,
+
         }
     ],
     "actions": [

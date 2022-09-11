@@ -17,12 +17,17 @@ import D3 from './D3/D3';
 import D4 from './D4/D4';
 import E3 from './E3/E3';
 import E4 from './E4/E4';
+
 import NewtownHall from './C2/Newtown-Appartments/Newtown-Hall';
 import NewtownAppartment1 from './C2/Newtown-Appartments/Newtown-left-bottom';
 import NewtownAppartment2 from './C2/Newtown-Appartments/Newtown-left-top';
 import NewtownAppartment3 from './C2/Newtown-Appartments/Newtown-top';
 import NewtownAppartment4 from './C2/Newtown-Appartments/Newtown-right-top';
 import NewtownAppartment5 from './C2/Newtown-Appartments/Newtown-right-bottom';
+
+import YumMartGroundFloor from './C4/yum-mart/yum-mart-ground';
+import YumMartFloor1 from './C4/yum-mart/yum-mart-floor-1';
+
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
@@ -78,7 +83,12 @@ export default {
         "Newtown-appartment-2": NewtownAppartment2,
         "Newtown-appartment-3": NewtownAppartment3,
         "Newtown-appartment-4": NewtownAppartment4,
-        "Newtown-appartment-5": NewtownAppartment5
+        "Newtown-appartment-5": NewtownAppartment5,
+
+        // C4 submaps
+        // Yum Mart
+        "yum-mart-ground-floor": YumMartGroundFloor,
+        "yum-mart-floor-1": YumMartFloor1
     },
     /////
     "spawnPoints": [

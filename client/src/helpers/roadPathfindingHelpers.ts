@@ -11,6 +11,7 @@ import type { GridLocation } from "../models/GridLocation";
 export const getRoadPathGridLocationList = ( start: CellPosition, startingDirection: DirectionEnum, destination: CellPosition ): GridLocation[] => {
     const roadNetwork = globals.GAME.FRONT.roadNetwork;
     const startingRoad = roadNetwork.roads.filter( ( e ) => { return e.cellIsInRoad( start ) && e.model.direction === startingDirection; } )[0];
+    if ( startingRoad === undefined || startingRoad === null ) return null;
     const roadIdPath = findRoadPathToDestination( start, startingRoad, destination );
     return convertRoadIdPathToGridLocationList( start, destination, roadIdPath, roadNetwork.roads );
 }

@@ -14,13 +14,6 @@ export default {
     "tileSet": "starting_neighbourhood_clean",
     "sprites": [
         {
-            "anim_type": AnimationTypeEnum.idle,
-            "row": 14,
-            "column": 9,
-            "type": PIGEON,
-            "direction": DirectionEnum.left
-        },
-        {
             "type": "vent_1",
             "row": 1,
             "column": 7
