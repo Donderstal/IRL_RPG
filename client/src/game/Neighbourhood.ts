@@ -17,11 +17,13 @@ export class Neighbourhood {
         this.model = getNeighbourhood( mapKey.split( '/' )[0] );
         this.activateMap( mapKey );
         this.setMapGrid();
-        this.setNPCCounter( );
+        this.setNPCCounter();
     }
 
     get key( ): string { return this.activeMapKey.split('/')[0]; }
-    get activeMap(): MapModel { return this.model.mapDictionary[this.activeMapName].outdoors ? this.mapModel : this.model.mapDictionary[this.activeMapName]; }
+    get activeMap(): MapModel {
+        return this.model.mapDictionary[this.activeMapName].outdoors ? this.mapModel : this.model.mapDictionary[this.activeMapName];
+    }
     get activeMapName(): string { return this.activeMapKey.split('/')[1]; }
 
     setMapGrid() {
@@ -108,7 +110,7 @@ export class Neighbourhood {
         }
 
         const mapModel: MapModel = {
-            name: this.key,
+            name: this.model.key,
             tileSet: tileSet,
             outdoors: true,
             columns: columns,
@@ -123,8 +125,8 @@ export class Neighbourhood {
             roads: this.model.roads
         }
 
-        console.log( mapModel );
         this.mapModel = mapModel;
+        this.model.mapDictionary[this.model.key] = mapModel;
     }
 
     getRandomAction(): InteractionModel[] {
@@ -135,44 +137,6 @@ export class Neighbourhood {
     activateMap( key: string ): void {
         this.previousMapKey = this.activeMapKey
         this.activeMapKey = key;
-        if ( this.activeMap.outdoors ) {
-            this.setMapNeighbours( );            
-        }
-    }
-
-    setMapNeighbours(): void {
-        const horizontalSlot = this.activeMapName[0];
-        const verticalSlot = this.activeMapName[1];
-        const horiIndex = this.model.horizontalSlots.indexOf(horizontalSlot);
-        const vertIndex = this.model.verticalSlots.indexOf( verticalSlot )
-        const mapsBySlot = this.model.mapDictionary;
-        let neighbours = {left: null, up: null, right: null, down: null};
-
-        if ( horiIndex + 1 != this.model.horizontalSlots.length ) {
-            const slotKey = this.model.horizontalSlots[horiIndex + 1] + verticalSlot;
-            if ( mapsBySlot[slotKey] != undefined ) {
-                neighbours.right = this.model.mapDictionary[slotKey].name
-            }
-        }
-        if ( vertIndex + 1 != this.model.verticalSlots.length ) {
-            const slotKey = horizontalSlot + this.model.verticalSlots[vertIndex + 1];
-            if ( mapsBySlot[slotKey] != undefined ) {
-                neighbours.down = this.model.mapDictionary[slotKey].name
-            }
-        }
-        if ( horiIndex - 1 != -1 ) {
-            const slotKey = this.model.horizontalSlots[horiIndex - 1] + verticalSlot;
-            if ( mapsBySlot[slotKey] != undefined ) {
-                neighbours.left = this.model.mapDictionary[slotKey].name
-            }
-        }
-        if ( vertIndex + 1 != -1 ) {
-            const slotKey = horizontalSlot + this.model.verticalSlots[vertIndex - 1];
-            if ( mapsBySlot[slotKey] != undefined ) {
-                neighbours.up = this.model.mapDictionary[slotKey].name
-            }
-        }
-        mapsBySlot[this.activeMapName].neighbours = neighbours;
     }
 
     setPlayerStart( name: string, className: string ): void {

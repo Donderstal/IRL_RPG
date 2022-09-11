@@ -4,6 +4,7 @@ import type { RoadModel } from "./RoadModel";
 import type { SpawnPointModel } from "./SpawnPointModel";
 
 export type NeighbourhoodModel = {
+    key: string;
     name: string;
     music?: string;
     horizontalSlots: string[];

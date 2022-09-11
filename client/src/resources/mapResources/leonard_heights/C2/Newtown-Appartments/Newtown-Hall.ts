@@ -342,7 +342,7 @@ export default {
         {
             "row": 12, 
             "column": 2,
-            "doorTo" : "leonard_heights/C2",
+            "doorTo": "leonard_heights/leonard_heights",
             "direction": DirectionEnum.down
         }
     ]

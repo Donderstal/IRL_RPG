@@ -53,10 +53,11 @@ export const initMapModel = ( mapData ): MapModel => {
 
 export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel => {
     let mapDictionary = {};
-    Object.keys(neighbourhoodData.mapDictionary).forEach( ( key ) => {
+    Object.keys( neighbourhoodData.mapDictionary ).forEach( ( key ) => {
         mapDictionary[key] = initMapModel( neighbourhoodData.mapDictionary[key] );
     } )
     const neighbourhoodModel: NeighbourhoodModel = {
+        key: neighbourhoodData.key,
         name: neighbourhoodData.name,
         music: neighbourhoodData.music,
         horizontalSlots: neighbourhoodData.horizontal_slots,

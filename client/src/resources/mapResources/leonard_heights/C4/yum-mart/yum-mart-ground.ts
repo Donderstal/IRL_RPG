@@ -1848,14 +1848,14 @@ export default {
 		{
 			"row": 6,
 			"column": 10,
-			"doorTo": "leonard_heights/C4",
+			"doorTo": "leonard_heights/leonard_heights",
 			"direction": DirectionEnum.down,
 
 		},
 		{
 			"row": 6,
 			"column": 11,
-			"doorTo": "leonard_heights/C4",
+			"doorTo": "leonard_heights/leonard_heights",
 			"direction": DirectionEnum.down,
 
 		}

@@ -33,6 +33,7 @@ import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
 
 export default {
+    "key": "leonard_heights",
     "name": "Leonard Heights",
     "horizontal_slots": ["A", "B", "C", "D", "E"], 
     "vertical_slots": ["1", "2", "3", "4"],
