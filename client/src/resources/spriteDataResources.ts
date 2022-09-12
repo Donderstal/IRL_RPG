@@ -187,7 +187,7 @@ const getCollectible = ( widthInBlocks, heightInBlocks, name, collectable_type )
 const getStandardDoorEast = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": "E",
+        "tile_alignment": DirectionEnum.left,
         ...getDoorOrWindow( 0.34375, 2.0625 )
     }
 }
@@ -203,7 +203,7 @@ const getStandardDoorNorth = ( src ) => {
 const getStandardDoorWest = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": "W",
+        "tile_alignment": DirectionEnum.left,
         ...getDoorOrWindow( 0.34375, 2.0625 )
     }
 }
@@ -211,9 +211,21 @@ const getStandardDoorWest = ( src ) => {
 const getStandardDoorSouth = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": "S",
+        "tile_alignment": DirectionEnum.down,
         ...getDoorOrWindow( 1, 1.53125 )
     }
+}
+
+const BAR_VERTICAL = {
+    "dimensional_alignment": "STANDARD",
+    "width_blocks": 1.8125,
+    "height_blocks": 3.90625
+}
+
+const BAR_HORIZONTAL = {
+    "dimensional_alignment": "STANDARD",
+    "width_blocks": 5,
+    "height_blocks": 2.28125
 }
 
 export const spriteData = {
@@ -224,6 +236,22 @@ export const spriteData = {
     "bar": {
         "src": "bar.png",
         ...getGroundedAtBottom( 9, 9 )
+    },
+    "Bar_A": {
+        "src": "Bar_A.png",
+        ...BAR_HORIZONTAL
+    },
+    "Bar_B": {
+        "src": "Bar_B.png",
+        ...BAR_HORIZONTAL
+    },
+    "Bar_C": {
+        "src": "Bar_C.png",
+        ...BAR_VERTICAL
+    },
+    "Bar_D": {
+        "src": "Bar_D.png",
+        ...BAR_VERTICAL
     },
     "bar_versionB": {
         "src": "bar_versionB.png",
@@ -240,6 +268,10 @@ export const spriteData = {
     "bar_sign_old": {
         "src": "bar_sign_old.png",
         ...getSignData( 1.8125, 1, ["SIGN_IDLE_VERT", "SIGN_IDLE_HORI_VERT"] )
+    },
+    "bar_stool": {
+        "src": "bar_lights.png",
+        ...getGroundedAtBottom( 0.625, 0.9375 )
     },
     "bench_a": {
         "src": "bench_a.png",
@@ -329,19 +361,33 @@ export const spriteData = {
         "height_blocks": 1.46875,
         "grounded_at_bottom": true
     },
-    "brown_chair": {
+    "bottle": {
+        "src": "bottle.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 0.15625,
+        "height_blocks": 0.40625,
+        "on_background": true
+    },
+    "bottle_hologram": {
+        "src": "bottle_hologram.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 1.125,
+        "height_blocks": 1.15625,
+        "not_grounded": true
+    },
+    "brown_chair" :{
         "src": "brown_chair.png",
         ...getGroundedAtBottom( 1, 1 )
     },
-    "brown_chair_east": {
+    "brown_chair_east" :{
         "src": "brown_chair_east.png",
         ...getGroundedAtBottom( 1, 1 )
     },
-    "brown_chair_south": {
-        "src": "brown_chair_south.png",
+    "brown_chair_north" :{
+        "src": "brown_chair_north.png",
         ...getGroundedAtBottom( 1, 1 )
     },
-    "brown_chair_west": {
+    "brown_chair_west" :{
         "src": "brown_chair_west.png",
         ...getGroundedAtBottom( 1, 1 )
     },
@@ -382,6 +428,18 @@ export const spriteData = {
     },
     "chair_red_cushion": {
         "src": "chair_red_cushion.png",
+        ...ONE_BLOCK_SPRITE
+    },
+    "chair_red_cushion_west": {
+        "src": "chair_red_cushion_west.png",
+        ...ONE_BLOCK_SPRITE
+    },
+    "chair_red_cushion_east": {
+        "src": "chair_red_cushion_east.png",
+        ...ONE_BLOCK_SPRITE
+    },
+    "chair_red_cushion_north": {
+        "src": "chair_red_cushion_north.png",
         ...ONE_BLOCK_SPRITE
     },
     "computer_table": {
@@ -652,6 +710,13 @@ export const spriteData = {
         }
         // border - left/top = h20px w20px
     },
+    "glass": {
+        "src": "glass.png",
+        "dimensional_alignment": "STANDARD",
+        "width_blocks": 0.15625,
+        "height_blocks": 0.3125,
+        "on_background": true
+    },
     "graff_z1": {
         "src": "graff_z1.png",
         ...getBackgroundItem( 1.3125, 1.125 )
@@ -667,6 +732,10 @@ export const spriteData = {
     "inside_bin": {
         "src": "inside_bin.png",
         ...getGroundedAtBottom( 1, 1 )
+    },
+    "Jukebox": {
+        "src": "Jukebox.png",
+        ...getGroundedAtBottom( 1.1875, 1.90625 )
     },
     "lamp_red": {
         "src": "lamp_red.png",
@@ -884,6 +953,22 @@ export const spriteData = {
     "Small_Table": {
         "src": "small_table.png",
         ...getGroundedAtBottom( 1, 1 )
+    },
+    "tableA": {
+        "src": "tableA.png",
+        ...getGroundedAtBottom( 1, 1.1875 )
+    },
+    "tableB": {
+        "src": "tableD.png",
+        ...getGroundedAtBottom( 1, 1.1875 )
+    },
+    "tableC": {
+        "src": "tableC.png",
+        ...getGroundedAtBottom( 1, 1.1875 )
+    },
+    "tableD": {
+        "src": "tableD.png",
+        ...getGroundedAtBottom( 1, 1.1875 )
     },
     "tires_1": {
         "src": "Tires_Z1.png",

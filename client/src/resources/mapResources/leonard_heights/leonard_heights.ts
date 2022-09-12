@@ -28,6 +28,10 @@ import NewtownAppartment5 from './C2/Newtown-Appartments/Newtown-right-bottom';
 import YumMartGroundFloor from './C4/yum-mart/yum-mart-ground';
 import YumMartFloor1 from './C4/yum-mart/yum-mart-floor-1';
 
+import ClubShelter from './B4/club-shelter/club-shelter';
+import ClubShelterEntrance from './B4/club-shelter/club-shelter-entrance';
+import ClubShelterToilets from './B4/club-shelter/club-shelter-toilets';
+
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
@@ -76,6 +80,12 @@ export default {
         "D4": D4,
         "E3": E3,
         "E4": E4,
+
+        // B4 submap
+        // Club shelter
+        "club-shelter-entrance": ClubShelterEntrance,
+        "club-shelter": ClubShelter,
+        "club-shelter-toilets": ClubShelterToilets,
 
         // C2 submaps
         // Newtown appartments.

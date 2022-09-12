@@ -80,5 +80,21 @@ export default {
     ],
     "actions":[
       
-    ]
+    ],
+    "doors": [
+        {
+            "row": 8,
+            "column": 4,
+            "doorTo": "leonard_heights/club-shelter-entrance",
+            "direction": DirectionEnum.up,
+
+        },
+        {
+            "row": 8,
+            "column": 5,
+            "doorTo": "leonard_heights/club-shelter-entrance",
+            "direction": DirectionEnum.up,
+
+        }
+    ],
 }
