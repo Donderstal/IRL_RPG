@@ -3855,86 +3855,30 @@ export default {
 		"column": 7,
 		"row": 2
 	},
-	"sprites": [],
-	"frontSprites": [],
-	"spawnPoints": [],
-	"roads": [
+	"sprites": [
 		{
-			"direction": DirectionEnum.right,
-			"alignment": RoadAlignmentEnum.horizontal,
-			"hasStart": true,
-			"primaryRow": 14,
-			"secondaryRow": 13,
-			"primaryColumn": 0,
-			"secondaryColumn": 25
+			column: 3,
+			row: 4,
+			type: "door_interior_west_blue",
 		},
 		{
-			"direction": DirectionEnum.left,
-			"alignment": RoadAlignmentEnum.horizontal,
-			"hasStart": true,
-			"primaryRow": 12,
-			"secondaryRow": 11,
-			"primaryColumn": 25,
-			"secondaryColumn": 0
-		},
-
-		{
-			"direction": DirectionEnum.right,
-			"alignment": RoadAlignmentEnum.horizontal,
-			"hasStart": true,
-			"primaryRow": 6,
-			"secondaryRow": 5,
-			"primaryColumn": 0,
-			"secondaryColumn": 25
+			column: 3,
+			row: 6,
+			type: "door_interior_north_blue",
 		},
 		{
-			"direction": DirectionEnum.left,
-			"alignment": RoadAlignmentEnum.horizontal,
-			"hasStart": true,
-			"primaryRow": 4,
-			"secondaryRow": 3,
-			"primaryColumn": 25,
-			"secondaryColumn": 0
-		},
-
-
-		{
-			"direction": DirectionEnum.up,
-			"alignment": RoadAlignmentEnum.vertical,
-			"hasStart": true,
-			"primaryRow": 17,
-			"secondaryRow": 0,
-			"primaryColumn": 9,
-			"secondaryColumn": 10
+			column: 3,
+			row: 8,
+			type: "door_interior_east_blue",
 		},
 		{
-			"direction": DirectionEnum.down,
-			"alignment": RoadAlignmentEnum.vertical,
-			"hasStart": true,
-			"primaryRow": 0,
-			"secondaryRow": 17,
-			"primaryColumn": 7,
-			"secondaryColumn": 8
-		},
-
-		{
-			"direction": DirectionEnum.up,
-			"alignment": RoadAlignmentEnum.vertical,
-			"hasStart": true,
-			"primaryRow": 17,
-			"secondaryRow": 0,
-			"primaryColumn": 17,
-			"secondaryColumn": 18
-		},
-		{
-			"direction": DirectionEnum.down,
-			"alignment": RoadAlignmentEnum.vertical,
-			"hasStart": true,
-			"primaryRow": 0,
-			"secondaryRow": 17,
-			"primaryColumn": 15,
-			"secondaryColumn": 16
+			column: 3,
+			row: 10,
+			type: "door_interior_south_blue",
 		}
 	],
+	"frontSprites": [],
+	"spawnPoints": [],
+	"roads": [],
 	"doors": []
 }

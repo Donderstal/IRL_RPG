@@ -993,35 +993,26 @@ export default {
 			"row": 1,
 			"column": 1
 		},
-		//{
-		//	"type": "car_b",
-		//	"row": 3,
-		//	"column": 1,
-		//	"direction": DirectionEnum.left
-		//},
-		//{
-		//	"type": "car_b",
-		//	"row": 3,
-		//	"column": 8,
-		//	"direction": DirectionEnum.right
-		//},
-		//{
-		//	"type": "bar_lights",
-		//	"row": 1,
-		//	"column": 8
-		//},
-		//{
-		//	"type": "car_b",
-		//	"row": 4,
-		//	"column": 1,
-		//	"direction": DirectionEnum.up
-		//},
-		//{
-		//	"type": "car_b",
-		//	"row": 4,
-		//	"column": 8,
-		//	"direction": DirectionEnum.down
-		//}
+		{
+			column: 3,
+			row: 7,
+			type: "door_interior_west_blue",
+		},
+		{
+			column: 5,
+			row: 7,
+			type: "door_interior_north_blue",
+		},
+		{
+			column: 7,
+			row: 7,
+			type: "door_interior_east_blue",
+		},
+		{
+			column: 9,
+			row: 7,
+			type: "door_interior_south_blue",
+		}
 	],
 	"playerStart": {
 		"column": 7,

@@ -295,6 +295,13 @@ export class Sprite {
         else {
             this.x = tile.x;
             this.y = tile.y - ( this.height - GRID_BLOCK_PX );
+            if ( this.model.tileAlignment === DirectionEnum.right ) {
+                this.x = ( tile.x + GRID_BLOCK_PX ) - this.width;
+            }
+            else if ( this.model.tileAlignment === DirectionEnum.down ) {
+                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
+            }
+
         }
     }
 

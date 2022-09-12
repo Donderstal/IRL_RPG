@@ -187,7 +187,6 @@ const getCollectible = ( widthInBlocks, heightInBlocks, name, collectable_type )
 const getStandardDoorEast = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": DirectionEnum.left,
         ...getDoorOrWindow( 0.34375, 2.0625 )
     }
 }
@@ -195,7 +194,6 @@ const getStandardDoorEast = ( src ) => {
 const getStandardDoorNorth = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": "N",
         ...getDoorOrWindow( 1, .25 )
     }
 }
@@ -203,7 +201,7 @@ const getStandardDoorNorth = ( src ) => {
 const getStandardDoorWest = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": DirectionEnum.left,
+        "tile_alignment": DirectionEnum.right,
         ...getDoorOrWindow( 0.34375, 2.0625 )
     }
 }
@@ -211,7 +209,6 @@ const getStandardDoorWest = ( src ) => {
 const getStandardDoorSouth = ( src ) => {
     return {
         "src": src,
-        "tile_alignment": DirectionEnum.down,
         ...getDoorOrWindow( 1, 1.53125 )
     }
 }
@@ -882,6 +879,7 @@ export const spriteData = {
     },
     "shelves_side_a": {
         "src": "shelves_side_a.png",
+        "tile_alignment": DirectionEnum.right,
         ...getGroundedAtBottom( 0.84375, 3 ),
     },
     "shelves_side_b": {
@@ -1410,8 +1408,10 @@ export const getDataModels = (): SpriteDataModel[] => {
         if ( model.isCollectable ) {
             model.collectableType = value["collectable_type"];
         }
-        if ( value["tile_alignment"] !== undefined )
+        if ( value["tile_alignment"] !== undefined ) {
             model.tileAlignment = value["tile_alignment"];
+        }
+
         if ( model.hasBlockedArea ) {
             model.blockedArea = value["blockedArea"];
         }

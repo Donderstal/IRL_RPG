@@ -34,6 +34,6 @@ export type SpriteDataModel = {
     collectableType?: CollectableType;
 
     hasBlockedArea: boolean;
-    tileAlignment?: string;
+    tileAlignment?: DirectionEnum;
     blockedArea?: { left: number, top: number, right: number, bottom: number };
 }

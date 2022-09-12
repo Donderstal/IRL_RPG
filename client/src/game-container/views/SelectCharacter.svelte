@@ -256,7 +256,7 @@
         <p><label>Select starting location</label><select id="map-selection">
             <option value="leonard_heights/Newtown-appartment-3">Lennart</option>
             <option value="test-maps/A1">Test movement</option>
-            <option value="test-maps/B2">Test pathfinding</option>
+            <option value="test-maps/B1">Test doors</option>
         </select></p>
     </div>
     <MainUiButton action={startGameWithParams} buttonText={"Let's go!"} />
