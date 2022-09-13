@@ -170,7 +170,6 @@ export class BackSpriteGrid extends CanvasGrid {
             }
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
-
         createSpriteFromCanvasObjectModel( model, this.type )
     }
 

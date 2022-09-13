@@ -103,7 +103,7 @@ export class Sprite {
         this.setDirection( canvasObjectModel.direction ?? 0, tile );
 
         this.activeEffect   = { active: false };
-        this.isPlayer = spriteIsPlayer( spriteId );
+        this.isPlayer       = spriteIsPlayer( spriteId );
         this.hasDoor        = canvasObjectModel.hasDoor;
         this.hasAction      = canvasObjectModel.hasAction;
         this.isCar          = this.model.isCar;

@@ -122,7 +122,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
 
         hasCondition: objectData.condition !== undefined,
         hasAction: objectData.action !== undefined,
-        hasDoor: objectData.destination !== undefined,
+        hasDoor: objectData.door !== undefined,
         spriteDataModel: getDataModelByKey( objectData.type ),
 
         name: objectData.name,

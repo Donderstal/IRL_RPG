@@ -45,7 +45,7 @@ export const RANDOM_TALK_4 = [[
             [
                 [[SceneAnimationType.emote, false, EMOTE_ANGRY, PLAYER_NAME], [SceneAnimationType.speak, true, "Then why don't you piss off?", null]]
             ],
-            false, PLAYER_NAME
+            null, PLAYER_NAME
         ]],
     ]
 ]]
