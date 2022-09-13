@@ -8,7 +8,7 @@ import { getAssociatedHitbox } from '../modules/hitboxModule';
 import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
-import { clearGridCanvasOfType } from '../controllers/gridCanvasController';
+import { clearGridCanvasOfType, getTileOnCanvasByIndex } from '../controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { initInteractionModel } from '../../helpers/modelFactory';
 import { setActiveCinematic } from '../controllers/cinematicController';
@@ -19,6 +19,8 @@ import { addDoorToUnlockedDoorsRegistry } from '../../helpers/doorRegistry';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { getBackSprites, getPlayer, getSpriteById } from '../controllers/spriteController';
 import type { Door } from './map-classes/Door';
+import { drawRect } from '../../helpers/canvasHelpers';
+import { GRID_BLOCK_PX } from '../../game-data/globals';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -107,19 +109,22 @@ export const handleNpcCounter = ( GAME: Game ): void => {
 }
 
 export const drawSpritesInOrder = ( GAME: Game ): void => {
+    const backgroundSprites = [];
+    const standardSprites = [];
+    const foregroundSprites = [];
+    const flyingSprites = [];
     const spritesInView = getBackSprites().filter( ( e ) => {
         return cameraFocus.xyValueIsInView( e.left, e.top )
             || cameraFocus.xyValueIsInView( e.left, e.bottom )
             || cameraFocus.xyValueIsInView( e.right, e.top )
-            || cameraFocus.xyValueIsInView( e.right, e.bottom )
+            || cameraFocus.xyValueIsInView( e.right, e.bottom );
     } )
 
-    const movingSpritesOutOfView = getBackSprites().filter( ( e ) => {
-        return !(cameraFocus.xyValueIsInView( e.left, e.top )
+    const spritesOutOfView = getBackSprites().filter( ( e ) => {
+        return !( cameraFocus.xyValueIsInView( e.left, e.top )
             || cameraFocus.xyValueIsInView( e.left, e.bottom )
             || cameraFocus.xyValueIsInView( e.right, e.top )
-            || cameraFocus.xyValueIsInView( e.right, e.bottom ) )
-            && e.pluginIsRunning(e.plugins.movement)
+            || cameraFocus.xyValueIsInView( e.right, e.bottom ) );
     } )
 
     spritesInView.sort( ( a, b ) => {
@@ -134,12 +139,21 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         }          
     })
 
-    const backgroundSprites = [];
-    const standardSprites   = [];
-    const foregroundSprites = [];
-    const flyingSprites     = [];
-
+    if ( GAME.debugMode ) {
+        GAME.FRONT.tilesBlockedBySprites.forEach( ( e ) => {
+            const tile = getTileOnCanvasByIndex( e, CanvasTypeEnum.backSprites );
+            if ( tile !== undefined ) {
+                drawRect( GAME.FRONT.canvas, tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX, 'red' );
+            }
+        } )
+    }
     GAME.FRONT.resetTilesBlockedBySprites();
+    spritesOutOfView.forEach( ( sprite ) => {
+        if ( !(sprite.model.onBackground || sprite.model.notGrounded
+            || ( sprite.movementType == MovementType.flying && sprite.pluginIsRunning( sprite.plugins.movement ) ) ) ) {
+            GAME.FRONT.setTilesBlockedBySprite( sprite );
+        }
+    } )
     spritesInView.forEach( ( sprite )  => {
         if ( sprite.model.onBackground ) {
             backgroundSprites.push( sprite );
@@ -152,7 +166,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         }
         else {
             standardSprites.push( sprite );
-            GAME.FRONT.getTilesBlockedBySprite( sprite );
+            GAME.FRONT.setTilesBlockedBySprite( sprite );
         }
     })
     if ( GAME.BACK.savepoint ) {
@@ -164,7 +178,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     drawSpritesInArray( foregroundSprites, GAME );
     drawSpritesInArray( flyingSprites, GAME );
 
-    handleSpriteModules( movingSpritesOutOfView, GAME );
+    handleSpriteModules( spritesOutOfView, GAME );
 }
 
 export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
@@ -179,8 +193,9 @@ export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
 }
 
 export const handleSpriteModules = ( array: Sprite[], GAME: Game ): void => {
+    let movingSprites = array.filter( ( e ) => { return e.pluginIsRunning( e.plugins.movement ); } );
     if ( !GAME.paused ) {
-        array.forEach( ( sprite ) => {
+        movingSprites.forEach( ( sprite ) => {
             if ( GAME.paused ) {
                 return;
             }

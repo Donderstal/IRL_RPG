@@ -410,24 +410,26 @@ export class Sprite {
         this.activeFrame = frame;
     }
 
-    getBlockedTiles(): number[] {
+    getTilesBlockedBySprite(): number[] {
         let tileIndexes = [];
-        let x = this.x + (GRID_BLOCK_PX / 2);
+        let originalX =  this.x + (GRID_BLOCK_PX / 2);
+        let x = originalX;
         let y = this.y + ( GRID_BLOCK_PX / 2 );
         let front = globals.GAME.FRONT;
 
         if ( this.isCar && (this.direction === DirectionEnum.left || this.direction === DirectionEnum.right) ) {
             y += GRID_BLOCK_PX;
         }
-        else if ( this.standing ) {
+        if ( !this.isCar && this.standing ) {
             y = ( this.y + this.height ) - ( GRID_BLOCK_PX / 2 );
         }
 
-        while ( y < ( this.y + this.height ) ) {
+        while ( y <= ( this.y + this.height ) ) {
             while ( x < ( this.x + this.width ) ) {
                 tileIndexes.push( front.getTileAtXY( x, y ).index );
                 x += GRID_BLOCK_PX;
             }
+            x = originalX;
             y += GRID_BLOCK_PX;
         }
 

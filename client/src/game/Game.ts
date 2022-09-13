@@ -182,6 +182,7 @@ export class Game {
         clearSpriteAnimations();
         dismissActiveAction();
         clearPressedKeys();
+        this.FRONT.resetTilesBlockedBySprites();
     }
 
     switchMap( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void {
