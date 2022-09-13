@@ -11,7 +11,6 @@ export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,
     "grid": GRID_LEONARD_D1,
    "outdoors":true,
-   "mapName":"leonard_heights/D1",
    "rows":16,
    "columns":24,
    "tileSet":"starting_neighbourhood_clean",

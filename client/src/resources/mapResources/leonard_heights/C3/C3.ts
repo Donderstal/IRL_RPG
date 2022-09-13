@@ -1,7 +1,6 @@
 import { GRID_LEONARD_C3 } from './grid';
 import { FRONT_GRID_LEONARD_C3 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { MovementType } from '../../../../enumerables/MovementTypeEnum';
 import { PIGEON } from '../../../spriteTypeResources';
@@ -10,7 +9,6 @@ export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
     "grid": GRID_LEONARD_C3,
     "outdoors": true,
-    "mapName": "leonard_heights/C3",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",

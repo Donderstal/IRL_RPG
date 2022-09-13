@@ -1,9 +1,10 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BUSINESS_MAN, FAT_BUFF_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY, ROBOT, SUNGLASSES_LADY, SUPERMARKET_MANAGER, TOUGH_GUY_WITH_COOL_HAIR, WHITE_PONY_TAIL_LADY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
+import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
 
 export default {
-	"mapName": "leonard_heights/club-shelter",
+	"mapName": LH_CLUB_SHELTER_KEY,
 	"columns": 20,
 	"rows": 16,
 	"tileSet": "Generic_Room_AX",
@@ -3673,21 +3674,21 @@ export default {
 		{
 			"row": 6,
 			"column": 16,
-			"doorTo": "leonard_heights/club-shelter-toilets",
+			"doorTo": LH_CLUB_SHELTER_TOILETS_KEY,
 			"direction": DirectionEnum.left,
 
 		},
 		{
 			"row": 16,
 			"column": 10,
-			"doorTo": "leonard_heights/club-shelter-entrance",
+			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
 			"direction": DirectionEnum.down,
 
 		},
 		{
 			"row": 16,
 			"column": 11,
-			"doorTo": "leonard_heights/club-shelter-entrance",
+			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
 			"direction": DirectionEnum.down,
 
 		}

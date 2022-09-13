@@ -3,11 +3,11 @@ import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
+import { LH_MAP_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY } from "../../leonard_heights_res";
 import { WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
 
 export default {
-    "mapName": "leonard_heights/Newtown-Hall",
-    "neighbourhood": "leonard_heights",
+    "mapName": LH_NEWTOWN_APP_HALL_KEY,
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
     "music": "game-jam-5-10-21.mp3",
@@ -312,37 +312,37 @@ export default {
         {
             "row": 10, 
             "column": 1,
-            "doorTo" : "leonard_heights/Newtown-appartment-1",
+            "doorTo" : LH_NEWTOWN_APP_1_KEY,
             "direction": DirectionEnum.left
         },
         {
             "row": 5, 
             "column": 1,
-            "doorTo" : "leonard_heights/Newtown-appartment-2",
+            "doorTo": LH_NEWTOWN_APP_2_KEY,
             "direction": DirectionEnum.left
         },
         {
             "row": 2, 
             "column": 3,
-            "doorTo"  : "leonard_heights/Newtown-appartment-3",
+            "doorTo": LH_NEWTOWN_APP_3_KEY,
             "direction": DirectionEnum.up
         },
         {
             "row": 5, 
             "column": 4,
-            "doorTo" : "leonard_heights/Newtown-appartment-4",
+            "doorTo": LH_NEWTOWN_APP_4_KEY,
             "direction": DirectionEnum.right
         },
         {
             "row": 10, 
             "column": 4,
-            "doorTo" : "leonard_heights/Newtown-appartment-5",
+            "doorTo": LH_NEWTOWN_APP_5_KEY,
             "direction": DirectionEnum.right
         },
         {
             "row": 12, 
             "column": 2,
-            "doorTo": "leonard_heights/leonard_heights",
+            "doorTo": LH_MAP_KEY,
             "direction": DirectionEnum.down
         }
     ]

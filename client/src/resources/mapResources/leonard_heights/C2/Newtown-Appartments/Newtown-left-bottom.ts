@@ -3,13 +3,11 @@ import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
 import { FAT_BUFF_GUY, PINK_HAIR_NERD_LADY } from "../../../../spriteTypeResources";
+import { LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_HALL_KEY } from "../../leonard_heights_res";
 import { KEY_GUY, BODYGUARD } from "./Newtown-Appartments-interactions";
 
 export default {
-    "mapName": "leonard_heights/Newtown-appartment-1",
-    "neighbourhood": "leonard_heights",
-    "spawnPoints": [],
-    "roads": [],
+    "mapName": LH_NEWTOWN_APP_1_KEY,
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
     "music": "game-jam-5-10-21.mp3",
@@ -421,7 +419,7 @@ export default {
         {
             "row": 4, 
             "column": 8,
-            "doorTo" : "leonard_heights/Newtown-Hall",
+            "doorTo" : LH_NEWTOWN_APP_HALL_KEY,
             "direction": DirectionEnum.right,
         }
     ]

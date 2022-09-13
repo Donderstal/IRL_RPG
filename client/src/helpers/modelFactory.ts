@@ -23,7 +23,7 @@ import { getDataModelByKey } from "../resources/spriteDataResources";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
-        name: mapData.mapName,
+        name: mapData.mapName != undefined ? mapData.mapName : "",
         columns: mapData.columns,
         rows: mapData.rows,
 

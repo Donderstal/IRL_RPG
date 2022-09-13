@@ -5,7 +5,6 @@ export default {
     "frontGrid": FRONT_GRID_LEONARD_A2,
     "grid": GRID_LEONARD_A2,
     "outdoors": true,
-    "mapName": "leonard_heights/A2",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",

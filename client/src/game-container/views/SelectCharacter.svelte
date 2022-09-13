@@ -5,6 +5,7 @@
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import { startGameWithParams } from "../stores.js"
     import { onMount } from 'svelte';
+    import { LH_NEWTOWN_APP_3_KEY } from '../../resources/mapResources/leonard_heights/leonard_heights_res'; 
 
     const availableClasses = [ "LOREM", "IPSUM", "DOLOR", "SIT AMET" ]
     const classNames = {
@@ -254,7 +255,7 @@
         <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
         <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" /></p>
         <p><label>Select starting location</label><select id="map-selection">
-            <option value="leonard_heights/Newtown-appartment-3">Lennart</option>
+            <option value={LH_NEWTOWN_APP_3_KEY}>Lennart</option>
             <option value="test-maps/A1">Test movement</option>
             <option value="test-maps/B1">Test doors</option>
         </select></p>

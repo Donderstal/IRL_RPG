@@ -35,6 +35,7 @@ import ClubShelterToilets from './B4/club-shelter/club-shelter-toilets';
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
+import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY, removeNeighbourhoodKey } from './leonard_heights_res';
 
 export default {
     "key": "leonard_heights",
@@ -83,23 +84,23 @@ export default {
 
         // B4 submap
         // Club shelter
-        "club-shelter-entrance": ClubShelterEntrance,
-        "club-shelter": ClubShelter,
-        "club-shelter-toilets": ClubShelterToilets,
+        [removeNeighbourhoodKey(LH_CLUB_SHELTER_ENTRANCE_KEY)]: ClubShelterEntrance,
+        [removeNeighbourhoodKey( LH_CLUB_SHELTER_KEY )]: ClubShelter,
+        [removeNeighbourhoodKey(LH_CLUB_SHELTER_TOILETS_KEY)]: ClubShelterToilets,
 
         // C2 submaps
         // Newtown appartments.
-        "Newtown-Hall": NewtownHall,
-        "Newtown-appartment-1": NewtownAppartment1,
-        "Newtown-appartment-2": NewtownAppartment2,
-        "Newtown-appartment-3": NewtownAppartment3,
-        "Newtown-appartment-4": NewtownAppartment4,
-        "Newtown-appartment-5": NewtownAppartment5,
+        [removeNeighbourhoodKey( LH_NEWTOWN_APP_HALL_KEY )]: NewtownHall,
+        [removeNeighbourhoodKey( LH_NEWTOWN_APP_1_KEY )]: NewtownAppartment1,
+        [removeNeighbourhoodKey( LH_NEWTOWN_APP_2_KEY )]: NewtownAppartment2,
+        [removeNeighbourhoodKey( LH_NEWTOWN_APP_3_KEY )]: NewtownAppartment3,
+        [removeNeighbourhoodKey( LH_NEWTOWN_APP_4_KEY )]: NewtownAppartment4,
+        [removeNeighbourhoodKey( LH_NEWTOWN_APP_5_KEY )]: NewtownAppartment5,
 
         // C4 submaps
         // Yum Mart
-        "yum-mart-ground-floor": YumMartGroundFloor,
-        "yum-mart-floor-1": YumMartFloor1
+        [removeNeighbourhoodKey( LH_YUM_MART_STORE_KEY )]: YumMartGroundFloor,
+        [removeNeighbourhoodKey( LH_YUM_MART_OFFICE_KEY )]: YumMartFloor1
     },
     /////
     "spawnPoints": [

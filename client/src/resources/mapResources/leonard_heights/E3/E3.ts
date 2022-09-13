@@ -2,14 +2,12 @@ import { GRID_LEONARD_E3 } from './grid';
 import { FRONT_GRID_LEONARD_E3 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 import { PIGEON } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E3,
     "grid": GRID_LEONARD_E3,
     "outdoors": true,
-    "mapName": "leonard_heights/E3",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",

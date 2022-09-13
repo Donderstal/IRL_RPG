@@ -1,18 +1,14 @@
 import { GRID_LEONARD_C4 } from './grid';
 import { FRONT_GRID_LEONARD_C4 } from './frontgrid';
-import { LOGGABLE_INTERACTION_3 } from '../../../../game-data/interactionGlobals';
-import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
-import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
-import { FAT_BUFF_GUY, PIGEON } from '../../../spriteTypeResources';
+import { PIGEON } from '../../../spriteTypeResources';
+import { LH_YUM_MART_STORE_KEY } from '../leonard_heights_res';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C4,
     "grid": GRID_LEONARD_C4,
     "outdoors": true,
-    "mapName": "leonard_heights/C4",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
@@ -154,14 +150,14 @@ export default {
         {
             "row": 7,
             "column": 19,
-            "doorTo": "leonard_heights/yum-mart-ground-floor",
+            "doorTo": LH_YUM_MART_STORE_KEY,
             "direction": DirectionEnum.up,
 
         },
         {
             "row": 7,
             "column": 20,
-            "doorTo": "leonard_heights/yum-mart-ground-floor",
+            "doorTo": LH_YUM_MART_STORE_KEY,
             "direction": DirectionEnum.up,
 
         }

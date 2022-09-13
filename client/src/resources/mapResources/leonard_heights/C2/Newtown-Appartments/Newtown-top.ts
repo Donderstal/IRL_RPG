@@ -1,11 +1,9 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { COLLECTABLE_ACTION_COIN, COLLECTABLE_ACTION_JUICE_CAN } from "../../../../actionResources";
+import { LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_HALL_KEY } from "../../leonard_heights_res";
 
 export default {
-    "mapName": "leonard_heights/Newtown-appartment-3",
-    "neighbourhood": "leonard_heights",
-    "spawnPoints": [],
-    "roads": [],
+    "mapName": LH_NEWTOWN_APP_3_KEY,
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
     "music": "game-jam-5-10-21.mp3",
@@ -425,7 +423,7 @@ export default {
         {
             "row": 8, 
             "column": 4,
-            "doorTo" : "leonard_heights/Newtown-Hall",
+            "doorTo" : LH_NEWTOWN_APP_HALL_KEY,
             "direction" : DirectionEnum.down
         }
     ],

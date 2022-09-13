@@ -1,13 +1,11 @@
 import { GRID_LEONARD_D4 } from './grid';
 import { FRONT_GRID_LEONARD_D4 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D4,
     "grid": GRID_LEONARD_D4,
     "outdoors": true,
-    "mapName": "leonard_heights/D4",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",

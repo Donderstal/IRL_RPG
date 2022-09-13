@@ -1,13 +1,10 @@
 import { GRID_LEONARD_B2 } from './grid';
 import { FRONT_GRID_LEONARD_B2 } from './frontgrid';
-import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B2,
     "grid": GRID_LEONARD_B2,
     "outdoors": true,
-    "mapName": "leonard_heights/B2",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",

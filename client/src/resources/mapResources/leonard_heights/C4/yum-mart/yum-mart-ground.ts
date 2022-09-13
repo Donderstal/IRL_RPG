@@ -1,9 +1,10 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { GRANNY, SUPERMARKET_MANAGER } from "../../../../spriteTypeResources";
+import { LH_MAP_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
 
 export default {
-	"mapName": "leonard_heights/yum-mart-ground-floor",
+	"mapName": LH_YUM_MART_STORE_KEY,
 	"neighbourhood": "leonard_heights",
 	"columns": 20,
 	"rows": 8,
@@ -1841,21 +1842,21 @@ export default {
 		{
 			"row": 3,
 			"column": 1,
-			"doorTo": "leonard_heights/yum-mart-floor-1",
+			"doorTo": LH_YUM_MART_OFFICE_KEY,
 			"direction": DirectionEnum.left,
 
 		},
 		{
 			"row": 6,
 			"column": 10,
-			"doorTo": "leonard_heights/leonard_heights",
+			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
 
 		},
 		{
 			"row": 6,
 			"column": 11,
-			"doorTo": "leonard_heights/leonard_heights",
+			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
 
 		}

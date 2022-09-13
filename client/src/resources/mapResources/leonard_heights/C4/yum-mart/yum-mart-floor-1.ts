@@ -1,9 +1,10 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
+import { LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
 
 export default {
-	"mapName": "leonard_heights/yum-mart-floor-1",
+	"mapName": LH_YUM_MART_OFFICE_KEY,
 	"columns": 20,
 	"rows": 8,
 	"tileSet": "Yum_Mart",
@@ -1807,7 +1808,7 @@ export default {
 		{
 			"row": 3,
 			"column": 1,
-			"doorTo": "leonard_heights/yum-mart-ground-floor",
+			"doorTo": LH_YUM_MART_STORE_KEY,
 			"direction": DirectionEnum.left,
 
 		}

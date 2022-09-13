@@ -1,14 +1,12 @@
 import { GRID_LEONARD_C2 } from './grid';
 import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
-import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { PIGEON } from '../../../spriteTypeResources';
+import { LH_NEWTOWN_APP_HALL_KEY } from '../leonard_heights_res';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C2,
     "grid": GRID_LEONARD_C2,
     "outdoors": true,
-    "mapName": "leonard_heights/C2",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
@@ -137,14 +135,14 @@ export default {
         {
             "row": 8,
             "column": 12,
-            "doorTo": "leonard_heights/Newtown-Hall",
+            "doorTo": LH_NEWTOWN_APP_HALL_KEY,
             "direction": DirectionEnum.up,
 
         },
         {
             "row": 8,
             "column": 13,
-            "doorTo": "leonard_heights/Newtown-Hall",
+            "doorTo": LH_NEWTOWN_APP_HALL_KEY,
             "direction": DirectionEnum.up,
 
         }

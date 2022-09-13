@@ -3,15 +3,12 @@ import { FRONT_GRID_LEONARD_B4 } from './frontgrid';
 import { WHOLESOME_LIFTER_B4 } from './B4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
-import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
 import { TOUGH_GUY } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B4,
     "grid": GRID_LEONARD_B4,
     "outdoors":true,
-    "mapName":"leonard_heights/B4",
     "rows":16,
     "columns":24,
     "tileSet":"starting_neighbourhood_clean",

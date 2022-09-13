@@ -1,13 +1,11 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { TOUGH_GUY_WITH_DARK_HAIR } from "../../../../spriteTypeResources";
+import { LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY } from "../../leonard_heights_res";
 import { NEIGHBOUR } from "./Newtown-Appartments-interactions";
 
 export default {
-    "mapName": "leonard_heights/Newtown-appartment-5",
-    "neighbourhood": "leonard_heights",
-    "spawnPoints": [],
-    "roads": [],
+    "mapName": LH_NEWTOWN_APP_5_KEY,
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
     "music": "game-jam-5-10-21.mp3",
@@ -395,7 +393,7 @@ export default {
         {
             "row": 4, 
             "column": 1,
-            "doorTo" : "leonard_heights/Newtown-Hall",
+            "doorTo" : LH_NEWTOWN_APP_HALL_KEY,
             "direction": DirectionEnum.left
         }
     ]

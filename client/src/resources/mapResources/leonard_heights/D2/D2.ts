@@ -1,18 +1,14 @@
-import globals from '../../../../game-data/globals';
 import { GRID_LEONARD_D2 } from './grid';
 import { FRONT_GRID_LEONARD_D2 } from './frontgrid';
 import { LOOKING_FOR_APPARTMENT_LADY, WHOLESOME_LIFTER_D2 } from './D2-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { RoadAlignmentEnum } from '../../../../enumerables/RoadAlignmentEnum';
-import { OutOfMapEnum } from '../../../../enumerables/OutOfMapEnum';
 import { DARK_HAIR_NERD_LADY, TOUGH_GUY } from '../../../spriteTypeResources';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D2,
     "grid": GRID_LEONARD_D2,
     "outdoors": true,
-    "mapName": "leonard_heights/D2",
     "rows": 16,
     "columns": 24,
     "tileSet": "starting_neighbourhood_clean",
