@@ -1,10 +1,12 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
-import { LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
+import { LH_YUM_MART_NAME, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
+import { YUM_MART_OFFICE_GUY } from "./yum-mart-interactions";
 
 export default {
-	"mapName": LH_YUM_MART_OFFICE_KEY,
+	"key": LH_YUM_MART_OFFICE_KEY,
+	"location": LH_YUM_MART_NAME,
 	"columns": 20,
 	"rows": 8,
 	"tileSet": "Yum_Mart",
@@ -1615,8 +1617,10 @@ export default {
 	],
 	"sprites": [
 		{
+			"action": YUM_MART_OFFICE_GUY,
 			"anim_type": AnimationTypeEnum.idle,
 			"direction": DirectionEnum.up,
+			"name": "Yum Mart Executive",
 			"type": BUSINESS_MAN,
 			"row": 6,
 			"column": 18

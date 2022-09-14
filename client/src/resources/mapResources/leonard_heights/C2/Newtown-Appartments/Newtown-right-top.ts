@@ -1,8 +1,9 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_HALL_KEY } from "../../leonard_heights_res";
+import { LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
 
 export default {
-    "mapName": LH_NEWTOWN_APP_4_KEY,
+    "key": LH_NEWTOWN_APP_4_KEY,
+    "location": LH_NEWTOWN_APP_NAME,
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
     "music": "game-jam-5-10-21.mp3",

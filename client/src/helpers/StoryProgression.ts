@@ -26,7 +26,7 @@ export class StoryProgression {
         this.triggeredEvents = eventIdList;
     }
 
-    get activeMapEvents(): ScriptedEvent[] { return this.events.filter((e)=>{return e.mapName == globals.GAME.activeMapName;}); }
+    get activeMapEvents(): ScriptedEvent[] { return this.events.filter((e)=>{return e.mapName == globals.GAME.activeMapKey;}); }
 
     checkForEventTrigger( trigger: CinematicTrigger, args: any[] = null ): boolean {
         if ( globals.GAME.disableStoryMode ) {

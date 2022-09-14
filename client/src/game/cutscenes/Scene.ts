@@ -27,7 +27,9 @@ export class Scene {
                 animationModel.spriteId = sprite.spriteId;
             }
             else if ( spriteId !== null ) {
-                animationModel.spriteId = spriteId
+                const sprite = getSpriteById( spriteId );
+                animationModel.spriteId = spriteId;
+                animationModel.spriteName = sprite.name;
             }
             this.animations.push(new Animation(animationModel, id));
             this.animationIds.push(id);
@@ -106,7 +108,7 @@ export class Scene {
                     animationHasFinished = cameraFocus.isFocusedOnTile( e.tileIndex );
                     break;
                 case SceneAnimationType.loadMap:
-                    animationHasFinished = globals.GAME.activeMapName === e.loadMapScene.mapName;
+                    animationHasFinished = globals.GAME.activeMapKey === e.loadMapScene.mapName;
                     break;
             }
             if ( animationHasFinished ) {

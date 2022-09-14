@@ -19,7 +19,7 @@ export class Door extends Hitbox {
     isUnlocked: boolean;
     constructor( x: number, y: number, door: DoorModel, id: string ) {
         super( x, y, GRID_BLOCK_PX * .75 )
-        this.mapName        = globals.GAME.activeMapName;
+        this.mapName        = globals.GAME.activeMapKey;
         this.model          = door;
         this.arcColor       = "#FFFF00";
         this.id             = id;

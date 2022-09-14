@@ -19,6 +19,7 @@ export default {
             "direction": DirectionEnum.left,
             "row": 9,
             "column": 18,
+            "name": "Jenn Trification",
             "action": LOOKING_FOR_APPARTMENT_LADY
         },
         {

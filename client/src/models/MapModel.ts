@@ -6,7 +6,9 @@ import type { SpawnPointModel } from "./SpawnPointModel";
 import type { TileModel } from "./TileModel";
 
 export type MapModel = {
-    name: string;
+    key: string;
+    location: string;
+
     columns: number;
     rows: number;
     tileSet: string;

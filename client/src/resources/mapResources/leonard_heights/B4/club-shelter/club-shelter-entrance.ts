@@ -1,10 +1,11 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { SUNGLASSES_LADY } from "../../../../spriteTypeResources";
-import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_MAP_KEY } from "../../leonard_heights_res";
+import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_MAP_KEY } from "../../leonard_heights_res";
 
 export default {
-	"mapName": LH_CLUB_SHELTER_ENTRANCE_KEY,
+	"key": LH_CLUB_SHELTER_ENTRANCE_KEY,
+	"location": LH_CLUB_SHELTER_NAME,
 	"columns": 4,
 	"rows": 8,
 	"tileSet": "Generic_Room_AX",

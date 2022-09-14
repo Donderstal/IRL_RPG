@@ -52,7 +52,7 @@ export class ActionSelector extends Hitbox {
                 this.activeAction, this.trigger, [this.spriteId]
             );
             if ( sprite.model.isCollectable ) {
-                const id = globals.GAME.collectableRegistry.getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, globals.GAME.activeMapName )
+                const id = globals.GAME.collectableRegistry.getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, globals.GAME.activeMapKey )
                 globals.GAME.collectableRegistry.addToRegistry( id, ( sprite as any ).collectableType )
             }
         }

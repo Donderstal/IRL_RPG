@@ -90,7 +90,7 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
     switch ( type ) {
         case InteractionType.door:
             [...mapData.doors, ...mapData.sprites.filter( ( e ) => { return e.hasDoor })].forEach( ( door ) => {
-                if ( globals.GAME.previousMapName == door.doorTo ) {
+                if ( globals.GAME.previousMapKey == door.doorTo ) {
                     newPlayerCell.row = door.row;
                     newPlayerCell.column = door.column;
                     newPlayerCell.direction = getOppositeDirection(door.direction);
@@ -101,19 +101,19 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
             const player = getPlayer()
             let neighbours = globals.GAME.activeMap.neighbours;
             newPlayerCell.direction = player.direction;
-            if ( neighbours.left == globals.GAME.previousMapName ) {
+            if ( neighbours.left == globals.GAME.previousMapKey ) {
                 newPlayerCell.row = player.row;
                 newPlayerCell.column = 1;
             }
-            else if ( neighbours.up == globals.GAME.previousMapName ) {
+            else if ( neighbours.up == globals.GAME.previousMapKey ) {
                 newPlayerCell.row = 1;
                 newPlayerCell.column = player.column;
             }
-            else if ( neighbours.right == globals.GAME.previousMapName ) {
+            else if ( neighbours.right == globals.GAME.previousMapKey ) {
                 newPlayerCell.row = player.row;
                 newPlayerCell.column = mapData.columns;
             }
-            else if ( neighbours.down == globals.GAME.previousMapName ) {
+            else if ( neighbours.down == globals.GAME.previousMapKey ) {
                 newPlayerCell.row = mapData.rows;
                 newPlayerCell.column = player.column;
             }

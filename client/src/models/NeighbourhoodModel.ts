@@ -5,7 +5,7 @@ import type { SpawnPointModel } from "./SpawnPointModel";
 
 export type NeighbourhoodModel = {
     key: string;
-    name: string;
+    location: string;
     music?: string;
     horizontalSlots: string[];
     verticalSlots: string[];

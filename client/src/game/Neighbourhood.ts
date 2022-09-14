@@ -4,12 +4,15 @@ import { getNeighbourhood } from "../resources/mapResources";
 import type { InteractionModel } from "../models/InteractionModel";
 import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
+import { setNewCenterBubble } from "./controllers/bubbleController";
 
 export class Neighbourhood {
     model: NeighbourhoodModel;
     mapModel: MapModel;
     activeMapKey: string;
+    activeMapLocation: string;
     previousMapKey: string;
+    previousMapLocation: string;
     playerData: { name: string, className: string };
     NPCCounter: Counter;
     neighbourhoodSlots: string[]
@@ -34,8 +37,6 @@ export class Neighbourhood {
         }
         const columns = this.model.horizontalSlots.length * CANVAS_COLUMNS;
         const rows = this.model.verticalSlots.length * CANVAS_ROWS;
-        console.log( columns );
-        console.log( rows );
         let grid = [];
         let frontGrid = [];
 
@@ -110,7 +111,8 @@ export class Neighbourhood {
         }
 
         const mapModel: MapModel = {
-            name: this.model.key,
+            key: this.model.key,
+            location: this.model.location,
             tileSet: tileSet,
             outdoors: true,
             columns: columns,
@@ -136,7 +138,12 @@ export class Neighbourhood {
 
     activateMap( key: string ): void {
         this.previousMapKey = this.activeMapKey
+        this.previousMapLocation = this.activeMapLocation;
         this.activeMapKey = key;
+        this.activeMapLocation = this.activeMap.location;
+        if ( this.previousMapLocation !== this.activeMapLocation ) {
+            setNewCenterBubble(this.activeMapLocation)
+        }
     }
 
     setPlayerStart( name: string, className: string ): void {

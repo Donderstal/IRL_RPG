@@ -1,10 +1,11 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BLONDE_BEER_BELLY_GUY, TOUGH_GUY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
-import { LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
+import { LH_CLUB_SHELTER_NAME, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
 
 export default {
-	"mapName": LH_CLUB_SHELTER_TOILETS_KEY,
+	"key": LH_CLUB_SHELTER_TOILETS_KEY,
+	"location": LH_CLUB_SHELTER_NAME,
 	"columns": 12,
 	"rows": 6,
 	"tileSet": "Yum_Mart",

@@ -1,21 +1,24 @@
-import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
-import globals, { BATTLE_FONT_LINE_HEIGHT, CANVAS_HEIGHT } from "../../game-data/globals";
-import { mobileAgent } from "../../helpers/screenOrientation";
+import { TextBubbleType } from "../../enumerables/TextBubbleType";
+import globals from "../../game-data/globals";
+import { getCenterBubbleDimensions, getCenterBubbleXy, getStandardBubbleDimensions, getStandardBubbleXy, getSubtitleBubbleDimensions, getSubtitleBubbleXy } from "../../helpers/speechBubbleHelpers";
 import { getUniqueId } from "../../helpers/utilFunctions";
+import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
 import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
-import { getCanvasWithType } from "./gridCanvasController";
 import { getSpeechBubbleCanvas } from "./utilityCanvasController";
 
 let activeBubbleIds: string[] = [];
 let subtitleBubbleId: string = null;
+let centerBubbleId: string = null;
 
 let activeBubbles: { [key: string]: SpeechBubble | Emote } = {}; 
 let subtitleBubble: SpeechBubble = null;
+let centerBubble: SpeechBubble = null;
 
-const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !( activeBubbles[e] instanceof Emote ); } ) };
 const getBubbleContext = () => { return getSpeechBubbleCanvas().ctx; }
+const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !( activeBubbles[e] instanceof Emote ); } ) };
+
 export const selectionBubble = (): SpeechBubble => {
     for ( const key in activeBubbles ) {
         if ( activeBubbles[key].type === SceneAnimationType.speakYesNo )
@@ -28,9 +31,12 @@ export const isWriting = (): boolean => {
     ).length > 0;
 };
 export const hasActiveBubbles = (): boolean => { return activeBubbleIds.length > 0 || subtitleBubble !== null; };
-export const setNewBubble = ( contents, type, sfx ): void => {
+
+export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType, sfx: string ): void => {
     const id = getUniqueId( activeBubbleIds );
-    activeBubbles[id] = new SpeechBubble( contents, id, type, getBubbleContext() );
+    const dimensions = getStandardBubbleDimensions( contents, type );
+    const xy = getStandardBubbleXy();
+    activeBubbles[id] = new SpeechBubble( contents, id, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, dimensions, xy );
     activeBubbleIds.push( id );
     globals.GAME.sound.playSpeakingEffect( sfx );
 };
@@ -42,12 +48,21 @@ export const setNewEmote = ( location, imageSrc ): void => {
     setTimeout( () => { unsetActiveBubble( id ) }, 1000 )
 };
 export const setNewSubtitleBubble = ( contents ): void => {
-    subtitleBubbleId = getUniqueId( activeBubbleIds );
-    subtitleBubble = new SpeechBubble(
-        contents, subtitleBubbleId, SceneAnimationType.speak,
-        getBubbleContext(), true
-    );
+    const dimensions = getSubtitleBubbleDimensions( );
+    const xy = getSubtitleBubbleXy()
+    subtitleBubbleId = getUniqueId( [ ...activeBubbleIds, centerBubbleId] );
+    subtitleBubble = new SpeechBubble( contents, subtitleBubbleId, TextBubbleType.Subtitle, dimensions, xy );
+    subtitleBubble.setMoveToY( subtitleBubble.y - subtitleBubble.height );
 };
+export const setNewCenterBubble = ( text: string ) => {
+    const dimensions = getCenterBubbleDimensions( );
+    const xy = getCenterBubbleXy( dimensions );
+    centerBubbleId = getUniqueId( [...activeBubbleIds, subtitleBubbleId] );
+    centerBubble = new SpeechBubble( { text: text } as SpeakScene, centerBubbleId, TextBubbleType.Center, dimensions, xy );
+
+    setTimeout( () => { centerBubbleId = null }, 5000 )
+}
+
 export const clearSubtitleBubble = (): void => {
     subtitleBubble.setMoveToY( screen.height );
     setTimeout( () => {
@@ -78,9 +93,12 @@ export const clearActiveBubbles = (): void => {
     activeBubbleIds = [];
 };
 export const drawBubbles = (): void => {
-    const activeContext = getBubbleContext();
-    Object.values( activeBubbles ).forEach( ( e ) => { e.draw( activeContext ); } );
+    const context = getBubbleContext();
+    Object.values( activeBubbles ).forEach( ( e ) => { e.draw( context ); } );
     if ( subtitleBubbleId !== null ) {
-        subtitleBubble.draw( activeContext );
+        subtitleBubble.draw( context );
+    }
+    if ( centerBubbleId !== null ) {
+        centerBubble.draw( context );
     }
 };

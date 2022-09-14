@@ -103,8 +103,8 @@ export class Game {
     get PLAYER_ITEMS( ): StackedItem[] { return this.party.inventory.ItemList }
 
     get activeMap( ): MapModel { return this.activeNeighbourhood.activeMap; }
-    get activeMapName( ): string { return this.activeNeighbourhood.activeMapKey; }
-    get previousMapName( ): string { return this.activeNeighbourhood.previousMapKey; }
+    get activeMapKey( ): string { return this.activeNeighbourhood.activeMapKey; }
+    get previousMapKey( ): string { return this.activeNeighbourhood.previousMapKey; }
 
     get activeText(): string {
         return this.typeWriter.activeText.map( ( ( e ) => { return e.activeWord; } )).toString();
@@ -195,14 +195,14 @@ export class Game {
     }
 
     handleCinematicEnd() {
-        if ( this.activeMapAtStartOfCinematic !== this.activeMapName ) {
+        if ( this.activeMapAtStartOfCinematic !== this.activeMapKey ) {
             this.switchMap( this.activeMapAtStartOfCinematic, InteractionType.cinematic_end, this.playerLocationAtStartOfCinematic )
         }
     }
 
     saveActiveMap() {
         const player = getPlayer();
-        this.activeMapAtStartOfCinematic = this.activeMapName;
+        this.activeMapAtStartOfCinematic = this.activeMapKey;
         this.activeSpritesAtStartOfCinematic = [...getBackSprites()];
         this.playerLocationAtStartOfCinematic = { column: player.column, row: player.row, direction: player.direction }
     }

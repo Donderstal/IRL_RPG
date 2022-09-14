@@ -135,7 +135,7 @@ export class Animation {
 
     initSpeakAnimation( type: SceneAnimationType ): void {
         const model = type === SceneAnimationType.speak ? this.model as SpeakScene : this.model as SpeakYesNoScene;
-        setNewBubble( this.model, type, model.sfx ?? this.sprite.sfx ?? "medium-text-blip.ogg" );
+        setNewBubble( model, type, model.sfx ?? this.sprite.sfx ?? "medium-text-blip.ogg" );
         if ( this.sprite.animationType != AnimationTypeEnum.animationLoop ) {
             initializeSpriteAnimation( this.sprite, "TALK", { looped: true, loops: 0 } );
         }

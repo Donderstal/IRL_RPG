@@ -3,11 +3,12 @@ import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
-import { LH_MAP_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY } from "../../leonard_heights_res";
+import { LH_MAP_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
 import { WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
 
 export default {
-    "mapName": LH_NEWTOWN_APP_HALL_KEY,
+    "key": LH_NEWTOWN_APP_HALL_KEY,
+    "location": LH_NEWTOWN_APP_NAME,
     "tileSet": "Generic_Room_AX",
     "outdoors": false,
     "music": "game-jam-5-10-21.mp3",

@@ -35,11 +35,11 @@ import ClubShelterToilets from './B4/club-shelter/club-shelter-toilets';
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
-import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY, removeNeighbourhoodKey } from './leonard_heights_res';
+import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY, LH_KEY, LH_NAME, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY, removeNeighbourhoodKey } from './leonard_heights_res';
 
 export default {
-    "key": "leonard_heights",
-    "name": "Leonard Heights",
+    "key": LH_KEY,
+    "location": LH_NAME,
     "horizontal_slots": ["A", "B", "C", "D", "E"], 
     "vertical_slots": ["1", "2", "3", "4"],
     "music": "Theme_Overworld_1_HDR.mp3",

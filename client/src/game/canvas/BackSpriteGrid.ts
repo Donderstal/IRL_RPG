@@ -176,7 +176,7 @@ export class BackSpriteGrid extends CanvasGrid {
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {
         if ( dataModel.spriteDataModel.isCollectable ) {
-            let mapName = globals.GAME.activeMapName
+            let mapName = globals.GAME.activeMapKey
             let objectResource = getDataModelByKey( dataModel.type );
             let id = globals.GAME.collectableRegistry.getCollectableId(tile.column, tile.row, objectResource.collectableType, mapName)
             return globals.GAME.collectableRegistry.isInRegistry( id, objectResource.collectableType );

@@ -23,7 +23,8 @@ import { getDataModelByKey } from "../resources/spriteDataResources";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
-        name: mapData.mapName != undefined ? mapData.mapName : "",
+        key: mapData.key != undefined ? mapData.key : "",
+        location: mapData.location != undefined ? mapData.location : "",
         columns: mapData.columns,
         rows: mapData.rows,
 
@@ -58,7 +59,7 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
     } )
     const neighbourhoodModel: NeighbourhoodModel = {
         key: neighbourhoodData.key,
-        name: neighbourhoodData.name,
+        location: neighbourhoodData.location,
         music: neighbourhoodData.music,
         horizontalSlots: neighbourhoodData.horizontal_slots,
         verticalSlots: neighbourhoodData.vertical_slots,
