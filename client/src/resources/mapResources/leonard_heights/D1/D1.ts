@@ -6,6 +6,7 @@ import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';
+import { ANIM_BOP, ANIM_LIFT } from '../../../../game-data/animationGlobals';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,
@@ -30,7 +31,7 @@ export default {
       },
       {
          "anim_type": AnimationTypeEnum.animationLoop,
-         "anim_name":"BOP",
+         "anim_name":ANIM_BOP,
          "row":5,
          "column":22,
          "type": TOUGH_GUY,
@@ -43,7 +44,7 @@ export default {
       },
       {
          "anim_type": AnimationTypeEnum.animationLoop,
-         "anim_name":"LIFT",
+         "anim_name": ANIM_LIFT,
          "row":5,
          "column":21,
          "type": STRONG_GUY,
@@ -57,7 +58,7 @@ export default {
       },
       {
          "anim_type": AnimationTypeEnum.animationLoop,
-         "anim_name":"LIFT",
+         "anim_name": ANIM_LIFT,
          "row":5,
          "column":22,
          "type": TOUGH_GUY,

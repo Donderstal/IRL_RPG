@@ -18,13 +18,14 @@ export class Scene {
         this.animations = [];
         this.animationIds = [];
         this.finishedAnimations = [];
-        console.log(`new scene with ${sceneModel.length} animation`)
-        sceneModel.forEach((animationModel: SceneAnimationModel): void => {
+        console.log(`new scene with ${sceneModel.length} animations`)
+        sceneModel.forEach( ( animationModel: SceneAnimationModel ): void => {
+            console.log( `new animation with type ${animationModel.type}` )
             const id = getUniqueId( this.animationIds );
             if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
                 && animationModel.type !== SceneAnimationType.createCar && animationModel.type !== SceneAnimationType.createSprite ) {
                 const sprite = getSpriteByName( animationModel.spriteName );
-                animationModel.spriteId = sprite.spriteId;
+                animationModel.spriteId = sprite.spriteId !== spriteId ? sprite.spriteId : spriteId;
             }
             else if ( spriteId !== null ) {
                 const sprite = getSpriteById( spriteId );
@@ -89,7 +90,7 @@ export class Scene {
                     animationHasFinished = e.hasSpriteSet();
                     break;
                 case SceneAnimationType.deleteSprite:
-                    animationHasFinished = getSpriteById( e.spriteId ) === undefined;
+                    animationHasFinished = getSpriteById( e.spriteId ) === null;
                     break;
                 case SceneAnimationType.fadeOut:
                     animationHasFinished = !globals.GAME.fader.fadingToBlack && globals.GAME.fader.holdBlackScreen;

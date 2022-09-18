@@ -4,6 +4,7 @@ import { WHOLESOME_LIFTER_E4 } from './E4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { STRONG_GUY } from '../../../spriteTypeResources';
+import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E4,
@@ -15,7 +16,7 @@ export default {
     "sprites": [
         {
             "anim_type": AnimationTypeEnum.animationLoop,
-            "anim_name": "LIFT",
+            "anim_name": ANIM_LIFT,
             "row": 9,
             "column": 12,
             "type": STRONG_GUY,

@@ -1,29 +1,31 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import { ANIM_BACK_AND_FORTH, ANIM_BACK_AND_FORTH_STEP, ANIM_BLINK, ANIM_BOP, ANIM_BREATHE, ANIM_CAST, ANIM_COLLECTABLE_IDLE, ANIM_COLLECTABLE_IDLE_LONG, ANIM_HACK, ANIM_LEFT_AND_RIGHT, ANIM_LEFT_AND_RIGHT_STEP, ANIM_LIFT, ANIM_POWER_UP, ANIM_PUNCH, ANIM_SELECTION, ANIM_SIGN_IDLE_HORI, ANIM_SIGN_IDLE_HORI_LONG, ANIM_SIGN_IDLE_VERT, ANIM_SIGN_IDLE_VERT_LONG, ANIM_SPRITE_HIT, ANIM_TALK, ANIM_TURN_CIRCLE, DIRECTIONAL_ANIMS, POSITIONAL_ANIMS } from "../game-data/animationGlobals";
+import { ANIM_BACK_AND_FORTH, ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_BACK_AND_FORTH_STEP, ANIM_BACK_AND_FORTH_STEP_POSITIONAL, ANIM_BLINK, ANIM_BOP, ANIM_BREATHE, ANIM_CAST, ANIM_COLLECTABLE_IDLE, ANIM_COLLECTABLE_IDLE_LONG, ANIM_HACK, ANIM_LEFT_AND_RIGHT, ANIM_LEFT_AND_RIGHT_STEP, ANIM_LIFT, ANIM_POWER_UP, ANIM_PUNCH, ANIM_SELECTION, ANIM_SIGN_IDLE_HORI, ANIM_SIGN_IDLE_HORI_LONG, ANIM_SIGN_IDLE_VERT, ANIM_SIGN_IDLE_VERT_LONG, ANIM_SPRITE_HIT, ANIM_TALK, ANIM_TURN_CIRCLE, ANIM_TURN_CIRCLE_POSITIONAL, DIRECTIONAL_ANIMS, POSITIONAL_ANIMS } from "../game-data/animationGlobals";
 import { getOppositeDirection } from "../helpers/utilFunctions";
 import type { SpriteAnimationModel } from "../models/SpriteAnimationModel";
 import type { SpriteFrameModel } from "../models/SpriteFrameModel";
 
-const getAnimationFrames = ( animationKey: string, direction: DirectionEnum, getPositional: boolean = false ): {row: number, column: number}[] => {
+type SheetFrame = {
+    row: number,
+    column: number
+}
+
+const getAnimationFrames = ( animationKey: string, direction: DirectionEnum ): SheetFrame[] => {
     let isDirectional = DIRECTIONAL_ANIMS.filter( ( e ) => {
         return e === animationKey
     } ).length > 0;
     let isPositional = POSITIONAL_ANIMS.filter( ( e ) => {
         return e === animationKey
     } ).length > 0;
-    let framesArray;
     if ( isDirectional ) {
         return getDirectionalAnimation( animationKey, direction );
     }
-    else if ( isPositional && getPositional ) {
+    if ( isPositional ) {
         return getPositionalAnimation( animationKey, direction );
     }
-    else {
-        return animationResources[animationKey].map( ( e ) => { return  });
-    }
+    return animationResources[animationKey];
 }
 
-const getDirectionalAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
+const getDirectionalAnimation = ( animationKey: string, direction: DirectionEnum ): SheetFrame[] => {
     switch ( animationKey ) {
         case ANIM_PUNCH:
         case ANIM_SPRITE_HIT:
@@ -46,13 +48,11 @@ const getDirectionalAnimation = ( animationKey: string, direction: DirectionEnum
 
 const getPositionalAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
     switch ( animationKey ) {
-        case ANIM_TURN_CIRCLE:
+        case ANIM_TURN_CIRCLE_POSITIONAL:
             return getTurnCircleAnimation( animationKey, direction );
-        case ANIM_BACK_AND_FORTH:
-        case ANIM_LEFT_AND_RIGHT:
+        case ANIM_BACK_AND_FORTH_POSITIONAL:
             return getTurnAnimation( animationKey, direction );
-        case ANIM_BACK_AND_FORTH_STEP:
-        case ANIM_LEFT_AND_RIGHT_STEP:
+        case ANIM_BACK_AND_FORTH_STEP_POSITIONAL:
             return getTurnStepAnimation( animationKey, direction );
     }
 }
@@ -349,41 +349,14 @@ const animationResources = {
     ]
 }
 
-export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number = null, options: { looped: boolean, loops: number } = null ): SpriteAnimationModel => {
-    if ( animationName in animationResources ) {
-        return getAnimationModel( animationName, width, height, options.looped, options.loops );
-    } 
-    
-    let suffix;
-    switch( direction ) {
-        case DirectionEnum.down: 
-            suffix = "_DOWN"
-            break;
-        case DirectionEnum.left:
-            suffix = "_LEFT"
-            break;
-        case DirectionEnum.up: 
-            suffix = "_UP"
-            break;
-        case DirectionEnum.right:
-            suffix = "_RIGHT"
-            break;
-    }
-    if ( animationName + suffix in animationResources ) {
-        return getAnimationModel( animationName + suffix, width, height, options.looped, options.loops );        
-    }
-    else {
-        console.log("Error! Animation not found in animationResources")
-        console.log("Animation name: " + animationName + suffix )
-        return getAnimationModel( "BOP" + suffix, width, height, options.looped, options.loops );
-    }
-
+export const getAnimationByName = ( animationName: string, width: number, height: number, direction: number, options: { looped: boolean, loops: number } = null ): SpriteAnimationModel => {
+    const sheetframeDto = getAnimationFrames( animationName, direction );
+    return getAnimationModel( animationName, sheetframeDto, width, height, options );
 }
 
-const getAnimationModel = ( name: string, width: number, height: number, looped: boolean = false, loops: number = null ): SpriteAnimationModel => {
-    const dto = animationResources[name];
+const getAnimationModel = ( key: string, dto: SheetFrame[], width: number, height: number, options: { looped: boolean, loops: number } = null ): SpriteAnimationModel => {
     const model: SpriteAnimationModel = {
-        name: name,
+        name: key,
         frames: dto.map( ( e ) => {
             const model: SpriteFrameModel = {
                 x: e.column * width,
@@ -393,8 +366,8 @@ const getAnimationModel = ( name: string, width: number, height: number, looped:
             }
             return model;
         } ),
-        looped: looped,
-        loops: loops
+        looped: options !== null ? options.looped : false,
+        loops: options !== null ? options.loops : null,
     }
     return model;
 }

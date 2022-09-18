@@ -1,13 +1,18 @@
 import { ConditionType } from "../enumerables/ConditionTypeEnum";
 import { InteractionType } from "../enumerables/InteractionType";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
+import { ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_POWER_UP, ANIM_TURN_CIRCLE_POSITIONAL } from "../game-data/animationGlobals";
 
 import { PLAYER_NAME } from '../game-data/interactionGlobals';
 import { EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED, EMOTE_ANGRY, EMOTE_HAPPY } from '../game-data/textboxGlobals';
 
-export const RANDOM_TALK_1 = [[
+export const DEFAULT_TALKING_INTERACTION = [
     InteractionType.talk, false, null, "medium-text-blip.ogg",
     [ConditionType.default, false],
+]
+
+export const RANDOM_TALK_1 = [[
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speak, true, "I can't believe the government took away my pet gorilla!", null, PLAYER_NAME]],
         [[SceneAnimationType.emote, true, EMOTE_SAD], [SceneAnimationType.emote, false, EMOTE_SURPRISED, PLAYER_NAME]],
@@ -15,8 +20,7 @@ export const RANDOM_TALK_1 = [[
     ]
 ]]
 export const RANDOM_TALK_2 = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speak, true, "Another splendid day in this beautiful city", null, PLAYER_NAME]],
         [[SceneAnimationType.emote, true, EMOTE_HEART], [SceneAnimationType.emote, false, EMOTE_HEART, PLAYER_NAME]],
@@ -24,8 +28,7 @@ export const RANDOM_TALK_2 = [[
     ]
 ]]
 export const RANDOM_TALK_3 = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [ 
         [[SceneAnimationType.speak, true, "I shot the sherrif!", null, PLAYER_NAME]],
         [[SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
@@ -34,8 +37,7 @@ export const RANDOM_TALK_3 = [[
     ]
 ]]
 export const RANDOM_TALK_4 = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speakYesNo, true, "Do you like bothering people in the street, moron?", 
             [
@@ -51,29 +53,26 @@ export const RANDOM_TALK_4 = [[
 ]]
 
 export const RANDOM_TALK_5 = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speak, true, "Let's dance!", null, PLAYER_NAME]],
-        [[SceneAnimationType.animation, true, "TURN_SINGLE_CIRCLE", null],[SceneAnimationType.animation, true, "TURN_SINGLE_CIRCLE", PLAYER_NAME]],
-        [[SceneAnimationType.animation, true, "POWER_UP_RIGHT", null],[SceneAnimationType.animation, true, "POWER_UP_RIGHT", PLAYER_NAME]],
-        [[SceneAnimationType.animation, true, "LEFT_AND_RIGHT_STEP", null],[SceneAnimationType.animation, true, "LEFT_AND_RIGHT_STEP", PLAYER_NAME]],
+        [[SceneAnimationType.animation, true, ANIM_TURN_CIRCLE_POSITIONAL, null], [SceneAnimationType.animation, true, ANIM_TURN_CIRCLE_POSITIONAL, PLAYER_NAME]],
+        [[SceneAnimationType.animation, true, ANIM_POWER_UP, null],[SceneAnimationType.animation, true, ANIM_POWER_UP, PLAYER_NAME]],
+        [[SceneAnimationType.animation, true, ANIM_BACK_AND_FORTH_POSITIONAL, null], [SceneAnimationType.animation, true, ANIM_BACK_AND_FORTH_POSITIONAL, PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "That's funky baby!!!", null, PLAYER_NAME]],
         [[SceneAnimationType.emote, true, EMOTE_HEART, PLAYER_NAME]]
     ]
 ]]
 
 export const LONG_TALK_4 = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speak, true, "Is it just me or do you also enjoy speaking in crazy long sentences that have little meaning to complete strangers??", null, PLAYER_NAME]],
     ]
 ]]
 
 export const COLLECTABLE_ACTION_COIN = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "It's a rare {R}coin!", PLAYER_NAME]],
@@ -84,8 +83,7 @@ export const COLLECTABLE_ACTION_COIN = [[
 ]]
 
 export const COLLECTABLE_ACTION_JUICE_CAN = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "It's a rare {R}Diet {R}Betes© can!", PLAYER_NAME]],
@@ -96,8 +94,7 @@ export const COLLECTABLE_ACTION_JUICE_CAN = [[
 ]]
 
 export const lockedDoorEvent = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speak, true, "This door is locked!", PLAYER_NAME]],
         [[SceneAnimationType.speak, true, "I need to find some way to open it...", PLAYER_NAME]]
@@ -105,8 +102,7 @@ export const lockedDoorEvent = [[
 ]]
 
 export const unlockDoorEvent = [[
-    InteractionType.talk, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
+    ...DEFAULT_TALKING_INTERACTION,
     [
         [[SceneAnimationType.speak, true, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
     ]

@@ -12,7 +12,7 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import globals from '../../game-data/globals';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
-import { getClosestCell } from '../../helpers/utilFunctions';
+import { getClosestCell, getOppositeDirection } from '../../helpers/utilFunctions';
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
@@ -24,6 +24,7 @@ import { DestinationType } from "../../enumerables/DestinationType";
 import { createSpriteFromCanvasObjectModel, getSpriteById, getSpriteByName, removeSpriteById } from "../controllers/spriteController";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { tryInitializeSpriteMovement } from "../controllers/spriteModuleController";
+import { ANIM_TALK } from "../../game-data/animationGlobals";
 
 export class Animation {
     id: string;
@@ -136,9 +137,11 @@ export class Animation {
     initSpeakAnimation( type: SceneAnimationType ): void {
         const model = type === SceneAnimationType.speak ? this.model as SpeakScene : this.model as SpeakYesNoScene;
         setNewBubble( model, type, model.sfx ?? this.sprite.sfx ?? "medium-text-blip.ogg" );
-        if ( this.sprite.animationType != AnimationTypeEnum.animationLoop ) {
-            initializeSpriteAnimation( this.sprite, "TALK", { looped: true, loops: 0 } );
+        if ( model.speakWith !== null && model.speakWith !== undefined ) {
+            const targetSprite = getSpriteByName( model.speakWith );
+            this.sprite.setDirection( getOppositeDirection( targetSprite.direction ) );
         }
+        initializeSpriteAnimation( this.sprite, ANIM_TALK, { looped: true, loops: 0 } );
     }
 
     initEmoteAnimation(): void {
@@ -207,6 +210,9 @@ export class Animation {
     unsetSpriteAnimation(): void {
         if ( spriteHasAnimation( this.sprite.spriteId ) && !this.animationScene.isPermanent ) {
             destroySpriteAnimation( this.sprite );
+        }
+        if ( this.sprite.animationType === AnimationTypeEnum.animationLoop ) {
+            initializeSpriteAnimation( this.sprite, this.sprite.animationName, { looped: true, loops: null } );
         }
     }
     

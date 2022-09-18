@@ -17,7 +17,7 @@ export const getSubtitleBubbleDimensions = ( ): { width: number, height: number 
     return { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
 }
 export const getCenterBubbleDimensions = ( ): { width: number, height: number } => {
-    return { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 }
+    return { width: mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 }
 }
 
 export const getStandardBubbleXy = ( ): { x: number, y: number } => {
@@ -38,6 +38,6 @@ export const getCenterBubbleXy = ( dimensions: { width: number, height: number }
     const speechBubbleCanvasHeight = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT;
     return {
         x: ( speechBubbleCanvasWidth / 2 ) - ( dimensions.width / 2 ),
-        y: ( GRID_BLOCK_PX * 2 ) - ( dimensions.height / 2 )
+        y: ( mobileAgent ? 0 : ( GRID_BLOCK_PX * 2 ) - ( dimensions.height / 2 ) ) 
     };
 }

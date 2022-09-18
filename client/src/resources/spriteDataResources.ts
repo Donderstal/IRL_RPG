@@ -10,6 +10,7 @@ import {
 import type { SpriteDataModel } from "../models/SpriteDataModel";
 import { getSpriteFrameForPosition } from "../helpers/modelConversionHelpers";
 import { CollectableType } from "../enumerables/CollectableTypeEnum";
+import { CHARACTER_IDLE_ANIMS, COLLECTABLE_ANIMS, SIGN_HORI_ANIMS, SIGN_VERT_ANIMS } from "../game-data/animationGlobals";
 
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
@@ -111,12 +112,7 @@ const STANDARD_CHARACTER = {
     "grounded_at_bottom": true,
     "is_character": true,
     "idle_animation": true,
-    "idle_animations": [
-        "BACK_AND_FORTH",
-        "LEFT_AND_RIGHT",
-        "BOP",
-        "BLINK"
-    ],
+    "idle_animations": CHARACTER_IDLE_ANIMS,
     "movement_frames": {
         [DirectionEnum.left]: [
             { "x": 0, "y": 112 },
@@ -256,18 +252,18 @@ export const spriteData = {
     },
     "bar_lights": {
         "src": "bar_lights.png",
-        ...getSignData( 4, 1, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 4, 1, SIGN_HORI_ANIMS )
     },
     "bar_sign": {
         "src": "bar_sign.png",
-        ...getSignData( 3, 2, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 3, 2, SIGN_HORI_ANIMS )
     },
     "bar_sign_old": {
         "src": "bar_sign_old.png",
-        ...getSignData( 1.8125, 1, ["SIGN_IDLE_VERT", "SIGN_IDLE_HORI_VERT"] )
+        ...getSignData( 1.8125, 1, SIGN_VERT_ANIMS )
     },
     "bar_stool": {
-        "src": "bar_lights.png",
+        "src": "bar_stool.png",
         ...getGroundedAtBottom( 0.625, 0.9375 )
     },
     "bench_a": {
@@ -720,7 +716,7 @@ export const spriteData = {
     },
     "hotel_sign": {
         "src": "hotel_sign.png",
-        ...getSignData( 1, 2.21875, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 1, 2.21875, SIGN_HORI_ANIMS)
     },
     "house_plant": {
         "src": "house_plant.png",
@@ -916,19 +912,19 @@ export const spriteData = {
     },
     "Sign_01": {
         "src": "sign1.png",
-        ...getSignData( 1, 1.75, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 1, 1.75, SIGN_HORI_ANIMS )
     },
     "Sign_02": {
         "src": "sign2.png",
-        ...getSignData( 1, 1.75, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 1, 1.75, SIGN_HORI_ANIMS )
     },
     "Sign_03": {
         "src": "sign3.png",
-        ...getSignData( 1, 1, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 1, 1, SIGN_HORI_ANIMS )
     },
     "Sign_04": {
         "src": "sign4.png",
-        ...getSignData( 1, 1, ["SIGN_IDLE_HORI", "SIGN_IDLE_HORI_LONG"] )
+        ...getSignData( 1, 1, SIGN_HORI_ANIMS )
     },
     "Single_Bed": {
         "src": "single_bed.png",
@@ -951,6 +947,38 @@ export const spriteData = {
     "Small_Table": {
         "src": "small_table.png",
         ...getGroundedAtBottom( 1, 1 )
+    },
+    "stairs_1": {
+        "src": "Stairs_section1.png",
+        ...getBackgroundItem( 1, 1 )
+    },
+    "stairs_2": {
+        "src": "Stairs_section2.png",
+        ...getBackgroundItem( 1, 2 )
+    },
+    "stairs_3": {
+        "src": "Stairs_section3.png",
+        ...getBackgroundItem( 1, 1 )
+    },
+    "stairs_4": {
+        "src": "Stairs_section4.png",
+        ...getBackgroundItem( 1, 3 )
+    },
+    "stairs_5": {
+        "src": "Stairs_section5.png",
+        ...getBackgroundItem( 1, 3 )
+    },
+    "stairs_6": {
+        "src": "Stairs_section6.png",
+        ...getBackgroundItem( 1, 3 )
+    },
+    "stairs_7": {
+        "src": "Stairs_section7.png",
+        ...getBackgroundItem( 1, 1 )
+    },
+    "stairs_8": {
+        "src": "Stairs_section8.png",
+        ...getBackgroundItem( 1, 1 )
     },
     "tableA": {
         "src": "tableA.png",
@@ -988,6 +1016,19 @@ export const spriteData = {
         "src": "thing_b.png",
         ...getGroundedAtBottom( 1, 2.015625 ),
     },
+    "toilet": {
+        "src": "toilet.png",
+        ...getGroundedAtBottom( 0.6875, 1.25 ),
+    },
+    "toilet_left": {
+        "src": "toilet_left.png",
+        ...getGroundedAtBottom( 1, 1.0625 ),
+    },
+    "toilet_right": {
+        "src": "toilet_right.png",
+        "tile_alignment": DirectionEnum.right,
+        ...getGroundedAtBottom( 1, 1.0625 ),
+    },
     "trash_1": {
         "src": "Trash_Z1.png",
         ...getBackgroundItem( 0.375, 0.28125 )
@@ -1023,6 +1064,19 @@ export const spriteData = {
         "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
         "width_blocks": 0.625,
         "height_blocks": 1.84375
+    },
+    "urinal": {
+        "src": "urinal.png",
+        ...getGroundedAtBottom( 0.6875, 1.09375 ),
+    },
+    "urinal_left": {
+        "src": "urinal_left.png",
+        ...getGroundedAtBottom( 0.53125, 1.03125 ),
+    },
+    "urinal_right": {
+        "src": "urinal_right.png",
+        "tile_alignment": DirectionEnum.right,
+        ...getGroundedAtBottom( 0.53125, 1.03125 ),
     },
     "vegetables_a": {
         "src": "vegetables_a.png",
@@ -1187,11 +1241,11 @@ export const spriteData = {
     // collectible
     "collectable_coin": {
         "src": "coin.png",
-        ...getCollectible( 0.75, 0.75, ["COLLECTABLE_IDLE", "COLLECTABLE_IDLE_LONG"], CollectableType.coin )
+        ...getCollectible( 0.75, 0.75, COLLECTABLE_ANIMS, CollectableType.coin )
     },
     "collectable_juice_can": {
         "src": "juice_can.png",
-        ...getCollectible( 0.5625, 0.78125, ["COLLECTABLE_IDLE", "COLLECTABLE_IDLE_LONG"], CollectableType.can )
+        ...getCollectible( 0.5625, 0.78125, COLLECTABLE_ANIMS, CollectableType.can )
     },
 
     // doors new

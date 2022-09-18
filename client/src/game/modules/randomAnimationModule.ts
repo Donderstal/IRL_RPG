@@ -36,19 +36,5 @@ export const getRandomDestination = ( sprite: Sprite ): DestinationCellModel => 
 };
 export const getRandomAnimation = ( sprite: Sprite ): string => {
     const animationList = sprite.model.idleAnimations;
-    let animationName = animationList[Math.floor( Math.random() * animationList.length )];
-    const direction = sprite.direction;
-
-    switch ( animationName ) {
-        case "BOP":
-            animationName = direction == DirectionEnum.up ? "BOP_UP" : DirectionEnum.down ? "BOP_DOWN" : direction == DirectionEnum.left ? "BOP_LEFT" : "BOP_RIGHT";
-            break;
-        case "BLINK":
-            animationName = direction == DirectionEnum.down ? "BLINK_DOWN" : direction == DirectionEnum.left ? "BLINK_LEFT" : "BLINK_RIGHT";
-            break;
-        default:
-            animationName = animationName
-    }
-
-    return animationName;
+    return animationList[Math.floor( Math.random() * animationList.length )];
 };

@@ -11,7 +11,7 @@ export const LOST_KEYS_INTERACTION = [
         [
             [[SceneAnimationType.speak, true, "Looks like someone lost their keys here...", PLAYER_NAME]],
             [[SceneAnimationType.speak, true, "I better pick 'em just in case", PLAYER_NAME]],
-            [[SceneAnimationType.deleteSprite, true, false, "misc/random5.wav"]]
+            [[SceneAnimationType.deleteSprite, true, null, "misc/random5.wav"]]
         ] 
     ]
 ]

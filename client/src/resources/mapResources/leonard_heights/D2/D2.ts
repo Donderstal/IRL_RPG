@@ -4,6 +4,7 @@ import { LOOKING_FOR_APPARTMENT_LADY, WHOLESOME_LIFTER_D2 } from './D2-interacti
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DARK_HAIR_NERD_LADY, TOUGH_GUY } from '../../../spriteTypeResources';
+import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D2,
@@ -24,7 +25,7 @@ export default {
         },
         {
             "anim_type": AnimationTypeEnum.animationLoop,
-            "anim_name": "LIFT",
+            "anim_name": ANIM_LIFT,
             "row": 9,
             "column": 8,
             "type": TOUGH_GUY,

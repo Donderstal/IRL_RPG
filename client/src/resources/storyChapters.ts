@@ -3,6 +3,7 @@ import { ConditionType } from "../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { InteractionType } from "../enumerables/InteractionType";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
+import { ANIM_LIFT } from "../game-data/animationGlobals";
 
 import {
     PLAYER_NAME, LOGGABLE_INTERACTION_1, LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_4,
@@ -277,10 +278,10 @@ export const STORY_EVENTS = [
                 [[SceneAnimationType.speak, true, "Quick quick!! Give 'em to my man! He doesn't have much time left...", HELPFUL_BRO, SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, HELPFUL_BRO, false]],
                 [[SceneAnimationType.move, true, PLAYER_NAME, SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "Here they are!", PLAYER_NAME, SAD_BRO]],
-                [[SceneAnimationType.animation, false, "LIFT", SAD_BRO, true], [SceneAnimationType.speak, true, "Finally!!", SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, SAD_BRO, false]],
+                [[SceneAnimationType.animation, false, ANIM_LIFT, SAD_BRO, true], [SceneAnimationType.speak, true, "Finally!!", SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, SAD_BRO, false]],
                 [[SceneAnimationType.speak, true, "I can feel the power flowing back into my body!!", SAD_BRO]],
                 [[SceneAnimationType.speak, true, "YEAH THAT'S MY BRO!!", HELPFUL_BRO], [SceneAnimationType.cameraMoveToSprite, true, HELPFUL_BRO, false]],
-                [[SceneAnimationType.animation, false, "LIFT", HELPFUL_BRO, true], [SceneAnimationType.speak, true, "Imma lift with you in the most bromantic way!", HELPFUL_BRO]],
+                [[SceneAnimationType.animation, false, ANIM_LIFT, HELPFUL_BRO, true], [SceneAnimationType.speak, true, "Imma lift with you in the most bromantic way!", HELPFUL_BRO]],
                 [[SceneAnimationType.emote, true, EMOTE_HEART, HELPFUL_BRO], [SceneAnimationType.emote, true, EMOTE_HEART, SAD_BRO]],
                 [[SceneAnimationType.speak, true, "I've never heard the word 'Bro' so many times in one day, I think", PLAYER_NAME], [SceneAnimationType.cameraMoveToSprite, true, PLAYER_NAME, false]],
                 [[SceneAnimationType.speak, true, "Bro you are a true KING!", SAD_BRO], [SceneAnimationType.cameraMoveToSprite, true, SAD_BRO, false]],
