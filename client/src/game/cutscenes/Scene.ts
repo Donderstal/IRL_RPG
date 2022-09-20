@@ -4,7 +4,7 @@ import { Animation } from './Animation';
 import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
 import type { SceneAnimationModel } from '../../models/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
-import { hasActiveBubbles } from '../controllers/bubbleController';
+import { getMainTextBubble, hasActiveBubbles, isWriting } from '../controllers/bubbleController';
 import { spriteHasMovement } from '../modules/spriteMovementModule';
 import { spriteHasAnimation } from '../modules/animationModule';
 import { cameraFocus } from '../cameraFocus';
@@ -74,7 +74,7 @@ export class Scene {
             switch( e.model.type ) {
                 case SceneAnimationType.speak:
                 case SceneAnimationType.speakYesNo:
-                    animationHasFinished = !hasActiveBubbles();
+                    animationHasFinished = getMainTextBubble().read;
                     break;    
                 case SceneAnimationType.emote:
                     animationHasFinished = e.counter.countAndCheckLimit( );

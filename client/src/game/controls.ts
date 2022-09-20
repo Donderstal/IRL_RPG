@@ -2,10 +2,10 @@ import globals, { GRID_BLOCK_PX } from '../game-data/globals';
 import { handleActionButton, dismissActiveAction, registerActionSelection } from './controllers/actionController';
 import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
-import { clearActiveBubbles, displayFullText, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
+import { clearActiveBubbles, clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
 import { InteractionType } from '../enumerables/InteractionType';
 import type { Sprite } from './core/Sprite';
-import { checkIfSpriteCanMove, moveSpriteInDirection } from './modules/spriteMovementModule';
+import { moveSpriteInDirection } from './modules/spriteMovementModule';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
 import { getCanvasWithType, getTileOnCanvasByCell } from './controllers/gridCanvasController';
@@ -41,19 +41,15 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
             displayFullText()
         }
         else {
-            const activeSelectionBubble = selectionBubble();
-            if ( activeSelectionBubble !== undefined ) {
-                registerActionSelection( activeSelectionBubble.activeButton )
-                registerPlayerAnswer( activeSelectionBubble.activeButton );
+            const textBubble = getMainTextBubble();
+            if ( selectionBubble() ) {
+                registerActionSelection( textBubble.activeButton )
+                registerPlayerAnswer( textBubble.activeButton );
             }
-            clearActiveBubbles();
+            clearActiveEmotes();
+            textBubble.markAsRead();
         }
         globals.GAME.sound.clearSpeakingEffect();
-    }
-
-    if ( event.key === "e" && hasActiveBubbles() ) {
-        clearActiveBubbles();
-        dismissActiveAction();
     }
 
     if ( event.key === "1" ) {

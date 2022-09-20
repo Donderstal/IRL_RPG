@@ -38,16 +38,13 @@ export class SpeechBubble {
 
     moving: boolean;
     destinationY: number;
-    constructor( contentModel: SpeakScene | SpeakYesNoScene, id: string, type: TextBubbleType, dimensions: { width: number, height: number }, xyPosition: {x: number, y: number} ) {
+    read: boolean;
+    constructor( contentModel: SpeakScene | SpeakYesNoScene, type: TextBubbleType, dimensions: { width: number, height: number }, xyPosition: {x: number, y: number} ) {
         this.x              = xyPosition.x;
         this.y              = xyPosition.y;
-        this.id             = id;
-        this.type           = type;
 
         this.width          = dimensions.width;
         this.height         = dimensions.height;
-        this.fullText       = contentModel.text;
-        this.text           = contentModel.text;
 
         this.columns        = this.width / GRID_BLOCK_PX;
         this.rows           = this.height / GRID_BLOCK_PX;
@@ -57,16 +54,7 @@ export class SpeechBubble {
         this.innerCanvas.height = this.height;
         this.innerCtx = this.innerCanvas.getContext( '2d' );
 
-        if ( contentModel.spriteName ) {
-            this.setHeader( contentModel.spriteName + ": " )
-        } 
-        if ( this.type === TextBubbleType.SpeakYesNo ) {
-            this.bubbleY    = this.y + this.height;
-            this.middleX    = this.x + (this.width / 2);
-            this.yesBubbleX = this.middleX - GRID_BLOCK_PX;
-            this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
-            this.activeButton = InteractionAnswer.yes
-        }
+        this.setContents( contentModel, type );
     }
     set text( text: any ) {             
         this.typeWriter = new TypeWriter( text );
@@ -79,6 +67,27 @@ export class SpeechBubble {
     get headerY() { return this.y + ( this.hasHeader ? SMALL_FONT_LINE_HEIGHT : 0 ); }
     get textY() { return this.headerY + LARGE_FONT_LINE_HEIGHT };
     get destinationYIsUp() { return this.y > this.destinationY; };
+
+    setContents( contentModel: SpeakScene | SpeakYesNoScene, type: TextBubbleType ) {
+        this.read = false;
+        this.type = type;
+        this.fullText = contentModel.text;
+        this.text = contentModel.text;
+        if ( contentModel.spriteName ) {
+            this.setHeader( contentModel.spriteName + ": " )
+        } 
+        if ( this.type === TextBubbleType.SpeakYesNo ) {
+            this.bubbleY    = this.y + this.height;
+            this.middleX    = this.x + (this.width / 2);
+            this.yesBubbleX = this.middleX - GRID_BLOCK_PX;
+            this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
+            this.activeButton = InteractionAnswer.yes
+        }
+    }
+
+    markAsRead() {
+        this.read = true;
+    }
 
     setWidth( width ): void {
         this.width = width;
@@ -205,7 +214,7 @@ export class SpeechBubble {
 
     writeText( activeContext: CanvasRenderingContext2D ): void {
         setFont(LARGE_FONT_SIZE, activeContext);
-
+        this.typeWriter.count();
         let textLineX = this.textX;
         let textLineY = this.textY;
         let sentenceWidth = BUBBLE_INNER_PADDING * 2;

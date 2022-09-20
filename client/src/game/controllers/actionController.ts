@@ -4,7 +4,7 @@ import { getClosestHitbox } from '../../helpers/utilFunctions';
 import { getAllActions } from '../modules/actionModule';
 import { getAssociatedHitbox } from '../modules/hitboxModule';
 import type { ActionSelector } from '../map/map-classes/ActionSelector';
-import { clearActiveBubbles } from './bubbleController';
+import { clearActiveBubbles, clearActiveEmotes } from './bubbleController';
 import { addEventToRegistry } from '../../helpers/interactionRegistry';
 import { checkForQuestTrigger } from '../../helpers/questRegistry';
 import { getPlayer, getSpriteById } from './spriteController';
@@ -55,11 +55,12 @@ export const dismissActiveAction = (): void => {
         activeAction.dismiss();
         activeAction = null;
     }
+    clearActiveBubbles();
 }
 
 export const confirmActiveAction = (): void => {
     activeAction.confirm();
-    clearActiveBubbles();
+    clearActiveEmotes();
 }
 
 export const registerActionSelection = ( selection: InteractionAnswer ): void => {

@@ -1,4 +1,4 @@
-import { setFont, getBubbleCanvasContext } from "./canvasHelpers";
+﻿import { setFont, getBubbleCanvasContext } from "./canvasHelpers";
 import globals, { LARGE_FONT_SIZE } from "../game-data/globals";
 
 class TypeWriterWord {
@@ -50,19 +50,30 @@ class TypeWriterWord {
 export class TypeWriter {
     index: number;
     speed: number;
+    counter: number;
 
     displayFull: boolean;
-    fullText: TypeWriterWord[];
-    activeText: TypeWriterWord[];
+    countFrames: boolean;
 
+    fullText: TypeWriterWord[];
+    _activeText: TypeWriterWord[];
+    trailingCharacter: TypeWriterWord;
+    trailingBlock: TypeWriterWord;
     constructor( text ) {
         this.index  = 0;
-        this.speed  = 50;
+        this.speed = 50;
+        this.counter = 0;
+        this.countFrames = false;
 
         this.fullText = [];
         this.displayFull = false;
         this.activeText = [];
 
+        this.trailingCharacter = new TypeWriterWord( "_", "B", 0, 0 );
+        this.trailingCharacter.setWordUntilCharacterLimit( 1000 );
+
+        this.trailingBlock = new TypeWriterWord( "■", "B", 0, 0 );
+        this.trailingBlock.setWordUntilCharacterLimit( 1000 );
         this.initText( text );
         this.write( );
     }
@@ -84,15 +95,38 @@ export class TypeWriter {
         return counter;
     }
 
+    get activeText() {
+        if ( !this.countFrames ) {
+            return [...this._activeText]
+        }
+
+        const trailer = this.counter > 5 ? this.trailingCharacter : this.trailingBlock;
+        return [...this._activeText, trailer];
+    }
+
+    set activeText( text: TypeWriterWord[] ) {
+        this._activeText = [...text];
+    }
+
+    count() {
+        this.countFrames = true;
+        this.counter++;
+        if ( this.counter > 10 ) {
+            this.counter = 0;
+        }
+    }
+
     write( ): void {
         if ( this.isWriting ) {
             this.activeText = [];
+            let newText = []
             this.fullText.forEach((e)=>{
                 if ( this.index >= e.startingPosition ) {
                     e.setWordUntilCharacterLimit( this.index );
-                    this.activeText.push( e );
+                    newText.push( e );
                 }
-            })
+            } )
+            this.activeText = newText;
             this.index++;
             if ( this.index === this.totalTextCharacters ) {
                 this.displayFullText( )

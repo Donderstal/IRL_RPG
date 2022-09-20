@@ -8,97 +8,99 @@ import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
 import { getSpeechBubbleCanvas } from "./utilityCanvasController";
 
-let activeBubbleIds: string[] = [];
-let subtitleBubbleId: string = null;
-let centerBubbleId: string = null;
-
-let activeBubbles: { [key: string]: SpeechBubble | Emote } = {}; 
-let subtitleBubble: SpeechBubble = null;
-let centerBubble: SpeechBubble = null;
-
 const getBubbleContext = () => { return getSpeechBubbleCanvas().ctx; }
-const nonEmoteIds = (): string[] => { return activeBubbleIds.filter( ( e ) => { return !( activeBubbles[e] instanceof Emote ); } ) };
 
-export const selectionBubble = (): SpeechBubble => {
-    for ( const key in activeBubbles ) {
-        if ( activeBubbles[key].type === SceneAnimationType.speakYesNo )
-            return activeBubbles[key] as SpeechBubble;
-    }
+let mainBubble: SpeechBubble = null;
+let titleBubble: SpeechBubble = null;
+let subtitleBubble: SpeechBubble = null;
+
+let emoteIds: string[] = [];
+let emotes: { [key: string]: Emote } = {};
+
+export const selectionBubble = (): boolean => {
+    return mainBubble !== null && mainBubble.type === TextBubbleType.SpeakYesNo;
 };
 export const isWriting = (): boolean => {
-    return nonEmoteIds().filter(
-        ( e ) => { return ( activeBubbles[e] as SpeechBubble ).typeWriter.isWriting }
-    ).length > 0;
+    return mainBubble.typeWriter.isWriting;
 };
-export const hasActiveBubbles = (): boolean => { return activeBubbleIds.length > 0 || subtitleBubble !== null; };
+export const getMainTextBubble = (): SpeechBubble => {
+    return mainBubble;
+}
+export const hasActiveBubbles = (): boolean => { return emoteIds.length > 0 || mainBubble !== null; };
 
 export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType, sfx: string ): void => {
-    const id = getUniqueId( activeBubbleIds );
+    if ( mainBubble !== null ) {
+        setBubbleContents( contents, type );
+        return;
+    }
     const dimensions = getStandardBubbleDimensions( contents, type );
     const xy = getStandardBubbleXy();
-    activeBubbles[id] = new SpeechBubble( contents, id, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, dimensions, xy );
-    activeBubbleIds.push( id );
+    mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, dimensions, xy );
     globals.GAME.sound.playSpeakingEffect( sfx );
 };
 export const setNewEmote = ( location, imageSrc ): void => {
-    const id = getUniqueId( activeBubbleIds );
-    activeBubbles[id] = new Emote( location, imageSrc );
-    activeBubbleIds.push( id );
-
-    setTimeout( () => { unsetActiveBubble( id ) }, 1000 )
+    const id = getUniqueId( emoteIds );
+    emotes[id] = new Emote( location, imageSrc );
+    emoteIds.push( id );
+    setTimeout( () => { unsetEmote( id ) }, 1000 )
 };
 export const setNewSubtitleBubble = ( contents ): void => {
     const dimensions = getSubtitleBubbleDimensions( );
     const xy = getSubtitleBubbleXy()
-    subtitleBubbleId = getUniqueId( [ ...activeBubbleIds, centerBubbleId] );
-    subtitleBubble = new SpeechBubble( contents, subtitleBubbleId, TextBubbleType.Subtitle, dimensions, xy );
+    subtitleBubble = new SpeechBubble( contents, TextBubbleType.Subtitle, dimensions, xy );
     subtitleBubble.setMoveToY( subtitleBubble.y - subtitleBubble.height );
 };
 export const setNewCenterBubble = ( text: string ) => {
     const dimensions = getCenterBubbleDimensions( );
     const xy = getCenterBubbleXy( dimensions );
-    centerBubbleId = getUniqueId( [...activeBubbleIds, subtitleBubbleId] );
-    centerBubble = new SpeechBubble( { text: text } as SpeakScene, centerBubbleId, TextBubbleType.Center, dimensions, xy );
-
-    setTimeout( () => { centerBubbleId = null }, 5000 )
+    titleBubble = new SpeechBubble( { text: text } as SpeakScene, TextBubbleType.Center, dimensions, xy );
+    setTimeout( () => { titleBubble = null }, 5000 )
 }
 
 export const clearSubtitleBubble = (): void => {
     subtitleBubble.setMoveToY( screen.height );
     setTimeout( () => {
         subtitleBubble = null;
-        subtitleBubbleId = null;
     }, 1000 );
 };
-export const bubbleIsActive = ( id ): boolean => {
-    return activeBubbleIds.indexOf( id ) > -1;
-};
-export const unsetActiveBubble = ( id ): void => {
-    activeBubbleIds = activeBubbleIds.filter( ( e ) => { return e !== id; } )
-    delete activeBubbles[id];
+export const unsetEmote = ( id: string ): void => {
+    emoteIds = emoteIds.filter( ( e ) => { return e !== id; } )
+    delete emotes[id];
 };
 export const displayFullText = (): void => {
-    nonEmoteIds().forEach( ( id ) => {
-        ( activeBubbles[id] as SpeechBubble ).typeWriter.displayFullText();
-    } );
+    mainBubble.typeWriter.displayFullText();
     globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3" );
 }
 export const handleSelectionKeys = (): void => {
     if ( selectionBubble() ) {
-        selectionBubble().moveCursor();
+        mainBubble.moveCursor();
     }
 };
 export const clearActiveBubbles = (): void => {
-    activeBubbles = {};
-    activeBubbleIds = [];
+    clearActiveEmotes();
+    mainBubble = null;
 };
+export const setBubbleContents = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType ): void => {
+    mainBubble.setContents( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo )
+}
+
+export const clearActiveText = (): void => {
+    mainBubble.text = "";
+}
+export const clearActiveEmotes = (): void => {
+    emotes = {};
+    emoteIds = [];
+}
 export const drawBubbles = (): void => {
     const context = getBubbleContext();
-    Object.values( activeBubbles ).forEach( ( e ) => { e.draw( context ); } );
-    if ( subtitleBubbleId !== null ) {
+    Object.values( emotes ).forEach( ( e ) => { e.draw( ); } );
+    if ( subtitleBubble !== null ) {
         subtitleBubble.draw( context );
     }
-    if ( centerBubbleId !== null ) {
-        centerBubble.draw( context );
+    if ( titleBubble !== null ) {
+        titleBubble.draw( context );
+    }
+    if ( mainBubble !== null ) {
+        mainBubble.draw( context );
     }
 };
