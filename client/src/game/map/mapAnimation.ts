@@ -31,7 +31,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     drawSpritesInOrder( GAME )
     
     handleRoadNetworkFuncs(GAME)
-    handleNpcCounter(GAME)
+    //handleNpcCounter(GAME)
 
     if ( getPlayer() != undefined && !GAME.paused ) {
         handleMovementKeys( );  

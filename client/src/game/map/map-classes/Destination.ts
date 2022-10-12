@@ -100,9 +100,10 @@ export class Destination {
     calculatePath( sprite: Sprite ): GridLocation[] {
         const grid = { 
             'rows': this.backClass.grid.rows, 'columns': this.backClass.grid.columns,
-            'tiles': this.backClass.grid.array.filter( ( tile ) => {
-                return !tile.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite( tile.index );
-            })
+            'tiles': this.backClass.grid.array,
+            'blockedIndexes': this.backClass.grid.array.filter( ( tile ) => {
+                return tile.isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( tile.index );
+            } ).map( ( e: Tile ) => { return e.index })
         };
         const startingTile = this.frontClass.getTileAtXY(sprite.centerX, sprite.baseY);
         if ( startingTile.offScreen ) {

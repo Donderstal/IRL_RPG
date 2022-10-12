@@ -11,6 +11,10 @@ enum CameraFocusMode {
 export class CameraFocus {
     xValue: number;
     yValue: number;
+    xOffset: number;
+    yOffset: number;
+    screenWidth: number;
+    screenHeight: number;
     startingXValue: number;
     startingYValue: number;
 
@@ -31,23 +35,13 @@ export class CameraFocus {
         this.lastFocusXy = { x: 0, y: 0 };
         this.mode = CameraFocusMode.followSprite
 
+        this.setOffset()
         this.updateXValue( this.startingXValue );
         this.updateYValue( this.startingYValue );
     }
 
     get cinematicMode(): boolean { return this.mode === CameraFocusMode.cinematic; }
     get followingSprite(): boolean { return this.mode === CameraFocusMode.followSprite; }
-
-    get xOffset(): number {
-        return (document.documentElement.clientWidth > document.documentElement.clientHeight
-            ? document.documentElement.clientWidth
-            : document.documentElement.clientHeight) / 2;
-    }
-    get yOffset(): number {
-        return (document.documentElement.clientWidth < document.documentElement.clientHeight
-            ? document.documentElement.clientWidth
-            : document.documentElement.clientHeight) / 2;
-    }
     get offsettedXValue(): number {
         return this.xValue + -this.xOffset
     }
@@ -59,6 +53,20 @@ export class CameraFocus {
     }
     get yValueAsString(): string { 
         return -this.offsettedYValue + 'px';
+    }
+
+    setOffset(): void {
+        this.xOffset = ( document.documentElement.clientWidth > document.documentElement.clientHeight
+            ? document.documentElement.clientWidth
+            : document.documentElement.clientHeight ) / 2;
+        this.yOffset = ( document.documentElement.clientWidth < document.documentElement.clientHeight
+            ? document.documentElement.clientWidth
+            : document.documentElement.clientHeight ) / 2;
+    }
+
+    setScreenDimensions(): void {
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
     }
 
     isFocusedOnSprite( spriteId: string ): boolean {
@@ -127,7 +135,9 @@ export class CameraFocus {
     }
 
     handleScreenFlip( xy: { x: number; y: number } ): void {
-        this.setBaseValues( );
+        this.setBaseValues();
+        this.setOffset();
+        this.setScreenDimensions();
         this.centerOnXY( xy.x, xy.y )
     }
 
@@ -175,8 +185,8 @@ export class CameraFocus {
 
     xyValueIsInView( x: number, y: number ): boolean {
         const viewMargin = GRID_BLOCK_PX * 2;
-        return x + viewMargin >= this.offsettedXValue && x - viewMargin <= ( this.offsettedXValue + window.innerWidth )
-            && y + viewMargin >= this.offsettedYValue && y - viewMargin <= ( this.offsettedYValue + window.innerHeight );
+        return x + viewMargin >= this.offsettedXValue && x - viewMargin <= ( this.offsettedXValue + this.screenWidth )
+            && y + viewMargin >= this.offsettedYValue && y - viewMargin <= ( this.offsettedYValue + this.screenHeight );
     }
 }
 

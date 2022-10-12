@@ -139,7 +139,7 @@ export class Game {
         this.initializePlayerParty( name );
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
-        this.disableStoryMode = disableStoryMode;
+        this.disableStoryMode = true;
         loadMapToCanvases( this.activeMap, "NEW" );
         this.story = new StoryProgression(); 
         setTimeout( this.initControlsAndAnimation, 1000 );

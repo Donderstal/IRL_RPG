@@ -7,6 +7,9 @@ import { getTileOnCanvasByCell } from "./gridCanvasController";
 
 let backSpritesDictionary: { [key in string]: Sprite } = {};
 let frontSpritesDictionary: { [key in string]: Sprite } = {};
+let backSpritesArray: Sprite[] = [];
+let frontSpritesArray: Sprite[] = [];
+let allSpritesArray: Sprite[] = [];
 let spriteIds: string[] = [];
 
 const getBackSpriteById = ( spriteId: string ): Sprite => {
@@ -19,10 +22,10 @@ const spriteWithIdExists = ( spriteId: string ): boolean => {
     return spriteIds.indexOf( spriteId ) > -1;
 }
 export const getBackSprites = (): Sprite[] => {
-    return Object.values( backSpritesDictionary );
+    return backSpritesArray;
 }
 export const getFrontSprites = (): Sprite[] => {
-    return Object.values( frontSpritesDictionary );
+    return frontSpritesArray;
 }
 export const getPlayer = (): Sprite => {
     return backSpritesDictionary[PLAYER_ID];
@@ -41,12 +44,15 @@ export const removeSpriteById = ( spriteId: string ): void => {
 }
 
 export const getAllSpritesAsList = (): Sprite[] => {
-    return [...Object.values( backSpritesDictionary ), ...Object.values( frontSpritesDictionary )]
+    return allSpritesArray;
 }
 
 export const clearAllSprites = (): void => {
     backSpritesDictionary = {};
     frontSpritesDictionary = {};
+    backSpritesArray = [];
+    frontSpritesArray = [];
+    allSpritesArray = []
     spriteIds = [];
 }
 
@@ -57,6 +63,10 @@ export const createSpriteFromCanvasObjectModel = ( model: CanvasObjectModel, can
     canvas === CanvasTypeEnum.backSprites
         ? backSpritesDictionary[spriteId] = sprite
         : frontSpritesDictionary[spriteId] = sprite;
+    canvas === CanvasTypeEnum.backSprites
+        ? backSpritesArray.push( sprite )
+        : frontSpritesArray.push( sprite );
+    allSpritesArray.push( sprite );
     spriteIds.push( spriteId );
     return spriteId;
 }

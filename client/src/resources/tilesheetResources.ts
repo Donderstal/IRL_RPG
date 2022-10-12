@@ -1630,6 +1630,15 @@ export const sheets = {
         "blocked": [
             0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
         ]
+    },
+    "Generic_Room_EX": {
+        "name": "Indoor set E",
+        "key": "Generic_Room_EX",
+        "src": "Generic_Room_EX_Tile_Sheet.png",
+        "uniqueTiles": 48,
+        "blocked": [
+            0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33, 41, 42, 44, 45, 46, 47
+        ]
     }
 }
 

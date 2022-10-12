@@ -93,9 +93,10 @@ export class BackSpriteGrid extends CanvasGrid {
 
         const grid = {
             'rows': this.grid.rows, 'columns': this.grid.columns,
-            'tiles': globals.GAME.BACK.grid.array.filter( ( tile ) => {
-                return !tile.isBlocked && !this.tileHasBlockingSprite( tile.index );
-            } )
+            'tiles': globals.GAME.BACK.grid.array,
+            'blockedIndexes': globals.GAME.BACK.grid.array.filter( ( tile ) => {
+                return tile.isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( tile.index );
+            } ).map( ( e: Tile ) => { return e.index } )
         };
 
         let visitedStarts = [];

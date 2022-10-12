@@ -77,7 +77,10 @@ export class Grid {
     drawRowInMap( currentRow: Tile[], tileSheet: HTMLImageElement ) {
         for ( let j = 0; j < this.columns; j++ ) {
             const currentTile = currentRow[j]
-            currentTile.drawTileInMap( tileSheet )
+            currentTile.drawTileInMap( tileSheet );
+            //if ( cameraFocus.xyValueIsInView( currentTile.x, currentTile.y ) ) {
+            //    currentTile.drawTileInMap( tileSheet );
+            //}
         }
     }
 

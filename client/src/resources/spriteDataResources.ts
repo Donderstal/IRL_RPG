@@ -521,6 +521,10 @@ export const spriteData = {
         "src": "Door_Z7.png",
         ...getDoorOrWindow( 1.875, 2.09375 )
     },
+    "elevator_door": {
+        "src": "elevator_door.png",
+        ...getDoorOrWindow( 1.21875, 1.71875 )
+    },
     "flowers_a": {
         "src": "flowers_a.png",
         ...getGroundedAtBottom( 1.9375, 1.96875 ),

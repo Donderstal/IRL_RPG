@@ -1,6 +1,7 @@
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from "../../game-data/globals";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_PX } from "../../game-data/globals";
 import type { GridCellModel } from "../../models/GridCellModel";
+import { cameraFocus } from "../cameraFocus";
 import { BackSpriteGrid } from "../canvas/BackSpriteGrid";
 import { BackTileGrid } from "../canvas/BackTileGrid";
 import { FrontTileGrid } from "../canvas/FrontTileGrid";
@@ -105,7 +106,7 @@ export const clearGridCanvasOfType = ( type: CanvasTypeEnum ): void => {
             backTiles.ctx.clearRect( 0, 0, backTiles.canvas.width, backTiles.canvas.height );
             break;
         case CanvasTypeEnum.backSprites:
-            backSprites.ctx.clearRect( 0, 0, backSprites.canvas.width, backSprites.canvas.height );
+            backSprites.ctx.clearRect( cameraFocus.offsettedXValue, cameraFocus.offsettedYValue, window.innerWidth + GRID_BLOCK_PX, window.innerHeight + GRID_BLOCK_PX );
             break;
         case CanvasTypeEnum.foreground:
             frontTiles.ctx.clearRect( 0, 0, frontTiles.canvas.width, frontTiles.canvas.height );
