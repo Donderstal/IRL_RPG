@@ -1,43 +1,152 @@
-import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
-import { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE, MAX_BUBBLE_WIDTH, SMALL_FONT_LINE_HEIGHT } from "../game-data/globals";
-import type { SceneAnimationModel, SpeakScene, SpeakYesNoScene } from "../models/SceneAnimationModel"
-import { breakTextIntoLines } from "./canvasHelpers";
+import { TextBubbleType } from "../enumerables/TextBubbleType";
+import globals, { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX, MAX_BUBBLE_WIDTH } from "../game-data/globals";
+import { BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_LEFT_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_MIDDLE, BUBBLE_RIGHT, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_TOP } from "../game-data/textboxGlobals";
 import { mobileAgent } from "./screenOrientation";
 
-export const getStandardBubbleDimensions = ( contentModel: SceneAnimationModel, type: SceneAnimationType ): { width: number, height: number } => {
-    let content = type === SceneAnimationType.speak ? contentModel as SpeakScene : contentModel as SpeakYesNoScene;
-    const text = breakTextIntoLines( content.text, LARGE_FONT_SIZE )
-    const textHeightAcc = text.length * LARGE_FONT_LINE_HEIGHT + ( content.spriteName !== undefined ? SMALL_FONT_LINE_HEIGHT : 0 );
-    return {
-        width: MAX_BUBBLE_WIDTH,
-        height: ( Math.ceil( textHeightAcc / GRID_BLOCK_PX ) * GRID_BLOCK_PX < GRID_BLOCK_PX * 2 ) ? GRID_BLOCK_PX * 2 : Math.ceil( textHeightAcc / GRID_BLOCK_PX ) * GRID_BLOCK_PX
-    }
-}
-export const getSubtitleBubbleDimensions = ( ): { width: number, height: number } => {
-    return { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX }
-}
-export const getCenterBubbleDimensions = ( ): { width: number, height: number } => {
-    return { width: mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 }
+export const speechBubbleCanvas = document.createElement( "canvas" );
+export const speechBubbleCanvasDimensions = { width: MAX_BUBBLE_WIDTH, height: GRID_BLOCK_PX * 2 };
+
+export const centerBubbleCanvas = document.createElement( "canvas" );
+export const centerBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 };
+
+export const subtitleBubbleCanvas = document.createElement( "canvas" );
+export const subtitleBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX };
+
+export const initializeBubbleCanvases = (): void => {
+    initializeSpeechBubbleCanvas();
+    initializeCenterBubbleCanvas();
+    initializeSubtitleBubbleCanvas
 }
 
-export const getStandardBubbleXy = ( ): { x: number, y: number } => {
+const initializeSpeechBubbleCanvas = (): void => {
+    speechBubbleCanvas.width = speechBubbleCanvasDimensions.width;
+    speechBubbleCanvas.height = speechBubbleCanvasDimensions.height;
+
+    drawTemplateBubbleToCanvas( speechBubbleCanvasDimensions.width, speechBubbleCanvasDimensions.height, speechBubbleCanvas.getContext( "2d" ) );
+}
+
+const initializeCenterBubbleCanvas = (): void => {
+    centerBubbleCanvas.width = centerBubbleCanvasDimensions.width;
+    centerBubbleCanvas.height = centerBubbleCanvasDimensions.height;
+
+    drawTemplateBubbleToCanvas( centerBubbleCanvasDimensions.width, centerBubbleCanvasDimensions.height, centerBubbleCanvas.getContext( "2d" ) );
+}
+
+const initializeSubtitleBubbleCanvas = (): void => {
+    subtitleBubbleCanvas.width = subtitleBubbleCanvasDimensions.width;
+    subtitleBubbleCanvas.height = subtitleBubbleCanvasDimensions.height;
+
+    drawTemplateBubbleToCanvas( subtitleBubbleCanvasDimensions.width, subtitleBubbleCanvasDimensions.height, subtitleBubbleCanvas.getContext( "2d" ) );
+}
+
+const drawTemplateBubbleToCanvas = (width: number, height: number, context: CanvasRenderingContext2D): void => {
+    const columns = width / GRID_BLOCK_PX;
+    const rows = height / GRID_BLOCK_PX;
+
+    for ( let row = 1; row <= rows; row++ ) {
+        for ( let column = 1; column <= columns; column++ ) {
+            let spriteKey = getBubblePart( column, row, columns, rows );
+            let x = ( GRID_BLOCK_PX * column ) - GRID_BLOCK_PX;
+            let y = ( GRID_BLOCK_PX * row ) - GRID_BLOCK_PX;
+            drawBubblePart( spriteKey, x, y, context );
+        }
+    }
+}
+
+const drawBubblePart = ( pngKey: string, x: number, y: number, context: CanvasRenderingContext2D ): void => {
+    const png = globals.PNG_DICTIONARY[pngKey];
+    context.drawImage(
+        png,
+        0, 0,
+        GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
+        x, y,
+        GRID_BLOCK_PX, GRID_BLOCK_PX
+    );
+}
+
+const getBubblePart = ( column: number, row: number, columns: number, rows: number ): string => {
+    if ( column === 1 && row === 1 ) {
+        return BUBBLE_LEFT_TOP;
+    }
+    else if ( column === columns && row === 1 ) {
+        return BUBBLE_RIGHT_TOP;
+    }
+    else if ( row === 1 ) {
+        return BUBBLE_TOP
+    }
+    else if ( column === 1 && row !== 1 && row !== rows ) {
+        return BUBBLE_LEFT;
+    }
+    else if ( column === columns && row !== 1 && row !== rows ) {
+        return BUBBLE_RIGHT;
+    }
+    else if ( row !== 1 && row !== rows ) {
+        return BUBBLE_MIDDLE;
+    }
+    else if ( column === 1 && row === rows ) {
+        return BUBBLE_LEFT_BOTTOM;
+    }
+    else if ( column === columns && row === rows ) {
+        return BUBBLE_RIGHT_BOTTOM;
+    }
+    else if ( row === rows ) {
+        return BUBBLE_BOTTOM
+    }
+}
+
+const getStandardBubbleXy = ( ): { x: number, y: number } => {
     const speechBubbleCanvasWidth = mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH;
     return {
         x: ( speechBubbleCanvasWidth - MAX_BUBBLE_WIDTH ) / 2,
         y: mobileAgent ? 0 : GRID_BLOCK_PX / 2
     };
 }
-export const getSubtitleBubbleXy = ( ): { x: number, y: number } => {
+const getSubtitleBubbleXy = ( ): { x: number, y: number } => {
     return {
         x: mobileAgent ? GRID_BLOCK_PX * 2 : CANVAS_WIDTH / 4,
         y: mobileAgent ? screen.height : CANVAS_HEIGHT
     };
 }
-export const getCenterBubbleXy = ( dimensions: { width: number, height: number } ): { x: number, y: number } => {
+const getCenterBubbleXy = ( ): { x: number, y: number } => {
     const speechBubbleCanvasWidth = mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH;
-    const speechBubbleCanvasHeight = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT;
     return {
-        x: ( speechBubbleCanvasWidth / 2 ) - ( dimensions.width / 2 ),
-        y: ( mobileAgent ? 0 : ( GRID_BLOCK_PX * 2 ) - ( dimensions.height / 2 ) ) 
+        x: ( speechBubbleCanvasWidth / 2 ) - ( centerBubbleCanvasDimensions.width / 2 ),
+        y: ( mobileAgent ? 0 : ( GRID_BLOCK_PX * 2 ) - ( centerBubbleCanvasDimensions.height / 2 ) ) 
     };
+}
+
+export const getSpeechBubbleTemplateCanvas = ( type: TextBubbleType ) => {
+    switch ( type ) {
+        case TextBubbleType.Speak:
+        case TextBubbleType.SpeakYesNo:
+            return speechBubbleCanvas;
+        case TextBubbleType.Center:
+            return centerBubbleCanvas;
+        case TextBubbleType.Subtitle:
+            return subtitleBubbleCanvas;
+    }
+}
+
+export const getSpeechBubbleDimensions = ( type: TextBubbleType ) => {
+    switch ( type ) {
+        case TextBubbleType.Speak:
+        case TextBubbleType.SpeakYesNo:
+            return speechBubbleCanvasDimensions;
+        case TextBubbleType.Center:
+            return centerBubbleCanvasDimensions;
+        case TextBubbleType.Subtitle:
+            return subtitleBubbleCanvasDimensions;
+    }
+}
+
+export const getSpeechBubbleXy = ( type: TextBubbleType ) => {
+    switch ( type ) {
+        case TextBubbleType.Speak:
+        case TextBubbleType.SpeakYesNo:
+            return getStandardBubbleXy();
+        case TextBubbleType.Center:
+            return getCenterBubbleXy();
+        case TextBubbleType.Subtitle:
+            return getSubtitleBubbleXy();
+    }
 }

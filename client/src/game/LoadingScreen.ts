@@ -1,7 +1,8 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT, LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, BUBBLE_CANVAS_HEIGHT, BUBBLE_CANVAS_WIDTH } from '../game-data/globals';
+import { LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, BUBBLE_CANVAS_HEIGHT, BUBBLE_CANVAS_WIDTH } from '../game-data/globals';
 import { COLOR_WHITE, COLOR_SECONDARY } from '../game-data/uiGlobals';
 import { TypeWriter } from '../helpers/TypeWriter';
 import globals from '../game-data/globals';
+import { initializeBubbleCanvases } from '../helpers/speechBubbleHelpers';
 
 let loaderTimeout;
 let canvas;
@@ -49,10 +50,13 @@ export class LoadingScreen {
 
     handleLoadingScreenText( ) {
         if ( this.typeWriter === undefined || !this.typeWriter.isWriting ) {
-            this.getNewLoadingScreenText( );
+            this.getNewLoadingScreenText();
             this.typeWriter = new TypeWriter( this.currentLoadingScreenText + "          " );
             canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-            this.activeTextWidth = canvasContext.measureText(this.currentLoadingScreenText).width;
+            this.activeTextWidth = canvasContext.measureText( this.currentLoadingScreenText ).width;
+        }
+        else {
+            this.typeWriter.write();
         }
     }
 
@@ -93,4 +97,5 @@ export const stopLoadingScreen = ( ): void => {
     clearTimeout(loaderTimeout);
     globals.GAME.loadingScreen.clear( );
     globals.GAME.loadingScreen = null; 
+    initializeBubbleCanvases();
 } 

@@ -1,7 +1,6 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import globals from "../../game-data/globals";
-import { getCenterBubbleDimensions, getCenterBubbleXy, getStandardBubbleDimensions, getStandardBubbleXy, getSubtitleBubbleDimensions, getSubtitleBubbleXy } from "../../helpers/speechBubbleHelpers";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
 import { Emote } from "../cutscenes/Emote";
@@ -33,9 +32,7 @@ export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: Scen
         setBubbleContents( contents, type );
         return;
     }
-    const dimensions = getStandardBubbleDimensions( contents, type );
-    const xy = getStandardBubbleXy();
-    mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, dimensions, xy );
+    mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo );
     globals.GAME.sound.playSpeakingEffect( sfx );
 };
 export const setNewEmote = ( location, imageSrc ): void => {
@@ -45,15 +42,11 @@ export const setNewEmote = ( location, imageSrc ): void => {
     setTimeout( () => { unsetEmote( id ) }, 1000 )
 };
 export const setNewSubtitleBubble = ( contents ): void => {
-    const dimensions = getSubtitleBubbleDimensions( );
-    const xy = getSubtitleBubbleXy()
-    subtitleBubble = new SpeechBubble( contents, TextBubbleType.Subtitle, dimensions, xy );
+    subtitleBubble = new SpeechBubble( contents, TextBubbleType.Subtitle );
     subtitleBubble.setMoveToY( subtitleBubble.y - subtitleBubble.height );
 };
 export const setNewCenterBubble = ( text: string ) => {
-    const dimensions = getCenterBubbleDimensions( );
-    const xy = getCenterBubbleXy( dimensions );
-    titleBubble = new SpeechBubble( { text: text } as SpeakScene, TextBubbleType.Center, dimensions, xy );
+    titleBubble = new SpeechBubble( { text: text } as SpeakScene, TextBubbleType.Center );
     setTimeout( () => { titleBubble = null }, 5000 )
 }
 

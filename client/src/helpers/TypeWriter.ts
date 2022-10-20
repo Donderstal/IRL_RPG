@@ -1,7 +1,7 @@
 ﻿import { setFont, getBubbleCanvasContext } from "./canvasHelpers";
 import globals, { LARGE_FONT_SIZE } from "../game-data/globals";
 
-class TypeWriterWord {
+export class TypeWriterWord {
     startingPosition: number;
     index: number;
 
@@ -131,7 +131,7 @@ export class TypeWriter {
             if ( this.index === this.totalTextCharacters ) {
                 this.displayFullText( )
             }
-            setTimeout( this.write.bind(this), this.speed );
+            //setTimeout( this.write.bind(this), this.speed );
         }
     }
 
