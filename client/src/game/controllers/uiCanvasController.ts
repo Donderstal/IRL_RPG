@@ -2,27 +2,20 @@ import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } from "../../game-data/globals";
 import type { Tile } from "../core/Tile";
 
-let backUtility: HTMLCanvasElement;
-let frontUtility: HTMLCanvasElement;
+let backUtility: OffscreenCanvas;
+let frontUtility: OffscreenCanvas;
 
 export const instantiateUtilityCanvases = () => {
-    backUtility = setUtilityCanvas( 'game-utility-canvas-back' );
-    frontUtility = setUtilityCanvas( 'game-utility-canvas-front' );
+    backUtility = new OffscreenCanvas( GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX );
+    frontUtility = new OffscreenCanvas( GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX );
 }
 
-const setUtilityCanvas = ( id: string ): HTMLCanvasElement => {
-    let canvas = document.getElementById( id ) as HTMLCanvasElement;
-    canvas.width = GRID_BLOCK_IN_SHEET_PX;
-    canvas.height = GRID_BLOCK_IN_SHEET_PX;
-    return canvas
-}
-
-export const getUtilityCanvas = ( type: CanvasTypeEnum ): HTMLCanvasElement => {
+export const getUtilityCanvas = ( type: CanvasTypeEnum ): OffscreenCanvas => {
     const canvas = type === CanvasTypeEnum.background ? backUtility : frontUtility;
     return canvas;
 }
 
-export const getUtilityContext = ( type: CanvasTypeEnum ): CanvasRenderingContext2D => {
+export const getUtilityContext = ( type: CanvasTypeEnum ): OffscreenCanvasRenderingContext2D => {
     const canvas = getUtilityCanvas( type );
     return canvas.getContext("2d")
 }

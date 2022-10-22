@@ -175,14 +175,8 @@ import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
     <LetterBoxDiv isTop={true} height={globals.GRID_BLOCK_PX * 2}/>
 
     <div id="canvas-wrapper" class="canvas-wrapper" style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px">
-        <canvas id='game-background-canvas' class="game-background-body" 
+        <canvas id='game-canvas' class="game-background-body" 
         style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>
-
-        <canvas id='game-front-canvas' class="game-front-body"
-        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
-
-        <canvas id='game-front-grid-canvas' class="game-front-tiles-body"
-        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>    
 
         <canvas id='game-menu-canvas' class="game-menu-body"
         style="left:{phoneUICanvasLeftPosition}px; background-color: #00384D; position: fixed; top: 0; visibility: hidden;" ></canvas>    

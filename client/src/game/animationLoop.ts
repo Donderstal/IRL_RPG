@@ -1,16 +1,15 @@
-import globals, { CANVAS_HEIGHT, CANVAS_WIDTH, FRAMES_PER_SECOND } from '../game-data/globals'
+import globals, { FRAMES_PER_SECOND } from '../game-data/globals'
 import { handleMapAnimations } from './map/mapAnimation'
 import { clearPressedKeys, listenForKeyPress} from './controls'
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations'
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
-import { backSpritesDOMContext, backTilesDOMContext, clearGridCanvasOfType, frontTilesDOMContext } from './controllers/gridCanvasController'
+import { clearGridCanvasOfType, preRenderCanvas, preRenderContext, DOMContext } from './controllers/gridCanvasController'
 import { getMenuCanvas } from './controllers/utilityCanvasController'
+import { cameraFocus } from './cameraFocus'
 
 let lastDateNow: number;
 let newDateNow: number;
-
-const utilityOffscreenCanvas = new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT )
 
 export const animationLoop = ( ): void => {
     const GAME = globals.GAME;
@@ -57,19 +56,16 @@ export const animationLoop = ( ): void => {
 const handleOffscreenCanvasBitmaps = () => {
     const GAME = globals.GAME;
 
-    if ( utilityOffscreenCanvas.width !== GAME.BACK.canvas.width ) {
-        utilityOffscreenCanvas.width = GAME.BACK.canvas.width
-    }
-    if ( utilityOffscreenCanvas.height !== GAME.BACK.canvas.height ) {
-        utilityOffscreenCanvas.height = GAME.BACK.canvas.height
-    }
+    let offscreenX = cameraFocus.leftBorder;
+    let offscreenY = cameraFocus.topBorder;
+    let width = GAME.BACK.canvas.width > preRenderCanvas.width ? preRenderCanvas.width : GAME.BACK.canvas.width;
+    let height = GAME.BACK.canvas.height > preRenderCanvas.height ? preRenderCanvas.height : GAME.BACK.canvas.height;
 
-    const utilCtx = utilityOffscreenCanvas.getContext( "2d" );
-    utilCtx.drawImage( GAME.BACK.canvas, 0, 0 );
-    utilCtx.drawImage( GAME.FRONT.canvas, 0, 0 );
-    utilCtx.drawImage( GAME.FRONTGRID.canvas, 0, 0 );
+    preRenderContext.drawImage( GAME.BACK.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
+    preRenderContext.drawImage( GAME.FRONT.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
+    preRenderContext.drawImage( GAME.FRONTGRID.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
 
-    const frontTilesBitmap = utilityOffscreenCanvas.transferToImageBitmap();
+    const frontTilesBitmap = preRenderCanvas.transferToImageBitmap();
 
-    frontTilesDOMContext.transferFromImageBitmap( frontTilesBitmap );
+    DOMContext.transferFromImageBitmap( frontTilesBitmap );
 }

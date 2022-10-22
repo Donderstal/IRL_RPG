@@ -35,7 +35,7 @@ import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
 import { cameraFocus, initializeCameraFocus } from './cameraFocus'
 import { portraitOrientation } from '../helpers/screenOrientation'
-import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
+import { getCanvasWithType, instantiateGridCanvases, setDOMCanvasDimensions } from './controllers/gridCanvasController'
 import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { instantiateUICanvases } from './controllers/utilityCanvasController'
@@ -225,16 +225,11 @@ export const startGame = ( name: string, className: string, startingMap: string,
         if ( screen.orientation.type == "landscape-primary" ) {
             setTimeout( () => {
                 const player = getPlayer()
-                if ( globals.GAME.loadingScreen != null ) {
-                    cameraFocus.handleScreenFlip( 
-                        {'x': CANVAS_WIDTH / 2, 'y': CANVAS_HEIGHT / 2 }
-                    )                
-                }
-                else {
-                    cameraFocus.handleScreenFlip( 
-                        { 'x': player.centerX, 'y': player.baseY }
-                    )
-                }
+                const xy = ( globals.GAME.loadingScreen != null )
+                    ? { 'x': CANVAS_WIDTH / 2, 'y': CANVAS_HEIGHT / 2 }
+                    : { 'x': player.centerX, 'y': player.baseY }
+                cameraFocus.handleScreenFlip( xy ); 
+                setDOMCanvasDimensions();
                 hideFlipScreenModal( );
                 setFaderDimensions( );
             }, 100)

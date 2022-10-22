@@ -1,17 +1,16 @@
 import globals, { GRID_BLOCK_PX } from '../game-data/globals';
-import { handleActionButton, dismissActiveAction, registerActionSelection } from './controllers/actionController';
+import { handleActionButton, registerActionSelection } from './controllers/actionController';
 import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
-import { clearActiveBubbles, clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
+import { clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
 import { InteractionType } from '../enumerables/InteractionType';
 import type { Sprite } from './core/Sprite';
 import { moveSpriteInDirection } from './modules/spriteMovementModule';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
-import { getCanvasWithType, getTileOnCanvasByCell } from './controllers/gridCanvasController';
+import { getCanvasWithType} from './controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import { getMenuCanvas } from './controllers/utilityCanvasController';
-import { cameraFocus } from './cameraFocus';
 import { getPlayer } from './controllers/spriteController';
 import { resetIdleAnimationCounter } from './modules/idleAnimationModule';
 import { destroySpriteAnimation, spriteHasAnimation } from './modules/animationModule';
@@ -59,16 +58,6 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
 
     if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {
         handleSelectionKeys();
-    }
-
-    if ( event.key === "c" ) {
-        console.log( `Camerfocused on x:${cameraFocus.xValue}, y:${cameraFocus.yValue}` );
-        console.log( `Camera focus offset is x:${cameraFocus.xOffset}, y:${cameraFocus.yOffset}` );
-        console.log( `Css strings x:${cameraFocus.xValueAsString}, y:${cameraFocus.yValueAsString}` );
-        console.log( `Window dimensions width:${window.innerWidth}, y:${window.innerHeight}` );
-        const tile = getTileOnCanvasByCell( { column: 2, row: 2 }, CanvasTypeEnum.background );
-        console.log( `Tile at c:2, r:2 on Screen?` )
-        console.log( cameraFocus.xyValueIsInView(tile.x, tile.y) )
     }
 };
 export const handleMovementKeys = () => {

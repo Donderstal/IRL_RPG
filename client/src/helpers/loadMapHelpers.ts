@@ -51,6 +51,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
         cameraFocus.handleScreenFlip( 
             { 'x': player.centerX, 'y': player.baseY}
         );
+
         cameraFocus.setSpriteFocus( player, true );
         setTimeout( ( ) => {
             globals.GAME.story.checkForEventTrigger(CinematicTrigger.enter)     

@@ -11,35 +11,24 @@ let backTiles: BackTileGrid;
 let backSprites: BackSpriteGrid;
 let frontTiles: FrontTileGrid;
 
-export let backTilesDOM: HTMLCanvasElement;
-export let backSpritesDOM: HTMLCanvasElement;
-export let frontTilesDOM: HTMLCanvasElement;
+export let preRenderCanvas: OffscreenCanvas;
+export let preRenderContext: OffscreenCanvasRenderingContext2D;
 
-export let backTilesDOMContext: ImageBitmapRenderingContext;
-export let backSpritesDOMContext: ImageBitmapRenderingContext;
-export let frontTilesDOMContext: ImageBitmapRenderingContext;
+export let DOMCanvas: HTMLCanvasElement;
+export let DOMContext: ImageBitmapRenderingContext;
 
 export const instantiateGridCanvases = () => {
-    const baseCanvas = document.getElementById( 'game-background-canvas' );
-    const xy = baseCanvas.getBoundingClientRect();
+    backTiles = new BackTileGrid( 0, 0, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.background );
+    backSprites = new BackSpriteGrid( 0, 0, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.backSprites );
+    frontTiles = new FrontTileGrid( 0, 0, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.foreground );
 
-    backTiles = new BackTileGrid( xy.x, xy.y, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.background );
-    backTilesDOM = document.getElementById( 'game-background-canvas' ) as HTMLCanvasElement;
-    backTilesDOM.width = CANVAS_WIDTH;
-    backTilesDOM.height = CANVAS_HEIGHT;
-    backTilesDOMContext = backTilesDOM.getContext( "bitmaprenderer" );
+    preRenderCanvas = new OffscreenCanvas( cameraFocus.screenWidth, cameraFocus.screenHeight );
+    preRenderContext = preRenderCanvas.getContext( "2d" );
 
-    backSprites = new BackSpriteGrid( xy.x, xy.y, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.backSprites );
-    backSpritesDOM = document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement
-    backSpritesDOM.width = CANVAS_WIDTH;
-    backSpritesDOM.height = CANVAS_HEIGHT;
-    backSpritesDOMContext = backSpritesDOM.getContext( "bitmaprenderer" );
-
-    frontTiles = new FrontTileGrid( xy.x, xy.y, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.foreground );
-    frontTilesDOM = document.getElementById( 'game-front-grid-canvas' ) as HTMLCanvasElement
-    frontTilesDOM.width = CANVAS_WIDTH;
-    frontTilesDOM.height = CANVAS_HEIGHT;
-    frontTilesDOMContext = frontTilesDOM.getContext( "bitmaprenderer" );
+    DOMCanvas = document.getElementById( "game-canvas" ) as HTMLCanvasElement;
+    DOMCanvas.width = cameraFocus.screenWidth;
+    DOMCanvas.height = cameraFocus.screenHeight;
+    DOMContext = DOMCanvas.getContext( "bitmaprenderer" );
 }
 
 export const getTileOnCanvasByIndex = ( index: number, canvasType: CanvasTypeEnum ) => {
@@ -86,24 +75,24 @@ const setCanvasDimensions = ( type: CanvasTypeEnum, width: number, height: numbe
         case CanvasTypeEnum.background:
             backTiles.canvas.width = width;
             backTiles.canvas.height = height;
-            backTilesDOM.width = width;
-            backTilesDOM.height = height;
             break;
         case CanvasTypeEnum.backSprites:
             backSprites.canvas.width = width;
             backSprites.canvas.height = height;
-            backSpritesDOM.width = width;
-            backSpritesDOM.height = height;
             break;
         case CanvasTypeEnum.foreground:
             frontTiles.canvas.width = width;
             frontTiles.canvas.height = height;
-            frontTilesDOM.width = width;
-            frontTilesDOM.height = height;
             break;
         default:
             console.log( `Canvastype ${type} not recognized` );
     }
+}
+export const setDOMCanvasDimensions = () => {
+    preRenderCanvas.width = cameraFocus.screenWidth;
+    preRenderCanvas.height = cameraFocus.screenHeight;
+    DOMCanvas.width = cameraFocus.screenWidth;
+    DOMCanvas.height = cameraFocus.screenHeight;
 }
 export const clearGridOfType = ( type: CanvasTypeEnum ): void => {
     switch ( type ) {
@@ -126,7 +115,7 @@ export const clearGridCanvasOfType = ( type: CanvasTypeEnum ): void => {
             backTiles.ctx.clearRect( 0, 0, backTiles.canvas.width, backTiles.canvas.height );
             break;
         case CanvasTypeEnum.backSprites:
-            backSprites.ctx.clearRect( cameraFocus.offsettedXValue, cameraFocus.offsettedYValue, window.innerWidth + GRID_BLOCK_PX, window.innerHeight + GRID_BLOCK_PX );
+            backSprites.ctx.clearRect( 0, 0, backSprites.canvas.width, backSprites.canvas.height );
             break;
         case CanvasTypeEnum.foreground:
             frontTiles.ctx.clearRect( 0, 0, frontTiles.canvas.width, frontTiles.canvas.height );

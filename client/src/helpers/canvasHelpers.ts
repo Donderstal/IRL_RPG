@@ -9,10 +9,6 @@ export const getMenuCanvasContext = (): CanvasRenderingContext2D => {
     return (document.getElementById( 'game-menu-canvas' ) as HTMLCanvasElement).getContext('2d');
 }
 
-export const getFrontgridCanvasContext = (): CanvasRenderingContext2D => {
-    return (document.getElementById( 'game-front-grid-canvas' ) as HTMLCanvasElement).getContext('2d');
-}
-
 export const getFrontCanvasContext = (): OffscreenCanvasRenderingContext2D => {
     return globals.GAME.FRONT.canvas.getContext( '2d' );
 }

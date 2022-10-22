@@ -42,31 +42,22 @@ export class CameraFocus {
 
     get cinematicMode(): boolean { return this.mode === CameraFocusMode.cinematic; }
     get followingSprite(): boolean { return this.mode === CameraFocusMode.followSprite; }
-    get offsettedXValue(): number {
-        return this.xValue + -this.xOffset
+
+    get leftBorder(): number {
+        return this.xValue - this.xOffset;
     }
-    get offsettedYValue(): number {
-        return this.yValue + -this.yOffset
-    }
-    get xValueAsString(): string { 
-        return -this.offsettedXValue + 'px';
-    }
-    get yValueAsString(): string { 
-        return -this.offsettedYValue + 'px';
+    get topBorder(): number {
+        return this.yValue - this.yOffset;
     }
 
     setOffset(): void {
-        this.xOffset = ( document.documentElement.clientWidth > document.documentElement.clientHeight
-            ? document.documentElement.clientWidth
-            : document.documentElement.clientHeight ) / 2;
-        this.yOffset = ( document.documentElement.clientWidth < document.documentElement.clientHeight
-            ? document.documentElement.clientWidth
-            : document.documentElement.clientHeight ) / 2;
+        this.xOffset = ( document.documentElement.clientWidth / 2 );
+        this.yOffset = ( document.documentElement.clientHeight / 2 );
     }
 
     setScreenDimensions(): void {
-        this.screenWidth = window.innerWidth;
-        this.screenHeight = window.innerHeight;
+        this.screenWidth = document.documentElement.clientWidth;
+        this.screenHeight = document.documentElement.clientHeight;
     }
 
     isFocusedOnSprite( spriteId: string ): boolean {
@@ -108,20 +99,19 @@ export class CameraFocus {
     }
 
     setBaseValues(): void {
-        this.startingXValue = (CANVAS_WIDTH - document.documentElement.clientWidth) / 2;
-        this.startingYValue = (CANVAS_HEIGHT - document.documentElement.clientHeight) / 2;
+        this.setScreenDimensions();
+        this.startingXValue = this.screenWidth / 2;
+        this.startingYValue = this.screenHeight / 2;
     }
 
     updateXValue( newValue: number ): void {
         this.xValue = newValue;
         this.lastFocusXy.x = newValue;
-        document.getElementById("canvas-wrapper").style.left = this.xValueAsString;
     }
 
     updateYValue( newValue: number ): void {
         this.yValue = newValue;
         this.lastFocusXy.y = newValue;
-        document.getElementById("canvas-wrapper").style.top = this.yValueAsString;
     }
 
     initMoveToXY( x: number, y: number ): void  {
@@ -137,15 +127,11 @@ export class CameraFocus {
     handleScreenFlip( xy: { x: number; y: number } ): void {
         this.setBaseValues();
         this.setOffset();
-        this.setScreenDimensions();
         this.centerOnXY( xy.x, xy.y )
     }
 
     getSpriteXY( sprite: Sprite ): { x: number; y: number } {
-        return {
-            x: sprite.centerX,
-            y: sprite.baseY
-        }
+        return { x: sprite.centerX, y: sprite.baseY }
     }
 
     moveToNewFocus( sprite: Sprite ): void {
@@ -184,9 +170,8 @@ export class CameraFocus {
     }
 
     xyValueIsInView( x: number, y: number ): boolean {
-        const viewMargin = GRID_BLOCK_PX * 2;
-        return x + viewMargin >= this.offsettedXValue && x - viewMargin <= ( this.offsettedXValue + this.screenWidth )
-            && y + viewMargin >= this.offsettedYValue && y - viewMargin <= ( this.offsettedYValue + this.screenHeight );
+        return x >= this.leftBorder && x <= ( this.leftBorder + this.screenWidth )
+            && y >= this.topBorder && y <= ( this.topBorder + this.screenHeight );
     }
 }
 

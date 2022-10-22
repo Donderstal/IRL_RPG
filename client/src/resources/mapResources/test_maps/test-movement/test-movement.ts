@@ -1,6 +1,10 @@
 import { AnimationTypeEnum } from "../../../../enumerables/AnimationTypeEnum";
+import { ConditionType } from "../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../enumerables/DirectionEnum";
+import { InteractionType } from "../../../../enumerables/InteractionType";
 import { RoadAlignmentEnum } from "../../../../enumerables/RoadAlignmentEnum";
+import { SceneAnimationType } from "../../../../enumerables/SceneAnimationTypeEnum";
+import { PLAYER_NAME } from "../../../../game-data/interactionGlobals";
 import { FAT_BUFF_GUY } from "../../../spriteTypeResources";
 
 export default {
@@ -979,14 +983,32 @@ export default {
 			"direction": DirectionEnum.down,
 			"type": FAT_BUFF_GUY,
 			"row": 2,
-			"column": 11
+			"column": 11,
+			"action": [
+				[
+					InteractionType.talk, false, null, "medium-text-blip.ogg",
+					[ConditionType.default, false],
+					[
+						[[SceneAnimationType.speak, true, "You know that a lot of negative kinda people think that us buff guys are assholes?", null, PLAYER_NAME]],
+					]
+				]
+			]
 		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
 			"direction": DirectionEnum.down,
 			"type": FAT_BUFF_GUY,
 			"row": 2,
-			"column": 3
+			"column": 3,
+			"action": [
+				[
+					InteractionType.talk, false, null, "medium-text-blip.ogg",
+					[ConditionType.default, false],
+					[
+						[[SceneAnimationType.speak, true, "Rumor has it that {G}people {G}used to drink plain water before {R}Diet {R}Betes© was invented.", null, PLAYER_NAME]],
+					]
+				]
+			]
 		},
 		{
 			"type": "bar_lights",
