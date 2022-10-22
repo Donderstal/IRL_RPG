@@ -18,9 +18,9 @@ export class Grid {
     overflowColumns: number;
     overflowRows: number;
     canvasType: CanvasTypeEnum;
-    ctx: CanvasRenderingContext2D
+    ctx: OffscreenCanvasRenderingContext2D;
     array: Tile[]
-    constructor( columns: number, rows: number, ctx: CanvasRenderingContext2D, canvasType: CanvasTypeEnum ) {
+    constructor( columns: number, rows: number, ctx: OffscreenCanvasRenderingContext2D, canvasType: CanvasTypeEnum ) {
         this.canvasType = canvasType;
         this.rows = rows;
         this.columns = columns;        
@@ -77,7 +77,7 @@ export class Grid {
     drawRowInMap( currentRow: Tile[], tileSheet: HTMLImageElement ) {
         for ( let j = 0; j < this.columns; j++ ) {
             const currentTile = currentRow[j]
-            currentTile.drawTileInMap( tileSheet );
+            //currentTile.drawTileInMap( tileSheet );
             //if ( cameraFocus.xyValueIsInView( currentTile.x, currentTile.y ) ) {
             //    currentTile.drawTileInMap( tileSheet );
             //}

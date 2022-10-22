@@ -12,8 +12,8 @@ export const handleCinematicAnimations = ( GAME ): void => {
     clearUtilityCanvasOfType( CanvasTypeEnum.speechBubbleCanvas );
 
     drawSpritesInOrder( GAME )   
-    handleRoadNetworkFuncs(GAME)
-    handleNpcCounter(GAME)
+    //handleRoadNetworkFuncs(GAME)
+    //handleNpcCounter(GAME)
 
     //GAME.FRONT.activeEffects.forEach( ( e ) => {
     //    e.drawAndMove( );

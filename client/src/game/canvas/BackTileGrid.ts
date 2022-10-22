@@ -17,7 +17,7 @@ export class BackTileGrid extends CanvasGrid {
     hasDoors: boolean;
     savepoint: Savepoint;
     blockedTiles: number[];
-    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+    constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
         this.savepoint = null;
     };

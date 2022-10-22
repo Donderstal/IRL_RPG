@@ -13,14 +13,14 @@ import type { Tile } from './Tile';
 export class CanvasGrid {
     x: number;
     y: number;
-    canvas: HTMLCanvasElement;
-    ctx: CanvasRenderingContext2D;
+    canvas: OffscreenCanvas;
+    ctx: OffscreenCanvasRenderingContext2D;
     type: CanvasTypeEnum;
     grid: Grid;
     sheetImage: HTMLImageElement;
     sheetModel: TilesheetModel;
     model: MapModel;
-    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+    constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         this.x = x;
         this.y = y;
         this.type = type;

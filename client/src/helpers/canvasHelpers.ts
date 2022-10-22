@@ -1,4 +1,5 @@
-import { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
+import globals, { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
+
 
 export const getBubbleCanvasContext = (): CanvasRenderingContext2D => {
     return (document.getElementById('game-bubble-canvas') as HTMLCanvasElement).getContext('2d');
@@ -12,13 +13,10 @@ export const getFrontgridCanvasContext = (): CanvasRenderingContext2D => {
     return (document.getElementById( 'game-front-grid-canvas' ) as HTMLCanvasElement).getContext('2d');
 }
 
-export const getFrontCanvasContext = (): CanvasRenderingContext2D => {
-    return ( document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement).getContext('2d');
+export const getFrontCanvasContext = (): OffscreenCanvasRenderingContext2D => {
+    return globals.GAME.FRONT.canvas.getContext( '2d' );
 }
 
-export const getBackCanvasContext = (): CanvasRenderingContext2D => {
-    return ( document.getElementById( 'game-background-canvas' ) as HTMLCanvasElement).getContext('2d');
-}
 export const drawFromImageToCanvas = (
     image: HTMLImageElement,
     imageX: number, imageY: number,
@@ -26,7 +24,7 @@ export const drawFromImageToCanvas = (
     canvasX: number, canvasY: number,
     widthInCanvas: number, heightInCanvas: number
 ): void => {
-    const ctx = (document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement).getContext("2d")
+    const ctx = getFrontCanvasContext();
     ctx.drawImage(
         image,
         imageX, imageY,
@@ -36,7 +34,7 @@ export const drawFromImageToCanvas = (
     )
 }
 
-export const setFont = ( size: number, ctx: CanvasRenderingContext2D = getFrontCanvasContext() ): void => {
+export const setFont = ( size: number, ctx: OffscreenCanvasRenderingContext2D = getFrontCanvasContext() ): void => {
     ctx.font = size + "px " + 'PFRondaSeven';
 }
 

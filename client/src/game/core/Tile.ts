@@ -17,7 +17,7 @@ export class Tile {
 
     x: number;
     y: number;
-    ctx: CanvasRenderingContext2D;
+    ctx: OffscreenCanvasRenderingContext2D;
     row: number;
     column: number;
 
@@ -27,7 +27,7 @@ export class Tile {
     canvasType: CanvasTypeEnum
 
     direction: DirectionEnum;
-    constructor( index: number | OutOfMapEnum, x: number, y: number, ctx: CanvasRenderingContext2D, row: number, column: number, canvasType: CanvasTypeEnum ) {
+    constructor( index: number | OutOfMapEnum, x: number, y: number, ctx: OffscreenCanvasRenderingContext2D, row: number, column: number, canvasType: CanvasTypeEnum ) {
         this.x = x;
         this.y = y;
         this.ctx = ctx;

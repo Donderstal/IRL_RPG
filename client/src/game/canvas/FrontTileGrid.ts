@@ -9,7 +9,7 @@ import { getPlayer } from "../controllers/spriteController";
 export class FrontTileGrid extends CanvasGrid {
     hasFrontGrid: boolean;
     lastTileList: Tile[];
-    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+    constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
         this.hasFrontGrid = false;
         this.lastTileList = null;
@@ -30,7 +30,7 @@ export class FrontTileGrid extends CanvasGrid {
     drawMapFromGridData( ): void {
         if ( this.playerVisionBox != undefined ) {
             super.drawMapFromGridData( )
-            this.playerVisionBox.clearArc( );            
+            //this.playerVisionBox.clearArc( );            
         }
     }
 

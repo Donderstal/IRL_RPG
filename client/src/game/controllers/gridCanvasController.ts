@@ -11,21 +11,35 @@ let backTiles: BackTileGrid;
 let backSprites: BackSpriteGrid;
 let frontTiles: FrontTileGrid;
 
+export let backTilesDOM: HTMLCanvasElement;
+export let backSpritesDOM: HTMLCanvasElement;
+export let frontTilesDOM: HTMLCanvasElement;
+
+export let backTilesDOMContext: ImageBitmapRenderingContext;
+export let backSpritesDOMContext: ImageBitmapRenderingContext;
+export let frontTilesDOMContext: ImageBitmapRenderingContext;
+
 export const instantiateGridCanvases = () => {
     const baseCanvas = document.getElementById( 'game-background-canvas' );
     const xy = baseCanvas.getBoundingClientRect();
 
-    backTiles = new BackTileGrid( xy.x, xy.y, document.getElementById( 'game-background-canvas' ) as HTMLCanvasElement, CanvasTypeEnum.background );
-    backTiles.canvas.width = CANVAS_WIDTH;
-    backTiles.canvas.height = CANVAS_HEIGHT;
+    backTiles = new BackTileGrid( xy.x, xy.y, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.background );
+    backTilesDOM = document.getElementById( 'game-background-canvas' ) as HTMLCanvasElement;
+    backTilesDOM.width = CANVAS_WIDTH;
+    backTilesDOM.height = CANVAS_HEIGHT;
+    backTilesDOMContext = backTilesDOM.getContext( "bitmaprenderer" );
 
-    backSprites = new BackSpriteGrid( xy.x, xy.y, document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement, CanvasTypeEnum.backSprites );
-    backSprites.canvas.width = CANVAS_WIDTH;
-    backSprites.canvas.height = CANVAS_HEIGHT;
+    backSprites = new BackSpriteGrid( xy.x, xy.y, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.backSprites );
+    backSpritesDOM = document.getElementById( 'game-front-canvas' ) as HTMLCanvasElement
+    backSpritesDOM.width = CANVAS_WIDTH;
+    backSpritesDOM.height = CANVAS_HEIGHT;
+    backSpritesDOMContext = backSpritesDOM.getContext( "bitmaprenderer" );
 
-    frontTiles = new FrontTileGrid( xy.x, xy.y, document.getElementById( 'game-front-grid-canvas' ) as HTMLCanvasElement, CanvasTypeEnum.foreground );
-    frontTiles.canvas.width = CANVAS_WIDTH;
-    frontTiles.canvas.height = CANVAS_HEIGHT;
+    frontTiles = new FrontTileGrid( xy.x, xy.y, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.foreground );
+    frontTilesDOM = document.getElementById( 'game-front-grid-canvas' ) as HTMLCanvasElement
+    frontTilesDOM.width = CANVAS_WIDTH;
+    frontTilesDOM.height = CANVAS_HEIGHT;
+    frontTilesDOMContext = frontTilesDOM.getContext( "bitmaprenderer" );
 }
 
 export const getTileOnCanvasByIndex = ( index: number, canvasType: CanvasTypeEnum ) => {
@@ -72,14 +86,20 @@ const setCanvasDimensions = ( type: CanvasTypeEnum, width: number, height: numbe
         case CanvasTypeEnum.background:
             backTiles.canvas.width = width;
             backTiles.canvas.height = height;
+            backTilesDOM.width = width;
+            backTilesDOM.height = height;
             break;
         case CanvasTypeEnum.backSprites:
             backSprites.canvas.width = width;
             backSprites.canvas.height = height;
+            backSpritesDOM.width = width;
+            backSpritesDOM.height = height;
             break;
         case CanvasTypeEnum.foreground:
             frontTiles.canvas.width = width;
             frontTiles.canvas.height = height;
+            frontTilesDOM.width = width;
+            frontTilesDOM.height = height;
             break;
         default:
             console.log( `Canvastype ${type} not recognized` );

@@ -27,7 +27,7 @@ export class BackSpriteGrid extends CanvasGrid {
     grid: Grid;
     roadNetwork: RoadNetwork;
     tilesBlockedBySprites: number[];
-    constructor( x: number, y: number, canvas: HTMLCanvasElement, type: CanvasTypeEnum ) {
+    constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
         //this.activeEffects = [];
         this.tilesBlockedBySprites = [];
