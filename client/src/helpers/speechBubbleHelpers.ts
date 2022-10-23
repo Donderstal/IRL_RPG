@@ -3,14 +3,13 @@ import globals, { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_IN_SHEET_PX, GRID_BLOC
 import { BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_LEFT_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_MIDDLE, BUBBLE_RIGHT, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_TOP } from "../game-data/textboxGlobals";
 import { mobileAgent } from "./screenOrientation";
 
-export const speechBubbleCanvas = document.createElement( "canvas" );
-export const speechBubbleCanvasDimensions = { width: MAX_BUBBLE_WIDTH, height: GRID_BLOCK_PX * 2 };
+export let speechBubbleCanvas: OffscreenCanvas;
+export let centerBubbleCanvas: OffscreenCanvas;
+export let subtitleBubbleCanvas: OffscreenCanvas;
 
-export const centerBubbleCanvas = document.createElement( "canvas" );
-export const centerBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 };
-
-export const subtitleBubbleCanvas = document.createElement( "canvas" );
-export const subtitleBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX };
+const speechBubbleCanvasDimensions = { width: MAX_BUBBLE_WIDTH, height: GRID_BLOCK_PX * 2 };
+const centerBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 };
+const subtitleBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX };
 
 export const initializeBubbleCanvases = (): void => {
     initializeSpeechBubbleCanvas();
@@ -19,27 +18,21 @@ export const initializeBubbleCanvases = (): void => {
 }
 
 const initializeSpeechBubbleCanvas = (): void => {
-    speechBubbleCanvas.width = speechBubbleCanvasDimensions.width;
-    speechBubbleCanvas.height = speechBubbleCanvasDimensions.height;
-
-    drawTemplateBubbleToCanvas( speechBubbleCanvasDimensions.width, speechBubbleCanvasDimensions.height, speechBubbleCanvas.getContext( "2d" ) );
+    speechBubbleCanvas = new OffscreenCanvas( speechBubbleCanvasDimensions.width, speechBubbleCanvasDimensions.height ); 
+    drawTemplateBubbleToCanvas( speechBubbleCanvas.width, speechBubbleCanvas.height, speechBubbleCanvas.getContext( "2d" ) );
 }
 
 const initializeCenterBubbleCanvas = (): void => {
-    centerBubbleCanvas.width = centerBubbleCanvasDimensions.width;
-    centerBubbleCanvas.height = centerBubbleCanvasDimensions.height;
-
-    drawTemplateBubbleToCanvas( centerBubbleCanvasDimensions.width, centerBubbleCanvasDimensions.height, centerBubbleCanvas.getContext( "2d" ) );
+    centerBubbleCanvas = new OffscreenCanvas( centerBubbleCanvasDimensions.width, centerBubbleCanvasDimensions.height );
+    drawTemplateBubbleToCanvas( centerBubbleCanvas.width, centerBubbleCanvas.height, centerBubbleCanvas.getContext( "2d" ) );
 }
 
 const initializeSubtitleBubbleCanvas = (): void => {
-    subtitleBubbleCanvas.width = subtitleBubbleCanvasDimensions.width;
-    subtitleBubbleCanvas.height = subtitleBubbleCanvasDimensions.height;
-
-    drawTemplateBubbleToCanvas( subtitleBubbleCanvasDimensions.width, subtitleBubbleCanvasDimensions.height, subtitleBubbleCanvas.getContext( "2d" ) );
+    subtitleBubbleCanvas = new OffscreenCanvas( subtitleBubbleCanvas.width, subtitleBubbleCanvas.height );
+    drawTemplateBubbleToCanvas( subtitleBubbleCanvas.width, subtitleBubbleCanvas.height, subtitleBubbleCanvas.getContext( "2d" ) );
 }
 
-const drawTemplateBubbleToCanvas = (width: number, height: number, context: CanvasRenderingContext2D): void => {
+const drawTemplateBubbleToCanvas = (width: number, height: number, context: OffscreenCanvasRenderingContext2D): void => {
     const columns = width / GRID_BLOCK_PX;
     const rows = height / GRID_BLOCK_PX;
 
@@ -53,7 +46,7 @@ const drawTemplateBubbleToCanvas = (width: number, height: number, context: Canv
     }
 }
 
-const drawBubblePart = ( pngKey: string, x: number, y: number, context: CanvasRenderingContext2D ): void => {
+const drawBubblePart = ( pngKey: string, x: number, y: number, context: OffscreenCanvasRenderingContext2D ): void => {
     const png = globals.PNG_DICTIONARY[pngKey];
     context.drawImage(
         png,

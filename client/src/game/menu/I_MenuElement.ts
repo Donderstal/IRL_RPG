@@ -1,11 +1,10 @@
-import globals from "../../game-data/globals";
 import { GRID_BLOCK_PX, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../game-data/globals";
 import { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_RIGHT_TOP, BUBBLE_LEFT_BOTTOM, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT, BUBBLE_LEFT } from "../../game-data/textboxGlobals";
 import { drawBubblePart } from "./menuHelpers";
 
 export class I_MenuElement {
-    utilCanvas: HTMLCanvasElement;
-    utilCtx: CanvasRenderingContext2D;
+    utilCanvas: OffscreenCanvas;
+    utilCtx: OffscreenCanvasRenderingContext2D;
     isActive: boolean;
     borders: string[];
     frameCounter: number;
@@ -20,10 +19,8 @@ export class I_MenuElement {
     height: number;
     rowStyles: string[];
     constructor( x: number, y, columns: number, rows: number, rowStyles: string[], borders: string[] = null, isActive = false ) {
-        this.utilCanvas = document.getElementById( 'game-utility-canvas-menu' ) as HTMLCanvasElement;
+        this.utilCanvas = new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT );
         this.utilCtx = this.utilCanvas.getContext( '2d' );
-        this.utilCanvas.width = CANVAS_WIDTH;
-        this.utilCanvas.height = CANVAS_HEIGHT;
         this.isActive = isActive;
         this.borders = borders;
         this.frameCounter = 0;
@@ -43,7 +40,7 @@ export class I_MenuElement {
         this.rowStyles = rowStyles;
     }
 
-    drawElement( ctx: CanvasRenderingContext2D ): void {
+    drawElement( ctx: OffscreenCanvasRenderingContext2D ): void {
         this.utilCtx.clearRect( 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT )
         for( let i = 0; i < this.rows; i++ ) {
             const rowStyle = this.rowStyles[i];
@@ -81,7 +78,7 @@ export class I_MenuElement {
         }
     }
 
-    drawBorders( ctx: CanvasRenderingContext2D ): void {
+    drawBorders( ctx: OffscreenCanvasRenderingContext2D ): void {
         this.borders.forEach( ( e ): void => {
             let startX;
             let startY;
@@ -123,7 +120,7 @@ export class I_MenuElement {
         })
     }
 
-    countFrameForAnimation( ctx: CanvasRenderingContext2D ): void {
+    countFrameForAnimation( ctx: OffscreenCanvasRenderingContext2D ): void {
         this.frameCounter++
         if ( this.frameCounter > this.frameLimit ) {
             this.frameCounter = 0;
@@ -135,5 +132,5 @@ export class I_MenuElement {
         }
     }
 
-    elementAnimation( ctx: CanvasRenderingContext2D ): void { }
+    elementAnimation( ctx: OffscreenCanvasRenderingContext2D ): void { }
 }

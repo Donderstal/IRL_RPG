@@ -90,7 +90,7 @@ export class SpeechBubble {
         this.read = true;
     }
 
-    writeHeader( activeContext: CanvasRenderingContext2D ): void {
+    writeHeader( activeContext: OffscreenCanvasRenderingContext2D ): void {
         writeTextLine( 
             this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, activeContext
         );
@@ -101,7 +101,7 @@ export class SpeechBubble {
         this.headerText = text;
     }
 
-    draw( context: CanvasRenderingContext2D ): void {
+    draw( context: OffscreenCanvasRenderingContext2D ): void {
         this.copyBubbleToGameCanvas( context );
         if ( this.typeWriter.isWriting ) {
             if ( !this.wroteLastFrame ) {
@@ -153,7 +153,7 @@ export class SpeechBubble {
         this.destinationY = null;
     }
 
-    writeCenterText( activeContext: CanvasRenderingContext2D ): void {
+    writeCenterText( activeContext: OffscreenCanvasRenderingContext2D ): void {
         setFont( BATTLE_FONT_SIZE * 2, activeContext );
         let textWidth = activeContext.measureText( this.fullText ).width;
         let textLineX = this.x + (this.width / 2) - (textWidth / 2);
@@ -167,7 +167,7 @@ export class SpeechBubble {
         }
     }
 
-    writeText( activeContext: CanvasRenderingContext2D ): void {
+    writeText( activeContext: OffscreenCanvasRenderingContext2D ): void {
         this.typeWriter.count();
         setFont( LARGE_FONT_SIZE, activeContext );
         let textLineX = this.textX;
@@ -231,7 +231,7 @@ export class SpeechBubble {
         } )
     }
 
-    drawButtons( activeContext: CanvasRenderingContext2D ): void {
+    drawButtons( activeContext: OffscreenCanvasRenderingContext2D ): void {
         const pngs = globals.PNG_DICTIONARY;
         activeContext.drawImage(
             this.activeButton === InteractionAnswer.yes ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
@@ -249,7 +249,7 @@ export class SpeechBubble {
         );
     }
 
-    copyBubbleToGameCanvas( activeContext: CanvasRenderingContext2D ): void {
+    copyBubbleToGameCanvas( activeContext: OffscreenCanvasRenderingContext2D ): void {
         activeContext.drawImage(
             getSpeechBubbleTemplateCanvas(this.type),
             this.x,

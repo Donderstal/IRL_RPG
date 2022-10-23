@@ -17,7 +17,7 @@ export class ContentBubble extends I_MenuElement {
         this.originalY  = this.y;
     }
 
-    draw( ctx: CanvasRenderingContext2D ): void {
+    draw( ctx: OffscreenCanvasRenderingContext2D ): void {
         if ( this.isActive ) {
             this.countFrameForAnimation( ctx );
         }
@@ -36,7 +36,7 @@ export class ContentBubble extends I_MenuElement {
         this.y = this.originalY;
     }
 
-    drawContents( ctx: CanvasRenderingContext2D ): void {
+    drawContents( ctx: OffscreenCanvasRenderingContext2D ): void {
         switch( this.type ) {
             case MENU_TAB_PARTY:
                 this.drawPartyBubble( ctx );
@@ -53,9 +53,9 @@ export class ContentBubble extends I_MenuElement {
         }
     }
 
-    drawPartyBubble( ctx: CanvasRenderingContext2D ): void { }
+    drawPartyBubble( ctx: OffscreenCanvasRenderingContext2D ): void { }
 
-    drawInventoryBubble( ctx: CanvasRenderingContext2D ): void {
+    drawInventoryBubble( ctx: OffscreenCanvasRenderingContext2D ): void {
         if ( this.inAnimation ) {
             ctx.fillStyle = "yellow";
             ctx.fillText(this.content, this.x + (MENU_MARGIN_TOP_DOWN * GRID_BLOCK_PX), this.y + ( this.height / 2));
@@ -68,9 +68,9 @@ export class ContentBubble extends I_MenuElement {
         }
     }
 
-    drawMapBubble( ctx: CanvasRenderingContext2D ): void { }
+    drawMapBubble( ctx: OffscreenCanvasRenderingContext2D ): void { }
 
-    drawGameBubble( ctx: CanvasRenderingContext2D ): void {
+    drawGameBubble( ctx: OffscreenCanvasRenderingContext2D ): void {
         if ( this.inAnimation ) {
             ctx.fillStyle = "yellow";
             ctx.fillText(this.content, (this.x + (this.width / 2)) - ( ctx.measureText(this.content).width) / 2, this.y + ( this.height / 2));

@@ -1,5 +1,7 @@
-﻿import { setFont, getBubbleCanvasContext } from "./canvasHelpers";
-import globals, { LARGE_FONT_SIZE } from "../game-data/globals";
+﻿import { setFont } from "./canvasHelpers";
+import globals, { GRID_BLOCK_PX, LARGE_FONT_SIZE } from "../game-data/globals";
+import { getUtilityCanvas } from "../game/controllers/uiCanvasController";
+import { CanvasTypeEnum } from "../enumerables/CanvasTypeEnum";
 
 export class TypeWriterWord {
     startingPosition: number;
@@ -9,18 +11,17 @@ export class TypeWriterWord {
     activeWord: string;
     color: string;
     width: number;
-    constructor( word, colorCode, startingPosition, index ) {
+    constructor( word, colorCode, startingPosition, index, innerCtx ) {
         this.startingPosition = startingPosition;
         this.index = index;
-        this.initWord( word, colorCode );
+        this.initWord( word, colorCode, innerCtx );
     }
 
-    initWord( word: string, colorCode: string ): void {
-        const canvasCtx = getBubbleCanvasContext();
-        setFont( LARGE_FONT_SIZE, canvasCtx );
+    initWord( word: string, colorCode: string, innerCtx: OffscreenCanvasRenderingContext2D ): void {
+        setFont( LARGE_FONT_SIZE, innerCtx );
         this.word = word + " ";
         this.color = this.getTextColor( colorCode );
-        this.width = canvasCtx.measureText( word ).width;
+        this.width = innerCtx.measureText( word ).width;
     }
 
     getTextColor( modifier: string ): string {
@@ -59,6 +60,9 @@ export class TypeWriter {
     _activeText: TypeWriterWord[];
     trailingCharacter: TypeWriterWord;
     trailingBlock: TypeWriterWord;
+
+    innerCanvas: OffscreenCanvas;
+    innerCtx: OffscreenCanvasRenderingContext2D;
     constructor( text ) {
         this.index  = 0;
         this.speed = 50;
@@ -69,10 +73,13 @@ export class TypeWriter {
         this.displayFull = false;
         this.activeText = [];
 
-        this.trailingCharacter = new TypeWriterWord( "_", "B", 0, 0 );
+        this.innerCanvas = new OffscreenCanvas( GRID_BLOCK_PX, GRID_BLOCK_PX );
+        this.innerCtx = this.innerCanvas.getContext( '2d' );
+
+        this.trailingCharacter = new TypeWriterWord( "_", "B", 0, 0, this.innerCtx );
         this.trailingCharacter.setWordUntilCharacterLimit( 1000 );
 
-        this.trailingBlock = new TypeWriterWord( "■", "B", 0, 0 );
+        this.trailingBlock = new TypeWriterWord( "■", "B", 0, 0, this.innerCtx );
         this.trailingBlock.setWordUntilCharacterLimit( 1000 );
         this.initText( text );
         this.write( );
@@ -146,7 +153,7 @@ export class TypeWriter {
                 word = wordInArray.split('}')[1];
             }
 
-            const wordInstance = new TypeWriterWord( word, colorModifier, totalCharacters, index );
+            const wordInstance = new TypeWriterWord( word, colorModifier, totalCharacters, index, this.innerCtx );
             this.fullText.push( wordInstance );
             totalCharacters += wordInstance.word.length;
         })

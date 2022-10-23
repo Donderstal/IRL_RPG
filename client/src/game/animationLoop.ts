@@ -1,12 +1,13 @@
-import globals, { FRAMES_PER_SECOND } from '../game-data/globals'
-import { handleMapAnimations } from './map/mapAnimation'
-import { clearPressedKeys, listenForKeyPress} from './controls'
-import { handleCinematicAnimations } from './cutscenes/cinematicAnimations'
-import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController'
-import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
-import { clearGridCanvasOfType, preRenderCanvas, preRenderContext, DOMContext } from './controllers/gridCanvasController'
-import { getMenuCanvas } from './controllers/utilityCanvasController'
-import { cameraFocus } from './cameraFocus'
+import globals, { FRAMES_PER_SECOND } from '../game-data/globals';
+import { handleMapAnimations } from './map/mapAnimation';
+import { clearPressedKeys, listenForKeyPress } from './controls';
+import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';
+import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController';
+import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
+import { clearGridCanvasOfType, preRenderCanvas, preRenderContext, DOMContext } from './controllers/gridCanvasController';
+import { getMenuCanvas, getSpeechBubbleCanvas } from './controllers/utilityCanvasController';
+import { cameraFocus } from './cameraFocus';
+import { getFaderCanvas } from '../helpers/Fader';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -56,16 +57,25 @@ export const animationLoop = ( ): void => {
 const handleOffscreenCanvasBitmaps = () => {
     const GAME = globals.GAME;
 
-    let offscreenX = cameraFocus.leftBorder;
-    let offscreenY = cameraFocus.topBorder;
-    let width = GAME.BACK.canvas.width > preRenderCanvas.width ? preRenderCanvas.width : GAME.BACK.canvas.width;
-    let height = GAME.BACK.canvas.height > preRenderCanvas.height ? preRenderCanvas.height : GAME.BACK.canvas.height;
+    const offscreenX = cameraFocus.leftBorder;
+    const offscreenY = cameraFocus.topBorder;
+    const width = preRenderCanvas.width//GAME.BACK.canvas.width > preRenderCanvas.width ? preRenderCanvas.width : GAME.BACK.canvas.width;
+    const height = preRenderCanvas.height//GAME.BACK.canvas.height > preRenderCanvas.height ? preRenderCanvas.height : GAME.BACK.canvas.height;
 
     preRenderContext.drawImage( GAME.BACK.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
     preRenderContext.drawImage( GAME.FRONT.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
     preRenderContext.drawImage( GAME.FRONTGRID.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
 
+    const speechBubbleCanvas = getSpeechBubbleCanvas();
+    const bubbleX = ( preRenderCanvas.width - speechBubbleCanvas.canvas.width ) / 2;
+    const bubbleY = ( preRenderCanvas.height - speechBubbleCanvas.canvas.height ) / 2;
+    preRenderContext.drawImage( speechBubbleCanvas.canvas, bubbleX, bubbleY );
+
+    const faderCanvas = getFaderCanvas();
+    preRenderContext.drawImage( faderCanvas, 0, 0 );
+
     const frontTilesBitmap = preRenderCanvas.transferToImageBitmap();
 
     DOMContext.transferFromImageBitmap( frontTilesBitmap );
+    preRenderContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
 }

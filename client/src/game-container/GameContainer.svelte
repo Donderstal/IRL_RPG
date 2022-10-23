@@ -1,10 +1,9 @@
 <script>
     import { onMount } from 'svelte';
     import globals, { CANVAS_WIDTH, GRID_BLOCK_PX } from '../game-data/globals.js';
-    import LetterBoxDiv from './in-game-elements/LetterBoxDiv.svelte'
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
     import { mobileAgent } from '../helpers/screenOrientation'
-import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
+    import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
 
     const logClick = ( event ) => {
         getAllSpritesAsList().forEach( ( e ) => {
@@ -44,9 +43,6 @@ import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
         action.addEventListener("touchend", (e)=>{ e.preventDefault(); removeKeyFromPressed({ key: " "})}, false);
     })
 
-    const phoneUICanvasLeftPosition = mobileAgent 
-        ? ((screen.width < screen.height ? screen.height : screen.width) - (GRID_BLOCK_PX * 12)) / 2 
-        : (screen.width - CANVAS_WIDTH) / 2;
     const buttonsDivsMaxWidth = ((screen.width < screen.height ? screen.height : screen.width) - (GRID_BLOCK_PX * 8)) / 2;
 </script>
 
@@ -61,19 +57,6 @@ import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
         position: absolute;
         margin: 0 auto;
         display: block;        
-    }
-    .game-background-body {
-        background-size: cover;
-        z-index: 4;
-    }
-    .game-front-body {
-        z-index: 5
-    }
-    .game-front-tiles-body {
-        z-index: 6
-    }
-    .game-menu-body {
-        z-index: 7
     }
     .canvas-wrapper {
         margin: 0 auto;
@@ -163,37 +146,12 @@ import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
         background: #00384D 0% 0% no-repeat padding-box;
         z-index: 100;
     }
-    #game-fader-canvas {
-        position: fixed;
-        z-index: 9;
-        left: 0;
-        top: 0;
-    }
 </style>
 
 <div class="game-gfx-container">
-    <LetterBoxDiv isTop={true} height={globals.GRID_BLOCK_PX * 2}/>
-
-    <div id="canvas-wrapper" class="canvas-wrapper" style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px">
-        <canvas id='game-canvas' class="game-background-body" 
-        style="width: {globals.CANVAS_WIDTH}px; height: {globals.CANVAS_HEIGHT}px"></canvas>
-
-        <canvas id='game-menu-canvas' class="game-menu-body"
-        style="left:{phoneUICanvasLeftPosition}px; background-color: #00384D; position: fixed; top: 0; visibility: hidden;" ></canvas>    
-
-        <canvas id='game-fader-canvas' style="background: transparent;" on:click={logClick}></canvas>    
-
-        <canvas id='game-bubble-canvas' class="game-menu-body"
-            style="position: fixed; top: 0; left: {phoneUICanvasLeftPosition}px; background-color: transparent;">
-        </canvas>   
-    </div>
-
-    <LetterBoxDiv isTop={false} height={globals.GRID_BLOCK_PX * 2}/>
-
-    <div style="visibility:hidden; display:none;">
-        <canvas id='game-utility-canvas-back'></canvas>
-        <canvas id='game-utility-canvas-front'></canvas>
-        <canvas id='game-utility-canvas-menu'></canvas>
+    <div id="canvas-wrapper" class="canvas-wrapper" style="width: {document.documentElement.width}px; height: {document.documentElement.height}px">
+        <canvas id='game-canvas' class="game-background-body" on:click={logClick}
+        style="width: {document.documentElement.width}px; height: {document.documentElement.height}px"></canvas>
     </div>
 
     {#if mobileAgent}

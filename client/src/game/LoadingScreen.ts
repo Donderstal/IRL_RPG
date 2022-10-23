@@ -3,10 +3,11 @@ import { COLOR_WHITE, COLOR_SECONDARY } from '../game-data/uiGlobals';
 import { TypeWriter } from '../helpers/TypeWriter';
 import globals from '../game-data/globals';
 import { initializeBubbleCanvases } from '../helpers/speechBubbleHelpers';
+import { DOMContext, preRenderCanvas, preRenderContext } from './controllers/gridCanvasController';
 
 let loaderTimeout;
-let canvas;
-let canvasContext;
+let canvas : OffscreenCanvas;
+let canvasContext : OffscreenCanvasRenderingContext2D;
 
 export class LoadingScreen {
     displayText: string;
@@ -17,8 +18,12 @@ export class LoadingScreen {
     typeWriter: TypeWriter;
     mainTextWidth: number;
     activeTextWidth: number;
+    width: number;
+    height: number;
     constructor() {
-        canvas = document.getElementById( 'game-bubble-canvas' ) as HTMLCanvasElement;
+        this.width = document.documentElement.clientWidth;
+        this.height = document.documentElement.clientHeight;
+        canvas = new OffscreenCanvas( this.width, this.height );
         canvasContext = canvas.getContext( "2d" );
 
         this.displayText = "Loading...";
@@ -65,27 +70,28 @@ export class LoadingScreen {
     }
 
     draw( ) {
-        canvasContext.clearRect( 0, 0, BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT )
-        canvasContext.fillStyle = COLOR_SECONDARY;
-        canvasContext.fillRect( 0, 0, BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT )
+        canvasContext.clearRect( 0, 0, this.width, this.height )
+
         canvasContext.fillStyle = COLOR_WHITE;
-        
         canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
-        canvasContext.fillText( this.mainText, ( BUBBLE_CANVAS_WIDTH / 2 ) - ( this.mainTextWidth / 2 ), BUBBLE_CANVAS_HEIGHT / 2 );
+        canvasContext.fillText( this.mainText, ( this.width / 2 ) - ( this.mainTextWidth / 2 ), this.height / 2 );
         canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-        canvasContext.fillText( this.activeText, ( BUBBLE_CANVAS_WIDTH / 2 ) - ( this.activeTextWidth / 2 ), ( BUBBLE_CANVAS_HEIGHT / 2 ) + BATTLE_FONT_LINE_HEIGHT );
+        canvasContext.fillText( this.activeText, ( this.width / 2 ) - ( this.activeTextWidth / 2 ), ( this.height / 2 ) + BATTLE_FONT_LINE_HEIGHT );
 
         this.handleLoadingScreenText( );
     }
 
     clear( ) {
-        canvasContext.clearRect( 0, 0, BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT ) 
+        canvasContext.clearRect( 0, 0, this.width, this.height ) 
     }
 }
 
 const drawLoadingScreen = (): void => {
     globals.GAME.loadingScreen.draw( );
     loaderTimeout = setTimeout( drawLoadingScreen, 50 )
+    preRenderContext.drawImage( canvas, 0, 0 );
+    const frontTilesBitmap = preRenderCanvas.transferToImageBitmap();
+    DOMContext.transferFromImageBitmap( frontTilesBitmap );
 }
 
 export const setLoadingScreen = (): void => {

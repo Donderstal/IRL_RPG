@@ -1,6 +1,9 @@
 import globals from '../game-data/globals';
 import { drawRect } from './canvasHelpers';
 
+let faderCanvas: OffscreenCanvas;
+export let fader: Fader;
+
 export class Fader {
     RGB: string;
     A: number;
@@ -31,9 +34,8 @@ export class Fader {
     }
 
     handleFade(): void {
-        const canvas = ( document.getElementById( 'game-fader-canvas' ) as HTMLCanvasElement );
-        canvas.getContext('2d').clearRect( 0, 0, screen.width, screen.height )
-        drawRect( canvas, 0, 0, screen.width, screen.height, this.RGBA )
+        faderCanvas.getContext('2d').clearRect( 0, 0, screen.width, screen.height )
+        drawRect( faderCanvas, 0, 0, screen.width, screen.height, this.RGBA )
 
         if ( this.fadingFromBlack ) {
             this.fadeFromBlack( )
@@ -79,3 +81,11 @@ export class Fader {
         this.fadeInAndOut       = false;
     }
 }
+
+export const setFaderCanvas = () => {
+    faderCanvas = new OffscreenCanvas( document.documentElement.clientWidth, document.documentElement.clientHeight )
+}
+
+export const getFaderCanvas = () => {
+    return faderCanvas;
+} 

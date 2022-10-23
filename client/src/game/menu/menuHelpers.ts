@@ -2,7 +2,7 @@ import globals from '../../game-data/globals';
 import { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals';
 import { mobileAgent } from '../../helpers/screenOrientation';
 
-export const drawBubblePart = ( name: string, tile: { x: number, y: number }, ctx: CanvasRenderingContext2D ): void => {
+export const drawBubblePart = ( name: string, tile: { x: number, y: number }, ctx: OffscreenCanvasRenderingContext2D ): void => {
     const pngs = globals.PNG_DICTIONARY;
     ctx.drawImage(
         pngs[name],

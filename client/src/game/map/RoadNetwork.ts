@@ -15,7 +15,7 @@ import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
 
 export class RoadNetwork {
-    canvas: HTMLCanvasElement;
+    canvas: OffscreenCanvas;
 
     roads: Road[];
     roadIds: string[];
@@ -26,7 +26,7 @@ export class RoadNetwork {
     carCounter: Counter;
     pendingIntersections: { roads: Road[]; roadIds: string[]; directions: DirectionEnum[]; square: TileSquare }[]
     pendingCrossings: { road: Road; square: TileSquare; location: CellPosition[] }[]
-    constructor( roads: RoadModel[], canvas: HTMLCanvasElement ) {
+    constructor( roads: RoadModel[], canvas: OffscreenCanvas ) {
         this.canvas = canvas;
 
         this.roads = [];

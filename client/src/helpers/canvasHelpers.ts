@@ -1,14 +1,5 @@
 import globals, { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
 
-
-export const getBubbleCanvasContext = (): CanvasRenderingContext2D => {
-    return (document.getElementById('game-bubble-canvas') as HTMLCanvasElement).getContext('2d');
-}
-
-export const getMenuCanvasContext = (): CanvasRenderingContext2D => {
-    return (document.getElementById( 'game-menu-canvas' ) as HTMLCanvasElement).getContext('2d');
-}
-
 export const getFrontCanvasContext = (): OffscreenCanvasRenderingContext2D => {
     return globals.GAME.FRONT.canvas.getContext( '2d' );
 }
@@ -71,7 +62,7 @@ export const breakTextIntoLines = ( text: string, fontSize: number ): string[] =
     return [ text ]
 }
 
-export const drawRect = ( canvas: HTMLCanvasElement, x: number, y: number, width: number, height: number, color: string = null ): void => {
+export const drawRect = ( canvas: OffscreenCanvas, x: number, y: number, width: number, height: number, color: string = null ): void => {
     const ctx = canvas.getContext( '2d' );
     ctx.fillStyle = (color !== null) ? color : "white"
     ctx.fillRect( x, y, width, height );

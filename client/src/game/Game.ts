@@ -8,7 +8,7 @@ import { Party } from './party/Party'
 import { TypeWriter } from '../helpers/TypeWriter'
 import { setLoadingScreen, stopLoadingScreen, LoadingScreen } from './LoadingScreen'
 import { StoryProgression } from '../helpers/StoryProgression'
-import { Fader } from '../helpers/Fader'
+import { Fader, setFaderCanvas } from '../helpers/Fader'
 import { FileLoader } from '../helpers/Loader'
 import { CollectableRegistry } from '../helpers/collectableRegistry'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
@@ -139,7 +139,7 @@ export class Game {
         this.initializePlayerParty( name );
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
-        this.disableStoryMode = true;
+        this.disableStoryMode = disableStoryMode;
         loadMapToCanvases( this.activeMap, "NEW" );
         this.story = new StoryProgression(); 
         setTimeout( this.initControlsAndAnimation, 1000 );
@@ -219,8 +219,9 @@ export class Game {
 
 export const startGame = ( name: string, className: string, startingMap: string, debugMode: boolean, disableStoryMode: boolean ): void => {
     initializeCameraFocus();
-    setFaderDimensions();
-    globals.GAME = new Game( );
+    setFaderCanvas();
+    globals.GAME = new Game();
+
     screen.orientation.onchange = ( ) => {
         if ( screen.orientation.type == "landscape-primary" ) {
             setTimeout( () => {
@@ -231,7 +232,7 @@ export const startGame = ( name: string, className: string, startingMap: string,
                 cameraFocus.handleScreenFlip( xy ); 
                 setDOMCanvasDimensions();
                 hideFlipScreenModal( );
-                setFaderDimensions( );
+                setFaderCanvas();
             }, 100)
         }
         else {
@@ -244,12 +245,6 @@ export const startGame = ( name: string, className: string, startingMap: string,
     }
     new FileLoader( [name, className, startingMap, debugMode, disableStoryMode], "NEW" );
     setLoadingScreen( );
-}
-
-const setFaderDimensions = (): void => {
-    const fader = document.getElementById('game-fader-canvas')
-    fader.style.width = screen.width + "px";
-    fader.style.height = screen.height + "px";
 }
 
 const showFlipScreenModal = (): void =>{

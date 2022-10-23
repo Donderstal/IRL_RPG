@@ -3,12 +3,12 @@ import { mobileAgent } from "../../helpers/screenOrientation";
 import { CanvasGrid } from "../core/CanvasGrid";
 
 export class SpeechBubbleCanvas extends CanvasGrid {
-    canvas: HTMLCanvasElement;
+    canvas: OffscreenCanvas;
     isActive: boolean;
 
     columns: number;
     rows: number;
-    constructor( x: number, y: number, canvas: HTMLCanvasElement, canvasType: CanvasTypeEnum ) {
+    constructor( x: number, y: number, canvas: OffscreenCanvas, canvasType: CanvasTypeEnum ) {
         super( x, y, canvas, canvasType );
 
         this.canvas = canvas;

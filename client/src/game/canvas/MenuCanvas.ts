@@ -14,17 +14,16 @@ const testMap = [ "Map1", "Map2", "Map3", "Map4", "Map5" ];
 const testGame = [ "Game1", "Game2", "Game3", "Game4", "Game5", "Game6" ];
 
 export class MenuCanvas extends CanvasGrid {
-    canvas: HTMLCanvasElement;
+    canvas: OffscreenCanvas;
     header: MenuHeader;
     isActive: boolean;
     textBox: MenuTextBox;
     contentBubbles: ContentBubble[];
     activeButtonIndex: number;
-    constructor( x: number, y: number, canvas: HTMLCanvasElement, canvasType: CanvasTypeEnum ) {
+    constructor( x: number, y: number, canvas: OffscreenCanvas, canvasType: CanvasTypeEnum ) {
         super( x, y, canvas, canvasType );
 
         this.canvas = canvas;
-        this.canvas.style.backgroundColor = "transparent"
         this.isActive = false;
 
         this.initGrid( MENU_GRID_COLUMNS, MENU_GRID_ROWS );
@@ -50,12 +49,10 @@ export class MenuCanvas extends CanvasGrid {
     }
     show( ): void {
         this.isActive = true;
-        this.canvas.style.visibility = 'visible';
     }
 
     hide(): void {
         this.isActive = false;
-        this.canvas.style.visibility = 'hidden';
     }
 
     draw(): void {

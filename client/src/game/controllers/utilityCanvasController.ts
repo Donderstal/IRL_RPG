@@ -21,21 +21,23 @@ export const getSpeechBubbleCanvas = () => {
 }
 
 const instantiateMenuCanvas = () => {
-    const canvas = document.getElementById( 'game-menu-canvas' ) as HTMLCanvasElement;
-    const xy = canvas.getBoundingClientRect();
-    canvas.width = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH;
-    canvas.height = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT;
-    menu = new MenuCanvas( xy.x, xy.y, canvas, CanvasTypeEnum.overview );
-    menu.canvas.style.position = 'fixed';
-    menu.canvas.style.top = "0";
+    const width = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH;
+    const height = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT;
+    menu = new MenuCanvas( 0, 0, new OffscreenCanvas( width, height ), CanvasTypeEnum.overview );
 }
 
 const instantiateSpeechBubbleCanvas = () => {
-    const canvas = document.getElementById( 'game-bubble-canvas' ) as HTMLCanvasElement;
-    const xy = canvas.getBoundingClientRect();
-    canvas.width = BUBBLE_CANVAS_WIDTH;
-    canvas.height = BUBBLE_CANVAS_HEIGHT;
-    speechBubble = new SpeechBubbleCanvas( xy.x, xy.y, canvas, CanvasTypeEnum.speechBubbleCanvas )
+    speechBubble = new SpeechBubbleCanvas( 0, 0, new OffscreenCanvas( BUBBLE_CANVAS_WIDTH, BUBBLE_CANVAS_HEIGHT ), CanvasTypeEnum.speechBubbleCanvas )
+}
+
+export const drawUIToCanvas = ( ctx: OffscreenCanvasRenderingContext2D, canvasWidth: number, canvasHeight: number ) => {
+    ctx.drawImage( menu.canvas, ( canvasWidth - menu.canvas.width ) / 2, ( canvasHeight - menu.canvas.height ) );
+    ctx.drawImage( speechBubble.canvas, ( canvasWidth - speechBubble.canvas.width ) / 2, ( canvasHeight - speechBubble.canvas.height ) );
+}
+
+export const clearUICanvases = () => {
+    clearUtilityCanvasOfType( CanvasTypeEnum.overview );
+    clearUtilityCanvasOfType( CanvasTypeEnum.speechBubbleCanvas );
 }
 
 export const clearUtilityCanvasOfType = ( type: CanvasTypeEnum ): void => {

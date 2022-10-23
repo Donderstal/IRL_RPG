@@ -6,7 +6,7 @@ import type { Sprite } from '../game/core/Sprite';
 
 export class TileSquare {
     tileList: Tile[];
-    canvas: HTMLCanvasElement;
+    canvas: OffscreenCanvas;
 
     left: number;
     top: number;
@@ -15,7 +15,7 @@ export class TileSquare {
 
     width: number;
     height: number;
-    constructor( tileList: Tile[], canvas: HTMLCanvasElement ) {
+    constructor( tileList: Tile[], canvas: OffscreenCanvas ) {
         this.canvas = canvas;
         this.tileList = [];
         this.setTileList( tileList );

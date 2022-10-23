@@ -7,8 +7,6 @@ import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
 import { getSpeechBubbleCanvas } from "./utilityCanvasController";
 
-const getBubbleContext = () => { return getSpeechBubbleCanvas().ctx; }
-
 let mainBubble: SpeechBubble = null;
 let titleBubble: SpeechBubble = null;
 let subtitleBubble: SpeechBubble = null;
@@ -85,7 +83,10 @@ export const clearActiveEmotes = (): void => {
     emoteIds = [];
 }
 export const drawBubbles = (): void => {
-    const context = getBubbleContext();
+    const canvas = getSpeechBubbleCanvas().canvas;
+    const context = canvas.getContext( "2d" );
+
+    context.clearRect( 0, 0, canvas.width, canvas.height );
     Object.values( emotes ).forEach( ( e ) => { e.draw( ); } );
     if ( subtitleBubble !== null ) {
         subtitleBubble.draw( context );

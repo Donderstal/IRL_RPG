@@ -20,13 +20,13 @@ class HeaderButton extends I_MenuElement {
         this.text = text;
     }
 
-    elementAnimation( ctx: CanvasRenderingContext2D ): void {
+    elementAnimation( ctx: OffscreenCanvasRenderingContext2D ): void {
         const tooltipWidth = ctx.measureText("e > ").width;
         ctx.fillText( " < q", this.x, this.y + (this.height / 2) );
         ctx.fillText( "e > ", (this.x + this.width) - tooltipWidth, this.y + (this.height / 2));
     }
 
-    drawElement( ctx: CanvasRenderingContext2D ): void {
+    drawElement( ctx: OffscreenCanvasRenderingContext2D ): void {
         if ( ( mobileAgent && this.isActive ) || !mobileAgent ) {
             super.drawElement( ctx );     
             ctx.font = BATTLE_FONT_SIZE + "px " + 'PFRondaSeven';
@@ -83,7 +83,7 @@ export class MenuHeader {
         ]
     }
 
-    draw( ctx: CanvasRenderingContext2D ): void {
+    draw( ctx: OffscreenCanvasRenderingContext2D ): void {
         this.buttons.forEach( ( e ) => {
             e.drawElement( ctx )
         } );

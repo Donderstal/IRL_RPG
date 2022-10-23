@@ -1,5 +1,23 @@
 ### LOG
 
+#### OCT 24, 2022
+* Implemented offscreen canvas for in game canvas elements
+* Scrapped all but one DOM canvas elements
+* Updated CameraFocus to work with new DOM canvas sizing
+* Removed some obsolete files
+
+#### OCT 12, 2022
+* Some minor performance fixes
+
+#### SEP 18, 2022
+* Cleaning up animation resources and globals
+* Fixed some minor animation bugs
+
+#### SEP 12, 2022
+* Cleaning up mapresource and spriteData files
+* Added some new maps
+* Fixing alignment of sprites in tiles on load
+
 #### SEP 7, 2022
 * Spritecontroller file for setting, getting and destroying sprites
 * SpriteModuleController file now handles all in/output for spritemodule files
