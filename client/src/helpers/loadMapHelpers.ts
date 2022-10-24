@@ -37,7 +37,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
     const sheetData = getTilesheetModelByKey( mapData.tileSet );
 
     back.setBackgroundData( mapData, sheetData );
-    back.drawMapFromGridData( );
 
     front.setForegroundData(mapData, sprites);
 
@@ -57,6 +56,9 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
             globals.GAME.story.checkForEventTrigger(CinematicTrigger.enter)     
         }, 250 )            
     }
+
+    back.drawMapFromGridData();
+    frontgrid.drawMapFromGridData();
 }
 
 export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {

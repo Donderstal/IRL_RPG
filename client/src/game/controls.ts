@@ -8,13 +8,14 @@ import type { Sprite } from './core/Sprite';
 import { moveSpriteInDirection } from './modules/spriteMovementModule';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
-import { getCanvasWithType} from './controllers/gridCanvasController';
+import { checkForNewTilesToDraw, getCanvasWithType} from './controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import { getMenuCanvas } from './controllers/utilityCanvasController';
 import { getPlayer } from './controllers/spriteController';
 import { resetIdleAnimationCounter } from './modules/idleAnimationModule';
 import { destroySpriteAnimation, spriteHasAnimation } from './modules/animationModule';
 import { spriteNextPositionIsBlocked } from './map/collision';
+import { cameraFocus } from './cameraFocus';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -84,6 +85,9 @@ export const handleMovementKeys = () => {
             player.setDirection( direction );
             if ( !spriteNextPositionIsBlocked( player ) ) {
                 moveSpriteInDirection( player, direction );
+            }
+            if ( cameraFocus.focusSpriteId == player.spriteId && !cameraFocus.movingToNewFocus ) {
+                checkForNewTilesToDraw();
             }
         }
         const eventTrigger = GAME.story.checkForEventTrigger( CinematicTrigger.position );

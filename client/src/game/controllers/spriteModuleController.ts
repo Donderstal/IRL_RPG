@@ -1,6 +1,7 @@
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { DestinationType } from "../../enumerables/DestinationType";
 import type { DestinationCellModel } from "../../models/DestinationCellModel";
+import { cameraFocus } from "../cameraFocus";
 import type { Sprite } from "../core/Sprite";
 import { spriteNextPositionIsBlocked } from "../map/collision";
 import { clearActions, destroySpriteAssociatedAction } from "../modules/actionModule";
@@ -11,6 +12,7 @@ import { clearHitboxes, destroyAssociatedHitbox } from "../modules/hitboxModule"
 import { clearIdleAnimationCounters, destroyAssociatedIdleCounter, getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "../modules/idleAnimationModule";
 import { clearRandomAnimationCounters, destroyAssociatedRandomCounter, getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "../modules/randomAnimationModule"
 import { checkIfSpriteCanMove, clearSpriteMovementDictionary, destroySpriteMovement, getSpriteDestination, initializeSpriteMovement, setSideStepDestination, spriteFailedToFindPath, spriteIsAtDestination } from "../modules/spriteMovementModule";
+import { checkForNewTilesToDraw } from "./gridCanvasController";
 import { removeSpriteById } from "./spriteController";
 
 const destroyAssociatedAnimationIfExists = ( sprite: Sprite ): void => {
@@ -49,6 +51,9 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     }
     else {
         const movingToDestination = checkIfSpriteCanMove( sprite, destination );
+        if ( cameraFocus.focusSpriteId == sprite.spriteId && !cameraFocus.movingToNewFocus ) {
+            checkForNewTilesToDraw();
+        }
         if ( !movingToDestination ) destroySpriteMovementToDestination( sprite );
     }
 }

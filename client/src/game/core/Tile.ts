@@ -20,6 +20,7 @@ export class Tile {
     ctx: OffscreenCanvasRenderingContext2D;
     row: number;
     column: number;
+    drawn: boolean;
 
     model: TileModel;
     blocked: boolean;
@@ -44,6 +45,7 @@ export class Tile {
 
         this.blocked = false;
         this.direction = null;
+        this.drawn = false;
 
         this.movementCost = 1;
     };
@@ -89,6 +91,7 @@ export class Tile {
                 this.ctx.fillText( `R:${this.row}`, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .75, )
             }            
         }
+        this.drawn = true;
     }
 
     setSettings( settings: {} ): void {

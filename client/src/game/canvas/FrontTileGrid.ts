@@ -23,7 +23,6 @@ export class FrontTileGrid extends CanvasGrid {
         if ( this.model.frontGrid ) {
             this.hasFrontGrid = true;
             this.setTileGrid( this.model.frontGrid );
-            this.drawMapFromGridData( );
         }
     }
 

@@ -59,8 +59,8 @@ const handleOffscreenCanvasBitmaps = () => {
 
     const offscreenX = cameraFocus.leftBorder;
     const offscreenY = cameraFocus.topBorder;
-    const width = preRenderCanvas.width//GAME.BACK.canvas.width > preRenderCanvas.width ? preRenderCanvas.width : GAME.BACK.canvas.width;
-    const height = preRenderCanvas.height//GAME.BACK.canvas.height > preRenderCanvas.height ? preRenderCanvas.height : GAME.BACK.canvas.height;
+    const width = preRenderCanvas.width;
+    const height = preRenderCanvas.height;
 
     preRenderContext.drawImage( GAME.BACK.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
     preRenderContext.drawImage( GAME.FRONT.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );

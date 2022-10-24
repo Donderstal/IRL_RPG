@@ -2,6 +2,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT, MOVEMENT_SPEED, GRID_BLOCK_PX } from '../g
 import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
 import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
+import { DirectionEnum } from '../enumerables/DirectionEnum';
 
 enum CameraFocusMode {
     followSprite,
@@ -24,6 +25,7 @@ export class CameraFocus {
     newFocusXy: { x: number; y: number }
     lastFocusXy: { x: number; y: number }
     mode: CameraFocusMode;
+    movingToDirections: DirectionEnum[];
     constructor() {
         this.setBaseValues();
 
@@ -36,8 +38,7 @@ export class CameraFocus {
         this.mode = CameraFocusMode.followSprite
 
         this.setOffset()
-        this.updateXValue( this.startingXValue );
-        this.updateYValue( this.startingYValue );
+        this.centerOnXY( this.startingXValue, this.startingYValue )
     }
 
     get cinematicMode(): boolean { return this.mode === CameraFocusMode.cinematic; }
@@ -48,6 +49,12 @@ export class CameraFocus {
     }
     get topBorder(): number {
         return this.yValue - this.yOffset;
+    }
+    get rightBorder(): number {
+        return this.leftBorder + this.screenWidth;
+    }
+    get downBorder(): number {
+        return this.topBorder + this.screenHeight;
     }
 
     setOffset(): void {
@@ -106,11 +113,23 @@ export class CameraFocus {
 
     updateXValue( newValue: number ): void {
         this.xValue = newValue;
+        if ( this.lastFocusXy.x < this.xValue ) {
+            this.movingToDirections.push( DirectionEnum.left );
+        }
+        if ( this.lastFocusXy.x > this.xValue ) {
+            this.movingToDirections.push( DirectionEnum.right );
+        }
         this.lastFocusXy.x = newValue;
     }
 
     updateYValue( newValue: number ): void {
         this.yValue = newValue;
+        if ( this.lastFocusXy.y < this.yValue ) {
+            this.movingToDirections.push( DirectionEnum.down );
+        }
+        if ( this.lastFocusXy.y > this.yValue ) {
+            this.movingToDirections.push( DirectionEnum.up );
+        }
         this.lastFocusXy.y = newValue;
     }
 
@@ -120,6 +139,7 @@ export class CameraFocus {
     }
 
     centerOnXY( x: number, y: number ): void  {
+        this.movingToDirections = [];
         this.updateXValue( x );
         this.updateYValue( y  );
     }
