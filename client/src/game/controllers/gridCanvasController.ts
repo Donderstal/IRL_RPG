@@ -17,8 +17,7 @@ export let preRenderCanvas: OffscreenCanvas;
 export let preRenderContext: OffscreenCanvasRenderingContext2D;
 
 export let DOMCanvas: HTMLCanvasElement;
-export let DOMContext: ImageBitmapRenderingContext;
-
+export let DOMContext: CanvasRenderingContext2D;
 export const instantiateGridCanvases = () => {
     backTiles = new BackTileGrid( 0, 0, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.background );
     backSprites = new BackSpriteGrid( 0, 0, new OffscreenCanvas( CANVAS_WIDTH, CANVAS_HEIGHT ), CanvasTypeEnum.backSprites );
@@ -30,7 +29,7 @@ export const instantiateGridCanvases = () => {
     DOMCanvas = document.getElementById( "game-canvas" ) as HTMLCanvasElement;
     DOMCanvas.width = cameraFocus.screenWidth;
     DOMCanvas.height = cameraFocus.screenHeight;
-    DOMContext = DOMCanvas.getContext( "bitmaprenderer" );
+    DOMContext = DOMCanvas.getContext( "2d" );
 }
 
 export const getTileOnCanvasByIndex = ( index: number, canvasType: CanvasTypeEnum ) => {

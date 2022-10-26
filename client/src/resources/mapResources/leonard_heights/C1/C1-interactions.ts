@@ -15,3 +15,7 @@ export const LOST_KEYS_INTERACTION = [
         ] 
     ]
 ]
+
+export const LOST_KEYS_SPRITE_CONDITION = [
+    ConditionType.interactionNotRegistered, KEY_STORY_2
+]

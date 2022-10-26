@@ -1,5 +1,6 @@
+import { CollectableType } from "../../../../../enumerables/CollectableTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { COLLECTABLE_ACTION_COIN, COLLECTABLE_ACTION_JUICE_CAN } from "../../../../actionResources";
+import { getCollectibleActionDefinition, getCollectibleCondition } from "../../../../collectibleResources";
 import { LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
 
 export default {
@@ -411,13 +412,15 @@ export default {
             "type": "collectable_coin",
             "row": 1,
             "column": 2,
-            "action": COLLECTABLE_ACTION_COIN
+            "action": getCollectibleActionDefinition( LH_NEWTOWN_APP_3_KEY, CollectableType.coin ),
+            "condition": getCollectibleCondition( LH_NEWTOWN_APP_3_KEY, CollectableType.coin )
         },
         {
             "type": "collectable_juice_can",
             "row": 5,
             "column": 3,
-            "action": COLLECTABLE_ACTION_JUICE_CAN
+            "action": getCollectibleActionDefinition( LH_NEWTOWN_APP_3_KEY, CollectableType.can ),
+            "condition": getCollectibleCondition( LH_NEWTOWN_APP_3_KEY, CollectableType.can )
         }
     ],
     "doors": [        

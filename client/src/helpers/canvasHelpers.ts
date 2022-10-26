@@ -63,7 +63,7 @@ export const breakTextIntoLines = ( text: string, fontSize: number ): string[] =
 }
 
 export const drawRect = ( canvas: OffscreenCanvas, x: number, y: number, width: number, height: number, color: string = null ): void => {
-    const ctx = canvas.getContext( '2d' );
+    const ctx = canvas.getContext( '2d', { alpha: false } );
     ctx.fillStyle = (color !== null) ? color : "white"
     ctx.fillRect( x, y, width, height );
 }

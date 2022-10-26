@@ -57,6 +57,7 @@
         position: absolute;
         margin: 0 auto;
         display: block;        
+        background: #00384D 0% 0% no-repeat padding-box;
     }
     .canvas-wrapper {
         margin: 0 auto;

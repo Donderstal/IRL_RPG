@@ -88,11 +88,12 @@ export class LoadingScreen {
 }
 
 const drawLoadingScreen = (): void => {
+    DOMContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
+    preRenderContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
     globals.GAME.loadingScreen.draw( );
     loaderTimeout = setTimeout( drawLoadingScreen, 50 )
     preRenderContext.drawImage( canvas, 0, 0 );
-    const frontTilesBitmap = preRenderCanvas.transferToImageBitmap();
-    DOMContext.transferFromImageBitmap( frontTilesBitmap );
+    DOMContext.drawImage( preRenderCanvas, 0, 0 )
 }
 
 export const setLoadingScreen = (): void => {

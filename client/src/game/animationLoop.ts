@@ -4,7 +4,7 @@ import { clearPressedKeys, listenForKeyPress } from './controls';
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController';
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
-import { clearGridCanvasOfType, preRenderCanvas, preRenderContext, DOMContext } from './controllers/gridCanvasController';
+import { clearGridCanvasOfType, preRenderCanvas, preRenderContext, DOMContext, DOMCanvas } from './controllers/gridCanvasController';
 import { getMenuCanvas, getSpeechBubbleCanvas } from './controllers/utilityCanvasController';
 import { cameraFocus } from './cameraFocus';
 import { getFaderCanvas } from '../helpers/Fader';
@@ -55,6 +55,8 @@ export const animationLoop = ( ): void => {
 }
 
 const handleOffscreenCanvasBitmaps = () => {
+    preRenderContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
+    DOMContext.clearRect( 0, 0, DOMCanvas.width, DOMCanvas.height );
     const GAME = globals.GAME;
 
     const offscreenX = cameraFocus.leftBorder;
@@ -62,9 +64,9 @@ const handleOffscreenCanvasBitmaps = () => {
     const width = preRenderCanvas.width;
     const height = preRenderCanvas.height;
 
-    preRenderContext.drawImage( GAME.BACK.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
-    preRenderContext.drawImage( GAME.FRONT.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
-    preRenderContext.drawImage( GAME.FRONTGRID.canvas, offscreenX, offscreenY, width, height, 0, 0, width, height );
+    preRenderContext.drawImage( GAME.BACK.canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
+    preRenderContext.drawImage( GAME.FRONT.canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
+    preRenderContext.drawImage( GAME.FRONTGRID.canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
 
     const speechBubbleCanvas = getSpeechBubbleCanvas();
     const bubbleX = ( preRenderCanvas.width - speechBubbleCanvas.canvas.width ) / 2;
@@ -73,9 +75,5 @@ const handleOffscreenCanvasBitmaps = () => {
 
     const faderCanvas = getFaderCanvas();
     preRenderContext.drawImage( faderCanvas, 0, 0 );
-
-    const frontTilesBitmap = preRenderCanvas.transferToImageBitmap();
-
-    DOMContext.transferFromImageBitmap( frontTilesBitmap );
-    preRenderContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
+    DOMContext.drawImage( preRenderCanvas, 0, 0 );
 }

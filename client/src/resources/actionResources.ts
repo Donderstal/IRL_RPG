@@ -71,28 +71,6 @@ export const LONG_TALK_4 = [[
     ]
 ]]
 
-export const COLLECTABLE_ACTION_COIN = [[
-    ...DEFAULT_TALKING_INTERACTION,
-    [
-        [[SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
-        [[SceneAnimationType.speak, true, "It's a rare {R}coin!", PLAYER_NAME]],
-        [[SceneAnimationType.speak, true, "Crazy that people in the past used these things to pay for stuff...", PLAYER_NAME]],
-        [[SceneAnimationType.speak, true, "I'll add this one to my collection!", PLAYER_NAME]],
-        [[SceneAnimationType.deleteSprite, true, null, "misc/random5.wav"]]
-    ]
-]]
-
-export const COLLECTABLE_ACTION_JUICE_CAN = [[
-    ...DEFAULT_TALKING_INTERACTION,
-    [
-        [[SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
-        [[SceneAnimationType.speak, true, "It's a rare {R}Diet {R}Betes© can!", PLAYER_NAME]],
-        [[SceneAnimationType.speak, true, "Rumor has it that people used to drink plain water before {R}Diet {R}Betes© was invented.", PLAYER_NAME]],
-        [[SceneAnimationType.speak, true, "I'll add this one to my collection!", PLAYER_NAME]],
-        [[SceneAnimationType.deleteSprite, true, null, "misc/random5.wav"]]
-    ]
-]]
-
 export const lockedDoorEvent = [[
     ...DEFAULT_TALKING_INTERACTION,
     [
@@ -107,3 +85,5 @@ export const unlockDoorEvent = [[
         [[SceneAnimationType.speak, true, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
     ]
 ]]
+
+console.log( RANDOM_TALK_5 );
