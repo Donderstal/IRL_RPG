@@ -4,6 +4,7 @@ import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { MovementType } from '../../../../enumerables/MovementTypeEnum';
 import { PIGEON } from '../../../spriteTypeResources';
+import { LH_CAR_SHACK_KEY } from '../leonard_heights_res';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -113,5 +114,14 @@ export default {
     ],
     "actions": [
 
+    ],
+    "doors": [
+        {
+            "row": 8,
+            "column": 21,
+            "doorTo": LH_CAR_SHACK_KEY,
+            "direction": DirectionEnum.up,
+
+        }
     ]
 }

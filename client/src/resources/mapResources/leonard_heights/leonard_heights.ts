@@ -32,10 +32,14 @@ import ClubShelter from './B4/club-shelter/club-shelter';
 import ClubShelterEntrance from './B4/club-shelter/club-shelter-entrance';
 import ClubShelterToilets from './B4/club-shelter/club-shelter-toilets';
 
+import TwoTowersLobby from './A3/Hotel-Two-Towers/Two-Towers-Lobby';
+
+import CarShack from './C3/Car-Shack/car-shack';
+
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
-import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY, LH_KEY, LH_NAME, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY, removeNeighbourhoodKey } from './leonard_heights_res';
+import { LH_CAR_SHACK_KEY, LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY, LH_HOTEL_TWO_TOWERS_LOBBY_KEY, LH_KEY, LH_NAME, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY, removeNeighbourhoodKey } from './leonard_heights_res';
 
 export default {
     "key": LH_KEY,
@@ -82,6 +86,10 @@ export default {
         "E3": E3,
         "E4": E4,
 
+        // A3 submap
+        // Hotel Two Towers
+        [removeNeighbourhoodKey(LH_HOTEL_TWO_TOWERS_LOBBY_KEY)]: TwoTowersLobby,
+
         // B4 submap
         // Club shelter
         [removeNeighbourhoodKey(LH_CLUB_SHELTER_ENTRANCE_KEY)]: ClubShelterEntrance,
@@ -96,6 +104,10 @@ export default {
         [removeNeighbourhoodKey( LH_NEWTOWN_APP_3_KEY )]: NewtownAppartment3,
         [removeNeighbourhoodKey( LH_NEWTOWN_APP_4_KEY )]: NewtownAppartment4,
         [removeNeighbourhoodKey( LH_NEWTOWN_APP_5_KEY )]: NewtownAppartment5,
+
+        //C3 submaps
+        // Car shack
+        [removeNeighbourhoodKey( LH_CAR_SHACK_KEY )]: CarShack,
 
         // C4 submaps
         // Yum Mart

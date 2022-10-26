@@ -1,4 +1,4 @@
-export const FRONT_GRID_LEONARD_A2 = [
+export const FRONT_GRID_LEONARD_A3 = [
 	{
 		"id": "E",
 		"angle": 0,

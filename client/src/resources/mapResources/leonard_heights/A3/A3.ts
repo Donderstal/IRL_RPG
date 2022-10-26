@@ -1,9 +1,11 @@
-import { GRID_LEONARD_A2 } from './grid';
-import { FRONT_GRID_LEONARD_A2 } from './frontgrid';
+import { GRID_LEONARD_A3 } from './grid';
+import { FRONT_GRID_LEONARD_A3 } from './frontgrid';
+import { LH_HOTEL_TWO_TOWERS_LOBBY_KEY } from '../leonard_heights_res';
+import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 
 export default {
-    "frontGrid": FRONT_GRID_LEONARD_A2,
-    "grid": GRID_LEONARD_A2,
+    "frontGrid": FRONT_GRID_LEONARD_A3,
+    "grid": GRID_LEONARD_A3,
     "outdoors": true,
     "rows": 16,
     "columns": 24,
@@ -167,5 +169,21 @@ export default {
     ],
     "actions": [
 
+    ],
+    "doors": [
+        {
+            "row": 7,
+            "column": 21,
+            "doorTo": LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
+            "direction": DirectionEnum.up,
+
+        },
+        {
+            "row": 7,
+            "column": 22,
+            "doorTo": LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
+            "direction": DirectionEnum.up,
+
+        }
     ]
 }

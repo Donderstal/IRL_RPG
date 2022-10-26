@@ -3,7 +3,7 @@ import { DirectionEnum } from "../enumerables/DirectionEnum";
 import {
     BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, BUSINESS_MAN,
     DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY,
-    MAIN_CHARACTER, MONKEY_CEO, PIGEON, PINK_HAIRED_FAT_GUY, PINK_HAIR_NERD_LADY, ROBOT, STRONG_GUY, SUNGLASSES_LADY,
+    MAIN_CHARACTER, MONKEY_CEO, PIGEON, PINK_HAIRED_FAT_GUY, PINK_HAIR_NERD_LADY, ROBOT, ROBOT_BLACK, ROBOT_GREY, ROBOT_WHITE, STRONG_GUY, SUNGLASSES_LADY,
     SUPERMARKET_MANAGER, TOUGH_GUY, TOUGH_GUY_WITH_COOL_HAIR, TOUGH_GUY_WITH_COOL_SHIRT, TOUGH_GUY_WITH_DARK_HAIR,
     WHITE_PONY_TAIL_LADY, YELLOW_SHIRT_LADY
 } from "./spriteTypeResources";
@@ -38,6 +38,11 @@ const getGroundedAtBottom = ( width, height ) => {
         "height_blocks": height,
         "width_blocks": width
     }
+}
+
+const getStandard = ( width, height ) => {
+    return { "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": width, "width_blocks": height}
 }
 
 const THREE_HIGH_SPRITE = {
@@ -1014,7 +1019,7 @@ export const spriteData = {
     },
     "thing_a": {
         "src": "thing_a.png",
-        ...getGroundedAtBottom( 1, 3 ),
+        ...getStandard( 1, 3 ),
     },
     "thing_b": {
         "src": "thing_b.png",
@@ -1084,11 +1089,11 @@ export const spriteData = {
     },
     "vegetables_a": {
         "src": "vegetables_a.png",
-        ...getGroundedAtBottom( 1, 3 ),
+        ...THREE_HIGH_SPRITE
     },
     "vegetables_b": {
         "src": "vegetables_b.png",
-        ...getGroundedAtBottom( 1, 3 ),
+        ...THREE_HIGH_SPRITE
     },
     "vegetables_c": {
         "src": "vegetables_c.png",
@@ -1392,6 +1397,18 @@ export const spriteData = {
     },
     [ROBOT]: {
         "src": "robot.png",
+        ...STANDARD_CHARACTER
+    },
+    [ROBOT_BLACK]: {
+        "src": "Robot_black.png",
+        ...STANDARD_CHARACTER
+    },
+    [ROBOT_GREY]: {
+        "src": "Robot_grey.png",
+        ...STANDARD_CHARACTER
+    },
+    [ROBOT_WHITE]: {
+        "src": "Robot_white.png",
         ...STANDARD_CHARACTER
     },
     [PINK_HAIR_NERD_LADY]: {

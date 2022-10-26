@@ -27,3 +27,9 @@ export const LH_NEWTOWN_APP_2_KEY = appendToNeighbourhoodKey( "Newtown-appartmen
 export const LH_NEWTOWN_APP_3_KEY = appendToNeighbourhoodKey( "Newtown-appartment-3" );
 export const LH_NEWTOWN_APP_4_KEY = appendToNeighbourhoodKey( "Newtown-appartment-4" );
 export const LH_NEWTOWN_APP_5_KEY = appendToNeighbourhoodKey( "Newtown-appartment-5" );
+
+export const LH_HOTEL_TWO_TOWERS_NAME = "Hotel 'The Two Towers'";
+export const LH_HOTEL_TWO_TOWERS_LOBBY_KEY = appendToNeighbourhoodKey( "Two-Towers-Lobby" );
+
+export const LH_CAR_SHACK_NAME = "The Car Shack";
+export const LH_CAR_SHACK_KEY = appendToNeighbourhoodKey( "Car-Shack" )

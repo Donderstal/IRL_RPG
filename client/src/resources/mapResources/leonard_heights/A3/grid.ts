@@ -1,4 +1,4 @@
-export const GRID_LEONARD_A2 = [
+export const GRID_LEONARD_A3 = [
 	{
 		"id": 750,
 		"angle": 0,
