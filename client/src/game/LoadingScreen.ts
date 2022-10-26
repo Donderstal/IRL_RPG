@@ -21,8 +21,9 @@ export class LoadingScreen {
     width: number;
     height: number;
     constructor() {
-        this.width = document.documentElement.clientWidth;
-        this.height = document.documentElement.clientHeight;
+        const rootElement = document.documentElement;
+        this.width = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientWidth : rootElement.clientHeight;
+        this.height = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientHeight : rootElement.clientWidth;
         canvas = new OffscreenCanvas( this.width, this.height );
         canvasContext = canvas.getContext( "2d" );
 

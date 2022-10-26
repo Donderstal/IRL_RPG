@@ -47,6 +47,7 @@ export class ActionSelector extends Hitbox {
     }
 
     handle( sprite ): void {
+        console.log( 'handle' )
         if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
             globals.GAME.setActiveCinematic(
                 this.activeAction, this.trigger, [this.spriteId]
@@ -59,10 +60,12 @@ export class ActionSelector extends Hitbox {
     }
 
     confirm(): void {
+        console.log( 'confirm' )
         this.confirmingAction = true;
     }
 
     dismiss(): void {
+        console.log('dismiss')
         if ( this.needsConfirmation && this.registeredSelection == InteractionAnswer.yes && !this.confirmingAction ) {
             this.confirm();
         }

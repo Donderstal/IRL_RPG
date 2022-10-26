@@ -91,7 +91,7 @@ const getStandardBubbleXy = ( ): { x: number, y: number } => {
     const speechBubbleCanvasWidth = mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH;
     return {
         x: ( speechBubbleCanvasWidth - MAX_BUBBLE_WIDTH ) / 2,
-        y: mobileAgent ? 0 : GRID_BLOCK_PX / 2
+        y: mobileAgent ? screen.height - ( GRID_BLOCK_PX * 2 ) : screen.height - ( GRID_BLOCK_PX * 3.5 ) 
     };
 }
 const getSubtitleBubbleXy = ( ): { x: number, y: number } => {

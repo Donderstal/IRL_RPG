@@ -3,6 +3,8 @@ import { PLAYER_ID } from "../../game-data/interactionGlobals";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 import { Sprite } from "../core/Sprite";
+import { destroySpriteAssociatedAction } from "../modules/actionModule";
+import { destroySpriteAssociatedDoor } from "../modules/doorModule";
 import { getTileOnCanvasByCell } from "./gridCanvasController";
 
 let backSpritesDictionary: { [key in string]: Sprite } = {};
@@ -38,7 +40,12 @@ export const getSpriteById = ( spriteId: string ): Sprite => {
 }
 
 export const removeSpriteById = ( spriteId: string ): void => {
+    destroySpriteAssociatedAction( spriteId );
+    destroySpriteAssociatedDoor( spriteId );
     spriteIds = spriteIds.filter( ( e ) => { return e !== spriteId } );
+    allSpritesArray = allSpritesArray.filter( ( e ) => { return e.spriteId !== spriteId } );
+    frontSpritesArray = frontSpritesArray.filter( ( e ) => { return e.spriteId !== spriteId } );
+    backSpritesArray = backSpritesArray.filter( ( e ) => { return e.spriteId !== spriteId } );
     delete backSpritesDictionary[spriteId];
     delete frontSpritesDictionary[spriteId];
 }

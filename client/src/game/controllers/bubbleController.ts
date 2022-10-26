@@ -28,9 +28,11 @@ export const hasActiveBubbles = (): boolean => { return emoteIds.length > 0 || m
 export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType, sfx: string ): void => {
     if ( mainBubble !== null ) {
         setBubbleContents( contents, type );
-        return;
     }
-    mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo );
+    else {
+        mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo );
+    }
+
     globals.GAME.sound.playSpeakingEffect( sfx );
 };
 export const setNewEmote = ( location, imageSrc ): void => {

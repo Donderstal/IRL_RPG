@@ -21,28 +21,24 @@ const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sp
     switch ( sprite.direction ) {
         case DirectionEnum.left:
             nextTileIsOffscreen = currentTile.column === 1;
-            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index - 1;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return nextTile.isBlocked && hitbox.left < currentTile.x;
+            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.left < currentTile.x;
         case DirectionEnum.up:
             nextTileIsOffscreen = currentTile.row === 1;
-            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index - globals.GAME.BACK.grid.columns;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return nextTile.isBlocked && hitbox.top < currentTile.y;
+            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.top < currentTile.y;
         case DirectionEnum.right:
             nextTileIsOffscreen = currentTile.column === globals.GAME.BACK.grid.columns;
-            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index + 1;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return nextTile.isBlocked && hitbox.right > currentTile.x + GRID_BLOCK_PX;
+            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.right > currentTile.x + GRID_BLOCK_PX;
         case DirectionEnum.down:
             nextTileIsOffscreen = currentTile.row === globals.GAME.BACK.grid.rows;
-            if ( nextTileIsOffscreen ) return false;
             nextIndex = currentTile.index + globals.GAME.BACK.grid.columns;
             nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
-            return nextTile.isBlocked && hitbox.innerBottom > currentTile.y + GRID_BLOCK_PX;
+            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.outerBottom > currentTile.y + GRID_BLOCK_PX;
     }
 }
 
