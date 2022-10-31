@@ -5,5 +5,7 @@ export type TilesheetModel = {
     uniqueTiles: number;
     blocked: number[];
 
+    images: { [key in string]: { [key in string]: OffscreenCanvas} }
     image?: HTMLImageElement;
+    xyValues: { [key in string]: { [key in string]: {x: number, y: number}[] } }
 }

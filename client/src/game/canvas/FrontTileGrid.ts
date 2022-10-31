@@ -1,5 +1,4 @@
 import { CanvasGrid } from "../core/CanvasGrid";
-import globals from '../../game-data/globals';
 import type { Tile } from "../core/Tile";
 import type { MapModel } from "../../models/MapModel";
 import type { TilesheetModel } from "../../models/TilesheetModel";
@@ -36,7 +35,7 @@ export class FrontTileGrid extends CanvasGrid {
     drawTilesAndClearArc( tiles ): void {
         if ( this.lastTileList ) {
             this.lastTileList.forEach( (e) => {
-                e.drawTileInMap( this.sheetImage )
+                e.drawTileInMap( this.sheetModel )
             })            
         }
         this.lastTileList = tiles;

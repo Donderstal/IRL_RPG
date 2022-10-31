@@ -1,6 +1,10 @@
 ### LOG
 
 #### OCT 24, 2022
+* Replaced old setup with in-canvas tile flipping/mirroring with flip/mirror sheets
+* Removed utility canvas classes
+
+#### OCT 24, 2022
 * Implemented offscreen canvas for in game canvas elements
 * Scrapped all but one DOM canvas elements
 * Updated CameraFocus to work with new DOM canvas sizing

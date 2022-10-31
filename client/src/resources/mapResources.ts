@@ -9,7 +9,7 @@ const mapResources = {
 }
 
 export const getNeighbourhood = ( fullMapName: string ): NeighbourhoodModel => {
-    const mapNameArray = fullMapName.split('/');
+    const mapNameArray = fullMapName.split( '/' );
     const neighbourhoodName = mapNameArray[0];
 
     return initNeighbourhoodModel( mapResources[neighbourhoodName] );

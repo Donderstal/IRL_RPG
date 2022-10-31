@@ -49,7 +49,7 @@ export class CanvasGrid {
     };
 
     drawMapFromGridData( ): void {
-        this.grid.drawMap( this.sheetModel.image );
+        this.grid.drawMap( this.sheetModel );
     }    
 
     clearMap() { }

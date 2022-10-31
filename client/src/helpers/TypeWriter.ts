@@ -1,7 +1,5 @@
 ﻿import { setFont } from "./canvasHelpers";
 import globals, { GRID_BLOCK_PX, LARGE_FONT_SIZE } from "../game-data/globals";
-import { getUtilityCanvas } from "../game/controllers/uiCanvasController";
-import { CanvasTypeEnum } from "../enumerables/CanvasTypeEnum";
 
 export class TypeWriterWord {
     startingPosition: number;

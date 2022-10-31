@@ -36,7 +36,6 @@ import { clearSpriteAnimations } from './modules/animationModule'
 import { cameraFocus, initializeCameraFocus } from './cameraFocus'
 import { portraitOrientation } from '../helpers/screenOrientation'
 import { getCanvasWithType, instantiateGridCanvases, setDOMCanvasDimensions } from './controllers/gridCanvasController'
-import { instantiateUtilityCanvases } from './controllers/uiCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { instantiateUICanvases } from './controllers/utilityCanvasController'
 import type { FrontTileGrid } from './canvas/FrontTileGrid'
@@ -46,6 +45,7 @@ import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { InteractionModel } from '../models/InteractionModel'
 import type { CellPosition } from '../models/CellPositionModel'
 import { getBackSprites, getPlayer } from './controllers/spriteController'
+import { initTilesheetModels } from '../resources/tilesheetResources'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -130,12 +130,12 @@ export class Game {
     }
 
     initGameCanvases(): void {
-        instantiateUtilityCanvases();
         instantiateGridCanvases();
         instantiateUICanvases();
     }
 
     startNewGame( name: string, spriteKey: string, startingMapName: string, debugMode: boolean, disableStoryMode: boolean ): void {
+        initTilesheetModels();
         this.initializePlayerParty( name );
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;

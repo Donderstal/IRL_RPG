@@ -186,6 +186,6 @@ export const verticalDrawNewTiles = ( y: number ): void => {
 
 const filterAndDrawTiles = ( tiles ) => {
     tiles.filter( ( tile: Tile ) => { return !tile.drawn && tile.model.id !== null; } ).forEach( ( tile: Tile ) => {
-        tile.drawTileInMap( backTiles.sheetModel.image );
+        tile.drawTileInMap( backTiles.sheetModel );
     } )
 }

@@ -1,10 +1,11 @@
 import type { DirectionEnum } from "../../enumerables/DirectionEnum";
 import type { TileModel } from "../../models/TileModel";
-import { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX, SHEET_XY_VALUES } from '../../game-data/globals';
+import { GRID_BLOCK_PX } from '../../game-data/globals';
 import globals from '../../game-data/globals';
 import { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
 import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
-import { drawTileToUtilityCanvas, getUtilityCanvas } from "../controllers/uiCanvasController";
+import { getTilesheetImageForTile, getTilesheetXy } from "../../helpers/tileSheetHelpers";
+import type { TilesheetModel } from "../../models/TilesheetModel";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -66,18 +67,18 @@ export class Tile {
         this.movementCost = value;
     }
 
-    drawTileInMap( sheetImage: HTMLImageElement ): void {
+    drawTileInMap( sheetModel: TilesheetModel ): void {
         if ( this.isEmpty ) {
             return;
         }
         else {
-            const tilesheetXy = SHEET_XY_VALUES[this.model.id];
-            drawTileToUtilityCanvas( this, sheetImage, this.canvasType );
+            const tilesheetXy = getTilesheetXy( this.model, sheetModel );
+            const sheet = getTilesheetImageForTile( this.model, sheetModel )
         
             this.ctx.drawImage(
-                getUtilityCanvas( this.canvasType ), 
-                0, 0,
-                GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
+                sheet, 
+                tilesheetXy.x, tilesheetXy.y,
+                GRID_BLOCK_PX, GRID_BLOCK_PX,
                 this.x, this.y,
                 GRID_BLOCK_PX, GRID_BLOCK_PX
             )
@@ -99,7 +100,7 @@ export class Tile {
         this.model.angle = settings['angle'];
     }
 
-    setTileID( id: number|string ): void {
+    setTileID( id: number ): void {
         this.model.id = id;
     };
 

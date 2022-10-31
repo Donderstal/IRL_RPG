@@ -54,24 +54,6 @@ export const SMALL_FONT_LINE_HEIGHT        = SMALL_FONT_SIZE * GOLDEN_FONT_RATIO
 export const LARGE_FONT_LINE_HEIGHT        = LARGE_FONT_SIZE * GOLDEN_FONT_RATIO
 export const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATIO
 
-const setSheetXyValues = ( tilesInSheet ) => {
-    let tileX = 0; let tileY = 0;
-    let tilesheetXyValues = []
-
-    for ( let i = 0; i <= tilesInSheet; i++ ) {
-        tilesheetXyValues.push( { 'x': tileX, 'y': tileY } )
-        tileX += GRID_BLOCK_IN_SHEET_PX
-        if ( i % 4 == 3 ) {
-            tileX = 0
-            tileY += GRID_BLOCK_IN_SHEET_PX
-        }
-    }
-
-    return tilesheetXyValues;
-}
-
-export const SHEET_XY_VALUES = setSheetXyValues( 10000 );
-
 const PNG_DICTIONARY = {};
 const AUDIO_DICTIONARY = {};
 let GAME: Game = null;

@@ -1,30 +1,19 @@
-import type { Tile } from "../game/core/Tile";
+import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../game-data/globals";
+import { getTilesetXyValues } from "../helpers/tileSheetHelpers";
 import type { TilesheetModel } from "../models/TilesheetModel";
 
 export const sheets = {
-    "Interior_Yum_Mart_Tiles" : {
-        "src": "Interior_Yum_Mart_Tiles.png",  
-        "name": "Yum interior old",
-        "key": "Interior_Yum_Mart_Tiles",
-        "uniqueTiles": 79,
-        "blocked": [
-            2, 3, 6, 7, 13, 14, 15, 17, 18, 19, 21, 22, 
-            23, 24, 26, 27, 28, 29, 30, 31, 32, 36,
-            37, 38, 39, 40, 41, 42, 43, 44, 47, 48, 49, 50, 
-            51, 52, 54, 55, 56, 57, 58, 50, 60, 61,
-            62, 63, 64, 65, 66, 67, 70, 71, 72, 73,
-            76, 77
-        ]
-    },
     "Yum_Mart": {
-        "src": "Yum_mart.png",
+        "folder": "YM",
+        "src": "Yum_mart",
         "uniqueTiles": 40,
         "name": "Yum interior new",
         "key": "Yum_Mart",
         "blocked": []
     },
     "downtown_2": {
-        "src": "City5_Tiles.png",
+        "folder": "DT",
+        "src": "City5_Tiles",
         "uniqueTiles": 608,
         "name": "Downtown (clean)",
         "key": "downtown_2",
@@ -601,7 +590,8 @@ export const sheets = {
         ]
     },
     "starting_neighbourhood_clean": {
-        "src": "Starting_neighbourhood_2.png",
+        "folder": "LH",
+        "src": "Starting_neighbourhood_2",
         "name": "Leonard Heights (clean)",
         "key": "starting_neighbourhood_clean",
         "uniqueTiles": 1300,
@@ -1588,53 +1578,41 @@ export const sheets = {
             1165
         ]
     },
-    "battle_downtown": {
-        "name": "Battle",
-        "key": "battle_downtown",
-        "src": "battle_tiles.png",
-        "uniqueTiles": 150,
-        "blocked": [ ]
-    },
     "Generic_Room_AX": {
+        "folder": "AX", 
         "name": "Indoor set A",
         "key": "Generic_Room_AX",
-        "src": "Generic_Room_AX_Tile_Sheet.png",
+        "src": "Generic_Room_AX_Tile_Sheet",
         "uniqueTiles": 48,
         "blocked": [
             0, 1, 2, 3, 11, 16, 17, 18, 19, 24, 27
         ]
     },
     "Generic_Room_BX": {
+        "folder": "BX",
         "name": "Indoor set B",
         "key": "Generic_Room_BX",
-        "src": "Generic_Room_BX.png",
-        "uniqueTiles": 48,
-        "blocked": [
-            0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
-        ]
-    },
-    "Generic_Room_C": {
-        "name": "Indoor set C",
-        "key": "Generic_Room_C",
-        "src": "Generic_Room_C_Tile_Set.png",
+        "src": "Generic_Room_BX",
         "uniqueTiles": 48,
         "blocked": [
             0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
         ]
     },
     "Generic_Room_DX": {
+        "folder": "DX",
         "name": "Indoor set D",
         "key": "Generic_Room_DX",
-        "src": "Generic_Room_DX_Tile_Sheet.png",
+        "src": "Generic_Room_DX_Tile_Sheet",
         "uniqueTiles": 48,
         "blocked": [
             0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
         ]
     },
     "Generic_Room_EX": {
+        "folder": "EX",
         "name": "Indoor set E",
         "key": "Generic_Room_EX",
-        "src": "Generic_Room_EX_Tile_Sheet.png",
+        "src": "Generic_Room_EX_Tile_Sheet",
         "uniqueTiles": 48,
         "blocked": [
             0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33, 41, 42, 44, 45, 46, 47
@@ -1642,24 +1620,69 @@ export const sheets = {
     }
 }
 
+const widthFactor = GRID_BLOCK_PX / GRID_BLOCK_IN_SHEET_PX;
+const heightFactor = GRID_BLOCK_PX / GRID_BLOCK_IN_SHEET_PX;
+
 const getTileSheetModels = () => {
     return Object.values( sheets ).map( ( e ) => {
-        const image = new Image();
-        image.src = "/static/tilesets/" + e.src;
+        const images = getImages( e );
+        console.log( images );
         let model: TilesheetModel = {
             name: e.name,
             key: e.key,
             src: e.src,
             uniqueTiles: e.uniqueTiles,
             blocked: e.blocked,
-            image: image
+            image: images["standard"]["0"],
+            images: { ...images },
+            xyValues: getTilesetXyValues( images["standard"]["0"].height / GRID_BLOCK_PX );
         }
 
         return model;
     } )
 }
 
-export const tileSheetModels: TilesheetModel[] = getTileSheetModels();
+const getImages = ( sheetData ) => {
+    let models = {
+        "standard": {
+            "0": null,
+            "90": null,
+            "180": null,
+            "270": null
+        },
+        "mirrored": {
+            "0": null,
+            "90": null,
+            "180": null,
+            "270": null
+        }
+    }
+    const folder = sheetData["folder"];
+    const src = sheetData["src"];
+
+    drawSheetToCanvas( models.standard, `${folder}/${src}`, "0" );
+    drawSheetToCanvas( models.standard, `${folder}/${src}_90`, "90" );
+    drawSheetToCanvas( models.standard, `${folder}/${src}_180`, "180" );
+    drawSheetToCanvas( models.standard, `${folder}/${src}_270`, "270" );
+
+    drawSheetToCanvas( models.mirrored, `${folder}/${src}_m`, "0" );
+    drawSheetToCanvas( models.mirrored, `${folder}/${src}_m_90`, "90" );
+    drawSheetToCanvas( models.mirrored, `${folder}/${src}_m_180`, "180" );
+    drawSheetToCanvas( models.mirrored, `${folder}/${src}_m_270`, "270" );
+
+    return models;
+}
+
+const drawSheetToCanvas = ( angleObject: { [key in string]: OffscreenCanvas }, src: string, key: string ) => {
+    const image = globals.PNG_DICTIONARY[`/static/tilesets/${src}.png`];
+    angleObject[key] = new OffscreenCanvas( image.naturalWidth, image.naturalHeight );
+    angleObject[key].getContext( "2d" ).drawImage( image, 0, 0, widthFactor * angleObject[key].width, heightFactor * angleObject[key].height );
+}
+
+export let tileSheetModels: TilesheetModel[];
+export const initTilesheetModels = () => {
+    tileSheetModels = getTileSheetModels();
+}
 
 export const getTilesheetModelByKey = ( key: string ): TilesheetModel => {
     const filteredModels = tileSheetModels.filter( ( e ) => { return e.key === key } );

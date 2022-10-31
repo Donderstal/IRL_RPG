@@ -4,6 +4,7 @@ import { Tile } from './Tile';
 import type { TileModel } from '../../models/TileModel';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { cameraFocus } from '../cameraFocus';
+import type { TilesheetModel } from '../../models/TilesheetModel';
 /**
  * The Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
  * It divides the canvas up in a grid of equally sized blocks, represented by an Tile instance.
@@ -68,21 +69,21 @@ export class Grid {
         return ( this.overflowRows * GRID_BLOCK_PX ) / 2;
     }
 
-    drawMap( tileSheet: HTMLImageElement ): void {
+    drawMap( tilesheetModel: TilesheetModel ): void {
         for ( let i = 0; i < this.array.length; i += this.columns ) {
             const row = this.array.slice( i, i + this.columns )
-            this.drawRowInMap( row, tileSheet )
+            this.drawRowInMap( row, tilesheetModel )
         }
     }
 
-    drawRowInMap( currentRow: Tile[], tileSheet: HTMLImageElement ) {
+    drawRowInMap( currentRow: Tile[], tilesheetModel: TilesheetModel ) {
         for ( let j = 0; j < this.columns; j++ ) {
             const currentTile = currentRow[j]
             if ( cameraFocus.xyValueIsInView( currentTile.x, currentTile.y )
                 || cameraFocus.xyValueIsInView( currentTile.x + GRID_BLOCK_PX, currentTile.y )
                 || cameraFocus.xyValueIsInView( currentTile.x, currentTile.y + GRID_BLOCK_PX )
                 || cameraFocus.xyValueIsInView( currentTile.x + GRID_BLOCK_PX, currentTile.y + GRID_BLOCK_PX ) ) {
-                currentTile.drawTileInMap( tileSheet );
+                currentTile.drawTileInMap( tilesheetModel );
             }
         }
     }
