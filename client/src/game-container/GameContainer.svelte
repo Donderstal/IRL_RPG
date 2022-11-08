@@ -1,9 +1,10 @@
 <script>
     import { onMount } from 'svelte';
-    import globals, { CANVAS_WIDTH, GRID_BLOCK_PX } from '../game-data/globals.js';
+    import globals, { GRID_BLOCK_PX } from '../game-data/globals';
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
+    import { closeGameCanvas } from '../helpers/DOMEventHelpers';
     import { mobileAgent } from '../helpers/screenOrientation'
-    import { getAllSpritesAsList } from '../game/controllers/spriteController.js';
+    import { getAllSpritesAsList } from '../game/controllers/spriteController';
 
     const logClick = ( event ) => {
         getAllSpritesAsList().forEach( ( e ) => {
@@ -100,7 +101,7 @@
     }
     @media only screen and (max-width: 914px) {
         #buttons-div {
-            z-index: 10;
+            z-index: 4;
             position: fixed;
             background-color: transparent;
             left: 0px;
@@ -135,17 +136,15 @@
             padding: 2vw;
         }
     }
-    #flip-screen {
+    button {
+        color:white;
+        max-width: 15vw;
+        max-height: 10vh;
         position: fixed;
-        padding: 2vw;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        visibility: hidden;
-        display: none;
-        background: #00384D 0% 0% no-repeat padding-box;
-        z-index: 100;
+        z-index: 5;
+        right: 1vw;
+        top: 1vh;
+        background-color: rgba(0, 56, 77, 0.1);
     }
 </style>
 
@@ -153,6 +152,7 @@
     <div id="canvas-wrapper" class="canvas-wrapper" style="width: {document.documentElement.width}px; height: {document.documentElement.height}px">
         <canvas id='game-canvas' class="game-background-body" on:click={logClick}
         style="width: {document.documentElement.width}px; height: {document.documentElement.height}px"></canvas>
+        <button on:click={closeGameCanvas} type="button">Close</button>
     </div>
 
     {#if mobileAgent}
@@ -172,8 +172,4 @@
             </p>
         </div>
     {/if}
-
-    <div id="flip-screen">
-        <h3>Please flip your screen into landscape mode to play the game!</h3>
-    </div>
 </div>

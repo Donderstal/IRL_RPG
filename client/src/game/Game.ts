@@ -46,6 +46,7 @@ import type { InteractionModel } from '../models/InteractionModel'
 import type { CellPosition } from '../models/CellPositionModel'
 import { getBackSprites, getPlayer } from './controllers/spriteController'
 import { initTilesheetModels } from '../resources/tilesheetResources'
+import { openGameCanvas, showGameCanvas } from '../helpers/DOMEventHelpers'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -218,45 +219,17 @@ export class Game {
 }
 
 export const startGame = ( name: string, className: string, startingMap: string, debugMode: boolean, disableStoryMode: boolean ): void => {
-    initializeCameraFocus();
-    setFaderCanvas();
-    globals.GAME = new Game();
+    showGameCanvas();
 
-    screen.orientation.onchange = ( ) => {
-        if ( screen.orientation.type == "landscape-primary" ) {
-            setTimeout( () => {
-                const player = getPlayer()
-                const xy = ( globals.GAME.loadingScreen != null )
-                    ? { 'x': CANVAS_WIDTH / 2, 'y': CANVAS_HEIGHT / 2 }
-                    : { 'x': player.centerX, 'y': player.baseY }
-                cameraFocus.handleScreenFlip( xy ); 
-                setDOMCanvasDimensions();
-                hideFlipScreenModal( );
-                setFaderCanvas();
-            }, 100)
-        }
-        else {
-            showFlipScreenModal( );
-        }
-    }
-    if( portraitOrientation() ){
-        document.getElementById('app-div').requestFullscreen()
-        showFlipScreenModal( );
-    }
-    new FileLoader( [name, className, startingMap, debugMode, disableStoryMode], "NEW" );
-    setLoadingScreen( );
-}
+    setTimeout( () => {
+        initializeCameraFocus();
+        setFaderCanvas();
+        globals.GAME = new Game();
 
-const showFlipScreenModal = (): void =>{
-    let el = document.getElementById('flip-screen')
-    el.style.visibility = 'visible';
-    el.style.display = 'block';
-}
-
-const hideFlipScreenModal = (): void => {
-    let el = document.getElementById('flip-screen')
-    el.style.visibility = 'hidden';
-    el.style.display = 'none';
+        openGameCanvas();
+        new FileLoader( [name, className, startingMap, debugMode, disableStoryMode], "NEW" );
+        setLoadingScreen();
+    }, 100 )
 }
 
 export const loadGame = ( JSON: any ): void => {

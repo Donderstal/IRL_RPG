@@ -37,6 +37,9 @@ export class CameraFocus {
         this.lastFocusXy = { x: 0, y: 0 };
         this.mode = CameraFocusMode.followSprite
 
+        this.focusSpriteId = null;
+        this.focusTileId = null;
+
         this.setOffset()
         this.centerOnXY( this.startingXValue, this.startingYValue )
     }
@@ -63,8 +66,10 @@ export class CameraFocus {
     }
 
     setScreenDimensions(): void {
-        this.screenWidth = document.documentElement.clientWidth;
-        this.screenHeight = document.documentElement.clientHeight;
+        const screenWidth = screen.width;
+        const screenHeight = screen.height;
+        this.screenWidth = screenWidth > screenHeight ? screenWidth : screenHeight;
+        this.screenHeight = screenWidth < screenHeight ? screenWidth : screenHeight;
     }
 
     isFocusedOnSprite( spriteId: string ): boolean {

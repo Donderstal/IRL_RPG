@@ -83,7 +83,7 @@ export class Fader {
 }
 
 export const setFaderCanvas = () => {
-    faderCanvas = new OffscreenCanvas( document.documentElement.clientWidth, document.documentElement.clientHeight )
+    faderCanvas = new OffscreenCanvas( screen.width, screen.height )
 }
 
 export const getFaderCanvas = () => {

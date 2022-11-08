@@ -1,5 +1,5 @@
 import { writable, get } from 'svelte/store';
-import { startGame, loadGame } from './../game/Game.js';
+import { loadGame } from './../game/Game.js';
 
 export const SCREEN_WELCOME         = "WELCOME";
 export const SCREEN_LOG_IN          = "LOG_IN";
@@ -51,9 +51,14 @@ const switchScreen = ( screen ) => {
     currentScreen.set(screen);
 }
 
-const closeWebsite = ( ) => {
-    websiteMode.set(false);
-    gameMode.set(true);
+export const closeWebsite = ( ) => {
+    websiteMode.set( false );
+    gameMode.set( true );
+}
+
+export const openWebsite = () => {
+    websiteMode.set( true );
+    gameMode.set( false );
 }
 
 export const openWelcomeScreen          = ( ) => {switchScreen(SCREEN_WELCOME)};
@@ -89,20 +94,7 @@ export const returnToPreviousScreen     = ( ) => {
     }
 };
 
-export const startGameWithParams = ( ) => {
-    const characterName = document.getElementById('name-input').value;
-    const characterClass = classNames[document.getElementById("active-class").innerText].toLowerCase();
-    const startingMap = document.getElementById('map-selection').value
-    const runInDebugMode = document.getElementById('enable-debug').checked;
-    const disableStoryEvents = document.getElementById('disable-story').checked;
-    closeWebsite( )
-    setTimeout( ( ) => {
-        startGame( characterName, characterClass, startingMap, runInDebugMode, disableStoryEvents );
-    }, 100)
-}
-
 export const loadGameFromJSON = (saveFile) => {
-    closeWebsite( );
     setTimeout( ( ) => {
         loadGame(saveFile);
     }, 100);  
