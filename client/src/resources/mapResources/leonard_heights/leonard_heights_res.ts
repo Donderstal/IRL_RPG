@@ -33,3 +33,10 @@ export const LH_HOTEL_TWO_TOWERS_LOBBY_KEY = appendToNeighbourhoodKey( "Two-Towe
 
 export const LH_CAR_SHACK_NAME = "The Car Shack";
 export const LH_CAR_SHACK_KEY = appendToNeighbourhoodKey( "Car-Shack" )
+
+export const LH_SARDINE_STUDIOS_NAME = "Sardine Studios";
+export const LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-bottom" );
+export const LH_SARDINE_STUDIOS_COMMON_AREA_KEY = appendToNeighbourhoodKey( "Sardine-Studios-common-area" );
+export const LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-floor1" );
+export const LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-floor2" );
+export const LH_SARDINE_STUDIOS_STAIRS_TOP_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-top" );

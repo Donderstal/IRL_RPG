@@ -1598,6 +1598,16 @@ export const sheets = {
             0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
         ]
     },
+    "Generic_Room_C": {
+        "name": "Indoor set C",
+        "key": "Generic_Room_C",
+        "src": "Generic_Room_C_Tile_Set",
+        "uniqueTiles": 48,
+        "folder": "C",
+        "blocked": [
+            0, 1, 2, 3, 10, 11, 16, 17, 18, 19, 24, 25, 32, 33
+        ]
+    },
     "Generic_Room_DX": {
         "folder": "DX",
         "name": "Indoor set D",

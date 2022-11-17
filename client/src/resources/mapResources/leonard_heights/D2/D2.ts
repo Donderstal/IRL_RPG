@@ -5,6 +5,7 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DARK_HAIR_NERD_LADY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
+import { LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY } from '../leonard_heights_res';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D2,
@@ -56,5 +57,13 @@ export default {
     ],
     "actions": [
 
+    ],
+    "doors": [
+        {
+            "row": 8,
+            "column": 15,
+            "doorTo": LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
+            "direction": DirectionEnum.up
+        }
     ]
 }

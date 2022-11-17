@@ -39,7 +39,25 @@ import CarShack from './C3/Car-Shack/car-shack';
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
-import { LH_CAR_SHACK_KEY, LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY, LH_HOTEL_TWO_TOWERS_LOBBY_KEY, LH_KEY, LH_NAME, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY, removeNeighbourhoodKey } from './leonard_heights_res';
+import {
+    LH_CAR_SHACK_KEY,
+    LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY,
+    LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
+    LH_KEY, LH_NAME,
+    LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY,
+    LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
+    LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
+    LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY,
+    removeNeighbourhoodKey,
+    LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
+    LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY,
+    LH_SARDINE_STUDIOS_STAIRS_TOP_KEY
+} from './leonard_heights_res';
+import SardineStudiosStairsBottom from './D2/Sardine-Studios/Sardine-Studios-stairs-bottom';
+import SardineStudiosCommunalSpace from './D2/Sardine-Studios/Sardine-Studios-communal-space';
+import SardineStudiosStairsFloor1 from './D2/Sardine-Studios/Sardine-studios-stairs-floor-1';
+import SardineStudioStairsFloor2 from './D2/Sardine-Studios/Sardine-Studio-stairs-floor-2';
+import SardineStudioStairsTop from './D2/Sardine-Studios/Sardine-Studio-stairs-top';
 
 export default {
     "key": LH_KEY,
@@ -112,7 +130,16 @@ export default {
         // C4 submaps
         // Yum Mart
         [removeNeighbourhoodKey( LH_YUM_MART_STORE_KEY )]: YumMartGroundFloor,
-        [removeNeighbourhoodKey( LH_YUM_MART_OFFICE_KEY )]: YumMartFloor1
+        [removeNeighbourhoodKey( LH_YUM_MART_OFFICE_KEY )]: YumMartFloor1,
+
+        // D2 Submaps
+        // Sardine Studios
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY )]: SardineStudiosStairsBottom,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_COMMON_AREA_KEY )]: SardineStudiosCommunalSpace,
+
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY )]: SardineStudiosStairsFloor1,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY )]: SardineStudioStairsFloor2,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_TOP_KEY )]: SardineStudioStairsTop
     },
     /////
     "spawnPoints": [
@@ -399,4 +426,8 @@ export default {
             "secondaryColumn": 38
         },
     ],
+}
+
+function LH_SARDINE_STUDIOS_STAIRS_BOTTOM(LH_SARDINE_STUDIOS_STAIRS_BOTTOM: any) {
+    throw new Error('Function not implemented.');
 }

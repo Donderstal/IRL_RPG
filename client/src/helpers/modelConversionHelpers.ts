@@ -1,5 +1,5 @@
 import type { SpriteFrameModel } from "../models/SpriteFrameModel"
-import { DirectionEnum } from "../enumerables/DirectionEnum";
+import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
 import { GRID_BLOCK_IN_SHEET_PX } from "../game-data/globals";
 import type { SpriteDataModel } from "../models/SpriteDataModel";
