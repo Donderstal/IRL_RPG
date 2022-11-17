@@ -21,6 +21,7 @@ import type { DestinationCellModel } from '../../models/DestinationCellModel';
 import { DestinationType } from '../../enumerables/DestinationType';
 import { createSpriteFromCanvasObjectModel, getPlayer, setSpritesList } from '../controllers/spriteController';
 import type { Sprite } from '../core/Sprite';
+import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -179,8 +180,8 @@ export class BackSpriteGrid extends CanvasGrid {
         if ( dataModel.spriteDataModel.isCollectable ) {
             let mapName = globals.GAME.activeMapKey
             let objectResource = getDataModelByKey( dataModel.type );
-            let id = globals.GAME.collectableRegistry.getCollectableId(tile.column, tile.row, objectResource.collectableType, mapName)
-            return globals.GAME.collectableRegistry.isInRegistry( id, objectResource.collectableType );
+            let id = getCollectableId(tile.column, tile.row, objectResource.collectableType, mapName)
+            return isInCollectableRegistry( id, objectResource.collectableType );
         }
         return false;
     }

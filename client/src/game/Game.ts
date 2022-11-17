@@ -1,19 +1,17 @@
 import { animationLoop } from './animationLoop'
 import globals from '../game-data/globals'
 import { clearPressedKeys, listenForKeyPress } from './controls'
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../game-data/globals'
 import { MAIN_CHARACTER } from '../resources/spriteTypeResources'
 import { SoundController } from './sound/SoundController'
 import { Party } from './party/Party'
 import { TypeWriter } from '../helpers/TypeWriter'
 import { setLoadingScreen, stopLoadingScreen, LoadingScreen } from './LoadingScreen'
-import { StoryProgression } from '../helpers/StoryProgression'
 import { Fader, setFaderCanvas } from '../helpers/Fader'
 import { FileLoader } from '../helpers/Loader'
-import { CollectableRegistry } from '../helpers/collectableRegistry'
+import { CollectableRegistry, setCollectableRegistry } from '../registries/collectableRegistry'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
-import { setInteractionRegistry } from '../helpers/interactionRegistry'
-import { setUnlockedDoorsRegistry } from '../helpers/doorRegistry'
+import { setInteractionRegistry } from '../registries/interactionRegistry'
+import { setUnlockedDoorsRegistry } from '../registries/doorRegistry'
 import { setNeighbourhoodAndMap, loadMapToCanvases, switchMap } from '../helpers/loadMapHelpers'
 import type { Neighbourhood } from './Neighbourhood'
 import type { Tile } from './core/Tile'
@@ -33,9 +31,8 @@ import { clearHitboxes } from './modules/hitboxModule'
 import { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animationModule'
-import { cameraFocus, initializeCameraFocus } from './cameraFocus'
-import { portraitOrientation } from '../helpers/screenOrientation'
-import { getCanvasWithType, instantiateGridCanvases, setDOMCanvasDimensions } from './controllers/gridCanvasController'
+import { initializeCameraFocus } from './cameraFocus'
+import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
 import { instantiateUICanvases } from './controllers/utilityCanvasController'
 import type { FrontTileGrid } from './canvas/FrontTileGrid'
@@ -47,6 +44,7 @@ import type { CellPosition } from '../models/CellPositionModel'
 import { getBackSprites, getPlayer } from './controllers/spriteController'
 import { initTilesheetModels } from '../resources/tilesheetResources'
 import { openGameCanvas, showGameCanvas } from '../helpers/DOMEventHelpers'
+import { setStoryRegistry } from '../registries/storyEventsRegistry'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -55,7 +53,6 @@ export class Game {
     usingCinematicMap: boolean;
 
     debugMode: boolean;
-    disableStoryMode: boolean;
     paused: boolean;
     inMenu: boolean;
     listeningForPress: boolean;
@@ -65,7 +62,6 @@ export class Game {
     sound: SoundController;
     audio: AudioContext;
     fader: Fader;
-    story: StoryProgression;
     typeWriter: TypeWriter;
     loadingScreen: LoadingScreen;
 
@@ -81,11 +77,9 @@ export class Game {
         this.paused; // bool
         this.inMenu;
         this.listeningForPress; // bool
-        this.collectableRegistry = new CollectableRegistry( );
         this.sound = new SoundController( );
         this.audio = new AudioContext( );
         this.fader = new Fader( );
-        this.story;
 
         this.party; // class Party
 
@@ -140,23 +134,22 @@ export class Game {
         this.initializePlayerParty( name );
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
-        this.disableStoryMode = disableStoryMode;
+        setStoryRegistry( disableStoryMode )
         loadMapToCanvases( this.activeMap, "NEW" );
-        this.story = new StoryProgression(); 
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
     loadGame( JSON: SaveDto ): void {
         console.log(JSON)
         this.initializePlayerParty( "test" )
-        this.collectableRegistry.setRegistry( JSON.keyLists.collectableRegistry );
+        setCollectableRegistry( JSON.keyLists.collectableRegistry );
         setInteractionRegistry( JSON.keyLists.interactionRegistry );
-        setUnlockedDoorsRegistry( JSON.keyLists.unlockedDoors )
-        setNeighbourhoodAndMap(JSON.activeMap.mapName)
+        setUnlockedDoorsRegistry( JSON.keyLists.unlockedDoors );
+        setNeighbourhoodAndMap( JSON.activeMap.mapName );
+        setStoryRegistry( false, JSON.keyLists.storyEvents );
         this.activeMap.playerStart = JSON.activeMap.playerStart;
         this.activeMap.playerStart.name = "test";
         loadMapToCanvases( this.activeMap, "LOAD" );
-        this.story = new StoryProgression( JSON.keyLists.storyEvents );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 

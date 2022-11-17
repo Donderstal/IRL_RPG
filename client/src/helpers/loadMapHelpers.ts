@@ -17,6 +17,7 @@ import type { BackSpriteGrid } from '../game/canvas/BackSpriteGrid';
 import type { FrontTileGrid } from '../game/canvas/FrontTileGrid';
 import { clearAllSprites, getPlayer } from '../game/controllers/spriteController';
 import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
+import { checkForEventTrigger } from '../registries/storyEventsRegistry';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid;
@@ -53,7 +54,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 
         cameraFocus.setSpriteFocus( player, true );
         setTimeout( ( ) => {
-            globals.GAME.story.checkForEventTrigger(CinematicTrigger.enter)     
+            checkForEventTrigger(CinematicTrigger.enter)     
         }, 250 )            
     }
 
@@ -62,7 +63,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 }
 
 export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {
-    globals.GAME.story.checkForEventTrigger( CinematicTrigger.leave, [destinationName, type] );
+    checkForEventTrigger( CinematicTrigger.leave, [destinationName, type] );
     globals.GAME.sound.clearActiveSoundEffects();
     globals.GAME.paused = true;
     stopListenForKeyPress();

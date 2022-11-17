@@ -15,7 +15,7 @@ import { setActiveCinematic } from '../controllers/cinematicController';
 import { lockedDoorEvent, unlockDoorEvent } from '../../resources/actionResources';
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../../enumerables/InteractionType';
-import { addDoorToUnlockedDoorsRegistry } from '../../helpers/doorRegistry';
+import { addDoorToUnlockedDoorsRegistry } from '../../registries/doorRegistry';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { getBackSprites, getPlayer, getSpriteById } from '../controllers/spriteController';
 import type { Door } from './map-classes/Door';

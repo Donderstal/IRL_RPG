@@ -16,6 +16,7 @@ import { resetIdleAnimationCounter } from './modules/idleAnimationModule';
 import { destroySpriteAnimation, spriteHasAnimation } from './modules/animationModule';
 import { spriteNextPositionIsBlocked } from './map/collision';
 import { cameraFocus } from './cameraFocus';
+import { checkForEventTrigger } from '../registries/storyEventsRegistry';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -62,7 +63,6 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     }
 };
 export const handleMovementKeys = () => {
-    const GAME = globals.GAME;
     const player = getPlayer();
 
     if ( player !== undefined ) {
@@ -90,7 +90,7 @@ export const handleMovementKeys = () => {
                 checkForNewTilesToDraw();
             }
         }
-        const eventTrigger = GAME.story.checkForEventTrigger( CinematicTrigger.position );
+        const eventTrigger = checkForEventTrigger( CinematicTrigger.position );
         if ( eventTrigger ) return;
         checkForNeighbours( player );
     }

@@ -1,7 +1,7 @@
 import { ConditionType } from "../enumerables/ConditionTypeEnum";
 import { InteractionAnswer } from "../enumerables/InteractionAnswer";
 
-import { isInRegistry, isInRegistryWithValue } from './interactionRegistry';
+import { isInRegistry, isInRegistryWithValue } from '../registries/interactionRegistry';
 import globals from '../game-data/globals';
 
 export const conditionIsTrue = ( conditionType: ConditionType, valueToCheck: string ): boolean => {

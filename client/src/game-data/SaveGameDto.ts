@@ -1,7 +1,7 @@
 import type { InteractionAnswer } from "../enumerables/InteractionAnswer";
 import type { Sprite } from "../game/core/Sprite";
-import { getUnlockedDoorsRegistry } from "../helpers/doorRegistry";
-import { getRegistry } from "../helpers/interactionRegistry";
+import { getUnlockedDoorsRegistry } from "../registries/doorRegistry";
+import { getRegistry } from "../registries/interactionRegistry";
 
 type MapDataModel = {
     mapName: string;

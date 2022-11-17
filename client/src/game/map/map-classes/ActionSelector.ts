@@ -5,6 +5,8 @@ import globals, { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
+import { checkForEventTrigger } from "../../../registries/storyEventsRegistry";
+import { addCollectableToRegistry, addToRegistry, getCollectableId } from "../../../registries/collectableRegistry";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -48,13 +50,13 @@ export class ActionSelector extends Hitbox {
 
     handle( sprite ): void {
         console.log( 'handle' )
-        if ( !globals.GAME.story.checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
+        if ( !checkForEventTrigger( this.trigger, [this.spriteId] ) ) {
             globals.GAME.setActiveCinematic(
                 this.activeAction, this.trigger, [this.spriteId]
             );
             if ( sprite.model.isCollectable ) {
-                const id = globals.GAME.collectableRegistry.getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, globals.GAME.activeMapKey )
-                globals.GAME.collectableRegistry.addToRegistry( id, ( sprite as any ).collectableType )
+                const id = getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, globals.GAME.activeMapKey )
+                addCollectableToRegistry( id, ( sprite as any ).collectableType )
             }
         }
     }

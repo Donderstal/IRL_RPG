@@ -1,5 +1,5 @@
 import { getQuestByTrigger, getQuestByKey } from "../resources/questResources";
-import { Quest } from "./Quest";
+import { Quest } from "../helpers/Quest";
 
 const completedQuestKeys: string[] = [];
 const activeQuestKeys: { [key: string]: string } = {};
