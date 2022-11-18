@@ -1,5 +1,6 @@
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { DestinationType } from "../../enumerables/DestinationType";
+import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import { cameraFocus } from "../cameraFocus";
 import type { Sprite } from "../core/Sprite";
@@ -12,6 +13,7 @@ import { clearHitboxes, destroyAssociatedHitbox } from "../modules/hitboxModule"
 import { clearIdleAnimationCounters, destroyAssociatedIdleCounter, getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "../modules/idleAnimationModule";
 import { clearRandomAnimationCounters, destroyAssociatedRandomCounter, getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "../modules/randomAnimationModule"
 import { checkIfSpriteCanMove, clearSpriteMovementDictionary, destroySpriteMovement, getSpriteDestination, initializeSpriteMovement, setSideStepDestination, spriteFailedToFindPath, spriteIsAtDestination } from "../modules/spriteMovementModule";
+import { markModuleAsInActive } from "../spriteModuleHandler";
 import { checkForNewTilesToDraw } from "./gridCanvasController";
 import { removeSpriteById } from "./spriteController";
 
@@ -28,6 +30,7 @@ const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
     }
     destroySpriteMovement( sprite.spriteId );
     sprite.deactivateMovementModule();
+    markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
 }
 
 export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {

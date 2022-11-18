@@ -9,6 +9,8 @@ import { addEventToRegistry } from '../../registries/interactionRegistry';
 import { checkForQuestTrigger } from '../../registries/questRegistry';
 import { getPlayer, getSpriteById } from './spriteController';
 import { getSpriteDestination, spriteHasMovement } from '../modules/spriteMovementModule';
+import { markModuleAsInActive } from '../spriteModuleHandler';
+import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 
 let activeAction: ActionSelector = null; 
 
@@ -39,6 +41,7 @@ const setActiveAction = ( action: ActionSelector ): void => {
     activeAction = action;
     const sprite = getSpriteById( activeAction.spriteId );
     if ( spriteHasMovement( activeAction.spriteId ) ) {
+        markModuleAsInActive( activeAction.spriteId, SpriteModuleEnum.movement );
         sprite.deactivateMovementModule();
     }
     activeAction.handle( sprite );

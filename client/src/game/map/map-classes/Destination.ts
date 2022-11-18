@@ -13,6 +13,8 @@ import type { DestinationCellModel } from '../../../models/DestinationCellModel'
 import type { DestinationType } from '../../../enumerables/DestinationType';
 import { getTileOnCanvasByXy } from '../../controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
+import { markModuleAsActive, markModuleAsInActive } from '../../spriteModuleHandler';
+import { SpriteModuleEnum } from '../../../enumerables/SpriteModuleEnum';
 
 export class Destination {
     column: number;
@@ -75,6 +77,7 @@ export class Destination {
             this.pathfindingTries = 0;
             this.startPath( sprite, startingTile, gridLocationList );
             this.activateSpriteMovementModule( sprite );
+            markModuleAsActive( sprite.spriteId, SpriteModuleEnum.movement );
         }
     }
 
@@ -159,6 +162,7 @@ export class Destination {
         this.currentPathIndex = 0;
         this.path = null;
         sprite.deactivateMovementModule();
+        markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
     }
 
     setNextStep( sprite: Sprite ): void {

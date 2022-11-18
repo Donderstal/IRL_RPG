@@ -11,7 +11,6 @@ export const initializeActionForSprite = ( sprite: Sprite, interactionList: Inte
     spriteActionDictionary[sprite.spriteId] = new ActionSelector(
         sprite.centerX, sprite.baseY, interactionList, sprite.spriteId
     );
-    sprite.plugins.mapAction.active = true;
 };
 
 export const initializeActionForTile = ( tile: Tile, interactionList: InteractionModel[] ): void => {
@@ -34,7 +33,9 @@ export const getAllActions = (): ActionSelector[] => {
 
 export const updateSpriteAssociatedAction = ( sprite: Sprite ): void => {
     const action = spriteActionDictionary[sprite.spriteId];
-    action.updateXy( sprite.centerX, sprite.baseY );
+    if ( action !== null && action !== undefined ) {
+        action.updateXy( sprite.centerX, sprite.baseY );
+    }
 };
 
 export const destroySpriteAssociatedAction = ( spriteId: string ): void => {

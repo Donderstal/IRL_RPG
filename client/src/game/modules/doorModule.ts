@@ -11,7 +11,6 @@ let tileDoorDictionary: { [key in string]: Door } = {};
 
 export const initializeDoorForSprite = ( sprite: Sprite, doorModel: DoorModel ): void => {
     spriteDoorDictionary[sprite.spriteId] = initDoorWithId( sprite.centerX, sprite.baseY, doorModel );
-    sprite.plugins.door.active = true;
 };
 
 export const initializeDoorForTile = ( tile: Tile, doorModel: DoorModel ): void => {
@@ -28,7 +27,9 @@ export const getTileAssociatedDoor = ( tileIndex: number ): Door => {
 
 export const updateSpriteAssociatedDoor = ( sprite: Sprite ): void => {
     const door = spriteDoorDictionary[sprite.spriteId];
-    door.updateXy( sprite.centerX, sprite.baseY );
+    if ( door !== null && door !== undefined ) {
+        door.updateXy( sprite.centerX, sprite.baseY );
+    }
 };
 
 export const destroySpriteAssociatedDoor = ( spriteId: string ): void => {
@@ -40,7 +41,7 @@ export const destroyTileAssociatedDoor = ( tile: Tile ): void => {
 };
 
 export const getAllDoors = (): Door[] => {
-    return [...Object.values( spriteDoorDictionary ), ...Object.values( tileDoorDictionary )];
+    return [...Object.values( spriteDoorDictionary ), ...Object.values( tileDoorDictionary )].filter( ( e ) => { return e !== null && e !== undefined; });
 };
 
 export const clearDoors = (): void => {

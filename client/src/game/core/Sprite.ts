@@ -3,7 +3,7 @@ import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { isHorizontal, spriteIsPlayer } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
-import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
+import type { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
 import { MovementType } from '../../enumerables/MovementTypeEnum'
 import type { GridCellModel } from '../../models/GridCellModel'
 import type { SpriteFrameModel } from '../../models/SpriteFrameModel'
@@ -11,16 +11,9 @@ import type { Tile } from './Tile'
 import type { SpriteDataModel } from '../../models/SpriteDataModel'
 import { SpriteSheetAlignmentEnum } from '../../enumerables/SpriteSheetAlignmentEnum'
 import { VisionBox } from '../map/map-classes/VisionBox'
-import { initializeHitboxForSprite, updateAssociatedHitbox } from '../modules/hitboxModule'
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
-import { initializeActionForSprite, updateSpriteAssociatedAction } from '../modules/actionModule'
-import { initializeDoorForSprite, updateSpriteAssociatedDoor } from '../modules/doorModule'
-import { initializeRandomAnimationCounter, resetRandomAnimationCounter } from '../modules/randomAnimationModule'
-import { handleSpriteAnimation, initializeSpriteAnimation } from '../modules/animationModule'
-import { initializeIdleAnimationCounter, resetIdleAnimationCounter } from '../modules/idleAnimationModule'
 import { BlockedArea } from '../map/map-classes/BlockedArea'
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
-import { handleIdleAnimationCounter, handleRandomAnimationCounter, handleSpriteMoveToDestination, tryInitializeSpriteMovement } from '../controllers/spriteModuleController'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -67,29 +60,8 @@ export class Sprite {
     isCar: boolean;
 
     visionbox: VisionBox;
-    plugins: {
-        movement: { set: boolean, active: boolean },
-        idleAnimation: { set: boolean, active: boolean },
-        randomAnimation: { set: boolean, active: boolean },
-        hitbox: { set: boolean, active: boolean },
-        mapAction: { set: boolean, active: boolean },
-        door: { set: boolean, active: boolean },
-        collision: { set: boolean, active: boolean },
-        animation: { set: boolean, active: boolean }
-    }
 
     constructor( tile: Tile, canvasObjectModel: CanvasObjectModel, spriteId: string ) {   
-        this.plugins = {
-            movement: { set: false, active: false },
-            idleAnimation: { set: false, active: false },
-            randomAnimation: { set: false, active: false },
-            hitbox: { set: false, active: false },
-            mapAction: { set: false, active: false },
-            door: { set: false, active: false },
-            collision: { set: false, active: false },
-            animation: { set: false, active: false }
-        }
-
         this.model          = canvasObjectModel.spriteDataModel;
         this.animationType  = canvasObjectModel.animationType;
         this.movementType   = canvasObjectModel.movementType;
@@ -112,15 +84,11 @@ export class Sprite {
         this.initialColumn = canvasObjectModel.column;
         this.initialRow = canvasObjectModel.row;
         this.setSpriteToGrid( tile );
-        this.setPlugins( canvasObjectModel );
         if ( this.model.hasBlockedArea ) {
             this.blockedArea = new BlockedArea( this, this.model.blockedArea );
         }
         if ( this.isPlayer ) {
             this.visionbox = new VisionBox( this.centerX, this.baseY );
-        }
-        if ( canvasObjectModel.destination && this.animationType !== AnimationTypeEnum.movingLoop ) {
-            tryInitializeSpriteMovement( this, canvasObjectModel.destination );
         }
     }
 
@@ -137,92 +105,7 @@ export class Sprite {
     get dynamicTop(): number { return this.standing ? this.baseY - this.speed : this.topY };
 
     get noCollision(): boolean {
-        return this.model.onBackground || this.model.notGrounded || ( this.movementType == MovementType.flying && this.pluginIsRunning(this.plugins.movement) )
-    }
-
-    pluginIsRunning( pluginConfig: { set: boolean, active: boolean } ) {
-        return pluginConfig.set && pluginConfig.active;
-    }
-
-    setPlugins( canvasObjectModel: CanvasObjectModel ): void {
-        let model = this.model;
-        if ( model.idleAnimation && (!this.model.isCharacter || this.isPlayer) ) {
-            this.plugins.idleAnimation.set = true;
-            this.plugins.idleAnimation.active = true;
-            initializeIdleAnimationCounter( this );
-        }
-
-        if ( this.model.isCharacter && this.animationType !== AnimationTypeEnum.movingLoop
-            && this.animationType !== AnimationTypeEnum.animationLoop ) {
-            this.plugins.randomAnimation.set = true;
-            this.plugins.randomAnimation.active = true;
-            initializeRandomAnimationCounter( this );
-        }
-
-        if ( model.canMove ) {
-            this.plugins.movement.set = true;
-        }
-
-        if ( this.hasDoor ) {
-            this.plugins.door.set = true;
-            initializeDoorForSprite( this, canvasObjectModel.door );
-        }
-        else if ( this.hasAction ) {
-            this.plugins.mapAction.set = true;
-            initializeActionForSprite( this, canvasObjectModel.action );
-        }
-        else {
-            this.plugins.hitbox.set = true;
-            initializeHitboxForSprite( this );
-        }
-
-        if ( this.model.canMove || this.model.idleAnimation ) {
-            this.plugins.animation.set = true;
-            if ( this.animationType === AnimationTypeEnum.animationLoop ) {
-                initializeSpriteAnimation( this, canvasObjectModel.animationName, { looped: true, loops: 0 } );
-            }
-        }
-    }
-
-    handlePlugins(): void {
-        let plugins = this.plugins
-        if ( this.isPlayer ) {
-            updateAssociatedHitbox( this );
-        }
-        if ( this.pluginIsRunning( plugins.movement ) || globals.GAME.debugMode ) {
-            if ( this.pluginIsRunning( plugins.door ) ) {
-                updateSpriteAssociatedDoor( this )
-            }
-            else if ( this.pluginIsRunning( plugins.mapAction ) ) {
-                updateSpriteAssociatedAction( this )
-            }
-            else {
-                updateAssociatedHitbox( this );
-            }
-        }
-        if ( this.pluginIsRunning( plugins.movement ) ) {
-            handleSpriteMoveToDestination( this );
-            this.resetCounters();
-        }
-        if ( this.pluginIsRunning( plugins.animation ) ) {
-            handleSpriteAnimation( this );
-            this.resetCounters();
-        }
-        if ( this.pluginIsRunning( plugins.idleAnimation ) && !this.pluginIsRunning( plugins.movement ) && !this.pluginIsRunning( plugins.animation ) ) {
-            handleIdleAnimationCounter( this );
-        }
-        if ( this.pluginIsRunning( plugins.randomAnimation ) && !this.pluginIsRunning( plugins.movement ) && !this.pluginIsRunning( plugins.animation ) ) {
-            handleRandomAnimationCounter( this );
-        }
-    }
-
-    resetCounters() {
-        if ( this.pluginIsRunning( this.plugins.idleAnimation ) ) {
-            resetIdleAnimationCounter( this.spriteId );
-        }
-        if ( this.pluginIsRunning( this.plugins.randomAnimation ) ) {
-            resetRandomAnimationCounter( this.spriteId );
-        }
+        return this.model.onBackground || this.model.notGrounded || this.movementType == MovementType.flying;
     }
 
     setDirection( direction: DirectionEnum, tile: Tile = null ): void {
@@ -362,7 +245,6 @@ export class Sprite {
     }
     
     drawSprite(): void {
-        this.handlePlugins();
         if ( this.isPlayer ) {
             this.visionbox.updateXy( this.centerX, this.baseY );
         }
@@ -440,22 +322,15 @@ export class Sprite {
         this.direction = direction;
         this.setDirection( direction );
         this.setActiveFrames();
-        this.plugins.movement.active = true;
     }
 
     deactivateMovementModule() {
         console.log( `Deactivate movement for sprite ${this.spriteId}` );
-        this.plugins.movement.active = false;
         this.sheetPosition = 0;
         this.setActiveFrame();
     }
 
-    activateAnimationModule() {
-        this.plugins.animation.active = true;
-    }
-
     deactivateAnimationModule() {
-        this.plugins.animation.active = false;
         this.sheetPosition = 0;
         this.setActiveFrames();
     }

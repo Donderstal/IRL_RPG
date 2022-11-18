@@ -5,6 +5,7 @@ import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 import { Sprite } from "../core/Sprite";
 import { destroySpriteAssociatedAction } from "../modules/actionModule";
 import { destroySpriteAssociatedDoor } from "../modules/doorModule";
+import { initializeSpriteModules } from "../spriteModuleHandler";
 import { getTileOnCanvasByCell } from "./gridCanvasController";
 
 let backSpritesDictionary: { [key in string]: Sprite } = {};
@@ -67,6 +68,7 @@ export const createSpriteFromCanvasObjectModel = ( model: CanvasObjectModel, can
     const spriteId = id !== null ? id : getUniqueId( spriteIds );
     const tile = getTileOnCanvasByCell( { column: model.column, row: model.row }, canvas );
     const sprite = new Sprite( tile, model, spriteId );
+    initializeSpriteModules( sprite, model );
     canvas === CanvasTypeEnum.backSprites
         ? backSpritesDictionary[spriteId] = sprite
         : frontSpritesDictionary[spriteId] = sprite;

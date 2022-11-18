@@ -2,6 +2,8 @@ import type { Sprite } from "../core/Sprite";
 import { SpriteAnimation } from "../map/map-classes/SpriteAnimation";
 import { getAnimationByName } from "../../resources/animationResources";
 import { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../../game-data/globals";
+import { markModuleAsActive, markModuleAsInActive } from "../spriteModuleHandler";
+import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 
 let animationDictionary: { [key in string]: SpriteAnimation } = {};
 
@@ -10,7 +12,7 @@ export const initializeSpriteAnimation = ( sprite: Sprite, animationName: string
     const frameHeight = ( sprite.height / GRID_BLOCK_PX ) * GRID_BLOCK_IN_SHEET_PX;
     const animationScript = getAnimationByName( animationName, frameWidth, frameHeight, sprite.direction, options );
     animationDictionary[sprite.spriteId] = new SpriteAnimation( animationScript );
-    sprite.activateAnimationModule();
+    markModuleAsActive( sprite.spriteId, SpriteModuleEnum.animation );
 };
 export const handleSpriteAnimation = ( sprite: Sprite ): void => {
     const animation = getSpriteAnimationById( sprite.spriteId );
@@ -18,7 +20,8 @@ export const handleSpriteAnimation = ( sprite: Sprite ): void => {
     destroyAnimationIfFinished( sprite, animation );
 };
 export const destroySpriteAnimation = ( sprite: Sprite ): void => {
-    sprite.deactivateAnimationModule()
+    markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.animation );
+    sprite.deactivateAnimationModule();
     delete animationDictionary[sprite.spriteId];
 };
 export const getSpriteAnimationById = ( spriteId: string ): SpriteAnimation => {

@@ -17,7 +17,6 @@ import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import type { DestinationCellModel } from '../../models/DestinationCellModel';
 import { DestinationType } from '../../enumerables/DestinationType';
 import { createSpriteFromCanvasObjectModel, getPlayer, setSpritesList } from '../controllers/spriteController';
 import type { Sprite } from '../core/Sprite';

@@ -18,6 +18,7 @@ import type { FrontTileGrid } from '../game/canvas/FrontTileGrid';
 import { clearAllSprites, getPlayer } from '../game/controllers/spriteController';
 import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
 import { checkForEventTrigger } from '../registries/storyEventsRegistry';
+import { clearSpriteModuleRegistries } from '../game/spriteModuleHandler';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid;
@@ -75,6 +76,7 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearGrids();
     clearGridCanvases();
 
+    clearSpriteModuleRegistries();
     clearAllSpriteModules();
     clearAllSprites();
 

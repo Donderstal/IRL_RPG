@@ -21,6 +21,8 @@ import { getBackSprites, getPlayer, getSpriteById } from '../controllers/spriteC
 import type { Door } from './map-classes/Door';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
+import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
+import { handleSpriteModules, pluginIsRunning } from '../spriteModuleHandler';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -56,7 +58,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
             door.draw();
         }
 
-        if ( playerHitbox.doorInRange( door ) ) {
+        if ( playerHitbox !== undefined && playerHitbox.doorInRange( door ) ) {
             inDoorRange = true;
             handleDoor( GAME, door );
         }
@@ -150,7 +152,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     GAME.FRONT.resetTilesBlockedBySprites();
     spritesOutOfView.forEach( ( sprite ) => {
         if ( !(sprite.model.onBackground || sprite.model.notGrounded
-            || ( sprite.movementType == MovementType.flying && sprite.pluginIsRunning( sprite.plugins.movement ) ) ) ) {
+            || ( sprite.movementType == MovementType.flying && pluginIsRunning( sprite.spriteId, SpriteModuleEnum.movement ) ) ) ) {
             GAME.FRONT.setTilesBlockedBySprite( sprite );
         }
     } )
@@ -161,7 +163,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         else if ( sprite.model.notGrounded ) {
             foregroundSprites.push( sprite );
         }
-        else if ( sprite.movementType == MovementType.flying && sprite.pluginIsRunning( sprite.plugins.movement ) ) {
+        else if ( sprite.movementType == MovementType.flying && pluginIsRunning( sprite.spriteId, SpriteModuleEnum.movement ) ) {
             flyingSprites.push( sprite );
         }
         else {
@@ -178,7 +180,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     drawSpritesInArray( foregroundSprites, GAME );
     drawSpritesInArray( flyingSprites, GAME );
 
-    handleSpriteModules( spritesOutOfView, GAME );
+    handleMovingSpriteModules( spritesOutOfView, GAME );
 }
 
 export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
@@ -187,19 +189,20 @@ export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
             if ( GAME.paused ) {
                 return;
             }
+            handleSpriteModules( sprite );
             sprite.drawSprite();
         })
     }
 }
 
-export const handleSpriteModules = ( array: Sprite[], GAME: Game ): void => {
-    let movingSprites = array.filter( ( e ) => { return e.pluginIsRunning( e.plugins.movement ); } );
+export const handleMovingSpriteModules = ( array: Sprite[], GAME: Game ): void => {
+    let movingSprites = array.filter( ( e ) => { return pluginIsRunning( e.spriteId, SpriteModuleEnum.movement ); } );
     if ( !GAME.paused ) {
         movingSprites.forEach( ( sprite ) => {
             if ( GAME.paused ) {
                 return;
             }
-            sprite.handlePlugins();
+            handleSpriteModules(sprite);
             sprite.updateCell();
         } )
     }
