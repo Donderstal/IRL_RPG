@@ -1,35 +1,18 @@
-import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import type { Sprite } from "../core/Sprite";
-import type { Tile } from "../core/Tile";
-import { Destination } from "../map/map-classes/Destination";
-import { getRandomDestinationInRadius } from "../../helpers/utilFunctions";
-import { cameraFocus } from "../cameraFocus";
-import type { DestinationCellModel } from "../../models/DestinationCellModel";
+import { DirectionEnum } from "../../../enumerables/DirectionEnum";
+import { getRandomDestinationInRadius } from "../../../helpers/utilFunctions";
+import { cameraFocus } from "../../cameraFocus";
+import type { Sprite } from "../../core/Sprite";
+import type { Destination } from "../../map/map-classes/Destination";
+import { getSpriteDestination } from "./destinationGetter";
 
-let movementDictionary: { [key in string]: Destination } = {};
-
-export const initializeSpriteMovement = ( sprite: Sprite, destinationCell: DestinationCellModel ): void => {
-    movementDictionary[sprite.spriteId] = new Destination( destinationCell, sprite );
-};
-export const destroySpriteMovement = ( spriteId: string ): void => {
-    const destination = movementDictionary[spriteId];
-    destination.snapSpriteToCurrentStepTile( )
-    delete movementDictionary[spriteId];
-};
-export const clearSpriteMovementDictionary = (): void => {
-    movementDictionary = {}
-};
-export const getSpriteDestination = ( spriteId: string ): Destination => {
-    return movementDictionary[spriteId];
-};
 export const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ): boolean => {
     const direction = destination.getNextStepDirection( sprite );
     const tile = destination.getNextStepTile();
-    if ( direction !== null && (tile !== null || !sprite.isCar) ) {
+    if ( direction !== null && ( tile !== null || !sprite.isCar ) ) {
         moveSpriteInDirection( sprite, direction, tile );
         return true;
     }
-    else if ( destination.hasNextStep ) { 
+    else if ( destination.hasNextStep ) {
         destination.setNextStep( sprite );
         if ( sprite.isCar ) return true;
         return true;
@@ -69,9 +52,6 @@ export const setSideStepDestination = ( sprite: Sprite ): void => {
         destination.setSideStep( sideStepDestination, sprite );
     }
 }
-export const spriteHasMovement = ( spriteId: string ): boolean => {
-    return spriteId in movementDictionary;
-};
 export const spriteFailedToFindPath = ( spriteId: string ): boolean => {
     const destination = getSpriteDestination( spriteId );
     return destination.failedToFindPath;

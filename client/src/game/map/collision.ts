@@ -1,10 +1,10 @@
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 import globals, { GRID_BLOCK_PX } from '../../game-data/globals';
-import { getAllSpritesAsList } from '../controllers/spriteController';
+import { getAllActiveSprites } from '../modules/sprites/spriteGetter';
 import { Hitbox } from '../core/Hitbox';
 import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
-import { getAssociatedHitbox } from '../modules/hitboxModule';
+import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 
 export const spriteNextPositionIsBlocked = ( sprite: Sprite ): boolean => {
     const spriteNextPosition = getSpriteNextPosition( sprite );
@@ -43,7 +43,7 @@ const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sp
 }
 
 const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: Sprite ): boolean => {
-    const allSprites = getAllSpritesAsList();
+    const allSprites = getAllActiveSprites();
     const spritesToCheck = allSprites.filter( ( e ) => { return !e.model.onBackground && !e.model.notGrounded;});
     const allSpritesCount = spritesToCheck.length;
 

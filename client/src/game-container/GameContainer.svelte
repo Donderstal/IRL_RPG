@@ -4,10 +4,10 @@
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
     import { closeGameCanvas } from '../helpers/DOMEventHelpers';
     import { mobileAgent } from '../helpers/screenOrientation'
-    import { getAllSpritesAsList } from '../game/controllers/spriteController';
+    import { getAllActiveSprites } from '../game/modules/sprites/spriteGetter';
 
     const logClick = ( event ) => {
-        getAllSpritesAsList().forEach( ( e ) => {
+        getAllActiveSprites().forEach( ( e ) => {
             if ( e.x <= event.offsetX && e.x + e.width >= event.offsetX 
             && e.y <= event.offsetY && e.y + e.height >= event.offsetY  ) {
                 console.log(e)

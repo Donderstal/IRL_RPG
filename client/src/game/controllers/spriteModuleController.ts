@@ -5,17 +5,23 @@ import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import { cameraFocus } from "../cameraFocus";
 import type { Sprite } from "../core/Sprite";
 import { spriteNextPositionIsBlocked } from "../map/collision";
-import { clearActions, destroySpriteAssociatedAction } from "../modules/actionModule";
-import { clearSpriteAnimations, destroySpriteAnimation, initializeSpriteAnimation, spriteHasAnimation } from "../modules/animationModule";
-import { blockedSpriteCounterIsOverLimit, clearBlockedSpriteCounters, destroyBlockedSpriteCounter, handleBlockedSpriteCounter } from "../modules/blockedSpritesModule";
-import { clearDoors, destroySpriteAssociatedDoor } from "../modules/doorModule";
-import { clearHitboxes, destroyAssociatedHitbox } from "../modules/hitboxModule";
-import { clearIdleAnimationCounters, destroyAssociatedIdleCounter, getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "../modules/idleAnimationModule";
-import { clearRandomAnimationCounters, destroyAssociatedRandomCounter, getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "../modules/randomAnimationModule"
-import { checkIfSpriteCanMove, clearSpriteMovementDictionary, destroySpriteMovement, getSpriteDestination, initializeSpriteMovement, setSideStepDestination, spriteFailedToFindPath, spriteIsAtDestination } from "../modules/spriteMovementModule";
+import { clearActions, destroySpriteAssociatedAction } from "../modules/actions/actionSetter";
+import { clearSpriteAnimations, destroySpriteAnimation, initializeSpriteAnimation } from "../modules/animations/animationSetter";
+import { spriteHasAnimation } from "../modules/animations/animationGetter";
+import { clearBlockedSpriteCounters, destroyBlockedSpriteCounter } from "../modules/blockedCounters/blockedCounterSetter";
+import { blockedSpriteCounterIsOverLimit, handleBlockedSpriteCounter } from "../modules/blockedCounters/blockedCounterHandler";
+import { clearDoors, destroySpriteAssociatedDoor } from "../modules/doors/doorSetter";
+import { clearHitboxes, destroyAssociatedHitbox } from "../modules/hitboxes/hitboxSetter";
+import { clearIdleAnimationCounters, destroyAssociatedIdleCounter } from "../modules/idleAnimCounters/idleAnimSetter";
+import { getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "../modules/idleAnimCounters/idleAnimHandler";
+import { clearRandomAnimationCounters, destroyAssociatedRandomCounter } from "../modules/randomAnimCounters/randomAnimSetter";
+import { getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "../modules/randomAnimCounters/randomAnimHandler";
+import { getSpriteDestination } from "../modules/destinations/destinationGetter";
+import { clearSpriteDestinations, destroySpriteDestination, initializeSpriteDestination } from "../modules/destinations/destinationSetter";
+import { checkIfSpriteCanMove, setSideStepDestination, spriteFailedToFindPath, spriteIsAtDestination } from "../modules/destinations/destinationHandler";
 import { markModuleAsInActive } from "../spriteModuleHandler";
 import { checkForNewTilesToDraw } from "./gridCanvasController";
-import { removeSpriteById } from "./spriteController";
+import { removeSpriteById } from "../modules/sprites/spriteSetter";
 
 const destroyAssociatedAnimationIfExists = ( sprite: Sprite ): void => {
     if ( spriteHasAnimation( sprite.spriteId ) ) {
@@ -28,7 +34,7 @@ const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
     if ( destination.type === DestinationType.randomGeneratedSprite ) {
         removeSpriteById( sprite.spriteId );
     }
-    destroySpriteMovement( sprite.spriteId );
+    destroySpriteDestination( sprite.spriteId );
     sprite.deactivateMovementModule();
     markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
 }
@@ -64,7 +70,7 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
 export const tryInitializeSpriteMovement = ( sprite: Sprite, destinationCell: DestinationCellModel ): void => {
     destroyAssociatedAnimationIfExists( sprite );
     try {
-        initializeSpriteMovement( sprite, destinationCell );
+        initializeSpriteDestination( sprite, destinationCell );
     }
     catch ( ex ) {
         console.log( 'error generating path for destination c' + destinationCell.column + ' r' + destinationCell.row );
@@ -107,7 +113,7 @@ export const handleIdleAnimationCounter = ( sprite: Sprite ) => {
 
 export const clearAllSpriteModules = () => {
     clearBlockedSpriteCounters();
-    clearSpriteMovementDictionary();
+    clearSpriteDestinations();
     clearSpriteAnimations();
     clearActions();
     clearDoors();
@@ -118,7 +124,7 @@ export const clearAllSpriteModules = () => {
 
 export const clearAllAssociatedSpriteModules = ( sprite: Sprite ) => {
     destroyBlockedSpriteCounter( sprite.spriteId );
-    destroySpriteMovement( sprite.spriteId );
+    destroySpriteDestination( sprite.spriteId );
     destroySpriteAnimation( sprite );
     destroySpriteAssociatedAction( sprite.spriteId );
     destroySpriteAssociatedDoor( sprite.spriteId );

@@ -2,7 +2,7 @@ import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { cameraFocus } from '../cameraFocus';
 import { drawBubbles } from '../controllers/bubbleController';
 import { clearGridCanvasOfType } from '../controllers/gridCanvasController';
-import { getPlayer, getSpriteById } from '../controllers/spriteController';
+import { getSpriteById, getPlayer } from "../modules/sprites/spriteGetter";
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 

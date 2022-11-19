@@ -3,8 +3,8 @@ import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
 import type { Sprite } from '../core/Sprite';
 import type { Game } from "../Game";
-import { getAllDoors } from '../modules/doorModule';
-import { getAssociatedHitbox } from '../modules/hitboxModule';
+import { getActiveDoors } from '../modules/doors/doorGetter';
+import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
@@ -17,7 +17,7 @@ import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../../enumerables/InteractionType';
 import { addDoorToUnlockedDoorsRegistry } from '../../registries/doorRegistry';
 import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
-import { getBackSprites, getPlayer, getSpriteById } from '../controllers/spriteController';
+import { getBackSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
 import type { Door } from './map-classes/Door';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
@@ -50,10 +50,10 @@ export const handleMapAnimations = ( GAME: Game ): void => {
 
     drawBubbles();
 
-    const doors = getAllDoors();
+    const doors = getActiveDoors();
     let inDoorRange = false;
 
-    doors.forEach( ( door ) => { 
+    Object.values(doors).forEach( ( door ) => { 
         if ( GAME.debugMode ) {
             door.draw();
         }

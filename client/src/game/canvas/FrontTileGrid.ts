@@ -3,7 +3,7 @@ import type { Tile } from "../core/Tile";
 import type { MapModel } from "../../models/MapModel";
 import type { TilesheetModel } from "../../models/TilesheetModel";
 import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
-import { getPlayer } from "../controllers/spriteController";
+import { getPlayer } from "../modules/sprites/spriteGetter";
 
 export class FrontTileGrid extends CanvasGrid {
     hasFrontGrid: boolean;

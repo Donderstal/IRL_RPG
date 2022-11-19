@@ -8,7 +8,7 @@ import { TypeWriter } from '../helpers/TypeWriter'
 import { setLoadingScreen, stopLoadingScreen, LoadingScreen } from './LoadingScreen'
 import { Fader, setFaderCanvas } from '../helpers/Fader'
 import { FileLoader } from '../helpers/Loader'
-import { CollectableRegistry, setCollectableRegistry } from '../registries/collectableRegistry'
+import { setCollectableRegistry } from '../registries/collectableRegistry'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../registries/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../registries/doorRegistry'
@@ -22,15 +22,14 @@ import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
 import { setActiveCinematic } from './controllers/cinematicController'
 import { dismissActiveAction } from './controllers/actionController'
-import { clearSpriteMovementDictionary } from './modules/spriteMovementModule'
-import { clearIdleAnimationCounters } from './modules/idleAnimationModule'
-import { clearRandomAnimationCounters } from './modules/randomAnimationModule'
-import { clearActions } from './modules/actionModule'
-import { clearDoors } from './modules/doorModule'
-import { clearHitboxes } from './modules/hitboxModule'
+import { clearSpriteDestinations } from './modules/destinations/destinationSetter'
+import { clearIdleAnimationCounters } from './modules/idleAnimCounters/idleAnimSetter';
+import { clearRandomAnimationCounters } from './modules/randomAnimCounters/randomAnimSetter'
+import { clearDoors } from './modules/doors/doorSetter'
+import { clearHitboxes } from './modules/hitboxes/hitboxSetter';
 import { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
-import { clearSpriteAnimations } from './modules/animationModule'
+import { clearSpriteAnimations } from './modules/animations/animationSetter'
 import { initializeCameraFocus } from './cameraFocus'
 import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
 import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
@@ -41,10 +40,12 @@ import type { BackTileGrid } from './canvas/BackTileGrid'
 import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { InteractionModel } from '../models/InteractionModel'
 import type { CellPosition } from '../models/CellPositionModel'
-import { getBackSprites, getPlayer } from './controllers/spriteController'
+import {  getPlayer } from "./modules/sprites/spriteGetter";
 import { initTilesheetModels } from '../resources/tilesheetResources'
 import { openGameCanvas, showGameCanvas } from '../helpers/DOMEventHelpers'
 import { setStoryRegistry } from '../registries/storyEventsRegistry'
+import { clearActions } from './modules/actions/actionSetter'
+import { getAllActiveSprites } from './modules/sprites/spriteGetter'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -56,8 +57,6 @@ export class Game {
     paused: boolean;
     inMenu: boolean;
     listeningForPress: boolean;
-
-    collectableRegistry: CollectableRegistry;
 
     sound: SoundController;
     audio: AudioContext;
@@ -172,7 +171,7 @@ export class Game {
         clearActions();
         clearRandomAnimationCounters();
         clearIdleAnimationCounters();
-        clearSpriteMovementDictionary();
+        clearSpriteDestinations();
         clearSpriteAnimations();
         dismissActiveAction();
         clearPressedKeys();
@@ -197,7 +196,7 @@ export class Game {
     saveActiveMap() {
         const player = getPlayer();
         this.activeMapAtStartOfCinematic = this.activeMapKey;
-        this.activeSpritesAtStartOfCinematic = [...getBackSprites()];
+        this.activeSpritesAtStartOfCinematic = [...getAllActiveSprites()];
         this.playerLocationAtStartOfCinematic = { column: player.column, row: player.row, direction: player.direction }
     }
 

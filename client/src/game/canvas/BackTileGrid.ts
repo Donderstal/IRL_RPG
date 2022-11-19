@@ -5,9 +5,9 @@ import type { MapModel } from '../../models/MapModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
 import { Savepoint } from '../map/map-classes/SavePoint';
-import { initializeActionForTile } from '../modules/actionModule';
-import { initializeDoorForTile } from '../modules/doorModule';
+import { initializeDoorForTile } from '../modules/doors/doorSetter';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import { initializeActionForTile } from '../modules/actions/actionSetter';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
@@ -82,7 +82,6 @@ export class BackTileGrid extends CanvasGrid {
         this.hasDoors = false;
         this.hasActions = false;
         this.blockedTiles = [ ];
-        this.backgroundActions = [];
         this.savepoint = null;
     }
 };

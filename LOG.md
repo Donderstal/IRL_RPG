@@ -1,6 +1,20 @@
 ### LOG
 
-#### OCT 24, 2022
+#### NOV 19, 2022
+* Splitting up spriteModule files into small setter/getter/handler/registry files
+
+#### NOV 19, 2022
+* Seperating spritemodule initializers/handlers from Sprite class
+
+
+#### NOV 17, 2022
+* Registry files to seperate folders, registry classes to modules
+
+#### NOV 8, 2022
+* Controlled screen orientation switching
+* 'Close' button to exit the fullscreen game mode
+
+#### OCT 31, 2022
 * Replaced old setup with in-canvas tile flipping/mirroring with flip/mirror sheets
 * Removed utility canvas classes
 

@@ -1,6 +1,6 @@
 import { CinematicTrigger } from "../enumerables/CinematicTriggerEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import { getPlayer, getSpriteById } from "../game/controllers/spriteController";
+import { getPlayer, getSpriteById } from "../game/modules/sprites/spriteGetter";
 import type { Sprite } from "../game/core/Sprite";
 import { ScriptedEvent } from "../game/cutscenes/ScriptedEvent";
 import { conditionIsTrue } from "../helpers/conditionalHelper";

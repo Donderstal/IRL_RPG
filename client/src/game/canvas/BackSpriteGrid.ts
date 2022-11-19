@@ -18,9 +18,10 @@ import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DestinationType } from '../../enumerables/DestinationType';
-import { createSpriteFromCanvasObjectModel, getPlayer, setSpritesList } from '../controllers/spriteController';
 import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
+import { createSpriteFromCanvasObjectModel, setSpriteList } from '../modules/sprites/spriteSetter';
+import { getPlayer } from '../modules/sprites/spriteGetter';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -44,7 +45,7 @@ export class BackSpriteGrid extends CanvasGrid {
             this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas );
 
         if ( sprites ) {
-            setSpritesList( sprites );
+            setSpriteList( sprites );
         }
         else {
             if ( this.model.sprites )

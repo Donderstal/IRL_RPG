@@ -2,7 +2,7 @@ import { cameraFocus } from "../game/cameraFocus";
 import { setDOMCanvasDimensions } from "../game/controllers/gridCanvasController";
 import { setFaderCanvas } from "./Fader";
 import { closeWebsite, openWebsite } from "../game-container/stores"
-import { getPlayer } from "../game/controllers/spriteController";
+import { getPlayer } from "../game/modules/sprites/spriteGetter";
 
 const setFullscreen = (): Promise<void> => {
     return document.getElementById( 'app-div' ).requestFullscreen();

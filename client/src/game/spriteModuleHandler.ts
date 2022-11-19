@@ -4,12 +4,24 @@ import globals from "../game-data/globals";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import { handleIdleAnimationCounter, handleRandomAnimationCounter, handleSpriteMoveToDestination, tryInitializeSpriteMovement } from "./controllers/spriteModuleController";
 import type { Sprite } from "./core/Sprite";
-import { initializeActionForSprite, updateSpriteAssociatedAction } from "./modules/actionModule";
-import { handleSpriteAnimation, initializeSpriteAnimation } from "./modules/animationModule";
-import { initializeDoorForSprite, updateSpriteAssociatedDoor } from "./modules/doorModule";
-import { initializeHitboxForSprite, updateAssociatedHitbox } from "./modules/hitboxModule";
-import { initializeIdleAnimationCounter, resetIdleAnimationCounter } from "./modules/idleAnimationModule";
-import { initializeRandomAnimationCounter, resetRandomAnimationCounter } from "./modules/randomAnimationModule";
+
+import { initializeActionForSprite } from "./modules/actions/actionSetter";
+import { updateSpriteAssociatedAction } from "./modules/actions/actionHandlers";
+
+import { initializeSpriteAnimation } from "./modules/animations/animationSetter";
+import { handleSpriteAnimation } from "./modules/animations/animationHandler";
+
+import { initializeHitboxForSprite } from "./modules/hitboxes/hitboxSetter";
+import { updateAssociatedHitbox } from "./modules/hitboxes/hitboxHandler";
+
+import { initializeDoorForSprite } from "./modules/doors/doorSetter";
+import { updateSpriteAssociatedDoor } from "./modules/doors/doorHandler";
+
+import { initializeIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimSetter';
+import { resetIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimHandler';
+
+import { initializeRandomAnimationCounter } from "./modules/randomAnimCounters/randomAnimSetter";
+import { resetRandomAnimationCounter } from "./modules/randomAnimCounters/randomAnimHandler";
 
 type ModuleState = {
 	set: boolean;
