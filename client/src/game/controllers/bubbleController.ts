@@ -2,10 +2,10 @@ import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
+import { getSpeechBubbleGrid } from "../canvas/canvasGetter";
 import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
 import { playEffect, playSpeakingEffect } from "../sound/sound";
-import { getSpeechBubbleCanvas } from "./utilityCanvasController";
 
 let mainBubble: SpeechBubble = null;
 let titleBubble: SpeechBubble = null;
@@ -85,7 +85,7 @@ export const clearActiveEmotes = (): void => {
     emoteIds = [];
 }
 export const drawBubbles = (): void => {
-    const canvas = getSpeechBubbleCanvas().canvas;
+    const canvas = getSpeechBubbleGrid().canvas;
     const context = canvas.getContext( "2d" );
 
     context.clearRect( 0, 0, canvas.width, canvas.height );

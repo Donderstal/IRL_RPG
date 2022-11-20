@@ -1,11 +1,13 @@
 ### LOG
 
 #### NOV 19, 2022
-* Splitting up spriteModule files into small setter/getter/handler/registry files
+* Splitting up canvas functionalities into setter/getter/registry files
 
 #### NOV 19, 2022
-* Seperating spritemodule initializers/handlers from Sprite class
+* Splitting up spriteModule files into small setter/getter/handler/registry files
 
+#### NOV 18, 2022
+* Seperating spritemodule initializers/handlers from Sprite class
 
 #### NOV 17, 2022
 * Registry files to seperate folders, registry classes to modules

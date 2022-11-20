@@ -9,5 +9,7 @@ export enum CanvasTypeEnum {
     overview,
     spriteCanvas,
     faderCanvas,
-    speechBubbleCanvas
+    speechBubbleCanvas,
+    preRender,
+    DOM
 }

@@ -1,8 +1,5 @@
-import globals from '../../../game-data/globals';
 import { determineShortestPath } from '../../../helpers/pathfindingHelpers';
 import { GRID_BLOCK_PX } from '../../../game-data/globals';
-import type { BackgroundCanvas } from '../../BackgroundCanvas';
-import type { ForegroundCanvas } from '../../ForegroundCanvas';
 import type { Sprite } from '../../core/Sprite';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import type { GridLocation } from '../../../models/GridLocation';
@@ -11,10 +8,12 @@ import type { DirectionXy } from '../../../models/DirectionXyModel';
 import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHelpers';
 import type { DestinationCellModel } from '../../../models/DestinationCellModel';
 import type { DestinationType } from '../../../enumerables/DestinationType';
-import { getTileOnCanvasByXy } from '../../controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
 import { markModuleAsActive, markModuleAsInActive } from '../../spriteModuleHandler';
 import { SpriteModuleEnum } from '../../../enumerables/SpriteModuleEnum';
+import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByXy } from '../../canvas/canvasGetter';
+import type { BackTileGrid } from '../../canvas/BackTileGrid';
+import type { BackSpriteGrid } from '../../canvas/BackSpriteGrid';
 
 export class Destination {
     column: number;
@@ -52,8 +51,8 @@ export class Destination {
         this.setPath( sprite );
     }
 
-    get backClass(): BackgroundCanvas { return globals.GAME.BACK; };
-    get frontClass(): ForegroundCanvas { return globals.GAME.FRONT; };
+    get backClass(): BackTileGrid { return getBackTilesGrid(); };
+    get frontClass(): BackSpriteGrid { return getBackSpritesGrid(); };
     get currentStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex]; };
     get nextStep(): { x: number, y: number, direction: number } { return this.path[this.currentPathIndex + 1]; };
     get hasNextStep(): boolean { return this.nextStep !== undefined; }
@@ -105,7 +104,7 @@ export class Destination {
             'rows': this.backClass.grid.rows, 'columns': this.backClass.grid.columns,
             'tiles': this.backClass.grid.array,
             'blockedIndexes': this.backClass.grid.array.filter( ( tile ) => {
-                return tile.isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( tile.index );
+                return tile.isBlocked || this.frontClass.tileHasBlockingSprite( tile.index );
             } ).map( ( e: Tile ) => { return e.index })
         };
         const startingTile = this.frontClass.getTileAtXY(sprite.centerX, sprite.baseY);

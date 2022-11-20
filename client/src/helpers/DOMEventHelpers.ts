@@ -1,8 +1,8 @@
 import { cameraFocus } from "../game/cameraFocus";
-import { setDOMCanvasDimensions } from "../game/controllers/gridCanvasController";
 import { setFaderCanvas } from "./faderModule";
 import { closeWebsite, openWebsite } from "../game-container/stores"
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
+import { setRenderCanvasesDimensions } from "../game/canvas/canvasSetter";
 
 const setFullscreen = (): Promise<void> => {
     return document.getElementById( 'app-div' ).requestFullscreen();
@@ -13,7 +13,7 @@ const unsetFullscreen = () => {
 }
 
 const setGameCanvasDimensions = () => {
-    setDOMCanvasDimensions( cameraFocus.screenWidth, cameraFocus.screenHeight );
+    setRenderCanvasesDimensions( cameraFocus.screenWidth, cameraFocus.screenHeight );
     setFaderCanvas( cameraFocus.screenWidth, cameraFocus.screenHeight );
 }
 

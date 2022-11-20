@@ -1,10 +1,11 @@
-import globals, { CANVAS_COLUMNS, CANVAS_ROWS } from "../game-data/globals";
+import { CANVAS_COLUMNS, CANVAS_ROWS } from "../game-data/globals";
 import { Counter } from "../helpers/Counter";
 import { getNeighbourhood } from "../resources/mapResources";
 import type { InteractionModel } from "../models/InteractionModel";
 import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import { setNewCenterBubble } from "./controllers/bubbleController";
+import { getBackSpritesGrid } from "./canvas/canvasGetter";
 
 let model: NeighbourhoodModel;
 let mapModel: MapModel;
@@ -172,7 +173,7 @@ export const setNeighbourhoodNPCCounter = (): void => {
 export const handleNeighbourhoodNPCCounter = (): void => {
     if( getActiveMap().spawnPoints != undefined ) {
         if ( NPCCounter.countAndCheckLimit() && getActiveMap().spawnPoints.length > 0 ) {
-            globals.GAME.FRONT.generateWalkingNPC();
+            getBackSpritesGrid().generateWalkingNPC();
         }
     }
     else {

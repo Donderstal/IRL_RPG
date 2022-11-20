@@ -5,6 +5,7 @@
     import { closeGameCanvas } from '../helpers/DOMEventHelpers';
     import { mobileAgent } from '../helpers/screenOrientation'
     import { getAllActiveSprites } from '../game/modules/sprites/spriteGetter';
+    import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
 
     const logClick = ( event ) => {
         getAllActiveSprites().forEach( ( e ) => {
@@ -13,7 +14,7 @@
                 console.log(e)
             }
         });
-        globals.GAME.BACK.grid.array.forEach( ( e ) => {
+        getBackSpritesGrid().grid.array.forEach( ( e ) => {
             if ( e.x <= event.offsetX && e.x + e.width >= event.offsetX 
             && e.y <= event.offsetY && e.y + e.height >= event.offsetY  ) {
                 console.log(e)

@@ -28,7 +28,8 @@ import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { tryInitializeSpriteMovement } from "../controllers/spriteModuleController";
 import { ANIM_TALK } from "../../game-data/animationGlobals";
 import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
-import { playEffect } from "../sound/sound";
+import { pauseMusic, playEffect } from "../sound/sound";
+import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from "../canvas/canvasGetter";
 
 export class Animation {
     id: string;
@@ -127,7 +128,7 @@ export class Animation {
                 break;
             case SceneAnimationType.cameraMoveToTile:
                 this.model = this.model as CameraMoveToTileScene
-                let tile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.cameraMoveToTileScene.column, this.cameraMoveToTileScene.row );
+                let tile = getTileOnCanvasByCell( this.cameraMoveToTileScene, CanvasTypeEnum.backSprites );
                 this.tileIndex = tile.index;
                 cameraFocus.setTileFocus( tile, this.cameraMoveToTileScene.snapToTile );
                 break;
@@ -154,6 +155,8 @@ export class Animation {
     }
 
     initMoveAnimation( sceneModel: MoveScene ): void {
+        const backTiles = getBackTilesGrid();
+        const backSprites = getBackSpritesGrid();
         if ( typeof sceneModel.destination === 'string' || sceneModel.destination instanceof String ) {
             const targetSprite = getSpriteByName( sceneModel.destination as string );             
             const cells = [
@@ -162,9 +165,9 @@ export class Animation {
                 initGridCellModel( targetSprite.column + 1, targetSprite.row ),
                 initGridCellModel( targetSprite.column, targetSprite.row + 1 ),
             ].filter((cell): boolean =>{ 
-                const tileB = globals.GAME.BACK.getTileAtCell( cell.column, cell.row )
-                const tileF = globals.GAME.FRONT.getTileAtCell( cell.column, cell.row )
-                return !tileB.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite(tileF.index);
+                const tileB = backTiles.getTileAtCell( cell.column, cell.row )
+                const tileF = backSprites.getTileAtCell( cell.column, cell.row )
+                return !tileB.isBlocked && !backSprites.tileHasBlockingSprite(tileF.index);
             });
             sceneModel.destination = getClosestCell( this.sprite, cells );
         }
@@ -182,7 +185,7 @@ export class Animation {
     }
 
     initCreateCarAnimation( sceneModel: CreateCarScene ): void {
-        let road = globals.GAME.FRONT.roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName } )[0];
+        let road = getBackSpritesGrid().roadNetwork.roads.filter( ( e ) => { return e.model.name == sceneModel.roadName } )[0];
         let startCell = road.getRoadStartPosition();
         let model = initCanvasObjectModel( {
             column: startCell.column, row: startCell.row,
@@ -199,7 +202,7 @@ export class Animation {
                 row: sceneModel.row,
                 direction: sceneModel.direction
             };
-            globals.GAME.FRONT.initPlayerCharacter( position, MAIN_CHARACTER );
+            getBackSpritesGrid().initPlayerCharacter( position, MAIN_CHARACTER );
             this.spriteId = PLAYER_ID;
         }
         else {
@@ -224,7 +227,3 @@ export class Animation {
         this.selection = selection;
     }
 } 
-
-function pauseMusic() {
-    throw new Error("Function not implemented.");
-}

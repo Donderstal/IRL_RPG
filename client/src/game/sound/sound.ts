@@ -68,7 +68,7 @@ export const clearSpeakingEffect = (): void => {
     }
     speakingEffect = null;
 }
-const pauseMusic = (): void => {
+export const pauseMusic = (): void => {
     activeMusic.pause();
 }
 

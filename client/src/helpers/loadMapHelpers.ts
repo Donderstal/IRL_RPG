@@ -1,6 +1,6 @@
 import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
 import { listenForKeyPress, stopListenForKeyPress, clearPressedKeys } from '../game/controls';
-import { activateMap, getActiveMap, getNeighbourhoodKey, getNeighbourhoodModel, getPreviousMapKey, hasActiveNeighbourhood, initializeNeighbourhood, Neighbourhood } from '../game/Neighbourhood';
+import { activateMap, getActiveMap, getNeighbourhoodKey, getNeighbourhoodModel, getPreviousMapKey, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import { getOppositeDirection } from './utilFunctions';
 import type { CellPosition } from '../models/CellPositionModel';
@@ -10,22 +10,19 @@ import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../enumerables/InteractionType';
 import { DirectionEnum } from '../enumerables/DirectionEnum';
 import { cameraFocus } from '../game/cameraFocus';
-import { clearGridCanvases, clearGrids, getCanvasWithType, setCanvasesDimensions } from '../game/controllers/gridCanvasController';
-import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
-import type { BackTileGrid } from '../game/canvas/BackTileGrid';
-import type { BackSpriteGrid } from '../game/canvas/BackSpriteGrid';
-import type { FrontTileGrid } from '../game/canvas/FrontTileGrid';
 import { getPlayer } from '../game/modules/sprites/spriteGetter';
 import { clearAllSprites } from '../game/modules/sprites/spriteSetter';
 import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
 import { checkForEventTrigger } from '../registries/storyEventsRegistry';
 import { clearSpriteModuleRegistries } from '../game/spriteModuleHandler';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
+import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
+import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
-    const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid;
-    const front = getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpriteGrid;
-    const frontgrid = getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTileGrid;
+    const back = getBackTilesGrid();
+    const front = getBackSpritesGrid();
+    const frontgrid = getFrontTilesGrid();
 
     if (setPlayer) {
         mapData.playerStart = mapData.playerStart != undefined ? mapData.playerStart : getPlayerCellInNewMap( mapData, loadType );        
@@ -75,8 +72,8 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     setNeighbourhoodAndMap( destinationName );
     setCanvasDimensions( );
 
-    clearGrids();
-    clearGridCanvases();
+    clearCanvasGridMaps();
+    clearCanvasGrids();
 
     clearSpriteModuleRegistries();
     clearAllSpriteModules();
@@ -148,10 +145,9 @@ const setCanvasDimensions = (): void => {
         let neighbourhoodModel = getNeighbourhoodModel();
         const width = neighbourhoodModel.horizontalSlots.length * CANVAS_WIDTH;
         const height = neighbourhoodModel.verticalSlots.length * CANVAS_HEIGHT;
-
-        setCanvasesDimensions( width, height );
+        setCanvasGridsDimensions( width, height )
     }
     else {
-        setCanvasesDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );
+        setCanvasGridsDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );
     }
 }

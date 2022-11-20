@@ -1,8 +1,5 @@
-import globals, { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
-
-export const getFrontCanvasContext = (): OffscreenCanvasRenderingContext2D => {
-    return globals.GAME.FRONT.canvas.getContext( '2d' );
-}
+import { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
+import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
 
 export const drawFromImageToCanvas = (
     image: HTMLImageElement,
@@ -11,7 +8,7 @@ export const drawFromImageToCanvas = (
     canvasX: number, canvasY: number,
     widthInCanvas: number, heightInCanvas: number
 ): void => {
-    const ctx = getFrontCanvasContext();
+    const ctx = getBackSpritesGrid().ctx;
     ctx.drawImage(
         image,
         imageX, imageY,
@@ -21,12 +18,12 @@ export const drawFromImageToCanvas = (
     )
 }
 
-export const setFont = ( size: number, ctx: OffscreenCanvasRenderingContext2D = getFrontCanvasContext() ): void => {
+export const setFont = ( size: number, ctx: OffscreenCanvasRenderingContext2D = getBackSpritesGrid().ctx ): void => {
     ctx.font = size + "px " + 'PFRondaSeven';
 }
 
 export const breakTextIntoLines = ( text: string, fontSize: number ): string[] => {
-    const ctx = getFrontCanvasContext() 
+    const ctx = getBackSpritesGrid().ctx 
     setFont(fontSize)
     if ( ctx.measureText( text ).width > MAX_BUBBLE_TEXT_WIDTH ) {
         const textArray         = text.split(' ');
@@ -68,7 +65,7 @@ export const drawRect = ( canvas: OffscreenCanvas, x: number, y: number, width: 
     ctx.fillRect( x, y, width, height );
 }
 
-export const writeTextLine = ( text: string, x: number, y: number, size: number, ctx = getFrontCanvasContext(), color = "black" ): void => {
+export const writeTextLine = ( text: string, x: number, y: number, size: number, ctx = getBackSpritesGrid().ctx, color = "black" ): void => {
     setFont( size, ctx );
     ctx.fillStyle = color;
     ctx.fillText( text, x, y );

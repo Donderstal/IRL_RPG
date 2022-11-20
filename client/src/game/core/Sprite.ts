@@ -1,4 +1,4 @@
-import globals, { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
+import { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
 import { isHorizontal, spriteIsPlayer } from '../../helpers/utilFunctions'
@@ -14,6 +14,8 @@ import { VisionBox } from '../map/map-classes/VisionBox'
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel'
 import { BlockedArea } from '../map/map-classes/BlockedArea'
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
+import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../canvas/canvasGetter'
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -220,13 +222,13 @@ export class Sprite {
     }
 
     setNewLocationInGrid( cell: GridCellModel, direction: DirectionEnum ): void {
-        let newTile = globals.GAME.getTileOnCanvasAtCell( 'FRONT', cell.column, cell.row )
+        let newTile = getTileOnCanvasByCell( cell, CanvasTypeEnum.backSprites );
         this.direction = direction;
         this.setSpriteToGrid( newTile );
     }
 
     updateCell( ): void {
-        let cell = globals.GAME.getTileOnCanvasAtXY( "FRONT", this.centerX, this.baseY )
+        let cell = getTileOnCanvasByXy( { "x": this.centerX, "y": this.baseY }, CanvasTypeEnum.backSprites )
         this.row = cell.row;
         this.column = cell.column;
     }
@@ -297,7 +299,6 @@ export class Sprite {
         let originalX =  this.x + (GRID_BLOCK_PX / 2);
         let x = originalX;
         let y = this.y + ( GRID_BLOCK_PX / 2 );
-        let front = globals.GAME.FRONT;
 
         if ( this.isCar && (this.direction === DirectionEnum.left || this.direction === DirectionEnum.right) ) {
             y += GRID_BLOCK_PX;
@@ -308,7 +309,7 @@ export class Sprite {
 
         while ( y <= ( this.y + this.height ) ) {
             while ( x < ( this.x + this.width ) ) {
-                tileIndexes.push( front.getTileAtXY( x, y ).index );
+                tileIndexes.push( getTileOnCanvasByXy( {"x": x, "y": y} , CanvasTypeEnum.backSprites ).index );
                 x += GRID_BLOCK_PX;
             }
             x = originalX;

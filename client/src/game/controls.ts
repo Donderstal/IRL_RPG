@@ -1,24 +1,19 @@
-import globals, { GRID_BLOCK_PX } from '../game-data/globals';
+import globals from '../game-data/globals';
 import { handleActionButton, registerActionSelection } from './controllers/actionController';
-import { CinematicTrigger } from './../enumerables/CinematicTriggerEnum';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
 import { clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
-import { InteractionType } from '../enumerables/InteractionType';
-import type { Sprite } from './core/Sprite';
 import { moveSpriteInDirection } from './modules/destinations/destinationHandler';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
-import { checkForNewTilesToDraw, getCanvasWithType} from './controllers/gridCanvasController';
-import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
-import { getMenuCanvas } from './controllers/utilityCanvasController';
+import { checkForNewTilesToDraw } from "../helpers/dynamicTileDrawer";
 import { getPlayer } from "./modules/sprites/spriteGetter";;
 import { resetIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimHandler';
 import { destroySpriteAnimation } from './modules/animations/animationSetter';
 import { spriteHasAnimation } from './modules/animations/animationGetter';
 import { spriteNextPositionIsBlocked } from './map/collision';
 import { cameraFocus } from './cameraFocus';
-import { checkForEventTrigger } from '../registries/storyEventsRegistry';
-import { getActiveMap } from './Neighbourhood';
+import { clearSpeakingEffect } from './sound/sound';
+import { getMenuGrid } from './canvas/canvasGetter';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -30,7 +25,7 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     }
 
     if ( event.key === "Tab" ) {
-        const menu = getMenuCanvas();
+        const menu = getMenuGrid();
         menu.isActive ? menu.hide() : menu.show();
     }
 
@@ -82,12 +77,9 @@ export const handleMovementKeys = () => {
                 moveSpriteInDirection( player, direction );
             }
             if ( cameraFocus.focusSpriteId == player.spriteId && !cameraFocus.movingToNewFocus ) {
-                checkForNewTilesToDraw();
+                checkForNewTilesToDraw( cameraFocus );
             }
         }
-        const eventTrigger = checkForEventTrigger( CinematicTrigger.position );
-        if ( eventTrigger ) return;
-        checkForNeighbours( player );
     }
 };
 export const preparePlayerForMovement = (): void => {
@@ -121,26 +113,3 @@ export const listenForKeyPress = (): void => {
     } )
     globals.GAME.listeningForPress = true;
 };
-const checkForNeighbours = ( sprite: Sprite ): void => {
-    const activeMap = getActiveMap();
-    const activeGrid = getCanvasWithType( CanvasTypeEnum.background ).grid;
-
-    if ( activeMap.outdoors ) {
-        if ( activeGrid.x > sprite.centerX && activeMap.neighbours.left ) {
-            globals.GAME.switchMap( activeMap.neighbours.left, InteractionType.neighbour )
-        }
-        if ( activeGrid.x + ( activeGrid.columns * GRID_BLOCK_PX ) < sprite.centerX && activeMap.neighbours.right ) {
-            globals.GAME.switchMap( activeMap.neighbours.right, InteractionType.neighbour )
-        }
-        if ( activeGrid.y > sprite.baseY && activeMap.neighbours.up ) {
-            globals.GAME.switchMap( activeMap.neighbours.up, InteractionType.neighbour )
-        }
-        if ( activeGrid.y + ( activeGrid.rows * GRID_BLOCK_PX ) < sprite.baseY && activeMap.neighbours.down ) {
-            globals.GAME.switchMap( activeMap.neighbours.down, InteractionType.neighbour )
-        } 
-    }
-};
-
-function clearSpeakingEffect() {
-    throw new Error('Function not implemented.');
-}

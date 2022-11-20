@@ -1,4 +1,3 @@
-import globals from '../../game-data/globals';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import { Animation } from './Animation';
 import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
@@ -10,7 +9,7 @@ import { spriteHasAnimation } from '../modules/animations/animationGetter';
 import { cameraFocus } from '../cameraFocus';
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
 import { fadedOut, inFadingAnimation } from '../../helpers/faderModule';
-import { getActiveMapKey } from '../Neighbourhood';
+import { getActiveMapKey } from '../neighbourhoodModule';
 
 export class Scene {
     animations: Animation[];

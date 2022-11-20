@@ -1,6 +1,6 @@
 import { DestinationType } from "../enumerables/DestinationType";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import globals from "../game-data/globals";
+import { getBackSpritesGrid } from "../game/canvas/canvasGetter";
 import type { Sprite } from "../game/core/Sprite";
 import type { Intersection } from "../game/map/roads/Intersection";
 import type { Road } from "../game/map/roads/Road";
@@ -9,7 +9,7 @@ import type { DestinationCellModel } from "../models/DestinationCellModel";
 import type { GridLocation } from "../models/GridLocation";
 
 export const getRoadPathGridLocationList = ( start: CellPosition, startingDirection: DirectionEnum, destination: CellPosition ): GridLocation[] => {
-    const roadNetwork = globals.GAME.FRONT.roadNetwork;
+    const roadNetwork = getBackSpritesGrid().roadNetwork;
     const startingRoad = roadNetwork.roads.filter( ( e ) => { return e.cellIsInRoad( start ) && e.model.direction === startingDirection; } )[0];
     if ( startingRoad === undefined || startingRoad === null ) return null;
     const roadIdPath = findRoadPathToDestination( start, startingRoad, destination );
@@ -17,7 +17,7 @@ export const getRoadPathGridLocationList = ( start: CellPosition, startingDirect
 }
 
 export const getRoadOfCar = ( sprite: Sprite ): Road => {
-    const roadNetwork = globals.GAME.FRONT.roadNetwork;
+    const roadNetwork = getBackSpritesGrid().roadNetwork;
     const roadsWithDirection = roadNetwork.roads.filter( ( e ) => { return e.model.direction === sprite.direction; } );
     let road = null;
     while ( road === null && roadsWithDirection.length > 0 ) {
@@ -206,8 +206,9 @@ const convertRoadIdPathToGridLocationList = ( start: CellPosition, destination: 
 
 const getIntersectingTile = ( roadId: string, road2Id: string ): CellPosition => {
     const cell: CellPosition = { column: null, row: null };
-    const road1 = globals.GAME.FRONT.roadNetwork.getRoadById( roadId );
-    const road2 = globals.GAME.FRONT.roadNetwork.getRoadById( road2Id );
+    const backSprites = getBackSpritesGrid();
+    const road1 = backSprites.roadNetwork.getRoadById( roadId );
+    const road2 = backSprites.roadNetwork.getRoadById( road2Id );
     if ( road1.isHorizontal ) {
         cell.column = road1.model.direction === DirectionEnum.left ? road2.model.primaryColumn : road2.model.secondaryColumn;
         cell.row = road1.model.primaryRow;
@@ -221,7 +222,7 @@ const getIntersectingTile = ( roadId: string, road2Id: string ): CellPosition =>
 
 const findClosestIntersection = ( roadId: string, cellPosition: CellPosition, direction: DirectionEnum ): Intersection => {
     let closestIntersection = null;
-    let intersectingIntersections = globals.GAME.FRONT.roadNetwork.intersections.filter( ( e ) => {
+    let intersectingIntersections = getBackSpritesGrid().roadNetwork.intersections.filter( ( e ) => {
         let hasNotBeenCrossed = direction === DirectionEnum.left
             ? e.core.rightColumn < cellPosition.column : direction === DirectionEnum.up
                 ? e.core.bottomRow < cellPosition.row : direction === DirectionEnum.right

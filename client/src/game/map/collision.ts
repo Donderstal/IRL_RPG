@@ -1,10 +1,13 @@
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
-import globals, { GRID_BLOCK_PX } from '../../game-data/globals';
+import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { getAllActiveSprites } from '../modules/sprites/spriteGetter';
 import { Hitbox } from '../core/Hitbox';
 import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
+import { getBackTilesGrid, getTileOnCanvasByIndex, getTileOnCanvasByXy } from '../canvas/canvasGetter';
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import { getSpriteActionById } from '../modules/actions/actionGetter';
 
 export const spriteNextPositionIsBlocked = ( sprite: Sprite ): boolean => {
     const spriteNextPosition = getSpriteNextPosition( sprite );
@@ -14,7 +17,8 @@ export const spriteNextPositionIsBlocked = ( sprite: Sprite ): boolean => {
 }
 
 const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sprite ): boolean => {
-    const currentTile = globals.GAME.BACK.getTileAtXY( sprite.centerX, sprite.baseY );
+    const currentTile = getTileOnCanvasByXy( { "x": sprite.centerX, "y": sprite.baseY }, CanvasTypeEnum.background );
+    const backGrid = getBackTilesGrid().grid;
     if ( currentTile.offScreen ) return false;
     const hitbox = new Hitbox( spriteNextPosition.centerX, spriteNextPosition.baseY, sprite.width / 2 );
     let nextIndex: number, nextTile: Tile, nextTileIsOffscreen: boolean;
@@ -22,22 +26,22 @@ const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sp
         case DirectionEnum.left:
             nextTileIsOffscreen = currentTile.column === 1;
             nextIndex = currentTile.index - 1;
-            nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
+            nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
             return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.left < currentTile.x;
         case DirectionEnum.up:
             nextTileIsOffscreen = currentTile.row === 1;
-            nextIndex = currentTile.index - globals.GAME.BACK.grid.columns;
-            nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
+            nextIndex = currentTile.index - backGrid.columns;
+            nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
             return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.top < currentTile.y;
         case DirectionEnum.right:
-            nextTileIsOffscreen = currentTile.column === globals.GAME.BACK.grid.columns;
+            nextTileIsOffscreen = currentTile.column === backGrid.columns;
             nextIndex = currentTile.index + 1;
-            nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
+            nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
             return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.right > currentTile.x + GRID_BLOCK_PX;
         case DirectionEnum.down:
-            nextTileIsOffscreen = currentTile.row === globals.GAME.BACK.grid.rows;
-            nextIndex = currentTile.index + globals.GAME.BACK.grid.columns;
-            nextTile = globals.GAME.BACK.getTileAtIndex( nextIndex )
+            nextTileIsOffscreen = currentTile.row === backGrid.rows;
+            nextIndex = currentTile.index + backGrid.columns;
+            nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
             return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.outerBottom > currentTile.y + GRID_BLOCK_PX;
     }
 }
@@ -53,7 +57,7 @@ const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: S
     while( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = spritesToCheck[spriteIndex];
         if ( targetSprite.spriteId != sprite.spriteId ) {
-            const hitbox = getAssociatedHitbox( sprite.spriteId );
+            const hitbox = getAssociatedHitbox( sprite.spriteId ) !== undefined ? getAssociatedHitbox( sprite.spriteId ) : getSpriteActionById( sprite.spriteId );
             if ( hitbox !== undefined ) {
                 if ( !targetSprite.model.hasBlockedArea && !targetSprite.hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction )) {
                     colliding = true;

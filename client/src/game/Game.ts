@@ -10,7 +10,6 @@ import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../registries/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../registries/doorRegistry'
 import { setNeighbourhoodAndMap, loadMapToCanvases, switchMap } from '../helpers/loadMapHelpers'
-import type { Tile } from './core/Tile'
 import type { Sprite } from './core/Sprite'
 import type { Character } from './party/Character'
 import type { Inventory } from './party/Inventory'
@@ -25,13 +24,7 @@ import { clearHitboxes } from './modules/hitboxes/hitboxSetter';
 import { InteractionType } from '../enumerables/InteractionType'
 import type { LoadMapScene } from '../models/SceneAnimationModel'
 import { clearSpriteAnimations } from './modules/animations/animationSetter'
-import { initializeCameraFocus } from './cameraFocus'
-import { getCanvasWithType, instantiateGridCanvases } from './controllers/gridCanvasController'
-import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum'
-import { instantiateUICanvases } from './controllers/utilityCanvasController'
-import type { FrontTileGrid } from './canvas/FrontTileGrid'
-import type { BackSpriteGrid } from './canvas/BackSpriteGrid'
-import type { BackTileGrid } from './canvas/BackTileGrid'
+import { cameraFocus, initializeCameraFocus } from './cameraFocus'
 import type { CinematicTrigger } from '../enumerables/CinematicTriggerEnum'
 import type { InteractionModel } from '../models/InteractionModel'
 import type { CellPosition } from '../models/CellPositionModel'
@@ -42,7 +35,10 @@ import { setStoryRegistry } from '../registries/storyEventsRegistry'
 import { clearActions } from './modules/actions/actionSetter'
 import { getAllActiveSprites } from './modules/sprites/spriteGetter'
 import { initializeBubbleCanvases } from '../helpers/speechBubbleHelpers'
-import { getActiveMap, getActiveMapKey } from './Neighbourhood'
+import { getActiveMap, getActiveMapKey } from './neighbourhoodModule'
+import { prepareCanvasElementsForGame } from './canvas/canvasSetter'
+import { mobileAgent } from '../helpers/screenOrientation'
+import { getBackSpritesGrid } from './canvas/canvasGetter'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -70,36 +66,12 @@ export class Game {
         this.party; // class Party
         this.currentChapter;
 
-        this.initGameCanvases( );
+        prepareCanvasElementsForGame( cameraFocus.screenWidth, cameraFocus.screenHeight, mobileAgent );
     }
-
-    get FRONTGRID(): FrontTileGrid { return getCanvasWithType( CanvasTypeEnum.foreground ) as FrontTileGrid; }
-    get FRONT(): BackSpriteGrid { return getCanvasWithType( CanvasTypeEnum.backSprites ) as BackSpriteGrid; }
-    get BACK(): BackTileGrid { return getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid; }
 
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
     get PLAYER_INVENTORY( ): Inventory { return this.party.inventory }
     get PLAYER_ITEMS( ): StackedItem[] { return this.party.inventory.ItemList }
-
-    getTileOnCanvasAtIndex( canvasName: string, index: number ): Tile {
-        const canvasClass = canvasName == 'FRONT' ? this.FRONT : this.BACK
-        return canvasClass.getTileAtIndex( index ); 
-    }
-
-    getTileOnCanvasAtXY( canvasName: string, x: number, y: number ): Tile {
-        const canvasClass = canvasName == 'FRONT' ? this.FRONT : this.BACK
-        return canvasClass.getTileAtXY( x, y );
-    }
-
-    getTileOnCanvasAtCell( canvasName: string, column: number, row: number ): Tile {
-        const canvasClass = canvasName == 'FRONT' ? this.FRONT : this.BACK
-        return canvasClass.getTileAtCell( column, row ); 
-    }
-
-    initGameCanvases(): void {
-        instantiateGridCanvases();
-        instantiateUICanvases();
-    }
 
     startNewGame( name: string, spriteKey: string, startingMapName: string, debugMode: boolean, disableStoryMode: boolean ): void {
         initTilesheetModels();
@@ -150,7 +122,7 @@ export class Game {
         clearSpriteAnimations();
         dismissActiveAction();
         clearPressedKeys();
-        this.FRONT.resetTilesBlockedBySprites();
+        getBackSpritesGrid().resetTilesBlockedBySprites();
     }
 
     switchMap( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void {

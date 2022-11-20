@@ -16,13 +16,14 @@ import type { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
-import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DestinationType } from '../../enumerables/DestinationType';
 import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
 import { createSpriteFromCanvasObjectModel, setSpriteList } from '../modules/sprites/spriteSetter';
 import { getPlayer } from '../modules/sprites/spriteGetter';
-import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../Neighbourhood';
+import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../neighbourhoodModule';
+import { getTileOnCanvasByCell } from './canvasGetter';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -95,9 +96,9 @@ export class BackSpriteGrid extends CanvasGrid {
 
         const grid = {
             'rows': this.grid.rows, 'columns': this.grid.columns,
-            'tiles': globals.GAME.BACK.grid.array,
-            'blockedIndexes': globals.GAME.BACK.grid.array.filter( ( tile ) => {
-                return tile.isBlocked || globals.GAME.FRONT.tileHasBlockingSprite( tile.index );
+            'tiles': this.grid.array,
+            'blockedIndexes': this.grid.array.filter( ( tile ) => {
+                return tile.isBlocked;
             } ).map( ( e: Tile ) => { return e.index } )
         };
 
@@ -132,7 +133,7 @@ export class BackSpriteGrid extends CanvasGrid {
             } ).length === 0 : true;
         } );
         let unblockedSpawnPoints = availableSpawnPoints.filter( ( e ) => {
-            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.column, e.row );
+            let tile = getTileOnCanvasByCell( { "column": e.column, "row": e.row }, CanvasTypeEnum.background );
             return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
         } );
         return unblockedSpawnPoints[Math.floor( Math.random() * unblockedSpawnPoints.length )];
@@ -150,7 +151,7 @@ export class BackSpriteGrid extends CanvasGrid {
 
     filterSpawnPoints( startLocation: SpawnPointModel = null ): SpawnPointModel[] {
         return this.model.spawnPoints.filter( ( e) => {
-            let tile = globals.GAME.getTileOnCanvasAtCell( "BACK", e.column, e.row );
+            let tile = getTileOnCanvasByCell( { "column": e.column, "row": e.row }, CanvasTypeEnum.background );
             return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
                 && (startLocation != null ? e.column != startLocation.column && e.row !== startLocation.row : true);
         })

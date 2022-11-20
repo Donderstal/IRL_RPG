@@ -1,4 +1,3 @@
-import globals from '../../../game-data/globals';
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
 import type { CellPosition } from "../../../models/CellPositionModel";
@@ -6,7 +5,9 @@ import type { RoadModel } from "../../../models/RoadModel";
 import { getDataModelByKey } from "../../../resources/spriteDataResources";
 import type { Tile } from "../../core/Tile";
 import type { I_Junction } from "./I_Junction";
-import { getNeighbourhoodModel } from '../../Neighbourhood';
+import { getNeighbourhoodModel } from '../../neighbourhoodModule';
+import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from '../../canvas/canvasGetter';
+import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
 
 export class Road {
     id: string;
@@ -46,10 +47,13 @@ export class Road {
     }
 
     get startCellIsBlocked( ): boolean { 
-        let FRONT = globals.GAME.FRONT;
-        let firstTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.model.primaryColumn, this.model.primaryRow )
-        let secondTile = globals.GAME.getTileOnCanvasAtCell( "FRONT", this.isHorizontal ? this.model.primaryColumn : this.model.secondaryColumn, this.isHorizontal ? this.model.secondaryRow : this.model.primaryRow )
-        return FRONT.tileHasBlockingSprite( firstTile.index ) || FRONT.tileHasBlockingSprite( secondTile.index )
+        let backSprites = getBackSpritesGrid();
+        let firstTile = getTileOnCanvasByCell( { "column": this.model.primaryColumn, "row": this.model.primaryRow } , CanvasTypeEnum.backSprites )
+        let secondTile = getTileOnCanvasByCell( {
+            "column": this.isHorizontal ? this.model.primaryColumn : this.model.secondaryColumn,
+            "row": this.isHorizontal ? this.model.secondaryRow : this.model.primaryRow
+        }, CanvasTypeEnum.backSprites )
+        return backSprites.tileHasBlockingSprite( firstTile.index ) || backSprites.tileHasBlockingSprite( secondTile.index )
     }
 
     setMovementCostToRoadTiles(): void {
@@ -58,14 +62,15 @@ export class Road {
     }
 
     getTilesInRoad(): Tile[] {
+        const backTiles = getBackTilesGrid();
         if ( this.isHorizontal ) {
-            return globals.GAME.BACK.grid.array.filter( ( e ) => {
+            return backTiles.grid.array.filter( ( e ) => {
                 return ( ( e.column >= this.model.primaryColumn || e.column <= this.model.secondaryColumn )
                     && ( e.row === this.model.primaryRow || e.row === this.model.secondaryRow ) );
             } )
         }
         else {
-            return globals.GAME.BACK.grid.array.filter( ( e ) => {
+            return backTiles.grid.array.filter( ( e ) => {
                 return ( ( e.row >= this.model.primaryRow || e.row <= this.model.secondaryRow )
                     && ( e.column === this.model.primaryColumn || e.column === this.model.secondaryColumn ) );
             } )

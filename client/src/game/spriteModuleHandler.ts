@@ -79,7 +79,7 @@ export const initializeSpriteModules = ( sprite: Sprite, canvasObjectModel: Canv
 	}
 	else {
 		initializeHitboxForSprite( sprite );
-		markModuleAsInActive( id, SpriteModuleEnum.hitbox );
+		markModuleAsActive( id, SpriteModuleEnum.hitbox );
 	}
 
 	if ( sprite.model.canMove || sprite.model.idleAnimation ) {

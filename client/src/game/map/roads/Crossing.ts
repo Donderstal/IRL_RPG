@@ -1,8 +1,9 @@
 import { I_Junction } from "./I_Junction";
-import globals from "../../../game-data/globals";
 import { TileSquare } from "../../../helpers/TileSquare";
 import type { Sprite } from "../../core/Sprite";
 import type { Road } from "./Road";
+import { getBackTilesGrid, getTileOnCanvasByCell } from "../../canvas/canvasGetter";
+import { CanvasTypeEnum } from "../../../enumerables/CanvasTypeEnum";
 
 export class Crossing extends I_Junction {
     crossingSprites: Sprite[];
@@ -12,9 +13,10 @@ export class Crossing extends I_Junction {
         this.laneDepth = 1;
 
         this.initCrossingFromPendingList( pendingCrossings );
-        this.setLanes( );
-        globals.GAME.BACK.ctx.fillStyle = 'white';
-        globals.GAME.BACK.ctx.fillRect( this.core.left, this.core.top, this.core.width, this.core.height );
+        this.setLanes();
+        const backTilesContext = getBackTilesGrid().ctx;
+        backTilesContext.fillStyle = 'white';
+        backTilesContext.fillRect( this.core.left, this.core.top, this.core.width, this.core.height );
     }
 
     initCrossingFromPendingList( pendingCrossings: { road: Road, square: TileSquare }[] ): void {
@@ -28,7 +30,7 @@ export class Crossing extends I_Junction {
 
         this.core = new TileSquare(  tileList );
         this.core.tileList.forEach( ( tile ) => { 
-            let gridTile = globals.GAME.BACK.getTileAtCell( tile.column, tile.row );
+            let gridTile = getTileOnCanvasByCell( tile, CanvasTypeEnum.background );
             gridTile.setMovementCost( 0.1 ); 
         })
     }

@@ -1,7 +1,7 @@
 import { DestinationType } from "../enumerables/DestinationType";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import globals from "../game-data/globals";
 import { PLAYER_ID } from "../game-data/interactionGlobals";
+import { getBackSpritesGrid, getBackTilesGrid } from "../game/canvas/canvasGetter";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import type { DestinationCellModel } from "../models/DestinationCellModel";
@@ -136,8 +136,8 @@ export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
 }
 
 export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): DestinationCellModel => {
-    const back = globals.GAME.BACK;
-    const front = globals.GAME.FRONT;
+    const back = getBackTilesGrid();
+    const front = getBackSpritesGrid();
     const leftBorderColumn = sprite.column - radius;
     const rightBorderColumn = sprite.column + radius;
     const topBorderRow = sprite.row - radius;

@@ -6,8 +6,8 @@ import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { checkForEventTrigger } from "../../../registries/storyEventsRegistry";
-import { addCollectableToRegistry, addToRegistry, getCollectableId } from "../../../registries/collectableRegistry";
-import { getActiveMapKey } from "../../Neighbourhood";
+import { addCollectableToRegistry, getCollectableId } from "../../../registries/collectableRegistry";
+import { getActiveMapKey } from "../../neighbourhoodModule";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;

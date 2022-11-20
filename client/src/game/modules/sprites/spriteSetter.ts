@@ -1,7 +1,7 @@
 import { CanvasTypeEnum } from "../../../enumerables/CanvasTypeEnum";
 import { getUniqueId } from "../../../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
-import { getTileOnCanvasByCell } from "../../controllers/gridCanvasController";
+import { getTileOnCanvasByCell } from "../../canvas/canvasGetter";
 import { Sprite } from "../../core/Sprite";
 import { initializeSpriteModules } from "../../spriteModuleHandler";
 import { destroySpriteAssociatedAction } from "../actions/actionSetter";

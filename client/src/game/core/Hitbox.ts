@@ -1,7 +1,7 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import { getFrontCanvasContext }  from '../../helpers/canvasHelpers';
 import globals from '../../game-data/globals';
 import { COLOR_WHITE } from '../../game-data/uiGlobals';
+import { getBackSpritesGrid } from "../canvas/canvasGetter";
 /**
  * The Hitbox interface is the base class of all in-game elements that should have collision detection.
  * It consists out of three circles, the inner, middle and outer.
@@ -49,7 +49,7 @@ export class Hitbox {
     }
 
     draw( ): void {
-        const frontCtx: CanvasRenderingContext2D = getFrontCanvasContext( );
+        const frontCtx: OffscreenCanvasRenderingContext2D = getBackSpritesGrid().ctx;
         frontCtx.beginPath( );
         frontCtx.arc( this.x, this.y, this.outerRadius, 0, 2 * Math.PI );
         frontCtx.arc( this.x, this.y, this.radius, 0, 2 * Math.PI );

@@ -20,7 +20,7 @@ import { getSpriteDestination } from "../modules/destinations/destinationGetter"
 import { clearSpriteDestinations, destroySpriteDestination, initializeSpriteDestination } from "../modules/destinations/destinationSetter";
 import { checkIfSpriteCanMove, setSideStepDestination, spriteFailedToFindPath, spriteIsAtDestination } from "../modules/destinations/destinationHandler";
 import { markModuleAsInActive } from "../spriteModuleHandler";
-import { checkForNewTilesToDraw } from "./gridCanvasController";
+import { checkForNewTilesToDraw } from "../../helpers/dynamicTileDrawer";
 import { removeSpriteById } from "../modules/sprites/spriteSetter";
 
 const destroyAssociatedAnimationIfExists = ( sprite: Sprite ): void => {
@@ -61,7 +61,7 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     else {
         const movingToDestination = checkIfSpriteCanMove( sprite, destination );
         if ( cameraFocus.focusSpriteId == sprite.spriteId && !cameraFocus.movingToNewFocus ) {
-            checkForNewTilesToDraw();
+            checkForNewTilesToDraw( cameraFocus );
         }
         if ( !movingToDestination ) destroySpriteMovementToDestination( sprite );
     }

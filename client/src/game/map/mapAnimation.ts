@@ -8,7 +8,6 @@ import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
-import { clearGridCanvasOfType, getTileOnCanvasByIndex } from '../controllers/gridCanvasController';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { initInteractionModel } from '../../helpers/modelFactory';
 import { setActiveCinematic } from '../controllers/cinematicController';
@@ -16,7 +15,6 @@ import { lockedDoorEvent, unlockDoorEvent } from '../../resources/actionResource
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { InteractionType } from '../../enumerables/InteractionType';
 import { addDoorToUnlockedDoorsRegistry } from '../../registries/doorRegistry';
-import { clearUtilityCanvasOfType } from '../controllers/utilityCanvasController';
 import { getBackSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
 import type { Door } from './map-classes/Door';
 import { drawRect } from '../../helpers/canvasHelpers';
@@ -24,13 +22,15 @@ import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 import { handleSpriteModules, pluginIsRunning } from '../spriteModuleHandler';
 import { playEffect } from '../sound/sound';
-import { handleNeighbourhoodNPCCounter } from '../Neighbourhood';
+import { handleNeighbourhoodNPCCounter } from '../neighbourhoodModule';
+import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
+import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
-    clearGridCanvasOfType( CanvasTypeEnum.backSprites );
-    clearUtilityCanvasOfType( CanvasTypeEnum.speechBubbleCanvas );
+    clearSpriteCanvasGrids();
+    clearUICanvasGrids()
 
     drawSpritesInOrder( GAME )
     
@@ -41,13 +41,13 @@ export const handleMapAnimations = ( GAME: Game ): void => {
         handleMovementKeys( );  
     }
 
-    //GAME.FRONT.activeEffects.forEach( ( e ) => {
+    //backSpritesGrid.activeEffects.forEach( ( e ) => {
     //    e.drawAndMove( );
     //})
 
-    //if ( GAME.FRONTGRID.hasFrontGrid ) {
-    //    const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( GAME.FRONTGRID );
-    //    GAME.FRONTGRID.drawTilesAndClearArc( tilesFront );
+    //if ( backSpritesGridGRID.hasFrontGrid ) {
+    //    const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( backSpritesGridGRID );
+    //    backSpritesGridGRID.drawTilesAndClearArc( tilesFront );
     //}
 
     drawBubbles();
@@ -101,10 +101,11 @@ const handleDoor = ( GAME: Game, door: Door ): void => {
     }
 }
 
-export const handleRoadNetworkFuncs = ( GAME: Game ): void => {
-    if ( GAME.FRONT.roadNetwork != null ) {
-        GAME.FRONT.roadNetwork.handleCarCounter()
-        GAME.FRONT.roadNetwork.handleRoadCrossings();
+export const handleRoadNetworkFuncs = ( ): void => {
+    const backSpritesGrid = getBackSpritesGrid();
+    if ( backSpritesGrid.roadNetwork != null ) {
+        backSpritesGrid.roadNetwork.handleCarCounter()
+        backSpritesGrid.roadNetwork.handleRoadCrossings();
     }
 }
 
@@ -113,6 +114,9 @@ export const handleNpcCounter = ( ): void => {
 }
 
 export const drawSpritesInOrder = ( GAME: Game ): void => {
+    const backTilesGrid = getBackTilesGrid();
+    const backSpritesGrid = getBackSpritesGrid();
+
     const backgroundSprites = [];
     const standardSprites = [];
     const foregroundSprites = [];
@@ -144,18 +148,18 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
     })
 
     if ( GAME.debugMode ) {
-        GAME.FRONT.tilesBlockedBySprites.forEach( ( e ) => {
+        backSpritesGrid.tilesBlockedBySprites.forEach( ( e ) => {
             const tile = getTileOnCanvasByIndex( e, CanvasTypeEnum.backSprites );
             if ( tile !== undefined ) {
-                drawRect( GAME.FRONT.canvas, tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX, 'red' );
+                drawRect( backSpritesGrid.canvas, tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX, 'red' );
             }
         } )
     }
-    GAME.FRONT.resetTilesBlockedBySprites();
+    backSpritesGrid.resetTilesBlockedBySprites();
     spritesOutOfView.forEach( ( sprite ) => {
         if ( !(sprite.model.onBackground || sprite.model.notGrounded
             || ( sprite.movementType == MovementType.flying && pluginIsRunning( sprite.spriteId, SpriteModuleEnum.movement ) ) ) ) {
-            GAME.FRONT.setTilesBlockedBySprite( sprite );
+            backSpritesGrid.setTilesBlockedBySprite( sprite );
         }
     } )
     spritesInView.forEach( ( sprite )  => {
@@ -170,11 +174,11 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         }
         else {
             standardSprites.push( sprite );
-            GAME.FRONT.setTilesBlockedBySprite( sprite );
+            backSpritesGrid.setTilesBlockedBySprite( sprite );
         }
     })
-    if ( GAME.BACK.savepoint ) {
-        GAME.BACK.savepoint.draw( )
+    if ( backTilesGrid.savepoint ) {
+        backTilesGrid.savepoint.draw( )
     }
     
     drawSpritesInArray( backgroundSprites, GAME );

@@ -1,8 +1,8 @@
 import { TileSquare } from "../../../helpers/TileSquare";
-import globals from "../../../game-data/globals";
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import type { Road } from './Road';
 import type { Sprite } from "../../core/Sprite";
+import { getBackSpritesGrid } from "../../canvas/canvasGetter";
 
 export class I_Junction {
     directions: DirectionEnum[];
@@ -151,12 +151,12 @@ export class I_Junction {
     }
 
     pushTilesToList( col1: number, row1: number, col2: number, row2: number, direction: DirectionEnum ) {
-        const FRONT = globals.GAME.FRONT
+        const backSprites = getBackSpritesGrid();
         return [
-            FRONT.getTileAtCell( col1, row1 ),
-            FRONT.getTileAtCell( col1, row2 ),
-            FRONT.getTileAtCell( col2, row1 ),
-            FRONT.getTileAtCell( col2, row2 ),
+            backSprites.getTileAtCell( col1, row1 ),
+            backSprites.getTileAtCell( col1, row2 ),
+            backSprites.getTileAtCell( col2, row1 ),
+            backSprites.getTileAtCell( col2, row2 ),
         ];
     }
 

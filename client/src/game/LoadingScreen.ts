@@ -1,7 +1,7 @@
 import { BATTLE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, LARGE_FONT_SIZE } from "../game-data/globals";
 import { COLOR_WHITE } from "../game-data/uiGlobals";
 import { TypeWriter } from "../helpers/TypeWriter";
-import { DOMContext, preRenderCanvas, preRenderContext } from "./controllers/gridCanvasController";
+import { getDOMContext, getPreRenderCanvas, getPreRenderContext } from "./canvas/canvasGetter";
 
 const rootElement = document.documentElement;
 const width = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientWidth : rootElement.clientHeight;
@@ -73,6 +73,9 @@ export const clearLoadingScreen = (): void => {
 }
 
 const drawLoadingScreenRecursive = (): void => {
+    const DOMContext = getDOMContext();
+    const preRenderCanvas = getPreRenderCanvas();
+    const preRenderContext = getPreRenderContext()
     DOMContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
     preRenderContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
     drawLoadingScreen();

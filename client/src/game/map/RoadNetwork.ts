@@ -1,6 +1,5 @@
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
-import globals from '../../game-data/globals';
 import { Counter } from '../../helpers/Counter';
 import { getValidCarDestination } from '../../helpers/roadPathfindingHelpers';
 import { TileSquare } from '../../helpers/TileSquare';
@@ -8,9 +7,9 @@ import { getUniqueId } from '../../helpers/utilFunctions';
 import type { CellPosition } from '../../models/CellPositionModel';
 import type { RoadModel } from '../../models/RoadModel';
 import { cameraFocus } from '../cameraFocus';
-import { getTileOnCanvasByCell } from '../controllers/gridCanvasController';
+import { getBackSpritesGrid, getTileOnCanvasByCell } from '../canvas/canvasGetter';
 import { createSpriteFromCanvasObjectModel } from '../modules/sprites/spriteSetter';
-import { getNeighbourhoodModel } from '../Neighbourhood';
+import { getNeighbourhoodModel } from '../neighbourhoodModule';
 import { Crossing } from './roads/Crossing';
 import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
@@ -85,7 +84,7 @@ export class RoadNetwork {
         const allStarts = validRoads.map( ( e ) => { return e.getRoadStartPosition(); } );
         const validStarts = allStarts.filter( ( e ) => {
             const tile = getTileOnCanvasByCell( { column: e.column, row: e.row }, CanvasTypeEnum.background );
-            return !tile.isBlocked && !globals.GAME.FRONT.tileHasBlockingSprite( tile.index ) && !cameraFocus.xyValueIsInView( tile.x, tile.y ); 
+            return !tile.isBlocked && !getBackSpritesGrid().tileHasBlockingSprite( tile.index ) && !cameraFocus.xyValueIsInView( tile.x, tile.y ); 
         } )
         return validStarts[Math.floor( Math.random() * validStarts.length )];
     }
@@ -123,7 +122,7 @@ export class RoadNetwork {
     }
 
     addPendingIntersection( horizontalRoad: Road, verticalRoad: Road ): void {
-        let FRONT = globals.GAME.FRONT
+        let backSprites = getBackSpritesGrid();
         let skip = false;
         this.pendingIntersections.forEach( ( e ) => {
             if ( this.areItemsInList( e.roadIds, horizontalRoad.id, verticalRoad.id )) {
@@ -136,10 +135,10 @@ export class RoadNetwork {
                 'roadIds': [ verticalRoad.id, horizontalRoad.id ],
                 'directions': [verticalRoad.model.direction, horizontalRoad.model.direction ],
                 'square': new TileSquare( [
-                    FRONT.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.primaryRow ),
-                    FRONT.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.primaryRow ),
-                    FRONT.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.secondaryRow ),
-                    FRONT.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.secondaryRow )
+                    backSprites.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.primaryRow ),
+                    backSprites.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.primaryRow ),
+                    backSprites.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.secondaryRow ),
+                    backSprites.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.secondaryRow )
                 ], this.canvas )
             } )                            
         }
@@ -216,7 +215,7 @@ export class RoadNetwork {
     }
 
     setCrossings( ): void {
-        const FRONT = globals.GAME.FRONT;
+        const backSprites = getBackSpritesGrid();
         this.roads.forEach( ( e ) => { 
             if ( e.crossings ) {
                 let road = e
@@ -225,10 +224,10 @@ export class RoadNetwork {
                         'road': road,
                         'location' : crossing,
                         'square': new TileSquare( [
-                            FRONT.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.primaryColumn, road.isHorizontal ? crossing[0] : road.model.primaryRow ),
-                            FRONT.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.secondaryColumn, road.isHorizontal ? crossing[0] : road.model.secondaryRow ),
-                            FRONT.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.primaryColumn, road.isHorizontal ? crossing[1] : road.model.primaryRow ),
-                            FRONT.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.secondaryColumn, road.isHorizontal ? crossing[1] : road.model.secondaryRow )
+                            backSprites.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.primaryColumn, road.isHorizontal ? crossing[0] : road.model.primaryRow ),
+                            backSprites.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.secondaryColumn, road.isHorizontal ? crossing[0] : road.model.secondaryRow ),
+                            backSprites.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.primaryColumn, road.isHorizontal ? crossing[1] : road.model.primaryRow ),
+                            backSprites.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.secondaryColumn, road.isHorizontal ? crossing[1] : road.model.secondaryRow )
                         ], this.canvas )
                     } )                     
                 });
