@@ -13,17 +13,19 @@ import { cameraFocus } from '../game/cameraFocus';
 import { getPlayer } from '../game/modules/sprites/spriteGetter';
 import { clearAllSprites } from '../game/modules/sprites/spriteSetter';
 import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
-import { checkForEventTrigger } from '../registries/storyEventsRegistry';
 import { clearSpriteModuleRegistries } from '../game/spriteModuleHandler';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
+import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
+import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getBackTilesGrid();
     const front = getBackSpritesGrid();
     const frontgrid = getFrontTilesGrid();
 
+    setStoryEventsForMap(mapData.key)
     if (setPlayer) {
         mapData.playerStart = mapData.playerStart != undefined ? mapData.playerStart : getPlayerCellInNewMap( mapData, loadType );        
     }
@@ -78,6 +80,7 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearSpriteModuleRegistries();
     clearAllSpriteModules();
     clearAllSprites();
+    clearStoryEventsForMap();
 
     if ( playerStart !== null ) {
         getActiveMap().playerStart = playerStart;

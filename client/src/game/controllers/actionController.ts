@@ -11,6 +11,8 @@ import { getSpriteDestination, spriteHasDestination } from '../modules/destinati
 import { markModuleAsInActive } from '../spriteModuleHandler';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 import { getAllActions } from '../modules/actions/actionRegistry';
+import { checkForEventTrigger } from '../storyEvents/storyEventHandler';
+import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 
 let activeAction: ActionSelector = null; 
 
@@ -44,7 +46,9 @@ const setActiveAction = ( action: ActionSelector ): void => {
         markModuleAsInActive( activeAction.spriteId, SpriteModuleEnum.movement );
         sprite.deactivateMovementModule();
     }
-    activeAction.handle( sprite );
+    if ( !checkForEventTrigger( CinematicTrigger.interaction, [activeAction.spriteId] ) ) {
+        activeAction.handle( sprite );
+    }
 }
 
 export const dismissActiveAction = (): void => {

@@ -3,7 +3,6 @@ import type { CellPosition } from '../../models/CellPositionModel';
 import type { ConditionModel } from '../../models/ConditionModel';
 import type { InteractionModel } from '../../models/InteractionModel';
 import type { StoryEventModel } from '../../models/StoryEventModel';
-import { setActiveCinematic } from '../controllers/cinematicController';
 
 export class ScriptedEvent {
     mapName: string;
@@ -31,10 +30,7 @@ export class ScriptedEvent {
         }
     }
 
-    fireEvent( args = null ) {
-        if ( !this.fired ) {
-            setActiveCinematic( this.action, this.trigger, args );
-            this.fired = true;           
-        }
+    fireEvent( ) {
+        this.fired = true;
     }
 }

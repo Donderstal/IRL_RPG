@@ -31,7 +31,6 @@ import type { CellPosition } from '../models/CellPositionModel'
 import {  getPlayer } from "./modules/sprites/spriteGetter";
 import { initTilesheetModels } from '../resources/tilesheetResources'
 import { openGameCanvas, showGameCanvas } from '../helpers/DOMEventHelpers'
-import { setStoryRegistry } from '../registries/storyEventsRegistry'
 import { clearActions } from './modules/actions/actionSetter'
 import { getAllActiveSprites } from './modules/sprites/spriteGetter'
 import { initializeBubbleCanvases } from '../helpers/speechBubbleHelpers'
@@ -39,6 +38,7 @@ import { getActiveMap, getActiveMapKey } from './neighbourhoodModule'
 import { prepareCanvasElementsForGame } from './canvas/canvasSetter'
 import { mobileAgent } from '../helpers/screenOrientation'
 import { getBackSpritesGrid } from './canvas/canvasGetter'
+import { setStoryEvents } from './storyEvents/storyEventSetter'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -78,7 +78,7 @@ export class Game {
         this.initializePlayerParty( name );
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
-        setStoryRegistry( disableStoryMode )
+        setStoryEvents( disableStoryMode )
         loadMapToCanvases( getActiveMap(), "NEW" );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
@@ -90,7 +90,7 @@ export class Game {
         setInteractionRegistry( JSON.keyLists.interactionRegistry );
         setUnlockedDoorsRegistry( JSON.keyLists.unlockedDoors );
         setNeighbourhoodAndMap( JSON.activeMap.mapName );
-        setStoryRegistry( false, JSON.keyLists.storyEvents );
+        setStoryEvents( false, JSON.keyLists.storyEvents );
         const map = getActiveMap();
         map.playerStart = JSON.activeMap.playerStart;
         map.playerStart.name = "test";

@@ -1,7 +1,8 @@
 ### LOG
 
-#### NOV 19, 2022
+#### NOV 20, 2022
 * Splitting up canvas functionalities into setter/getter/registry files
+* Story event funcs into setter/getter/registry files
 
 #### NOV 19, 2022
 * Splitting up spriteModule files into small setter/getter/handler/registry files

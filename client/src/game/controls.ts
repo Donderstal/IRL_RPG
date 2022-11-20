@@ -14,6 +14,8 @@ import { spriteNextPositionIsBlocked } from './map/collision';
 import { cameraFocus } from './cameraFocus';
 import { clearSpeakingEffect } from './sound/sound';
 import { getMenuGrid } from './canvas/canvasGetter';
+import { checkForEventTrigger } from './storyEvents/storyEventHandler';
+import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -80,6 +82,7 @@ export const handleMovementKeys = () => {
                 checkForNewTilesToDraw( cameraFocus );
             }
         }
+        checkForEventTrigger( CinematicTrigger.position );
     }
 };
 export const preparePlayerForMovement = (): void => {

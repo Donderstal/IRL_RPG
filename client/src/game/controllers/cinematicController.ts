@@ -7,6 +7,7 @@ import { checkForQuestTrigger } from "../../registries/questRegistry";
 import type { InteractionModel } from "../../models/InteractionModel";
 import { Interaction } from "../cutscenes/Interaction";
 import { dismissActiveAction } from "./actionController";
+import { clearActiveBubbles } from "./bubbleController";
 
 let activeCinematic: Interaction = null;
 
@@ -38,7 +39,7 @@ export const dismissActiveCinematic = (): void => {
     else if ( activeCinematic.trigger === CinematicTrigger.interaction ) {
         dismissActiveAction();
     }
-
+    clearActiveBubbles()
     activeCinematic = null;
 };
 export const getActiveCinematic = (): Interaction => {
