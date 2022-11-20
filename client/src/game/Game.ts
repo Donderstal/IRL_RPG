@@ -2,23 +2,18 @@ import { animationLoop } from './animationLoop'
 import globals from '../game-data/globals'
 import { clearPressedKeys, listenForKeyPress } from './controls'
 import { MAIN_CHARACTER } from '../resources/spriteTypeResources'
-import { SoundController } from './sound/SoundController'
 import { Party } from './party/Party'
-import { TypeWriter } from '../helpers/TypeWriter'
-import { setLoadingScreen, stopLoadingScreen, LoadingScreen } from './LoadingScreen'
-import { Fader, setFaderCanvas } from '../helpers/Fader'
+import { setLoadingScreen, stopLoadingScreen } from './loadingScreen'
 import { FileLoader } from '../helpers/Loader'
 import { setCollectableRegistry } from '../registries/collectableRegistry'
 import { SaveDto, SaveGameDto } from '../game-data/SaveGameDto'
 import { setInteractionRegistry } from '../registries/interactionRegistry'
 import { setUnlockedDoorsRegistry } from '../registries/doorRegistry'
 import { setNeighbourhoodAndMap, loadMapToCanvases, switchMap } from '../helpers/loadMapHelpers'
-import type { Neighbourhood } from './Neighbourhood'
 import type { Tile } from './core/Tile'
 import type { Sprite } from './core/Sprite'
 import type { Character } from './party/Character'
 import type { Inventory } from './party/Inventory'
-import type { MapModel } from '../models/MapModel'
 import type { StackedItem } from './party/StackedItem'
 import { setActiveCinematic } from './controllers/cinematicController'
 import { dismissActiveAction } from './controllers/actionController'
@@ -46,6 +41,8 @@ import { openGameCanvas, showGameCanvas } from '../helpers/DOMEventHelpers'
 import { setStoryRegistry } from '../registries/storyEventsRegistry'
 import { clearActions } from './modules/actions/actionSetter'
 import { getAllActiveSprites } from './modules/sprites/spriteGetter'
+import { initializeBubbleCanvases } from '../helpers/speechBubbleHelpers'
+import { getActiveMap, getActiveMapKey } from './Neighbourhood'
 
 const startingItemIDs = ["phone_misc_1", "kitty_necklace_armor_3", "dirty_beanie_armor_3", "key_1"];
 
@@ -58,14 +55,7 @@ export class Game {
     inMenu: boolean;
     listeningForPress: boolean;
 
-    sound: SoundController;
-    audio: AudioContext;
-    fader: Fader;
-    typeWriter: TypeWriter;
-    loadingScreen: LoadingScreen;
-
     party: Party;
-    activeNeighbourhood: Neighbourhood;
     currentChapter: string;
 
     activeMapAtStartOfCinematic: string;
@@ -76,13 +66,8 @@ export class Game {
         this.paused; // bool
         this.inMenu;
         this.listeningForPress; // bool
-        this.sound = new SoundController( );
-        this.audio = new AudioContext( );
-        this.fader = new Fader( );
 
         this.party; // class Party
-
-        this.activeNeighbourhood;
         this.currentChapter;
 
         this.initGameCanvases( );
@@ -95,18 +80,6 @@ export class Game {
     get PARTY_MEMBERS( ): Character[] { return this.party.members }
     get PLAYER_INVENTORY( ): Inventory { return this.party.inventory }
     get PLAYER_ITEMS( ): StackedItem[] { return this.party.inventory.ItemList }
-
-    get activeMap( ): MapModel { return this.activeNeighbourhood.activeMap; }
-    get activeMapKey( ): string { return this.activeNeighbourhood.activeMapKey; }
-    get previousMapKey( ): string { return this.activeNeighbourhood.previousMapKey; }
-
-    get activeText(): string {
-        return this.typeWriter.activeText.map( ( ( e ) => { return e.activeWord; } )).toString();
-    }
-
-    set activeText( text: string ) {
-        this.typeWriter = new TypeWriter( text );
-    }
 
     getTileOnCanvasAtIndex( canvasName: string, index: number ): Tile {
         const canvasClass = canvasName == 'FRONT' ? this.FRONT : this.BACK
@@ -134,7 +107,7 @@ export class Game {
         setNeighbourhoodAndMap(startingMapName)
         this.debugMode = debugMode;
         setStoryRegistry( disableStoryMode )
-        loadMapToCanvases( this.activeMap, "NEW" );
+        loadMapToCanvases( getActiveMap(), "NEW" );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
@@ -146,9 +119,10 @@ export class Game {
         setUnlockedDoorsRegistry( JSON.keyLists.unlockedDoors );
         setNeighbourhoodAndMap( JSON.activeMap.mapName );
         setStoryRegistry( false, JSON.keyLists.storyEvents );
-        this.activeMap.playerStart = JSON.activeMap.playerStart;
-        this.activeMap.playerStart.name = "test";
-        loadMapToCanvases( this.activeMap, "LOAD" );
+        const map = getActiveMap();
+        map.playerStart = JSON.activeMap.playerStart;
+        map.playerStart.name = "test";
+        loadMapToCanvases( map, "LOAD" );
         setTimeout( this.initControlsAndAnimation, 1000 );
     }
 
@@ -160,7 +134,8 @@ export class Game {
     }
 
     initControlsAndAnimation(): void {
-        stopLoadingScreen( );
+        stopLoadingScreen();
+        initializeBubbleCanvases();
         listenForKeyPress();  
         animationLoop( );
     }
@@ -188,14 +163,14 @@ export class Game {
     }
 
     handleCinematicEnd() {
-        if ( this.activeMapAtStartOfCinematic !== this.activeMapKey ) {
+        if ( this.activeMapAtStartOfCinematic !== getActiveMapKey() ) {
             this.switchMap( this.activeMapAtStartOfCinematic, InteractionType.cinematic_end, this.playerLocationAtStartOfCinematic )
         }
     }
 
     saveActiveMap() {
         const player = getPlayer();
-        this.activeMapAtStartOfCinematic = this.activeMapKey;
+        this.activeMapAtStartOfCinematic = getActiveMapKey();
         this.activeSpritesAtStartOfCinematic = [...getAllActiveSprites()];
         this.playerLocationAtStartOfCinematic = { column: player.column, row: player.row, direction: player.direction }
     }
@@ -215,7 +190,6 @@ export const startGame = ( name: string, className: string, startingMap: string,
 
     setTimeout( () => {
         initializeCameraFocus();
-        setFaderCanvas();
         globals.GAME = new Game();
 
         openGameCanvas();

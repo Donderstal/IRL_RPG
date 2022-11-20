@@ -1,6 +1,6 @@
 import { cameraFocus } from "../game/cameraFocus";
 import { setDOMCanvasDimensions } from "../game/controllers/gridCanvasController";
-import { setFaderCanvas } from "./Fader";
+import { setFaderCanvas } from "./faderModule";
 import { closeWebsite, openWebsite } from "../game-container/stores"
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
 
@@ -13,8 +13,8 @@ const unsetFullscreen = () => {
 }
 
 const setGameCanvasDimensions = () => {
-    setDOMCanvasDimensions();
-    setFaderCanvas();
+    setDOMCanvasDimensions( cameraFocus.screenWidth, cameraFocus.screenHeight );
+    setFaderCanvas( cameraFocus.screenWidth, cameraFocus.screenHeight );
 }
 
 const focusCameraOnFlip = ( focusXy: { x: number, y: number } ) => {
@@ -31,6 +31,7 @@ export const hideGameCanvas = () => {
 
 export const openGameCanvas = ( ) => {
     setFullscreen();
+    setGameCanvasDimensions();
     if ( !screen.orientation.type.includes( "landscape" ) ) {
         const player = getPlayer();
         screen.orientation.lock( "landscape" ).then(

@@ -18,6 +18,7 @@ import { spriteHasAnimation } from './modules/animations/animationGetter';
 import { spriteNextPositionIsBlocked } from './map/collision';
 import { cameraFocus } from './cameraFocus';
 import { checkForEventTrigger } from '../registries/storyEventsRegistry';
+import { getActiveMap } from './Neighbourhood';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -27,8 +28,6 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
     if ( 'preventDefault' in event ) {
         event.preventDefault();
     }
-
-    const GAME = globals.GAME
 
     if ( event.key === "Tab" ) {
         const menu = getMenuCanvas();
@@ -51,12 +50,7 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
             clearActiveEmotes();
             textBubble.markAsRead();
         }
-        globals.GAME.sound.clearSpeakingEffect();
-    }
-
-    if ( event.key === "1" ) {
-        console.log( getPlayer() );
-        console.log( GAME.FRONT )
+        clearSpeakingEffect();
     }
 
     if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {
@@ -128,7 +122,7 @@ export const listenForKeyPress = (): void => {
     globals.GAME.listeningForPress = true;
 };
 const checkForNeighbours = ( sprite: Sprite ): void => {
-    const activeMap = globals.GAME.activeMap;
+    const activeMap = getActiveMap();
     const activeGrid = getCanvasWithType( CanvasTypeEnum.background ).grid;
 
     if ( activeMap.outdoors ) {
@@ -146,3 +140,7 @@ const checkForNeighbours = ( sprite: Sprite ): void => {
         } 
     }
 };
+
+function clearSpeakingEffect() {
+    throw new Error('Function not implemented.');
+}

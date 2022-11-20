@@ -1,10 +1,10 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
-import globals from "../../game-data/globals";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
 import { Emote } from "../cutscenes/Emote";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
+import { playEffect, playSpeakingEffect } from "../sound/sound";
 import { getSpeechBubbleCanvas } from "./utilityCanvasController";
 
 let mainBubble: SpeechBubble = null;
@@ -33,7 +33,7 @@ export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: Scen
         mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo );
     }
 
-    globals.GAME.sound.playSpeakingEffect( sfx );
+    playSpeakingEffect( sfx );
 };
 export const setNewEmote = ( location, imageSrc ): void => {
     const id = getUniqueId( emoteIds );
@@ -62,7 +62,7 @@ export const unsetEmote = ( id: string ): void => {
 };
 export const displayFullText = (): void => {
     mainBubble.typeWriter.displayFullText();
-    globals.GAME.sound.playEffect( "misc/menu-scroll-a.mp3" );
+    playEffect( "misc/menu-scroll-a.mp3" );
 }
 export const handleSelectionKeys = (): void => {
     if ( selectionBubble() ) {

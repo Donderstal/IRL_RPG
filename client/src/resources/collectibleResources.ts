@@ -34,6 +34,7 @@ const getCollectibleInteractionScript = ( type: CollectableType ) => {
 const COLLECTABLE_ACTION_COIN = [
     [[SceneAnimationType.emote, true, EMOTE_SURPRISED, PLAYER_NAME]],
     [[SceneAnimationType.speak, true, "It's a rare {R}coin!", PLAYER_NAME]],
+    [[SceneAnimationType.fadeOutIn, true]],
     [[SceneAnimationType.speak, true, "Crazy that people in the past used these things to pay for stuff...", PLAYER_NAME]],
     [[SceneAnimationType.speak, true, "I'll add this one to my collection!", PLAYER_NAME]],
     [[SceneAnimationType.deleteSprite, true, null, "misc/random5.wav"]]

@@ -27,6 +27,8 @@ import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter"
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { tryInitializeSpriteMovement } from "../controllers/spriteModuleController";
 import { ANIM_TALK } from "../../game-data/animationGlobals";
+import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
+import { playEffect } from "../sound/sound";
 
 export class Animation {
     id: string;
@@ -95,26 +97,26 @@ export class Animation {
             case SceneAnimationType.deleteSprite:
                 setTimeout( ( ) => { 
                     if ( this.deleteSpriteScene.sfx ) {
-                        globals.GAME.sound.playEffect( this.deleteSpriteScene.sfx )                        
+                        playEffect( this.deleteSpriteScene.sfx )                        
                     }
                     removeSpriteById( this.spriteId );
                 }, 250 )
                 break;
             case SceneAnimationType.fadeOut:
-                globals.GAME.fader.startFadeToBlack(  );
+                startFadeToBlack();
                 if ( this.fadeScene.sfx ) {
-                    globals.GAME.sound.pauseMusic( );
-                    globals.GAME.sound.playEffect( this.fadeScene.sfx )
+                    pauseMusic( );
+                    playEffect( this.fadeScene.sfx )
                 }
                 break;
             case SceneAnimationType.fadeIn:
-                globals.GAME.fader.startFadeFromBlack( );
+                startFadeFromBlack( );
                 break;
             case SceneAnimationType.fadeOutIn:
-                globals.GAME.fader.startFadeToBlack( true );
+                startFadeToBlack( true );
                 if ( this.fadeScene.sfx ) {
-                    globals.GAME.sound.pauseMusic( );
-                    globals.GAME.sound.playEffect( this.fadeScene.sfx )
+                    pauseMusic( );
+                    playEffect( this.fadeScene.sfx )
                 }
                 break;
             case SceneAnimationType.wait:
@@ -222,3 +224,7 @@ export class Animation {
         this.selection = selection;
     }
 } 
+
+function pauseMusic() {
+    throw new Error("Function not implemented.");
+}

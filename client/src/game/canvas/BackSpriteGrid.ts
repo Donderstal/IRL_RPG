@@ -22,6 +22,7 @@ import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
 import { createSpriteFromCanvasObjectModel, setSpriteList } from '../modules/sprites/spriteSetter';
 import { getPlayer } from '../modules/sprites/spriteGetter';
+import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../Neighbourhood';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -157,14 +158,14 @@ export class BackSpriteGrid extends CanvasGrid {
 
     generateRandomWalkingSprite( start: SpawnPointModel, destination: SpawnPointModel ) {
         let tile = this.getTileAtCell( start.column, start.row );
-        let sprites = globals.GAME.activeNeighbourhood.model.characterTypes
+        let sprites = getNeighbourhoodModel().characterTypes
         let characterDto = {
             type: sprites[Math.floor( Math.random() * sprites.length )],
             column: tile.column,
             row: tile.row,
             direction: start.direction,
             name: "Random person",
-            action: globals.GAME.activeNeighbourhood.getRandomAction(),
+            action: getRandomNeighbourhoodAction(),
             destination: {
                 column: destination.column,
                 row: destination.row,
@@ -178,7 +179,7 @@ export class BackSpriteGrid extends CanvasGrid {
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {
         if ( dataModel.spriteDataModel.isCollectable ) {
-            let mapName = globals.GAME.activeMapKey
+            let mapName = getActiveMapKey()
             let objectResource = getDataModelByKey( dataModel.type );
             let id = getCollectableId(tile.column, tile.row, objectResource.collectableType, mapName)
             return isInCollectableRegistry( id, objectResource.collectableType );

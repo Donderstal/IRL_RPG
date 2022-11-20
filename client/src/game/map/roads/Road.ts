@@ -4,9 +4,9 @@ import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
 import type { CellPosition } from "../../../models/CellPositionModel";
 import type { RoadModel } from "../../../models/RoadModel";
 import { getDataModelByKey } from "../../../resources/spriteDataResources";
-import type { Sprite } from "../../core/Sprite";
 import type { Tile } from "../../core/Tile";
 import type { I_Junction } from "./I_Junction";
+import { getNeighbourhoodModel } from '../../Neighbourhood';
 
 export class Road {
     id: string;
@@ -111,7 +111,7 @@ export class Road {
     }
 
     getRandomCarObjectModel( isBus = false ): CanvasObjectModel {
-        const carNames = globals.GAME.activeNeighbourhood.model.carTypes;
+        const carNames = getNeighbourhoodModel().carTypes;
         const startLocation = this.getRoadStartPosition();
         let randomIndex = Math.floor(Math.random() * carNames.length);
         let model: CanvasObjectModel = {

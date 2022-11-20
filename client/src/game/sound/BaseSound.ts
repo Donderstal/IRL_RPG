@@ -1,15 +1,9 @@
-import globals from "../../game-data/globals";
-/**
- * BaseSound' properties are shared by all sounds 
- * Contains a HTML Audio node, cloned from a source Audio node
- */
 export class BaseSound {
     baseVolume: number;
     audioNode: HTMLAudioElement;
     constructor( baseAudioElement: HTMLAudioElement, volume: number, loopSound = false ) {
         this.initAudioNode(baseAudioElement, volume, loopSound);
         this.baseVolume = volume;
-        globals.GAME.sound.activeSoundEffects.push( this );
     }
 
     get isNotPlaying(): boolean { return this.hasNotStartedPlaying || this.hasEnded || this.isPaused }

@@ -23,6 +23,8 @@ import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 import { handleSpriteModules, pluginIsRunning } from '../spriteModuleHandler';
+import { playEffect } from '../sound/sound';
+import { handleNeighbourhoodNPCCounter } from '../Neighbourhood';
 
 export const handleMapAnimations = ( GAME: Game ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -94,7 +96,7 @@ const handleDoor = ( GAME: Game, door: Door ): void => {
         }
         else {
             GAME.switchMap( door.model.doorTo, InteractionType.door );
-            GAME.sound.playEffect( "misc/random5.wav" );
+            playEffect( "misc/random5.wav" );
         }
     }
 }
@@ -106,8 +108,8 @@ export const handleRoadNetworkFuncs = ( GAME: Game ): void => {
     }
 }
 
-export const handleNpcCounter = ( GAME: Game ): void => {
-    GAME.activeNeighbourhood.handleNPCCounter( );
+export const handleNpcCounter = ( ): void => {
+    handleNeighbourhoodNPCCounter( );
 }
 
 export const drawSpritesInOrder = ( GAME: Game ): void => {

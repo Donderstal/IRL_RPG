@@ -9,6 +9,8 @@ import { spriteHasDestination } from '../modules/destinations/destinationGetter'
 import { spriteHasAnimation } from '../modules/animations/animationGetter';
 import { cameraFocus } from '../cameraFocus';
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
+import { fadedOut, inFadingAnimation } from '../../helpers/faderModule';
+import { getActiveMapKey } from '../Neighbourhood';
 
 export class Scene {
     animations: Animation[];
@@ -93,11 +95,11 @@ export class Scene {
                     animationHasFinished = getSpriteById( e.spriteId ) === null;
                     break;
                 case SceneAnimationType.fadeOut:
-                    animationHasFinished = !globals.GAME.fader.fadingToBlack && globals.GAME.fader.holdBlackScreen;
+                    animationHasFinished = fadedOut();
                     break;
                 case SceneAnimationType.fadeIn:
                 case SceneAnimationType.fadeOutIn:
-                    animationHasFinished = !globals.GAME.fader.inFadingAnimation
+                    animationHasFinished = !inFadingAnimation();
                     break;
                 case SceneAnimationType.wait:
                     animationHasFinished = e.counter.countAndCheckLimit( );
@@ -109,7 +111,7 @@ export class Scene {
                     animationHasFinished = cameraFocus.isFocusedOnTile( e.tileIndex );
                     break;
                 case SceneAnimationType.loadMap:
-                    animationHasFinished = globals.GAME.activeMapKey === e.loadMapScene.mapName;
+                    animationHasFinished = getActiveMapKey() === e.loadMapScene.mapName;
                     break;
             }
             if ( animationHasFinished ) {

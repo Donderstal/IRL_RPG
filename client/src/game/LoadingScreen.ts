@@ -1,109 +1,91 @@
-import { LARGE_FONT_SIZE, BATTLE_FONT_SIZE, BATTLE_FONT_LINE_HEIGHT, BUBBLE_CANVAS_HEIGHT, BUBBLE_CANVAS_WIDTH } from '../game-data/globals';
-import { COLOR_WHITE, COLOR_SECONDARY } from '../game-data/uiGlobals';
-import { TypeWriter } from '../helpers/TypeWriter';
-import globals from '../game-data/globals';
-import { initializeBubbleCanvases } from '../helpers/speechBubbleHelpers';
-import { DOMContext, preRenderCanvas, preRenderContext } from './controllers/gridCanvasController';
+import { BATTLE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, LARGE_FONT_SIZE } from "../game-data/globals";
+import { COLOR_WHITE } from "../game-data/uiGlobals";
+import { TypeWriter } from "../helpers/TypeWriter";
+import { DOMContext, preRenderCanvas, preRenderContext } from "./controllers/gridCanvasController";
 
+const rootElement = document.documentElement;
+const width = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientWidth : rootElement.clientHeight;
+const height = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientHeight : rootElement.clientWidth;
+
+const canvas: OffscreenCanvas = new OffscreenCanvas( width, height );
+const canvasContext: OffscreenCanvasRenderingContext2D = canvas.getContext( "2d" );
+canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
+
+const displayText = "Loading...";
+const randomTextArray = [
+    "Explaining relativity to kindergartners...",
+    "Overthinking something I did five years ago...",
+    "Researching the future...",
+    "Drilling elite Llama battle division...",
+    "Paving streets as slowly as possible...",
+    "Blaming personal problems on my parents...",
+    "Replacing developers with interns...",
+    "Paying artists in exposure...",
+    "Taxing waiters more than billionaires...",
+    "Redeveloping public housing as luxury condos...",
+    "Press space to interact with characters and objects..."
+]
+
+const mainText = "Loading...";
+const mainTextWidth = canvasContext.measureText( mainText ).width;
+
+let typeWriter: TypeWriter = null;
 let loaderTimeout;
-let canvas : OffscreenCanvas;
-let canvasContext : OffscreenCanvasRenderingContext2D;
+let currentLoadingScreenText;
+let activeTextWidth;
 
-export class LoadingScreen {
-    displayText: string;
-    randomTextArray: string[];
-    mainText: string;
-    currentLoadingScreenText: string;
+const activeText = (): string => { return typeWriter.activeText.map( ( e ) => { return e.activeWord; } ).join( '' ) };
+const availableTextLines = (): string[] => { return randomTextArray.filter( ( e ) => { return e !== currentLoadingScreenText } ) };
 
-    typeWriter: TypeWriter;
-    mainTextWidth: number;
-    activeTextWidth: number;
-    width: number;
-    height: number;
-    constructor() {
-        const rootElement = document.documentElement;
-        this.width = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientWidth : rootElement.clientHeight;
-        this.height = rootElement.clientWidth > rootElement.clientHeight ? rootElement.clientHeight : rootElement.clientWidth;
-        canvas = new OffscreenCanvas( this.width, this.height );
-        canvasContext = canvas.getContext( "2d" );
-
-        this.displayText = "Loading...";
-        this.randomTextArray = [
-            "Explaining relativity to kindergartners...",
-            "Overthinking something I did five years ago...",
-            "Researching the future...",
-            "Drilling elite Llama battle division...",
-            "Paving streets as slowly as possible...",
-            "Blaming personal problems on my parents...",
-            "Replacing developers with interns...",
-            "Paying artists in exposure...",
-            "Taxing waiters more than billionaires...",
-            "Redeveloping public housing as luxury condos...",
-            "Press space to interact with characters and objects..."
-        ]
-
-        this.mainText = "Loading..."
-        canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
-        this.mainTextWidth = canvasContext.measureText(this.mainText).width;
-
-        this.currentLoadingScreenText;
-        this.activeTextWidth;
-        this.handleLoadingScreenText( )
-    }
-
-    get activeText( ) { return this.typeWriter.activeText.map((e)=>{return e.activeWord;}).join('') };
-    get availableTextLines( ) { return this.randomTextArray.filter( ( e ) => { return e !== this.currentLoadingScreenText } )};
-
-    handleLoadingScreenText( ) {
-        if ( this.typeWriter === undefined || !this.typeWriter.isWriting ) {
-            this.getNewLoadingScreenText();
-            this.typeWriter = new TypeWriter( this.currentLoadingScreenText + "          " );
-            canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-            this.activeTextWidth = canvasContext.measureText( this.currentLoadingScreenText ).width;
-        }
-        else {
-            this.typeWriter.write();
-        }
-    }
-
-    getNewLoadingScreenText( ) {
-        this.currentLoadingScreenText = this.availableTextLines[ Math.floor( Math.random( ) * this.availableTextLines.length ) ];
-    }
-
-    draw( ) {
-        canvasContext.clearRect( 0, 0, this.width, this.height )
-
-        canvasContext.fillStyle = COLOR_WHITE;
-        canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
-        canvasContext.fillText( this.mainText, ( this.width / 2 ) - ( this.mainTextWidth / 2 ), this.height / 2 );
+export const handleLoadingScreenText = (): void => {
+    if ( typeWriter === null || !typeWriter.isWriting ) {
+        getNewLoadingScreenText();
+        typeWriter = new TypeWriter( currentLoadingScreenText + "          " );
         canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-        canvasContext.fillText( this.activeText, ( this.width / 2 ) - ( this.activeTextWidth / 2 ), ( this.height / 2 ) + BATTLE_FONT_LINE_HEIGHT );
-
-        this.handleLoadingScreenText( );
+        activeTextWidth = canvasContext.measureText( currentLoadingScreenText ).width;
     }
-
-    clear( ) {
-        canvasContext.clearRect( 0, 0, this.width, this.height ) 
+    else {
+        typeWriter.write();
     }
 }
 
-const drawLoadingScreen = (): void => {
+export const getNewLoadingScreenText = (): void => {
+    const lines = availableTextLines();
+    currentLoadingScreenText = lines[Math.floor( Math.random() * lines.length )];
+}
+
+export const drawLoadingScreen = (): void => {
+    canvasContext.clearRect( 0, 0, width, height )
+
+    canvasContext.fillStyle = COLOR_WHITE;
+    canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
+    canvasContext.fillText( mainText, ( width / 2 ) - ( mainTextWidth / 2 ), height / 2 );
+    canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
+    if ( typeWriter !== null ) {
+        canvasContext.fillText( activeText(), ( width / 2 ) - ( activeTextWidth / 2 ), ( height / 2 ) + BATTLE_FONT_LINE_HEIGHT );
+	}
+
+    handleLoadingScreenText();
+}
+
+export const clearLoadingScreen = (): void => {
+    canvasContext.clearRect( 0, 0, width, height )
+}
+
+const drawLoadingScreenRecursive = (): void => {
     DOMContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
     preRenderContext.clearRect( 0, 0, preRenderCanvas.width, preRenderCanvas.height );
-    globals.GAME.loadingScreen.draw( );
-    loaderTimeout = setTimeout( drawLoadingScreen, 50 )
+    drawLoadingScreen();
+    loaderTimeout = setTimeout( drawLoadingScreenRecursive, 50 )
     preRenderContext.drawImage( canvas, 0, 0 );
     DOMContext.drawImage( preRenderCanvas, 0, 0 )
 }
 
 export const setLoadingScreen = (): void => {
-    globals.GAME.loadingScreen = new LoadingScreen( );
-    drawLoadingScreen( );
+    drawLoadingScreenRecursive();
 }
 
-export const stopLoadingScreen = ( ): void => {
-    clearTimeout(loaderTimeout);
-    globals.GAME.loadingScreen.clear( );
-    globals.GAME.loadingScreen = null; 
-    initializeBubbleCanvases();
+export const stopLoadingScreen = (): void => {
+    clearTimeout( loaderTimeout );
+    clearLoadingScreen();
 } 

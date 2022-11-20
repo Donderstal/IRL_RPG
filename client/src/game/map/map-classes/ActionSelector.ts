@@ -7,6 +7,7 @@ import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { checkForEventTrigger } from "../../../registries/storyEventsRegistry";
 import { addCollectableToRegistry, addToRegistry, getCollectableId } from "../../../registries/collectableRegistry";
+import { getActiveMapKey } from "../../Neighbourhood";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -55,7 +56,7 @@ export class ActionSelector extends Hitbox {
                 this.activeAction, this.trigger, [this.spriteId]
             );
             if ( sprite.model.isCollectable ) {
-                const id = getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, globals.GAME.activeMapKey )
+                const id = getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, getActiveMapKey() );
                 addCollectableToRegistry( id, ( sprite as any ).collectableType )
             }
         }

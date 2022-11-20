@@ -1,5 +1,6 @@
 import type { InteractionAnswer } from "../enumerables/InteractionAnswer";
 import type { Sprite } from "../game/core/Sprite";
+import { getActiveMap } from "../game/Neighbourhood";
 import { getUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { getRegistry } from "../registries/interactionRegistry";
 
@@ -45,7 +46,7 @@ export class SaveGameDto {
     getMapDataFromGame( GAME ): MapDataModel {
         const playerSprite: Sprite = GAME.PLAYER;
         return { 
-            mapName: GAME.activeMapName,
+            mapName: getActiveMap().key,
             sprites: GAME.FRONT.allSprites.filter(e => e.type == 'character').map(e => e.spriteData),
             playerStart: {
                 column: playerSprite.column,

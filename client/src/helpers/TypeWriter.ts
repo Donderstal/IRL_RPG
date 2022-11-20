@@ -1,5 +1,6 @@
 ﻿import { setFont } from "./canvasHelpers";
 import globals, { GRID_BLOCK_PX, LARGE_FONT_SIZE } from "../game-data/globals";
+import { clearSpeakingEffect } from "../game/sound/sound";
 
 export class TypeWriterWord {
     startingPosition: number;
@@ -158,7 +159,7 @@ export class TypeWriter {
     }
 
     displayFullText( ): void {
-        globals.GAME.sound.clearSpeakingEffect();
+        clearSpeakingEffect();
         this.fullText.forEach((e)=>{e.activeWord = e.word;});
         this.activeText = this.fullText;
         this.index = this.totalTextCharacters;

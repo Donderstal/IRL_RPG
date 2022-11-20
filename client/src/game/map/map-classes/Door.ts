@@ -5,6 +5,7 @@ import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import { inUnlockedDoorsRegistry } from '../../../registries/doorRegistry';;
 import type { DoorModel } from "../../../models/DoorModel";
 import { ConditionType } from '../../../enumerables/ConditionTypeEnum';
+import { getActiveMapKey } from '../../Neighbourhood';
 
 /**
  * Hitbox extension that trigger the GAME.switchMap function if the player is in blockedRange
@@ -19,7 +20,7 @@ export class Door extends Hitbox {
     isUnlocked: boolean;
     constructor( x: number, y: number, door: DoorModel, id: string ) {
         super( x, y, GRID_BLOCK_PX * .75 )
-        this.mapName        = globals.GAME.activeMapKey;
+        this.mapName        = getActiveMapKey();
         this.model          = door;
         this.arcColor       = "#FFFF00";
         this.id             = id;

@@ -1,5 +1,6 @@
 import globals from "../game-data/globals";
 import { clearSubtitleBubble, setNewSubtitleBubble } from "../game/controllers/bubbleController";
+import { playEffect } from "../game/sound/sound";
 import type { QuestModel } from "../models/QuestModel";
 
 export
@@ -35,7 +36,7 @@ export
 
     displayQuestText( label: string ): void {
         setNewSubtitleBubble( { text: label + this.model.name } );
-        globals.GAME.sound.playEffect( 'misc/menu-select.mp3' );
+        playEffect( 'misc/menu-select.mp3' );
         setTimeout( () => {
             clearSubtitleBubble();
         }, 5000 );

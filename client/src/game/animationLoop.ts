@@ -7,7 +7,7 @@ import { CanvasTypeEnum } from '../enumerables/CanvasTypeEnum';
 import { clearGridCanvasOfType, preRenderCanvas, preRenderContext, DOMContext, DOMCanvas } from './controllers/gridCanvasController';
 import { getMenuCanvas, getSpeechBubbleCanvas } from './controllers/utilityCanvasController';
 import { cameraFocus } from './cameraFocus';
-import { getFaderCanvas } from '../helpers/Fader';
+import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpers/faderModule';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -46,8 +46,8 @@ export const animationLoop = ( ): void => {
         else {
             clearGridCanvasOfType( CanvasTypeEnum.backSprites );
         }       
-        if ( GAME.fader.inFadingAnimation ) {
-            GAME.fader.handleFade( )
+        if ( inFadingAnimation() ) {
+            handleFadeAnimation()
         } 
     }
 
@@ -74,6 +74,9 @@ const handleOffscreenCanvasBitmaps = () => {
     preRenderContext.drawImage( speechBubbleCanvas.canvas, bubbleX, bubbleY );
 
     const faderCanvas = getFaderCanvas();
-    preRenderContext.drawImage( faderCanvas, 0, 0 );
+    if ( inFadingAnimation() ) {
+        preRenderContext.drawImage( faderCanvas, 0, 0 );
+    }
+
     DOMContext.drawImage( preRenderCanvas, 0, 0 );
 }

@@ -8,12 +8,12 @@ import { getPlayer } from '../modules/sprites/spriteGetter';
 export class SpatialSound extends BaseSound {
     track: MediaElementAudioSourceNode;
     panner: StereoPannerNode;
-    constructor( baseAudioElement, volume, loopSound = false ) {
+    constructor( baseAudioElement, volume, audioContext, loopSound = false ) {
         super(baseAudioElement, volume, loopSound)
   
-        this.track = globals.GAME.audio.createMediaElementSource(this.audioNode);
-        this.panner = new StereoPannerNode(globals.GAME.audio);
-        this.track.connect(this.panner).connect(globals.GAME.audio.destination);
+        this.track = audioContext.createMediaElementSource(this.audioNode);
+        this.panner = new StereoPannerNode( audioContext );
+        this.track.connect( this.panner ).connect( audioContext.destination);
     }
 
     setVolumeAndPan( sprite: Sprite ): void {

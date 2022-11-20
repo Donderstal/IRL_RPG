@@ -10,6 +10,7 @@ import type { RoadModel } from '../../models/RoadModel';
 import { cameraFocus } from '../cameraFocus';
 import { getTileOnCanvasByCell } from '../controllers/gridCanvasController';
 import { createSpriteFromCanvasObjectModel } from '../modules/sprites/spriteSetter';
+import { getNeighbourhoodModel } from '../Neighbourhood';
 import { Crossing } from './roads/Crossing';
 import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
@@ -42,7 +43,7 @@ export class RoadNetwork {
         this.pendingCrossings = [];
         this.crossings = [];
         this.setCrossings();
-        this.carCounter = new Counter( globals.GAME.activeNeighbourhood.model.carSpawnRate, true );
+        this.carCounter = new Counter( getNeighbourhoodModel().carSpawnRate, true );
     }
 
     getRoadById( id: string ): Road {

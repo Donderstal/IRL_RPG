@@ -89,11 +89,11 @@ const setCanvasDimensions = ( type: CanvasTypeEnum, width: number, height: numbe
             console.log( `Canvastype ${type} not recognized` );
     }
 }
-export const setDOMCanvasDimensions = () => {
-    preRenderCanvas.width = cameraFocus.screenWidth;
-    preRenderCanvas.height = cameraFocus.screenHeight;
-    DOMCanvas.width = cameraFocus.screenWidth;
-    DOMCanvas.height = cameraFocus.screenHeight;
+export const setDOMCanvasDimensions = (width: number, height: number) => {
+    preRenderCanvas.width = width;
+    preRenderCanvas.height = height;
+    DOMCanvas.width = width;
+    DOMCanvas.height = height;
 }
 export const clearGridOfType = ( type: CanvasTypeEnum ): void => {
     switch ( type ) {

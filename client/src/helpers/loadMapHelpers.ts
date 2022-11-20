@@ -1,6 +1,6 @@
 import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
 import { listenForKeyPress, stopListenForKeyPress, clearPressedKeys } from '../game/controls';
-import { Neighbourhood } from '../game/Neighbourhood';
+import { activateMap, getActiveMap, getNeighbourhoodKey, getNeighbourhoodModel, getPreviousMapKey, hasActiveNeighbourhood, initializeNeighbourhood, Neighbourhood } from '../game/Neighbourhood';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import { getOppositeDirection } from './utilFunctions';
 import type { CellPosition } from '../models/CellPositionModel';
@@ -20,6 +20,7 @@ import { clearAllSprites } from '../game/modules/sprites/spriteSetter';
 import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
 import { checkForEventTrigger } from '../registries/storyEventsRegistry';
 import { clearSpriteModuleRegistries } from '../game/spriteModuleHandler';
+import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getCanvasWithType( CanvasTypeEnum.background ) as BackTileGrid;
@@ -45,7 +46,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 
     frontgrid.setFrontgridData( mapData, sheetData );
 
-    globals.GAME.sound.setActiveMusic( mapData.music != undefined ? mapData.music : globals.GAME.activeNeighbourhood.model.music );
+    setActiveMusic( mapData.music != undefined ? mapData.music : getNeighbourhoodModel().music );
     mapData.playerStart = undefined;
 
     if ( setPlayer ) {
@@ -66,7 +67,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 
 export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {
     checkForEventTrigger( CinematicTrigger.leave, [destinationName, type] );
-    globals.GAME.sound.clearActiveSoundEffects();
+    clearActiveSoundEffects();
     globals.GAME.paused = true;
     stopListenForKeyPress();
     clearPressedKeys();
@@ -82,10 +83,10 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearAllSprites();
 
     if ( playerStart !== null ) {
-        globals.GAME.activeMap.playerStart = playerStart;
+        getActiveMap().playerStart = playerStart;
     }
 
-    loadMapToCanvases( globals.GAME.activeMap, type );
+    loadMapToCanvases( getActiveMap(), type );
     setTimeout( ( ) => {
         listenForKeyPress( ); 
         globals.GAME.paused = false;   
@@ -94,40 +95,20 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
 
 const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
     let newPlayerCell: CellPosition = { row: null, column: null, direction: null };
+    const previousMapKey = getPreviousMapKey()
     switch ( type ) {
         case InteractionType.door:
             [...mapData.doors, ...mapData.sprites.filter( ( e ) => { return e.hasDoor })].forEach( ( door ) => {
-                if ( globals.GAME.previousMapKey == door.doorTo ) {
+                if ( previousMapKey == door.doorTo ) {
                     newPlayerCell.row = door.row;
                     newPlayerCell.column = door.column;
                     newPlayerCell.direction = getOppositeDirection(door.direction);
                 }
             } )
             break;
-        case InteractionType.neighbour:
-            const player = getPlayer()
-            let neighbours = globals.GAME.activeMap.neighbours;
-            newPlayerCell.direction = player.direction;
-            if ( neighbours.left == globals.GAME.previousMapKey ) {
-                newPlayerCell.row = player.row;
-                newPlayerCell.column = 1;
-            }
-            else if ( neighbours.up == globals.GAME.previousMapKey ) {
-                newPlayerCell.row = 1;
-                newPlayerCell.column = player.column;
-            }
-            else if ( neighbours.right == globals.GAME.previousMapKey ) {
-                newPlayerCell.row = player.row;
-                newPlayerCell.column = mapData.columns;
-            }
-            else if ( neighbours.down == globals.GAME.previousMapKey ) {
-                newPlayerCell.row = mapData.rows;
-                newPlayerCell.column = player.column;
-            }
-            break;
         case InteractionType.bus:
             mapData.sprites.forEach( ( object ) => {
-                if ( object.action != undefined && object.action[0].action.type == InteractionType.bus ) {
+                if ( object.action != undefined && object.action[0].type == InteractionType.bus ) {
                     newPlayerCell.row = object.row;
                     newPlayerCell.column = object.column;
                     newPlayerCell.direction = DirectionEnum.down;
@@ -141,30 +122,30 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
 export const loadCinematicMap = ( mapName, setPlayer = false, playerStart = null ) => {
     globals.GAME.paused = true;
     let GAME = globals.GAME;
-    GAME.sound.clearActiveSoundEffects( );
+    clearActiveSoundEffects( );
     setNeighbourhoodAndMap( mapName );
     if ( setPlayer ) {
-        GAME.activeNeighbourhood.activeMap.playerStart = playerStart;
+        getActiveMap().playerStart = playerStart;
     }
     loadMapToCanvases( 
-        GAME.activeNeighbourhood.activeMap, InteractionType.cinematic, setPlayer
+        getActiveMap(), InteractionType.cinematic, setPlayer
     );
     globals.GAME.paused = false;
 
 }
 
 export const setNeighbourhoodAndMap = ( mapName: string ): void => {
-    if ( globals.GAME.activeNeighbourhood == undefined || !mapName.includes(globals.GAME.activeNeighbourhood.key) ) {
-        globals.GAME.activeNeighbourhood = new Neighbourhood(mapName);
+    if ( !hasActiveNeighbourhood() || !mapName.includes( getNeighbourhoodKey() )) {
+        initializeNeighbourhood(mapName);
     }
     else {
-        globals.GAME.activeNeighbourhood.activateMap(mapName);
+        activateMap(mapName);
     }
 }
 
 const setCanvasDimensions = (): void => {
-    if ( globals.GAME.activeMap.outdoors ) {
-        let neighbourhoodModel = globals.GAME.activeNeighbourhood.model;
+    if ( getActiveMap().outdoors ) {
+        let neighbourhoodModel = getNeighbourhoodModel();
         const width = neighbourhoodModel.horizontalSlots.length * CANVAS_WIDTH;
         const height = neighbourhoodModel.verticalSlots.length * CANVAS_HEIGHT;
 
