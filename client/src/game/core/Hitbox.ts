@@ -1,7 +1,7 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
-import globals from '../../game-data/globals';
 import { COLOR_WHITE } from '../../game-data/uiGlobals';
 import { getBackSpritesGrid } from "../canvas/canvasGetter";
+import { inDebugGameState } from "../gameState/gameStateGetter";
 /**
  * The Hitbox interface is the base class of all in-game elements that should have collision detection.
  * It consists out of three circles, the inner, middle and outer.
@@ -43,7 +43,7 @@ export class Hitbox {
             this.x = newX;
             this.y = newY;            
         }
-        if ( globals.GAME.debugMode ) {
+        if ( inDebugGameState() ) {
             this.draw( );
         }
     }

@@ -1,4 +1,3 @@
-import globals from '../game-data/globals';
 import { handleActionButton, registerActionSelection } from './controllers/actionController';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
 import { clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
@@ -16,6 +15,7 @@ import { clearSpeakingEffect } from './sound/sound';
 import { getMenuGrid } from './canvas/canvasGetter';
 import { checkForEventTrigger } from './storyEvents/storyEventHandler';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
+import { setListeningForKeysGameState } from './gameState/gameState';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -103,7 +103,7 @@ export const clearPressedKeys = (): void => {
 export const stopListenForKeyPress = (): void => {
     window.removeEventListener( 'keydown', addKeyToPressed )
     window.removeEventListener( 'keyup', removeKeyFromPressed )
-    globals.GAME.listeningForPress = false;
+    setListeningForKeysGameState( false );
 };
 export const listenForKeyPress = (): void => {
     window.addEventListener( 'keydown', addKeyToPressed )
@@ -114,5 +114,5 @@ export const listenForKeyPress = (): void => {
             clearPressedKeys();
         }
     } )
-    globals.GAME.listeningForPress = true;
+    setListeningForKeysGameState( true );
 };

@@ -1,5 +1,5 @@
 import { BaseSound } from './BaseSound';
-import globals, { GRID_BLOCK_PX } from '../../game-data/globals';
+import { GRID_BLOCK_PX } from '../../game-data/globals';
 import type { Sprite } from '../core/Sprite';
 import { getPlayer } from '../modules/sprites/spriteGetter';
 /**

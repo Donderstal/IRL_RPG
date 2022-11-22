@@ -1,4 +1,4 @@
-import globals, { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
 import { listenForKeyPress, stopListenForKeyPress, clearPressedKeys } from '../game/controls';
 import { activateMap, getActiveMap, getNeighbourhoodKey, getNeighbourhoodModel, getPreviousMapKey, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
@@ -19,6 +19,8 @@ import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from 
 import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
 import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
 import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
+import { setPausedGameState } from '../game/gameState/gameState';
+import { dismissActiveAction } from '../game/controllers/actionController';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getBackTilesGrid();
@@ -67,7 +69,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true
 export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {
     checkForEventTrigger( CinematicTrigger.leave, [destinationName, type] );
     clearActiveSoundEffects();
-    globals.GAME.paused = true;
+    setPausedGameState( true );
     stopListenForKeyPress();
     clearPressedKeys();
 
@@ -80,7 +82,10 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearSpriteModuleRegistries();
     clearAllSpriteModules();
     clearAllSprites();
+
     clearStoryEventsForMap();
+    getBackSpritesGrid().resetTilesBlockedBySprites();
+    dismissActiveAction();
 
     if ( playerStart !== null ) {
         getActiveMap().playerStart = playerStart;
@@ -89,7 +94,7 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     loadMapToCanvases( getActiveMap(), type );
     setTimeout( ( ) => {
         listenForKeyPress( ); 
-        globals.GAME.paused = false;   
+        setPausedGameState( false ); 
     }, 100 )
 }
 
@@ -120,8 +125,7 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
 }
 
 export const loadCinematicMap = ( mapName, setPlayer = false, playerStart = null ) => {
-    globals.GAME.paused = true;
-    let GAME = globals.GAME;
+    setPausedGameState( true );
     clearActiveSoundEffects( );
     setNeighbourhoodAndMap( mapName );
     if ( setPlayer ) {
@@ -130,7 +134,7 @@ export const loadCinematicMap = ( mapName, setPlayer = false, playerStart = null
     loadMapToCanvases( 
         getActiveMap(), InteractionType.cinematic, setPlayer
     );
-    globals.GAME.paused = false;
+    setPausedGameState( false );
 
 }
 

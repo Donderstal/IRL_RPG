@@ -1,4 +1,3 @@
-import globals from "../game-data/globals";
 import { playMusic } from "../game/sound/sound";
 import { drawRect } from "./canvasHelpers";
 

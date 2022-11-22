@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import globals, { GRID_BLOCK_PX } from '../game-data/globals';
+    import { GRID_BLOCK_PX } from '../game-data/globals';
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
     import { closeGameCanvas } from '../helpers/DOMEventHelpers';
     import { mobileAgent } from '../helpers/screenOrientation'

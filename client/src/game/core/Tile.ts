@@ -1,11 +1,11 @@
 import type { DirectionEnum } from "../../enumerables/DirectionEnum";
 import type { TileModel } from "../../models/TileModel";
 import { GRID_BLOCK_PX } from '../../game-data/globals';
-import globals from '../../game-data/globals';
 import { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
 import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { getTilesheetImageForTile, getTilesheetXy } from "../../helpers/tileSheetHelpers";
 import type { TilesheetModel } from "../../models/TilesheetModel";
+import { inDebugGameState } from "../gameState/gameStateGetter";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -82,7 +82,7 @@ export class Tile {
                 this.x, this.y,
                 GRID_BLOCK_PX, GRID_BLOCK_PX
             )
-            if ( globals.GAME.debugMode ) {
+            if ( inDebugGameState() ) {
                 this.ctx.beginPath( )
                 this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
                 this.ctx.stroke()

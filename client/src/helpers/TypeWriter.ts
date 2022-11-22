@@ -1,5 +1,5 @@
 ﻿import { setFont } from "./canvasHelpers";
-import globals, { GRID_BLOCK_PX, LARGE_FONT_SIZE } from "../game-data/globals";
+import { GRID_BLOCK_PX, LARGE_FONT_SIZE } from "../game-data/globals";
 import { clearSpeakingEffect } from "../game/sound/sound";
 
 export class TypeWriterWord {

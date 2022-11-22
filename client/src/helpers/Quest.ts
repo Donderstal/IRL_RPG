@@ -1,4 +1,3 @@
-import globals from "../game-data/globals";
 import { clearSubtitleBubble, setNewSubtitleBubble } from "../game/controllers/bubbleController";
 import { playEffect } from "../game/sound/sound";
 import type { QuestModel } from "../models/QuestModel";

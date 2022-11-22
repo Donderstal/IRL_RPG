@@ -1,6 +1,9 @@
 import type { InteractionAnswer } from "../enumerables/InteractionAnswer";
 import type { Sprite } from "../game/core/Sprite";
+import { getPlayer } from "../game/modules/sprites/spriteGetter";
 import { getActiveMap } from "../game/neighbourhoodModule";
+import { exportTriggerEventsRegistry } from "../game/storyEvents/storyEventGetter";
+import { exportCollectableRegistry } from "../registries/collectableRegistry";
 import { getUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { getRegistry } from "../registries/interactionRegistry";
 
@@ -33,21 +36,21 @@ export class SaveGameDto {
         this.keyLists;
     }
 
-    saveGameToDto( GAME ): void {
+    saveGameToDto( ): void {
         const save: SaveDto = {
-            playerData: this.getPlayerDataFromGame( GAME ),
-            activeMap: this.getMapDataFromGame( GAME ),
-            keyLists: this.getKeyListsFromGame( GAME )
+            playerData: this.getPlayerDataFromGame( ),
+            activeMap: this.getMapDataFromGame( ),
+            keyLists: this.getKeyListsFromGame( )
         }
         console.log(save)
         this.exportSaveGameToJSON( save, "save_game")
     }
 
-    getMapDataFromGame( GAME ): MapDataModel {
-        const playerSprite: Sprite = GAME.PLAYER;
+    getMapDataFromGame( ): MapDataModel {
+        const playerSprite: Sprite = getPlayer();
         return { 
             mapName: getActiveMap().key,
-            sprites: [],//GAME.FRONT.allSprites.filter(e => e.type == 'character').map(e => e.spriteData),
+            sprites: [],
             playerStart: {
                 column: playerSprite.column,
                 row: playerSprite.row,
@@ -56,16 +59,16 @@ export class SaveGameDto {
         }
     }
 
-    getKeyListsFromGame( GAME ): KeyLists {
+    getKeyListsFromGame( ): KeyLists {
         return { 
-            storyEvents: GAME.story.triggeredEvents,
+            storyEvents: exportTriggerEventsRegistry(),
             interactionRegistry: getRegistry( ),
-            collectableRegistry: GAME.collectableRegistry.exportRegistry( ),
+            collectableRegistry: exportCollectableRegistry(),
             unlockedDoors: getUnlockedDoorsRegistry( )
         }
     }
 
-    getPlayerDataFromGame( GAME ): {} {
+    getPlayerDataFromGame( ): {} {
         return { }
     }
     

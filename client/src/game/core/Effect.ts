@@ -3,7 +3,6 @@ import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
 import { getEffectData } from "../../resources/effectResources";
 import { FRAME_LIMIT, GRID_BLOCK_PX } from "../../game-data/globals";
 import globals from "../../game-data/globals";
-import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { drawFromImageToCanvas } from "../../helpers/canvasHelpers";
 /**
  * Effect instances represent a ( part of ) a graphical effect in the game.

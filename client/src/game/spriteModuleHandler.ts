@@ -1,6 +1,5 @@
 import { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
 import { SpriteModuleEnum } from "../enumerables/SpriteModuleEnum";
-import globals from "../game-data/globals";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import { handleIdleAnimationCounter, handleRandomAnimationCounter, handleSpriteMoveToDestination, tryInitializeSpriteMovement } from "./controllers/spriteModuleController";
 import type { Sprite } from "./core/Sprite";
@@ -22,6 +21,7 @@ import { resetIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimHa
 
 import { initializeRandomAnimationCounter } from "./modules/randomAnimCounters/randomAnimSetter";
 import { resetRandomAnimationCounter } from "./modules/randomAnimCounters/randomAnimHandler";
+import { inDebugGameState } from "./gameState/gameStateGetter";
 
 type ModuleState = {
 	set: boolean;
@@ -98,7 +98,7 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 	if ( sprite.isPlayer ) {
 		updateAssociatedHitbox( sprite );
 	}
-	if ( pluginIsRunning( id, SpriteModuleEnum.movement ) || globals.GAME.debugMode ) {
+	if ( pluginIsRunning( id, SpriteModuleEnum.movement ) || inDebugGameState() ) {
 		if ( pluginIsRunning( id, SpriteModuleEnum.door ) ) {
 			updateSpriteAssociatedDoor( sprite )
 		}

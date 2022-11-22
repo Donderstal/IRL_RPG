@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import { LH_NEWTOWN_APP_3_KEY } from '../../resources/mapResources/leonard_heights/leonard_heights_res'; 
-    import { startGame } from '../../game/Game.js';
+    import { GameType } from '../../enumerables/GameType';
+    import { loadFilesAndStartGame } from '../../game/mainController';
 
     const startGameWithParams = ( ) => {
-        const characterName = document.getElementById('name-input').value;
-        const startingMap = document.getElementById('map-selection').value
-        const runInDebugMode = document.getElementById('enable-debug').checked;
-        const disableStoryEvents = document.getElementById('disable-story').checked;
-        startGame( characterName, null, startingMap, runInDebugMode, disableStoryEvents );
+        const characterName = (document.getElementById('name-input') as HTMLInputElement).value;
+        const startingMap = (document.getElementById('map-selection') as HTMLInputElement).value
+        const runInDebugMode = (document.getElementById('enable-debug') as HTMLInputElement).checked;
+        const disableStoryEvents = (document.getElementById('disable-story') as HTMLInputElement).checked;
+        loadFilesAndStartGame( GameType.newGame, [characterName, null, startingMap, runInDebugMode, disableStoryEvents] );
     }
 </script>
 

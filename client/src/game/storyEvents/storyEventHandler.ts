@@ -5,13 +5,14 @@ import type { CellPosition } from "../../models/CellPositionModel";
 import { setActiveCinematic } from "../controllers/cinematicController";
 import type { Sprite } from "../core/Sprite";
 import type { ScriptedEvent } from "../cutscenes/ScriptedEvent";
+import { inDisableStoryGameState } from "../gameState/gameStateGetter";
 import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
 import { getStoryEventsOnActiveMap, storyEventHasBeenTriggered } from "./storyEventGetter";
-import { getDisableStoryMode, markStoryEventAsTriggered } from "./storyEventRegistry";
+import { markStoryEventAsTriggered } from "./storyEventRegistry";
 
 export const checkForEventTrigger = ( trigger: CinematicTrigger, args: any[] = null ): boolean => {
     const events = getStoryEventsOnActiveMap();
-    if ( getDisableStoryMode() || events.length < 1 ) {
+    if ( inDisableStoryGameState() || events.length < 1 ) {
         return false;
     }
     const activeMapStoryEvent = events.filter( ( e ) => {
@@ -26,7 +27,7 @@ export const checkForEventTrigger = ( trigger: CinematicTrigger, args: any[] = n
             triggerEvent = checkForNPCInteractionType( activeMapStoryEvent, args[0] );
         }
         if ( triggerEvent && !activeMapStoryEvent.fired ) {
-            activeMapStoryEvent.fireEvent( args );
+            activeMapStoryEvent.fireEvent( );
             markStoryEventAsTriggered( activeMapStoryEvent.id );
             setActiveCinematic( activeMapStoryEvent.action, activeMapStoryEvent.trigger, args );
         }

@@ -1,12 +1,13 @@
 import type { InteractionModel } from "../../../models/InteractionModel";
 import { InteractionAnswer } from "../../../enumerables/InteractionAnswer";
 import { Hitbox } from "../../core/Hitbox";
-import globals, { GRID_BLOCK_PX } from "../../../game-data/globals";
+import { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
 import { addCollectableToRegistry, getCollectableId } from "../../../registries/collectableRegistry";
 import { getActiveMapKey } from "../../neighbourhoodModule";
+import { setActiveCinematic } from "../../controllers/cinematicController";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -50,7 +51,7 @@ export class ActionSelector extends Hitbox {
 
     handle( sprite ): void {
         console.log( 'handle' )
-        globals.GAME.setActiveCinematic(
+        setActiveCinematic(
             this.activeAction, this.trigger, [this.spriteId]
         );
         if ( sprite.model.isCollectable ) {

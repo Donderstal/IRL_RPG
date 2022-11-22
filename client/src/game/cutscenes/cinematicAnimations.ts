@@ -5,15 +5,15 @@ import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '..
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { getFrontTilesGrid } from '../canvas/canvasGetter';
 
-export const handleCinematicAnimations = ( GAME ): void => {
+export const handleCinematicAnimations = ( ): void => {
     clearSpriteCanvasGrids();
     clearUICanvasGrids()
 
     const frontTiles = getFrontTilesGrid();
 
-    drawSpritesInOrder( GAME )   
-    //handleRoadNetworkFuncs(GAME)
-    //handleNpcCounter(GAME)
+    drawSpritesInOrder( )   
+    //handleRoadNetworkFuncs()
+    //handleNpcCounter()
 
     //GAME.FRONT.activeEffects.forEach( ( e ) => {
     //    e.drawAndMove( );

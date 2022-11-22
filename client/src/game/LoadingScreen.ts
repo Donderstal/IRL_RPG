@@ -11,7 +11,6 @@ const canvas: OffscreenCanvas = new OffscreenCanvas( width, height );
 const canvasContext: OffscreenCanvasRenderingContext2D = canvas.getContext( "2d" );
 canvasContext.font = BATTLE_FONT_SIZE + "px " + "Stormfaze";
 
-const displayText = "Loading...";
 const randomTextArray = [
     "Explaining relativity to kindergartners...",
     "Overthinking something I did five years ago...",
@@ -25,7 +24,6 @@ const randomTextArray = [
     "Redeveloping public housing as luxury condos...",
     "Press space to interact with characters and objects..."
 ]
-
 const mainText = "Loading...";
 const mainTextWidth = canvasContext.measureText( mainText ).width;
 

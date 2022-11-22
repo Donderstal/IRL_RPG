@@ -13,9 +13,7 @@ let activeMapKey: string;
 let activeMapLocation: string;
 let previousMapKey: string;
 let previousMapLocation: string;
-let playerData: { name: string, className: string };
 let NPCCounter: Counter;
-let neighbourhoodSlots: string[];
 
 export const getNeighbourhoodKey = (): string => { return activeMapKey.split( '/' )[0]; }
 export const getActiveMap = (): MapModel => {

@@ -10,3 +10,6 @@ export const storyEventHasBeenTriggered = ( id: string ) => {
     const triggeredEvents = getTriggeredStoryEventIds()
     return triggeredEvents.filter( ( e ) => { return e === id } ).length > 0
 }
+export const exportTriggerEventsRegistry = (): string[] => {
+    return getTriggeredStoryEventIds();
+}

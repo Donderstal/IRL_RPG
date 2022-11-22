@@ -10,7 +10,6 @@ import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
-import globals from '../../game-data/globals';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { getClosestCell, getOppositeDirection } from '../../helpers/utilFunctions';
 import type { CellPosition } from "../../models/CellPositionModel";
@@ -30,6 +29,8 @@ import { ANIM_TALK } from "../../game-data/animationGlobals";
 import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
 import { pauseMusic, playEffect } from "../sound/sound";
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from "../canvas/canvasGetter";
+import { switchMap } from "../mainController";
+import { InteractionType } from "../../enumerables/InteractionType";
 
 export class Animation {
     id: string;
@@ -134,7 +135,7 @@ export class Animation {
                 break;
             case SceneAnimationType.loadMap:
                 this.model = this.model as LoadMapScene;
-                globals.GAME.loadCinematicMap( this.loadMapScene );   
+                switchMap( this.loadMapScene.mapName, InteractionType.cinematic, this.loadMapScene.playerStart )
                 break;
         }
     }

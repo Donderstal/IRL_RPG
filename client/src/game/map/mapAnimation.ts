@@ -2,7 +2,6 @@ import { MovementType } from '../../enumerables/MovementTypeEnum';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
 import type { Sprite } from '../core/Sprite';
-import type { Game } from "../Game";
 import { getActiveDoors } from '../modules/doors/doorGetter';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { handleMovementKeys } from '../controls';
@@ -25,19 +24,21 @@ import { playEffect } from '../sound/sound';
 import { handleNeighbourhoodNPCCounter } from '../neighbourhoodModule';
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
+import { inDebugGameState, inPausedGameState } from '../gameState/gameStateGetter';
+import { switchMap } from '../../helpers/loadMapHelpers';
 
-export const handleMapAnimations = ( GAME: Game ): void => {
+export const handleMapAnimations = (): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
     clearSpriteCanvasGrids();
     clearUICanvasGrids()
 
-    drawSpritesInOrder( GAME )
+    drawSpritesInOrder( )
     
-    //handleRoadNetworkFuncs(GAME)
-    //handleNpcCounter(GAME)
+    //handleRoadNetworkFuncs()
+    //handleNpcCounter()
 
-    if ( getPlayer() != undefined && !GAME.paused ) {
+    if ( getPlayer() != undefined && !inPausedGameState() ) {
         handleMovementKeys( );  
     }
 
@@ -45,24 +46,19 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     //    e.drawAndMove( );
     //})
 
-    //if ( backSpritesGridGRID.hasFrontGrid ) {
-    //    const tilesFront = GAME.PLAYER.visionbox.getFrontGridTilesInArc( backSpritesGridGRID );
-    //    backSpritesGridGRID.drawTilesAndClearArc( tilesFront );
-    //}
-
     drawBubbles();
 
     const doors = getActiveDoors();
     let inDoorRange = false;
 
     Object.values(doors).forEach( ( door ) => { 
-        if ( GAME.debugMode ) {
+        if ( inDebugGameState() ) {
             door.draw();
         }
 
         if ( playerHitbox !== undefined && playerHitbox.doorInRange( door ) ) {
             inDoorRange = true;
-            handleDoor( GAME, door );
+            handleDoor( door );
         }
     })
 
@@ -76,7 +72,7 @@ export const handleMapAnimations = ( GAME: Game ): void => {
     }
 }
 
-const handleDoor = ( GAME: Game, door: Door ): void => {
+const handleDoor = ( door: Door ): void => {
     const player = getPlayer();
     let pendingDoor = getPendingDoor();
 
@@ -95,7 +91,7 @@ const handleDoor = ( GAME: Game, door: Door ): void => {
             addDoorToUnlockedDoorsRegistry( door.registryString );
         }
         else {
-            GAME.switchMap( door.model.doorTo, InteractionType.door );
+            switchMap( door.model.doorTo, InteractionType.door );
             playEffect( "misc/random5.wav" );
         }
     }
@@ -113,7 +109,7 @@ export const handleNpcCounter = ( ): void => {
     handleNeighbourhoodNPCCounter( );
 }
 
-export const drawSpritesInOrder = ( GAME: Game ): void => {
+export const drawSpritesInOrder = ( ): void => {
     const backTilesGrid = getBackTilesGrid();
     const backSpritesGrid = getBackSpritesGrid();
 
@@ -147,7 +143,7 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         }          
     })
 
-    if ( GAME.debugMode ) {
+    if ( inDebugGameState() ) {
         backSpritesGrid.tilesBlockedBySprites.forEach( ( e ) => {
             const tile = getTileOnCanvasByIndex( e, CanvasTypeEnum.backSprites );
             if ( tile !== undefined ) {
@@ -181,18 +177,18 @@ export const drawSpritesInOrder = ( GAME: Game ): void => {
         backTilesGrid.savepoint.draw( )
     }
     
-    drawSpritesInArray( backgroundSprites, GAME );
-    drawSpritesInArray( standardSprites, GAME );
-    drawSpritesInArray( foregroundSprites, GAME );
-    drawSpritesInArray( flyingSprites, GAME );
+    drawSpritesInArray( backgroundSprites );
+    drawSpritesInArray( standardSprites );
+    drawSpritesInArray( foregroundSprites );
+    drawSpritesInArray( flyingSprites );
 
-    handleMovingSpriteModules( spritesOutOfView, GAME );
+    handleMovingSpriteModules( spritesOutOfView );
 }
 
-export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
-    if ( !GAME.paused ) {
+export const drawSpritesInArray = ( array: Sprite[] ): void => {
+    if ( !inPausedGameState() ) {
         array.forEach( ( sprite ) => {
-            if ( GAME.paused ) {
+            if ( inPausedGameState() ) {
                 return;
             }
             handleSpriteModules( sprite );
@@ -201,11 +197,11 @@ export const drawSpritesInArray = ( array: Sprite[], GAME: Game ): void => {
     }
 }
 
-export const handleMovingSpriteModules = ( array: Sprite[], GAME: Game ): void => {
+export const handleMovingSpriteModules = ( array: Sprite[]): void => {
     let movingSprites = array.filter( ( e ) => { return pluginIsRunning( e.spriteId, SpriteModuleEnum.movement ); } );
-    if ( !GAME.paused ) {
+    if ( !inPausedGameState() ) {
         movingSprites.forEach( ( sprite ) => {
-            if ( GAME.paused ) {
+            if ( inPausedGameState() ) {
                 return;
             }
             handleSpriteModules(sprite);

@@ -1,7 +1,6 @@
 <script>
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
-    import { loadGameFromJSON } from "../stores.js"
 
     let SaveFile = false;
 
@@ -29,7 +28,7 @@
     <MainUiButton action={
         () => { 
             if ( SaveFile ) {
-                loadGameFromJSON(SaveFile)
+                console.log(SaveFile)
             }
         }
     } buttonText={"Load game"}/>

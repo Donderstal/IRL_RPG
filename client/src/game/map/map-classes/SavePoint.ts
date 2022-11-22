@@ -1,5 +1,4 @@
 import { GRID_BLOCK_PX } from "../../../game-data/globals";
-import globals from "../../../game-data/globals";
 import { getEffect, GraphicalEffect } from "../../../helpers/effectHelpers";
 import { PLAYER_ID, PLAYER_NAME } from "../../../game-data/interactionGlobals";
 import { InteractionType } from "../../../enumerables/InteractionType";
@@ -7,6 +6,7 @@ import { ConditionType } from "../../../enumerables/ConditionTypeEnum";
 import { SceneAnimationType } from "../../../enumerables/SceneAnimationTypeEnum";
 import type { Tile } from "../../core/Tile";
 import { Hitbox } from "../../core/Hitbox";
+import { save } from "../../mainController";
 
 const actionData = [
     InteractionType.save, false, null, "medium-text-blip.ogg",
@@ -47,6 +47,6 @@ export class Savepoint extends Hitbox {
     }
 
     confirm( ): void {
-        globals.GAME.save( );
+        save( );
     }
 }

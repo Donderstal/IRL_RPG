@@ -1,5 +1,8 @@
 ### LOG
 
+#### NOV 22, 2022
+* Breaking up the Game class and moving its funcs to different modules
+
 #### NOV 20, 2022
 * Splitting up canvas functionalities into setter/getter/registry files
 * Story event funcs into setter/getter/registry files

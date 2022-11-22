@@ -1,6 +1,5 @@
 import { CanvasGrid } from '../core/CanvasGrid';
 //import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
-import globals from '../../game-data/globals';
 import { RoadNetwork } from '../map/RoadNetwork';
 import { getDataModelByKey } from '../../resources/spriteDataResources';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
@@ -24,6 +23,7 @@ import { createSpriteFromCanvasObjectModel, setSpriteList } from '../modules/spr
 import { getPlayer } from '../modules/sprites/spriteGetter';
 import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../neighbourhoodModule';
 import { getTileOnCanvasByCell } from './canvasGetter';
+import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -53,7 +53,7 @@ export class BackSpriteGrid extends CanvasGrid {
             if ( this.model.sprites )
                 this.setSprites( this.model.sprites );
             if ( this.model.playerStart ) {
-                this.initPlayerCharacter( this.model.playerStart, globals.GAME.party.characterActiveOnMap.ClassName );
+                this.initPlayerCharacter( this.model.playerStart, MAIN_CHARACTER );
                 const player = getPlayer();
                 cameraFocus.centerOnXY( player.centerX, player.baseY )      
             }            

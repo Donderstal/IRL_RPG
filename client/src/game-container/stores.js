@@ -1,5 +1,4 @@
 import { writable, get } from 'svelte/store';
-import { loadGame } from './../game/Game.js';
 
 export const SCREEN_WELCOME         = "WELCOME";
 export const SCREEN_LOG_IN          = "LOG_IN";
@@ -15,10 +14,6 @@ export const SCREEN_ABOUT           = "ABOUT"
 export const SCREEN_HELP            = "HELP"
 export const SCREEN_SIGNED_UP       = "SIGNED_UP"
 export const SCREEN_RESTORED_PASS   = "RESTORED_PASS"
-
-const classNames = {
-    "LOREM" : "NECKBEARD", "IPSUM" : "INFLUENCER", "DOLOR" : "CHAD", "SIT AMET" : "TUMBLR_GIRL"
-};
 
 const checkForUserSession = ( ) => {
     fetch("/check-login", {
@@ -93,12 +88,6 @@ export const returnToPreviousScreen     = ( ) => {
             break;
     }
 };
-
-export const loadGameFromJSON = (saveFile) => {
-    setTimeout( ( ) => {
-        loadGame(saveFile);
-    }, 100);  
-}
 
 export const setErrorMessage = (message) =>{
     userMessage.set(message);

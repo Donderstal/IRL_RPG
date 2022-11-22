@@ -1,5 +1,4 @@
 import { mobileAgent } from '../helpers/screenOrientation';
-import globals from './globals';
 import { GRID_BLOCK_PX } from './globals';
 import { BUBBLE_TOP, BUBBLE_MIDDLE, BUBBLE_BOTTOM } from './textboxGlobals';
 

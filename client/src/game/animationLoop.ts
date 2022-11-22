@@ -8,12 +8,12 @@ import { cameraFocus } from './cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
+import { inListeningForKeysGameState, inPausedGameState } from './gameState/gameStateGetter';
 
 let lastDateNow: number;
 let newDateNow: number;
 
 export const animationLoop = ( ): void => {
-    const GAME = globals.GAME;
     const menuCanvas = getMenuGrid();
 
     newDateNow = Date.now();
@@ -23,16 +23,16 @@ export const animationLoop = ( ): void => {
     
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
-        if ( !GAME.paused ) {
-            if ( !GAME.listeningForPress ) {
+        if ( !inPausedGameState() ) {
+            if ( !inListeningForKeysGameState() ) {
                 listenForKeyPress();
             }            
 
             if ( !menuCanvas.isActive && !cinematicIsActive() ) {
-                handleMapAnimations( GAME );
+                handleMapAnimations( );
             }
             else if ( !menuCanvas.isActive && cinematicIsActive() ) {
-                handleCinematicAnimations( GAME );
+                handleCinematicAnimations( );
             }
             else if ( menuCanvas.isActive ) {
                 menuCanvas.draw();

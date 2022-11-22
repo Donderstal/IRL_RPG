@@ -1,4 +1,3 @@
-import type { Game } from "../game/Game";
 import { mobileAgent } from "../helpers/screenOrientation";
 
 export const GRID_BLOCK_IN_SHEET_PX        = 64
@@ -56,10 +55,8 @@ export const BATTLE_FONT_LINE_HEIGHT       = BATTLE_FONT_SIZE * GOLDEN_FONT_RATI
 
 const PNG_DICTIONARY = {};
 const AUDIO_DICTIONARY = {};
-let GAME: Game = null;
 
 export default {
-    GAME,
     PNG_DICTIONARY,
     AUDIO_DICTIONARY
 }
