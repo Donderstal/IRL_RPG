@@ -1,3 +1,4 @@
+import { getTilesheetPng } from "../assets/tilesheets";
 import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../game-data/globals";
 import { getTilesetXyValues } from "../helpers/tileSheetHelpers";
 import type { TilesheetModel } from "../models/TilesheetModel";
@@ -1684,7 +1685,7 @@ const getImages = ( sheetData ) => {
 }
 
 const drawSheetToCanvas = ( angleObject: { [key in string]: OffscreenCanvas }, src: string, key: string ) => {
-    const image = globals.PNG_DICTIONARY[`/static/tilesets/${src}.png`];
+    const image = getTilesheetPng( `/static/tilesets/${src}.png` );
     angleObject[key] = new OffscreenCanvas( image.naturalWidth, image.naturalHeight );
     angleObject[key].getContext( "2d" ).drawImage( image, 0, 0, widthFactor * angleObject[key].width, heightFactor * angleObject[key].height );
 }

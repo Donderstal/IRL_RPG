@@ -1,6 +1,6 @@
-import globals from '../../game-data/globals';
 import { ItemCategoryEnum } from '../../enumerables/ItemCategoryEnum';
 import { getItemDataById } from '../../resources/itemResources';
+import { getUiImage } from '../../assets/ui';
 
 const uiSpritesFolder = "/static/ui/"
 /**
@@ -24,7 +24,7 @@ export class GameItem {
         this.Category   = data.category;
         this.SpriteSrc  = data.png;
         this.Description= data.description;
-        this.Image      = globals.PNG_DICTIONARY[uiSpritesFolder + this.SpriteSrc + ".png"];
+        this.Image = getUiImage( uiSpritesFolder + this.SpriteSrc + ".png" );
     }
     get canBeEquipped( ): boolean { 
         return this.Category === ItemCategoryEnum.wearable; 

@@ -1,6 +1,6 @@
-import globals from '../../game-data/globals';
 import { SpatialSound } from './SpatialSound';
 import { BaseSound } from "./BaseSound";
+import { getAudioFile } from '../../assets/audio';
 
 const musicFolder = "/static/music/";
 const effectsFolder = "/static/sfx/";
@@ -16,8 +16,6 @@ let musicIsPlaying = false;
 let activeSoundEffects = [];
 let speakingEffect = null;
 let activeMusicId = "";
-
-const audioList = (): { [key: string]: HTMLAudioElement } => { return globals.AUDIO_DICTIONARY; }
 
 export const clearActiveSoundEffects = (): void => {
     activeSoundEffects.forEach( ( sound ) => {
@@ -41,12 +39,12 @@ export const setActiveMusic = ( filename: string ): void => {
     if ( activeMusic ) {
         pauseMusic();
     }
-    activeMusic = new BaseSound( audioList()[src], src.includes( "menu" ) ? menuMusicVolume : standardMusicVolume, true );
+    activeMusic = new BaseSound( getAudioFile( src ), src.includes( "menu" ) ? menuMusicVolume : standardMusicVolume, true );
     playMusic();
 }
 export const getSpatialEffect = ( filename: string, loop = false ): SpatialSound => {
     const src = effectsFolder + filename;
-    const effect = new SpatialSound( audioList()[src], standardSFXVolume, audioContext, loop );
+    const effect = new SpatialSound( getAudioFile( src ), standardSFXVolume, audioContext, loop );
     activeSoundEffects.push( effect );
     return effect;
 }
@@ -78,5 +76,5 @@ export const playMusic = (): void => {
 
 const getEffect = ( filename: string, loop = false ): BaseSound => {
     const src = effectsFolder + filename;
-    return new BaseSound( audioList()[src], standardSFXVolume, loop );
+    return new BaseSound( getAudioFile( src ), standardSFXVolume, loop );
 }

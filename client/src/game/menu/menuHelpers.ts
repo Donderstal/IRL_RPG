@@ -1,11 +1,10 @@
-import globals from '../../game-data/globals';
+import { getUiImage } from '../../assets/ui';
 import { GRID_BLOCK_PX, GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals';
 import { mobileAgent } from '../../helpers/screenOrientation';
 
 export const drawBubblePart = ( name: string, tile: { x: number, y: number }, ctx: OffscreenCanvasRenderingContext2D ): void => {
-    const pngs = globals.PNG_DICTIONARY;
     ctx.drawImage(
-        pngs[name],
+        getUiImage(name),
         0, 0,
         GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
         tile.x, tile.y, 

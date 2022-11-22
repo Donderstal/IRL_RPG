@@ -1,4 +1,4 @@
-import globals, { FRAMES_PER_SECOND } from '../game-data/globals';
+import { FRAMES_PER_SECOND } from '../game-data/globals';
 import { handleMapAnimations } from './map/mapAnimation';
 import { clearPressedKeys, listenForKeyPress } from './controls';
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';

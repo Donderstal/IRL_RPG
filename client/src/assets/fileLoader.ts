@@ -1,5 +1,9 @@
-import globals from "../game-data/globals";
 import { fetchJSONWithCallback } from "../helpers/utilFunctions";
+import { setAudioFile } from "./audio";
+import { setEffectPng } from "./effects";
+import { setSpritePng } from "./sprites";
+import { setTilesheetPng } from "./tilesheets";
+import { setUiImage } from "./ui";
 
 let pngIndex: number = 0;
 let pngsLimit: number = null;
@@ -30,7 +34,18 @@ const setPngs = ( jsonList: string[] ): void => {
         image.src = path;
         image.onload = () => {
             pngIndex++;
-            globals.PNG_DICTIONARY[path] = image;
+            if ( path.includes( '/effects/' ) ) {
+                setEffectPng( path, image );
+            }
+            else if ( path.includes( '/sprites/' ) ) {
+                setSpritePng( path, image );
+            }
+            else if ( path.includes( '/site_assets/' ) || path.includes( '/ui/' ) ) {
+                setUiImage( path, image );
+            }
+            else if ( path.includes( '/tilesets/' ) ) {
+                setTilesheetPng( path, image );
+            }
         }
     } );
 }
@@ -44,7 +59,7 @@ const setSounds = ( jsonList: string[] ): void => {
         audio.preload = 'auto';
         audio.onloadedmetadata = () => {
             soundIndex++;
-            globals.AUDIO_DICTIONARY[path] = audio;
+            setAudioFile( path, audio );
         }
     } );
 }

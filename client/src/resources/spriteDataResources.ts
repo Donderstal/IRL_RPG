@@ -11,6 +11,7 @@ import type { SpriteDataModel } from "../models/SpriteDataModel";
 import { getSpriteFrameForPosition } from "../helpers/modelConversionHelpers";
 import { CollectableType } from "../enumerables/CollectableTypeEnum";
 import { CHARACTER_IDLE_ANIMS, COLLECTABLE_ANIMS, SIGN_HORI_ANIMS, SIGN_VERT_ANIMS } from "../game-data/animationGlobals";
+import { getSpritePng } from "../assets/sprites";
 
 const ONE_BLOCK_SPRITE = {
     "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
@@ -1429,17 +1430,17 @@ export const spriteData = {
     }
 }
 
-export const getDataModels = (): SpriteDataModel[] => {
-    return Object.entries( spriteData ).map( ( e ) => {
+export const initializeDataModels = (): void => {
+    spriteDataModels = Object.entries( spriteData ).map( ( e ) => {
         const key = e[0];
         const value = e[1];
-        const image = new Image();
+        const src = "/static/sprites/" + value["src"];
         let model: SpriteDataModel = null;
-        image.src = "/static/sprites/" + value["src"];
+
         model = {
             key: key,
-            src: value["src"],
-            image: image,
+            src: src,
+            image: getSpritePng(src),
             dimensionalAlignment: value["dimensional_alignment"] as SpriteSheetAlignmentEnum,
 
             isCar: value["isCar"] !== undefined && value["isCar"],
@@ -1495,7 +1496,7 @@ export const getDataModels = (): SpriteDataModel[] => {
     } )
 }
 
-const spriteDataModels: SpriteDataModel[] = getDataModels();
+let spriteDataModels: SpriteDataModel[] = null;
 
 export const getDataModelByKey = ( key: string ): SpriteDataModel => {
     const filteredModels = spriteDataModels.filter( ( e ) => { return e.key === key } );

@@ -2,8 +2,8 @@ import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
 
 import { getEffectData } from "../../resources/effectResources";
 import { FRAME_LIMIT, GRID_BLOCK_PX } from "../../game-data/globals";
-import globals from "../../game-data/globals";
 import { drawFromImageToCanvas } from "../../helpers/canvasHelpers";
+import { getTilesheetPng } from "../../assets/tilesheets";
 /**
  * Effect instances represent a ( part of ) a graphical effect in the game.
  */
@@ -84,7 +84,7 @@ export class Effect {
 
     setSprite( src: string ): void {
         this.src        = src;
-        this.sheet      = globals.PNG_DICTIONARY[this.src];
+        this.sheet      = getTilesheetPng( src );
         this.active     = true;
     }
 

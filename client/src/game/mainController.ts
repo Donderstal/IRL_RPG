@@ -14,12 +14,13 @@ import { animationLoop } from "./animationLoop";
 import { cameraFocus, initializeCameraFocus } from "./cameraFocus";
 import { prepareCanvasElementsForGame } from "./canvas/canvasSetter";
 import { listenForKeyPress } from "./controls";
-import { filesAreLoaded, startFileLoader } from "./fileLoader";
+import { filesAreLoaded, startFileLoader } from "../assets/fileLoader";
 import { setDebugModeState, setDisableStoryState } from "./gameState/gameStateSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./loadingScreen";
 import { getActiveMap } from "./neighbourhoodModule";
 import { setNewParty } from "./party/partyController";
 import { setStoryEvents } from "./storyEvents/storyEventSetter";
+import { initializeDataModels } from "../resources/spriteDataResources";
 
 
 let params: any[] = null;
@@ -54,7 +55,7 @@ const checkIfFilesAreLoaded = () => {
 
 const startNewGame = ( ): void => {
     initTilesheetModels();
-
+    initializeDataModels();
     setNewParty( params[0] );
     setNeighbourhoodAndMap( params[2] );
     setDebugModeState( params[3] );
@@ -69,6 +70,7 @@ const loadGameFromSave = (): void => {
     const json = params[0];
 
     initTilesheetModels();
+    initializeDataModels();
     setNewParty( "test" )
     setNeighbourhoodAndMap( json.activeMap.mapName );
     setStoryEvents( json.keyLists.storyEvents );

@@ -1,4 +1,4 @@
-import globals, { BATTLE_FONT_SIZE } from '../../game-data/globals';
+import { BATTLE_FONT_SIZE } from '../../game-data/globals';
 import { writeTextLine, setFont } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT } from '../../game-data/globals';
 import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED } from '../../game-data/textboxGlobals';
@@ -7,6 +7,7 @@ import { TypeWriter, TypeWriterWord } from "../../helpers/TypeWriter";
 import type { SpeakScene, SpeakYesNoScene } from '../../models/SceneAnimationModel';
 import { TextBubbleType } from '../../enumerables/TextBubbleType';
 import { getSpeechBubbleDimensions, getSpeechBubbleTemplateCanvas, getSpeechBubbleXy } from '../../helpers/speechBubbleHelpers';
+import { getUiImage } from '../../assets/ui';
 
 type PhraseModel = {
     x: number;
@@ -232,16 +233,15 @@ export class SpeechBubble {
     }
 
     drawButtons( activeContext: OffscreenCanvasRenderingContext2D ): void {
-        const pngs = globals.PNG_DICTIONARY;
         activeContext.drawImage(
-            this.activeButton === InteractionAnswer.yes ? pngs[BUBBLE_YES] : pngs[BUBBLE_UNSELECTED],
+            this.activeButton === InteractionAnswer.yes ? getUiImage( BUBBLE_YES ) : getUiImage( BUBBLE_UNSELECTED ),
             0, 0,
             GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.yesBubbleX, this.bubbleY,
             GRID_BLOCK_PX, GRID_BLOCK_PX
         );
         activeContext.drawImage(
-            this.activeButton === InteractionAnswer.no ? pngs[BUBBLE_NO] : pngs[BUBBLE_UNSELECTED],
+            this.activeButton === InteractionAnswer.no ? getUiImage( BUBBLE_NO ) : getUiImage( BUBBLE_UNSELECTED ),
             0, 0,
             GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.noBubbleX, this.bubbleY,

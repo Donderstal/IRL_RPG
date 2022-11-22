@@ -1,3 +1,4 @@
+import { getUiImage } from "../assets/ui";
 import { TextBubbleType } from "../enumerables/TextBubbleType";
 import globals, { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX, MAX_BUBBLE_WIDTH } from "../game-data/globals";
 import { BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_LEFT_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_MIDDLE, BUBBLE_RIGHT, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_TOP } from "../game-data/textboxGlobals";
@@ -47,9 +48,8 @@ const drawTemplateBubbleToCanvas = (width: number, height: number, context: Offs
 }
 
 const drawBubblePart = ( pngKey: string, x: number, y: number, context: OffscreenCanvasRenderingContext2D ): void => {
-    const png = globals.PNG_DICTIONARY[pngKey];
     context.drawImage(
-        png,
+        getUiImage(pngKey),
         0, 0,
         GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
         x, y,

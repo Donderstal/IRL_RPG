@@ -1,5 +1,6 @@
+import { getUiImage } from '../../assets/ui';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
-import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from '../../game-data/globals';
+import { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from '../../game-data/globals';
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers';
 
 export class Emote { 
@@ -10,7 +11,7 @@ export class Emote {
     constructor( location, src ) {
         this.x = location.x;
         this.y = location.y - GRID_BLOCK_PX;
-        this.image = globals.PNG_DICTIONARY[src];
+        this.image = getUiImage( src );
         this.type = SceneAnimationType.emote
     }
 
