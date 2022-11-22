@@ -19,13 +19,14 @@ import type { Door } from './map-classes/Door';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
-import { handleSpriteModules, pluginIsRunning } from '../spriteModuleHandler';
 import { playEffect } from '../sound/sound';
 import { handleNeighbourhoodNPCCounter } from '../neighbourhoodModule';
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { inDebugGameState, inPausedGameState } from '../gameState/gameStateGetter';
 import { switchMap } from '../../helpers/loadMapHelpers';
+import { moduleIsRunningForSprite } from '../modules/moduleGetter';
+import { handleSpriteModules } from '../modules/moduleHandler';
 
 export const handleMapAnimations = (): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -154,7 +155,7 @@ export const drawSpritesInOrder = ( ): void => {
     backSpritesGrid.resetTilesBlockedBySprites();
     spritesOutOfView.forEach( ( sprite ) => {
         if ( !(sprite.model.onBackground || sprite.model.notGrounded
-            || ( sprite.movementType == MovementType.flying && pluginIsRunning( sprite.spriteId, SpriteModuleEnum.movement ) ) ) ) {
+            || ( sprite.movementType == MovementType.flying && moduleIsRunningForSprite( sprite.spriteId, SpriteModuleEnum.movement ) ) ) ) {
             backSpritesGrid.setTilesBlockedBySprite( sprite );
         }
     } )
@@ -165,7 +166,7 @@ export const drawSpritesInOrder = ( ): void => {
         else if ( sprite.model.notGrounded ) {
             foregroundSprites.push( sprite );
         }
-        else if ( sprite.movementType == MovementType.flying && pluginIsRunning( sprite.spriteId, SpriteModuleEnum.movement ) ) {
+        else if ( sprite.movementType == MovementType.flying && moduleIsRunningForSprite( sprite.spriteId, SpriteModuleEnum.movement ) ) {
             flyingSprites.push( sprite );
         }
         else {
@@ -198,7 +199,7 @@ export const drawSpritesInArray = ( array: Sprite[] ): void => {
 }
 
 export const handleMovingSpriteModules = ( array: Sprite[]): void => {
-    let movingSprites = array.filter( ( e ) => { return pluginIsRunning( e.spriteId, SpriteModuleEnum.movement ); } );
+    let movingSprites = array.filter( ( e ) => { return moduleIsRunningForSprite( e.spriteId, SpriteModuleEnum.movement ); } );
     if ( !inPausedGameState() ) {
         movingSprites.forEach( ( sprite ) => {
             if ( inPausedGameState() ) {

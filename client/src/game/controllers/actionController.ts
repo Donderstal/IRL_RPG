@@ -8,7 +8,7 @@ import { addEventToRegistry } from '../../registries/interactionRegistry';
 import { checkForQuestTrigger } from '../../registries/questRegistry';
 import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
 import { getSpriteDestination, spriteHasDestination } from '../modules/destinations/destinationGetter';
-import { markModuleAsInActive } from '../spriteModuleHandler';
+import { markModuleAsInActive } from '../modules/moduleSetter';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 import { getAllActions } from '../modules/actions/actionRegistry';
 import { checkForEventTrigger } from '../storyEvents/storyEventHandler';

@@ -12,8 +12,7 @@ import { DirectionEnum } from '../enumerables/DirectionEnum';
 import { cameraFocus } from '../game/cameraFocus';
 import { getPlayer } from '../game/modules/sprites/spriteGetter';
 import { clearAllSprites } from '../game/modules/sprites/spriteSetter';
-import { clearAllSpriteModules } from '../game/controllers/spriteModuleController';
-import { clearSpriteModuleRegistries } from '../game/spriteModuleHandler';
+import { clearSpriteModuleRegistries } from '../game/modules/moduleSetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
@@ -80,7 +79,6 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearCanvasGrids();
 
     clearSpriteModuleRegistries();
-    clearAllSpriteModules();
     clearAllSprites();
 
     clearStoryEventsForMap();

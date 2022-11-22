@@ -9,7 +9,7 @@ import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHel
 import type { DestinationCellModel } from '../../../models/DestinationCellModel';
 import type { DestinationType } from '../../../enumerables/DestinationType';
 import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
-import { markModuleAsActive, markModuleAsInActive } from '../../spriteModuleHandler';
+import { markModuleAsActive, markModuleAsInActive } from '../../modules/moduleSetter';
 import { SpriteModuleEnum } from '../../../enumerables/SpriteModuleEnum';
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByXy } from '../../canvas/canvasGetter';
 import type { BackTileGrid } from '../../canvas/BackTileGrid';

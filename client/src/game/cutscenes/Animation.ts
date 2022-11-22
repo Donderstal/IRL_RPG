@@ -24,7 +24,7 @@ import { DestinationType } from "../../enumerables/DestinationType";
 import { createSpriteFromCanvasObjectModel, removeSpriteById } from "../modules/sprites/spriteSetter";
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
-import { tryInitializeSpriteMovement } from "../controllers/spriteModuleController";
+import { tryInitializeSpriteMovement } from "../modules/moduleSetter";
 import { ANIM_TALK } from "../../game-data/animationGlobals";
 import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
 import { pauseMusic, playEffect } from "../sound/sound";
