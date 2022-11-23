@@ -1,5 +1,5 @@
 import { getTilesheetPng } from "../assets/tilesheets";
-import globals, { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../game-data/globals";
+import { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../game-data/globals";
 import { getTilesetXyValues } from "../helpers/tileSheetHelpers";
 import type { TilesheetModel } from "../models/TilesheetModel";
 
@@ -1646,7 +1646,7 @@ const getTileSheetModels = () => {
             blocked: e.blocked,
             image: images["standard"]["0"],
             images: { ...images },
-            xyValues: getTilesetXyValues( images["standard"]["0"].height / GRID_BLOCK_PX );
+            xyValues: getTilesetXyValues( images["standard"]["0"].height / GRID_BLOCK_PX )
         }
 
         return model;

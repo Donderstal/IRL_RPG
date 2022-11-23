@@ -63,9 +63,9 @@
 
     <div id="instance-settings" style="position:absolute; top:10%; left:5%;">
         <h4>Instance settings</h4>
-        <p><label>Run game in Debug mode</label><input id="enable-debug" type="checkbox" /></p>
-        <p><label>Disable story cinematics</label><input id="disable-story" type="checkbox" checked /></p>
-        <p><label>Select starting location</label><select id="map-selection">
+        <p><label for="enable-debug">Run game in Debug mode</label><input id="enable-debug" name="enable-debug" type="checkbox" /></p>
+        <p><label for="disable-story">Disable story cinematics</label><input id="disable-story" name="disable-story" type="checkbox" checked /></p>
+        <p><label for="map-selection" >Select starting location</label><select id="map-selection" name="map-selection" >
             <option value={LH_NEWTOWN_APP_3_KEY}>Lennart</option>
             <option value="test-maps/A1">Test movement</option>
             <option value="test-maps/B1">Test doors</option>

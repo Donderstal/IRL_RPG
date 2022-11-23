@@ -2,6 +2,7 @@ import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import { getRandomDestinationInRadius } from "../../../helpers/utilFunctions";
 import { cameraFocus } from "../../cameraFocus";
 import type { Sprite } from "../../core/Sprite";
+import type { Tile } from "../../core/Tile";
 import type { Destination } from "../../map/map-classes/Destination";
 import { getSpriteDestination } from "./destinationGetter";
 

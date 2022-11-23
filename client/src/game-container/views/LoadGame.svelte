@@ -22,8 +22,8 @@
 <div class="load-game-div">
     <GoBackButton/>
     <div>
-        <label id="save_file_label">Input a save file: </label>
-        <input id="save_file" type="file" on:change|self={loadJsonFile}/>
+        <label id="save_file_label" for="jsonInput">Input a save file: </label>
+        <input id="save_file" type="file" name="jsonInput" on:change|self={loadJsonFile}/>
     </div>
     <MainUiButton action={
         () => { 

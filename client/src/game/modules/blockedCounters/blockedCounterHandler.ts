@@ -3,12 +3,13 @@ import { getAssociatedBlockedSpriteCounter, spriteHasBlockedCounter } from "./bl
 import { initializeBlockedSpriteCounter } from "./blockedCounterSetter";
 
 export const handleBlockedSpriteCounter = ( sprite: Sprite ): void => {
-    if ( spriteHasBlockedCounter( sprite.spriteId ) ) {
-        const counter = getAssociatedBlockedSpriteCounter( sprite.spriteId );
+    const id = sprite.spriteId;
+    if ( spriteHasBlockedCounter( id ) ) {
+        const counter = getAssociatedBlockedSpriteCounter( id );
         counter.count();
     }
     else {
-        initializeBlockedSpriteCounter( sprite );
+        initializeBlockedSpriteCounter( id );
     }
 }
 export const blockedSpriteCounterIsOverLimit = ( spriteId: string ): boolean => {

@@ -1,6 +1,6 @@
 import { getUiImage } from "../assets/ui";
 import { TextBubbleType } from "../enumerables/TextBubbleType";
-import globals, { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX, MAX_BUBBLE_WIDTH } from "../game-data/globals";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX, MAX_BUBBLE_WIDTH } from "../game-data/globals";
 import { BUBBLE_BOTTOM, BUBBLE_LEFT, BUBBLE_LEFT_BOTTOM, BUBBLE_LEFT_TOP, BUBBLE_MIDDLE, BUBBLE_RIGHT, BUBBLE_RIGHT_BOTTOM, BUBBLE_RIGHT_TOP, BUBBLE_TOP } from "../game-data/textboxGlobals";
 import { mobileAgent } from "./screenOrientation";
 

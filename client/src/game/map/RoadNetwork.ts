@@ -139,7 +139,7 @@ export class RoadNetwork {
                     backSprites.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.primaryRow ),
                     backSprites.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.secondaryRow ),
                     backSprites.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.secondaryRow )
-                ], this.canvas )
+                ] )
             } )                            
         }
     }
@@ -228,7 +228,7 @@ export class RoadNetwork {
                             backSprites.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.secondaryColumn, road.isHorizontal ? crossing[0] : road.model.secondaryRow ),
                             backSprites.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.primaryColumn, road.isHorizontal ? crossing[1] : road.model.primaryRow ),
                             backSprites.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.secondaryColumn, road.isHorizontal ? crossing[1] : road.model.secondaryRow )
-                        ], this.canvas )
+                        ] )
                     } )                     
                 });
             };

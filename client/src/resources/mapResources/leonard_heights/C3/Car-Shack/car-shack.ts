@@ -996,7 +996,7 @@ export default {
 			"type": SUPERMARKET_MANAGER,
 			"row": 6,
 			"column": 10
-		}
+		},
 		{
 			"type": "boarded_window",
 			"direction": 0,

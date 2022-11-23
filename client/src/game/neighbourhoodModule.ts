@@ -152,17 +152,11 @@ export const activateMap = ( key: string ): void => {
     previousMapLocation = activeMapLocation;
     activeMapKey = key;
     activeMapLocation = getActiveMap().location;
-    if( previousMapLocation !== activeMapLocation ) {
+    if ( previousMapLocation !== activeMapLocation ) {
         setNewCenterBubble( activeMapLocation )
     }
-    }
-
-export const setPlayerStart = ( name: string, className: string ): void => {
-    playerData = {
-        name: name,
-        className: className
-    };
 }
+
 
 export const setNeighbourhoodNPCCounter = (): void => {
     NPCCounter = new Counter( model.characterSpawnRate, true )

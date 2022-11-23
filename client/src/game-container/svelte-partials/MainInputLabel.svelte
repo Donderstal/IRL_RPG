@@ -10,4 +10,4 @@
     }
 </style>
 
-<label>{text}</label>
+<label for="text">{text}</label>

@@ -56,7 +56,7 @@ export class Tile {
     }
 
     get isEmpty( ): boolean {
-        return this.model.id === "E" || this.model.id === null;
+        return this.model.id === null;
     }
 
     get offScreen(): boolean {

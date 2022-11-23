@@ -1,15 +1,10 @@
+import { TileStatus } from "../enumerables/TileStatusEnum";
 import type { Tile } from "../game/core/Tile";
 import type { GridLocation } from "../models/GridLocation";
 
 let colsInGrid: number, rowsInGrid: number, tiles: Tile[], blockedIndexes: number[];
 let queue: PriorityQueue, visitedTilesList: string[], foundPath: GridLocation[], movementCost: number, targetLocationIndex: string;
 
-enum TileStatus {
-    start,
-    invalid,
-    blocked,
-    valid
-}
 enum PathfindingDirection {
     north,
     east,

@@ -6,7 +6,6 @@ import type { Sprite } from '../game/core/Sprite';
 
 export class TileSquare {
     tileList: Tile[];
-    canvas: OffscreenCanvas;
 
     left: number;
     top: number;
@@ -15,8 +14,7 @@ export class TileSquare {
 
     width: number;
     height: number;
-    constructor( tileList: Tile[], canvas: OffscreenCanvas ) {
-        this.canvas = canvas;
+    constructor( tileList: Tile[] ) {
         this.tileList = [];
         this.setTileList( tileList );
         this.setSquareDimensions( );
@@ -28,9 +26,7 @@ export class TileSquare {
     get bottomRow(): number { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.row; } )); };
  
     draw( color: string ): void {
-        drawRect(
-            this.canvas, this.left, this.top, this.width, this.height, color
-        );
+
     }
 
     setTileList( list: Tile[] ): void {

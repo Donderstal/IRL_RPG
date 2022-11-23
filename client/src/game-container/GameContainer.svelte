@@ -132,10 +132,6 @@
             margin-top: 30vh;
             display: block;
         }
-        h3 {
-            margin-top: 33vh;
-            padding: 2vw;
-        }
     }
     button {
         color:white;
@@ -159,17 +155,17 @@
     {#if mobileAgent}
         <div id="buttons-div" >
             <p id="buttons-div-left" class="left-buttons" style="max-width:{buttonsDivsMaxWidth}px">
-                <img alt="D pad image" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>
-                <img alt="D pad image" id="d-pad-up" class="arrow-button-vert sprite-image" src="/static/ui/arrow-up.png"/>
-                <img alt="D pad image" id="d-pad-right" class="arrow-button-hori sprite-image" src="/static/ui/arrow-right.png"/>
-                <img alt="D pad image" id="d-pad-down" class="arrow-button-vert sprite-image" src="/static/ui/arrow-down.png"/>
+                <img alt="D pad button left" id="d-pad-left" class="arrow-button-hori sprite-image" src="/static/ui/arrow-left.png"/>
+                <img alt="D pad button up" id="d-pad-up" class="arrow-button-vert sprite-image" src="/static/ui/arrow-up.png"/>
+                <img alt="D pad button right" id="d-pad-right" class="arrow-button-hori sprite-image" src="/static/ui/arrow-right.png"/>
+                <img alt="D pad button down" id="d-pad-down" class="arrow-button-vert sprite-image" src="/static/ui/arrow-down.png"/>
             </p>
             <p id="buttons-div-right" class="right-buttons" style="max-width:{buttonsDivsMaxWidth}px">
                 <span>
-                    <img alt="D pad image" class="sprite-image-inner" src="/static/ui/arrow-right.png"/>
-                    <img alt="D pad image" class="sprite-image-inner" src="/static/ui/arrow-left.png"/>
+                    <img alt="start button" class="sprite-image-inner" src="/static/ui/arrow-right.png"/>
+                    <img alt="D pad" class="sprite-image-inner" src="/static/ui/arrow-left.png"/>
                 </span>
-                <img alt="action button image" id="action-button" class="sprite-image" src="/static/ui/bubble-black.png"/>
+                <img alt="action button" id="action-button" class="sprite-image" src="/static/ui/bubble-black.png"/>
             </p>
         </div>
     {/if}

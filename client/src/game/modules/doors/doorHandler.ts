@@ -1,4 +1,5 @@
 import { getAllDoors } from "./doorRegistry";
+import type { Sprite } from "../../core/Sprite";
 
 export const updateSpriteAssociatedDoor = ( sprite: Sprite ): void => {
     const doors = getAllDoors();

@@ -97,7 +97,7 @@ const getPlayerCellInNewMap = ( mapData: MapModel, type: InteractionType ) => {
     const previousMapKey = getPreviousMapKey()
     switch ( type ) {
         case InteractionType.door:
-            [...mapData.doors, ...mapData.sprites.filter( ( e ) => { return e.hasDoor })].forEach( ( door ) => {
+            mapData.doors.forEach( ( door ) => {
                 if ( previousMapKey == door.doorTo ) {
                     newPlayerCell.row = door.row;
                     newPlayerCell.column = door.column;

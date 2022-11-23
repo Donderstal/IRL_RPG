@@ -1,3 +1,5 @@
+import type { TileStatus } from '../enumerables/TileStatusEnum';
+
 export type GridLocation = {
     index: string;
     tileIndex?: number;

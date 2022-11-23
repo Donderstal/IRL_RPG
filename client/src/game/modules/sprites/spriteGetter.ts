@@ -37,5 +37,5 @@ const getBackSpriteById = ( spriteId: string ): Sprite => {
 }
 const getFrontSpriteById = ( spriteId: string ): Sprite => {
     const frontSprites = getFrontSpritesArray();
-    return frontSprites.filter( ( e ) => { return e.spriteId === spriteId; } )[0;]
+    return frontSprites.filter( ( e ) => { return e.spriteId === spriteId; } )[0];
 }

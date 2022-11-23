@@ -299,9 +299,6 @@ const getDataModels = (): StoryEventModel[] => {
             trigger: event.trigger,
             interaction: event.interaction.map(initInteractionModel)
         }
-        if ( event.trigger === CinematicTrigger.interaction ) {
-            model.name = event.name;
-        }
         if ( event.trigger === CinematicTrigger.position ) {
             model.position = { row: event.position.row, column: event.position.column, direction: event.position.direction };
         }

@@ -91,20 +91,11 @@ export class Grid {
     getTileAtXY( x: number, y: number ): Tile {
         const column = Math.ceil( ( x - this.x ) / GRID_BLOCK_PX);
         const row = Math.ceil( ( y - this.y )  / GRID_BLOCK_PX);
-        if ( x > this.x + this.columns * GRID_BLOCK_PX || y > this.y + this.rows * GRID_BLOCK_PX || x <= this.x || y <= this.y ) {
-            return this.getDummyTile( 
-                x <= this.x ? 0 : x > this.x + this.columns * GRID_BLOCK_PX ? this.columns + 1 : column,
-                y <= this.y ? 0 : y > this.y + this.rows * GRID_BLOCK_PX ? this.rows + 1 : row
-            );
-        }
 
         return this.getTileAtCell( column, row );
     }
 
     getTileAtCell( column: number, row: number ): Tile {
-        if ( column === 0 || row === 0 || column === this.columns + 1 || row === this.rows + 1 ){
-            return this.getDummyTile( column, row );
-        }
         const tileIndex = ( ( (row as number ) * this.columns ) - ( this.columns - (column as number)) ) - 1;
         return this.array[tileIndex]
     }
@@ -114,22 +105,5 @@ export class Grid {
             e.setTileID( tileGrid[index].id );
             e.setSettings( { 'mirrored': tileGrid[index].mirrored, 'angle': tileGrid[index].angle } )
         })
-    }
-
-    getDummyTile( column: number, row: number ): Tile {
-        const x = ( column - 1 ) * GRID_BLOCK_PX;
-        const y = ( row - 1 ) * GRID_BLOCK_PX;
-        if ( column <= 0 ){
-            return new Tile( OutOfMapEnum.left, x, y, this.ctx, row, 0 )
-        }
-        else if ( row <= 0 ) {
-            return new Tile( OutOfMapEnum.up, x, y, this.ctx, 0, column )
-        }
-        else if ( column >= this.columns + 1 ) {
-            return new Tile( OutOfMapEnum.right, x, y, this.ctx, row, this.columns + 1 )
-        }
-        else if ( row >= this.rows + 1 ) {
-            return new Tile( OutOfMapEnum.down, x, y, this.ctx, this.rows + 1, column )
-        }
     }
 }
