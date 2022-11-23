@@ -3,18 +3,16 @@ import { getUniqueId } from "../../../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
 import { getTileOnCanvasByCell } from "../../canvas/canvasGetter";
 import { Sprite } from "../../core/Sprite";
-import { initializeSpriteModules } from "../moduleSetter";
 import { destroySpriteAssociatedAction } from "../actions/actionSetter";
 import { destroySpriteAssociatedDoor } from "../doors/doorSetter";
 import { addSpriteToRegistry, clearSpriteArraysAndDictionaries, removeSpriteFromRegistry, getSpriteIds } from "./spriteRegistry";
 
-export const createSpriteFromCanvasObjectModel = ( model: CanvasObjectModel, canvas: CanvasTypeEnum, id: string = null ): string => {
+export const createSpriteFromCanvasObjectModel = ( model: CanvasObjectModel, canvas: CanvasTypeEnum, id: string = null ): Sprite => {
     const spriteId = id !== null ? id : getUniqueId( getSpriteIds() );
     const tile = getTileOnCanvasByCell( { column: model.column, row: model.row }, canvas );
     const sprite = new Sprite( tile, model, spriteId );
-    initializeSpriteModules( sprite, model );
     addSpriteToRegistry( sprite, canvas );
-    return spriteId;
+    return sprite;
 }
 export const setSpriteList = ( spriteList: Sprite[] ): void => {
     spriteList.forEach( ( e ) => {

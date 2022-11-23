@@ -1,26 +1,27 @@
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
-import { DestinationType } from "../../enumerables/DestinationType";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
+import type { Sprite } from "../core/Sprite";
+
 import { checkForNewTilesToDraw } from "../../helpers/dynamicTileDrawer";
 import { cameraFocus } from "../cameraFocus";
-import type { Sprite } from "../core/Sprite";
-import { inDebugGameState } from "../gameState/gameStateGetter";
 import { spriteNextPositionIsBlocked } from "../map/collision";
+import { inDebugGameState } from "../gameState/gameStateGetter";
+
 import { updateSpriteAssociatedAction } from "./actions/actionHandlers";
 import { handleSpriteAnimation } from "./animations/animationHandler";
-import { initializeSpriteAnimation } from "./animations/animationSetter";
 import { blockedSpriteCounterIsOverLimit, handleBlockedSpriteCounter } from "./blockedCounters/blockedCounterHandler";
-import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
-import { getSpriteDestination } from "./destinations/destinationGetter";
 import { checkIfSpriteCanMove, setSideStepDestination, spriteIsAtDestination } from "./destinations/destinationHandler";
-import { destroySpriteDestination } from "./destinations/destinationSetter";
 import { updateSpriteAssociatedDoor } from "./doors/doorHandler";
 import { updateAssociatedHitbox } from "./hitboxes/hitboxHandler";
 import { getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "./idleAnimCounters/idleAnimHandler";
-import { moduleIsRunningForSprite } from "./moduleGetter";
-import { markModuleAsInActive, tryInitializeSpriteMovement } from "./moduleSetter";
 import { getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "./randomAnimCounters/randomAnimHandler";
-import { removeSpriteById } from "./sprites/spriteSetter";
+
+import { moduleIsRunningForSprite } from "./moduleRegistryGetter";
+import { getSpriteDestination } from "./destinations/destinationGetter";
+
+import { initializeSpriteAnimation } from "./animations/animationSetter";
+import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
+import { destroySpriteMovementToDestination, tryInitializeSpriteMovement } from "./moduleSetter";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
@@ -117,14 +118,4 @@ export const handleIdleAnimationCounter = ( sprite: Sprite ) => {
     resetIdleAnimationCounter( id );
     const animation = getIdleAnimationFromList( sprite );
     initializeSpriteAnimation( sprite, animation, { looped: false, loops: 0 } );
-}
-
-const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
-    const destination = getSpriteDestination( sprite.spriteId );
-    if ( destination.type === DestinationType.randomGeneratedSprite ) {
-        removeSpriteById( sprite.spriteId );
-    }
-    destroySpriteDestination( sprite.spriteId );
-    sprite.deactivateMovementModule();
-    markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
 }

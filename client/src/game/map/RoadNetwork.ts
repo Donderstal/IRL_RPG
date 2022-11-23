@@ -8,7 +8,7 @@ import type { CellPosition } from '../../models/CellPositionModel';
 import type { RoadModel } from '../../models/RoadModel';
 import { cameraFocus } from '../cameraFocus';
 import { getBackSpritesGrid, getTileOnCanvasByCell } from '../canvas/canvasGetter';
-import { createSpriteFromCanvasObjectModel } from '../modules/sprites/spriteSetter';
+import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
 import { getNeighbourhoodModel } from '../neighbourhoodModule';
 import { Crossing } from './roads/Crossing';
 import { Intersection } from './roads/Intersection';
@@ -97,7 +97,7 @@ export class RoadNetwork {
         const destination = getValidCarDestination( startLocation, road );
         if ( destination !== null && destination !== undefined ) {
             carObjectModel.destination = destination;
-            createSpriteFromCanvasObjectModel( carObjectModel, CanvasTypeEnum.backSprites );
+            setSpriteAndSpriteModules( carObjectModel, CanvasTypeEnum.backSprites );
         }
     }
 

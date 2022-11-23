@@ -1,18 +1,25 @@
 import type { InteractionAnswer } from '../../enumerables/InteractionAnswer';
-import { PLAYER_ID } from '../../game-data/interactionGlobals';
-import { getClosestHitbox } from '../../helpers/utilFunctions';
-import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
+import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
+import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import type { ActionSelector } from '../map/map-classes/ActionSelector';
+
 import { clearActiveBubbles, clearActiveEmotes } from './bubbleController';
 import { addEventToRegistry } from '../../registries/interactionRegistry';
 import { checkForQuestTrigger } from '../../registries/questRegistry';
+import { checkForEventTrigger } from '../storyEvents/storyEventHandler';
+
+import { PLAYER_ID } from '../../game-data/interactionGlobals';
+import { getClosestHitbox } from '../../helpers/utilFunctions';
+
+import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
 import { getSpriteDestination, spriteHasDestination } from '../modules/destinations/destinationGetter';
-import { markModuleAsInActive } from '../modules/moduleSetter';
-import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
+import { markModuleAsInActive } from '../modules/moduleRegistrySetter';
 import { getAllActions } from '../modules/actions/actionRegistry';
-import { checkForEventTrigger } from '../storyEvents/storyEventHandler';
-import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
+import { setActiveCinematic } from './cinematicController';
+import { getActiveMapKey } from '../neighbourhoodModule';
+import { addCollectableToRegistry, getCollectableId } from '../../registries/collectableRegistry';
+
 
 let activeAction: ActionSelector = null; 
 
@@ -47,7 +54,13 @@ const setActiveAction = ( action: ActionSelector ): void => {
         sprite.deactivateMovementModule();
     }
     if ( !checkForEventTrigger( CinematicTrigger.interaction, [activeAction.spriteId] ) ) {
-        activeAction.handle( sprite );
+        setActiveCinematic(
+            action.activeAction, action.trigger, [sprite.spriteId]
+        );
+        if ( sprite.model.isCollectable ) {
+            const id = getCollectableId( sprite.column, sprite.row, sprite.model.collectableType, getActiveMapKey() );
+            addCollectableToRegistry( id, sprite.model.collectableType )
+        }
     }
 }
 

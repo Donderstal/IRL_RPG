@@ -1,5 +1,4 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
-import { listenForKeyPress, stopListenForKeyPress, clearPressedKeys } from '../game/controls';
 import { activateMap, getActiveMap, getNeighbourhoodKey, getNeighbourhoodModel, getPreviousMapKey, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import { getOppositeDirection } from './utilFunctions';
@@ -12,7 +11,7 @@ import { DirectionEnum } from '../enumerables/DirectionEnum';
 import { cameraFocus } from '../game/cameraFocus';
 import { getPlayer } from '../game/modules/sprites/spriteGetter';
 import { clearAllSprites } from '../game/modules/sprites/spriteSetter';
-import { clearSpriteModuleRegistries } from '../game/modules/moduleSetter';
+import { clearSpriteModuleRegistries } from '../game/modules/moduleRegistrySetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
@@ -69,8 +68,6 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     checkForEventTrigger( CinematicTrigger.leave, [destinationName, type] );
     clearActiveSoundEffects();
     setPausedGameState( true );
-    stopListenForKeyPress();
-    clearPressedKeys();
 
     setNeighbourhoodAndMap( destinationName );
     setCanvasDimensions( );
@@ -91,7 +88,6 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
 
     loadMapToCanvases( getActiveMap(), type );
     setTimeout( ( ) => {
-        listenForKeyPress( ); 
         setPausedGameState( false ); 
     }, 100 )
 }

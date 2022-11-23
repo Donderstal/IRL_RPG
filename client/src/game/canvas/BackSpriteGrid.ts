@@ -19,11 +19,12 @@ import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DestinationType } from '../../enumerables/DestinationType';
 import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
-import { createSpriteFromCanvasObjectModel, setSpriteList } from '../modules/sprites/spriteSetter';
+import { setSpriteList } from '../modules/sprites/spriteSetter';
 import { getPlayer } from '../modules/sprites/spriteGetter';
 import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../neighbourhoodModule';
 import { getTileOnCanvasByCell } from './canvasGetter';
 import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
+import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -71,14 +72,14 @@ export class BackSpriteGrid extends CanvasGrid {
                 name: PLAYER_NAME
             }
         );
-        createSpriteFromCanvasObjectModel( canvasObjectModel, this.type, PLAYER_ID );
+        setSpriteAndSpriteModules( canvasObjectModel, this.type, PLAYER_ID );
     }
 
     setSprites( sprites: CanvasObjectModel[] ): void {
         let models = sprites.filter((e)=>{
             return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
         })
-        models.forEach( e => createSpriteFromCanvasObjectModel( e, this.type ) );
+        models.forEach( e => setSpriteAndSpriteModules( e, this.type ) );
     };
 
     clearMap( ): void {
@@ -175,7 +176,7 @@ export class BackSpriteGrid extends CanvasGrid {
             }
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
-        createSpriteFromCanvasObjectModel( model, this.type )
+        setSpriteAndSpriteModules( model, this.type )
     }
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {

@@ -21,10 +21,10 @@ import { spriteHasAnimation } from "../modules/animations/animationGetter";
 import { cameraFocus } from "../cameraFocus";
 import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import { DestinationType } from "../../enumerables/DestinationType";
-import { createSpriteFromCanvasObjectModel, removeSpriteById } from "../modules/sprites/spriteSetter";
+import { removeSpriteById } from "../modules/sprites/spriteSetter";
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
-import { tryInitializeSpriteMovement } from "../modules/moduleSetter";
+import { setSpriteAndSpriteModules, tryInitializeSpriteMovement } from "../modules/moduleSetter";
 import { ANIM_TALK } from "../../game-data/animationGlobals";
 import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
 import { pauseMusic, playEffect } from "../sound/sound";
@@ -193,7 +193,7 @@ export class Animation {
             type: sceneModel.sprite, name: sceneModel.spriteName,
             direction: road.model.direction
         } );
-        this.spriteId = createSpriteFromCanvasObjectModel( model, CanvasTypeEnum.backSprites );
+        this.spriteId = setSpriteAndSpriteModules( model, CanvasTypeEnum.backSprites );
     }
 
     initCreateSpriteAnimation( sceneModel: CreateSpriteScene ): void {
@@ -211,7 +211,7 @@ export class Animation {
                 type: sceneModel.sprite, direction: sceneModel.direction,
                 row: sceneModel.row, column: sceneModel.column, name: sceneModel.spriteName
             } );
-            this.spriteId = createSpriteFromCanvasObjectModel( model, CanvasTypeEnum.backSprites );
+            this.spriteId = setSpriteAndSpriteModules( model, CanvasTypeEnum.backSprites );
         }
     }
 

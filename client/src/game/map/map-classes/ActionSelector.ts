@@ -5,9 +5,6 @@ import { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
-import { addCollectableToRegistry, getCollectableId } from "../../../registries/collectableRegistry";
-import { getActiveMapKey } from "../../neighbourhoodModule";
-import { setActiveCinematic } from "../../controllers/cinematicController";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -49,24 +46,11 @@ export class ActionSelector extends Hitbox {
         }
     }
 
-    handle( sprite ): void {
-        console.log( 'handle' )
-        setActiveCinematic(
-            this.activeAction, this.trigger, [this.spriteId]
-        );
-        if ( sprite.model.isCollectable ) {
-            const id = getCollectableId( sprite.column, sprite.row, ( sprite as any ).collectableType, getActiveMapKey() );
-            addCollectableToRegistry( id, ( sprite as any ).collectableType )
-        }
-    }
-
     confirm(): void {
-        console.log( 'confirm' )
         this.confirmingAction = true;
     }
 
     dismiss(): void {
-        console.log('dismiss')
         if ( this.needsConfirmation && this.registeredSelection == InteractionAnswer.yes && !this.confirmingAction ) {
             this.confirm();
         }

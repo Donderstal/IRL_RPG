@@ -25,7 +25,7 @@ import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByIndex } from '..
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { inDebugGameState, inPausedGameState } from '../gameState/gameStateGetter';
 import { switchMap } from '../../helpers/loadMapHelpers';
-import { moduleIsRunningForSprite } from '../modules/moduleGetter';
+import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
 
 export const handleMapAnimations = (): void => {

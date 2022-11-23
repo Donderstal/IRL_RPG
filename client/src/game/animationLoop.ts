@@ -1,6 +1,6 @@
 import { FRAMES_PER_SECOND } from '../game-data/globals';
 import { handleMapAnimations } from './map/mapAnimation';
-import { clearPressedKeys, listenForKeyPress } from './controls';
+import { clearPressedKeys, listenForKeyPress, stopListenForKeyPress } from './controls';
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController';
 
@@ -44,6 +44,8 @@ export const animationLoop = ( ): void => {
             handleOffscreenCanvasBitmaps();
         }
         else {
+            stopListenForKeyPress();
+            clearPressedKeys();
             clearSpriteCanvasGrids()
         }       
         if ( inFadingAnimation() ) {

@@ -3,7 +3,7 @@ import { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from "../../../game-data/global
 import { getAnimationByName } from "../../../resources/animationResources";
 import type { Sprite } from "../../core/Sprite";
 import { SpriteAnimation } from "../../map/map-classes/SpriteAnimation";
-import { markModuleAsActive, markModuleAsInActive } from "../moduleSetter";
+import { markModuleAsActive, markModuleAsInActive } from "../moduleRegistrySetter";
 import { addAnimationToRegistry, clearAnimationRegistry, deleteAnimationFromRegistry } from "./animationRegistry";
 
 export const initializeSpriteAnimation = ( sprite: Sprite, animationName: string, options: { looped: boolean, loops: number } ): void => {
