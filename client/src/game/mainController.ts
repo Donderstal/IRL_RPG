@@ -31,9 +31,6 @@ export const loadFilesAndStartGame = ( startType: GameType, parameters: any[] ):
     gameType = startType;
     params = parameters;
 
-    console.log( startType );
-    console.log( params );
-
     showGameCanvas();
     setTimeout( () => {
         initializeCameraFocus();

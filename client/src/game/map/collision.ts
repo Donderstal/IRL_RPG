@@ -4,7 +4,7 @@ import { getAllActiveSprites } from '../modules/sprites/spriteGetter';
 import { Hitbox } from '../core/Hitbox';
 import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
-import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
+import { getAssociatedHitbox, idInHitboxDictionary } from '../modules/hitboxes/hitboxGetter';
 import { getBackTilesGrid, getTileOnCanvasByIndex, getTileOnCanvasByXy } from '../canvas/canvasGetter';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { getSpriteActionById } from '../modules/actions/actionGetter';
@@ -57,7 +57,7 @@ const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: S
     while( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = spritesToCheck[spriteIndex];
         if ( targetSprite.spriteId != sprite.spriteId ) {
-            const hitbox = getAssociatedHitbox( sprite.spriteId ) !== undefined ? getAssociatedHitbox( sprite.spriteId ) : getSpriteActionById( sprite.spriteId );
+            const hitbox = idInHitboxDictionary( sprite.spriteId ) ? getAssociatedHitbox( sprite.spriteId ) : getSpriteActionById( sprite.spriteId );
             if ( hitbox !== undefined ) {
                 if ( !targetSprite.model.hasBlockedArea && !targetSprite.hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction )) {
                     colliding = true;

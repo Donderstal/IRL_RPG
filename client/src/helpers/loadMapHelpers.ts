@@ -19,6 +19,7 @@ import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
 import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
 import { setPausedGameState } from '../game/gameState/gameState';
 import { dismissActiveAction } from '../game/controllers/actionController';
+import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType, setPlayer = true, sprites: Sprite[] = null ): void => {
     const back = getBackTilesGrid();
@@ -76,7 +77,7 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     clearCanvasGrids();
 
     clearSpriteModuleRegistries();
-    clearAllSprites();
+    clearAllModuleRegistries();
 
     clearStoryEventsForMap();
     getBackSpritesGrid().resetTilesBlockedBySprites();

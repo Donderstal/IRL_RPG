@@ -52,7 +52,7 @@ const THREE_HIGH_SPRITE = {
 }
 
 const POSTER_SPRITE = {
-    "dimensional_alignment": SpriteSheetAlignmentEnum.standard, "not_grounded": true,
+    "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
     "on_background": true, "height_blocks": 1.75, "width_blocks": 1.75,
 }
 
@@ -170,6 +170,17 @@ const getSignData = ( widthInBlocks, heightInBlocks, name ) => {
         "width_blocks": widthInBlocks,
         "height_blocks": heightInBlocks,
         "not_grounded": true,
+        "idle_animation": true,
+        "idle_animations": name
+    }
+}
+
+const getPosterData = ( widthInBlocks, heightInBlocks, name ) => {
+    return {
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "width_blocks": widthInBlocks,
+        "height_blocks": heightInBlocks,
+        "on_background": true,
         "idle_animation": true,
         "idle_animations": name
     }
@@ -922,19 +933,19 @@ export const spriteData = {
     },
     "Sign_01": {
         "src": "sign1.png",
-        ...getSignData( 1, 1.75, SIGN_HORI_ANIMS )
+        ...getPosterData( 1, 1.75, SIGN_HORI_ANIMS )
     },
     "Sign_02": {
         "src": "sign2.png",
-        ...getSignData( 1, 1.75, SIGN_HORI_ANIMS )
+        ...getPosterData( 1, 1.75, SIGN_HORI_ANIMS )
     },
     "Sign_03": {
         "src": "sign3.png",
-        ...getSignData( 1, 1, SIGN_HORI_ANIMS )
+        ...getPosterData( 1, 1, SIGN_HORI_ANIMS )
     },
     "Sign_04": {
         "src": "sign4.png",
-        ...getSignData( 1, 1, SIGN_HORI_ANIMS )
+        ...getPosterData( 1, 1, SIGN_HORI_ANIMS )
     },
     "Single_Bed": {
         "src": "single_bed.png",

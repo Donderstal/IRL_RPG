@@ -168,7 +168,6 @@ export class Destination {
         this.currentPathIndex += 1;
         if ( !this.hasNextStep ) {
             this.reachedDestination = true;
-            console.log( this.currentStep );
         }
         else {
             sprite.setDirection( this.currentStep.direction, this.getNextStepTile() );

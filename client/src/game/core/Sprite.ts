@@ -326,7 +326,6 @@ export class Sprite {
     }
 
     deactivateMovementModule() {
-        console.log( `Deactivate movement for sprite ${this.spriteId}` );
         this.sheetPosition = 0;
         this.setActiveFrame();
     }

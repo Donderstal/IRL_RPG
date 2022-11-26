@@ -74,7 +74,7 @@ export class Tile {
         else {
             const tilesheetXy = getTilesheetXy( this.model, sheetModel );
             const sheet = getTilesheetImageForTile( this.model, sheetModel )
-        
+
             this.ctx.drawImage(
                 sheet, 
                 tilesheetXy.x, tilesheetXy.y,

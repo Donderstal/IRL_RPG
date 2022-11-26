@@ -5,17 +5,18 @@ import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import type { Sprite } from "../core/Sprite";
-import { initializeActionForSprite } from "./actions/actionSetter";
-import { destroySpriteAnimation, initializeSpriteAnimation } from "./animations/animationSetter";
+import { clearActions, initializeActionForSprite } from "./actions/actionSetter";
+import { clearSpriteAnimations, destroySpriteAnimation, initializeSpriteAnimation } from "./animations/animationSetter";
+import { clearBlockedSpriteCounters } from "./blockedCounters/blockedCounterSetter";
 import { getSpriteDestination } from "./destinations/destinationGetter";
 import { spriteFailedToFindPath } from "./destinations/destinationHandler";
-import { destroySpriteDestination, initializeSpriteDestination } from "./destinations/destinationSetter";
-import { initializeDoorForSprite } from "./doors/doorSetter";
-import { initializeHitboxForSprite } from "./hitboxes/hitboxSetter";
-import { initializeIdleAnimationCounter } from "./idleAnimCounters/idleAnimSetter";
+import { clearSpriteDestinations, destroySpriteDestination, initializeSpriteDestination } from "./destinations/destinationSetter";
+import { clearDoors, initializeDoorForSprite } from "./doors/doorSetter";
+import { clearHitboxes, initializeHitboxForSprite } from "./hitboxes/hitboxSetter";
+import { clearIdleAnimationCounters, initializeIdleAnimationCounter } from "./idleAnimCounters/idleAnimSetter";
 import { markModuleAsActive, markModuleAsInActive } from "./moduleRegistrySetter";
-import { initializeRandomAnimationCounter } from "./randomAnimCounters/randomAnimSetter";
-import { createSpriteFromCanvasObjectModel, removeSpriteById } from "./sprites/spriteSetter";
+import { clearRandomAnimationCounters, initializeRandomAnimationCounter } from "./randomAnimCounters/randomAnimSetter";
+import { clearAllSprites, createSpriteFromCanvasObjectModel, removeSpriteById } from "./sprites/spriteSetter";
 
 export const setSpriteAndSpriteModules = ( model: CanvasObjectModel, canvas: CanvasTypeEnum, id: string = null ): string => {
 	const sprite = createSpriteFromCanvasObjectModel( model, canvas, id );
@@ -91,13 +92,14 @@ export const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
 	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
 }
 
-//export const clearAllAssociatedSpriteModules = ( sprite: Sprite ) => {
-//	destroyBlockedSpriteCounter( sprite.spriteId );
-//	destroySpriteDestination( sprite.spriteId );
-//	destroySpriteAnimation( sprite );
-//	destroySpriteAssociatedAction( sprite.spriteId );
-//	destroySpriteAssociatedDoor( sprite.spriteId );
-//	destroyAssociatedHitbox( sprite.spriteId );
-//	destroyAssociatedIdleCounter( sprite.spriteId );
-//	destroyAssociatedRandomCounter( sprite.spriteId );
-//}
+export const clearAllModuleRegistries = (): void => {
+	clearActions();
+	clearSpriteAnimations();
+	clearBlockedSpriteCounters();
+	clearSpriteDestinations();
+	clearDoors();
+	clearHitboxes();
+	clearIdleAnimationCounters();
+	clearRandomAnimationCounters();
+	clearAllSprites();
+}

@@ -19,10 +19,10 @@ export const handleCinematicAnimations = ( ): void => {
     //    e.drawAndMove( );
     //})
 
-    if ( frontTiles.hasFrontGrid && getPlayer().visionbox != undefined ) {
-        const tilesFront = getPlayer().visionbox.getFrontGridTilesInArc( frontTiles );
-        frontTiles.drawTilesAndClearArc( tilesFront );
-    }
+    //if ( frontTiles.hasFrontGrid && getPlayer().visionbox != undefined ) {
+    //    const tilesFront = getPlayer().visionbox.getFrontGridTilesInArc( frontTiles );
+    //    frontTiles.drawTilesAndClearArc( tilesFront );
+    //}
 
     drawBubbles();
 

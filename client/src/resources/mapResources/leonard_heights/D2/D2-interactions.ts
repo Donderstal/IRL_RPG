@@ -11,9 +11,7 @@ export const LOOKING_FOR_APPARTMENT_LADY = [
         [
             [[SceneAnimationType.speak, true, "This is my favorite part of the city.", null, PLAYER_NAME]],
             [[SceneAnimationType.speak, true, "Like, there's nice cocktail bars and yoga studios.", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "But all the poor people are still here to give it a authentic vibe, you know?", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "I'd love to move into the Gemini Towers, they're so luxurious!", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "I'm wondering if there are any overpriced studio appartments for rent there!", null, PLAYER_NAME]]
+            [[SceneAnimationType.speak, true, "But all the poor people are still here to give it a authentic vibe, you know?", null, PLAYER_NAME]]
         ]
     ]    
 ]

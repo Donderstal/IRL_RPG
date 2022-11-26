@@ -84,7 +84,7 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
 
 export const initTileModel = ( tileData ): TileModel => {
     const tileModel: TileModel = {
-        id: tileData !== "E" ? tileData.id : null,
+        id: tileData !== "E" && tileData.id !== "E" ? tileData.id : null,
         angle: tileData !== "E" ? tileData.angle : 0,
         mirrored: tileData !== "E" ? tileData.mirrored : false
 

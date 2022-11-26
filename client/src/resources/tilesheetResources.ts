@@ -1637,7 +1637,6 @@ const heightFactor = GRID_BLOCK_PX / GRID_BLOCK_IN_SHEET_PX;
 const getTileSheetModels = () => {
     return Object.values( sheets ).map( ( e ) => {
         const images = getImages( e );
-        console.log( images );
         let model: TilesheetModel = {
             name: e.name,
             key: e.key,

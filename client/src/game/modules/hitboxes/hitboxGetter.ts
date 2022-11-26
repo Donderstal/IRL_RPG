@@ -8,3 +8,8 @@ export const getAssociatedHitbox = ( id: string ): Hitbox => {
     }
     return hitboxes[id];
 }
+
+export const idInHitboxDictionary = ( id: string ): boolean => {
+    const hitboxes = getActiveHitboxes();
+    return hitboxes[id] !== undefined;
+}

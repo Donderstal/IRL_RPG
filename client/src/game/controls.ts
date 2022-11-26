@@ -4,7 +4,7 @@ import { clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionK
 import { moveSpriteInDirection } from './modules/destinations/destinationHandler';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
-import { checkForNewTilesToDraw } from "../helpers/dynamicTileDrawer";
+import { drawNewTilesInCameraFocus } from "../helpers/dynamicTileDrawer";
 import { getPlayer } from "./modules/sprites/spriteGetter";;
 import { resetIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimHandler';
 import { destroySpriteAnimation } from './modules/animations/animationSetter';
@@ -79,7 +79,7 @@ export const handleMovementKeys = () => {
                 moveSpriteInDirection( player, direction );
             }
             if ( cameraFocus.focusSpriteId == player.spriteId && !cameraFocus.movingToNewFocus ) {
-                checkForNewTilesToDraw( cameraFocus );
+                drawNewTilesInCameraFocus( cameraFocus );
             }
         }
         checkForEventTrigger( CinematicTrigger.position );

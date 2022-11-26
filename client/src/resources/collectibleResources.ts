@@ -47,5 +47,3 @@ const COLLECTABLE_ACTION_JUICE_CAN = [
     [[SceneAnimationType.speak, true, "I'll add this one to my collection!", PLAYER_NAME]],
     [[SceneAnimationType.deleteSprite, true, null, "misc/random5.wav"]]
 ]
-
-console.log( getCollectibleActionDefinition("yo", CollectableType.coin))

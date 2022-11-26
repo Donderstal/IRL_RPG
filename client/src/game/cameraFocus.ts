@@ -48,21 +48,21 @@ export class CameraFocus {
     get followingSprite(): boolean { return this.mode === CameraFocusMode.followSprite; }
 
     get leftBorder(): number {
-        return this.xValue - this.xOffset;
+        return this.xValue - ( this.screenWidth / 2 );
     }
     get topBorder(): number {
-        return this.yValue - this.yOffset;
+        return this.yValue - ( this.screenHeight / 2 );
     }
     get rightBorder(): number {
-        return this.leftBorder + this.screenWidth;
+        return ( this.leftBorder + this.screenWidth );
     }
     get downBorder(): number {
-        return this.topBorder + this.screenHeight;
+        return ( this.topBorder + this.screenHeight );
     }
 
     setOffset(): void {
-        this.xOffset = ( document.documentElement.clientWidth / 2 );
-        this.yOffset = ( document.documentElement.clientHeight / 2 );
+        this.xOffset = ( this.screenWidth / 2 );
+        this.yOffset = ( this.screenHeight / 2 );
     }
 
     setScreenDimensions(): void {
@@ -119,10 +119,10 @@ export class CameraFocus {
     updateXValue( newValue: number ): void {
         this.xValue = newValue;
         if ( this.lastFocusXy.x < this.xValue ) {
-            this.movingToDirections.push( DirectionEnum.left );
+            this.movingToDirections.push( DirectionEnum.right );
         }
         if ( this.lastFocusXy.x > this.xValue ) {
-            this.movingToDirections.push( DirectionEnum.right );
+            this.movingToDirections.push( DirectionEnum.left );
         }
         this.lastFocusXy.x = newValue;
     }

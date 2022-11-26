@@ -1,82 +1,75 @@
 import { CanvasTypeEnum } from "../enumerables/CanvasTypeEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
+import { GRID_BLOCK_PX } from "../game-data/globals";
 import type { CameraFocus } from "../game/cameraFocus";
-import type { BackTileGrid } from "../game/canvas/BackTileGrid";
-import { getBackTilesGrid, getTileOnCanvasByCell, getTileOnCanvasByXy } from "../game/canvas/canvasGetter";
+import { getBackTilesGrid, getTileOnCanvasByCell } from "../game/canvas/canvasGetter";
  
 import type { Tile } from "../game/core/Tile";
+import { getSpriteById } from "../game/modules/sprites/spriteGetter";
 import type { TilesheetModel } from "../models/TilesheetModel";
 
-export const checkForNewTilesToDraw = ( cameraFocus: CameraFocus ): void => {
+export const drawNewTilesInCameraFocus = ( cameraFocus: CameraFocus ): void => {
+    const sprite = getSpriteById( cameraFocus.focusSpriteId );
     const backGrid = getBackTilesGrid()
     const cameraDirections = cameraFocus.movingToDirections;
+
+    const totalColumnsInFocus = Math.ceil( cameraFocus.screenWidth / GRID_BLOCK_PX );
+    const totalRowsInFocus = Math.ceil( cameraFocus.screenHeight / GRID_BLOCK_PX );
+
+    const columnOffsetToCenter = Math.ceil( totalColumnsInFocus / 2 );
+    const rowOffsetToCenter = Math.ceil( totalRowsInFocus / 2 );
+
+    const spriteColumnMinusColumnOffset = ( sprite.column - columnOffsetToCenter );
+    const spriteRowMinusRowOffset = ( sprite.row - rowOffsetToCenter );
+    const spriteColumnPlusColumnOffset = ( sprite.column + columnOffsetToCenter );
+    const spriteRowPlusRowOffset = ( sprite.row + rowOffsetToCenter );
+
+    const leftColumnInFocus = spriteColumnMinusColumnOffset < 1 ? 1 : spriteColumnMinusColumnOffset;
+    const topRowInFocus = spriteRowMinusRowOffset < 1 ? 1 : spriteRowMinusRowOffset;
+    const rightColumnInFocus = spriteColumnPlusColumnOffset > backGrid.grid.columns ? backGrid.grid.columns : spriteColumnPlusColumnOffset;
+    const downRowInFocus = spriteRowPlusRowOffset > backGrid.grid.rows ? backGrid.grid.rows : spriteRowPlusRowOffset;
+
+    let tiles = [];
+
     cameraDirections.forEach( ( e: DirectionEnum ): void => {
         switch ( e ) {
             case DirectionEnum.left:
-                horizontalDrawNewTiles( cameraFocus.leftBorder, cameraFocus, backGrid );
-                horizontalDrawNewTiles( cameraFocus.rightBorder, cameraFocus, backGrid );
+                tiles = [...getTileColumn( leftColumnInFocus, topRowInFocus, downRowInFocus ), ...tiles];
                 break;
             case DirectionEnum.up:
-                verticalDrawNewTiles( cameraFocus.topBorder, cameraFocus, backGrid );
-                verticalDrawNewTiles( cameraFocus.downBorder, cameraFocus, backGrid );
+                tiles = [...getTileRow( topRowInFocus, leftColumnInFocus, rightColumnInFocus ), ...tiles];
                 break;
             case DirectionEnum.right:
-                horizontalDrawNewTiles( cameraFocus.leftBorder, cameraFocus, backGrid );
-                horizontalDrawNewTiles( cameraFocus.rightBorder, cameraFocus, backGrid );
+                tiles = [...getTileColumn( rightColumnInFocus, topRowInFocus, downRowInFocus ), ...tiles];
                 break;
             case DirectionEnum.down:
-                verticalDrawNewTiles( cameraFocus.topBorder, cameraFocus, backGrid );
-                verticalDrawNewTiles( cameraFocus.downBorder, cameraFocus, backGrid );
+                tiles = [...getTileRow( downRowInFocus, leftColumnInFocus, rightColumnInFocus ), ...tiles];
                 break;
         }
     } )
+
+    drawUndrawnTilesToCanvas( tiles, backGrid.sheetModel );
 }
 
-const horizontalDrawNewTiles = ( x: number, cameraFocus: CameraFocus, backGrid: BackTileGrid ): void => {
-    let tiles = [];
-
-    let tileTop = getTileOnCanvasByXy( { x: x, y: cameraFocus.topBorder }, CanvasTypeEnum.background );
-    let tileBottom = getTileOnCanvasByXy( { x: x, y: cameraFocus.downBorder }, CanvasTypeEnum.background );
-    if ( tileTop === undefined || tileBottom === undefined ) {
-        return;
+const getTileColumn = ( column, topRow, bottomRow ): Tile[] => {
+    const tiles = [];
+    for ( var i = topRow; i <= bottomRow; i++ ) {
+        tiles.push( getTileOnCanvasByCell( { "column": column, "row": i }, CanvasTypeEnum.background ) );
+        tiles.push( getTileOnCanvasByCell( { "column": column, "row": i }, CanvasTypeEnum.foreground ) );
     }
-
-    for ( var row = tileTop.row + 1; row < tileBottom.row; row++ ) {
-        tiles.push( getTileOnCanvasByCell( { column: tileTop.column, row: row }, CanvasTypeEnum.background ) );
-    }
-
-    let tileTopFront = getTileOnCanvasByXy( { x: x, y: cameraFocus.topBorder }, CanvasTypeEnum.foreground );
-    let tileBottomFront = getTileOnCanvasByXy( { x: x, y: cameraFocus.downBorder }, CanvasTypeEnum.foreground );
-    for ( var row = tileTop.row + 1; row < tileBottom.row; row++ ) {
-        tiles.push( getTileOnCanvasByCell( { column: tileTop.column, row: row }, CanvasTypeEnum.foreground ) );
-    }
-
-    filterAndDrawTiles( [...tiles, tileTop, tileBottom, tileTopFront, tileBottomFront], backGrid.sheetModel );
+    return tiles;
 }
 
-const verticalDrawNewTiles = ( y: number, cameraFocus: CameraFocus, backGrid: BackTileGrid ): void => {
-    let tiles = [];
-
-    let tileLeft = getTileOnCanvasByXy( { x: cameraFocus.leftBorder, y: y }, CanvasTypeEnum.background );
-    let tileRight = getTileOnCanvasByXy( { x: cameraFocus.rightBorder, y: y }, CanvasTypeEnum.background );
-    if ( tileLeft === undefined || tileRight === undefined ) {
-        return;
+const getTileRow = ( row, leftColumn, rightColumn ): Tile[] => {
+    const tiles = [];
+    for ( var i = leftColumn; i <= rightColumn; i++ ) {
+        tiles.push( getTileOnCanvasByCell( { "column": i, "row": row }, CanvasTypeEnum.background ) );
+        tiles.push( getTileOnCanvasByCell( { "column": i, "row": row }, CanvasTypeEnum.foreground ) );
     }
-
-    for ( var column = tileLeft.column + 1; column < tileRight.column; column++ ) {
-        tiles.push( getTileOnCanvasByCell( { column: column, row: tileLeft.row }, CanvasTypeEnum.background ) );
-    }
-
-    let tileLeftFront = getTileOnCanvasByXy( { x: cameraFocus.leftBorder, y: y }, CanvasTypeEnum.foreground );
-    let tileRightFront = getTileOnCanvasByXy( { x: cameraFocus.rightBorder, y: y }, CanvasTypeEnum.foreground );
-    for ( var column = tileLeft.column + 1; column < tileRight.column; column++ ) {
-        tiles.push( getTileOnCanvasByCell( { column: column, row: tileLeft.row }, CanvasTypeEnum.foreground ) );
-    }
-
-    filterAndDrawTiles( [...tiles, tileLeft, tileRight, tileLeftFront, tileRightFront], backGrid.sheetModel );
+    return tiles;
 }
 
-const filterAndDrawTiles = ( tiles: Tile[], sheetModel: TilesheetModel ) => {
+const drawUndrawnTilesToCanvas = ( tiles: Tile[], sheetModel: TilesheetModel ) => {
     tiles.filter( ( tile ) => { return !tile.drawn && tile.model.id !== null; } ).forEach( ( tile ) => {
         tile.drawTileInMap( sheetModel );
     } )

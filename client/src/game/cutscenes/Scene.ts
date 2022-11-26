@@ -19,9 +19,7 @@ export class Scene {
         this.animations = [];
         this.animationIds = [];
         this.finishedAnimations = [];
-        console.log(`new scene with ${sceneModel.length} animations`)
         sceneModel.forEach( ( animationModel: SceneAnimationModel ): void => {
-            console.log( `new animation with type ${animationModel.type}` )
             const id = getUniqueId( this.animationIds );
             if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
                 && animationModel.type !== SceneAnimationType.createCar && animationModel.type !== SceneAnimationType.createSprite ) {

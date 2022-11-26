@@ -85,5 +85,3 @@ export const unlockDoorEvent = [[
         [[SceneAnimationType.speak, true, "Let's unlock this door now...", PLAYER_NAME, false, "misc/Heavy-Door-Lock--Unlocking.mp3"]]
     ]
 ]]
-
-console.log( RANDOM_TALK_5 );

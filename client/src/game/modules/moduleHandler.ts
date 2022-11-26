@@ -2,7 +2,7 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { Sprite } from "../core/Sprite";
 
-import { checkForNewTilesToDraw } from "../../helpers/dynamicTileDrawer";
+import { drawNewTilesInCameraFocus } from "../../helpers/dynamicTileDrawer";
 import { cameraFocus } from "../cameraFocus";
 import { spriteNextPositionIsBlocked } from "../map/collision";
 import { inDebugGameState } from "../gameState/gameStateGetter";
@@ -87,7 +87,7 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     else {
         const movingToDestination = checkIfSpriteCanMove( sprite, destination );
         if ( cameraFocus.focusSpriteId == sprite.spriteId && !cameraFocus.movingToNewFocus ) {
-            checkForNewTilesToDraw( cameraFocus );
+            drawNewTilesInCameraFocus( cameraFocus );
         }
         if ( !movingToDestination ) destroySpriteMovementToDestination( sprite );
     }
