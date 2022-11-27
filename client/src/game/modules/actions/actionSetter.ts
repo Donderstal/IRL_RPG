@@ -3,7 +3,8 @@ import type { InteractionModel } from "../../../models/InteractionModel";
 import type { Sprite } from "../../core/Sprite";
 import type { Tile } from "../../core/Tile";
 import { ActionSelector } from "../../map/map-classes/ActionSelector";
-import { addSpriteAction, addTileAction, clearActionRegistry, removeSpriteAction, removeTileAction } from "./actionRegistry";
+import { SavePoint } from "../../map/map-classes/SavePoint";
+import { addSavePoint, addSpriteAction, addTileAction, clearActionRegistry, removeSpriteAction, removeTileAction } from "./actionRegistry";
 
 export const initializeActionForSprite = ( sprite: Sprite, interactionList: InteractionModel[] ): void => {
     const action = new ActionSelector(
@@ -18,6 +19,11 @@ export const initializeActionForTile = ( tile: Tile, interactionList: Interactio
     );
     addTileAction( tile.index.toString(), action );
 };
+
+export const initializeSavePoint = ( tile: Tile ): void => {
+    const savePoint = new SavePoint( tile );
+    addSavePoint( savePoint );
+}
 
 export const destroySpriteAssociatedAction = ( spriteId: string ): void => {
     removeSpriteAction( spriteId );

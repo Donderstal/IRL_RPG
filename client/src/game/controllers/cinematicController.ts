@@ -1,5 +1,5 @@
 import { CinematicTrigger } from "../../enumerables/CinematicTriggerEnum";
-import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
+import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { addEventToRegistry } from "../../registries/interactionRegistry";
 import { checkForQuestTrigger } from "../../registries/questRegistry";
@@ -13,6 +13,7 @@ import { InteractionType } from "../../enumerables/InteractionType";
 import { getActiveMapKey } from "../neighbourhoodModule";
 import { switchMap } from "../../helpers/loadMapHelpers";
 import { getAllActiveSprites, getPlayer } from "../modules/sprites/spriteGetter";
+import { save } from "../mainController";
 
 let activeCinematic: Interaction = null;
 let activeMapAtStartOfCinematic: string = null;
@@ -54,6 +55,9 @@ export const dismissActiveCinematic = (): void => {
     }
     else if ( activeCinematic.trigger === CinematicTrigger.interaction ) {
         dismissActiveAction();
+    }
+    if ( activeCinematic.model.type === InteractionType.save && activeCinematic.registeredSelection === InteractionAnswer.yes ) {
+        save();
     }
     clearActiveBubbles()
     activeCinematic = null;

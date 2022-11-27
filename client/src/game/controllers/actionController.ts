@@ -20,7 +20,6 @@ import { setActiveCinematic } from './cinematicController';
 import { getActiveMapKey } from '../neighbourhoodModule';
 import { addCollectableToRegistry, getCollectableId } from '../../registries/collectableRegistry';
 
-
 let activeAction: ActionSelector = null; 
 
 export const handleActionButton = ( ): void => {

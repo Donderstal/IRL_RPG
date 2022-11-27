@@ -27,6 +27,7 @@ import { inDebugGameState, inPausedGameState } from '../gameState/gameStateGette
 import { switchMap } from '../../helpers/loadMapHelpers';
 import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
+import { drawSavePoint } from '../modules/actions/actionHandlers';
 
 export const handleMapAnimations = (): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -111,7 +112,6 @@ export const handleNpcCounter = ( ): void => {
 }
 
 export const drawSpritesInOrder = ( ): void => {
-    const backTilesGrid = getBackTilesGrid();
     const backSpritesGrid = getBackSpritesGrid();
 
     const backgroundSprites = [];
@@ -173,10 +173,9 @@ export const drawSpritesInOrder = ( ): void => {
             standardSprites.push( sprite );
             backSpritesGrid.setTilesBlockedBySprite( sprite );
         }
-    })
-    if ( backTilesGrid.savepoint ) {
-        backTilesGrid.savepoint.draw( )
-    }
+    } )
+
+    drawSavePoint();
     
     drawSpritesInArray( backgroundSprites );
     drawSpritesInArray( standardSprites );

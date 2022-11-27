@@ -1,5 +1,8 @@
 ### LOG
 
+#### NOV 27, 2022
+* Restored SavePoint functionality
+
 #### NOV 26, 2022
 * Refactor for dynamic tile drawing
 

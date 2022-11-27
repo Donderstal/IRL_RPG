@@ -3,8 +3,14 @@ import type { GraphicEffectModel } from "../models/GraphicEffectModel";
 
 const folder = "/static/effects/";
 
+export const FX_STAR = "STAR";
+export const FX_FIRE_CIRCLE_BACK = "FIRE_CIRCLE_BACK";
+export const FX_FIRE_CIRCLE_FRONT = "FIRE_CIRCLE_FRONT";
+export const FX_BLUE_SQUARE = "BLUE_SQUARE";
+export const FX_PURPLE_CROSS = "PURPLE_CROSS";
+
 const effectsResources = {
-    "STAR" : {
+    [FX_STAR] : {
         "src": folder + "star_fx.png",
         "widthInBlocks": 2,
         "heightInBlocks": 2,
@@ -15,7 +21,7 @@ const effectsResources = {
             { 'x': 192, 'y': 0 }
         ]
     },
-    "FIRE_CIRCLE_BACK" : {
+    [FX_FIRE_CIRCLE_BACK]: {
         "src": folder + "fire_circle.png",
         "widthInBlocks": 2,
         "heightInBlocks": 2,
@@ -32,7 +38,7 @@ const effectsResources = {
             { 'x': 128, 'y': 384 }
         ]
     },
-    "FIRE_CIRCLE_FRONT" : {
+    [FX_FIRE_CIRCLE_FRONT] : {
         "src": folder + "fire_circle.png",
         "widthInBlocks": 2,
         "heightInBlocks": 2,
@@ -49,7 +55,7 @@ const effectsResources = {
             { 'x': 128, 'y': 896 }
         ]
     },
-    "BLUE_SQUARE" : {
+    [FX_BLUE_SQUARE] : {
         "src": folder + "Square_fx.png",
         "widthInBlocks": 4.3125 / 2,
         "heightInBlocks": 3.46875 / 2,
@@ -68,7 +74,7 @@ const effectsResources = {
             { 'x': 276, 'y': 888 },
         ]
     },
-    "PURPLE_CROSS" : {
+    [FX_PURPLE_CROSS] : {
         "src": folder + "cross_fx.png",
         "widthInBlocks": 4.3125 / 2,
         "heightInBlocks": 3.46875 / 2,

@@ -348,7 +348,7 @@ export default {
         }
     ],
     "savepoint": {
-        'col': 6,
+        'column': 6,
         'row': 6
     }
 }

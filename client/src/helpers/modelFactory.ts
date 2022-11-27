@@ -46,6 +46,9 @@ export const initMapModel = ( mapData ): MapModel => {
         actions: mapData.actions != undefined
             ? mapData.actions.map( ( actionList ): InteractionModel[] => { return actionList.map( initInteractionModel ); } )
             : [],
+        savepoint: mapData.savepoint != undefined
+            ? { "column": mapData.savepoint.column, "row": mapData.savepoint.row }
+            : null,
 
         playerStart: mapData.playerStart
     };

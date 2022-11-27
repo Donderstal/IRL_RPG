@@ -8,8 +8,8 @@ import { initCinematicSceneModel } from '../../helpers/modelFactory';
 
 export class Interaction {
     trigger: CinematicTrigger;
+    scenes: CinematicSceneModel[];
     args: any[];
-    numberOfScenes: number;
     registeredSelection: InteractionAnswer;
     iterator: number;
     activeScene: Scene;
@@ -18,12 +18,12 @@ export class Interaction {
     model: InteractionModel;
     constructor( model: InteractionModel, trigger: CinematicTrigger, args: string[] ) {
         this.model = model;
+        this.scenes = [...model.cinematic.scenes];
         this.trigger = trigger;
         this.args   = args;
-        this.numberOfScenes = this.model.cinematic.scenes.length;
         this.registeredSelection = null;
         this.iterator = 0;
-        this.activeScene = new Scene( this.model.cinematic.scenes[this.iterator], ( this.trigger === CinematicTrigger.interaction ? args[0] : null ) );
+        this.activeScene = new Scene( this.scenes[this.iterator], ( this.trigger === CinematicTrigger.interaction ? args[0] : null ) );
         this.ended = false;
     }
 
@@ -40,9 +40,9 @@ export class Interaction {
         
         this.iterator++
         this.activeScene.unsetSceneAnimations();
-        if ( this.model.cinematic.scenes[this.iterator] ) {
+        if ( this.scenes[this.iterator] ) {
             this.activeScene = new Scene( 
-                this.model.cinematic.scenes[this.iterator], 
+                this.scenes[this.iterator], 
                 ( this.trigger == CinematicTrigger.interaction ? this.args[0] : null )
             );            
         }
@@ -69,7 +69,7 @@ export class Interaction {
         if ( scenesToAdd ) {
             for ( var i = 0; i < scenesToAdd.length; i++ ) {
                 let model: CinematicSceneModel = initCinematicSceneModel( scenesToAdd[i] );
-                this.model.cinematic.scenes.splice( this.iterator + 1 + i, 0, model )
+                this.scenes.splice( this.iterator + 1 + i, 0, model )
             }            
         }
     }

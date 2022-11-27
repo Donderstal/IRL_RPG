@@ -1,5 +1,6 @@
 import type { Sprite } from "../../core/Sprite";
 import { getSpriteActionById } from "./actionGetter";
+import { getSavePoint } from "./actionRegistry";
 
 export const updateSpriteAssociatedAction = ( sprite: Sprite ): void => {
     const action = getSpriteActionById(sprite.spriteId);
@@ -7,3 +8,9 @@ export const updateSpriteAssociatedAction = ( sprite: Sprite ): void => {
         action.updateXy( sprite.centerX, sprite.baseY );
     }
 };
+export const drawSavePoint = (): void => {
+    const savePoint = getSavePoint()
+    if ( savePoint !== null ) {
+        savePoint.draw()
+    }
+}

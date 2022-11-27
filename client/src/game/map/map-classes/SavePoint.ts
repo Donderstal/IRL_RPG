@@ -5,7 +5,10 @@ import { InteractionType } from "../../../enumerables/InteractionType";
 import { ConditionType } from "../../../enumerables/ConditionTypeEnum";
 import { SceneAnimationType } from "../../../enumerables/SceneAnimationTypeEnum";
 import type { Tile } from "../../core/Tile";
-import { Hitbox } from "../../core/Hitbox";
+import { initInteractionModel } from "../../../helpers/modelFactory";
+import { getDebugModeGameState } from "../../gameState/gameState";
+import { FX_BLUE_SQUARE } from "../../../resources/effectResources";
+import { ActionSelector } from "./ActionSelector";
 
 const actionData = [
     InteractionType.save, false, null, "medium-text-blip.ogg",
@@ -16,36 +19,33 @@ const actionData = [
             [[SceneAnimationType.speak, true, "Game saved!"]]
         ],
         [
-            [[SceneAnimationType.speak, true, "Why did you press the button then?", false]]
+            [[SceneAnimationType.speak, true, "Why did you press the button then?"]]
         ],
-            false, PLAYER_NAME
+           PLAYER_NAME
         ]],
     ]
 ]
 
-export class Savepoint extends Hitbox { 
+export class SavePoint extends ActionSelector { 
     spriteId: string;
     effect: GraphicalEffect;
-    confirmingAction: boolean;
     constructor( tile: Tile ) {
         let x = tile.x + ( GRID_BLOCK_PX / 2 )
         let y = tile.y + ( GRID_BLOCK_PX / 2 )
-        super( x, y, GRID_BLOCK_PX / 2 )
+        super( x, y, [initInteractionModel( actionData )], PLAYER_ID )
 
         this.initSavePointEffect();
-        this.confirmingAction = false;
         this.spriteId   = PLAYER_ID;
     }
 
     initSavePointEffect(): void {
-        this.effect = getEffect( "BLUE_SQUARE", this.x, this.y ); 
+        this.effect = getEffect( FX_BLUE_SQUARE, this.x, this.y ); 
     }
 
     draw(): void {
         this.effect.drawBack( this.x - ( this.effect.effects[0].width / 2 ), this.y - ( this.effect.effects[0].height / 2 ) )
-    }
-
-    confirm( ): void {
-
+        if ( getDebugModeGameState() ) {
+            super.draw();
+        }
     }
 }

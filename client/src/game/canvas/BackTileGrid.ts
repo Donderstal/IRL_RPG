@@ -4,22 +4,18 @@ import type { MapActionModel } from '../../models/MapActionModel';
 import type { MapModel } from '../../models/MapModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
-import { Savepoint } from '../map/map-classes/SavePoint';
 import { initializeDoorForTile } from '../modules/doors/doorSetter';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { initializeActionForTile } from '../modules/actions/actionSetter';
+import { initializeActionForTile, initializeSavePoint } from '../modules/actions/actionSetter';
+import type { GridCellModel } from '../../models/GridCellModel';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
     mapName: string;
     neighbourhood: string;
-    hasActions: boolean;
-    hasDoors: boolean;
-    savepoint: Savepoint;
     blockedTiles: number[];
     constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
-        this.savepoint = null;
     };
 
     setMapName( mapName: string ): void {
@@ -35,7 +31,6 @@ export class BackTileGrid extends CanvasGrid {
             const tile = this.getTileAtCell( action.column, action.row );
             initializeActionForTile( tile, action.action )
         } )
-        this.hasActions = true;
     }
 
     setDoors( doors: DoorModel[] ): void {
@@ -43,7 +38,6 @@ export class BackTileGrid extends CanvasGrid {
             const tile = this.getTileAtCell( door.column, door.row );
             initializeDoorForTile( tile, door );
         } )
-        this.hasDoors = true;
     }
 
     setBlockedTiles( blockedTileIndexes: number[] ): void {
@@ -71,17 +65,14 @@ export class BackTileGrid extends CanvasGrid {
             this.setBlockedTiles( sheetModel.blocked );
     }
 
-    setSavepoint( savepointData: any ): void {
-        const tile = this.getTileAtCell( savepointData.col, savepointData.row )
-        this.savepoint = new Savepoint( tile );
+    setSavepoint( savepointData: GridCellModel ): void {
+        const tile = this.getTileAtCell( savepointData.column, savepointData.row );
+        initializeSavePoint( tile );
     }
 
     clearMap(): void {
         resetDoors();
         this.grid = null;
-        this.hasDoors = false;
-        this.hasActions = false;
         this.blockedTiles = [ ];
-        this.savepoint = null;
     }
 };
