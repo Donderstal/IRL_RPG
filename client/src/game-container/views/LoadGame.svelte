@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
-
-    let SaveFile = false;
+    import SaveGameButton from "../svelte-partials/SaveGameButton.svelte";
+    import type { SaveGame } from "../../models/SaveGameModel"
+    import {LH_NEWTOWN_APP_NAME} from "../../resources/mapResources/leonard_heights/leonard_heights_res";
 
     const loadJsonFile = (event) => {
         let reader = new FileReader();
@@ -11,25 +12,61 @@
             }
             reader.readAsText(event.target.files[0]);
     }
+
+    const mockSave: SaveGame = {
+        time: new Date().toDateString(),
+        playerData: { name: "Bertje" },
+        activeMap: { mapName: "Test", location: LH_NEWTOWN_APP_NAME },
+        keyLists: {
+            storyEvents: [],
+            interactionRegistry: {},
+            unlockedDoors: [],
+            collectableRegistry: {
+                coins: [ "1", "2" ],
+                juiceCans: [ "1", "2", "3" ]
+            }
+        }
+    }
 </script>
 <style>
     .load-game-div {
-        height: 80vh;
+        height: 90vh;
+        width: 100vw;
         background-color: transparent;
+        display: grid;
+        grid-template-columns: [marginLeft] 20% [mainColumn] 60% [marginRight] 20% ;
+        grid-template-rows: [header] 10% [firstRow] 30% [secondRow] 30% [thirdRow] 30%;
+    }
+
+    .column {
+        grid-column-start: mainColumn;
+        grid-column-end: span 1;
+        grid-row-end: span 1;
+    }
+
+    .one {
+        grid-row-start: header;
+    }
+
+    .one {
+        grid-row-start: firstRow;
+    }
+
+    .two {
+        grid-row-start: secondRow;
+    }
+
+    .three {
+        grid-row-start: thirdRow;
     }
 </style>
 
-<div class="load-game-div">
+<div>
     <GoBackButton/>
-    <div>
-        <label id="save_file_label" for="jsonInput">Input a save file: </label>
-        <input id="save_file" type="file" name="jsonInput" on:change|self={loadJsonFile}/>
+    <div class="load-game-div">
+        <div class="column header"><h2>LOAD GAME</h2></div>
+        <div class="column one"><SaveGameButton saveGame={mockSave}/></div>
+        <div class="column two"><SaveGameButton saveGame={null}/></div>
+        <div class="column three"><SaveGameButton saveGame={null}/></div>
     </div>
-    <MainUiButton action={
-        () => { 
-            if ( SaveFile ) {
-                console.log(SaveFile)
-            }
-        }
-    } buttonText={"Load game"}/>
 </div>

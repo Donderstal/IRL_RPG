@@ -1,4 +1,4 @@
-<script>   
+<script lang="ts">   
     export let buttonText;
     export let action; 
 </script>
@@ -35,7 +35,7 @@
 </style>
 
 <div>
-    <button on:click|preventDefault={action} class="main-menu-button">  
+    <button on:click|preventDefault={action} >  
         {buttonText} 
     </button>
 </div>

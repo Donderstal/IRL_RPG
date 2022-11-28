@@ -2,6 +2,7 @@ import type { Sprite } from "../game/core/Sprite";
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
 import { getActiveMap } from "../game/neighbourhoodModule";
 import { exportTriggerEventsRegistry } from "../game/storyEvents/storyEventGetter";
+import type { MapModel } from "../models/MapModel";
 import type { SaveGame, SaveGameKeyLists, SaveGameMapData, SaveGamePlayerData } from "../models/SaveGameModel";
 import { exportCollectableRegistry } from "../registries/collectableRegistry";
 import { getUnlockedDoorsRegistry } from "../registries/doorRegistry";
@@ -14,25 +15,21 @@ export const saveGameToServer = (): void => {
 }
 
 const getSaveGame = (): SaveGame => {
+    const map = getActiveMap();
     const saveGame: SaveGame = {
         time: new Date().toString(),
         playerData: getPlayerDataFromGame(),
-        activeMap: getMapDataFromGame(),
+        activeMap: getMapDataFromGame( map ),
         keyLists: getKeyListsFromGame()
     }
     return saveGame;
 }
 
-const getMapDataFromGame = (): SaveGameMapData => {
+const getMapDataFromGame = ( map: MapModel ): SaveGameMapData => {
     const playerSprite: Sprite = getPlayer();
     return {
-        mapName: getActiveMap().key,
-        sprites: [],
-        playerStart: {
-            column: playerSprite.column,
-            row: playerSprite.row,
-            type: playerSprite.model.key
-        }
+        mapName: map.key,
+        location: map.location
     }
 }
 

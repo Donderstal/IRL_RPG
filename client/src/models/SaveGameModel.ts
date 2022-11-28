@@ -11,8 +11,7 @@ export type SaveGamePlayerData = {
 }
 export type SaveGameMapData = {
     mapName: string;
-    sprites: any[];
-    playerStart: { column: number; row: number; type: string };
+    location: string;
 }
 
 export type SaveGameKeyLists = {

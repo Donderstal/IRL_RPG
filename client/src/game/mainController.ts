@@ -1,6 +1,6 @@
 import { GameType } from "../enumerables/GameType";
 import type { InteractionType } from "../enumerables/InteractionType";
-import { saveGameToServer } from "../game-data/SaveGameDto";
+import { saveGameToServer } from "./saveGame";
 import { openGameCanvas, showGameCanvas } from "../helpers/DOMEventHelpers";
 import { loadMapToCanvases, setNeighbourhoodAndMap } from "../helpers/loadMapHelpers";
 import { mobileAgent } from "../helpers/screenOrientation";
