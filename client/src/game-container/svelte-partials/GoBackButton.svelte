@@ -1,5 +1,5 @@
 <script>
-    import { returnToPreviousScreen } from "../stores.js";
+    import { returnToPreviousScreen } from "../stores";
 </script>
 
 <style>

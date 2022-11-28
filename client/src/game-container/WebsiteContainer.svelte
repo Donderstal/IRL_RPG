@@ -5,7 +5,7 @@
         SCREEN_LOG_IN, SCREEN_MAIN_MENU, SCREEN_NEW_GANE, SCREEN_SIGN_UP, 
         SCREEN_WELCOME, SCREEN_RESTORED_PASS, SCREEN_SIGNED_UP, SCREEN_VALIDATE_ACCOUNT,
         openRestoredPassScreen, openSignedUpScreen, openValidateAccountScreen, openLogInScreen,
-    } from './stores.js';
+    } from './stores';
 
     //partials
     import UserTab from './svelte-partials/UserTab.svelte';

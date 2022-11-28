@@ -1,6 +1,6 @@
 import { GameType } from "../enumerables/GameType";
 import type { InteractionType } from "../enumerables/InteractionType";
-import { SaveGameDto } from "../game-data/SaveGameDto";
+import { saveGameToServer } from "../game-data/SaveGameDto";
 import { openGameCanvas, showGameCanvas } from "../helpers/DOMEventHelpers";
 import { loadMapToCanvases, setNeighbourhoodAndMap } from "../helpers/loadMapHelpers";
 import { mobileAgent } from "../helpers/screenOrientation";
@@ -98,6 +98,5 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
 }
 
 export const save = (): void => {
-    let save = new SaveGameDto();
-    save.saveGameToDto()
+    saveGameToServer();
 }

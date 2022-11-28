@@ -3,7 +3,7 @@
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import Textbox from "../svelte-partials/Textbox.svelte";
 
-    import { openLogInScreen, openSignUpScreen, openMainMenuScreen, openAboutScreen } from "../stores.js";
+    import { openLogInScreen, openSignUpScreen, openMainMenuScreen, openAboutScreen } from "../stores";
 </script>
 
 <div>

@@ -1,5 +1,5 @@
 <script>   
-    import { openForgotPasswordScreen, openValidateAccountScreen, userMessage } from "../stores.js";
+    import { openForgotPasswordScreen, openValidateAccountScreen, userMessage } from "../stores";
     import InputDiv	from "../svelte-partials/InputDiv.svelte"; 
     import MainUiButton	from "../svelte-partials/MainUiButton.svelte";
     import FormWarning	from "../svelte-partials/FormWarning.svelte";

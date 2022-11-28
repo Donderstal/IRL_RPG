@@ -1,7 +1,7 @@
 <script>
     import WebsiteContainer from './WebsiteContainer.svelte'
     import GameContainer from './GameContainer.svelte'
-    import { websiteMode, gameMode } from './stores.js'
+    import { websiteMode, gameMode } from './stores'
 </script>
 
 <style>
