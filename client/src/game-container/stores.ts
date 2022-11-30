@@ -1,5 +1,6 @@
 import { writable, get } from 'svelte/store';
 import { GameMenuState } from '../enumerables/GameMenuState';
+import type { WebsiteUser } from '../models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";
 export const SCREEN_LOG_IN          = "LOG_IN";
@@ -27,15 +28,24 @@ const checkForUserSession = ( ) => {
     });
 }
 
-const setUserDataToFrontEnd = ( username ) => {
-    activeUser.set(username);
+export const setUserDataToFrontEnd = ( json ) => {
+    const user: WebsiteUser = {
+        name: json[0],
+        email: json[1],
+        accountCreated: json[2],
+        lastLogin: json[3],
+        save_1: json[4] != null ? JSON.parse( json[4] ) : null,
+        save_2: json[5] != null ? JSON.parse( json[5] ) : null,
+        save_3: json[6] != null ? JSON.parse( json[6] ) : null
+    }
+    activeUser.set( user );
     loggedIn.set(true);
     currentScreen.set(SCREEN_MAIN_MENU)
 }
 
-export const loggedIn       = writable();
-export const activeUser     = writable();
-export const currentScreen  = writable();
+export const loggedIn       = writable<boolean>();
+export const activeUser     = writable<WebsiteUser>();
+export const currentScreen  = writable<string>();
 checkForUserSession();
 
 export const userMessage = writable( false );

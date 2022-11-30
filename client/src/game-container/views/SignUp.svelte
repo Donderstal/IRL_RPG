@@ -87,5 +87,5 @@
             invalidForm = true;
             window.setTimeout(()=>{ invalidForm = false; }, 2000)
         }
-    }} buttonText={"Sign up"}/>
+    }} buttonText={"Sign up"} clickable={true}/>
 </form>

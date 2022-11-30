@@ -5,6 +5,7 @@
         SCREEN_LOG_IN, SCREEN_MAIN_MENU, SCREEN_NEW_GANE, SCREEN_SIGN_UP, 
         SCREEN_WELCOME, SCREEN_RESTORED_PASS, SCREEN_SIGNED_UP, SCREEN_VALIDATE_ACCOUNT,
         openRestoredPassScreen, openSignedUpScreen, openValidateAccountScreen, openLogInScreen,
+        setUserDataToFrontEnd, openMainMenuScreen
     } from './stores';
 
     //partials
@@ -59,8 +60,12 @@
                 else if ( url == "/post-restore-password" ) {
                     openRestoredPassScreen( );
                 }
-                else {
+                else if ( url == "/post-log-out" ){
                     window.location.replace("http://localhost:5000/");
+                }
+                else {
+                    setUserDataToFrontEnd(json);
+                    openMainMenuScreen();
                 }
                 break;
             case 202: 

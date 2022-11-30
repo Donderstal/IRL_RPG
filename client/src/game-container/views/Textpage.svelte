@@ -28,5 +28,5 @@
         <Textbox text={text}/>
     </div>
     <br/>
-    <MainUiButton action={buttonAction} buttonText={buttonText}/>
+    <MainUiButton action={buttonAction} buttonText={buttonText} clickable={true}/>
 </div>

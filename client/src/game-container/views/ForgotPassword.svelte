@@ -60,5 +60,5 @@
             invalidForm = true;
             window.setTimeout(()=>{ invalidForm = false; }, 2000)
         }
-    }} buttonText={"Send email"} />
+    }} buttonText={"Send email"} clickable={true}/>
 </form>

@@ -28,6 +28,11 @@
 		}
 	})
 </script>
+<style>
+	 p {
+		 margin: 0 auto;
+	 }
+</style>
 <div>
 	<div>
 		<canvas bind:this={canvas}></canvas>

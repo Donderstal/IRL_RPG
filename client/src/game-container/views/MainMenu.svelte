@@ -11,18 +11,18 @@
     <Header/>
     <br/>
     <div>
-        <MainUiButton action={openNewGameScreen} buttonText={"New game"} />
+        <MainUiButton action={openNewGameScreen} buttonText={"New game"} clickable={true}/>
     </div>
     <br/>
     <div>
-        <MainUiButton action={openLoadGameScreen} buttonText={"Load game"} />
+        <MainUiButton action={openLoadGameScreen} buttonText={"Load game"} clickable={$loggedIn}/>
     </div>
     <br/>
     <div>
-        <MainUiButton action={openOptionsScreen} buttonText={"Options"} />
+        <MainUiButton action={openOptionsScreen} buttonText={"Options"} clickable={false}/>
     </div>
     <br/>
     <div>
-        <MainUiButton action={openAboutScreen} buttonText={"About"} />
+        <MainUiButton action={openAboutScreen} buttonText={"About"} clickable={false}/>
     </div>
 </div>

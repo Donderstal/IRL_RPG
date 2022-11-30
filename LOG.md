@@ -1,5 +1,10 @@
 ### LOG
 
+#### NOV 30, 2022
+* Refactoring server code
+* New table for user save files
+* Improved session and cookie handling
+
 #### NOV 27, 2022
 * Restored SavePoint functionality
 

@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, send_from_directory, request, session, make_response;
 import users;
 import tokens;
+import db;
 
 app = Flask(__name__)
 app.secret_key = 'test'
@@ -10,6 +11,8 @@ app.config['MAIL_USERNAME'] = 'test'
 app.config['MAIL_PASSWORD'] = 'test'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+
+db.init_tables()
 
 # Path for our main Svelte page
 @app.route("/")
@@ -23,9 +26,14 @@ def home(path):
 
 @app.route("/check-login", methods=['POST'])
 def check_login():
-    loggedIn = tokens.check_for_valid_cookie() and tokens.compare_session_and_cookie( );
+    loggedIn = tokens.check_for_valid_cookie()
     if loggedIn :
-        response = make_response(jsonify({'loggedIn': loggedIn, 'user': session['username']}), 200);
+        connection = db.get_connection();
+        cursor = db.get_cursor(connection);
+        user = db.get_user_data(cursor, str(session['id']));
+        response = make_response(jsonify({'loggedIn': loggedIn, 'user': user}), 200);
+        db.close_cursor(cursor);
+        db.close_connection(connection);
     else:
         response = make_response(jsonify({'loggedIn': loggedIn}), 200);
     return response;

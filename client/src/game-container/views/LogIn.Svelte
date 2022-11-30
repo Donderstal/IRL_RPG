@@ -72,16 +72,16 @@
                 invalidForm = true;
                 window.setTimeout(()=>{ invalidForm = false; }, 2000)
             }
-        }} buttonText={validating ? "Activate!" : "Log in"} />
+        }} buttonText={validating ? "Activate!" : "Log in"} clickable={true}/>
     </div>
     {#if !validating} 
         <br/>
         <div>
-            <MainUiButton action={openForgotPasswordScreen} buttonText={"I forgot..."} />        
+            <MainUiButton action={openForgotPasswordScreen} buttonText={"I forgot..."} clickable={true}/>        
         </div>
         <br/>
         <div>
-            <MainUiButton action={openValidateAccountScreen} buttonText={"Activate"} />        
+            <MainUiButton action={openValidateAccountScreen} buttonText={"Activate"} clickable={true}/>        
         </div>
     {/if}
 </form>

@@ -26,7 +26,6 @@ const getSaveGame = (): SaveGame => {
 }
 
 const getMapDataFromGame = ( map: MapModel ): SaveGameMapData => {
-    const playerSprite: Sprite = getPlayer();
     return {
         mapName: map.key,
         location: map.location
@@ -44,7 +43,7 @@ const getKeyListsFromGame = (): SaveGameKeyLists => {
 
 const getPlayerDataFromGame = (): SaveGamePlayerData => {
     return {
-        name: "Test"
+        name: getPlayer().name
     };
 }
 

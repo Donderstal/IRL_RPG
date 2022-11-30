@@ -71,5 +71,5 @@
             <option value="test-maps/B1">Test doors</option>
         </select></p>
     </div>
-    <MainUiButton action={startGameWithParams} buttonText={"Let's go!"} />
+    <MainUiButton action={startGameWithParams} buttonText={"Let's go!"} clickable={true}/>
 </div>

@@ -25,7 +25,7 @@
 
 <form id="post-log-out">
     { #if $loggedIn } 
-        <h3>Logged in as: {$activeUser}</h3>
+        <h3>Logged in as: {$activeUser.name}</h3>
     { :else }
         <h3>Not signed in</h3>
     {/if}
@@ -34,11 +34,13 @@
             <MainUiButton
                 action={logOut} 
                 buttonText={"Log out"} 
+                clickable={true}
             />
         { :else }
             <MainUiButton
                 action={logIn} 
                 buttonText={"Log in"} 
+                clickable={true}
             />
         {/if}
     {/if}

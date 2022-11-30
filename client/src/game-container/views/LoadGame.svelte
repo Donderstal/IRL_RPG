@@ -1,16 +1,27 @@
 <script lang="ts">
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
-    import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import SaveGameButton from "../svelte-partials/SaveGameButton.svelte";
     import type { SaveGame } from "../../models/SaveGameModel"
     import {LH_NEWTOWN_APP_NAME} from "../../resources/mapResources/leonard_heights/leonard_heights_res";
+    import { activeUser } from '../stores';
+    import { onMount } from 'svelte';
+    let games = [];
 
-    const loadJsonFile = (event) => {
-        let reader = new FileReader();
-            reader.onload = (event) =>{
-                SaveFile = JSON.parse(event.target.result);
+    export const setSaveGames = () => {
+        games = [];
+        [ $activeUser.save_1, $activeUser.save_2, $activeUser.save_3 ].forEach((e)=>{
+            let saveGame: SaveGame = null;
+            if ( e !== null ) {
+                saveGame = {
+                    time: e["time"],
+                    playerData: e["playerData"],
+                    activeMap: e["activeMap"],
+                    keyLists: e["keyLists"]
+                }
             }
-            reader.readAsText(event.target.files[0]);
+
+            games.push(saveGame);
+        })
     }
 
     const mockSave: SaveGame = {
@@ -27,6 +38,10 @@
             }
         }
     }
+
+    onMount(()=>{
+        setSaveGames();
+    })
 </script>
 <style>
     .load-game-div {
@@ -35,38 +50,22 @@
         background-color: transparent;
         display: grid;
         grid-template-columns: [marginLeft] 20% [mainColumn] 60% [marginRight] 20% ;
-        grid-template-rows: [header] 10% [firstRow] 30% [secondRow] 30% [thirdRow] 30%;
+        grid-template-rows: repeat(1, 1fr);
     }
 
     .column {
         grid-column-start: mainColumn;
         grid-column-end: span 1;
-        grid-row-end: span 1;
-    }
-
-    .one {
-        grid-row-start: header;
-    }
-
-    .one {
-        grid-row-start: firstRow;
-    }
-
-    .two {
-        grid-row-start: secondRow;
-    }
-
-    .three {
-        grid-row-start: thirdRow;
+        max-height: 25vh;
     }
 </style>
 
 <div>
     <GoBackButton/>
     <div class="load-game-div">
-        <div class="column header"><h2>LOAD GAME</h2></div>
-        <div class="column one"><SaveGameButton saveGame={mockSave}/></div>
-        <div class="column two"><SaveGameButton saveGame={null}/></div>
-        <div class="column three"><SaveGameButton saveGame={null}/></div>
+        <div class="column"><h2>LOAD GAME</h2></div>
+        {#each games as game}
+            <div class="column"><SaveGameButton saveGame={game}/></div>
+        {/each}
     </div>
 </div>
