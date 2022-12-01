@@ -1,5 +1,4 @@
 import { writable, get } from 'svelte/store';
-import { GameMenuState } from '../enumerables/GameMenuState';
 import type { WebsiteUser } from '../models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";
@@ -53,8 +52,6 @@ export const userMessage = writable( false );
 export const websiteMode    = writable( true );
 export const gameMode = writable( false );
 
-export const gameMenuState   = writable( GameMenuState.none )
-
 const switchScreen = ( screen ) => {
     userMessage.set(false);
     currentScreen.set(screen);
@@ -69,10 +66,6 @@ export const openWebsite = () => {
     websiteMode.set( true );
     gameMode.set( false );
 }
-
-export const closeGameMenu = () => { gameMenuState.set( GameMenuState.none ) };
-export const openSaveMenu = () => { gameMenuState.set( GameMenuState.save ) };
-export const openGameMenu = () => { gameMenuState.set( GameMenuState.menu ) };
 
 export const openWelcomeScreen          = ( ) => {switchScreen(SCREEN_WELCOME)};
 export const openLogInScreen            = ( ) => {switchScreen(SCREEN_LOG_IN)};

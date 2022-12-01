@@ -10,6 +10,17 @@
 		text-align: left;
 		margin-left: 1vw;
 	}
+	
+    @media only screen and (max-width: 600px) {
+        label {
+			margin-left: 2.5vw;
+        }
+    }
+	@media only screen and (max-height: 600px) {
+		label {
+			font-size: 3vh;
+		}
+    }
 </style>
 <label>
 	{valueLabel}

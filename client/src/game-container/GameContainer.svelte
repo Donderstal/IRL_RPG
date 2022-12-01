@@ -6,6 +6,8 @@
     import { mobileAgent } from '../helpers/screenOrientation'
     import { getAllActiveSprites } from '../game/modules/sprites/spriteGetter';
     import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
+    import Menu from './game-menus/Menu.svelte';
+    import { GameMenuType } from '../enumerables/GameMenuType';
 
     const logClick = ( event ) => {
         getAllActiveSprites().forEach( ( e ) => {
@@ -151,6 +153,8 @@
         style="width: {document.documentElement.width}px; height: {document.documentElement.height}px"></canvas>
         <button on:click={closeGameCanvas} type="button">Close</button>
     </div>
+
+    <Menu menuType={GameMenuType.save} />
 
     {#if mobileAgent}
         <div id="buttons-div" >

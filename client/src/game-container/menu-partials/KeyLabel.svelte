@@ -9,6 +9,11 @@
 		width: 100%;
 		text-align: right;
 	}
+	@media only screen and (max-height: 600px) {
+		label {
+			font-size: 3.5vh;
+		}
+    }
 </style>
 <label>
 	{keyLabel}:

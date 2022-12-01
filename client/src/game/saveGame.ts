@@ -17,7 +17,7 @@ export const saveGameToServer = (): void => {
 const getSaveGame = (): SaveGame => {
     const map = getActiveMap();
     const saveGame: SaveGame = {
-        time: new Date().toString(),
+        time: new Date().toLocaleString(),
         playerData: getPlayerDataFromGame(),
         activeMap: getMapDataFromGame( map ),
         keyLists: getKeyListsFromGame()

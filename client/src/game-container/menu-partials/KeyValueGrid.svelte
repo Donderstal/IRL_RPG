@@ -11,6 +11,22 @@
         grid-template-rows: repeat(1, 1fr);
     }
 
+    @media only screen and (max-width: 600px) {
+        .grid-inner {
+            grid-template-columns: [left] 32.5% [right] 67.5%;
+        }
+    }
+    @media only screen and (max-height: 600px) {
+		div {
+			margin-top: 1vh;
+		}
+        .right {
+            margin-top: 1.5vh;
+        }
+                .grid-inner {
+            grid-template-columns: [left] 40% [right] 60%;
+        }
+    }
     .left {
         grid-column-start: left;
         grid-column-end: span 1;

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_PX } from '../../game-data/globals';
     import type { SpriteFrameModel } from '../../models/SpriteFrameModel';
 
 	export let imageSrc: string;
@@ -13,17 +14,20 @@
 			return;
 		}
 		const image = new Image();
+		let imageInCanvasWidth = Math.round((frame.width / GRID_BLOCK_IN_SHEET_PX) * GRID_BLOCK_PX);
+		let imageInCanvasHeight = Math.round((frame.height / GRID_BLOCK_IN_SHEET_PX) * GRID_BLOCK_PX);
 		image.src = imageSrc;
 		image.onload = ()=>{
 			const context = canvas.getContext("2d");
-			canvas.width = frame.width;
-			canvas.height = frame.height;
+			canvas.width = imageInCanvasWidth;
+			canvas.height = imageInCanvasHeight;
+
 			context.drawImage(
 				image,
 				frame.x, frame.y,
 				frame.width, frame.height,
 				0, 0,
-				frame.width, frame.height
+				imageInCanvasWidth, imageInCanvasHeight
 			)
 		}
 	})
