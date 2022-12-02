@@ -1,4 +1,6 @@
 import { writable, get } from 'svelte/store';
+import type { GameMenuType } from '../enumerables/GameMenuType';
+import { setPausedState } from '../game/gameState/gameStateSetter';
 import type { WebsiteUser } from '../models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";
@@ -14,7 +16,7 @@ export const SCREEN_CREDITS         = "CREDITS"
 export const SCREEN_ABOUT           = "ABOUT"
 export const SCREEN_HELP            = "HELP"
 export const SCREEN_SIGNED_UP       = "SIGNED_UP"
-export const SCREEN_RESTORED_PASS   = "RESTORED_PASS"
+export const SCREEN_RESTORED_PASS = "RESTORED_PASS"
 
 const checkForUserSession = ( ) => {
     fetch("/check-login", {
@@ -52,6 +54,20 @@ export const userMessage = writable( false );
 export const websiteMode    = writable( true );
 export const gameMode = writable( false );
 
+export const inGameMenu = writable( false );
+export const gameMenuType = writable<GameMenuType>();
+
+export const openInGameMenu = ( type: GameMenuType ) => {
+    setPausedState( true );
+    gameMenuType.set( type );
+    inGameMenu.set( true );
+}
+
+export const closeInGameMenu = () => {
+    inGameMenu.set( false );
+    setPausedState( false );
+}
+
 const switchScreen = ( screen ) => {
     userMessage.set(false);
     currentScreen.set(screen);
@@ -82,7 +98,11 @@ export const openHelpScreen             = ( ) => {switchScreen(SCREEN_HELP)};
 export const openRestoredPassScreen     = ( ) => {switchScreen(SCREEN_RESTORED_PASS)};
 export const openSignedUpScreen         = ( ) => {switchScreen(SCREEN_SIGNED_UP)};
 
-export const returnToPreviousScreen     = ( ) => {
+export const returnToPreviousScreen = () => {
+    if ( get(inGameMenu) ) {
+        closeInGameMenu();
+        return;
+    }
     switch( get(currentScreen) ) {
         case SCREEN_FORGOT_PASSWORD:
         case SCREEN_VALIDATE_ACCOUNT:

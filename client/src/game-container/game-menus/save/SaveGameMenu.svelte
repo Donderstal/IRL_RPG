@@ -1,9 +1,20 @@
 <script lang="ts">
     import SaveGameButton from "../../svelte-partials/SaveGameButton.svelte";
+    import GoBackButton from '../../svelte-partials/GoBackButton.svelte'
+
     import type { SaveGame } from "../../../models/SaveGameModel";
     import { activeUser } from '../../stores';
     import { onMount } from 'svelte';
+    import { mobileAgent } from '../../../helpers/screenOrientation';
+    import { save } from '../../../game/mainController';
+
     let games = [];
+    let activeIndex = null;
+
+    let closeMenuButton = null;
+    let firstSaveButton = null;
+    let secondSaveButton = null;
+    let thirdSaveButton = null;
 
     export const setSaveGames = () => {
         games = [];
@@ -17,13 +28,81 @@
                     keyLists: e["keyLists"]
                 }
             }
-
+            console.log(saveGame)
             games.push(saveGame);
         })
     }
 
+    const setActiveIndex = ( index: number ): void => {
+        deactivateActiveButton();
+        activeIndex = index;
+        activateButtonAtIndex();
+    }
+
+    const deactivateActiveButton = (): void => {
+        switch( activeIndex ) {
+            case 0:
+                closeMenuButton.markAsUnselected();
+                break;
+            case 1:
+                firstSaveButton.markAsUnselected();
+                break;
+            case 2:
+                secondSaveButton.markAsUnselected();
+                break;
+            case 3:
+                thirdSaveButton.markAsUnselected();
+                break;
+        }
+    }
+
+    const activateButtonAtIndex = (): void => {
+        switch( activeIndex ) {
+            case 0:
+                closeMenuButton.markAsSelected();
+                break;
+            case 1:
+                firstSaveButton.markAsSelected();
+                break;
+            case 2:
+                secondSaveButton.markAsSelected();
+                break;
+            case 3:
+                thirdSaveButton.markAsSelected();
+                break;
+        }
+    }
+
+    const handleKeyPress = (event: KeyboardEvent): void => {
+        if ( !mobileAgent ) {
+            if ( event.key === "w" || event.key === "ArrowUp" ) {
+                const nextIndex = activeIndex === 1 ? 3 : activeIndex - 1;
+                setActiveIndex(nextIndex);
+            }
+            else if ( event.key === "s" || event.key === "ArrowDown" ) {
+                const nextIndex = activeIndex === 3 ? 1 : activeIndex + 1;
+                setActiveIndex(nextIndex);
+            }
+            else if ( event.key === "a" || event.key === "ArrowLeft" ) {
+                setActiveIndex(0);
+            }
+            else if ( event.key === "d" || event.key === "ArrowRight" ) {
+                setActiveIndex(1);
+            }
+            else if ( event.key === " " ) {
+                openConfirmationModel(activeIndex);
+            }
+        }
+    }
+
+    const openConfirmationModel = (index = activeIndex): void => {
+        save(index);
+    }
+
     onMount(()=>{
         setSaveGames();
+        setTimeout(()=>{ setActiveIndex(1); }, 100);
+        document.addEventListener("keypress", handleKeyPress)
     })
 </script>
 <style>
@@ -57,10 +136,17 @@
         }
     }
 </style>
-<div >
+<div>
+    <GoBackButton on:mouseenter={()=>{setActiveIndex(0)}} bind:this={closeMenuButton} />
     <div class="save-game-div">
-        {#each games as game, index}
-            <div class="item"><SaveGameButton saveGame={game} index={index + 1} inSaveGameMenu={true}/></div>
-        {/each}
+        <div on:mouseenter={()=>{setActiveIndex(1);}} class="item">
+            <SaveGameButton bind:this={firstSaveButton} saveGame={games[0]} index={1} inSaveGameMenu={true} action={openConfirmationModel}/>
+        </div>
+        <div on:mouseenter={()=>{setActiveIndex(2);}} class="item">
+            <SaveGameButton bind:this={secondSaveButton} saveGame={games[1]} index={2} inSaveGameMenu={true} action={openConfirmationModel}/>
+        </div>
+        <div on:mouseenter={()=>{setActiveIndex(3);}} class="item">
+            <SaveGameButton bind:this={thirdSaveButton} saveGame={games[2]} index={3} inSaveGameMenu={true} action={openConfirmationModel}/>
+        </div>
     </div>
 </div>

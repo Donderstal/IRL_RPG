@@ -52,7 +52,7 @@ export class Interaction {
     }
 
     registerYesOrNoSelection(): void {
-        let scenesToAdd;
+        let scenesToAdd = null;
         let animation = this.activeScene.getAnimationByType( SceneAnimationType.speakYesNo );
         this.registeredSelection = animation.selection;
         switch( animation.selection ) {
@@ -66,7 +66,7 @@ export class Interaction {
                 console.log("Selection has invalid value: " + animation.selection)
         }
 
-        if ( scenesToAdd ) {
+        if ( scenesToAdd != null) {
             for ( var i = 0; i < scenesToAdd.length; i++ ) {
                 let model: CinematicSceneModel = initCinematicSceneModel( scenesToAdd[i] );
                 this.scenes.splice( this.iterator + 1 + i, 0, model )

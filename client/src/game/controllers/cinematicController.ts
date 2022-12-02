@@ -13,11 +13,11 @@ import { InteractionType } from "../../enumerables/InteractionType";
 import { getActiveMapKey } from "../neighbourhoodModule";
 import { switchMap } from "../../helpers/loadMapHelpers";
 import { getAllActiveSprites, getPlayer } from "../modules/sprites/spriteGetter";
-import { save } from "../mainController";
+import { openInGameMenu } from "../../game-container/stores";
+import { GameMenuType } from "../../enumerables/GameMenuType";
 
 let activeCinematic: Interaction = null;
 let activeMapAtStartOfCinematic: string = null;
-let activeSpritesAtStartOfCinematic: Sprite[] = null;
 let playerLocationAtStartOfCinematic: CellPosition = null;
 
 export const saveActiveMapLocations = (): void => {
@@ -57,7 +57,7 @@ export const dismissActiveCinematic = (): void => {
         dismissActiveAction();
     }
     if ( activeCinematic.model.type === InteractionType.save && activeCinematic.registeredSelection === InteractionAnswer.yes ) {
-        save();
+        openInGameMenu( GameMenuType.save );
     }
     clearActiveBubbles()
     activeCinematic = null;

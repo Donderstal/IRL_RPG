@@ -1,4 +1,7 @@
-### LOG
+### 
+
+#### DEC 2, 2022
+* Svelte front end for saving and loading a game
 
 #### NOV 30, 2022
 * Refactoring server code

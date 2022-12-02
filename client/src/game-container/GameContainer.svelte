@@ -7,7 +7,7 @@
     import { getAllActiveSprites } from '../game/modules/sprites/spriteGetter';
     import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
     import Menu from './game-menus/Menu.svelte';
-    import { GameMenuType } from '../enumerables/GameMenuType';
+    import { inGameMenu, gameMenuType } from './stores';
 
     const logClick = ( event ) => {
         getAllActiveSprites().forEach( ( e ) => {
@@ -140,7 +140,7 @@
         max-width: 15vw;
         max-height: 10vh;
         position: fixed;
-        z-index: 5;
+        z-index: 50;
         right: 1vw;
         top: 1vh;
         background-color: rgba(0, 56, 77, 0.1);
@@ -151,10 +151,13 @@
     <div id="canvas-wrapper" class="canvas-wrapper" style="width: {document.documentElement.width}px; height: {document.documentElement.height}px">
         <canvas id='game-canvas' class="game-background-body" on:click={logClick}
         style="width: {document.documentElement.width}px; height: {document.documentElement.height}px"></canvas>
-        <button on:click={closeGameCanvas} type="button">Close</button>
     </div>
 
-    <Menu menuType={GameMenuType.save} />
+    {#if $inGameMenu }
+        <Menu menuType={$gameMenuType} />
+    {:else}
+        <button on:click={closeGameCanvas} type="button">Close</button>
+    {/if}
 
     {#if mobileAgent}
         <div id="buttons-div" >

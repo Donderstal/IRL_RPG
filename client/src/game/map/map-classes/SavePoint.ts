@@ -15,9 +15,7 @@ const actionData = [
     [ConditionType.default, false],
     [
         [[SceneAnimationType.speakYesNo, true, "Save the game?",
-        [
-            [[SceneAnimationType.speak, true, "Game saved!"]]
-        ],
+        null,
         [
             [[SceneAnimationType.speak, true, "Why did you press the button then?"]]
         ],

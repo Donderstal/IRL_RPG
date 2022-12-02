@@ -8,6 +8,7 @@
     export let index: number;
     export let saveGame: SaveGame; 
     export let inSaveGameMenu: boolean;
+    export let action;
 
     let coins = 0;
     let cans = 0;
@@ -21,8 +22,9 @@
         [ "Coins", 0 ],
         [ "Cans", 0 ]
     ];
+    let selected = false;
 
-    if ( saveGame !== null ) {
+    if ( saveGame !== null && saveGame !== undefined ) {
         coins = saveGame.keyLists.collectableRegistry.coins.length;
         cans = saveGame.keyLists.collectableRegistry.juiceCans.length;
         location = saveGame.activeMap.location;
@@ -42,6 +44,17 @@
         y: 0,
         width: MAP_SPRITE_WIDTH_IN_SHEET,
         height: MAP_SPRITE_HEIGHT_IN_SHEET
+    }
+
+    export const markAsSelected = (): void => {
+        selected = true;
+    }
+    export const markAsUnselected = (): void => {
+        selected = false;
+    }
+
+    const handleAction = (): void =>{
+        action(index);
     }
 </script>
 
@@ -63,7 +76,7 @@
         grid-template-columns: [marginLeft] 5% [leftColumn] 30% [rightColumn] 60% [marginRight] 5% ;
         grid-template-rows: [marginTop] 5% [topRow] 45% [bottomRow] 45% [marginBottom] 5%;
     }
-    .grid-outer-active:hover {
+    .grid-outer-active:hover, .selected {
         cursor: pointer;
         transition: transform .3s ease-out;
         transform: translateY(-.5vh) translateX(-.5vh);
@@ -137,7 +150,8 @@
     }
 </style>
 
-<div class="grid-outer" class:grid-outer-active="{saveGame !== null || inSaveGameMenu}">
+<div class="grid-outer" class:grid-outer-active="{saveGame !== null || inSaveGameMenu}" class:selected="{selected}"
+    on:click={handleAction} on:touchstart={handleAction}>
     <span>{index}</span>
     {#if saveGame !== null}
         <div class="image-item">

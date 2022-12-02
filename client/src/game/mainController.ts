@@ -97,6 +97,6 @@ export const switchMap = ( destinationName: string, type: InteractionType, playe
     switchMap( destinationName, type, playerStart );
 }
 
-export const save = (): void => {
-    saveGameToServer();
+export const save = (index: number): void => {
+    saveGameToServer( index );
 }

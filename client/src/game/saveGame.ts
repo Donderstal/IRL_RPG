@@ -1,4 +1,3 @@
-import type { Sprite } from "../game/core/Sprite";
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
 import { getActiveMap } from "../game/neighbourhoodModule";
 import { exportTriggerEventsRegistry } from "../game/storyEvents/storyEventGetter";
@@ -8,10 +7,10 @@ import { exportCollectableRegistry } from "../registries/collectableRegistry";
 import { getUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { getRegistry } from "../registries/interactionRegistry";
 
-export const saveGameToServer = (): void => {
+export const saveGameToServer = ( index: number ): void => {
     const saveGame = getSaveGame();
     console.log( saveGame );
-    postSaveGame(saveGame, "post-game")
+    postSaveGame( saveGame, index )
 }
 
 const getSaveGame = (): SaveGame => {
@@ -47,12 +46,16 @@ const getPlayerDataFromGame = (): SaveGamePlayerData => {
     };
 }
 
-const postSaveGame = ( saveGame: SaveGame, name: string ): void => {
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent( JSON.stringify( saveGame ) );
-    var downloadAnchorNode = document.createElement( 'a' );
-    downloadAnchorNode.setAttribute( "href", dataStr );
-    downloadAnchorNode.setAttribute( "download", name + Date.now().toString() + ".json" );
-    document.body.appendChild( downloadAnchorNode );
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
+const postSaveGame = ( saveGame: SaveGame, index: number ): void => {
+    const data = {
+        'index': index,
+        'body': JSON.stringify( saveGame )
+    };
+
+    fetch( "/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify( data ),
+    } );
+
 }
