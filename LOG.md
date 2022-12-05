@@ -1,4 +1,6 @@
 ### 
+#### DEC 4, 2022
+* Now storing and retrieving savegame json from db based on user account
 
 #### DEC 2, 2022
 * Svelte front end for saving and loading a game

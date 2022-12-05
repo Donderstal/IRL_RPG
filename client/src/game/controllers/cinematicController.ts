@@ -18,6 +18,7 @@ import { GameMenuType } from "../../enumerables/GameMenuType";
 
 let activeCinematic: Interaction = null;
 let activeMapAtStartOfCinematic: string = null;
+let activeSpritesAtStartOfCinematic: Sprite[];
 let playerLocationAtStartOfCinematic: CellPosition = null;
 
 export const saveActiveMapLocations = (): void => {

@@ -52,7 +52,7 @@
     <div class="load-game-div">
         <div class="column"><h2>LOAD GAME</h2></div>
         {#each games as game, index}
-            <div class="column"><SaveGameButton saveGame={game} inSaveGameMenu={false} index={index + 1}/></div>
+            <div class="column"><SaveGameButton saveGame={game} inSaveGameMenu={false} index={index + 1} action={()=>alert(`Load ${index+1}`)}/></div>
         {/each}
     </div>
 </div>

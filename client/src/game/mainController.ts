@@ -1,6 +1,5 @@
 import { GameType } from "../enumerables/GameType";
 import type { InteractionType } from "../enumerables/InteractionType";
-import { saveGameToServer } from "./saveGame";
 import { openGameCanvas, showGameCanvas } from "../helpers/DOMEventHelpers";
 import { loadMapToCanvases, setNeighbourhoodAndMap } from "../helpers/loadMapHelpers";
 import { mobileAgent } from "../helpers/screenOrientation";
@@ -95,8 +94,4 @@ const initControlsAndAnimation = (): void => {
 
 export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {
     switchMap( destinationName, type, playerStart );
-}
-
-export const save = (index: number): void => {
-    saveGameToServer( index );
 }

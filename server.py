@@ -26,17 +26,7 @@ def home(path):
 
 @app.route("/check-login", methods=['POST'])
 def check_login():
-    loggedIn = tokens.check_for_valid_cookie()
-    if loggedIn :
-        connection = db.get_connection();
-        cursor = db.get_cursor(connection);
-        user = db.get_user_data(cursor, str(session['id']));
-        response = make_response(jsonify({'loggedIn': loggedIn, 'user': user}), 200);
-        db.close_cursor(cursor);
-        db.close_connection(connection);
-    else:
-        response = make_response(jsonify({'loggedIn': loggedIn}), 200);
-    return response;
+    return users.validate_user( );
 
 @app.route("/post-log-out", methods=['POST'])
 def post_logout():
@@ -57,6 +47,10 @@ def post_restore_password():
 @app.route("/post-validate-account", methods=['POST'])
 def post_activate_account():
     return users.activate_account( request );
+
+@app.route("/post-savegame", methods=['POST'])
+def post_savegame():
+    return users.post_savefile(request);
 
 if __name__ == "__main__":
     app.run(debug=True)

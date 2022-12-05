@@ -169,3 +169,45 @@ def is_username_taken( cur, username ):
 def is_email_taken( cur, email ):
     arr = db.get_user_emails(cur)
     return [email] in arr;
+
+def validate_user():
+    loggedIn = tokens.check_for_valid_cookie();
+    if loggedIn :
+        connection = db.get_connection();
+        cursor = db.get_cursor(connection);
+        user = db.get_user_data(cursor, str(session['id']));
+        response = make_response(jsonify({'loggedIn': loggedIn, 'user': user}), 200);
+        db.close_cursor(cursor);
+        db.close_connection(connection);
+    else:
+        response = make_response(jsonify({'loggedIn': loggedIn}), 200);
+    return response;
+
+def post_savefile( request ):
+    returnValue = None;
+    statusCode = None;
+
+    # open connection
+    connection = db.get_connection();
+
+    cursor = db.get_cursor(connection);
+    # process request
+    jsonRequest = request.get_json(force=True);
+
+    loggedIn = tokens.check_for_valid_cookie();
+    if loggedIn :
+        try:
+            db.update_user_savefile(cursor, session['id'], jsonRequest['index'], jsonRequest['body']);
+            returnValue = jsonify({'succes': True});
+            statusCode = 200;
+            connection.commit();
+        except Exception as e:
+            print('Caught this error: ' + repr(e))
+            returnValue = jsonify({'error': str(e)});
+            statusCode = 500;
+    else:
+        returnValue = jsonify({'error': 'UNAUTHORIZED'});
+        statusCode = 401;
+
+    # close connection
+    return close_connection_and_give_response( returnValue, statusCode, False, cursor, connection );

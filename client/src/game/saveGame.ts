@@ -7,10 +7,13 @@ import { exportCollectableRegistry } from "../registries/collectableRegistry";
 import { getUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { getRegistry } from "../registries/interactionRegistry";
 
-export const saveGameToServer = ( index: number ): void => {
+export const saveGameToServer = ( index: number ): {[key in string]: any} => {
     const saveGame = getSaveGame();
     console.log( saveGame );
-    postSaveGame( saveGame, index )
+    return {
+        'index': index,
+        'body': JSON.stringify( saveGame )
+    };
 }
 
 const getSaveGame = (): SaveGame => {
@@ -44,18 +47,4 @@ const getPlayerDataFromGame = (): SaveGamePlayerData => {
     return {
         name: getPlayer().name
     };
-}
-
-const postSaveGame = ( saveGame: SaveGame, index: number ): void => {
-    const data = {
-        'index': index,
-        'body': JSON.stringify( saveGame )
-    };
-
-    fetch( "/test", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data ),
-    } );
-
 }

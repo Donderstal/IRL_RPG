@@ -18,7 +18,7 @@ export const SCREEN_HELP            = "HELP"
 export const SCREEN_SIGNED_UP       = "SIGNED_UP"
 export const SCREEN_RESTORED_PASS = "RESTORED_PASS"
 
-const checkForUserSession = ( ) => {
+export const checkForUserSession = ( ) => {
     fetch("/check-login", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 

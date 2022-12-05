@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+
     import { MAP_SPRITE_WIDTH_IN_SHEET, MAP_SPRITE_HEIGHT_IN_SHEET } from '../../game-data/globals';
     import type { SaveGame } from '../../models/SaveGameModel';
     import type { SpriteFrameModel } from '../../models/SpriteFrameModel';
@@ -24,21 +26,6 @@
     ];
     let selected = false;
 
-    if ( saveGame !== null && saveGame !== undefined ) {
-        coins = saveGame.keyLists.collectableRegistry.coins.length;
-        cans = saveGame.keyLists.collectableRegistry.juiceCans.length;
-        location = saveGame.activeMap.location;
-        name = saveGame.playerData.name;
-        date = saveGame.time;
-        src = "/static/sprites/Main_Character.png";
-        keyValuePairs = [
-            [ "Date", saveGame.time],
-            [ "Location", saveGame.activeMap.location ],
-            [ "Coins", saveGame.keyLists.collectableRegistry.coins.length ],
-            [ "Cans", saveGame.keyLists.collectableRegistry.juiceCans.length ]
-        ]
-    }
-
     const profileImageFrame: SpriteFrameModel = {
         x: 0,
         y: 0,
@@ -52,10 +39,40 @@
     export const markAsUnselected = (): void => {
         selected = false;
     }
+    export const hasSaveGameSet = (): boolean => {
+        return saveGame !== null && saveGame !== undefined;
+    }
+
+    export const setSaveGameToButton = (save: SaveGame): void => {
+        saveGame = save;
+        setData();
+    }
 
     const handleAction = (): void =>{
         action(index);
     }
+
+    const setData = (): void => {
+        if ( saveGame !== null && saveGame !== undefined ) {
+            coins = saveGame.keyLists.collectableRegistry.coins.length;
+            cans = saveGame.keyLists.collectableRegistry.juiceCans.length;
+            location = saveGame.activeMap.location;
+            name = saveGame.playerData.name;
+            date = saveGame.time;
+            src = "/static/sprites/Main_Character.png";
+            keyValuePairs = [
+                [ "Date", saveGame.time],
+                [ "Location", saveGame.activeMap.location ],
+                [ "Coins", saveGame.keyLists.collectableRegistry.coins.length ],
+                [ "Cans", saveGame.keyLists.collectableRegistry.juiceCans.length ]
+            ]
+        }
+    }
+
+    onMount(()=>{
+        setData()
+    });
+    setData();
 </script>
 
 <style>
@@ -150,8 +167,10 @@
     }
 </style>
 
+
 <div class="grid-outer" class:grid-outer-active="{saveGame !== null || inSaveGameMenu}" class:selected="{selected}"
     on:click={handleAction} on:touchstart={handleAction}>
+    {#key saveGame}
     <span>{index}</span>
     {#if saveGame !== null}
         <div class="image-item">
@@ -163,4 +182,6 @@
     {:else}
         <div class="empty-header-wrapper"><h2>Empty</h2></div>
     {/if}
+    {/key}
 </div>
+

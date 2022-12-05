@@ -3,10 +3,15 @@
     import GoBackButton from '../../svelte-partials/GoBackButton.svelte'
 
     import type { SaveGame } from "../../../models/SaveGameModel";
-    import { activeUser } from '../../stores';
+    import { activeUser, checkForUserSession, currentScreen, SCREEN_WELCOME, setUserDataToFrontEnd } from '../../stores';
     import { onMount } from 'svelte';
     import { mobileAgent } from '../../../helpers/screenOrientation';
-    import { save } from '../../../game/mainController';
+    import { SceneAnimationType } from '../../../enumerables/SceneAnimationTypeEnum';
+    import { saveGameToServer } from '../../../game/saveGame';
+
+    export let setModal;
+
+    const messageOverwriteSave = "Saving to this slot will overwrite the existing savefile.";
 
     let games = [];
     let activeIndex = null;
@@ -33,10 +38,28 @@
         })
     }
 
+    const updateSaveGames = () => {
+        setSaveGames();
+        firstSaveButton.setSaveGameToButton(games[0]);
+        secondSaveButton.setSaveGameToButton(games[1]);
+        thirdSaveButton.setSaveGameToButton(games[2]);
+    }
+
     const setActiveIndex = ( index: number ): void => {
         deactivateActiveButton();
         activeIndex = index;
         activateButtonAtIndex();
+    }
+
+    const getSaveButton = (index): SaveGameButton => {
+        switch( activeIndex ) {
+            case 1:
+                return firstSaveButton;
+            case 2:
+                return secondSaveButton;
+            case 3:
+                return thirdSaveButton;
+        }
     }
 
     const deactivateActiveButton = (): void => {
@@ -96,7 +119,38 @@
     }
 
     const openConfirmationModel = (index = activeIndex): void => {
-        save(index);
+        const selectedButton = getSaveButton(index);
+        if ( selectedButton.hasSaveGameSet() ) {
+            setModal(messageOverwriteSave, SceneAnimationType.speakYesNo);
+        }
+        else {
+            saveGame();
+        }
+    }
+
+    export const saveGame = (index = activeIndex): void => {
+        const saveData = saveGameToServer( index );
+        fetch( "/post-savegame", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify( saveData ),
+        } ).catch( ( ex ) =>{
+            console.log( ex );
+            setModal(`Error saving game to slot ${index}. Contact us if the problem persists.`, SceneAnimationType.speak);
+        }).then( ( res ) => {
+            console.log( res );
+            setModal(`Game saved to slot ${index}`, SceneAnimationType.speak);
+        })
+
+        fetch("/check-login", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'}, 
+        }).then(res => {
+            res.json().then(jsonData => {
+                jsonData['loggedIn'] ? setUserDataToFrontEnd(jsonData['user']) : currentScreen.set(SCREEN_WELCOME)         
+            });
+            updateSaveGames();
+        })
     }
 
     onMount(()=>{
@@ -104,6 +158,8 @@
         setTimeout(()=>{ setActiveIndex(1); }, 100);
         document.addEventListener("keypress", handleKeyPress)
     })
+
+    setSaveGames();
 </script>
 <style>
     .save-game-div {

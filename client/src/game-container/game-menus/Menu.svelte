@@ -1,9 +1,38 @@
 <script lang="ts">
     import { GameMenuType } from '../../enumerables/GameMenuType';
+    import { InteractionAnswer } from '../../enumerables/InteractionAnswer';
+    import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
+    import Modal from '../menu-partials/Modal.svelte';
+    import { returnToPreviousScreen } from '../stores';
     import MainMenu from '../views/MainMenu.svelte';
     import SaveGameMenu from './save/SaveGameMenu.svelte';
 
 	export let menuType: GameMenuType;
+
+	let saveGameMenu: SaveGameMenu;
+	let showModal = false
+	let modalType: SceneAnimationType;
+	let modalMessage: string;
+
+	const activateModal = (message: string, type: SceneAnimationType): void => {
+		modalType = type;
+		showModal = true;
+		modalMessage = message;
+	}
+
+	const deactivateModal = ( userAnswer: InteractionAnswer ): void => {
+		const saveGame = userAnswer === InteractionAnswer.yes && modalType === SceneAnimationType.speakYesNo;
+		if ( modalType === SceneAnimationType.speak ) {
+			returnToPreviousScreen();
+		}
+		showModal = false;
+		modalType = null;
+		modalMessage = null;
+
+		if ( saveGame ) {
+			saveGameMenu.saveGame();
+		}
+	}
 </script>
 
 <style>
@@ -23,8 +52,11 @@
 <div class="game-menu-div">
 	{#if menuType == GameMenuType.save}
 		<div><h2>Choose a save slot to overwrite</h2></div>
-		<SaveGameMenu/>
+		<SaveGameMenu bind:this={saveGameMenu} setModal={activateModal}/>
 	{:else if menuType === GameMenuType.main }
 		<MainMenu/>
+	{/if}
+	{#if showModal}
+		<Modal message={modalMessage} modalType={modalType} deactivate={deactivateModal}/>
 	{/if}
 </div>
