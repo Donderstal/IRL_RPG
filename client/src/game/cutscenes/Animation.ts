@@ -29,8 +29,11 @@ import { ANIM_TALK } from "../../game-data/animationGlobals";
 import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
 import { pauseMusic, playEffect } from "../sound/sound";
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from "../canvas/canvasGetter";
-import { switchMap } from "../mainController";
+import { switchMap } from '../../helpers/loadMapHelpers';
 import { InteractionType } from "../../enumerables/InteractionType";
+import { getActiveMapKey } from "../neighbourhoodModule";
+import { setPlayerStartForCinematic } from "../map/playerLocationOnMapLoad";
+import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 
 export class Animation {
     id: string;
@@ -135,7 +138,8 @@ export class Animation {
                 break;
             case SceneAnimationType.loadMap:
                 this.model = this.model as LoadMapScene;
-                switchMap( this.loadMapScene.mapName, InteractionType.cinematic, this.loadMapScene.playerStart )
+                setPlayerStartForCinematic( getActiveMapKey() , this.loadMapScene.playerStart);
+                switchMap( this.loadMapScene.mapName, PlayerMapEntry.cinematic );
                 break;
         }
     }

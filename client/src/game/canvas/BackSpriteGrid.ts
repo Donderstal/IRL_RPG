@@ -25,6 +25,7 @@ import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } 
 import { getTileOnCanvasByCell } from './canvasGetter';
 import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
 import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
+import { getPlayerStart, mapHasPlayerStart } from '../map/playerLocationOnMapLoad';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -42,7 +43,7 @@ export class BackSpriteGrid extends CanvasGrid {
         //this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
     }
 
-    setForegroundData( mapModel: MapModel, sprites: Sprite[] = null ) {
+    setForegroundData( mapModel: MapModel, sprites: Sprite[] = null, setPlayer = true ) {
         this.model = mapModel;
         if ( this.model.roads !== undefined ) 
             this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas );
@@ -53,8 +54,8 @@ export class BackSpriteGrid extends CanvasGrid {
         else {
             if ( this.model.sprites )
                 this.setSprites( this.model.sprites );
-            if ( this.model.playerStart ) {
-                this.initPlayerCharacter( this.model.playerStart, MAIN_CHARACTER );
+            if ( setPlayer && mapHasPlayerStart() ) {
+                this.initPlayerCharacter( getPlayerStart(), MAIN_CHARACTER );
                 const player = getPlayer();
                 cameraFocus.centerOnXY( player.centerX, player.baseY )      
             }            

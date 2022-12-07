@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
     import { GRID_BLOCK_PX } from '../game-data/globals';
     import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
@@ -8,6 +8,12 @@
     import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
     import Menu from './game-menus/Menu.svelte';
     import { inGameMenu, gameMenuType } from './stores';
+    import { stopGameAndClearGameData } from '../game/mainController';
+
+    const closeGame = (): void => {
+        closeGameCanvas();
+        stopGameAndClearGameData();
+    }
 
     const logClick = ( event ) => {
         getAllActiveSprites().forEach( ( e ) => {
@@ -17,8 +23,8 @@
             }
         });
         getBackSpritesGrid().grid.array.forEach( ( e ) => {
-            if ( e.x <= event.offsetX && e.x + e.width >= event.offsetX 
-            && e.y <= event.offsetY && e.y + e.height >= event.offsetY  ) {
+            if ( e.x <= event.offsetX && e.x + GRID_BLOCK_PX >= event.offsetX 
+            && e.y <= event.offsetY && e.y + GRID_BLOCK_PX >= event.offsetY  ) {
                 console.log(e)
             }
         });
@@ -148,15 +154,14 @@
 </style>
 
 <div class="game-gfx-container">
-    <div id="canvas-wrapper" class="canvas-wrapper" style="width: {document.documentElement.width}px; height: {document.documentElement.height}px">
-        <canvas id='game-canvas' class="game-background-body" on:click={logClick}
-        style="width: {document.documentElement.width}px; height: {document.documentElement.height}px"></canvas>
+    <div id="canvas-wrapper" class="canvas-wrapper" style="width: {screen.width}px; height: {screen.height}px">
+        <canvas id='game-canvas' class="game-background-body" style="width: {screen.width}px; height: {screen.height}px"/>
     </div>
 
     {#if $inGameMenu }
         <Menu menuType={$gameMenuType} />
     {:else}
-        <button on:click={closeGameCanvas} type="button">Close</button>
+        <button on:click={closeGame} type="button">Close</button>
     {/if}
 
     {#if mobileAgent}

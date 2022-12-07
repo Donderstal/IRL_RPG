@@ -1,4 +1,5 @@
 import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
+import type { CellPosition } from "./CellPositionModel";
 
 export type SceneAnimationModel = {
     type: SceneAnimationType;
@@ -75,5 +76,5 @@ export type CameraMoveToTileScene = SceneAnimationModel & {
 export type LoadMapScene = SceneAnimationModel & {
     mapName: string;
     setPlayerSprite: boolean;
-    playerStart: {};
+    playerStart: CellPosition;
 }

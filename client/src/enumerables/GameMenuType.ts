@@ -1,4 +1,5 @@
 export enum GameMenuType {
     save,
-    main
+    main,
+    log_in
 }

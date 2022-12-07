@@ -1,18 +1,16 @@
 import { GameType } from "../enumerables/GameType";
-import type { InteractionType } from "../enumerables/InteractionType";
 import { openGameCanvas, showGameCanvas } from "../helpers/DOMEventHelpers";
-import { loadMapToCanvases, setNeighbourhoodAndMap } from "../helpers/loadMapHelpers";
+import { clearActiveMap, loadMapToCanvases, setNeighbourhoodAndMap } from "../helpers/loadMapHelpers";
 import { mobileAgent } from "../helpers/screenOrientation";
 import { initializeBubbleCanvases } from "../helpers/speechBubbleHelpers";
-import type { CellPosition } from "../models/CellPositionModel";
 import { setCollectableRegistry } from "../registries/collectableRegistry";
 import { setUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { setInteractionRegistry } from "../registries/interactionRegistry";
 import { initTilesheetModels } from "../resources/tilesheetResources";
-import { animationLoop } from "./animationLoop";
+import { animationLoop, stopAnimationLoop } from "./animationLoop";
 import { cameraFocus, initializeCameraFocus } from "./cameraFocus";
 import { prepareCanvasElementsForGame } from "./canvas/canvasSetter";
-import { listenForKeyPress } from "./controls";
+import { listenForKeyPress, stopListenForKeyPress } from "./controls";
 import { filesAreLoaded, startFileLoader } from "../assets/fileLoader";
 import { setDebugModeState, setDisableStoryState } from "./gameState/gameStateSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./loadingScreen";
@@ -20,6 +18,7 @@ import { getActiveMap } from "./neighbourhoodModule";
 import { setNewParty } from "./party/partyController";
 import { setStoryEvents } from "./storyEvents/storyEventSetter";
 import { initializeDataModels } from "../resources/spriteDataResources";
+import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 
 
 let params: any[] = null;
@@ -42,6 +41,11 @@ export const loadFilesAndStartGame = ( startType: GameType, parameters: any[] ):
     checkForLoadedFilesInterval = setInterval( checkIfFilesAreLoaded, 100 );
 }
 
+export const stopGameAndClearGameData = (): void => {
+    stopControlsAndAnimation();
+    clearActiveMap();
+}
+
 const checkIfFilesAreLoaded = () => {
     if ( filesAreLoaded() ) {
         clearInterval( checkForLoadedFilesInterval );
@@ -58,7 +62,7 @@ const startNewGame = ( ): void => {
     setDisableStoryState( params[4] );
     setStoryEvents();
 
-    loadMapToCanvases( getActiveMap(), "NEW" );
+    loadMapToCanvases( getActiveMap(), PlayerMapEntry.newGame );
     setTimeout( initControlsAndAnimation, 1000 );
 }
 
@@ -77,11 +81,7 @@ const loadGameFromSave = (): void => {
     setInteractionRegistry( json.keyLists.interactionRegistry );
     setUnlockedDoorsRegistry( json.keyLists.unlockedDoors );
 
-    const map = getActiveMap();
-    map.playerStart = json.activeMap.playerStart;
-    map.playerStart.name = "test";
-
-    loadMapToCanvases( map, "LOAD" );
+    loadMapToCanvases( getActiveMap(), PlayerMapEntry.loadGame );
     setTimeout( initControlsAndAnimation, 1000 );
 }
 
@@ -92,6 +92,7 @@ const initControlsAndAnimation = (): void => {
     animationLoop();
 }
 
-export const switchMap = ( destinationName: string, type: InteractionType, playerStart: CellPosition = null ): void => {
-    switchMap( destinationName, type, playerStart );
+const stopControlsAndAnimation = (): void => {
+    stopListenForKeyPress();
+    stopAnimationLoop();
 }

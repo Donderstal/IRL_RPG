@@ -15,6 +15,8 @@ import { switchMap } from "../../helpers/loadMapHelpers";
 import { getAllActiveSprites, getPlayer } from "../modules/sprites/spriteGetter";
 import { openInGameMenu } from "../../game-container/stores";
 import { GameMenuType } from "../../enumerables/GameMenuType";
+import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
+import { setPlayerStartForCinematicEnd } from "../map/playerLocationOnMapLoad";
 
 let activeCinematic: Interaction = null;
 let activeMapAtStartOfCinematic: string = null;
@@ -48,7 +50,8 @@ export const dismissActiveCinematic = (): void => {
     }
 
     if ( activeMapAtStartOfCinematic !== getActiveMapKey() ) {
-        switchMap( activeMapAtStartOfCinematic, InteractionType.cinematic_end, playerLocationAtStartOfCinematic )
+        setPlayerStartForCinematicEnd( activeMapAtStartOfCinematic, playerLocationAtStartOfCinematic );
+        switchMap( activeMapAtStartOfCinematic, PlayerMapEntry.cinematic_end )
     }
 
     if ( activeCinematic.trigger === CinematicTrigger.leave ) {
@@ -59,6 +62,9 @@ export const dismissActiveCinematic = (): void => {
     }
     if ( activeCinematic.model.type === InteractionType.save && activeCinematic.registeredSelection === InteractionAnswer.yes ) {
         openInGameMenu( GameMenuType.save );
+    }
+    if ( activeCinematic.model.type === InteractionType.prompt_log_in && activeCinematic.registeredSelection === InteractionAnswer.yes ) {
+        openInGameMenu( GameMenuType.log_in );
     }
     clearActiveBubbles()
     activeCinematic = null;

@@ -12,6 +12,7 @@ import { inListeningForKeysGameState, inPausedGameState } from './gameState/game
 
 let lastDateNow: number;
 let newDateNow: number;
+let animationFrameLoop = null;
 
 export const animationLoop = ( ): void => {
     const menuCanvas = getMenuGrid();
@@ -53,7 +54,11 @@ export const animationLoop = ( ): void => {
         } 
     }
 
-    requestAnimationFrame( animationLoop )
+    animationFrameLoop = requestAnimationFrame( animationLoop )
+}
+
+export const stopAnimationLoop = () => {
+    cancelAnimationFrame( animationFrameLoop );
 }
 
 const handleOffscreenCanvasBitmaps = () => {

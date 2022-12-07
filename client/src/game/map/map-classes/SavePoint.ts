@@ -9,20 +9,36 @@ import { initInteractionModel } from "../../../helpers/modelFactory";
 import { getDebugModeGameState } from "../../gameState/gameState";
 import { FX_BLUE_SQUARE } from "../../../resources/effectResources";
 import { ActionSelector } from "./ActionSelector";
+import { loggedIn } from "../../../game-container/stores";
+import { get } from "svelte/store";
 
-const actionData = [
-    InteractionType.save, false, null, "medium-text-blip.ogg",
-    [ConditionType.default, false],
-    [
-        [[SceneAnimationType.speakYesNo, true, "Save the game?",
-        null,
-        [
-            [[SceneAnimationType.speak, true, "Why did you press the button then?"]]
-        ],
-           PLAYER_NAME
-        ]],
-    ]
-]
+const getActionData = (): any[] => {
+    if ( get(loggedIn) ) {
+        return [
+            InteractionType.save, false, null, "medium-text-blip.ogg",
+            [ConditionType.default, false],
+            [
+                [[SceneAnimationType.speakYesNo, true, "Save the game?",
+                    null,
+                [
+                    [[SceneAnimationType.speak, true, "Why did you press the button then?"]]
+                ],
+                    PLAYER_NAME
+                ]],
+            ]
+        ];
+    }
+    else {
+        return [
+            InteractionType.prompt_log_in, false, null, "medium-text-blip.ogg",
+            [ConditionType.default, false],
+            [
+                [[SceneAnimationType.speak, true, "You're not logged in, so you can't save the game.", PLAYER_NAME]],
+                [[SceneAnimationType.speakYesNo, true, "Log in now?", null, null, PLAYER_NAME]],
+            ]
+        ];
+    }
+}
 
 export class SavePoint extends ActionSelector { 
     spriteId: string;
@@ -30,7 +46,7 @@ export class SavePoint extends ActionSelector {
     constructor( tile: Tile ) {
         let x = tile.x + ( GRID_BLOCK_PX / 2 )
         let y = tile.y + ( GRID_BLOCK_PX / 2 )
-        super( x, y, [initInteractionModel( actionData )], PLAYER_ID )
+        super( x, y, [initInteractionModel( getActionData() )], PLAYER_ID )
 
         this.initSavePointEffect();
         this.spriteId   = PLAYER_ID;

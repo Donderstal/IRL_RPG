@@ -12,7 +12,6 @@ import { initInteractionModel } from '../../helpers/modelFactory';
 import { setActiveCinematic } from '../controllers/cinematicController';
 import { lockedDoorEvent, unlockDoorEvent } from '../../resources/actionResources';
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
-import { InteractionType } from '../../enumerables/InteractionType';
 import { addDoorToUnlockedDoorsRegistry } from '../../registries/doorRegistry';
 import { getBackSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
 import type { Door } from './map-classes/Door';
@@ -28,6 +27,7 @@ import { switchMap } from '../../helpers/loadMapHelpers';
 import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
 import { drawSavePoint } from '../modules/actions/actionHandlers';
+import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 
 export const handleMapAnimations = (): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -87,13 +87,13 @@ const handleDoor = ( door: Door ): void => {
         }
         else if ( door.model.condition !== undefined ) {
             setActiveCinematic(
-                initInteractionModel( unlockDoorEvent ), CinematicTrigger.leave, [door.model.doorTo, InteractionType.door.toString()]
+                initInteractionModel( unlockDoorEvent ), CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
             );
             door.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry( door.registryString );
         }
         else {
-            switchMap( door.model.doorTo, InteractionType.door );
+            switchMap( door.model.doorTo, PlayerMapEntry.door );
             playEffect( "misc/random5.wav" );
         }
     }

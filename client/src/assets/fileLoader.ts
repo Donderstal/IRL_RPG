@@ -8,10 +8,12 @@ import { setUiImage } from "./ui";
 let pngIndex: number = 0;
 let pngsLimit: number = null;
 let fetchedPngJson = false;
+let loadedPngs = false;
 
 let soundIndex: number = 0;
 let soundsLimit: number = null;
 let fetchedSoundJson = false;
+let loadedAudio = false;
 
 export const startFileLoader = ( ) => {
     fetchJSONWithCallback( "static/png-list.json", setPngs );
@@ -22,7 +24,13 @@ export const filesAreLoaded = () => {
     if ( fetchedPngJson === false || fetchedSoundJson === false ) {
         return false;
     }
-    return pngIndex === pngsLimit && soundIndex === soundsLimit;
+    if ( pngIndex === pngsLimit ) {
+        loadedPngs = true;
+    }
+    if ( soundIndex === soundsLimit ) {
+        loadedAudio = true;
+    }
+    return loadedPngs && loadedAudio;
 }
 
 const setPngs = ( jsonList: string[] ): void => {

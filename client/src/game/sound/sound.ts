@@ -17,6 +17,17 @@ let activeSoundEffects = [];
 let speakingEffect = null;
 let activeMusicId = "";
 
+export const clearAllSound = (): void => {
+    clearActiveSoundEffects();
+    pauseMusic();
+
+    activeMusic = null;
+    musicIsPlaying = false;
+    activeSoundEffects = [];
+    speakingEffect = null;
+    activeMusicId = "";
+}
+
 export const clearActiveSoundEffects = (): void => {
     activeSoundEffects.forEach( ( sound ) => {
         if ( !sound.audioNode.src.includes( activeMusicId ) ) {

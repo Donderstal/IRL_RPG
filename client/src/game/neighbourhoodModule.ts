@@ -157,7 +157,6 @@ export const activateMap = ( key: string ): void => {
     }
 }
 
-
 export const setNeighbourhoodNPCCounter = (): void => {
     NPCCounter = new Counter( model.characterSpawnRate, true )
 }
