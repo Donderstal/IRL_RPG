@@ -2,7 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { MONKEY_CEO, ROBOT } from "../../../../spriteTypeResources";
 import { LH_HOTEL_TWO_TOWERS_LOBBY_KEY, LH_HOTEL_TWO_TOWERS_NAME, LH_KEY, LH_MAP_KEY } from "../../leonard_heights_res";
-import { MONKEY_COOK, ROBOT_COOK, ROBOT_RECEPTIONIST } from "./Two-Tower-interactions";
+import { A3_INTERACTION_MONKEY_COOK, A3_INTERACTION_ROBOT_COOK, A3_INTERACTION_ROBOT_RECEPTIONIST } from "./Two-Tower-interactions";
 
 export default {
 	"key": LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
@@ -3918,7 +3918,7 @@ export default {
 				"type": ROBOT,
 				"row": 4,
 			"column": 13,
-				"action": ROBOT_RECEPTIONIST
+			"action": A3_INTERACTION_ROBOT_RECEPTIONIST
 			},
 		{
 			"anim_type": AnimationTypeEnum.idle,
@@ -3927,7 +3927,7 @@ export default {
 			"row": 12,
 			"column": 6,
 			"name": "Robot Cook",
-			"action": ROBOT_COOK
+			"action": A3_INTERACTION_ROBOT_COOK
 		},
 		{
 			"anim_type": AnimationTypeEnum.idle,
@@ -3936,7 +3936,7 @@ export default {
 			"row": 15,
 			"column": 6,
 			"name": "Monkey Cook",
-			"action": MONKEY_COOK
+			"action": A3_INTERACTION_MONKEY_COOK
 		},
 		{
 			"type": "plant_yo",

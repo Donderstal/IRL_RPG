@@ -1,6 +1,6 @@
 import { GRID_LEONARD_B3 } from './grid';
 import { FRONT_GRID_LEONARD_B3 } from './frontgrid';
-import { GUY_WHO_LOST_HIS_KEYS } from './B3-interactions';
+import { B3_INTERACTION_GUY_WHO_LOST_HIS_KEYS } from './B3-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DORKY_GUY, PIGEON } from '../../../spriteTypeResources';
@@ -25,7 +25,7 @@ export default {
             "column": 20,
             "direction": DirectionEnum.down,
             "type": DORKY_GUY,
-            "action": GUY_WHO_LOST_HIS_KEYS
+            "action": B3_INTERACTION_GUY_WHO_LOST_HIS_KEYS
         },
         {
             "type": "gate_stuk14",

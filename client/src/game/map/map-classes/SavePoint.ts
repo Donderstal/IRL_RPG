@@ -1,42 +1,21 @@
 import { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { getEffect, GraphicalEffect } from "../../../helpers/effectHelpers";
-import { PLAYER_ID, PLAYER_NAME } from "../../../game-data/interactionGlobals";
-import { InteractionType } from "../../../enumerables/InteractionType";
-import { ConditionType } from "../../../enumerables/ConditionTypeEnum";
-import { SceneAnimationType } from "../../../enumerables/SceneAnimationTypeEnum";
+import { PLAYER_ID } from "../../../game-data/interactionGlobals";
 import type { Tile } from "../../core/Tile";
-import { initInteractionModel } from "../../../helpers/modelFactory";
 import { getDebugModeGameState } from "../../gameState/gameState";
 import { FX_BLUE_SQUARE } from "../../../resources/effectResources";
 import { ActionSelector } from "./ActionSelector";
 import { loggedIn } from "../../../game-container/stores";
 import { get } from "svelte/store";
+import { INTERACTION_SAVE_GAME, INTERACTION_SAVE_NOT_LOGGED_IN } from "../../../resources/mapResources/interactionResources";
+import type { InteractionModel } from "../../../models/InteractionModel";
 
-const getActionData = (): any[] => {
+const getInteraction = (): InteractionModel => {
     if ( get(loggedIn) ) {
-        return [
-            InteractionType.save, false, null, "medium-text-blip.ogg",
-            [ConditionType.default, false],
-            [
-                [[SceneAnimationType.speakYesNo, true, "Save the game?",
-                    null,
-                [
-                    [[SceneAnimationType.speak, true, "Why did you press the button then?"]]
-                ],
-                    PLAYER_NAME
-                ]],
-            ]
-        ];
+        return INTERACTION_SAVE_GAME;
     }
     else {
-        return [
-            InteractionType.prompt_log_in, false, null, "medium-text-blip.ogg",
-            [ConditionType.default, false],
-            [
-                [[SceneAnimationType.speak, true, "You're not logged in, so you can't save the game.", PLAYER_NAME]],
-                [[SceneAnimationType.speakYesNo, true, "Log in now?", null, null, PLAYER_NAME]],
-            ]
-        ];
+        return INTERACTION_SAVE_NOT_LOGGED_IN
     }
 }
 
@@ -46,7 +25,7 @@ export class SavePoint extends ActionSelector {
     constructor( tile: Tile ) {
         let x = tile.x + ( GRID_BLOCK_PX / 2 )
         let y = tile.y + ( GRID_BLOCK_PX / 2 )
-        super( x, y, [initInteractionModel( getActionData() )], PLAYER_ID )
+        super( x, y, [getInteraction()], PLAYER_ID )
 
         this.initSavePointEffect();
         this.spriteId   = PLAYER_ID;

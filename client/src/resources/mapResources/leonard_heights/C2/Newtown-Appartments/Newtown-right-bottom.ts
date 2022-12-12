@@ -2,7 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { TOUGH_GUY_WITH_DARK_HAIR } from "../../../../spriteTypeResources";
 import { LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
-import { NEIGHBOUR } from "./Newtown-Appartments-interactions";
+import { C1_INTERACTION_NEIGHBOUR } from "./Newtown-Appartments-interactions";
 
 export default {
     "key": LH_NEWTOWN_APP_5_KEY,
@@ -386,7 +386,7 @@ export default {
             "column": 7,
             "type": TOUGH_GUY_WITH_DARK_HAIR,
             "direction": DirectionEnum.up,
-            "action": NEIGHBOUR
+            "action": C1_INTERACTION_NEIGHBOUR
         }
     ],
     "actions": [],

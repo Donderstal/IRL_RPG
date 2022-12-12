@@ -2,7 +2,7 @@ import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { initCanvasObjectModel, initGridCellModel } from "../../helpers/modelFactory";
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene,
-    DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, SceneAnimationModel,
+    DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene,
     SpeakScene, SpeakYesNoScene, WaitScene
 } from "../../models/SceneAnimationModel";
 import { Counter } from '../../helpers/Counter';
@@ -37,13 +37,13 @@ import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 
 export class Animation {
     id: string;
-    model: SceneAnimationModel;
+    model: AnimationScene;
     spriteId: string;
     counter: Counter;
     tileIndex: number;
     destination: GridCellModel;
     selection: InteractionAnswer;
-    constructor( animationModel: SceneAnimationModel, id: string ) {
+    constructor( animationModel: AnimationScene, id: string ) {
         this.id = id;
         this.model = animationModel;
         this.setSpriteId();

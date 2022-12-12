@@ -1,66 +1,50 @@
-import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
-import { InteractionType } from "../../../../../enumerables/InteractionType";
-import { SceneAnimationType } from "../../../../../enumerables/SceneAnimationTypeEnum";
-import { UNLOCK_DOOR_TEST, LOGGABLE_INTERACTION_2, LOGGABLE_INTERACTION_3, PLAYER_NAME } from "../../../../../game-data/interactionGlobals";
+import { UNLOCK_DOOR_TEST, LOGGABLE_INTERACTION_3, PLAYER_NAME } from "../../../../../game-data/interactionGlobals";
 import { EMOTE_ANGRY } from "../../../../../game-data/textboxGlobals";
+import type { CinematicModel } from "../../../../../models/CinematicModel";
+import { getEmoteScene, getSpeakScene } from "../../../../cinematicFactory";
+import { getDefaultCondition, getInteractionRegisteredCondition } from "../../../../conditionFactory";
+import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../interactionFactory";
 
-export const KEY_GUY = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.interactionRegistered, UNLOCK_DOOR_TEST],
-        [
-            [[SceneAnimationType.speak, true, "Didn't I give you a key already", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "There's still no reason to go outside.", null, PLAYER_NAME]]
-        ]
-    ],
-    [
-        InteractionType.talk, false, UNLOCK_DOOR_TEST, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "I guess you want to go outside, right?", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "I've locked the door, just to be sure...", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "But here's the key. Please lock it again when you go out!!", null, PLAYER_NAME]]
-        ]
-    ]
+const CINSCRIPT_KEY_GUY_1: CinematicModel = [
+    [getSpeakScene( "Didn't I give you a key already", PLAYER_NAME )],
+    [getSpeakScene( "There's still no reason to go outside.", PLAYER_NAME )]
+];
+const CINSCRIPT_KEY_GUY_2: CinematicModel = [
+    [getSpeakScene( "I guess you want to go outside, right?", PLAYER_NAME )],
+    [getSpeakScene( "I've locked the door, just to be sure...", PLAYER_NAME )],
+    [getSpeakScene( "But here's the key. Please lock it again when you go out!!", PLAYER_NAME )]
+];
+export const C1_INTERACTION_KEY_GUY = [
+    getDefaultTalkInteraction( CINSCRIPT_KEY_GUY_1, getInteractionRegisteredCondition( UNLOCK_DOOR_TEST ) ),
+    getRegistryTalkInteraction( CINSCRIPT_KEY_GUY_2, getDefaultCondition(), UNLOCK_DOOR_TEST )
+];
+
+const CINSCRIPT_BODYGUARD: CinematicModel = [
+    [getSpeakScene( "I'm just here for the safety of my tenants.", PLAYER_NAME )],
+    [getSpeakScene( "Some maniac left the door unlocked.", PLAYER_NAME )]
+];
+
+export const C1_INTERACTION_BODYGUARD = [
+    getDefaultTalkInteraction( CINSCRIPT_BODYGUARD, getDefaultCondition() )
+];
+
+const CINSCRIPT_NEIGHBOUR_1: CinematicModel = [
+    [getSpeakScene( "Woah dude you did it!", PLAYER_NAME )],
+    [getSpeakScene( "I'm the {R}Mob {R}Boss.", PLAYER_NAME )]
+];
+const CINSCRIPT_NEIGHBOUR_2: CinematicModel = [
+    [getSpeakScene( "Just hanging out in my appartment...", PLAYER_NAME )]
+];
+export const C1_INTERACTION_NEIGHBOUR = [
+    getDefaultTalkInteraction( CINSCRIPT_NEIGHBOUR_1, getInteractionRegisteredCondition( LOGGABLE_INTERACTION_3 ) ),
+    getDefaultTalkInteraction( CINSCRIPT_NEIGHBOUR_2, getDefaultCondition() )
 ]
 
-export const BODYGUARD = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "I'm just here for the safety of my tenants.", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "Some maniac left the door unlocked.", null, PLAYER_NAME]]
-        ]
-    ]
-]
-
-export const NEIGHBOUR = [
-    [
-        InteractionType.talk, true, LOGGABLE_INTERACTION_3, "medium-text-blip.ogg",
-        [ConditionType.interactionRegistered, LOGGABLE_INTERACTION_2],
-        [
-            [[SceneAnimationType.speak, true, "Woah dude you did it!", null]],
-            [[SceneAnimationType.speak, true, "I'm the {R}Mob {R}Boss.", null]]
-        ]
-    ],
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "Just hanging out in my appartment...", null]]
-        ]
-    ]
-]
-
-export const WAITING_BUSINESSMAN = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "For some reason somebody locked the main door...", null, PLAYER_NAME]],
-            [[SceneAnimationType.emote, true, EMOTE_ANGRY, null]],
-            [[SceneAnimationType.speak, true, "I don't have time for this! I've got important meetings to attend!!", null, PLAYER_NAME]]
-        ]
-    ]
+const CINSCRIPT_WAITING_BUSINESSMAN: CinematicModel = [
+    [getSpeakScene( "For some reason somebody locked the main door...", PLAYER_NAME )],
+    [getEmoteScene( EMOTE_ANGRY )],
+    [getSpeakScene( "I don't have time for this! I've got important meetings to attend!!", PLAYER_NAME )]
+];
+export const C1_INTERACTION_WAITING_BUSINESSMAN = [
+    getDefaultTalkInteraction( CINSCRIPT_WAITING_BUSINESSMAN, getDefaultCondition() )
 ]

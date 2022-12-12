@@ -1,12 +1,13 @@
 import { GRID_LEONARD_D1 } from './grid';
 import { FRONT_GRID_LEONARD_D1 } from './frontgrid';
-import { FRIENDLY_CHAD, WHOLESOME_LIFTER } from './D1-interactions';
+import { D1_INTERACTION_FRIENDLY_CHAD, D1_INTERACTION_WHOLESOME_LIFTER, FRIENDLY_CHAD, WHOLESOME_LIFTER } from './D1-interactions';
 import { LOGGABLE_INTERACTION_7 } from '../../../../game-data/interactionGlobals';
 import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_BOP, ANIM_LIFT } from '../../../../game-data/animationGlobals';
+import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from '../../../conditionFactory';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,
@@ -23,11 +24,8 @@ export default {
          "type": STRONG_GUY,
          "direction":DirectionEnum.right,
          "name":"Helpful Bro",
-         "action": FRIENDLY_CHAD,
-         "condition":[
-            ConditionType.interactionNotRegistered,
-            LOGGABLE_INTERACTION_7
-         ]
+           "action": D1_INTERACTION_FRIENDLY_CHAD,
+         "condition": getInteractionNotRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
          "anim_type": AnimationTypeEnum.animationLoop,
@@ -37,10 +35,7 @@ export default {
          "type": TOUGH_GUY,
          "direction": DirectionEnum.up,
          "name":"Sad Bro",
-         "condition":[
-            ConditionType.interactionNotRegistered,
-            LOGGABLE_INTERACTION_7
-         ]
+          "condition": getInteractionNotRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
          "anim_type": AnimationTypeEnum.animationLoop,
@@ -49,12 +44,9 @@ export default {
          "column":21,
          "type": STRONG_GUY,
          "direction": DirectionEnum.left,
-         "name":"Wholesome Lifter",
-         "action":WHOLESOME_LIFTER,
-         "condition":[
-            ConditionType.interactionRegistered,
-            LOGGABLE_INTERACTION_7
-         ]
+         "name": "Wholesome Lifter 1",
+          "action": D1_INTERACTION_WHOLESOME_LIFTER,
+          "condition": getInteractionRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
          "anim_type": AnimationTypeEnum.animationLoop,
@@ -63,12 +55,9 @@ export default {
          "column":22,
          "type": TOUGH_GUY,
          "direction": DirectionEnum.left,
-         "name":"Wholesome Lifter",
-         "action": WHOLESOME_LIFTER,
-         "condition":[
-            ConditionType.interactionRegistered,
-            LOGGABLE_INTERACTION_7
-         ]
+         "name": "Wholesome Lifter 2",
+          "action": D1_INTERACTION_WHOLESOME_LIFTER,
+          "condition": getInteractionRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
          "type":"funz",

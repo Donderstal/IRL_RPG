@@ -1,4 +1,3 @@
-import { LONG_TALK_4, RANDOM_TALK_2, RANDOM_TALK_3, RANDOM_TALK_4, RANDOM_TALK_1, RANDOM_TALK_5 } from '../../actionResources';
 import A1 from './A1/A1';
 import A2 from './A2/A2';
 import A3 from './A3/A3';
@@ -58,6 +57,7 @@ import SardineStudiosCommunalSpace from './D2/Sardine-Studios/Sardine-Studios-co
 import SardineStudiosStairsFloor1 from './D2/Sardine-Studios/Sardine-studios-stairs-floor-1';
 import SardineStudioStairsFloor2 from './D2/Sardine-Studios/Sardine-Studio-stairs-floor-2';
 import SardineStudioStairsTop from './D2/Sardine-Studios/Sardine-Studio-stairs-top';
+import { INTERACTION_RANDOM_ENCOUNTER_1, INTERACTION_RANDOM_ENCOUNTER_2, INTERACTION_RANDOM_ENCOUNTER_3, INTERACTION_RANDOM_ENCOUNTER_4, INTERACTION_RANDOM_ENCOUNTER_5, INTERACTION_RANDOM_ENCOUNTER_6 } from '../interactionResources';
 
 export default {
     "key": LH_KEY,
@@ -75,12 +75,8 @@ export default {
     ],
     "characters_spawn_rate": 10000,
     "spawnable_actions": [
-        RANDOM_TALK_1,
-        RANDOM_TALK_2,
-        RANDOM_TALK_3,
-        RANDOM_TALK_4, 
-        RANDOM_TALK_5,
-        LONG_TALK_4
+        INTERACTION_RANDOM_ENCOUNTER_1, INTERACTION_RANDOM_ENCOUNTER_2, INTERACTION_RANDOM_ENCOUNTER_3,
+        INTERACTION_RANDOM_ENCOUNTER_4, INTERACTION_RANDOM_ENCOUNTER_5, INTERACTION_RANDOM_ENCOUNTER_6
     ],
     
     "mapDictionary": {

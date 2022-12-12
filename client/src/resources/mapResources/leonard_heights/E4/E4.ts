@@ -1,6 +1,6 @@
 import { GRID_LEONARD_E4 } from './grid';
 import { FRONT_GRID_LEONARD_E4 } from './frontgrid';
-import { WHOLESOME_LIFTER_E4 } from './E4-interactions';
+import { E4_INTERACTION_WHOLESOME_LIFTER } from './E4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { STRONG_GUY } from '../../../spriteTypeResources';
@@ -22,7 +22,7 @@ export default {
             "type": STRONG_GUY,
             "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
-            "action": WHOLESOME_LIFTER_E4
+            "action": E4_INTERACTION_WHOLESOME_LIFTER
         },
         {
             "type": "Sign_04",

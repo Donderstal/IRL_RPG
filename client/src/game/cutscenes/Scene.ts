@@ -1,7 +1,7 @@
 import { getUniqueId } from '../../helpers/utilFunctions';
 import { Animation } from './Animation';
 import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
-import type { SceneAnimationModel } from '../../models/SceneAnimationModel';
+import type { AnimationScene } from '../../models/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
 import { getMainTextBubble } from '../controllers/bubbleController';
 import { spriteHasDestination } from '../modules/destinations/destinationGetter'
@@ -19,7 +19,7 @@ export class Scene {
         this.animations = [];
         this.animationIds = [];
         this.finishedAnimations = [];
-        sceneModel.forEach( ( animationModel: SceneAnimationModel ): void => {
+        sceneModel.forEach( ( animationModel: AnimationScene ): void => {
             const id = getUniqueId( this.animationIds );
             if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
                 && animationModel.type !== SceneAnimationType.createCar && animationModel.type !== SceneAnimationType.createSprite ) {

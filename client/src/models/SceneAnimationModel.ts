@@ -1,79 +1,80 @@
 import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
 import type { CellPosition } from "./CellPositionModel";
 
-export type SceneAnimationModel = {
+export type AnimationScene = {
     type: SceneAnimationType;
     waitForAnimationEnd: boolean;
     spriteId?: string;
     spriteName?: string;
+    sfx?: string;
 }
 
-export type SpeakScene = SceneAnimationModel & {
+export type SpeakScene = AnimationScene & {
     text: string;
     speakWith?: string;
     sfx?: string;
 }
 
-export type SpeakYesNoScene = SceneAnimationModel & {
+export type SpeakYesNoScene = AnimationScene & {
     text: string;
     speakWith?: string;
     sfx?: string;
 
-    pathYes?: SceneAnimationModel[];
-    pathNo?: SceneAnimationModel[];
+    pathYes?: AnimationScene[][];
+    pathNo?: AnimationScene[][];
 }
 
-export type EmoteScene = SceneAnimationModel & {
+export type EmoteScene = AnimationScene & {
     src: string;
     speakWith?: string;
     sfx?: string;
 }
 
-export type MoveScene = SceneAnimationModel & {
+export type MoveScene = AnimationScene & {
     destination: { column: number, row: number } | string;
 }
 
-export type AnimateSpriteScene = SceneAnimationModel & {
+export type AnimateSpriteScene = AnimationScene & {
     animationName: string;
     loop: boolean;
     isPermanent: boolean;
 }
 
-export type CreateCarScene = SceneAnimationModel & {
+export type CreateCarScene = AnimationScene & {
     sprite: string;
     roadName: string;
 }
 
-export type CreateSpriteScene = SceneAnimationModel & {
+export type CreateSpriteScene = AnimationScene & {
     sprite: string;
     column: number;
     row: number;
     direction: number;
 }
 
-export type DeleteSpriteScene = SceneAnimationModel & {
+export type DeleteSpriteScene = AnimationScene & {
     sfx?: string;
 }
 
-export type FadeScene = SceneAnimationModel & {
+export type FadeScene = AnimationScene & {
     sfx: string;
 }
 
-export type WaitScene = SceneAnimationModel & {
+export type WaitScene = AnimationScene & {
     milliseconds: number;
 }
 
-export type CameraMoveToSpriteScene = SceneAnimationModel & {
+export type CameraMoveToSpriteScene = AnimationScene & {
     snapToSprite: boolean;
 }
 
-export type CameraMoveToTileScene = SceneAnimationModel & {
+export type CameraMoveToTileScene = AnimationScene & {
     column: number;
     row: number;
     snapToTile: boolean;
 }
 
-export type LoadMapScene = SceneAnimationModel & {
+export type LoadMapScene = AnimationScene & {
     mapName: string;
     setPlayerSprite: boolean;
     playerStart: CellPosition;

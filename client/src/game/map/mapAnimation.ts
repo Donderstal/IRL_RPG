@@ -8,9 +8,7 @@ import { handleMovementKeys } from '../controls';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { initInteractionModel } from '../../helpers/modelFactory';
 import { setActiveCinematic } from '../controllers/cinematicController';
-import { lockedDoorEvent, unlockDoorEvent } from '../../resources/actionResources';
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { addDoorToUnlockedDoorsRegistry } from '../../registries/doorRegistry';
 import { getBackSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
@@ -28,6 +26,7 @@ import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
 import { drawSavePoint } from '../modules/actions/actionHandlers';
 import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
+import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/mapResources/interactionResources';
 
 export const handleMapAnimations = (): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -82,12 +81,12 @@ const handleDoor = ( door: Door ): void => {
         setDoorAsPending( door.id, door.model.doorTo )
         if ( !door.meetsCondition ) {
             setActiveCinematic(
-                initInteractionModel( lockedDoorEvent ), CinematicTrigger.interaction, [PLAYER_ID]
+                INTERACTION_LOCKED_DOOR, CinematicTrigger.interaction, [PLAYER_ID]
             );
         }
         else if ( door.model.condition !== undefined ) {
             setActiveCinematic(
-                initInteractionModel( unlockDoorEvent ), CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
+                INTERACTION_UNLOCK_DOOR, CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
             );
             door.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry( door.registryString );

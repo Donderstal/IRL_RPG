@@ -1,10 +1,10 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
-import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
+import { getInteractionRegisteredCondition } from "../../../../conditionFactory";
 import { FAT_BUFF_GUY, PINK_HAIR_NERD_LADY } from "../../../../spriteTypeResources";
 import { LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
-import { KEY_GUY, BODYGUARD } from "./Newtown-Appartments-interactions";
+import { C1_INTERACTION_KEY_GUY, C1_INTERACTION_BODYGUARD } from "./Newtown-Appartments-interactions";
 
 export default {
     "key": LH_NEWTOWN_APP_1_KEY,
@@ -403,16 +403,16 @@ export default {
             "column": 4,
             "type": PINK_HAIR_NERD_LADY,
             "direction": DirectionEnum.down,
-            "action": KEY_GUY
+            "action": C1_INTERACTION_KEY_GUY
         },
         {
-            "condition": [ConditionType.interactionRegistered, UNLOCK_DOOR_TEST],
+            "condition": getInteractionRegisteredCondition( UNLOCK_DOOR_TEST ),
             "anim_type": AnimationTypeEnum.idle,
             "row": 2,
             "column": 2,
             "type": FAT_BUFF_GUY,
             "direction": DirectionEnum.down,
-            "action": BODYGUARD
+            "action": C1_INTERACTION_BODYGUARD
         }
     ],
     "actions": [],

@@ -1,6 +1,6 @@
 import { GRID_LEONARD_B4 } from './grid';
 import { FRONT_GRID_LEONARD_B4 } from './frontgrid';
-import { WHOLESOME_LIFTER_B4 } from './B4-interactions';
+import { B4_INTERACTION_WHOLESOME_LIFTER } from './B4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { TOUGH_GUY } from '../../../spriteTypeResources';
@@ -22,7 +22,7 @@ export default {
             "type": TOUGH_GUY,
             "direction": DirectionEnum.left,
             "name":"Wholesome Lifter",
-            "action": WHOLESOME_LIFTER_B4
+            "action": B4_INTERACTION_WHOLESOME_LIFTER
         },
         {
             "type":"vent_4",

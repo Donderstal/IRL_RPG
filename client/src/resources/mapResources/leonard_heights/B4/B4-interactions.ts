@@ -1,16 +1,15 @@
-import { ConditionType } from "../../../../enumerables/ConditionTypeEnum";
-import { InteractionType } from "../../../../enumerables/InteractionType";
-import { SceneAnimationType } from "../../../../enumerables/SceneAnimationTypeEnum";
 import { PLAYER_NAME } from "../../../../game-data/interactionGlobals";
+import type { CinematicModel } from "../../../../models/CinematicModel";
+import { getSpeakScene } from "../../../cinematicFactory";
+import { getDefaultCondition } from "../../../conditionFactory";
+import { getDefaultTalkInteraction } from "../../../interactionFactory";
 
-export const WHOLESOME_LIFTER_B4 = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "Just another day lifting and being handsome!", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "If you need some dumbbells I can't help ya though...", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "I only hand them out to my bros, or bros of my bros!", null, PLAYER_NAME]]
-        ]
-    ]
-]
+const CINSCRIPT_WHOLESOME_LIFT: CinematicModel = [
+    [getSpeakScene( "Just another day lifting and being handsome!", PLAYER_NAME )],
+    [getSpeakScene( "If you need some dumbbells I can't help ya though...", PLAYER_NAME )],
+    [getSpeakScene( "I only hand them out to my bros, or bros of my bros!", PLAYER_NAME )]
+];
+
+export const B4_INTERACTION_WHOLESOME_LIFTER = [
+    getDefaultTalkInteraction( CINSCRIPT_WHOLESOME_LIFT, getDefaultCondition() )
+];

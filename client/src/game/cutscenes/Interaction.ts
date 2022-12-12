@@ -4,8 +4,6 @@ import { CinematicTrigger } from "../../enumerables/CinematicTriggerEnum";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import type { InteractionModel } from '../../models/InteractionModel';
-import { initCinematicSceneModel } from '../../helpers/modelFactory';
-
 export class Interaction {
     trigger: CinematicTrigger;
     scenes: CinematicSceneModel[];
@@ -18,7 +16,7 @@ export class Interaction {
     model: InteractionModel;
     constructor( model: InteractionModel, trigger: CinematicTrigger, args: string[] ) {
         this.model = model;
-        this.scenes = [...model.cinematic.scenes];
+        this.scenes = [...model.cinematic];
         this.trigger = trigger;
         this.args   = args;
         this.registeredSelection = null;
@@ -68,8 +66,7 @@ export class Interaction {
 
         if ( scenesToAdd != null) {
             for ( var i = 0; i < scenesToAdd.length; i++ ) {
-                let model: CinematicSceneModel = initCinematicSceneModel( scenesToAdd[i] );
-                this.scenes.splice( this.iterator + 1 + i, 0, model )
+                this.scenes.splice( this.iterator + 1 + i, 0, scenesToAdd[i] )
             }            
         }
     }

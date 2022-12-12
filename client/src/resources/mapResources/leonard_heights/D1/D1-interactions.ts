@@ -1,24 +1,19 @@
-import { ConditionType } from "../../../../enumerables/ConditionTypeEnum"
-import { InteractionType } from "../../../../enumerables/InteractionType"
-import { SceneAnimationType } from "../../../../enumerables/SceneAnimationTypeEnum"
+import type { CinematicModel } from "../../../../models/CinematicModel"
+import { getSpeakScene } from "../../../cinematicFactory";
+import { getDefaultCondition } from "../../../conditionFactory";
+import { getDefaultTalkInteraction } from "../../../interactionFactory";
 
-export const FRIENDLY_CHAD = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "My bro's having some rough feels man.", null]],
-            [[SceneAnimationType.speak, true, "We'd really appreciate you helping a bro out.", null]]
-        ]
-    ]
-]
+const CINSCRIPT_FRIENDLY_CHAD: CinematicModel = [
+    [getSpeakScene( "My bro's having some rough feels man." )],
+    [getSpeakScene( "We'd really appreciate you helping a bro out." )]
+]; 
+export const D1_INTERACTION_FRIENDLY_CHAD = [
+    getDefaultTalkInteraction( CINSCRIPT_FRIENDLY_CHAD, getDefaultCondition() )
+];
 
-export const WHOLESOME_LIFTER = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "What could be better than pumping iron with your bros?", null]],
-        ]
-    ]
+const CINSCRIPT_WHOLESOME_LIFTER: CinematicModel = [
+    [getSpeakScene( "What could be better than pumping iron with your bros?" )]
+];
+export const D1_INTERACTION_WHOLESOME_LIFTER = [
+    getDefaultTalkInteraction( CINSCRIPT_WHOLESOME_LIFTER, getDefaultCondition() )
 ]

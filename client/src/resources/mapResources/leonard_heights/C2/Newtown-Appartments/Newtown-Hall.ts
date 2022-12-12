@@ -1,10 +1,10 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
-import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
+import { getInteractionNotRegisteredCondition } from "../../../../conditionFactory";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
 import { LH_MAP_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
-import { WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
+import { C1_INTERACTION_WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
 
 export default {
     "key": LH_NEWTOWN_APP_HALL_KEY,
@@ -298,14 +298,14 @@ export default {
             "column": 4
         },
         {
-            "condition": [ ConditionType.interactionNotRegistered, UNLOCK_DOOR_TEST ],
+            "condition": getInteractionNotRegisteredCondition( UNLOCK_DOOR_TEST ),
             "anim_type": AnimationTypeEnum.semiIdle,
             "row": 11,
             "column": 3,
             "name": "Impatient businessman",
             "type": BUSINESS_MAN,
             "direction": DirectionEnum.left,
-            "action": WAITING_BUSINESSMAN
+            "action": C1_INTERACTION_WAITING_BUSINESSMAN
         }
     ],
     "actions": [],

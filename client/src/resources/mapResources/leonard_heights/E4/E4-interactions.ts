@@ -1,15 +1,13 @@
-import { ConditionType } from "../../../../enumerables/ConditionTypeEnum";
-import { InteractionType } from "../../../../enumerables/InteractionType";
-import { SceneAnimationType } from "../../../../enumerables/SceneAnimationTypeEnum";
 import { PLAYER_NAME } from "../../../../game-data/interactionGlobals";
+import type { CinematicModel } from "../../../../models/CinematicModel";
+import { getSpeakScene } from "../../../cinematicFactory";
+import { getDefaultCondition } from "../../../conditionFactory";
+import { getDefaultTalkInteraction } from "../../../interactionFactory";
 
-export const WHOLESOME_LIFTER_E4 = [
-    [
-        InteractionType.talk, false, null, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "Lifting is the best bro!", null, PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "Really increases your self-esteem too, you should try it.", null, PLAYER_NAME]]
-        ]
-    ]
-]
+const CINSCRIPT_WHOLESOME_LIFTER: CinematicModel = [
+    [getSpeakScene( "Lifting is the best bro!", PLAYER_NAME )],
+    [getSpeakScene( "Really increases your self - esteem too, you should try it.", PLAYER_NAME )]
+];
+export const E4_INTERACTION_WHOLESOME_LIFTER = [
+    getDefaultTalkInteraction( CINSCRIPT_WHOLESOME_LIFTER, getDefaultCondition() )
+];

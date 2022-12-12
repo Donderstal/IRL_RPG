@@ -1,6 +1,6 @@
 import { GRID_LEONARD_D2 } from './grid';
 import { FRONT_GRID_LEONARD_D2 } from './frontgrid';
-import { LOOKING_FOR_APPARTMENT_LADY, WHOLESOME_LIFTER_D2 } from './D2-interactions';
+import { D2_INTERACTION_LOOKING_FOR_APPARTMENT_LADY, D2_INTERACTION_WHOLESOME_LIFTER } from './D2-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DARK_HAIR_NERD_LADY, TOUGH_GUY } from '../../../spriteTypeResources';
@@ -22,7 +22,7 @@ export default {
             "row": 9,
             "column": 18,
             "name": "Jenn Trification",
-            "action": LOOKING_FOR_APPARTMENT_LADY
+            "action": D2_INTERACTION_LOOKING_FOR_APPARTMENT_LADY
         },
         {
             "anim_type": AnimationTypeEnum.animationLoop,
@@ -32,7 +32,7 @@ export default {
             "type": TOUGH_GUY,
             "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
-            "action": WHOLESOME_LIFTER_D2
+            "action": D2_INTERACTION_WHOLESOME_LIFTER
         },
         {
             "type": "Sign_03",

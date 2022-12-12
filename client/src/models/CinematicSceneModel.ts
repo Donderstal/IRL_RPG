@@ -1,3 +1,3 @@
-import type { SceneAnimationModel } from "./SceneAnimationModel";
+import type { AnimationScene } from "./SceneAnimationModel";
 
-export type CinematicSceneModel = SceneAnimationModel[];
+export type CinematicSceneModel = AnimationScene[];

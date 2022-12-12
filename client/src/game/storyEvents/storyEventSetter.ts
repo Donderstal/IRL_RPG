@@ -1,9 +1,8 @@
-import { getStoryEventModels } from "../../resources/storyChapters";
 import { ScriptedEvent } from "../cutscenes/ScriptedEvent";
 import { addStoryEventForMapToRegistry, addStoryEventToRegistry, clearRegistryStoryEventsForMap, getStoryEventRegistry, markStoryEventAsTriggered } from "./storyEventRegistry"
 
 export const setStoryEvents = ( eventIdList: string[] = null ): void => {
-    getStoryEventModels().forEach( ( e ) => {
+    [].forEach( ( e ) => {
         addStoryEventToRegistry( new ScriptedEvent( e ) );
     } )
     if ( eventIdList !== null ) {

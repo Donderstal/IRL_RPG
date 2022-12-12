@@ -1,21 +1,14 @@
-import { KEY_STORY_2 } from '../../../storyChapters';
 import { PLAYER_NAME } from '../../../../game-data/interactionGlobals';
-import { InteractionType } from '../../../../enumerables/InteractionType';
-import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
-import { SceneAnimationType } from '../../../../enumerables/SceneAnimationTypeEnum';
+import type { CinematicModel } from '../../../../models/CinematicModel';
+import { getDeleteSpriteScene, getSpeakScene } from '../../../cinematicFactory';
+import { getDefaultTalkInteraction } from '../../../interactionFactory';
+import { getDefaultCondition } from '../../../conditionFactory';
 
+const CINSCRIPT_LOST_KEY: CinematicModel = [
+    [getSpeakScene( "Looks like someone lost their keys here...", PLAYER_NAME )],
+    [getSpeakScene( "I better pick 'em just in case", PLAYER_NAME )],
+    [getDeleteSpriteScene( null, true, "misc/random5.wav" )]
+]
 export const LOST_KEYS_INTERACTION = [
-    [
-        InteractionType.talk, true, KEY_STORY_2, "medium-text-blip.ogg",
-        [ConditionType.default, false],
-        [
-            [[SceneAnimationType.speak, true, "Looks like someone lost their keys here...", PLAYER_NAME]],
-            [[SceneAnimationType.speak, true, "I better pick 'em just in case", PLAYER_NAME]],
-            [[SceneAnimationType.deleteSprite, true, null, "misc/random5.wav"]]
-        ] 
-    ]
-]
-
-export const LOST_KEYS_SPRITE_CONDITION = [
-    ConditionType.interactionNotRegistered, KEY_STORY_2
-]
+    getDefaultTalkInteraction( CINSCRIPT_LOST_KEY, getDefaultCondition() )
+];
