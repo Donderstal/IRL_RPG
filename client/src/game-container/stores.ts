@@ -1,6 +1,7 @@
 import { writable, get } from 'svelte/store';
-import type { GameMenuType } from '../enumerables/GameMenuType';
+import { GameMenuType } from '../enumerables/GameMenuType';
 import { setPausedState } from '../game/gameState/gameStateSetter';
+import { resetSavePoint } from '../game/mainController';
 import type { WebsiteUser } from '../models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";
@@ -29,7 +30,7 @@ export const checkForUserSession = ( ) => {
     });
 }
 
-export const setUserDataToFrontEnd = ( json ) => {
+export const setUserDataToFrontEnd = ( json, inGameMenu = false ) => {
     const user: WebsiteUser = {
         name: json[0],
         email: json[1],
@@ -40,8 +41,10 @@ export const setUserDataToFrontEnd = ( json ) => {
         save_3: json[6] != null ? JSON.parse( json[6] ) : null
     }
     activeUser.set( user );
-    loggedIn.set(true);
-    currentScreen.set(SCREEN_MAIN_MENU)
+    loggedIn.set( true );
+    if ( !inGameMenu ) {
+        currentScreen.set( SCREEN_MAIN_MENU );
+    }
 }
 
 export const loggedIn       = writable<boolean>();
@@ -66,6 +69,7 @@ export const openInGameMenu = ( type: GameMenuType ) => {
 export const closeInGameMenu = () => {
     inGameMenu.set( false );
     setPausedState( false );
+    resetSavePoint();
 }
 
 const switchScreen = ( screen ) => {
@@ -73,7 +77,8 @@ const switchScreen = ( screen ) => {
     currentScreen.set(screen);
 }
 
-export const closeWebsite = ( ) => {
+export const closeWebsite = () => {
+    openWelcomeScreen( );
     websiteMode.set( false );
     gameMode.set( true );
 }
@@ -99,7 +104,7 @@ export const openRestoredPassScreen     = ( ) => {switchScreen(SCREEN_RESTORED_P
 export const openSignedUpScreen         = ( ) => {switchScreen(SCREEN_SIGNED_UP)};
 
 export const returnToPreviousScreen = () => {
-    if ( get(inGameMenu) ) {
+    if ( get( inGameMenu ) && get( gameMenuType ) !== GameMenuType.log_in ) {
         closeInGameMenu();
         return;
     }
@@ -116,6 +121,9 @@ export const returnToPreviousScreen = () => {
         case SCREEN_NEW_GANE:
         case SCREEN_LOAD_GAME:
             switchScreen(SCREEN_MAIN_MENU);
+            break;
+        case SCREEN_WELCOME:
+            closeInGameMenu();
             break;
     }
 };

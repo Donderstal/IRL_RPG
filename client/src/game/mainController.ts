@@ -19,6 +19,8 @@ import { setNewParty } from "./party/partyController";
 import { setStoryEvents } from "./storyEvents/storyEventSetter";
 import { initializeDataModels } from "../resources/spriteDataResources";
 import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
+import type { SaveGame } from "../models/SaveGameModel";
+import { getBackTilesGrid } from "./canvas/canvasGetter";
 
 
 let params: any[] = null;
@@ -46,6 +48,14 @@ export const stopGameAndClearGameData = (): void => {
     clearActiveMap();
 }
 
+export const resetSavePoint = (): void => {
+    const backTiles = getBackTilesGrid();
+    const savePoint = backTiles.model.savepoint;
+    if ( savePoint !== null && savePoint !== undefined ) {
+        backTiles.setSavepoint( savePoint );
+    }
+}
+
 const checkIfFilesAreLoaded = () => {
     if ( filesAreLoaded() ) {
         clearInterval( checkForLoadedFilesInterval );
@@ -67,19 +77,19 @@ const startNewGame = ( ): void => {
 }
 
 const loadGameFromSave = (): void => {
-    const json = params[0];
-
+    const saveGame: SaveGame = params[0];
+    console.log( saveGame );
     initTilesheetModels();
     initializeDataModels();
-    setNewParty( "test" )
-    setNeighbourhoodAndMap( json.activeMap.mapName );
-    setStoryEvents( json.keyLists.storyEvents );
+    setNewParty( saveGame.playerData.name );
+    setNeighbourhoodAndMap( saveGame.activeMap.mapName );
+    setStoryEvents( saveGame.keyLists.storyEvents );
 
     setDebugModeState( false );
-    setDisableStoryState( false );
-    setCollectableRegistry( json.keyLists.collectableRegistry );
-    setInteractionRegistry( json.keyLists.interactionRegistry );
-    setUnlockedDoorsRegistry( json.keyLists.unlockedDoors );
+    setDisableStoryState( true );
+    setCollectableRegistry( saveGame.keyLists.collectableRegistry );
+    setInteractionRegistry( saveGame.keyLists.interactionRegistry );
+    setUnlockedDoorsRegistry( saveGame.keyLists.unlockedDoors );
 
     loadMapToCanvases( getActiveMap(), PlayerMapEntry.loadGame );
     setTimeout( initControlsAndAnimation, 1000 );

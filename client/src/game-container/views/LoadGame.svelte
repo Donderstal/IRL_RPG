@@ -4,6 +4,8 @@
     import type { SaveGame } from "../../models/SaveGameModel";
     import { activeUser } from '../stores';
     import { onMount } from 'svelte';
+    import { loadFilesAndStartGame } from '../../game/mainController';
+    import { GameType } from '../../enumerables/GameType';
     let games = [];
 
     export const setSaveGames = () => {
@@ -21,6 +23,11 @@
 
             games.push(saveGame);
         })
+    }
+
+    const loadGame = (index: number): void => {
+        const game = games[index];
+        loadFilesAndStartGame(GameType.loadFromSave, [game]);
     }
 
     onMount(()=>{
@@ -52,7 +59,7 @@
     <div class="load-game-div">
         <div class="column"><h2>LOAD GAME</h2></div>
         {#each games as game, index}
-            <div class="column"><SaveGameButton saveGame={game} inSaveGameMenu={false} index={index + 1} action={()=>alert(`Load ${index+1}`)}/></div>
+            <div class="column"><SaveGameButton saveGame={game} inSaveGameMenu={false} index={index + 1} action={()=>loadGame(index)}/></div>
         {/each}
     </div>
 </div>

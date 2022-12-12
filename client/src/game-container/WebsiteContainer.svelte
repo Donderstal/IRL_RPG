@@ -1,11 +1,13 @@
 <script>
+    import { get } from 'svelte/store';
+
     // store globals and functions
     import { 
         currentScreen, SCREEN_FORGOT_PASSWORD, SCREEN_LOAD_GAME, setErrorMessage,
         SCREEN_LOG_IN, SCREEN_MAIN_MENU, SCREEN_NEW_GANE, SCREEN_SIGN_UP, 
         SCREEN_WELCOME, SCREEN_RESTORED_PASS, SCREEN_SIGNED_UP, SCREEN_VALIDATE_ACCOUNT,
         openRestoredPassScreen, openSignedUpScreen, openValidateAccountScreen, openLogInScreen,
-        setUserDataToFrontEnd, openMainMenuScreen
+        setUserDataToFrontEnd, openMainMenuScreen, inGameMenu, activeUser, loggedIn
     } from './stores';
 
     //partials
@@ -20,6 +22,11 @@
     import SelectCharacter from './views/SelectCharacter.svelte'
     import LoadGame from './views/LoadGame.svelte';
     import MainMenu from './views/MainMenu.svelte';
+
+    import { SceneAnimationType } from '../enumerables/SceneAnimationTypeEnum';
+    import { onMount } from 'svelte';
+
+    export let setModal;
 
     const accountScreens = [ 
         SCREEN_LOG_IN, SCREEN_SIGN_UP, SCREEN_FORGOT_PASSWORD, 
@@ -64,8 +71,11 @@
                     window.location.replace("http://localhost:5000/");
                 }
                 else {
-                    setUserDataToFrontEnd(json);
-                    openMainMenuScreen();
+                    const inMenu = get(inGameMenu);
+                    setUserDataToFrontEnd(json, inMenu)
+                    if ( inMenu ) {
+                        setModal(`You're now logged in as ${$activeUser.name}. You can now save your game.`, SceneAnimationType.speak)
+                    }
                 }
                 break;
             case 202: 
@@ -91,6 +101,12 @@
         setErrorMessage(false);
         onSubmit(formId, url);
     }
+
+    onMount(()=>{
+        if( $currentScreen === SCREEN_WELCOME && get(loggedIn ) ) {
+            openMainMenuScreen();
+        }
+    })
 </script>
 
 <style>
@@ -129,7 +145,7 @@
     { :else if $currentScreen == SCREEN_RESTORED_PASS}
         <Textpage 
             title={"Password reset"} 
-            text={"We've sent you an email with you new password. Don't worry about the delivery costs, this one is on the house! Don't forget to change your password again after loggin in."}
+            text={"We've sent you an email with your new password. Don't worry about the delivery costs, this one is on the house! Don't forget to change your password again after loggin in."}
             buttonAction={openLogInScreen} buttonText={"Log in"}
         />   
     {/if}

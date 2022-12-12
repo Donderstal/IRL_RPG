@@ -3,8 +3,9 @@
     import { InteractionAnswer } from '../../enumerables/InteractionAnswer';
     import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
     import Modal from '../menu-partials/Modal.svelte';
-    import { returnToPreviousScreen } from '../stores';
+    import { closeInGameMenu } from '../stores';
     import MainMenu from '../views/MainMenu.svelte';
+    import WebsiteContainer from '../WebsiteContainer.svelte';
     import SaveGameMenu from './save/SaveGameMenu.svelte';
 
 	export let menuType: GameMenuType;
@@ -23,7 +24,7 @@
 	const deactivateModal = ( userAnswer: InteractionAnswer ): void => {
 		const saveGame = userAnswer === InteractionAnswer.yes && modalType === SceneAnimationType.speakYesNo;
 		if ( modalType === SceneAnimationType.speak ) {
-			returnToPreviousScreen();
+			closeInGameMenu();
 		}
 		showModal = false;
 		modalType = null;
@@ -55,6 +56,8 @@
 		<SaveGameMenu bind:this={saveGameMenu} setModal={activateModal}/>
 	{:else if menuType === GameMenuType.main }
 		<MainMenu/>
+	{:else if menuType === GameMenuType.log_in }
+		<WebsiteContainer setModal={activateModal}/>
 	{/if}
 	{#if showModal}
 		<Modal message={modalMessage} modalType={modalType} deactivate={deactivateModal}/>
