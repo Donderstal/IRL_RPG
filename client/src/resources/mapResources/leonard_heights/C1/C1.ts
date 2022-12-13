@@ -2,7 +2,7 @@ import { GRID_LEONARD_C1 } from './grid';
 import { FRONT_GRID_LEONARD_C1 } from './frontgrid';
 import { LOST_KEYS_INTERACTION } from './C1-interactions';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { getInteractionRegisteredCondition } from '../../../conditionFactory';
+import { getInteractionNotRegisteredCondition } from '../../../conditionFactory';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C1,
@@ -16,7 +16,7 @@ export default {
             "type": "collectable_coin",
             "row": 3,
             "column": 19,
-            "condition": getInteractionRegisteredCondition( "TEST_KEY_2" ),
+            "condition": getInteractionNotRegisteredCondition( "TEST_KEY_2" ),
             "action": LOST_KEYS_INTERACTION
         },
         {

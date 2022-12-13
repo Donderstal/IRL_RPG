@@ -57,8 +57,9 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
 }
 
 export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, playerStart: CellPosition = null ): void => {
+    if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType] ) ) return;
+
     registerMapExit( getActiveMapKey() );
-    checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType] );
     clearActiveSoundEffects();
     setPausedGameState( true );
 

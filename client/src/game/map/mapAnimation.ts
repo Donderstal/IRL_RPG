@@ -26,7 +26,7 @@ import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
 import { drawSavePoint } from '../modules/actions/actionHandlers';
 import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
-import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/mapResources/interactionResources';
+import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
 
 export const handleMapAnimations = (): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
@@ -81,12 +81,12 @@ const handleDoor = ( door: Door ): void => {
         setDoorAsPending( door.id, door.model.doorTo )
         if ( !door.meetsCondition ) {
             setActiveCinematic(
-                INTERACTION_LOCKED_DOOR, CinematicTrigger.interaction, [PLAYER_ID]
+                INTERACTION_LOCKED_DOOR[0], CinematicTrigger.interaction, [PLAYER_ID]
             );
         }
         else if ( door.model.condition !== undefined ) {
             setActiveCinematic(
-                INTERACTION_UNLOCK_DOOR, CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
+                INTERACTION_UNLOCK_DOOR[0], CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
             );
             door.metConditionAtLastCheck = true;
             addDoorToUnlockedDoorsRegistry( door.registryString );

@@ -1,8 +1,7 @@
 import { GRID_LEONARD_D1 } from './grid';
 import { FRONT_GRID_LEONARD_D1 } from './frontgrid';
-import { D1_INTERACTION_FRIENDLY_CHAD, D1_INTERACTION_WHOLESOME_LIFTER, FRIENDLY_CHAD, WHOLESOME_LIFTER } from './D1-interactions';
+import { D1_INTERACTION_FRIENDLY_CHAD, D1_INTERACTION_WHOLESOME_LIFTER } from './D1-interactions';
 import { LOGGABLE_INTERACTION_7 } from '../../../../game-data/interactionGlobals';
-import { ConditionType } from '../../../../enumerables/ConditionTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';

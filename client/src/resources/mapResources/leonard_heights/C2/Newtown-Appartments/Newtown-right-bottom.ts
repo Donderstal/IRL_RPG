@@ -386,7 +386,8 @@ export default {
             "column": 7,
             "type": TOUGH_GUY_WITH_DARK_HAIR,
             "direction": DirectionEnum.up,
-            "action": C1_INTERACTION_NEIGHBOUR
+            "action": C1_INTERACTION_NEIGHBOUR,
+            "name": "Shady guy"
         }
     ],
     "actions": [],

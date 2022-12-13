@@ -7,10 +7,10 @@ import { FX_BLUE_SQUARE } from "../../../resources/effectResources";
 import { ActionSelector } from "./ActionSelector";
 import { loggedIn } from "../../../game-container/stores";
 import { get } from "svelte/store";
-import { INTERACTION_SAVE_GAME, INTERACTION_SAVE_NOT_LOGGED_IN } from "../../../resources/mapResources/interactionResources";
+import { INTERACTION_SAVE_GAME, INTERACTION_SAVE_NOT_LOGGED_IN } from "../../../resources/interactionResources";
 import type { InteractionModel } from "../../../models/InteractionModel";
 
-const getInteraction = (): InteractionModel => {
+const getInteraction = (): InteractionModel[] => {
     if ( get(loggedIn) ) {
         return INTERACTION_SAVE_GAME;
     }
@@ -25,7 +25,7 @@ export class SavePoint extends ActionSelector {
     constructor( tile: Tile ) {
         let x = tile.x + ( GRID_BLOCK_PX / 2 )
         let y = tile.y + ( GRID_BLOCK_PX / 2 )
-        super( x, y, [getInteraction()], PLAYER_ID )
+        super( x, y, getInteraction(), PLAYER_ID )
 
         this.initSavePointEffect();
         this.spriteId   = PLAYER_ID;
