@@ -8,6 +8,7 @@ import { initializeDoorForTile } from '../modules/doors/doorSetter';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { initializeActionForTile, initializeSavePoint } from '../modules/actions/actionSetter';
 import type { GridCellModel } from '../../models/GridCellModel';
+import type { ElevatorModel } from '../../models/ElevatorModel';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
@@ -59,15 +60,23 @@ export class BackTileGrid extends CanvasGrid {
             this.setDoors( this.model.doors );
         if ( this.model.actions )
             this.setActions( this.model.actions );
-        if ( this.model.savepoint ) 
+        if ( this.model.savepoint )
             this.setSavepoint( this.model.savepoint );
-        if ( sheetModel.blocked ) 
+        if ( sheetModel.blocked )
             this.setBlockedTiles( sheetModel.blocked );
+        if ( this.model.elevators )
+            this.setElevators( this.model.elevators );
     }
 
     setSavepoint( savepointData: GridCellModel ): void {
         const tile = this.getTileAtCell( savepointData.column, savepointData.row );
         initializeSavePoint( tile );
+    }
+
+    setElevators( elevators: ElevatorModel[] ): void {
+        elevators.forEach( ( e ) => {
+            console.log( e );
+        } )
     }
 
     clearMap(): void {

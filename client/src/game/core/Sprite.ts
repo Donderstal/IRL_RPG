@@ -309,7 +309,10 @@ export class Sprite {
 
         while ( y <= ( this.y + this.height ) ) {
             while ( x < ( this.x + this.width ) ) {
-                tileIndexes.push( getTileOnCanvasByXy( {"x": x, "y": y} , CanvasTypeEnum.backSprites ).index );
+                const tile = getTileOnCanvasByXy( { "x": x, "y": y }, CanvasTypeEnum.backSprites );
+                if ( tile !== undefined ) {
+                    tileIndexes.push( tile.index );
+                } 
                 x += GRID_BLOCK_PX;
             }
             x = originalX;

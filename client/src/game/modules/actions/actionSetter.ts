@@ -1,4 +1,7 @@
+import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import { GRID_BLOCK_PX } from "../../../game-data/globals";
+import { isHorizontal } from "../../../helpers/utilFunctions";
+import type { ElevatorModel } from "../../../models/ElevatorModel";
 import type { InteractionModel } from "../../../models/InteractionModel";
 import type { Sprite } from "../../core/Sprite";
 import type { Tile } from "../../core/Tile";

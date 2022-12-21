@@ -6,10 +6,6 @@ import type { DoorModel } from "../../../models/DoorModel";
 import { ConditionType } from '../../../enumerables/ConditionTypeEnum';
 import { getActiveMapKey } from '../../neighbourhoodModule';
 
-/**
- * Hitbox extension that trigger the GAME.switchMap function if the player is in blockedRange
- * this.destination stores the name of the map where the door leads to.
- */
 export class Door extends Hitbox {
     mapName: string;
     model: DoorModel;

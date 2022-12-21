@@ -1,5 +1,6 @@
 ﻿import type { CanvasObjectModel } from "./CanvasObjectModel";
 import type { DoorModel } from "./DoorModel";
+import type { ElevatorModel } from "./ElevatorModel";
 import type { MapActionModel } from "./MapActionModel";
 import type { RoadModel } from "./RoadModel";
 import type { SpawnPointModel } from "./SpawnPointModel";
@@ -29,6 +30,7 @@ export type MapModel = {
 
     spawnPoints?: SpawnPointModel[];
     roads?: RoadModel[];
+    elevators?: ElevatorModel[];
 
     savepoint?: any;
 }

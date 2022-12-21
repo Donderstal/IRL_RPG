@@ -1,4 +1,5 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { ELEVATOR_SARDINE_STUDIOS } from "../../../elevatorResources";
 import { LH_MAP_KEY, LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY, LH_SARDINE_STUDIOS_COMMON_AREA_KEY, LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY } from "../../leonard_heights_res";
 
 export default {
@@ -433,5 +434,6 @@ export default {
 			"doorTo": LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
 			"direction": DirectionEnum.right
 		}
-	]
+	],
+	"elevators": [ELEVATOR_SARDINE_STUDIOS]
 }
