@@ -2,6 +2,7 @@ import { GRID_LEONARD_C2 } from './grid';
 import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { LH_NEWTOWN_APP_HALL_KEY } from '../leonard_heights_res';
+import { DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR } from './C2-door-keys';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C2,
@@ -133,18 +134,18 @@ export default {
     ],
     "doors": [
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR,
             "row": 8,
             "column": 12,
             "doorTo": LH_NEWTOWN_APP_HALL_KEY,
-            "direction": DirectionEnum.up,
-
+            "direction": DirectionEnum.up
         },
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR,
             "row": 8,
             "column": 13,
             "doorTo": LH_NEWTOWN_APP_HALL_KEY,
-            "direction": DirectionEnum.up,
-
+            "direction": DirectionEnum.up
         }
     ]
 }

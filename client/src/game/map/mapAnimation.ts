@@ -75,13 +75,13 @@ const handleDoor = ( door: Door ): void => {
     }
     else if ( door.model.condition !== undefined ) {
         setActiveCinematic(
-            INTERACTION_UNLOCK_DOOR[0], CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
+            INTERACTION_UNLOCK_DOOR[0], CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door, door.model.id]
         );
         door.metConditionAtLastCheck = true;
         addDoorToUnlockedDoorsRegistry( door.registryString );
     }
     else {
-        switchMap( door.model.doorTo, PlayerMapEntry.door );
+        switchMap( door.model.doorTo, PlayerMapEntry.door, door.model.id );
         playEffect( "misc/random5.wav" );
     }
 }

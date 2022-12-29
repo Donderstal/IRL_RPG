@@ -5,6 +5,8 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
+import { LH_CLUB_SHELTER_ENTRANCE_KEY } from '../leonard_heights_res';
+import { DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR } from './B4-door-keys';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B4,
@@ -81,18 +83,18 @@ export default {
     ],
     "doors": [
         {
+            "id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
             "row": 8,
             "column": 4,
-            "doorTo": "leonard_heights/club-shelter-entrance",
-            "direction": DirectionEnum.up,
-
+            "doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
+            "direction": DirectionEnum.up
         },
         {
+            "id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
             "row": 8,
             "column": 5,
-            "doorTo": "leonard_heights/club-shelter-entrance",
-            "direction": DirectionEnum.up,
-
+            "doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
+            "direction": DirectionEnum.up
         }
     ],
 }

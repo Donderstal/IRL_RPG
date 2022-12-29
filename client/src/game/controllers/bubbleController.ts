@@ -52,8 +52,8 @@ export const setNewCenterBubble = ( text: string ) => {
     titleBubble = new SpeechBubble( text, TextBubbleType.Center );
     setTimeout( () => { titleBubble = null }, 5000 )
 };
-export const setElevatorBubble = ( floors: { [key in string]: string } ): void => {
-    elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', [Object.keys( floors ).find( k => floors[k] === getActiveMapKey() )] );
+export const setElevatorBubble = ( floors: { [key in string]: string }, id: string ): void => {
+    elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', id, [Object.keys( floors ).find( k => floors[k] === getActiveMapKey() )] );
 }
 export const hasActiveSelectionBubble = (): boolean => {
     return elevatorBubble !== null;

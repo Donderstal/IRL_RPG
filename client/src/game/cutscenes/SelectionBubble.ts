@@ -7,7 +7,9 @@ import { TypeWriterWord } from "../../helpers/TypeWriter";
 import { TextBubbleBase } from "./TextBubbleBase";
 
 export class SelectionBubble extends TextBubbleBase {
-    source: { [key in string]: string }
+    source: { [key in string]: string };
+    id: string;
+
     slots: string[];
     activeSlotIndex: number;
     disabledSlots: number[]
@@ -17,7 +19,7 @@ export class SelectionBubble extends TextBubbleBase {
 
     innerCanvas: OffscreenCanvas;
     innerCtx: OffscreenCanvasRenderingContext2D;
-    constructor( source: {[key in string]: string}, type: TextBubbleType, header: string, disabledSlots: string[] = null ) {
+    constructor( source: { [key in string]: string }, type: TextBubbleType, header: string, interactionId: string, disabledSlots: string[] = null ) {
         const textList = Object.keys( source );
         textList.push( 'Cancel' );
 
@@ -26,6 +28,7 @@ export class SelectionBubble extends TextBubbleBase {
 
         super( xy.x, xy.y, dimensions.width, dimensions.height );
         this.source = source;
+        this.id = interactionId;
 
         this.slots = [];
         this.disabledSlots = [];

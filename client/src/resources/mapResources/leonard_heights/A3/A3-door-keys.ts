@@ -1,0 +1,1 @@
+export const DOORKEY_TWO_TOWERS_MAIN_DOOR = "DOORKEY_A3_1";

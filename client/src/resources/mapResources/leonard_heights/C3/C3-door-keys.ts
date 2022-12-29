@@ -1,0 +1,1 @@
+export const DOORKEY_CAR_SHACK_FRONT_DOOR = "DOORKEY_C3_1";

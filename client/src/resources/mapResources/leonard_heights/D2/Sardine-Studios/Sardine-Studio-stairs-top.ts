@@ -1,6 +1,7 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { ELEVATOR_SARDINE_STUDIOS } from "../../../elevatorResources";
 import { LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY, LH_SARDINE_STUDIOS_STAIRS_TOP_KEY } from "../../leonard_heights_res";
+import { DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_TOP } from "../D2-door-keys";
 
 export default {
 	"key": LH_SARDINE_STUDIOS_STAIRS_TOP_KEY,
@@ -416,12 +417,14 @@ export default {
 	"roads": [],
 	"doors": [
 		{
+			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_TOP,
 			"row": 1,
 			"column": 5,
 			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY,
 			"direction": DirectionEnum.up
 		},
 		{
+			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_TOP,
 			"row": 1,
 			"column": 6,
 			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY,

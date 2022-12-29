@@ -7,6 +7,7 @@ import {
 } from "./leonard_heights/leonard_heights_res";
 
 export const ELEVATOR_SARDINE_STUDIOS: ElevatorModel = {
+    id: "SARDINE_STUDIOS_ELEVATOR",
     column: 3,
     row: 3,
     direction: DirectionEnum.up,

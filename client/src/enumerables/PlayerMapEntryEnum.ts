@@ -4,5 +4,6 @@ export enum PlayerMapEntry {
     door,
     bus,
     cinematic,
-    cinematic_end
+    cinematic_end,
+    elevator
 }

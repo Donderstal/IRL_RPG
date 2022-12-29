@@ -56,10 +56,10 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     frontgrid.drawMapFromGridData();
 }
 
-export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, playerStart: CellPosition = null ): void => {
+export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, exitId: string = null ): void => {
     if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType] ) ) return;
 
-    registerMapExit( getActiveMapKey() );
+    registerMapExit( getActiveMapKey(), exitId );
     clearActiveSoundEffects();
     setPausedGameState( true );
 

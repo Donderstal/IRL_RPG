@@ -5,6 +5,7 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { MovementType } from '../../../../enumerables/MovementTypeEnum';
 import { PIGEON } from '../../../spriteTypeResources';
 import { LH_CAR_SHACK_KEY } from '../leonard_heights_res';
+import { DOORKEY_CAR_SHACK_FRONT_DOOR } from './C3-door-keys';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -39,9 +40,7 @@ export default {
             "type": "door_1",
             "row": 7,
             "column": 19,
-            "hasDoor": true,
-            "directionIn": "",
-            "doorTo": ""
+            "hasDoor": false
         },
         {
             "type": "gang_z",
@@ -52,9 +51,7 @@ export default {
             "type": "door_3",
             "row": 8,
             "column": 4,
-            "hasDoor": true,
-            "directionIn": "",
-            "doorTo": ""
+            "hasDoor": false
         },
         {
             "type": "pot_plant_a",
@@ -117,11 +114,11 @@ export default {
     ],
     "doors": [
         {
+            "id": DOORKEY_CAR_SHACK_FRONT_DOOR,
             "row": 8,
             "column": 21,
             "doorTo": LH_CAR_SHACK_KEY,
-            "direction": DirectionEnum.up,
-
+            "direction": DirectionEnum.up
         }
     ]
 }

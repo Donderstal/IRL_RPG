@@ -38,9 +38,7 @@ export default {
             "type": "door_4",
             "row": 8,
             "column": 5,
-            "hasDoor": true,
-            "directionIn": "",
-            "doorTo": ""
+            "hasDoor": false
         },
         {
             "type": "wheelie_bin_left",

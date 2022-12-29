@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { MONKEY_CEO, ROBOT } from "../../../../spriteTypeResources";
 import { LH_HOTEL_TWO_TOWERS_LOBBY_KEY, LH_HOTEL_TWO_TOWERS_NAME, LH_KEY, LH_MAP_KEY } from "../../leonard_heights_res";
+import { DOORKEY_TWO_TOWERS_MAIN_DOOR } from "../A3-door-keys";
 import { A3_INTERACTION_MONKEY_COOK, A3_INTERACTION_ROBOT_COOK, A3_INTERACTION_ROBOT_RECEPTIONIST } from "./Two-Tower-interactions";
 
 export default {
@@ -4280,18 +4281,18 @@ export default {
 	"roads": [],
 	"doors": [
 		{
+			"id": DOORKEY_TWO_TOWERS_MAIN_DOOR,
 			"row": 14,
 			"column": 11,
 			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down,
-
+			"direction": DirectionEnum.down
 		},
 		{
+			"id": DOORKEY_TWO_TOWERS_MAIN_DOOR,
 			"row": 14,
 			"column": 12,
 			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down,
-
+			"direction": DirectionEnum.down
 		}
 	]
 }

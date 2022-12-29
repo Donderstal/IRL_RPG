@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
 import { LH_YUM_MART_NAME, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
+import { DOORKEY_YUM_MART_DOOR_1 } from "../C4-door-keys";
 import { C4_INTERACTION_YUM_MART_OFFICE_GUY } from "./yum-mart-interactions";
 
 export default {
@@ -1810,11 +1811,11 @@ export default {
 	"roads": [],
 	"doors": [
 		{
+			"id": DOORKEY_YUM_MART_DOOR_1,
 			"row": 3,
 			"column": 1,
 			"doorTo": LH_YUM_MART_STORE_KEY,
 			"direction": DirectionEnum.left,
-
 		}
 	]
 }

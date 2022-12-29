@@ -141,6 +141,7 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
 
 export const initDoorModel = ( doorData ): DoorModel => {
     const doorModel: DoorModel = {
+        id: doorData.id,
         row: doorData.row,
         column: doorData.column,
         doorTo: doorData.doorTo,

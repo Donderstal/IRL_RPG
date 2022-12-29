@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BALD_BEER_BELLY_GUY } from "../../../../spriteTypeResources";
 import { LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
+import { DOORKEY_NEWTOWN_APPARTMENTS_APP_2_DOOR } from "../C2-door-keys";
 
 export default {
     "key": LH_NEWTOWN_APP_2_KEY,
@@ -400,6 +401,7 @@ export default {
     "actions": [],
     "doors": [
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_2_DOOR,
             "row": 4, 
             "column": 8,
             "doorTo" :LH_NEWTOWN_APP_HALL_KEY,

@@ -25,9 +25,7 @@ export default {
          "type":"door_4",
          "row":8,
          "column":4,
-         "hasDoor":true,
-         "directionIn":"",
-         "doorTo":""
+         "hasDoor": false
       },
       {
          "type":"funz",

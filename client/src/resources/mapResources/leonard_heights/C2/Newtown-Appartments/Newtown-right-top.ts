@@ -1,5 +1,6 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
+import { DOORKEY_NEWTOWN_APPARTMENTS_APP_4_DOOR } from "../C2-door-keys";
 
 export default {
     "key": LH_NEWTOWN_APP_4_KEY,
@@ -341,6 +342,7 @@ export default {
     "actions": [],
     "doors": [
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_4_DOOR,
             "row": 4, 
             "column": 1,
             "doorTo" : LH_NEWTOWN_APP_HALL_KEY,

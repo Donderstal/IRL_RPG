@@ -1,7 +1,8 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BLONDE_BEER_BELLY_GUY, TOUGH_GUY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
-import { LH_CLUB_SHELTER_NAME, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
+import { LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
+import { DOORKEY_CLUBSHELTER_TOILET_DOOR } from "../B4-door-keys";
 
 export default {
 	"key": LH_CLUB_SHELTER_TOILETS_KEY,
@@ -845,11 +846,11 @@ export default {
 	"frontSprites": [],
 	"doors": [
 		{
+			"id": DOORKEY_CLUBSHELTER_TOILET_DOOR,
 			"row": 5,
 			"column": 12,
-			"doorTo": "leonard_heights/club-shelter",
+			"doorTo": LH_CLUB_SHELTER_KEY,
 			"direction": DirectionEnum.right,
-
 		}
 	]
 }

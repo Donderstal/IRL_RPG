@@ -2,6 +2,7 @@ import { CollectableType } from "../../../../../enumerables/CollectableTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { getCollectibleActionDefinition, getCollectibleCondition } from "../../../../collectibleResources";
 import { LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
+import { DOORKEY_NEWTOWN_APPARTMENTS_APP_3_DOOR } from "../C2-door-keys";
 
 export default {
     "key": LH_NEWTOWN_APP_3_KEY,
@@ -425,6 +426,7 @@ export default {
     ],
     "doors": [        
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_3_DOOR,
             "row": 8, 
             "column": 4,
             "doorTo" : LH_NEWTOWN_APP_HALL_KEY,

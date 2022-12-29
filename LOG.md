@@ -1,4 +1,16 @@
 ### 
+#### DEC 29, 2022
+* Added SelectionBubble class for in-game choices
+* Split TextBubbleBase from Speechbubble
+* Implemented new Elevator class for elevator map switching
+* New id based map switching with doors and elevator
+
+#### DEC 13, 2022
+* Cleaning and reorganizing various resources
+
+#### DEC 12, 2022
+* In-game Svelte menu for logging in and registering on save
+
 #### DEC 4, 2022
 * Now storing and retrieving savegame json from db based on user account
 

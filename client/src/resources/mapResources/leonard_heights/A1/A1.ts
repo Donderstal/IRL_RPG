@@ -30,9 +30,7 @@ export default {
             "type": "door_5",
             "row": 4,
             "column": 21,
-            "hasDoor": true,
-            "directionIn": "",
-            "doorTo": ""
+            "hasDoor": false
         }
     ],
     "actions": [

@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BUSINESS_MAN, FAT_BUFF_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY, ROBOT, SUNGLASSES_LADY, SUPERMARKET_MANAGER, TOUGH_GUY_WITH_COOL_HAIR, WHITE_PONY_TAIL_LADY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
 import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
+import { DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR, DOORKEY_CLUBSHELTER_TOILET_DOOR } from "../B4-door-keys";
 
 export default {
 	"key": LH_CLUB_SHELTER_KEY,
@@ -3673,13 +3674,14 @@ export default {
 	"frontSprites": [],
 	"doors": [
 		{
+			"id": DOORKEY_CLUBSHELTER_TOILET_DOOR,
 			"row": 6,
 			"column": 16,
 			"doorTo": LH_CLUB_SHELTER_TOILETS_KEY,
 			"direction": DirectionEnum.left,
-
 		},
 		{
+			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
 			"row": 16,
 			"column": 10,
 			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
@@ -3687,11 +3689,11 @@ export default {
 
 		},
 		{
+			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
 			"row": 16,
 			"column": 11,
 			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
 			"direction": DirectionEnum.down,
-
 		}
 	]
 }

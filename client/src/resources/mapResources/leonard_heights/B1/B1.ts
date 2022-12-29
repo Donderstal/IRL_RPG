@@ -49,9 +49,7 @@ export default {
             "type": "door_4",
             "row": 4,
             "column": 5,
-            "hasDoor": true,
-            "directionIn": "",
-            "doorTo": ""
+            "hasDoor": false
         },
         {
             "type": "car_b",

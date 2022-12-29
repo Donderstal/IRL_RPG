@@ -11,7 +11,7 @@ import { destroySpriteAnimation } from './modules/animations/animationSetter';
 import { spriteHasAnimation } from './modules/animations/animationGetter';
 import { spriteNextPositionIsBlocked } from './map/collision';
 import { cameraFocus } from './cameraFocus';
-import { clearSpeakingEffect } from './sound/sound';
+import { clearSpeakingEffect, playEffect } from './sound/sound';
 import { getMenuGrid } from './canvas/canvasGetter';
 import { checkForEventTrigger } from './storyEvents/storyEventHandler';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
@@ -67,10 +67,12 @@ const handleSelectionBubbleControls = ( eventKey: string ): void => {
         bubble.handleArrowButtons( ( eventKey === "w" || eventKey === "ArrowUp" ) ? DirectionEnum.up : DirectionEnum.down )
     }
     if ( eventKey === " " ) {
+        const elevatorId = bubble.id;
         const result = bubble.handleSelectionButton();
         destroyElevatorBubble();
         if ( result !== undefined ) {
-            switchMap( result, PlayerMapEntry.door );
+            switchMap( result, PlayerMapEntry.elevator, elevatorId );
+            playEffect( "misc/menu-select.mp3" );
         }
     }
 }

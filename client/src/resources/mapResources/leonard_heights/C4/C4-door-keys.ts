@@ -1,0 +1,2 @@
+export const DOORKEY_YUM_MART_FRONT_DOOR = "DOORKEY_C4_1";
+export const DOORKEY_YUM_MART_DOOR_1 = "DOORKEY_C4_2";

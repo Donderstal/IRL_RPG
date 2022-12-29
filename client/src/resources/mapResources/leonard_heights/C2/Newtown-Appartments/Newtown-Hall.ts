@@ -4,6 +4,7 @@ import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
 import { getInteractionNotRegisteredCondition } from "../../../../conditionFactory";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
 import { LH_MAP_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
+import { DOORKEY_NEWTOWN_APPARTMENTS_APP_1_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_2_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_3_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_4_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_5_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR } from "../C2-door-keys";
 import { C1_INTERACTION_WAITING_BUSINESSMAN } from "./Newtown-Appartments-interactions";
 
 export default {
@@ -311,36 +312,42 @@ export default {
     "actions": [],
     "doors": [
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_1_DOOR,
             "row": 10, 
             "column": 1,
             "doorTo" : LH_NEWTOWN_APP_1_KEY,
             "direction": DirectionEnum.left
         },
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_2_DOOR,
             "row": 5, 
             "column": 1,
             "doorTo": LH_NEWTOWN_APP_2_KEY,
             "direction": DirectionEnum.left
         },
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_3_DOOR,
             "row": 2, 
             "column": 3,
             "doorTo": LH_NEWTOWN_APP_3_KEY,
             "direction": DirectionEnum.up
         },
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_4_DOOR,
             "row": 5, 
             "column": 4,
             "doorTo": LH_NEWTOWN_APP_4_KEY,
             "direction": DirectionEnum.right
         },
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_5_DOOR,
             "row": 10, 
             "column": 4,
             "doorTo": LH_NEWTOWN_APP_5_KEY,
             "direction": DirectionEnum.right
         },
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR,
             "row": 12, 
             "column": 2,
             "doorTo": LH_MAP_KEY,

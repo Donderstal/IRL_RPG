@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { TOUGH_GUY_WITH_DARK_HAIR } from "../../../../spriteTypeResources";
 import { LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
+import { DOORKEY_NEWTOWN_APPARTMENTS_APP_5_DOOR } from "../C2-door-keys";
 import { C1_INTERACTION_NEIGHBOUR } from "./Newtown-Appartments-interactions";
 
 export default {
@@ -393,6 +394,7 @@ export default {
     "actions": [],
     "doors": [
         {
+            "id": DOORKEY_NEWTOWN_APPARTMENTS_APP_5_DOOR,
             "row": 4, 
             "column": 1,
             "doorTo" : LH_NEWTOWN_APP_HALL_KEY,

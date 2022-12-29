@@ -55,7 +55,7 @@ export const dismissActiveCinematic = (): void => {
     }
 
     if ( activeCinematic.trigger === CinematicTrigger.leave ) {
-        switchMap( activeCinematic.args[0], activeCinematic.args[1] );
+        switchMap( activeCinematic.args[0], activeCinematic.args[1], activeCinematic.args[2] );
     }
     else if ( activeCinematic.trigger === CinematicTrigger.interaction ) {
         dismissActiveAction();

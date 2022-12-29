@@ -2,6 +2,7 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { SUNGLASSES_LADY } from "../../../../spriteTypeResources";
 import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_MAP_KEY } from "../../leonard_heights_res";
+import { DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR, DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR } from "../B4-door-keys";
 
 export default {
 	"key": LH_CLUB_SHELTER_ENTRANCE_KEY,
@@ -364,27 +365,28 @@ export default {
 	"frontSprites": [],
 	"doors": [
 		{
+			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
 			"row": 2,
 			"column": 2,
 			"doorTo": LH_CLUB_SHELTER_KEY,
 			"direction": DirectionEnum.up,
-
 		},
 		{
+			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
 			"row": 2,
 			"column": 3,
 			"doorTo": LH_CLUB_SHELTER_KEY,
 			"direction": DirectionEnum.up,
-
 		},
 		{
+			"id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
 			"row": 8,
 			"column": 2,
 			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
-
 		},
 		{
+			"id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
 			"row": 8,
 			"column": 3,
 			"doorTo": LH_MAP_KEY,
