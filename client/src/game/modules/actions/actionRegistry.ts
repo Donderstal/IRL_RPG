@@ -46,5 +46,5 @@ export const getAllActions = (): ActionSelector[] => {
 export const clearActionRegistry = (): void => {
     spriteActionDictionary = {};
     tileActionDictionary = {};
-    savePoint = null
+    savePoint = null;
 }

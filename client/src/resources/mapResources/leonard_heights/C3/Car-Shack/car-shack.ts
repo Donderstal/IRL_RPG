@@ -1094,6 +1094,12 @@ export default {
 			"column": 10
 		},
 		{
+			"type": "car_b_colour_b",
+			"direction": 2,
+			"row": 7,
+			"column": 11
+		},
+		{
 			"type": "car_c",
 			"direction": 0,
 			"row": 4,

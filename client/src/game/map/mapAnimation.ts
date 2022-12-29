@@ -1,11 +1,10 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
-import { unsetPendingDoor, setDoorAsPending, getPendingDoor } from '../controllers/doorController';
 import type { Sprite } from '../core/Sprite';
 import { getActiveDoors } from '../modules/doors/doorGetter';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { handleMovementKeys } from '../controls';
-import { drawBubbles } from '../controllers/bubbleController';
+import { drawBubbles, hasActiveSelectionBubble } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { setActiveCinematic } from '../controllers/cinematicController';
@@ -29,6 +28,7 @@ import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
 
 export const handleMapAnimations = (): void => {
+    const player = getPlayer();
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
     clearSpriteCanvasGrids();
@@ -39,7 +39,7 @@ export const handleMapAnimations = (): void => {
     handleRoadNetworkFuncs()
     handleNpcCounter()
 
-    if ( getPlayer() != undefined && !inPausedGameState() ) {
+    if ( getPlayer() != undefined && !inPausedGameState() && !hasActiveSelectionBubble() ) {
         handleMovementKeys( );  
     }
 
@@ -50,22 +50,16 @@ export const handleMapAnimations = (): void => {
     drawBubbles();
 
     const doors = getActiveDoors();
-    let inDoorRange = false;
 
     Object.values(doors).forEach( ( door ) => { 
         if ( inDebugGameState() ) {
             door.draw();
         }
 
-        if ( playerHitbox !== undefined && playerHitbox.doorInRange( door ) ) {
-            inDoorRange = true;
+        if ( playerHitbox !== undefined && playerHitbox.doorInRange( door ) && door.model.direction === player.direction ) {
             handleDoor( door );
         }
     })
-
-    if ( !inDoorRange ) {
-        unsetPendingDoor( );
-    }
 
     if ( cameraFocus.movingToNewFocus ) {
         const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
@@ -74,27 +68,21 @@ export const handleMapAnimations = (): void => {
 }
 
 const handleDoor = ( door: Door ): void => {
-    const player = getPlayer();
-    let pendingDoor = getPendingDoor();
-
-    if ( door.model.direction == player.direction && pendingDoor.id != door.id && pendingDoor.destination != door.model.doorTo ) {
-        setDoorAsPending( door.id, door.model.doorTo )
-        if ( !door.meetsCondition ) {
-            setActiveCinematic(
-                INTERACTION_LOCKED_DOOR[0], CinematicTrigger.interaction, [PLAYER_ID]
-            );
-        }
-        else if ( door.model.condition !== undefined ) {
-            setActiveCinematic(
-                INTERACTION_UNLOCK_DOOR[0], CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
-            );
-            door.metConditionAtLastCheck = true;
-            addDoorToUnlockedDoorsRegistry( door.registryString );
-        }
-        else {
-            switchMap( door.model.doorTo, PlayerMapEntry.door );
-            playEffect( "misc/random5.wav" );
-        }
+    if ( !door.meetsCondition ) {
+        setActiveCinematic(
+            INTERACTION_LOCKED_DOOR[0], CinematicTrigger.interaction, [PLAYER_ID]
+        );
+    }
+    else if ( door.model.condition !== undefined ) {
+        setActiveCinematic(
+            INTERACTION_UNLOCK_DOOR[0], CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door]
+        );
+        door.metConditionAtLastCheck = true;
+        addDoorToUnlockedDoorsRegistry( door.registryString );
+    }
+    else {
+        switchMap( door.model.doorTo, PlayerMapEntry.door );
+        playEffect( "misc/random5.wav" );
     }
 }
 

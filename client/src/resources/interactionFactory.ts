@@ -40,3 +40,12 @@ export const getPromptLogInInteraction = ( cinematic: CinematicModel, condition:
         condition: condition
     }
 }
+export const getElevatorInteraction = ( cinematic: CinematicModel, condition: ConditionModel ): InteractionModel => {
+    return {
+        type: InteractionType.elevator,
+        sfx: "medium-text-blip.ogg",
+        shouldBeRegistered: false,
+        cinematic: cinematic,
+        condition: condition
+    }
+}

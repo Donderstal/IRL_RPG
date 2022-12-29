@@ -1,4 +1,3 @@
-import { resetDoors } from '../controllers/doorController';
 import type { DoorModel } from '../../models/DoorModel';
 import type { MapActionModel } from '../../models/MapActionModel';
 import type { MapModel } from '../../models/MapModel';
@@ -6,7 +5,7 @@ import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
 import { initializeDoorForTile } from '../modules/doors/doorSetter';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { initializeActionForTile, initializeSavePoint } from '../modules/actions/actionSetter';
+import { initializeActionForTile, initializeSavePoint, initializeElevator } from '../modules/actions/actionSetter';
 import type { GridCellModel } from '../../models/GridCellModel';
 import type { ElevatorModel } from '../../models/ElevatorModel';
 
@@ -75,12 +74,12 @@ export class BackTileGrid extends CanvasGrid {
 
     setElevators( elevators: ElevatorModel[] ): void {
         elevators.forEach( ( e ) => {
-            console.log( e );
+            const tile = this.getTileAtCell( e.column, e.row );
+            initializeElevator( tile, e );
         } )
     }
 
     clearMap(): void {
-        resetDoors();
         this.grid = null;
         this.blockedTiles = [ ];
     }

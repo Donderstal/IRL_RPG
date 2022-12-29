@@ -7,15 +7,18 @@ import { mobileAgent } from "./screenOrientation";
 export let speechBubbleCanvas: OffscreenCanvas;
 export let centerBubbleCanvas: OffscreenCanvas;
 export let subtitleBubbleCanvas: OffscreenCanvas;
+export let elevatorBubbleCanvas: OffscreenCanvas;
 
 const speechBubbleCanvasDimensions = { width: MAX_BUBBLE_WIDTH, height: GRID_BLOCK_PX * 2 };
 const centerBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX * 2 };
 const subtitleBubbleCanvasDimensions = { width: mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_WIDTH / 2, height: GRID_BLOCK_PX };
+const elevatorBubbleCanvasDimensions = { width: GRID_BLOCK_PX * 4, height: GRID_BLOCK_PX * 8 };
 
 export const initializeBubbleCanvases = (): void => {
     initializeSpeechBubbleCanvas();
     initializeCenterBubbleCanvas();
-    initializeSubtitleBubbleCanvas
+    initializeSubtitleBubbleCanvas();
+    initializeElevatorBubbleCanvas();
 }
 
 const initializeSpeechBubbleCanvas = (): void => {
@@ -29,8 +32,13 @@ const initializeCenterBubbleCanvas = (): void => {
 }
 
 const initializeSubtitleBubbleCanvas = (): void => {
-    subtitleBubbleCanvas = new OffscreenCanvas( subtitleBubbleCanvas.width, subtitleBubbleCanvas.height );
+    subtitleBubbleCanvas = new OffscreenCanvas( subtitleBubbleCanvasDimensions.width, subtitleBubbleCanvasDimensions.height );
     drawTemplateBubbleToCanvas( subtitleBubbleCanvas.width, subtitleBubbleCanvas.height, subtitleBubbleCanvas.getContext( "2d" ) );
+}
+
+const initializeElevatorBubbleCanvas = (): void => {
+    elevatorBubbleCanvas = new OffscreenCanvas( elevatorBubbleCanvasDimensions.width, elevatorBubbleCanvasDimensions.height );
+    drawTemplateBubbleToCanvas( elevatorBubbleCanvas.width, elevatorBubbleCanvas.height, elevatorBubbleCanvas.getContext( "2d" ) );
 }
 
 const drawTemplateBubbleToCanvas = (width: number, height: number, context: OffscreenCanvasRenderingContext2D): void => {
@@ -107,6 +115,14 @@ const getCenterBubbleXy = ( ): { x: number, y: number } => {
         y: ( mobileAgent ? 0 : ( GRID_BLOCK_PX * 2 ) - ( centerBubbleCanvasDimensions.height / 2 ) ) 
     };
 }
+const getElevatorBubbleXy = (): { x: number, y: number } => {
+    const speechBubbleCanvasWidth = mobileAgent ? GRID_BLOCK_PX * 12 : CANVAS_WIDTH;
+    const speechBubbleCanvasHeight = mobileAgent ? GRID_BLOCK_PX * 8 : CANVAS_HEIGHT;
+    return {
+        x: ( speechBubbleCanvasWidth / 2 ) - ( elevatorBubbleCanvasDimensions.width / 2 ),
+        y: ( speechBubbleCanvasHeight / 2 ) - ( elevatorBubbleCanvasDimensions.height / 2 )
+    };
+}
 
 export const getSpeechBubbleTemplateCanvas = ( type: TextBubbleType ) => {
     switch ( type ) {
@@ -117,6 +133,8 @@ export const getSpeechBubbleTemplateCanvas = ( type: TextBubbleType ) => {
             return centerBubbleCanvas;
         case TextBubbleType.Subtitle:
             return subtitleBubbleCanvas;
+        case TextBubbleType.Elevator:
+            return elevatorBubbleCanvas;
     }
 }
 
@@ -129,6 +147,8 @@ export const getSpeechBubbleDimensions = ( type: TextBubbleType ) => {
             return centerBubbleCanvasDimensions;
         case TextBubbleType.Subtitle:
             return subtitleBubbleCanvasDimensions;
+        case TextBubbleType.Elevator:
+            return elevatorBubbleCanvasDimensions;
     }
 }
 
@@ -141,5 +161,7 @@ export const getSpeechBubbleXy = ( type: TextBubbleType ) => {
             return getCenterBubbleXy();
         case TextBubbleType.Subtitle:
             return getSubtitleBubbleXy();
+        case TextBubbleType.Elevator:
+            return getElevatorBubbleXy();
     }
 }

@@ -34,7 +34,7 @@ export
     }
 
     displayQuestText( label: string ): void {
-        setNewSubtitleBubble( { text: label + this.model.name } );
+        setNewSubtitleBubble( label + this.model.name );
         playEffect( 'misc/menu-select.mp3' );
         setTimeout( () => {
             clearSubtitleBubble();

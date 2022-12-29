@@ -78,3 +78,6 @@ export const CINSCRIPT_COLLECT_CAN: CinematicModel = [
     [getSpeakScene( "I'll add this one to my collection!", null, PLAYER_NAME )],
     [getDeleteSpriteScene( null, true, "misc/random5.wav" )]
 ];
+export const CINSCRIPT_ELEVATOR: CinematicModel = [
+    [getSpeakYesNoScene( "Use the elevator?", null, null, null, PLAYER_NAME )]
+];

@@ -1,6 +1,6 @@
 import { handleActionButton, registerActionSelection } from './controllers/actionController';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
-import { clearActiveEmotes, displayFullText, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, isWriting, selectionBubble } from './controllers/bubbleController';
+import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, hasActiveSelectionBubble, isWriting, selectionBubble } from './controllers/bubbleController';
 import { moveSpriteInDirection } from './modules/destinations/destinationHandler';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
@@ -16,6 +16,8 @@ import { getMenuGrid } from './canvas/canvasGetter';
 import { checkForEventTrigger } from './storyEvents/storyEventHandler';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { setListeningForKeysGameState } from './gameState/gameState';
+import { switchMap } from '../helpers/loadMapHelpers';
+import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -24,6 +26,11 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
 
     if ( 'preventDefault' in event ) {
         event.preventDefault();
+    }
+
+    if ( hasActiveSelectionBubble() ) {
+        handleSelectionBubbleControls( event.key );
+        return;
     }
 
     if ( event.key === "Tab" ) {
@@ -54,6 +61,19 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
         handleSelectionKeys();
     }
 };
+const handleSelectionBubbleControls = ( eventKey: string ): void => {
+    const bubble = getElevatorBubble();
+    if ( eventKey === "w" || eventKey === "ArrowUp" || eventKey === "s" || eventKey === "ArrowDown" ) {
+        bubble.handleArrowButtons( ( eventKey === "w" || eventKey === "ArrowUp" ) ? DirectionEnum.up : DirectionEnum.down )
+    }
+    if ( eventKey === " " ) {
+        const result = bubble.handleSelectionButton();
+        destroyElevatorBubble();
+        if ( result !== undefined ) {
+            switchMap( result, PlayerMapEntry.door );
+        }
+    }
+}
 export const handleMovementKeys = () => {
     const player = getPlayer();
 

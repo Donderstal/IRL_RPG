@@ -4,12 +4,15 @@ import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
 import { getSpeechBubbleGrid } from "../canvas/canvasGetter";
 import { Emote } from "../cutscenes/Emote";
+import { SelectionBubble } from "../cutscenes/SelectionBubble";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
+import { getActiveMapKey } from "../neighbourhoodModule";
 import { playEffect, playSpeakingEffect } from "../sound/sound";
 
 let mainBubble: SpeechBubble = null;
 let titleBubble: SpeechBubble = null;
 let subtitleBubble: SpeechBubble = null;
+let elevatorBubble: SelectionBubble = null;
 
 let emoteIds: string[] = [];
 let emotes: { [key: string]: Emote } = {};
@@ -30,7 +33,7 @@ export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: Scen
         setBubbleContents( contents, type );
     }
     else {
-        mainBubble = new SpeechBubble( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo );
+        mainBubble = new SpeechBubble( contents.text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, contents.spriteName );
     }
 
     playSpeakingEffect( sfx );
@@ -41,13 +44,22 @@ export const setNewEmote = ( location, imageSrc ): void => {
     emoteIds.push( id );
     setTimeout( () => { unsetEmote( id ) }, 1000 )
 };
-export const setNewSubtitleBubble = ( contents ): void => {
-    subtitleBubble = new SpeechBubble( contents, TextBubbleType.Subtitle );
+export const setNewSubtitleBubble = ( text: string ): void => {
+    subtitleBubble = new SpeechBubble( text, TextBubbleType.Subtitle );
     subtitleBubble.setMoveToY( subtitleBubble.y - subtitleBubble.height );
 };
 export const setNewCenterBubble = ( text: string ) => {
-    titleBubble = new SpeechBubble( { text: text } as SpeakScene, TextBubbleType.Center );
+    titleBubble = new SpeechBubble( text, TextBubbleType.Center );
     setTimeout( () => { titleBubble = null }, 5000 )
+};
+export const setElevatorBubble = ( floors: { [key in string]: string } ): void => {
+    elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', [Object.keys( floors ).find( k => floors[k] === getActiveMapKey() )] );
+}
+export const hasActiveSelectionBubble = (): boolean => {
+    return elevatorBubble !== null;
+}
+export const getElevatorBubble = (): SelectionBubble => {
+    return elevatorBubble;
 }
 
 export const clearSubtitleBubble = (): void => {
@@ -74,7 +86,7 @@ export const clearActiveBubbles = (): void => {
     mainBubble = null;
 };
 export const setBubbleContents = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType ): void => {
-    mainBubble.setContents( contents, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo )
+    mainBubble.setContents( contents.text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, contents.spriteName )
 }
 
 export const clearActiveText = (): void => {
@@ -83,6 +95,9 @@ export const clearActiveText = (): void => {
 export const clearActiveEmotes = (): void => {
     emotes = {};
     emoteIds = [];
+}
+export const destroyElevatorBubble = (): void => {
+    elevatorBubble = null;
 }
 export const drawBubbles = (): void => {
     const canvas = getSpeechBubbleGrid().canvas;
@@ -98,5 +113,8 @@ export const drawBubbles = (): void => {
     }
     if ( mainBubble !== null ) {
         mainBubble.draw( context );
+    }
+    if ( elevatorBubble !== null ) {
+        elevatorBubble.draw( context );
     }
 };

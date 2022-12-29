@@ -1,13 +1,13 @@
 import { BATTLE_FONT_SIZE } from '../../game-data/globals';
 import { writeTextLine, setFont } from '../../helpers/canvasHelpers';
-import { GRID_BLOCK_PX, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, LARGE_FONT_SIZE, SMALL_FONT_SIZE, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT } from '../../game-data/globals';
+import { GRID_BLOCK_PX, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, LARGE_FONT_SIZE, LARGE_FONT_LINE_HEIGHT } from '../../game-data/globals';
 import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED } from '../../game-data/textboxGlobals';
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { TypeWriter, TypeWriterWord } from "../../helpers/TypeWriter";
-import type { SpeakScene, SpeakYesNoScene } from '../../models/SceneAnimationModel';
 import { TextBubbleType } from '../../enumerables/TextBubbleType';
-import { getSpeechBubbleDimensions, getSpeechBubbleTemplateCanvas, getSpeechBubbleXy } from '../../helpers/speechBubbleHelpers';
+import { getSpeechBubbleDimensions, getSpeechBubbleXy } from '../../helpers/speechBubbleHelpers';
 import { getUiImage } from '../../assets/ui';
+import { TextBubbleBase } from './TextBubbleBase';
 
 type PhraseModel = {
     x: number;
@@ -17,7 +17,7 @@ type PhraseModel = {
     phrase: string;
 }
 
-export class SpeechBubble {
+export class SpeechBubble extends TextBubbleBase {
     x: number;
     y: number;
     width: number;
@@ -44,19 +44,14 @@ export class SpeechBubble {
     moving: boolean;
     destinationY: number;
     read: boolean;
-    constructor( contentModel: SpeakScene | SpeakYesNoScene, type: TextBubbleType ) {
+    constructor( text: string, type: TextBubbleType, textSpeaker: string = null ) {
         const dimensions = getSpeechBubbleDimensions( type );
         const xy = getSpeechBubbleXy( type );
-
-        this.x              = xy.x;
-        this.y              = xy.y;
-
-        this.width          = dimensions.width;
-        this.height         = dimensions.height;
+        super( xy.x, xy.y, dimensions.width, dimensions.height )
 
         this.wroteLastFrame = false;
 
-        this.setContents( contentModel, type );
+        this.setContents( text, type, textSpeaker );
     }
     set text( text: any ) {             
         this.typeWriter = new TypeWriter( text );
@@ -65,18 +60,15 @@ export class SpeechBubble {
         return this.typeWriter.activeText;
     }
 
-    get textX() { return this.x + BUBBLE_INNER_PADDING; };
-    get headerY() { return this.y + ( (this.type === TextBubbleType.Speak || this.type == TextBubbleType.SpeakYesNo) ? SMALL_FONT_LINE_HEIGHT : 0 ); }
-    get textY() { return this.headerY + LARGE_FONT_LINE_HEIGHT };
     get destinationYIsUp() { return this.y > this.destinationY; };
 
-    setContents( contentModel: SpeakScene | SpeakYesNoScene, type: TextBubbleType ) {
+    setContents( text: string, type: TextBubbleType, textSpeaker: string = null ) {
         this.read = false;
-        this.type = type;
-        this.fullText = contentModel.text;
-        this.text = contentModel.text;
-        if ( contentModel.spriteName ) {
-            this.setHeader( contentModel.spriteName + ": " )
+        this.setType( type );
+        this.fullText = text;
+        this.text = text;
+        if ( textSpeaker !== null ) {
+            this.setHeader( textSpeaker + ": " )
         } 
         if ( this.type === TextBubbleType.SpeakYesNo ) {
             this.bubbleY = ( this.y + this.height ) - GRID_BLOCK_PX;
@@ -91,19 +83,14 @@ export class SpeechBubble {
         this.read = true;
     }
 
-    writeHeader( activeContext: OffscreenCanvasRenderingContext2D ): void {
-        writeTextLine( 
-            this.headerText, this.textX, this.headerY, SMALL_FONT_SIZE, activeContext
-        );
-    }
-
     setHeader( text: string ): void {
         this.hasHeader  = true;
         this.headerText = text;
     }
 
     draw( context: OffscreenCanvasRenderingContext2D ): void {
-        this.copyBubbleToGameCanvas( context );
+        super.draw( context );
+
         if ( this.typeWriter.isWriting ) {
             if ( !this.wroteLastFrame ) {
                 this.typeWriter.write();
@@ -112,9 +99,6 @@ export class SpeechBubble {
             else {
                 this.wroteLastFrame = false;
             }
-        }
-        if ( this.hasHeader ) {
-            this.writeHeader( context );
         }
         if ( this.type === TextBubbleType.Center ) {
             this.writeCenterText( context )
@@ -246,14 +230,6 @@ export class SpeechBubble {
             GRID_BLOCK_IN_SHEET_PX, GRID_BLOCK_IN_SHEET_PX,
             this.noBubbleX, this.bubbleY,
             GRID_BLOCK_PX, GRID_BLOCK_PX
-        );
-    }
-
-    copyBubbleToGameCanvas( activeContext: OffscreenCanvasRenderingContext2D ): void {
-        activeContext.drawImage(
-            getSpeechBubbleTemplateCanvas(this.type),
-            this.x,
-            this.y
         );
     }
 
