@@ -1,4 +1,8 @@
 ### 
+#### JAN 9, 2023
+* Added mechanic for making exceptions to blocked tile rules
+* Adding some new maps, sprites
+
 #### DEC 29, 2022
 * Added SelectionBubble class for in-game choices
 * Split TextBubbleBase from Speechbubble
