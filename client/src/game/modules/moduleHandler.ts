@@ -106,6 +106,7 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ) => {
     }
     else {
         const destination = getRandomDestination( sprite );
+        if ( destination == null ) return;
         tryInitializeSpriteMovement( sprite, destination );
     }
 }

@@ -8,12 +8,18 @@ import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { initializeActionForTile, initializeSavePoint, initializeElevator } from '../modules/actions/actionSetter';
 import type { GridCellModel } from '../../models/GridCellModel';
 import type { ElevatorModel } from '../../models/ElevatorModel';
+import type { CellPosition } from '../../models/CellPositionModel';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
     mapName: string;
     neighbourhood: string;
     blockedTiles: number[];
+
+    mapSpecificBlockedTiles: number[];
+    mapSpecificUnblockedTiles: number[];
+
+    unblockedCells: CellPosition[];
     constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
     };
@@ -34,19 +40,25 @@ export class BackTileGrid extends CanvasGrid {
     }
 
     setDoors( doors: DoorModel[] ): void {
+        this.unblockedCells = [];
         doors.forEach( ( door ) => {
             const tile = this.getTileAtCell( door.column, door.row );
+            this.unblockedCells.push( { 'column': door.column, 'row': door.row }  )
             initializeDoorForTile( tile, door );
         } )
     }
 
     setBlockedTiles( blockedTileIndexes: number[] ): void {
-        this.grid.array.forEach(
-            ( tile ) => {
-                if ( blockedTileIndexes.indexOf( tile.model.id ) > - 1 )
-                    tile.blocked = true;
+        let blockedIndexes = blockedTileIndexes.filter( ( e ) => { return this.mapSpecificUnblockedTiles.indexOf( e ) === -1; } )
+        blockedIndexes = [...blockedIndexes, ...this.mapSpecificBlockedTiles];
+        this.grid.array.forEach( ( tile ) => {
+            if ( blockedIndexes.indexOf( tile.model.id ) > - 1 ) {
+                tile.blocked = true;
             }
-        )
+            if ( this.unblockedCells.filter( ( e ) => { return e.column === tile.column && e.row === tile.row; } ).length > 0 ) {
+                tile.blocked = false;
+            }
+        } );
     }
 
     setBackgroundData( mapModel: MapModel, sheetModel: TilesheetModel ): void {
@@ -54,6 +66,11 @@ export class BackTileGrid extends CanvasGrid {
         this.sheetModel = sheetModel;
         let oneDimensionalMapGrid = this.model.grid.flat( 1 );
         this.setTileGrid( oneDimensionalMapGrid );
+
+        if ( this.model.blockedTileIds )
+            this.mapSpecificBlockedTiles = [...this.model.blockedTileIds];
+        if ( this.model.unblockedTileIds )
+            this.mapSpecificUnblockedTiles = [...this.model.unblockedTileIds];
 
         if ( this.model.doors )
             this.setDoors( this.model.doors );

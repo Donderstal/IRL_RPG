@@ -35,8 +35,17 @@ export const LH_CAR_SHACK_NAME = "The Car Shack";
 export const LH_CAR_SHACK_KEY = appendToNeighbourhoodKey( "Car-Shack" )
 
 export const LH_SARDINE_STUDIOS_NAME = "Sardine Studios";
+// Sardine ground floor
 export const LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-bottom" );
 export const LH_SARDINE_STUDIOS_COMMON_AREA_KEY = appendToNeighbourhoodKey( "Sardine-Studios-common-area" );
+
+// Sardine floor 1
 export const LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-floor1" );
+export const LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY = appendToNeighbourhoodKey( "Sardine-Studios-floor1-hall" );
+export const LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY = appendToNeighbourhoodKey( "Sardine-Studios-floor1-app1" );
+export const LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY = appendToNeighbourhoodKey( "Sardine-Studios-floor1-app2" );
+export const LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY = appendToNeighbourhoodKey( "Sardine-Studios-floor1-app3" );
+
+// Sardine floor 2
 export const LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-floor2" );
 export const LH_SARDINE_STUDIOS_STAIRS_TOP_KEY = appendToNeighbourhoodKey( "Sardine-Studios-stairs-top" );

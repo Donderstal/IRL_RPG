@@ -33,4 +33,7 @@ export type MapModel = {
     elevators?: ElevatorModel[];
 
     savepoint?: any;
+
+    blockedTileIds?: number[];
+    unblockedTileIds?: number[];
 }

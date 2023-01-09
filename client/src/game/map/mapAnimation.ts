@@ -37,7 +37,7 @@ export const handleMapAnimations = (): void => {
     drawSpritesInOrder( )
     
     handleRoadNetworkFuncs()
-    handleNpcCounter()
+    //handleNpcCounter()
 
     if ( getPlayer() != undefined && !inPausedGameState() && !hasActiveSelectionBubble() ) {
         handleMovementKeys( );  

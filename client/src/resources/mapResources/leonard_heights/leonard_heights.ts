@@ -1,3 +1,26 @@
+import { INTERACTION_RANDOM_ENCOUNTER_1, INTERACTION_RANDOM_ENCOUNTER_2, INTERACTION_RANDOM_ENCOUNTER_3, INTERACTION_RANDOM_ENCOUNTER_4, INTERACTION_RANDOM_ENCOUNTER_5, INTERACTION_RANDOM_ENCOUNTER_6 } from '../../interactionResources';
+import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
+import { DirectionEnum } from '../../../enumerables/DirectionEnum';
+import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
+import {
+    LH_CAR_SHACK_KEY,
+    LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY,
+    LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
+    LH_KEY, LH_NAME,
+    LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY,
+    LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
+    LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
+    LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY,
+    removeNeighbourhoodKey,
+    LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
+    LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY,
+    LH_SARDINE_STUDIOS_STAIRS_TOP_KEY,
+    LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY,
+    LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY,
+    LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY,
+    LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY
+} from './leonard_heights_res';
+
 import A1 from './A1/A1';
 import A2 from './A2/A2';
 import A3 from './A3/A3';
@@ -35,29 +58,15 @@ import TwoTowersLobby from './A3/Hotel-Two-Towers/Two-Towers-Lobby';
 
 import CarShack from './C3/Car-Shack/car-shack';
 
-import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
-import { DirectionEnum } from '../../../enumerables/DirectionEnum';
-import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
-import {
-    LH_CAR_SHACK_KEY,
-    LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_TOILETS_KEY,
-    LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
-    LH_KEY, LH_NAME,
-    LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY,
-    LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
-    LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
-    LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY,
-    removeNeighbourhoodKey,
-    LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
-    LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY,
-    LH_SARDINE_STUDIOS_STAIRS_TOP_KEY
-} from './leonard_heights_res';
 import SardineStudiosStairsBottom from './D2/Sardine-Studios/Sardine-Studios-stairs-bottom';
 import SardineStudiosCommunalSpace from './D2/Sardine-Studios/Sardine-Studios-communal-space';
 import SardineStudiosStairsFloor1 from './D2/Sardine-Studios/Sardine-studios-stairs-floor-1';
+import SardineStudiosFloor1Hall from './D2/Sardine-Studios/Sardine-Studios-floor1-hall';
+import SardineStudiosFloor1App1 from './D2/Sardine-Studios/Sardine-Studios-floor1-app1';
+import SardineStudiosFloor1App2 from './D2/Sardine-Studios/Sardine-Studios-floor1-app2';
+import SardineStudiosFloor1App3 from './D2/Sardine-Studios/Sardine-Studios-floor1-app3';
 import SardineStudioStairsFloor2 from './D2/Sardine-Studios/Sardine-Studio-stairs-floor-2';
 import SardineStudioStairsTop from './D2/Sardine-Studios/Sardine-Studio-stairs-top';
-import { INTERACTION_RANDOM_ENCOUNTER_1, INTERACTION_RANDOM_ENCOUNTER_2, INTERACTION_RANDOM_ENCOUNTER_3, INTERACTION_RANDOM_ENCOUNTER_4, INTERACTION_RANDOM_ENCOUNTER_5, INTERACTION_RANDOM_ENCOUNTER_6 } from '../../interactionResources';
 
 export default {
     "key": LH_KEY,
@@ -132,8 +141,13 @@ export default {
         // Sardine Studios
         [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY )]: SardineStudiosStairsBottom,
         [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_COMMON_AREA_KEY )]: SardineStudiosCommunalSpace,
-
+        /// Sardine f1
         [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY )]: SardineStudiosStairsFloor1,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY )]: SardineStudiosFloor1Hall,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY )]: SardineStudiosFloor1App1,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY )]: SardineStudiosFloor1App2,
+        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY )]: SardineStudiosFloor1App3,
+
         [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY )]: SardineStudioStairsFloor2,
         [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_TOP_KEY )]: SardineStudioStairsTop
     },
@@ -422,8 +436,4 @@ export default {
             "secondaryColumn": 38
         },
     ],
-}
-
-function LH_SARDINE_STUDIOS_STAIRS_BOTTOM(LH_SARDINE_STUDIOS_STAIRS_BOTTOM: any) {
-    throw new Error('Function not implemented.');
 }

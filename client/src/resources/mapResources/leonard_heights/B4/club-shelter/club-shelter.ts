@@ -3695,5 +3695,6 @@ export default {
 			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
 			"direction": DirectionEnum.down,
 		}
-	]
+	],
+	"unblockedTileIds": [ 27 ]
 }

@@ -38,6 +38,10 @@ export const initMapModel = ( mapData ): MapModel => {
             ? { "column": mapData.savepoint.column, "row": mapData.savepoint.row }
             : null,
         elevators: mapData.elevators ? mapData.elevators : [],
+
+        unblockedTileIds: mapData.unblockedTileIds != undefined ? mapData.unblockedTileIds : [],
+        blockedTileIds: mapData.blockedTileIds != undefined ? mapData.blockedTileIds : [],
+
         playerStart: mapData.playerStart
     };
     return mapModel;
