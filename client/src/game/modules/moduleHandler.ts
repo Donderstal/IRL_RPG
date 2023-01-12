@@ -32,7 +32,7 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 		if ( moduleIsRunningForSprite( id, SpriteModuleEnum.door ) ) {
 			updateSpriteAssociatedDoor( sprite )
 		}
-		else if ( moduleIsRunningForSprite( id, SpriteModuleEnum.animation ) ) {
+		else if ( moduleIsRunningForSprite( id, SpriteModuleEnum.mapAction ) ) {
 			updateSpriteAssociatedAction( sprite )
 		}
 		else {

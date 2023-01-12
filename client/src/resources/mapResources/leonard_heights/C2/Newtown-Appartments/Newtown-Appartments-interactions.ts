@@ -25,7 +25,7 @@ const CINSCRIPT_BODYGUARD: CinematicModel = [
 ];
 
 export const C1_INTERACTION_BODYGUARD = [
-    getDefaultTalkInteraction( CINSCRIPT_BODYGUARD, getDefaultCondition() )
+    getRegistryTalkInteraction( CINSCRIPT_BODYGUARD, getDefaultCondition(), "BRO" )
 ];
 
 const CINSCRIPT_NEIGHBOUR_1: CinematicModel = [

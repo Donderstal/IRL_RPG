@@ -1,5 +1,6 @@
+import { dir } from "console";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import { ANIM_BACK_AND_FORTH, ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_BACK_AND_FORTH_STEP, ANIM_BACK_AND_FORTH_STEP_POSITIONAL, ANIM_BLINK, ANIM_BOP, ANIM_BREATHE, ANIM_CAST, ANIM_COLLECTABLE_IDLE, ANIM_COLLECTABLE_IDLE_LONG, ANIM_HACK, ANIM_LEFT_AND_RIGHT, ANIM_LEFT_AND_RIGHT_STEP, ANIM_LIFT, ANIM_POWER_UP, ANIM_PUNCH, ANIM_SELECTION, ANIM_SIGN_IDLE_HORI, ANIM_SIGN_IDLE_HORI_LONG, ANIM_SIGN_IDLE_VERT, ANIM_SIGN_IDLE_VERT_LONG, ANIM_SPRITE_HIT, ANIM_TALK, ANIM_TURN_CIRCLE, ANIM_TURN_CIRCLE_POSITIONAL, DIRECTIONAL_ANIMS, POSITIONAL_ANIMS } from "../game-data/animationGlobals";
+import { ANIM_BACK_AND_FORTH, ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_BACK_AND_FORTH_STEP, ANIM_BACK_AND_FORTH_STEP_POSITIONAL, ANIM_BLINK, ANIM_BOP, ANIM_BREATHE, ANIM_CAST, ANIM_COLLECTABLE_IDLE, ANIM_COLLECTABLE_IDLE_LONG, ANIM_FLAP_WINGS_POSITIONAL, ANIM_HACK, ANIM_LEFT_AND_RIGHT, ANIM_LEFT_AND_RIGHT_STEP, ANIM_LIFT, ANIM_POWER_UP, ANIM_PUNCH, ANIM_SELECTION, ANIM_SIGN_IDLE_HORI, ANIM_SIGN_IDLE_HORI_LONG, ANIM_SIGN_IDLE_VERT, ANIM_SIGN_IDLE_VERT_LONG, ANIM_SPRITE_HIT, ANIM_TALK, ANIM_TURN_CIRCLE, ANIM_TURN_CIRCLE_POSITIONAL, DIRECTIONAL_ANIMS, POSITIONAL_ANIMS } from "../game-data/animationGlobals";
 import { getOppositeDirection } from "../helpers/utilFunctions";
 import type { SpriteAnimationModel } from "../models/SpriteAnimationModel";
 import type { SpriteFrameModel } from "../models/SpriteFrameModel";
@@ -49,15 +50,17 @@ const getDirectionalAnimation = ( animationKey: string, direction: DirectionEnum
 const getPositionalAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
     switch ( animationKey ) {
         case ANIM_TURN_CIRCLE_POSITIONAL:
-            return getTurnCircleAnimation( animationKey, direction );
+            return getTurnCircleAnimation( direction );
         case ANIM_BACK_AND_FORTH_POSITIONAL:
-            return getTurnAnimation( animationKey, direction );
+            return getTurnAnimation( direction );
         case ANIM_BACK_AND_FORTH_STEP_POSITIONAL:
-            return getTurnStepAnimation( animationKey, direction );
+            return getTurnStepAnimation( direction );
+        case ANIM_FLAP_WINGS_POSITIONAL:
+            return getFlapWingsAnimation( direction );
     }
 }
 
-const getTurnCircleAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
+const getTurnCircleAnimation = ( direction: DirectionEnum ): { row: number, column: number }[] => {
     const standardOrder = [0, 1, 3, 2];
     const length = standardOrder.length
     const startIndex = standardOrder.indexOf( direction );
@@ -65,7 +68,7 @@ const getTurnCircleAnimation = ( animationKey: string, direction: DirectionEnum 
     return order.map( ( e ) => { return {row: e, column: 0} })
 }
 
-const getTurnAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
+const getTurnAnimation = ( direction: DirectionEnum ): { row: number, column: number }[] => {
     const opposite = getOppositeDirection( direction );
     return [
         { row: opposite, column: 0 },
@@ -73,13 +76,23 @@ const getTurnAnimation = ( animationKey: string, direction: DirectionEnum ): { r
     ]
 }
 
-const getTurnStepAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
+const getTurnStepAnimation = ( direction: DirectionEnum ): { row: number, column: number }[] => {
     const opposite = getOppositeDirection( direction );
     return [
         { row: opposite, column: 0 },
         { row: opposite, column: 1 },
         { row: direction, column: 0 },
         { row: direction, column: 1 }
+    ]
+}
+
+const getFlapWingsAnimation = ( direction: DirectionEnum ): { row: number, column: number }[] => {
+    const frameRow = direction === 0 ? 7 : direction === 1 ? 4 : direction === 2 ? 5 : 6;
+    return [
+        { row: frameRow, column: 0 },
+        { row: frameRow, column: 1 },
+        { row: frameRow, column: 0 },
+        { row: frameRow, column: 1 }
     ]
 }
 

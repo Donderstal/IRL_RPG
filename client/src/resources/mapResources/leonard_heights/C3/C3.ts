@@ -3,9 +3,11 @@ import { FRONT_GRID_LEONARD_C3 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { MovementType } from '../../../../enumerables/MovementTypeEnum';
-import { PIGEON } from '../../../spriteTypeResources';
+import { PIGEON, POLICE_ROBOT } from '../../../spriteTypeResources';
 import { LH_CAR_SHACK_KEY } from '../leonard_heights_res';
 import { DOORKEY_CAR_SHACK_FRONT_DOOR } from './C3-door-keys';
+import { getInteractionRegisteredCondition } from '../../../conditionFactory';
+import { IKEY_CAR_SHACK_3 } from '../../../../game-data/interactionGlobals';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -104,9 +106,12 @@ export default {
             "column": 16
         },
         {
-            "type": "boxes",
-            "row": 9,
-            "column": 22
+            "condition": getInteractionRegisteredCondition( IKEY_CAR_SHACK_3 ),
+            "type": POLICE_ROBOT,
+            "row": 8,
+            "column": 19,
+            "direction": 3,
+            "anim_type": AnimationTypeEnum.idle
         }
     ],
     "actions": [

@@ -1,4 +1,4 @@
-import type { TextBubbleType } from "../../enumerables/TextBubbleType";
+import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import { BUBBLE_INNER_PADDING, LARGE_FONT_LINE_HEIGHT, SMALL_FONT_LINE_HEIGHT, SMALL_FONT_SIZE } from "../../game-data/globals";
 import { writeTextLine } from "../../helpers/canvasHelpers";
 import { getSpeechBubbleTemplateCanvas } from "../../helpers/speechBubbleHelpers";
@@ -18,11 +18,12 @@ export class TextBubbleBase {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.hasHeader = false;
     }
 
     get textX() { return this.x + BUBBLE_INNER_PADDING; };
     get headerY() { return this.y + SMALL_FONT_LINE_HEIGHT; }
-    get textY() { return this.headerY + LARGE_FONT_LINE_HEIGHT };
+    get textY() { return ( ( this.hasHeader || ( this.type === TextBubbleType.Speak || this.type === TextBubbleType.SpeakYesNo ) ) ? this.headerY : this.y ) + LARGE_FONT_LINE_HEIGHT };
 
     setType( type: TextBubbleType ): void {
         this.type = type;

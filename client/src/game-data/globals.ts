@@ -28,7 +28,7 @@ export const CANVAS_WIDTH                  = GRID_BLOCK_PX * (CANVAS_COLUMNS);
 export const CANVAS_HEIGHT                 = GRID_BLOCK_PX * (CANVAS_ROWS);
 
 export const BUBBLE_CANVAS_WIDTH           = mobileAgent ? 12 * GRID_BLOCK_PX : CANVAS_WIDTH;
-export const BUBBLE_CANVAS_HEIGHT          = mobileAgent ? 8 * GRID_BLOCK_PX : CANVAS_HEIGHT;
+export const BUBBLE_CANVAS_HEIGHT          = mobileAgent ? 8 * GRID_BLOCK_PX : screen.height;
 
 // sheet dimensions
 export const MAP_SPRITE_WIDTH_IN_SHEET     = 64
@@ -39,9 +39,9 @@ export const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( mobileAgent ? .33
 export const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 
 // canvas font sizes
-export const SMALL_FONT_SIZE               = mobileAgent ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 4.5;
-export const LARGE_FONT_SIZE               = mobileAgent ? GRID_BLOCK_PX / 2.5 : GRID_BLOCK_PX / 3.5;
-export const BATTLE_FONT_SIZE              = mobileAgent ? GRID_BLOCK_PX / 2 : GRID_BLOCK_PX / 2.5;
+export const SMALL_FONT_SIZE = mobileAgent ? GRID_BLOCK_PX / 3.5 : GRID_BLOCK_PX / 4.5;
+export const LARGE_FONT_SIZE = mobileAgent ? GRID_BLOCK_PX / 3 : GRID_BLOCK_PX / 3.5;
+export const BATTLE_FONT_SIZE = GRID_BLOCK_PX / 2.5;
 
 // in-game textbox color and opacity
 export const INNER_TEXTBOX_RGBA            = "rgb(0, 56, 77)";

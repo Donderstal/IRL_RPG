@@ -31,6 +31,7 @@ export const DARK_HAIR_NERD_LADY = "DARK HAIR NERD LADY";
 export const MAIN_CHARACTER = "MAIN CHARACTER";
 
 export const CAR_MECHANIC = "CAR MECHANIC"
+export const CAR_SHACK_BOSS = "CAR SHACK BOSS"
 
 export const POLICE_MAN_1 = "POLICE MAN 1";
 export const POLICE_MAN_2 = "POLICE MAN 2";

@@ -10,7 +10,15 @@ export const sheets = {
         "uniqueTiles": 40,
         "name": "Yum interior new",
         "key": "Yum_Mart",
-        "blocked": []
+        "blocked": [0, 1, 2, 3]
+    },
+    "bar-interior": {
+        "folder": "BI",
+        "src": "bar-interior",
+        "uniqueTiles": 20,
+        "name": "Bar interior",
+        "key": "bar-interior",
+        "blocked": [ 0, 1, 2, 3 ]
     },
     "downtown_2": {
         "folder": "DT",

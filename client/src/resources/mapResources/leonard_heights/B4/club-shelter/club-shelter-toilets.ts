@@ -38,12 +38,12 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 2,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 2,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -98,12 +98,12 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -158,12 +158,12 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 8,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 10,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -218,82 +218,12 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": "E",
+			"id": 8,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": "E",
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 11,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 10,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 10,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 11,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 10,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": "E",
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": "E",
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
+			"id": 8,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -308,51 +238,6 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": 10,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 10,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": "E",
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": "E",
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 9,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
 			"id": 9,
 			"angle": 0,
 			"mirrored": false
@@ -368,7 +253,122 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 12,
 			"angle": 0,
 			"mirrored": false
 		}
@@ -737,117 +737,216 @@ export default {
 	],
 	"sprites": [
 		{
-			"anim_type": AnimationTypeEnum.idle,
-			"direction": DirectionEnum.up,
-			"type": BLONDE_BEER_BELLY_GUY,
-			"row": 2,
-			"column": 10
-		},
-		{
-			"anim_type": AnimationTypeEnum.idle,
-			"direction": DirectionEnum.up,
-			"type": TOUGH_GUY,
-			"row": 2,
-			"column": 12
-		},
-		{
-			"anim_type": AnimationTypeEnum.idle,
-			"direction": DirectionEnum.left,
-			"type": YELLOW_SHIRT_LADY,
-			"row": 2,
-			"column": 5
-		},
-		{
-			"type": "wall_thing_c",
-			"row": 2,
-			"column": 1
-		},
-		{
 			"type": "trash_2",
+			"column": 11,
 			"row": 6,
-			"column": 11
-		},
-		{
-			"type": "plant_yo",
-			"row": 4,
-			"column": 5
-		},
-		{
-			"type": "trash_1",
-			"row": 4,
-			"column": 1
+			"direction": 0
 		},
 		{
 			"type": "funz",
+			"column": 3,
 			"row": 1,
-			"column": 3
+			"direction": 0
 		},
 		{
 			"type": "can_orange_1",
+			"column": 2,
 			"row": 6,
-			"column": 2
-		},
-		{
-			"type": "wall_thing_b",
-			"row": 3,
-			"column": 12
-		},
-		{
-			"type": "wall_thing_c",
-			"row": 2,
-			"column": 9
-		},
-		{
-			"type": "wall_thing",
-			"row": 3,
-			"column": 9
-		},
-		{
-			"type": "trash_4",
-			"row": 3,
-			"column": 8
-		},
-		{
-			"type": "yellow_stand",
-			"row": 4,
-			"column": 4
-		},
-		{
-			"type": "door_interior_east_blue",
-			"row": 5,
-			"column": 1
+			"direction": 0
 		},
 		{
 			"type": "door_interior_west_blue",
-			"row": 5,
-			"column": 12
+			"column": 12,
+			"row": 6,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_c",
+			"column": 6,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "urinal_right",
+			"column": 5,
+			"row": 3,
+			"direction": 0
+		},
+		{
+			"type": "urinal_left",
+			"column": 1,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "urinal_left",
+			"column": 1,
+			"row": 3,
+			"direction": 0
+		},
+		{
+			"type": "BLONDE BEER BELLY GUY",
+			"column": 2,
+			"row": 2,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "PINK HAIRED FAT GUY",
+			"column": 4,
+			"row": 2,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
 		},
 		{
 			"type": "wall_thing",
+			"column": 4,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing",
+			"column": 1,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_b",
+			"column": 6,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_c",
+			"column": 6,
 			"row": 3,
-			"column": 4
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_c",
+			"column": 8,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_c",
+			"column": 8,
+			"row": 3,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_b",
+			"column": 8,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_b",
+			"column": 10,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_b",
+			"column": 12,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_c",
+			"column": 10,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "wall_thing_c",
+			"column": 10,
+			"row": 3,
+			"direction": 0
+		},
+		{
+			"type": "toilet",
+			"column": 9,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "toilet",
+			"column": 11,
+			"row": 2,
+			"direction": 0
 		},
 		{
 			"type": "door_interior_south_blue",
-			"row": 3,
-			"column": 3
+			"column": 9,
+			"row": 4,
+			"direction": 0
 		},
 		{
-			"type": "wall_thing",
+			"type": "door_interior_east_blue",
+			"column": 10,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "door_interior_east_blue",
+			"column": 11,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "YELLOW SHIRT LADY",
+			"column": 11,
 			"row": 3,
-			"column": 1
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "door_interior_south_blue",
+			"column": 7,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "urinal_right",
+			"column": 5,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "water_puddle",
+			"column": 7,
+			"row": 3,
+			"direction": 0
+		},
+		{
+			"type": "toilet",
+			"column": 7,
+			"row": 2,
+			"direction": 0
 		},
 		{
 			"type": "collectable_juice_can",
-			"row": 2,
-			"column": 8
+			"column": 2,
+			"row": 3,
+			"direction": 0
+		},
+		{
+			"type": "banana",
+			"column": 9,
+			"row": 5,
+			"direction": 0
 		}
 	],
-	"frontSprites": [],
+	"frontSprites": [
+
+	],
+	"spawnPoints": [],
+	"roads": [],
 	"doors": [
 		{
 			"id": DOORKEY_CLUBSHELTER_TOILET_DOOR,
-			"row": 5,
+			"row": 6,
 			"column": 12,
 			"doorTo": LH_CLUB_SHELTER_KEY,
 			"direction": DirectionEnum.right,

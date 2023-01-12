@@ -2,7 +2,7 @@ import { ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_POWER_UP, ANIM_TURN_CIRCLE_POSITIO
 import { PLAYER_NAME } from "../game-data/interactionGlobals";
 import { EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED } from "../game-data/textboxGlobals";
 import type { CinematicModel } from "../models/CinematicModel";
-import { getAnimateSpriteScene, getDeleteSpriteScene, getEmoteScene, getSpeakScene, getSpeakYesNoScene } from "./cinematicFactory";
+import { getAnimateSpriteScene, getDeleteSpriteScene, getEmoteScene, getSpeakScene, getSpeakYesNoScene, getWaitScene } from "./cinematicFactory";
 
 // Random encounters
 export const CINSCRIPT_RANDOM_ENCOUNTER_1: CinematicModel = [
@@ -79,5 +79,5 @@ export const CINSCRIPT_COLLECT_CAN: CinematicModel = [
     [getDeleteSpriteScene( null, true, "misc/random5.wav" )]
 ];
 export const CINSCRIPT_ELEVATOR: CinematicModel = [
-    [getSpeakYesNoScene( "Use the elevator?", null, null, null, PLAYER_NAME )]
+    [getWaitScene(1)]
 ];

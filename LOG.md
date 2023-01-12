@@ -1,4 +1,9 @@
 ### 
+#### JAN 12, 2023
+* Updated maps, resources, sprites
+* Added new tryout questlines
+* Some minor bugfixes
+
 #### JAN 9, 2023
 * Added mechanic for making exceptions to blocked tile rules
 * Adding some new maps, sprites

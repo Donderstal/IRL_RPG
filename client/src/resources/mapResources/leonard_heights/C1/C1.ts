@@ -3,6 +3,7 @@ import { FRONT_GRID_LEONARD_C1 } from './frontgrid';
 import { LOST_KEYS_INTERACTION } from './C1-interactions';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { getInteractionNotRegisteredCondition } from '../../../conditionFactory';
+import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C1,
@@ -97,7 +98,239 @@ export default {
             "type": "vent_1",
             "row": 16,
             "column": 18
-        }
+        },
+        {
+			"type": "car_police",
+			"column": 13,
+			"row": 3,
+			"direction": 3
+		},
+		{
+			"type": "POLICE MAN 1",
+			"column": 9,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2",
+			"column": 10,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1",
+			"column": 11,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1 VISOR",
+			"column": 12,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2 VISOR",
+			"column": 13,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1 VISOR",
+			"column": 14,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE ROBOT",
+			"column": 15,
+			"row": 6,
+			"direction": 0,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE ROBOT",
+			"column": 15,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1 VISOR",
+			"column": 14,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2 VISOR",
+			"column": 13,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1 VISOR",
+			"column": 12,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1",
+			"column": 11,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2",
+			"column": 10,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1",
+			"column": 9,
+			"row": 7,
+			"direction": 2,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1",
+			"column": 9,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2",
+			"column": 10,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1",
+			"column": 11,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1 VISOR",
+			"column": 12,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2 VISOR",
+			"column": 13,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1 VISOR",
+			"column": 14,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE ROBOT",
+			"column": 15,
+			"row": 8,
+			"direction": 1,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE ROBOT",
+			"column": 15,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1 VISOR",
+			"column": 14,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2 VISOR",
+			"column": 13,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1 VISOR",
+			"column": 12,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE WOMAN 1",
+			"column": 11,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 2",
+			"column": 10,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "POLICE MAN 1",
+			"column": 9,
+			"row": 9,
+			"direction": 3,
+			"anim_type": AnimationTypeEnum.idle
+		},
+		{
+			"type": "car_police",
+			"column": 11,
+			"row": 3,
+			"direction": 3
+		},
+		{
+			"type": "car_police",
+			"column": 2,
+			"row": 14,
+			"direction": 1
+		},
+		{
+			"type": "car_police",
+			"column": 20,
+			"row": 3,
+			"direction": 2
+		},
+		{
+			"type": "car_police",
+			"column": 19,
+			"row": 12,
+			"direction": 0
+		},
+		{
+			"type": "car_police",
+			"column": 17,
+			"row": 12,
+			"direction": 0
+		}
     ],
     "actions": [
 

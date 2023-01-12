@@ -1,8 +1,10 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { FAT_BUFF_GUY, ROBOT, SUPERMARKET_MANAGER } from "../../../../spriteTypeResources";
+import { CHARNAME_CAR_SHACK_BOSS, CHARNAME_CAR_SHACK_MECHANIC } from "../../../../../game-data/interactionGlobals";
+import { CAR_MECHANIC, CAR_SHACK_BOSS, FAT_BUFF_GUY, ROBOT, SUPERMARKET_MANAGER } from "../../../../spriteTypeResources";
 import { LH_CAR_SHACK_KEY, LH_CAR_SHACK_NAME, LH_MAP_KEY } from "../../leonard_heights_res";
 import { DOORKEY_CAR_SHACK_FRONT_DOOR } from "../C3-door-keys";
+import { C3_INTERACTION_CAR_SHACK_BOSS, C3_INTERACTION_CAR_SHACK_MECHANIC } from "./car-shack-interactions";
 
 export default {
 	"key": LH_CAR_SHACK_KEY,
@@ -980,23 +982,27 @@ export default {
 		{
 			"anim_type": AnimationTypeEnum.idle,
 			"direction": 0,
-			"type": FAT_BUFF_GUY,
+			"name": CHARNAME_CAR_SHACK_BOSS,
+			"type": CAR_SHACK_BOSS,
 			"row": 2,
-			"column": 6
+			"column": 6,
+			"action": C3_INTERACTION_CAR_SHACK_BOSS
 		},
+		//{
+		//	"anim_type": AnimationTypeEnum.idle,
+		//	"direction": 0,
+		//	"type": ROBOT,
+		//	"row": 3,
+		//	"column": 1
+		//},
 		{
 			"anim_type": AnimationTypeEnum.idle,
 			"direction": 0,
-			"type": ROBOT,
-			"row": 3,
-			"column": 1
-		},
-		{
-			"anim_type": AnimationTypeEnum.idle,
-			"direction": 0,
-			"type": SUPERMARKET_MANAGER,
+			"name": CHARNAME_CAR_SHACK_MECHANIC,
+			"type": CAR_MECHANIC,
 			"row": 6,
-			"column": 10
+			"column": 10,
+			"action": C3_INTERACTION_CAR_SHACK_MECHANIC
 		},
 		{
 			"type": "boarded_window",

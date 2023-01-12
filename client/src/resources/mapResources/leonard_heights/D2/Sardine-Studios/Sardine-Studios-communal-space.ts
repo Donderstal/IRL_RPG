@@ -1,6 +1,7 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY, LH_SARDINE_STUDIOS_COMMON_AREA_KEY } from "../../leonard_heights_res";
 import { DOORKEY_SARDINE_STUDIOS_COMMON_AREA } from "../D2-door-keys";
+import { D2_INTERACTION_COMMUNAL_ROBOT, D2_INTERACTION_COMMUNAL_SPACE_GUY, D2_INTERACTION_COMMUNAL_SPACE_WOMAN } from "./Sardine-Studios-interactions";
 
 export default {
 	"key": LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
@@ -1792,19 +1793,22 @@ export default {
 			"type": "SUNGLASSES LADY",
 			"column": 17,
 			"row": 3,
-			"direction": 0
+			"direction": 0,
+			"action": D2_INTERACTION_COMMUNAL_SPACE_WOMAN
 		},
 		{
 			"type": "ROBOT_WHITE",
 			"column": 10,
 			"row": 2,
-			"direction": 1
+			"direction": 1,
+			"action": D2_INTERACTION_COMMUNAL_ROBOT
 		},
 		{
 			"type": "TOUGH GUY WITH COOL SHIRT",
 			"column": 5,
 			"row": 2,
-			"direction": 0
+			"direction": 0,
+			"action": D2_INTERACTION_COMMUNAL_SPACE_GUY
 		}
 	],
 	"frontSprites": [],

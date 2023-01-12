@@ -26,9 +26,6 @@ export class Counter {
 
     initLimit(): void {
         this.activeLimit = this.hasSemiRandomLimit ? Math.ceil(Math.random( ) * this.maximumLimit ) : this.maximumLimit;
-        if ( this.activeLimit < 1000 && this.hasMinimumLimit ) {
-            this.initLimit( );
-        }
     }
 
     countAndCheckLimit( ): boolean {

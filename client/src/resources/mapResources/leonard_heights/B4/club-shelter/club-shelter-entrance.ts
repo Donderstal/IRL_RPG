@@ -9,11 +9,66 @@ export default {
 	"location": LH_CLUB_SHELTER_NAME,
 	"columns": 4,
 	"rows": 8,
-	"tileSet": "Generic_Room_AX",
+	"tileSet": "bar-interior",
 	"outdoors": false,
 	"grid": [
 		{
-			"id": 11,
+			"id": 0,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 0,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 0,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 0,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 4,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 4,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 4,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 4,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -48,127 +103,72 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": 11,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 19,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 19,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
+			"id": 19,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 36,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 36,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 38,
+			"id": 19,
 			"angle": 0,
 			"mirrored": false
 		}

@@ -2,6 +2,8 @@ import { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnu
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import {
     BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, BUSINESS_MAN,
+    CAR_MECHANIC,
+    CAR_SHACK_BOSS,
     DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY,
     MAIN_CHARACTER, MONKEY_CEO, PIGEON, PINK_HAIRED_FAT_GUY, PINK_HAIR_NERD_LADY, POLICE_MAN_1, POLICE_MAN_1_VISOR, POLICE_MAN_2, POLICE_MAN_2_VISOR, POLICE_ROBOT, POLICE_WOMAN_1, POLICE_WOMAN_1_VISOR, ROBOT, ROBOT_BLACK, ROBOT_GREY, ROBOT_WHITE, STRONG_GUY, SUNGLASSES_LADY,
     SUPERMARKET_MANAGER, TOUGH_GUY, TOUGH_GUY_WITH_COOL_HAIR, TOUGH_GUY_WITH_COOL_SHIRT, TOUGH_GUY_WITH_DARK_HAIR,
@@ -10,7 +12,7 @@ import {
 import type { SpriteDataModel } from "../models/SpriteDataModel";
 import { getSpriteFrameForPosition } from "../helpers/modelConversionHelpers";
 import { CollectableType } from "../enumerables/CollectableTypeEnum";
-import { CHARACTER_IDLE_ANIMS, COLLECTABLE_ANIMS, SIGN_HORI_ANIMS, SIGN_VERT_ANIMS } from "../game-data/animationGlobals";
+import { CHARACTER_IDLE_ANIMS, COLLECTABLE_ANIMS, PIGEON_IDLE_ANIMS, SIGN_HORI_ANIMS, SIGN_VERT_ANIMS } from "../game-data/animationGlobals";
 import { getSpritePng } from "../assets/sprites";
 
 const ONE_BLOCK_SPRITE = {
@@ -1341,7 +1343,8 @@ export const spriteData = {
     },
     [PIGEON]: {
         "src": "pigeon.png",
-        ...STANDARD_CHARACTER
+        ...STANDARD_CHARACTER,
+        "idle_animations": PIGEON_IDLE_ANIMS
     },
     [BUSINESS_MAN]: {
         "src": "business_man.png",
@@ -1470,6 +1473,14 @@ export const spriteData = {
     [POLICE_ROBOT]: {
         "src": "police-robot.png",
         ...STANDARD_CHARACTER
+    },
+    [CAR_MECHANIC]: {
+        ...STANDARD_CHARACTER,
+        "src": "car-mechanic-li.png"
+    },
+    [CAR_SHACK_BOSS]: {
+        ...STANDARD_CHARACTER,
+        "src": "car_shack_boss.png"
     }
 }
 

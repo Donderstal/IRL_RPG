@@ -12,3 +12,11 @@ export const UNLOCK_DOOR_TEST = "UDT";
 export const PLAYER_NAME = "Julius";
 export const PLAYER_ID = "PLAYER";
 export const SPEAK_SPEAKER = "Speaker";
+
+//QUEST LINE: CAR SHACK
+export const CHARNAME_CAR_SHACK_BOSS = "Clint";
+export const CHARNAME_CAR_SHACK_MECHANIC = "Li";
+export const CHARNAME_CAR_SHACK_POLROBOT = "Polbot";
+export const IKEY_CAR_SHACK_1 = "IKEY_CAR_SHACK_1";
+export const IKEY_CAR_SHACK_2 = "IKEY_CAR_SHACK_2";
+export const IKEY_CAR_SHACK_3 = "IKEY_CAR_SHACK_3";
