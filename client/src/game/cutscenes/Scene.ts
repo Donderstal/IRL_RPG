@@ -21,18 +21,19 @@ export class Scene {
         this.finishedAnimations = [];
         sceneModel.forEach( ( animationModel: AnimationScene ): void => {
             const id = getUniqueId( this.animationIds );
-            if ( animationModel.spriteName !== null && animationModel.spriteName !== undefined
-                && animationModel.type !== SceneAnimationType.createCar && animationModel.type !== SceneAnimationType.createSprite ) {
-                const sprite = getSpriteByName( animationModel.spriteName );
-                animationModel.spriteId = sprite.spriteId !== spriteId ? sprite.spriteId : spriteId;
+            const animation = new Animation( animationModel, id );
+            if ( animation.model.spriteName !== null ) {
+                const sprite = getSpriteByName( animation.model.spriteName );
+                animation.setSpriteKeys( sprite.spriteId, sprite.name );
             }
             else if ( spriteId !== null ) {
                 const sprite = getSpriteById( spriteId );
-                animationModel.spriteId = spriteId;
-                animationModel.spriteName = sprite.name;
+                animation.setSpriteKeys( spriteId, sprite.name );
             }
-            this.animations.push(new Animation(animationModel, id));
-            this.animationIds.push(id);
+
+            animation.setAction();
+            this.animations.push( animation );
+            this.animationIds.push( id );
         })
     }
 

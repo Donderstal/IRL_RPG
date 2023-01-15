@@ -1,4 +1,8 @@
 ### 
+#### JAN 16, 2023
+* Expanded spritesheets with talking head animations
+* Added close up talking heads anim to speech bubbles
+
 #### JAN 12, 2023
 * Updated maps, resources, sprites
 * Added new tryout questlines

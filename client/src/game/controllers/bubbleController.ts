@@ -2,6 +2,7 @@ import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
+import type { SpriteDataModel } from "../../models/SpriteDataModel";
 import { getSpeechBubbleGrid } from "../canvas/canvasGetter";
 import { Emote } from "../cutscenes/Emote";
 import { SelectionBubble } from "../cutscenes/SelectionBubble";
@@ -28,12 +29,12 @@ export const getMainTextBubble = (): SpeechBubble => {
 }
 export const hasActiveBubbles = (): boolean => { return emoteIds.length > 0 || mainBubble !== null; };
 
-export const setNewBubble = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType, sfx: string ): void => {
+export const setNewBubble = ( text: string, type: SceneAnimationType, sfx: string, spriteName: string, spriteDataModel: SpriteDataModel ): void => {
     if ( mainBubble !== null ) {
-        setBubbleContents( contents, type );
+        setBubbleContents( text, spriteName, type, spriteDataModel );
     }
     else {
-        mainBubble = new SpeechBubble( contents.text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, contents.spriteName );
+        mainBubble = new SpeechBubble( text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, spriteName, spriteDataModel );
     }
 
     playSpeakingEffect( sfx );
@@ -85,8 +86,8 @@ export const clearActiveBubbles = (): void => {
     clearActiveEmotes();
     mainBubble = null;
 };
-export const setBubbleContents = ( contents: SpeakScene | SpeakYesNoScene, type: SceneAnimationType ): void => {
-    mainBubble.setContents( contents.text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, contents.spriteName )
+export const setBubbleContents = ( text: string, name: string, type: SceneAnimationType, spriteDataModel: SpriteDataModel ): void => {
+    mainBubble.setContents( text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, name, spriteDataModel )
 }
 
 export const clearActiveText = (): void => {

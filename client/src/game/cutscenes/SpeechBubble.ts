@@ -1,4 +1,4 @@
-import { BATTLE_FONT_SIZE } from '../../game-data/globals';
+import { BATTLE_FONT_SIZE, MAP_SPRITE_HEIGHT_IN_SHEET, MAP_SPRITE_WIDTH_IN_SHEET } from '../../game-data/globals';
 import { writeTextLine, setFont } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX, BUBBLE_INNER_PADDING, GRID_BLOCK_IN_SHEET_PX, LARGE_FONT_SIZE, LARGE_FONT_LINE_HEIGHT } from '../../game-data/globals';
 import { BUBBLE_YES, BUBBLE_NO, BUBBLE_UNSELECTED } from '../../game-data/textboxGlobals';
@@ -8,6 +8,10 @@ import { TextBubbleType } from '../../enumerables/TextBubbleType';
 import { getSpeechBubbleDimensions, getSpeechBubbleXy } from '../../helpers/speechBubbleHelpers';
 import { getUiImage } from '../../assets/ui';
 import { TextBubbleBase } from './TextBubbleBase';
+import { SpriteAnimation } from '../map/map-classes/SpriteAnimation';
+import { getAnimationByName } from '../../resources/animationResources';
+import { ANIM_SPEECH_BUBBLE_TALKING_HEAD_1 } from '../../game-data/animationGlobals';
+import { DirectionEnum } from '../../enumerables/DirectionEnum';
 
 type PhraseModel = {
     x: number;
@@ -44,14 +48,16 @@ export class SpeechBubble extends TextBubbleBase {
     moving: boolean;
     destinationY: number;
     read: boolean;
-    constructor( text: string, type: TextBubbleType, textSpeaker: string = null ) {
+    image: HTMLImageElement;
+    animation: SpriteAnimation;
+    constructor( text: string, type: TextBubbleType, textSpeaker: string = null, spriteDataModel = null ) {
         const dimensions = getSpeechBubbleDimensions( type );
         const xy = getSpeechBubbleXy( type );
         super( xy.x, xy.y, dimensions.width, dimensions.height )
 
         this.wroteLastFrame = false;
 
-        this.setContents( text, type, textSpeaker );
+        this.setContents( text, type, textSpeaker, spriteDataModel );
     }
     set text( text: any ) {             
         this.typeWriter = new TypeWriter( text );
@@ -59,16 +65,21 @@ export class SpeechBubble extends TextBubbleBase {
     get text(): TypeWriterWord[] {
         return this.typeWriter.activeText;
     }
-
+    get textX(): number {
+        return this.isNPCSpeechBubble ? this.x + ( GRID_BLOCK_PX * 2 ) : super.textX;
+    }
+    get imageX(): number {
+        return this.isPlayerSpeechBubble ? ( this.x + this.width ) - ( GRID_BLOCK_PX * 2 ) : this.x;
+    }
     get destinationYIsUp() { return this.y > this.destinationY; };
 
-    setContents( text: string, type: TextBubbleType, textSpeaker: string = null ) {
+    setContents( text: string, type: TextBubbleType, textSpeaker: string = null, spriteDataModel = null ) {
         this.read = false;
         this.setType( type );
         this.fullText = text;
         this.text = text;
         if ( textSpeaker !== null ) {
-            this.setHeader( textSpeaker + ": " )
+            this.setHeader( textSpeaker );
         } 
         if ( this.type === TextBubbleType.SpeakYesNo ) {
             this.bubbleY = ( this.y + this.height ) - GRID_BLOCK_PX;
@@ -77,20 +88,19 @@ export class SpeechBubble extends TextBubbleBase {
             this.noBubbleX  = this.middleX + GRID_BLOCK_PX;
             this.activeButton = InteractionAnswer.yes
         }
+        if ( this.isSpeechBubble ) {
+            const animationModel = getAnimationByName( ANIM_SPEECH_BUBBLE_TALKING_HEAD_1, MAP_SPRITE_WIDTH_IN_SHEET * 2, MAP_SPRITE_HEIGHT_IN_SHEET, DirectionEnum.down, { looped: true, loops: null } );
+            this.image = spriteDataModel.image;
+            this.animation = new SpriteAnimation(animationModel);
+        }
     }
 
     markAsRead() {
         this.read = true;
     }
 
-    setHeader( text: string ): void {
-        this.hasHeader  = true;
-        this.headerText = text;
-    }
-
     draw( context: OffscreenCanvasRenderingContext2D ): void {
         super.draw( context );
-
         if ( this.typeWriter.isWriting ) {
             if ( !this.wroteLastFrame ) {
                 this.typeWriter.write();
@@ -99,7 +109,15 @@ export class SpeechBubble extends TextBubbleBase {
             else {
                 this.wroteLastFrame = false;
             }
+            if ( this.isSpeechBubble && this.animation !== null ) {
+                this.animation.spriteAnimationCounter( this );
+            }
         }
+        else if ( this.isSpeechBubble && this.animation !== null ) {
+            this.setActiveFrame( this.animation.model.frames[0] );
+            this.animation = null;
+        }
+
         if ( this.type === TextBubbleType.Center ) {
             this.writeCenterText( context )
         }
@@ -112,6 +130,19 @@ export class SpeechBubble extends TextBubbleBase {
         }
         if ( this.moving ) {
             this.moveTo( );
+        }
+        if ( this.isSpeechBubble ) {
+            const imageWidthOnCanvas = GRID_BLOCK_PX * 2;
+            const imageHeightOnCanvas = GRID_BLOCK_PX * 1.875;
+            const imageXOnCanvas = ( this.imageX + ( GRID_BLOCK_PX * 2 ) ) - imageWidthOnCanvas;
+            const imageYOnCanvas = ( this.y + this.height ) - imageHeightOnCanvas
+            context.drawImage(
+                this.image,
+                this.activeFrame.x, this.activeFrame.y,
+                this.activeFrame.width, this.activeFrame.height,
+                imageXOnCanvas, imageYOnCanvas,
+                imageWidthOnCanvas, imageHeightOnCanvas
+            );
         }
     }
 
@@ -157,7 +188,7 @@ export class SpeechBubble extends TextBubbleBase {
         setFont( LARGE_FONT_SIZE, activeContext );
         let textLineX = this.textX;
         let textLineY = this.textY;
-        let sentenceWidth = BUBBLE_INNER_PADDING * 2;
+        let sentenceWidth = this.isSpeechBubble ? GRID_BLOCK_PX * 2 : BUBBLE_INNER_PADDING * 2;
         let textCopy = [...this.text];
         let phraseArray = [];
         let activePhrase: PhraseModel = null;
@@ -183,7 +214,7 @@ export class SpeechBubble extends TextBubbleBase {
             if ( sentenceWidth > this.width ) {
                 textLineX = this.textX;
                 textLineY += LARGE_FONT_LINE_HEIGHT;
-                sentenceWidth = BUBBLE_INNER_PADDING * 2;
+                sentenceWidth = this.isSpeechBubble ? GRID_BLOCK_PX * 2 : BUBBLE_INNER_PADDING * 2;
                 newSentence = true;
             }
 

@@ -18,7 +18,8 @@ import {
     LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY,
     LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY,
     LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY,
-    LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY
+    LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY,
+    LH_CHARACTERS_MASTER_ROOM_KEY
 } from './leonard_heights_res';
 
 import A1 from './A1/A1';
@@ -67,6 +68,7 @@ import SardineStudiosFloor1App2 from './D2/Sardine-Studios/Sardine-Studios-floor
 import SardineStudiosFloor1App3 from './D2/Sardine-Studios/Sardine-Studios-floor1-app3';
 import SardineStudioStairsFloor2 from './D2/Sardine-Studios/Sardine-Studio-stairs-floor-2';
 import SardineStudioStairsTop from './D2/Sardine-Studios/Sardine-Studio-stairs-top';
+import characterMasterRoom from './hiddenRooms/characterMasterRoom';
 
 export default {
     "key": LH_KEY,
@@ -110,48 +112,65 @@ export default {
         "E4": E4,
 
         // A3 submap
-        // Hotel Two Towers
-        [removeNeighbourhoodKey(LH_HOTEL_TWO_TOWERS_LOBBY_KEY)]: TwoTowersLobby,
+            // Hotel Two Towers
+                [removeNeighbourhoodKey( LH_HOTEL_TWO_TOWERS_LOBBY_KEY )]: TwoTowersLobby,
+            //
+        //
 
         // B4 submap
-        // Club shelter
-        [removeNeighbourhoodKey(LH_CLUB_SHELTER_ENTRANCE_KEY)]: ClubShelterEntrance,
-        [removeNeighbourhoodKey( LH_CLUB_SHELTER_KEY )]: ClubShelter,
-        [removeNeighbourhoodKey(LH_CLUB_SHELTER_TOILETS_KEY)]: ClubShelterToilets,
+            // Club shelter
+                [removeNeighbourhoodKey(LH_CLUB_SHELTER_ENTRANCE_KEY)]: ClubShelterEntrance,
+                [removeNeighbourhoodKey( LH_CLUB_SHELTER_KEY )]: ClubShelter,
+                [removeNeighbourhoodKey(LH_CLUB_SHELTER_TOILETS_KEY)]: ClubShelterToilets,
+            //
+        //
 
         // C2 submaps
-        // Newtown appartments.
-        [removeNeighbourhoodKey( LH_NEWTOWN_APP_HALL_KEY )]: NewtownHall,
-        [removeNeighbourhoodKey( LH_NEWTOWN_APP_1_KEY )]: NewtownAppartment1,
-        [removeNeighbourhoodKey( LH_NEWTOWN_APP_2_KEY )]: NewtownAppartment2,
-        [removeNeighbourhoodKey( LH_NEWTOWN_APP_3_KEY )]: NewtownAppartment3,
-        [removeNeighbourhoodKey( LH_NEWTOWN_APP_4_KEY )]: NewtownAppartment4,
-        [removeNeighbourhoodKey( LH_NEWTOWN_APP_5_KEY )]: NewtownAppartment5,
+            // Newtown appartments.
+                [removeNeighbourhoodKey( LH_NEWTOWN_APP_HALL_KEY )]: NewtownHall,
+                [removeNeighbourhoodKey( LH_NEWTOWN_APP_1_KEY )]: NewtownAppartment1,
+                [removeNeighbourhoodKey( LH_NEWTOWN_APP_2_KEY )]: NewtownAppartment2,
+                [removeNeighbourhoodKey( LH_NEWTOWN_APP_3_KEY )]: NewtownAppartment3,
+                [removeNeighbourhoodKey( LH_NEWTOWN_APP_4_KEY )]: NewtownAppartment4,
+                [removeNeighbourhoodKey( LH_NEWTOWN_APP_5_KEY )]: NewtownAppartment5,
+            //
+        //
 
         //C3 submaps
-        // Car shack
-        [removeNeighbourhoodKey( LH_CAR_SHACK_KEY )]: CarShack,
+            // Car shack
+                [removeNeighbourhoodKey( LH_CAR_SHACK_KEY )]: CarShack,
+            //
+        //
 
         // C4 submaps
-        // Yum Mart
-        [removeNeighbourhoodKey( LH_YUM_MART_STORE_KEY )]: YumMartGroundFloor,
-        [removeNeighbourhoodKey( LH_YUM_MART_OFFICE_KEY )]: YumMartFloor1,
+            // Yum Mart
+                [removeNeighbourhoodKey( LH_YUM_MART_STORE_KEY )]: YumMartGroundFloor,
+                [removeNeighbourhoodKey( LH_YUM_MART_OFFICE_KEY )]: YumMartFloor1,
+            //
+        //
 
         // D2 Submaps
-        // Sardine Studios
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY )]: SardineStudiosStairsBottom,
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_COMMON_AREA_KEY )]: SardineStudiosCommunalSpace,
-        /// Sardine f1
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY )]: SardineStudiosStairsFloor1,
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY )]: SardineStudiosFloor1Hall,
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY )]: SardineStudiosFloor1App1,
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY )]: SardineStudiosFloor1App2,
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY )]: SardineStudiosFloor1App3,
+            // Sardine Studios
+                [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY )]: SardineStudiosStairsBottom,
+                [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_COMMON_AREA_KEY )]: SardineStudiosCommunalSpace,
 
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY )]: SardineStudioStairsFloor2,
-        [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_TOP_KEY )]: SardineStudioStairsTop
-    },
+                /// Sardine f1
+                    [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY )]: SardineStudiosStairsFloor1,
+                    [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY )]: SardineStudiosFloor1Hall,
+                    [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY )]: SardineStudiosFloor1App1,
+                    [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY )]: SardineStudiosFloor1App2,
+                    [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY )]: SardineStudiosFloor1App3,
+                //
+
+                [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY )]: SardineStudioStairsFloor2,
+                [removeNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_TOP_KEY )]: SardineStudioStairsTop,
+            //
+        //
+
+        // Master rooms
+            [removeNeighbourhoodKey(LH_CHARACTERS_MASTER_ROOM_KEY)]: characterMasterRoom
     /////
+    },
     "spawnPoints": [
         {
             "column": 4,

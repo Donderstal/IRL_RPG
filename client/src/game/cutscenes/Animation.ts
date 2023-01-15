@@ -39,6 +39,7 @@ export class Animation {
     id: string;
     model: AnimationScene;
     spriteId: string;
+    spriteName: string;
     counter: Counter;
     tileIndex: number;
     destination: GridCellModel;
@@ -46,8 +47,6 @@ export class Animation {
     constructor( animationModel: AnimationScene, id: string ) {
         this.id = id;
         this.model = animationModel;
-        this.setSpriteId();
-        this.setAction();
     }
 
     get speakScene(): SpeakScene { return this.model as SpeakScene; }
@@ -74,8 +73,9 @@ export class Animation {
         return this.spriteId !== null && this.spriteId !== undefined;
     }
 
-    setSpriteId() {
-        this.spriteId = this.model.spriteId;
+    setSpriteKeys(id: string, name: string) {
+        this.spriteId = id;
+        this.spriteName = name;
     }
 
     setAction( ): void {
@@ -146,7 +146,7 @@ export class Animation {
 
     initSpeakAnimation( type: SceneAnimationType ): void {
         const model = type === SceneAnimationType.speak ? this.model as SpeakScene : this.model as SpeakYesNoScene;
-        setNewBubble( model, type, model.sfx ?? this.sprite.sfx ?? "medium-text-blip.ogg" );
+        setNewBubble( model.text, type, model.sfx ?? this.sprite.sfx ?? "medium-text-blip.ogg", this.spriteName, this.sprite.model );
         if ( model.speakWith !== null && model.speakWith !== undefined ) {
             const targetSprite = getSpriteByName( model.speakWith );
             this.sprite.setDirection( getOppositeDirection( targetSprite.direction ) );
