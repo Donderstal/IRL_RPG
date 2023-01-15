@@ -1,6 +1,7 @@
 ﻿import { setFont } from "./canvasHelpers";
-import { GRID_BLOCK_PX, LARGE_FONT_SIZE } from "../game-data/globals";
+import { GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } from "../game-data/globals";
 import { clearSpeakingEffect } from "../game/sound/sound";
+import type { PhraseModel } from "../models/PhraseModel";
 
 export class TypeWriterWord {
     startingPosition: number;
@@ -137,8 +138,70 @@ export class TypeWriter {
             if ( this.index === this.totalTextCharacters ) {
                 this.displayFullText( )
             }
-            //setTimeout( this.write.bind(this), this.speed );
         }
+    }
+
+    breakTextIntoLines( activeContext: OffscreenCanvasRenderingContext2D, startingX: number, startingY: number, maxWidth: number ): PhraseModel[] {
+        this.count();
+        setFont( LARGE_FONT_SIZE, activeContext );
+        let textLineX = startingX;
+        let textLineY = startingY;
+        let sentenceWidth = 0;
+
+        let textCopy = [...this.activeText ];
+        let phraseArray: PhraseModel[] = [];
+        let activePhrase: PhraseModel = null;
+
+        while ( textCopy.length > 0 ) {
+            const word = textCopy.shift();
+            const width = activeContext.measureText( word.activeWord ).width;
+            const newColor = word.color;
+            let newSentence = false
+            sentenceWidth += width;
+
+            if ( activePhrase === null ) {
+                activePhrase = {
+                    x: textLineX,
+                    y: textLineY,
+                    phrase: word.activeWord,
+                    color: word.color,
+                    width: width
+                }
+                continue;
+            }
+
+            if ( sentenceWidth > maxWidth ) {
+                textLineX = startingX;
+                textLineY += LARGE_FONT_LINE_HEIGHT;
+                sentenceWidth = 0;
+                newSentence = true;
+            }
+
+            if ( newColor === activePhrase.color && !newSentence ) {
+                activePhrase.phrase += word.activeWord;
+                activePhrase.width += width;
+            }
+            else {
+                phraseArray.push( activePhrase );
+                if ( !newSentence ) {
+                    textLineX += activePhrase.width;
+                }
+
+                activePhrase = {
+                    x: textLineX,
+                    y: textLineY,
+                    color: word.color,
+                    phrase: word.activeWord,
+                    width: width
+                }
+            }
+
+            if ( textCopy.length == 0 ) {
+                phraseArray.push( activePhrase );
+            }
+        }
+
+        return phraseArray;
     }
 
     initText( text: string ): void {

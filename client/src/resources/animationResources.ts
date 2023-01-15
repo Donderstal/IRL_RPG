@@ -139,7 +139,7 @@ const getBattleAnimation = ( animationKey: string, direction: DirectionEnum ): {
 }
 
 const getCheeringAnimation = ( animationKey: string, direction: DirectionEnum ): { row: number, column: number }[] => {
-    const frameRow = direction === DirectionEnum.left ? 12 : 13;
+    const frameRow = direction === DirectionEnum.left ? 14 : 15;
     if ( animationKey === ANIM_CAST ) {
         return [
             { row: frameRow, column: 0 },
@@ -259,7 +259,7 @@ const getIdleAnimation = ( animationKey: string, direction: DirectionEnum ): { r
 }
 
 const getHackAnimation = (direction: DirectionEnum ): { row: number, column: number }[] => {
-    const frameRow = direction === DirectionEnum.left ? 15 : 13;
+    const frameRow = direction === DirectionEnum.left ? 17 : 15;
     return [
         { row: frameRow, column: 2 },
         { row: frameRow, column: 3 },
@@ -298,10 +298,10 @@ const animationResources = {
         { row: 2, column: 1 }
     ],
     [ANIM_LIFT]: [
-        { row: 12, column: 0 },
-        { row: 12, column: 1 },
-        { row: 12, column: 2 },
-        { row: 12, column: 1 }
+        { row: 14, column: 0 },
+        { row: 14, column: 1 },
+        { row: 14, column: 2 },
+        { row: 14, column: 1 }
     ],
     [ANIM_SIGN_IDLE_HORI]: [
         { row: 0, column: 1 },

@@ -18,6 +18,7 @@ import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { setListeningForKeysGameState } from './gameState/gameState';
 import { switchMap } from '../helpers/loadMapHelpers';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
+import { screenTextIsActive, handleScreenTextActionButton } from '../helpers/screenTextModule';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -55,6 +56,10 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
             textBubble.markAsRead();
         }
         clearSpeakingEffect();
+    }
+
+    if ( event.key === " " && screenTextIsActive() ) {
+        handleScreenTextActionButton()
     }
 
     if ( event.key === "a" || event.key === "ArrowLeft" || event.key === "d" || event.key === "ArrowRight" ) {

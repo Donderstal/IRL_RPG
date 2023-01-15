@@ -53,6 +53,11 @@ export class TextBubbleBase {
         this.headerText = text;
     }
 
+    clearHeader(): void {
+        this.hasHeader = false;
+        this.headerText = null;
+    }
+
     copyBubbleToGameCanvas( activeContext: OffscreenCanvasRenderingContext2D ): void {
         activeContext.drawImage(
             getSpeechBubbleTemplateCanvas( this.type ),

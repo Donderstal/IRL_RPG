@@ -10,6 +10,7 @@ import { cameraFocus } from '../cameraFocus';
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
 import { fadedOut, inFadingAnimation } from '../../helpers/faderModule';
 import { getActiveMapKey } from '../neighbourhoodModule';
+import { screenTextIsActive } from '../../helpers/screenTextModule';
 
 export class Scene {
     animations: Animation[];
@@ -110,6 +111,9 @@ export class Scene {
                     break;
                 case SceneAnimationType.loadMap:
                     animationHasFinished = getActiveMapKey() === e.loadMapScene.mapName;
+                    break;
+                case SceneAnimationType.screenText:
+                    animationHasFinished = !screenTextIsActive();
                     break;
             }
             if ( animationHasFinished ) {

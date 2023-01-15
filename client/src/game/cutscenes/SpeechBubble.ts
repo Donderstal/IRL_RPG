@@ -13,13 +13,6 @@ import { getAnimationByName } from '../../resources/animationResources';
 import { ANIM_SPEECH_BUBBLE_TALKING_HEAD_1 } from '../../game-data/animationGlobals';
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 
-type PhraseModel = {
-    x: number;
-    y: number;
-    width: number;
-    color: string;
-    phrase: string;
-}
 
 export class SpeechBubble extends TextBubbleBase {
     x: number;
@@ -80,7 +73,10 @@ export class SpeechBubble extends TextBubbleBase {
         this.text = text;
         if ( textSpeaker !== null ) {
             this.setHeader( textSpeaker );
-        } 
+        }
+        else {
+            this.clearHeader();
+        }
         if ( this.type === TextBubbleType.SpeakYesNo ) {
             this.bubbleY = ( this.y + this.height ) - GRID_BLOCK_PX;
             this.middleX    = this.x + (this.width / 2);
@@ -184,65 +180,8 @@ export class SpeechBubble extends TextBubbleBase {
     }
 
     writeText( activeContext: OffscreenCanvasRenderingContext2D ): void {
-        this.typeWriter.count();
-        setFont( LARGE_FONT_SIZE, activeContext );
-        let textLineX = this.textX;
-        let textLineY = this.textY;
-        let sentenceWidth = this.isSpeechBubble ? GRID_BLOCK_PX * 2 : BUBBLE_INNER_PADDING * 2;
-        let textCopy = [...this.text];
-        let phraseArray = [];
-        let activePhrase: PhraseModel = null;
-
-        while ( textCopy.length > 0 ) {
-            const word = textCopy.shift();
-            const width = activeContext.measureText( word.activeWord ).width;
-            const newColor = word.color;
-            let newSentence = false
-            sentenceWidth += width;
-
-            if ( activePhrase === null ) {
-                activePhrase = {
-                    x: textLineX,
-                    y: textLineY,
-                    phrase: word.activeWord,
-                    color: word.color,
-                    width: width
-                }
-                continue;
-            }
-
-            if ( sentenceWidth > this.width ) {
-                textLineX = this.textX;
-                textLineY += LARGE_FONT_LINE_HEIGHT;
-                sentenceWidth = this.isSpeechBubble ? GRID_BLOCK_PX * 2 : BUBBLE_INNER_PADDING * 2;
-                newSentence = true;
-            }
-
-            if ( newColor === activePhrase.color && !newSentence ) {
-                activePhrase.phrase += word.activeWord;
-                activePhrase.width += width;
-            }
-            else {
-                phraseArray.push( activePhrase );
-                if ( !newSentence ) {
-                    textLineX += activePhrase.width;
-                }
-
-                activePhrase = {
-                    x: textLineX,
-                    y: textLineY,
-                    color: word.color,
-                    phrase: word.activeWord,
-                    width: width
-                }
-            }
-
-            if ( textCopy.length == 0 ) {
-                phraseArray.push( activePhrase );
-            }
-        }
-
-        phraseArray.forEach( ( phrase ) => {
+        const textLines = this.typeWriter.breakTextIntoLines( activeContext, this.textX, this.textY, this.width - (this.isSpeechBubble ? GRID_BLOCK_PX * 2 : BUBBLE_INNER_PADDING * 2))
+        textLines.forEach( ( phrase ) => {
             writeTextLine( phrase.phrase, phrase.x, phrase.y, LARGE_FONT_SIZE, activeContext, phrase.color );
         } )
     }

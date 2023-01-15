@@ -79,6 +79,21 @@ export const getOppositeDirection = ( direction: DirectionEnum ): DirectionEnum 
     }
 };
 
+export const getSpriteFacingTowardsTargetDirection = ( spriteHitbox: Hitbox, target: Hitbox ): DirectionEnum => {
+    const targetIsLeftOfSprite = target.x < spriteHitbox.x;
+    const targetIsAboveSprite = target.y < spriteHitbox.y;
+
+    const xDifference = Math.abs( target.x - spriteHitbox.x );
+    const yDifference = Math.abs( target.y - spriteHitbox.y );
+
+    if ( xDifference > yDifference ) {
+        return targetIsLeftOfSprite ? DirectionEnum.left : DirectionEnum.right;
+    }
+    else {
+        return targetIsAboveSprite ? DirectionEnum.up : DirectionEnum.down;
+    }
+}
+
 export const cellDistanceSquared = ( cellA: GridCellModel, cellB: GridCellModel ): number => {
     const rowDiff = cellA.row - cellB.row;
     const colDiff = cellA.column - cellB.column;

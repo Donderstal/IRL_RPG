@@ -3,7 +3,7 @@ import { initCanvasObjectModel, initGridCellModel } from "../../helpers/modelFac
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene,
     DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene,
-    SpeakScene, SpeakYesNoScene, WaitScene
+    SpeakScene, SpeakYesNoScene, WaitScene, ScreenTextScene
 } from "../../models/SceneAnimationModel";
 import { Counter } from '../../helpers/Counter';
 import type { GridCellModel } from "../../models/GridCellModel";
@@ -11,7 +11,7 @@ import type { Sprite } from "../core/Sprite";
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
-import { getClosestCell, getOppositeDirection } from '../../helpers/utilFunctions';
+import { getClosestCell, getOppositeDirection, getSpriteFacingTowardsTargetDirection } from '../../helpers/utilFunctions';
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
@@ -30,10 +30,13 @@ import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule"
 import { pauseMusic, playEffect } from "../sound/sound";
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from "../canvas/canvasGetter";
 import { switchMap } from '../../helpers/loadMapHelpers';
-import { InteractionType } from "../../enumerables/InteractionType";
 import { getActiveMapKey } from "../neighbourhoodModule";
 import { setPlayerStartForCinematic } from "../map/playerLocationOnMapLoad";
 import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
+import { getAssociatedHitbox, idInHitboxDictionary } from "../modules/hitboxes/hitboxGetter";
+import { getSpriteActionById } from "../modules/actions/actionGetter";
+import { setScreenTextToCanvas } from "../../helpers/screenTextModule";
+import { MAX_BUBBLE_TEXT_WIDTH } from "../../game-data/globals";
 
 export class Animation {
     id: string;
@@ -62,6 +65,7 @@ export class Animation {
     get cameraMoveToSpriteScene(): CameraMoveToSpriteScene { return this.model as CameraMoveToSpriteScene; }
     get cameraMoveToTileScene(): CameraMoveToTileScene { return this.model as CameraMoveToTileScene; }
     get loadMapScene(): LoadMapScene { return this.model as LoadMapScene; }
+    get screenTextScene(): ScreenTextScene { return this.model as ScreenTextScene; }
 
     get sprite(): Sprite { return getSpriteById(this.spriteId); }
 
@@ -131,15 +135,16 @@ export class Animation {
                 cameraFocus.setSpriteFocus( this.sprite, this.cameraMoveToSpriteScene.snapToSprite );
                 break;
             case SceneAnimationType.cameraMoveToTile:
-                this.model = this.model as CameraMoveToTileScene
                 let tile = getTileOnCanvasByCell( this.cameraMoveToTileScene, CanvasTypeEnum.backSprites );
                 this.tileIndex = tile.index;
                 cameraFocus.setTileFocus( tile, this.cameraMoveToTileScene.snapToTile );
                 break;
             case SceneAnimationType.loadMap:
-                this.model = this.model as LoadMapScene;
                 setPlayerStartForCinematic( getActiveMapKey() , this.loadMapScene.playerStart);
                 switchMap( this.loadMapScene.mapName, PlayerMapEntry.cinematic );
+                break;
+            case SceneAnimationType.screenText:
+                setScreenTextToCanvas( this.screenTextScene.text, this.screenTextScene.maxWidth == null ? MAX_BUBBLE_TEXT_WIDTH : this.screenTextScene.maxWidth );
                 break;
         }
     }
@@ -149,7 +154,12 @@ export class Animation {
         setNewBubble( model.text, type, model.sfx ?? this.sprite.sfx ?? "medium-text-blip.ogg", this.spriteName, this.sprite.model );
         if ( model.speakWith !== null && model.speakWith !== undefined ) {
             const targetSprite = getSpriteByName( model.speakWith );
-            this.sprite.setDirection( getOppositeDirection( targetSprite.direction ) );
+
+            const speakerHitbox = idInHitboxDictionary( this.spriteId ) ? getAssociatedHitbox( this.spriteId ) : getSpriteActionById( this.spriteId );
+            const targetHitbox = idInHitboxDictionary( targetSprite.spriteId ) ? getAssociatedHitbox( targetSprite.spriteId ) : getSpriteActionById( targetSprite.spriteId );
+
+            this.sprite.setDirection( getSpriteFacingTowardsTargetDirection( speakerHitbox, targetHitbox ) );
+            targetSprite.setDirection( getSpriteFacingTowardsTargetDirection( targetHitbox, speakerHitbox ) );
         }
         initializeSpriteAnimation( this.sprite, ANIM_TALK, { looped: true, loops: 0 } );
     }

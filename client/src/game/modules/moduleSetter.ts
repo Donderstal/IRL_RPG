@@ -27,14 +27,12 @@ export const initializeSpriteModules = ( sprite: Sprite, canvasObjectModel: Canv
 	let model = sprite.model;
 	let id = sprite.spriteId;
 	if ( model.idleAnimation && ( !sprite.model.isCharacter || sprite.isPlayer ) ) {
-		initializeIdleAnimationCounter( sprite );
-		markModuleAsActive( id, SpriteModuleEnum.idleAnimation );
+		initializeIdleAnimationModule( sprite );
 	}
 
 	if ( sprite.model.isCharacter && sprite.animationType !== AnimationTypeEnum.movingLoop
 		&& sprite.animationType !== AnimationTypeEnum.animationLoop ) {
-		initializeRandomAnimationCounter( sprite );
-		markModuleAsActive( id, SpriteModuleEnum.randomAnimation );
+		initializeRandomAnimationModule( sprite );
 	}
 
 	if ( model.canMove ) {
@@ -92,6 +90,16 @@ export const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
 	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
 }
 
+export const lockSpriteForCutscene = ( sprite: Sprite ) => {
+	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.idleAnimation );
+	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.randomAnimation );
+};
+
+export const unlockSpriteAfterCutscene = ( sprite: Sprite ) => {
+	initializeIdleAnimationModule( sprite );
+	initializeRandomAnimationModule( sprite );
+};
+
 export const clearAllModuleRegistries = (): void => {
 	clearActions();
 	clearSpriteAnimations();
@@ -102,4 +110,13 @@ export const clearAllModuleRegistries = (): void => {
 	clearIdleAnimationCounters();
 	clearRandomAnimationCounters();
 	clearAllSprites();
+}
+
+const initializeIdleAnimationModule = ( sprite: Sprite ) => {
+	initializeIdleAnimationCounter( sprite );
+	markModuleAsActive( sprite.spriteId, SpriteModuleEnum.idleAnimation );
+}
+const initializeRandomAnimationModule = ( sprite: Sprite ) => {
+	initializeRandomAnimationCounter( sprite );
+	markModuleAsActive( sprite.spriteId, SpriteModuleEnum.randomAnimation );
 }

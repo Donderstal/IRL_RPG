@@ -4,6 +4,10 @@ import { CinematicTrigger } from "../../enumerables/CinematicTriggerEnum";
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import type { InteractionModel } from '../../models/InteractionModel';
+import type { Sprite } from '../core/Sprite';
+import { getSpriteById, getSpriteByName } from '../modules/sprites/spriteGetter';
+import { lockSpriteForCutscene, unlockSpriteAfterCutscene } from '../modules/moduleSetter';
+import { resetSpriteModuleCounters } from '../modules/moduleHandler';
 export class Interaction {
     trigger: CinematicTrigger;
     scenes: CinematicSceneModel[];
@@ -14,6 +18,7 @@ export class Interaction {
     ended: boolean;
 
     model: InteractionModel;
+    interactingSprites: Sprite[];
     constructor( model: InteractionModel, trigger: CinematicTrigger, args: string[] ) {
         this.model = model;
         this.scenes = [...model.cinematic];
@@ -21,8 +26,46 @@ export class Interaction {
         this.args   = args;
         this.registeredSelection = null;
         this.iterator = 0;
+
+        this.setInteractingSprites( args )
+        this.lockSprites();
+
         this.activeScene = new Scene( this.scenes[this.iterator], ( this.trigger === CinematicTrigger.interaction ? args[0] : null ) );
         this.ended = false;
+    }
+
+    setInteractingSprites( args: string[] ): void {
+        this.interactingSprites = []
+        const allNameProps = [];
+
+        this.scenes.forEach( ( e ) => { e.forEach( ( a ) => { allNameProps.push( a.spriteName ) } ) } );
+        const filteredNames = allNameProps.filter( ( e ) => { return e !== null } );
+        filteredNames.forEach( ( e ) => {
+            const sprite = getSpriteByName( e );
+            if ( sprite !== null && sprite !== undefined ) {
+                this.interactingSprites.push( sprite );
+            }
+        } )
+        if ( this.trigger === CinematicTrigger.interaction ) {
+            this.interactingSprites.push( getSpriteById(args[0]) )
+        }
+    }
+
+    lockSprites(): void {
+        this.interactingSprites.forEach( ( sprite ) => {
+            if ( sprite !== null && sprite !== undefined ) {
+                resetSpriteModuleCounters( sprite.spriteId );
+                lockSpriteForCutscene( sprite );
+            }
+        } )
+    }
+
+    unlockSprites(): void {
+        this.interactingSprites.forEach( ( sprite ) => {
+            if ( sprite !== null && sprite !== undefined ) {
+                unlockSpriteAfterCutscene( sprite );
+            }
+        } )
     }
 
     checkForScenePass( ): void {
@@ -45,6 +88,7 @@ export class Interaction {
             );            
         }
         else {
+            this.unlockSprites();
             this.ended = true;
         }
     }

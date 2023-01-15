@@ -21,6 +21,7 @@ import { initializeDataModels } from "../resources/spriteDataResources";
 import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 import type { SaveGame } from "../models/SaveGameModel";
 import { getBackTilesGrid } from "./canvas/canvasGetter";
+import { setScreenTextCanvas } from "../helpers/screenTextModule";
 
 
 let params: any[] = null;
@@ -35,6 +36,7 @@ export const loadFilesAndStartGame = ( startType: GameType, parameters: any[] ):
     setTimeout( () => {
         initializeCameraFocus();
         prepareCanvasElementsForGame( cameraFocus.screenWidth, cameraFocus.screenHeight, mobileAgent );
+        setScreenTextCanvas( cameraFocus.screenWidth, cameraFocus.screenHeight )
         openGameCanvas();
         setLoadingScreen();
         startFileLoader();

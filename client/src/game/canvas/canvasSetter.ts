@@ -19,6 +19,7 @@ export const clearCanvasGrids = (): void => {
     clearCanvasInRegistry( CanvasTypeEnum.background );
     clearCanvasInRegistry( CanvasTypeEnum.backSprites );
     clearCanvasInRegistry( CanvasTypeEnum.foreground );
+
 }
 export const clearUICanvasGrids = (): void => {
     clearCanvasInRegistry( CanvasTypeEnum.overview );

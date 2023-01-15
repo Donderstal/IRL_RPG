@@ -9,10 +9,13 @@ import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpe
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
 import { inListeningForKeysGameState, inPausedGameState } from './gameState/gameStateGetter';
+import { hasActiveBubbles } from './controllers/bubbleController';
+import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
 
 let lastDateNow: number;
 let newDateNow: number;
 let animationFrameLoop = null;
+let wroteScreenTextLastFrame = false;
 
 export const animationLoop = ( ): void => {
     const menuCanvas = getMenuGrid();
@@ -77,14 +80,32 @@ const handleOffscreenCanvasBitmaps = () => {
     preRenderContext.drawImage( getBackSpritesGrid().canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
     preRenderContext.drawImage( getFrontTilesGrid().canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
 
-    const speechBubbleCanvas = getSpeechBubbleGrid();
-    const bubbleX = ( preRenderCanvas.width - speechBubbleCanvas.canvas.width ) / 2;
-    const bubbleY = ( preRenderCanvas.height - speechBubbleCanvas.canvas.height ) / 2;
-    preRenderContext.drawImage( speechBubbleCanvas.canvas, bubbleX, bubbleY );
+    if ( hasActiveBubbles() ) {
+        const speechBubbleCanvas = getSpeechBubbleGrid();
+        const bubbleX = ( preRenderCanvas.width - speechBubbleCanvas.canvas.width ) / 2;
+        const bubbleY = ( preRenderCanvas.height - speechBubbleCanvas.canvas.height ) / 2;
+        preRenderContext.drawImage( speechBubbleCanvas.canvas, bubbleX, bubbleY );
+    }
 
-    const faderCanvas = getFaderCanvas();
     if ( inFadingAnimation() ) {
+        const faderCanvas = getFaderCanvas();
         preRenderContext.drawImage( faderCanvas, 0, 0 );
+    }
+
+    if ( screenTextIsActive() ) {
+        if ( !wroteScreenTextLastFrame ) {
+            handleScreenText();
+            wroteScreenTextLastFrame = true;
+        }
+        else {
+            wroteScreenTextLastFrame = false;
+        }
+
+
+        const screenTextCanvas = getScreenTextCanvas();
+        const screenTextX = ( preRenderCanvas.width - screenTextCanvas.width ) / 2;
+        const screenTextY = ( preRenderCanvas.height - screenTextCanvas.height ) / 2;
+        preRenderContext.drawImage( screenTextCanvas, screenTextX, screenTextY );
     }
 
     DOMContext.drawImage( preRenderCanvas, 0, 0 );

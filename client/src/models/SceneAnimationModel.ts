@@ -79,3 +79,8 @@ export type LoadMapScene = AnimationScene & {
     setPlayerSprite: boolean;
     playerStart: CellPosition;
 }
+
+export type ScreenTextScene = AnimationScene & {
+    text: string;
+    maxWidth: number;
+}

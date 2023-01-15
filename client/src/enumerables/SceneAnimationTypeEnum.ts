@@ -13,5 +13,6 @@ export enum SceneAnimationType {
     emote,
     cameraMoveToSprite,
     cameraMoveToTile,
-    loadMap
+    loadMap,
+    screenText
 }

@@ -1,7 +1,8 @@
+import { SceneAnimationType } from "../../../../../enumerables/SceneAnimationTypeEnum";
 import { UNLOCK_DOOR_TEST, LOGGABLE_INTERACTION_3, PLAYER_NAME } from "../../../../../game-data/interactionGlobals";
 import { EMOTE_ANGRY } from "../../../../../game-data/textboxGlobals";
 import type { CinematicModel } from "../../../../../models/CinematicModel";
-import { getEmoteScene, getSpeakScene } from "../../../../cinematicFactory";
+import { getEmoteScene, getFadeScene, getScreenTextScene, getSpeakScene } from "../../../../cinematicFactory";
 import { getDefaultCondition, getInteractionRegisteredCondition } from "../../../../conditionFactory";
 import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../interactionFactory";
 
@@ -42,6 +43,9 @@ export const C1_INTERACTION_NEIGHBOUR = [
 
 const CINSCRIPT_WAITING_BUSINESSMAN: CinematicModel = [
     [getSpeakScene( "For some reason somebody locked the main door...", PLAYER_NAME )],
+    [getFadeScene( SceneAnimationType.fadeOut )],
+    [getScreenTextScene( "THIS IS A SCREENTEXT. IN THE NEAR FUTURE, THIS IS AN INTRODUCTORY TEXT TO A YET TO BE RELEASED VIDEO GAME. THE SINGLE DEVELOPER WORKING ON THIS GAME SWEARS IT WILL NOT GO DOWN IN HISTORY AS VAPORWARE. SO HELP ME BABY JEEBUS." )],
+    [getFadeScene( SceneAnimationType.fadeIn )],
     [getEmoteScene( EMOTE_ANGRY )],
     [getSpeakScene( "I don't have time for this! I've got important meetings to attend!!", PLAYER_NAME )]
 ];
