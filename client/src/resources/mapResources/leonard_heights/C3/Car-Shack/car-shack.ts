@@ -1098,13 +1098,13 @@ export default {
 			"type": "car_b_colour_b",
 			"direction": 2,
 			"row": 3,
-			"column": 10
+			"column": 8
 		},
 		{
 			"type": "car_b_colour_b",
 			"direction": 2,
 			"row": 7,
-			"column": 11
+			"column": 9
 		},
 		{
 			"type": "car_c",

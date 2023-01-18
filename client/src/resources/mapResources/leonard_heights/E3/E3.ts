@@ -36,8 +36,8 @@ export default {
         },
         {
             "type": "car_b",
-            "row": 9,
-            "column": 10,
+            "row": 7,
+            "column": 4,
             "direction": DirectionEnum.right
         },
         {

@@ -19,7 +19,8 @@ import {
     LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY,
     LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY,
     LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY,
-    LH_CHARACTERS_MASTER_ROOM_KEY
+    LH_CHARACTERS_MASTER_ROOM_KEY,
+    LH_CARS_MASTER_ROOM_KEY
 } from './leonard_heights_res';
 
 import A1 from './A1/A1';
@@ -69,6 +70,7 @@ import SardineStudiosFloor1App3 from './D2/Sardine-Studios/Sardine-Studios-floor
 import SardineStudioStairsFloor2 from './D2/Sardine-Studios/Sardine-Studio-stairs-floor-2';
 import SardineStudioStairsTop from './D2/Sardine-Studios/Sardine-Studio-stairs-top';
 import characterMasterRoom from './hiddenRooms/characterMasterRoom';
+import carMasterRoom from './hiddenRooms/carMasterRoom';
 
 export default {
     "key": LH_KEY,
@@ -168,7 +170,8 @@ export default {
         //
 
         // Master rooms
-            [removeNeighbourhoodKey(LH_CHARACTERS_MASTER_ROOM_KEY)]: characterMasterRoom
+        [removeNeighbourhoodKey( LH_CHARACTERS_MASTER_ROOM_KEY )]: characterMasterRoom,
+        [removeNeighbourhoodKey( LH_CARS_MASTER_ROOM_KEY )]: carMasterRoom
     /////
     },
     "spawnPoints": [

@@ -20,7 +20,8 @@ import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { registerMapExit, setPlayerLocationOnMapLoad } from '../game/map/playerLocationOnMapLoad';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null ): void => {
-    setPlayerLocationOnMapLoad( mapData , loadType);
+    const neighbourhood = getNeighbourhoodModel();
+    setPlayerLocationOnMapLoad( mapData, loadType);
 
     const back = getBackTilesGrid();
     const front = getBackSpritesGrid();
@@ -35,10 +36,10 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     const sheetData = getTilesheetModelByKey( mapData.tileSet );
 
     back.setBackgroundData( mapData, sheetData );
-    front.setForegroundData( mapData, sprites, setPlayer );
+    front.setForegroundData( mapData, neighbourhood.carSpawnRate, sprites, setPlayer );
     frontgrid.setFrontgridData( mapData, sheetData );
 
-    setActiveMusic( mapData.music != undefined ? mapData.music : getNeighbourhoodModel().music );
+    setActiveMusic( mapData.music != undefined ? mapData.music : neighbourhood.music );
 
     if ( setPlayer ) {
         const player = getPlayer();

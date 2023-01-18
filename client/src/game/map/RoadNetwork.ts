@@ -1,16 +1,12 @@
-import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 import { Counter } from '../../helpers/Counter';
 import { getValidCarDestination } from '../../helpers/roadPathfindingHelpers';
 import { TileSquare } from '../../helpers/TileSquare';
 import { getUniqueId } from '../../helpers/utilFunctions';
+import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { CellPosition } from '../../models/CellPositionModel';
 import type { RoadModel } from '../../models/RoadModel';
-import { cameraFocus } from '../cameraFocus';
-import { getBackSpritesGrid, getTileOnCanvasByCell } from '../canvas/canvasGetter';
-import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
-import { getNeighbourhoodModel } from '../neighbourhoodModule';
-import { Crossing } from './roads/Crossing';
+import { getBackSpritesGrid } from '../canvas/canvasGetter';
 import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
 
@@ -21,12 +17,11 @@ export class RoadNetwork {
     roadIds: string[];
     intersections: Intersection[];
     intersectionIds: string[];
-    crossings: Crossing[];
     roadDestinations: CellPosition[];
     carCounter: Counter;
     pendingIntersections: { roads: Road[]; roadIds: string[]; directions: DirectionEnum[]; square: TileSquare }[]
     pendingCrossings: { road: Road; square: TileSquare; location: CellPosition[] }[]
-    constructor( roads: RoadModel[], canvas: OffscreenCanvas ) {
+    constructor( roads: RoadModel[], canvas: OffscreenCanvas, carSpawnRate: number ) {
         this.canvas = canvas;
 
         this.roads = [];
@@ -40,9 +35,7 @@ export class RoadNetwork {
         this.setIntersections( );
 
         this.pendingCrossings = [];
-        this.crossings = [];
-        this.setCrossings();
-        this.carCounter = new Counter( getNeighbourhoodModel().carSpawnRate, true );
+        this.carCounter = new Counter( carSpawnRate, true );
     }
 
     getRoadById( id: string ): Road {
@@ -67,29 +60,23 @@ export class RoadNetwork {
         });
     }
 
-    handleRoadCrossings( ): void {
-        this.crossings.forEach( ( intersection ) => { intersection.updateCrossingStatus( ); })
-    }
-
-    handleCarCounter(): void {
+    handleCarCounter(): CanvasObjectModel {
         if ( this.carCounter.countAndCheckLimit() ) {
             const validRoads = this.roads.filter( ( e ) => { return e.model.hasStart; } );
             const randomRoad = validRoads[Math.floor( Math.random() * validRoads.length )];
-            this.generateCar( randomRoad );
+            return this.generateCar( randomRoad );
         }
+        return null;
     }
 
     getValidCarStart(): CellPosition {
-        const validRoads = this.roads.filter( ( e ) => { return e.model.hasStart; } );
-        const allStarts = validRoads.map( ( e ) => { return e.getRoadStartPosition(); } );
-        const validStarts = allStarts.filter( ( e ) => {
-            const tile = getTileOnCanvasByCell( { column: e.column, row: e.row }, CanvasTypeEnum.background );
-            return !tile.isBlocked && !getBackSpritesGrid().tileHasBlockingSprite( tile.index ) && !cameraFocus.xyValueIsInView( tile.x, tile.y ); 
-        } )
+        const validRoads = this.roads.filter( ( e ) => { return e.hasUnoccupiedStart(); } );
+        const validStarts = validRoads.map( ( e ) => { return e.getRoadStartPosition(); } );
+
         return validStarts[Math.floor( Math.random() * validStarts.length )];
     }
 
-    generateCar( road: Road ): void {
+    generateCar( road: Road ): CanvasObjectModel {
         const carObjectModel = road.getRandomCarObjectModel();
         const startLocation = this.getValidCarStart();
         if ( startLocation === null || startLocation === undefined ) return;
@@ -97,8 +84,8 @@ export class RoadNetwork {
         const destination = getValidCarDestination( startLocation, road );
         if ( destination !== null && destination !== undefined ) {
             carObjectModel.destination = destination;
-            setSpriteAndSpriteModules( carObjectModel, CanvasTypeEnum.backSprites );
         }
+        return carObjectModel;
     }
 
     roadsIntersect( horizontalRoad: Road, verticalRoad: Road ): boolean {
@@ -211,49 +198,6 @@ export class RoadNetwork {
             const id = getUniqueId(this.intersectionIds);
             this.intersections.push( new Intersection([ ...filteredIntersections, pendingIntersection], id))
             this.intersectionIds.push(id);
-        }
-    }
-
-    setCrossings( ): void {
-        const backSprites = getBackSpritesGrid();
-        this.roads.forEach( ( e ) => { 
-            if ( e.crossings ) {
-                let road = e
-                road.crossings.forEach( ( crossing ) => {
-                    this.pendingCrossings.push( {
-                        'road': road,
-                        'location' : crossing,
-                        'square': new TileSquare( [
-                            backSprites.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.primaryColumn, road.isHorizontal ? crossing[0] : road.model.primaryRow ),
-                            backSprites.getTileAtCell( road.isHorizontal ? crossing[0] : road.model.secondaryColumn, road.isHorizontal ? crossing[0] : road.model.secondaryRow ),
-                            backSprites.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.primaryColumn, road.isHorizontal ? crossing[1] : road.model.primaryRow ),
-                            backSprites.getTileAtCell( road.isHorizontal ? crossing[1] : road.model.secondaryColumn, road.isHorizontal ? crossing[1] : road.model.secondaryRow )
-                        ] )
-                    } )                     
-                });
-            };
-        });
-
-        this.checkPendingCrossings( );
-    }
-
-    checkPendingCrossings( ): void {
-        while ( this.pendingCrossings.length > 0 ) {
-            const pendingCrossing = this.pendingCrossings.shift( );
-            const pendingRoad = pendingCrossing.road;
-            let filteredCrossings = this.pendingCrossings.filter( ( e ) => { 
-                return e.road !== pendingRoad && e.road.model.alignment == pendingRoad.model.alignment && JSON.stringify(e.location) == JSON.stringify(pendingCrossing.location)
-                    && ( e.road.isHorizontal
-                    ? ( e.road.model.primaryRow == pendingRoad.model.secondaryRow + 1 || e.road.model.secondaryRow == pendingRoad.model.primaryRow - 1)
-                    : (e.road.model.primaryColumn == pendingRoad.model.secondaryColumn + 1 || e.road.model.secondaryColumn == pendingRoad.model.primaryColumn - 1)
-                );
-            })
-
-            filteredCrossings.forEach( ( e ) => {
-                let index =  this.pendingCrossings.indexOf( e );
-                this.pendingCrossings.splice( index, 1 )
-            })
-            this.crossings.push( new Crossing([ ...filteredCrossings, pendingCrossing]))
         }
     }
 }

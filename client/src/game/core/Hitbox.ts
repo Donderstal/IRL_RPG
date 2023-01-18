@@ -48,6 +48,12 @@ export class Hitbox {
         }
     }
 
+    updateRadius( radius: number ) {
+        this.outerRadius = radius * 1.5;
+        this.radius = radius;
+        this.innerRadius = radius / 2 
+    }
+
     draw( ): void {
         const frontCtx: OffscreenCanvasRenderingContext2D = getBackSpritesGrid().ctx;
         frontCtx.beginPath( );

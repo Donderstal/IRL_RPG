@@ -8,6 +8,8 @@ import type { I_Junction } from "./I_Junction";
 import { getNeighbourhoodModel } from '../../neighbourhoodModule';
 import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from '../../canvas/canvasGetter';
 import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
+import { RoadPosition } from "./RoadPosition";
+import { getRoadEndTileList, getRoadStartTileList } from "./roadPositionHelpers";
 
 export class Road {
     id: string;
@@ -21,6 +23,9 @@ export class Road {
     hasBusLine: boolean;
     isHorizontal: boolean
     crossings: [];
+
+    startingPosition: RoadPosition;
+    endPosition: RoadPosition;
     constructor ( roadModel: RoadModel, id: string ) {
         this.id = id;
         this.model = roadModel;
@@ -44,6 +49,12 @@ export class Road {
         if ( this.hasBusLine ) {
             this.setBusStopLocation( )
         }
+
+        const startingTiles = getRoadStartTileList( this.model );
+        this.startingPosition = new RoadPosition( startingTiles, this.model );
+
+        const endTiles = getRoadEndTileList( this.model );
+        this.endPosition = new RoadPosition( endTiles, this.model );
     }
 
     get startCellIsBlocked( ): boolean { 
@@ -98,21 +109,15 @@ export class Road {
     }
 
     getRoadEndPosition(): CellPosition {
-        const model: CellPosition = {
-            column: this.isHorizontal ? this.model.secondaryColumn : this.model.primaryColumn,
-            row: this.isHorizontal ? this.model.primaryRow : this.model.secondaryRow,
-            direction: this.model.direction
-        };
-        return model;
+        return this.endPosition.getAbsolutEndCell();
     }
 
     getRoadStartPosition(): CellPosition {
-        const model: CellPosition = {
-            column: this.model.primaryColumn,
-            row: this.model.primaryRow,
-            direction: this.model.direction
-        };
-        return model;
+        return this.startingPosition.getRelativeStartingCell();
+    }
+
+    hasUnoccupiedStart(): boolean {
+        return this.model.hasStart && this.startingPosition.isNotOccupied();
     }
 
     getRandomCarObjectModel( isBus = false ): CanvasObjectModel {

@@ -43,10 +43,10 @@ export class BackSpriteGrid extends CanvasGrid {
         //this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
     }
 
-    setForegroundData( mapModel: MapModel, sprites: Sprite[] = null, setPlayer = true ) {
+    setForegroundData( mapModel: MapModel, carSpawnRate: number, sprites: Sprite[] = null, setPlayer = true ) {
         this.model = mapModel;
         if ( this.model.roads !== undefined ) 
-            this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas );
+            this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas, carSpawnRate );
 
         if ( sprites ) {
             setSpriteList( sprites );

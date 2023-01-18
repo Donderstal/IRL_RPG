@@ -79,7 +79,7 @@ export default {
         },
         {
             "type": "car_b",
-            "row": 5,
+            "row": 7,
             "column": 8,
             "direction": DirectionEnum.up
         },

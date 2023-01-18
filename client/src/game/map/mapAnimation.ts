@@ -26,6 +26,7 @@ import { handleSpriteModules } from '../modules/moduleHandler';
 import { drawSavePoint } from '../modules/actions/actionHandlers';
 import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
+import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
 
 export const handleMapAnimations = (): void => {
     const player = getPlayer();
@@ -89,8 +90,8 @@ const handleDoor = ( door: Door ): void => {
 export const handleRoadNetworkFuncs = ( ): void => {
     const backSpritesGrid = getBackSpritesGrid();
     if ( backSpritesGrid.roadNetwork != null ) {
-        backSpritesGrid.roadNetwork.handleCarCounter()
-        backSpritesGrid.roadNetwork.handleRoadCrossings();
+        const carModel = backSpritesGrid.roadNetwork.handleCarCounter()
+        if ( carModel !== null ) setSpriteAndSpriteModules( carModel, CanvasTypeEnum.backSprites );
     }
 }
 

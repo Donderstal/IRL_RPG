@@ -65,4 +65,5 @@ export const LH_MAP_KEY = appendToNeighbourhoodKey( LH_KEY );
 // Master Rooms
     export const LH_MASTER_ROOMS_LOCATION_NAME = "Master rooms";
     export const LH_CHARACTERS_MASTER_ROOM_KEY = appendToNeighbourhoodKey( "characters-master-room" );
+    export const LH_CARS_MASTER_ROOM_KEY = appendToNeighbourhoodKey( "cars-master-room" );
 //

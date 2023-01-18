@@ -95,7 +95,7 @@ export class Sprite {
     }
 
     get centerX(): number { return this.x + ( this.width / 2 ); };
-    get baseY(): number { return (this.isCar && !isHorizontal(this.direction) ) ? this.bottom - ( this.height / 2): this.bottom - ( GRID_BLOCK_PX / 2 ); };
+    get baseY(): number { return this.isCar ? this.bottom - ( this.height / 2): this.bottom - ( GRID_BLOCK_PX / 2 ); };
     get topY(): number{ return this.top + ( GRID_BLOCK_PX / 2 ); };
 
     get left(): number { return this.x; };
@@ -116,12 +116,8 @@ export class Sprite {
         if ( direction !== this.previousDirection ) {
             this.setDimensions();
             this.setActiveFrames();
-            if ( this.isCar ) {
-                let tileCopy = { x: tile.x, y: tile.y };
-                if ( direction === DirectionEnum.down ) {
-                    tileCopy.y -= GRID_BLOCK_PX
-                }
-                this.setCarToGrid( tileCopy );
+            if ( tile !== null ) {
+                this.setSpriteToGrid( tile )
             }
         }
     }
@@ -174,40 +170,13 @@ export class Sprite {
         this.row = tile.row;
         this.column = tile.column;
 
-        if ( this.isCar ) {
-            this.setCarToGrid( tile );
+        this.x = tile.x;
+        this.y = tile.y - ( this.height - GRID_BLOCK_PX );
+        if ( this.model.tileAlignment === DirectionEnum.right ) {
+            this.x = ( tile.x + GRID_BLOCK_PX ) - this.width;
         }
-        else {
-            this.x = tile.x;
-            this.y = tile.y - ( this.height - GRID_BLOCK_PX );
-            if ( this.model.tileAlignment === DirectionEnum.right ) {
-                this.x = ( tile.x + GRID_BLOCK_PX ) - this.width;
-            }
-            else if ( this.model.tileAlignment === DirectionEnum.down ) {
-                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
-            }
-
-        }
-    }
-
-    setCarToGrid( tile: {x: number, y: number} ): void {
-        switch ( this.direction ) {
-            case DirectionEnum.left:
-                this.x = tile.x;
-                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
-                break;
-            case DirectionEnum.up:
-                this.x = tile.x;
-                this.y = tile.y;
-                break;
-            case DirectionEnum.right:
-                this.x = ( tile.x + GRID_BLOCK_PX ) - this.width;
-                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
-                break;
-            case DirectionEnum.down:
-                this.x = tile.x;
-                this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
-                break;
+        else if ( this.model.tileAlignment === DirectionEnum.down ) {
+            this.y = ( tile.y + GRID_BLOCK_PX ) - this.height;
         }
     }
 
