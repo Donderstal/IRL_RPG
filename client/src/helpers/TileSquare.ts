@@ -25,8 +25,9 @@ export class TileSquare {
     get rightColumn(): number { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.column; } )); };
     get bottomRow(): number { return Math.max.apply(Math, this.tileList.map( (tile) => { return tile.row; } )); };
  
-    draw( color: string ): void {
-
+    draw( color: string, context: OffscreenCanvasRenderingContext2D ): void {
+        context.fillStyle = color;
+        context.fillRect( this.left, this.top, this.width, this.height)
     }
 
     setTileList( list: Tile[] ): void {

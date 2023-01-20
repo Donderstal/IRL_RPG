@@ -5,7 +5,7 @@ import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import type { GridLocation } from '../../../models/GridLocation';
 import type { Tile } from '../../core/Tile';
 import type { DirectionXy } from '../../../models/DirectionXyModel';
-import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHelpers';
+//import { getRoadPathGridLocationList } from '../../../helpers/roadPathfindingHelpers';
 import type { DestinationCellModel } from '../../../models/DestinationCellModel';
 import type { DestinationType } from '../../../enumerables/DestinationType';
 import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
@@ -96,7 +96,7 @@ export class Destination {
         this.currentPathIndex = 0;
         const startingTile = this.frontClass.getTileAtCell( sprite.column, sprite.row );
         const destinationTile = this.frontClass.getTileAtCell( this.column, this.row );
-        return getRoadPathGridLocationList( startingTile, sprite.direction, destinationTile );
+        return null; //getRoadPathGridLocationList( startingTile, sprite.direction, destinationTile );
     }
 
     calculatePath( sprite: Sprite ): GridLocation[] {

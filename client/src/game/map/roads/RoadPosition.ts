@@ -41,4 +41,17 @@ export class RoadPosition extends TileSquare {
         }
         return notOccupied;
     }
+
+    getDirectionXy() {
+        switch ( this.direction ) {
+            case DirectionEnum.left:
+                return { x: this.left, y: this.top, direction: this.direction };
+            case DirectionEnum.up:
+                return { x: this.left, y: this.top, direction: this.direction };
+            case DirectionEnum.right:
+                return { x: this.right, y: this.top, direction: this.direction };
+            case DirectionEnum.down:
+                return { x: this.left, y: this.bottom, direction: this.direction };
+        }
+    }
 }

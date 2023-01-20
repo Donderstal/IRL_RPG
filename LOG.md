@@ -1,4 +1,8 @@
 ### 
+#### JAN 20, 2023
+* Big cleanup and refactor of road and car functionalities
+* New pathfinding for roadnetwork cars, scrapped old road pathfinding code
+
 #### JAN 15, 2023
 * Expanded spritesheets with talking head animations
 * Added close up talking heads anim to speech bubbles

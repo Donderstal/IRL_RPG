@@ -314,7 +314,7 @@ export default {
             "hasStart": true,
             "primaryColumn": 81,
             "secondaryColumn": 82,
-            "primaryRow": 63,
+            "primaryRow": 64,
             "secondaryRow": 47
         },
         {
@@ -325,7 +325,7 @@ export default {
             "primaryColumn": 79,
             "secondaryColumn": 80,
             "primaryRow": 45,
-            "secondaryRow": 63
+            "secondaryRow": 64
         },
 
         // Hotel street / D3 - E3

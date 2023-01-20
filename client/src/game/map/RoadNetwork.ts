@@ -1,53 +1,34 @@
-import { DirectionEnum } from '../../enumerables/DirectionEnum';
+import { RoadAlignmentEnum } from '../../enumerables/RoadAlignmentEnum';
 import { Counter } from '../../helpers/Counter';
-import { getValidCarDestination } from '../../helpers/roadPathfindingHelpers';
-import { TileSquare } from '../../helpers/TileSquare';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { CellPosition } from '../../models/CellPositionModel';
+import type { DirectionXy } from '../../models/DirectionXyModel';
 import type { RoadModel } from '../../models/RoadModel';
-import { getBackSpritesGrid } from '../canvas/canvasGetter';
-import { Intersection } from './roads/Intersection';
 import { Road } from './roads/Road';
 
 export class RoadNetwork {
     canvas: OffscreenCanvas;
-
     roads: Road[];
     roadIds: string[];
-    intersections: Intersection[];
-    intersectionIds: string[];
-    roadDestinations: CellPosition[];
     carCounter: Counter;
-    pendingIntersections: { roads: Road[]; roadIds: string[]; directions: DirectionEnum[]; square: TileSquare }[]
-    pendingCrossings: { road: Road; square: TileSquare; location: CellPosition[] }[]
-    constructor( roads: RoadModel[], canvas: OffscreenCanvas, carSpawnRate: number ) {
+    constructor( roadModels: RoadModel[], canvas: OffscreenCanvas, carSpawnRate: number ) {
         this.canvas = canvas;
 
         this.roads = [];
         this.roadIds = [];
-        this.roadDestinations = [];
-        this.initRoads( roads );
 
-        this.pendingIntersections = [];
-        this.intersections = [];
-        this.intersectionIds = [];
-        this.setIntersections( );
-
-        this.pendingCrossings = [];
+        this.initRoads( roadModels );
+        this.registerIntersectingRoads();
+        this.roads.forEach( ( e ) => { this.setRoadPaths( e ); } )
         this.carCounter = new Counter( carSpawnRate, true );
     }
 
+    get horizontalRoads() { return this.roads.filter( ( e ) => { return e.model.alignment === RoadAlignmentEnum.horizontal; } ) }
+    get verticalRoads() { return this.roads.filter( ( e ) => { return e.model.alignment === RoadAlignmentEnum.vertical; } ) }
+
     getRoadById( id: string ): Road {
         return this.roads.filter((e) => {return e.id==id;})[0];
-    }
-
-    getIntersectionById( id: string ): Intersection {
-        return this.intersections.filter((e) => {return e.id==id;})[0];
-    }
-
-    areItemsInList( list: any[], item1: any, item2: any ): boolean {
-        return list.indexOf( item1 ) > -1 && list.indexOf( item2 ) > -1
     }
 
     initRoads( roads: RoadModel[] ): void {
@@ -56,16 +37,10 @@ export class RoadNetwork {
             const roadInstance =  new Road( road, id )
             this.roads.push( roadInstance );
             this.roadIds.push( id );
-            this.roadDestinations.push( roadInstance.getRoadEndPosition() );
         });
     }
 
     handleCarCounter(): CanvasObjectModel {
-        if ( this.carCounter.countAndCheckLimit() ) {
-            const validRoads = this.roads.filter( ( e ) => { return e.model.hasStart; } );
-            const randomRoad = validRoads[Math.floor( Math.random() * validRoads.length )];
-            return this.generateCar( randomRoad );
-        }
         return null;
     }
 
@@ -81,123 +56,59 @@ export class RoadNetwork {
         const startLocation = this.getValidCarStart();
         if ( startLocation === null || startLocation === undefined ) return;
 
-        const destination = getValidCarDestination( startLocation, road );
-        if ( destination !== null && destination !== undefined ) {
-            carObjectModel.destination = destination;
-        }
         return carObjectModel;
     }
 
-    roadsIntersect( horizontalRoad: Road, verticalRoad: Road ): boolean {
+    registerIntersectingRoads() {
+        this.roads.forEach( ( currentRoad: Road ) => {
+            const rightAngledRoads = currentRoad.model.alignment === RoadAlignmentEnum.horizontal ? this.verticalRoads : this.horizontalRoads;
+            const possibleIntersectingRoads = rightAngledRoads.filter( ( e: Road ) => { return !e.intersectingRoadIds.includes(currentRoad.id); })
+            possibleIntersectingRoads.forEach( ( rightAngledRoad: Road ) => { this.registerIntersectionIfRoadsIntersect( currentRoad, rightAngledRoad ); } );
+        } );
+    }
+
+    registerIntersectionIfRoadsIntersect( baseRoad: Road, possibleIntersector: Road ) {
+        if ( !this.roadsIntersect( baseRoad, possibleIntersector ) ) return;
+        baseRoad.registerIntersectingRoad( possibleIntersector );
+        possibleIntersector.registerIntersectingRoad( baseRoad );
+    }
+
+    roadsIntersect( roadOne: Road, roadTwo: Road ): boolean {
+        const horizontalRoad = roadOne.model.alignment === RoadAlignmentEnum.horizontal ? roadOne : roadTwo;
+        const verticalRoad = roadOne.model.alignment === RoadAlignmentEnum.vertical ? roadOne : roadTwo;
         return ( Math.min( horizontalRoad.model.primaryColumn, horizontalRoad.model.secondaryColumn ) <= verticalRoad.model.primaryColumn )
             && ( Math.max( horizontalRoad.model.primaryColumn, horizontalRoad.model.secondaryColumn ) >= verticalRoad.model.secondaryColumn )
             && ( Math.min( verticalRoad.model.primaryRow, verticalRoad.model.secondaryRow ) <= horizontalRoad.model.primaryRow )
             && ( Math.max( verticalRoad.model.primaryRow, verticalRoad.model.secondaryRow ) >= horizontalRoad.model.secondaryRow );
     }
 
-    setIntersections( ): void {
-        this.roads.forEach( ( e ) => { 
-            let currentRoad = e;
-            let otherRoads = this.roads.filter( ( e ) => { return e.model.alignment != currentRoad.model.alignment; })
-            otherRoads.forEach( ( otherRoad ) => {
-                if ( this.roadsIntersect( currentRoad.isHorizontal ? currentRoad : otherRoad, currentRoad.isHorizontal ? otherRoad : currentRoad ) ) {
-                    this.addPendingIntersection( currentRoad.isHorizontal ? currentRoad : otherRoad, currentRoad.isHorizontal ? otherRoad : currentRoad );
-                }
-            })
-        })
-        this.checkPendingIntersections( );
-    }
+    setRoadPaths( road: Road ): void {
+        const roadPaths = []
+        const visitedRoads = []
+        let pathRoadIdStack: string[][] = [ [ road.id ] ]
+        let pathXyStack: DirectionXy[][] = [ [ road.startingPosition.getDirectionXy() ] ];
 
-    addPendingIntersection( horizontalRoad: Road, verticalRoad: Road ): void {
-        let backSprites = getBackSpritesGrid();
-        let skip = false;
-        this.pendingIntersections.forEach( ( e ) => {
-            if ( this.areItemsInList( e.roadIds, horizontalRoad.id, verticalRoad.id )) {
-                skip = true;
-            }
-        })
-        if ( !skip ) {
-            this.pendingIntersections.push( {
-                'roads': [ verticalRoad, horizontalRoad ],
-                'roadIds': [ verticalRoad.id, horizontalRoad.id ],
-                'directions': [verticalRoad.model.direction, horizontalRoad.model.direction ],
-                'square': new TileSquare( [
-                    backSprites.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.primaryRow ),
-                    backSprites.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.primaryRow ),
-                    backSprites.getTileAtCell( verticalRoad.model.primaryColumn, horizontalRoad.model.secondaryRow ),
-                    backSprites.getTileAtCell( verticalRoad.model.secondaryColumn, horizontalRoad.model.secondaryRow )
-                ] )
-            } )                            
+        while ( pathRoadIdStack.length > 0 && pathXyStack.length > 0 ) {
+            const currentIdPath = pathRoadIdStack.shift();
+            const currentXyPath = pathXyStack.shift();
+
+            const latestRoadIdInPath = currentIdPath[currentIdPath.length - 1];
+            const latestXyInPath = currentXyPath[currentXyPath.length - 1];
+
+            const latestStepRoad = this.getRoadById( latestRoadIdInPath );
+            const possibleTurns = latestStepRoad.getPossibleRoadTurnsFromXy( latestXyInPath );
+            const possibleTurnRoadIds = Object.keys( possibleTurns ).filter( ( e ) => { return visitedRoads.indexOf( latestRoadIdInPath ) == -1 });
+
+            possibleTurnRoadIds.forEach( ( e ) => {
+                const otherRoad = this.getRoadById( e );
+                const fromTurnPosition = otherRoad.turnFromIntersectingRoadPositions[latestRoadIdInPath];
+                pathRoadIdStack.push( [...currentIdPath, e] );
+                pathXyStack.push( [...currentXyPath, possibleTurns[e].getDirectionXy(), fromTurnPosition.getDirectionXy() ] );
+            } );
+
+            roadPaths.push( [...currentXyPath, latestStepRoad.endPosition.getDirectionXy()] );
+            visitedRoads.push( latestRoadIdInPath )
         }
-    }
-
-    checkPendingIntersections( ): void {
-        while ( this.pendingIntersections.length > 0 ) {
-            const pendingIntersection = this.pendingIntersections.shift();
-            const currentDirections = pendingIntersection.directions;
-            const pendingSquare = pendingIntersection.square;
-            let filteredIntersections = [];
-
-            if ( this.areItemsInList( currentDirections, DirectionEnum.down, DirectionEnum.left ) ) {
-                filteredIntersections = this.pendingIntersections.filter( ( e ) => {
-                    return (
-                        ( this.areItemsInList( e.directions, DirectionEnum.up, DirectionEnum.left ) && e.square.leftColumn == pendingSquare.rightColumn + 1 && e.square.bottomRow == pendingSquare.bottomRow )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.down, DirectionEnum.right ) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.rightColumn )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.up, DirectionEnum.right ) && e.square.top == pendingSquare.bottom + 1 && e.square.leftColumn == pendingSquare.rightColumn + 1 )
-                    )
-                } );
-                if ( filteredIntersections.length == 1 && this.areItemsInList( currentDirections, DirectionEnum.down, DirectionEnum.left )
-                    && this.areItemsInList( filteredIntersections[0].directions, DirectionEnum.up, DirectionEnum.right ) ) {
-                    filteredIntersections = [];
-                }
-            }
-            else if ( this.areItemsInList( currentDirections, DirectionEnum.down, DirectionEnum.right ) ) {
-                filteredIntersections = this.pendingIntersections.filter( ( e ) => {
-                    return (
-                        ( this.areItemsInList( e.directions, DirectionEnum.up, DirectionEnum.left ) && e.square.bottomRow == pendingSquare.topRow - 1 && e.square.leftColumn == pendingSquare.rightColumn + 1 )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.down, DirectionEnum.left ) && e.square.bottomRow == pendingSquare.topRow + 1 && e.square.rightColumn == pendingSquare.rightColumn )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.up, DirectionEnum.right ) && e.square.leftColumn == pendingSquare.rightColumn + 1 && e.square.bottomRow == pendingSquare.bottomRow )
-                    )
-                } );
-                if ( filteredIntersections.length == 1 && this.areItemsInList( currentDirections, DirectionEnum.down, DirectionEnum.right )
-                    && this.areItemsInList( filteredIntersections[0].directions, DirectionEnum.up, DirectionEnum.left ) ) {
-                    filteredIntersections = [];
-                }
-            }
-            else if ( this.areItemsInList( currentDirections, DirectionEnum.up, DirectionEnum.left ) ) {
-                filteredIntersections = this.pendingIntersections.filter( ( e ) => {
-                    return (
-                        ( this.areItemsInList( e.directions, DirectionEnum.down, DirectionEnum.left ) && e.square.rightColumn == pendingSquare.leftColumn - 1 && e.square.bottomRow == pendingSquare.bottomRow )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.down, DirectionEnum.right ) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.leftColumn - 1 )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.up, DirectionEnum.right ) && e.square.topRow == pendingSquare.bottomRow + 1 && e.square.rightColumn == pendingSquare.rightColumn )
-                    )
-                } );
-                if ( filteredIntersections.length == 1 && this.areItemsInList( currentDirections, DirectionEnum.up, DirectionEnum.left )
-                    && this.areItemsInList( filteredIntersections[0].directions, DirectionEnum.down, DirectionEnum.right ) ) {
-                    filteredIntersections = [];
-                }
-            }
-            else if ( this.areItemsInList( currentDirections, DirectionEnum.up, DirectionEnum.right ) ) {
-                filteredIntersections = this.pendingIntersections.filter( ( e ) => {
-                    return (
-                        ( this.areItemsInList( e.directions, DirectionEnum.up, DirectionEnum.left ) && e.square.bottomRow == pendingSquare.topRow - 1 && e.square.rightColumn == pendingSquare.rightColumn )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.down, DirectionEnum.left ) && e.square.bottomRow == pendingSquare.topRow - 1 && e.square.rightColumn == pendingSquare.leftColumn - 1 )
-                        || ( this.areItemsInList( e.directions, DirectionEnum.down, DirectionEnum.right ) && e.square.rightColumn == pendingSquare.leftColumn - 1 && e.square.bottomRow == pendingSquare.bottomRow )
-                    )
-                } );
-                if ( filteredIntersections.length == 1 && this.areItemsInList( currentDirections, DirectionEnum.up, DirectionEnum.right )
-                    && this.areItemsInList( filteredIntersections[0].directions, DirectionEnum.down, DirectionEnum.left ) ) {
-                    filteredIntersections = [];
-                }
-            } 
-
-            filteredIntersections.forEach( ( e ) => {
-                let index =  this.pendingIntersections.indexOf( e );
-                this.pendingIntersections.splice( index, 1 )
-            })
-            const id = getUniqueId(this.intersectionIds);
-            this.intersections.push( new Intersection([ ...filteredIntersections, pendingIntersection], id))
-            this.intersectionIds.push(id);
-        }
+        road.paths = roadPaths;
     }
 }
