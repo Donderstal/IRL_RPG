@@ -14,7 +14,7 @@ import { getClosestHitbox } from '../../helpers/utilFunctions';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
 import { getSpriteDestination, spriteHasDestination } from '../modules/destinations/destinationGetter';
-import { markModuleAsInActive } from '../modules/moduleRegistrySetter';
+import { markModuleAsActive, markModuleAsInActive } from '../modules/moduleRegistrySetter';
 import { getAllActions } from '../modules/actions/actionRegistry';
 import { setActiveCinematic } from './cinematicController';
 import { getActiveMapKey } from '../neighbourhoodModule';
@@ -68,7 +68,8 @@ export const dismissActiveAction = (): void => {
         if ( spriteHasDestination( activeAction.spriteId ) ) {
             const destination = getSpriteDestination( activeAction.spriteId );
             const sprite = getSpriteById( activeAction.spriteId );
-            destination.setPath( sprite );
+            sprite.activateMovementModule( destination.getNextStepDirection(sprite) );
+            markModuleAsActive( activeAction.spriteId, SpriteModuleEnum.movement );
         }
         addActionSelectorEventToRegistry( activeAction );
         activeAction.dismiss();

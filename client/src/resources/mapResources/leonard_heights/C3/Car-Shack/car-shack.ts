@@ -988,19 +988,12 @@ export default {
 			"column": 6,
 			"action": C3_INTERACTION_CAR_SHACK_BOSS
 		},
-		//{
-		//	"anim_type": AnimationTypeEnum.idle,
-		//	"direction": 0,
-		//	"type": ROBOT,
-		//	"row": 3,
-		//	"column": 1
-		//},
 		{
 			"anim_type": AnimationTypeEnum.idle,
 			"direction": 0,
 			"name": CHARNAME_CAR_SHACK_MECHANIC,
 			"type": CAR_MECHANIC,
-			"row": 6,
+			"row": 7,
 			"column": 10,
 			"action": C3_INTERACTION_CAR_SHACK_MECHANIC
 		},
@@ -1053,22 +1046,10 @@ export default {
 			"column": 3
 		},
 		{
-			"type": "thing_b",
-			"direction": 0,
-			"row": 7,
-			"column": 9
-		},
-		{
 			"type": "shelves_side_a",
 			"direction": 0,
 			"row": 7,
 			"column": 12
-		},
-		{
-			"type": "thing_b",
-			"direction": 0,
-			"row": 7,
-			"column": 10
 		},
 		{
 			"type": "tires_2",
@@ -1098,13 +1079,13 @@ export default {
 			"type": "car_b_colour_b",
 			"direction": 2,
 			"row": 3,
-			"column": 8
+			"column": 7
 		},
 		{
 			"type": "car_b_colour_b",
 			"direction": 2,
-			"row": 7,
-			"column": 9
+			"row": 8,
+			"column": 8
 		},
 		{
 			"type": "car_c",

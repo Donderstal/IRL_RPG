@@ -27,7 +27,8 @@ export const isWriting = (): boolean => {
 export const getMainTextBubble = (): SpeechBubble => {
     return mainBubble;
 }
-export const hasActiveBubbles = (): boolean => { return emoteIds.length > 0 || mainBubble !== null; };
+export const hasActiveSpeechBubbles = (): boolean => { return emoteIds.length > 0 || mainBubble !== null; };
+export const hasActiveUiBubbles = (): boolean => { return titleBubble !== null || elevatorBubble !== null || subtitleBubble !== null;  }
 
 export const setNewBubble = ( text: string, type: SceneAnimationType, sfx: string, spriteName: string, spriteDataModel: SpriteDataModel ): void => {
     if ( mainBubble !== null ) {

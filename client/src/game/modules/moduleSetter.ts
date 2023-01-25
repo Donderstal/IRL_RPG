@@ -3,13 +3,14 @@ import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { DestinationType } from "../../enumerables/DestinationType";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
-import type { DestinationCellModel } from "../../models/DestinationCellModel";
+import type { DirectionXy } from "../../models/DirectionXyModel";
+import { getBackTilesGrid } from "../canvas/canvasGetter";
 import type { Sprite } from "../core/Sprite";
+import { tryFindPath } from "../map/pathfinder";
 import { clearActions, initializeActionForSprite } from "./actions/actionSetter";
 import { clearSpriteAnimations, destroySpriteAnimation, initializeSpriteAnimation } from "./animations/animationSetter";
 import { clearBlockedSpriteCounters } from "./blockedCounters/blockedCounterSetter";
 import { getSpriteDestination } from "./destinations/destinationGetter";
-import { spriteFailedToFindPath } from "./destinations/destinationHandler";
 import { clearSpriteDestinations, destroySpriteDestination, initializeSpriteDestination } from "./destinations/destinationSetter";
 import { clearDoors, initializeDoorForSprite } from "./doors/doorSetter";
 import { clearHitboxes, initializeHitboxForSprite } from "./hitboxes/hitboxSetter";
@@ -59,25 +60,19 @@ export const initializeSpriteModules = ( sprite: Sprite, canvasObjectModel: Canv
 		}
 	}
 	if ( canvasObjectModel.destination && sprite.animationType !== AnimationTypeEnum.movingLoop ) {
-		tryInitializeSpriteMovement( sprite, canvasObjectModel.destination );
+		const backTiles = getBackTilesGrid();
+		const start = backTiles.getTileAtCell( canvasObjectModel.column, canvasObjectModel.row );
+		const destination = backTiles.getTileAtCell( canvasObjectModel.destination.column, canvasObjectModel.destination.row );
+
+		const path = tryFindPath( start, destination );
+		if ( path === null ) return;
+		initializeSpriteMovement( path, DestinationType.randomGeneratedSprite, sprite );
 	}
 }
 
-export const tryInitializeSpriteMovement = ( sprite: Sprite, destinationCell: DestinationCellModel ): void => {
+export const initializeSpriteMovement = ( path: DirectionXy[], type: DestinationType, sprite: Sprite ): void => {
 	destroySpriteAnimation( sprite );
-	try {
-		initializeSpriteDestination( sprite, destinationCell );
-	}
-	catch ( ex ) {
-		console.log( 'error generating path for destination c' + destinationCell.column + ' r' + destinationCell.row );
-		console.log( ex );
-		if ( destinationCell.type === DestinationType.randomGeneratedSprite ) {
-			removeSpriteById( sprite.spriteId );
-		}
-	}
-	if ( spriteFailedToFindPath( sprite.spriteId ) && destinationCell.type === DestinationType.randomGeneratedSprite ) {
-		removeSpriteById( sprite.spriteId );
-	}
+	initializeSpriteDestination( path, type, sprite );
 }
 
 export const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {

@@ -100,15 +100,28 @@ export class Road {
     getPossibleRoadTurnsFromXy( directionXy: DirectionXy ) {
         let possibleTurns = {};
         let possibleTurnRoadIds;
+        let allTurnRoadIds = Object.keys( this.turnToIntersectingRoadPositions );
         switch ( this.model.direction ) {
             case DirectionEnum.left:
-                possibleTurnRoadIds = Object.keys( this.turnToIntersectingRoadPositions ).filter( ( e ) => { return this.turnToIntersectingRoadPositions[e].left < directionXy.x; });
+                possibleTurnRoadIds = allTurnRoadIds.filter( ( e ) => {
+                    return this.turnToIntersectingRoadPositions[e].left < directionXy.x;
+                } );
+                break;
             case DirectionEnum.up:
-                possibleTurnRoadIds = Object.keys( this.turnToIntersectingRoadPositions ).filter( ( e ) => { return this.turnToIntersectingRoadPositions[e].top < directionXy.y; } );
+                possibleTurnRoadIds = allTurnRoadIds.filter( ( e ) => {
+                    return this.turnToIntersectingRoadPositions[e].top < directionXy.y;
+                } );
+                break;
             case DirectionEnum.right:
-                possibleTurnRoadIds = Object.keys( this.turnToIntersectingRoadPositions ).filter( ( e ) => { return this.turnToIntersectingRoadPositions[e].right > directionXy.x; } );
+                possibleTurnRoadIds = allTurnRoadIds.filter( ( e ) => {
+                    return this.turnToIntersectingRoadPositions[e].right > directionXy.x;
+                } );
+                break;
             case DirectionEnum.down:
-                possibleTurnRoadIds = Object.keys( this.turnToIntersectingRoadPositions ).filter( ( e ) => { return this.turnToIntersectingRoadPositions[e].bottom > directionXy.y; } );
+                possibleTurnRoadIds = allTurnRoadIds.filter( ( e ) => {
+                    return this.turnToIntersectingRoadPositions[e].bottom > directionXy.y;
+                } );
+                break;
         }
         possibleTurnRoadIds.forEach( ( e ) => { possibleTurns[e] = this.turnToIntersectingRoadPositions[e]; } )
         return possibleTurns;
@@ -148,10 +161,6 @@ export class Road {
                 : ( cellPosition.row <= model.secondaryRow && cellPosition.row >= model.primaryRow );
         }
         return inColumns && inRows;
-    }
-
-    getRoadEndPosition(): CellPosition {
-        return this.endPosition.getAbsolutEndCell();
     }
 
     getRoadStartPosition(): CellPosition {

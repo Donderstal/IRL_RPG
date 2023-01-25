@@ -1,6 +1,6 @@
 import { handleActionButton, registerActionSelection } from './controllers/actionController';
 import { DirectionEnum } from './../enumerables/DirectionEnum';
-import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, handleSelectionKeys, hasActiveBubbles, hasActiveSelectionBubble, isWriting, selectionBubble } from './controllers/bubbleController';
+import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, handleSelectionKeys, hasActiveSpeechBubbles, hasActiveSelectionBubble, isWriting, selectionBubble } from './controllers/bubbleController';
 import { moveSpriteInDirection } from './modules/destinations/destinationHandler';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
@@ -39,10 +39,10 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
         menu.isActive ? menu.hide() : menu.show();
     }
 
-    if ( event.key === " " && !hasActiveBubbles() ) {
+    if ( event.key === " " && !hasActiveSpeechBubbles() ) {
         handleActionButton()
     }
-    else if ( event.key === " " && hasActiveBubbles() ) {
+    else if ( event.key === " " && hasActiveSpeechBubbles() ) {
         if ( isWriting() ) {
             displayFullText()
         }

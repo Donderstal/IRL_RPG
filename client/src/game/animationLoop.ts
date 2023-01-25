@@ -9,7 +9,7 @@ import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpe
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
 import { inListeningForKeysGameState, inPausedGameState } from './gameState/gameStateGetter';
-import { hasActiveBubbles } from './controllers/bubbleController';
+import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
 
 let lastDateNow: number;
@@ -80,7 +80,7 @@ const handleOffscreenCanvasBitmaps = () => {
     preRenderContext.drawImage( getBackSpritesGrid().canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
     preRenderContext.drawImage( getFrontTilesGrid().canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
 
-    if ( hasActiveBubbles() ) {
+    if ( hasActiveSpeechBubbles() || hasActiveUiBubbles() ) {
         const speechBubbleCanvas = getSpeechBubbleGrid();
         const bubbleX = ( preRenderCanvas.width - speechBubbleCanvas.canvas.width ) / 2;
         const bubbleY = ( preRenderCanvas.height - speechBubbleCanvas.canvas.height ) / 2;

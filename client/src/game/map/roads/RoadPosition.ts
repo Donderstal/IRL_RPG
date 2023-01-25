@@ -21,16 +21,6 @@ export class RoadPosition extends TileSquare {
         return { column: this.leftColumn, row: this.bottomRow, direction: this.direction };
     }
 
-    getAbsolutEndCell(): CellPosition {
-        if ( this.direction = DirectionEnum.up ) {
-            return { column: this.leftColumn, row: this.topRow, direction: this.direction };
-        }
-        if ( this.direction = DirectionEnum.right ) {
-            return { column: this.rightColumn, row: this.bottomRow, direction: this.direction };
-        }
-        return { column: this.leftColumn, row: this.bottomRow, direction: this.direction };
-    }
-
     isNotOccupied(): boolean {
         const sprites = getAllActiveSprites().filter( ( e ) => { return e.model.canMove });
         let notOccupied = true;
@@ -45,13 +35,13 @@ export class RoadPosition extends TileSquare {
     getDirectionXy() {
         switch ( this.direction ) {
             case DirectionEnum.left:
-                return { x: this.left, y: this.top, direction: this.direction };
+                return { x: this.left, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
             case DirectionEnum.up:
-                return { x: this.left, y: this.top, direction: this.direction };
+                return { x: this.left, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
             case DirectionEnum.right:
-                return { x: this.right, y: this.top, direction: this.direction };
+                return { x: this.right, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
             case DirectionEnum.down:
-                return { x: this.left, y: this.bottom, direction: this.direction };
+                return { x: this.left, y: this.bottom, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
         }
     }
 }

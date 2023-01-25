@@ -1,5 +1,9 @@
 ### 
 #### JAN 20, 2023
+* Fine tuning car pathfinding algorithm
+* Simplified destination class, decoupled from pathfinding
+
+#### JAN 20, 2023
 * Big cleanup and refactor of road and car functionalities
 * New pathfinding for roadnetwork cars, scrapped old road pathfinding code
 

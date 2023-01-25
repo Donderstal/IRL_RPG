@@ -9,7 +9,7 @@ import { getSpriteDestination } from "./destinationGetter";
 export const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ): boolean => {
     const direction = destination.getNextStepDirection( sprite );
     const tile = destination.getNextStepTile();
-    if ( direction !== null && ( tile !== null || !sprite.isCar ) ) {
+    if ( direction !== null ) {
         moveSpriteInDirection( sprite, direction, tile );
         return true;
     }
@@ -53,10 +53,6 @@ export const setSideStepDestination = ( sprite: Sprite ): void => {
         destination.setSideStep( sideStepDestination, sprite );
     }
 }
-export const spriteFailedToFindPath = ( spriteId: string ): boolean => {
-    const destination = getSpriteDestination( spriteId );
-    return destination.failedToFindPath;
-};
 export const spriteIsAtDestination = ( sprite: Sprite ): boolean => {
     const destination = getSpriteDestination( sprite.spriteId );
     return destination.column === sprite.column && destination.row === sprite.row;

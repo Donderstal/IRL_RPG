@@ -1,3 +1,5 @@
+import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import { DestinationType } from '../../enumerables/DestinationType';
 import { RoadAlignmentEnum } from '../../enumerables/RoadAlignmentEnum';
 import { Counter } from '../../helpers/Counter';
 import { getUniqueId } from '../../helpers/utilFunctions';
@@ -5,6 +7,8 @@ import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { CellPosition } from '../../models/CellPositionModel';
 import type { DirectionXy } from '../../models/DirectionXyModel';
 import type { RoadModel } from '../../models/RoadModel';
+import { initializeSpriteMovement, setSpriteAndSpriteModules } from '../modules/moduleSetter';
+import { getSpriteById } from '../modules/sprites/spriteGetter';
 import { Road } from './roads/Road';
 
 export class RoadNetwork {
@@ -41,7 +45,21 @@ export class RoadNetwork {
     }
 
     handleCarCounter(): CanvasObjectModel {
+        if ( this.carCounter.countAndCheckLimit() ) {
+            this.spawnCarWithRandomDestination();
+        }
         return null;
+    }
+
+    spawnCarWithRandomDestination(): void {
+        const validRoads = this.roads.filter( ( e ) => { return e.hasUnoccupiedStart(); } );
+        const randomRoad = validRoads[Math.floor( Math.random() * validRoads.length )];
+        const randomPath = randomRoad.getRandomPath();
+        const carModel = randomRoad.getRandomCarObjectModel();
+
+        const id = setSpriteAndSpriteModules( carModel, CanvasTypeEnum.backSprites );
+        const sprite = getSpriteById( id );
+        initializeSpriteMovement( randomPath, DestinationType.randomGeneratedSprite, sprite );
     }
 
     getValidCarStart(): CellPosition {

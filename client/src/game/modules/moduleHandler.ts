@@ -21,7 +21,10 @@ import { getSpriteDestination } from "./destinations/destinationGetter";
 
 import { initializeSpriteAnimation } from "./animations/animationSetter";
 import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
-import { destroySpriteMovementToDestination, tryInitializeSpriteMovement } from "./moduleSetter";
+import { destroySpriteMovementToDestination, initializeSpriteMovement } from "./moduleSetter";
+import { getBackTilesGrid } from "../canvas/canvasGetter";
+import { DestinationType } from "../../enumerables/DestinationType";
+import { tryFindPath } from "../map/pathfinder";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
@@ -56,14 +59,13 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 }
 
 export const resetSpriteModuleCounters = ( spriteId: string ): void => {
-	if ( moduleIsRunningForSprite( spriteId, SpriteModuleEnum.idleAnimation ) ) {
-		resetIdleAnimationCounter( spriteId );
-	}
-	if ( moduleIsRunningForSprite( spriteId, SpriteModuleEnum.randomAnimation ) ) {
-		resetRandomAnimationCounter( spriteId );
-	}
+    if ( moduleIsRunningForSprite( spriteId, SpriteModuleEnum.idleAnimation ) ) {
+        resetIdleAnimationCounter( spriteId );
+    }
+    if ( moduleIsRunningForSprite( spriteId, SpriteModuleEnum.randomAnimation ) ) {
+        resetRandomAnimationCounter( spriteId );
+    }
 }
-
 
 export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     const destination = getSpriteDestination( sprite.spriteId );
@@ -105,9 +107,15 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ) => {
         initializeSpriteAnimation( sprite, animation, { looped: false, loops: 0 } )
     }
     else {
+
         const destination = getRandomDestination( sprite );
         if ( destination == null ) return;
-        tryInitializeSpriteMovement( sprite, destination );
+
+        const start = getBackTilesGrid().getTileAtCell( sprite.column, sprite.row );
+        const destinationTile = getBackTilesGrid().getTileAtCell( destination.column, destination.row );
+        const path = tryFindPath( start, destinationTile );
+        if ( path === null ) return;
+        initializeSpriteMovement( path, DestinationType.randomInRange, sprite );
     }
 }
 

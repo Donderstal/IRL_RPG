@@ -311,7 +311,7 @@ export default {
             "name": `Morgan street C ${DirectionEnum.up}`,
             "direction": DirectionEnum.up,
             "alignment": RoadAlignmentEnum.vertical,
-            "hasStart": true,
+            "hasStart": false,
             "primaryColumn": 81,
             "secondaryColumn": 82,
             "primaryRow": 64,

@@ -11,7 +11,7 @@ import type { Sprite } from "../core/Sprite";
 import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import type { InteractionAnswer } from "../../enumerables/InteractionAnswer";
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
-import { getClosestCell, getOppositeDirection, getSpriteFacingTowardsTargetDirection } from '../../helpers/utilFunctions';
+import { getClosestCell, getSpriteFacingTowardsTargetDirection } from '../../helpers/utilFunctions';
 import type { CellPosition } from "../../models/CellPositionModel";
 import { MAIN_CHARACTER } from "../../resources/spriteTypeResources";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
@@ -19,12 +19,11 @@ import { setNewBubble, setNewEmote } from "../controllers/bubbleController";
 import { destroySpriteAnimation, initializeSpriteAnimation } from "../modules/animations/animationSetter";
 import { spriteHasAnimation } from "../modules/animations/animationGetter";
 import { cameraFocus } from "../cameraFocus";
-import type { DestinationCellModel } from "../../models/DestinationCellModel";
 import { DestinationType } from "../../enumerables/DestinationType";
 import { removeSpriteById } from "../modules/sprites/spriteSetter";
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
-import { setSpriteAndSpriteModules, tryInitializeSpriteMovement } from "../modules/moduleSetter";
+import { setSpriteAndSpriteModules, initializeSpriteMovement } from "../modules/moduleSetter";
 import { ANIM_TALK } from "../../game-data/animationGlobals";
 import { startFadeFromBlack, startFadeToBlack } from "../../helpers/faderModule";
 import { pauseMusic, playEffect } from "../sound/sound";
@@ -37,6 +36,7 @@ import { getAssociatedHitbox, idInHitboxDictionary } from "../modules/hitboxes/h
 import { getSpriteActionById } from "../modules/actions/actionGetter";
 import { setScreenTextToCanvas } from "../../helpers/screenTextModule";
 import { MAX_BUBBLE_TEXT_WIDTH } from "../../game-data/globals";
+import { tryFindPath } from "../map/pathfinder";
 
 export class Animation {
     id: string;
@@ -187,12 +187,12 @@ export class Animation {
             sceneModel.destination = getClosestCell( this.sprite, cells );
         }
 
-        const destination: DestinationCellModel = {
-            column: sceneModel.destination.column,
-            row: sceneModel.destination.row,
-            type: DestinationType.cinematic
-        }
-        tryInitializeSpriteMovement( this.sprite, destination )
+
+        const start = backTiles.getTileAtCell( this.sprite.column, this.sprite.row );
+        const destination = backTiles.getTileAtCell( sceneModel.destination.column, sceneModel.destination.row );
+
+        const path = tryFindPath( start , destination );
+        initializeSpriteMovement( path, DestinationType.cinematic, this.sprite )
     }
 
     initAnimationAnimation( sceneModel: AnimateSpriteScene ): void {
