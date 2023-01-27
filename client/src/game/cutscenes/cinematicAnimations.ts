@@ -4,10 +4,12 @@ import { getSpriteById, getPlayer } from "../modules/sprites/spriteGetter";
 import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '../map/mapAnimation';
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { getFrontTilesGrid } from '../canvas/canvasGetter';
+import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
 
 export const handleCinematicAnimations = ( ): void => {
     clearSpriteCanvasGrids();
-    clearUICanvasGrids()
+    clearUICanvasGrids();
+    handleSpritesScheduledForDelete();
 
     const frontTiles = getFrontTilesGrid();
 

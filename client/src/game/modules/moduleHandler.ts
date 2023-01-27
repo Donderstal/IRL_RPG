@@ -22,9 +22,10 @@ import { getSpriteDestination } from "./destinations/destinationGetter";
 import { initializeSpriteAnimation } from "./animations/animationSetter";
 import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
 import { destroySpriteMovementToDestination, initializeSpriteMovement } from "./moduleSetter";
-import { getBackTilesGrid } from "../canvas/canvasGetter";
+import { getBackSpritesGrid, getBackTilesGrid } from "../canvas/canvasGetter";
 import { DestinationType } from "../../enumerables/DestinationType";
 import { tryFindPath } from "../map/pathfinder";
+import type { Destination } from "../map/map-classes/Destination";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
@@ -70,20 +71,21 @@ export const resetSpriteModuleCounters = ( spriteId: string ): void => {
 export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     const destination = getSpriteDestination( sprite.spriteId );
 
-    if ( destination.failedToFindPath ) {
-        destroySpriteMovementToDestination( sprite );
-    }
-
     if ( spriteNextPositionIsBlocked( sprite ) ) {
         if ( spriteIsAtDestination( sprite ) ) {
-            destroySpriteMovementToDestination( sprite );
+            checkIfSpriteShouldFindNewPath( sprite, destination );
             return;
         }
 
         handleBlockedSpriteCounter( sprite );
         if ( blockedSpriteCounterIsOverLimit( sprite.spriteId ) ) {
             destroyBlockedSpriteCounter( sprite.spriteId );
-            setSideStepDestination( sprite );
+            if ( !sprite.isCar ) {
+                setSideStepDestination( sprite );
+            }
+            else if ( sprite.isCar && !sprite.isVisible() ) {
+                destroySpriteMovementToDestination( sprite );
+            }
         }
     }
     else {
@@ -91,8 +93,23 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
         if ( cameraFocus.focusSpriteId == sprite.spriteId && !cameraFocus.movingToNewFocus ) {
             drawNewTilesInCameraFocus( cameraFocus );
         }
-        if ( !movingToDestination ) destroySpriteMovementToDestination( sprite );
+        if ( !movingToDestination ) checkIfSpriteShouldFindNewPath( sprite, destination );
     }
+}
+
+export const checkIfSpriteShouldFindNewPath = ( sprite: Sprite, destination: Destination ): void => {
+    if ( destination.type === DestinationType.randomGeneratedSprite && sprite.isVisible() ) {
+        if ( sprite.isCar ) {
+            const path = getBackSpritesGrid().roadNetwork.findPathFromDirectionXy( destination.currentStep );
+            if ( path === null || path === undefined || path.length === 0 ) {
+                destroySpriteMovementToDestination( sprite );
+                return;
+            }
+            initializeSpriteMovement( path, DestinationType.randomInRange, sprite );
+            return;
+        }
+    }
+    destroySpriteMovementToDestination( sprite );
 }
 
 export const handleRandomAnimationCounter = ( sprite: Sprite ) => {
@@ -107,7 +124,6 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ) => {
         initializeSpriteAnimation( sprite, animation, { looped: false, loops: 0 } )
     }
     else {
-
         const destination = getRandomDestination( sprite );
         if ( destination == null ) return;
 

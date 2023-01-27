@@ -16,6 +16,7 @@ import { BlockedArea } from '../map/map-classes/BlockedArea'
 import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../canvas/canvasGetter'
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
+import { cameraFocus } from '../cameraFocus'
 /**
  * The Sprite serves as a base class for all sprites in the game.
  * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
@@ -305,5 +306,12 @@ export class Sprite {
     deactivateAnimationModule() {
         this.sheetPosition = 0;
         this.setActiveFrames();
+    }
+
+    isVisible(): boolean {
+        return cameraFocus.xyValueIsInView( this.left, this.top )
+            || cameraFocus.xyValueIsInView( this.left, this.bottom )
+            || cameraFocus.xyValueIsInView( this.right, this.top )
+            || cameraFocus.xyValueIsInView( this.right, this.bottom )
     }
 }

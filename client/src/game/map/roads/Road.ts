@@ -61,14 +61,14 @@ export class Road {
         const tileList = this.isHorizontal
             ? getHorizontalRoadStartTileList( model.primaryColumn, model.secondaryRow, model.primaryRow, model.direction )
             : getVerticalRoadStartTileList( model.primaryRow, model.primaryColumn, model.secondaryColumn, model.direction );
-        this.startingPosition = new RoadPosition( tileList, this.model );
+        this.startingPosition = new RoadPosition( tileList, this.model, this.id );
     }
 
     setRoadEndPosition( model: RoadModel ) {
         const tileList = this.isHorizontal
             ? getHorizontalRoadEndTileList( model.secondaryColumn, model.secondaryRow, model.primaryRow, model.direction )
             : getVerticalRoadEndTileList( model.secondaryRow, model.primaryColumn, model.secondaryColumn, model.direction );
-        this.endPosition = new RoadPosition( tileList, this.model );
+        this.endPosition = new RoadPosition( tileList, this.model, this.id );
     }
 
     setIntersectionPositions( intersectingRoad: Road ) {
@@ -89,11 +89,11 @@ export class Road {
         }
 
         if ( turnToTileList !== null ) {
-            this.turnToIntersectingRoadPositions[intersectingRoad.id] = new RoadPosition( turnToTileList, this.model );
+            this.turnToIntersectingRoadPositions[intersectingRoad.id] = new RoadPosition( turnToTileList, this.model, this.id );
         }
 
         if ( turnFromTileList !== null ) {
-            this.turnFromIntersectingRoadPositions[intersectingRoad.id] = new RoadPosition( turnFromTileList, this.model );
+            this.turnFromIntersectingRoadPositions[intersectingRoad.id] = new RoadPosition( turnFromTileList, this.model, this.id );
         }
     }
 
@@ -168,7 +168,7 @@ export class Road {
     }
 
     hasUnoccupiedStart(): boolean {
-        return this.model.hasStart && this.startingPosition.isNotOccupied();
+        return this.model.hasStart && this.startingPosition.isNotOccupied() && !this.startingPosition.isVisible();
     }
 
     getRandomCarObjectModel( isBus = false ): CanvasObjectModel {

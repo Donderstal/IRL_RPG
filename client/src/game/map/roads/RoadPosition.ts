@@ -6,13 +6,17 @@ import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import { TileSquare } from "../../../helpers/TileSquare";
 import { getAllActiveSprites } from "../../modules/sprites/spriteGetter";
 import type { Tile } from "../../core/Tile";
+import type { DirectionXy } from "../../../models/DirectionXyModel";
+import { cameraFocus } from "../../cameraFocus";
 
 export class RoadPosition extends TileSquare {
+    id: string;
     direction: DirectionEnum;
     alignment: RoadAlignmentEnum;
 
-    constructor( tiles: Tile[], model: RoadModel ) {
+    constructor( tiles: Tile[], model: RoadModel, id: string ) {
         super( tiles );
+        this.id = id;
         this.direction = model.direction;
         this.alignment = model.alignment;
     }
@@ -32,16 +36,22 @@ export class RoadPosition extends TileSquare {
         return notOccupied;
     }
 
-    getDirectionXy() {
+    getDirectionXy(): DirectionXy {
         switch ( this.direction ) {
             case DirectionEnum.left:
-                return { x: this.left, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
+                return { x: this.left, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow }, id: this.id };
             case DirectionEnum.up:
-                return { x: this.left, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
+                return { x: this.left, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow }, id: this.id };
             case DirectionEnum.right:
-                return { x: this.right, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
+                return { x: this.right, y: this.top, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow }, id: this.id };
             case DirectionEnum.down:
-                return { x: this.left, y: this.bottom, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow } };
+                return { x: this.left, y: this.bottom, direction: this.direction, tile: { column: this.leftColumn, row: this.bottomRow }, id: this.id };
         }
+    }
+
+    isVisible(): boolean {
+        const camera = cameraFocus;
+        return camera.xyValueIsInView( this.left, this.top ) || camera.xyValueIsInView( this.left, this.bottom )
+            || camera.xyValueIsInView( this.right, this.top ) || camera.xyValueIsInView( this.right, this.bottom )
     }
 }

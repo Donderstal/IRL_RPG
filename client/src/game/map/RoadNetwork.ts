@@ -4,7 +4,6 @@ import { RoadAlignmentEnum } from '../../enumerables/RoadAlignmentEnum';
 import { Counter } from '../../helpers/Counter';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
-import type { CellPosition } from '../../models/CellPositionModel';
 import type { DirectionXy } from '../../models/DirectionXyModel';
 import type { RoadModel } from '../../models/RoadModel';
 import { initializeSpriteMovement, setSpriteAndSpriteModules } from '../modules/moduleSetter';
@@ -62,21 +61,6 @@ export class RoadNetwork {
         initializeSpriteMovement( randomPath, DestinationType.randomGeneratedSprite, sprite );
     }
 
-    getValidCarStart(): CellPosition {
-        const validRoads = this.roads.filter( ( e ) => { return e.hasUnoccupiedStart(); } );
-        const validStarts = validRoads.map( ( e ) => { return e.getRoadStartPosition(); } );
-
-        return validStarts[Math.floor( Math.random() * validStarts.length )];
-    }
-
-    generateCar( road: Road ): CanvasObjectModel {
-        const carObjectModel = road.getRandomCarObjectModel();
-        const startLocation = this.getValidCarStart();
-        if ( startLocation === null || startLocation === undefined ) return;
-
-        return carObjectModel;
-    }
-
     registerIntersectingRoads() {
         this.roads.forEach( ( currentRoad: Road ) => {
             const rightAngledRoads = currentRoad.model.alignment === RoadAlignmentEnum.horizontal ? this.verticalRoads : this.horizontalRoads;
@@ -128,5 +112,15 @@ export class RoadNetwork {
             visitedRoads.push( latestRoadIdInPath )
         }
         road.paths = roadPaths;
+    }
+
+    findPathFromDirectionXy( directionXy: DirectionXy ): DirectionXy[] {
+        const activeRoad = this.getRoadById( directionXy.id );
+        const possiblePaths = activeRoad.paths.map( ( path ) => {
+            const index = path.findIndex( step => step.x === directionXy.x && step.y === directionXy.y && step.direction === directionXy.direction );
+            if ( index === - 1 ) return null;
+            return path.slice( index );
+        } ).filter( ( path ) => { return path !== null && path.length > 1 } );
+        return possiblePaths[Math.floor( Math.random() * possiblePaths.length )]
     }
 }

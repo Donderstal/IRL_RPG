@@ -1,5 +1,8 @@
 ### 
-#### JAN 20, 2023
+#### JAN 27, 2023
+* Retry, blocked handlering for car movement
+
+#### JAN 25, 2023
 * Fine tuning car pathfinding algorithm
 * Simplified destination class, decoupled from pathfinding
 

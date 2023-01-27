@@ -20,7 +20,7 @@ import { destroySpriteAnimation, initializeSpriteAnimation } from "../modules/an
 import { spriteHasAnimation } from "../modules/animations/animationGetter";
 import { cameraFocus } from "../cameraFocus";
 import { DestinationType } from "../../enumerables/DestinationType";
-import { removeSpriteById } from "../modules/sprites/spriteSetter";
+import { scheduleSpriteForDeletion } from "../modules/sprites/spriteSetter";
 import { getSpriteById, getSpriteByName } from "../modules/sprites/spriteGetter";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { setSpriteAndSpriteModules, initializeSpriteMovement } from "../modules/moduleSetter";
@@ -108,7 +108,7 @@ export class Animation {
                     if ( this.deleteSpriteScene.sfx ) {
                         playEffect( this.deleteSpriteScene.sfx )                        
                     }
-                    removeSpriteById( this.spriteId );
+                    scheduleSpriteForDeletion( this.spriteId, true );
                 }, 250 )
                 break;
             case SceneAnimationType.fadeOut:

@@ -79,10 +79,7 @@ export class Grid {
     drawRowInMap( currentRow: Tile[], tilesheetModel: TilesheetModel ) {
         for ( let j = 0; j < this.columns; j++ ) {
             const currentTile = currentRow[j]
-            if ( cameraFocus.xyValueIsInView( currentTile.x, currentTile.y )
-                || cameraFocus.xyValueIsInView( currentTile.x + GRID_BLOCK_PX, currentTile.y )
-                || cameraFocus.xyValueIsInView( currentTile.x, currentTile.y + GRID_BLOCK_PX )
-                || cameraFocus.xyValueIsInView( currentTile.x + GRID_BLOCK_PX, currentTile.y + GRID_BLOCK_PX ) ) {
+            if ( currentTile.isVisible() ) {
                 currentTile.drawTileInMap( tilesheetModel );
             }
         }

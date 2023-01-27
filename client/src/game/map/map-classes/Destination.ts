@@ -20,7 +20,6 @@ export class Destination {
     foundPath: boolean;
     currentPathIndex: number;
     pathfindingTries: number;
-    failedToFindPath: boolean;
     inSideStep: boolean;
     reachedDestination: boolean;
     spriteId: string;
@@ -35,7 +34,6 @@ export class Destination {
         this.currentPathIndex = 0;
 
         this.pathfindingTries = 0;
-        this.failedToFindPath = false;
         this.spriteId = sprite.spriteId;
         this.sprite = sprite;
 

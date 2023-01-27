@@ -5,5 +5,6 @@ export type DirectionXy = {
     x: number;
     y: number;
     direction: DirectionEnum;
-    tile?: GridCellModel
+    tile?: GridCellModel;
+    id?: string;
 }

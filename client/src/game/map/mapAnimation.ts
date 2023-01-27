@@ -17,7 +17,7 @@ import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 import { playEffect } from '../sound/sound';
 import { handleNeighbourhoodNPCCounter } from '../neighbourhoodModule';
-import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
+import { getBackSpritesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { inDebugGameState, inPausedGameState } from '../gameState/gameStateGetter';
 import { switchMap } from '../../helpers/loadMapHelpers';
@@ -26,6 +26,7 @@ import { handleSpriteModules } from '../modules/moduleHandler';
 import { drawSavePoint } from '../modules/actions/actionHandlers';
 import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
+import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
 
 export const handleMapAnimations = (): void => {
     const player = getPlayer();
@@ -33,6 +34,7 @@ export const handleMapAnimations = (): void => {
 
     clearSpriteCanvasGrids();
     clearUICanvasGrids()
+    handleSpritesScheduledForDelete();
 
     drawSpritesInOrder( )
     
@@ -104,19 +106,8 @@ export const drawSpritesInOrder = ( ): void => {
     const standardSprites = [];
     const foregroundSprites = [];
     const flyingSprites = [];
-    const spritesInView = getBackSprites().filter( ( e ) => {
-        return cameraFocus.xyValueIsInView( e.left, e.top )
-            || cameraFocus.xyValueIsInView( e.left, e.bottom )
-            || cameraFocus.xyValueIsInView( e.right, e.top )
-            || cameraFocus.xyValueIsInView( e.right, e.bottom );
-    } )
-
-    const spritesOutOfView = getBackSprites().filter( ( e ) => {
-        return !( cameraFocus.xyValueIsInView( e.left, e.top )
-            || cameraFocus.xyValueIsInView( e.left, e.bottom )
-            || cameraFocus.xyValueIsInView( e.right, e.top )
-            || cameraFocus.xyValueIsInView( e.right, e.bottom ) );
-    } )
+    const spritesInView = getBackSprites().filter( ( e ) => { return e.isVisible() } );
+    const spritesOutOfView = getBackSprites().filter( ( e ) => { return !e.isVisible() } );
 
     spritesInView.sort( ( a, b ) => {
         if ( a.row > b.row || a.row === b.row && a.bottom > b.bottom ) {

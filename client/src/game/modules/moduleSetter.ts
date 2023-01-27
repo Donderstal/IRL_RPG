@@ -17,7 +17,7 @@ import { clearHitboxes, initializeHitboxForSprite } from "./hitboxes/hitboxSette
 import { clearIdleAnimationCounters, initializeIdleAnimationCounter } from "./idleAnimCounters/idleAnimSetter";
 import { markModuleAsActive, markModuleAsInActive } from "./moduleRegistrySetter";
 import { clearRandomAnimationCounters, initializeRandomAnimationCounter } from "./randomAnimCounters/randomAnimSetter";
-import { clearAllSprites, createSpriteFromCanvasObjectModel, removeSpriteById } from "./sprites/spriteSetter";
+import { clearAllSprites, createSpriteFromCanvasObjectModel, scheduleSpriteForDeletion } from "./sprites/spriteSetter";
 
 export const setSpriteAndSpriteModules = ( model: CanvasObjectModel, canvas: CanvasTypeEnum, id: string = null ): string => {
 	const sprite = createSpriteFromCanvasObjectModel( model, canvas, id );
@@ -78,7 +78,7 @@ export const initializeSpriteMovement = ( path: DirectionXy[], type: Destination
 export const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
 	const destination = getSpriteDestination( sprite.spriteId );
 	if ( destination.type === DestinationType.randomGeneratedSprite ) {
-		removeSpriteById( sprite.spriteId );
+		scheduleSpriteForDeletion( sprite.spriteId, false, sprite.isCar )
 	}
 	destroySpriteDestination( sprite.spriteId );
 	sprite.deactivateMovementModule();

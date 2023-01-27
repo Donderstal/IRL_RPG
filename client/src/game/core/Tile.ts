@@ -6,6 +6,7 @@ import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { getTilesheetImageForTile, getTilesheetXy } from "../../helpers/tileSheetHelpers";
 import type { TilesheetModel } from "../../models/TilesheetModel";
 import { inDebugGameState } from "../gameState/gameStateGetter";
+import { cameraFocus } from "../cameraFocus";
 /**
  * The Tile class is the most basic building block of the game.
  * Each map is divided up in a grid of rows and columns with an Grid instance.
@@ -107,4 +108,11 @@ export class Tile {
     clearTileID( ): void {
         this.model.id = null;
     };
+
+    isVisible(): boolean {
+        return cameraFocus.xyValueIsInView( this.x, this.y )
+            || cameraFocus.xyValueIsInView( this.x + GRID_BLOCK_PX, this.y )
+            || cameraFocus.xyValueIsInView( this.x, this.y + GRID_BLOCK_PX )
+            || cameraFocus.xyValueIsInView( this.x + GRID_BLOCK_PX, this.y + GRID_BLOCK_PX );
+    }
 };
