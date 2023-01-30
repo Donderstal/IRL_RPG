@@ -85,6 +85,10 @@ export class Destination {
 
     }
 
+    getStepByIndex( index: number ): DirectionXy {
+        return this.path[index];
+    }
+
     getCurrentStepTile(): Tile {
         if ( this.currentStep == undefined ) return null;
         if ( this.currentStep.tile === undefined || this.currentStep.tile === null ) {
@@ -102,10 +106,11 @@ export class Destination {
     }
 
     getNextStepDirection( sprite: Sprite ): DirectionEnum {
+        let topY = sprite.model.isCharacter ? sprite.bottom + GRID_BLOCK_PX : sprite.top;
         if ( this.currentStep.x <= sprite.left - ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.left ) {
             return DirectionEnum.left;
         }
-        else if ( this.currentStep.y <= sprite.top - ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.up ) {
+        else if ( this.currentStep.y <= topY - ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.up ) {
             return DirectionEnum.up;
         }
         else if ( this.currentStep.x >= sprite.right + ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.right ) {

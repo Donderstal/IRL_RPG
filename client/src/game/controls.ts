@@ -102,7 +102,7 @@ export const handleMovementKeys = () => {
         if ( direction !== null ) {
             preparePlayerForMovement();
             player.setDirection( direction );
-            if ( !spriteNextPositionIsBlocked( player ) ) {
+            if ( !spriteNextPositionIsBlocked( player, null, direction ) ) {
                 moveSpriteInDirection( player, direction );
             }
             if ( cameraFocus.focusSpriteId == player.spriteId && !cameraFocus.movingToNewFocus ) {

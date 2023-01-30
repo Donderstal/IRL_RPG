@@ -71,7 +71,7 @@ export const resetSpriteModuleCounters = ( spriteId: string ): void => {
 export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     const destination = getSpriteDestination( sprite.spriteId );
 
-    if ( spriteNextPositionIsBlocked( sprite ) ) {
+    if ( spriteNextPositionIsBlocked( sprite, destination ) ) {
         if ( spriteIsAtDestination( sprite ) ) {
             checkIfSpriteShouldFindNewPath( sprite, destination );
             return;

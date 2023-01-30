@@ -202,19 +202,6 @@ export class Sprite {
         this.row = cell.row;
         this.column = cell.column;
     }
-
-    nextPosition( direction: DirectionEnum = this.direction ):number {
-        switch( direction ) {
-            case DirectionEnum.left:
-                return this.left - this.speed;
-            case DirectionEnum.up:
-                return this.dynamicTop - this.speed;
-            case DirectionEnum.right:
-                return this.right + this.speed;
-            case DirectionEnum.down:
-                return this.bottom + this.speed;
-        }
-    }
     
     drawSprite(): void {
         if ( this.isPlayer ) {

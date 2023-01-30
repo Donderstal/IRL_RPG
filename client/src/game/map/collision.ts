@@ -8,9 +8,12 @@ import { getAssociatedHitbox, idInHitboxDictionary } from '../modules/hitboxes/h
 import { getBackTilesGrid, getTileOnCanvasByIndex, getTileOnCanvasByXy } from '../canvas/canvasGetter';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { getSpriteActionById } from '../modules/actions/actionGetter';
+import type { SpritePosition } from '../../helpers/SpritePosition';
+import { getNonPlayerSpriteNextPosition, getPlayerNextPosition, getStaticSpritePosition } from '../../helpers/spritePositionHelper';
+import type { Destination } from './map-classes/Destination';
 
-export const spriteNextPositionIsBlocked = ( sprite: Sprite ): boolean => {
-    const spriteNextPosition = getSpriteNextPosition( sprite );
+export const spriteNextPositionIsBlocked = ( sprite: Sprite, destination: Destination = null, direction: DirectionEnum = null ): boolean => {
+    const spriteNextPosition = getSpriteNextPosition( sprite, destination, direction );
     const staticCollision = checkForStaticCollision( spriteNextPosition, sprite );
     const dynamicCollision = staticCollision ? true : checkForDynamicCollision( spriteNextPosition, sprite );
     return staticCollision || dynamicCollision;
@@ -74,7 +77,7 @@ const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: S
 }  
 
 const checkIfSpritesCollide = ( spriteNextPosition: SpritePosition, targetSprite: Sprite, direction: DirectionEnum ): boolean => {
-    const targetNextPosition = getSpriteNextPosition( targetSprite );
+    const targetNextPosition = getStaticSpritePosition( targetSprite );
 
     const willCollide = checkIfPositionsCollide( spriteNextPosition, targetNextPosition, direction );
 
@@ -111,43 +114,7 @@ const checkIfPositionsCollide = ( spriteNextPosition: SpritePosition, targetNext
     }
 }
 
-class SpritePosition {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    isStanding: boolean;
-    isCar: boolean;
-
-    top: number;
-    left: number;
-    bottom: number;
-    right: number;
-
-    baseY: number;
-    centerX: number;
-    dynamicTop: number;
-    constructor( x, y, width, height, standing, isCar ) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.isStanding = standing;
-        this.isCar = isCar
-
-        this.top = this.y;
-        this.left = this.x;
-        this.bottom = this.y + this.height;
-        this.right = this.x + this.width;
-
-        this.baseY = this.bottom - ( GRID_BLOCK_PX / 2 );
-        this.centerX = this.x + ( this.width / 2 );
-        this.dynamicTop = this.isStanding
-            ? this.bottom - GRID_BLOCK_PX
-            : this.top + ( this.isCar ? GRID_BLOCK_PX : GRID_BLOCK_PX / 4 );
-    }
-}
-
-const getSpriteNextPosition = ( sprite: Sprite ) => {
-    return new SpritePosition( sprite.x, sprite.y, sprite.width, sprite.height, sprite.standing, sprite.isCar );
+const getSpriteNextPosition = ( sprite: Sprite, destination: Destination, direction: DirectionEnum ): SpritePosition => {
+    if ( sprite.isPlayer ) return getPlayerNextPosition( sprite, direction );
+    return getNonPlayerSpriteNextPosition( sprite, destination );
 }
