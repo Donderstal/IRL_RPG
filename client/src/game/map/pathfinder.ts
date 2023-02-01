@@ -4,23 +4,13 @@ import type { DirectionXy } from "../../models/DirectionXyModel";
 import type { GridLocation } from "../../models/GridLocation";
 import { getBackSpritesGrid, getBackTilesGrid } from "../canvas/canvasGetter";
 import type { Tile } from "../core/Tile";
+import { getBlockedCellList } from "./blockedTilesRegistry";
 
 export const tryFindPath = ( start: Tile, destination: Tile ): DirectionXy[] => {
-    const path = determineShortestPath( start, destination, getGrid() );
+    const backClass = getBackTilesGrid();
+    const path = determineShortestPath( start, destination, backClass.grid.columns, backClass.grid.rows, getBlockedCellList() );
     if ( path === null ) return null;
     return reduceGridLocationList( start, path );
-}
-
-const getGrid = (): any => {
-    const backClass = getBackTilesGrid();
-    const frontClass = getBackSpritesGrid();
-    return {
-        'rows': backClass.grid.rows, 'columns': backClass.grid.columns,
-        'tiles': backClass.grid.array,
-        'blockedIndexes': backClass.grid.array.filter( ( tile ) => {
-            return tile.isBlocked || frontClass.tileHasBlockingSprite( tile.index );
-        } ).map( ( e: Tile ) => { return e.index } )
-    };
 }
 
 const reduceGridLocationList = ( startingTile: Tile, gridLocationList: GridLocation[] ): DirectionXy[] => {

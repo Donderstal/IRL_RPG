@@ -1,6 +1,6 @@
 import { PLAYER_ID } from "../../../game-data/interactionGlobals";
 import type { Sprite } from "../../core/Sprite";
-import { getAllSpritesAsList, getBackSpritesArray, getFrontSpritesArray, getSpriteIds } from "./spriteRegistry";
+import { getAllSpritesAsList, getBackSpritesArray, getDynamicCollisionSprites, getFrontSpritesArray, getSpriteIds, getStaticCollisionSprites } from "./spriteRegistry";
 
 export const getPlayer = (): Sprite => {
     return getSpriteById( PLAYER_ID );
@@ -25,6 +25,12 @@ export const getBackSprites = (): Sprite[] => {
 }
 export const getFrontSprites = (): Sprite[] => {
     return getFrontSpritesArray();
+}
+export const getStaticSprites = (): Sprite[] => {
+    return getStaticCollisionSprites();
+}
+export const getDynamicSprites = (): Sprite[] => {
+    return getDynamicCollisionSprites();
 }
 
 const spriteWithIdExists = ( id: string ) => {

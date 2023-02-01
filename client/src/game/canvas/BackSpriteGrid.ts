@@ -11,21 +11,20 @@ import type { Tile } from '../core/Tile';
 import type { MapModel } from '../../models/MapModel';
 import type { SpawnPointModel } from '../../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../../helpers/modelFactory';
-import type { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';
-import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DestinationType } from '../../enumerables/DestinationType';
 import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
 import { setSpriteList } from '../modules/sprites/spriteSetter';
 import { getPlayer } from '../modules/sprites/spriteGetter';
 import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../neighbourhoodModule';
-import { getTileOnCanvasByCell } from './canvasGetter';
 import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
 import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
 import { getPlayerStart, mapHasPlayerStart } from '../map/playerLocationOnMapLoad';
+import { getBlockedCellList, isTileBlocked, tileIsValidDestination } from '../map/blockedTilesRegistry';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -88,22 +87,9 @@ export class BackSpriteGrid extends CanvasGrid {
         this.roadNetwork = null;
     }
 
-    tileHasBlockingSprite( index: number | OutOfMapEnum ): boolean {
-        return this.tilesBlockedBySprites.indexOf( index ) > -1;
-    }
-
     generateWalkingNPC( ): void {
         let start: SpawnPointModel;
         let end: SpawnPointModel;
-
-        const grid = {
-            'rows': this.grid.rows, 'columns': this.grid.columns,
-            'tiles': this.grid.array,
-            'blockedIndexes': this.grid.array.filter( ( tile ) => {
-                return tile.isBlocked;
-            } ).map( ( e: Tile ) => { return e.index } )
-        };
-
         let visitedStarts = [];
         let visitedEnds = [];
         let validPath = false;
@@ -115,7 +101,7 @@ export class BackSpriteGrid extends CanvasGrid {
                 if ( end === undefined ) return;
                 let tileStart = this.getTileAtCell( start.column, start.row );
                 let tileEnd = this.getTileAtCell( end.column, end.row );
-                validPath = determineShortestPath( tileStart, tileEnd, grid ) !== null;
+                validPath = determineShortestPath( tileStart, tileEnd, this.grid.columns, this.grid.rows, getBlockedCellList() ) !== null;
 
                 visitedEnds.push( end );
             }
@@ -134,10 +120,7 @@ export class BackSpriteGrid extends CanvasGrid {
                 return point.column === x.column && point.row === x.row
             } ).length === 0 : true;
         } );
-        let unblockedSpawnPoints = availableSpawnPoints.filter( ( e ) => {
-            let tile = getTileOnCanvasByCell( { "column": e.column, "row": e.row }, CanvasTypeEnum.background );
-            return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
-        } );
+        let unblockedSpawnPoints = availableSpawnPoints.filter( tileIsValidDestination );
         return unblockedSpawnPoints[Math.floor( Math.random() * unblockedSpawnPoints.length )];
     }
 
@@ -153,9 +136,7 @@ export class BackSpriteGrid extends CanvasGrid {
 
     filterSpawnPoints( startLocation: SpawnPointModel = null ): SpawnPointModel[] {
         return this.model.spawnPoints.filter( ( e) => {
-            let tile = getTileOnCanvasByCell( { "column": e.column, "row": e.row }, CanvasTypeEnum.background );
-            return !( tile.isBlocked || this.tileHasBlockingSprite( tile.index ) )
-                && (startLocation != null ? e.column != startLocation.column && e.row !== startLocation.row : true);
+            return !isTileBlocked( e ) && ( startLocation == null || (e.column != startLocation.column && e.row !== startLocation.row));
         })
     }
 

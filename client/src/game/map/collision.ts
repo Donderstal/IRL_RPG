@@ -11,6 +11,7 @@ import { getSpriteActionById } from '../modules/actions/actionGetter';
 import type { SpritePosition } from '../../helpers/SpritePosition';
 import { getNonPlayerSpriteNextPosition, getPlayerNextPosition, getStaticSpritePosition } from '../../helpers/spritePositionHelper';
 import type { Destination } from './map-classes/Destination';
+import { isTileBlocked } from './blockedTilesRegistry';
 
 export const spriteNextPositionIsBlocked = ( sprite: Sprite, destination: Destination = null, direction: DirectionEnum = null ): boolean => {
     const spriteNextPosition = getSpriteNextPosition( sprite, destination, direction );
@@ -22,7 +23,6 @@ export const spriteNextPositionIsBlocked = ( sprite: Sprite, destination: Destin
 const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sprite ): boolean => {
     const currentTile = getTileOnCanvasByXy( { "x": sprite.centerX, "y": sprite.baseY }, CanvasTypeEnum.background );
     const backGrid = getBackTilesGrid().grid;
-    if ( currentTile.offScreen ) return false;
     const hitbox = new Hitbox( spriteNextPosition.centerX, spriteNextPosition.baseY, sprite.width / 2 );
     let nextIndex: number, nextTile: Tile, nextTileIsOffscreen: boolean;
     switch ( sprite.direction ) {
@@ -30,22 +30,22 @@ const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sp
             nextTileIsOffscreen = currentTile.column === 1;
             nextIndex = currentTile.index - 1;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.left < currentTile.x;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.left < currentTile.x;
         case DirectionEnum.up:
             nextTileIsOffscreen = currentTile.row === 1;
             nextIndex = currentTile.index - backGrid.columns;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.top < currentTile.y;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.top < currentTile.y;
         case DirectionEnum.right:
             nextTileIsOffscreen = currentTile.column === backGrid.columns;
             nextIndex = currentTile.index + 1;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.right > currentTile.x + GRID_BLOCK_PX;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.right > currentTile.x + GRID_BLOCK_PX;
         case DirectionEnum.down:
             nextTileIsOffscreen = currentTile.row === backGrid.rows;
             nextIndex = currentTile.index + backGrid.columns;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || nextTile.isBlocked ) && hitbox.outerBottom > currentTile.y + GRID_BLOCK_PX;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.outerBottom > currentTile.y + GRID_BLOCK_PX;
     }
 }
 

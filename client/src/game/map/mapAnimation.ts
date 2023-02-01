@@ -10,7 +10,7 @@ import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { setActiveCinematic } from '../controllers/cinematicController';
 import { CinematicTrigger } from '../../enumerables/CinematicTriggerEnum';
 import { addDoorToUnlockedDoorsRegistry } from '../../registries/doorRegistry';
-import { getBackSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
+import { getBackSprites, getDynamicSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
 import type { Door } from './map-classes/Door';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
@@ -27,6 +27,7 @@ import { drawSavePoint } from '../modules/actions/actionHandlers';
 import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
 import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
+import { registerTilesBlockedByDynamicSprites } from './blockedTilesRegistry';
 
 export const handleMapAnimations = (): void => {
     const player = getPlayer();
@@ -35,6 +36,7 @@ export const handleMapAnimations = (): void => {
     clearSpriteCanvasGrids();
     clearUICanvasGrids()
     handleSpritesScheduledForDelete();
+    registerTilesBlockedByDynamicSprites( getDynamicSprites() );
 
     drawSpritesInOrder( )
     

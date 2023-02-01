@@ -1,4 +1,7 @@
 ### 
+#### FEB 1, 2023
+* centralized functionalities for getting/setting blocked tiles
+
 #### JAN 27, 2023
 * Retry, blocked handlering for car movement
 

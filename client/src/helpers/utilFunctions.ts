@@ -1,9 +1,10 @@
 import { DestinationType } from "../enumerables/DestinationType";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { PLAYER_ID } from "../game-data/interactionGlobals";
-import { getBackSpritesGrid, getBackTilesGrid } from "../game/canvas/canvasGetter";
+import { getBackTilesGrid } from "../game/canvas/canvasGetter";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
+import { tileIsValidDestination } from "../game/map/blockedTilesRegistry";
 import type { DestinationCellModel } from "../models/DestinationCellModel";
 import type { GridCellModel } from "../models/GridCellModel";
 
@@ -152,7 +153,6 @@ export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
 
 export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): DestinationCellModel => {
     const back = getBackTilesGrid();
-    const front = getBackSpritesGrid();
     const leftBorderColumn = sprite.column - radius;
     const rightBorderColumn = sprite.column + radius;
     const topBorderRow = sprite.row - radius;
@@ -164,9 +164,7 @@ export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): 
             && !( e.row === sprite.row && e.column === sprite.column );
     } );
 
-    const availableTiles = tiles.filter( ( e ) => {
-        return !e.isBlocked && !front.tileHasBlockingSprite( e.index );
-    } );
+    const availableTiles = tiles.filter( tileIsValidDestination );
 
     if ( availableTiles.length > 0 ) {
         let randomTile = availableTiles[Math.floor( Math.random() * availableTiles.length )];

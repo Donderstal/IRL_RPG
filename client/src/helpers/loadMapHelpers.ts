@@ -1,12 +1,11 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
-import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodKey, getNeighbourhoodModel, getPreviousMapKey, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
+import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodKey, getNeighbourhoodModel, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
-import type { CellPosition } from '../models/CellPositionModel';
 import type { Sprite } from '../game/core/Sprite';
 import type { MapModel } from '../models/MapModel';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { cameraFocus } from '../game/cameraFocus';
-import { getPlayer } from '../game/modules/sprites/spriteGetter';
+import { getPlayer, getStaticSprites } from '../game/modules/sprites/spriteGetter';
 import { clearSpriteModuleRegistries } from '../game/modules/moduleRegistrySetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
@@ -18,6 +17,7 @@ import { dismissActiveAction } from '../game/controllers/actionController';
 import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { registerMapExit, setPlayerLocationOnMapLoad } from '../game/map/playerLocationOnMapLoad';
+import { clearBlockedTilesRegistry, registerNewMap, registerTilesBlockedByStaticSprites } from '../game/map/blockedTilesRegistry';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null ): void => {
     const neighbourhood = getNeighbourhoodModel();
@@ -53,6 +53,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
         }, 250 )            
     }
 
+    registerBlockedTilesOnMap();
     back.drawMapFromGridData();
     frontgrid.drawMapFromGridData();
 }
@@ -60,6 +61,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
 export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, exitId: string = null ): void => {
     if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType] ) ) return;
 
+    clearBlockedTilesRegistry();
     registerMapExit( getActiveMapKey(), exitId );
     clearActiveSoundEffects();
     setPausedGameState( true );
@@ -74,7 +76,7 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
     dismissActiveAction();
 
     loadMapToCanvases( getActiveMap(), loadType );
-    setTimeout( ( ) => {
+    setTimeout( () => {
         setPausedGameState( false ); 
     }, 100 )
 }
@@ -108,6 +110,14 @@ export const setNeighbourhoodAndMap = ( mapName: string ): void => {
     else {
         activateMap(mapName);
     }
+}
+
+const registerBlockedTilesOnMap = (): void => {
+    const backGrid = getBackTilesGrid();
+    const sprites = getStaticSprites();
+
+    registerNewMap( backGrid );
+    registerTilesBlockedByStaticSprites( sprites );
 }
 
 const setCanvasDimensions = (): void => {

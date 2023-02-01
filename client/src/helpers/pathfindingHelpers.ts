@@ -1,8 +1,9 @@
 import { TileStatus } from "../enumerables/TileStatusEnum";
 import type { Tile } from "../game/core/Tile";
+import type { GridCellModel } from "../models/GridCellModel";
 import type { GridLocation } from "../models/GridLocation";
 
-let colsInGrid: number, rowsInGrid: number, tiles: Tile[], blockedIndexes: number[];
+let colsInGrid: number, rowsInGrid: number, tiles: GridCellModel[];
 let queue: PriorityQueue, visitedTilesList: string[], foundPath: GridLocation[], movementCost: number, targetLocationIndex: string;
 
 enum PathfindingDirection {
@@ -49,7 +50,7 @@ class PriorityQueue {
 const getLocationStatus = ( location: GridLocation ): TileStatus => {
     if ( location.row < 0 || location.column < 0 || location.row > rowsInGrid + 1 || location.column > colsInGrid + 1 ) {
         return TileStatus.invalid;
-    } else if ( visitedTilesList.indexOf( location.index ) > -1 || blockedIndexes.indexOf( location.tileIndex ) > -1 ) {
+    } else if ( visitedTilesList.indexOf( location.index ) > -1 ) {
         return TileStatus.blocked;
     } else {
         return TileStatus.valid;
@@ -76,8 +77,8 @@ const exploreInDirection = ( currentLocation: GridLocation, direction: Pathfindi
     }
 
     let tile = tiles[((row * colsInGrid) - (colsInGrid - column)) - 1];
-    if ( tile !== undefined ) {
-        const newLocation: GridLocation = { row: row, column: column, movementCost: movementCost, index: tile.column + "_" + tile.row, tileIndex: tile.index };
+    if ( tile !== undefined && tile !== null) {
+        const newLocation: GridLocation = { row: row, column: column, movementCost: movementCost, index: tile.column + "_" + tile.row };
         newLocation.path = [...currentLocation.path.slice(), newLocation];
         newLocation.status = getLocationStatus( newLocation );
         if ( newLocation.status === TileStatus.valid )
@@ -102,13 +103,12 @@ const addTileInDirectionToQueueIfValid = ( currentLocation: ItemWithPriority, di
     }
 }
 
-export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, grid: { columns: number, rows: number, tiles: Tile[], blockedIndexes: number[] } ): GridLocation[] => {
+export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, columns: number, rows: number, gridTiles: GridCellModel[] ): GridLocation[] => {
     queue = new PriorityQueue( );
     visitedTilesList = [];
-    colsInGrid = grid.columns;
-    rowsInGrid = grid.rows;
-    tiles = grid.tiles;
-    blockedIndexes = grid.blockedIndexes;
+    colsInGrid = columns;
+    rowsInGrid = rows;
+    tiles = gridTiles;
     foundPath = null;
     targetLocationIndex = targetTile.column + "_" + targetTile.row; 
 
@@ -116,7 +116,6 @@ export const determineShortestPath = ( startingTile: Tile, targetTile: Tile, gri
         column: startingTile.column,
         row: startingTile.row,
         index: startingTile.column + "_" + startingTile.row,
-        tileIndex: startingTile.index,
         movementCost: startingTile.movementCost,
         status: TileStatus.start,
         path: []

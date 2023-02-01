@@ -37,6 +37,7 @@ import { getSpriteActionById } from "../modules/actions/actionGetter";
 import { setScreenTextToCanvas } from "../../helpers/screenTextModule";
 import { MAX_BUBBLE_TEXT_WIDTH } from "../../game-data/globals";
 import { tryFindPath } from "../map/pathfinder";
+import { tileIsValidDestination } from "../map/blockedTilesRegistry";
 
 export class Animation {
     id: string;
@@ -171,7 +172,6 @@ export class Animation {
 
     initMoveAnimation( sceneModel: MoveScene ): void {
         const backTiles = getBackTilesGrid();
-        const backSprites = getBackSpritesGrid();
         if ( typeof sceneModel.destination === 'string' || sceneModel.destination instanceof String ) {
             const targetSprite = getSpriteByName( sceneModel.destination as string );             
             const cells = [
@@ -179,11 +179,7 @@ export class Animation {
                 initGridCellModel( targetSprite.column - 1, targetSprite.row ),
                 initGridCellModel( targetSprite.column + 1, targetSprite.row ),
                 initGridCellModel( targetSprite.column, targetSprite.row + 1 ),
-            ].filter((cell): boolean =>{ 
-                const tileB = backTiles.getTileAtCell( cell.column, cell.row )
-                const tileF = backSprites.getTileAtCell( cell.column, cell.row )
-                return !tileB.isBlocked && !backSprites.tileHasBlockingSprite(tileF.index);
-            });
+            ].filter( tileIsValidDestination );
             sceneModel.destination = getClosestCell( this.sprite, cells );
         }
 

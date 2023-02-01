@@ -52,16 +52,8 @@ export class Tile {
         this.movementCost = 1;
     };
 
-    get isBlocked( ): boolean { 
-        return !this.offScreen && this.blocked;
-    }
-
     get isEmpty( ): boolean {
         return this.model.id === null;
-    }
-
-    get offScreen(): boolean {
-        return this.index === OutOfMapEnum.left || this.index === OutOfMapEnum.up || this.index === OutOfMapEnum.right || this.index === OutOfMapEnum.down;
     }
 
     setMovementCost( value: number ): void {
