@@ -1,10 +1,8 @@
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
-import { getRandomDestinationInRadius } from "../../../helpers/utilFunctions";
 import { cameraFocus } from "../../cameraFocus";
 import type { Sprite } from "../../core/Sprite";
 import type { Tile } from "../../core/Tile";
 import type { Destination } from "../../map/map-classes/Destination";
-import { getSpriteDestination } from "./destinationGetter";
 
 export const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination ): boolean => {
     const direction = destination.getNextStepDirection( sprite );
@@ -16,10 +14,6 @@ export const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination )
     else if ( destination.hasNextStep ) {
         destination.setNextStep( sprite );
         if ( sprite.isCar ) return true;
-        return true;
-    }
-    else if ( destination.inSideStep ) {
-        destination.resetOriginalDestination( sprite );
         return true;
     }
     return false;
@@ -45,15 +39,3 @@ export const moveSpriteInDirection = ( sprite: Sprite, direction: DirectionEnum,
     }
     sprite.movementFrameCounter();
 };
-export const setSideStepDestination = ( sprite: Sprite ): void => {
-    if ( !sprite.isCar ) {
-        const destination = getSpriteDestination( sprite.spriteId );
-        const sideStepDestination = getRandomDestinationInRadius( sprite, 2 );
-        if ( sideStepDestination === null ) return;
-        destination.setSideStep( sideStepDestination, sprite );
-    }
-}
-export const spriteIsAtDestination = ( sprite: Sprite ): boolean => {
-    const destination = getSpriteDestination( sprite.spriteId );
-    return destination.column === sprite.column && destination.row === sprite.row;
-}

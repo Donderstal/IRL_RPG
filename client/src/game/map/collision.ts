@@ -1,7 +1,6 @@
 import { DirectionEnum } from '../../enumerables/DirectionEnum';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
-import { getAllActiveSprites } from '../modules/sprites/spriteGetter';
-import { Hitbox } from '../core/Hitbox';
+import { getDynamicSprites } from '../modules/sprites/spriteGetter';
 import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
 import { getAssociatedHitbox, idInHitboxDictionary } from '../modules/hitboxes/hitboxGetter';
@@ -15,54 +14,52 @@ import { isTileBlocked } from './blockedTilesRegistry';
 
 export const spriteNextPositionIsBlocked = ( sprite: Sprite, destination: Destination = null, direction: DirectionEnum = null ): boolean => {
     const spriteNextPosition = getSpriteNextPosition( sprite, destination, direction );
-    const staticCollision = checkForStaticCollision( spriteNextPosition, sprite );
-    const dynamicCollision = staticCollision ? true : checkForDynamicCollision( spriteNextPosition, sprite );
-    return staticCollision || dynamicCollision;
+    return sprite.isPlayer
+        ? checkForStaticCollision( spriteNextPosition, sprite ) || checkForDynamicCollision( spriteNextPosition, sprite )
+        : checkForDynamicCollision( spriteNextPosition, sprite );
 }
 
 const checkForStaticCollision = ( spriteNextPosition: SpritePosition, sprite: Sprite ): boolean => {
     const currentTile = getTileOnCanvasByXy( { "x": sprite.centerX, "y": sprite.baseY }, CanvasTypeEnum.background );
     const backGrid = getBackTilesGrid().grid;
-    const hitbox = new Hitbox( spriteNextPosition.centerX, spriteNextPosition.baseY, sprite.width / 2 );
     let nextIndex: number, nextTile: Tile, nextTileIsOffscreen: boolean;
     switch ( sprite.direction ) {
         case DirectionEnum.left:
             nextTileIsOffscreen = currentTile.column === 1;
             nextIndex = currentTile.index - 1;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.left < currentTile.x;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && spriteNextPosition.left < currentTile.x - ( sprite.speed / 2 );
         case DirectionEnum.up:
             nextTileIsOffscreen = currentTile.row === 1;
             nextIndex = currentTile.index - backGrid.columns;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.top < currentTile.y;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && spriteNextPosition.dynamicTop < currentTile.y - ( sprite.speed / 2 );
         case DirectionEnum.right:
             nextTileIsOffscreen = currentTile.column === backGrid.columns;
             nextIndex = currentTile.index + 1;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.right > currentTile.x + GRID_BLOCK_PX;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && spriteNextPosition.right > ( currentTile.x + GRID_BLOCK_PX ) + ( sprite.speed / 2 );
         case DirectionEnum.down:
             nextTileIsOffscreen = currentTile.row === backGrid.rows;
             nextIndex = currentTile.index + backGrid.columns;
             nextTile = getTileOnCanvasByIndex( nextIndex, CanvasTypeEnum.background );
-            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && hitbox.outerBottom > currentTile.y + GRID_BLOCK_PX;
+            return ( nextTileIsOffscreen || isTileBlocked( nextTile ) ) && spriteNextPosition.bottom > ( currentTile.y + GRID_BLOCK_PX ) + ( sprite.speed / 2 );
     }
 }
 
 const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: Sprite ): boolean => {
-    const allSprites = getAllActiveSprites();
-    const spritesToCheck = allSprites.filter( ( e ) => { return !e.model.onBackground && !e.model.notGrounded;});
+    const spritesToCheck = sprite.isCar ? getDynamicSprites() : getDynamicSprites().filter( ( e ) => { return e.isVisible(); });
     const allSpritesCount = spritesToCheck.length;
 
-    let colliding = false; 
+    let colliding = false;
     let spriteIndex = 0;
 
-    while( colliding == false && spriteIndex < allSpritesCount ) {
+    while ( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = spritesToCheck[spriteIndex];
         if ( targetSprite.spriteId != sprite.spriteId ) {
             const hitbox = idInHitboxDictionary( sprite.spriteId ) ? getAssociatedHitbox( sprite.spriteId ) : getSpriteActionById( sprite.spriteId );
             if ( hitbox !== undefined ) {
-                if ( !targetSprite.model.hasBlockedArea && !targetSprite.hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction )) {
+                if ( !targetSprite.model.hasBlockedArea && !targetSprite.hasDoor && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction ) ) {
                     colliding = true;
                 }
                 else if ( targetSprite.model.hasBlockedArea && targetSprite.blockedArea.checkForCollision( hitbox, sprite.direction ) ) {
@@ -72,9 +69,9 @@ const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: S
         }
         spriteIndex++;
     }
-    
+
     return colliding;
-}  
+}
 
 const checkIfSpritesCollide = ( spriteNextPosition: SpritePosition, targetSprite: Sprite, direction: DirectionEnum ): boolean => {
     const targetNextPosition = getStaticSpritePosition( targetSprite );
@@ -103,7 +100,7 @@ const checkIfPositionsCollide = ( spriteNextPosition: SpritePosition, targetNext
             return spriteNextPosition.left <= targetNextPosition.right
                 && targetIsLeftOfSprite && inHorizontalRange;
         case DirectionEnum.up:
-            return spriteNextPosition.dynamicTop <= targetNextPosition.baseY
+            return spriteNextPosition.dynamicTop <= targetNextPosition.bottom
                 && targetIsAboveSprite && inVerticalRange;
         case DirectionEnum.right:
             return spriteNextPosition.right >= targetNextPosition.left

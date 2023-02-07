@@ -17,11 +17,7 @@ import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../canvas/canvasGetter'
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
 import { cameraFocus } from '../cameraFocus'
-/**
- * The Sprite serves as a base class for all sprites in the game.
- * The Class contains base functionalities concerning drawing a sprite, looping through a spritesheet,
- *  and movement to a destination.
- */
+
 export class Sprite {
     x: number;
     y: number;
@@ -117,7 +113,7 @@ export class Sprite {
         if ( direction !== this.previousDirection ) {
             this.setDimensions();
             this.setActiveFrames();
-            if ( tile !== null ) {
+            if ( tile !== null && this.isCar ) {
                 this.setSpriteToGrid( tile )
             }
         }

@@ -27,7 +27,7 @@ import { drawSavePoint } from '../modules/actions/actionHandlers';
 import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
 import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
-import { registerTilesBlockedByDynamicSprites } from './blockedTilesRegistry';
+import { getBaseCellList, getDynamicallyBlockedTileIndexes, registerTilesBlockedByDynamicSprites } from './blockedTilesRegistry';
 
 export const handleMapAnimations = (): void => {
     const player = getPlayer();
@@ -41,7 +41,7 @@ export const handleMapAnimations = (): void => {
     drawSpritesInOrder( )
     
     handleRoadNetworkFuncs()
-    //handleNpcCounter()
+    handleNpcCounter()
 
     if ( getPlayer() != undefined && !inPausedGameState() && !hasActiveSelectionBubble() ) {
         handleMovementKeys( );  
@@ -124,20 +124,24 @@ export const drawSpritesInOrder = ( ): void => {
     })
 
     if ( inDebugGameState() ) {
-        backSpritesGrid.tilesBlockedBySprites.forEach( ( e ) => {
+        const baseCells = getBaseCellList()
+        baseCells.forEach( ( e, index ) => {
+            if ( e === null ) {
+                const tile = getTileOnCanvasByIndex( index, CanvasTypeEnum.backSprites );
+                if ( tile !== undefined ) {
+                    drawRect( backSpritesGrid.canvas, tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX, 'orange' );
+                }
+            }
+        } )
+
+        const indexes = getDynamicallyBlockedTileIndexes();
+        indexes.forEach( ( e ) => {
             const tile = getTileOnCanvasByIndex( e, CanvasTypeEnum.backSprites );
             if ( tile !== undefined ) {
                 drawRect( backSpritesGrid.canvas, tile.x, tile.y, GRID_BLOCK_PX, GRID_BLOCK_PX, 'red' );
             }
         } )
     }
-    backSpritesGrid.resetTilesBlockedBySprites();
-    spritesOutOfView.forEach( ( sprite ) => {
-        if ( !(sprite.model.onBackground || sprite.model.notGrounded
-            || ( sprite.movementType == MovementType.flying && moduleIsRunningForSprite( sprite.spriteId, SpriteModuleEnum.movement ) ) ) ) {
-            backSpritesGrid.setTilesBlockedBySprite( sprite );
-        }
-    } )
     spritesInView.forEach( ( sprite )  => {
         if ( sprite.model.onBackground ) {
             backgroundSprites.push( sprite );
@@ -150,7 +154,6 @@ export const drawSpritesInOrder = ( ): void => {
         }
         else {
             standardSprites.push( sprite );
-            backSpritesGrid.setTilesBlockedBySprite( sprite );
         }
     } )
 

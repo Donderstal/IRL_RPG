@@ -3,7 +3,6 @@ import type { Sprite } from '../../core/Sprite';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import type { Tile } from '../../core/Tile';
 import type { DirectionXy } from '../../../models/DirectionXyModel';
-import type { DestinationCellModel } from '../../../models/DestinationCellModel';
 import type { DestinationType } from '../../../enumerables/DestinationType';
 import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
 import { markModuleAsActive, markModuleAsInActive } from '../../modules/moduleRegistrySetter';
@@ -11,11 +10,7 @@ import { SpriteModuleEnum } from '../../../enumerables/SpriteModuleEnum';
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../../canvas/canvasGetter';
 
 export class Destination {
-    column: number;
-    row: number;
     type: DestinationType;
-    originalDestination: { column: number, row: number }
-
     path: DirectionXy[];
     foundPath: boolean;
     currentPathIndex: number;
@@ -49,13 +44,6 @@ export class Destination {
         this.path = path;
         this.activateSpriteMovementModule( sprite );
         markModuleAsActive( sprite.spriteId, SpriteModuleEnum.movement );
-    }
-
-    setSideStep( sideStepDestination: DestinationCellModel, sprite: Sprite ): void {
-        //this.column = sideStepDestination.column;
-        //this.row = sideStepDestination.row;
-        //this.inSideStep = true;
-        //this.setPath( sprite );
     }
 
     snapSpriteToCurrentStepTile( ): void {
@@ -106,7 +94,7 @@ export class Destination {
     }
 
     getNextStepDirection( sprite: Sprite ): DirectionEnum {
-        let topY = sprite.model.isCharacter ? sprite.bottom + GRID_BLOCK_PX : sprite.top;
+        let topY = sprite.model.isCharacter ? sprite.bottom - GRID_BLOCK_PX : sprite.top;
         if ( this.currentStep.x <= sprite.left - ( sprite.speed / 2 ) && this.currentStep.direction == DirectionEnum.left ) {
             return DirectionEnum.left;
         }
@@ -122,12 +110,5 @@ export class Destination {
         else {
             return null;
         }
-    }
-
-    resetOriginalDestination( sprite: Sprite ): void {
-        //this.column = this.originalDestination.column;
-        //this.row = this.originalDestination.row;
-        //this.inSideStep = false;
-        //this.setPath( sprite );
     }
 }

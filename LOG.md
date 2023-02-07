@@ -1,5 +1,10 @@
 ### 
 #### FEB 1, 2023
+* Fine tuning sprite path finding algorithm
+* Turned off static collision for NPC sprites
+* Blocked handling/repathing improvements so sprites don't get stuck
+
+#### FEB 1, 2023
 * centralized functionalities for getting/setting blocked tiles
 
 #### JAN 27, 2023

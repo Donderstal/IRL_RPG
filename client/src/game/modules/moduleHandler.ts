@@ -10,22 +10,23 @@ import { inDebugGameState } from "../gameState/gameStateGetter";
 import { updateSpriteAssociatedAction } from "./actions/actionHandlers";
 import { handleSpriteAnimation } from "./animations/animationHandler";
 import { blockedSpriteCounterIsOverLimit, handleBlockedSpriteCounter } from "./blockedCounters/blockedCounterHandler";
-import { checkIfSpriteCanMove, setSideStepDestination, spriteIsAtDestination } from "./destinations/destinationHandler";
+import { checkIfSpriteCanMove } from "./destinations/destinationHandler";
 import { updateSpriteAssociatedDoor } from "./doors/doorHandler";
 import { updateAssociatedHitbox } from "./hitboxes/hitboxHandler";
 import { getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "./idleAnimCounters/idleAnimHandler";
 import { getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "./randomAnimCounters/randomAnimHandler";
 
 import { moduleIsRunningForSprite } from "./moduleRegistryGetter";
-import { getSpriteDestination } from "./destinations/destinationGetter";
+import { getSpriteDestination, getSpriteDestinationCell, spriteHasDestinationCell } from "./destinations/destinationGetter";
 
 import { initializeSpriteAnimation } from "./animations/animationSetter";
 import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
 import { destroySpriteMovementToDestination, initializeSpriteMovement } from "./moduleSetter";
-import { getBackSpritesGrid, getBackTilesGrid } from "../canvas/canvasGetter";
+import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from "../canvas/canvasGetter";
 import { DestinationType } from "../../enumerables/DestinationType";
 import { tryFindPath } from "../map/pathfinder";
 import type { Destination } from "../map/map-classes/Destination";
+import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
@@ -56,7 +57,7 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 	}
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.randomAnimation ) && !moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) && !moduleIsRunningForSprite( id, SpriteModuleEnum.animation ) ) {
 		handleRandomAnimationCounter( sprite );
-	}
+    }
 }
 
 export const resetSpriteModuleCounters = ( spriteId: string ): void => {
@@ -71,17 +72,22 @@ export const resetSpriteModuleCounters = ( spriteId: string ): void => {
 export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
     const destination = getSpriteDestination( sprite.spriteId );
 
-    if ( spriteNextPositionIsBlocked( sprite, destination ) ) {
-        if ( spriteIsAtDestination( sprite ) ) {
-            checkIfSpriteShouldFindNewPath( sprite, destination );
-            return;
-        }
-
+    if ( sprite.isVisible() && spriteNextPositionIsBlocked( sprite, destination ) ) {
         handleBlockedSpriteCounter( sprite );
         if ( blockedSpriteCounterIsOverLimit( sprite.spriteId ) ) {
             destroyBlockedSpriteCounter( sprite.spriteId );
-            if ( !sprite.isCar ) {
-                setSideStepDestination( sprite );
+            if ( !sprite.isCar && spriteHasDestinationCell( sprite.spriteId ) ) {
+                const destinationCell = getSpriteDestinationCell( sprite.spriteId );
+                const startTile = getTileOnCanvasByCell( { column: sprite.column, row: sprite.row }, CanvasTypeEnum.background );
+                const destinationTile = getTileOnCanvasByCell( destinationCell, CanvasTypeEnum.background )
+                const path = tryFindPath( startTile, destinationTile );
+                const destination = getSpriteDestination( sprite.spriteId );
+                if ( path === null || path === undefined || path.length === 0 ) {
+                    destroySpriteMovementToDestination( sprite );
+                    return;
+                }
+                initializeSpriteMovement( path, destination.type, sprite );
+                return;
             }
             else if ( sprite.isCar && !sprite.isVisible() ) {
                 destroySpriteMovementToDestination( sprite );
@@ -98,6 +104,7 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
 }
 
 export const checkIfSpriteShouldFindNewPath = ( sprite: Sprite, destination: Destination ): void => {
+    console.log( `sprite ${sprite.spriteId} reached destination col ${sprite.column}, row ${sprite.row}` )
     if ( destination.type === DestinationType.randomGeneratedSprite && sprite.isVisible() ) {
         if ( sprite.isCar ) {
             const path = getBackSpritesGrid().roadNetwork.findPathFromDirectionXy( destination.currentStep );
@@ -105,7 +112,7 @@ export const checkIfSpriteShouldFindNewPath = ( sprite: Sprite, destination: Des
                 destroySpriteMovementToDestination( sprite );
                 return;
             }
-            initializeSpriteMovement( path, DestinationType.randomInRange, sprite );
+            initializeSpriteMovement( path, DestinationType.randomGeneratedSprite, sprite );
             return;
         }
     }
@@ -131,7 +138,8 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ) => {
         const destinationTile = getBackTilesGrid().getTileAtCell( destination.column, destination.row );
         const path = tryFindPath( start, destinationTile );
         if ( path === null ) return;
-        initializeSpriteMovement( path, DestinationType.randomInRange, sprite );
+
+        initializeSpriteMovement( path, DestinationType.randomInRange, sprite, destination );
     }
 }
 

@@ -33,6 +33,6 @@ export class SpritePosition {
         this.centerX = this.x + ( this.width / 2 );
         this.dynamicTop = this.isStanding
             ? this.bottom - GRID_BLOCK_PX
-            : this.top + ( this.isCar ? GRID_BLOCK_PX : GRID_BLOCK_PX / 4 );
+            : this.top + GRID_BLOCK_PX;
     }
 }

@@ -11,7 +11,7 @@ let nonCollisionSprites: Sprite[] = [];
 let staticCollisionSprites: Sprite[] = [];
 let dynamicCollisionSprites: Sprite[] = [];
 
-let spriteDeletionOptions: DeleteSpriteModel[];
+let spriteDeletionOptions: DeleteSpriteModel[] = [];
 
 export const getAllSpritesAsList = (): Sprite[] => {
     return allSpritesArray;

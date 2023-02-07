@@ -30,11 +30,9 @@ export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
     grid: Grid;
     roadNetwork: RoadNetwork;
-    tilesBlockedBySprites: number[];
     constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
         //this.activeEffects = [];
-        this.tilesBlockedBySprites = [];
         this.roadNetwork;
     };
 
@@ -169,18 +167,5 @@ export class BackSpriteGrid extends CanvasGrid {
             return isInCollectableRegistry( id, objectResource.collectableType );
         }
         return false;
-    }
-
-    setTilesBlockedBySprite( sprite: Sprite ): void {
-        let blockedTileIndexes = sprite.getTilesBlockedBySprite( );
-        blockedTileIndexes.forEach( ( e )=> {
-            if ( this.tilesBlockedBySprites.indexOf( e ) == -1 && !isNaN(e) ) {
-                this.tilesBlockedBySprites.push( e );
-            }
-        })
-    }
-
-    resetTilesBlockedBySprites() {
-        this.tilesBlockedBySprites = [];
     }
 }

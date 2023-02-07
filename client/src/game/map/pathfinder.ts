@@ -1,4 +1,5 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
+import { GRID_BLOCK_PX } from "../../game-data/globals";
 import { determineShortestPath } from "../../helpers/pathfindingHelpers";
 import type { DirectionXy } from "../../models/DirectionXyModel";
 import type { GridLocation } from "../../models/GridLocation";
@@ -16,7 +17,7 @@ export const tryFindPath = ( start: Tile, destination: Tile ): DirectionXy[] => 
 const reduceGridLocationList = ( startingTile: Tile, gridLocationList: GridLocation[] ): DirectionXy[] => {
     let previousDirection = null;
     const frontClass = getBackSpritesGrid();
-    return gridLocationList.reduce( ( acc, cur, index ) => {
+    const list: DirectionXy[] = gridLocationList.reduce( ( acc, cur, index ) => {
         const currentLocation = frontClass.getTileAtCell( cur.column, cur.row );
         const step = {
             x: currentLocation.x,
@@ -42,4 +43,13 @@ const reduceGridLocationList = ( startingTile: Tile, gridLocationList: GridLocat
         }
         return [...acc, step];
     }, [] );
+    return list.map( ( e ) => {
+        if ( e.direction === DirectionEnum.right ) {
+            e.x += GRID_BLOCK_PX;
+        }
+        if ( e.direction === DirectionEnum.down ) {
+            e.y += GRID_BLOCK_PX;
+        }
+        return e
+    } )
 }

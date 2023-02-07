@@ -4,6 +4,7 @@ import { DestinationType } from "../../enumerables/DestinationType";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { CanvasObjectModel } from "../../models/CanvasObjectModel";
 import type { DirectionXy } from "../../models/DirectionXyModel";
+import type { GridCellModel } from "../../models/GridCellModel";
 import { getBackTilesGrid } from "../canvas/canvasGetter";
 import type { Sprite } from "../core/Sprite";
 import { tryFindPath } from "../map/pathfinder";
@@ -66,19 +67,19 @@ export const initializeSpriteModules = ( sprite: Sprite, canvasObjectModel: Canv
 
 		const path = tryFindPath( start, destination );
 		if ( path === null ) return;
-		initializeSpriteMovement( path, DestinationType.randomGeneratedSprite, sprite );
+		initializeSpriteMovement( path, DestinationType.randomGeneratedSprite, sprite, canvasObjectModel.destination );
 	}
 }
 
-export const initializeSpriteMovement = ( path: DirectionXy[], type: DestinationType, sprite: Sprite ): void => {
+export const initializeSpriteMovement = ( path: DirectionXy[], type: DestinationType, sprite: Sprite, destinationCell: GridCellModel = null ): void => {
 	destroySpriteAnimation( sprite );
-	initializeSpriteDestination( path, type, sprite );
+	initializeSpriteDestination( path, type, sprite, destinationCell );
 }
 
 export const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
 	const destination = getSpriteDestination( sprite.spriteId );
 	if ( destination.type === DestinationType.randomGeneratedSprite ) {
-		scheduleSpriteForDeletion( sprite.spriteId, false, sprite.isCar )
+		scheduleSpriteForDeletion( sprite.spriteId, sprite.model.isCharacter !== undefined, sprite.isCar )
 	}
 	destroySpriteDestination( sprite.spriteId );
 	sprite.deactivateMovementModule();

@@ -79,7 +79,7 @@ export class Tile {
                 this.ctx.beginPath( )
                 this.ctx.rect( this.x, this.y,GRID_BLOCK_PX, GRID_BLOCK_PX )
                 this.ctx.stroke()
-                this.ctx.fillStyle = 'white';
+                this.ctx.fillStyle = 'black';
                 this.ctx.fillText( `ID:${this.model.id.toString()}`, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .25, )
                 this.ctx.fillText( `C:${this.column}`, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .50, )
                 this.ctx.fillText( `R:${this.row}`, this.x + GRID_BLOCK_PX * .33, this.y + GRID_BLOCK_PX * .75, )

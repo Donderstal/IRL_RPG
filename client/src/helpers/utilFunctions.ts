@@ -153,19 +153,20 @@ export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
 
 export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): DestinationCellModel => {
     const back = getBackTilesGrid();
-    const leftBorderColumn = sprite.column - radius;
-    const rightBorderColumn = sprite.column + radius;
-    const topBorderRow = sprite.row - radius;
-    const bottomBorderRow = sprite.row + radius;
+    const columnsInGrid = back.grid.columns;
+    const rowsInGrid = back.grid.rows;
+    const leftBorderColumn = ( sprite.initialColumn - radius ) < 1 ? 1 : ( sprite.initialColumn - radius );
+    const rightBorderColumn = ( sprite.initialColumn + radius ) > columnsInGrid ? columnsInGrid : ( sprite.initialColumn + radius );
+    const topBorderRow = ( sprite.initialRow - radius ) < 1 ? 1 : ( sprite.initialRow - radius );
+    const bottomBorderRow = ( sprite.initialRow + radius ) > rowsInGrid ? rowsInGrid : ( sprite.initialRow + radius );
 
     const tiles = back.grid.array.filter( ( e ) => {
-        return ( e.column > leftBorderColumn && e.column < rightBorderColumn )
-            && ( e.row > topBorderRow && e.row < bottomBorderRow )
+        return ( e.column >= leftBorderColumn && e.column <= rightBorderColumn )
+            && ( e.row >= topBorderRow && e.row <= bottomBorderRow )
             && !( e.row === sprite.row && e.column === sprite.column );
     } );
 
     const availableTiles = tiles.filter( tileIsValidDestination );
-
     if ( availableTiles.length > 0 ) {
         let randomTile = availableTiles[Math.floor( Math.random() * availableTiles.length )];
         return { column: randomTile.column, row: randomTile.row, type: DestinationType.randomInRange };

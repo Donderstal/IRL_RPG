@@ -1,7 +1,7 @@
 <script lang="ts">
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
-    import { LH_NEWTOWN_APP_3_KEY, LH_CHARACTERS_MASTER_ROOM_KEY } from '../../resources/mapResources/leonard_heights/leonard_heights_res'; 
+    import { LH_NEWTOWN_APP_3_KEY, LH_CHARACTERS_MASTER_ROOM_KEY, LH_COLLISION_MASTER_ROOM } from '../../resources/mapResources/leonard_heights/leonard_heights_res'; 
     import { GameType } from '../../enumerables/GameType';
     import { loadFilesAndStartGame } from '../../game/mainController';
 
@@ -68,6 +68,7 @@
         <p><label for="map-selection" >Select starting location</label><select id="map-selection" name="map-selection" >
             <option value={LH_NEWTOWN_APP_3_KEY}>Leonard Heights</option>
             <option value={LH_CHARACTERS_MASTER_ROOM_KEY}>Master rooms</option>
+            <option value={LH_COLLISION_MASTER_ROOM}>Collision test room</option>
         </select></p>
     </div>
     <MainUiButton action={startGameWithParams} buttonText={"Let's go!"} clickable={true}/>

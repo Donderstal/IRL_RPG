@@ -72,7 +72,6 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
     clearActiveMap();
 
     clearStoryEventsForMap();
-    getBackSpritesGrid().resetTilesBlockedBySprites();
     dismissActiveAction();
 
     loadMapToCanvases( getActiveMap(), loadType );

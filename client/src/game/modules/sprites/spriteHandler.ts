@@ -11,7 +11,7 @@ export const handleSpritesScheduledForDelete = (): void => {
 
 const tryDeleteSprite = ( model: DeleteSpriteModel ): void => {
     const sprite = getSpriteById( model.id );
-    if ( model.force || ( model.deleteWhenInvisible && !sprite.isVisible() ) ) {
+    if ( model.force || ( model.deleteWhenInvisible && !sprite.isVisible() ) || model.attempts > 5 ) {
         removeSpriteById( model.id, true );
     }
     else {

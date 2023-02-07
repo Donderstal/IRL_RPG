@@ -188,7 +188,7 @@ export class Animation {
         const destination = backTiles.getTileAtCell( sceneModel.destination.column, sceneModel.destination.row );
 
         const path = tryFindPath( start , destination );
-        initializeSpriteMovement( path, DestinationType.cinematic, this.sprite )
+        initializeSpriteMovement( path, DestinationType.cinematic, this.sprite, sceneModel.destination )
     }
 
     initAnimationAnimation( sceneModel: AnimateSpriteScene ): void {
