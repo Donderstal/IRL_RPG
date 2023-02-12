@@ -18,7 +18,7 @@ const CINSCRIPT_KEY_GUY_3: CinematicModel = [
 ];
 
 export const B3_INTERACTION_GUY_WHO_LOST_HIS_KEYS = [
-    getDefaultTalkInteraction( CINSCRIPT_KEY_GUY_3, getInteractionRegisteredCondition( "TEST_KEY_3" ) ),
+    getDefaultTalkInteraction( CINSCRIPT_KEY_GUY_1, getInteractionRegisteredCondition( "TEST_KEY_3" ) ),
     getRegistryTalkInteraction( CINSCRIPT_KEY_GUY_2, getInteractionRegisteredCondition( "TEST_KEY_2" ), "TEST_KEY_3" ),
-    getDefaultTalkInteraction( CINSCRIPT_KEY_GUY_1, getDefaultCondition() )
+    getDefaultTalkInteraction( CINSCRIPT_KEY_GUY_3, getDefaultCondition() )
 ];

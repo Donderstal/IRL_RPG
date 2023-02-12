@@ -34,7 +34,7 @@ export const BUBBLE_CANVAS_HEIGHT          = mobileAgent ? 8 * GRID_BLOCK_PX : s
 export const MAP_SPRITE_WIDTH_IN_SHEET     = 64
 export const MAP_SPRITE_HEIGHT_IN_SHEET    = 112
 // speech bubbles 
-export const MAX_BUBBLE_WIDTH              = GRID_BLOCK_PX * 12
+export const MAX_BUBBLE_WIDTH              = mobileAgent ? GRID_BLOCK_PX * 10 : GRID_BLOCK_PX * 12;
 export const BUBBLE_INNER_PADDING          = GRID_BLOCK_PX * ( mobileAgent ? .33 : .66 )
 export const MAX_BUBBLE_TEXT_WIDTH         = MAX_BUBBLE_WIDTH - ( BUBBLE_INNER_PADDING * 4 );
 

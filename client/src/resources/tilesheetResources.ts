@@ -1653,7 +1653,7 @@ const getTileSheetModels = () => {
             blocked: e.blocked,
             image: images["standard"]["0"],
             images: { ...images },
-            xyValues: getTilesetXyValues( images["standard"]["0"].height / GRID_BLOCK_PX )
+            xyValues: getTilesetXyValues( images["standard"]["0"].height / GRID_BLOCK_IN_SHEET_PX )
         }
 
         return model;

@@ -1,5 +1,8 @@
 ### 
-#### FEB 1, 2023
+#### FEB 12, 2023
+* New asset loading system for better handling of cached files
+
+#### FEB 7, 2023
 * Fine tuning sprite path finding algorithm
 * Turned off static collision for NPC sprites
 * Blocked handling/repathing improvements so sprites don't get stuck

@@ -5,69 +5,136 @@ import { setSpritePng } from "./sprites";
 import { setTilesheetPng } from "./tilesheets";
 import { setUiImage } from "./ui";
 
-let pngIndex: number = 0;
-let pngsLimit: number = null;
+let imageToLoadCount: number = null;
 let fetchedPngJson = false;
-let loadedPngs = false;
+let registeredAllImages = false;
 
-let soundIndex: number = 0;
-let soundsLimit: number = null;
+let soundsToLoadCount: number = null;
 let fetchedSoundJson = false;
-let loadedAudio = false;
+let registeredAllAudio = false;
 
-export const startFileLoader = ( ) => {
+let imagesToLoadQueue: HTMLImageElement[] = [];
+const loadedImageFiles: HTMLImageElement[] = [];
+const registeredImageFiles: HTMLImageElement[] = [];
+
+let audioToLoadQueue: HTMLAudioElement[] = [];
+const loadedAudioFiles: HTMLAudioElement[] = [];
+const registeredAudioFiles: HTMLAudioElement[] = [];
+
+export const startFileLoader = () => {
     fetchJSONWithCallback( "static/png-list.json", setPngs );
     fetchJSONWithCallback( "static/audio-list.json", setSounds );
 }
 
-export const filesAreLoaded = () => {
+export const getLoadingProgressPercentage = (): number => {
+    const total = soundsToLoadCount + imageToLoadCount;
+    const current = loadedImageFiles.length + loadedAudioFiles.length;
+    return current / total;
+}
+
+export const filesAreLoaded = (): boolean => {
     if ( fetchedPngJson === false || fetchedSoundJson === false ) {
         return false;
     }
-    if ( pngIndex === pngsLimit ) {
-        loadedPngs = true;
+    if ( registeredImageFiles.length >= imageToLoadCount ) {
+        registeredAllImages = true;
     }
-    if ( soundIndex === soundsLimit ) {
-        loadedAudio = true;
+    if ( registeredAudioFiles.length >= soundsToLoadCount ) {
+        registeredAllAudio = true;
     }
-    return loadedPngs && loadedAudio;
+    return registeredAllImages && registeredAllAudio;
+}
+
+export const handleFileLoadQueues = (): boolean => {
+    if ( fetchedPngJson === false || fetchedSoundJson === false ) {
+        return false;
+    }
+    if ( !registeredAllImages ) {
+        if ( loadedImageFiles.length < imagesToLoadQueue.length ) {
+            handleImagesQueue();
+        }
+        else {
+            loadedImageFiles.forEach( ( e ) => { onImageLoaded( e.src, e ); } );
+        }
+    }
+
+    if ( !registeredAllAudio ) {
+        if ( loadedAudioFiles.length < audioToLoadQueue.length ) {
+            handleAudioQueue();
+        }
+        else {
+            loadedAudioFiles.forEach( ( e ) => { onAudioLoaded( e.src, e ); } );
+        }
+    }
+
+    return filesAreLoaded();
+}
+
+const handleImagesQueue = (): void => {
+    imagesToLoadQueue = imagesToLoadQueue.map( ( e ) => {
+        if ( e !== null && e.complete && e.naturalWidth > 0 ) {
+            loadedImageFiles.push( e );
+            return null;
+        }
+        return e;
+    } )
+}
+
+const handleAudioQueue = (): void => {
+    audioToLoadQueue = audioToLoadQueue.map( ( e ) => {
+        if ( e !== null && e.readyState >= 2 ) {
+            loadedAudioFiles.push( e );
+            return null;
+        }
+        return e;
+    } )
 }
 
 const setPngs = ( jsonList: string[] ): void => {
     fetchedPngJson = true;
-    pngsLimit = jsonList.length;
-    jsonList.forEach( ( pngPath ) => {
-        const image = new Image();
-        const path = pngPath;
-        image.src = path;
-        image.onload = () => {
-            pngIndex++;
-            if ( path.includes( '/effects/' ) ) {
-                setEffectPng( path, image );
-            }
-            else if ( path.includes( '/sprites/' ) ) {
-                setSpritePng( path, image );
-            }
-            else if ( path.includes( '/site_assets/' ) || path.includes( '/ui/' ) ) {
-                setUiImage( path, image );
-            }
-            else if ( path.includes( '/tilesets/' ) ) {
-                setTilesheetPng( path, image );
-            }
-        }
-    } );
+    imageToLoadCount = jsonList.length;
+    jsonList.forEach( addImageElementToQueue );
 }
 
 const setSounds = ( jsonList: string[] ): void => {
     fetchedSoundJson = true
-    soundsLimit = jsonList.length;
-    jsonList.forEach( ( audioPath ) => {
-        const audio = new Audio( audioPath );
-        const path = audioPath;
-        audio.preload = 'auto';
-        audio.onloadedmetadata = () => {
-            soundIndex++;
-            setAudioFile( path, audio );
-        }
-    } );
+    soundsToLoadCount = jsonList.length;
+    jsonList.forEach( addAudioElementToQueue );
+}
+
+const addImageElementToQueue = ( src: string ): void => {
+    const image = new Image();
+    image.src = src;
+    imagesToLoadQueue.push( image );
+}
+
+const addAudioElementToQueue = ( src: string ): void => {
+    const audio = new Audio();
+    audio.src = src;
+    audioToLoadQueue.push( audio );
+}
+
+const onImageLoaded = ( path: string, image: HTMLImageElement ): void => {
+    const splitPath = path.split( "static" )
+    const pathFromRoot = "/static" + splitPath[1];
+    if ( pathFromRoot.includes( '/effects/' ) ) {
+        setEffectPng( pathFromRoot, image );
+    }
+    else if ( pathFromRoot.includes( '/sprites/' ) ) {
+        setSpritePng( pathFromRoot, image );
+    }
+    else if ( pathFromRoot.includes( '/site_assets/' ) || pathFromRoot.includes( '/ui/' ) ) {
+        setUiImage( pathFromRoot, image );
+    }
+    else if ( pathFromRoot.includes( '/tilesets/' ) ) {
+        setTilesheetPng( pathFromRoot, image );
+    }
+    registeredImageFiles.push( image );
+}
+
+const onAudioLoaded = ( path: string, audio: HTMLAudioElement ): void => {
+    const splitPath = path.split( "static" )
+    const pathFromRoot = "/static" + splitPath[1];
+    setAudioFile( pathFromRoot, audio );
+    registeredAudioFiles.push( audio );
 }

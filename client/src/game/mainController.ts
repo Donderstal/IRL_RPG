@@ -11,7 +11,7 @@ import { animationLoop, stopAnimationLoop } from "./animationLoop";
 import { cameraFocus, initializeCameraFocus } from "./cameraFocus";
 import { prepareCanvasElementsForGame } from "./canvas/canvasSetter";
 import { listenForKeyPress, stopListenForKeyPress } from "./controls";
-import { filesAreLoaded, startFileLoader } from "../assets/fileLoader";
+import { filesAreLoaded, handleFileLoadQueues, startFileLoader } from "../assets/fileLoader";
 import { setDebugModeState, setDisableStoryState } from "./gameState/gameStateSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./loadingScreen";
 import { getActiveMap } from "./neighbourhoodModule";
@@ -59,7 +59,7 @@ export const resetSavePoint = (): void => {
 }
 
 const checkIfFilesAreLoaded = () => {
-    if ( filesAreLoaded() ) {
+    if ( handleFileLoadQueues() ) {
         clearInterval( checkForLoadedFilesInterval );
         gameType === GameType.newGame ? startNewGame() : loadGameFromSave();
     }

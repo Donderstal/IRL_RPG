@@ -1,3 +1,4 @@
+import { getLoadingProgressPercentage } from "../assets/fileLoader";
 import { BATTLE_FONT_LINE_HEIGHT, BATTLE_FONT_SIZE, LARGE_FONT_SIZE } from "../game-data/globals";
 import { COLOR_WHITE } from "../game-data/uiGlobals";
 import { TypeWriter } from "../helpers/TypeWriter";
@@ -35,18 +36,6 @@ let activeTextWidth;
 const activeText = (): string => { return typeWriter.activeText.map( ( e ) => { return e.activeWord; } ).join( '' ) };
 const availableTextLines = (): string[] => { return randomTextArray.filter( ( e ) => { return e !== currentLoadingScreenText } ) };
 
-export const handleLoadingScreenText = (): void => {
-    if ( typeWriter === null || !typeWriter.isWriting ) {
-        getNewLoadingScreenText();
-        typeWriter = new TypeWriter( currentLoadingScreenText + "          " );
-        canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
-        activeTextWidth = canvasContext.measureText( currentLoadingScreenText ).width;
-    }
-    else {
-        typeWriter.write();
-    }
-}
-
 export const getNewLoadingScreenText = (): void => {
     const lines = availableTextLines();
     currentLoadingScreenText = lines[Math.floor( Math.random() * lines.length )];
@@ -64,10 +53,35 @@ export const drawLoadingScreen = (): void => {
 	}
 
     handleLoadingScreenText();
+    handleLoadingProgressBar();
 }
 
 export const clearLoadingScreen = (): void => {
     canvasContext.clearRect( 0, 0, width, height )
+}
+
+const handleLoadingScreenText = (): void => {
+    if ( typeWriter === null || !typeWriter.isWriting ) {
+        getNewLoadingScreenText();
+        typeWriter = new TypeWriter( currentLoadingScreenText + "          " );
+        canvasContext.font = LARGE_FONT_SIZE + "px " + "Stormfaze";
+        activeTextWidth = canvasContext.measureText( currentLoadingScreenText ).width;
+    }
+    else {
+        typeWriter.write();
+    }
+}
+
+const handleLoadingProgressBar = (): void => {
+    const percentage = getLoadingProgressPercentage() === NaN ? 0 : getLoadingProgressPercentage();
+
+    canvasContext.strokeStyle = "white";
+    canvasContext.beginPath();
+    canvasContext.rect( width * .25, ( height / 2 ) + ( BATTLE_FONT_LINE_HEIGHT * 2 ), width * .5, BATTLE_FONT_LINE_HEIGHT );
+    canvasContext.stroke();
+
+    canvasContext.fillStyle = "white";
+    canvasContext.fillRect( width * .25, ( height / 2 ) + ( BATTLE_FONT_LINE_HEIGHT * 2 ), ( width * .5 ) * percentage, BATTLE_FONT_LINE_HEIGHT );
 }
 
 const drawLoadingScreenRecursive = (): void => {
