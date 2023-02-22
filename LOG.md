@@ -1,7 +1,8 @@
 ### 
-#### FEB 02 2023
+#### FEB 22 2023
 * Minor additions/fixes to some Animation types
 * Finetuning cameraPosition handling and dynamic tile drawer
+* Tryout for a intro cinematic
 
 #### FEB 12, 2023
 * New asset loading system for better handling of cached files

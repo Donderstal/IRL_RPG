@@ -75,11 +75,12 @@ export const getCreateSpriteScene = ( position: CellPosition, sprite: string, sp
 export const getDeleteSpriteScene = ( spriteName: string = null, waitForEnd = true, sfx: string = null ): DeleteSpriteScene => {
     return getBaseSceneModel( SceneAnimationType.deleteSprite, waitForEnd, spriteName, sfx ) as DeleteSpriteScene;
 };
-export const getFadeScene = ( type: SceneAnimationType, waitForEnd = true, sfx: string = null ): FadeScene => {
+export const getFadeScene = ( type: SceneAnimationType, targetOpacity = null, waitForEnd = true, sfx: string = null ): FadeScene => {
     const base = getBaseSceneModel( type, waitForEnd, null, sfx );
     const scene: FadeScene = {
         ...base,
-        sfx: base.sfx
+        sfx: base.sfx,
+        targetOpacity: targetOpacity
     };
     return scene;
 };
@@ -92,27 +93,29 @@ export const getWaitScene = ( milliseconds: number, sfx: string = null ): WaitSc
     return scene;
 };
 export const getCameraMoveToSpriteScene = ( snapToSprite: boolean, spriteName: string, waitForEnd = true, sfx: string = null ): CameraMoveToSpriteScene => {
-    const base = getBaseSceneModel( SceneAnimationType.wait, waitForEnd, spriteName, sfx );
+    const base = getBaseSceneModel( SceneAnimationType.cameraMoveToSprite, waitForEnd, spriteName, sfx );
     const scene: CameraMoveToSpriteScene = {
         ...base,
         snapToSprite: snapToSprite
     };
     return scene;
 };
-export const getLoadMapScene = ( mapName: string, setPlayerSprite: boolean, playerStart: CellPosition = null, sfx: string = null ): LoadMapScene => {
-    const base = getBaseSceneModel( SceneAnimationType.wait, true, null, sfx );
+export const getLoadMapScene = ( mapName: string, setPlayerSprite: boolean, playerStart: CellPosition = null, focusTile: GridCellModel = null, sfx: string = null ): LoadMapScene => {
+    const base = getBaseSceneModel( SceneAnimationType.loadMap, true, null, sfx );
     const scene: LoadMapScene = {
         ...base,
         mapName: mapName,
         setPlayerSprite: setPlayerSprite,
-        playerStart: playerStart
+        playerStart: playerStart,
+        focusTile: focusTile
     };
     return scene;
 };
-export const getScreenTextScene = ( text: string, maxWidth: number = null, sfx: string = null ) => {
+export const getScreenTextScene = ( text: string, title: boolean = false, maxWidth: number = null, sfx: string = null ) => {
     const base = getBaseSceneModel( SceneAnimationType.screenText, true, null, sfx );
     const scene: ScreenTextScene = {
         ...base,
+        title: title,
         text: text,
         maxWidth: maxWidth
     };
