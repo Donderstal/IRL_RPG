@@ -6,6 +6,7 @@ import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import { setNewCenterBubble } from "./controllers/bubbleController";
 import { getBackSpritesGrid } from "./canvas/canvasGetter";
+import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 
 let model: NeighbourhoodModel;
 let mapModel: MapModel;
@@ -33,11 +34,13 @@ export const hasActiveNeighbourhood = (): boolean => {
 }
 const activeMapName = (): string => { return activeMapKey.split( '/' )[1]; }
 
-export const initializeNeighbourhood = ( mapKey: string ) => {
+export const initializeNeighbourhood = ( mapKey: string, mapLoadType: PlayerMapEntry ) => {
     model = getNeighbourhood( mapKey.split( '/' )[0] );
-    activateMap( mapKey );
-    setMapGrid();
-    setNeighbourhoodNPCCounter();
+    activateMap( mapKey, mapLoadType );
+    if( model.horizontalSlots.length > 0 )
+        setMapGrid();
+    if ( model.characterSpawnRate !== null )
+        setNeighbourhoodNPCCounter();
 }
 
 const setMapGrid = (): void => {
@@ -147,12 +150,12 @@ export const getRandomNeighbourhoodAction = (): InteractionModel[] => {
     return interactions[Math.floor( Math.random() * interactions.length )];
 }
 
-export const activateMap = ( key: string ): void => {
+export const activateMap = ( key: string, mapLoadType: PlayerMapEntry ): void => {
     previousMapKey = activeMapKey
     previousMapLocation = activeMapLocation;
     activeMapKey = key;
     activeMapLocation = getActiveMap().location;
-    if ( previousMapLocation !== activeMapLocation ) {
+    if ( previousMapLocation !== activeMapLocation && mapLoadType !== PlayerMapEntry.cinematic ) {
         setNewCenterBubble( activeMapLocation )
     }
 }

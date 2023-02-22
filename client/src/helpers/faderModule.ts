@@ -9,6 +9,7 @@ let fadingFromBlack = false;
 let holdBlackScreen = false;
 let fadeInAndOut = false;
 let A = null;
+let faderOpacity = null;
 
 export const getRGBA = (): string => { return "rgba( " + RGB + A + ")"; };
 export const inFadingAnimation = (): boolean => { return fadingFromBlack || fadingToBlack || holdBlackScreen; };
@@ -17,12 +18,14 @@ export const fadedOut = (): boolean => { return !fadingToBlack && holdBlackScree
 export const setFaderCanvas = ( width : number, height: number ): void => {
     faderCanvas = new OffscreenCanvas( width, height );
 };
-export const startFadeToBlack = ( fadeBack = false ): void => {
+export const startFadeToBlack = ( targetOpacity: number, fadeBack = false ): void => {
+    faderOpacity = targetOpacity
     fadeInAndOut = fadeBack
     fadingToBlack = true;
     A = 0;
 };
-export const startFadeFromBlack = (): void => {
+export const startFadeFromBlack = ( targetOpacity: number ): void => {
+    faderOpacity = targetOpacity
     fadingFromBlack = true;
     A = 1;
 };
@@ -53,15 +56,15 @@ const holdBlackMode = (): void => {
     holdBlackScreen = true;
 }
 const checkForFadeEnd = (): void => {
-    if( fadingFromBlack && A <= 0 ) {
+    if ( fadingFromBlack && A <= faderOpacity ) {
         unsetFadingAnimation();
         playMusic();
     }
-    else if ( fadingToBlack && A >= 1 && fadeInAndOut ) {
+    else if ( fadingToBlack && A >= faderOpacity && fadeInAndOut ) {
         unsetFadingAnimation();
-        startFadeFromBlack();
+        startFadeFromBlack( 0 );
     }
-    else if ( fadingToBlack && A >= 1 ) {
+    else if ( fadingToBlack && A >= faderOpacity ) {
         unsetFadingAnimation();
         holdBlackMode();
     }

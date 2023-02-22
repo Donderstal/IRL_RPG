@@ -5,6 +5,7 @@ import { drawSpritesInOrder, handleRoadNetworkFuncs, handleNpcCounter } from '..
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { getFrontTilesGrid } from '../canvas/canvasGetter';
 import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
+import { drawNewTilesInCameraFocus } from '../../helpers/dynamicTileDrawer';
 
 export const handleCinematicAnimations = ( ): void => {
     clearSpriteCanvasGrids();

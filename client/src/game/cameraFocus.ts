@@ -195,8 +195,8 @@ export class CameraFocus {
     }
 
     xyValueIsInView( x: number, y: number ): boolean {
-        return x >= this.leftBorder && x <= ( this.leftBorder + this.screenWidth )
-            && y >= this.topBorder && y <= ( this.topBorder + this.screenHeight );
+        return x >= this.leftBorder && x <= this.rightBorder
+            && y >= this.topBorder && y <= this.downBorder;
     }
 }
 

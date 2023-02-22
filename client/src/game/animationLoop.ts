@@ -11,6 +11,7 @@ import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid,
 import { inListeningForKeysGameState, inPausedGameState } from './gameState/gameStateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
+import { drawNewTilesInCameraFocus } from '../helpers/dynamicTileDrawer';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -45,6 +46,7 @@ export const animationLoop = ( ): void => {
             if  ( cinematicIsActive( ) ) {
                 handleActiveCinematic();
             } 
+            drawNewTilesInCameraFocus( cameraFocus );
             handleOffscreenCanvasBitmaps();
         }
         else {
@@ -87,10 +89,8 @@ const handleOffscreenCanvasBitmaps = () => {
         preRenderContext.drawImage( speechBubbleCanvas.canvas, bubbleX, bubbleY );
     }
 
-    if ( inFadingAnimation() ) {
-        const faderCanvas = getFaderCanvas();
-        preRenderContext.drawImage( faderCanvas, 0, 0 );
-    }
+    const faderCanvas = getFaderCanvas();
+    preRenderContext.drawImage( faderCanvas, 0, 0 );
 
     if ( screenTextIsActive() ) {
         if ( !wroteScreenTextLastFrame ) {

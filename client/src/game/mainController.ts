@@ -69,7 +69,7 @@ const startNewGame = ( ): void => {
     initTilesheetModels();
     initializeDataModels();
     setNewParty( params[0] );
-    setNeighbourhoodAndMap( params[2] );
+    setNeighbourhoodAndMap( params[2], PlayerMapEntry.newGame );
     setDebugModeState( params[3] );
     setDisableStoryState( params[4] );
     setStoryEvents();
@@ -84,7 +84,7 @@ const loadGameFromSave = (): void => {
     initTilesheetModels();
     initializeDataModels();
     setNewParty( saveGame.playerData.name );
-    setNeighbourhoodAndMap( saveGame.activeMap.mapName );
+    setNeighbourhoodAndMap( saveGame.activeMap.mapName, PlayerMapEntry.loadGame );
     setStoryEvents( saveGame.keyLists.storyEvents );
 
     setDebugModeState( false );

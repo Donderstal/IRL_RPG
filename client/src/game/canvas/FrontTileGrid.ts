@@ -26,7 +26,7 @@ export class FrontTileGrid extends CanvasGrid {
     }
 
     drawMapFromGridData( ): void {
-        if ( this.playerVisionBox != undefined ) {
+        if ( getPlayer() !== null && this.playerVisionBox != undefined ) {
             super.drawMapFromGridData( )
             //this.playerVisionBox.clearArc( );            
         }

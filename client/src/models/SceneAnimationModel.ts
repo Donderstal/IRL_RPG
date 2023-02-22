@@ -1,5 +1,6 @@
 import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
 import type { CellPosition } from "./CellPositionModel";
+import type { GridCellModel } from "./GridCellModel";
 
 export type AnimationScene = {
     type: SceneAnimationType;
@@ -58,6 +59,7 @@ export type DeleteSpriteScene = AnimationScene & {
 
 export type FadeScene = AnimationScene & {
     sfx: string;
+    targetOpacity: number
 }
 
 export type WaitScene = AnimationScene & {
@@ -78,9 +80,11 @@ export type LoadMapScene = AnimationScene & {
     mapName: string;
     setPlayerSprite: boolean;
     playerStart: CellPosition;
+    focusTile: GridCellModel;
 }
 
 export type ScreenTextScene = AnimationScene & {
     text: string;
+    title: boolean;
     maxWidth: number;
 }

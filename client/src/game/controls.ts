@@ -4,13 +4,11 @@ import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorB
 import { moveSpriteInDirection } from './modules/destinations/destinationHandler';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
 import { registerPlayerAnswer } from './controllers/cinematicController';
-import { drawNewTilesInCameraFocus } from "../helpers/dynamicTileDrawer";
 import { getPlayer } from "./modules/sprites/spriteGetter";;
 import { resetIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimHandler';
 import { destroySpriteAnimation } from './modules/animations/animationSetter';
 import { spriteHasAnimation } from './modules/animations/animationGetter';
 import { spriteNextPositionIsBlocked } from './map/collision';
-import { cameraFocus } from './cameraFocus';
 import { clearSpeakingEffect, playEffect } from './sound/sound';
 import { getMenuGrid } from './canvas/canvasGetter';
 import { checkForEventTrigger } from './storyEvents/storyEventHandler';
@@ -104,9 +102,6 @@ export const handleMovementKeys = () => {
             player.setDirection( direction );
             if ( !spriteNextPositionIsBlocked( player, null, direction ) ) {
                 moveSpriteInDirection( player, direction );
-            }
-            if ( cameraFocus.focusSpriteId == player.spriteId && !cameraFocus.movingToNewFocus ) {
-                drawNewTilesInCameraFocus( cameraFocus );
             }
         }
         checkForEventTrigger( CinematicTrigger.position );

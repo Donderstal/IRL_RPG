@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../game-data/globals';
+import { CANVAS_COLUMNS, CANVAS_HEIGHT, CANVAS_ROWS, CANVAS_WIDTH, GRID_BLOCK_PX } from '../game-data/globals';
 import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodKey, getNeighbourhoodModel, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import type { Sprite } from '../game/core/Sprite';
@@ -9,7 +9,7 @@ import { getPlayer, getStaticSprites } from '../game/modules/sprites/spriteGette
 import { clearSpriteModuleRegistries } from '../game/modules/moduleRegistrySetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
-import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
+import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid, getTileOnCanvasByCell } from '../game/canvas/canvasGetter';
 import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
 import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
 import { setPausedGameState } from '../game/gameState/gameState';
@@ -18,8 +18,9 @@ import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { registerMapExit, setPlayerLocationOnMapLoad } from '../game/map/playerLocationOnMapLoad';
 import { clearBlockedTilesRegistry, registerNewMap, registerTilesBlockedByStaticSprites } from '../game/map/blockedTilesRegistry';
+import type { GridCellModel } from '../models/GridCellModel';
 
-export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null ): void => {
+export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null, cameraFocusTile: GridCellModel = null ): void => {
     const neighbourhood = getNeighbourhoodModel();
     setPlayerLocationOnMapLoad( mapData, loadType);
 
@@ -43,14 +44,18 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
 
     if ( setPlayer ) {
         const player = getPlayer();
-        cameraFocus.handleScreenFlip( 
-            { 'x': player.centerX, 'y': player.baseY}
+        cameraFocus.handleScreenFlip(
+            { 'x': player.centerX, 'y': player.baseY }
         );
 
         cameraFocus.setSpriteFocus( player, true );
-        setTimeout( ( ) => {
-            checkForEventTrigger(CinematicTrigger.enter)     
-        }, 250 )            
+        setTimeout( () => {
+            checkForEventTrigger( CinematicTrigger.enter )
+        }, 250 )
+    }
+    else if ( cameraFocusTile !== null ) {
+        const cameraTile = back.getTileAtCell( cameraFocusTile.column, cameraFocusTile.row );
+        cameraFocus.setTileFocus( cameraTile, true );
     }
 
     registerBlockedTilesOnMap();
@@ -58,15 +63,18 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     frontgrid.drawMapFromGridData();
 }
 
-export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, exitId: string = null ): void => {
+export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, exitId: string = null, setPlayer: boolean = true, cameraFocusTile: GridCellModel = null ): void => {
     if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType] ) ) return;
 
     clearBlockedTilesRegistry();
-    registerMapExit( getActiveMapKey(), exitId );
+    if ( loadType !== PlayerMapEntry.cinematic ) {
+        registerMapExit( getActiveMapKey(), exitId );
+    }
+    
     clearActiveSoundEffects();
     setPausedGameState( true );
 
-    setNeighbourhoodAndMap( destinationName );
+    setNeighbourhoodAndMap( destinationName, loadType );
     setCanvasDimensions();
 
     clearActiveMap();
@@ -74,7 +82,7 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
     clearStoryEventsForMap();
     dismissActiveAction();
 
-    loadMapToCanvases( getActiveMap(), loadType );
+    loadMapToCanvases( getActiveMap(), loadType, setPlayer, null, cameraFocusTile );
     setTimeout( () => {
         setPausedGameState( false ); 
     }, 100 )
@@ -94,7 +102,7 @@ export const clearActiveMap = () => {
 export const loadCinematicMap = ( mapName, setPlayer = false ) => {
     setPausedGameState( true );
     clearActiveSoundEffects( );
-    setNeighbourhoodAndMap( mapName );
+    setNeighbourhoodAndMap( mapName, PlayerMapEntry.cinematic );
     loadMapToCanvases( 
         getActiveMap(), PlayerMapEntry.cinematic, setPlayer
     );
@@ -102,12 +110,12 @@ export const loadCinematicMap = ( mapName, setPlayer = false ) => {
 
 }
 
-export const setNeighbourhoodAndMap = ( mapName: string ): void => {
+export const setNeighbourhoodAndMap = ( mapName: string, playerMapEntry: PlayerMapEntry ): void => {
     if ( !hasActiveNeighbourhood() || !mapName.includes( getNeighbourhoodKey() )) {
-        initializeNeighbourhood(mapName);
+        initializeNeighbourhood( mapName, playerMapEntry );
     }
     else {
-        activateMap(mapName);
+        activateMap( mapName, playerMapEntry );
     }
 }
 
@@ -120,11 +128,15 @@ const registerBlockedTilesOnMap = (): void => {
 }
 
 const setCanvasDimensions = (): void => {
-    if ( getActiveMap().outdoors ) {
+    const map = getActiveMap();
+    if ( map.outdoors ) {
         let neighbourhoodModel = getNeighbourhoodModel();
         const width = neighbourhoodModel.horizontalSlots.length * CANVAS_WIDTH;
         const height = neighbourhoodModel.verticalSlots.length * CANVAS_HEIGHT;
         setCanvasGridsDimensions( width, height )
+    }
+    else if ( map.columns > CANVAS_COLUMNS || map.rows > CANVAS_ROWS ) {
+        setCanvasGridsDimensions( map.columns * GRID_BLOCK_PX, map.rows * GRID_BLOCK_PX );
     }
     else {
         setCanvasGridsDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );

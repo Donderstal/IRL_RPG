@@ -113,17 +113,17 @@ export class Animation {
                 }, 250 )
                 break;
             case SceneAnimationType.fadeOut:
-                startFadeToBlack();
+                startFadeToBlack( this.fadeScene.targetOpacity ?? 1 );
                 if ( this.fadeScene.sfx ) {
                     pauseMusic( );
                     playEffect( this.fadeScene.sfx )
                 }
                 break;
             case SceneAnimationType.fadeIn:
-                startFadeFromBlack( );
+                startFadeFromBlack( this.fadeScene.targetOpacity ?? 0 );
                 break;
             case SceneAnimationType.fadeOutIn:
-                startFadeToBlack( true );
+                startFadeToBlack( this.fadeScene.targetOpacity ?? 1, true );
                 if ( this.fadeScene.sfx ) {
                     pauseMusic( );
                     playEffect( this.fadeScene.sfx )
@@ -141,11 +141,13 @@ export class Animation {
                 cameraFocus.setTileFocus( tile, this.cameraMoveToTileScene.snapToTile );
                 break;
             case SceneAnimationType.loadMap:
-                setPlayerStartForCinematic( getActiveMapKey() , this.loadMapScene.playerStart);
-                switchMap( this.loadMapScene.mapName, PlayerMapEntry.cinematic );
+                if ( this.loadMapScene.setPlayerSprite ) {
+                    setPlayerStartForCinematic( getActiveMapKey() , this.loadMapScene.playerStart);
+                }
+                switchMap( this.loadMapScene.mapName, PlayerMapEntry.cinematic, null, this.loadMapScene.setPlayerSprite, this.loadMapScene.focusTile );
                 break;
             case SceneAnimationType.screenText:
-                setScreenTextToCanvas( this.screenTextScene.text, this.screenTextScene.maxWidth == null ? MAX_BUBBLE_TEXT_WIDTH : this.screenTextScene.maxWidth );
+                setScreenTextToCanvas( this.screenTextScene.text, this.screenTextScene.title, this.screenTextScene.maxWidth == null ? MAX_BUBBLE_TEXT_WIDTH : this.screenTextScene.maxWidth );
                 break;
         }
     }

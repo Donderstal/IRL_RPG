@@ -141,9 +141,9 @@ export class TypeWriter {
         }
     }
 
-    breakTextIntoLines( activeContext: OffscreenCanvasRenderingContext2D, startingX: number, startingY: number, maxWidth: number ): PhraseModel[] {
+    breakTextIntoLines( activeContext: OffscreenCanvasRenderingContext2D, startingX: number, startingY: number, maxWidth: number, fontSize: number = LARGE_FONT_SIZE ): PhraseModel[] {
         this.count();
-        setFont( LARGE_FONT_SIZE, activeContext );
+        setFont( fontSize, activeContext );
         let textLineX = startingX;
         let textLineY = startingY;
         let sentenceWidth = 0;
