@@ -18,7 +18,7 @@ export class Elevator extends ActionSelector {
         return this.mapName + "_" + this.elevatorModel.direction + "_" + this.elevatorModel.column + "_" + this.elevatorModel.row + "_ELEVATOR";
     }
     dismiss() {
-        setElevatorBubble( this.elevatorModel.floors, this.elevatorModel.id );
+        setElevatorBubble( this.elevatorModel.floors, this.elevatorModel.id, this.mapName );
         super.dismiss();
     }
 }

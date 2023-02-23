@@ -28,8 +28,16 @@ import { PlayerMapEntry } from '../../enumerables/PlayerMapEntryEnum';
 import { INTERACTION_LOCKED_DOOR, INTERACTION_UNLOCK_DOOR } from '../../resources/interactionResources';
 import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
 import { getBaseCellList, getDynamicallyBlockedTileIndexes, registerTilesBlockedByDynamicSprites } from './blockedTilesRegistry';
+import { queueEvent } from '../../events/eventQueueSetter';
+import { checkForQueuedEvent } from '../../events/eventQueueHandler';
 
 export const handleMapAnimations = (): void => {
+    const event = checkForQueuedEvent();
+    if ( event !== null ) {
+        setActiveCinematic( event.interaction, event.trigger, event.options )
+        return;
+    }
+
     const player = getPlayer();
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
 
@@ -73,12 +81,10 @@ export const handleMapAnimations = (): void => {
 
 const handleDoor = ( door: Door ): void => {
     if ( !door.meetsCondition ) {
-        setActiveCinematic(
-            INTERACTION_LOCKED_DOOR[0], CinematicTrigger.interaction, [PLAYER_ID]
-        );
+        queueEvent( INTERACTION_LOCKED_DOOR[0], CinematicTrigger.interaction, [PLAYER_ID] );
     }
     else if ( door.model.condition !== undefined ) {
-        setActiveCinematic(
+        queueEvent(
             INTERACTION_UNLOCK_DOOR[0], CinematicTrigger.leave, [door.model.doorTo, PlayerMapEntry.door, door.model.id]
         );
         door.metConditionAtLastCheck = true;

@@ -64,7 +64,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
 }
 
 export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, exitId: string = null, setPlayer: boolean = true, cameraFocusTile: GridCellModel = null ): void => {
-    if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType] ) ) return;
+    if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType, exitId] ) ) return;
 
     clearBlockedTilesRegistry();
     if ( loadType !== PlayerMapEntry.cinematic ) {

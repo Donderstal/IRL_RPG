@@ -1,7 +1,6 @@
 import { writable, get } from 'svelte/store';
 import { GameMenuType } from '../enumerables/GameMenuType';
 import { setPausedState } from '../game/gameState/gameStateSetter';
-import { resetSavePoint } from '../game/mainController';
 import type { WebsiteUser } from '../models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";
@@ -69,7 +68,6 @@ export const openInGameMenu = ( type: GameMenuType ) => {
 export const closeInGameMenu = () => {
     inGameMenu.set( false );
     setPausedState( false );
-    resetSavePoint();
 }
 
 const switchScreen = ( screen ) => {

@@ -1,4 +1,7 @@
 ### 
+#### FEB 23 2023
+* Cleaning up warnings, circular references
+
 #### FEB 22 2023
 * Minor additions/fixes to some Animation types
 * Finetuning cameraPosition handling and dynamic tile drawer

@@ -98,7 +98,6 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
 }
 
 export const checkIfSpriteShouldFindNewPath = ( sprite: Sprite, destination: Destination ): void => {
-    console.log( `sprite ${sprite.spriteId} reached destination col ${sprite.column}, row ${sprite.row}` )
     if ( destination.type === DestinationType.randomGeneratedSprite && sprite.isVisible() ) {
         if ( sprite.isCar ) {
             const path = getBackSpritesGrid().roadNetwork.findPathFromDirectionXy( destination.currentStep );

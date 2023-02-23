@@ -3,7 +3,7 @@ import { DirectionEnum } from './../enumerables/DirectionEnum';
 import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, handleSelectionKeys, hasActiveSpeechBubbles, hasActiveSelectionBubble, isWriting, selectionBubble } from './controllers/bubbleController';
 import { moveSpriteInDirection } from './modules/destinations/destinationHandler';
 import { PLAYER_ID } from '../game-data/interactionGlobals';
-import { registerPlayerAnswer } from './controllers/cinematicController';
+import { cinematicIsActive, registerPlayerAnswer } from './controllers/cinematicController';
 import { getPlayer } from "./modules/sprites/spriteGetter";;
 import { resetIdleAnimationCounter } from './modules/idleAnimCounters/idleAnimHandler';
 import { destroySpriteAnimation } from './modules/animations/animationSetter';
@@ -37,7 +37,7 @@ export const addKeyToPressed = ( event: KeyboardEvent ): void => {
         menu.isActive ? menu.hide() : menu.show();
     }
 
-    if ( event.key === " " && !hasActiveSpeechBubbles() ) {
+    if ( event.key === " " && !hasActiveSpeechBubbles() && !cinematicIsActive() ) {
         handleActionButton()
     }
     else if ( event.key === " " && hasActiveSpeechBubbles() ) {
@@ -103,8 +103,8 @@ export const handleMovementKeys = () => {
             if ( !spriteNextPositionIsBlocked( player, null, direction ) ) {
                 moveSpriteInDirection( player, direction );
             }
+            checkForEventTrigger( CinematicTrigger.position );
         }
-        checkForEventTrigger( CinematicTrigger.position );
     }
 };
 export const preparePlayerForMovement = (): void => {

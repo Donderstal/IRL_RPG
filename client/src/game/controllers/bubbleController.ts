@@ -1,13 +1,11 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import { getUniqueId } from "../../helpers/utilFunctions";
-import type { SpeakScene, SpeakYesNoScene } from "../../models/SceneAnimationModel";
 import type { SpriteDataModel } from "../../models/SpriteDataModel";
 import { getSpeechBubbleGrid } from "../canvas/canvasGetter";
 import { Emote } from "../cutscenes/Emote";
 import { SelectionBubble } from "../cutscenes/SelectionBubble";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
-import { getActiveMapKey } from "../neighbourhoodModule";
 import { playEffect, playSpeakingEffect } from "../sound/sound";
 
 let mainBubble: SpeechBubble = null;
@@ -54,8 +52,8 @@ export const setNewCenterBubble = ( text: string ) => {
     titleBubble = new SpeechBubble( text, TextBubbleType.Center );
     setTimeout( () => { titleBubble = null }, 5000 )
 };
-export const setElevatorBubble = ( floors: { [key in string]: string }, id: string ): void => {
-    elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', id, [Object.keys( floors ).find( k => floors[k] === getActiveMapKey() )] );
+export const setElevatorBubble = ( floors: { [key in string]: string }, id: string, activeMapKey: string ): void => {
+    elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', id, [Object.keys( floors ).find( k => floors[k] === activeMapKey )] );
 }
 export const hasActiveSelectionBubble = (): boolean => {
     return elevatorBubble !== null;

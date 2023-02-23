@@ -16,9 +16,9 @@ import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
 import { getSpriteDestination, spriteHasDestination } from '../modules/destinations/destinationGetter';
 import { markModuleAsActive, markModuleAsInActive } from '../modules/moduleRegistrySetter';
 import { getAllActions } from '../modules/actions/actionRegistry';
-import { setActiveCinematic } from './cinematicController';
 import { getActiveMapKey } from '../neighbourhoodModule';
 import { addCollectableToRegistry, getCollectableId } from '../../registries/collectableRegistry';
+import { queueEvent } from '../../events/eventQueueSetter';
 
 let activeAction: ActionSelector = null; 
 
@@ -53,9 +53,7 @@ const setActiveAction = ( action: ActionSelector ): void => {
         sprite.deactivateMovementModule();
     }
     if ( !checkForEventTrigger( CinematicTrigger.interaction, [activeAction.spriteId] ) ) {
-        setActiveCinematic(
-            action.activeAction, action.trigger, [sprite.spriteId]
-        );
+        queueEvent( action.activeAction, action.trigger, [sprite.spriteId] );
         if ( sprite.model.isCollectable ) {
             const id = getCollectableId( sprite.column, sprite.row, sprite.model.collectableType, getActiveMapKey() );
             addCollectableToRegistry( id, sprite.model.collectableType )

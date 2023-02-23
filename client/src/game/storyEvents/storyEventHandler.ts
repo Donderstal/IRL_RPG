@@ -1,8 +1,8 @@
 import { CinematicTrigger } from "../../enumerables/CinematicTriggerEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
+import { queueEvent } from "../../events/eventQueueSetter";
 import { conditionIsTrue } from "../../helpers/conditionalHelper";
 import type { CellPosition } from "../../models/CellPositionModel";
-import { setActiveCinematic } from "../controllers/cinematicController";
 import type { Sprite } from "../core/Sprite";
 import type { ScriptedEvent } from "../cutscenes/ScriptedEvent";
 import { inDisableStoryGameState } from "../gameState/gameStateGetter";
@@ -29,7 +29,7 @@ export const checkForEventTrigger = ( trigger: CinematicTrigger, args: any[] = n
         if ( triggerEvent && !activeMapStoryEvent.fired ) {
             activeMapStoryEvent.fireEvent( );
             markStoryEventAsTriggered( activeMapStoryEvent.id );
-            setActiveCinematic( activeMapStoryEvent.action, activeMapStoryEvent.trigger, args );
+            queueEvent( activeMapStoryEvent.action, activeMapStoryEvent.trigger, args );
         }
         return true;
     }

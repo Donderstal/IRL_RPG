@@ -15,6 +15,6 @@
 		}
     }
 </style>
-<label>
+<label for="none">
 	{keyLabel}:
 </label>

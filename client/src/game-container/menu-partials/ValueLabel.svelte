@@ -22,6 +22,6 @@
 		}
     }
 </style>
-<label>
+<label for="none">
 	{valueLabel}
 </label>

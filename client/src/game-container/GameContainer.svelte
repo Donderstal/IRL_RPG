@@ -155,9 +155,9 @@
 
 <div class="game-gfx-container">
     <div id="canvas-wrapper" class="canvas-wrapper" 
-        style="width:{screen.width > screen.height ? screen.width : screen.height}px; height: {screen.width > screen.height ? screen.height : screen.width}px">
+        >
         <canvas id='game-canvas' class="game-background-body" 
-        style="width:{screen.width > screen.height ? screen.width : screen.height}px; height: {screen.width > screen.height ? screen.height : screen.width}px">
+        >
     </div>
 
     {#if $inGameMenu }

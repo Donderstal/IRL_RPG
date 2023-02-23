@@ -1,7 +1,6 @@
 import type { DirectionEnum } from "../../enumerables/DirectionEnum";
 import type { TileModel } from "../../models/TileModel";
 import { GRID_BLOCK_PX } from '../../game-data/globals';
-import { OutOfMapEnum } from "../../enumerables/OutOfMapEnum";
 import type { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { getTilesheetImageForTile, getTilesheetXy } from "../../helpers/tileSheetHelpers";
 import type { TilesheetModel } from "../../models/TilesheetModel";
@@ -15,7 +14,7 @@ import { cameraFocus } from "../cameraFocus";
  * This could be the presence of a door or sprite or wether a tile can be crossed by sprites
  */
 export class Tile {
-    index: number | OutOfMapEnum;
+    index: number;
 
     x: number;
     y: number;
@@ -30,7 +29,7 @@ export class Tile {
     canvasType: CanvasTypeEnum
 
     direction: DirectionEnum;
-    constructor( index: number | OutOfMapEnum, x: number, y: number, ctx: OffscreenCanvasRenderingContext2D, row: number, column: number, canvasType: CanvasTypeEnum ) {
+    constructor( index: number, x: number, y: number, ctx: OffscreenCanvasRenderingContext2D, row: number, column: number, canvasType: CanvasTypeEnum ) {
         this.x = x;
         this.y = y;
         this.ctx = ctx;

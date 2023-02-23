@@ -11,7 +11,7 @@ import { animationLoop, stopAnimationLoop } from "./animationLoop";
 import { cameraFocus, initializeCameraFocus } from "./cameraFocus";
 import { prepareCanvasElementsForGame } from "./canvas/canvasSetter";
 import { listenForKeyPress, stopListenForKeyPress } from "./controls";
-import { filesAreLoaded, handleFileLoadQueues, startFileLoader } from "../assets/fileLoader";
+import { handleFileLoadQueues, startFileLoader } from "../assets/fileLoader";
 import { setDebugModeState, setDisableStoryState } from "./gameState/gameStateSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./loadingScreen";
 import { getActiveMap } from "./neighbourhoodModule";
