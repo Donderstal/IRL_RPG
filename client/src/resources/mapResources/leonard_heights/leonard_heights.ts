@@ -20,7 +20,82 @@ import {
     LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY,
     LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY,
     LH_CHARACTERS_MASTER_ROOM_KEY,
-    LH_CARS_MASTER_ROOM_KEY
+    LH_CARS_MASTER_ROOM_KEY,
+    LH_GREY_BUILDING_GF_LOBBY,
+    LH_GREY_BUILDING_GF_HALL_LEFT,
+    LH_GREY_BUILDING_GF_HALL_RIGHT,
+    LH_GREY_BUILDING_GF_APT1,
+    LH_GREY_BUILDING_GF_APT1_BEDROOM,
+    LH_GREY_BUILDING_GF_APT1_TOILET,
+    LH_GREY_BUILDING_GF_APT2,
+    LH_GREY_BUILDING_GF_APT2_BEDROOM,
+    LH_GREY_BUILDING_GF_APT2_TOILET,
+    LH_GREY_BUILDING_GF_APT3,
+    LH_GREY_BUILDING_GF_APT3_BEDROOM,
+    LH_GREY_BUILDING_GF_APT3_TOILET,
+    LH_GREY_BUILDING_GF_APT4,
+    LH_GREY_BUILDING_GF_APT4_BEDROOM,
+    LH_GREY_BUILDING_GF_APT4_TOILET,
+    LH_GREY_BUILDING_GF_APT5,
+    LH_GREY_BUILDING_GF_APT5_BEDROOM,
+    LH_GREY_BUILDING_GF_APT5_TOILET,
+    LH_GREY_BUILDING_GF_APT6,
+    LH_GREY_BUILDING_GF_APT6_BEDROOM,
+    LH_GREY_BUILDING_GF_APT6_TOILET,
+    LH_GREY_BUILDING_F1_LOBBY,
+    LH_GREY_BUILDING_F1_HALL_LEFT,
+    LH_GREY_BUILDING_F1_HALL_RIGHT,
+    LH_GREY_BUILDING_F1_APT1,
+    LH_GREY_BUILDING_F1_APT1_BEDROOM,
+    LH_GREY_BUILDING_F1_APT1_TOILET,
+    LH_GREY_BUILDING_F1_APT2,
+    LH_GREY_BUILDING_F1_APT2_BEDROOM,
+    LH_GREY_BUILDING_F1_APT2_TOILET,
+    LH_GREY_BUILDING_F1_APT3,
+    LH_GREY_BUILDING_F1_APT3_BEDROOM,
+    LH_GREY_BUILDING_F1_APT3_TOILET,
+    LH_GREY_BUILDING_F1_APT4,
+    LH_GREY_BUILDING_F1_APT4_BEDROOM,
+    LH_GREY_BUILDING_F1_APT4_TOILET,
+    LH_GREY_BUILDING_F1_APT5,
+    LH_GREY_BUILDING_F1_APT5_TOILET,
+    LH_GREY_BUILDING_F1_APT5_BEDROOM,
+    LH_GREY_BUILDING_F1_APT6,
+    LH_GREY_BUILDING_F1_APT6_BEDROOM,
+    LH_GREY_BUILDING_F1_APT6_TOILET,
+    LH_GREY_BUILDING_F2_LOBBY,
+    LH_GREY_BUILDING_F2_HALL_LEFT,
+    LH_GREY_BUILDING_F2_APT1,
+    LH_GREY_BUILDING_F2_APT1_BEDROOM,
+    LH_GREY_BUILDING_F2_APT1_TOILET,
+    LH_GREY_BUILDING_F2_APT2,
+    LH_GREY_BUILDING_F2_APT2_BEDROOM,
+    LH_GREY_BUILDING_F2_APT2_TOILET,
+    LH_GREY_BUILDING_F2_APT3,
+    LH_GREY_BUILDING_F2_APT3_BEDROOM,
+    LH_GREY_BUILDING_F2_APT3_TOILET,
+    LH_GREY_BUILDING_F3_LOBBY,
+    LH_GREY_BUILDING_F3_HALL_LEFT,
+    LH_GREY_BUILDING_F3_HALL_RIGHT,
+    LH_GREY_BUILDING_F3_APT1,
+    LH_GREY_BUILDING_F3_APT1_BEDROOM,
+    LH_GREY_BUILDING_F3_APT1_TOILET,
+    LH_GREY_BUILDING_F3_APT2,
+    LH_GREY_BUILDING_F3_APT2_BEDROOM,
+    LH_GREY_BUILDING_F3_APT2_TOILET,
+    LH_GREY_BUILDING_F3_APT3,
+    LH_GREY_BUILDING_F3_APT3_BEDROOM,
+    LH_GREY_BUILDING_F3_APT3_TOILET,
+    LH_GREY_BUILDING_F3_APT4,
+    LH_GREY_BUILDING_F3_APT4_BEDROOM,
+    LH_GREY_BUILDING_F3_APT4_TOILET,
+    LH_GREY_BUILDING_F3_APT5,
+    LH_GREY_BUILDING_F3_APT5_BEDROOM,
+    LH_GREY_BUILDING_F3_APT5_TOILET,
+    LH_GREY_BUILDING_F3_APT6,
+    LH_GREY_BUILDING_F3_APT6_BEDROOM,
+    LH_GREY_BUILDING_F3_APT6_TOILET,
+    LH_GREY_BUILDING_F4_LOBBY
 } from './leonard_heights_res';
 
 import A1 from './A1/A1';
@@ -71,6 +146,39 @@ import SardineStudioStairsFloor2 from './D2/Sardine-Studios/Sardine-Studio-stair
 import SardineStudioStairsTop from './D2/Sardine-Studios/Sardine-Studio-stairs-top';
 import characterMasterRoom from './hiddenRooms/characterMasterRoom';
 import carMasterRoom from './hiddenRooms/carMasterRoom';
+import GBGFLobby from './E3/Grey-Building/GF/GB-GF-lobby';
+import GBGFHallLeft from './E3/Grey-Building/GF/GB-GF-hall-left';
+import GBGFHallRight from './E3/Grey-Building/GF/GB-GF-hall-right';
+import { MAP_LH_GB_GF_APT1, MAP_LH_GB_GF_APT1_BED, MAP_LH_GB_GF_APT1_TOILET } from './E3/Grey-Building/GF/GB-GF-apt1';
+import { MAP_LH_GB_GF_APT2, MAP_LH_GB_GF_APT2_BED, MAP_LH_GB_GF_APT2_TOILET } from './E3/Grey-Building/GF/GB-GF-apt2';
+import { MAP_LH_GB_GF_APT3, MAP_LH_GB_GF_APT3_BED, MAP_LH_GB_GF_APT3_TOILET } from './E3/Grey-Building/GF/GB-GF-apt3';
+import { MAP_LH_GB_GF_APT4, MAP_LH_GB_GF_APT4_BED, MAP_LH_GB_GF_APT4_TOILET } from './E3/Grey-Building/GF/GB-GF-apt4';
+import { MAP_LH_GB_GF_APT5, MAP_LH_GB_GF_APT5_BED, MAP_LH_GB_GF_APT5_TOILET } from './E3/Grey-Building/GF/GB-GF-apt5';
+import { MAP_LH_GB_GF_APT6, MAP_LH_GB_GF_APT6_BED, MAP_LH_GB_GF_APT6_TOILET } from './E3/Grey-Building/GF/GB-GF-apt6';
+import GBF1Lobby from './E3/Grey-Building/F1/GB-F1-lobby';
+import GBF1HallLeft from './E3/Grey-Building/F1/GB-F1-hall-left';
+import GBF1HallRight from './E3/Grey-Building/F1/GB-F1-hall-right';
+import { MAP_LH_GB_F1_APT1, MAP_LH_GB_F1_APT1_BED, MAP_LH_GB_F1_APT1_TOILET } from './E3/Grey-Building/F1/GB-F1-apt1';
+import { MAP_LH_GB_F1_APT2, MAP_LH_GB_F1_APT2_BED, MAP_LH_GB_F1_APT2_TOILET } from './E3/Grey-Building/F1/GB-F1-apt2';
+import { MAP_LH_GB_F1_APT3, MAP_LH_GB_F1_APT3_BED, MAP_LH_GB_F1_APT3_TOILET } from './E3/Grey-Building/F1/GB-F1-apt3';
+import { MAP_LH_GB_F1_APT4, MAP_LH_GB_F1_APT4_BED, MAP_LH_GB_F1_APT4_TOILET } from './E3/Grey-Building/F1/GB-F1-apt4';
+import { MAP_LH_GB_F1_APT5, MAP_LH_GB_F1_APT5_BED, MAP_LH_GB_F1_APT5_TOILET } from './E3/Grey-Building/F1/GB-F1-apt5';
+import { MAP_LH_GB_F1_APT6, MAP_LH_GB_F1_APT6_BED, MAP_LH_GB_F1_APT6_TOILET } from './E3/Grey-Building/F1/GB-F1-apt6';
+import GBF2Lobby from './E3/Grey-Building/F2/GB-F2-lobby';
+import GBF2HallLeft from './E3/Grey-Building/F2/GB-F2-hall-left';
+import { MAP_LH_GB_F2_APT1, MAP_LH_GB_F2_APT1_BED, MAP_LH_GB_F2_APT1_TOILET } from './E3/Grey-Building/F2/GB-F2-apt1';
+import { MAP_LH_GB_F2_APT2, MAP_LH_GB_F2_APT2_BED, MAP_LH_GB_F2_APT2_TOILET } from './E3/Grey-Building/F2/GB-F2-apt2';
+import { MAP_LH_GB_F2_APT3, MAP_LH_GB_F2_APT3_BED, MAP_LH_GB_F2_APT3_TOILET } from './E3/Grey-Building/F2/GB-F2-apt3';
+import GBF3Lobby from './E3/Grey-Building/F3/GB-F3-lobby';
+import GBF3HallLeft from './E3/Grey-Building/F3/GB-F3-hall-left';
+import GBF3HallRight from './E3/Grey-Building/F3/GB-F3-hall-right';
+import { MAP_LH_GB_F3_APT1, MAP_LH_GB_F3_APT1_BED, MAP_LH_GB_F3_APT1_TOILET } from './E3/Grey-Building/F3/GB-F3-apt1';
+import { MAP_LH_GB_F3_APT2, MAP_LH_GB_F3_APT2_BED, MAP_LH_GB_F3_APT2_TOILET } from './E3/Grey-Building/F3/GB-F3-apt2';
+import { MAP_LH_GB_F3_APT3, MAP_LH_GB_F3_APT3_BED, MAP_LH_GB_F3_APT3_TOILET } from './E3/Grey-Building/F3/GB-F3-apt3';
+import { MAP_LH_GB_F3_APT4, MAP_LH_GB_F3_APT4_BED, MAP_LH_GB_F3_APT4_TOILET } from './E3/Grey-Building/F3/GB-F3-apt4';
+import { MAP_LH_GB_F3_APT5, MAP_LH_GB_F3_APT5_BED, MAP_LH_GB_F3_APT5_TOILET } from './E3/Grey-Building/F3/GB-F3-apt5';
+import { MAP_LH_GB_F3_APT6, MAP_LH_GB_F3_APT6_BED, MAP_LH_GB_F3_APT6_TOILET } from './E3/Grey-Building/F3/GB-F3-apt6';
+import GBF4Lobby from './E3/Grey-Building/F4/GB-F4-lobby';
 
 export default {
     "key": LH_KEY,
@@ -168,6 +276,94 @@ export default {
                 [removeLHNeighbourhoodKey( LH_SARDINE_STUDIOS_STAIRS_TOP_KEY )]: SardineStudioStairsTop,
             //
         //
+
+        // E3 Submaps
+            // Grey Building
+                // GF
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_LOBBY )]: GBGFLobby,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_HALL_LEFT )]: GBGFHallLeft,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_HALL_RIGHT )]: GBGFHallRight,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT1 )]: MAP_LH_GB_GF_APT1,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT1_BEDROOM )]: MAP_LH_GB_GF_APT1_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT1_TOILET )]: MAP_LH_GB_GF_APT1_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT2 )]: MAP_LH_GB_GF_APT2,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT2_BEDROOM )]: MAP_LH_GB_GF_APT2_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT2_TOILET )]: MAP_LH_GB_GF_APT2_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT3 )]: MAP_LH_GB_GF_APT3,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT3_BEDROOM )]: MAP_LH_GB_GF_APT3_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT3_TOILET )]: MAP_LH_GB_GF_APT3_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT4 )]: MAP_LH_GB_GF_APT4,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT4_BEDROOM )]: MAP_LH_GB_GF_APT4_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT4_TOILET )]: MAP_LH_GB_GF_APT4_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT5 )]: MAP_LH_GB_GF_APT5,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT5_BEDROOM )]: MAP_LH_GB_GF_APT5_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT5_TOILET )]: MAP_LH_GB_GF_APT5_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT6 )]: MAP_LH_GB_GF_APT6,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT6_BEDROOM )]: MAP_LH_GB_GF_APT6_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_GF_APT6_TOILET )]: MAP_LH_GB_GF_APT6_TOILET,
+                //
+                // F1
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_LOBBY )]: GBF1Lobby,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_HALL_LEFT )]: GBF1HallLeft,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_HALL_RIGHT )]: GBF1HallRight,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT1 )]: MAP_LH_GB_F1_APT1,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT1_BEDROOM )]: MAP_LH_GB_F1_APT1_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT1_TOILET )]: MAP_LH_GB_F1_APT1_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT2 )]: MAP_LH_GB_F1_APT2,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT2_BEDROOM )]: MAP_LH_GB_F1_APT2_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT2_TOILET )]: MAP_LH_GB_F1_APT2_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT3 )]: MAP_LH_GB_F1_APT3,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT3_BEDROOM )]: MAP_LH_GB_F1_APT3_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT3_TOILET )]: MAP_LH_GB_F1_APT3_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT4 )]: MAP_LH_GB_F1_APT4,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT4_BEDROOM )]: MAP_LH_GB_F1_APT4_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT4_TOILET )]: MAP_LH_GB_F1_APT4_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT5 )]: MAP_LH_GB_F1_APT5,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT5_BEDROOM )]: MAP_LH_GB_F1_APT5_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT5_TOILET )]: MAP_LH_GB_F1_APT5_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT6 )]: MAP_LH_GB_F1_APT6,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT6_BEDROOM )]: MAP_LH_GB_F1_APT6_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F1_APT6_TOILET )]: MAP_LH_GB_F1_APT6_TOILET,
+                //
+                // F2
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_LOBBY )]: GBF2Lobby,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_HALL_LEFT )]: GBF2HallLeft,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT1 )]: MAP_LH_GB_F2_APT1,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT1_BEDROOM )]: MAP_LH_GB_F2_APT1_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT1_TOILET )]: MAP_LH_GB_F2_APT1_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT2 )]: MAP_LH_GB_F2_APT2,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT2_BEDROOM )]: MAP_LH_GB_F2_APT2_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT2_TOILET )]: MAP_LH_GB_F2_APT2_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT3 )]: MAP_LH_GB_F2_APT3,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT3_BEDROOM )]: MAP_LH_GB_F2_APT3_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F2_APT3_TOILET )]: MAP_LH_GB_F2_APT3_TOILET,
+                //
+                // F3
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_LOBBY )]: GBF3Lobby,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_HALL_LEFT )]: GBF3HallLeft,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_HALL_RIGHT )]: GBF3HallRight,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT1 )]: MAP_LH_GB_F3_APT1,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT1_BEDROOM )]: MAP_LH_GB_F3_APT1_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT1_TOILET )]: MAP_LH_GB_F3_APT1_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT2 )]: MAP_LH_GB_F3_APT2,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT2_BEDROOM )]: MAP_LH_GB_F3_APT2_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT2_TOILET )]: MAP_LH_GB_F3_APT2_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT3 )]: MAP_LH_GB_F3_APT3,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT3_BEDROOM )]: MAP_LH_GB_F3_APT3_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT3_TOILET )]: MAP_LH_GB_F3_APT3_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT4 )]: MAP_LH_GB_F3_APT4,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT4_BEDROOM )]: MAP_LH_GB_F3_APT4_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT4_TOILET )]: MAP_LH_GB_F3_APT4_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT5 )]: MAP_LH_GB_F3_APT5,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT5_BEDROOM )]: MAP_LH_GB_F3_APT5_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT5_TOILET )]: MAP_LH_GB_F3_APT5_TOILET,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT6 )]: MAP_LH_GB_F3_APT6,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT6_BEDROOM )]: MAP_LH_GB_F3_APT6_BED,
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F3_APT6_TOILET )]: MAP_LH_GB_F3_APT6_TOILET,
+                //
+                // F4
+                [removeLHNeighbourhoodKey( LH_GREY_BUILDING_F4_LOBBY )]: GBF4Lobby,
+                //
 
         // Master rooms
         [removeLHNeighbourhoodKey( LH_CHARACTERS_MASTER_ROOM_KEY )]: characterMasterRoom,

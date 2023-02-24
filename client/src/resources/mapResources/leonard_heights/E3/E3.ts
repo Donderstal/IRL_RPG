@@ -3,6 +3,8 @@ import { FRONT_GRID_LEONARD_E3 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { PIGEON } from '../../../spriteTypeResources';
+import { DOORKEY_GREY_BUILDING_FRONT_DOOR } from './E3-door-keys';
+import { LH_GREY_BUILDING_GF_LOBBY } from '../leonard_heights_res';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E3,
@@ -46,7 +48,20 @@ export default {
             "column": 10
         }
     ],
-    "actions": [
-
+    "doors": [
+        {
+            id: DOORKEY_GREY_BUILDING_FRONT_DOOR,
+            column: 10,
+            row: 5,
+            direction: DirectionEnum.up,
+            doorTo: LH_GREY_BUILDING_GF_LOBBY
+        },
+        {
+            id: DOORKEY_GREY_BUILDING_FRONT_DOOR,
+            column: 11,
+            row: 5,
+            direction: DirectionEnum.up,
+            doorTo: LH_GREY_BUILDING_GF_LOBBY
+        }
     ]
 }

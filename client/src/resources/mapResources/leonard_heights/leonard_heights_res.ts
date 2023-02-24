@@ -62,6 +62,117 @@ export const LH_MAP_KEY = appendToLHNeighbourhoodKey( LH_KEY );
     export const LH_SARDINE_STUDIOS_STAIRS_TOP_KEY = appendToLHNeighbourhoodKey( "Sardine-Studios-stairs-top" );
 //
 
+//The Grey Building (E3)
+    export const LH_GREY_BUILDING_NAME = "The Grey Building";
+
+    // Grey building ground floor
+    export const LH_GREY_BUILDING_GF_LOBBY = appendToLHNeighbourhoodKey( "LH_GREY_GF_LOBBY" );
+    export const LH_GREY_BUILDING_GF_HALL_LEFT = appendToLHNeighbourhoodKey( "LH_GREY_GF_HALL_LEFT" );
+    export const LH_GREY_BUILDING_GF_HALL_RIGHT = appendToLHNeighbourhoodKey( "LH_GREY_GF_HALL_RIGHT" );
+        // Grey building GF Appartments
+        export const LH_GREY_BUILDING_GF_APT1 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT1" );
+        export const LH_GREY_BUILDING_GF_APT1_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT1_TOILET" );
+        export const LH_GREY_BUILDING_GF_APT1_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT1_BEDROOM" );
+
+        export const LH_GREY_BUILDING_GF_APT2 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT2" );
+        export const LH_GREY_BUILDING_GF_APT2_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT2_TOILET" );
+        export const LH_GREY_BUILDING_GF_APT2_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT2_BEDROOM" );
+
+        export const LH_GREY_BUILDING_GF_APT3 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT3" );
+        export const LH_GREY_BUILDING_GF_APT3_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT3_TOILET" );
+        export const LH_GREY_BUILDING_GF_APT3_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT3_BEDROOM" );
+
+        export const LH_GREY_BUILDING_GF_APT4 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT4" );
+        export const LH_GREY_BUILDING_GF_APT4_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT4_TOILET" );
+        export const LH_GREY_BUILDING_GF_APT4_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT4_BEDROOM" );
+
+        export const LH_GREY_BUILDING_GF_APT5 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT5" );
+        export const LH_GREY_BUILDING_GF_APT5_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT5_TOILET" );
+        export const LH_GREY_BUILDING_GF_APT5_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT5_BEDROOM" );
+
+        export const LH_GREY_BUILDING_GF_APT6 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT6" );
+        export const LH_GREY_BUILDING_GF_APT6_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT6_TOILET" );
+        export const LH_GREY_BUILDING_GF_APT6_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_GF_APT6_BEDROOM" );
+
+    // Grey building floor 1
+    export const LH_GREY_BUILDING_F1_LOBBY = appendToLHNeighbourhoodKey( "LH_GREY_F1_LOBBY" );
+    export const LH_GREY_BUILDING_F1_HALL_LEFT = appendToLHNeighbourhoodKey( "LH_GREY_F1_HALL_LEFT" );
+    export const LH_GREY_BUILDING_F1_HALL_RIGHT = appendToLHNeighbourhoodKey( "LH_GREY_F1_HALL_RIGHT" );
+        // Grey building floor 1 Appartments
+        export const LH_GREY_BUILDING_F1_APT1 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT1" );
+        export const LH_GREY_BUILDING_F1_APT1_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT1_TOILET" );
+        export const LH_GREY_BUILDING_F1_APT1_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT1_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F1_APT2 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT2" );
+        export const LH_GREY_BUILDING_F1_APT2_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT2_TOILET" );
+        export const LH_GREY_BUILDING_F1_APT2_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT2_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F1_APT3 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT3" );
+        export const LH_GREY_BUILDING_F1_APT3_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT3_TOILET" );
+        export const LH_GREY_BUILDING_F1_APT3_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT3_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F1_APT4 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT4" );
+        export const LH_GREY_BUILDING_F1_APT4_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT4_TOILET" );
+        export const LH_GREY_BUILDING_F1_APT4_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT4_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F1_APT5 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT5" );
+        export const LH_GREY_BUILDING_F1_APT5_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT5_TOILET" );
+        export const LH_GREY_BUILDING_F1_APT5_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT5_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F1_APT6 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT6" );
+        export const LH_GREY_BUILDING_F1_APT6_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT6_TOILET" );
+        export const LH_GREY_BUILDING_F1_APT6_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F1_APT6_BEDROOM" );
+
+    // Grey building floor 2
+    export const LH_GREY_BUILDING_F2_LOBBY = appendToLHNeighbourhoodKey( "LH_GREY_F2_LOBBY" );
+    export const LH_GREY_BUILDING_F2_HALL_LEFT = appendToLHNeighbourhoodKey( "LH_GREY_F2_HALL_LEFT" );
+
+    // Grey building floor 2 Appartments
+        export const LH_GREY_BUILDING_F2_APT1 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT1" );
+        export const LH_GREY_BUILDING_F2_APT1_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT1_TOILET" );
+        export const LH_GREY_BUILDING_F2_APT1_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT1_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F2_APT2 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT2" );
+        export const LH_GREY_BUILDING_F2_APT2_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT2_TOILET" );
+        export const LH_GREY_BUILDING_F2_APT2_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT2_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F2_APT3 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT3" );
+        export const LH_GREY_BUILDING_F2_APT3_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT3_TOILET" );
+        export const LH_GREY_BUILDING_F2_APT3_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F2_APT3_BEDROOM" );
+
+    // Grey building floor 3
+    export const LH_GREY_BUILDING_F3_LOBBY = appendToLHNeighbourhoodKey( "LH_GREY_F3_LOBBY" );
+    export const LH_GREY_BUILDING_F3_HALL_LEFT = appendToLHNeighbourhoodKey( "LH_GREY_F3_HALL_LEFT" );
+    export const LH_GREY_BUILDING_F3_HALL_RIGHT = appendToLHNeighbourhoodKey( "LH_GREY_F3_HALL_RIGHT" );
+        // Grey building floor 3 Appartments
+        export const LH_GREY_BUILDING_F3_APT1 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT1" );
+        export const LH_GREY_BUILDING_F3_APT1_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT1_TOILET" );
+        export const LH_GREY_BUILDING_F3_APT1_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT1_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F3_APT2 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT2" );
+        export const LH_GREY_BUILDING_F3_APT2_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT2_TOILET" );
+        export const LH_GREY_BUILDING_F3_APT2_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT2_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F3_APT3 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT3" );
+        export const LH_GREY_BUILDING_F3_APT3_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT3_TOILET" );
+        export const LH_GREY_BUILDING_F3_APT3_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT3_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F3_APT4 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT4" );
+        export const LH_GREY_BUILDING_F3_APT4_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT4_TOILET" );
+        export const LH_GREY_BUILDING_F3_APT4_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT4_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F3_APT5 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT5" );
+        export const LH_GREY_BUILDING_F3_APT5_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT5_TOILET" );
+        export const LH_GREY_BUILDING_F3_APT5_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT5_BEDROOM" );
+
+        export const LH_GREY_BUILDING_F3_APT6 = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT6" );
+        export const LH_GREY_BUILDING_F3_APT6_TOILET = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT6_TOILET" );
+        export const LH_GREY_BUILDING_F3_APT6_BEDROOM = appendToLHNeighbourhoodKey( "LH_GREY_BUILDING_F3_APT6_BEDROOM" );
+
+    // Grey building floor 4
+    export const LH_GREY_BUILDING_F4_LOBBY = appendToLHNeighbourhoodKey( "LH_GREY_F4_LOBBY" );
+//
+
 // Master Rooms
     export const LH_MASTER_ROOMS_LOCATION_NAME = "Master rooms";
     export const LH_CHARACTERS_MASTER_ROOM_KEY = appendToLHNeighbourhoodKey( "characters-master-room" );
