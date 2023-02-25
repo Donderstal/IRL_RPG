@@ -1,4 +1,4 @@
-import { CM_INTRO_CINEMATIC_MAP_1, CM_INTRO_CINEMATIC_MAP_2, CM_KEY, CM_NAME, removeCMNeighbourhoodKey } from "./cinematic_maps_res";
+import { CM_INTRO_CINEMATIC_MAP_1, CM_INTRO_CINEMATIC_MAP_2, CM_KEY, CM_NAME } from "./cinematic_maps_res";
 import introCinematicMap1 from "./story-cinematic-1/intro-cinematic-map-1";
 import introCinematicMap2 from "./story-cinematic-1/intro-cinematic-map-2";
 
@@ -15,7 +15,7 @@ export default {
     "spawnable_actions": [],
 
     "mapDictionary": {
-        [removeCMNeighbourhoodKey( CM_INTRO_CINEMATIC_MAP_1 )]: introCinematicMap1,
-        [removeCMNeighbourhoodKey(CM_INTRO_CINEMATIC_MAP_2) ]: introCinematicMap2
+        [CM_INTRO_CINEMATIC_MAP_1]: introCinematicMap1,
+        [CM_INTRO_CINEMATIC_MAP_2]: introCinematicMap2
     }
 }

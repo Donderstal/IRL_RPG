@@ -1,9 +1,6 @@
 const appendToLHNeighbourhoodKey = ( string ) => {
     return `${LH_KEY}/${string}`;
 }
-export const removeLHNeighbourhoodKey = ( string ) => {
-    return string.split( '/' )[1];
-}
 
 export const LH_KEY = "leonard_heights";
 

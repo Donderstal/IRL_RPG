@@ -1,9 +1,6 @@
 const appendToCMNeighbourhoodKey = ( string ) => {
     return `${CM_KEY}/${string}`;
 }
-export const removeCMNeighbourhoodKey = ( string ) => {
-    return string.split( '/' )[1];
-}
 
 export const CM_KEY = "cinematic-maps";
 export const CM_NAME = "Cinematic maps"

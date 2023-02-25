@@ -18,7 +18,7 @@ let NPCCounter: Counter;
 
 export const getNeighbourhoodKey = (): string => { return activeMapKey.split( '/' )[0]; }
 export const getActiveMap = (): MapModel => {
-    return model.mapDictionary[activeMapName()].outdoors ? mapModel : model.mapDictionary[activeMapName()];
+    return activeMapName() === `${model.key}/${model.key}` ? mapModel : model.mapDictionary[activeMapName()];
 }
 export const getActiveMapKey = (): string => {
     return activeMapKey;
@@ -32,7 +32,7 @@ export const getNeighbourhoodModel = (): NeighbourhoodModel => {
 export const hasActiveNeighbourhood = (): boolean => {
     return model !== undefined && model !== null;
 }
-const activeMapName = (): string => { return activeMapKey.split( '/' )[1]; }
+const activeMapName = (): string => { return activeMapKey; }
 
 export const initializeNeighbourhood = ( mapKey: string, mapLoadType: PlayerMapEntry ) => {
     model = getNeighbourhood( mapKey.split( '/' )[0] );
