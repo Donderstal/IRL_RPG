@@ -1,4 +1,8 @@
 ### 
+#### FEB 27 2023
+* Added a bunch of new building maps
+* New starting location
+
 #### FEB 23 2023
 * Cleaning up warnings, circular references
 

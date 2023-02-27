@@ -1,7 +1,7 @@
 <script lang="ts">
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
-    import { LH_NEWTOWN_APP_3_KEY, LH_CHARACTERS_MASTER_ROOM_KEY } from '../../resources/mapResources/leonard_heights/leonard_heights_res'; 
+    import { LH_BAKER_STREET_12_F3_APT_KEY, LH_CHARACTERS_MASTER_ROOM_KEY } from '../../resources/mapResources/leonard_heights/leonard_heights_res'; 
     import { GameType } from '../../enumerables/GameType';
     import { loadFilesAndStartGame } from '../../game/mainController';
 
@@ -66,7 +66,7 @@
         <p><label for="enable-debug">Run game in Debug mode</label><input id="enable-debug" name="enable-debug" type="checkbox" /></p>
         <p><label for="disable-story">Disable story cinematics</label><input id="disable-story" name="disable-story" type="checkbox" checked /></p>
         <p><label for="map-selection" >Select starting location</label><select id="map-selection" name="map-selection" >
-            <option value={LH_NEWTOWN_APP_3_KEY}>Leonard Heights</option>
+            <option value={LH_BAKER_STREET_12_F3_APT_KEY}>Leonard Heights</option>
             <option value={LH_CHARACTERS_MASTER_ROOM_KEY}>Master rooms</option>
         </select></p>
     </div>

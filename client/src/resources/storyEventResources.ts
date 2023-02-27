@@ -1,7 +1,7 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { getDefaultCondition } from "./conditionFactory";
 import { getDefaultTalkInteraction } from "./interactionFactory";
-import { LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
+import { LH_BAKER_STREET_12_F3_APT_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
 import { CINSCRIPT_INTRO_CINEMATIC, CINSCRIPT_STORY_1, CINSCRIPT_STORY_2, CINSCRIPT_STORY_3, CINSCRIPT_STORY_4 } from "./storyCinematicResources";
 import { getOnInteractionStoryEvent, getOnPositionStoryEvent, getOnEnterStoryEvent, getOnLeaveStoryEvent } from "./storyEventFactory";
 
@@ -14,7 +14,7 @@ const EVENTKEY_STORY_EVENT_4 = "EVENTKEY_SE4";
 
 const INTRO_CINEMATIC_EVENT = [getDefaultTalkInteraction( CINSCRIPT_INTRO_CINEMATIC, getDefaultCondition() )]
 const STORY_INTRO_CINEMATIC_EVENT = getOnEnterStoryEvent(
-    LH_NEWTOWN_APP_3_KEY, EVENTKEY_INTRO_CINEMATIC, INTRO_CINEMATIC_EVENT
+    LH_BAKER_STREET_12_F3_APT_KEY, EVENTKEY_INTRO_CINEMATIC, INTRO_CINEMATIC_EVENT
 );
 
 
@@ -40,5 +40,5 @@ const STORY_EVENT_4 = getOnEnterStoryEvent(
 
 
 export const STORY_EVENT_LIST = [
-    STORY_EVENT_1, STORY_EVENT_2, STORY_EVENT_3, STORY_EVENT_4
+    STORY_INTRO_CINEMATIC_EVENT
 ]

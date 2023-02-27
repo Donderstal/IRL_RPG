@@ -4,7 +4,7 @@ import { PLAYER_NAME } from "../game-data/interactionGlobals";
 import type { CinematicModel } from "../models/CinematicModel";
 import { getCameraMoveToSpriteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene } from "./cinematicFactory";
 import { CM_INTRO_CINEMATIC_MAP_1, CM_INTRO_CINEMATIC_MAP_2 } from "./mapResources/cinematic_maps/cinematic_maps_res";
-import { LH_NEWTOWN_APP_3_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
+import { LH_BAKER_STREET_12_F3_APT_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
 
 export const CINSCRIPT_INTRO_CINEMATIC: CinematicModel = [
     [getFadeScene( SceneAnimationType.fadeOut )],
@@ -29,17 +29,16 @@ export const CINSCRIPT_INTRO_CINEMATIC: CinematicModel = [
     [getScreenTextScene( "PROFITS ARE THROUGH THE ROOF, BUT THE LESS FORTUNATE ARE SUPPRESSED OR NEGLECTED." )],
     [getFadeScene( SceneAnimationType.fadeOut )],
 
-    [getLoadMapScene( LH_NEWTOWN_APP_3_KEY, true, { column: 7, row: 6, direction: DirectionEnum.up })],
+    [getLoadMapScene( LH_BAKER_STREET_12_F3_APT_KEY, true, { column: 2, row: 4, direction: DirectionEnum.up })],
     [getFadeScene( SceneAnimationType.fadeIn, .5 )],
-    [getScreenTextScene( "BUT OUR STORY STARTS SMALL, FAR AWAY FROM  ALL THESE INTRIGUING DEVELOPMENTS." )],
-    [getScreenTextScene( "IT STARTS IN A TINY STUDIO APPARTMENT IN A NOT-SO-FANCY PART OF TOWN, WHERE A YOUNG MAN IS PLAYING VIDEO GAMES." )],
+    [getScreenTextScene( "BUT OUR STORY STARTS SMALL, FAR AWAY FROM ALL THESE INTRIGUING DEVELOPMENTS." )],
+    [getScreenTextScene( "IT STARTS IN A TINY STUDIO APPARTMENT IN A NOT-SO-FANCY PART OF TOWN, WHERE A NOT-SO-YOUNG MAN IS PLAYING VIDEO GAMES." )],
     [getScreenTextScene( "OUR HERO HAS NO IDEA OF THE THINGS THAT ARE TO COME. IT'S JUST ANOTHER DAY, AND HE NEEDS TO GO TO WORK..." )],
     [getFadeScene( SceneAnimationType.fadeIn )],
 
     [getSpeakScene( "Another day stocking shelves and helping customers at the Yum Mart...", null, PLAYER_NAME )],
-    [getSpeakScene( "This wasn't really where I expected myself to be at 30 years old, working in a supermarket.", null, PLAYER_NAME )],
-    [getSpeakScene( "Oh well, it could be worse. At least I'm not on basic income!", null, PLAYER_NAME )],
-    [getSpeakScene( "Let's get going!", null, PLAYER_NAME )],
+    [getSpeakScene( "This wasn't where I expected myself to be at 30 years, working in a supermarket.", null, PLAYER_NAME )],
+    [getSpeakScene( "Oh well, it could be worse. Let's get going before I'm late!", null, PLAYER_NAME )],
 ]
 
 export const CINSCRIPT_STORY_1: CinematicModel = [

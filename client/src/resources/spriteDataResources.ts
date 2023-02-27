@@ -734,7 +734,7 @@ export const spriteData = {
         "on_background": true
     },
     "graff_z1": {
-        "src": "graff_z1.png",
+        "src": "Graff_Z1.png",
         ...getBackgroundItem( 1.3125, 1.125 )
     },
     "hotel_sign": {

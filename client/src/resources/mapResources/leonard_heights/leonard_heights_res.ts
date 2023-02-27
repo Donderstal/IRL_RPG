@@ -31,6 +31,19 @@ export const LH_MAP_KEY = appendToLHNeighbourhoodKey( LH_KEY );
     export const LH_NEWTOWN_APP_5_KEY = appendToLHNeighbourhoodKey( "Newtown-appartment-5" );
 //
 
+// BAKER STREET 12 (C2)
+export const LH_BAKER_STREET_12_NAME = "Baker Street 12";
+export const LH_BAKER_STREET_12_GF_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_GF" );
+export const LH_BAKER_STREET_12_F1_STAIRS_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F1_STAIRS" );
+export const LH_BAKER_STREET_12_F1_APT_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F1_APT" );
+export const LH_BAKER_STREET_12_F2_STAIRS_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F2_STAIRS" );
+export const LH_BAKER_STREET_12_F2_APT_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F2_APT" );
+export const LH_BAKER_STREET_12_F3_STAIRS_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F3_STAIRS" );
+export const LH_BAKER_STREET_12_F3_APT_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F3_APT" );
+export const LH_BAKER_STREET_12_F4_STAIRS_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F4_STAIRS" );
+export const LH_BAKER_STREET_12_F4_APT_KEY = appendToLHNeighbourhoodKey( "LH_BS_12_F4_APT" );
+//
+
 // HOTEL TWO TOWERS (A3)
     export const LH_HOTEL_TWO_TOWERS_NAME = "Hotel 'The Two Towers'";
     export const LH_HOTEL_TWO_TOWERS_LOBBY_KEY = appendToLHNeighbourhoodKey( "Two-Towers-Lobby" );
