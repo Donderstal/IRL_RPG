@@ -7,8 +7,8 @@ import { DOORKEY_YUM_MART_DOOR_1, DOORKEY_YUM_MART_FRONT_DOOR } from "../C4-door
 export default {
 	"key": LH_YUM_MART_STORE_KEY,
 	"location": LH_YUM_MART_NAME,
-	"columns": 20,
-	"rows": 8,
+	"columns": 16,
+	"rows": 14,
 	"tileSet": "Yum_Mart",
 	"outdoors": false,
 	"music": "game-jam-5-10-21.mp3",
@@ -94,562 +94,912 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": 1,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 1,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 1,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 1,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 6,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 5,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 9,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 9,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 13,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 11,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 15,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 15,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 15,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 15,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 15,
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -674,82 +1024,62 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
@@ -774,42 +1104,32 @@ export default {
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		},
 		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
-			"angle": 0,
-			"mirrored": false
-		},
-		{
-			"id": 14,
+			"id": 15,
 			"angle": 0,
 			"mirrored": false
 		}
@@ -1614,226 +1934,658 @@ export default {
 			"id": "E",
 			"angle": 0,
 			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
+		},
+		{
+			"id": "E",
+			"angle": 0,
+			"mirrored": false
 		}
 	],
 	"sprites": [
 		{
-			"anim_type": AnimationTypeEnum.idle,
-			"direction": DirectionEnum.down,
-			"type": SUPERMARKET_MANAGER,
-			"row": 2,
-			"column": 3
+			"type": "thing_a",
+			"column": 11,
+			"row": 14,
+			"direction": 0
 		},
 		{
-			"anim_type": AnimationTypeEnum.idle,
-			"direction": DirectionEnum.left,
-			"type": GRANNY,
-			"row": 8,
-			"column": 20
+			"type": "thing_a",
+			"column": 16,
+			"row": 14,
+			"direction": 0
 		},
 		{
-			"type": "door_interior_east_blue",
-			"row": 3,
-			"column": 1
+			"type": "vegetables_a",
+			"column": 12,
+			"row": 14,
+			"direction": 0
 		},
 		{
-			"type": "door_interior_north_blue",
-			"row": 6,
-			"column": 10
-		},
-		{
-			"type": "door_interior_north_blue",
-			"row": 6,
-			"column": 11
+			"type": "vegetables_b",
+			"column": 15,
+			"row": 14,
+			"direction": 0
 		},
 		{
 			"type": "wall_thing",
-			"row": 4,
-			"column": 9
+			"column": 7,
+			"row": 10,
+			"direction": 0
 		},
 		{
 			"type": "wall_thing",
-			"row": 4,
-			"column": 11
+			"column": 9,
+			"row": 10,
+			"direction": 0
 		},
 		{
-			"type": "cashier_desk_c",
-			"row": 7,
-			"column": 2
-		},
-		{
-			"type": "cashier_desk_a",
-
-			"row": 7,
-			"column": 3
-		},
-		{
-			"type": "gate_left",
-
-			"row": 6,
-			"column": 8
-		},
-		{
-			"type": "wall_thing",
-
-			"row": 4,
-			"column": 7
-		},
-		{
-			"type": "wall_thing_b",
-
-			"row": 4,
-			"column": 6
-		},
-		{
-			"type": "bin_x",
-
-			"row": 7,
-			"column": 6
-		},
-		{
-			"type": "shelves_a",
-
-			"row": 2,
-			"column": 13
-		},
-		{
-			"type": "shelves_d",
-
-			"row": 2,
-			"column": 5
-		},
-		{
-			"type": "shelves_e",
-
-			"row": 2,
-			"column": 7
-		},
-		{
-			"type": "magazine_rack_b",
-
-			"row": 4,
-			"column": 1
-		},
-		{
-			"type": "yellow_stand",
-
-			"row": 2,
-			"column": 4
-		},
-		{
-			"type": "can_orange_1",
-
-			"row": 8,
-			"column": 20
-		},
-		{
-			"type": "newspaper_trash",
-
-			"row": 5,
-			"column": 1
-		},
-		{
-			"type": "shelves_d",
-
-			"row": 2,
-			"column": 9
+			"type": "wall_thing_c",
+			"column": 11,
+			"row": 12,
+			"direction": 0
 		},
 		{
 			"type": "shelves_side_d",
-
-			"row": 6,
-			"column": 15
+			"column": 1,
+			"row": 13,
+			"direction": 0
 		},
 		{
-			"type": "gate_left",
-
-			"row": 6,
-			"column": 14
+			"type": "shelves_side_d",
+			"column": 1,
+			"row": 11,
+			"direction": 0
 		},
 		{
-			"type": "thing_a",
-
-			"row": 8,
-			"column": 18
+			"type": "cashier_desk_c",
+			"column": 3,
+			"row": 13,
+			"direction": 0
 		},
 		{
-			"type": "thing_a",
-
-			"row": 4,
-			"column": 18
+			"type": "cashier_desk_c",
+			"column": 3,
+			"row": 11,
+			"direction": 0
 		},
 		{
-			"type": "vegetables_a",
-
-			"row": 8,
-			"column": 19
+			"type": "wall_thing_b",
+			"column": 6,
+			"row": 10,
+			"direction": 0
 		},
 		{
-			"type": "vegetables_a",
-
-			"row": 4,
-			"column": 19
-		},
-		{
-			"type": "vegetables_b",
-
-			"row": 8,
-			"column": 17
-		},
-		{
-			"type": "vegetables_b",
-
-			"row": 4,
-			"column": 17
-		},
-		{
-			"type": "shelves_b",
-
-			"row": 2,
-			"column": 11
+			"type": "wall_thing_b",
+			"column": 6,
+			"row": 13,
+			"direction": 0
 		},
 		{
 			"type": "shelves_side_a",
-
+			"column": 16,
+			"row": 10,
+			"direction": 0
+		},
+		{
+			"type": "shelves_side_a",
+			"column": 16,
+			"row": 8,
+			"direction": 0
+		},
+		{
+			"type": "shelves_side_a",
+			"column": 16,
 			"row": 6,
-			"column": 6
+			"direction": 0
 		},
 		{
-			"type": "Sign_03",
-
-			"row": 4,
-			"column": 11
+			"type": "door_interior_north_light",
+			"column": 8,
+			"row": 12,
+			"direction": 0
 		},
 		{
-			"type": "Sign_03",
-
-			"row": 4,
-			"column": 7
+			"type": "door_interior_north_light",
+			"column": 9,
+			"row": 12,
+			"direction": 0
 		},
 		{
-			"type": "Sign_03",
-
-			"row": 4,
-			"column": 9
+			"type": "door_interior_east_light",
+			"column": 1,
+			"row": 3,
+			"direction": 0
 		},
 		{
-			"type": "wall_thing",
-
-			"row": 4,
-			"column": 13
+			"type": "door_interior_west_light",
+			"column": 16,
+			"row": 3,
+			"direction": 0
 		},
 		{
-			"type": "Sign_03",
-
-			"row": 4,
-			"column": 13
+			"type": "flowers_a",
+			"column": 4,
+			"row": 2,
+			"direction": 0
 		},
 		{
-			"type": "yum_mart_sign",
-
+			"type": "bin_x",
+			"column": 6,
+			"row": 14,
+			"direction": 0
+		},
+		{
+			"type": "trash_2",
+			"column": 5,
+			"row": 14,
+			"direction": 0
+		},
+		{
+			"type": "can_red_1",
+			"column": 2,
+			"row": 7,
+			"direction": 0
+		},
+		{
+			"type": "collectable_juice_can",
+			"column": 1,
+			"row": 8,
+			"direction": 0
+		},
+		{
+			"type": "Poster_Cola",
+			"column": 15,
 			"row": 1,
-			"column": 17
+			"direction": 0
+		},
+		{
+			"type": "Poster_Gronk",
+			"column": 1,
+			"row": 1,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Side",
+			"column": 14,
+			"row": 10,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Side",
+			"column": 14,
+			"row": 6,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Side",
+			"column": 14,
+			"row": 8,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Bread",
+			"column": 6,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Bread",
+			"column": 7,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Large-B",
+			"column": 6,
+			"row": 8,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Large-A",
+			"column": 8,
+			"row": 8,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Large-C",
+			"column": 10,
+			"row": 8,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Dairy-Large-Back",
+			"column": 6,
+			"row": 7,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Dairy-Large-Back",
+			"column": 8,
+			"row": 7,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Dairy-Large-Back",
+			"column": 10,
+			"row": 7,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-C",
+			"column": 10,
+			"row": 5,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-B",
+			"column": 8,
+			"row": 5,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-B",
+			"column": 6,
+			"row": 5,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Back",
+			"column": 6,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Back",
+			"column": 8,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Back",
+			"column": 10,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Small-A",
+			"column": 8,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Small-B",
+			"column": 9,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Small-C",
+			"column": 10,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Small-C",
+			"column": 11,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Small-A",
+			"column": 14,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Small-B",
+			"column": 13,
+			"row": 2,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Drinks-A",
+			"column": 1,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "Store-Fridge-Drinks-B",
+			"column": 2,
+			"row": 4,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Side",
+			"column": 1,
+			"row": 7,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Side",
+			"column": 3,
+			"row": 7,
+			"direction": 0
+		},
+		{
+			"type": "Grocery-Shelves-Large-Side",
+			"column": 3,
+			"row": 6,
+			"direction": 0
 		}
 	],
 	"frontSprites": [],
@@ -1850,15 +2602,15 @@ export default {
 		},
 		{
 			"id": DOORKEY_YUM_MART_FRONT_DOOR,
-			"row": 6,
-			"column": 10,
+			"row": 12,
+			"column": 8,
 			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
 		},
 		{
 			"id": DOORKEY_YUM_MART_FRONT_DOOR,
-			"row": 6,
-			"column": 11,
+			"row": 12,
+			"column": 9,
 			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
 		}

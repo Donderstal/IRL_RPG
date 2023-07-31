@@ -899,19 +899,27 @@ export const spriteData = {
     "shelves_side_a": {
         "src": "shelves_side_a.png",
         "tile_alignment": DirectionEnum.right,
-        ...getGroundedAtBottom( 0.84375, 3 ),
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 3,
+        "width_blocks": 0.84375
     },
     "shelves_side_b": {
         "src": "shelves_side_b.png",
-        ...getGroundedAtBottom( 0.5, 3 ),
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 3,
+        "width_blocks": 0.5
     },
     "shelves_side_c": {
         "src": "shelves_side_c.png",
-        ...getGroundedAtBottom( 0.5, 5 ),
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 5,
+        "width_blocks": 0.5
     },
     "shelves_side_d": {
         "src": "shelves_side_d.png",
-        ...getGroundedAtBottom( 0.84375, 3 ),
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 3,
+        "width_blocks": 0.84375
     },
     "shop_cupboard_a": {
         "src": "shop_cupboard_a.png",
@@ -1033,11 +1041,15 @@ export const spriteData = {
     },
     "thing_a": {
         "src": "thing_a.png",
-        ...getStandard( 1, 3 ),
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 3,
+        "width_blocks": 1
     },
     "thing_b": {
         "src": "thing_b.png",
-        ...getGroundedAtBottom( 1, 2.015625 ),
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 2.015625,
+        "width_blocks": 1
     },
     "toilet": {
         "src": "toilet.png",
@@ -1228,6 +1240,96 @@ export const spriteData = {
     "yum_mart_sign": {
         "src": "yum_mart.png",
         ...getBackgroundItem( 3.46875, 0.65625 )
+    },
+
+    // store shelves and fridges
+    "Grocery-Shelves-Small-Side": {
+        "src": "Grocery-Shelves-Small-Side.png",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 2,
+        "width_blocks": 0.5
+    },
+    "Grocery-Shelves-Large-Side": {
+        "src": "Grocery-Shelves-Large-Side.png",
+        "dimensional_alignment": SpriteSheetAlignmentEnum.standard,
+        "height_blocks": 3,
+        "width_blocks": 0.5
+    },
+    "Grocery-Shelves-Bread": {
+        "src": "Grocery-Shelves-Bread.png",
+        ...getTwoHighSprite( true )
+    },
+    "Grocery-Shelves-Small-A": {
+        "src": "Grocery-Shelves-Small-A.png",
+        ...getTwoHighSprite( true )
+    },
+    "Grocery-Shelves-Small-B": {
+        "src": "Grocery-Shelves-Small-B.png",
+        ...getTwoHighSprite( true )
+    },
+    "Grocery-Shelves-Small-Back": {
+        "src": "Grocery-Shelves-Small-Back.png",
+        ...getTwoHighSprite( true )
+    },
+    "Grocery-Shelves-Small-C": {
+        "src": "Grocery-Shelves-Small-C.png",
+        ...getTwoHighSprite( true )
+    },
+    "Store-Fridge-Drinks-A": {
+        "src": "Store-Fridge-Drinks-A.png",
+        ...getTwoHighSprite( true )
+    },
+    "Store-Fridge-Drinks-B": {
+        "src": "Store-Fridge-Drinks-B.png",
+        ...getTwoHighSprite( true )
+    },
+    "Store-Fridge-Small-A": {
+        "src": "Store-Fridge-Small-A.png",
+        ...getTwoHighSprite( true )
+    },
+    "Store-Fridge-Small-B": {
+        "src": "Store-Fridge-Small-B.png",
+        ...getTwoHighSprite( true )
+    },
+    "Store-Fridge-Small-C": {
+        "src": "Store-Fridge-Small-C.png",
+        ...getTwoHighSprite( true )
+    },
+    "Grocery-Shelves-Large-A": {
+        "src": "Grocery-Shelves-Large-A.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Grocery-Shelves-Large-B": {
+        "src": "Grocery-Shelves-Large-B.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Grocery-Shelves-Large-Back": {
+        "src": "Grocery-Shelves-Large-Back.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Grocery-Shelves-Large-C": {
+        "src": "Grocery-Shelves-Large-C.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Store-Fridge-Large-A": {
+        "src": "Store-Fridge-Large-A.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Store-Fridge-Large-B": {
+        "src": "Store-Fridge-Large-B.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Store-Fridge-Large-C": {
+        "src": "Store-Fridge-Large-C.png",
+        ...getGroundedAtBottom( 2, 2 )
+    },
+    "Store-Fridge-Dairy-Back": {
+        "src": "Store-Fridge-Dairy-Back.png",
+        ...getTwoHighSprite( true )
+    },
+    "Store-Fridge-Dairy-Large-Back": {
+        "src": "Store-Fridge-Dairy-Large-Back.png",
+        ...getGroundedAtBottom( 2, 2 )
     },
 
     // cars
