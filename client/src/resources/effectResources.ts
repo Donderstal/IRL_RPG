@@ -1,4 +1,4 @@
-import { initGraphicEffectModel } from "../helpers/modelFactory";
+import { initGraphicEffectModel } from "../factories/modelFactory";
 import type { GraphicEffectModel } from "../models/GraphicEffectModel";
 
 const folder = "/static/effects/";

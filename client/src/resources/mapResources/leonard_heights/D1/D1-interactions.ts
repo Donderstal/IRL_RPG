@@ -1,7 +1,7 @@
 import type { CinematicModel } from "../../../../models/CinematicModel"
-import { getSpeakScene } from "../../../cinematicFactory";
-import { getDefaultCondition } from "../../../conditionFactory";
-import { getDefaultTalkInteraction } from "../../../interactionFactory";
+import { getSpeakScene } from "../../../../factories/cinematicFactory";
+import { getDefaultCondition } from "../../../../factories/conditionFactory";
+import { getDefaultTalkInteraction } from "../../../../factories/interactionFactory";
 
 const CINSCRIPT_FRIENDLY_CHAD: CinematicModel = [
     [getSpeakScene( "My bro's having some rough feels man." )],

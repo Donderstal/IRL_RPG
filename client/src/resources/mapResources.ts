@@ -1,4 +1,4 @@
-import { initNeighbourhoodModel } from "../helpers/modelFactory";
+import { initNeighbourhoodModel } from "../factories/modelFactory";
 import lennartMaps from './mapResources/leonard_heights/leonard_heights';
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import test_maps from "./mapResources/test_maps/test_maps";

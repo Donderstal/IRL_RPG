@@ -1,6 +1,6 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { IKEY_CAR_SHACK_3 } from "../../../../../game-data/interactionGlobals";
-import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from "../../../../conditionFactory";
+import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from "../../../../../factories/conditionFactory";
 import { POLICE_WOMAN_1 } from "../../../../spriteTypeResources";
 import { LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY, LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY, LH_SARDINE_STUDIOS_NAME } from "../../leonard_heights_res";
 import { DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP1 } from "../D2-door-keys";

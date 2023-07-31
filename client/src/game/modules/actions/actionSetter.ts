@@ -1,4 +1,4 @@
-import { initSpriteFrameModel, initTileFrameModel } from "../../../helpers/modelFactory";
+import { initSpriteFrameModel, initTileFrameModel } from "../../../factories/modelFactory";
 import type { ElevatorModel } from "../../../models/ElevatorModel";
 import type { InteractionModel } from "../../../models/InteractionModel";
 import type { Sprite } from "../../core/Sprite";

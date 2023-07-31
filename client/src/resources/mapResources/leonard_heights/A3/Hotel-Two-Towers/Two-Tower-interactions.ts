@@ -1,11 +1,8 @@
-import { ConditionType } from "../../../../../enumerables/ConditionTypeEnum"
-import { InteractionType } from "../../../../../enumerables/InteractionType"
-import { SceneAnimationType } from "../../../../../enumerables/SceneAnimationTypeEnum"
 import { PLAYER_NAME } from "../../../../../game-data/interactionGlobals"
 import type { CinematicModel } from "../../../../../models/CinematicModel"
-import { getSpeakScene } from "../../../../cinematicFactory"
-import { getDefaultCondition } from "../../../../conditionFactory"
-import { getDefaultTalkInteraction } from "../../../../interactionFactory"
+import { getSpeakScene } from "../../../../../factories/cinematicFactory"
+import { getDefaultCondition } from "../../../../../factories/conditionFactory"
+import { getDefaultTalkInteraction } from "../../../../../factories/interactionFactory"
 
 const CINSCRIPT_ROBOT_RECEPTIONIST: CinematicModel = [
     [getSpeakScene( "Greetings sir, welcome to the Two Towers Hotel!", PLAYER_NAME )],

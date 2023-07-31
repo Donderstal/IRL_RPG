@@ -17,7 +17,7 @@ import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../canvas/canvasGetter'
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
 import { cameraFocus } from '../cameraFocus'
-import { initSpriteFrameModel } from '../../helpers/modelFactory'
+import { initSpriteFrameModel } from '../../factories/modelFactory'
 
 export class Sprite {
     x: number;

@@ -1,9 +1,9 @@
 import { CHARNAME_CAR_SHACK_BOSS, CHARNAME_CAR_SHACK_MECHANIC, IKEY_CAR_SHACK_1, IKEY_CAR_SHACK_2, IKEY_CAR_SHACK_3, PLAYER_NAME } from "../../../../../game-data/interactionGlobals";
 import { EMOTE_EXCLAMATIONMARK, EMOTE_HEART, EMOTE_QUESTIONMARK, EMOTE_SAD } from "../../../../../game-data/textboxGlobals";
 import type { CinematicModel } from "../../../../../models/CinematicModel";
-import { getEmoteScene, getSpeakScene, getSpeakYesNoScene } from "../../../../cinematicFactory";
-import { getDefaultCondition, getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from "../../../../conditionFactory";
-import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../interactionFactory";
+import { getEmoteScene, getSpeakScene, getSpeakYesNoScene } from "../../../../../factories/cinematicFactory";
+import { getDefaultCondition, getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from "../../../../../factories/conditionFactory";
+import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../../factories/interactionFactory";
 
 // Car Shack Boss Clint
 const CINSCRIPT_CAR_SHACK_BOSS_1: CinematicModel = [

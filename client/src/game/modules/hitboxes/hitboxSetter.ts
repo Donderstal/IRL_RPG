@@ -1,4 +1,4 @@
-import { initSpriteFrameModel } from "../../../helpers/modelFactory";
+import { initSpriteFrameModel } from "../../../factories/modelFactory";
 import { Hitbox } from "../../core/Hitbox";
 import type { Sprite } from "../../core/Sprite";
 import { addHitboxToRegistry, clearHitboxRegistry, removeHitboxFromRegistry } from "./hitboxRegistry";

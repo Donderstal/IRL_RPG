@@ -1,5 +1,5 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
-import { initCanvasObjectModel, initGridCellModel } from "../../helpers/modelFactory";
+import { initCanvasObjectModel, initGridCellModel } from "../../factories/modelFactory";
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene,
     DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene,

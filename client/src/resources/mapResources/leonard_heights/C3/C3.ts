@@ -6,7 +6,7 @@ import { MovementType } from '../../../../enumerables/MovementTypeEnum';
 import { PIGEON, POLICE_ROBOT } from '../../../spriteTypeResources';
 import { LH_CAR_SHACK_KEY } from '../leonard_heights_res';
 import { DOORKEY_CAR_SHACK_FRONT_DOOR } from './C3-door-keys';
-import { getInteractionRegisteredCondition } from '../../../conditionFactory';
+import { getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
 import { IKEY_CAR_SHACK_3 } from '../../../../game-data/interactionGlobals';
 
 export default {

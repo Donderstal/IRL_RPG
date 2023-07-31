@@ -2,6 +2,7 @@
 
 #### JULy 31 2023
 * Reworking hitboxes to a square design instead of circles
+* Reorganized model and class factories to seperate folder
 
 #### LOOOONG BREAK
 

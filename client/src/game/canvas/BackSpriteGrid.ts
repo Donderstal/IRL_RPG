@@ -1,5 +1,4 @@
 import { CanvasGrid } from '../core/CanvasGrid';
-//import { getEffect, GraphicalEffect } from '../../helpers/effectHelpers';
 import { RoadNetwork } from '../map/RoadNetwork';
 import { getDataModelByKey } from '../../resources/spriteDataResources';
 import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
@@ -10,7 +9,7 @@ import type { CellPosition } from '../../models/CellPositionModel';
 import type { Tile } from '../core/Tile';
 import type { MapModel } from '../../models/MapModel';
 import type { SpawnPointModel } from '../../models/SpawnPointModel';
-import { initCanvasObjectModel } from '../../helpers/modelFactory';
+import { initCanvasObjectModel } from '../../factories/modelFactory';
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import { cameraFocus } from '../cameraFocus';

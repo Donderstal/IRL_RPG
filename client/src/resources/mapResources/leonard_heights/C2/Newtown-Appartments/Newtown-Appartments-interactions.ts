@@ -2,9 +2,9 @@ import { SceneAnimationType } from "../../../../../enumerables/SceneAnimationTyp
 import { UNLOCK_DOOR_TEST, LOGGABLE_INTERACTION_3, PLAYER_NAME } from "../../../../../game-data/interactionGlobals";
 import { EMOTE_ANGRY } from "../../../../../game-data/textboxGlobals";
 import type { CinematicModel } from "../../../../../models/CinematicModel";
-import { getEmoteScene, getFadeScene, getScreenTextScene, getSpeakScene } from "../../../../cinematicFactory";
-import { getDefaultCondition, getInteractionRegisteredCondition } from "../../../../conditionFactory";
-import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../interactionFactory";
+import { getEmoteScene, getFadeScene, getScreenTextScene, getSpeakScene } from "../../../../../factories/cinematicFactory";
+import { getDefaultCondition, getInteractionRegisteredCondition } from "../../../../../factories/conditionFactory";
+import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../../factories/interactionFactory";
 
 const CINSCRIPT_KEY_GUY_1: CinematicModel = [
     [getSpeakScene( "Didn't I give you a key already", PLAYER_NAME )],

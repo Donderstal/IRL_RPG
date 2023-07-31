@@ -1,9 +1,9 @@
 import { ANIM_TURN_CIRCLE_POSITIONAL } from "../../../../../game-data/animationGlobals";
 import { EMOTE_HEART } from "../../../../../game-data/textboxGlobals";
 import type { CinematicModel } from "../../../../../models/CinematicModel";
-import { getAnimateSpriteScene, getEmoteScene, getSpeakScene } from "../../../../cinematicFactory";
-import { getDefaultCondition } from "../../../../conditionFactory";
-import { getDefaultTalkInteraction } from "../../../../interactionFactory";
+import { getAnimateSpriteScene, getEmoteScene, getSpeakScene } from "../../../../../factories/cinematicFactory";
+import { getDefaultCondition } from "../../../../../factories/conditionFactory";
+import { getDefaultTalkInteraction } from "../../../../../factories/interactionFactory";
 
 const CINSCRIPT_YUM_MART_OFFICE_GUY: CinematicModel = [
     [getSpeakScene( "I hate my wife..." )],

@@ -1,8 +1,8 @@
 import { PLAYER_NAME } from "../../../../../../game-data/interactionGlobals";
 import type { CinematicModel } from "../../../../../../models/CinematicModel";
-import { getSpeakScene } from "../../../../../cinematicFactory";
-import { getDefaultCondition } from "../../../../../conditionFactory";
-import { getDefaultTalkInteraction } from "../../../../../interactionFactory";
+import { getSpeakScene } from "../../../../../../factories/cinematicFactory";
+import { getDefaultCondition } from "../../../../../../factories/conditionFactory";
+import { getDefaultTalkInteraction } from "../../../../../../factories/interactionFactory";
 
 const CINSCRIPT_BS_APT4_RESIDENT: CinematicModel = [
     [getSpeakScene( "Can't you see I'm trying to cook dinner?", PLAYER_NAME )],

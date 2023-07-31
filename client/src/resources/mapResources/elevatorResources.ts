@@ -1,6 +1,6 @@
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import type { ElevatorModel } from "../../models/ElevatorModel";
-import { getDefaultCondition } from "../conditionFactory";
+import { getDefaultCondition } from "../../factories/conditionFactory";
 import {
     LH_GREY_BUILDING_F1_LOBBY,
     LH_GREY_BUILDING_F2_LOBBY,

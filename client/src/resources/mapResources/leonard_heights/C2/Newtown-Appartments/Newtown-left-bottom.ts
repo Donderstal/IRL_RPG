@@ -1,7 +1,7 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
-import { getInteractionRegisteredCondition } from "../../../../conditionFactory";
+import { getInteractionRegisteredCondition } from "../../../../../factories/conditionFactory";
 import { FAT_BUFF_GUY, PINK_HAIR_NERD_LADY } from "../../../../spriteTypeResources";
 import { LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
 import { DOORKEY_NEWTOWN_APPARTMENTS_APP_1_DOOR } from "../C2-door-keys";

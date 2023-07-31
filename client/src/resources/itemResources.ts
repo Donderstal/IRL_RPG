@@ -1,5 +1,5 @@
 import { ItemCategoryEnum } from "../enumerables/ItemCategoryEnum";
-import { initItemModel } from "../helpers/modelFactory";
+import { initItemModel } from "../factories/modelFactory";
 import type { ItemModel } from "../models/ItemModel";
 
 const itemData = {

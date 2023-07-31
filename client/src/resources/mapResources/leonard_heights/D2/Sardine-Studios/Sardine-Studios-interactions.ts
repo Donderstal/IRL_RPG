@@ -1,9 +1,9 @@
 import { IKEY_CAR_SHACK_1, IKEY_CAR_SHACK_2, PLAYER_NAME } from "../../../../../game-data/interactionGlobals";
 import { EMOTE_ANGRY } from "../../../../../game-data/textboxGlobals";
 import type { CinematicModel } from "../../../../../models/CinematicModel";
-import { getEmoteScene, getSpeakScene } from "../../../../cinematicFactory";
-import { getDefaultCondition, getInteractionRegisteredCondition } from "../../../../conditionFactory";
-import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../interactionFactory";
+import { getEmoteScene, getSpeakScene } from "../../../../../factories/cinematicFactory";
+import { getDefaultCondition, getInteractionRegisteredCondition } from "../../../../../factories/conditionFactory";
+import { getDefaultTalkInteraction, getRegistryTalkInteraction } from "../../../../../factories/interactionFactory";
 
 // Communal space guy
 const CINSCRIPT_COMMUNAL_SPACE_GUY_1: CinematicModel = [

@@ -2,7 +2,7 @@ import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import { PLAYER_NAME } from "../game-data/interactionGlobals";
 import type { CinematicModel } from "../models/CinematicModel";
-import { getCameraMoveToSpriteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene } from "./cinematicFactory";
+import { getCameraMoveToSpriteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene } from "./../factories/cinematicFactory";
 import { CM_INTRO_CINEMATIC_MAP_1, CM_INTRO_CINEMATIC_MAP_2 } from "./mapResources/cinematic_maps/cinematic_maps_res";
 import { LH_BAKER_STREET_12_F3_APT_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
 

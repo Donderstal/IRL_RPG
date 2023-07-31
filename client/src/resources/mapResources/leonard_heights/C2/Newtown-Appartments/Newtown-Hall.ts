@@ -1,7 +1,7 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { UNLOCK_DOOR_TEST } from "../../../../../game-data/interactionGlobals";
-import { getInteractionNotRegisteredCondition } from "../../../../conditionFactory";
+import { getInteractionNotRegisteredCondition } from "../../../../../factories/conditionFactory";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
 import { LH_MAP_KEY, LH_NEWTOWN_APP_1_KEY, LH_NEWTOWN_APP_2_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY, LH_NEWTOWN_APP_NAME } from "../../leonard_heights_res";
 import { DOORKEY_NEWTOWN_APPARTMENTS_APP_1_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_2_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_3_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_4_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_APP_5_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR } from "../C2-door-keys";

@@ -1,9 +1,9 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import { getDefaultCondition } from "./conditionFactory";
-import { getDefaultTalkInteraction } from "./interactionFactory";
+import { getDefaultCondition } from "./../factories/conditionFactory";
+import { getDefaultTalkInteraction } from "./../factories/interactionFactory";
 import { LH_BAKER_STREET_12_F3_APT_KEY, LH_NEWTOWN_APP_3_KEY, LH_NEWTOWN_APP_4_KEY, LH_NEWTOWN_APP_5_KEY, LH_NEWTOWN_APP_HALL_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
 import { CINSCRIPT_INTRO_CINEMATIC, CINSCRIPT_STORY_1, CINSCRIPT_STORY_2, CINSCRIPT_STORY_3, CINSCRIPT_STORY_4 } from "./storyCinematicResources";
-import { getOnInteractionStoryEvent, getOnPositionStoryEvent, getOnEnterStoryEvent, getOnLeaveStoryEvent } from "./storyEventFactory";
+import { getOnInteractionStoryEvent, getOnPositionStoryEvent, getOnEnterStoryEvent, getOnLeaveStoryEvent } from "./../factories/storyEventFactory";
 
 const EVENTKEY_INTRO_CINEMATIC = "STORY_INTRO_CINEMATIC";
 

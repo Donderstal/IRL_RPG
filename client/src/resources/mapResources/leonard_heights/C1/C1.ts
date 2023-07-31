@@ -2,7 +2,7 @@ import { GRID_LEONARD_C1 } from './grid';
 import { FRONT_GRID_LEONARD_C1 } from './frontgrid';
 import { LOST_KEYS_INTERACTION } from './C1-interactions';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { getInteractionNotRegisteredCondition } from '../../../conditionFactory';
+import { getInteractionNotRegisteredCondition } from '../../../../factories/conditionFactory';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 
 export default {

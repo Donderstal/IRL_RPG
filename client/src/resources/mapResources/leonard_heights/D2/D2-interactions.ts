@@ -1,9 +1,9 @@
 import { PLAYER_NAME } from '../../../../game-data/interactionGlobals';
 import { EMOTE_HEART } from '../../../../game-data/textboxGlobals';
 import type { CinematicModel } from '../../../../models/CinematicModel';
-import { getEmoteScene, getSpeakScene } from '../../../cinematicFactory';
-import { getDefaultCondition } from '../../../conditionFactory';
-import { getDefaultTalkInteraction } from '../../../interactionFactory';
+import { getEmoteScene, getSpeakScene } from '../../../../factories/cinematicFactory';
+import { getDefaultCondition } from '../../../../factories/conditionFactory';
+import { getDefaultTalkInteraction } from '../../../../factories/interactionFactory';
 
 const CINSCRIPT_LOOKING_FOR_APPARTMENT: CinematicModel = [
     [getSpeakScene( "This is my favorite part of the city.", PLAYER_NAME )],

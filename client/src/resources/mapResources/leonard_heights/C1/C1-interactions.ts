@@ -1,8 +1,8 @@
 import { PLAYER_NAME } from '../../../../game-data/interactionGlobals';
 import type { CinematicModel } from '../../../../models/CinematicModel';
-import { getDeleteSpriteScene, getSpeakScene } from '../../../cinematicFactory';
-import { getDefaultTalkInteraction } from '../../../interactionFactory';
-import { getDefaultCondition } from '../../../conditionFactory';
+import { getDeleteSpriteScene, getSpeakScene } from '../../../../factories/cinematicFactory';
+import { getDefaultTalkInteraction } from '../../../../factories/interactionFactory';
+import { getDefaultCondition } from '../../../../factories/conditionFactory';
 
 const CINSCRIPT_LOST_KEY: CinematicModel = [
     [getSpeakScene( "Looks like someone lost their keys here...", PLAYER_NAME )],

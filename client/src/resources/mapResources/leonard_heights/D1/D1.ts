@@ -6,7 +6,7 @@ import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_BOP, ANIM_LIFT } from '../../../../game-data/animationGlobals';
-import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from '../../../conditionFactory';
+import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,

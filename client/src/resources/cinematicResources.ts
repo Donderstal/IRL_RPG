@@ -2,7 +2,7 @@ import { ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_POWER_UP, ANIM_TURN_CIRCLE_POSITIO
 import { PLAYER_NAME } from "../game-data/interactionGlobals";
 import { EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_HEART, EMOTE_SAD, EMOTE_SURPRISED } from "../game-data/textboxGlobals";
 import type { CinematicModel } from "../models/CinematicModel";
-import { getAnimateSpriteScene, getDeleteSpriteScene, getEmoteScene, getSpeakScene, getSpeakYesNoScene, getWaitScene } from "./cinematicFactory";
+import { getAnimateSpriteScene, getDeleteSpriteScene, getEmoteScene, getSpeakScene, getSpeakYesNoScene, getWaitScene } from "./../factories/cinematicFactory";
 
 // Random encounters
 export const CINSCRIPT_RANDOM_ENCOUNTER_1: CinematicModel = [

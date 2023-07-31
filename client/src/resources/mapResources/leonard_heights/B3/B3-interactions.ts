@@ -1,8 +1,8 @@
 import { PLAYER_NAME } from '../../../../game-data/interactionGlobals';
 import type { CinematicModel } from '../../../../models/CinematicModel';
-import { getSpeakScene } from '../../../cinematicFactory';
-import { getDefaultCondition, getInteractionRegisteredCondition } from '../../../conditionFactory';
-import { getDefaultTalkInteraction, getRegistryTalkInteraction } from '../../../interactionFactory';
+import { getSpeakScene } from '../../../../factories/cinematicFactory';
+import { getDefaultCondition, getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
+import { getDefaultTalkInteraction, getRegistryTalkInteraction } from '../../../../factories/interactionFactory';
 
 const CINSCRIPT_KEY_GUY_1: CinematicModel = [
     [getSpeakScene( "Woah, it's the key finding dude!", PLAYER_NAME )],
