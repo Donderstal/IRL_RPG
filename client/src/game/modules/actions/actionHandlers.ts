@@ -5,7 +5,7 @@ import { getSavePoint } from "./actionRegistry";
 export const updateSpriteAssociatedAction = ( sprite: Sprite ): void => {
     const action = getSpriteActionById(sprite.spriteId);
     if ( action !== null && action !== undefined ) {
-        action.updateXy( sprite.centerX, sprite.baseY );
+        action.updateXy( sprite.x, sprite.y );
     }
 };
 export const drawSavePoint = (): void => {

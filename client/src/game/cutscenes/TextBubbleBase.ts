@@ -3,7 +3,7 @@ import { BUBBLE_INNER_PADDING, GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT
 import { PLAYER_NAME } from "../../game-data/interactionGlobals";
 import { writeTextLine } from "../../helpers/canvasHelpers";
 import { getSpeechBubbleTemplateCanvas } from "../../helpers/speechBubbleHelpers";
-import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
+import type { FrameModel } from "../../models/SpriteFrameModel";
 
 export class TextBubbleBase {
     x: number;
@@ -16,7 +16,7 @@ export class TextBubbleBase {
     headerText: string;
 
     frameCount: number;
-    activeFrame: SpriteFrameModel;
+    activeFrame: FrameModel;
 
     constructor( x: number, y: number, width: number, height: number ) {
         this.x = x;
@@ -40,7 +40,7 @@ export class TextBubbleBase {
         this.frameCount++;
     }
 
-    setActiveFrame( frame: SpriteFrameModel ): void {
+    setActiveFrame( frame: FrameModel ): void {
         this.activeFrame = frame;
     }
 

@@ -1,4 +1,10 @@
 ### 
+
+#### JULy 31 2023
+* Reworking hitboxes to a square design instead of circles
+
+#### LOOOONG BREAK
+
 #### FEB 27 2023
 * Added a bunch of new building maps
 * New starting location

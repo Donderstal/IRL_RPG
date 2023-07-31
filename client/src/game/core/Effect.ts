@@ -1,4 +1,4 @@
-import type { SpriteFrameModel } from "../../models/SpriteFrameModel";
+import type { FrameModel } from "../../models/SpriteFrameModel";
 
 import { getEffectData } from "../../resources/effectResources";
 import { FRAME_LIMIT, GRID_BLOCK_PX } from "../../game-data/globals";
@@ -104,7 +104,7 @@ export class Effect {
 }
 
 class Frame { 
-    model: SpriteFrameModel
+    model: FrameModel
     constructor( x: number, y: number, width: number, height: number ) {
         this.model = {
             x: x,

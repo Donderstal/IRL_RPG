@@ -1,10 +1,10 @@
 import type { InteractionModel } from "../../../models/InteractionModel";
 import { InteractionAnswer } from "../../../enumerables/InteractionAnswer";
 import { Hitbox } from "../../core/Hitbox";
-import { GRID_BLOCK_PX } from "../../../game-data/globals";
 import { conditionIsTrue } from "../../../helpers/conditionalHelper";
 import { InteractionType } from "../../../enumerables/InteractionType";
 import { CinematicTrigger } from "../../../enumerables/CinematicTriggerEnum";
+import type { FrameModel } from "../../../models/SpriteFrameModel";
 
 export class ActionSelector extends Hitbox {
     activeAction: InteractionModel;
@@ -16,8 +16,8 @@ export class ActionSelector extends Hitbox {
     registeredSelection: InteractionAnswer;
     confirmingAction: boolean;
     wasMoving: boolean;
-    constructor( x, y, actionList: InteractionModel[], spriteId = null ) {
-        super( x, y, GRID_BLOCK_PX / 2 );
+    constructor( frame: FrameModel, actionList: InteractionModel[], spriteId = null ) {
+        super( frame );
         this.spriteId = spriteId;
         this.conditionalActions = actionList;
         this.trigger = CinematicTrigger.interaction;

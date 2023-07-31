@@ -68,7 +68,7 @@ export const handleMapAnimations = (): void => {
             door.draw();
         }
 
-        if ( playerHitbox !== undefined && playerHitbox.doorInRange( door ) && door.model.direction === player.direction ) {
+        if ( playerHitbox !== undefined && playerHitbox.isInDoorRange( door ) && door.model.direction === player.direction ) {
             handleDoor( door );
         }
     })

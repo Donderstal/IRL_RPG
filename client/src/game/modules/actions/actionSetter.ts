@@ -1,4 +1,4 @@
-import { GRID_BLOCK_PX } from "../../../game-data/globals";
+import { initSpriteFrameModel, initTileFrameModel } from "../../../helpers/modelFactory";
 import type { ElevatorModel } from "../../../models/ElevatorModel";
 import type { InteractionModel } from "../../../models/InteractionModel";
 import type { Sprite } from "../../core/Sprite";
@@ -9,25 +9,25 @@ import { SavePoint } from "../../map/map-classes/SavePoint";
 import { addSavePoint, addSpriteAction, addTileAction, clearActionRegistry, removeSpriteAction, removeTileAction } from "./actionRegistry";
 
 export const initializeActionForSprite = ( sprite: Sprite, interactionList: InteractionModel[] ): void => {
-    const action = new ActionSelector(
-        sprite.centerX, sprite.baseY, interactionList, sprite.spriteId
-    );
+    const frame = initSpriteFrameModel( sprite );
+    const action = new ActionSelector( frame, interactionList, sprite.spriteId );
     addSpriteAction( sprite.spriteId, action );
 };
 
 export const initializeActionForTile = ( tile: Tile, interactionList: InteractionModel[] ): void => {
-    const action  = new ActionSelector(
-        tile.x + ( GRID_BLOCK_PX / 2 ), tile.y + ( GRID_BLOCK_PX / 2 ), interactionList
-    );
+    const frame = initTileFrameModel( tile );
+    const action = new ActionSelector( frame, interactionList );
     addTileAction( tile.index.toString(), action );
 };
 
 export const initializeSavePoint = ( tile: Tile ): void => {
-    const savePoint = new SavePoint( tile );
+    const frame = initTileFrameModel( tile );
+    const savePoint = new SavePoint( frame );
     addSavePoint( savePoint );
 }
 export const initializeElevator = ( tile: Tile, elevatorModel: ElevatorModel ): void => {
-    const elevator = new Elevator( tile.x + ( GRID_BLOCK_PX / 2 ), tile.y + GRID_BLOCK_PX, elevatorModel );
+    const frame = initTileFrameModel( tile );
+    const elevator = new Elevator( frame, elevatorModel );
     addTileAction( tile.index.toString(), elevator );
 }
 export const destroySpriteAssociatedAction = ( spriteId: string ): void => {

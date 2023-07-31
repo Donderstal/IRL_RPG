@@ -1,6 +1,6 @@
 import type { DirectionEnum } from "../enumerables/DirectionEnum"
 
-export type SpriteFrameModel = {
+export type FrameModel = {
     x: number,
     y: number,
     width?: number,

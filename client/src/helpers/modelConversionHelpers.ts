@@ -1,14 +1,14 @@
-import type { SpriteFrameModel } from "../models/SpriteFrameModel"
+import type { FrameModel } from "../models/SpriteFrameModel"
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
 import { GRID_BLOCK_IN_SHEET_PX } from "../game-data/globals";
 import type { SpriteDataModel } from "../models/SpriteDataModel";
 import { isHorizontal } from "./utilFunctions";
 
-export const getSpriteFrameForPosition = ( framePosition: { x: number, y: number }, dataModel: SpriteDataModel, direction: DirectionEnum = null ): SpriteFrameModel => {
+export const getSpriteFrameForPosition = ( framePosition: { x: number, y: number }, dataModel: SpriteDataModel, direction: DirectionEnum = null ): FrameModel => {
     let width = getFrameWidth( dataModel, direction );
     let height = getFrameHeight( dataModel, direction );
-    const model: SpriteFrameModel = {
+    const model: FrameModel = {
         x: framePosition.x,
         y: framePosition.y,
         width: width,

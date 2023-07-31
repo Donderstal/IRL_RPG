@@ -1,4 +1,5 @@
 import { GRID_BLOCK_PX } from "../../../game-data/globals";
+import type { FrameModel } from "../../../models/SpriteFrameModel";
 import type { CanvasGrid } from "../../core/CanvasGrid";
 import { Hitbox } from "../../core/Hitbox";
 import type { Tile } from "../../core/Tile";
@@ -6,8 +7,8 @@ import type { Tile } from "../../core/Tile";
 export class VisionBox extends Hitbox {
     previousArcX: number;
     previousArcY: number;
-    constructor( x, y ) {
-        super( x, y, GRID_BLOCK_PX * 2 );
+    constructor( frame: FrameModel ) {
+        super( frame );
         this.arcColor = "black"
         this.previousArcX = null;
         this.previousArcY = null;

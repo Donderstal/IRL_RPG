@@ -1,4 +1,4 @@
-import type { SpriteFrameModel } from "./SpriteFrameModel";
+import type { FrameModel } from "./SpriteFrameModel";
 
 export type GraphicEffectModel = {
     src: string;
@@ -6,5 +6,5 @@ export type GraphicEffectModel = {
     heightInBlocks: number;
     frameWidth: number;
     frameHeight: number;
-    frames: SpriteFrameModel[];
+    frames: FrameModel[];
 }

@@ -1,12 +1,12 @@
 import { GRID_BLOCK_IN_SHEET_PX } from '../../game-data/globals'
 import { getEffect } from '../../helpers/effectHelpers'
 import { GRID_BLOCK_PX, MOVEMENT_SPEED, FRAME_LIMIT } from '../../game-data/globals'
-import { isHorizontal, spriteIsPlayer } from '../../helpers/utilFunctions'
+import { spriteIsPlayer } from '../../helpers/utilFunctions'
 import { DirectionEnum } from '../../enumerables/DirectionEnum'
 import type { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum'
 import { MovementType } from '../../enumerables/MovementTypeEnum'
 import type { GridCellModel } from '../../models/GridCellModel'
-import type { SpriteFrameModel } from '../../models/SpriteFrameModel'
+import type { FrameModel } from '../../models/SpriteFrameModel'
 import type { Tile } from './Tile'
 import type { SpriteDataModel } from '../../models/SpriteDataModel'
 import { SpriteSheetAlignmentEnum } from '../../enumerables/SpriteSheetAlignmentEnum'
@@ -17,6 +17,7 @@ import { drawFromImageToCanvas } from '../../helpers/canvasHelpers'
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../canvas/canvasGetter'
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum'
 import { cameraFocus } from '../cameraFocus'
+import { initSpriteFrameModel } from '../../helpers/modelFactory'
 
 export class Sprite {
     x: number;
@@ -30,7 +31,7 @@ export class Sprite {
 
     model: SpriteDataModel;
     blockedArea: BlockedArea;
-    activeFrames: SpriteFrameModel[];
+    activeFrames: FrameModel[];
 
     sheetFrameLimit: number;
     frameCount: number;
@@ -46,7 +47,7 @@ export class Sprite {
     animationType: AnimationTypeEnum;
     movementType: MovementType;
     animationName: string;
-    activeFrame: SpriteFrameModel;
+    activeFrame: FrameModel;
 
     name: string;
     spriteId: string;
@@ -87,7 +88,8 @@ export class Sprite {
             this.blockedArea = new BlockedArea( this, this.model.blockedArea );
         }
         if ( this.isPlayer ) {
-            this.visionbox = new VisionBox( this.centerX, this.baseY );
+            const frame = initSpriteFrameModel( this )
+            this.visionbox = new VisionBox( frame );
         }
     }
 
@@ -196,7 +198,7 @@ export class Sprite {
     
     drawSprite(): void {
         if ( this.isPlayer ) {
-            this.visionbox.updateXy( this.centerX, this.baseY );
+            this.visionbox.updateXy( this.x, this.y );
         }
         if ( this.hasActiveEffect ) {
             this.activeEffect.drawBack( this.x - ( GRID_BLOCK_PX * 0.9375 ), this.y + ( this.height * 0.25  ) )

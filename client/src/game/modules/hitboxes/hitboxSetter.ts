@@ -1,12 +1,12 @@
-import { isHorizontal } from "../../../helpers/utilFunctions";
+import { initSpriteFrameModel } from "../../../helpers/modelFactory";
 import { Hitbox } from "../../core/Hitbox";
 import type { Sprite } from "../../core/Sprite";
 import { addHitboxToRegistry, clearHitboxRegistry, removeHitboxFromRegistry } from "./hitboxRegistry";
 
 export const initializeHitboxForSprite = ( sprite: Sprite ): void => {
     const spriteId = sprite.spriteId;
-    const radius = sprite.isCar && !isHorizontal( sprite.direction ) ? sprite.height / 2 : sprite.width / 2;
-    const hitbox = new Hitbox( sprite.centerX, sprite.baseY, radius );
+    const frame = initSpriteFrameModel(sprite);
+    const hitbox = new Hitbox( frame );
     addHitboxToRegistry(spriteId, hitbox);
 };
 export const destroyAssociatedHitbox = ( spriteId: string ): void => {

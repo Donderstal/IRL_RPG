@@ -1,6 +1,6 @@
 import { FRAME_LIMIT } from "../../../game-data/globals";
 import type { SpriteAnimationModel } from "../../../models/SpriteAnimationModel";
-import type { SpriteFrameModel } from "../../../models/SpriteFrameModel";
+import type { FrameModel } from "../../../models/SpriteFrameModel";
 import type { Sprite } from "../../core/Sprite";
 import type { SpeechBubble } from "../../cutscenes/SpeechBubble";
 
@@ -29,7 +29,7 @@ export class SpriteAnimation {
         this.checkForAnimationEnd();
     }
 
-    getActiveFrame(): SpriteFrameModel {
+    getActiveFrame(): FrameModel {
         return this.model.frames[this.index];
     }
 

@@ -12,7 +12,7 @@ import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import { getClosestHitbox } from '../../helpers/utilFunctions';
 
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
-import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
+import { getSpriteById } from "../modules/sprites/spriteGetter";
 import { getSpriteDestination, spriteHasDestination } from '../modules/destinations/destinationGetter';
 import { markModuleAsActive, markModuleAsInActive } from '../modules/moduleRegistrySetter';
 import { getAllActions } from '../modules/actions/actionRegistry';
@@ -37,7 +37,7 @@ export const handleActionButton = ( ): void => {
     const actions = getAllActions();
     if ( actions.length === 0 ) return;
     const closestAction = getClosestHitbox( playerHitbox, actions );
-    if ( playerHitbox.actionInRange( closestAction, getPlayer().direction ) ) {
+    if ( playerHitbox.isInActionRange( closestAction ) ) {
         setActiveAction( closestAction as ActionSelector );
     }
     else {

@@ -2,7 +2,7 @@ import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { ANIM_BACK_AND_FORTH, ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_BACK_AND_FORTH_STEP, ANIM_BACK_AND_FORTH_STEP_POSITIONAL, ANIM_BLINK, ANIM_BOP, ANIM_BREATHE, ANIM_CAST, ANIM_COLLECTABLE_IDLE, ANIM_COLLECTABLE_IDLE_LONG, ANIM_FLAP_WINGS_POSITIONAL, ANIM_HACK, ANIM_LEFT_AND_RIGHT, ANIM_LEFT_AND_RIGHT_STEP, ANIM_LIFT, ANIM_POWER_UP, ANIM_PUNCH, ANIM_SELECTION, ANIM_SIGN_IDLE_HORI, ANIM_SIGN_IDLE_HORI_LONG, ANIM_SIGN_IDLE_VERT, ANIM_SIGN_IDLE_VERT_LONG, ANIM_SPEECH_BUBBLE_TALKING_HEAD_1, ANIM_SPRITE_HIT, ANIM_TALK, ANIM_TURN_CIRCLE, ANIM_TURN_CIRCLE_POSITIONAL, DIRECTIONAL_ANIMS, POSITIONAL_ANIMS } from "../game-data/animationGlobals";
 import { getOppositeDirection } from "../helpers/utilFunctions";
 import type { SpriteAnimationModel } from "../models/SpriteAnimationModel";
-import type { SpriteFrameModel } from "../models/SpriteFrameModel";
+import type { FrameModel } from "../models/SpriteFrameModel";
 
 type SheetFrame = {
     row: number,
@@ -386,7 +386,7 @@ const getAnimationModel = ( key: string, dto: SheetFrame[], width: number, heigh
     const model: SpriteAnimationModel = {
         name: key,
         frames: dto.map( ( e ) => {
-            const model: SpriteFrameModel = {
+            const model: FrameModel = {
                 x: e.column * width,
                 y: e.row * height,
                 width: width,

@@ -51,6 +51,8 @@ export class Tile {
         this.movementCost = 1;
     };
 
+    get width(): number { return GRID_BLOCK_PX; }
+    get height(): number { return GRID_BLOCK_PX; }
     get isEmpty( ): boolean {
         return this.model.id === null;
     }

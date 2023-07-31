@@ -5,7 +5,7 @@ import type { DoorModel } from "../models/DoorModel";
 import type { TileModel } from "../models/TileModel";
 import type { MapModel } from "../models/MapModel";
 import type { GraphicEffectModel } from "../models/GraphicEffectModel";
-import type { SpriteFrameModel } from "../models/SpriteFrameModel";
+import type { FrameModel } from "../models/SpriteFrameModel";
 import type { ItemModel } from "../models/ItemModel";
 import type { GridCellModel } from "../models/GridCellModel";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
@@ -154,13 +154,23 @@ export const initDoorModel = ( doorData ): DoorModel => {
     return doorModel;
 }
 
-export const initSpriteFrameModel = ( frameData ): SpriteFrameModel => {
-    const model: SpriteFrameModel = {
+export const initSpriteFrameModel = ( frameData ): FrameModel => {
+    const model: FrameModel = {
         x: frameData.x,
         y: frameData.y,
         width: frameData.width,
         height: frameData.height,
         direction: frameData.direction
+    }
+    return model;
+}
+
+export const initTileFrameModel = ( frameData ): FrameModel => {
+    const model: FrameModel = {
+        x: frameData.x,
+        y: frameData.y,
+        width: frameData.width,
+        height: frameData.height
     }
     return model;
 }

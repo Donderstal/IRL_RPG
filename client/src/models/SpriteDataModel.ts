@@ -1,7 +1,7 @@
 import type { CollectableType } from "../enumerables/CollectableTypeEnum";
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { SpriteSheetAlignmentEnum } from "../enumerables/SpriteSheetAlignmentEnum";
-import type { SpriteFrameModel } from "./SpriteFrameModel";
+import type { FrameModel } from "./SpriteFrameModel";
 
 export type SpriteDataModel = {
     key: string;
@@ -13,7 +13,7 @@ export type SpriteDataModel = {
     idleAnimations?: string[];
 
     canMove: boolean;
-    movementFrames?: { [key in DirectionEnum]: SpriteFrameModel[] };
+    movementFrames?: { [key in DirectionEnum]: FrameModel[] };
 
     onBackground: boolean;
     notGrounded: boolean;

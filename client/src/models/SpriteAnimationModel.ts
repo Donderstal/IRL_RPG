@@ -1,8 +1,8 @@
-import type { SpriteFrameModel } from "./SpriteFrameModel";
+import type { FrameModel } from "./SpriteFrameModel";
 
 export type SpriteAnimationModel = {
     name: string,
-    frames: SpriteFrameModel[],
+    frames: FrameModel[],
     looped: boolean,
     loops?: number
 }
