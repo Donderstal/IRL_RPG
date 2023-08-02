@@ -5,14 +5,14 @@ import { conditionIsTrue } from "../../helpers/conditionalHelper";
 import type { CellPosition } from "../../models/CellPositionModel";
 import type { Sprite } from "../core/Sprite";
 import type { ScriptedEvent } from "../cutscenes/ScriptedEvent";
-import { inDisableStoryGameState } from "../gameState/gameStateGetter";
+import { inDisableStoryState } from "../../state/stateGetter";
 import { getPlayer, getSpriteById } from "../modules/sprites/spriteGetter";
 import { getStoryEventsOnActiveMap, storyEventHasBeenTriggered } from "./storyEventGetter";
 import { markStoryEventAsTriggered } from "./storyEventRegistry";
 
 export const checkForEventTrigger = ( trigger: CinematicTrigger, args: any[] = null ): boolean => {
     const events = getStoryEventsOnActiveMap();
-    if ( inDisableStoryGameState() || events.length < 1 ) {
+    if ( inDisableStoryState() || events.length < 1 ) {
         return false;
     }
     const activeMapStoryEvent = events.filter( ( e ) => {

@@ -2,7 +2,7 @@ import { GRID_BLOCK_PX, MOVEMENT_SPEED } from "../../game-data/globals";
 import { COLOR_WHITE } from '../../game-data/uiGlobals';
 import type { FrameModel } from "../../models/SpriteFrameModel";
 import { getBackSpritesGrid } from "../canvas/canvasGetter";
-import { inDebugGameState } from "../gameState/gameStateGetter";
+import { inDebugState } from "../../state/stateGetter";
 /**
  * The Hitbox interface is the base class of all in-game elements that should have collision detection.
  * It consists out of three circles, the inner, middle and outer.
@@ -55,7 +55,7 @@ export class Hitbox {
             this.x = newX;
             this.y = newY;            
         }
-        if ( inDebugGameState() ) {
+        if ( inDebugState() ) {
             this.draw( );
         }
     }

@@ -13,7 +13,7 @@ import { clearSpeakingEffect, playEffect } from './sound/sound';
 import { getMenuGrid } from './canvas/canvasGetter';
 import { checkForEventTrigger } from './storyEvents/storyEventHandler';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
-import { setListeningForKeysGameState } from './gameState/gameState';
+import { setListeningForKeysState } from '../state/stateSetter';
 import { switchMap } from '../helpers/loadMapHelpers';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { screenTextIsActive, handleScreenTextActionButton } from '../helpers/screenTextModule';
@@ -125,7 +125,7 @@ export const clearPressedKeys = (): void => {
 export const stopListenForKeyPress = (): void => {
     window.removeEventListener( 'keydown', addKeyToPressed )
     window.removeEventListener( 'keyup', removeKeyFromPressed )
-    setListeningForKeysGameState( false );
+    setListeningForKeysState( false );
 };
 export const listenForKeyPress = (): void => {
     window.addEventListener( 'keydown', addKeyToPressed )
@@ -136,5 +136,5 @@ export const listenForKeyPress = (): void => {
             clearPressedKeys();
         }
     } )
-    setListeningForKeysGameState( true );
+    setListeningForKeysState( true );
 };

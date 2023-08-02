@@ -1,6 +1,6 @@
 import { getEffect, GraphicalEffect } from "../../../helpers/effectHelpers";
 import { PLAYER_ID } from "../../../game-data/interactionGlobals";
-import { getDebugModeGameState } from "../../gameState/gameState";
+import { inDebugState } from "../../../state/stateGetter";
 import { FX_BLUE_SQUARE } from "../../../resources/effectResources";
 import { ActionSelector } from "./ActionSelector";
 import { loggedIn } from "../../../game-container/stores";
@@ -34,7 +34,7 @@ export class SavePoint extends ActionSelector {
 
     draw(): void {
         this.effect.drawBack( this.x - ( this.effect.effects[0].width / 2 ), this.y - ( this.effect.effects[0].height / 2 ) )
-        if ( getDebugModeGameState() ) {
+        if ( inDebugState() ) {
             super.draw();
         }
     }

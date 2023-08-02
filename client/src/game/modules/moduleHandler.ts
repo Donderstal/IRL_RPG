@@ -2,7 +2,7 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { Sprite } from "../core/Sprite";
 import { spriteNextPositionIsBlocked } from "../map/collision";
-import { inDebugGameState } from "../gameState/gameStateGetter";
+import { inDebugState } from "../../state/stateGetter";
 
 import { updateSpriteAssociatedAction } from "./actions/actionHandlers";
 import { handleSpriteAnimation } from "./animations/animationHandler";
@@ -30,7 +30,7 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 	if ( sprite.isPlayer ) {
 		updateAssociatedHitbox( sprite );
 	}
-	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugGameState() ) {
+    if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugState() ) {
 		if ( moduleIsRunningForSprite( id, SpriteModuleEnum.door ) ) {
 			updateSpriteAssociatedDoor( sprite )
 		}

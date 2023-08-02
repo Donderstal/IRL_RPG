@@ -12,7 +12,7 @@ import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from 
 import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid, getTileOnCanvasByCell } from '../game/canvas/canvasGetter';
 import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
 import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
-import { setPausedGameState } from '../game/gameState/gameState';
+import { setPausedState } from '../state/stateSetter';
 import { dismissActiveAction } from '../game/controllers/actionController';
 import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
@@ -72,7 +72,7 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
     }
     
     clearActiveSoundEffects();
-    setPausedGameState( true );
+    setPausedState( true );
 
     setNeighbourhoodAndMap( destinationName, loadType );
     setCanvasDimensions();
@@ -84,7 +84,7 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
 
     loadMapToCanvases( getActiveMap(), loadType, setPlayer, null, cameraFocusTile );
     setTimeout( () => {
-        setPausedGameState( false ); 
+        setPausedState( false ); 
     }, 100 )
 }
 
@@ -100,13 +100,13 @@ export const clearActiveMap = () => {
 }
 
 export const loadCinematicMap = ( mapName, setPlayer = false ) => {
-    setPausedGameState( true );
+    setPausedState( true );
     clearActiveSoundEffects( );
     setNeighbourhoodAndMap( mapName, PlayerMapEntry.cinematic );
     loadMapToCanvases( 
         getActiveMap(), PlayerMapEntry.cinematic, setPlayer
     );
-    setPausedGameState( false );
+    setPausedState( false );
 
 }
 

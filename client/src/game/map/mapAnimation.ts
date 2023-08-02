@@ -19,7 +19,7 @@ import { playEffect } from '../sound/sound';
 import { handleNeighbourhoodNPCCounter } from '../neighbourhoodModule';
 import { getBackSpritesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
-import { inDebugGameState, inPausedGameState } from '../gameState/gameStateGetter';
+import { inDebugState, inPausedState } from '../../state/stateGetter';
 import { switchMap } from '../../helpers/loadMapHelpers';
 import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
@@ -51,7 +51,7 @@ export const handleMapAnimations = (): void => {
     handleRoadNetworkFuncs()
     handleNpcCounter()
 
-    if ( getPlayer() != undefined && !inPausedGameState() && !hasActiveSelectionBubble() ) {
+    if ( getPlayer() != undefined && !inPausedState() && !hasActiveSelectionBubble() ) {
         handleMovementKeys( );  
     }
 
@@ -64,7 +64,7 @@ export const handleMapAnimations = (): void => {
     const doors = getActiveDoors();
 
     Object.values(doors).forEach( ( door ) => { 
-        if ( inDebugGameState() ) {
+        if ( inDebugState() ) {
             door.draw();
         }
 
@@ -129,7 +129,7 @@ export const drawSpritesInOrder = ( ): void => {
         }          
     })
 
-    if ( inDebugGameState() ) {
+    if ( inDebugState() ) {
         const baseCells = getBaseCellList()
         baseCells.forEach( ( e, index ) => {
             if ( e === null ) {
@@ -174,9 +174,9 @@ export const drawSpritesInOrder = ( ): void => {
 }
 
 export const drawSpritesInArray = ( array: Sprite[] ): void => {
-    if ( !inPausedGameState() ) {
+    if ( !inPausedState() ) {
         array.forEach( ( sprite ) => {
-            if ( inPausedGameState() ) {
+            if ( inPausedState() ) {
                 return;
             }
             handleSpriteModules( sprite );
@@ -187,9 +187,9 @@ export const drawSpritesInArray = ( array: Sprite[] ): void => {
 
 export const handleMovingSpriteModules = ( array: Sprite[]): void => {
     let movingSprites = array.filter( ( e ) => { return moduleIsRunningForSprite( e.spriteId, SpriteModuleEnum.movement ); } );
-    if ( !inPausedGameState() ) {
+    if ( !inPausedState() ) {
         movingSprites.forEach( ( sprite ) => {
-            if ( inPausedGameState() ) {
+            if ( inPausedState() ) {
                 return;
             }
             handleSpriteModules(sprite);

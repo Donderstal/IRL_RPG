@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store';
 import { GameMenuType } from '../enumerables/GameMenuType';
-import { setPausedState } from '../game/gameState/gameStateSetter';
+import { setPausedState } from '../state/stateSetter';
 import type { WebsiteUser } from '../models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";

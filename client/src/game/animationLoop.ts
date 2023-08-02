@@ -8,7 +8,7 @@ import { cameraFocus } from './cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
-import { inListeningForKeysGameState, inPausedGameState } from './gameState/gameStateGetter';
+import { inListeningForKeysState, inPausedState } from '../state/stateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from '../helpers/dynamicTileDrawer';
@@ -28,8 +28,8 @@ export const animationLoop = ( ): void => {
     
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
-        if ( !inPausedGameState() ) {
-            if ( !inListeningForKeysGameState() ) {
+        if ( !inPausedState() ) {
+            if ( !inListeningForKeysState() ) {
                 listenForKeyPress();
             }            
 

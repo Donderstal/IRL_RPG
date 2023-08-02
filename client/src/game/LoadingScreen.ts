@@ -23,7 +23,9 @@ const randomTextArray = [
     "Paying artists in exposure...",
     "Taxing waiters more than billionaires...",
     "Redeveloping public housing as luxury condos...",
-    "Press space to interact with characters and objects..."
+    "Press space to interact with characters and objects...",
+    "Taking a small lunch break...",
+    "Decrying climate change while "
 ]
 const mainText = "Loading...";
 const mainTextWidth = canvasContext.measureText( mainText ).width;
