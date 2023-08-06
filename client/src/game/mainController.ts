@@ -12,7 +12,7 @@ import { cameraFocus, initializeCameraFocus } from "./cameraFocus";
 import { prepareCanvasElementsForGame } from "./canvas/canvasSetter";
 import { listenForKeyPress, stopListenForKeyPress } from "./controls";
 import { handleFileLoadQueues, startFileLoader } from "../assets/fileLoader";
-import { setDebugModeState, setDisableStoryState } from "../state/stateSetter";
+import { setDebugModeState, setDisableStoryState, setOpenWorldState } from "../state/stateSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./loadingScreen";
 import { getActiveMap } from "./neighbourhoodModule";
 import { setNewParty } from "./party/partyController";
@@ -98,6 +98,7 @@ const loadGameFromSave = (): void => {
 }
 
 const initControlsAndAnimation = (): void => {
+    setOpenWorldState();
     stopLoadingScreen();
     initializeBubbleCanvases();
     listenForKeyPress();

@@ -17,6 +17,7 @@ import { setListeningForKeysState } from '../state/stateSetter';
 import { switchMap } from '../helpers/loadMapHelpers';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { screenTextIsActive, handleScreenTextActionButton } from '../helpers/screenTextModule';
+import { activateControls, deactivateControls } from '../controls/controlController';
 
 let pressedKeys: { [key in string]: boolean } = {};
 
@@ -126,6 +127,7 @@ export const stopListenForKeyPress = (): void => {
     window.removeEventListener( 'keydown', addKeyToPressed )
     window.removeEventListener( 'keyup', removeKeyFromPressed )
     setListeningForKeysState( false );
+    deactivateControls();
 };
 export const listenForKeyPress = (): void => {
     window.addEventListener( 'keydown', addKeyToPressed )
@@ -137,4 +139,5 @@ export const listenForKeyPress = (): void => {
         }
     } )
     setListeningForKeysState( true );
+    activateControls();
 };

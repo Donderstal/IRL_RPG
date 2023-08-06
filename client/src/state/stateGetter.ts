@@ -26,3 +26,6 @@ export const inCinematicState = (): boolean => {
 export const inMenuState = (): boolean => {
     return getGameControlState() == State.menu;
 }
+export const getControlState = (): State => {
+    return getGameControlState();
+}

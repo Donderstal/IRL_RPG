@@ -12,6 +12,7 @@ import { inListeningForKeysState, inPausedState } from '../state/stateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from '../helpers/dynamicTileDrawer';
+import { handleControls } from '../controls/controlHandler';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -29,6 +30,7 @@ export const animationLoop = ( ): void => {
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
         if ( !inPausedState() ) {
+            handleControls();
             if ( !inListeningForKeysState() ) {
                 listenForKeyPress();
             }            
