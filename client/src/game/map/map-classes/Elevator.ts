@@ -20,6 +20,5 @@ export class Elevator extends ActionSelector {
     }
     dismiss() {
         setElevatorBubble( this.elevatorModel.floors, this.elevatorModel.id, this.mapName );
-        super.dismiss();
     }
 }

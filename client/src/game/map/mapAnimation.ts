@@ -3,8 +3,7 @@ import { PLAYER_ID } from '../../game-data/interactionGlobals';
 import type { Sprite } from '../core/Sprite';
 import { getActiveDoors } from '../modules/doors/doorGetter';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
-import { handleMovementKeys } from '../controls';
-import { drawBubbles, hasActiveSelectionBubble } from '../controllers/bubbleController';
+import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { setActiveCinematic } from '../controllers/cinematicController';
@@ -50,10 +49,6 @@ export const handleMapAnimations = (): void => {
     
     handleRoadNetworkFuncs()
     handleNpcCounter()
-
-    if ( getPlayer() != undefined && !inPausedState() && !hasActiveSelectionBubble() ) {
-        handleMovementKeys( );  
-    }
 
     //backSpritesGrid.activeEffects.forEach( ( e ) => {
     //    e.drawAndMove( );

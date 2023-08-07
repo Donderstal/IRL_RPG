@@ -1,7 +1,11 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+
     import { GameMenuType } from '../../enumerables/GameMenuType';
     import { InteractionAnswer } from '../../enumerables/InteractionAnswer';
     import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
+	import { State } from '../../enumerables/StateEnum';
+    import { updateGameControlState } from '../../state/stateSetter';
     import Modal from '../menu-partials/Modal.svelte';
     import { closeInGameMenu } from '../stores';
     import MainMenu from '../views/MainMenu.svelte';
@@ -34,6 +38,10 @@
 			saveGameMenu.saveGame();
 		}
 	}
+
+	onMount(()=>{
+		updateGameControlState(State.menu)
+	})
 </script>
 
 <style>

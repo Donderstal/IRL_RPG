@@ -17,6 +17,8 @@ import { openInGameMenu } from "../../game-container/stores";
 import { GameMenuType } from "../../enumerables/GameMenuType";
 import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 import { setPlayerStartForCinematicEnd } from "../map/playerLocationOnMapLoad";
+import { updateGameControlState } from "../../state/stateSetter";
+import { State } from "../../enumerables/StateEnum";
 
 let activeCinematic: Interaction = null;
 let activeMapAtStartOfCinematic: string = null;
@@ -33,6 +35,7 @@ export const setActiveCinematic = ( interaction: InteractionModel, trigger: Cine
     if ( activeCinematic !== null ) return;
     saveActiveMapLocations();
     activeCinematic = new Interaction( interaction, trigger, options )
+    updateGameControlState( State.cinematic );
 };
 export const cinematicIsActive = (): boolean => {
     return activeCinematic !== null;
@@ -75,6 +78,7 @@ export const getActiveCinematic = (): Interaction => {
 export const handleActiveCinematic = (): void => {
     if ( activeCinematic.ended ) {
         dismissActiveCinematic();
+        updateGameControlState( State.open_world );
     }
     else {
         activeCinematic.checkForScenePass();

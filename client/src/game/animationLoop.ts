@@ -1,6 +1,5 @@
 import { FRAMES_PER_SECOND } from '../game-data/globals';
 import { handleMapAnimations } from './map/mapAnimation';
-import { clearPressedKeys, listenForKeyPress, stopListenForKeyPress } from './controls';
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';
 import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController';
 
@@ -8,7 +7,7 @@ import { cameraFocus } from './cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
-import { inListeningForKeysState, inPausedState } from '../state/stateGetter';
+import { inPausedState } from '../state/stateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from '../helpers/dynamicTileDrawer';
@@ -22,19 +21,11 @@ let wroteScreenTextLastFrame = false;
 export const animationLoop = ( ): void => {
     const menuCanvas = getMenuGrid();
 
-    newDateNow = Date.now();
-    if ( !document.hasFocus() ) {
-        clearPressedKeys( );
-    }
-    
+    newDateNow = Date.now();    
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
+        handleControls();
         lastDateNow = newDateNow;
         if ( !inPausedState() ) {
-            handleControls();
-            if ( !inListeningForKeysState() ) {
-                listenForKeyPress();
-            }            
-
             if ( !menuCanvas.isActive && !cinematicIsActive() ) {
                 handleMapAnimations( );
             }
@@ -52,8 +43,6 @@ export const animationLoop = ( ): void => {
             handleOffscreenCanvasBitmaps();
         }
         else {
-            stopListenForKeyPress();
-            clearPressedKeys();
             clearSpriteCanvasGrids()
         }       
         if ( inFadingAnimation() ) {

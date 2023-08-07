@@ -1,7 +1,9 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
+import { State } from "../../enumerables/StateEnum";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpriteDataModel } from "../../models/SpriteDataModel";
+import { updateGameControlState } from "../../state/stateSetter";
 import { getSpeechBubbleGrid } from "../canvas/canvasGetter";
 import { Emote } from "../cutscenes/Emote";
 import { SelectionBubble } from "../cutscenes/SelectionBubble";
@@ -16,15 +18,9 @@ let elevatorBubble: SelectionBubble = null;
 let emoteIds: string[] = [];
 let emotes: { [key: string]: Emote } = {};
 
-export const selectionBubble = (): boolean => {
-    return mainBubble !== null && mainBubble.type === TextBubbleType.SpeakYesNo;
-};
-export const isWriting = (): boolean => {
-    return mainBubble.typeWriter.isWriting;
-};
-export const getMainTextBubble = (): SpeechBubble => {
-    return mainBubble;
-}
+export const selectionBubble = (): boolean => { return mainBubble !== null && mainBubble.type === TextBubbleType.SpeakYesNo; };
+export const isWriting = (): boolean => { return mainBubble.typeWriter.isWriting; };
+export const getMainTextBubble = (): SpeechBubble => { return mainBubble; }
 export const hasActiveSpeechBubbles = (): boolean => { return emoteIds.length > 0 || mainBubble !== null; };
 export const hasActiveUiBubbles = (): boolean => { return titleBubble !== null || elevatorBubble !== null || subtitleBubble !== null;  }
 
@@ -54,51 +50,36 @@ export const setNewCenterBubble = ( text: string ) => {
 };
 export const setElevatorBubble = ( floors: { [key in string]: string }, id: string, activeMapKey: string ): void => {
     elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', id, [Object.keys( floors ).find( k => floors[k] === activeMapKey )] );
-}
+    updateGameControlState( State.cinematic );
+};
 export const hasActiveSelectionBubble = (): boolean => {
     return elevatorBubble !== null;
-}
+};
 export const getElevatorBubble = (): SelectionBubble => {
     return elevatorBubble;
-}
-
+};
 export const clearSubtitleBubble = (): void => {
     subtitleBubble.setMoveToY( screen.height );
     setTimeout( () => {
         subtitleBubble = null;
     }, 1000 );
 };
-export const unsetEmote = ( id: string ): void => {
-    emoteIds = emoteIds.filter( ( e ) => { return e !== id; } )
-    delete emotes[id];
-};
 export const displayFullText = (): void => {
     mainBubble.typeWriter.displayFullText();
     playEffect( "misc/menu-scroll-a.mp3" );
-}
-export const handleSelectionKeys = (): void => {
-    if ( selectionBubble() ) {
-        mainBubble.moveCursor();
-    }
 };
 export const clearActiveBubbles = (): void => {
     clearActiveEmotes();
     mainBubble = null;
 };
-export const setBubbleContents = ( text: string, name: string, type: SceneAnimationType, spriteDataModel: SpriteDataModel ): void => {
-    mainBubble.setContents( text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, name, spriteDataModel )
-}
-
-export const clearActiveText = (): void => {
-    mainBubble.text = "";
-}
 export const clearActiveEmotes = (): void => {
     emotes = {};
     emoteIds = [];
-}
+};
 export const destroyElevatorBubble = (): void => {
     elevatorBubble = null;
-}
+    updateGameControlState( State.open_world );
+};
 export const drawBubbles = (): void => {
     const canvas = getSpeechBubbleGrid().canvas;
     const context = canvas.getContext( "2d" );
@@ -117,4 +98,12 @@ export const drawBubbles = (): void => {
     if ( elevatorBubble !== null ) {
         elevatorBubble.draw( context );
     }
+};
+
+const setBubbleContents = ( text: string, name: string, type: SceneAnimationType, spriteDataModel: SpriteDataModel ): void => {
+    mainBubble.setContents( text, type === SceneAnimationType.speak ? TextBubbleType.Speak : TextBubbleType.SpeakYesNo, name, spriteDataModel )
+}
+const unsetEmote = ( id: string ): void => {
+    emoteIds = emoteIds.filter( ( e ) => { return e !== id; } )
+    delete emotes[id];
 };

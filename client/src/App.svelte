@@ -1,5 +1,11 @@
 <script lang="ts">
+    import { activateControls } from './controls/controlController';
+	import { onMount } from 'svelte';
 	import MainContainer from "./game-container/MainContainer.svelte";
+
+	onMount(()=>{
+		activateControls();
+	})
 </script>
 
 <style>

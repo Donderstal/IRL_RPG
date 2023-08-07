@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { GRID_BLOCK_PX } from '../game-data/globals';
-    import { addKeyToPressed, removeKeyFromPressed } from '../game/controls';
+    import { addKeyToPressed, removeKeyFromPressed } from '../controls/controlDictionary';
     import { closeGameCanvas } from '../helpers/DOMEventHelpers';
     import { mobileAgent } from '../helpers/screenOrientation'
     import { getAllActiveSprites } from '../game/modules/sprites/spriteGetter';

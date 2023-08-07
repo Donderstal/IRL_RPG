@@ -10,9 +10,8 @@ import { initTilesheetModels } from "../resources/tilesheetResources";
 import { animationLoop, stopAnimationLoop } from "./animationLoop";
 import { cameraFocus, initializeCameraFocus } from "./cameraFocus";
 import { prepareCanvasElementsForGame } from "./canvas/canvasSetter";
-import { listenForKeyPress, stopListenForKeyPress } from "./controls";
 import { handleFileLoadQueues, startFileLoader } from "../assets/fileLoader";
-import { setDebugModeState, setDisableStoryState, setOpenWorldState } from "../state/stateSetter";
+import { setDebugModeState, setDisableStoryState, updateGameControlState } from "../state/stateSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./loadingScreen";
 import { getActiveMap } from "./neighbourhoodModule";
 import { setNewParty } from "./party/partyController";
@@ -22,6 +21,7 @@ import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 import type { SaveGame } from "../models/SaveGameModel";
 import { getBackTilesGrid } from "./canvas/canvasGetter";
 import { setScreenTextCanvas } from "../helpers/screenTextModule";
+import { State } from "../enumerables/StateEnum";
 
 
 let params: any[] = null;
@@ -98,14 +98,12 @@ const loadGameFromSave = (): void => {
 }
 
 const initControlsAndAnimation = (): void => {
-    setOpenWorldState();
+    updateGameControlState(State.open_world);
     stopLoadingScreen();
     initializeBubbleCanvases();
-    listenForKeyPress();
     animationLoop();
 }
 
 const stopControlsAndAnimation = (): void => {
-    stopListenForKeyPress();
     stopAnimationLoop();
 }
