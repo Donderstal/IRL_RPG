@@ -4,9 +4,8 @@ import type { FrameModel } from "../../models/SpriteFrameModel";
 import { getBackSpritesGrid } from "../canvas/canvasGetter";
 import { inDebugState } from "../../state/stateGetter";
 /**
- * The Hitbox interface is the base class of all in-game elements that should have collision detection.
- * It consists out of three circles, the inner, middle and outer.
- * Collision is detected by comparing the xy circle values of two hitboxes.
+ * Hitbox provides collision detection functionalities. It consists out of a inner, middle and outer rectangle. 
+ * Two Hitbox instances can be compared to see if they collide. 
  */
 export class Hitbox {
     x: number;
