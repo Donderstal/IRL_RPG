@@ -5,7 +5,7 @@ import { TriggerType } from '../enumerables/TriggerType';
 import { Trigger } from './Trigger';
 import type { FrameModel } from "../models/SpriteFrameModel";
 
-export class Door extends Trigger {
+export class DoorTrigger extends Trigger {
     mapName: string;
     model: DoorModel;
     arcColor: string;

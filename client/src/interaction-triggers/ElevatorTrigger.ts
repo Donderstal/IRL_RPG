@@ -6,7 +6,7 @@ import { TriggerType } from "../enumerables/TriggerType";
 import type { TriggerEvent } from "../models/TriggerEvent";
 import { Trigger } from "./Trigger";
 
-export class Elevator extends Trigger {
+export class ElevatorTrigger extends Trigger {
     mapName: string;
     elevatorModel: ElevatorModel;
     constructor( frame: FrameModel, elevator: ElevatorModel ) {

@@ -7,7 +7,7 @@ import { TriggerType } from "../enumerables/TriggerType";
 import { EventType } from "../enumerables/EventType";
 import type { TriggerEvent } from "../models/TriggerEvent";
 
-export class SavePoint extends Trigger { 
+export class SavePointTrigger extends Trigger { 
     spriteId: string;
     effect: GraphicalEffect;
     constructor( frame: FrameModel ) {

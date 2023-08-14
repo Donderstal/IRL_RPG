@@ -1,3 +1,4 @@
+import type { TriggerType } from "../enumerables/TriggerType";
 import { Hitbox } from "../game/core/Hitbox";
 import type { GraphicalEffect } from "../helpers/effectHelpers";
 import type { FrameModel } from "../models/SpriteFrameModel";
@@ -8,9 +9,10 @@ export class Trigger extends Hitbox {
     event: TriggerEvent;
     arcColor: string;
     graphicalEffect: GraphicalEffect;
+    triggerType: TriggerType;
+    id: string;
     constructor( frame: FrameModel ) {
         super( frame );
-
         this.arcColor = "#FF0000";
     }
 
@@ -23,12 +25,17 @@ export class Trigger extends Hitbox {
         if ( inDebugState() ) super.draw();
     }
 
+    setId( id: string ): void {
+        this.id = id;
+    }
+
     updateXy( x: number, y: number ): void {
         super.updateXy( x, y );
     }
 
     setEvent( event: TriggerEvent ): void {
         this.event = { ...event };
+        this.triggerType = event.trigger;
     }
 
     getEvent(): TriggerEvent {
