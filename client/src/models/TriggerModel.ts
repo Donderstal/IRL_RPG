@@ -1,8 +1,8 @@
-import type { TriggerType } from "../enumerables/TriggerType";
+import type { EventType } from "../enumerables/EventType";
 import type { CellPosition } from "./CellPositionModel";
 
 export type TriggerModel = CellPosition & {
-	triggerType: TriggerType,
+	eventType: EventType,
 	eventId: string,
 	spriteId?: string
 }
