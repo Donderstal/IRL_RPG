@@ -1,30 +1,23 @@
-import { LH_GREY_BUILDING_F3_APT6, LH_GREY_BUILDING_F3_APT6_BEDROOM, LH_GREY_BUILDING_F3_APT6_TOILET, LH_GREY_BUILDING_F3_HALL_RIGHT } from "../../../leonard_heights_res";
+import { MAP_IDS } from "../../../../mapIds";
 import GBAptTemplate from "../GB-apt-template";
 import GBBedroomTemplate from "../GB-bedroom-template";
 import GBToiletTemplate from "../GB-toilet-template";
 import { LHGB_AppartmentBedroom_Doors, LHGB_AppartmentMain_Doors, LHGB_AppartmentToilet_Doors } from "../GBDoorsFactory";
-import { DOORKEY_GREY_BUILDING_F3_APT6, DOORKEY_GREY_BUILDING_F3_APT6_BEDROOM, DOORKEY_GREY_BUILDING_F3_APT6_TOILET } from "./GB-F3-door-keys";
-
-const F3_APT_6_DOORS = [DOORKEY_GREY_BUILDING_F3_APT6, DOORKEY_GREY_BUILDING_F3_APT6_BEDROOM, DOORKEY_GREY_BUILDING_F3_APT6_TOILET];
-const F3_APT_6_CONNECTED_MAPS = [LH_GREY_BUILDING_F3_HALL_RIGHT, LH_GREY_BUILDING_F3_APT6_BEDROOM, LH_GREY_BUILDING_F3_APT6_TOILET];
 
 export const MAP_LH_GB_F3_APT6 = {
     ...GBAptTemplate,
-    "key": LH_GREY_BUILDING_F3_APT6,
-    "doors": LHGB_AppartmentMain_Doors( F3_APT_6_DOORS, F3_APT_6_CONNECTED_MAPS ),
-    "sprites": []
+    "key": MAP_IDS.GREY_BUILDING_F3_APT6,
+    "triggers": [...LHGB_AppartmentMain_Doors( MAP_IDS.GREY_BUILDING_F3_APT6 )]
 }
 
 export const MAP_LH_GB_F3_APT6_BED = {
     ...GBBedroomTemplate,
-    "key": LH_GREY_BUILDING_F3_APT6_BEDROOM,
-    "doors": LHGB_AppartmentBedroom_Doors( DOORKEY_GREY_BUILDING_F3_APT6_BEDROOM, LH_GREY_BUILDING_F3_APT6 ),
-    "sprites": []
+    "key": MAP_IDS.GREY_BUILDING_F3_APT6_BEDROOM,
+    "triggers": [...LHGB_AppartmentBedroom_Doors( MAP_IDS.GREY_BUILDING_F3_APT6_BEDROOM )]
 }
 
 export const MAP_LH_GB_F3_APT6_TOILET = {
     ...GBToiletTemplate,
-    "key": LH_GREY_BUILDING_F3_APT6_TOILET,
-    "doors": LHGB_AppartmentToilet_Doors( DOORKEY_GREY_BUILDING_F3_APT6_TOILET, LH_GREY_BUILDING_F3_APT6 ),
-    "sprites": []
+    "key": MAP_IDS.GREY_BUILDING_F3_APT6_TOILET,
+    "triggers": [...LHGB_AppartmentToilet_Doors( MAP_IDS.GREY_BUILDING_F3_APT6_TOILET )]
 }

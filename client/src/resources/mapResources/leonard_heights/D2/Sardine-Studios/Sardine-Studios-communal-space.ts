@@ -1,11 +1,17 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY, LH_SARDINE_STUDIOS_COMMON_AREA_KEY } from "../../leonard_heights_res";
-import { DOORKEY_SARDINE_STUDIOS_COMMON_AREA } from "../D2-door-keys";
-import { D2_INTERACTION_COMMUNAL_ROBOT, D2_INTERACTION_COMMUNAL_SPACE_GUY, D2_INTERACTION_COMMUNAL_SPACE_WOMAN } from "./Sardine-Studios-interactions";
+import { EventType } from "../../../../../enumerables/EventType";
+import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
+
+const ID_SUNGLASSED_LADY = "ID_SUNGLASSES LADY";
+const ID_ROBOT_WHITE = "ID_ROBOT_WHITE";
+const ID_TOUGH_GUY = "ID_TOUGH_GUY";
 
 export default {
-	"key": LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
-	"location": LH_SARDINE_STUDIOS_NAME,
+	"key": MAP_IDS.SARDINE_STUDIOS_COMMUNAL_SPACE,
+	"location": LOCATION_NAMES.SARDINE_STUDIOS,
 	"columns": 20,
 	"rows": 8,
 	"tileSet": "Generic_Room_C",
@@ -1794,33 +1800,48 @@ export default {
 			"column": 17,
 			"row": 3,
 			"direction": 0,
-			"action": D2_INTERACTION_COMMUNAL_SPACE_WOMAN
+			"id": ID_SUNGLASSED_LADY
 		},
 		{
 			"type": "ROBOT_WHITE",
 			"column": 10,
 			"row": 2,
 			"direction": 1,
-			"action": D2_INTERACTION_COMMUNAL_ROBOT
+			"id": ID_ROBOT_WHITE
 		},
 		{
 			"type": "TOUGH GUY WITH COOL SHIRT",
 			"column": 5,
 			"row": 2,
 			"direction": 0,
-			"action": D2_INTERACTION_COMMUNAL_SPACE_GUY
+			"id": ID_TOUGH_GUY
 		}
 	],
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_COMMON_AREA,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_COMMON_AREA,
 			"row": 6,
 			"column": 1,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
 			"direction": DirectionEnum.left
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.D2_SARSTUD_COMMUNAL_SPACE_WOMAN1,
+			"spriteId": ID_SUNGLASSED_LADY
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.D2_SARSTUD_COMMUNAL_SPACE_ROBOT1,
+			"spriteId": ID_ROBOT_WHITE
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.D2_SARSTUD_COMMUNAL_SPACE_GUY1,
+			"spriteId": ID_TOUGH_GUY
 		}
 	]
 }

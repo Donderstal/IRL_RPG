@@ -1,8 +1,7 @@
-import { ELEVATOR_GREY_BUILDING } from "../../../elevatorResources";
-import { LH_GREY_BUILDING_NAME } from "../../leonard_heights_res";
+import { LOCATION_NAMES } from "../../../locationNames";
 
 export default {
-	"location": LH_GREY_BUILDING_NAME,
+	"location": LOCATION_NAMES.GREY_BUILDING,
 	"columns": 12,
 	"rows": 8,
 	"tileSet": "Generic_Room_BX",
@@ -970,6 +969,5 @@ export default {
 			"angle": 0,
 			"mirrored": false
 		}
-	],
-	"elevators": [ELEVATOR_GREY_BUILDING]
+	]
 }

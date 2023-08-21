@@ -1,12 +1,14 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { BLONDE_BEER_BELLY_GUY, TOUGH_GUY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
-import { LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
-import { DOORKEY_CLUBSHELTER_TOILET_DOOR } from "../B4-door-keys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { BLONDE_BEER_BELLY_GUY, PINK_HAIRED_FAT_GUY, TOUGH_GUY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_CLUB_SHELTER_TOILETS_KEY,
-	"location": LH_CLUB_SHELTER_NAME,
+	"key": MAP_IDS.CLUB_SHELTER_TOILETS,
+	"location": LOCATION_NAMES.CLUB_SHELTER,
 	"columns": 12,
 	"rows": 6,
 	"tileSet": "Yum_Mart",
@@ -785,14 +787,14 @@ export default {
 			"direction": 0
 		},
 		{
-			"type": "BLONDE BEER BELLY GUY",
+			"type": BLONDE_BEER_BELLY_GUY,
 			"column": 2,
 			"row": 2,
 			"direction": 1,
 			"anim_type": AnimationTypeEnum.idle
 		},
 		{
-			"type": "PINK HAIRED FAT GUY",
+			"type": PINK_HAIRED_FAT_GUY,
 			"column": 4,
 			"row": 2,
 			"direction": 2,
@@ -895,7 +897,7 @@ export default {
 			"direction": 0
 		},
 		{
-			"type": "YELLOW SHIRT LADY",
+			"type": YELLOW_SHIRT_LADY,
 			"column": 11,
 			"row": 3,
 			"direction": 3,
@@ -942,13 +944,12 @@ export default {
 
 	],
 	"spawnPoints": [],
-	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_CLUBSHELTER_TOILET_DOOR,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.CLUBSHELTER_TOILET_DOOR,
 			"row": 6,
 			"column": 12,
-			"doorTo": LH_CLUB_SHELTER_KEY,
 			"direction": DirectionEnum.right,
 		}
 	]

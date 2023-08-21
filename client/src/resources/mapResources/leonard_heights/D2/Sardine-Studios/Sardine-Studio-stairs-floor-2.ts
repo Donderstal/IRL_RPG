@@ -1,11 +1,13 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { ELEVATOR_SARDINE_STUDIOS } from "../../../elevatorResources";
-import { LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY, LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY, LH_SARDINE_STUDIOS_STAIRS_TOP_KEY } from "../../leonard_heights_res";
-import { DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_F2, DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_TOP } from "../D2-door-keys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { ELEVATOR_IDS } from "../../../../eventResources/elevatorIds";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_SARDINE_STUDIOS_STAIRS_FLOOR2_KEY,
-	"location": LH_SARDINE_STUDIOS_NAME,
+	"key": MAP_IDS.SARDINE_STUDIOS_HALL_F2,
+	"location": LOCATION_NAMES.SARDINE_STUDIOS,
 	"columns": 6,
 	"rows": 6,
 	"tileSet": "Generic_Room_BX",
@@ -415,35 +417,41 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_TOP,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_TOP,
 			"row": 1,
 			"column": 1,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_TOP_KEY,
 			"direction": DirectionEnum.up
 		},
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_TOP,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_TOP,
 			"row": 1,
 			"column": 2,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_TOP_KEY,
 			"direction": DirectionEnum.up
 		},
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_F2,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F2,
 			"row": 1,
 			"column": 5,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
 			"direction": DirectionEnum.up
 		},
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_F2,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F2,
 			"row": 1,
 			"column": 6,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
 			"direction": DirectionEnum.up
 		},
-	],
-	"elevators": [ ELEVATOR_SARDINE_STUDIOS ]
+		{
+			"eventType": EventType.elevator,
+			"eventId": ELEVATOR_IDS.SARDINE_STUDIOS,
+			"column": 3,
+			"row": 3,
+			"direction": DirectionEnum.up,
+		}
+	]
 }

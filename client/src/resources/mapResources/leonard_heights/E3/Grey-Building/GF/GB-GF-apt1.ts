@@ -1,17 +1,13 @@
-import { LH_GREY_BUILDING_GF_APT1, LH_GREY_BUILDING_GF_APT1_BEDROOM, LH_GREY_BUILDING_GF_APT1_TOILET, LH_GREY_BUILDING_GF_HALL_LEFT } from "../../../leonard_heights_res";
+import { MAP_IDS } from "../../../../mapIds";
 import GBAptTemplate from "../GB-apt-template";
 import GBBedroomTemplate from "../GB-bedroom-template";
 import GBToiletTemplate from "../GB-toilet-template";
 import { LHGB_AppartmentBedroom_Doors, LHGB_AppartmentMain_Doors, LHGB_AppartmentToilet_Doors } from "../GBDoorsFactory";
-import { DOORKEY_GREY_BUILDING_GF_APT1, DOORKEY_GREY_BUILDING_GF_APT1_BEDROOM, DOORKEY_GREY_BUILDING_GF_APT1_TOILET } from "./GB-GF-door-keys";
-
-const GF_APT_1_DOORS = [DOORKEY_GREY_BUILDING_GF_APT1, DOORKEY_GREY_BUILDING_GF_APT1_BEDROOM, DOORKEY_GREY_BUILDING_GF_APT1_TOILET];
-const GF_APT_1_CONNECTED_MAPS = [LH_GREY_BUILDING_GF_HALL_LEFT, LH_GREY_BUILDING_GF_APT1_BEDROOM, LH_GREY_BUILDING_GF_APT1_TOILET];
 
 export const MAP_LH_GB_GF_APT1 = {
     ...GBAptTemplate,
-    "key": LH_GREY_BUILDING_GF_APT1,
-    "doors": LHGB_AppartmentMain_Doors( GF_APT_1_DOORS, GF_APT_1_CONNECTED_MAPS ),
+    "key": MAP_IDS.GREY_BUILDING_GF_APT1,
+	"triggers": [...LHGB_AppartmentMain_Doors( MAP_IDS.GREY_BUILDING_GF_APT1 )],
 	"sprites": [
 		{
 			"type": "door_interior_west_light",
@@ -114,8 +110,8 @@ export const MAP_LH_GB_GF_APT1 = {
 
 export const MAP_LH_GB_GF_APT1_BED = {
     ...GBBedroomTemplate,
-    "key": LH_GREY_BUILDING_GF_APT1_BEDROOM,
-    "doors": LHGB_AppartmentBedroom_Doors( DOORKEY_GREY_BUILDING_GF_APT1_BEDROOM, LH_GREY_BUILDING_GF_APT1 ),
+    "key": MAP_IDS.GREY_BUILDING_GF_APT1_BEDROOM,
+	"triggers": [...LHGB_AppartmentBedroom_Doors( MAP_IDS.GREY_BUILDING_GF_APT1_BEDROOM )],
 	"sprites": [
 		{
 			"type": "yellow_rug_a",
@@ -182,8 +178,8 @@ export const MAP_LH_GB_GF_APT1_BED = {
 
 export const MAP_LH_GB_GF_APT1_TOILET = {
     ...GBToiletTemplate,
-    "key": LH_GREY_BUILDING_GF_APT1_TOILET,
-    "doors": LHGB_AppartmentToilet_Doors( DOORKEY_GREY_BUILDING_GF_APT1_TOILET, LH_GREY_BUILDING_GF_APT1 ),
+    "key": MAP_IDS.GREY_BUILDING_GF_APT1_TOILET,
+	"triggers": [...LHGB_AppartmentToilet_Doors( MAP_IDS.GREY_BUILDING_GF_APT1_TOILET )],
 	"sprites": [
 		{
 			"type": "toilet",

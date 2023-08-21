@@ -1,11 +1,12 @@
 import { AnimationTypeEnum } from "../../../../enumerables/AnimationTypeEnum";
 import { ANIM_BREATHE, ANIM_TALK } from "../../../../game-data/animationGlobals";
 import { PINK_HAIRED_FAT_GUY } from "../../../spriteTypeResources";
-import { CM_INTRO_CINEMATIC_MAP_2, CM_NAME } from "../cinematic_maps_res";
+import { LOCATION_NAMES } from "../../locationNames";
+import { MAP_IDS } from "../../mapIds";
 
 export default {
-	"key": CM_NAME,
-	"location": CM_INTRO_CINEMATIC_MAP_2,
+	"key": MAP_IDS.CINEMATIC_INTRO_MAP_2,
+	"location": LOCATION_NAMES.CINEMATIC_MAPS,
 	"columns": 24,
 	"rows": 16,
 	"tileSet": "Yum_Mart",

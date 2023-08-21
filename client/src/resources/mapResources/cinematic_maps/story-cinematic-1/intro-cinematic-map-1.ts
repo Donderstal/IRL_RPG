@@ -1,10 +1,11 @@
 import { AnimationTypeEnum } from "../../../../enumerables/AnimationTypeEnum";
 import { ANIM_BOP, ANIM_PUNCH } from "../../../../game-data/animationGlobals";
-import { CM_NAME, CM_INTRO_CINEMATIC_MAP_1 } from "../cinematic_maps_res";
+import { LOCATION_NAMES } from "../../locationNames";
+import { MAP_IDS } from "../../mapIds";
 
 export default {
-	"key": CM_INTRO_CINEMATIC_MAP_1,
-	"location": CM_NAME,
+	"key": MAP_IDS.CINEMATIC_INTRO_MAP_1,
+	"location": LOCATION_NAMES.CINEMATIC_MAPS,
 	"columns": 40,
 	"rows": 40,
 	"tileSet": "downtown_2",

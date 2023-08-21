@@ -1,10 +1,13 @@
 import { GRID_LEONARD_E4 } from './grid';
 import { FRONT_GRID_LEONARD_E4 } from './frontgrid';
-import { E4_INTERACTION_WHOLESOME_LIFTER } from './E4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { STRONG_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
+import { EventType } from '../../../../enumerables/EventType';
+import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+
+const ID_WHOLESOME_LIFTER_E4 = "ID_WHOLESOME_LIFTER_E4";
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E4,
@@ -22,7 +25,7 @@ export default {
             "type": STRONG_GUY,
             "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
-            "action": E4_INTERACTION_WHOLESOME_LIFTER
+            "id": ID_WHOLESOME_LIFTER_E4
         },
         {
             "type": "Sign_04",
@@ -57,7 +60,11 @@ export default {
             "column": 10
         }
     ],
-    "actions": [
-
+    "triggers": [
+        {
+            "eventType": EventType.cutscene,
+            "eventId": CUTSCENE_IDS.E4_WHOLESOME_LIFTER,
+            "spriteId": ID_WHOLESOME_LIFTER_E4
+        }
     ]
 }

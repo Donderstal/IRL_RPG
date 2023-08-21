@@ -1,9 +1,11 @@
 import { GRID_LEONARD_C1 } from './grid';
 import { FRONT_GRID_LEONARD_C1 } from './frontgrid';
-import { LOST_KEYS_INTERACTION } from './C1-interactions';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { getInteractionNotRegisteredCondition } from '../../../../factories/conditionFactory';
-import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
+import { EventType } from '../../../../enumerables/EventType';
+import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+
+const COLLECTABLE_COIN_C1 = "COLLECTABLE_COIN_C1";
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C1,
@@ -18,7 +20,7 @@ export default {
             "row": 3,
             "column": 19,
             "condition": getInteractionNotRegisteredCondition( "TEST_KEY_2" ),
-            "action": LOST_KEYS_INTERACTION
+            "id": COLLECTABLE_COIN_C1
         },
         {
             "type": "funz",
@@ -106,7 +108,11 @@ export default {
 			"direction": 3
 		}
     ],
-    "actions": [
-
+    "triggers": [
+        {
+            "eventType": EventType.cutscene,
+            "eventId": CUTSCENE_IDS.C1_FIND_LOST_KEYS,
+            "spriteId": COLLECTABLE_COIN_C1
+        }
     ]
 }

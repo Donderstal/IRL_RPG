@@ -1,11 +1,13 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { ELEVATOR_SARDINE_STUDIOS } from "../../../elevatorResources";
-import { LH_MAP_KEY, LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY, LH_SARDINE_STUDIOS_COMMON_AREA_KEY, LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY } from "../../leonard_heights_res";
-import { DOORKEY_SARDINE_STUDIOS_COMMON_AREA, DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_F1, DOORKEY_SARDINE_STUDIOS_FRONT_DOOR } from "../D2-door-keys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { ELEVATOR_IDS } from "../../../../eventResources/elevatorIds";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
-	"location": LH_SARDINE_STUDIOS_NAME,
+	"key": MAP_IDS.SARDINE_STUDIOS_HALL_GF,
+	"location": LOCATION_NAMES.SARDINE_STUDIOS,
 	"columns": 6,
 	"rows": 6,
 	"music": "game-jam-5-10-21.mp3",
@@ -410,35 +412,41 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_F1,
-			"row": 1,
-			"column": 1,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
-			"direction": DirectionEnum.up
-		},
-		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_STAIRS_F1,
-			"row": 1,
-			"column": 2,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
-			"direction": DirectionEnum.up
-		},
-		{
-			"id": DOORKEY_SARDINE_STUDIOS_FRONT_DOOR,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_FRONT_DOOR,
 			"row": 6,
 			"column": 4,
-			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down
 		},
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_COMMON_AREA,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_COMMON_AREA,
 			"row": 4,
 			"column": 6,
-			"doorTo": LH_SARDINE_STUDIOS_COMMON_AREA_KEY,
 			"direction": DirectionEnum.right
-		}
-	],
-	"elevators": [ELEVATOR_SARDINE_STUDIOS]
+		},
+		{
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F1,
+			"row": 1,
+			"column": 1,
+			"direction": DirectionEnum.up
+		},
+		{
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F1,
+			"row": 1,
+			"column": 2,
+			"direction": DirectionEnum.up
+		},
+		{
+			"eventType": EventType.elevator,
+			"eventId": ELEVATOR_IDS.SARDINE_STUDIOS,
+			"column": 3,
+			"row": 3,
+			"direction": DirectionEnum.up,
+        }
+	]
 }

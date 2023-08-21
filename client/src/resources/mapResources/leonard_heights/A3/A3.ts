@@ -1,8 +1,8 @@
 import { GRID_LEONARD_A3 } from './grid';
 import { FRONT_GRID_LEONARD_A3 } from './frontgrid';
-import { LH_HOTEL_TWO_TOWERS_LOBBY_KEY } from '../leonard_heights_res';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { DOORKEY_TWO_TOWERS_MAIN_DOOR } from './A3-door-keys';
+import { EventType } from '../../../../enumerables/EventType';
+import { DOOR_IDS } from '../../../eventResources/doorIds';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_A3,
@@ -168,23 +168,20 @@ export default {
             "column": 1
         }
     ],
-    "actions": [
-
-    ],
-    "doors": [
+    "triggers": [
         {
             "row": 7,
             "column": 21,
-            "doorTo": LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
+            "eventType": EventType.door,
             "direction": DirectionEnum.up,
-            "id": DOORKEY_TWO_TOWERS_MAIN_DOOR
+            "eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
         },
         {
             "row": 7,
             "column": 22,
-            "doorTo": LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
+            "eventType": EventType.door,
             "direction": DirectionEnum.up,
-            "id": DOORKEY_TWO_TOWERS_MAIN_DOOR
+            "eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
         }
     ]
 }

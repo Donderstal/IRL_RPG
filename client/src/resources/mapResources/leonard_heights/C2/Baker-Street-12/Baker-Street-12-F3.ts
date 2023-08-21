@@ -1,10 +1,10 @@
-import { LH_BAKER_STREET_12_F3_APT_KEY, LH_BAKER_STREET_12_F3_STAIRS_KEY } from "../../leonard_heights_res";
-import { DOORKEY_BAKER_STREET_12_APT_F3 } from "./registries/BSDoorKeys";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
 
 export default {
-    "key": LH_BAKER_STREET_12_F3_APT_KEY,
+    "key": MAP_IDS.BAKER_STREET_12_F3_APT,
     ...BakerStreetAptTemplate,
 	"playerStart": {
 		'row': 4,
@@ -96,5 +96,5 @@ export default {
 			"direction": 0
 		}
 	],
-    "doors": [getBSAppartmentToHallDoor( DOORKEY_BAKER_STREET_12_APT_F3, LH_BAKER_STREET_12_F3_STAIRS_KEY )]
+    "triggers": [getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F3 )]
 }

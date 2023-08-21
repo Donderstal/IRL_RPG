@@ -1,13 +1,17 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { EventType } from "../../../../../enumerables/EventType";
+import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
-import { LH_YUM_MART_NAME, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
-import { DOORKEY_YUM_MART_DOOR_1 } from "../C4-door-keys";
-import { C4_INTERACTION_YUM_MART_OFFICE_GUY } from "./yum-mart-interactions";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
+
+const ID_BUSINESSMAN = "ID_BUSINESSMAN";
 
 export default {
-	"key": LH_YUM_MART_OFFICE_KEY,
-	"location": LH_YUM_MART_NAME,
+	"key": MAP_IDS.YUM_MART_OFFICE,
+	"location": LOCATION_NAMES.YUM_MART,
 	"columns": 20,
 	"rows": 8,
 	"tileSet": "Yum_Mart",
@@ -1618,7 +1622,7 @@ export default {
 	],
 	"sprites": [
 		{
-			"action": C4_INTERACTION_YUM_MART_OFFICE_GUY,
+			"id": ID_BUSINESSMAN,
 			"anim_type": AnimationTypeEnum.idle,
 			"direction": DirectionEnum.up,
 			"name": "Yum Mart Executive",
@@ -1809,13 +1813,18 @@ export default {
 	],
 	"frontSprites": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_YUM_MART_DOOR_1,
 			"row": 3,
 			"column": 1,
-			"doorTo": LH_YUM_MART_STORE_KEY,
 			"direction": DirectionEnum.left,
-		}
-	]
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.C4_YUM_MART_OFFICE_GUY,
+			"spriteId": ID_BUSINESSMAN
+        }
+	],
 }

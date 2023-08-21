@@ -1,12 +1,17 @@
 import { GRID_LEONARD_D1 } from './grid';
 import { FRONT_GRID_LEONARD_D1 } from './frontgrid';
-import { D1_INTERACTION_FRIENDLY_CHAD, D1_INTERACTION_WHOLESOME_LIFTER } from './D1-interactions';
 import { LOGGABLE_INTERACTION_7 } from '../../../../game-data/interactionGlobals';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_BOP, ANIM_LIFT } from '../../../../game-data/animationGlobals';
 import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
+import { EventType } from '../../../../enumerables/EventType';
+import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+
+const ID_HELPFUL_BRO = "ID_HELPFUL_BRO";
+const ID_D1_WHOLESOME_LIFTER_1 = "ID_D1_WHOLESOME_LIFTER_1";
+const ID_D1_WHOLESOME_LIFTER_2 = "ID_D1_WHOLESOME_LIFTER_2";
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D1,
@@ -22,8 +27,8 @@ export default {
          "column":21,
          "type": STRONG_GUY,
          "direction":DirectionEnum.right,
-         "name":"Helpful Bro",
-           "action": D1_INTERACTION_FRIENDLY_CHAD,
+           "name": "Helpful Bro",
+           "id": ID_HELPFUL_BRO,
          "condition": getInteractionNotRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
@@ -44,7 +49,7 @@ export default {
          "type": STRONG_GUY,
          "direction": DirectionEnum.left,
          "name": "Wholesome Lifter 1",
-          "action": D1_INTERACTION_WHOLESOME_LIFTER,
+          "id": ID_D1_WHOLESOME_LIFTER_1,
           "condition": getInteractionRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
@@ -55,7 +60,7 @@ export default {
          "type": TOUGH_GUY,
          "direction": DirectionEnum.left,
          "name": "Wholesome Lifter 2",
-          "action": D1_INTERACTION_WHOLESOME_LIFTER,
+          "ïd": ID_D1_WHOLESOME_LIFTER_2,
           "condition": getInteractionRegisteredCondition( LOGGABLE_INTERACTION_7 )
       },
       {
@@ -419,7 +424,21 @@ export default {
          "column":22
       }
    ],
-   "actions":[
-      
+   "triggers":[
+       {
+           "eventType": EventType.cutscene,
+           "eventId": CUTSCENE_IDS.D1_FRIENDLY_CHAD,
+           "spriteId": ID_HELPFUL_BRO
+       },
+       {
+           "eventType": EventType.cutscene,
+           "eventId": CUTSCENE_IDS.D1_WHOLESOME_LIFTER,
+           "spriteId": ID_D1_WHOLESOME_LIFTER_1
+       },
+       {
+           "eventType": EventType.cutscene,
+           "eventId": CUTSCENE_IDS.D1_WHOLESOME_LIFTER,
+           "spriteId": ID_D1_WHOLESOME_LIFTER_2
+       },
    ]
 }

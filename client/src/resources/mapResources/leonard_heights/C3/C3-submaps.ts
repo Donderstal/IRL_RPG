@@ -1,8 +1,8 @@
-import { LH_CAR_SHACK_KEY } from "../leonard_heights_res";
+import { MAP_IDS } from "../../mapIds";
 import carShack from "./Car-Shack/car-shack";
 
 export default {
     // Car shack
-    [LH_CAR_SHACK_KEY]: carShack
+    [MAP_IDS.CAR_SHACK]: carShack
     //
 }

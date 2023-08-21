@@ -1,12 +1,14 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BUSINESS_MAN, FAT_BUFF_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY, ROBOT, SUNGLASSES_LADY, SUPERMARKET_MANAGER, TOUGH_GUY_WITH_COOL_HAIR, WHITE_PONY_TAIL_LADY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
-import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_CLUB_SHELTER_TOILETS_KEY } from "../../leonard_heights_res";
-import { DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR, DOORKEY_CLUBSHELTER_TOILET_DOOR } from "../B4-door-keys";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_CLUB_SHELTER_KEY,
-	"location": LH_CLUB_SHELTER_NAME,
+	"key": MAP_IDS.CLUB_SHELTER_MAIN,
+	"location": LOCATION_NAMES.CLUB_SHELTER,
 	"columns": 20,
 	"rows": 16,
 	"tileSet": "bar-interior",
@@ -3682,28 +3684,27 @@ export default {
 		}
 	],
 	"frontSprites": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_CLUBSHELTER_TOILET_DOOR,
+			"eventType": EventType.door,
 			"row": 6,
 			"column": 16,
-			"doorTo": LH_CLUB_SHELTER_TOILETS_KEY,
 			"direction": DirectionEnum.left,
+			"eventId": DOOR_IDS.CLUBSHELTER_TOILET_DOOR
 		},
 		{
-			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
+			"eventType": EventType.door,
 			"row": 16,
 			"column": 10,
-			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
 			"direction": DirectionEnum.down,
-
+			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_INNER_DOOR
 		},
 		{
-			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
+			"eventType": EventType.door,
 			"row": 16,
 			"column": 11,
-			"doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
 			"direction": DirectionEnum.down,
+			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_INNER_DOOR
 		}
 	]
 }

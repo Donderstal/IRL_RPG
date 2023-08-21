@@ -1,12 +1,14 @@
 import { GRID_LEONARD_B4 } from './grid';
 import { FRONT_GRID_LEONARD_B4 } from './frontgrid';
-import { B4_INTERACTION_WHOLESOME_LIFTER } from './B4-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
-import { LH_CLUB_SHELTER_ENTRANCE_KEY } from '../leonard_heights_res';
-import { DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR } from './B4-door-keys';
+import { EventType } from '../../../../enumerables/EventType';
+import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+import { DOOR_IDS } from '../../../eventResources/doorIds';
+
+const WHOLESOME_LIFTER_ID = "WHOLESOME_LIFT_B4"
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B4,
@@ -23,8 +25,8 @@ export default {
             "column":9,
             "type": TOUGH_GUY,
             "direction": DirectionEnum.left,
-            "name":"Wholesome Lifter",
-            "action": B4_INTERACTION_WHOLESOME_LIFTER
+            "name": "Wholesome Lifter",
+            "id": WHOLESOME_LIFTER_ID
         },
         {
             "type":"vent_4",
@@ -78,23 +80,25 @@ export default {
             "direction":DirectionEnum.left
         }
     ],
-    "actions":[
-      
-    ],
-    "doors": [
+    "triggers": [
         {
-            "id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
-            "row": 8,
-            "column": 4,
-            "doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
-            "direction": DirectionEnum.up
+            "eventType": EventType.cutscene,
+            "eventId": CUTSCENE_IDS.B4_WHOLESOME_LIFTER,
+            "spriteId": WHOLESOME_LIFTER_ID
         },
         {
-            "id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
+            "eventType": EventType.door,
+            "row": 8,
+            "column": 4,
+            "direction": DirectionEnum.up,
+            "eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
+        },
+        {
+            "eventType": EventType.door,
             "row": 8,
             "column": 5,
-            "doorTo": LH_CLUB_SHELTER_ENTRANCE_KEY,
-            "direction": DirectionEnum.up
+            "direction": DirectionEnum.up,
+            "eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
         }
-    ],
+    ]
 }

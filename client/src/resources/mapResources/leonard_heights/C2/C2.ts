@@ -1,8 +1,8 @@
 import { GRID_LEONARD_C2 } from './grid';
 import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { LH_BAKER_STREET_12_GF_KEY, LH_NEWTOWN_APP_HALL_KEY } from '../leonard_heights_res';
-import { DOORKEY_BAKER_STREET_12_FRONT_DOOR, DOORKEY_NEWTOWN_APPARTMENTS_FRONT_DOOR } from './C2-door-keys';
+import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { EventType } from '../../../../enumerables/EventType';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C2,
@@ -129,22 +129,19 @@ export default {
             "column": 1
         }
     ],
-    "actions": [
-
-    ],
-    "doors": [
+    "triggers": [
         {
-            "id": DOORKEY_BAKER_STREET_12_FRONT_DOOR,
+            "eventType": EventType.door,
+            "eventId": DOOR_IDS.BAKER_STREET_12_FRONT_DOOR,
             "row": 8,
             "column": 12,
-            "doorTo": LH_BAKER_STREET_12_GF_KEY,
             "direction": DirectionEnum.up
         },
         {
-            "id": DOORKEY_BAKER_STREET_12_FRONT_DOOR,
+            "eventType": EventType.door,
+            "eventId": DOOR_IDS.BAKER_STREET_12_FRONT_DOOR,
             "row": 8,
             "column": 13,
-            "doorTo": LH_BAKER_STREET_12_GF_KEY,
             "direction": DirectionEnum.up
         }
     ]

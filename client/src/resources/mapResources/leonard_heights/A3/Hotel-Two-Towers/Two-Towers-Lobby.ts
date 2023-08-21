@@ -1,13 +1,19 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { EventType } from "../../../../../enumerables/EventType";
+import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
 import { MONKEY_CEO, ROBOT } from "../../../../spriteTypeResources";
-import { LH_HOTEL_TWO_TOWERS_LOBBY_KEY, LH_HOTEL_TWO_TOWERS_NAME, LH_KEY, LH_MAP_KEY } from "../../leonard_heights_res";
-import { DOORKEY_TWO_TOWERS_MAIN_DOOR } from "../A3-door-keys";
-import { A3_INTERACTION_MONKEY_COOK, A3_INTERACTION_ROBOT_COOK, A3_INTERACTION_ROBOT_RECEPTIONIST } from "./Two-Tower-interactions";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
+
+const ROBOT_RECEPTIONIST = "ROBOT RECEPTIONIST";
+const MONKEY_COOK = "MONKEY COOK";
+const ROBOT_COOK = "ROBOT COOK";
 
 export default {
-	"key": LH_HOTEL_TWO_TOWERS_LOBBY_KEY,
-	"location": LH_HOTEL_TWO_TOWERS_NAME,
+	"key": MAP_IDS.HOTEL_THE_TWO_TOWERS_LOBBY,
+	"location": LOCATION_NAMES.HOTEL_THE_TWO_TOWERS,
 	"columns": 24,
 	"rows": 16,
 	"tileSet": "Generic_Room_BX",
@@ -3859,76 +3865,77 @@ export default {
 	"sprites": [
 		{
 			"anim_type": AnimationTypeEnum.idle,
-				"direction": DirectionEnum.down,
-				"type": MONKEY_CEO,
-				"row": 4,
-				"column": 12
-			},
+			"direction": DirectionEnum.down,
+			"type": MONKEY_CEO,
+			"row": 4,
+			"column": 12
+		},
 		{
 			"anim_type": AnimationTypeEnum.idle,
-				"direction": DirectionEnum.down,
-				"type": MONKEY_CEO,
-				"row": 5,
-				"column": 24
-			},
+			"direction": DirectionEnum.down,
+			"type": MONKEY_CEO,
+			"row": 5,
+			"column": 24
+		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
-				"direction": DirectionEnum.right,
-				"type": MONKEY_CEO,
-				"row": 11,
-				"column": 21
-			},
+			"direction": DirectionEnum.right,
+			"type": MONKEY_CEO,
+			"row": 11,
+			"column": 21
+		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
-				"direction": DirectionEnum.up,
-				"type": MONKEY_CEO,
-				"row": 16,
-				"column": 21
-			},
+			"direction": DirectionEnum.up,
+			"type": MONKEY_CEO,
+			"row": 16,
+			"column": 21
+		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
-				"direction": DirectionEnum.left,
-				"type": MONKEY_CEO,
-				"row": 15,
-				"column": 22
-			},
+			"direction": DirectionEnum.left,
+			"type": MONKEY_CEO,
+			"row": 15,
+			"column": 22
+		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
-				"direction": DirectionEnum.up,
-				"type": MONKEY_CEO,
-				"row": 15,
-				"column": 17
-			},
+			"direction": DirectionEnum.up,
+			"type": MONKEY_CEO,
+			"row": 15,
+			"column": 17
+		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
-				"direction": DirectionEnum.up,
-				"type": MONKEY_CEO,
-				"row": 15,
-				"column": 18
-			},
+			"direction": DirectionEnum.up,
+			"type": MONKEY_CEO,
+			"row": 15,
+			"column": 18
+		},
 		{
 			"anim_type": AnimationTypeEnum.semiIdle,
-				"direction": DirectionEnum.right,
-				"type": MONKEY_CEO,
-				"row": 10,
-				"column": 21
-			},
+			"direction": DirectionEnum.right,
+			"type": MONKEY_CEO,
+			"row": 10,
+			"column": 21
+		},
 		{
 			"anim_type": AnimationTypeEnum.idle,
-				"direction": DirectionEnum.down,
-				"type": ROBOT,
-				"row": 4,
+			"direction": DirectionEnum.down,
+			"type": ROBOT,
+			"row": 4,
 			"column": 13,
-			"action": A3_INTERACTION_ROBOT_RECEPTIONIST
-			},
+			"name": ROBOT_RECEPTIONIST,
+			"id": ROBOT_RECEPTIONIST
+		},
 		{
 			"anim_type": AnimationTypeEnum.idle,
 			"direction": DirectionEnum.right,
 			"type": ROBOT,
 			"row": 12,
 			"column": 6,
-			"name": "Robot Cook",
-			"action": A3_INTERACTION_ROBOT_COOK
+			"name": ROBOT_COOK,
+			"id": ROBOT_COOK
 		},
 		{
 			"anim_type": AnimationTypeEnum.idle,
@@ -3936,8 +3943,8 @@ export default {
 			"type": MONKEY_CEO,
 			"row": 15,
 			"column": 6,
-			"name": "Monkey Cook",
-			"action": A3_INTERACTION_MONKEY_COOK
+			"name": MONKEY_COOK,
+			"id": MONKEY_COOK
 		},
 		{
 			"type": "plant_yo",
@@ -4279,20 +4286,35 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_TWO_TOWERS_MAIN_DOOR,
+			"eventType": EventType.door,
 			"row": 14,
 			"column": 11,
-			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down
+			"direction": DirectionEnum.down,
+			"eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
 		},
 		{
-			"id": DOORKEY_TWO_TOWERS_MAIN_DOOR,
+			"eventType": EventType.door,
 			"row": 14,
 			"column": 12,
-			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down
+			"direction": DirectionEnum.down,
+			"eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.A3_MONKEY_COOK,
+			"spriteId": MONKEY_COOK
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.A3_ROBOT_COOK,
+			"spriteId": ROBOT_COOK
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.A3_ROBOT_RECEPTIONIST,
+			"spriteId": ROBOT_RECEPTIONIST
 		}
 	]
 }

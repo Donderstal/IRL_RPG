@@ -1,12 +1,15 @@
 import { GRID_LEONARD_D2 } from './grid';
 import { FRONT_GRID_LEONARD_D2 } from './frontgrid';
-import { D2_INTERACTION_LOOKING_FOR_APPARTMENT_LADY, D2_INTERACTION_WHOLESOME_LIFTER } from './D2-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DARK_HAIR_NERD_LADY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
-import { LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY } from '../leonard_heights_res';
-import { DOORKEY_SARDINE_STUDIOS_FRONT_DOOR } from './D2-door-keys';
+import { EventType } from '../../../../enumerables/EventType';
+import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+
+const ID_D2_DARK_HAIR_NERD_LADY = "ID_D2_DARK_HAIR_NERD_LADY";
+const ID_D2_TOUGH_GUY = "ID_D2_TOUGH_GUY";
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_D2,
@@ -23,7 +26,7 @@ export default {
             "row": 9,
             "column": 18,
             "name": "Jenn Trification",
-            "action": D2_INTERACTION_LOOKING_FOR_APPARTMENT_LADY
+            "id": ID_D2_DARK_HAIR_NERD_LADY
         },
         {
             "anim_type": AnimationTypeEnum.animationLoop,
@@ -33,7 +36,7 @@ export default {
             "type": TOUGH_GUY,
             "direction": DirectionEnum.left,
             "name": "Wholesome Lifter",
-            "action": D2_INTERACTION_WHOLESOME_LIFTER
+            "id": ID_D2_TOUGH_GUY
         },
         {
             "type": "Sign_03",
@@ -56,16 +59,23 @@ export default {
             "column": 18
         }
     ],
-    "actions": [
-
-    ],
-    "doors": [
+    "triggers": [
         {
-            "id": DOORKEY_SARDINE_STUDIOS_FRONT_DOOR,
             "row": 8,
             "column": 15,
-            "doorTo": LH_SARDINE_STUDIOS_STAIRS_BOTTOM_KEY,
-            "direction": DirectionEnum.up
+            "direction": DirectionEnum.up,
+            "eventId": DOOR_IDS.SARDINE_STUDIOS_FRONT_DOOR,
+            "eventType": EventType.door
+        },
+        {
+            "eventType": EventType.cutscene,
+            "eventId": CUTSCENE_IDS.D2_LOOKING_FOR_APPARTMENT_LADY,
+            "spriteId": ID_D2_DARK_HAIR_NERD_LADY
+        },
+        {
+            "eventType": EventType.cutscene,
+            "eventId": CUTSCENE_IDS.D2_WHOLESOME_LIFTER,
+            "spriteId": ID_D2_TOUGH_GUY
         }
     ]
 }

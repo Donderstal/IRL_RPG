@@ -1,11 +1,10 @@
-import { LH_BAKER_STREET_12_F2_STAIRS_KEY } from "../../leonard_heights_res";
+import { MAP_IDS } from "../../../mapIds";
 import { getBSStairHallDoors } from "./registries/BSDoorsFactory";
 import BakerStreetStairsTemplate from "./templates/Baker-Street-Stairs-Template";
 
 export default {
-	"key": LH_BAKER_STREET_12_F2_STAIRS_KEY,
+	"key": MAP_IDS.BAKER_STREET_12_F2_HALL,
 	...BakerStreetStairsTemplate,
-	"doors": getBSStairHallDoors( LH_BAKER_STREET_12_F2_STAIRS_KEY ),
 	"sprites": [
 		{
 			"type": "door_interior_north_green",
@@ -38,4 +37,5 @@ export default {
 			"direction": 0
 		}
 	],
+	"triggers": getBSStairHallDoors( MAP_IDS.BAKER_STREET_12_F2_HALL ),
 }

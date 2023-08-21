@@ -1,10 +1,11 @@
-import { CM_INTRO_CINEMATIC_MAP_1, CM_INTRO_CINEMATIC_MAP_2, CM_KEY, CM_NAME } from "./cinematic_maps_res";
+import { LOCATION_NAMES } from "../locationNames";
+import { MAP_IDS } from "../mapIds";
 import introCinematicMap1 from "./story-cinematic-1/intro-cinematic-map-1";
 import introCinematicMap2 from "./story-cinematic-1/intro-cinematic-map-2";
 
 export default {
-    "key": CM_KEY,
-    "location": CM_NAME,
+    "key": MAP_IDS.CINEMATIC_MAPS,
+    "location": LOCATION_NAMES.CINEMATIC_MAPS,
     "horizontal_slots": [],
     "vertical_slots": [],
     "music": "Theme_Overworld_1_HDR.mp3",
@@ -15,7 +16,7 @@ export default {
     "spawnable_actions": [],
 
     "mapDictionary": {
-        [CM_INTRO_CINEMATIC_MAP_1]: introCinematicMap1,
-        [CM_INTRO_CINEMATIC_MAP_2]: introCinematicMap2
+        [MAP_IDS.CINEMATIC_INTRO_MAP_1]: introCinematicMap1,
+        [MAP_IDS.CINEMATIC_INTRO_MAP_2]: introCinematicMap2
     }
 }

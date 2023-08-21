@@ -1,12 +1,14 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
 import { SUNGLASSES_LADY } from "../../../../spriteTypeResources";
-import { LH_CLUB_SHELTER_ENTRANCE_KEY, LH_CLUB_SHELTER_KEY, LH_CLUB_SHELTER_NAME, LH_MAP_KEY } from "../../leonard_heights_res";
-import { DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR, DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR } from "../B4-door-keys";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_CLUB_SHELTER_ENTRANCE_KEY,
-	"location": LH_CLUB_SHELTER_NAME,
+	"key": MAP_IDS.CLUB_SHELTER_ENTRANCE,
+	"location": LOCATION_NAMES.CLUB_SHELTER,
 	"columns": 4,
 	"rows": 8,
 	"tileSet": "bar-interior",
@@ -363,35 +365,34 @@ export default {
 		}
 	],
 	"frontSprites": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
-			"row": 2,
-			"column": 2,
-			"doorTo": LH_CLUB_SHELTER_KEY,
-			"direction": DirectionEnum.up,
-		},
-		{
-			"id": DOORKEY_CLUBSHELTER_MAIN_INNER_DOOR,
-			"row": 2,
-			"column": 3,
-			"doorTo": LH_CLUB_SHELTER_KEY,
-			"direction": DirectionEnum.up,
-		},
-		{
-			"id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
+			"eventType": EventType.door,
 			"row": 8,
 			"column": 2,
-			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
+			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
 		},
 		{
-			"id": DOORKEY_CLUBSHELTER_MAIN_FRONT_DOOR,
+			"eventType": EventType.door,
 			"row": 8,
 			"column": 3,
-			"doorTo": LH_MAP_KEY,
 			"direction": DirectionEnum.down,
-
+			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
+		},
+		{
+			"eventType": EventType.door,
+			"row": 2,
+			"column": 2,
+			"direction": DirectionEnum.up,
+			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_INNER_DOOR
+		},
+		{
+			"eventType": EventType.door,
+			"row": 2,
+			"column": 3,
+			"direction": DirectionEnum.up,
+			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_INNER_DOOR
 		}
 	]
 }

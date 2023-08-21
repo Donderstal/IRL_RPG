@@ -1,10 +1,12 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY, LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY, LH_SARDINE_STUDIOS_NAME } from "../../leonard_heights_res";
-import { DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP3 } from "../D2-door-keys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY,
-	"location": LH_SARDINE_STUDIOS_NAME,
+	"key": MAP_IDS.SARDINE_STUDIOS_F1_APT3,
+	"location": LOCATION_NAMES.SARDINE_STUDIOS,
 	"columns": 4,
 	"rows": 9,
 	"tileSet": "Generic_Room_BX",
@@ -444,13 +446,13 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP3,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP3,
 			"row": 2,
 			"column": 3,
-			"doorTo": LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY,
 			"direction": DirectionEnum.up
-		},
+		}
 	]
 }

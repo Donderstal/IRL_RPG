@@ -1,12 +1,12 @@
-import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { GRANNY, SUPERMARKET_MANAGER } from "../../../../spriteTypeResources";
-import { LH_MAP_KEY, LH_YUM_MART_NAME, LH_YUM_MART_OFFICE_KEY, LH_YUM_MART_STORE_KEY } from "../../leonard_heights_res";
-import { DOORKEY_YUM_MART_DOOR_1, DOORKEY_YUM_MART_FRONT_DOOR } from "../C4-door-keys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_YUM_MART_STORE_KEY,
-	"location": LH_YUM_MART_NAME,
+	"key": MAP_IDS.YUM_MART_OFFICE,
+	"location": LOCATION_NAMES.YUM_MART,
 	"columns": 16,
 	"rows": 14,
 	"tileSet": "Yum_Mart",
@@ -2591,28 +2591,27 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_YUM_MART_DOOR_1,
-			"row": 3,
-			"column": 1,
-			"doorTo": LH_YUM_MART_OFFICE_KEY,
-			"direction": DirectionEnum.left,
-
-		},
-		{
-			"id": DOORKEY_YUM_MART_FRONT_DOOR,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
 			"row": 12,
 			"column": 8,
-			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down,
+			"direction": DirectionEnum.up,
 		},
 		{
-			"id": DOORKEY_YUM_MART_FRONT_DOOR,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
 			"row": 12,
 			"column": 9,
-			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down,
+			"direction": DirectionEnum.up,
+		},
+		{
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.YUM_MART_DOOR_1,
+			"row": 3,
+			"column": 1,
+			"direction": DirectionEnum.left,
 		}
 	]
 }

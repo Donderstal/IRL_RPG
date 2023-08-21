@@ -1,12 +1,12 @@
-import { LH_GREY_BUILDING_F2_LOBBY } from "../../../leonard_heights_res";
+import { MAP_IDS } from "../../../../mapIds";
 import GBLobbyTemplate from "../GB-lobby-template";
 import { LHGB_Lobby_Doors } from "../GBDoorsFactory";
 
 export default {
-    "key": LH_GREY_BUILDING_F2_LOBBY,
+    "key": MAP_IDS.GREY_BUILDING_F2_LOBBY,
     ...GBLobbyTemplate,
 	"frontSprites": [],
-    "doors": LHGB_Lobby_Doors( LH_GREY_BUILDING_F2_LOBBY ),
+    "triggers": [...LHGB_Lobby_Doors( MAP_IDS.GREY_BUILDING_F2_LOBBY )],
 	"sprites": [
 		{
 			"type": "elevator_door",

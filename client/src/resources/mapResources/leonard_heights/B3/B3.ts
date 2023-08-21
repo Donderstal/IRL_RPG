@@ -1,9 +1,13 @@
 import { GRID_LEONARD_B3 } from './grid';
 import { FRONT_GRID_LEONARD_B3 } from './frontgrid';
-import { B3_INTERACTION_GUY_WHO_LOST_HIS_KEYS } from './B3-interactions';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DORKY_GUY, PIGEON } from '../../../spriteTypeResources';
+import { EventType } from '../../../../enumerables/EventType';
+import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+
+const KEYS_GUY_ID = "KEYS_GUY_B3"
+
 export default {
     "frontGrid": FRONT_GRID_LEONARD_B3,
     "grid": GRID_LEONARD_B3,
@@ -25,7 +29,7 @@ export default {
             "column": 20,
             "direction": DirectionEnum.down,
             "type": DORKY_GUY,
-            "action": B3_INTERACTION_GUY_WHO_LOST_HIS_KEYS
+            "id": KEYS_GUY_ID
         },
         {
             "type": "gate_stuk14",
@@ -103,7 +107,11 @@ export default {
             "column": 11
         }
     ],
-    "actions": [
-
+    "trigger": [
+        {
+            "eventType": EventType.cutscene,
+            "eventId": CUTSCENE_IDS.B3_GUY_WHO_LOST_HIS_KEYS,
+            "spriteId": KEYS_GUY_ID
+        }
     ]
 }

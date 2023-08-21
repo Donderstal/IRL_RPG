@@ -1,7 +1,7 @@
-import { LH_GREY_BUILDING_NAME } from "../../leonard_heights_res";
+import { LOCATION_NAMES } from "../../../locationNames";
 
 export default {
-	"location": LH_GREY_BUILDING_NAME,
+	"location": LOCATION_NAMES.GREY_BUILDING,
 	"columns": 15,
 	"rows": 4,
 	"tileSet": "Generic_Room_BX",

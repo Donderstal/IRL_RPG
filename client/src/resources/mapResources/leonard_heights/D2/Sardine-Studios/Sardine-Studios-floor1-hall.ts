@@ -1,10 +1,12 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY, LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY, LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY, LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY, LH_SARDINE_STUDIOS_NAME, LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY } from "../../leonard_heights_res";
-import { DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP1, DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP2, DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP3, DOORKEY_SARDINE_STUDIOS_DOOR_F1_HALL } from "../D2-door-keys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": LH_SARDINE_STUDIOS_FLOOR1_HALL_KEY,
-	"location": LH_SARDINE_STUDIOS_NAME,
+	"key": MAP_IDS.SARDINE_STUDIOS_CORRIDOR_F1,
+	"location": LOCATION_NAMES.SARDINE_STUDIOS,
 	"columns": 20,
 	"rows": 4,
 	"tileSet": "Generic_Room_BX",
@@ -848,33 +850,34 @@ export default {
 	"frontSprites": [],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_F1_HALL,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_HALL,
 			"row": 4,
 			"column": 1,
-			"doorTo": LH_SARDINE_STUDIOS_STAIRS_FLOOR1_KEY,
 			"direction": DirectionEnum.left
 		},
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP1,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP1,
 			"row": 4,
 			"column": 4,
-			"doorTo": LH_SARDINE_STUDIOS_FLOOR1_APP1_KEY,
 			"direction": DirectionEnum.down
 		},
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP2,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP2,
 			"row": 4,
 			"column": 9,
-			"doorTo": LH_SARDINE_STUDIOS_FLOOR1_APP2_KEY,
 			"direction": DirectionEnum.down
 		},
+		,
 		{
-			"id": DOORKEY_SARDINE_STUDIOS_DOOR_F1_APP3,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP3,
 			"row": 4,
 			"column": 14,
-			"doorTo": LH_SARDINE_STUDIOS_FLOOR1_APP3_KEY,
 			"direction": DirectionEnum.down
 		}
 	]

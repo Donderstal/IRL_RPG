@@ -4,10 +4,10 @@ import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { MovementType } from '../../../../enumerables/MovementTypeEnum';
 import { PIGEON, POLICE_ROBOT } from '../../../spriteTypeResources';
-import { LH_CAR_SHACK_KEY } from '../leonard_heights_res';
-import { DOORKEY_CAR_SHACK_FRONT_DOOR } from './C3-door-keys';
 import { getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
 import { IKEY_CAR_SHACK_3 } from '../../../../game-data/interactionGlobals';
+import { EventType } from '../../../../enumerables/EventType';
+import { DOOR_IDS } from '../../../eventResources/doorIds';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -114,15 +114,12 @@ export default {
             "anim_type": AnimationTypeEnum.idle
         }
     ],
-    "actions": [
-
-    ],
-    "doors": [
+    "triggers": [
         {
-            "id": DOORKEY_CAR_SHACK_FRONT_DOOR,
+            "eventType": EventType.door,
+            "eventId": DOOR_IDS.CAR_SHACK_FRONT_DOOR,
             "row": 8,
             "column": 21,
-            "doorTo": LH_CAR_SHACK_KEY,
             "direction": DirectionEnum.up
         }
     ]

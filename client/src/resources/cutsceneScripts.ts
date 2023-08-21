@@ -2,11 +2,10 @@ import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import { ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_POWER_UP, ANIM_TURN_CIRCLE_POSITIONAL } from "../game-data/animationGlobals";
 import { CHARNAME_CAR_SHACK_BOSS, CHARNAME_CAR_SHACK_MECHANIC, PLAYER_NAME } from "../game-data/interactionGlobals";
-import { EMOTE_ANGRY, EMOTE_HAPPY, EMOTE_HEART, EMOTE_QUESTIONMARK, EMOTE_SAD, EMOTE_SURPRISED } from "../game-data/textboxGlobals";
+import { EMOTE_ANGRY, EMOTE_EXCLAMATIONMARK, EMOTE_HAPPY, EMOTE_HEART, EMOTE_QUESTIONMARK, EMOTE_SAD, EMOTE_SURPRISED } from "../game-data/textboxGlobals";
 import type { CinematicModel } from "../models/CinematicModel";
-import { getAnimateSpriteScene, getCameraMoveToSpriteScene, getDeleteSpriteScene, getEmoteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene, getSpeakYesNoScene, getWaitScene } from "./../factories/cinematicFactory";
-import { CM_INTRO_CINEMATIC_MAP_1, CM_INTRO_CINEMATIC_MAP_2 } from "./mapResources/cinematic_maps/cinematic_maps_res";
-import { LH_BAKER_STREET_12_F3_APT_KEY } from "./mapResources/leonard_heights/leonard_heights_res";
+import { getAnimateSpriteScene, getCameraMoveToSpriteScene, getDeleteSpriteScene, getEmoteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene, getSpeakYesNoScene } from "./../factories/cinematicFactory";
+import { MAP_IDS } from "./mapResources/mapIds";
 
 type CutsceneScripts = {
     INTRO_CINEMATIC: CinematicModel;
@@ -76,7 +75,7 @@ export const CUTSCENE_SCRIPTS: CutsceneScripts = {
         [getScreenTextScene( "THE SUN STILL SHINES AND PEOPLE STILL WASTE THEIR TIME WITH EXHAUSTING SOCIAL MEDIA DISCUSSIONS." )],
         [getScreenTextScene( "BUT BELOW THE SURFACE, THINGS ARE RAPIDLY CHANGING..." )],
 
-        [getLoadMapScene( CM_INTRO_CINEMATIC_MAP_2, false, null, { column: 18, row: 7 } )],
+        [getLoadMapScene( MAP_IDS.CINEMATIC_INTRO_MAP_1, false, null, { column: 18, row: 7 } )],
         [getFadeScene( SceneAnimationType.fadeIn, .5 )],
         [getCameraMoveToSpriteScene( false, "CASHIER_ROBOT_LEFT", false )],
         [getScreenTextScene( "BASIC INCOME IS SLOWLY BEING ROLLED OUT, CHANGING THE WAY PEOPLE LIVE AND WORK." )],
@@ -84,7 +83,7 @@ export const CUTSCENE_SCRIPTS: CutsceneScripts = {
         [getScreenTextScene( "MORE AND MORE PEOPLE ARE DROPPING OUT OF LABOUR, CHOOSING TO SPEND THEIR DAYS WITH THEIR MEAGRE BASIC INCOMES." )],
         [getFadeScene( SceneAnimationType.fadeOut )],
 
-        [getLoadMapScene( CM_INTRO_CINEMATIC_MAP_1, false, null, { column: 22, row: 24 } )],
+        [getLoadMapScene( MAP_IDS.CINEMATIC_INTRO_MAP_2, false, null, { column: 22, row: 24 } )],
         [getFadeScene( SceneAnimationType.fadeIn, .5 )],
         [getCameraMoveToSpriteScene( false, "CIN-SPRITE-END-POSITION", false )],
         [getScreenTextScene( "AS INTERNATIONAL CORPORATIONS HAVE BECOME MORE POWERFUL, STATES ARE LOSING INFLUENCE AND RESPONSIBILITY." )],
@@ -92,7 +91,7 @@ export const CUTSCENE_SCRIPTS: CutsceneScripts = {
         [getScreenTextScene( "PROFITS ARE THROUGH THE ROOF, BUT THE LESS FORTUNATE ARE SUPPRESSED OR NEGLECTED." )],
         [getFadeScene( SceneAnimationType.fadeOut )],
 
-        [getLoadMapScene( LH_BAKER_STREET_12_F3_APT_KEY, true, { column: 2, row: 4, direction: DirectionEnum.up } )],
+        [getLoadMapScene( MAP_IDS.BAKER_STREET_12_F3_APT, true, { column: 2, row: 4, direction: DirectionEnum.up } )],
         [getFadeScene( SceneAnimationType.fadeIn, .5 )],
         [getScreenTextScene( "BUT OUR STORY STARTS SMALL, FAR AWAY FROM ALL THESE INTRIGUING DEVELOPMENTS." )],
         [getScreenTextScene( "IT STARTS IN A TINY STUDIO APPARTMENT IN A NOT-SO-FANCY PART OF TOWN, WHERE A NOT-SO-YOUNG MAN IS PLAYING VIDEO GAMES." )],

@@ -1,12 +1,15 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
-import { LH_BAKER_STREET_12_F4_APT_KEY, LH_BAKER_STREET_12_F4_STAIRS_KEY } from "../../leonard_heights_res";
-import { DOORKEY_BAKER_STREET_12_APT_F4 } from "./registries/BSDoorKeys";
+import { EventType } from "../../../../../enumerables/EventType";
+import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
-import { C2_INTERACTION_BS_APT4_RESIDENT } from "./registries/BSInteractions";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
 
+const RESIDENT = "RESIDENT";
+
 export default {
-    "key": LH_BAKER_STREET_12_F4_APT_KEY,
+    "key": MAP_IDS.BAKER_STREET_12_F4_APT,
     ...BakerStreetAptTemplate,
 	"sprites": [
 		{
@@ -46,7 +49,7 @@ export default {
 			"direction": 2,
 			"name": "New Neighbour",
 			"anim_type": AnimationTypeEnum.idle,
-			"action": C2_INTERACTION_BS_APT4_RESIDENT
+			"id": RESIDENT
 		},
 		{
 			"type": "Fridge",
@@ -97,5 +100,12 @@ export default {
 			"direction": 0
 		}
 	],
-    "doors": [getBSAppartmentToHallDoor( DOORKEY_BAKER_STREET_12_APT_F4, LH_BAKER_STREET_12_F4_STAIRS_KEY )]
+	"triggers": [
+		getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F4 ),
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.C2_BS12_APT4_RESIDENT,
+			"spriteId": RESIDENT
+        }
+	]
 }

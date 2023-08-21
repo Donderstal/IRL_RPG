@@ -3,8 +3,8 @@ import { FRONT_GRID_LEONARD_C4 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { PIGEON } from '../../../spriteTypeResources';
-import { LH_YUM_MART_STORE_KEY } from '../leonard_heights_res';
-import { DOORKEY_YUM_MART_FRONT_DOOR } from './C4-door-keys';
+import { EventType } from '../../../../enumerables/EventType';
+import { DOOR_IDS } from '../../../eventResources/doorIds';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C4,
@@ -147,24 +147,20 @@ export default {
             "direction": DirectionEnum.up
         }
     ],
-    "doors": [
+    "triggers": [
         {
-            "id": DOORKEY_YUM_MART_FRONT_DOOR,
+            "eventType": EventType.door,
+            "eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
             "row": 7,
             "column": 19,
-            "doorTo": LH_YUM_MART_STORE_KEY,
             "direction": DirectionEnum.up,
-
         },
         {
-            "id": DOORKEY_YUM_MART_FRONT_DOOR,
+            "eventType": EventType.door,
+            "eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
             "row": 7,
             "column": 20,
-            "doorTo": LH_YUM_MART_STORE_KEY,
             "direction": DirectionEnum.up,
         }
-    ],
-    "actions": [
-
     ]
 }

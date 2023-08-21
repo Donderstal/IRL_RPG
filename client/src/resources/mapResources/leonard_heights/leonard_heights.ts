@@ -1,12 +1,6 @@
-import { INTERACTION_RANDOM_ENCOUNTER_1, INTERACTION_RANDOM_ENCOUNTER_2, INTERACTION_RANDOM_ENCOUNTER_3, INTERACTION_RANDOM_ENCOUNTER_4, INTERACTION_RANDOM_ENCOUNTER_5, INTERACTION_RANDOM_ENCOUNTER_6 } from '../../interactionResources';
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BLONDE_BEER_BELLY_GUY, BLONDE_NERD_LADY, BURLY_GUY, DARK_HAIR_NERD_LADY, DORKY_GUY, FAT_BUFF_GUY, FAT_FEDORA_GUY, GRANNY, GREEN_HAIR_LADY, PINK_HAIR_NERD_LADY, STRONG_GUY, TOUGH_GUY, TOUGH_GUY_WITH_DARK_HAIR, WHITE_PONY_TAIL_LADY } from '../../spriteTypeResources';
 import { DirectionEnum } from '../../../enumerables/DirectionEnum';
 import { RoadAlignmentEnum } from '../../../enumerables/RoadAlignmentEnum';
-import {
-    LH_KEY, LH_NAME,
-    LH_CHARACTERS_MASTER_ROOM_KEY,
-    LH_CARS_MASTER_ROOM_KEY,
-} from './leonard_heights_res';
 
 import A1 from './A1/A1';
 import A2 from './A2/A2';
@@ -37,10 +31,13 @@ import C3Submaps from './C3/C3-submaps';
 import C4Submaps from './C4/C4-submaps';
 import D2Submaps from './D2/D2-submaps';
 import E3Submaps from './E3/E3-submaps';
+import { LOCATION_NAMES } from '../locationNames';
+import { CUTSCENE_IDS } from '../../eventResources/cutsceneIds';
+import { MAP_IDS } from '../mapIds';
 
 export default {
-    "key": LH_KEY,
-    "location": LH_NAME,
+    "key": MAP_IDS.LEONARD_HEIGHTS,
+    "location": LOCATION_NAMES.LEONARD_HEIGHTS,
     "horizontal_slots": ["A", "B", "C", "D", "E"], 
     "vertical_slots": ["1", "2", "3", "4"],
     "music": "Theme_Overworld_1_HDR.mp3",
@@ -54,8 +51,8 @@ export default {
     ],
     "characters_spawn_rate": 10000,
     "spawnable_actions": [
-        INTERACTION_RANDOM_ENCOUNTER_1, INTERACTION_RANDOM_ENCOUNTER_2, INTERACTION_RANDOM_ENCOUNTER_3,
-        INTERACTION_RANDOM_ENCOUNTER_4, INTERACTION_RANDOM_ENCOUNTER_5, INTERACTION_RANDOM_ENCOUNTER_6
+        CUTSCENE_IDS.RANDOM_ENCOUNTER_1, CUTSCENE_IDS.RANDOM_ENCOUNTER_2, CUTSCENE_IDS.RANDOM_ENCOUNTER_3,
+        CUTSCENE_IDS.RANDOM_ENCOUNTER_4, CUTSCENE_IDS.RANDOM_ENCOUNTER_5, CUTSCENE_IDS.RANDOM_ENCOUNTER_6
     ],
     
     "mapDictionary": {
@@ -87,8 +84,8 @@ export default {
         "E4": E4,
 
         // Master rooms
-        [ LH_CHARACTERS_MASTER_ROOM_KEY ]: characterMasterRoom,
-        [ LH_CARS_MASTER_ROOM_KEY ]: carMasterRoom
+        [ MAP_IDS.MASTER_ROOM_CHARACTERS ]: characterMasterRoom,
+        [ MAP_IDS.MASTER_ROOM_CARS ]: carMasterRoom
     /////
     },
     "spawnPoints": [

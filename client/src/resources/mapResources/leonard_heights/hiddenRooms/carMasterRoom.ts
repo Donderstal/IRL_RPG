@@ -1,8 +1,9 @@
-import { LH_CARS_MASTER_ROOM_KEY, LH_MASTER_ROOMS_LOCATION_NAME } from "../leonard_heights_res";
+import { LOCATION_NAMES } from "../../locationNames";
+import { MAP_IDS } from "../../mapIds";
 
 export default {
-	"key": LH_CARS_MASTER_ROOM_KEY,
-	"location": LH_MASTER_ROOMS_LOCATION_NAME,
+	"key": MAP_IDS.MASTER_ROOM_CARS,
+	"location": LOCATION_NAMES.MASTER_ROOMS,
 	"columns": 24,
 	"rows": 16,
 	"tileSet": "downtown_2",

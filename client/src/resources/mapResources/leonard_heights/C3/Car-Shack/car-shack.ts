@@ -1,14 +1,19 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
+import { EventType } from "../../../../../enumerables/EventType";
 import { CHARNAME_CAR_SHACK_BOSS, CHARNAME_CAR_SHACK_MECHANIC } from "../../../../../game-data/interactionGlobals";
-import { CAR_MECHANIC, CAR_SHACK_BOSS, FAT_BUFF_GUY, ROBOT, SUPERMARKET_MANAGER } from "../../../../spriteTypeResources";
-import { LH_CAR_SHACK_KEY, LH_CAR_SHACK_NAME, LH_MAP_KEY } from "../../leonard_heights_res";
-import { DOORKEY_CAR_SHACK_FRONT_DOOR } from "../C3-door-keys";
-import { C3_INTERACTION_CAR_SHACK_BOSS, C3_INTERACTION_CAR_SHACK_MECHANIC } from "./car-shack-interactions";
+import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { CAR_MECHANIC, CAR_SHACK_BOSS } from "../../../../spriteTypeResources";
+import { LOCATION_NAMES } from "../../../locationNames";
+import { MAP_IDS } from "../../../mapIds";
+
+const MECHANIC_LI = "MECHANIC_LI";
+const BOSS_CLYDE = "BOSS_CLYDE";
 
 export default {
-	"key": LH_CAR_SHACK_KEY,
-	"location": LH_CAR_SHACK_NAME,
+	"key": MAP_IDS.CAR_SHACK,
+	"location": LOCATION_NAMES.CAR_SHACK,
 	"columns": 12,
 	"rows": 8,
 	"tileSet": "Generic_Room_BX",
@@ -986,7 +991,7 @@ export default {
 			"type": CAR_SHACK_BOSS,
 			"row": 2,
 			"column": 6,
-			"action": C3_INTERACTION_CAR_SHACK_BOSS
+			"id": MECHANIC_LI
 		},
 		{
 			"anim_type": AnimationTypeEnum.idle,
@@ -995,7 +1000,7 @@ export default {
 			"type": CAR_MECHANIC,
 			"row": 7,
 			"column": 10,
-			"action": C3_INTERACTION_CAR_SHACK_MECHANIC
+			"id": BOSS_CLYDE
 		},
 		{
 			"type": "boarded_window",
@@ -1096,13 +1101,23 @@ export default {
 	],
 	"spawnPoints": [],
 	"roads": [],
-	"doors": [
+	"triggers": [
 		{
-			"id": DOORKEY_CAR_SHACK_FRONT_DOOR,
-			"row": 8,
+			"eventType": EventType.door,
+			"eventId": DOOR_IDS.CAR_SHACK_FRONT_DOOR,
+			"direction": DirectionEnum.down,
 			"column": 4,
-			"doorTo": LH_MAP_KEY,
-			"direction": DirectionEnum.down
-		}
+			"row": 8,
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.C3_CAR_SHACK_BOSS,
+			"spriteId": BOSS_CLYDE
+		},
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.C3_CAR_SHACK_MECHANIC,
+			"spriteId": MECHANIC_LI
+        }
 	]
 }

@@ -1,10 +1,10 @@
-import { LH_BAKER_STREET_12_GF_KEY } from "../../leonard_heights_res";
+import { MAP_IDS } from "../../../mapIds";
 import { getBSStairHallDoors } from "./registries/BSDoorsFactory";
 import BakerStreetTemplateBase from "./templates/Baker-Street-Template-Base";
 
 export default {
 	...BakerStreetTemplateBase,
-	"key": LH_BAKER_STREET_12_GF_KEY,
+	"key": MAP_IDS.BAKER_STREET_12_GF,
 	"columns": 7,
 	"rows": 10,
 	"grid": [
@@ -767,5 +767,5 @@ export default {
 			"direction": 0
 		}
 	],
-	"doors": getBSStairHallDoors(LH_BAKER_STREET_12_GF_KEY)
+	"triggers": getBSStairHallDoors( MAP_IDS.BAKER_STREET_12_GF )
 }
