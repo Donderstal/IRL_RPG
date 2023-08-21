@@ -5,5 +5,7 @@ export enum ConditionType {
     interactionNotRegistered,
     yesRegisteredInInteraction,
     noRegisteredInInteraction,
+    loggedIn,
+    notLoggedIn,
     default
 }

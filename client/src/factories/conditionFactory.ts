@@ -35,3 +35,15 @@ export const getYesRegisteredInInteractionCondition = ( key: string ): Condition
     }
     return condition;
 }
+export const getLoggedInCondition = (): ConditionModel => {
+    const condition: ConditionModel = {
+        type: ConditionType.loggedIn
+    }
+    return condition;
+}
+export const getNotLoggedInCondition = (): ConditionModel => {
+    const condition: ConditionModel = {
+        type: ConditionType.notLoggedIn
+    }
+    return condition;
+}

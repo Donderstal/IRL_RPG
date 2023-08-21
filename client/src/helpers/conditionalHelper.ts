@@ -2,33 +2,28 @@ import { ConditionType } from "../enumerables/ConditionTypeEnum";
 import { InteractionAnswer } from "../enumerables/InteractionAnswer";
 import { isInRegistry, isInRegistryWithValue } from '../registries/interactionRegistry';
 import { getInventory } from "../game/party/partyController";
+import { loggedIn } from "../game-container/stores";
+import { get } from "svelte/store";
 
-export const conditionIsTrue = ( conditionType: ConditionType, valueToCheck: string ): boolean => {
-    let returnBoolean = false; 
-
+export const conditionIsTrue = ( conditionType: ConditionType, valueToCheck: string = null ): boolean => {
     switch ( conditionType ) {
         case ConditionType.ownsItem:
-            returnBoolean = getInventory().getItemStackById( valueToCheck ) !== undefined;
-            break;
+            return getInventory().getItemStackById( valueToCheck ) !== undefined;
         case ConditionType.doesNotOwnItem:
-            returnBoolean = getInventory().getItemStackById( valueToCheck ) === undefined;
-            break;
+            return getInventory().getItemStackById( valueToCheck ) === undefined;
         case ConditionType.interactionRegistered:
-            returnBoolean = isInRegistry( valueToCheck );
-            break;
+            return isInRegistry( valueToCheck );
         case ConditionType.interactionNotRegistered:
-            returnBoolean = !isInRegistry( valueToCheck );
-            break;
+            return !isInRegistry( valueToCheck );
         case ConditionType.yesRegisteredInInteraction:
-            returnBoolean = isInRegistryWithValue( valueToCheck, InteractionAnswer.yes );
-            break;
+            return isInRegistryWithValue( valueToCheck, InteractionAnswer.yes );
         case ConditionType.noRegisteredInInteraction:
-            returnBoolean = isInRegistryWithValue( valueToCheck, InteractionAnswer.no );
-            break;
+            return isInRegistryWithValue( valueToCheck, InteractionAnswer.no );
+        case ConditionType.notLoggedIn:
+            return !get( loggedIn );
+        case ConditionType.loggedIn:
+            return get( loggedIn );
         case ConditionType.default:
-            returnBoolean = true;
-            break;
+            return true;
     }
-
-    return returnBoolean;
 }
