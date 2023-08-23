@@ -1,13 +1,7 @@
-import type { DoorModel } from '../../models/DoorModel';
-import type { MapActionModel } from '../../models/MapActionModel';
 import type { MapModel } from '../../models/MapModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
-import { initializeDoorForTile } from '../modules/doors/doorSetter';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { initializeActionForTile, initializeSavePoint, initializeElevator } from '../modules/actions/actionSetter';
-import type { GridCellModel } from '../../models/GridCellModel';
-import type { ElevatorModel } from '../../models/ElevatorModel';
 import type { CellPosition } from '../../models/CellPositionModel';
 
 export class BackTileGrid extends CanvasGrid {
@@ -30,22 +24,6 @@ export class BackTileGrid extends CanvasGrid {
 
     setNeighbourhood( neighbourhood: string ): void {
         this.neighbourhood = neighbourhood
-    }
-
-    setActions( actions: MapActionModel[] ): void {
-        actions.forEach( ( action ) => {
-            const tile = this.getTileAtCell( action.column, action.row );
-            initializeActionForTile( tile, action.action )
-        } )
-    }
-
-    setDoors( doors: DoorModel[] ): void {
-        this.unblockedCells = [];
-        doors.forEach( ( door ) => {
-            const tile = this.getTileAtCell( door.column, door.row );
-            this.unblockedCells.push( { 'column': door.column, 'row': door.row }  )
-            initializeDoorForTile( tile, door );
-        } )
     }
 
     setBlockedTiles( blockedTileIndexes: number[] ): void {
@@ -71,29 +49,8 @@ export class BackTileGrid extends CanvasGrid {
             this.mapSpecificBlockedTiles = [...this.model.blockedTileIds];
         if ( this.model.unblockedTileIds )
             this.mapSpecificUnblockedTiles = [...this.model.unblockedTileIds];
-
-        if ( this.model.doors )
-            this.setDoors( this.model.doors );
-        if ( this.model.actions )
-            this.setActions( this.model.actions );
-        if ( this.model.savepoint )
-            this.setSavepoint( this.model.savepoint );
         if ( sheetModel.blocked )
             this.setBlockedTiles( sheetModel.blocked );
-        if ( this.model.elevators )
-            this.setElevators( this.model.elevators );
-    }
-
-    setSavepoint( savepointData: GridCellModel ): void {
-        const tile = this.getTileAtCell( savepointData.column, savepointData.row );
-        initializeSavePoint( tile );
-    }
-
-    setElevators( elevators: ElevatorModel[] ): void {
-        elevators.forEach( ( e ) => {
-            const tile = this.getTileAtCell( e.column, e.row );
-            initializeElevator( tile, e );
-        } )
     }
 
     clearMap(): void {

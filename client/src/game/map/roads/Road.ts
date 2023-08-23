@@ -181,9 +181,7 @@ export class Road {
             spriteDataModel: getDataModelByKey( isBus ? "bus" : carNames[randomIndex] ),
             column: startLocation.column,
             row: startLocation.row,
-            hasCondition: false,
-            hasDoor: false,
-            hasAction: false
+            hasCondition: false
         }
         return model;
     }

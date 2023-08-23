@@ -63,8 +63,7 @@ const setMapGrid = (): void => {
     let mapRowsAccumulator = 0;
     let mapColumnsAccumulator = 0;
 
-    let doors = [];
-    let actions = [];
+    let triggers = [];
     let sprites = [];
     let frontSprites = [];
 
@@ -84,12 +83,7 @@ const setMapGrid = (): void => {
                 tiles = [...tiles, ...map.grid.slice( sliceStart, sliceStart + CANVAS_COLUMNS )];
                 frontTiles = [...frontTiles, ...map.frontGrid.slice( sliceStart, sliceStart + CANVAS_COLUMNS )];
                 if ( rowLimit === 1 ) {
-                    doors = [...doors, ...map.doors.map( ( e ) => {
-                        e.column += mapColumnsAccumulator;
-                        e.row += mapRowsAccumulator;
-                        return e;
-                    } )]
-                    actions = [...actions, ...map.actions.map( ( e ) => {
+                    triggers = [...triggers, ...map.triggers.map( ( e ) => {
                         e.column += mapColumnsAccumulator;
                         e.row += mapRowsAccumulator;
                         return e;
@@ -135,8 +129,7 @@ const setMapGrid = (): void => {
         frontGrid: frontGrid,
         sprites: sprites,
         frontSprites: frontSprites,
-        doors: doors,
-        actions: actions,
+        triggers: triggers,
         spawnPoints: model.spawnPoints,
         roads: model.roads
     }

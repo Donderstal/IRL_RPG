@@ -5,7 +5,7 @@ import type { Sprite } from '../game/core/Sprite';
 import type { MapModel } from '../models/MapModel';
 import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { cameraFocus } from '../game/cameraFocus';
-import { getPlayer, getStaticSprites } from '../game/modules/sprites/spriteGetter';
+import { getPlayer, getSpriteById, getStaticSprites } from '../game/modules/sprites/spriteGetter';
 import { clearSpriteModuleRegistries } from '../game/modules/moduleRegistrySetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
@@ -19,6 +19,9 @@ import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { registerMapExit, setPlayerLocationOnMapLoad } from '../game/map/playerLocationOnMapLoad';
 import { clearBlockedTilesRegistry, registerNewMap, registerTilesBlockedByStaticSprites } from '../game/map/blockedTilesRegistry';
 import type { GridCellModel } from '../models/GridCellModel';
+import type { TriggerModel } from '../models/TriggerModel';
+import type { BackTileGrid } from '../game/canvas/BackTileGrid';
+import { setTrigger } from '../event-triggers/triggerSetter';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null, cameraFocusTile: GridCellModel = null ): void => {
     const neighbourhood = getNeighbourhoodModel();
@@ -39,6 +42,8 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     back.setBackgroundData( mapData, sheetData );
     front.setForegroundData( mapData, neighbourhood.carSpawnRate, sprites, setPlayer );
     frontgrid.setFrontgridData( mapData, sheetData );
+
+    setTriggers( mapData.triggers, back );
 
     setActiveMusic( mapData.music != undefined ? mapData.music : neighbourhood.music );
 
@@ -141,4 +146,30 @@ const setCanvasDimensions = (): void => {
     else {
         setCanvasGridsDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );
     }
+}
+
+const setTriggers = ( triggerList: TriggerModel[], back: BackTileGrid ): void => {
+    triggerList.forEach( ( e ) => {
+        if ( e.spriteId !== null && e.spriteId !== undefined ) {
+            setSpriteBasedTrigger( e );
+        }
+        else {
+            setTileBasedTrigger( e, back );
+        }
+    } )
+}
+
+const setSpriteBasedTrigger = ( trigger: TriggerModel ): void => {
+    const sprite = getSpriteById( trigger.spriteId );
+    if ( sprite == null ) {
+        console.error( `Error setting trigger ${trigger.eventId}. No sprite could be found with id ${sprite}` );
+    }
+    setTrigger( sprite, trigger );
+}
+const setTileBasedTrigger = ( trigger: TriggerModel, back: BackTileGrid ): void => {
+    const tile = back.getTileAtCell( trigger.column, trigger.row );
+    if ( tile == null ) {
+        console.error( `Error setting trigger ${trigger.eventId}. No tile could be found a column ${trigger.column}, row ${trigger.row}` );
+    }
+    setTrigger( tile, trigger );
 }

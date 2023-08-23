@@ -3,8 +3,6 @@ import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { MovementType } from "../enumerables/MovementTypeEnum";
 import type { ConditionModel } from "./ConditionModel";
 import type { DestinationCellModel } from "./DestinationCellModel";
-import type { DoorModel } from "./DoorModel";
-import type { InteractionModel } from "./InteractionModel";
 import type { SpriteDataModel } from "./SpriteDataModel";
 
 export type CanvasObjectModel = {
@@ -13,6 +11,7 @@ export type CanvasObjectModel = {
     column: number;
     spriteDataModel: SpriteDataModel;
 
+    id?: string;
     name?: string
     sfx?: string;
     animationType?: AnimationTypeEnum;
@@ -22,11 +21,6 @@ export type CanvasObjectModel = {
 
     hasCondition: boolean;
     condition?: ConditionModel;
-    hasAction: boolean;
-    action?: InteractionModel[];
-
-    hasDoor: boolean;
-    door?: DoorModel;
 
     destination?: DestinationCellModel; 
 }

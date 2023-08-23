@@ -1,7 +1,6 @@
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import type { SpawnPointModel } from "../models/SpawnPointModel";
 import type { RoadModel } from "../models/RoadModel";
-import type { DoorModel } from "../models/DoorModel";
 import type { TileModel } from "../models/TileModel";
 import type { MapModel } from "../models/MapModel";
 import type { GraphicEffectModel } from "../models/GraphicEffectModel";
@@ -30,14 +29,7 @@ export const initMapModel = ( mapData ): MapModel => {
         sprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
         frontSprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
 
-        doors: mapData.doors != undefined
-            ? mapData.doors.map( ( door ): DoorModel => { return initDoorModel( door ) } )
-            : [],
-        actions: mapData.actions != undefined ? mapData.actions : [],
-        savepoint: mapData.savepoint != undefined
-            ? { "column": mapData.savepoint.column, "row": mapData.savepoint.row }
-            : null,
-        elevators: mapData.elevators ? mapData.elevators : [],
+        triggers: mapData.triggers != undefined ? mapData.triggers : [],
 
         unblockedTileIds: mapData.unblockedTileIds != undefined ? mapData.unblockedTileIds : [],
         blockedTileIds: mapData.blockedTileIds != undefined ? mapData.blockedTileIds : [],
@@ -117,10 +109,9 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
         column: objectData.column,
 
         hasCondition: objectData.condition !== undefined,
-        hasAction: objectData.action !== undefined,
-        hasDoor: objectData.door !== undefined,
         spriteDataModel: getDataModelByKey( objectData.type ),
 
+        id: objectData.id,
         name: objectData.name,
         direction: objectData.direction,
         animationType: objectData.anim_type,
@@ -129,29 +120,12 @@ export const initCanvasObjectModel = ( objectData ): CanvasObjectModel => {
         sfx: objectData.sfx
     }
 
-    if ( model.hasAction ) {
-        model.action = objectData.action;
-    }
     if ( model.hasCondition ) {
         model.condition = objectData.condition;
-    }
-    if ( model.hasDoor ) {
-        model.door = initDoorModel( { doorTo: objectData.doorTo, direction: objectData.directionIn } );
     }
     if ( objectData.destination !== undefined )
         model.destination = objectData.destination;
     return model;
-}
-
-export const initDoorModel = ( doorData ): DoorModel => {
-    const doorModel: DoorModel = {
-        id: doorData.id,
-        row: doorData.row,
-        column: doorData.column,
-        doorTo: doorData.doorTo,
-        direction: doorData.direction
-    };
-    return doorModel;
 }
 
 export const initSpriteFrameModel = ( frameData ): FrameModel => {

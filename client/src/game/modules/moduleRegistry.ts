@@ -9,8 +9,6 @@ let movementModuleRegistry: ModuleStateRegistry = {};
 let idleAnimationModuleRegistry: ModuleStateRegistry = {};
 let randomAnimationModuleRegistry: ModuleStateRegistry = {};
 let hitboxModuleRegistry: ModuleStateRegistry = {};
-let mapActionModuleRegistry: ModuleStateRegistry = {};
-let doorModuleRegistry: ModuleStateRegistry = {};
 let collisionModuleRegistry: ModuleStateRegistry = {};
 let animationModuleRegistry: ModuleStateRegistry = {};
 
@@ -19,8 +17,6 @@ export const clearSpriteModules = (): void => {
 	idleAnimationModuleRegistry = {};
 	randomAnimationModuleRegistry = {};
 	hitboxModuleRegistry = {};
-	mapActionModuleRegistry = {};
-	doorModuleRegistry = {};
 	collisionModuleRegistry = {};
 	animationModuleRegistry = {};
 }
@@ -35,10 +31,6 @@ export const spriteModuleIsRunning = ( spriteId: string, moduleType: SpriteModul
 			return checkIfModuleIsActive( randomAnimationModuleRegistry[spriteId] );
 		case SpriteModuleEnum.hitbox:
 			return checkIfModuleIsActive( hitboxModuleRegistry[spriteId] );
-		case SpriteModuleEnum.mapAction:
-			return checkIfModuleIsActive( mapActionModuleRegistry[spriteId] );
-		case SpriteModuleEnum.door:
-			return checkIfModuleIsActive( doorModuleRegistry[spriteId] );
 		case SpriteModuleEnum.collision:
 			return checkIfModuleIsActive( collisionModuleRegistry[spriteId] );
 		case SpriteModuleEnum.animation:
@@ -59,12 +51,6 @@ export const setModuleState = ( spriteId: string, moduleType: SpriteModuleEnum, 
 			break;
 		case SpriteModuleEnum.hitbox:
 			hitboxModuleRegistry[spriteId] = moduleState;
-			break;
-		case SpriteModuleEnum.mapAction:
-			mapActionModuleRegistry[spriteId] = moduleState;
-			break;
-		case SpriteModuleEnum.door:
-			doorModuleRegistry[spriteId] = moduleState;
 			break;
 		case SpriteModuleEnum.collision:
 			collisionModuleRegistry[spriteId] = moduleState;

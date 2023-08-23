@@ -1,19 +1,26 @@
 import type { TriggerType } from "../enumerables/TriggerType";
-import { Hitbox } from "../game/core/Hitbox";
-import type { GraphicalEffect } from "../helpers/effectHelpers";
+import { getEffect, GraphicalEffect } from "../helpers/effectHelpers";
 import type { FrameModel } from "../models/SpriteFrameModel";
 import type { TriggerEvent } from "../models/TriggerEvent";
+import type { TriggerModel } from "../models/TriggerModel";
 import { inDebugState } from "../state/stateGetter";
+import { Hitbox } from "../game/core/Hitbox";
+import { EventType } from "../enumerables/EventType";
+import { FX_BLUE_SQUARE } from "../resources/effectResources";
 
 export class Trigger extends Hitbox {
     event: TriggerEvent;
     arcColor: string;
     graphicalEffect: GraphicalEffect;
     triggerType: TriggerType;
+    model: TriggerModel;
     id: string;
-    constructor( frame: FrameModel ) {
+    constructor( frame: FrameModel, model: TriggerModel ) {
         super( frame );
-        this.arcColor = "#FF0000";
+        this.model = model;
+        this.setForArcColor();
+        this.checkForGraphicalEffect();
+
     }
 
     get effectX(): number { return this.x - ( this.graphicalEffect.effects[0].width / 2 ); }
@@ -33,17 +40,22 @@ export class Trigger extends Hitbox {
         super.updateXy( x, y );
     }
 
-    setEvent( event: TriggerEvent ): void {
-        this.event = { ...event };
-        this.triggerType = event.trigger;
-    }
-
-    getEvent(): TriggerEvent {
-        return { ...this.event };
-    }
-
     triggerEvent( ): void {
-        console.log( this.event );
+        console.log( this.model );
+    }
+
+    setForArcColor(): void {
+        switch ( this.model.eventType ) {
+            case EventType.elevator:
+                this.arcColor = "#00FF00";
+                break;
+            case EventType.door:
+                this.arcColor = "#FFFF00";
+                break;
+            default:
+                this.arcColor = "#FF0000";
+                break;
+        }
     }
 
     setGraphicalEffect( graphicalEffect: GraphicalEffect ): void {
@@ -52,5 +64,11 @@ export class Trigger extends Hitbox {
 
     drawGraphicalEffect(): void {
         this.graphicalEffect.drawBack( this.effectX, this.effectY );
+    }
+
+    checkForGraphicalEffect(): void {
+        if ( this.model.eventType === EventType.save_point ) {
+            this.setGraphicalEffect( getEffect( FX_BLUE_SQUARE, this.x, this.y ) );
+        }
     }
 }

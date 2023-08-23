@@ -19,7 +19,6 @@ import { setStoryEvents } from "./storyEvents/storyEventSetter";
 import { initializeDataModels } from "../resources/spriteDataResources";
 import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 import type { SaveGame } from "../models/SaveGameModel";
-import { getBackTilesGrid } from "./canvas/canvasGetter";
 import { setScreenTextCanvas } from "../helpers/screenTextModule";
 import { State } from "../enumerables/StateEnum";
 
@@ -48,14 +47,6 @@ export const loadFilesAndStartGame = ( startType: GameType, parameters: any[] ):
 export const stopGameAndClearGameData = (): void => {
     stopControlsAndAnimation();
     clearActiveMap();
-}
-
-export const resetSavePoint = (): void => {
-    const backTiles = getBackTilesGrid();
-    const savePoint = backTiles.model.savepoint;
-    if ( savePoint !== null && savePoint !== undefined ) {
-        backTiles.setSavepoint( savePoint );
-    }
 }
 
 const checkIfFilesAreLoaded = () => {

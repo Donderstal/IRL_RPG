@@ -8,12 +8,10 @@ import type { GridCellModel } from "../../models/GridCellModel";
 import { getBackTilesGrid } from "../canvas/canvasGetter";
 import type { Sprite } from "../core/Sprite";
 import { tryFindPath } from "../map/pathfinder";
-import { clearActions, initializeActionForSprite } from "./actions/actionSetter";
 import { clearSpriteAnimations, destroySpriteAnimation, initializeSpriteAnimation } from "./animations/animationSetter";
 import { clearBlockedSpriteCounters } from "./blockedCounters/blockedCounterSetter";
 import { getSpriteDestination } from "./destinations/destinationGetter";
 import { clearSpriteDestinations, destroySpriteDestination, initializeSpriteDestination } from "./destinations/destinationSetter";
-import { clearDoors, initializeDoorForSprite } from "./doors/doorSetter";
 import { clearHitboxes, initializeHitboxForSprite } from "./hitboxes/hitboxSetter";
 import { clearIdleAnimationCounters, initializeIdleAnimationCounter } from "./idleAnimCounters/idleAnimSetter";
 import { markModuleAsActive, markModuleAsInActive } from "./moduleRegistrySetter";
@@ -41,18 +39,8 @@ export const initializeSpriteModules = ( sprite: Sprite, canvasObjectModel: Canv
 		markModuleAsInActive( id, SpriteModuleEnum.movement );
 	}
 
-	if ( sprite.hasDoor ) {
-		initializeDoorForSprite( sprite, canvasObjectModel.door );
-		markModuleAsActive( id, SpriteModuleEnum.door );
-	}
-	else if ( sprite.hasAction ) {
-		initializeActionForSprite( sprite, canvasObjectModel.action );
-		markModuleAsActive( id, SpriteModuleEnum.mapAction );
-	}
-	else {
-		initializeHitboxForSprite( sprite );
-		markModuleAsActive( id, SpriteModuleEnum.hitbox );
-	}
+	initializeHitboxForSprite( sprite );
+	markModuleAsActive( id, SpriteModuleEnum.hitbox );
 
 	if ( sprite.model.canMove || sprite.model.idleAnimation ) {
 		markModuleAsInActive( id, SpriteModuleEnum.animation );
@@ -97,11 +85,9 @@ export const unlockSpriteAfterCutscene = ( sprite: Sprite ) => {
 };
 
 export const clearAllModuleRegistries = (): void => {
-	clearActions();
 	clearSpriteAnimations();
 	clearBlockedSpriteCounters();
 	clearSpriteDestinations();
-	clearDoors();
 	clearHitboxes();
 	clearIdleAnimationCounters();
 	clearRandomAnimationCounters();

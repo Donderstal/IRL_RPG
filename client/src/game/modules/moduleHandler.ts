@@ -4,11 +4,9 @@ import type { Sprite } from "../core/Sprite";
 import { spriteNextPositionIsBlocked } from "../map/collision";
 import { inDebugState } from "../../state/stateGetter";
 
-import { updateSpriteAssociatedAction } from "./actions/actionHandlers";
 import { handleSpriteAnimation } from "./animations/animationHandler";
 import { blockedSpriteCounterIsOverLimit, handleBlockedSpriteCounter } from "./blockedCounters/blockedCounterHandler";
 import { checkIfSpriteCanMove } from "./destinations/destinationHandler";
-import { updateSpriteAssociatedDoor } from "./doors/doorHandler";
 import { updateAssociatedHitbox } from "./hitboxes/hitboxHandler";
 import { getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "./idleAnimCounters/idleAnimHandler";
 import { getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "./randomAnimCounters/randomAnimHandler";
@@ -31,15 +29,7 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 		updateAssociatedHitbox( sprite );
 	}
     if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugState() ) {
-		if ( moduleIsRunningForSprite( id, SpriteModuleEnum.door ) ) {
-			updateSpriteAssociatedDoor( sprite )
-		}
-		else if ( moduleIsRunningForSprite( id, SpriteModuleEnum.mapAction ) ) {
-			updateSpriteAssociatedAction( sprite )
-		}
-		else {
-			updateAssociatedHitbox( sprite );
-		}
+        updateAssociatedHitbox( sprite );
 	}
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) ) {
 		handleSpriteMoveToDestination( sprite );

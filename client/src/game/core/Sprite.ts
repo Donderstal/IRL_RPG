@@ -76,8 +76,6 @@ export class Sprite {
 
         this.activeEffect   = { active: false };
         this.isPlayer       = spriteIsPlayer( spriteId );
-        this.hasDoor        = canvasObjectModel.hasDoor;
-        this.hasAction      = canvasObjectModel.hasAction;
         this.isCar          = this.model.isCar;
         this.speed          = this.isPlayer ? MOVEMENT_SPEED : MOVEMENT_SPEED * ( Math.random() * ( .75 - .5 ) + .5 );
 

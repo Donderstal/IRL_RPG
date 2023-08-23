@@ -76,7 +76,7 @@ export class BackSpriteGrid extends CanvasGrid {
         let models = sprites.filter((e)=>{
             return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
         })
-        models.forEach( e => setSpriteAndSpriteModules( e, this.type ) );
+        models.forEach( e => setSpriteAndSpriteModules( e, this.type, e.id ) );
     };
 
     clearMap( ): void {

@@ -3,8 +3,6 @@ export enum SpriteModuleEnum {
 	idleAnimation,
 	randomAnimation,
 	hitbox,
-	mapAction,
-	door,
 	collision,
 	animation
 }

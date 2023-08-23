@@ -1,10 +1,8 @@
 ﻿import type { CanvasObjectModel } from "./CanvasObjectModel";
-import type { DoorModel } from "./DoorModel";
-import type { ElevatorModel } from "./ElevatorModel";
-import type { MapActionModel } from "./MapActionModel";
 import type { RoadModel } from "./RoadModel";
 import type { SpawnPointModel } from "./SpawnPointModel";
 import type { TileModel } from "./TileModel";
+import type { TriggerModel } from "./TriggerModel";
 
 export type MapModel = {
     key: string;
@@ -16,7 +14,6 @@ export type MapModel = {
 
     outdoors: boolean;
     music?: string;
-    neighbours?: { left: string, up: string, right: string, down: string}
     playerStart?: any;
 
     grid: TileModel[];
@@ -25,14 +22,10 @@ export type MapModel = {
     sprites: CanvasObjectModel[];
     frontSprites: CanvasObjectModel[];
 
-    doors: DoorModel[];
-    actions: MapActionModel[];
-
     spawnPoints?: SpawnPointModel[];
     roads?: RoadModel[];
-    elevators?: ElevatorModel[];
 
-    savepoint?: any;
+    triggers?: TriggerModel[];
 
     blockedTileIds?: number[];
     unblockedTileIds?: number[];
