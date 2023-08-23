@@ -1,7 +1,5 @@
-import type { TriggerType } from "../enumerables/TriggerType";
 import { getEffect, GraphicalEffect } from "../helpers/effectHelpers";
 import type { FrameModel } from "../models/SpriteFrameModel";
-import type { TriggerEvent } from "../models/TriggerEvent";
 import type { TriggerModel } from "../models/TriggerModel";
 import { inDebugState } from "../state/stateGetter";
 import { Hitbox } from "../game/core/Hitbox";
@@ -9,10 +7,8 @@ import { EventType } from "../enumerables/EventType";
 import { FX_BLUE_SQUARE } from "../resources/effectResources";
 
 export class Trigger extends Hitbox {
-    event: TriggerEvent;
     arcColor: string;
     graphicalEffect: GraphicalEffect;
-    triggerType: TriggerType;
     model: TriggerModel;
     id: string;
     constructor( frame: FrameModel, model: TriggerModel ) {
@@ -20,7 +16,6 @@ export class Trigger extends Hitbox {
         this.model = model;
         this.setForArcColor();
         this.checkForGraphicalEffect();
-
     }
 
     get effectX(): number { return this.x - ( this.graphicalEffect.effects[0].width / 2 ); }

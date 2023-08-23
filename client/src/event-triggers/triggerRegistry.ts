@@ -1,4 +1,5 @@
-import type { TriggerType } from "../enumerables/TriggerType";
+import { EventType } from "../enumerables/EventType";
+import { TriggerType } from "../enumerables/TriggerType";
 import { getUniqueId } from "../helpers/utilFunctions";
 import type { Trigger } from "./Trigger";
 
@@ -24,11 +25,12 @@ const triggerInRegistry = ( id: string ) => {
     return triggers.filter( e => e.id == id ).length > -1;
 }
 
-export const registerTrigger = ( trigger: Trigger ) => {
+export const registerTrigger = ( trigger: Trigger ): string => {
     const id = getUniqueId( ids );
     trigger.setId( id );
     addTrigger( trigger );
     addId( id );
+    return id;
 }
 export const deregisterTrigger = ( id: string ): void => {
     removeId( id );
@@ -38,6 +40,9 @@ export const clearTriggerRegistry = (): void => {
     ids = [];
     triggers = [];
 }
+export const getAllTriggers = (): Trigger[] => {
+    return triggers;
+}
 export const getTriggerById = ( id: string ) => {
     return triggers.filter( e => e.id == id )[0]
 }
@@ -45,5 +50,18 @@ export const isRegisteredInTriggerRegistry = ( id: string ): boolean => {
     return ( idInRegistry( id ) && triggerInRegistry( id ) );
 }
 export const getTriggersByTriggerType = ( type: TriggerType ): Trigger[] => {
-    return triggers.filter( e => e.event.trigger == type );
+    return triggers.filter( ( e ) => {
+        switch ( e.model.eventType ) {
+            case EventType.cutscene:
+                return type === TriggerType.interaction;
+            case EventType.door:
+                return true;
+            case EventType.elevator:
+                return type === TriggerType.interaction;
+                break;
+            case EventType.save_point:
+                return type === TriggerType.interaction;
+                break;
+        }
+    } );
 }

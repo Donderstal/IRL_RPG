@@ -25,9 +25,6 @@ import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
-	if ( sprite.isPlayer ) {
-		updateAssociatedHitbox( sprite );
-	}
     if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugState() ) {
         updateAssociatedHitbox( sprite );
 	}

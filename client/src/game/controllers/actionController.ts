@@ -19,30 +19,14 @@ import { getAllActions } from '../modules/actions/actionRegistry';
 import { getActiveMapKey } from '../neighbourhoodModule';
 import { addCollectableToRegistry, getCollectableId } from '../../registries/collectableRegistry';
 import { queueEvent } from '../../events/eventQueueSetter';
+import { checkForEventTriggers } from '../../event-triggers/triggerHandler';
+import { TriggerType } from '../../enumerables/TriggerType';
 
 let activeAction: ActionSelector = null; 
 
 export const handleActionButton = ( ): void => {
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
-
-    if ( activeAction !== null ) {
-        if ( activeAction.needsConfirmation ) {
-            confirmActiveAction();
-        }
-        else {
-            dismissActiveAction();
-        }
-    }
-
-    const actions = getAllActions();
-    if ( actions.length === 0 ) return;
-    const closestAction = getClosestHitbox( playerHitbox, actions );
-    if ( playerHitbox.isInActionRange( closestAction ) ) {
-        setActiveAction( closestAction as ActionSelector );
-    }
-    else {
-        dismissActiveAction();
-    }
+    checkForEventTriggers( playerHitbox, TriggerType.interaction );
 }
 
 const setActiveAction = ( action: ActionSelector ): void => {

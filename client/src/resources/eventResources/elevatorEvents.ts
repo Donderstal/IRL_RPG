@@ -1,6 +1,6 @@
 import { EventType } from "../../enumerables/EventType";
 import { getDefaultCondition } from "../../factories/conditionFactory";
-import { createElevatorEventDto } from "../../factories/eventFactory";
+import { createElevatorEventDto, createEventConditionPair } from "../../factories/eventFactory";
 import type { EventModel } from "../../models/events/EventModel";
 import { MAP_IDS } from "../mapResources/mapIds";
 import { ELEVATOR_IDS } from "./elevatorIds";
@@ -24,13 +24,13 @@ export const ELEVATOR_EVENTS: { [key in string]: EventModel } = {
     [ELEVATOR_IDS.SARDINE_STUDIOS]: {
         eventType: EventType.elevator,
         triggerableEvents: [
-            { event: createElevatorEventDto( ELEVATOR_FLOORS_SARDINE_STUDIO ), condition: getDefaultCondition() }
+            createEventConditionPair( createElevatorEventDto( ELEVATOR_FLOORS_SARDINE_STUDIO ), getDefaultCondition() )
         ]
     },
     [ELEVATOR_IDS.GREY_BUILDING]: {
         eventType: EventType.elevator,
         triggerableEvents: [
-            { event: createElevatorEventDto( ELEVATOR_FLOORS_GREY_BUILDING ), condition: getDefaultCondition() }
+            createEventConditionPair( createElevatorEventDto( ELEVATOR_FLOORS_GREY_BUILDING ), getDefaultCondition() )
         ]
     }
 }
