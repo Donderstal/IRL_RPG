@@ -3,8 +3,8 @@ import { TriggerType } from "../enumerables/TriggerType";
 import { getUniqueId } from "../helpers/utilFunctions";
 import type { Trigger } from "./Trigger";
 
-let ids: string[]
-let triggers: Trigger[];
+let ids: string[] = [];
+let triggers: Trigger[] = [];
 
 const removeId = (id: string): void => {
     ids = [...ids.filter( e => e != id )]   

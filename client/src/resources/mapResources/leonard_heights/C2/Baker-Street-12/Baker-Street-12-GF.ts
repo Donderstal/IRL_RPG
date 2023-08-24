@@ -4,7 +4,7 @@ import BakerStreetTemplateBase from "./templates/Baker-Street-Template-Base";
 
 export default {
 	...BakerStreetTemplateBase,
-	"key": MAP_IDS.BAKER_STREET_12_GF,
+	"key": MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_GF,
 	"columns": 7,
 	"rows": 10,
 	"grid": [
@@ -767,5 +767,5 @@ export default {
 			"direction": 0
 		}
 	],
-	"triggers": getBSStairHallDoors( MAP_IDS.BAKER_STREET_12_GF )
+	"triggers": getBSStairHallDoors( MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_GF )
 }

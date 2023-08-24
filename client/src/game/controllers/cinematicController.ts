@@ -5,7 +5,6 @@ import { addEventToRegistry } from "../../registries/interactionRegistry";
 import { checkForQuestTrigger } from "../../registries/questRegistry";
 import type { InteractionModel } from "../../models/InteractionModel";
 import { Interaction } from "../cutscenes/Interaction";
-import { dismissActiveAction } from "./actionController";
 import { clearActiveBubbles } from "./bubbleController";
 import type { CellPosition } from "../../models/CellPositionModel";
 import type { Sprite } from "../core/Sprite";
@@ -22,7 +21,6 @@ import { State } from "../../enumerables/StateEnum";
 
 let activeCinematic: Interaction = null;
 let activeMapAtStartOfCinematic: string = null;
-let activeSpritesAtStartOfCinematic: Sprite[];
 let playerLocationAtStartOfCinematic: CellPosition = null;
 
 export const saveActiveMapLocations = (): void => {
@@ -59,9 +57,6 @@ export const dismissActiveCinematic = (): void => {
 
     if ( activeCinematic.trigger === CinematicTrigger.leave ) {
         switchMap( activeCinematic.args[0], activeCinematic.args[1], activeCinematic.args[2] );
-    }
-    else if ( activeCinematic.trigger === CinematicTrigger.interaction ) {
-        dismissActiveAction();
     }
     if ( activeCinematic.model.type === InteractionType.save && activeCinematic.registeredSelection === InteractionAnswer.yes ) {
         openInGameMenu( GameMenuType.save );

@@ -3,6 +3,7 @@ import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import type { CellPosition } from '../../models/CellPositionModel';
+import { EventType } from '../../enumerables/EventType';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
@@ -16,10 +17,17 @@ export class BackTileGrid extends CanvasGrid {
     unblockedCells: CellPosition[];
     constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
+        this.unblockedCells = [];
     };
 
     setMapName( mapName: string ): void {
         this.mapName = mapName;
+    }
+
+    setUnblockedTiles( tileList: CellPosition[] ): void {
+        tileList.forEach( ( e ) => {
+            this.unblockedCells.push( e )
+        } )
     }
 
     setNeighbourhood( neighbourhood: string ): void {
@@ -51,6 +59,9 @@ export class BackTileGrid extends CanvasGrid {
             this.mapSpecificUnblockedTiles = [...this.model.unblockedTileIds];
         if ( sheetModel.blocked )
             this.setBlockedTiles( sheetModel.blocked );
+        if ( this.model.triggers ) {
+            this.setUnblockedTiles( this.model.triggers.filter( e => e.eventType === EventType.door ) );
+        }
     }
 
     clearMap(): void {

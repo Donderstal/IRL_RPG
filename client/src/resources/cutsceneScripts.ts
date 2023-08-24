@@ -75,7 +75,7 @@ export const CUTSCENE_SCRIPTS: CutsceneScripts = {
         [getScreenTextScene( "THE SUN STILL SHINES AND PEOPLE STILL WASTE THEIR TIME WITH EXHAUSTING SOCIAL MEDIA DISCUSSIONS." )],
         [getScreenTextScene( "BUT BELOW THE SURFACE, THINGS ARE RAPIDLY CHANGING..." )],
 
-        [getLoadMapScene( MAP_IDS.CINEMATIC_INTRO_MAP_1, false, null, { column: 18, row: 7 } )],
+        [getLoadMapScene( MAP_IDS.CINEMATIC_MAPS.CINEMATIC_INTRO_MAP_1, false, null, { column: 18, row: 7 } )],
         [getFadeScene( SceneAnimationType.fadeIn, .5 )],
         [getCameraMoveToSpriteScene( false, "CASHIER_ROBOT_LEFT", false )],
         [getScreenTextScene( "BASIC INCOME IS SLOWLY BEING ROLLED OUT, CHANGING THE WAY PEOPLE LIVE AND WORK." )],
@@ -83,7 +83,7 @@ export const CUTSCENE_SCRIPTS: CutsceneScripts = {
         [getScreenTextScene( "MORE AND MORE PEOPLE ARE DROPPING OUT OF LABOUR, CHOOSING TO SPEND THEIR DAYS WITH THEIR MEAGRE BASIC INCOMES." )],
         [getFadeScene( SceneAnimationType.fadeOut )],
 
-        [getLoadMapScene( MAP_IDS.CINEMATIC_INTRO_MAP_2, false, null, { column: 22, row: 24 } )],
+        [getLoadMapScene( MAP_IDS.CINEMATIC_MAPS.CINEMATIC_INTRO_MAP_2, false, null, { column: 22, row: 24 } )],
         [getFadeScene( SceneAnimationType.fadeIn, .5 )],
         [getCameraMoveToSpriteScene( false, "CIN-SPRITE-END-POSITION", false )],
         [getScreenTextScene( "AS INTERNATIONAL CORPORATIONS HAVE BECOME MORE POWERFUL, STATES ARE LOSING INFLUENCE AND RESPONSIBILITY." )],
@@ -91,7 +91,7 @@ export const CUTSCENE_SCRIPTS: CutsceneScripts = {
         [getScreenTextScene( "PROFITS ARE THROUGH THE ROOF, BUT THE LESS FORTUNATE ARE SUPPRESSED OR NEGLECTED." )],
         [getFadeScene( SceneAnimationType.fadeOut )],
 
-        [getLoadMapScene( MAP_IDS.BAKER_STREET_12_F3_APT, true, { column: 2, row: 4, direction: DirectionEnum.up } )],
+        [getLoadMapScene( MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F3_APT, true, { column: 2, row: 4, direction: DirectionEnum.up } )],
         [getFadeScene( SceneAnimationType.fadeIn, .5 )],
         [getScreenTextScene( "BUT OUR STORY STARTS SMALL, FAR AWAY FROM ALL THESE INTRIGUING DEVELOPMENTS." )],
         [getScreenTextScene( "IT STARTS IN A TINY STUDIO APPARTMENT IN A NOT-SO-FANCY PART OF TOWN, WHERE A NOT-SO-YOUNG MAN IS PLAYING VIDEO GAMES." )],

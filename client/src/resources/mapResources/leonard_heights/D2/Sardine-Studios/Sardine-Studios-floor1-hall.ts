@@ -5,7 +5,7 @@ import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": MAP_IDS.SARDINE_STUDIOS_CORRIDOR_F1,
+	"key": MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_CORRIDOR_F1,
 	"location": LOCATION_NAMES.SARDINE_STUDIOS,
 	"columns": 20,
 	"rows": 4,

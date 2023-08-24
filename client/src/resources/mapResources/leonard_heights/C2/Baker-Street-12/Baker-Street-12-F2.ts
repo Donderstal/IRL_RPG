@@ -13,7 +13,7 @@ const ROBOT_1_ID = "ROBOT_1_ID";
 const ROBOT_2_ID = "ROBOT_1_ID";
 
 export default {
-    "key": MAP_IDS.BAKER_STREET_12_F1_APT,
+	"key": MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F1_APT,
     ...BakerStreetAptTemplate,
 	"sprites": [
 		{
@@ -99,7 +99,7 @@ export default {
 			"row": 4,
 			"column": 6,
 			"id": COLLECTIBLE_ID,
-			"condition": getCollectibleCondition( MAP_IDS.BAKER_STREET_12_F2_APT, CollectableType.can )
+			"condition": getCollectibleCondition( MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F2_APT, CollectableType.can )
 		},
 		{
 			"type": "ROBOT_WHITE",

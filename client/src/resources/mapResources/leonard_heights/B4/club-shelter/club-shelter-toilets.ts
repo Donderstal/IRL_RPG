@@ -2,12 +2,12 @@ import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum"
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
 import { EventType } from "../../../../../enumerables/EventType";
 import { DOOR_IDS } from "../../../../eventResources/doorIds";
-import { BLONDE_BEER_BELLY_GUY, PINK_HAIRED_FAT_GUY, TOUGH_GUY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
+import { BLONDE_BEER_BELLY_GUY, PINK_HAIRED_FAT_GUY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": MAP_IDS.CLUB_SHELTER_TOILETS,
+	"key": MAP_IDS.LEONARD_HEIGHTS.CLUB_SHELTER_TOILETS,
 	"location": LOCATION_NAMES.CLUB_SHELTER,
 	"columns": 12,
 	"rows": 6,

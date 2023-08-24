@@ -1,5 +1,5 @@
 import { CANVAS_COLUMNS, CANVAS_HEIGHT, CANVAS_ROWS, CANVAS_WIDTH, GRID_BLOCK_PX } from '../game-data/globals';
-import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodKey, getNeighbourhoodModel, hasActiveNeighbourhood, initializeNeighbourhood } from '../game/neighbourhoodModule';
+import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodModel, initializeNeighbourhood, isCurrentNeighbourhoodId } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import type { Sprite } from '../game/core/Sprite';
 import type { MapModel } from '../models/MapModel';
@@ -13,7 +13,6 @@ import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid, getTileOnCanva
 import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
 import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
 import { setPausedState } from '../state/stateSetter';
-import { dismissActiveAction } from '../game/controllers/actionController';
 import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
 import { registerMapExit, setPlayerLocationOnMapLoad } from '../game/map/playerLocationOnMapLoad';
@@ -22,6 +21,7 @@ import type { GridCellModel } from '../models/GridCellModel';
 import type { TriggerModel } from '../models/TriggerModel';
 import type { BackTileGrid } from '../game/canvas/BackTileGrid';
 import { setTrigger } from '../event-triggers/triggerSetter';
+import { determineMapNeighbourhood } from '../resources/mapResources/mapIds';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null, cameraFocusTile: GridCellModel = null ): void => {
     const neighbourhood = getNeighbourhoodModel();
@@ -85,7 +85,6 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
     clearActiveMap();
 
     clearStoryEventsForMap();
-    dismissActiveAction();
 
     loadMapToCanvases( getActiveMap(), loadType, setPlayer, null, cameraFocusTile );
     setTimeout( () => {
@@ -116,12 +115,12 @@ export const loadCinematicMap = ( mapName, setPlayer = false ) => {
 }
 
 export const setNeighbourhoodAndMap = ( mapName: string, playerMapEntry: PlayerMapEntry ): void => {
-    if ( !hasActiveNeighbourhood() || !mapName.includes( getNeighbourhoodKey() )) {
-        initializeNeighbourhood( mapName, playerMapEntry );
+    const neighbourhoodId = determineMapNeighbourhood( mapName );
+
+    if ( !isCurrentNeighbourhoodId( neighbourhoodId ) ) {
+        initializeNeighbourhood( neighbourhoodId );
     }
-    else {
-        activateMap( mapName, playerMapEntry );
-    }
+    activateMap( mapName, playerMapEntry );
 }
 
 const registerBlockedTilesOnMap = (): void => {

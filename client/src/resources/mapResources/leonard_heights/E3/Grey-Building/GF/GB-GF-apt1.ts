@@ -6,8 +6,8 @@ import { LHGB_AppartmentBedroom_Doors, LHGB_AppartmentMain_Doors, LHGB_Appartmen
 
 export const MAP_LH_GB_GF_APT1 = {
     ...GBAptTemplate,
-    "key": MAP_IDS.GREY_BUILDING_GF_APT1,
-	"triggers": [...LHGB_AppartmentMain_Doors( MAP_IDS.GREY_BUILDING_GF_APT1 )],
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_APT1,
+	"triggers": [...LHGB_AppartmentMain_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_APT1 )],
 	"sprites": [
 		{
 			"type": "door_interior_west_light",
@@ -110,8 +110,8 @@ export const MAP_LH_GB_GF_APT1 = {
 
 export const MAP_LH_GB_GF_APT1_BED = {
     ...GBBedroomTemplate,
-    "key": MAP_IDS.GREY_BUILDING_GF_APT1_BEDROOM,
-	"triggers": [...LHGB_AppartmentBedroom_Doors( MAP_IDS.GREY_BUILDING_GF_APT1_BEDROOM )],
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_APT1_BEDROOM,
+	"triggers": [...LHGB_AppartmentBedroom_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_APT1_BEDROOM )],
 	"sprites": [
 		{
 			"type": "yellow_rug_a",
@@ -178,8 +178,8 @@ export const MAP_LH_GB_GF_APT1_BED = {
 
 export const MAP_LH_GB_GF_APT1_TOILET = {
     ...GBToiletTemplate,
-    "key": MAP_IDS.GREY_BUILDING_GF_APT1_TOILET,
-	"triggers": [...LHGB_AppartmentToilet_Doors( MAP_IDS.GREY_BUILDING_GF_APT1_TOILET )],
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_APT1_TOILET,
+	"triggers": [...LHGB_AppartmentToilet_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_APT1_TOILET )],
 	"sprites": [
 		{
 			"type": "toilet",

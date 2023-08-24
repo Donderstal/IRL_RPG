@@ -7,7 +7,7 @@ import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": MAP_IDS.CLUB_SHELTER_MAIN,
+	"key": MAP_IDS.LEONARD_HEIGHTS.CLUB_SHELTER_MAIN,
 	"location": LOCATION_NAMES.CLUB_SHELTER,
 	"columns": 20,
 	"rows": 16,

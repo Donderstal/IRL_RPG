@@ -1,11 +1,10 @@
 import { CanvasTypeEnum } from "../../../enumerables/CanvasTypeEnum";
+import { deleteSpriteRelatedTrigger } from "../../../event-triggers/triggerSetter";
 import { getUniqueId } from "../../../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
 import type { DeleteSpriteModel } from "../../../models/DeleteSpriteModel";
 import { getTileOnCanvasByCell } from "../../canvas/canvasGetter";
 import { Sprite } from "../../core/Sprite";
-import { destroySpriteAssociatedAction } from "../actions/actionSetter";
-import { destroySpriteAssociatedDoor } from "../doors/doorSetter";
 import { addSpriteToRegistry, clearSpriteArraysAndDictionaries, removeSpriteFromRegistry, getSpriteIds, removeSpriteScheduledForDeletion, addSpriteForDeletion } from "./spriteRegistry";
 
 export const createSpriteFromCanvasObjectModel = ( model: CanvasObjectModel, canvas: CanvasTypeEnum, id: string = null ): Sprite => {
@@ -30,8 +29,7 @@ export const scheduleSpriteForDeletion = ( spriteId: string, force: boolean, del
     addSpriteForDeletion( model );
 }
 export const removeSpriteById = ( spriteId: string, wasScheduled: true ): void => {
-    destroySpriteAssociatedAction( spriteId );
-    destroySpriteAssociatedDoor( spriteId );
+    deleteSpriteRelatedTrigger( spriteId );
     removeSpriteFromRegistry( spriteId );
     if ( wasScheduled ) removeSpriteScheduledForDeletion( spriteId );
 }

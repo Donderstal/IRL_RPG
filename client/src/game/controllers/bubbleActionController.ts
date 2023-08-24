@@ -2,7 +2,6 @@ import type { DirectionEnum } from "../../enumerables/DirectionEnum";
 import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 import { switchMap } from "../../helpers/loadMapHelpers";
 import { clearSpeakingEffect, playEffect } from "../sound/sound";
-import { registerActionSelection } from "./actionController";
 import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, isWriting, selectionBubble } from "./bubbleController";
 import { registerPlayerAnswer } from "./cinematicController";
 
@@ -27,7 +26,7 @@ export const handleTextBubbleActionButton = (): void => {
     else {
         const textBubble = getMainTextBubble();
         if ( selectionBubble() ) {
-            registerActionSelection( textBubble.activeButton )
+            alert( textBubble.activeButton )
             registerPlayerAnswer( textBubble.activeButton );
         }
         clearActiveEmotes();

@@ -6,18 +6,18 @@ import { LHGB_AppartmentBedroom_Doors, LHGB_AppartmentMain_Doors, LHGB_Appartmen
 
 export const MAP_LH_GB_F3_APT3 = {
     ...GBAptTemplate,
-    "key": MAP_IDS.GREY_BUILDING_F3_APT3,
-    "triggers": [...LHGB_AppartmentMain_Doors( MAP_IDS.GREY_BUILDING_F3_APT3 )]
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_F3_APT3,
+    "triggers": [...LHGB_AppartmentMain_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_F3_APT3 )]
 }
 
 export const MAP_LH_GB_F3_APT3_BED = {
     ...GBBedroomTemplate,
-    "key": MAP_IDS.GREY_BUILDING_F3_APT3_BEDROOM,
-    "triggers": [...LHGB_AppartmentBedroom_Doors( MAP_IDS.GREY_BUILDING_F3_APT3_BEDROOM )]
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_F3_APT3_BEDROOM,
+    "triggers": [...LHGB_AppartmentBedroom_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_F3_APT3_BEDROOM )]
 }
 
 export const MAP_LH_GB_F3_APT3_TOILET = {
     ...GBToiletTemplate,
-    "key": MAP_IDS.GREY_BUILDING_F3_APT3_TOILET,
-    "triggers": [...LHGB_AppartmentToilet_Doors( MAP_IDS.GREY_BUILDING_F3_APT3_TOILET )]
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_F3_APT3_TOILET,
+    "triggers": [...LHGB_AppartmentToilet_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_F3_APT3_TOILET )]
 }

@@ -11,18 +11,18 @@ import SardineStudiosStairsFloor1 from "./Sardine-Studios/Sardine-studios-stairs
 
 export default {
     // Sardine Studios
-    [MAP_IDS.SARDINE_STUDIOS_HALL_GF]: SardineStudiosStairsBottom,
-    [MAP_IDS.SARDINE_STUDIOS_COMMUNAL_SPACE]: SardineStudiosCommunalSpace,
+    [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_HALL_GF]: SardineStudiosStairsBottom,
+    [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_COMMUNAL_SPACE]: SardineStudiosCommunalSpace,
 
         /// Sardine f1
-        [MAP_IDS.SARDINE_STUDIOS_HALL_F1]: SardineStudiosStairsFloor1,
-        [MAP_IDS.SARDINE_STUDIOS_CORRIDOR_F1]: SardineStudiosFloor1Hall,
-        [MAP_IDS.SARDINE_STUDIOS_F1_APT1]: SardineStudiosFloor1App1,
-        [MAP_IDS.SARDINE_STUDIOS_F1_APT2]: SardineStudiosFloor1App2,
-        [MAP_IDS.SARDINE_STUDIOS_F1_APT3]: SardineStudiosFloor1App3,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_HALL_F1]: SardineStudiosStairsFloor1,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_CORRIDOR_F1]: SardineStudiosFloor1Hall,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_F1_APT1]: SardineStudiosFloor1App1,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_F1_APT2]: SardineStudiosFloor1App2,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_F1_APT3]: SardineStudiosFloor1App3,
         //
 
-        [MAP_IDS.SARDINE_STUDIOS_HALL_F2]: SardineStudioStairsFloor2,
-        [MAP_IDS.SARDINE_STUDIOS_HALL_F3]: SardineStudioStairsTop,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_HALL_F2]: SardineStudioStairsFloor2,
+        [MAP_IDS.LEONARD_HEIGHTS.SARDINE_STUDIOS_HALL_F3]: SardineStudioStairsTop,
     //
 }

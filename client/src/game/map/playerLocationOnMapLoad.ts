@@ -3,6 +3,7 @@ import type { MapModel } from "../../models/MapModel";
 import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import { getOppositeDirection } from "../../helpers/utilFunctions";
+import { EventType } from "../../enumerables/EventType";
 
 let previousMapName: string;
 let playerStart: CellPosition = null;
@@ -62,16 +63,12 @@ const setPlayerStartForNewGame = ( mapToLoad: MapModel ): void => {
 }
 
 const setPlayerStartForLoadGame = ( mapToLoad: MapModel ): void => {
-    const model: CellPosition = {
-        column: mapToLoad.savepoint.column,
-        row: mapToLoad.savepoint.row,
-        direction: DirectionEnum.down
-    };
+    const model: CellPosition = mapToLoad.triggers.filter(e => e.eventType === EventType.save_point)[0];
     playerStart = model;
 }
 
 const setPlayerStartForDoor = ( mapToLoad: MapModel ): void => {
-    const door = mapToLoad.doors.filter( ( e ) => { return e.id === exitId } )[0];
+    const door = mapToLoad.triggers.filter( ( e ) => { return e.eventId === exitId } )[0];
     if ( door === undefined ) {
         console.error( `No door exists from ${previousMapName} to ${mapToLoad.key}` );
     }
@@ -84,7 +81,7 @@ const setPlayerStartForDoor = ( mapToLoad: MapModel ): void => {
 }
 
 const setPlayerStartForElevator = ( mapToLoad: MapModel ): void => {
-    const elevator = mapToLoad.elevators.filter( ( e ) => { return e.id === exitId } )[0];
+    const elevator = mapToLoad.triggers.filter( ( e ) => { return e.eventId === exitId } )[0];
     if ( elevator === undefined ) {
         console.error( `No elevator exists from ${previousMapName} to ${mapToLoad.key}` );
     }

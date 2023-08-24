@@ -10,7 +10,7 @@ import { MAP_IDS } from "../../../mapIds";
 const ID_BUSINESSMAN = "ID_BUSINESSMAN";
 
 export default {
-	"key": MAP_IDS.YUM_MART_OFFICE,
+	"key": MAP_IDS.LEONARD_HEIGHTS.YUM_MART_OFFICE,
 	"location": LOCATION_NAMES.YUM_MART,
 	"columns": 20,
 	"rows": 8,

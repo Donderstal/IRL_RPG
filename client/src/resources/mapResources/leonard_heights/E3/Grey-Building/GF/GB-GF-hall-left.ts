@@ -4,6 +4,6 @@ import { LHGB_Hallway_Doors } from "../GBDoorsFactory";
 
 export default {
     ...GBHallTemplate,
-    "key": MAP_IDS.GREY_BUILDING_GF_HALL_LEFT,
-    "triggers": [...LHGB_Hallway_Doors( MAP_IDS.GREY_BUILDING_GF_HALL_LEFT )]
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_HALL_LEFT,
+    "triggers": [...LHGB_Hallway_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_HALL_LEFT )]
 }

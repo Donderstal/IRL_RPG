@@ -1,7 +1,6 @@
 <script lang="ts">
     import SaveGameButton from "../../svelte-partials/SaveGameButton.svelte";
     import GoBackButton from '../../svelte-partials/GoBackButton.svelte'
-    import { resetSavePoint } from '../../../game/mainController';
     import type { SaveGame } from "../../../models/SaveGameModel";
     import { activeUser, checkForUserSession, currentScreen, SCREEN_WELCOME, setUserDataToFrontEnd } from '../../stores';
     import { onMount } from 'svelte';
@@ -140,7 +139,6 @@
         }).then( ( res ) => {
             console.log( res );
             setModal(`Game saved to slot ${index}`, SceneAnimationType.speak);
-            resetSavePoint();
         })
 
         fetch("/check-login", {

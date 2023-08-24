@@ -32,8 +32,7 @@ import { switchMap } from '../../helpers/loadMapHelpers';
 import { getActiveMapKey } from "../neighbourhoodModule";
 import { setPlayerStartForCinematic } from "../map/playerLocationOnMapLoad";
 import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
-import { getAssociatedHitbox, idInHitboxDictionary } from "../modules/hitboxes/hitboxGetter";
-import { getSpriteActionById } from "../modules/actions/actionGetter";
+import { getAssociatedHitbox } from "../modules/hitboxes/hitboxGetter";
 import { setScreenTextToCanvas } from "../../helpers/screenTextModule";
 import { MAX_BUBBLE_TEXT_WIDTH } from "../../game-data/globals";
 import { tryFindPath } from "../map/pathfinder";
@@ -158,8 +157,8 @@ export class Animation {
         if ( model.speakWith !== null && model.speakWith !== undefined ) {
             const targetSprite = getSpriteByName( model.speakWith );
 
-            const speakerHitbox = idInHitboxDictionary( this.spriteId ) ? getAssociatedHitbox( this.spriteId ) : getSpriteActionById( this.spriteId );
-            const targetHitbox = idInHitboxDictionary( targetSprite.spriteId ) ? getAssociatedHitbox( targetSprite.spriteId ) : getSpriteActionById( targetSprite.spriteId );
+            const speakerHitbox = getAssociatedHitbox( this.spriteId );
+            const targetHitbox = getAssociatedHitbox( targetSprite.spriteId );
 
             this.sprite.setDirection( getSpriteFacingTowardsTargetDirection( speakerHitbox, targetHitbox ) );
             targetSprite.setDirection( getSpriteFacingTowardsTargetDirection( targetHitbox, speakerHitbox ) );

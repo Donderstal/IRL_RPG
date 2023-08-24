@@ -3,9 +3,9 @@ import { getBSStairHallDoors } from "./registries/BSDoorsFactory";
 import BakerStreetStairsTemplate from "./templates/Baker-Street-Stairs-Template";
 
 export default {
-	"key": MAP_IDS.BAKER_STREET_12_F4_HALL,
+	"key": MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F4_HALL,
 	...BakerStreetStairsTemplate,
-	"triggers": getBSStairHallDoors( MAP_IDS.BAKER_STREET_12_F4_HALL ),
+	"triggers": getBSStairHallDoors( MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F4_HALL ),
 	"sprites": [
 		{
 			"type": "door_interior_north_green",

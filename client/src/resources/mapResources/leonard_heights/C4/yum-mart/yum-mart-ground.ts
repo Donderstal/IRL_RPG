@@ -5,7 +5,7 @@ import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
 export default {
-	"key": MAP_IDS.YUM_MART_OFFICE,
+	"key": MAP_IDS.LEONARD_HEIGHTS.YUM_MART_OFFICE,
 	"location": LOCATION_NAMES.YUM_MART,
 	"columns": 16,
 	"rows": 14,

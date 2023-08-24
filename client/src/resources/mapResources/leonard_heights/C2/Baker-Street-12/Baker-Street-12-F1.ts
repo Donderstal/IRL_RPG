@@ -4,7 +4,7 @@ import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
 
 export default {
-    "key": MAP_IDS.BAKER_STREET_12_F1_APT,
+	"key": MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F1_APT,
 	...BakerStreetAptTemplate,
 	"sprites": [
 		{

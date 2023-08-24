@@ -5,7 +5,7 @@ import { LOCATION_NAMES } from "../../locationNames";
 import { MAP_IDS } from "../../mapIds";
 
 export default {
-	"key": MAP_IDS.CINEMATIC_INTRO_MAP_2,
+	"key": MAP_IDS.CINEMATIC_MAPS.CINEMATIC_INTRO_MAP_2,
 	"location": LOCATION_NAMES.CINEMATIC_MAPS,
 	"columns": 24,
 	"rows": 16,

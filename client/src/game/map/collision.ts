@@ -3,10 +3,9 @@ import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { getDynamicSprites } from '../modules/sprites/spriteGetter';
 import type { Sprite } from '../core/Sprite';
 import type { Tile } from '../core/Tile';
-import { getAssociatedHitbox, idInHitboxDictionary } from '../modules/hitboxes/hitboxGetter';
+import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { getBackTilesGrid, getTileOnCanvasByIndex, getTileOnCanvasByXy } from '../canvas/canvasGetter';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { getSpriteActionById } from '../modules/actions/actionGetter';
 import type { SpritePosition } from '../../helpers/SpritePosition';
 import { getNonPlayerSpriteNextPosition, getPlayerNextPosition, getStaticSpritePosition } from '../../helpers/spritePositionHelper';
 import type { Destination } from './map-classes/Destination';
@@ -57,7 +56,7 @@ const checkForDynamicCollision = ( spriteNextPosition: SpritePosition, sprite: S
     while ( colliding == false && spriteIndex < allSpritesCount ) {
         const targetSprite = spritesToCheck[spriteIndex];
         if ( targetSprite.spriteId != sprite.spriteId ) {
-            const hitbox = idInHitboxDictionary( sprite.spriteId ) ? getAssociatedHitbox( sprite.spriteId ) : getSpriteActionById( sprite.spriteId );
+            const hitbox = getAssociatedHitbox( sprite.spriteId );
             if ( hitbox !== undefined ) {
                 if ( !targetSprite.model.hasBlockedArea && checkIfSpritesCollide( spriteNextPosition, targetSprite, sprite.direction ) ) {
                     colliding = true;

@@ -9,7 +9,7 @@ import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
 const RESIDENT = "RESIDENT";
 
 export default {
-    "key": MAP_IDS.BAKER_STREET_12_F4_APT,
+	"key": MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F4_APT,
     ...BakerStreetAptTemplate,
 	"sprites": [
 		{

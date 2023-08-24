@@ -15,13 +15,13 @@ let activeMapLocation: string;
 let previousMapKey: string;
 let previousMapLocation: string;
 let NPCCounter: Counter;
+let activeNeighbourhoodId: string;
 
-export const getNeighbourhoodKey = (): string => { return activeMapKey.split( '/' )[0]; }
-export const getActiveMap = (): MapModel => {
-    return activeMapName() === `${model.key}/${model.key}` ? mapModel : model.mapDictionary[activeMapName()];
-}
 export const getActiveMapKey = (): string => {
     return activeMapKey;
+}
+export const getActiveMap = (): MapModel => {
+    return activeMapKey === `${model.key}/${model.key}` ? mapModel : model.mapDictionary[activeMapKey];
 }
 export const getPreviousMapKey = (): string => {
     return previousMapKey;
@@ -29,18 +29,43 @@ export const getPreviousMapKey = (): string => {
 export const getNeighbourhoodModel = (): NeighbourhoodModel => {
     return model;
 }
-export const hasActiveNeighbourhood = (): boolean => {
-    return model !== undefined && model !== null;
+export const isCurrentNeighbourhoodId = ( neighbourhoodKey: string ): boolean => {
+    return activeNeighbourhoodId == neighbourhoodKey;
 }
-const activeMapName = (): string => { return activeMapKey; }
-
-export const initializeNeighbourhood = ( mapKey: string, mapLoadType: PlayerMapEntry ) => {
-    model = getNeighbourhood( mapKey.split( '/' )[0] );
-    activateMap( mapKey, mapLoadType );
+export const initializeNeighbourhood = ( neighbourhoodKey: string ) => {
+    model = getNeighbourhood( neighbourhoodKey );
+    activeNeighbourhoodId = neighbourhoodKey;
     if( model.horizontalSlots.length > 0 )
         setMapGrid();
     if ( model.characterSpawnRate !== null )
         setNeighbourhoodNPCCounter();
+}
+export const getRandomNeighbourhoodAction = (): InteractionModel[] => {
+    let interactions = model.spawnableActions;
+    return interactions[Math.floor( Math.random() * interactions.length )];
+}
+export const activateMap = ( key: string, mapLoadType: PlayerMapEntry ): void => {
+    previousMapKey = activeMapKey
+    previousMapLocation = activeMapLocation;
+    activeMapKey = key;
+    activeMapLocation = getActiveMap().location;
+    if ( previousMapLocation !== activeMapLocation && mapLoadType !== PlayerMapEntry.cinematic ) {
+        setNewCenterBubble( activeMapLocation )
+    }
+}
+export const setNeighbourhoodNPCCounter = (): void => {
+    NPCCounter = new Counter( model.characterSpawnRate, true )
+}
+
+export const handleNeighbourhoodNPCCounter = (): void => {
+    if( getActiveMap().spawnPoints != undefined ) {
+        if ( NPCCounter.countAndCheckLimit() && getActiveMap().spawnPoints.length > 0 ) {
+            getBackSpritesGrid().generateWalkingNPC();
+        }
+    }
+    else {
+        NPCCounter.resetCounter();
+    }
 }
 
 const setMapGrid = (): void => {
@@ -136,34 +161,4 @@ const setMapGrid = (): void => {
 
     mapModel = constructedMapModel;
     model.mapDictionary[model.key] = mapModel;
-}
-
-export const getRandomNeighbourhoodAction = (): InteractionModel[] => {
-    let interactions = model.spawnableActions;
-    return interactions[Math.floor( Math.random() * interactions.length )];
-}
-
-export const activateMap = ( key: string, mapLoadType: PlayerMapEntry ): void => {
-    previousMapKey = activeMapKey
-    previousMapLocation = activeMapLocation;
-    activeMapKey = key;
-    activeMapLocation = getActiveMap().location;
-    if ( previousMapLocation !== activeMapLocation && mapLoadType !== PlayerMapEntry.cinematic ) {
-        setNewCenterBubble( activeMapLocation )
-    }
-}
-
-export const setNeighbourhoodNPCCounter = (): void => {
-    NPCCounter = new Counter( model.characterSpawnRate, true )
-}
-
-export const handleNeighbourhoodNPCCounter = (): void => {
-    if( getActiveMap().spawnPoints != undefined ) {
-        if ( NPCCounter.countAndCheckLimit() && getActiveMap().spawnPoints.length > 0 ) {
-            getBackSpritesGrid().generateWalkingNPC();
-        }
-    }
-    else {
-        NPCCounter.resetCounter();
-    }
 }

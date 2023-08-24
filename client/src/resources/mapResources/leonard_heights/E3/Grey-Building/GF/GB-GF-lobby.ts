@@ -3,10 +3,10 @@ import GBLobbyTemplate from "../GB-lobby-template";
 import { LHGB_Lobby_Doors } from "../GBDoorsFactory";
 
 export default {
-    "key": MAP_IDS.GREY_BUILDING_GF_LOBBY,
+    "key": MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_LOBBY,
     ...GBLobbyTemplate,
 	"frontSprites": [],
-    "triggers": [...LHGB_Lobby_Doors( MAP_IDS.GREY_BUILDING_GF_LOBBY ) ],
+    "triggers": [...LHGB_Lobby_Doors( MAP_IDS.LEONARD_HEIGHTS.GREY_BUILDING_GF_LOBBY ) ],
     "sprites": [
 		{
 			"type": "boarded_window",

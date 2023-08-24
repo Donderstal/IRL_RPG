@@ -12,7 +12,7 @@ const MECHANIC_LI = "MECHANIC_LI";
 const BOSS_CLYDE = "BOSS_CLYDE";
 
 export default {
-	"key": MAP_IDS.CAR_SHACK,
+	"key": MAP_IDS.LEONARD_HEIGHTS.CAR_SHACK,
 	"location": LOCATION_NAMES.CAR_SHACK,
 	"columns": 12,
 	"rows": 8,

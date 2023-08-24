@@ -2,7 +2,6 @@ import { CinematicTrigger } from "../enumerables/CinematicTriggerEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { PLAYER_ID } from "../game-data/interactionGlobals";
 import { getMenuGrid } from "../game/canvas/canvasGetter";
-import { handleActionButton } from "../game/controllers/actionController";
 import { hasActiveSelectionBubble, hasActiveSpeechBubbles } from "../game/controllers/bubbleController";
 import { handleMenuBubbleActionButton, handleMenuBubbleSelectionButton, handleSelectionKeys, handleTextBubbleActionButton } from "../game/controllers/bubbleActionController";
 import type { Sprite } from "../game/core/Sprite";
@@ -17,6 +16,9 @@ import { handleScreenTextActionButton, screenTextIsActive } from "../helpers/scr
 import { inCinematicState, inMenuState, inOpenWorldState, inWebsiteState } from "../state/stateGetter";
 import { actionButtonKey, menuButtonKey, returnButtonKey } from "./controlConstants";
 import { getActiveControls } from "./controlTranslator";
+import { getAssociatedHitbox } from "../game/modules/hitboxes/hitboxGetter";
+import { checkForEventTriggers } from "../event-triggers/triggerHandler";
+import { TriggerType } from "../enumerables/TriggerType";
 
 let actionButtonWasPressedLastFrame = false;
 let menuButtonWasPressedLastFrame = false;
@@ -59,7 +61,8 @@ export const handleOpenWorldControls = ( activeControls: any[] ): void => {
         getMenuGrid().show();
     }
     if ( activeControls.includes( actionButtonKey ) && !actionButtonWasPressedLastFrame ) {
-        handleActionButton();
+        const playerHitbox = getAssociatedHitbox( PLAYER_ID );
+        checkForEventTriggers( playerHitbox, TriggerType.interaction );;
     }
     if ( activeControls.includes( DirectionEnum.left ) ) {
         movePlayer( DirectionEnum.left );

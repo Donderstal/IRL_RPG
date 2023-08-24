@@ -3,7 +3,7 @@ import { LOCATION_NAMES } from "../../locationNames";
 import { MAP_IDS } from "../../mapIds";
 
 export default {
-	"key": MAP_IDS.MASTER_ROOM_CHARACTERS,
+	"key": MAP_IDS.MASTER_ROOMS.MASTER_ROOM_CHARACTERS,
 	"location": LOCATION_NAMES.MASTER_ROOMS,
 	"columns": 24,
 	"rows": 16,

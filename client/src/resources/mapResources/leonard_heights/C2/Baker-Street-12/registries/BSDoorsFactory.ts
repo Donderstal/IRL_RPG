@@ -6,30 +6,30 @@ import { MAP_IDS } from "../../../../mapIds";
 
 export const getBSStairHallDoors = ( mapKey: string ): TriggerModel[] => {
     switch ( mapKey ) {
-        case MAP_IDS.BAKER_STREET_12_GF:
+        case MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_GF:
             return [
                 getFrontDoor(),
                 ...getRightStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_GF, DirectionEnum.up )
             ];
-        case MAP_IDS.BAKER_STREET_12_F1_HALL:
+        case MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F1_HALL:
             return [
                 ...getLeftStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_F1, DirectionEnum.up ),
                 getHallToAppartmentDoor( DOOR_IDS.BAKER_STREET_12_APT_F1 ),
                 ...getRightStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_GF, DirectionEnum.down )
             ];
-        case MAP_IDS.BAKER_STREET_12_F2_HALL:
+        case MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F2_HALL:
             return [
                 ...getLeftStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_F1, DirectionEnum.down ),
                 getHallToAppartmentDoor( DOOR_IDS.BAKER_STREET_12_APT_F2 ),
                 ...getRightStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_F2, DirectionEnum.up )
             ];
-        case MAP_IDS.BAKER_STREET_12_F3_HALL:
+        case MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F3_HALL:
             return [
                 ...getLeftStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_F3, DirectionEnum.up ),
                 getHallToAppartmentDoor( DOOR_IDS.BAKER_STREET_12_APT_F3),
                 ...getRightStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_F2, DirectionEnum.down )
             ];
-        case MAP_IDS.BAKER_STREET_12_F4_HALL:
+        case MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F4_HALL:
             return [
                 ...getLeftStairsDoors( DOOR_IDS.BAKER_STREET_12_STAIRS_F3, DirectionEnum.down ),
                 getHallToAppartmentDoor( DOOR_IDS.BAKER_STREET_12_APT_F4 ),

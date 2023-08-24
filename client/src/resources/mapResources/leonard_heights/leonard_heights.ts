@@ -21,9 +21,6 @@ import D4 from './D4/D4';
 import E3 from './E3/E3';
 import E4 from './E4/E4';
 
-import characterMasterRoom from './hiddenRooms/characterMasterRoom';
-import carMasterRoom from './hiddenRooms/carMasterRoom';
-
 import A3Submaps from './A3/A3-submaps';
 import B4Submaps from './B4/B4-submaps';
 import C2Submaps from './C2/C2-submaps';
@@ -33,10 +30,10 @@ import D2Submaps from './D2/D2-submaps';
 import E3Submaps from './E3/E3-submaps';
 import { LOCATION_NAMES } from '../locationNames';
 import { CUTSCENE_IDS } from '../../eventResources/cutsceneIds';
-import { MAP_IDS } from '../mapIds';
+import { NEIGHBOURHOOD_IDS } from '../neighbourhoodIds';
 
 export default {
-    "key": MAP_IDS.LEONARD_HEIGHTS,
+    "key": NEIGHBOURHOOD_IDS.LEONARD_HEIGHTS,
     "location": LOCATION_NAMES.LEONARD_HEIGHTS,
     "horizontal_slots": ["A", "B", "C", "D", "E"], 
     "vertical_slots": ["1", "2", "3", "4"],
@@ -82,10 +79,6 @@ export default {
         "E3": E3,
         ...E3Submaps,
         "E4": E4,
-
-        // Master rooms
-        [ MAP_IDS.MASTER_ROOM_CHARACTERS ]: characterMasterRoom,
-        [ MAP_IDS.MASTER_ROOM_CARS ]: carMasterRoom
     /////
     },
     "spawnPoints": [

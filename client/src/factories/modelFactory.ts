@@ -26,8 +26,8 @@ export const initMapModel = ( mapData ): MapModel => {
             ? mapData.frontGrid.map( ( tile ): TileModel => { return initTileModel( tile ) } )
             : mapData.grid.map( (): TileModel => { return initTileModel( {id: null, angle: 0, mirrored: false} ) } ),
 
-        sprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
-        frontSprites: mapData.sprites.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
+        sprites: mapData.sprites?.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
+        frontSprites: mapData.sprites?.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
 
         triggers: mapData.triggers != undefined ? mapData.triggers : [],
 
