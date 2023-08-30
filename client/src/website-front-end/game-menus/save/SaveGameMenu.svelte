@@ -2,7 +2,7 @@
     import SaveGameButton from "../../svelte-partials/SaveGameButton.svelte";
     import GoBackButton from '../../svelte-partials/GoBackButton.svelte'
     import type { SaveGame } from "../../../models/SaveGameModel";
-    import { activeUser, checkForUserSession, currentScreen, SCREEN_WELCOME, setUserDataToFrontEnd } from '../../stores';
+    import { activeUser, checkForUserSession, currentScreen, SCREEN_WELCOME, setUserDataToFrontEnd } from '../../../stores';
     import { onMount } from 'svelte';
     import { mobileAgent } from '../../../helpers/screenOrientation';
     import { SceneAnimationType } from '../../../enumerables/SceneAnimationTypeEnum';

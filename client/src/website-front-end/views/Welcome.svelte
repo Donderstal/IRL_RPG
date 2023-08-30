@@ -3,7 +3,7 @@
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import Textbox from "../svelte-partials/Textbox.svelte";
 
-    import { openLogInScreen, openSignUpScreen, openMainMenuScreen, openAboutScreen, inGameMenu } from "../stores";
+    import { openLogInScreen, openSignUpScreen, openMainMenuScreen, openAboutScreen, inGameMenu } from "../../stores";
     import { get } from "svelte/store";
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
 </script>

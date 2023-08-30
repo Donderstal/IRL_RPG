@@ -2,9 +2,9 @@
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     import SaveGameButton from "../svelte-partials/SaveGameButton.svelte";
     import type { SaveGame } from "../../models/SaveGameModel";
-    import { activeUser } from '../stores';
+    import { activeUser } from '../../stores';
     import { onMount } from 'svelte';
-    import { loadFilesAndStartGame } from '../../game/mainController';
+    import { loadFilesAndStartGame } from '../../mainController';
     import { GameType } from '../../enumerables/GameType';
     let games = [];
 

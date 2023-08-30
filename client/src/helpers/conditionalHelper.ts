@@ -2,7 +2,7 @@ import { ConditionType } from "../enumerables/ConditionTypeEnum";
 import { InteractionAnswer } from "../enumerables/InteractionAnswer";
 import { isInRegistry, isInRegistryWithValue } from '../registries/interactionRegistry';
 import { getInventory } from "../game/party/partyController";
-import { loggedIn } from "../game-container/stores";
+import { loggedIn } from "../stores";
 import { get } from "svelte/store";
 
 export const conditionIsTrue = ( conditionType: ConditionType, valueToCheck: string = null ): boolean => {

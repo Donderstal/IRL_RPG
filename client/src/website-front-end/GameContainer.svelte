@@ -7,8 +7,8 @@
     import { getAllActiveSprites } from '../game/modules/sprites/spriteGetter';
     import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
     import Menu from './game-menus/Menu.svelte';
-    import { inGameMenu, gameMenuType } from './stores';
-    import { stopGameAndClearGameData } from '../game/mainController';
+    import { inGameMenu, gameMenuType } from './../stores';
+    import { stopGameAndClearGameData } from '../mainController';
 
     const closeGame = (): void => {
         closeGameCanvas();

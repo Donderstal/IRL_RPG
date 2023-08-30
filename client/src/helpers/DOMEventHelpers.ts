@@ -1,6 +1,6 @@
 import { cameraFocus } from "../game/cameraFocus";
 import { setFaderCanvas } from "./faderModule";
-import { closeWebsite, openWebsite } from "../game-container/stores"
+import { closeWebsite, openWebsite } from "../stores"
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
 import { setRenderCanvasesDimensions } from "../game/canvas/canvasSetter";
 

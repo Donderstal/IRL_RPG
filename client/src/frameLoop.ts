@@ -1,25 +1,25 @@
-import { FRAMES_PER_SECOND } from '../game-data/globals';
-import { handleMapAnimations } from './map/mapAnimation';
-import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';
-import { cameraFocus } from './cameraFocus';
-import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpers/faderModule';
-import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
-import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
-import { inInEventState, inPausedState } from '../state/stateGetter';
-import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
-import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
-import { drawNewTilesInCameraFocus } from '../helpers/dynamicTileDrawer';
-import { handleControls } from '../controls/controlHandler';
-import { checkQueuedTriggers, clearTriggerQueue } from '../event-triggers/triggerQueue';
-import { handleEventQueue } from '../event-queue/eventQueueHandler';
+import { FRAMES_PER_SECOND } from './game-data/globals';
+import { handleMapAnimations } from './game/map/mapAnimation';
+import { handleCinematicAnimations } from './game/cutscenes/cinematicAnimations';
+import { cameraFocus } from './game/cameraFocus';
+import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from './helpers/faderModule';
+import { clearRenderCanvases, clearSpriteCanvasGrids } from './game/canvas/canvasSetter';
+import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './game/canvas/canvasGetter';
+import { inInEventState, inPausedState } from './state/stateGetter';
+import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './game/controllers/bubbleController';
+import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from './helpers/screenTextModule';
+import { drawNewTilesInCameraFocus } from './helpers/dynamicTileDrawer';
+import { handleControls } from './controls/controlHandler';
+import { checkQueuedTriggers, clearTriggerQueue } from './event-triggers/triggerQueue';
+import { handleEventQueue } from './event-queue/eventQueueHandler';
 
 let lastDateNow: number;
 let newDateNow: number;
 let animationFrameLoop = null;
 let wroteScreenTextLastFrame = false;
 
-export const animationLoop = ( ): void => {
-    newDateNow = Date.now();    
+export const animationLoop = (): void => {
+    newDateNow = Date.now();
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
 
@@ -42,10 +42,10 @@ export const animationLoop = ( ): void => {
         }
         else {
             clearSpriteCanvasGrids()
-        }       
+        }
         if ( inFadingAnimation() ) {
             handleFadeAnimation()
-        } 
+        }
     }
 
     animationFrameLoop = requestAnimationFrame( animationLoop )

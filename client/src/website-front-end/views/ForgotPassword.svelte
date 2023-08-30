@@ -5,7 +5,7 @@
     import GoBackButton from "../svelte-partials/GoBackButton.svelte";
     import SmallHeader from "../header/SmallHeader.svelte";
 
-    import { userMessage } from "../stores"
+    import { userMessage } from "../../stores"
     let errorMessage = false;
     userMessage.subscribe( value => {
         errorMessage = value;

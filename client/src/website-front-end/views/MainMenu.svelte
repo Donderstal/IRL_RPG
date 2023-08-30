@@ -2,7 +2,7 @@
     import MainUiButton from '../svelte-partials/MainUiButton.svelte'    
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'    
     import Header from '../header/Header.svelte'    
-    import { openNewGameScreen, openLoadGameScreen, openOptionsScreen, openAboutScreen, loggedIn } from "../stores";
+    import { openNewGameScreen, openLoadGameScreen, openOptionsScreen, openAboutScreen, loggedIn } from "../../stores";
 </script>
 <div>
     {#if !$loggedIn}

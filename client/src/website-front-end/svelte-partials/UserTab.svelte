@@ -1,6 +1,6 @@
 <script>
     // store globals and functions
-    import { currentScreen, loggedIn, activeUser, SCREEN_WELCOME } from '../stores';
+    import { currentScreen, loggedIn, activeUser, SCREEN_WELCOME } from '../../stores';
     //partials
     import MainUiButton from './MainUiButton.svelte'
 

@@ -7,7 +7,7 @@
 	import { State } from '../../enumerables/StateEnum';
     import { updateGameControlState } from '../../state/stateSetter';
     import Modal from '../menu-partials/Modal.svelte';
-    import { closeInGameMenu } from '../stores';
+    import { closeInGameMenu } from '../../stores';
     import MainMenu from '../views/MainMenu.svelte';
     import WebsiteContainer from '../WebsiteContainer.svelte';
     import SaveGameMenu from './save/SaveGameMenu.svelte';

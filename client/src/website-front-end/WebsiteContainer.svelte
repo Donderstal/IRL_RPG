@@ -8,7 +8,7 @@
         SCREEN_WELCOME, SCREEN_RESTORED_PASS, SCREEN_SIGNED_UP, SCREEN_VALIDATE_ACCOUNT,
         openRestoredPassScreen, openSignedUpScreen, openValidateAccountScreen, openLogInScreen,
         setUserDataToFrontEnd, openMainMenuScreen, inGameMenu, activeUser, loggedIn
-    } from './stores';
+    } from './../stores';
 
     //partials
     import UserTab from './svelte-partials/UserTab.svelte';

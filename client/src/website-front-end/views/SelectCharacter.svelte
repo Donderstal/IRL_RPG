@@ -3,7 +3,7 @@
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import { MAP_IDS } from '../../resources/mapResources/mapIds'; 
     import { GameType } from '../../enumerables/GameType';
-    import { loadFilesAndStartGame } from '../../game/mainController';
+    import { loadFilesAndStartGame } from '../../mainController';
 
     const startGameWithParams = ( ) => {
         const characterName = (document.getElementById('name-input') as HTMLInputElement).value;

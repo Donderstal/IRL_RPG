@@ -1,6 +1,6 @@
 <script>
     // store globals
-    import {openWelcomeScreen} from "../stores";
+    import {openWelcomeScreen} from "../../stores";
     // header
     import SmallHeader  from "../header/SmallHeader.svelte";
 

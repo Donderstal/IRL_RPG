@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { returnToPreviousScreen } from "../stores";
+    import { returnToPreviousScreen } from "../../stores";
 
     let selected = false;
 

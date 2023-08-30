@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store';
-import { GameMenuType } from '../enumerables/GameMenuType';
-import { setPausedState } from '../state/stateSetter';
-import type { WebsiteUser } from '../models/WebsiteUserModel';
+import { GameMenuType } from './enumerables/GameMenuType';
+import { setPausedState } from './state/stateSetter';
+import type { WebsiteUser } from './models/WebsiteUserModel';
 
 export const SCREEN_WELCOME         = "WELCOME";
 export const SCREEN_LOG_IN          = "LOG_IN";
@@ -16,7 +16,7 @@ export const SCREEN_CREDITS         = "CREDITS"
 export const SCREEN_ABOUT           = "ABOUT"
 export const SCREEN_HELP            = "HELP"
 export const SCREEN_SIGNED_UP       = "SIGNED_UP"
-export const SCREEN_RESTORED_PASS = "RESTORED_PASS"
+export const SCREEN_RESTORED_PASS   = "RESTORED_PASS"
 
 export const checkForUserSession = ( ) => {
     fetch("/check-login", {

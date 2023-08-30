@@ -1,7 +1,7 @@
 <script lang="ts">
     import { activateControls } from './controls/controlController';
 	import { onMount } from 'svelte';
-	import MainContainer from "./game-container/MainContainer.svelte";
+	import MainContainer from "./website-front-end/MainContainer.svelte";
 
 	onMount(()=>{
 		activateControls();
