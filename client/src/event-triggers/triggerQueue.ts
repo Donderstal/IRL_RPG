@@ -1,5 +1,6 @@
 import { EventType } from "../enumerables/EventType";
 import type { TriggerType } from "../enumerables/TriggerType";
+import { addToEventQueue } from "../event-queue/eventQueue";
 import { conditionIsTrue } from "../helpers/conditionalHelper";
 import type { EventModel } from "../models/events/EventModel";
 import type { TriggerModel } from "../models/TriggerModel";
@@ -25,19 +26,19 @@ export const addTriggerToQueue = ( trigger: TriggerModel, type: TriggerType ): v
 export const checkQueuedTriggers = ( ): void => {
     triggerQueue.forEach( checkQueuedTrigger );
 }
-export const checkQueuedTrigger = ( queuedTrigger: QueuedTrigger ): void => {
+export const clearTriggerQueue = (): void => {
+    triggerQueue = [];
+}
+
+const checkQueuedTrigger = ( queuedTrigger: QueuedTrigger ): void => {
     const event = getTriggerAssociatedEvent( queuedTrigger.trigger )
     if ( event == null ) {
         console.warn( `Tried to trigger unkown event with id ${queuedTrigger.trigger}` );
     }
 
-    const triggerablEventScripts = event.triggerableEvents.filter( ( e ) => { return queuedTrigger.type === e.triggerType  && conditionIsTrue(e.condition.type, e.condition.value); } );
-    console.log( triggerablEventScripts );
+    const triggeredEventScriptId = event.triggerableEvents.findIndex( ( e ) => { return queuedTrigger.type === e.triggerType && conditionIsTrue( e.condition.type, e.condition.value ); } );
+    addToEventQueue( event, triggeredEventScriptId, queuedTrigger.type );
 }
-export const clearTriggerQueue = (): void => {
-    triggerQueue = [];
-}
-
 const getTriggerAssociatedEvent = ( model: TriggerModel ): EventModel => {
     let event = null;
 

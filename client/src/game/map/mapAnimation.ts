@@ -3,7 +3,6 @@ import type { Sprite } from '../core/Sprite';
 import { drawBubbles } from '../controllers/bubbleController';
 import { cameraFocus } from '../cameraFocus';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { setActiveCinematic } from '../controllers/cinematicController';
 import { getBackSprites, getDynamicSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
@@ -16,19 +15,12 @@ import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
 import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
 import { getBaseCellList, getDynamicallyBlockedTileIndexes, registerTilesBlockedByDynamicSprites } from './blockedTilesRegistry';
-import { checkForQueuedEvent } from '../../events/eventQueueHandler';
 import { checkForEventTriggers, drawTriggers, updateAssociatedTrigger } from '../../event-triggers/triggerHandler';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { TriggerType } from '../../enumerables/TriggerType';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
 
 export const handleMapAnimations = (): void => {
-    const event = checkForQueuedEvent();
-    if ( event !== null ) {
-        setActiveCinematic( event.interaction, event.trigger, event.options )
-        return;
-    }
-
     clearSpriteCanvasGrids();
     clearUICanvasGrids()
     handleSpritesScheduledForDelete();

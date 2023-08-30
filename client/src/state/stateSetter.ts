@@ -1,5 +1,5 @@
 import type { State } from "../enumerables/StateEnum";
-import { setDebugModeGameState, setDisableStoryGameState, setGameControlState, setPausedGameState } from "./state";
+import { setDebugModeGameState, setDisableStoryGameState, setGameControlState, setInEventGameState, setPausedGameState } from "./state";
 
 export const setPausedState = ( value: boolean ): void => {
     setPausedGameState( value );
@@ -13,8 +13,11 @@ export const setDisableStoryState = ( value: boolean ): void => {
 export const setListeningForKeysState = ( value: boolean ): void => {
     setDisableStoryGameState( value );
 }
+export const setInEventState = ( value: boolean ): void => {
+    setInEventGameState( value );
+}
 
 export const updateGameControlState = ( value: State ): void => {
-    console.log(`updatign control state to ${value}`)
+    console.log(`updating control state to ${value}`)
     setGameControlState( value );
 }

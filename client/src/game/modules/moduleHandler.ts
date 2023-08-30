@@ -22,10 +22,11 @@ import { DestinationType } from "../../enumerables/DestinationType";
 import { tryFindPath } from "../map/pathfinder";
 import type { Destination } from "../map/map-classes/Destination";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
+import { PLAYER_ID } from "../../game-data/interactionGlobals";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
-    if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugState() ) {
+    if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugState() || id === PLAYER_ID ) {
         updateAssociatedHitbox( sprite );
 	}
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) ) {

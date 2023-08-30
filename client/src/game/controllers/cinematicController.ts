@@ -26,7 +26,6 @@ let playerLocationAtStartOfCinematic: CellPosition = null;
 export const saveActiveMapLocations = (): void => {
     const player = getPlayer();
     activeMapAtStartOfCinematic = getActiveMapKey();
-    activeSpritesAtStartOfCinematic = [...getAllActiveSprites()];
     playerLocationAtStartOfCinematic = { column: player.column, row: player.row, direction: player.direction }
 }
 export const setActiveCinematic = ( interaction: InteractionModel, trigger: CinematicTrigger, options: any[] ): void => {

@@ -1,17 +1,17 @@
 import { FRAMES_PER_SECOND } from '../game-data/globals';
 import { handleMapAnimations } from './map/mapAnimation';
 import { handleCinematicAnimations } from './cutscenes/cinematicAnimations';
-import { cinematicIsActive, handleActiveCinematic } from './controllers/cinematicController';
-
 import { cameraFocus } from './cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from '../helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './canvas/canvasGetter';
-import { inPausedState } from '../state/stateGetter';
+import { inInEventState, inPausedState } from '../state/stateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from '../helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from '../helpers/dynamicTileDrawer';
 import { handleControls } from '../controls/controlHandler';
+import { checkQueuedTriggers, clearTriggerQueue } from '../event-triggers/triggerQueue';
+import { handleEventQueue } from '../event-queue/eventQueueHandler';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -19,26 +19,24 @@ let animationFrameLoop = null;
 let wroteScreenTextLastFrame = false;
 
 export const animationLoop = ( ): void => {
-    const menuCanvas = getMenuGrid();
-
     newDateNow = Date.now();    
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
-        handleControls();
         lastDateNow = newDateNow;
+
         if ( !inPausedState() ) {
-            if ( !menuCanvas.isActive && !cinematicIsActive() ) {
-                handleMapAnimations( );
+            checkQueuedTriggers();
+            clearTriggerQueue();
+            handleEventQueue();
+
+            handleControls();
+
+            if ( inInEventState() ) {
+                handleCinematicAnimations();
             }
-            else if ( !menuCanvas.isActive && cinematicIsActive() ) {
-                handleCinematicAnimations( );
-            }
-            else if ( menuCanvas.isActive ) {
-                menuCanvas.draw();
+            else {
+                handleMapAnimations();
             }
 
-            if  ( cinematicIsActive( ) ) {
-                handleActiveCinematic();
-            } 
             drawNewTilesInCameraFocus( cameraFocus );
             handleOffscreenCanvasBitmaps();
         }

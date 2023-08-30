@@ -4,6 +4,7 @@ let paused: boolean;
 let debugMode: boolean;
 let disableStory: boolean;
 let listeningForKeys: boolean;
+let inEvent: boolean;
 let controlState: State; 
 
 export const setPausedGameState = ( value: boolean ): void => {
@@ -17,6 +18,9 @@ export const setDisableStoryGameState = ( value: boolean ): void => {
 }
 export const setListeningForKeysGameState = ( value: boolean ): void => {
     listeningForKeys = value;
+}
+export const setInEventGameState = ( value: boolean ): void => {
+    inEvent = value;
 }
 export const setGameControlState = ( value: State ): void => {
     controlState = value;
@@ -33,6 +37,9 @@ export const getDisableStoryGameState = (): boolean => {
 }
 export const getListentingForKeysGameState = (): boolean => {
     return listeningForKeys;
+}
+export const getInEventGameState = (): boolean => {
+    return inEvent;
 }
 export const getGameControlState = (): State => {
     return controlState;
