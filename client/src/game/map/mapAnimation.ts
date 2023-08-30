@@ -34,8 +34,8 @@ export const handleMapAnimations = (): void => {
 
     drawBubbles();
 
-    const hitbox = getAssociatedHitbox( PLAYER_ID );
-    checkForEventTriggers( hitbox, TriggerType.collision );
+    const playerHitbox = getAssociatedHitbox( PLAYER_ID );
+    checkForEventTriggers( TriggerType.collision, playerHitbox );
 
     if ( cameraFocus.movingToNewFocus ) {
         const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );

@@ -1,4 +1,3 @@
-import { CinematicTrigger } from "../enumerables/CinematicTriggerEnum";
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { PLAYER_ID } from "../game-data/interactionGlobals";
 import { getMenuGrid } from "../game/canvas/canvasGetter";
@@ -11,7 +10,6 @@ import { destroySpriteAnimation } from "../game/modules/animations/animationSett
 import { moveSpriteInDirection } from "../game/modules/destinations/destinationHandler";
 import { resetIdleAnimationCounter } from "../game/modules/idleAnimCounters/idleAnimHandler";
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
-import { checkForEventTrigger } from "../game/storyEvents/storyEventHandler";
 import { handleScreenTextActionButton, screenTextIsActive } from "../helpers/screenTextModule";
 import { inCinematicState, inMenuState, inOpenWorldState, inWebsiteState } from "../state/stateGetter";
 import { actionButtonKey, menuButtonKey, returnButtonKey } from "./controlConstants";
@@ -62,7 +60,7 @@ export const handleOpenWorldControls = ( activeControls: any[] ): void => {
     }
     if ( activeControls.includes( actionButtonKey ) && !actionButtonWasPressedLastFrame ) {
         const playerHitbox = getAssociatedHitbox( PLAYER_ID );
-        checkForEventTriggers( playerHitbox, TriggerType.interaction );;
+        checkForEventTriggers( TriggerType.interaction, playerHitbox );
     }
     if ( activeControls.includes( DirectionEnum.left ) ) {
         movePlayer( DirectionEnum.left );
@@ -137,7 +135,6 @@ const movePlayer = ( direction: DirectionEnum ): void => {
     if ( !spriteNextPositionIsBlocked( player, null, direction ) ) {
         moveSpriteInDirection( player, direction );
     }
-    checkForEventTrigger( CinematicTrigger.position );
 }
 const preparePlayerForMovement = ( player: Sprite ): void => {
     resetIdleAnimationCounter( PLAYER_ID );

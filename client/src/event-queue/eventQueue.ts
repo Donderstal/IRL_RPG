@@ -12,6 +12,11 @@ export const addToEventQueue = (triggeredEvent: EventModel, eventScriptIndex: nu
 export const getEventQueue = (): EventModel[] => {
     return eventQueue;
 }
+export const removeFromEventQueue = ( eventToRemove: EventModel ): void => {
+    eventQueue = eventQueue.filter( ( e ) => {
+        return e.triggerId !== eventToRemove.triggerId;
+    } )
+}
 const copyEventModel = ( triggeredEvent: EventModel, eventScriptIndex: number, triggerType: TriggerType ): EventModel => {
     return {
         ...triggeredEvent,

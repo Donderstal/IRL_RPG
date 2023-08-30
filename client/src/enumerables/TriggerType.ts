@@ -1,4 +1,6 @@
 export enum TriggerType {
     collision,
-    interaction
+    interaction,
+    map_enter,
+    map_leave
 }

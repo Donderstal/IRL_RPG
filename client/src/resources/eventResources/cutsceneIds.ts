@@ -1,4 +1,6 @@
 export type CutsceneIds = {
+    INTRO_CUTSCENE: string;
+
     RANDOM_ENCOUNTER_1: string;
     RANDOM_ENCOUNTER_2: string;
     RANDOM_ENCOUNTER_3: string;
@@ -48,6 +50,9 @@ export type CutsceneIds = {
 }
 
 export const CUTSCENE_IDS: CutsceneIds = {
+    //#region Cinematic csevent ids
+    INTRO_CUTSCENE: "ID_INTRO_CUTSCENE",
+    //#endregion
     //#region Random encounter csevent ids
     RANDOM_ENCOUNTER_1: "ID_CUTSCENE_RANDOM_ENCOUNTER_1",
     RANDOM_ENCOUNTER_2: "ID_CUTSCENE_RANDOM_ENCOUNTER_2",

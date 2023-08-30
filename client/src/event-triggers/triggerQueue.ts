@@ -33,10 +33,14 @@ export const clearTriggerQueue = (): void => {
 const checkQueuedTrigger = ( queuedTrigger: QueuedTrigger ): void => {
     const event = getTriggerAssociatedEvent( queuedTrigger.trigger )
     if ( event == null ) {
-        console.warn( `Tried to trigger unkown event with id ${queuedTrigger.trigger}` );
+        console.warn( `Tried to trigger unknown event with id ${queuedTrigger.trigger.eventId}` );
+        return;
     }
 
     const triggeredEventScriptId = event.triggerableEvents.findIndex( ( e ) => { return queuedTrigger.type === e.triggerType && conditionIsTrue( e.condition.type, e.condition.value ); } );
+    if ( triggeredEventScriptId == -1 ) {
+        console.warn( `Tried to trigger event with id ${queuedTrigger.trigger.eventId}, but no eventscript was found that meets condition.` );
+    }
     addToEventQueue( event, triggeredEventScriptId, queuedTrigger.type );
 }
 const getTriggerAssociatedEvent = ( model: TriggerModel ): EventModel => {

@@ -6,7 +6,7 @@ import { getSpriteRelatedTriggerId, registerSpriteTriggerRelation, spriteTrigger
 import { Trigger } from "./Trigger";
 import { deregisterTrigger, registerTrigger } from "./triggerRegistry";
 
-export const setTrigger = ( canvasObject: Tile | Sprite, model: TriggerModel ): void => {
+export const setTrigger = ( model: TriggerModel, canvasObject: Tile | Sprite = null ): void => {
     const frame = getFrameModelFromCanvasObject( canvasObject );
     const trigger = new Trigger( frame, model );
     const triggerId = registerTrigger( trigger );
@@ -23,8 +23,11 @@ export const deleteSpriteRelatedTrigger = ( spriteId: string ): void => {
     }
 }
 const getFrameModelFromCanvasObject = ( canvasObject: Tile | Sprite ): FrameModel => {
-    return {
-        x: canvasObject.x, y: canvasObject.y,
-        width: canvasObject.width, height: canvasObject.height
-    };
+    if ( canvasObject !== null ) {
+        return {
+            x: canvasObject.x, y: canvasObject.y,
+            width: canvasObject.width, height: canvasObject.height
+        };
+    }
+    return { x: 0, y: 0, width: 0, height: 0 };
 }

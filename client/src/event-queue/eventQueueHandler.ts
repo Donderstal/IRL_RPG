@@ -2,21 +2,34 @@ import { EventType } from "../enumerables/EventType";
 import { TriggerType } from "../enumerables/TriggerType";
 import type { EventModel } from "../models/events/EventModel";
 import { startEvent } from "./eventController";
-import { getEventQueue } from "./eventQueue"
+import { getEventQueue, removeFromEventQueue } from "./eventQueue"
 
 export const handleEventQueue = (): void => {
     const eventsInQueue = getEventQueue();
-    if ( eventsInQueue.length < 1 ) return
+    if ( eventsInQueue.length < 1 ) return;
+    if ( eventsInQueue.length === 1 ) {
+        startEvent( eventsInQueue[0] );
+    }
+
     const sortedEvent = getEventWithPriority( eventsInQueue );
-    startEvent(sortedEvent);
+    startEvent( sortedEvent );
+    removeFromEventQueue( sortedEvent );
 }
 const getEventWithPriority = ( events: EventModel[] ): EventModel => {
     const interactionEvents = events.filter( e => e.triggerType == TriggerType.interaction );
     const collisionEvents = events.filter( e => e.triggerType == TriggerType.collision );
+    const leaveMapEvents = events.filter( e => e.triggerType == TriggerType.map_leave );
+    const enterMapEvents = events.filter( e => e.triggerType == TriggerType.map_enter );
 
     let sortedEvents: EventModel[] = [];
+    if ( leaveMapEvents != undefined && leaveMapEvents.length >= 1 ) {
+        sortedEvents = [...sortedEvents, ...sortEventsByEventType( leaveMapEvents )];
+    }
+    if ( enterMapEvents != undefined && enterMapEvents.length >= 1 ) {
+        sortedEvents = [...sortedEvents, ...sortEventsByEventType( enterMapEvents )];
+    }
     if ( interactionEvents != undefined && interactionEvents.length >= 1 ) {
-        sortedEvents = [ ...sortEventsByEventType( interactionEvents) ];
+        sortedEvents = [...sortedEvents, ...sortEventsByEventType( interactionEvents) ];
     }
     if ( collisionEvents != undefined && collisionEvents.length >= 1 ) {
         sortedEvents = [...sortedEvents, ...sortEventsByEventType( interactionEvents )];

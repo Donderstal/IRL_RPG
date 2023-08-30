@@ -42,10 +42,10 @@ export const createElevatorEventDto = ( floors: { [key in string]: string } ): E
     };
 };
 
-export const createEventConditionPair = ( event: IEventDto, condition: ConditionModel ): EventConditionPair => {
+export const createEventConditionPair = ( event: IEventDto, condition: ConditionModel, triggerType: TriggerType = null ): EventConditionPair => {
     return {
         event: event,
         condition: condition,
-        triggerType: ( event.eventType == EventType.door && condition.type == ConditionType.default ) ? TriggerType.collision : TriggerType.interaction
+        triggerType: triggerType ?? (( event.eventType == EventType.door && condition.type == ConditionType.default ) ? TriggerType.collision : TriggerType.interaction)
     }
 }

@@ -1,4 +1,5 @@
 import { EventType } from "../../enumerables/EventType";
+import { TriggerType } from "../../enumerables/TriggerType";
 import { getDefaultCondition, getInteractionNotRegisteredCondition, getInteractionRegisteredCondition, getLoggedInCondition } from "../../factories/conditionFactory";
 import { createCutsceneEventDto, createEventConditionPair } from "../../factories/eventFactory";
 import { IKEY_CAR_SHACK_1, IKEY_CAR_SHACK_2, IKEY_CAR_SHACK_3 } from "../../game-data/interactionGlobals";
@@ -42,6 +43,14 @@ export const createSavePointCutscene = ( ): EventModel => {
 }
 
 export const CUTSCENE_EVENTS: { [key in string]: EventModel } = {
+    //#region Storyline event
+    [CUTSCENE_IDS.INTRO_CUTSCENE]: {
+        eventType: EventType.cutscene,
+        triggerableEvents: [
+            createEventConditionPair( createCutsceneEventDto( CUTSCENE_SCRIPTS.INTRO_CINEMATIC, CUTSCENE_IDS.INTRO_CUTSCENE ), getDefaultCondition(), TriggerType.map_enter )
+        ]
+    },
+    //#endregion
     //#region Random encounter cutscene events
     [CUTSCENE_IDS.RANDOM_ENCOUNTER_1]: {
         eventType: EventType.cutscene,

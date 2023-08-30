@@ -2,5 +2,7 @@ export enum EventType {
     cutscene,
     door,
     save_point,
-    elevator
+    elevator,
+    enter_map,
+    leave_map
 }

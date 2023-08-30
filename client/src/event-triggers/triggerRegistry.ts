@@ -51,17 +51,18 @@ export const isRegisteredInTriggerRegistry = ( id: string ): boolean => {
 }
 export const getTriggersByTriggerType = ( type: TriggerType ): Trigger[] => {
     return triggers.filter( ( e ) => {
+        if ( type === e.model.triggeredBy ) return true;
+        if ( e.model.triggeredBy !== null && e.model.triggeredBy !== undefined ) return false;
+
         switch ( e.model.eventType ) {
             case EventType.cutscene:
                 return type === TriggerType.interaction;
             case EventType.door:
-                return true;
+                return type === TriggerType.interaction || type === TriggerType.collision;
             case EventType.elevator:
                 return type === TriggerType.interaction;
-                break;
             case EventType.save_point:
                 return type === TriggerType.interaction;
-                break;
         }
     } );
 }

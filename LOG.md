@@ -1,6 +1,28 @@
 ### 
 
-#### JULy 31 2023
+#### AUG 30 2023
+* Testing new event setup, adding story cinematics to trigger->event flow
+* Removing a lot of obsolete code
+* Restructuring filesystem
+
+#### AUG 24 2023
+* Testing new trigger setup ( seems to work fine! )
+
+#### AUG 21 2023
+* Add new trigger and event models
+* Cleaning up a lot of old resoruces
+* Restructuring resources for new trigger->event design
+
+#### AUG 14 2023
+* Basic new setup for collision based interaction triggers
+
+#### AUG 07 2023
+* New unified design for controls combining controls for website, menu and game
+
+#### AUG 02 2023
+* Cleaning up and streamlining GameState usage
+
+#### JULY 31 2023
 * Reworking hitboxes to a square design instead of circles
 * Reorganized model and class factories to seperate folder
 

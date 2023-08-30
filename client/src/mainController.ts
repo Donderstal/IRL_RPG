@@ -15,7 +15,6 @@ import { setDebugModeState, setDisableStoryState, updateGameControlState } from 
 import { setLoadingScreen, stopLoadingScreen } from "./game/loadingScreen";
 import { getActiveMap } from "./game/neighbourhoodModule";
 import { setNewParty } from "./game/party/partyController";
-import { setStoryEvents } from "./game/storyEvents/storyEventSetter";
 import { initializeDataModels } from "./resources/spriteDataResources";
 import { PlayerMapEntry } from "./enumerables/PlayerMapEntryEnum";
 import type { SaveGame } from "./models/SaveGameModel";
@@ -63,7 +62,6 @@ const startNewGame = ( ): void => {
     setNeighbourhoodAndMap( params[2], PlayerMapEntry.newGame );
     setDebugModeState( params[3] );
     setDisableStoryState( params[4] );
-    setStoryEvents();
 
     loadMapToCanvases( getActiveMap(), PlayerMapEntry.newGame );
     setTimeout( initControlsAndAnimation, 1000 );
@@ -76,7 +74,6 @@ const loadGameFromSave = (): void => {
     initializeDataModels();
     setNewParty( saveGame.playerData.name );
     setNeighbourhoodAndMap( saveGame.activeMap.mapName, PlayerMapEntry.loadGame );
-    setStoryEvents( saveGame.keyLists.storyEvents );
 
     setDebugModeState( false );
     setDisableStoryState( true );

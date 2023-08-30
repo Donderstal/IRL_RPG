@@ -3,15 +3,12 @@ import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodModel, init
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import type { Sprite } from '../game/core/Sprite';
 import type { MapModel } from '../models/MapModel';
-import { CinematicTrigger } from '../enumerables/CinematicTriggerEnum';
 import { cameraFocus } from '../game/cameraFocus';
 import { getPlayer, getSpriteById, getStaticSprites } from '../game/modules/sprites/spriteGetter';
 import { clearSpriteModuleRegistries } from '../game/modules/moduleRegistrySetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid, getTileOnCanvasByCell } from '../game/canvas/canvasGetter';
-import { checkForEventTrigger } from '../game/storyEvents/storyEventHandler';
-import { clearStoryEventsForMap, setStoryEventsForMap } from '../game/storyEvents/storyEventSetter';
 import { setPausedState } from '../state/stateSetter';
 import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
@@ -22,6 +19,8 @@ import type { TriggerModel } from '../models/TriggerModel';
 import type { BackTileGrid } from '../game/canvas/BackTileGrid';
 import { setTrigger } from '../event-triggers/triggerSetter';
 import { determineMapNeighbourhood } from '../resources/mapResources/mapIds';
+import { checkForEventTriggers } from '../event-triggers/triggerHandler';
+import { TriggerType } from '../enumerables/TriggerType';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null, cameraFocusTile: GridCellModel = null ): void => {
     const neighbourhood = getNeighbourhoodModel();
@@ -30,8 +29,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     const back = getBackTilesGrid();
     const front = getBackSpritesGrid();
     const frontgrid = getFrontTilesGrid();
-
-    setStoryEventsForMap(mapData.key)
 
     back.initGrid( mapData.columns, mapData.rows );
     front.initGrid( mapData.columns, mapData.rows );
@@ -54,9 +51,6 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
         );
 
         cameraFocus.setSpriteFocus( player, true );
-        setTimeout( () => {
-            checkForEventTrigger( CinematicTrigger.enter )
-        }, 250 )
     }
     else if ( cameraFocusTile !== null ) {
         const cameraTile = back.getTileAtCell( cameraFocusTile.column, cameraFocusTile.row );
@@ -66,12 +60,14 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     registerBlockedTilesOnMap();
     back.drawMapFromGridData();
     frontgrid.drawMapFromGridData();
+
+    checkForEventTriggers( TriggerType.map_enter );
 }
 
 export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, exitId: string = null, setPlayer: boolean = true, cameraFocusTile: GridCellModel = null ): void => {
-    if ( checkForEventTrigger( CinematicTrigger.leave, [destinationName, loadType, exitId] ) ) return;
-
+    checkForEventTriggers( TriggerType.map_leave );
     clearBlockedTilesRegistry();
+
     if ( loadType !== PlayerMapEntry.cinematic ) {
         registerMapExit( getActiveMapKey(), exitId );
     }
@@ -83,8 +79,6 @@ export const switchMap = ( destinationName: string, loadType: PlayerMapEntry, ex
     setCanvasDimensions();
 
     clearActiveMap();
-
-    clearStoryEventsForMap();
 
     loadMapToCanvases( getActiveMap(), loadType, setPlayer, null, cameraFocusTile );
     setTimeout( () => {
@@ -99,8 +93,6 @@ export const clearActiveMap = () => {
 
     clearSpriteModuleRegistries();
     clearAllModuleRegistries();
-
-    clearStoryEventsForMap();
 }
 
 export const loadCinematicMap = ( mapName, setPlayer = false ) => {
@@ -152,6 +144,9 @@ const setTriggers = ( triggerList: TriggerModel[], back: BackTileGrid ): void =>
         if ( e.spriteId !== null && e.spriteId !== undefined ) {
             setSpriteBasedTrigger( e );
         }
+        else if ( e.triggeredBy !== null && e.triggeredBy !== undefined ) {
+            setTrigger( e );
+        }
         else {
             setTileBasedTrigger( e, back );
         }
@@ -163,12 +158,12 @@ const setSpriteBasedTrigger = ( trigger: TriggerModel ): void => {
     if ( sprite == null ) {
         console.error( `Error setting trigger ${trigger.eventId}. No sprite could be found with id ${sprite}` );
     }
-    setTrigger( sprite, trigger );
+    setTrigger( trigger, sprite );
 }
 const setTileBasedTrigger = ( trigger: TriggerModel, back: BackTileGrid ): void => {
     const tile = back.getTileAtCell( trigger.column, trigger.row );
     if ( tile == null ) {
         console.error( `Error setting trigger ${trigger.eventId}. No tile could be found a column ${trigger.column}, row ${trigger.row}` );
     }
-    setTrigger( tile, trigger );
+    setTrigger( trigger, tile );
 }

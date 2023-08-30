@@ -15,7 +15,6 @@ export type SaveGameMapData = {
 }
 
 export type SaveGameKeyLists = {
-    storyEvents: string[];
     interactionRegistry: { [key: string]: InteractionAnswer };
     collectableRegistry: { coins: string[], juiceCans: string[] };
     unlockedDoors: string[]

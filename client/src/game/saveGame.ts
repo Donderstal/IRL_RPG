@@ -1,6 +1,5 @@
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
 import { getActiveMap } from "../game/neighbourhoodModule";
-import { exportTriggerEventsRegistry } from "../game/storyEvents/storyEventGetter";
 import type { MapModel } from "../models/MapModel";
 import type { SaveGame, SaveGameKeyLists, SaveGameMapData, SaveGamePlayerData } from "../models/SaveGameModel";
 import { exportCollectableRegistry } from "../registries/collectableRegistry";
@@ -36,7 +35,6 @@ const getMapDataFromGame = ( map: MapModel ): SaveGameMapData => {
 
 const getKeyListsFromGame = (): SaveGameKeyLists => {
     return {
-        storyEvents: exportTriggerEventsRegistry(),
         interactionRegistry: getRegistry(),
         collectableRegistry: exportCollectableRegistry(),
         unlockedDoors: getUnlockedDoorsRegistry()

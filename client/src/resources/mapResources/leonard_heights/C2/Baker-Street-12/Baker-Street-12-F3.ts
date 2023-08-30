@@ -1,3 +1,6 @@
+import { EventType } from "../../../../../enumerables/EventType";
+import { TriggerType } from "../../../../../enumerables/TriggerType";
+import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
 import { DOOR_IDS } from "../../../../eventResources/doorIds";
 import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
@@ -96,5 +99,12 @@ export default {
 			"direction": 0
 		}
 	],
-    "triggers": [getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F3 )]
+	"triggers": [
+		getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F3 ),
+		{
+			"eventType": EventType.cutscene,
+			"eventId": CUTSCENE_IDS.INTRO_CUTSCENE,
+			"triggeredBy": TriggerType.map_enter
+		}
+	]
 }
