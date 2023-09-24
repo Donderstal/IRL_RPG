@@ -10,11 +10,6 @@ export type CutsceneIds = {
     RANDOM_ENCOUNTER_7: string;
     RANDOM_ENCOUNTER_8: string;
 
-    DOOR: string;
-    SAVE_POINT: string;
-    COLLECT_CAN: string;
-    COLLECT_COIN: string;
-
     A3_ROBOT_RECEPTIONIST: string;
     A3_ROBOT_COOK: string;
     A3_MONKEY_COOK: string;
@@ -62,12 +57,6 @@ export const CUTSCENE_IDS: CutsceneIds = {
     RANDOM_ENCOUNTER_6: "ID_CUTSCENE_RANDOM_ENCOUNTER_6",
     RANDOM_ENCOUNTER_7: "ID_CUTSCENE_RANDOM_ENCOUNTER_7",
     RANDOM_ENCOUNTER_8: "ID_CUTSCENE_RANDOM_ENCOUNTER_8",
-    //#endregion
-    //#region Standard csevent ids
-    DOOR: "ID_CUTSCENE_LDOOR",
-    SAVE_POINT: "ID_CUTSCENE_SAVE_GAME",
-    COLLECT_CAN: "ID_CUTSCENE_COLLECT_CAN",
-    COLLECT_COIN: "ID_CUTSCENE_COLLECT_COIN",
     //#endregion
     //#region A3 csevent ids
     A3_ROBOT_RECEPTIONIST: "ID_CUTSCENE_A3_ROBOT_RECEPTIONIST",

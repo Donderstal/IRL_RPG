@@ -1,7 +1,7 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
@@ -103,7 +103,7 @@ export default {
 	"triggers": [
 		getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F4 ),
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.C2_BS12_APT4_RESIDENT,
 			"spriteId": RESIDENT
         }

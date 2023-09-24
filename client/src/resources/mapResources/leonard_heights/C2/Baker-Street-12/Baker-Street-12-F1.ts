@@ -1,4 +1,4 @@
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";

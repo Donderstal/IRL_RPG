@@ -1,7 +1,7 @@
 import { DirectionEnum } from "../../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../../enumerables/EventType";
+import { EventChainType } from "../../../../../../enumerables/EventChainType";
 import type { TriggerModel } from "../../../../../../models/TriggerModel";
-import { DOOR_IDS } from "../../../../../eventResources/doorIds";
+import { DOOR_IDS } from "../../../../../eventChainResources/doorIds";
 import { MAP_IDS } from "../../../../mapIds";
 
 export const getBSStairHallDoors = ( mapKey: string ): TriggerModel[] => {
@@ -38,7 +38,7 @@ export const getBSStairHallDoors = ( mapKey: string ): TriggerModel[] => {
 }
 export const getBSAppartmentToHallDoor = ( doorKey: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: doorKey,
         direction: DirectionEnum.up,
         column: 4,
@@ -48,7 +48,7 @@ export const getBSAppartmentToHallDoor = ( doorKey: string ): TriggerModel => {
 
 const getHallToAppartmentDoor = ( doorKey: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: doorKey,
         direction: DirectionEnum.down,
         column: 4,
@@ -57,7 +57,7 @@ const getHallToAppartmentDoor = ( doorKey: string ): TriggerModel => {
 }
 const getRightStairsDoors = ( doorKey: string, direction: DirectionEnum ): TriggerModel[] => {
     const baseDoorModel = {
-        eventType: EventType.door,
+        eventType: EventChainType.door,
         eventId: doorKey,
         direction: direction,
         row: direction === DirectionEnum.up ? 1 : 4
@@ -76,7 +76,7 @@ const getRightStairsDoors = ( doorKey: string, direction: DirectionEnum ): Trigg
 const getLeftStairsDoors = ( doorKey: string, direction: DirectionEnum ) => {
     const baseDoorModel = {
         direction: direction,
-        eventType: EventType.door,
+        eventType: EventChainType.door,
         eventId: doorKey,
         row: direction === DirectionEnum.up ? 1 : 4
     }
@@ -93,7 +93,7 @@ const getLeftStairsDoors = ( doorKey: string, direction: DirectionEnum ) => {
 }
 const getFrontDoor = (): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: DOOR_IDS.BAKER_STREET_12_FRONT_DOOR,
         direction: DirectionEnum.down,
         column: 4,

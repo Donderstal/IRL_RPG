@@ -1,6 +1,6 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
@@ -2593,21 +2593,21 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
 			"row": 12,
 			"column": 8,
 			"direction": DirectionEnum.up,
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
 			"row": 12,
 			"column": 9,
 			"direction": DirectionEnum.up,
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.YUM_MART_DOOR_1,
 			"row": 3,
 			"column": 1,

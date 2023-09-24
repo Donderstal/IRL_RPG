@@ -4,8 +4,8 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { STRONG_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
-import { EventType } from '../../../../enumerables/EventType';
-import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+import { CUTSCENE_IDS } from '../../../eventChainResources/cutsceneIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 const ID_WHOLESOME_LIFTER_E4 = "ID_WHOLESOME_LIFTER_E4";
 
@@ -62,7 +62,7 @@ export default {
     ],
     "triggers": [
         {
-            "eventType": EventType.cutscene,
+            "eventChainType": EventChainType.cutscene,
             "eventId": CUTSCENE_IDS.E4_WHOLESOME_LIFTER,
             "spriteId": ID_WHOLESOME_LIFTER_E4
         }

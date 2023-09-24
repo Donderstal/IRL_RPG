@@ -1,6 +1,6 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
@@ -852,21 +852,21 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_HALL,
 			"row": 4,
 			"column": 1,
 			"direction": DirectionEnum.left
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP1,
 			"row": 4,
 			"column": 4,
 			"direction": DirectionEnum.down
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP2,
 			"row": 4,
 			"column": 9,
@@ -874,7 +874,7 @@ export default {
 		},
 		,
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP3,
 			"row": 4,
 			"column": 14,

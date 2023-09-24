@@ -1,8 +1,8 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { BUSINESS_MAN } from "../../../../spriteTypeResources";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
@@ -1818,11 +1818,11 @@ export default {
 			"row": 3,
 			"column": 1,
 			"direction": DirectionEnum.left,
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.C4_YUM_MART_OFFICE_GUY,
 			"spriteId": ID_BUSINESSMAN
         }

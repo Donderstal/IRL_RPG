@@ -4,9 +4,9 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
-import { EventType } from '../../../../enumerables/EventType';
-import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { CUTSCENE_IDS } from '../../../eventChainResources/cutsceneIds';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 const WHOLESOME_LIFTER_ID = "WHOLESOME_LIFT_B4"
 
@@ -82,19 +82,19 @@ export default {
     ],
     "triggers": [
         {
-            "eventType": EventType.cutscene,
+            "eventChainType": EventChainType.cutscene,
             "eventId": CUTSCENE_IDS.B4_WHOLESOME_LIFTER,
             "spriteId": WHOLESOME_LIFTER_ID
         },
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "row": 8,
             "column": 4,
             "direction": DirectionEnum.up,
             "eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
         },
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "row": 8,
             "column": 5,
             "direction": DirectionEnum.up,

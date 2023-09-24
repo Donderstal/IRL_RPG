@@ -3,8 +3,8 @@ import { FRONT_GRID_LEONARD_E3 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { PIGEON } from '../../../spriteTypeResources';
-import { EventType } from '../../../../enumerables/EventType';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_E3,
@@ -50,14 +50,14 @@ export default {
     ],
     "triggers": [
         {
-            eventType: EventType.door,
+            eventChainType: EventChainType.door,
             eventId: DOOR_IDS.GREY_BUILDING_FRONT_DOOR,
             column: 10,
             row: 5,
             direction: DirectionEnum.up,
         },
         {
-            eventType: EventType.door,
+            eventChainType: EventChainType.door,
             eventId: DOOR_IDS.GREY_BUILDING_FRONT_DOOR,
             column: 10,
             row: 5,

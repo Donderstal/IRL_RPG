@@ -1,7 +1,7 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { BALD_BEER_BELLY_GUY, BLACK_PONY_TAIL_LADY, BUSINESS_MAN, FAT_BUFF_GUY, GRANNY, GREEN_HAIR_LADY, GREEN_SHIRTED_STRONG_GUY, ROBOT, SUNGLASSES_LADY, SUPERMARKET_MANAGER, TOUGH_GUY_WITH_COOL_HAIR, WHITE_PONY_TAIL_LADY, YELLOW_SHIRT_LADY } from "../../../../spriteTypeResources";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
@@ -3686,21 +3686,21 @@ export default {
 	"frontSprites": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 6,
 			"column": 16,
 			"direction": DirectionEnum.left,
 			"eventId": DOOR_IDS.CLUBSHELTER_TOILET_DOOR
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 16,
 			"column": 10,
 			"direction": DirectionEnum.down,
 			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_INNER_DOOR
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 16,
 			"column": 11,
 			"direction": DirectionEnum.down,

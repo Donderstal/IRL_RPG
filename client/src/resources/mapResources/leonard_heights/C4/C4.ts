@@ -3,8 +3,8 @@ import { FRONT_GRID_LEONARD_C4 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { PIGEON } from '../../../spriteTypeResources';
-import { EventType } from '../../../../enumerables/EventType';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C4,
@@ -149,14 +149,14 @@ export default {
     ],
     "triggers": [
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
             "row": 7,
             "column": 19,
             "direction": DirectionEnum.up,
         },
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
             "row": 7,
             "column": 20,

@@ -1,8 +1,8 @@
 import { GRID_LEONARD_C2 } from './grid';
 import { FRONT_GRID_LEONARD_C2 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
-import { EventType } from '../../../../enumerables/EventType';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C2,
@@ -131,14 +131,14 @@ export default {
     ],
     "triggers": [
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "eventId": DOOR_IDS.BAKER_STREET_12_FRONT_DOOR,
             "row": 8,
             "column": 12,
             "direction": DirectionEnum.up
         },
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "eventId": DOOR_IDS.BAKER_STREET_12_FRONT_DOOR,
             "row": 8,
             "column": 13,

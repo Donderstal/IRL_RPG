@@ -1,8 +1,8 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
 import type { TriggerModel } from "../../../../../models/TriggerModel";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
-import { ELEVATOR_IDS } from "../../../../eventResources/elevatorIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
+import { ELEVATOR_IDS } from "../../../../eventChainResources/elevatorIds";
 import { MAP_IDS } from "../../../mapIds";
 
 const GF_LEFT_HALL_APPARTMENT_DOORS = [DOOR_IDS.GREY_BUILDING_GF_APT1, DOOR_IDS.GREY_BUILDING_GF_APT2, DOOR_IDS.GREY_BUILDING_GF_APT3];
@@ -17,7 +17,7 @@ const F3_LEFT_HALL_APPARTMENT_DOORS = [DOOR_IDS.GREY_BUILDING_F3_APT1, DOOR_IDS.
 const F3_RIGHT_HALL_APPARTMENT_DOORS = [DOOR_IDS.GREY_BUILDING_F3_APT2, DOOR_IDS.GREY_BUILDING_F3_APT3, DOOR_IDS.GREY_BUILDING_F3_APT4];
 
 const GREY_BUILDING_ELEVATOR: TriggerModel = {
-    eventType: EventType.elevator,
+    eventChainType: EventChainType.elevator,
     eventId: ELEVATOR_IDS.GREY_BUILDING,
     column: 2,
     row: 2,
@@ -115,7 +115,7 @@ export const LHGB_AppartmentMain_Doors = ( mapKey: string ): TriggerModel[] => {
 }
 export const LHGB_AppartmentToilet_Doors = ( mapKey: string ): TriggerModel[] => {
     return [{
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: getAppartmentToiletIds(mapKey),
         column: 1,
         row: 3,
@@ -124,7 +124,7 @@ export const LHGB_AppartmentToilet_Doors = ( mapKey: string ): TriggerModel[] =>
 }
 export const LHGB_AppartmentBedroom_Doors = ( mapKey: string ): TriggerModel[] => {
     return [{
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: getAppartmentBedroomIds( mapKey ),
         column: 5,
         row: 4,
@@ -284,7 +284,7 @@ const getAppartmentToiletIds = ( mapKey: string ): string => {
 }
 const getLobbyLeftDoor = ( doorId: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: doorId,
         column: 1,
         row: 7,
@@ -293,7 +293,7 @@ const getLobbyLeftDoor = ( doorId: string ): TriggerModel => {
 }
 const getLobbyRightDoor = ( doorId: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: doorId,
         column: 12,
         row: 7,
@@ -303,14 +303,14 @@ const getLobbyRightDoor = ( doorId: string ): TriggerModel => {
 const getLobbyFrontDoors = (): TriggerModel[] => {
     return [
         {
-            eventType: EventType.door,
+            eventChainType: EventChainType.door,
             eventId: DOOR_IDS.GREY_BUILDING_FRONT_DOOR,
             column: 6,
             row: 8,
             direction: DirectionEnum.down
         },
         {
-            eventType: EventType.door,
+            eventChainType: EventChainType.door,
             eventId: DOOR_IDS.GREY_BUILDING_FRONT_DOOR,
             column: 7,
             row: 8,
@@ -325,7 +325,7 @@ const getAppartmentDoors = ( doorKeys: string[] ): TriggerModel[] => {
         if ( key !== null ) {
             doors.push(
                 {
-                    eventType: EventType.door,
+                    eventType: EventChainType.door,
                     eventId: key,
                     column: doorColumnPositions[index],
                     row: 4,
@@ -338,7 +338,7 @@ const getAppartmentDoors = ( doorKeys: string[] ): TriggerModel[] => {
 }
 const getHallwayLeftDoor = ( key: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: key,
         column: 15,
         row: 3,
@@ -347,7 +347,7 @@ const getHallwayLeftDoor = ( key: string ): TriggerModel => {
 }
 const getHallwayRightDoor = ( key: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: key,
         column: 1,
         row: 3,
@@ -356,7 +356,7 @@ const getHallwayRightDoor = ( key: string ): TriggerModel => {
 }
 const getAppartmentToHallDoor = ( key: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: key,
         column: 6,
         row: 2,
@@ -365,7 +365,7 @@ const getAppartmentToHallDoor = ( key: string ): TriggerModel => {
 }
 const getAppartmentToBedroomDoor = ( key: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: key,
         column: 5,
         row: 4,
@@ -374,7 +374,7 @@ const getAppartmentToBedroomDoor = ( key: string ): TriggerModel => {
 }
 const getAppartmentToToiletDoor = ( key: string ): TriggerModel => {
     return {
-        eventType: EventType.door,
+        eventChainType: EventChainType.door,
         eventId: key,
         column: 6,
         row: 4,

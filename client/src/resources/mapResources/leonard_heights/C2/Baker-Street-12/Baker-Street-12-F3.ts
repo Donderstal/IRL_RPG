@@ -1,7 +1,7 @@
-import { EventType } from "../../../../../enumerables/EventType";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
 import { TriggerType } from "../../../../../enumerables/TriggerType";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
@@ -102,9 +102,9 @@ export default {
 	"triggers": [
 		getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F3 ),
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.INTRO_CUTSCENE,
-			"triggeredBy": TriggerType.map_enter
+			"triggerType": TriggerType.map_leave
 		}
 	]
 }

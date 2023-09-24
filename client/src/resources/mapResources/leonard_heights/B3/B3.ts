@@ -3,8 +3,8 @@ import { FRONT_GRID_LEONARD_B3 } from './frontgrid';
 import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DORKY_GUY, PIGEON } from '../../../spriteTypeResources';
-import { EventType } from '../../../../enumerables/EventType';
-import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+import { CUTSCENE_IDS } from '../../../eventChainResources/cutsceneIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 const KEYS_GUY_ID = "KEYS_GUY_B3"
 
@@ -109,7 +109,7 @@ export default {
     ],
     "trigger": [
         {
-            "eventType": EventType.cutscene,
+            "eventChainType": EventChainType.cutscene,
             "eventId": CUTSCENE_IDS.B3_GUY_WHO_LOST_HIS_KEYS,
             "spriteId": KEYS_GUY_ID
         }

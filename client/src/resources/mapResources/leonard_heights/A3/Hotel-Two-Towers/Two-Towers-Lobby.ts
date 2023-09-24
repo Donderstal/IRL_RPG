@@ -1,8 +1,8 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { MONKEY_CEO, ROBOT } from "../../../../spriteTypeResources";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
@@ -4288,31 +4288,31 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 14,
 			"column": 11,
 			"direction": DirectionEnum.down,
 			"eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 14,
 			"column": 12,
 			"direction": DirectionEnum.down,
 			"eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.A3_MONKEY_COOK,
 			"spriteId": MONKEY_COOK
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.A3_ROBOT_COOK,
 			"spriteId": ROBOT_COOK
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.A3_ROBOT_RECEPTIONIST,
 			"spriteId": ROBOT_RECEPTIONIST
 		}

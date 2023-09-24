@@ -1,7 +1,7 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { SUNGLASSES_LADY } from "../../../../spriteTypeResources";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
@@ -367,28 +367,28 @@ export default {
 	"frontSprites": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 8,
 			"column": 2,
 			"direction": DirectionEnum.down,
 			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 8,
 			"column": 3,
 			"direction": DirectionEnum.down,
 			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_FRONT_DOOR
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 2,
 			"column": 2,
 			"direction": DirectionEnum.up,
 			"eventId": DOOR_IDS.CLUBSHELTER_MAIN_INNER_DOOR
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"row": 2,
 			"column": 3,
 			"direction": DirectionEnum.up,

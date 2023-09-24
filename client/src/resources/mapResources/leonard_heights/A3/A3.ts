@@ -1,8 +1,8 @@
 import { GRID_LEONARD_A3 } from './grid';
 import { FRONT_GRID_LEONARD_A3 } from './frontgrid';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
-import { EventType } from '../../../../enumerables/EventType';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_A3,
@@ -172,14 +172,14 @@ export default {
         {
             "row": 7,
             "column": 21,
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "direction": DirectionEnum.up,
             "eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
         },
         {
             "row": 7,
             "column": 22,
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "direction": DirectionEnum.up,
             "eventId": DOOR_IDS.TWO_TOWERS_MAIN_DOOR
         }

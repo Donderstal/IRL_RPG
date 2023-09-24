@@ -1,7 +1,7 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 
@@ -1822,24 +1822,24 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_COMMON_AREA,
 			"row": 6,
 			"column": 1,
 			"direction": DirectionEnum.left
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.D2_SARSTUD_COMMUNAL_SPACE_WOMAN1,
 			"spriteId": ID_SUNGLASSED_LADY
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.D2_SARSTUD_COMMUNAL_SPACE_ROBOT1,
 			"spriteId": ID_ROBOT_WHITE
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.D2_SARSTUD_COMMUNAL_SPACE_GUY1,
 			"spriteId": ID_TOUGH_GUY
 		}

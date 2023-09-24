@@ -1,7 +1,7 @@
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
-import { ELEVATOR_IDS } from "../../../../eventResources/elevatorIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
+import { ELEVATOR_IDS } from "../../../../eventChainResources/elevatorIds";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
 export default {
@@ -418,42 +418,42 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_HALL,
 			"row": 4,
 			"column": 6,
 			"direction": DirectionEnum.right
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F2,
 			"row": 1,
 			"column": 1,
 			"direction": DirectionEnum.up
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F2,
 			"row": 1,
 			"column": 2,
 			"direction": DirectionEnum.up
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F1,
 			"row": 1,
 			"column": 5,
 			"direction": DirectionEnum.up
 		},
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_STAIRS_F1,
 			"row": 1,
 			"column": 6,
 			"direction": DirectionEnum.up
 		},
 		{
-			"eventType": EventType.elevator,
+			"eventChainType": EventChainType.elevator,
 			"eventId": ELEVATOR_IDS.SARDINE_STUDIOS,
 			"column": 3,
 			"row": 3,

@@ -1,9 +1,9 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { DirectionEnum } from "../../../../../enumerables/DirectionEnum";
-import { EventType } from "../../../../../enumerables/EventType";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
 import { CHARNAME_CAR_SHACK_BOSS, CHARNAME_CAR_SHACK_MECHANIC } from "../../../../../game-data/interactionGlobals";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { CAR_MECHANIC, CAR_SHACK_BOSS } from "../../../../spriteTypeResources";
 import { LOCATION_NAMES } from "../../../locationNames";
 import { MAP_IDS } from "../../../mapIds";
@@ -1103,19 +1103,19 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.CAR_SHACK_FRONT_DOOR,
 			"direction": DirectionEnum.down,
 			"column": 4,
 			"row": 8,
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.C3_CAR_SHACK_BOSS,
 			"spriteId": BOSS_CLYDE
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.C3_CAR_SHACK_MECHANIC,
 			"spriteId": MECHANIC_LI
         }

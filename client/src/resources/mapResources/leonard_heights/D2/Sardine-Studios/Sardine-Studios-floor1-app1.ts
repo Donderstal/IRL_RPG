@@ -4,9 +4,9 @@ import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition
 import { POLICE_WOMAN_1 } from "../../../../spriteTypeResources";
 import { MAP_IDS } from "../../../mapIds";
 import { LOCATION_NAMES } from "../../../locationNames";
-import { EventType } from "../../../../../enumerables/EventType";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
 
 const ID_THIEVING_ROBOT = "ID_THIEVING_ROBOT";
 const ID_POLICE_WOMAN = "ID_POLICE_WOMAN";
@@ -467,19 +467,19 @@ export default {
 	"roads": [],
 	"triggers": [
 		{
-			"eventType": EventType.door,
+			"eventChainType": EventChainType.door,
 			"eventId": DOOR_IDS.SARDINE_STUDIOS_DOOR_F1_APP1,
 			"row": 2,
 			"column": 3,
 			"direction": DirectionEnum.up
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.D2_SARSTUD_F1_A1_ROBOT1,
 			"spriteId": ID_THIEVING_ROBOT
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventId": CUTSCENE_IDS.D2_SARSTUD_F1_A1_POLICEWOMAN1,
 			"spriteId": ID_POLICE_WOMAN
 		}

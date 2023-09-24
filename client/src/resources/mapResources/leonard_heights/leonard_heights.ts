@@ -29,7 +29,7 @@ import C4Submaps from './C4/C4-submaps';
 import D2Submaps from './D2/D2-submaps';
 import E3Submaps from './E3/E3-submaps';
 import { LOCATION_NAMES } from '../locationNames';
-import { CUTSCENE_IDS } from '../../eventResources/cutsceneIds';
+import { CUTSCENE_IDS } from '../../eventChainResources/cutsceneIds';
 import { NEIGHBOURHOOD_IDS } from '../neighbourhoodIds';
 
 export default {

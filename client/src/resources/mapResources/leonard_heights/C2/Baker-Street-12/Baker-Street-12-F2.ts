@@ -1,9 +1,9 @@
 import { AnimationTypeEnum } from "../../../../../enumerables/AnimationTypeEnum";
 import { CollectableType } from "../../../../../enumerables/CollectableTypeEnum";
-import { EventType } from "../../../../../enumerables/EventType";
+import { EventChainType } from "../../../../../enumerables/EventChainType";
 import { getCollectibleCondition } from "../../../../collectibleResources";
-import { CUTSCENE_IDS } from "../../../../eventResources/cutsceneIds";
-import { DOOR_IDS } from "../../../../eventResources/doorIds";
+import { CUTSCENE_IDS } from "../../../../eventChainResources/cutsceneIds";
+import { DOOR_IDS } from "../../../../eventChainResources/doorIds";
 import { MAP_IDS } from "../../../mapIds";
 import { getBSAppartmentToHallDoor } from "./registries/BSDoorsFactory";
 import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
@@ -120,18 +120,18 @@ export default {
 	],
 	"triggers": [
 		getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F2 ),
+		//{
+		//	"eventChainType": EventChainType.door,
+		//	"eventId": CUTSCENE_IDS.COLLECT_CAN,
+		//	"spriteId": COLLECTIBLE_ID
+		//},
 		{
-			"eventType": EventType.door,
-			"eventId": CUTSCENE_IDS.COLLECT_CAN,
-			"spriteId": COLLECTIBLE_ID
-		},
-		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventID": CUTSCENE_IDS.C2_BS12_APT2_ROBOT_1,
 			"spriteId": ROBOT_1_ID
 		},
 		{
-			"eventType": EventType.cutscene,
+			"eventChainType": EventChainType.cutscene,
 			"eventID": CUTSCENE_IDS.C2_BS12_APT2_ROBOT_2,
 			"spriteId": ROBOT_2_ID
 		}

@@ -6,8 +6,8 @@ import { MovementType } from '../../../../enumerables/MovementTypeEnum';
 import { PIGEON, POLICE_ROBOT } from '../../../spriteTypeResources';
 import { getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
 import { IKEY_CAR_SHACK_3 } from '../../../../game-data/interactionGlobals';
-import { EventType } from '../../../../enumerables/EventType';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 export default {
     "frontGrid": FRONT_GRID_LEONARD_C3,
@@ -116,7 +116,7 @@ export default {
     ],
     "triggers": [
         {
-            "eventType": EventType.door,
+            "eventChainType": EventChainType.door,
             "eventId": DOOR_IDS.CAR_SHACK_FRONT_DOOR,
             "row": 8,
             "column": 21,

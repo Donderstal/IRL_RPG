@@ -4,9 +4,9 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { DirectionEnum } from '../../../../enumerables/DirectionEnum';
 import { DARK_HAIR_NERD_LADY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_LIFT } from '../../../../game-data/animationGlobals';
-import { EventType } from '../../../../enumerables/EventType';
-import { DOOR_IDS } from '../../../eventResources/doorIds';
-import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+import { DOOR_IDS } from '../../../eventChainResources/doorIds';
+import { CUTSCENE_IDS } from '../../../eventChainResources/cutsceneIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 const ID_D2_DARK_HAIR_NERD_LADY = "ID_D2_DARK_HAIR_NERD_LADY";
 const ID_D2_TOUGH_GUY = "ID_D2_TOUGH_GUY";
@@ -65,15 +65,15 @@ export default {
             "column": 15,
             "direction": DirectionEnum.up,
             "eventId": DOOR_IDS.SARDINE_STUDIOS_FRONT_DOOR,
-            "eventType": EventType.door
+            "eventChainType": EventChainType.door
         },
         {
-            "eventType": EventType.cutscene,
+            "eventChainType": EventChainType.cutscene,
             "eventId": CUTSCENE_IDS.D2_LOOKING_FOR_APPARTMENT_LADY,
             "spriteId": ID_D2_DARK_HAIR_NERD_LADY
         },
         {
-            "eventType": EventType.cutscene,
+            "eventChainType": EventChainType.cutscene,
             "eventId": CUTSCENE_IDS.D2_WHOLESOME_LIFTER,
             "spriteId": ID_D2_TOUGH_GUY
         }

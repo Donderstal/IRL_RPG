@@ -6,8 +6,8 @@ import { AnimationTypeEnum } from '../../../../enumerables/AnimationTypeEnum';
 import { STRONG_GUY, TOUGH_GUY } from '../../../spriteTypeResources';
 import { ANIM_BOP, ANIM_LIFT } from '../../../../game-data/animationGlobals';
 import { getInteractionNotRegisteredCondition, getInteractionRegisteredCondition } from '../../../../factories/conditionFactory';
-import { EventType } from '../../../../enumerables/EventType';
-import { CUTSCENE_IDS } from '../../../eventResources/cutsceneIds';
+import { CUTSCENE_IDS } from '../../../eventChainResources/cutsceneIds';
+import { EventChainType } from '../../../../enumerables/EventChainType';
 
 const ID_HELPFUL_BRO = "ID_HELPFUL_BRO";
 const ID_D1_WHOLESOME_LIFTER_1 = "ID_D1_WHOLESOME_LIFTER_1";
@@ -426,17 +426,17 @@ export default {
    ],
    "triggers":[
        {
-           "eventType": EventType.cutscene,
+           "eventChainType": EventChainType.cutscene,
            "eventId": CUTSCENE_IDS.D1_FRIENDLY_CHAD,
            "spriteId": ID_HELPFUL_BRO
        },
        {
-           "eventType": EventType.cutscene,
+           "eventChainType": EventChainType.cutscene,
            "eventId": CUTSCENE_IDS.D1_WHOLESOME_LIFTER,
            "spriteId": ID_D1_WHOLESOME_LIFTER_1
        },
        {
-           "eventType": EventType.cutscene,
+           "eventChainType": EventChainType.cutscene,
            "eventId": CUTSCENE_IDS.D1_WHOLESOME_LIFTER,
            "spriteId": ID_D1_WHOLESOME_LIFTER_2
        },
