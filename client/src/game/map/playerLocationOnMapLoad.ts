@@ -3,7 +3,7 @@ import type { MapModel } from "../../models/MapModel";
 import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 import { DirectionEnum } from "../../enumerables/DirectionEnum";
 import { getOppositeDirection } from "../../helpers/utilFunctions";
-import { EventType } from "../../enumerables/EventType";
+import { EventChainType } from "../../enumerables/EventChainType";
 
 let previousMapName: string;
 let playerStart: CellPosition = null;
@@ -63,7 +63,7 @@ const setPlayerStartForNewGame = ( mapToLoad: MapModel ): void => {
 }
 
 const setPlayerStartForLoadGame = ( mapToLoad: MapModel ): void => {
-    const model: CellPosition = mapToLoad.triggers.filter(e => e.eventType === EventType.save_point)[0];
+    const model: CellPosition = mapToLoad.triggers.filter(e => e.eventChainType === EventChainType.savepoint)[0];
     playerStart = model;
 }
 

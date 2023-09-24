@@ -1,5 +1,5 @@
 import { State } from "../enumerables/StateEnum";
-import { getDebugModeGameState, getDisableStoryGameState, getGameControlState, getInEventGameState, getListentingForKeysGameState, getPausedGameState } from "./state";
+import { getDebugModeGameState, getDisableStoryGameState, getGameControlState, getEventChainState, getListentingForKeysGameState, getPausedGameState } from "./state";
 
 export const inPausedState = (): boolean => {
     return getPausedGameState();
@@ -13,8 +13,8 @@ export const inDisableStoryState = (): boolean => {
 export const inListeningForKeysState = (): boolean => {
     return getListentingForKeysGameState();
 }
-export const inInEventState = (): boolean => {
-    return getInEventGameState();
+export const inEventChainState = (): boolean => {
+    return getEventChainState();
 }
 
 export const inWebsiteState = (): boolean => {

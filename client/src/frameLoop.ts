@@ -4,14 +4,15 @@ import { handleCinematicAnimations } from './game/cutscenes/cinematicAnimations'
 import { cameraFocus } from './game/cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from './helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './game/canvas/canvasSetter';
-import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getMenuGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './game/canvas/canvasGetter';
-import { inInEventState, inPausedState } from './state/stateGetter';
+import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './game/canvas/canvasGetter';
+import { inEventChainState, inPausedState } from './state/stateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './game/controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from './helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from './helpers/dynamicTileDrawer';
 import { handleControls } from './controls/controlHandler';
-import { checkQueuedTriggers, clearTriggerQueue } from './event-triggers/triggerQueue';
-import { handleEventQueue } from './event-queue/eventQueueHandler';
+import { checkQueuedTriggers } from './event-triggers/triggerQueue';
+import { handleEventChainQueue } from './eventchain-queue/eventChainQueueHandler';
+import { handleActiveEventChain } from './eventchain-queue/activeEventChain';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -19,18 +20,25 @@ let animationFrameLoop = null;
 let wroteScreenTextLastFrame = false;
 
 export const animationLoop = (): void => {
+    const gameIsPaused = inPausedState();
+    const gameHasActiveEvent = inEventChainState();
+
     newDateNow = Date.now();
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
 
-        if ( !inPausedState() ) {
-            checkQueuedTriggers();
-            clearTriggerQueue();
-            handleEventQueue();
+        if ( !gameIsPaused ) {
+            if ( !gameHasActiveEvent ) {
+                checkQueuedTriggers();
+                handleEventChainQueue();
+            }
+            else {
+                handleActiveEventChain()
+            }
 
             handleControls();
 
-            if ( inInEventState() ) {
+            if ( gameHasActiveEvent ) {
                 handleCinematicAnimations();
             }
             else {
@@ -43,9 +51,8 @@ export const animationLoop = (): void => {
         else {
             clearSpriteCanvasGrids()
         }
-        if ( inFadingAnimation() ) {
-            handleFadeAnimation()
-        }
+
+        if ( inFadingAnimation() ) handleFadeAnimation();
     }
 
     animationFrameLoop = requestAnimationFrame( animationLoop )

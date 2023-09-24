@@ -144,7 +144,7 @@ const setTriggers = ( triggerList: TriggerModel[], back: BackTileGrid ): void =>
         if ( e.spriteId !== null && e.spriteId !== undefined ) {
             setSpriteBasedTrigger( e );
         }
-        else if ( e.triggeredBy !== null && e.triggeredBy !== undefined ) {
+        else if ( e.triggerType !== null && e.triggerType !== undefined ) {
             setTrigger( e );
         }
         else {

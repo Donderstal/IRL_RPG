@@ -2,11 +2,13 @@ import { TriggerType } from "../enumerables/TriggerType";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import { getSpriteRelatedTriggerId, spriteTriggerRelationExists } from "../registries/spriteTriggerRelationRegistry";
+import { inEventChainState } from "../state/stateGetter";
 import type { Trigger } from "./Trigger";
 import { addTriggerToQueue } from "./triggerQueue";
 import { getAllTriggers, getTriggerById, getTriggersByTriggerType } from "./triggerRegistry";
 
 export const checkForEventTriggers = ( triggerType: TriggerType, playerHitbox: Hitbox = null ): void => {
+    if ( inEventChainState() ) return;
     const triggers = getTriggersByTriggerType( triggerType );
     if ( triggers.length === -1 || triggers.length === 0 ) return;
 
@@ -38,17 +40,14 @@ const checkForEventTrigger = ( trigger: Trigger, triggerType: TriggerType, playe
         case TriggerType.interaction:
             queueTrigger = playerHitbox.isInActionRange( trigger );
             break;
-        case TriggerType.map_enter:
-        case TriggerType.map_leave:
-            queueTrigger = trigger.model.triggeredBy === triggerType;
-            break;
         default:
             console.error(`Trigger has unkown triggertype ${triggerType}`)
     }
 
     if ( queueTrigger ) {
         console.log( `Queueing trigger` )
-        console.log( trigger )
+        console.log( trigger.model )
+        console.log( triggerType )
         addTriggerToQueue( trigger.model, triggerType );
     }
 }

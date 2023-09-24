@@ -1,6 +1,6 @@
 import { ConditionType } from "../enumerables/ConditionTypeEnum";
 import { InteractionAnswer } from "../enumerables/InteractionAnswer";
-import { isInRegistry, isInRegistryWithValue } from '../registries/interactionRegistry';
+import { isInInteractionRegistry, isInRegistryWithValue } from '../registries/interactionRegistry';
 import { getInventory } from "../game/party/partyController";
 import { loggedIn } from "../stores";
 import { get } from "svelte/store";
@@ -12,9 +12,9 @@ export const conditionIsTrue = ( conditionType: ConditionType, valueToCheck: str
         case ConditionType.doesNotOwnItem:
             return getInventory().getItemStackById( valueToCheck ) === undefined;
         case ConditionType.interactionRegistered:
-            return isInRegistry( valueToCheck );
+            return isInInteractionRegistry( valueToCheck );
         case ConditionType.interactionNotRegistered:
-            return !isInRegistry( valueToCheck );
+            return !isInInteractionRegistry( valueToCheck );
         case ConditionType.yesRegisteredInInteraction:
             return isInRegistryWithValue( valueToCheck, InteractionAnswer.yes );
         case ConditionType.noRegisteredInInteraction:

@@ -3,8 +3,8 @@ import type { FrameModel } from "../models/SpriteFrameModel";
 import type { TriggerModel } from "../models/TriggerModel";
 import { inDebugState } from "../state/stateGetter";
 import { Hitbox } from "../game/core/Hitbox";
-import { EventType } from "../enumerables/EventType";
 import { FX_BLUE_SQUARE } from "../resources/effectResources";
+import { EventChainType } from "../enumerables/EventChainType";
 
 export class Trigger extends Hitbox {
     arcColor: string;
@@ -40,11 +40,11 @@ export class Trigger extends Hitbox {
     }
 
     setForArcColor(): void {
-        switch ( this.model.eventType ) {
-            case EventType.elevator:
+        switch ( this.model.eventChainType ) {
+            case EventChainType.elevator:
                 this.arcColor = "#00FF00";
                 break;
-            case EventType.door:
+            case EventChainType.door:
                 this.arcColor = "#FFFF00";
                 break;
             default:
@@ -62,7 +62,7 @@ export class Trigger extends Hitbox {
     }
 
     checkForGraphicalEffect(): void {
-        if ( this.model.eventType === EventType.save_point ) {
+        if ( this.model.eventChainType === EventChainType.savepoint ) {
             this.setGraphicalEffect( getEffect( FX_BLUE_SQUARE, this.x, this.y ) );
         }
     }

@@ -19,7 +19,7 @@ export const setDisableStoryGameState = ( value: boolean ): void => {
 export const setListeningForKeysGameState = ( value: boolean ): void => {
     listeningForKeys = value;
 }
-export const setInEventGameState = ( value: boolean ): void => {
+export const setEventChainGameState = ( value: boolean ): void => {
     inEvent = value;
 }
 export const setGameControlState = ( value: State ): void => {
@@ -38,7 +38,7 @@ export const getDisableStoryGameState = (): boolean => {
 export const getListentingForKeysGameState = (): boolean => {
     return listeningForKeys;
 }
-export const getInEventGameState = (): boolean => {
+export const getEventChainState = (): boolean => {
     return inEvent;
 }
 export const getGameControlState = (): State => {

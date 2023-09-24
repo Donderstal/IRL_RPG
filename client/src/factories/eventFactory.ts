@@ -14,7 +14,7 @@ import type { ElevatorEventChain } from "../models/eventChains/ElevatorEventChai
 import type { SavePointEventChain } from "../models/eventChains/SavePointEventChain";
 
 // EvenScripts
-export const createCutsceneEventDto = ( cutsceneModel: CinematicModel, registryKey: string = null, sfx: string = null ): CutsceneEventDto => {
+export const createCutsceneEventScript = ( cutsceneModel: CinematicModel, registryKey: string = null, sfx: string = null ): CutsceneEventDto => {
     return {
         eventType: EventType.cutscene,
         cutscene: cutsceneModel,
@@ -23,14 +23,14 @@ export const createCutsceneEventDto = ( cutsceneModel: CinematicModel, registryK
         sfx: sfx
     };
 }
-export const createLeaveMapEventDto = ( nextMapName: string, doorId: string = null ): LeaveMapEventDto => {
+export const createLeaveMapEventScript = ( nextMapName: string, doorId: string = null ): LeaveMapEventDto => {
     return {
         eventType: EventType.leave_map,
         nextMapName: nextMapName,
         doorId: doorId
     };
 }
-export const createEnterMapEventDto = ( mapName: string, doorId: string = null ): EnterMapEventDto => {
+export const createEnterMapEventScript = ( mapName: string, doorId: string = null ): EnterMapEventDto => {
     return {
         eventType: EventType.enter_map,
         mapName: mapName,

@@ -9,7 +9,7 @@ import type { ItemModel } from "../models/ItemModel";
 import type { GridCellModel } from "../models/GridCellModel";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import { getDataModelByKey } from "../resources/spriteDataResources";
-import { isInRegistry } from "../registries/interactionRegistry";
+import { isInInteractionRegistry } from "../registries/interactionRegistry";
 
 export const initMapModel = ( mapData ): MapModel => {
     const mapModel: MapModel = {
@@ -30,7 +30,7 @@ export const initMapModel = ( mapData ): MapModel => {
         sprites: mapData.sprites?.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
         frontSprites: mapData.sprites?.map( ( spriteDto ): CanvasObjectModel => { return initCanvasObjectModel( spriteDto ) } ),
 
-        triggers: mapData.triggers != undefined ? mapData.triggers.filter( e => !isInRegistry(e.eventId) ) : [],
+        triggers: mapData.triggers != undefined ? mapData.triggers.filter( e => !isInInteractionRegistry(e.eventId) ) : [],
 
         unblockedTileIds: mapData.unblockedTileIds != undefined ? mapData.unblockedTileIds : [],
         blockedTileIds: mapData.blockedTileIds != undefined ? mapData.blockedTileIds : [],

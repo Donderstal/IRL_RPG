@@ -1,13 +1,12 @@
-import { EventType } from "../enumerables/EventType";
+import { EventChainType } from "../enumerables/EventChainType";
 import type { TriggerType } from "../enumerables/TriggerType";
-import { addToEventQueue } from "../event-queue/eventQueue";
-import { conditionIsTrue } from "../helpers/conditionalHelper";
-import type { EventModel } from "../models/events/EventModel";
+import { addToEventChainQueue } from "../eventchain-queue/eventChainQueue";
+import type { IEventChain } from "../models/eventChains/IEventChain";
 import type { TriggerModel } from "../models/TriggerModel";
-import { CUTSCENE_EVENTS } from "../resources/eventResources/cutsceneEvents";
-import { DOOR_EVENTS } from "../resources/eventResources/doorEvents";
-import { ELEVATOR_EVENTS } from "../resources/eventResources/elevatorEvents";
-import { SAVEPOINT_EVENTS } from "../resources/eventResources/savePointEvents";
+import { CUTSCENE_EVENT_CHAINS } from "../resources/eventChainResources/cutsceneEventChains";
+import { DOOR_EVENT_CHAINS } from "../resources/eventChainResources/doorEventChains";
+import { ELEVATOR_EVENT_CHAINS } from "../resources/eventChainResources/elevatorEventChains";
+import { SAVEPOINT_EVENT_CHAINS } from "../resources/eventChainResources/savePointEventChains";
 
 type QueuedTrigger = {
     trigger: TriggerModel,
@@ -23,43 +22,39 @@ export const addTriggerToQueue = ( trigger: TriggerModel, type: TriggerType ): v
     }
     triggerQueue.push( queueTrigger );
 }
-export const checkQueuedTriggers = ( ): void => {
+export const checkQueuedTriggers = (): void => {
     triggerQueue.forEach( checkQueuedTrigger );
-}
-export const clearTriggerQueue = (): void => {
-    triggerQueue = [];
+    clearTriggerQueue();
 }
 
 const checkQueuedTrigger = ( queuedTrigger: QueuedTrigger ): void => {
     const event = getTriggerAssociatedEvent( queuedTrigger.trigger )
     if ( event == null ) {
         console.warn( `Tried to trigger unknown event with id ${queuedTrigger.trigger.eventId}` );
-        return;
     }
 
-    const triggeredEventScriptId = event.triggerableEvents.findIndex( ( e ) => { return queuedTrigger.type === e.triggerType && conditionIsTrue( e.condition.type, e.condition.value ); } );
-    if ( triggeredEventScriptId == -1 ) {
-        console.warn( `Tried to trigger event with id ${queuedTrigger.trigger.eventId}, but no eventscript was found that meets condition.` );
-    }
-    addToEventQueue( event, triggeredEventScriptId, queuedTrigger.type );
+    addToEventChainQueue( event, queuedTrigger.type );
 }
-const getTriggerAssociatedEvent = ( model: TriggerModel ): EventModel => {
+const getTriggerAssociatedEvent = ( model: TriggerModel ): IEventChain => {
     let event = null;
 
-    switch ( model.eventType ) {
-        case EventType.cutscene:
-            event = CUTSCENE_EVENTS[model.eventId];
+    switch ( model.eventChainType ) {
+        case EventChainType.cutscene:
+            event = CUTSCENE_EVENT_CHAINS[model.eventId];
             break;
-        case EventType.door:
-            event = DOOR_EVENTS[model.eventId];
+        case EventChainType.door:
+            event = DOOR_EVENT_CHAINS[model.eventId];
             break;
-        case EventType.elevator:
-            event = ELEVATOR_EVENTS[model.eventId];
+        case EventChainType.elevator:
+            event = ELEVATOR_EVENT_CHAINS[model.eventId];
             break;
-        case EventType.save_point:
-            event = SAVEPOINT_EVENTS[model.eventId];
+        case EventChainType.savepoint:
+            event = SAVEPOINT_EVENT_CHAINS[model.eventId];
             break;
     }
 
     return event;
+}
+const clearTriggerQueue = (): void => {
+    triggerQueue = [];
 }

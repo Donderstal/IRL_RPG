@@ -3,7 +3,7 @@ import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import type { CellPosition } from '../../models/CellPositionModel';
-import { EventType } from '../../enumerables/EventType';
+import { EventChainType } from '../../enumerables/EventChainType';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
@@ -60,7 +60,7 @@ export class BackTileGrid extends CanvasGrid {
         if ( sheetModel.blocked )
             this.setBlockedTiles( sheetModel.blocked );
         if ( this.model.triggers ) {
-            this.setUnblockedTiles( this.model.triggers.filter( e => e.eventType === EventType.door ) );
+            this.setUnblockedTiles( this.model.triggers.filter( e => e.eventChainType === EventChainType.door ) );
         }
     }
 

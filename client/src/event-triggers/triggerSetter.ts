@@ -11,7 +11,7 @@ export const setTrigger = ( model: TriggerModel, canvasObject: Tile | Sprite = n
     const trigger = new Trigger( frame, model );
     const triggerId = registerTrigger( trigger );
 
-    if ( model.spriteId !== null ) {
+    if ( model.spriteId !== null && model.spriteId !== undefined) {
         registerSpriteTriggerRelation( model.spriteId, triggerId, model.eventId );
     }
 }

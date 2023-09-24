@@ -1,6 +1,7 @@
-import { EventType } from "../enumerables/EventType";
+import { EventChainType } from "../enumerables/EventChainType";
 import { TriggerType } from "../enumerables/TriggerType";
 import { getUniqueId } from "../helpers/utilFunctions";
+import type { TriggerModel } from "../models/TriggerModel";
 import type { Trigger } from "./Trigger";
 
 let ids: string[] = [];
@@ -25,6 +26,9 @@ const triggerInRegistry = ( id: string ) => {
     return triggers.filter( e => e.id == id ).length > -1;
 }
 
+export const getTriggerByTriggerType = ( type: TriggerType ): Trigger => {
+    return triggers.filter( e => e.model.triggerType === type )[0];
+}
 export const registerTrigger = ( trigger: Trigger ): string => {
     const id = getUniqueId( ids );
     trigger.setId( id );
@@ -50,19 +54,20 @@ export const isRegisteredInTriggerRegistry = ( id: string ): boolean => {
     return ( idInRegistry( id ) && triggerInRegistry( id ) );
 }
 export const getTriggersByTriggerType = ( type: TriggerType ): Trigger[] => {
-    return triggers.filter( ( e ) => {
-        if ( type === e.model.triggeredBy ) return true;
-        if ( e.model.triggeredBy !== null && e.model.triggeredBy !== undefined ) return false;
-
-        switch ( e.model.eventType ) {
-            case EventType.cutscene:
-                return type === TriggerType.interaction;
-            case EventType.door:
-                return type === TriggerType.interaction || type === TriggerType.collision;
-            case EventType.elevator:
-                return type === TriggerType.interaction;
-            case EventType.save_point:
-                return type === TriggerType.interaction;
-        }
-    } );
+    return triggers.filter( ( e ) => { return filterTrigger(e.model, type) } );
+};
+const filterTrigger = ( triggerModel: TriggerModel, type: TriggerType ): boolean => {
+    if ( triggerModel.triggerType !== undefined && triggerModel.triggerType !== null ) {
+        return type === triggerModel.triggerType;
+    }
+    switch ( triggerModel.eventChainType ) {
+        case EventChainType.cutscene:
+            return type === TriggerType.interaction;
+        case EventChainType.door:
+            return type === TriggerType.interaction || type === TriggerType.collision;
+        case EventChainType.elevator:
+            return type === TriggerType.interaction;
+        case EventChainType.savepoint:
+            return type === TriggerType.interaction;
+    }
 }
