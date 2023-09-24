@@ -4,7 +4,7 @@ import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene,
     DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene,
     SpeakScene, SpeakYesNoScene, WaitScene, ScreenTextScene
-} from "../../models/SceneAnimationModel";
+} from "../../models/cutscenes/SceneAnimationModel";
 import { Counter } from '../../helpers/Counter';
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { Sprite } from "../core/Sprite";

@@ -1,5 +1,5 @@
 import type { EventType } from "../../enumerables/EventType";
 
-export type IEventDto = {
+export type IEventScript = {
     eventType?: EventType
 }

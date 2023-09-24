@@ -1,5 +1,10 @@
 ### 
 
+#### SEP 24 2023
+* Splitting up Events into EventChains and EventScripts
+* Restructuring models, resources to the Chain/Script distinction
+* Basic (dummy) setup for triggering an EventChain, walking through the scripts and ending it
+
 #### AUG 30 2023
 * Testing new event setup, adding story cinematics to trigger->event flow
 * Removing a lot of obsolete code

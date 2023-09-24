@@ -1,7 +1,7 @@
 ﻿import { setFont } from "./canvasHelpers";
 import { GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } from "../game-data/globals";
 import { clearSpeakingEffect } from "../game/sound/sound";
-import type { PhraseModel } from "../models/PhraseModel";
+import type { PhraseModel } from "../models/cutscenes/PhraseModel";
 
 export class TypeWriterWord {
     startingPosition: number;

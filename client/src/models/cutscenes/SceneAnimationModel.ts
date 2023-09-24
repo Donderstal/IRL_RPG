@@ -1,6 +1,6 @@
-import type { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum"
-import type { CellPosition } from "./CellPositionModel";
-import type { GridCellModel } from "./GridCellModel";
+import type { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum"
+import type { CellPosition } from "../CellPositionModel";
+import type { GridCellModel } from "../GridCellModel";
 
 export type AnimationScene = {
     type: SceneAnimationType;

@@ -1,7 +1,7 @@
 import { getUniqueId } from '../../helpers/utilFunctions';
 import { Animation } from './Animation';
-import type { CinematicSceneModel } from '../../models/CinematicSceneModel';
-import type { AnimationScene } from '../../models/SceneAnimationModel';
+import type { CutsceneSceneModel } from '../../models/cutscenes/CutsceneSceneModel';
+import type { AnimationScene } from '../../models/cutscenes/SceneAnimationModel';
 import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
 import { getMainTextBubble } from '../controllers/bubbleController';
 import { spriteHasDestination } from '../modules/destinations/destinationGetter'
@@ -16,7 +16,7 @@ export class Scene {
     animations: Animation[];
     animationIds: string[];
     finishedAnimations: string[];
-    constructor( sceneModel: CinematicSceneModel, spriteId: string ) {
+    constructor( sceneModel: CutsceneSceneModel, spriteId: string ) {
         this.animations = [];
         this.animationIds = [];
         this.finishedAnimations = [];

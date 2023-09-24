@@ -3,21 +3,21 @@ import { EventChainType } from "../enumerables/EventChainType";
 import { EventType } from "../enumerables/EventType";
 import { TriggerType } from "../enumerables/TriggerType";
 import { getTriggersByTriggerType } from "../event-triggers/triggerRegistry";
-import { handleActiveEventScript } from "../events/eventHandler";
+import { handleActiveEventScript } from "../event-scripts/eventScriptHandler";
 import { createCutsceneEventScript, createEnterMapEventScript, createLeaveMapEventScript } from "../factories/eventFactory";
 import type { DoorEventChain } from "../models/eventChains/DoorEventChain";
 import type { IEventChain } from "../models/eventChains/IEventChain";
-import type { CutsceneEventDto } from "../models/events/CutsceneEventDto";
-import type { IEventDto } from "../models/events/IEventDto";
+import type { CutsceneEventScript } from "../models/eventScripts/CutsceneEventScript";
+import type { IEventScript } from "../models/eventScripts/IEventScript";
 import { CUTSCENE_SCRIPTS } from "../resources/cutsceneScripts";
 import { setEventChainGameState } from "../state/state";
 
 let activeEventChain: IEventChain = null;
-let mainEventScript: IEventDto = null;
-let activeEventScript: IEventDto = null;
+let mainEventScript: IEventScript = null;
+let activeEventScript: IEventScript = null;
 let previousEventTypesInChain: EventType[] = [];
 
-export const startEventChain = ( eventChain: IEventChain, mainEvent: IEventDto ): void => {
+export const startEventChain = ( eventChain: IEventChain, mainEvent: IEventScript ): void => {
     console.log( `Activating eventchain ${eventChain.eventChainType}` );
     console.log( `Main eventscript: ${mainEvent.eventType}` );
     setEventChainGameState( true );
@@ -53,20 +53,20 @@ const clearEventChain = (): void => {
     activeEventChain = null;
     setEventChainGameState( false );
 }
-const setActiveEventScript = ( script: IEventDto ): void => {
+const setActiveEventScript = ( script: IEventScript ): void => {
     activeEventScript = script;
 }
 const unsetActiveEventScript = ( ): void => {
     activeEventScript = null;
 }
-const determineNextEventScript = ( currentEvent: IEventDto = activeEventScript ): IEventDto => {
+const determineNextEventScript = ( currentEvent: IEventScript = activeEventScript ): IEventScript => {
     const currentEventType = currentEvent.eventType;
     const eventChainType = activeEventChain.eventChainType
-    let nextEvent: IEventDto = null;
+    let nextEvent: IEventScript = null;
 
     switch ( currentEventType ) {
         case EventType.cutscene:
-            nextEvent = getNextEventAfterCutscene( currentEvent as CutsceneEventDto, eventChainType );
+            nextEvent = getNextEventAfterCutscene( currentEvent as CutsceneEventScript, eventChainType );
             break;
         case EventType.enter_map:
             nextEvent = getNextEventAfterEnterMap();
@@ -87,8 +87,8 @@ const determineNextEventScript = ( currentEvent: IEventDto = activeEventScript )
 
     return nextEvent;
 };
-const determineFirstEventScript = ( ): IEventDto => {
-    let startingEventScript: IEventDto = null;
+const determineFirstEventScript = ( ): IEventScript => {
+    let startingEventScript: IEventScript = null;
 
     if ( mainEventScript?.eventType === EventType.leave_map ) {
         startingEventScript = getNextEventBeforeLeaveMap();
@@ -98,7 +98,7 @@ const determineFirstEventScript = ( ): IEventDto => {
 
     return startingEventScript;
 };
-const getNextEventAfterCutscene = ( currentEvent: CutsceneEventDto, eventChainType: EventChainType ): IEventDto => {
+const getNextEventAfterCutscene = ( currentEvent: CutsceneEventScript, eventChainType: EventChainType ): IEventScript => {
     if ( eventChainType === EventChainType.cutscene ) {
         return null;
     }
@@ -122,15 +122,15 @@ const getNextEventAfterCutscene = ( currentEvent: CutsceneEventDto, eventChainTy
         // trigger prompt
     }
 }
-const getNextEventAfterLeaveMap = ( ): IEventDto => {
+const getNextEventAfterLeaveMap = ( ): IEventScript => {
     const doorChain = activeEventChain as DoorEventChain;
     return createEnterMapEventScript( doorChain.initialMap === doorChain.mapA ? doorChain.mapB : doorChain.mapA, doorChain.doorId );
 }
-const getNextEventAfterPrompt = ( ): IEventDto => {
+const getNextEventAfterPrompt = ( ): IEventScript => {
     // HANDLE PROMPT ANSWER
     return null;
 }
-const getNextEventBeforeLeaveMap = (): IEventDto => {
+const getNextEventBeforeLeaveMap = (): IEventScript => {
     const leaveMapTrigger = getTriggersByTriggerType( TriggerType.map_leave )[0];
     if ( leaveMapTrigger != undefined && leaveMapTrigger != undefined ) {
         const cinematicScript = CUTSCENE_SCRIPTS[leaveMapTrigger.model.eventId];
@@ -138,7 +138,7 @@ const getNextEventBeforeLeaveMap = (): IEventDto => {
     }
     return null;
 };
-const getNextEventAfterEnterMap = (): IEventDto => {
+const getNextEventAfterEnterMap = (): IEventScript => {
     const enterMapTrigger = getTriggersByTriggerType( TriggerType.map_enter )[0];
     if ( enterMapTrigger != undefined && enterMapTrigger != undefined ) {
         const cinematicScript = CUTSCENE_SCRIPTS[enterMapTrigger.model.eventId];

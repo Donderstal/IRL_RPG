@@ -3,67 +3,67 @@ import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import { ANIM_BACK_AND_FORTH_POSITIONAL, ANIM_POWER_UP, ANIM_TURN_CIRCLE_POSITIONAL } from "../game-data/animationGlobals";
 import { CHARNAME_CAR_SHACK_BOSS, CHARNAME_CAR_SHACK_MECHANIC, PLAYER_NAME } from "../game-data/interactionGlobals";
 import { EMOTE_ANGRY, EMOTE_EXCLAMATIONMARK, EMOTE_HAPPY, EMOTE_HEART, EMOTE_QUESTIONMARK, EMOTE_SAD, EMOTE_SURPRISED } from "../game-data/textboxGlobals";
-import type { CinematicModel } from "../models/CinematicModel";
+import type { CutsceneModel } from "../models/cutscenes/CutsceneModel";
 import { getAnimateSpriteScene, getCameraMoveToSpriteScene, getDeleteSpriteScene, getEmoteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene, getSpeakYesNoScene } from "./../factories/cinematicFactory";
 import { MAP_IDS } from "./mapResources/mapIds";
 
 type CutsceneScripts = {
-    INTRO_CINEMATIC: CinematicModel;
+    INTRO_CINEMATIC: CutsceneModel;
 
-    RANDOM_ENCOUNTER_1: CinematicModel;
-    RANDOM_ENCOUNTER_2: CinematicModel;
-    RANDOM_ENCOUNTER_3: CinematicModel;
-    RANDOM_ENCOUNTER_4: CinematicModel;
-    RANDOM_ENCOUNTER_5: CinematicModel;
-    RANDOM_ENCOUNTER_6: CinematicModel;
+    RANDOM_ENCOUNTER_1: CutsceneModel;
+    RANDOM_ENCOUNTER_2: CutsceneModel;
+    RANDOM_ENCOUNTER_3: CutsceneModel;
+    RANDOM_ENCOUNTER_4: CutsceneModel;
+    RANDOM_ENCOUNTER_5: CutsceneModel;
+    RANDOM_ENCOUNTER_6: CutsceneModel;
 
-    LOCKED_DOOR: CinematicModel;
-    UNLOCK_DOOR: CinematicModel;
-    SAVE_GAME: CinematicModel;
-    SAVE_NOT_LOGGED_IN: CinematicModel;
-    COLLECT_COIN: CinematicModel;
-    COLLECT_CAN: CinematicModel;
+    LOCKED_DOOR: CutsceneModel;
+    UNLOCK_DOOR: CutsceneModel;
+    SAVE_GAME: CutsceneModel;
+    SAVE_NOT_LOGGED_IN: CutsceneModel;
+    COLLECT_COIN: CutsceneModel;
+    COLLECT_CAN: CutsceneModel;
 
-    LH_A3_ROBOT_RECEPTIONIST: CinematicModel;
-    LH_A3_ROBOT_COOK: CinematicModel;
-    LH_A3_MONKEY_COOK: CinematicModel;
+    LH_A3_ROBOT_RECEPTIONIST: CutsceneModel;
+    LH_A3_ROBOT_COOK: CutsceneModel;
+    LH_A3_MONKEY_COOK: CutsceneModel;
 
-    LH_B3_KEY_GUY_1: CinematicModel;
-    LH_B3_KEY_GUY_2: CinematicModel;
-    LH_B3_KEY_GUY_3: CinematicModel;
+    LH_B3_KEY_GUY_1: CutsceneModel;
+    LH_B3_KEY_GUY_2: CutsceneModel;
+    LH_B3_KEY_GUY_3: CutsceneModel;
 
-    LH_B4_WHOLESOME_LIFTER: CinematicModel;
+    LH_B4_WHOLESOME_LIFTER: CutsceneModel;
 
-    LH_C1_FINDING_LOST_KEY: CinematicModel;
+    LH_C1_FINDING_LOST_KEY: CutsceneModel;
 
-    LH_C2_BS12_APT4_RESIDENT: CinematicModel;
-    LH_C2_BS12_APT2_ROBOT_1: CinematicModel;
-    LH_C2_BS12_APT2_ROBOT_2: CinematicModel;
+    LH_C2_BS12_APT4_RESIDENT: CutsceneModel;
+    LH_C2_BS12_APT2_ROBOT_1: CutsceneModel;
+    LH_C2_BS12_APT2_ROBOT_2: CutsceneModel;
 
-    LH_C3_CAR_SHACK_BOSS_1: CinematicModel;
-    LH_C3_CAR_SHACK_BOSS_2: CinematicModel;
-    LH_C3_CAR_SHACK_BOSS_3: CinematicModel;
-    LH_C3_CAR_MECHANIC_1: CinematicModel;
+    LH_C3_CAR_SHACK_BOSS_1: CutsceneModel;
+    LH_C3_CAR_SHACK_BOSS_2: CutsceneModel;
+    LH_C3_CAR_SHACK_BOSS_3: CutsceneModel;
+    LH_C3_CAR_MECHANIC_1: CutsceneModel;
 
-    LH_C4_YUM_MART_OFFICE_GUY: CinematicModel;
+    LH_C4_YUM_MART_OFFICE_GUY: CutsceneModel;
 
-    LH_D1_FRIENDLY_CHAD: CinematicModel;
-    LH_D1_WHOLESOME_LIFTER: CinematicModel;
+    LH_D1_FRIENDLY_CHAD: CutsceneModel;
+    LH_D1_WHOLESOME_LIFTER: CutsceneModel;
 
-    LH_D2_LOOKING_FOR_APPARTMENT: CinematicModel;
-    LH_D2_WHOLESOME_LIFTER: CinematicModel;
-    LH_D2_SARSTUD_COMMUNAL_SPACE_GUY1_1: CinematicModel;
-    LH_D2_SARSTUD_COMMUNAL_SPACE_GUY1_2: CinematicModel;
-    LH_D2_SARSTUD_COMMUNAL_SPACE_WOMAN1_1: CinematicModel;
-    LH_D2_SARSTUD_COMMUNAL_SPACE_WOMAN1_2: CinematicModel;
-    LH_D2_SARSTUD_COMMUNAL_ROBOT1_1: CinematicModel;
-    LH_D2_SARSTUD_COMMUNAL_ROBOT1_2: CinematicModel;
-    LH_D2_SARSTUD_F1_A1_ROBOT1_1: CinematicModel;
-    LH_D2_SARSTUD_F1_A1_ROBOT1_2: CinematicModel;
-    LH_D2_SARSTUD_F1_A1_ROBOT1_3: CinematicModel;
-    LH_D2_SARSTUD_F1_A1_POLICEWOMAN1: CinematicModel;
+    LH_D2_LOOKING_FOR_APPARTMENT: CutsceneModel;
+    LH_D2_WHOLESOME_LIFTER: CutsceneModel;
+    LH_D2_SARSTUD_COMMUNAL_SPACE_GUY1_1: CutsceneModel;
+    LH_D2_SARSTUD_COMMUNAL_SPACE_GUY1_2: CutsceneModel;
+    LH_D2_SARSTUD_COMMUNAL_SPACE_WOMAN1_1: CutsceneModel;
+    LH_D2_SARSTUD_COMMUNAL_SPACE_WOMAN1_2: CutsceneModel;
+    LH_D2_SARSTUD_COMMUNAL_ROBOT1_1: CutsceneModel;
+    LH_D2_SARSTUD_COMMUNAL_ROBOT1_2: CutsceneModel;
+    LH_D2_SARSTUD_F1_A1_ROBOT1_1: CutsceneModel;
+    LH_D2_SARSTUD_F1_A1_ROBOT1_2: CutsceneModel;
+    LH_D2_SARSTUD_F1_A1_ROBOT1_3: CutsceneModel;
+    LH_D2_SARSTUD_F1_A1_POLICEWOMAN1: CutsceneModel;
 
-    LH_E4_WHOLESOME_LIFTER: CinematicModel;
+    LH_E4_WHOLESOME_LIFTER: CutsceneModel;
 }
 
 export const CUTSCENE_SCRIPTS: CutsceneScripts = {

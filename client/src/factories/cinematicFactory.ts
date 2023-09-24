@@ -1,7 +1,9 @@
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
 import type { CellPosition } from "../models/CellPositionModel";
 import type { GridCellModel } from "../models/GridCellModel";
-import type { AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene, SpeakScene, SpeakYesNoScene, WaitScene, ScreenTextScene } from "../models/SceneAnimationModel"
+import type {
+    AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene, SpeakScene, SpeakYesNoScene, WaitScene, ScreenTextScene
+} from "../models/cutscenes/SceneAnimationModel"
 
 const getBaseSceneModel = ( type: SceneAnimationType, waitForAnimationEnd: boolean, spriteName: string = null, sfx: string = null, spriteId: string = null ): AnimationScene => {
     const model: AnimationScene = {

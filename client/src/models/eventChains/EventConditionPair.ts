@@ -1,9 +1,9 @@
 import type { TriggerType } from "../../enumerables/TriggerType"
 import type { ConditionModel } from "../ConditionModel"
-import type { IEventDto } from "../events/IEventDto"
+import type { IEventScript } from "../eventScripts/IEventScript"
 
 export type EventConditionPair = {
-    event: IEventDto,
+    event: IEventScript,
     condition: ConditionModel,
     triggerType: TriggerType
 }

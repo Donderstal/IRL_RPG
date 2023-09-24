@@ -7,8 +7,8 @@ import { conditionIsTrue } from "../helpers/conditionalHelper";
 import type { CutsceneEventChain } from "../models/eventChains/CutsceneEventChain";
 import type { DoorEventChain } from "../models/eventChains/DoorEventChain";
 import type { IEventChain } from "../models/eventChains/IEventChain";
-import type { CutsceneEventDto } from "../models/events/CutsceneEventDto";
-import type { IEventDto } from "../models/events/IEventDto";
+import type { CutsceneEventScript } from "../models/eventScripts/CutsceneEventScript";
+import type { IEventScript } from "../models/eventScripts/IEventScript";
 import { addDoorToUnlockedDoorsRegistry, inUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { isInInteractionRegistry } from "../registries/interactionRegistry";
 import { CUTSCENE_SCRIPTS } from "../resources/cutsceneScripts";
@@ -45,7 +45,7 @@ const sortEventChainQueue = (): IEventChain[] => {
         ...queue.filter( e => e.triggerType == TriggerType.collision )
     ];
 }
-const getTriggerableEvent = ( eventChain: IEventChain ): IEventDto => {
+const getTriggerableEvent = ( eventChain: IEventChain ): IEventScript => {
     switch ( eventChain.eventChainType ) {
         case EventChainType.cutscene:
             return getCutsceneEventScript( eventChain as CutsceneEventChain );
@@ -59,7 +59,7 @@ const getTriggerableEvent = ( eventChain: IEventChain ): IEventDto => {
 
     return null;
 }
-const getDoorEventScript = ( eventChain: DoorEventChain ): IEventDto => {
+const getDoorEventScript = ( eventChain: DoorEventChain ): IEventScript => {
     const activeMapName = getActiveMapKey();   
     console.log( `Active map is ${activeMapName}` )
 
@@ -80,13 +80,13 @@ const getDoorEventScript = ( eventChain: DoorEventChain ): IEventDto => {
     eventChain = augmentDoorEventChain( eventChain, DoorInteractionType.unlocked, activeMapName )
     return createLeaveMapEventScript( eventChain.mapA === activeMapName ? eventChain.mapB : eventChain.mapA, eventChain.doorId );
 }
-const getCutsceneEventScript = ( eventChain: CutsceneEventChain ): CutsceneEventDto => {
+const getCutsceneEventScript = ( eventChain: CutsceneEventChain ): CutsceneEventScript => {
     let eventIndex = 0;
 
     while ( eventIndex < eventChain.triggerableCutscenes.length ) {
         const eventWithCondition = eventChain.triggerableCutscenes[eventIndex];
         if ( conditionIsTrue( eventWithCondition.condition.type, eventWithCondition.condition.value ) ) {
-            return eventWithCondition.event as CutsceneEventDto;
+            return eventWithCondition.event as CutsceneEventScript;
         }
         eventIndex++
     }
