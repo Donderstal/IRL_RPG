@@ -7,7 +7,7 @@ import type { CutsceneModel } from "../models/cutscenes/CutsceneModel";
 import { getAnimateSpriteScene, getCameraMoveToSpriteScene, getDeleteSpriteScene, getEmoteScene, getFadeScene, getLoadMapScene, getScreenTextScene, getSpeakScene, getSpeakYesNoScene } from "./../factories/cinematicFactory";
 import { MAP_IDS } from "./mapResources/mapIds";
 
-type CutsceneScripts = {
+export type CutsceneScripts = {
     INTRO_CINEMATIC: CutsceneModel;
 
     RANDOM_ENCOUNTER_1: CutsceneModel;

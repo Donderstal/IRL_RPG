@@ -74,16 +74,6 @@ export const destroySpriteMovementToDestination = ( sprite: Sprite ): void => {
 	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.movement );
 }
 
-export const lockSpriteForCutscene = ( sprite: Sprite ) => {
-	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.idleAnimation );
-	markModuleAsInActive( sprite.spriteId, SpriteModuleEnum.randomAnimation );
-};
-
-export const unlockSpriteAfterCutscene = ( sprite: Sprite ) => {
-	initializeIdleAnimationModule( sprite );
-	initializeRandomAnimationModule( sprite );
-};
-
 export const clearAllModuleRegistries = (): void => {
 	clearSpriteAnimations();
 	clearBlockedSpriteCounters();

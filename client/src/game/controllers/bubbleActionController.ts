@@ -3,7 +3,6 @@ import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
 import { switchMap } from "../../helpers/loadMapHelpers";
 import { clearSpeakingEffect, playEffect } from "../sound/sound";
 import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, isWriting, selectionBubble } from "./bubbleController";
-import { registerPlayerAnswer } from "./cinematicController";
 
 export const handleMenuBubbleActionButton = (): void => {
     const bubble = getElevatorBubble();
@@ -27,7 +26,6 @@ export const handleTextBubbleActionButton = (): void => {
         const textBubble = getMainTextBubble();
         if ( selectionBubble() ) {
             alert( textBubble.activeButton )
-            registerPlayerAnswer( textBubble.activeButton );
         }
         clearActiveEmotes();
         textBubble.markAsRead();

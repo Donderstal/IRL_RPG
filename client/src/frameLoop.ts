@@ -13,6 +13,7 @@ import { handleControls } from './controls/controlHandler';
 import { checkQueuedTriggers } from './event-triggers/triggerQueue';
 import { handleEventChainQueue } from './eventchain-queue/eventChainQueueHandler';
 import { handleActiveEventChain } from './eventchain-queue/activeEventChain';
+import { getSpriteById } from './game/modules/sprites/spriteGetter';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -31,22 +32,22 @@ export const animationLoop = (): void => {
             if ( !gameHasActiveEvent ) {
                 checkQueuedTriggers();
                 handleEventChainQueue();
+                handleMapAnimations();
             }
             else {
                 handleActiveEventChain()
+                handleCinematicAnimations();
             }
 
             handleControls();
-
-            if ( gameHasActiveEvent ) {
-                handleCinematicAnimations();
-            }
-            else {
-                handleMapAnimations();
-            }
-
             drawNewTilesInCameraFocus( cameraFocus );
             handleOffscreenCanvasBitmaps();
+
+
+            if ( cameraFocus.movingToNewFocus ) {
+                const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
+                cameraFocus.moveToNewFocus( spriteInFocus );
+            }
         }
         else {
             clearSpriteCanvasGrids()

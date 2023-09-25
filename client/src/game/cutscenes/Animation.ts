@@ -66,7 +66,6 @@ export class Animation {
     get cameraMoveToTileScene(): CameraMoveToTileScene { return this.model as CameraMoveToTileScene; }
     get loadMapScene(): LoadMapScene { return this.model as LoadMapScene; }
     get screenTextScene(): ScreenTextScene { return this.model as ScreenTextScene; }
-
     get sprite(): Sprite { return getSpriteById(this.spriteId); }
 
     is( value: SceneAnimationType ): boolean {

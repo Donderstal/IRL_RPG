@@ -4,13 +4,15 @@ import { EventType } from "../enumerables/EventType";
 import { TriggerType } from "../enumerables/TriggerType";
 import { getTriggersByTriggerType } from "../event-triggers/triggerRegistry";
 import { handleActiveEventScript } from "../event-scripts/eventScriptHandler";
-import { createCutsceneEventScript, createEnterMapEventScript, createLeaveMapEventScript } from "../factories/eventFactory";
+import { createEnterMapEventScript, createLeaveMapEventScript } from "../factories/eventFactory";
 import type { DoorEventChain } from "../models/eventChains/DoorEventChain";
 import type { IEventChain } from "../models/eventChains/IEventChain";
 import type { CutsceneEventScript } from "../models/eventScripts/CutsceneEventScript";
 import type { IEventScript } from "../models/eventScripts/IEventScript";
-import { CUTSCENE_SCRIPTS } from "../resources/cutsceneScripts";
 import { setEventChainGameState } from "../state/state";
+import { updateGameControlState } from "../state/stateSetter";
+import { State } from "../enumerables/StateEnum";
+import { CUTSCENE_EVENT_CHAINS } from "../resources/eventChainResources/cutsceneEventChains";
 
 let activeEventChain: IEventChain = null;
 let mainEventScript: IEventScript = null;
@@ -28,6 +30,7 @@ export const startEventChain = ( eventChain: IEventChain, mainEvent: IEventScrip
     console.log( `Determining first eventscript in chain ${activeEventChain.eventChainType}` );
     console.log( `First eventscript: ${firstEvent.eventType}` );
     setActiveEventScript( firstEvent );
+    updateGameControlState( State.cinematic );
 }
 export const handleActiveEventChain = (): void => {
     const eventScriptIsStillActive = handleActiveEventScript( activeEventScript )
@@ -52,6 +55,7 @@ const clearEventChain = (): void => {
     mainEventScript = null;
     activeEventChain = null;
     setEventChainGameState( false );
+    updateGameControlState( State.open_world );
 }
 const setActiveEventScript = ( script: IEventScript ): void => {
     activeEventScript = script;
@@ -133,16 +137,16 @@ const getNextEventAfterPrompt = ( ): IEventScript => {
 const getNextEventBeforeLeaveMap = (): IEventScript => {
     const leaveMapTrigger = getTriggersByTriggerType( TriggerType.map_leave )[0];
     if ( leaveMapTrigger != undefined && leaveMapTrigger != undefined ) {
-        const cinematicScript = CUTSCENE_SCRIPTS[leaveMapTrigger.model.eventId];
-        return createCutsceneEventScript( cinematicScript );
+        const eventChain = CUTSCENE_EVENT_CHAINS[leaveMapTrigger.model.eventId];
+        return { ...eventChain.triggerableCutscenes[0].event };
     }
     return null;
 };
 const getNextEventAfterEnterMap = (): IEventScript => {
     const enterMapTrigger = getTriggersByTriggerType( TriggerType.map_enter )[0];
     if ( enterMapTrigger != undefined && enterMapTrigger != undefined ) {
-        const cinematicScript = CUTSCENE_SCRIPTS[enterMapTrigger.model.eventId];
-        return createCutsceneEventScript( cinematicScript );
+        const eventChain = CUTSCENE_EVENT_CHAINS[enterMapTrigger.model.eventId];
+        return { ...eventChain.triggerableCutscenes[0].event };
     }
     return null;
 };

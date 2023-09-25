@@ -19,7 +19,7 @@ import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
 import { setSpriteList } from '../modules/sprites/spriteSetter';
 import { getPlayer } from '../modules/sprites/spriteGetter';
-import { getActiveMapKey, getNeighbourhoodModel, getRandomNeighbourhoodAction } from '../neighbourhoodModule';
+import { getActiveMapKey, getNeighbourhoodModel } from '../neighbourhoodModule';
 import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
 import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
 import { getPlayerStart, mapHasPlayerStart } from '../map/playerLocationOnMapLoad';
@@ -146,7 +146,6 @@ export class BackSpriteGrid extends CanvasGrid {
             row: tile.row,
             direction: start.direction,
             name: "Random person",
-            action: getRandomNeighbourhoodAction(),
             destination: {
                 column: destination.column,
                 row: destination.row,

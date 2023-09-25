@@ -2,7 +2,7 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { Sprite } from "../core/Sprite";
 import { spriteNextPositionIsBlocked } from "../map/collision";
-import { inDebugState } from "../../state/stateGetter";
+import { inDebugState, inEventChainState } from "../../state/stateGetter";
 
 import { handleSpriteAnimation } from "./animations/animationHandler";
 import { blockedSpriteCounterIsOverLimit, handleBlockedSpriteCounter } from "./blockedCounters/blockedCounterHandler";
@@ -36,7 +36,10 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.animation ) ) {
 		handleSpriteAnimation( sprite );
 		resetSpriteModuleCounters( id );
-	}
+    }
+    if ( inEventChainState() ) {
+        return;
+    }
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.idleAnimation ) && !moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) && !moduleIsRunningForSprite( id, SpriteModuleEnum.animation ) ) {
 		handleIdleAnimationCounter( sprite );
 	}

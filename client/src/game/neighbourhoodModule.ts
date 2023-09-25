@@ -1,7 +1,6 @@
 import { CANVAS_COLUMNS, CANVAS_ROWS } from "../game-data/globals";
 import { Counter } from "../helpers/Counter";
 import { getNeighbourhood } from "../resources/mapResources";
-import type { InteractionModel } from "../models/InteractionModel";
 import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import { setNewCenterBubble } from "./controllers/bubbleController";
@@ -39,10 +38,6 @@ export const initializeNeighbourhood = ( neighbourhoodKey: string ) => {
         setMapGrid();
     if ( model.characterSpawnRate !== null )
         setNeighbourhoodNPCCounter();
-}
-export const getRandomNeighbourhoodAction = (): InteractionModel[] => {
-    let interactions = model.spawnableActions;
-    return interactions[Math.floor( Math.random() * interactions.length )];
 }
 export const activateMap = ( key: string, mapLoadType: PlayerMapEntry ): void => {
     previousMapKey = activeMapKey

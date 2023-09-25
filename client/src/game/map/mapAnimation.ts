@@ -1,9 +1,8 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
 import type { Sprite } from '../core/Sprite';
 import { drawBubbles } from '../controllers/bubbleController';
-import { cameraFocus } from '../cameraFocus';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { getBackSprites, getDynamicSprites, getPlayer, getSpriteById } from '../modules/sprites/spriteGetter';
+import { getBackSprites, getDynamicSprites } from '../modules/sprites/spriteGetter';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
@@ -36,11 +35,6 @@ export const handleMapAnimations = (): void => {
 
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
     checkForEventTriggers( TriggerType.collision, playerHitbox );
-
-    if ( cameraFocus.movingToNewFocus ) {
-        const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
-        cameraFocus.moveToNewFocus( spriteInFocus );
-    }
 }
 
 export const drawSpritesInOrder = (): void => {
