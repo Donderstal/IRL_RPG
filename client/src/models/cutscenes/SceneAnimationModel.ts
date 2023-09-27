@@ -32,7 +32,7 @@ export type EmoteScene = AnimationScene & {
 }
 
 export type MoveScene = AnimationScene & {
-    destination: { column: number, row: number } | string;
+    destination: { column: number, row: number };
 }
 
 export type AnimateSpriteScene = AnimationScene & {

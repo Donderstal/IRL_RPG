@@ -1,5 +1,8 @@
 ### 
 
+#### SEP 27 2023
+* Introducing a contract structure for tasks like creating a sprite, loading a map, showing text etc.
+
 #### SEP 24 2023
 * Splitting up Events into EventChains and EventScripts
 * Restructuring models, resources to the Chain/Script distinction

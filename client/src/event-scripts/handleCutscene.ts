@@ -1,6 +1,6 @@
 import type { CutsceneSceneModel } from "../models/cutscenes/CutsceneSceneModel";
 import type { CutsceneEventScript } from "../models/eventScripts/CutsceneEventScript";
-import { checkIfCutsceneAnimationHasEnded, startCutsceneAnimation } from "./cutsceneAnimationHelper";
+import { checkIfEventScriptSceneIsFinished, dispatchContract } from "./eventScriptsContractHandler";
 
 let activeCutsceneEventScript: CutsceneEventScript = null;
 let activeSceneIndex: number = -1;
@@ -27,7 +27,9 @@ export const handleActiveCutsceneEventScript = ( cutsceneEvent: CutsceneEventScr
         startScene();
     }
 
-    handleActiveScene();
+    if ( checkIfEventScriptSceneIsFinished() ) {
+        clearScene();
+    }
 
     return true;
 };
@@ -43,21 +45,7 @@ const getNextScene = (): CutsceneSceneModel => {
     return activeCutsceneEventScript.cutscene[activeSceneIndex];
 };
 const startScene = (): void => {
-    activeScene.forEach( startCutsceneAnimation );
-};
-const handleActiveScene = (): void => {
-    let allAnimationsAreFinished = true;
-
-    activeScene.forEach( ( e ) => {
-        const hasFinished = checkIfCutsceneAnimationHasEnded( e );
-        if ( !hasFinished ) {
-            allAnimationsAreFinished = false;
-        }
-    } );
-
-    if ( allAnimationsAreFinished ) {
-        clearScene();
-    }
+    activeScene.forEach( dispatchContract );
 };
 const clearScene = (): void => {
     console.log( `ending cutscene scene` )

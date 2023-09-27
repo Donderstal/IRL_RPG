@@ -86,14 +86,6 @@ export const getFadeScene = ( type: SceneAnimationType, targetOpacity = null, wa
     };
     return scene;
 };
-export const getWaitScene = ( milliseconds: number, sfx: string = null ): WaitScene => {
-    const base = getBaseSceneModel( SceneAnimationType.wait, true, null, sfx );
-    const scene: WaitScene = {
-        ...base,
-        milliseconds: milliseconds
-    };
-    return scene;
-};
 export const getCameraMoveToSpriteScene = ( snapToSprite: boolean, spriteName: string, waitForEnd = true, sfx: string = null ): CameraMoveToSpriteScene => {
     const base = getBaseSceneModel( SceneAnimationType.cameraMoveToSprite, waitForEnd, spriteName, sfx );
     const scene: CameraMoveToSpriteScene = {
