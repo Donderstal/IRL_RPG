@@ -12,6 +12,8 @@ import { EventChainType } from "../enumerables/EventChainType";
 import type { DoorEventChain } from "../models/eventChains/DoorEventChain";
 import type { ElevatorEventChain } from "../models/eventChains/ElevatorEventChain";
 import type { SavePointEventChain } from "../models/eventChains/SavePointEventChain";
+import type { GridCellModel } from "../models/GridCellModel";
+import type { LoadMapOnStartEventChain } from "../models/eventChains/LoadMapOnStartEventChain";
 
 // EvenScripts
 export const createCutsceneEventScript = ( cutsceneModel: CutsceneModel, registryKey: string = null, sfx: string = null ): CutsceneEventScript => {
@@ -30,11 +32,12 @@ export const createLeaveMapEventScript = ( nextMapName: string, doorId: string =
         doorId: doorId
     };
 }
-export const createEnterMapEventScript = ( mapName: string, doorId: string = null ): EnterMapEventScript => {
+export const createEnterMapEventScript = ( mapName: string, doorId: string = null, playerStart: GridCellModel = null ): EnterMapEventScript => {
     return {
         eventType: EventType.enter_map,
         mapName: mapName,
-        doorId: doorId
+        doorId: doorId,
+        playerStart: playerStart
     };
 }
 
@@ -64,6 +67,13 @@ export const createSavePointEventChain = (): SavePointEventChain => {
     return {
         eventChainType: EventChainType.savepoint
     };
+}
+export const createLoadMapOnGameStartEventChain = ( startingMap: string, playerStart: GridCellModel ): LoadMapOnStartEventChain => {
+    return {
+        eventChainType: EventChainType.loadMapOnStart,
+        startingMap: startingMap,
+        playerStart: playerStart
+    }
 }
 
 // Helper structures

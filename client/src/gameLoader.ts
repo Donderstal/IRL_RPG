@@ -1,7 +1,12 @@
 import { handleFileLoadQueues, startFileLoader } from "./assets/fileLoader";
 import { registerNewContract } from "./contracts/contractRegistry";
 import { State } from "./enumerables/StateEnum";
+import { TriggerType } from "./enumerables/TriggerType";
+import { addTriggerToQueue } from "./event-triggers/triggerQueue";
+import { addToEventChainQueue } from "./eventchain-queue/eventChainQueue";
+import { handleEventChainQueue } from "./eventchain-queue/eventChainQueueHandler";
 import { getEnterMapContract } from "./factories/contractFactory";
+import { createLoadMapOnGameStartEventChain } from "./factories/eventFactory";
 import { cameraFocus, initializeCameraFocus } from "./game/cameraFocus";
 import { prepareCanvasElementsForGame } from "./game/canvas/canvasSetter";
 import { setLoadingScreen, stopLoadingScreen } from "./game/loadingScreen";
@@ -89,6 +94,7 @@ const startLoadGame = (): void => {
     setUnlockedDoorsRegistry( saveGame.keyLists.unlockedDoors );
 };
 const publishEnterMapContract = ( mapName: string, playerStart: GridCellModel ): void => {
-    const contract = getEnterMapContract( null, mapName, playerStart );
-    registerNewContract( contract );
+    const eventChain = createLoadMapOnGameStartEventChain( mapName, playerStart );
+    addToEventChainQueue( eventChain, TriggerType.game_start );
+    handleEventChainQueue( TriggerType.game_start );
 }

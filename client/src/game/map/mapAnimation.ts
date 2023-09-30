@@ -2,7 +2,7 @@ import { MovementType } from '../../enumerables/MovementTypeEnum';
 import type { Sprite } from '../core/Sprite';
 import { drawBubbles } from '../controllers/bubbleController';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { getBackSprites, getDynamicSprites } from '../modules/sprites/spriteGetter';
+import { getBackSprites, getDynamicSprites, getPlayer } from '../modules/sprites/spriteGetter';
 import { drawRect } from '../../helpers/canvasHelpers';
 import { GRID_BLOCK_PX } from '../../game-data/globals';
 import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
@@ -28,13 +28,14 @@ export const handleMapAnimations = (): void => {
     drawSpritesInOrder( )
     drawTriggers();
 
-    handleRoadNetworkFuncs()
+    //TO DO - handleRoadNetworkFuncs()
     handleNpcCounter()
 
     drawBubbles();
 
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
-    checkForEventTriggers( TriggerType.collision, playerHitbox );
+    const player = getPlayer();
+    checkForEventTriggers( TriggerType.collision, playerHitbox, player.direction );
 }
 
 export const drawSpritesInOrder = (): void => {

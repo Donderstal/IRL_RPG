@@ -15,7 +15,7 @@ import { handleEventChainQueue } from './eventchain-queue/eventChainQueueHandler
 import { handleActiveEventChain } from './eventchain-queue/activeEventChain';
 import { getSpriteById } from './game/modules/sprites/spriteGetter';
 import { publishNewContracts } from './contracts/contractPublisher';
-import { getLoadingGameGameState, getLoadingMapGameState, setLoadingMapGameState } from './state/state';
+import { getClearingMapGameState, getLoadingGameGameState, getLoadingMapGameState, setLoadingMapGameState } from './state/state';
 import { loadGame } from './gameLoader';
 import { getPendingContracts } from './contracts/contractRegistry';
 import { registerBlockedTilesOnMap } from './map/mapLoader';
@@ -30,6 +30,11 @@ export const animationLoop = (): void => {
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
 
+        const gameHasActiveEvent = inEventChainState();
+        if ( gameHasActiveEvent ) {
+            handleActiveEventChain();
+        }
+
         if ( getLoadingGameGameState() ) {
             handleGameIsLoadingLoop();
         }
@@ -39,7 +44,7 @@ export const animationLoop = (): void => {
         else if ( getLoadingMapGameState() ) {
             handleMapIsLoadLoop();
         }
-        else {
+        else if (!getClearingMapGameState()) {
             handleDefaultLoop()
         }
 
@@ -75,7 +80,6 @@ const handleDefaultLoop = (): void => {
         handleMapAnimations();
     }
     else {
-        handleActiveEventChain()
         handleCinematicAnimations();
     }
 

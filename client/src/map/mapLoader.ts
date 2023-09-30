@@ -4,14 +4,16 @@ import { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
 import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 import { getCreateSpriteContract, getFocusCameraOnSpriteContract, getSetTriggerContract } from "../factories/contractFactory";
 import { initCanvasObjectModel } from "../factories/modelFactory";
+import { CANVAS_COLUMNS, CANVAS_HEIGHT, CANVAS_ROWS, CANVAS_WIDTH, GRID_BLOCK_PX } from "../game-data/globals";
 import { PLAYER_ID, PLAYER_NAME } from "../game-data/interactionGlobals";
 import { getBackTilesGrid } from "../game/canvas/canvasGetter";
-import { initializeCanvasGrids, setMapModelToCanvasGrids } from "../game/canvas/canvasSetter";
+import { initializeCanvasGrids, setCanvasGridsDimensions, setMapModelToCanvasGrids } from "../game/canvas/canvasSetter";
 import { registerNewMap, registerTilesBlockedByStaticSprites } from "../game/map/blockedTilesRegistry";
 import { getStaticSprites } from "../game/modules/sprites/spriteGetter";
-import { getActiveMap, initializeNeighbourhood, markMapAsActive } from "../game/neighbourhoodModule";
+import { getActiveMap, getNeighbourhoodModel, initializeNeighbourhood, markMapAsActive } from "../game/neighbourhoodModule";
 import { setActiveMusic } from "../game/sound/sound";
 import { conditionIsTrue } from "../helpers/conditionalHelper";
+import { getOppositeDirection } from "../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import type { MapModel } from "../models/MapModel";
 import type { TriggerModel } from "../models/TriggerModel";
@@ -27,6 +29,8 @@ export const loadMap = ( contract: EnterMapContract ): void => {
     initializeNeighbourhood( neighbourhoodKey );
     markMapAsActive( contract.mapId, PlayerMapEntry.door );
 
+    setCanvasDimensions();
+
     const mapModelToLoad: MapModel = getActiveMap();
     initializeCanvasGrids( mapModelToLoad.columns, mapModelToLoad.rows );
 
@@ -37,9 +41,18 @@ export const loadMap = ( contract: EnterMapContract ): void => {
     registerCreatePlayerSpriteContract( contract, mapModelToLoad );
 
     registerTriggerContracts( mapModelToLoad.triggers );
-    setActiveMusic( mapModelToLoad.music );
+
+    let neighbourhoodModel = getNeighbourhoodModel();
+    setActiveMusic( mapModelToLoad.music ?? neighbourhoodModel.music );
 
     registerNewContract( getFocusCameraOnSpriteContract( PLAYER_ID, true ) );
+}
+export const registerBlockedTilesOnMap = (): void => {
+    const backGrid = getBackTilesGrid();
+    const sprites = getStaticSprites();
+
+    registerNewMap( backGrid );
+    registerTilesBlockedByStaticSprites( sprites );
 }
 const registerTriggerContracts = ( triggers: TriggerModel[] ): void => {
     triggers.forEach( ( e ) => {
@@ -70,7 +83,7 @@ const registerCreatePlayerSpriteContract = ( contract: EnterMapContract, mapMode
     const playerSpriteModel = initCanvasObjectModel(
         {
             type: MAIN_CHARACTER,
-            direction: playerStart.direction ?? 0,
+            direction: getOppositeDirection( playerStart.direction ) ?? 0,
             column: playerStart.column,
             row: playerStart.row,
             anim_type: AnimationTypeEnum.idle,
@@ -81,10 +94,18 @@ const registerCreatePlayerSpriteContract = ( contract: EnterMapContract, mapMode
     const createSpriteContract = getCreateSpriteContract( playerSpriteModel );
     registerNewContract( createSpriteContract );
 }
-export const registerBlockedTilesOnMap = (): void => {
-    const backGrid = getBackTilesGrid();
-    const sprites = getStaticSprites();
-
-    registerNewMap( backGrid );
-    registerTilesBlockedByStaticSprites( sprites );
+const setCanvasDimensions = (): void => {
+    const map = getActiveMap();
+    if ( map.outdoors ) {
+        let neighbourhoodModel = getNeighbourhoodModel();
+        const width = neighbourhoodModel.horizontalSlots.length * CANVAS_WIDTH;
+        const height = neighbourhoodModel.verticalSlots.length * CANVAS_HEIGHT;
+        setCanvasGridsDimensions( width, height )
+    }
+    else if ( map.columns > CANVAS_COLUMNS || map.rows > CANVAS_ROWS ) {
+        setCanvasGridsDimensions( map.columns * GRID_BLOCK_PX, map.rows * GRID_BLOCK_PX );
+    }
+    else {
+        setCanvasGridsDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );
+    }
 }

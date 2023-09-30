@@ -2,7 +2,7 @@
 
 #### SEP 30 2023
 * Loading game with frameLoop instead of timeouts.
-* Loading maps step for step with contracts
+* Using the new triggers -> eventchains -> contracts flow for entering and leaving map
 
 #### SEP 27 2023
 * Introducing a contract structure for tasks like creating a sprite, loading a map, showing text etc.

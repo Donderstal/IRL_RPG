@@ -1,12 +1,13 @@
 import type { State } from "../enumerables/StateEnum";
 
-let paused: boolean;
-let debugMode: boolean;
-let disableStory: boolean;
-let listeningForKeys: boolean;
-let inEvent: boolean;
-let loadingGame: boolean;
-let loadingMap: boolean;
+let paused: boolean = false;
+let debugMode: boolean = false;
+let disableStory: boolean = false;
+let listeningForKeys: boolean = false;
+let inEvent: boolean = false;
+let loadingGame: boolean = false;
+let loadingMap: boolean = false;
+let clearingMap: boolean = false;
 let controlState: State; 
 
 let gameIsLoadedFromSave: boolean;
@@ -42,6 +43,9 @@ export const setLoadingGameGameState = ( value: boolean ): void => {
 export const setLoadingMapGameState = ( value: boolean ): void => {
     loadingMap = value;
 }
+export const setClearingMapGameState = ( value: boolean ): void => {
+    clearingMap = value;
+}
 
 export const getPausedGameState = (): boolean => {
     return paused;
@@ -72,4 +76,7 @@ export const getGameIsLoadedFromSave = (): boolean => {
 }
 export const getGameStartParameters = (): any[] => {
     return gameStartParameters;
+}
+export const getClearingMapGameState = (): boolean => {
+    return clearingMap;
 }

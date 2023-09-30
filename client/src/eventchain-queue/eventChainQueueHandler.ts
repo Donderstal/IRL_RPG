@@ -1,13 +1,15 @@
 import { DoorInteractionType } from "../enumerables/DoorInteractionType";
 import { EventChainType } from "../enumerables/EventChainType";
 import { TriggerType } from "../enumerables/TriggerType";
-import { createCutsceneEventScript, createLeaveMapEventScript } from "../factories/eventFactory";
+import { createCutsceneEventScript, createEnterMapEventScript, createLeaveMapEventScript } from "../factories/eventFactory";
 import { getActiveMapKey } from "../game/neighbourhoodModule";
 import { conditionIsTrue } from "../helpers/conditionalHelper";
 import type { CutsceneEventChain } from "../models/eventChains/CutsceneEventChain";
 import type { DoorEventChain } from "../models/eventChains/DoorEventChain";
 import type { IEventChain } from "../models/eventChains/IEventChain";
+import type { LoadMapOnStartEventChain } from "../models/eventChains/LoadMapOnStartEventChain";
 import type { CutsceneEventScript } from "../models/eventScripts/CutsceneEventScript";
+import type { EnterMapEventScript } from "../models/eventScripts/EnterMapEventScript";
 import type { IEventScript } from "../models/eventScripts/IEventScript";
 import { addDoorToUnlockedDoorsRegistry, inUnlockedDoorsRegistry } from "../registries/doorRegistry";
 import { isInInteractionRegistry } from "../registries/interactionRegistry";
@@ -17,11 +19,11 @@ import { clearEventChainQueue, getEventChainQueue } from "./eventChainQueue";
 
 let pendingEventChain = null
 
-export const handleEventChainQueue = (): void => {
+export const handleEventChainQueue = ( triggerType: TriggerType = null ): void => {
     let triggerableEvent = null;
     let queueItemIndex = 0;
 
-    const queue = sortEventChainQueue();
+    const queue = sortEventChainQueue( triggerType );
 
     if ( queue.length < 1 ) return;
 
@@ -38,8 +40,11 @@ export const handleEventChainQueue = (): void => {
     clearEventChainQueue();
     pendingEventChain = null;
 }
-const sortEventChainQueue = (): IEventChain[] => {
+const sortEventChainQueue = ( triggerType: TriggerType ): IEventChain[] => {
     const queue = getEventChainQueue();
+    if ( triggerType !== null ) {
+        return queue.filter( e => e.triggerType == triggerType )
+    }
     return [
         ...queue.filter( e => e.triggerType == TriggerType.interaction ),
         ...queue.filter( e => e.triggerType == TriggerType.collision )
@@ -53,11 +58,16 @@ const getTriggerableEvent = ( eventChain: IEventChain ): IEventScript => {
             return getDoorEventScript( eventChain as DoorEventChain );
         case EventChainType.elevator:
             break;
+        case EventChainType.loadMapOnStart:
+            return getLoadMapOnStartEventScript( eventChain as LoadMapOnStartEventChain );
         case EventChainType.savepoint:
             break;
     }
 
     return null;
+}
+const getLoadMapOnStartEventScript = ( eventChain: LoadMapOnStartEventChain ): EnterMapEventScript => {
+    return createEnterMapEventScript( eventChain.startingMap, null, eventChain.playerStart );
 }
 const getDoorEventScript = ( eventChain: DoorEventChain ): IEventScript => {
     const activeMapName = getActiveMapKey();   
@@ -66,18 +76,18 @@ const getDoorEventScript = ( eventChain: DoorEventChain ): IEventScript => {
     if ( eventChain.lockedBy !== null ) {
         const doorIsUnlocked = isInInteractionRegistry( eventChain.lockedBy );
         if ( !doorIsUnlocked ) {
-            eventChain = augmentDoorEventChain( eventChain, DoorInteractionType.locked, activeMapName )
+            pendingEventChain = augmentDoorEventChain( eventChain, DoorInteractionType.locked, activeMapName )
             return createCutsceneEventScript( CUTSCENE_SCRIPTS.LOCKED_DOOR );
         }
 
         if ( !inUnlockedDoorsRegistry( eventChain.doorId ) ) {
-            eventChain = augmentDoorEventChain( eventChain, DoorInteractionType.unlock, activeMapName )
+            pendingEventChain = augmentDoorEventChain( eventChain, DoorInteractionType.unlock, activeMapName )
             addDoorToUnlockedDoorsRegistry( eventChain.doorId )
             return createCutsceneEventScript( CUTSCENE_SCRIPTS.UNLOCK_DOOR );
         }
     }
 
-    eventChain = augmentDoorEventChain( eventChain, DoorInteractionType.unlocked, activeMapName )
+    pendingEventChain = augmentDoorEventChain( eventChain, DoorInteractionType.unlocked, activeMapName )
     return createLeaveMapEventScript( eventChain.mapA === activeMapName ? eventChain.mapB : eventChain.mapA, eventChain.doorId );
 }
 const getCutsceneEventScript = ( eventChain: CutsceneEventChain ): CutsceneEventScript => {
