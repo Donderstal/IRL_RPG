@@ -9,10 +9,6 @@ import BakerStreetAptTemplate from "./templates/Baker-Street-Apt-Template";
 export default {
 	"key": MAP_IDS.LEONARD_HEIGHTS.BAKER_STREET_12_F3_APT,
     ...BakerStreetAptTemplate,
-	"playerStart": {
-		'row': 4,
-		'column': 3
-	},
 	"sprites": [
 		{
 			"type": "Sink",

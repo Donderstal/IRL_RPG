@@ -1,7 +1,7 @@
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import {
     addBackSpriteGridToRegistry, addBackTileGridToRegistry, addFrontTileGridToRegistry, addMenuGridToRegistry, addSpeechBubbleGridToRegistry,
-    clearCanvasInRegistry, clearMapFromRegistryGrid, initializeRenderCanvasesInRegistry, setRegistryCanvasGridDimensions
+    clearCanvasInRegistry, clearMapFromRegistryGrid, getCanvasFromRegistry, initializeRenderCanvasesInRegistry, setRegistryCanvasGridDimensions
 } from "./canvasRegistry";
 import { BackSpriteGrid } from "./BackSpriteGrid";
 import { BackTileGrid } from "./BackTileGrid";
@@ -9,6 +9,9 @@ import { FrontTileGrid } from "./FrontTileGrid";
 import { MenuCanvas } from "./MenuCanvas";
 import { SpeechBubbleCanvas } from "./SpeechBubbleCanvas";
 import { BUBBLE_CANVAS_HEIGHT, BUBBLE_CANVAS_WIDTH, CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_PX } from "../../game-data/globals";
+import type { MapModel } from "../../models/MapModel";
+import type { TilesheetModel } from "../../models/TilesheetModel";
+import type { Sprite } from "../core/Sprite";
 
 export const clearCanvasGridMaps = (): void => {
     clearMapFromRegistryGrid( CanvasTypeEnum.background );
@@ -50,6 +53,27 @@ export const clearAllCanvasElements = () => {
     clearCanvasGrids()
     clearUICanvasGrids()
     clearRenderCanvases
+}
+export const initializeCanvasGrids = ( columns: number, rows: number ): void => {
+    const grids = [
+        getCanvasFromRegistry( CanvasTypeEnum.background ), getCanvasFromRegistry( CanvasTypeEnum.backSprites ), getCanvasFromRegistry( CanvasTypeEnum.foreground )
+    ];
+    grids.forEach( ( e ) => { e.initGrid( columns, rows ); } );
+}
+export const setMapModelToCanvasGrids = ( mapModel: MapModel, sheetModel: TilesheetModel, carSpawnRate: number, setPlayer = true, sprites: Sprite[] = null ): void => {
+    const background = getCanvasFromRegistry( CanvasTypeEnum.background ) as BackTileGrid;
+    const backSpritesGrid = getCanvasFromRegistry( CanvasTypeEnum.backSprites ) as BackSpriteGrid;
+    const foreground = getCanvasFromRegistry( CanvasTypeEnum.foreground ) as FrontTileGrid;
+
+    background.setBackgroundData( mapModel, sheetModel );
+    backSpritesGrid.setForegroundData( mapModel, carSpawnRate, sprites, setPlayer );
+    foreground.setFrontgridData( mapModel, sheetModel );
+}
+export const drawTilesToCanvasGrids = (): void => {
+    const grids = [
+        getCanvasFromRegistry( CanvasTypeEnum.background ), getCanvasFromRegistry( CanvasTypeEnum.foreground )
+    ];
+    grids.forEach( ( e ) => { e.drawMapFromGridData(); } );
 }
 
 const initializeMapGridCanvases = () => {

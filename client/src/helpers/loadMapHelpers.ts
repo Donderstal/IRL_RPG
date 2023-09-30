@@ -1,14 +1,13 @@
 import { CANVAS_COLUMNS, CANVAS_HEIGHT, CANVAS_ROWS, CANVAS_WIDTH, GRID_BLOCK_PX } from '../game-data/globals';
-import { activateMap, getActiveMap, getActiveMapKey, getNeighbourhoodModel, initializeNeighbourhood, isCurrentNeighbourhoodId } from '../game/neighbourhoodModule';
+import { markMapAsActive, getActiveMap, getActiveMapKey, getNeighbourhoodModel, initializeNeighbourhood } from '../game/neighbourhoodModule';
 import { getTilesheetModelByKey } from '../resources/tilesheetResources';
 import type { Sprite } from '../game/core/Sprite';
 import type { MapModel } from '../models/MapModel';
-import { cameraFocus } from '../game/cameraFocus';
-import { getPlayer, getSpriteById, getStaticSprites } from '../game/modules/sprites/spriteGetter';
+import { getSpriteById, getStaticSprites } from '../game/modules/sprites/spriteGetter';
 import { clearSpriteModuleRegistries } from '../game/modules/moduleRegistrySetter';
 import { clearActiveSoundEffects, setActiveMusic } from '../game/sound/sound';
 import { clearCanvasGridMaps, clearCanvasGrids, setCanvasGridsDimensions } from '../game/canvas/canvasSetter';
-import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid, getTileOnCanvasByCell } from '../game/canvas/canvasGetter';
+import { getBackSpritesGrid, getBackTilesGrid, getFrontTilesGrid } from '../game/canvas/canvasGetter';
 import { setPausedState } from '../state/stateSetter';
 import { clearAllModuleRegistries } from '../game/modules/moduleSetter';
 import { PlayerMapEntry } from '../enumerables/PlayerMapEntryEnum';
@@ -21,6 +20,9 @@ import { setTrigger } from '../event-triggers/triggerSetter';
 import { determineMapNeighbourhood } from '../resources/mapResources/mapIds';
 import { checkForEventTriggers } from '../event-triggers/triggerHandler';
 import { TriggerType } from '../enumerables/TriggerType';
+import { getFocusCameraOnSpriteContract, getFocusCameraOnTileContract } from '../factories/contractFactory';
+import { PLAYER_ID } from '../game-data/interactionGlobals';
+import { registerNewContract } from '../contracts/contractRegistry';
 
 export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, setPlayer = true, sprites: Sprite[] = null, cameraFocusTile: GridCellModel = null ): void => {
     const neighbourhood = getNeighbourhoodModel();
@@ -44,18 +46,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
 
     setActiveMusic( mapData.music != undefined ? mapData.music : neighbourhood.music );
 
-    if ( setPlayer ) {
-        const player = getPlayer();
-        cameraFocus.handleScreenFlip(
-            { 'x': player.centerX, 'y': player.baseY }
-        );
-
-        cameraFocus.setSpriteFocus( player, true );
-    }
-    else if ( cameraFocusTile !== null ) {
-        const cameraTile = back.getTileAtCell( cameraFocusTile.column, cameraFocusTile.row );
-        cameraFocus.setTileFocus( cameraTile, true );
-    }
+    setCameraFocus( setPlayer, cameraFocusTile );
 
     registerBlockedTilesOnMap();
     back.drawMapFromGridData();
@@ -108,11 +99,8 @@ export const loadCinematicMap = ( mapName, setPlayer = false ) => {
 
 export const setNeighbourhoodAndMap = ( mapName: string, playerMapEntry: PlayerMapEntry ): void => {
     const neighbourhoodId = determineMapNeighbourhood( mapName );
-
-    if ( !isCurrentNeighbourhoodId( neighbourhoodId ) ) {
-        initializeNeighbourhood( neighbourhoodId );
-    }
-    activateMap( mapName, playerMapEntry );
+    initializeNeighbourhood( neighbourhoodId );
+    markMapAsActive( mapName, playerMapEntry );
 }
 
 const registerBlockedTilesOnMap = (): void => {
@@ -136,6 +124,19 @@ const setCanvasDimensions = (): void => {
     }
     else {
         setCanvasGridsDimensions( CANVAS_WIDTH, CANVAS_HEIGHT );
+    }
+}
+
+const setCameraFocus = ( setPlayer: boolean, cameraFocusTile: GridCellModel ): void => {
+    let cameraFocusContract = null;
+    if ( setPlayer ) {
+        cameraFocusContract = getFocusCameraOnSpriteContract( PLAYER_ID, true );
+    }
+    else if ( cameraFocusTile !== null ) {
+        cameraFocusContract = getFocusCameraOnTileContract( cameraFocusTile, true )
+    }
+    if ( cameraFocusContract !== null ) {
+        registerNewContract( cameraFocusContract )
     }
 }
 

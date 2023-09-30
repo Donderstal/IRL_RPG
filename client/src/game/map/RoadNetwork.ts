@@ -1,13 +1,15 @@
-import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
+import { registerNewContract } from '../../contracts/contractRegistry';
 import { DestinationType } from '../../enumerables/DestinationType';
 import { RoadAlignmentEnum } from '../../enumerables/RoadAlignmentEnum';
+import { getCreateSpriteContract } from '../../factories/contractFactory';
 import { Counter } from '../../helpers/Counter';
 import { getUniqueId } from '../../helpers/utilFunctions';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { DirectionXy } from '../../models/DirectionXyModel';
 import type { RoadModel } from '../../models/RoadModel';
-import { initializeSpriteMovement, setSpriteAndSpriteModules } from '../modules/moduleSetter';
+import { initializeSpriteMovement } from '../modules/moduleSetter';
 import { getSpriteById } from '../modules/sprites/spriteGetter';
+import { getSpriteIds } from '../modules/sprites/spriteRegistry';
 import { Road } from './roads/Road';
 
 export class RoadNetwork {
@@ -54,9 +56,14 @@ export class RoadNetwork {
         const validRoads = this.roads.filter( ( e ) => { return e.hasUnoccupiedStart(); } );
         const randomRoad = validRoads[Math.floor( Math.random() * validRoads.length )];
         const randomPath = randomRoad.getRandomPath();
-        const carModel = randomRoad.getRandomCarObjectModel();
 
-        const id = setSpriteAndSpriteModules( carModel, CanvasTypeEnum.backSprites );
+        const carModel = randomRoad.getRandomCarObjectModel();
+        const id = getUniqueId( getSpriteIds() );
+        carModel.id = id;
+
+        const createSpriteContract = getCreateSpriteContract( carModel );
+        registerNewContract( createSpriteContract );
+
         const sprite = getSpriteById( id );
         initializeSpriteMovement( randomPath, DestinationType.randomGeneratedSprite, sprite );
     }

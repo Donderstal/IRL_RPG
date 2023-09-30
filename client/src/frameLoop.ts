@@ -14,6 +14,9 @@ import { checkQueuedTriggers } from './event-triggers/triggerQueue';
 import { handleEventChainQueue } from './eventchain-queue/eventChainQueueHandler';
 import { handleActiveEventChain } from './eventchain-queue/activeEventChain';
 import { getSpriteById } from './game/modules/sprites/spriteGetter';
+import { publishNewContracts } from './contracts/contractPublisher';
+import { getLoadingGameGameState, getLoadingMapGameState } from './state/state';
+import { loadGame } from './gameLoader';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -21,48 +24,58 @@ let animationFrameLoop = null;
 let wroteScreenTextLastFrame = false;
 
 export const animationLoop = (): void => {
-    const gameIsPaused = inPausedState();
-    const gameHasActiveEvent = inEventChainState();
-
     newDateNow = Date.now();
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
 
-        if ( !gameIsPaused ) {
-            if ( !gameHasActiveEvent ) {
-                checkQueuedTriggers();
-                handleEventChainQueue();
-                handleMapAnimations();
-            }
-            else {
-                handleActiveEventChain()
-                handleCinematicAnimations();
-            }
-
-            handleControls();
-            drawNewTilesInCameraFocus( cameraFocus );
-            handleOffscreenCanvasBitmaps();
-
-
-            if ( cameraFocus.movingToNewFocus ) {
-                const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
-                cameraFocus.moveToNewFocus( spriteInFocus );
-            }
+        if ( getLoadingGameGameState() ) {
+            handleGameIsLoadingLoop();
         }
-        else {
-            clearSpriteCanvasGrids()
+        else if ( inPausedState() ) {
+            handleGameIsPausedLoop();
         }
+        else if ( !getLoadingMapGameState() ) {
+            handleDefaultLoop()
+        }
+
+        publishNewContracts();
 
         if ( inFadingAnimation() ) handleFadeAnimation();
     }
 
     animationFrameLoop = requestAnimationFrame( animationLoop )
 }
-
 export const stopAnimationLoop = () => {
     cancelAnimationFrame( animationFrameLoop );
 }
 
+const handleGameIsLoadingLoop = (): void => {
+    loadGame();
+}
+const handleGameIsPausedLoop = (): void => {
+    clearSpriteCanvasGrids();
+}
+const handleDefaultLoop = (): void => {
+    const gameHasActiveEvent = inEventChainState();
+    if ( !gameHasActiveEvent ) {
+        checkQueuedTriggers();
+        handleEventChainQueue();
+        handleMapAnimations();
+    }
+    else {
+        handleActiveEventChain()
+        handleCinematicAnimations();
+    }
+
+    handleControls();
+    drawNewTilesInCameraFocus( cameraFocus );
+    handleOffscreenCanvasBitmaps();
+
+    if ( cameraFocus.movingToNewFocus ) {
+        const spriteInFocus = getSpriteById( cameraFocus.focusSpriteId );
+        cameraFocus.moveToNewFocus( spriteInFocus );
+    }
+}
 const handleOffscreenCanvasBitmaps = () => {
     clearRenderCanvases();
 

@@ -28,10 +28,10 @@ export const getPreviousMapKey = (): string => {
 export const getNeighbourhoodModel = (): NeighbourhoodModel => {
     return model;
 }
-export const isCurrentNeighbourhoodId = ( neighbourhoodKey: string ): boolean => {
-    return activeNeighbourhoodId == neighbourhoodKey;
-}
 export const initializeNeighbourhood = ( neighbourhoodKey: string ) => {
+    if ( isCurrentNeighbourhoodId( neighbourhoodKey ) ) {
+        return;
+    }
     model = getNeighbourhood( neighbourhoodKey );
     activeNeighbourhoodId = neighbourhoodKey;
     if( model.horizontalSlots.length > 0 )
@@ -39,10 +39,10 @@ export const initializeNeighbourhood = ( neighbourhoodKey: string ) => {
     if ( model.characterSpawnRate !== null )
         setNeighbourhoodNPCCounter();
 }
-export const activateMap = ( key: string, mapLoadType: PlayerMapEntry ): void => {
-    previousMapKey = activeMapKey
+export const markMapAsActive = ( mapKey: string, mapLoadType: PlayerMapEntry ): void => {
+    previousMapKey = activeMapKey;
     previousMapLocation = activeMapLocation;
-    activeMapKey = key;
+    activeMapKey = mapKey;
     activeMapLocation = getActiveMap().location;
     if ( previousMapLocation !== activeMapLocation && mapLoadType !== PlayerMapEntry.cinematic ) {
         setNewCenterBubble( activeMapLocation )
@@ -63,6 +63,9 @@ export const handleNeighbourhoodNPCCounter = (): void => {
     }
 }
 
+const isCurrentNeighbourhoodId = ( neighbourhoodKey: string ): boolean => {
+    return activeNeighbourhoodId == neighbourhoodKey;
+}
 const setMapGrid = (): void => {
     const emptyRow = [];
     let tileSet;

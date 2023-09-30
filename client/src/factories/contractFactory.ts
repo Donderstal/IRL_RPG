@@ -4,6 +4,7 @@ import type { EnterMapContract } from "../contracts/EnterMapContract";
 import type { FadeContract } from "../contracts/FadeContract";
 import type { FocusCameraOnSpriteContract } from "../contracts/FocusCameraOnSpriteContract";
 import type { FocusCameraOnTileContract } from "../contracts/FocusCameraOnTileContract";
+import type { IContract } from "../contracts/IContract";
 import type { LeaveMapContract } from "../contracts/LeaveMapContract";
 import type { MoveSpriteContract } from "../contracts/MoveSpriteContract";
 import type { SetSpriteAnimationContract } from "../contracts/SetSpriteAnimationContract";
@@ -20,69 +21,61 @@ import type { GridCellModel } from "../models/GridCellModel";
 
 export const getCreateSpriteContract = ( canvasObjectModel: CanvasObjectModel ): CreateSpriteContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.CreateSprite,
+        ...getContractBase( ContractType.CreateSprite ),
         canvasObjectModel: canvasObjectModel
     };
 };
 export const getDeleteSpriteContract = ( spriteId: string ): DeleteSpriteContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.DeleteSprite,
+        ...getContractBase( ContractType.DeleteSprite ),
         spriteId: spriteId
     };
 };
-export const getEnterMapContract = ( doorId: string, mapId: string ): EnterMapContract => {
+export const getEnterMapContract = ( doorId: string, mapId: string, playerStart: GridCellModel = null ): EnterMapContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.EnterMap,
+        ...getContractBase( ContractType.EnterMap ),
         doorId: doorId,
-        mapId: mapId
+        mapId: mapId,
+        playerStart: playerStart
     };
 };
 export const getFadeContract = ( opacity: number, fadeBack: boolean = false ): FadeContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.Fade,
+        ...getContractBase( ContractType.Fade ),
         targetOpacity: opacity,
         fadeBack: fadeBack
     };
 };
 export const getFocusCameraOnSpriteContract = ( spriteId: string, snap: boolean ): FocusCameraOnSpriteContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.FocusCameraOnSprite,
+        ...getContractBase( ContractType.FocusCameraOnSprite ),
         spriteId: spriteId,
         snap: snap
     };
 };
 export const getFocusCameraOnTileContract = ( cell: GridCellModel, snap: boolean ): FocusCameraOnTileContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.FocusCamerOnTile,
+        ...getContractBase( ContractType.FocusCamerOnTile ),
         tile: cell,
         snap: snap
     };
 };
-export const getLeaveMapContract = ( doorId: string, mapId: string ): LeaveMapContract => {
+export const getLeaveMapContract = ( doorId: string ): LeaveMapContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.LeaveMap,
+        ...getContractBase( ContractType.LeaveMap ),
         doorId: doorId
     };
 };
 export const getMoveSpriteContract = ( spriteId: string, cell: GridCellModel ): MoveSpriteContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.MoveSprite,
+        ...getContractBase( ContractType.MoveSprite ),
         spriteId: spriteId,
         destination: cell
     };
 };
 export const getSetSpriteAnimationContract = ( spriteId: string, animationName: string, loop: boolean = false ): SetSpriteAnimationContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.SetSpriteAnimation,
+        ...getContractBase( ContractType.SetSpriteAnimation ),
         spriteId: spriteId,
         animationName: animationName,
         loop: loop
@@ -90,16 +83,14 @@ export const getSetSpriteAnimationContract = ( spriteId: string, animationName: 
 };
 export const getShowEmoteContract = ( spriteId: string, emoteName: string ): ShowEmoteContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.ShowEmote,
+        ...getContractBase( ContractType.ShowEmote ),
         spriteId: spriteId,
         emote: emoteName
     };
 };
 export const getShowScreenTextContract = ( text: string, isTitle: boolean, maxWidth: number = MAX_BUBBLE_TEXT_WIDTH ): ShowScreenTextContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.ShowEmote,
+        ...getContractBase( ContractType.ShowEmote ),
         text: text,
         isTitle: isTitle,
         maxWidth: maxWidth
@@ -107,8 +98,7 @@ export const getShowScreenTextContract = ( text: string, isTitle: boolean, maxWi
 };
 export const getShowSpeechBubbleContract = ( speakingSpriteId: string, text: string, speakingToSpriteId: string = null, sfx: string = null ): ShowSpeechBubbleContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.ShowEmote,
+        ...getContractBase( ContractType.ShowEmote ),
         speakingSpriteId: speakingSpriteId,
         text: text,
         speakingToSpriteId: speakingToSpriteId,
@@ -117,11 +107,17 @@ export const getShowSpeechBubbleContract = ( speakingSpriteId: string, text: str
 };
 export const getSwitchCutsceneMapContract = ( mapId: string, focusTile: GridCellModel, setPlayerSprite: boolean = false, playerStart: CellPosition = null ): SwitchCutsceneMapContract => {
     return {
-        contractId: getNewContractId(),
-        contractType: ContractType.SwitchCutsceneMap,
+        ...getContractBase( ContractType.SwitchCutsceneMap ),
         mapId: mapId,
         focusTile: focusTile,
         setPlayerSprite: setPlayerSprite,
         playerStart: playerStart
     };
 };
+const getContractBase = ( type: ContractType ): IContract => {
+    return {
+        contractId: getNewContractId(),
+        contractType: type,
+        attempts: 0
+    }
+}

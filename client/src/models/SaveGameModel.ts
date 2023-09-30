@@ -1,4 +1,5 @@
 import type { InteractionAnswer } from "../enumerables/InteractionAnswer";
+import type { GridCellModel } from "./GridCellModel";
 
 export type SaveGame = {
     time: string;
@@ -8,6 +9,7 @@ export type SaveGame = {
 }
 export type SaveGamePlayerData = {
     name: string;
+    position: GridCellModel;
 }
 export type SaveGameMapData = {
     mapName: string;

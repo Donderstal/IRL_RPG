@@ -2,7 +2,6 @@
     import GoBackButton from '../svelte-partials/GoBackButton.svelte'
     import MainUiButton from "../svelte-partials/MainUiButton.svelte";
     import { MAP_IDS } from '../../resources/mapResources/mapIds'; 
-    import { GameType } from '../../enumerables/GameType';
     import { loadFilesAndStartGame } from '../../mainController';
 
     const startGameWithParams = ( ) => {
@@ -10,7 +9,7 @@
         const startingMap = (document.getElementById('map-selection') as HTMLInputElement).value
         const runInDebugMode = (document.getElementById('enable-debug') as HTMLInputElement).checked;
         const disableStoryEvents = (document.getElementById('disable-story') as HTMLInputElement).checked;
-        loadFilesAndStartGame( GameType.newGame, [characterName, null, startingMap, runInDebugMode, disableStoryEvents] );
+        loadFilesAndStartGame( false, [characterName, null, startingMap, runInDebugMode, disableStoryEvents] );
     }
 </script>
 

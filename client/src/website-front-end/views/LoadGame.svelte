@@ -5,7 +5,6 @@
     import { activeUser } from '../../stores';
     import { onMount } from 'svelte';
     import { loadFilesAndStartGame } from '../../mainController';
-    import { GameType } from '../../enumerables/GameType';
     let games = [];
 
     export const setSaveGames = () => {
@@ -27,7 +26,7 @@
 
     const loadGame = (index: number): void => {
         const game = games[index];
-        loadFilesAndStartGame(GameType.loadFromSave, [game]);
+        loadFilesAndStartGame(true, [game]);
     }
 
     onMount(()=>{

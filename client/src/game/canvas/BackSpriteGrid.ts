@@ -1,7 +1,7 @@
 import { CanvasGrid } from '../core/CanvasGrid';
 import { RoadNetwork } from '../map/RoadNetwork';
 import { getDataModelByKey } from '../../resources/spriteDataResources';
-import { PLAYER_ID, PLAYER_NAME } from '../../game-data/interactionGlobals';
+import { PLAYER_NAME } from '../../game-data/interactionGlobals';
 import { conditionIsTrue } from '../../helpers/conditionalHelper';
 import type { Grid } from '../core/Grid';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
@@ -12,18 +12,17 @@ import type { SpawnPointModel } from '../../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../../factories/modelFactory';
 import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
-import { cameraFocus } from '../cameraFocus';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DestinationType } from '../../enumerables/DestinationType';
 import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
 import { setSpriteList } from '../modules/sprites/spriteSetter';
-import { getPlayer } from '../modules/sprites/spriteGetter';
 import { getActiveMapKey, getNeighbourhoodModel } from '../neighbourhoodModule';
 import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
-import { setSpriteAndSpriteModules } from '../modules/moduleSetter';
 import { getPlayerStart, mapHasPlayerStart } from '../map/playerLocationOnMapLoad';
 import { getBlockedCellList, isTileBlocked, tileIsValidDestination } from '../map/blockedTilesRegistry';
+import { getCreateSpriteContract } from '../../factories/contractFactory';
+import { registerNewContract } from '../../contracts/contractRegistry';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -52,8 +51,6 @@ export class BackSpriteGrid extends CanvasGrid {
                 this.setSprites( this.model.sprites );
             if ( setPlayer && mapHasPlayerStart() ) {
                 this.initPlayerCharacter( getPlayerStart(), MAIN_CHARACTER );
-                const player = getPlayer();
-                cameraFocus.centerOnXY( player.centerX, player.baseY )      
             }            
         }
     }
@@ -69,14 +66,18 @@ export class BackSpriteGrid extends CanvasGrid {
                 name: PLAYER_NAME
             }
         );
-        setSpriteAndSpriteModules( canvasObjectModel, this.type, PLAYER_ID );
+        const contract = getCreateSpriteContract( canvasObjectModel );
+        registerNewContract( contract );
     }
 
     setSprites( sprites: CanvasObjectModel[] ): void {
         let models = sprites.filter((e)=>{
             return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
         })
-        models.forEach( e => setSpriteAndSpriteModules( e, this.type, e.id ) );
+        models.forEach( ( e ) => {
+            const contract = getCreateSpriteContract( e );
+            registerNewContract( contract );
+        } );
     };
 
     clearMap( ): void {
@@ -154,7 +155,9 @@ export class BackSpriteGrid extends CanvasGrid {
             }
         }
         let model: CanvasObjectModel = initCanvasObjectModel( characterDto );
-        setSpriteAndSpriteModules( model, this.type )
+
+        const contract = getCreateSpriteContract( model );
+        registerNewContract( contract );
     }
 
     spriteIsInRegistry( tile: Tile, dataModel: CanvasObjectModel ): boolean {
