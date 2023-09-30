@@ -1,6 +1,4 @@
 import type { DirectionEnum } from "../../enumerables/DirectionEnum";
-import { PlayerMapEntry } from "../../enumerables/PlayerMapEntryEnum";
-import { switchMap } from "../../helpers/loadMapHelpers";
 import { clearSpeakingEffect, playEffect } from "../sound/sound";
 import { clearActiveEmotes, destroyElevatorBubble, displayFullText, getElevatorBubble, getMainTextBubble, isWriting, selectionBubble } from "./bubbleController";
 
@@ -10,7 +8,7 @@ export const handleMenuBubbleActionButton = (): void => {
     const result = bubble.handleSelectionButton();
     destroyElevatorBubble();
     if ( result !== undefined ) {
-        switchMap( result, PlayerMapEntry.elevator, elevatorId );
+        //switchMap( result, PlayerMapEntry.elevator, elevatorId );
         playEffect( "misc/menu-select.mp3" );
     }
 }

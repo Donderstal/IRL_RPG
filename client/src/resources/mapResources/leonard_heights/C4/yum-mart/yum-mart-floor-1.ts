@@ -1819,7 +1819,7 @@ export default {
 			"column": 1,
 			"direction": DirectionEnum.left,
 			"eventChainType": EventChainType.door,
-			"eventId": DOOR_IDS.YUM_MART_FRONT_DOOR,
+			"eventId": DOOR_IDS.YUM_MART_DOOR_1,
 		},
 		{
 			"eventChainType": EventChainType.cutscene,

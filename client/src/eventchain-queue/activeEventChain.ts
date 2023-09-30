@@ -13,6 +13,7 @@ import { setEventChainGameState } from "../state/state";
 import { updateGameControlState } from "../state/stateSetter";
 import { State } from "../enumerables/StateEnum";
 import { CUTSCENE_EVENT_CHAINS } from "../resources/eventChainResources/cutsceneEventChains";
+import { inDebugState } from "../state/stateGetter";
 
 let activeEventChain: IEventChain = null;
 let mainEventScript: IEventScript = null;
@@ -20,15 +21,21 @@ let activeEventScript: IEventScript = null;
 let previousEventTypesInChain: EventType[] = [];
 
 export const startEventChain = ( eventChain: IEventChain, mainEvent: IEventScript ): void => {
-    console.log( `Activating eventchain ${eventChain.eventChainType}` );
-    console.log( `Main eventscript: ${mainEvent.eventType}` );
+    if ( inDebugState() ) {
+        console.log( `Activating eventchain ${eventChain.eventChainType}` );
+        console.log( `Main eventscript: ${mainEvent.eventType}` );
+    }
+
     setEventChainGameState( true );
     activeEventChain = eventChain;
     mainEventScript = mainEvent;
 
     const firstEvent = determineFirstEventScript();
-    console.log( `Determining first eventscript in chain ${activeEventChain.eventChainType}` );
-    console.log( `First eventscript: ${firstEvent.eventType}` );
+    if ( inDebugState() ) {
+        console.log( `Determining first eventscript in chain ${activeEventChain.eventChainType}` );
+        console.log( `First eventscript: ${firstEvent.eventType}` );
+    }
+
     setActiveEventScript( firstEvent );
     updateGameControlState( State.cinematic );
 }
@@ -39,8 +46,11 @@ export const handleActiveEventChain = (): void => {
     previousEventTypesInChain.push( activeEventScript.eventType );
 
     const nextEvent = determineNextEventScript();
-    console.log( `Determining next eventscript in chain ${activeEventChain.eventChainType}` )
-    console.log( `Next eventscript: ${nextEvent?.eventType}` )
+    if ( inDebugState() ) {
+        console.log( `Determining next eventscript in chain ${activeEventChain.eventChainType}` )
+        console.log( `Next eventscript: ${nextEvent?.eventType}` )
+    }
+
     if ( nextEvent !== null ) {
         setActiveEventScript( nextEvent );
     }
@@ -49,7 +59,10 @@ export const handleActiveEventChain = (): void => {
     }
 }
 const clearEventChain = (): void => {
-    console.log( `Ending eventchain ${activeEventChain.eventChainType}` );
+    if ( inDebugState() ) {
+        console.log( `Ending eventchain ${activeEventChain.eventChainType}` );
+    }
+
     unsetActiveEventScript();
     previousEventTypesInChain = [];
     mainEventScript = null;

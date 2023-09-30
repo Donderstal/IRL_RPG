@@ -97,10 +97,10 @@ export default {
 	],
 	"triggers": [
 		getBSAppartmentToHallDoor( DOOR_IDS.BAKER_STREET_12_APT_F3 ),
-		{
-			"eventChainType": EventChainType.cutscene,
-			"eventId": CUTSCENE_IDS.INTRO_CUTSCENE,
-			"triggerType": TriggerType.map_leave
-		}
+		//{
+		//	"eventChainType": EventChainType.cutscene,
+		//	"eventId": CUTSCENE_IDS.INTRO_CUTSCENE,
+		//	"triggerType": TriggerType.map_leave
+		//}
 	]
 }

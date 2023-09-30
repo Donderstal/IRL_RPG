@@ -1,7 +1,6 @@
 import type { EnterMapContract } from "../contracts/EnterMapContract";
 import { registerNewContract } from "../contracts/contractRegistry";
 import { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
-import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 import { getCreateSpriteContract, getFocusCameraOnSpriteContract, getSetTriggerContract } from "../factories/contractFactory";
 import { initCanvasObjectModel } from "../factories/modelFactory";
 import { CANVAS_COLUMNS, CANVAS_HEIGHT, CANVAS_ROWS, CANVAS_WIDTH, GRID_BLOCK_PX } from "../game-data/globals";
@@ -27,7 +26,7 @@ export const loadMap = ( contract: EnterMapContract ): void => {
 
     const neighbourhoodKey = determineMapNeighbourhood( contract.mapId );
     initializeNeighbourhood( neighbourhoodKey );
-    markMapAsActive( contract.mapId, PlayerMapEntry.door );
+    markMapAsActive( contract.mapId );
 
     setCanvasDimensions();
 
@@ -73,7 +72,6 @@ const registerCreatePlayerSpriteContract = ( contract: EnterMapContract, mapMode
     let playerStart = contract.doorId === null || contract.doorId === undefined
         ? contract.playerStart
         : mapModelToLoad.triggers.filter( e => e.eventId === contract.doorId )[0];
-    console.log( `setting player sprite to column ${playerStart.column}, row ${playerStart.row}` );
 
     if ( playerStart === undefined ) {
         console.error( `Found no start for PlayerSprite while loading map!` );

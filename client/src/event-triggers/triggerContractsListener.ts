@@ -37,14 +37,14 @@ const setTriggerFromContract = ( trigger: TriggerModel ): void => {
 const setSpriteBasedTrigger = ( trigger: TriggerModel ): void => {
     const sprite = getSpriteById( trigger.spriteId );
     if ( sprite == null ) {
-        console.error( `Error setting trigger ${trigger.eventId}. No sprite could be found with id ${sprite}` );
+        console.warn( `Error setting trigger ${trigger.eventId}. No sprite could be found with id ${sprite}` );
     }
     setTrigger( trigger, sprite );
 }
 const setTileBasedTrigger = ( trigger: TriggerModel ): void => {
     const tile = getTileOnCanvasByCell( { column: trigger.column, row: trigger.row }, CanvasTypeEnum.background )
     if ( tile == null ) {
-        console.error( `Error setting trigger ${trigger.eventId}. No tile could be found a column ${trigger.column}, row ${trigger.row}` );
+        console.warn( `Error setting trigger ${trigger.eventId}. No tile could be found a column ${trigger.column}, row ${trigger.row}` );
     }
     setTrigger( trigger, tile );
 }

@@ -71,7 +71,6 @@ const getLoadMapOnStartEventScript = ( eventChain: LoadMapOnStartEventChain ): E
 }
 const getDoorEventScript = ( eventChain: DoorEventChain ): IEventScript => {
     const activeMapName = getActiveMapKey();   
-    console.log( `Active map is ${activeMapName}` )
 
     if ( eventChain.lockedBy !== null ) {
         const doorIsUnlocked = isInInteractionRegistry( eventChain.lockedBy );

@@ -5,7 +5,6 @@ import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
 import { setNewCenterBubble } from "./controllers/bubbleController";
 import { getBackSpritesGrid } from "./canvas/canvasGetter";
-import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
 
 let model: NeighbourhoodModel;
 let mapModel: MapModel;
@@ -39,14 +38,12 @@ export const initializeNeighbourhood = ( neighbourhoodKey: string ) => {
     if ( model.characterSpawnRate !== null )
         setNeighbourhoodNPCCounter();
 }
-export const markMapAsActive = ( mapKey: string, mapLoadType: PlayerMapEntry ): void => {
+export const markMapAsActive = ( mapKey: string ): void => {
     previousMapKey = activeMapKey;
     previousMapLocation = activeMapLocation;
     activeMapKey = mapKey;
     activeMapLocation = getActiveMap().location;
-    if ( previousMapLocation !== activeMapLocation && mapLoadType !== PlayerMapEntry.cinematic ) {
-        setNewCenterBubble( activeMapLocation )
-    }
+    setNewCenterBubble( activeMapLocation );
 }
 export const setNeighbourhoodNPCCounter = (): void => {
     NPCCounter = new Counter( model.characterSpawnRate, true )

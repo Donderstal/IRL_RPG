@@ -4,7 +4,7 @@ import yumMartGround from "./yum-mart/yum-mart-ground";
 
 export default {
     // Yum Mart
-    [MAP_IDS.LEONARD_HEIGHTS.YUM_MART_OFFICE]: yumMartGround,
-    [MAP_IDS.LEONARD_HEIGHTS.YUM_MART_STORE]: yumMartFloor1
+    [MAP_IDS.LEONARD_HEIGHTS.YUM_MART_OFFICE]:  yumMartFloor1,
+    [MAP_IDS.LEONARD_HEIGHTS.YUM_MART_STORE]: yumMartGround
     //
 }

@@ -3,7 +3,7 @@ import { TriggerType } from "../enumerables/TriggerType";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import { getSpriteRelatedTriggerId, spriteTriggerRelationExists } from "../registries/spriteTriggerRelationRegistry";
-import { inEventChainState } from "../state/stateGetter";
+import { inDebugState, inEventChainState } from "../state/stateGetter";
 import type { Trigger } from "./Trigger";
 import { addTriggerToQueue } from "./triggerQueue";
 import { getAllTriggers, getTriggerById, getTriggersByTriggerType } from "./triggerRegistry";
@@ -46,9 +46,12 @@ const checkForEventTrigger = ( trigger: Trigger, triggerType: TriggerType, playe
     }
 
     if ( queueTrigger ) {
-        console.log( `Queueing trigger` )
-        console.log( trigger.model )
-        console.log( triggerType )
+        if ( inDebugState() ) {
+            console.log( `Queueing trigger` )
+            console.log( trigger.model )
+            console.log( triggerType )
+        }
+
         addTriggerToQueue( trigger.model, triggerType );
     }
 }
