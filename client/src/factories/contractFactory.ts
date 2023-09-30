@@ -8,6 +8,7 @@ import type { IContract } from "../contracts/IContract";
 import type { LeaveMapContract } from "../contracts/LeaveMapContract";
 import type { MoveSpriteContract } from "../contracts/MoveSpriteContract";
 import type { SetSpriteAnimationContract } from "../contracts/SetSpriteAnimationContract";
+import type { SetTriggerContract } from "../contracts/SetTriggerContract";
 import type { ShowEmoteContract } from "../contracts/ShowEmoteContract";
 import type { ShowScreenTextContract } from "../contracts/ShowScreenTextContract";
 import type { ShowSpeechBubbleContract } from "../contracts/ShowSpeechBubbleContract";
@@ -18,6 +19,7 @@ import { MAX_BUBBLE_TEXT_WIDTH } from "../game-data/globals";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import type { CellPosition } from "../models/CellPositionModel";
 import type { GridCellModel } from "../models/GridCellModel";
+import type { TriggerModel } from "../models/TriggerModel";
 
 export const getCreateSpriteContract = ( canvasObjectModel: CanvasObjectModel ): CreateSpriteContract => {
     return {
@@ -79,6 +81,12 @@ export const getSetSpriteAnimationContract = ( spriteId: string, animationName: 
         spriteId: spriteId,
         animationName: animationName,
         loop: loop
+    };
+};
+export const getSetTriggerContract = ( triggerModel: TriggerModel ): SetTriggerContract => {
+    return {
+        ...getContractBase( ContractType.SetTrigger ),
+        triggerModel: triggerModel
     };
 };
 export const getShowEmoteContract = ( spriteId: string, emoteName: string ): ShowEmoteContract => {

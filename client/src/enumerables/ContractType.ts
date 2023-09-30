@@ -8,6 +8,7 @@ export enum ContractType {
     LeaveMap,
     MoveSprite,
     SetSpriteAnimation,
+    SetTrigger,
     ShowEmote,
     ShowScreenText,
     ShowSpeechBubble,

@@ -11,7 +11,6 @@ import { SpeechBubbleCanvas } from "./SpeechBubbleCanvas";
 import { BUBBLE_CANVAS_HEIGHT, BUBBLE_CANVAS_WIDTH, CANVAS_HEIGHT, CANVAS_WIDTH, GRID_BLOCK_PX } from "../../game-data/globals";
 import type { MapModel } from "../../models/MapModel";
 import type { TilesheetModel } from "../../models/TilesheetModel";
-import type { Sprite } from "../core/Sprite";
 
 export const clearCanvasGridMaps = (): void => {
     clearMapFromRegistryGrid( CanvasTypeEnum.background );
@@ -60,13 +59,13 @@ export const initializeCanvasGrids = ( columns: number, rows: number ): void => 
     ];
     grids.forEach( ( e ) => { e.initGrid( columns, rows ); } );
 }
-export const setMapModelToCanvasGrids = ( mapModel: MapModel, sheetModel: TilesheetModel, carSpawnRate: number, setPlayer = true, sprites: Sprite[] = null ): void => {
+export const setMapModelToCanvasGrids = ( mapModel: MapModel, sheetModel: TilesheetModel, carSpawnRate: number ): void => {
     const background = getCanvasFromRegistry( CanvasTypeEnum.background ) as BackTileGrid;
     const backSpritesGrid = getCanvasFromRegistry( CanvasTypeEnum.backSprites ) as BackSpriteGrid;
     const foreground = getCanvasFromRegistry( CanvasTypeEnum.foreground ) as FrontTileGrid;
 
     background.setBackgroundData( mapModel, sheetModel );
-    backSpritesGrid.setForegroundData( mapModel, carSpawnRate, sprites, setPlayer );
+    backSpritesGrid.setForegroundData( mapModel, carSpawnRate );
     foreground.setFrontgridData( mapModel, sheetModel );
 }
 export const drawTilesToCanvasGrids = (): void => {

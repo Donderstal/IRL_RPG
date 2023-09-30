@@ -1,25 +1,17 @@
 import { CanvasGrid } from '../core/CanvasGrid';
 import { RoadNetwork } from '../map/RoadNetwork';
 import { getDataModelByKey } from '../../resources/spriteDataResources';
-import { PLAYER_NAME } from '../../game-data/interactionGlobals';
-import { conditionIsTrue } from '../../helpers/conditionalHelper';
 import type { Grid } from '../core/Grid';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
-import type { CellPosition } from '../../models/CellPositionModel';
 import type { Tile } from '../core/Tile';
 import type { MapModel } from '../../models/MapModel';
 import type { SpawnPointModel } from '../../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../../factories/modelFactory';
-import { AnimationTypeEnum } from '../../enumerables/AnimationTypeEnum';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { DestinationType } from '../../enumerables/DestinationType';
-import type { Sprite } from '../core/Sprite';
 import { getCollectableId, isInCollectableRegistry } from '../../registries/collectableRegistry';
-import { setSpriteList } from '../modules/sprites/spriteSetter';
 import { getActiveMapKey, getNeighbourhoodModel } from '../neighbourhoodModule';
-import { MAIN_CHARACTER } from '../../resources/spriteTypeResources';
-import { getPlayerStart, mapHasPlayerStart } from '../map/playerLocationOnMapLoad';
 import { getBlockedCellList, isTileBlocked, tileIsValidDestination } from '../map/blockedTilesRegistry';
 import { getCreateSpriteContract } from '../../factories/contractFactory';
 import { registerNewContract } from '../../contracts/contractRegistry';
@@ -38,47 +30,11 @@ export class BackSpriteGrid extends CanvasGrid {
         //this.activeEffects.push( getEffect( name, x, y, endX, endY ) );
     }
 
-    setForegroundData( mapModel: MapModel, carSpawnRate: number, sprites: Sprite[] = null, setPlayer = true ) {
+    setForegroundData( mapModel: MapModel, carSpawnRate: number ) {
         this.model = mapModel;
         if ( this.model.roads !== undefined ) 
             this.roadNetwork = new RoadNetwork( this.model.roads, this.canvas, carSpawnRate );
-
-        if ( sprites ) {
-            setSpriteList( sprites );
-        }
-        else {
-            if ( this.model.sprites )
-                this.setSprites( this.model.sprites );
-            if ( setPlayer && mapHasPlayerStart() ) {
-                this.initPlayerCharacter( getPlayerStart(), MAIN_CHARACTER );
-            }            
-        }
     }
-
-    initPlayerCharacter( start: CellPosition, className: string ) {
-        const canvasObjectModel = initCanvasObjectModel(
-            {
-                type: className,
-                direction: start.direction ?? 0,
-                column: start.column,
-                row: start.row,
-                anim_type: AnimationTypeEnum.idle,
-                name: PLAYER_NAME
-            }
-        );
-        const contract = getCreateSpriteContract( canvasObjectModel );
-        registerNewContract( contract );
-    }
-
-    setSprites( sprites: CanvasObjectModel[] ): void {
-        let models = sprites.filter((e)=>{
-            return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
-        })
-        models.forEach( ( e ) => {
-            const contract = getCreateSpriteContract( e );
-            registerNewContract( contract );
-        } );
-    };
 
     clearMap( ): void {
         this.grid = null;

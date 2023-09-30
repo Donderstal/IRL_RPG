@@ -1,5 +1,6 @@
 import { acknowledgeFadeContract, acknowledgeFocusCameraOnSpriteContract, acknowledgeFocusCameraOnTileContract } from "../camera/cameraContractsListener";
 import { ContractType } from "../enumerables/ContractType";
+import { acknowledgeSetTriggerContract } from "../event-triggers/triggerContractsListener";
 import { acknowledgeEnterMapContract, acknowledgeLeaveMapContract, acknowledgeSwitchCutsceneMapContract } from "../map/mapContractsListener";
 import { acknowledgeCreateSpriteContract, acknowledgeDeleteSpriteContract, acknowledgeMoveSpriteContract, acknowledgeSetSpriteAnimationContract } from "../sprites/spriteContractsListener";
 import { acknowledgeShowEmoteContract, acknowledgeShowScreenTextContract, acknowledgeShowSpeechBubbleContract } from "../text/textContractsListener";
@@ -13,6 +14,7 @@ import type { IContract } from "./IContract";
 import type { LeaveMapContract } from "./LeaveMapContract";
 import type { MoveSpriteContract } from "./MoveSpriteContract";
 import type { SetSpriteAnimationContract } from "./SetSpriteAnimationContract";
+import type { SetTriggerContract } from "./SetTriggerContract";
 import type { ShowEmoteContract } from "./ShowEmoteContract";
 import type { ShowScreenTextContract } from "./ShowScreenTextContract";
 import type { ShowSpeechBubbleContract } from "./ShowSpeechBubbleContract";
@@ -26,6 +28,7 @@ export const publishNewContracts = (): void => {
     contracts.forEach( publishContract );
 }
 const publishContract = ( contract: IContract ): void => {
+    addToPendingContractIds( contract.contractId );
     switch ( contract.contractType ) {
         case ContractType.CreateSprite:
             acknowledgeCreateSpriteContract( contract as CreateSpriteContract );
@@ -54,6 +57,9 @@ const publishContract = ( contract: IContract ): void => {
         case ContractType.SetSpriteAnimation:
             acknowledgeSetSpriteAnimationContract( contract as SetSpriteAnimationContract );
             break;
+        case ContractType.SetTrigger:
+            acknowledgeSetTriggerContract( contract as SetTriggerContract );
+            break;
         case ContractType.ShowEmote:
             acknowledgeShowEmoteContract( contract as ShowEmoteContract );
             break;
@@ -67,5 +73,4 @@ const publishContract = ( contract: IContract ): void => {
             acknowledgeSwitchCutsceneMapContract( contract as SwitchCutsceneMapContract );
             break;
     }
-    addToPendingContractIds( contract.contractId );
 }

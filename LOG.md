@@ -1,5 +1,9 @@
 ### 
 
+#### SEP 30 2023
+* Loading game with frameLoop instead of timeouts.
+* Loading maps step for step with contracts
+
 #### SEP 27 2023
 * Introducing a contract structure for tasks like creating a sprite, loading a map, showing text etc.
 

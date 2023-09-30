@@ -39,7 +39,7 @@ export const loadMapToCanvases = ( mapData: MapModel, loadType: PlayerMapEntry, 
     const sheetData = getTilesheetModelByKey( mapData.tileSet );
 
     back.setBackgroundData( mapData, sheetData );
-    front.setForegroundData( mapData, neighbourhood.carSpawnRate, sprites, setPlayer );
+    front.setForegroundData( mapData, neighbourhood.carSpawnRate );
     frontgrid.setFrontgridData( mapData, sheetData );
 
     setTriggers( mapData.triggers, back );

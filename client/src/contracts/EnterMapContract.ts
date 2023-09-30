@@ -1,8 +1,8 @@
-import type { GridCellModel } from "../models/GridCellModel";
+import type { CellPosition } from "../models/CellPositionModel";
 import type { IContract } from "./IContract";
 
 export type EnterMapContract = IContract & {
     doorId: string,
     mapId: string,
-    playerStart: GridCellModel
+    playerStart: CellPosition
 }

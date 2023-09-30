@@ -1,7 +1,7 @@
 import type { EnterMapContract } from "../contracts/EnterMapContract";
 import type { LeaveMapContract } from "../contracts/LeaveMapContract";
 import type { SwitchCutsceneMapContract } from "../contracts/SwitchCutsceneMapContract";
-import { deregisterContractOnCompletion, markContractAsFailed } from "../contracts/contractRegistry";
+import { deregisterContractOnCompletion, markContractAsFailed, removeFromPendingContractIds } from "../contracts/contractRegistry";
 import { loadMap } from "./mapLoader";
 
 export const acknowledgeEnterMapContract = ( contract: EnterMapContract ): void => {
@@ -10,9 +10,11 @@ export const acknowledgeEnterMapContract = ( contract: EnterMapContract ): void 
         deregisterContractOnCompletion( contract.contractId );
     }
     catch ( exception ) {
-        contract.attempts++
+        console.log( `Failed to set contract ${contract.contractId}, retrying in next frame` );
+        contract.attempts++;
+        removeFromPendingContractIds( contract.contractId );
         if ( contract.attempts > 5 ) {
-            console.log( `Failed to complete EnterMapContract with id ${contract.contractId}. Map ${contract.mapId}, door ${contract.doorId}.` )
+            console.log( `Failed to complete EnterMapContract with id ${contract.contractId}. Map ${contract.mapId}, door ${contract.doorId}.` );
             console.error( exception );
             markContractAsFailed( contract.contractId );
         }

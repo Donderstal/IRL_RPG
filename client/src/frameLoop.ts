@@ -15,8 +15,10 @@ import { handleEventChainQueue } from './eventchain-queue/eventChainQueueHandler
 import { handleActiveEventChain } from './eventchain-queue/activeEventChain';
 import { getSpriteById } from './game/modules/sprites/spriteGetter';
 import { publishNewContracts } from './contracts/contractPublisher';
-import { getLoadingGameGameState, getLoadingMapGameState } from './state/state';
+import { getLoadingGameGameState, getLoadingMapGameState, setLoadingMapGameState } from './state/state';
 import { loadGame } from './gameLoader';
+import { getPendingContracts } from './contracts/contractRegistry';
+import { registerBlockedTilesOnMap } from './map/mapLoader';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -34,7 +36,10 @@ export const animationLoop = (): void => {
         else if ( inPausedState() ) {
             handleGameIsPausedLoop();
         }
-        else if ( !getLoadingMapGameState() ) {
+        else if ( getLoadingMapGameState() ) {
+            handleMapIsLoadLoop();
+        }
+        else {
             handleDefaultLoop()
         }
 
@@ -54,6 +59,13 @@ const handleGameIsLoadingLoop = (): void => {
 }
 const handleGameIsPausedLoop = (): void => {
     clearSpriteCanvasGrids();
+}
+const handleMapIsLoadLoop = (): void => {
+    const pendingContracts = getPendingContracts();
+    if ( pendingContracts.length < 1 ) {
+        registerBlockedTilesOnMap();
+        setLoadingMapGameState( false );
+    }
 }
 const handleDefaultLoop = (): void => {
     const gameHasActiveEvent = inEventChainState();

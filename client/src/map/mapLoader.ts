@@ -1,22 +1,28 @@
 import type { EnterMapContract } from "../contracts/EnterMapContract";
 import { registerNewContract } from "../contracts/contractRegistry";
-import { CanvasTypeEnum } from "../enumerables/CanvasTypeEnum";
+import { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
 import { PlayerMapEntry } from "../enumerables/PlayerMapEntryEnum";
-import { setTrigger } from "../event-triggers/triggerSetter";
-import { getFocusCameraOnSpriteContract } from "../factories/contractFactory";
-import { PLAYER_ID } from "../game-data/interactionGlobals";
-import { getBackTilesGrid, getTileOnCanvasByCell } from "../game/canvas/canvasGetter";
+import { getCreateSpriteContract, getFocusCameraOnSpriteContract, getSetTriggerContract } from "../factories/contractFactory";
+import { initCanvasObjectModel } from "../factories/modelFactory";
+import { PLAYER_ID, PLAYER_NAME } from "../game-data/interactionGlobals";
+import { getBackTilesGrid } from "../game/canvas/canvasGetter";
 import { initializeCanvasGrids, setMapModelToCanvasGrids } from "../game/canvas/canvasSetter";
 import { registerNewMap, registerTilesBlockedByStaticSprites } from "../game/map/blockedTilesRegistry";
-import { getSpriteById, getStaticSprites } from "../game/modules/sprites/spriteGetter";
+import { getStaticSprites } from "../game/modules/sprites/spriteGetter";
 import { getActiveMap, initializeNeighbourhood, markMapAsActive } from "../game/neighbourhoodModule";
 import { setActiveMusic } from "../game/sound/sound";
+import { conditionIsTrue } from "../helpers/conditionalHelper";
+import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import type { MapModel } from "../models/MapModel";
 import type { TriggerModel } from "../models/TriggerModel";
 import { determineMapNeighbourhood } from "../resources/mapResources/mapIds";
+import { MAIN_CHARACTER } from "../resources/spriteTypeResources";
 import { getTilesheetModelByKey } from "../resources/tilesheetResources";
+import { setLoadingMapGameState } from "../state/state";
 
 export const loadMap = ( contract: EnterMapContract ): void => {
+    setLoadingMapGameState( true );
+
     const neighbourhoodKey = determineMapNeighbourhood( contract.mapId );
     initializeNeighbourhood( neighbourhoodKey );
     markMapAsActive( contract.mapId, PlayerMapEntry.door );
@@ -25,45 +31,60 @@ export const loadMap = ( contract: EnterMapContract ): void => {
     initializeCanvasGrids( mapModelToLoad.columns, mapModelToLoad.rows );
 
     const sheetData = getTilesheetModelByKey( mapModelToLoad.tileSet );
-    setMapModelToCanvasGrids( mapModelToLoad, sheetData, 0, true, [] );
+    setMapModelToCanvasGrids( mapModelToLoad, sheetData, 0 );
 
-    setTriggers( mapModelToLoad.triggers );
+    registerCreateSpriteContracts( mapModelToLoad.sprites );
+    registerCreatePlayerSpriteContract( contract, mapModelToLoad );
+
+    registerTriggerContracts( mapModelToLoad.triggers );
     setActiveMusic( mapModelToLoad.music );
 
     registerNewContract( getFocusCameraOnSpriteContract( PLAYER_ID, true ) );
-    registerBlockedTilesOnMap();
 }
-const registerBlockedTilesOnMap = (): void => {
+const registerTriggerContracts = ( triggers: TriggerModel[] ): void => {
+    triggers.forEach( ( e ) => {
+        const contract = getSetTriggerContract( e );
+        registerNewContract( contract );
+    })
+}
+const registerCreateSpriteContracts = ( spriteDtos: CanvasObjectModel[] ): void => {
+    let spritesToCreate = spriteDtos.filter( ( e ) => {
+        return e.hasCondition ? conditionIsTrue( e.condition.type, e.condition.value ) : true;
+    } )
+    spritesToCreate.forEach( ( e ) => {
+        const contract = getCreateSpriteContract( e );
+        registerNewContract( contract );
+    } );
+}
+const registerCreatePlayerSpriteContract = ( contract: EnterMapContract, mapModelToLoad: MapModel ): void => {
+    let playerStart = contract.doorId === null || contract.doorId === undefined
+        ? contract.playerStart
+        : mapModelToLoad.triggers.filter( e => e.eventId === contract.doorId )[0];
+    console.log( `setting player sprite to column ${playerStart.column}, row ${playerStart.row}` );
+
+    if ( playerStart === undefined ) {
+        console.error( `Found no start for PlayerSprite while loading map!` );
+        console.log( contract );
+    }
+
+    const playerSpriteModel = initCanvasObjectModel(
+        {
+            type: MAIN_CHARACTER,
+            direction: playerStart.direction ?? 0,
+            column: playerStart.column,
+            row: playerStart.row,
+            anim_type: AnimationTypeEnum.idle,
+            name: PLAYER_NAME,
+            id: PLAYER_ID
+        }
+    );
+    const createSpriteContract = getCreateSpriteContract( playerSpriteModel );
+    registerNewContract( createSpriteContract );
+}
+export const registerBlockedTilesOnMap = (): void => {
     const backGrid = getBackTilesGrid();
     const sprites = getStaticSprites();
 
     registerNewMap( backGrid );
     registerTilesBlockedByStaticSprites( sprites );
-}
-const setTriggers = ( triggerList: TriggerModel[] ): void => {
-    triggerList.forEach( ( e ) => {
-        if ( e.spriteId !== null && e.spriteId !== undefined ) {
-            setSpriteBasedTrigger( e );
-        }
-        else if ( e.triggerType !== null && e.triggerType !== undefined ) {
-            setTrigger( e );
-        }
-        else {
-            setTileBasedTrigger( e );
-        }
-    } )
-}
-const setSpriteBasedTrigger = ( trigger: TriggerModel ): void => {
-    const sprite = getSpriteById( trigger.spriteId );
-    if ( sprite == null ) {
-        console.error( `Error setting trigger ${trigger.eventId}. No sprite could be found with id ${sprite}` );
-    }
-    setTrigger( trigger, sprite );
-}
-const setTileBasedTrigger = ( trigger: TriggerModel ): void => {
-    const tile = getTileOnCanvasByCell( {column: trigger.column, row: trigger.row }, CanvasTypeEnum.background )
-    if ( tile == null ) {
-        console.error( `Error setting trigger ${trigger.eventId}. No tile could be found a column ${trigger.column}, row ${trigger.row}` );
-    }
-    setTrigger( trigger, tile );
 }
