@@ -1,17 +1,18 @@
 import { registerNewContract } from "../contracts/contractRegistry";
+import { StateType } from "../enumerables/StateType";
 import { getLeaveMapContract } from "../factories/contractFactory";
 import type { LeaveMapEventScript } from "../models/eventScripts/LeaveMapEventScript";
-import { getClearingMapGameState, getPausedGameState, setClearingMapGameState, setPausedGameState } from "../state/state";
+import { alterGameState, getGameState } from "../state/state";
 
 export const handleActiveLeaveMapEventScript = ( eventScript: LeaveMapEventScript ): boolean => {
-    if ( getClearingMapGameState() == false ) {
+    if ( getGameState( StateType.clearingMap ) == false ) {
         const contract = getLeaveMapContract( eventScript.doorId );
         registerNewContract( contract );
-        setClearingMapGameState( true );
+        alterGameState( StateType.clearingMap, true );
         return true;
     }
 
-    setClearingMapGameState( false );
-    setPausedGameState( true );
+    alterGameState( StateType.clearingMap, false );
+    alterGameState( StateType.paused, true );
     return false;
 }

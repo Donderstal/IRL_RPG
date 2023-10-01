@@ -1,11 +1,9 @@
 import { handleFileLoadQueues, startFileLoader } from "./assets/fileLoader";
-import { registerNewContract } from "./contracts/contractRegistry";
-import { State } from "./enumerables/StateEnum";
+import { ControlState } from "./enumerables/ControlState";
+import { StateType } from "./enumerables/StateType";
 import { TriggerType } from "./enumerables/TriggerType";
-import { addTriggerToQueue } from "./event-triggers/triggerQueue";
 import { addToEventChainQueue } from "./eventchain-queue/eventChainQueue";
 import { handleEventChainQueue } from "./eventchain-queue/eventChainQueueHandler";
-import { getEnterMapContract } from "./factories/contractFactory";
 import { createLoadMapOnGameStartEventChain } from "./factories/eventFactory";
 import { cameraFocus, initializeCameraFocus } from "./game/cameraFocus";
 import { prepareCanvasElementsForGame } from "./game/canvas/canvasSetter";
@@ -22,8 +20,7 @@ import { setUnlockedDoorsRegistry } from "./registries/doorRegistry";
 import { setInteractionRegistry } from "./registries/interactionRegistry";
 import { initializeDataModels } from "./resources/spriteDataResources";
 import { initTilesheetModels } from "./resources/tilesheetResources";
-import { getGameIsLoadedFromSave, getGameStartParameters, setLoadingGameGameState } from "./state/state";
-import { setDebugModeState, setDisableStoryState, updateGameControlState } from "./state/stateSetter";
+import { alterGameControlState, alterGameState, getGameStartParameters, getGameState } from "./state/state";
 
 let loadingFrameCount = 0;
 let loadedFilesAtFrame = null;
@@ -32,7 +29,7 @@ let params;
 let saveGame: SaveGame;
 
 export const loadGame = () => {
-    loadingGameFromSave = getGameIsLoadedFromSave();
+    loadingGameFromSave = getGameState(StateType.isLoadedFromSave);
     params = getGameStartParameters();
     loadingFrameCount++;
 
@@ -64,8 +61,8 @@ export const loadGame = () => {
     }
     else if ( loadingFrameCount == loadedFilesAtFrame + 2 ) {
         stopLoadingScreen();
-        updateGameControlState( State.open_world );
-        setLoadingGameGameState( false );
+        alterGameControlState( ControlState.open_world );
+        alterGameState( StateType.loadingGame, false );
 
         if ( !loadingGameFromSave ) {
             const startingMapName = params[2];
@@ -81,13 +78,13 @@ export const loadGame = () => {
 
 const startNewGame = (): void => {
     setNewParty( params[0] );
-    setDebugModeState( params[3] );
-    setDisableStoryState( params[4] );
+    alterGameState( StateType.debugMode, params[3] );
+    alterGameState( StateType.disableStory, params[4] );
 };
 const startLoadGame = (): void => {
     setNewParty( saveGame.playerData.name );
-    setDebugModeState( false );
-    setDisableStoryState( true );
+    alterGameState( StateType.debugMode, false );
+    alterGameState( StateType.disableStory, false );
 
     setCollectableRegistry( saveGame.keyLists.collectableRegistry );
     setInteractionRegistry( saveGame.keyLists.interactionRegistry );

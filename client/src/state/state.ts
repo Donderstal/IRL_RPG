@@ -1,17 +1,80 @@
-import type { State } from "../enumerables/StateEnum";
+import { StateType } from "../enumerables/StateType";
+import type { ControlState } from "../enumerables/ControlState";
 
-let paused: boolean = false;
+let clearingMap: boolean = false;
 let debugMode: boolean = false;
 let disableStory: boolean = false;
-let listeningForKeys: boolean = false;
 let inEvent: boolean = false;
+let listeningForKeys: boolean = false;
 let loadingGame: boolean = false;
 let loadingMap: boolean = false;
-let clearingMap: boolean = false;
-let controlState: State; 
+let paused: boolean = false;
+
+let controlState: ControlState; 
 
 let gameIsLoadedFromSave: boolean;
 let gameStartParameters: any[];
+
+export const alterGameState = ( stateType: StateType, value: boolean ): void => {
+    switch ( stateType ) {
+        case StateType.clearingMap:
+            clearingMap = value;
+            break;
+        case StateType.debugMode:
+            debugMode = value;
+            break;
+        case StateType.disableStory:
+            disableStory = value;
+            break;
+        case StateType.inEvent:
+            inEvent = value;
+            break;
+        case StateType.isLoadedFromSave:
+            gameIsLoadedFromSave = value;
+            break;
+        case StateType.listeningForKeys:
+            listeningForKeys = value;
+            break;
+        case StateType.loadingGame:
+            loadingGame = value;
+            break;
+        case StateType.loadingMap:
+            loadingMap = value;
+            break;
+        case StateType.paused:
+            paused = value;
+            break;
+    }
+};
+export const getGameState = ( stateType: StateType ): boolean => {
+    switch ( stateType ) {
+        case StateType.clearingMap:
+            return clearingMap;
+        case StateType.debugMode:
+            return debugMode;
+        case StateType.disableStory:
+            return disableStory;
+        case StateType.inEvent:
+            return inEvent;
+        case StateType.isLoadedFromSave:
+            return gameIsLoadedFromSave;
+        case StateType.listeningForKeys:
+            return listeningForKeys;
+        case StateType.loadingGame:
+            return loadingGame;
+        case StateType.loadingMap:
+            return loadingMap;
+        case StateType.paused:
+            return paused;
+    }
+};
+
+export const alterGameControlState = ( value: ControlState ): void => {
+    controlState = value;
+};
+export const getGameControlState = (): ControlState => {
+    return controlState;
+};
 
 export const setGameStartParameters = ( value: any[] ): void => {
     gameStartParameters = value;
@@ -19,64 +82,6 @@ export const setGameStartParameters = ( value: any[] ): void => {
 export const setGameIsLoadedFromSave = ( value: boolean ): void => {
     gameIsLoadedFromSave = value;
 }
-export const setPausedGameState = ( value: boolean ): void => {
-    paused = value;
-}
-export const setDebugModeGameState = (value: boolean): void => {
-    debugMode = value;
-}
-export const setDisableStoryGameState = ( value: boolean ): void => {
-    disableStory = value;
-}
-export const setListeningForKeysGameState = ( value: boolean ): void => {
-    listeningForKeys = value;
-}
-export const setEventChainGameState = ( value: boolean ): void => {
-    inEvent = value;
-}
-export const setGameControlState = ( value: State ): void => {
-    controlState = value;
-}
-export const setLoadingGameGameState = ( value: boolean ): void => {
-    loadingGame = value;
-}
-export const setLoadingMapGameState = ( value: boolean ): void => {
-    loadingMap = value;
-}
-export const setClearingMapGameState = ( value: boolean ): void => {
-    clearingMap = value;
-}
-
-export const getPausedGameState = (): boolean => {
-    return paused;
-}
-export const getDebugModeGameState = (): boolean => {
-    return debugMode;
-}
-export const getDisableStoryGameState = (): boolean => {
-    return disableStory;
-}
-export const getListentingForKeysGameState = (): boolean => {
-    return listeningForKeys;
-}
-export const getEventChainState = (): boolean => {
-    return inEvent;
-}
-export const getGameControlState = (): State => {
-    return controlState;
-}
-export const getLoadingGameGameState = (): boolean => {
-    return loadingGame;
-}
-export const getLoadingMapGameState = (): boolean => {
-    return loadingMap;
-}
-export const getGameIsLoadedFromSave = (): boolean => {
-    return gameIsLoadedFromSave;
-}
 export const getGameStartParameters = (): any[] => {
     return gameStartParameters;
-}
-export const getClearingMapGameState = (): boolean => {
-    return clearingMap;
 }

@@ -2,18 +2,14 @@ import { AnimationTypeEnum } from "../../enumerables/AnimationTypeEnum";
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
 import type { Sprite } from "../core/Sprite";
 import { spriteNextPositionIsBlocked } from "../map/collision";
-import { inDebugState, inEventChainState } from "../../state/stateGetter";
-
 import { handleSpriteAnimation } from "./animations/animationHandler";
 import { blockedSpriteCounterIsOverLimit, handleBlockedSpriteCounter } from "./blockedCounters/blockedCounterHandler";
 import { checkIfSpriteCanMove } from "./destinations/destinationHandler";
 import { updateAssociatedHitbox } from "./hitboxes/hitboxHandler";
 import { getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdleAnimationCounter, resetIdleAnimationCounter } from "./idleAnimCounters/idleAnimHandler";
 import { getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "./randomAnimCounters/randomAnimHandler";
-
 import { moduleIsRunningForSprite } from "./moduleRegistryGetter";
 import { getSpriteDestination, getSpriteDestinationCell, spriteHasDestinationCell } from "./destinations/destinationGetter";
-
 import { initializeSpriteAnimation } from "./animations/animationSetter";
 import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
 import { destroySpriteMovementToDestination, initializeSpriteMovement } from "./moduleSetter";
@@ -23,10 +19,12 @@ import { tryFindPath } from "../map/pathfinder";
 import type { Destination } from "../map/map-classes/Destination";
 import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { PLAYER_ID } from "../../game-data/interactionGlobals";
+import { StateType } from "../../enumerables/StateType";
+import { getGameState } from "../../state/state";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
-    if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || inDebugState() || id === PLAYER_ID ) {
+    if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) || getGameState( StateType.debugMode ) || id === PLAYER_ID ) {
         updateAssociatedHitbox( sprite );
 	}
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) ) {
@@ -37,7 +35,7 @@ export const handleSpriteModules = ( sprite: Sprite ): void => {
 		handleSpriteAnimation( sprite );
 		resetSpriteModuleCounters( id );
     }
-    if ( inEventChainState() ) {
+    if ( getGameState( StateType.inEvent ) ) {
         return;
     }
 	if ( moduleIsRunningForSprite( id, SpriteModuleEnum.idleAnimation ) && !moduleIsRunningForSprite( id, SpriteModuleEnum.movement ) && !moduleIsRunningForSprite( id, SpriteModuleEnum.animation ) ) {

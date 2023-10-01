@@ -1,7 +1,6 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT, MOVEMENT_SPEED, GRID_BLOCK_PX } from '../game-data/globals';
+import { MOVEMENT_SPEED } from '../game-data/globals';
 import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
-import type { OutOfMapEnum } from '../enumerables/OutOfMapEnum';
 import { DirectionEnum } from '../enumerables/DirectionEnum';
 
 enum CameraFocusMode {
@@ -21,7 +20,7 @@ export class CameraFocus {
 
     movingToNewFocus: boolean;
     focusSpriteId: string;
-    focusTileId: number | OutOfMapEnum;
+    focusTileId: number;
     newFocusXy: { x: number; y: number }
     lastFocusXy: { x: number; y: number }
     mode: CameraFocusMode;

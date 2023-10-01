@@ -9,7 +9,6 @@ import { SpriteModuleEnum } from '../../enumerables/SpriteModuleEnum';
 import { handleNeighbourhoodNPCCounter } from '../neighbourhoodModule';
 import { getBackSpritesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGetter';
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
-import { inDebugState, inPausedState } from '../../state/stateGetter';
 import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
 import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
@@ -18,6 +17,8 @@ import { checkForEventTriggers, drawTriggers, updateAssociatedTrigger } from '..
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
 import { TriggerType } from '../../enumerables/TriggerType';
 import { PLAYER_ID } from '../../game-data/interactionGlobals';
+import { getGameState } from '../../state/state';
+import { StateType } from '../../enumerables/StateType';
 
 export const handleMapAnimations = (): void => {
     clearSpriteCanvasGrids();
@@ -58,7 +59,7 @@ export const drawSpritesInOrder = (): void => {
         }
     } )
 
-    if ( inDebugState() ) {
+    if ( getGameState( StateType.debugMode ) ) {
         const baseCells = getBaseCellList()
         baseCells.forEach( ( e, index ) => {
             if ( e === null ) {
@@ -103,18 +104,18 @@ const handleNpcCounter = ( ): void => {
     handleNeighbourhoodNPCCounter( );
 }
 const drawSpritesInArray = ( array: Sprite[] ): void => {
-    if ( !inPausedState() ) {
+    if ( !getGameState( StateType.paused ) ) {
         array.forEach( ( sprite ) => { handleSpriteFrameLoop( sprite ) } );
     }
 }
 const handleOutOfScreenSprites = ( array: Sprite[]): void => {
     let movingSprites = array.filter( ( e ) => { return moduleIsRunningForSprite( e.spriteId, SpriteModuleEnum.movement ); } );
-    if ( !inPausedState() ) {
+    if ( !getGameState( StateType.paused ) ) {
         movingSprites.forEach( ( sprite ) => { handleSpriteFrameLoop( sprite, true ) } )
     }
 }
 const handleSpriteFrameLoop = ( sprite: Sprite, isOutOfScreen: boolean = false ): void => {
-    if ( inPausedState() ) {
+    if ( getGameState( StateType.paused ) ) {
         return;
     }
     handleSpriteModules( sprite );

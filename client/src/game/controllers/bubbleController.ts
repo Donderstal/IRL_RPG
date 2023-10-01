@@ -1,14 +1,14 @@
 import { SceneAnimationType } from "../../enumerables/SceneAnimationTypeEnum";
-import { State } from "../../enumerables/StateEnum";
+import { ControlState } from "../../enumerables/ControlState";
 import { TextBubbleType } from "../../enumerables/TextBubbleType";
 import { getUniqueId } from "../../helpers/utilFunctions";
 import type { SpriteDataModel } from "../../models/SpriteDataModel";
-import { updateGameControlState } from "../../state/stateSetter";
 import { getSpeechBubbleGrid } from "../canvas/canvasGetter";
 import { Emote } from "../cutscenes/Emote";
 import { SelectionBubble } from "../cutscenes/SelectionBubble";
 import { SpeechBubble } from "../cutscenes/SpeechBubble";
 import { playEffect, playSpeakingEffect } from "../sound/sound";
+import { alterGameControlState } from "../../state/state";
 
 let mainBubble: SpeechBubble = null;
 let titleBubble: SpeechBubble = null;
@@ -50,7 +50,7 @@ export const setNewCenterBubble = ( text: string ) => {
 };
 export const setElevatorBubble = ( floors: { [key in string]: string }, id: string, activeMapKey: string ): void => {
     elevatorBubble = new SelectionBubble( floors, TextBubbleType.Elevator, 'Elevator', id, [Object.keys( floors ).find( k => floors[k] === activeMapKey )] );
-    updateGameControlState( State.cinematic );
+    alterGameControlState( ControlState.cinematic );
 };
 export const hasActiveSelectionBubble = (): boolean => {
     return elevatorBubble !== null;
@@ -78,7 +78,7 @@ export const clearActiveEmotes = (): void => {
 };
 export const destroyElevatorBubble = (): void => {
     elevatorBubble = null;
-    updateGameControlState( State.open_world );
+    alterGameControlState( ControlState.open_world );
 };
 export const drawBubbles = (): void => {
     const canvas = getSpeechBubbleGrid().canvas;

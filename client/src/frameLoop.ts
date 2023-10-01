@@ -5,7 +5,6 @@ import { cameraFocus } from './game/cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from './helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './game/canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './game/canvas/canvasGetter';
-import { inEventChainState, inPausedState } from './state/stateGetter';
 import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './game/controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from './helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from './helpers/dynamicTileDrawer';
@@ -15,10 +14,11 @@ import { handleEventChainQueue } from './eventchain-queue/eventChainQueueHandler
 import { handleActiveEventChain } from './eventchain-queue/activeEventChain';
 import { getSpriteById } from './game/modules/sprites/spriteGetter';
 import { publishNewContracts } from './contracts/contractPublisher';
-import { getClearingMapGameState, getLoadingGameGameState, getLoadingMapGameState, setLoadingMapGameState } from './state/state';
+import { alterGameState, getGameState } from './state/state';
 import { loadGame } from './gameLoader';
 import { getPendingContracts } from './contracts/contractRegistry';
 import { registerBlockedTilesOnMap } from './map/mapLoader';
+import { StateType } from './enumerables/StateType';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -30,21 +30,21 @@ export const animationLoop = (): void => {
     if ( newDateNow - lastDateNow > 1000 / FRAMES_PER_SECOND || lastDateNow == undefined ) {
         lastDateNow = newDateNow;
 
-        const gameHasActiveEvent = inEventChainState();
+        const gameHasActiveEvent = getGameState( StateType.inEvent );
         if ( gameHasActiveEvent ) {
             handleActiveEventChain();
         }
 
-        if ( getLoadingGameGameState() ) {
+        if ( getGameState( StateType.loadingGame ) ) {
             handleGameIsLoadingLoop();
         }
-        else if ( inPausedState() ) {
+        else if ( getGameState( StateType.paused ) ) {
             handleGameIsPausedLoop();
         }
-        else if ( getLoadingMapGameState() ) {
+        else if ( getGameState( StateType.loadingMap ) ) {
             handleMapIsLoadLoop();
         }
-        else if (!getClearingMapGameState()) {
+        else if ( !getGameState( StateType.clearingMap ) ) {
             handleDefaultLoop()
         }
 
@@ -69,11 +69,11 @@ const handleMapIsLoadLoop = (): void => {
     const pendingContracts = getPendingContracts();
     if ( pendingContracts.length < 1 ) {
         registerBlockedTilesOnMap();
-        setLoadingMapGameState( false );
+        alterGameState( StateType.loadingMap, false );
     }
 }
 const handleDefaultLoop = (): void => {
-    const gameHasActiveEvent = inEventChainState();
+    const gameHasActiveEvent = getGameState( StateType.inEvent );
     if ( !gameHasActiveEvent ) {
         checkQueuedTriggers();
         handleEventChainQueue();

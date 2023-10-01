@@ -1,5 +1,5 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
-import { getControlState } from "../state/stateGetter";
+import { getGameControlState } from "../state/state";
 import { actionButtonKey, menuButtonKey, spaceEventKey, tabEventKey, enterEventKey, returnButtonKey, aEventKey, arrowLeftEventKey, wEventKey, arrowUpEventKey, dEventKey, arrowRightEventKey, sEventKey, arrowDownEventKey } from "./controlConstants";
 import { getPressedKeys } from "./controlDictionary"
 import { controlSettings } from "./controlSettings";
@@ -45,6 +45,6 @@ const translateEventKey = ( key ): DirectionEnum|string => {
 }
 
 const getActiveControlSettings = (): any[] => {
-    const controlState = getControlState();
+    const controlState = getGameControlState();
     return controlSettings[controlState];
 }

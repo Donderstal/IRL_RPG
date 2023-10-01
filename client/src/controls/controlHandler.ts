@@ -11,12 +11,13 @@ import { moveSpriteInDirection } from "../game/modules/destinations/destinationH
 import { resetIdleAnimationCounter } from "../game/modules/idleAnimCounters/idleAnimHandler";
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
 import { handleScreenTextActionButton, screenTextIsActive } from "../helpers/screenTextModule";
-import { inCinematicState, inMenuState, inOpenWorldState, inWebsiteState } from "../state/stateGetter";
 import { actionButtonKey, menuButtonKey, returnButtonKey } from "./controlConstants";
 import { getActiveControls } from "./controlTranslator";
 import { getAssociatedHitbox } from "../game/modules/hitboxes/hitboxGetter";
 import { checkForEventTriggers } from "../event-triggers/triggerHandler";
 import { TriggerType } from "../enumerables/TriggerType";
+import { getGameControlState } from "../state/state";
+import { ControlState } from "../enumerables/ControlState";
 
 let actionButtonWasPressedLastFrame = false;
 let menuButtonWasPressedLastFrame = false;
@@ -24,10 +25,21 @@ let returnButtonWasPressedLastFrame = false;
 
 export const handleControls = (): void => {
     const activeControls = getActiveControls();
-    if ( inWebsiteState() ) handleWebsiteControls( activeControls );
-    if ( inOpenWorldState() ) handleOpenWorldControls( activeControls );
-    if ( inCinematicState() ) handleCinematicControls( activeControls );
-    if ( inMenuState() ) handleMenuControls( activeControls );
+    const controlState = getGameControlState()
+    switch ( controlState ) {
+        case ControlState.cinematic:
+            handleCinematicControls( activeControls );
+            break;
+        case ControlState.menu:
+            handleMenuControls( activeControls );
+            break;
+        case ControlState.open_world:
+            handleOpenWorldControls( activeControls );
+            break;
+        case ControlState.website:
+            handleWebsiteControls( activeControls );
+            break;
+    }
 
     actionButtonWasPressedLastFrame = activeControls.includes( actionButtonKey );
     menuButtonWasPressedLastFrame = activeControls.includes( menuButtonKey );

@@ -22,8 +22,8 @@
     import SelectCharacter from './views/SelectCharacter.svelte'
     import LoadGame from './views/LoadGame.svelte';
     import MainMenu from './views/MainMenu.svelte';
-    import { State } from '../enumerables/StateEnum';
-    import { updateGameControlState } from '../state/stateSetter';
+    import { ControlState } from '../enumerables/ControlState';
+    import { alterGameControlState } from '../state/state'
     import { SceneAnimationType } from '../enumerables/SceneAnimationTypeEnum';
     import { onMount } from 'svelte';
 
@@ -107,7 +107,7 @@
         if( $currentScreen === SCREEN_WELCOME && get(loggedIn ) ) {
             openMainMenuScreen();
         }
-        updateGameControlState(State.website);
+        alterGameControlState(ControlState.website);
     })
 </script>
 

@@ -4,8 +4,8 @@
     import { GameMenuType } from '../../enumerables/GameMenuType';
     import { InteractionAnswer } from '../../enumerables/InteractionAnswer';
     import { SceneAnimationType } from '../../enumerables/SceneAnimationTypeEnum';
-	import { State } from '../../enumerables/StateEnum';
-    import { updateGameControlState } from '../../state/stateSetter';
+	import { ControlState } from '../../enumerables/ControlState';
+    import { alterGameControlState } from '../../state/state';
     import Modal from '../menu-partials/Modal.svelte';
     import { closeInGameMenu } from '../../stores';
     import MainMenu from '../views/MainMenu.svelte';
@@ -40,7 +40,7 @@
 	}
 
 	onMount(()=>{
-		updateGameControlState(State.menu)
+		alterGameControlState(ControlState.menu)
 	})
 </script>
 

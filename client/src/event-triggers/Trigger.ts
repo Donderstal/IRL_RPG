@@ -1,10 +1,11 @@
 import { getEffect, GraphicalEffect } from "../helpers/effectHelpers";
 import type { FrameModel } from "../models/SpriteFrameModel";
 import type { TriggerModel } from "../models/TriggerModel";
-import { inDebugState } from "../state/stateGetter";
 import { Hitbox } from "../game/core/Hitbox";
 import { FX_BLUE_SQUARE } from "../resources/effectResources";
 import { EventChainType } from "../enumerables/EventChainType";
+import { getGameState } from "../state/state";
+import { StateType } from "../enumerables/StateType";
 
 export class Trigger extends Hitbox {
     arcColor: string;
@@ -24,7 +25,7 @@ export class Trigger extends Hitbox {
 
     draw(): void {
         if ( this.hasGraphicEffect ) this.drawGraphicalEffect();
-        if ( inDebugState() ) super.draw();
+        if ( getGameState( StateType.debugMode ) ) super.draw();
     }
 
     setId( id: string ): void {

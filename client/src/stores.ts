@@ -1,7 +1,8 @@
 import { writable, get } from 'svelte/store';
 import { GameMenuType } from './enumerables/GameMenuType';
-import { setPausedState } from './state/stateSetter';
 import type { WebsiteUser } from './models/WebsiteUserModel';
+import { alterGameState } from './state/state';
+import { StateType } from './enumerables/StateType';
 
 export const SCREEN_WELCOME         = "WELCOME";
 export const SCREEN_LOG_IN          = "LOG_IN";
@@ -60,14 +61,14 @@ export const inGameMenu = writable( false );
 export const gameMenuType = writable<GameMenuType>();
 
 export const openInGameMenu = ( type: GameMenuType ) => {
-    setPausedState( true );
+    alterGameState( StateType.paused, true );
     gameMenuType.set( type );
     inGameMenu.set( true );
 }
 
 export const closeInGameMenu = () => {
     inGameMenu.set( false );
-    setPausedState( false );
+    alterGameState( StateType.paused, false );
 }
 
 const switchScreen = ( screen ) => {

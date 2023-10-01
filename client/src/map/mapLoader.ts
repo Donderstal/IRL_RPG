@@ -1,6 +1,7 @@
 import type { EnterMapContract } from "../contracts/EnterMapContract";
 import { registerNewContract } from "../contracts/contractRegistry";
 import { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
+import { StateType } from "../enumerables/StateType";
 import { getCreateSpriteContract, getFocusCameraOnSpriteContract, getSetTriggerContract } from "../factories/contractFactory";
 import { initCanvasObjectModel } from "../factories/modelFactory";
 import { CANVAS_COLUMNS, CANVAS_HEIGHT, CANVAS_ROWS, CANVAS_WIDTH, GRID_BLOCK_PX } from "../game-data/globals";
@@ -19,10 +20,10 @@ import type { TriggerModel } from "../models/TriggerModel";
 import { determineMapNeighbourhood } from "../resources/mapResources/mapIds";
 import { MAIN_CHARACTER } from "../resources/spriteTypeResources";
 import { getTilesheetModelByKey } from "../resources/tilesheetResources";
-import { setLoadingMapGameState } from "../state/state";
+import { alterGameState } from "../state/state";
 
 export const loadMap = ( contract: EnterMapContract ): void => {
-    setLoadingMapGameState( true );
+    alterGameState( StateType.loadingMap, true );
 
     const neighbourhoodKey = determineMapNeighbourhood( contract.mapId );
     initializeNeighbourhood( neighbourhoodKey );

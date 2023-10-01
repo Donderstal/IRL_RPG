@@ -9,11 +9,10 @@ import type { DoorEventChain } from "../models/eventChains/DoorEventChain";
 import type { IEventChain } from "../models/eventChains/IEventChain";
 import type { CutsceneEventScript } from "../models/eventScripts/CutsceneEventScript";
 import type { IEventScript } from "../models/eventScripts/IEventScript";
-import { setEventChainGameState } from "../state/state";
-import { updateGameControlState } from "../state/stateSetter";
-import { State } from "../enumerables/StateEnum";
+import { alterGameControlState, alterGameState, getGameState } from "../state/state";
+import { ControlState } from "../enumerables/ControlState";
 import { CUTSCENE_EVENT_CHAINS } from "../resources/eventChainResources/cutsceneEventChains";
-import { inDebugState } from "../state/stateGetter";
+import { StateType } from "../enumerables/StateType";
 
 let activeEventChain: IEventChain = null;
 let mainEventScript: IEventScript = null;
@@ -21,23 +20,24 @@ let activeEventScript: IEventScript = null;
 let previousEventTypesInChain: EventType[] = [];
 
 export const startEventChain = ( eventChain: IEventChain, mainEvent: IEventScript ): void => {
-    if ( inDebugState() ) {
+    if ( getGameState( StateType.debugMode ) ) {
         console.log( `Activating eventchain ${eventChain.eventChainType}` );
         console.log( `Main eventscript: ${mainEvent.eventType}` );
     }
 
-    setEventChainGameState( true );
+    alterGameState( StateType.inEvent, true );
+
     activeEventChain = eventChain;
     mainEventScript = mainEvent;
 
     const firstEvent = determineFirstEventScript();
-    if ( inDebugState() ) {
+    if ( getGameState( StateType.debugMode ) ) {
         console.log( `Determining first eventscript in chain ${activeEventChain.eventChainType}` );
         console.log( `First eventscript: ${firstEvent.eventType}` );
     }
 
     setActiveEventScript( firstEvent );
-    updateGameControlState( State.cinematic );
+    alterGameControlState( ControlState.cinematic );
 }
 export const handleActiveEventChain = (): void => {
     const eventScriptIsStillActive = handleActiveEventScript( activeEventScript )
@@ -46,7 +46,7 @@ export const handleActiveEventChain = (): void => {
     previousEventTypesInChain.push( activeEventScript.eventType );
 
     const nextEvent = determineNextEventScript();
-    if ( inDebugState() ) {
+    if ( getGameState( StateType.debugMode ) ) {
         console.log( `Determining next eventscript in chain ${activeEventChain.eventChainType}` )
         console.log( `Next eventscript: ${nextEvent?.eventType}` )
     }
@@ -59,7 +59,7 @@ export const handleActiveEventChain = (): void => {
     }
 }
 const clearEventChain = (): void => {
-    if ( inDebugState() ) {
+    if ( getGameState( StateType.debugMode ) ) {
         console.log( `Ending eventchain ${activeEventChain.eventChainType}` );
     }
 
@@ -67,8 +67,8 @@ const clearEventChain = (): void => {
     previousEventTypesInChain = [];
     mainEventScript = null;
     activeEventChain = null;
-    setEventChainGameState( false );
-    updateGameControlState( State.open_world );
+    alterGameState( StateType.inEvent, false );
+    alterGameControlState( ControlState.open_world );
 }
 const setActiveEventScript = ( script: IEventScript ): void => {
     activeEventScript = script;

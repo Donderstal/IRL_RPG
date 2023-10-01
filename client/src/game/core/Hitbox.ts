@@ -2,7 +2,8 @@ import { GRID_BLOCK_PX, MOVEMENT_SPEED } from "../../game-data/globals";
 import { COLOR_WHITE } from '../../game-data/uiGlobals';
 import type { FrameModel } from "../../models/SpriteFrameModel";
 import { getBackSpritesGrid } from "../canvas/canvasGetter";
-import { inDebugState } from "../../state/stateGetter";
+import { getGameState } from "../../state/state";
+import { StateType } from "../../enumerables/StateType";
 /**
  * Hitbox provides collision detection functionalities. It consists out of a inner, middle and outer rectangle. 
  * Two Hitbox instances can be compared to see if they collide. 
@@ -54,7 +55,7 @@ export class Hitbox {
             this.x = newX;
             this.y = newY;            
         }
-        if ( inDebugState() ) {
+        if ( getGameState( StateType.debugMode ) ) {
             this.draw( );
         }
     }

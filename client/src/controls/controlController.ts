@@ -1,10 +1,11 @@
-import { setListeningForKeysState } from "../state/stateSetter";
+import { StateType } from "../enumerables/StateType";
+import { alterGameState } from "../state/state";
 import { addKeyToPressed, clearPressedKeys, removeKeyFromPressed } from "./controlDictionary";
 
 export const deactivateControls = (): void => {
     window.removeEventListener( 'keydown', addKeyToPressed )
     window.removeEventListener( 'keyup', removeKeyFromPressed )
-    setListeningForKeysState( false );
+    alterGameState( StateType.listeningForKeys, false );
 };
 export const activateControls = (): void => {
     window.addEventListener( 'keydown', addKeyToPressed )
@@ -14,6 +15,6 @@ export const activateControls = (): void => {
             // clear pressed keys on right click
             clearPressedKeys();
         }
-    } )
-    setListeningForKeysState( true );
+    } );
+    alterGameState( StateType.listeningForKeys, true );
 };

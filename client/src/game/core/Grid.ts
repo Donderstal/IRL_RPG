@@ -1,9 +1,7 @@
 import { GRID_BLOCK_PX, CANVAS_ROWS, CANVAS_COLUMNS} from '../../game-data/globals';
-import { OutOfMapEnum } from '../../enumerables/OutOfMapEnum';
 import { Tile } from './Tile';
 import type { TileModel } from '../../models/TileModel';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import { cameraFocus } from '../cameraFocus';
 import type { TilesheetModel } from '../../models/TilesheetModel';
 /**
  * The Grid class is a structured way of interacting with the two HTML5 Canvases that display the game.
