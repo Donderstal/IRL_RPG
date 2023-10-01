@@ -1,5 +1,4 @@
 import { SceneAnimationType } from "../enumerables/SceneAnimationTypeEnum";
-import type { CellPosition } from "../models/CellPositionModel";
 import type { GridCellModel } from "../models/GridCellModel";
 import type {
     AnimateSpriteScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, AnimationScene, SpeakScene, SpeakYesNoScene, WaitScene, ScreenTextScene
@@ -63,7 +62,7 @@ export const getAnimateSpriteScene = ( animationName: string, loop: boolean = fa
     };
     return scene;
 };
-export const getCreateSpriteScene = ( position: CellPosition, sprite: string, spriteName: string = null, waitForEnd = true, sfx: string = null ): CreateSpriteScene => {
+export const getCreateSpriteScene = ( position: GridCellModel, sprite: string, spriteName: string = null, waitForEnd = true, sfx: string = null ): CreateSpriteScene => {
     const base = getBaseSceneModel( SceneAnimationType.createSprite, waitForEnd, spriteName, sfx );
     const scene: CreateSpriteScene = {
         ...base,
@@ -94,7 +93,7 @@ export const getCameraMoveToSpriteScene = ( snapToSprite: boolean, spriteName: s
     };
     return scene;
 };
-export const getLoadMapScene = ( mapName: string, setPlayerSprite: boolean, playerStart: CellPosition = null, focusTile: GridCellModel = null, sfx: string = null ): LoadMapScene => {
+export const getLoadMapScene = ( mapName: string, setPlayerSprite: boolean, playerStart: GridCellModel = null, focusTile: GridCellModel = null, sfx: string = null ): LoadMapScene => {
     const base = getBaseSceneModel( SceneAnimationType.loadMap, true, null, sfx );
     const scene: LoadMapScene = {
         ...base,
@@ -125,7 +124,7 @@ export const getCreateCarScene = ( base: AnimationScene, roadName: string, sprit
     };
     return scene;
 };
-export const getCameraMoveToTileScene = ( base: AnimationScene, position: CellPosition, snapToTile: boolean ): CameraMoveToTileScene => {
+export const getCameraMoveToTileScene = ( base: AnimationScene, position: GridCellModel, snapToTile: boolean ): CameraMoveToTileScene => {
     const scene: CameraMoveToTileScene = {
         ...base,
         column: position.column,

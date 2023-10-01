@@ -2,7 +2,7 @@ import type { AnimationTypeEnum } from "../enumerables/AnimationTypeEnum";
 import type { DirectionEnum } from "../enumerables/DirectionEnum";
 import type { MovementType } from "../enumerables/MovementTypeEnum";
 import type { ConditionModel } from "./ConditionModel";
-import type { DestinationCellModel } from "./DestinationCellModel";
+import type { GridCellModel } from "./GridCellModel";
 import type { SpriteDataModel } from "./SpriteDataModel";
 
 export type CanvasObjectModel = {
@@ -22,5 +22,5 @@ export type CanvasObjectModel = {
     hasCondition: boolean;
     condition?: ConditionModel;
 
-    destination?: DestinationCellModel; 
+    destination?: GridCellModel; 
 }

@@ -1,6 +1,6 @@
 ﻿import type { CanvasObjectModel } from "./CanvasObjectModel";
+import type { GridCellModel } from "./GridCellModel";
 import type { RoadModel } from "./RoadModel";
-import type { SpawnPointModel } from "./SpawnPointModel";
 import type { TileModel } from "./TileModel";
 import type { TriggerModel } from "./TriggerModel";
 
@@ -22,7 +22,7 @@ export type MapModel = {
     sprites: CanvasObjectModel[];
     frontSprites: CanvasObjectModel[];
 
-    spawnPoints?: SpawnPointModel[];
+    spawnPoints?: GridCellModel[];
     roads?: RoadModel[];
 
     triggers?: TriggerModel[];

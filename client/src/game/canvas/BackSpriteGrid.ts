@@ -5,7 +5,6 @@ import type { Grid } from '../core/Grid';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { Tile } from '../core/Tile';
 import type { MapModel } from '../../models/MapModel';
-import type { SpawnPointModel } from '../../models/SpawnPointModel';
 import { initCanvasObjectModel } from '../../factories/modelFactory';
 import { determineShortestPath } from '../../helpers/pathfindingHelpers';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
@@ -15,6 +14,7 @@ import { getActiveMapKey, getNeighbourhoodModel } from '../neighbourhoodModule';
 import { getBlockedCellList, isTileBlocked, tileIsValidDestination } from '../map/blockedTilesRegistry';
 import { getCreateSpriteContract } from '../../factories/contractFactory';
 import { registerNewContract } from '../../contracts/contractRegistry';
+import type { GridCellModel } from '../../models/GridCellModel';
 
 export class BackSpriteGrid extends CanvasGrid {
     //activeEffects: GraphicalEffect[];
@@ -42,8 +42,8 @@ export class BackSpriteGrid extends CanvasGrid {
     }
 
     generateWalkingNPC( ): void {
-        let start: SpawnPointModel;
-        let end: SpawnPointModel;
+        let start: GridCellModel;
+        let end: GridCellModel;
         let visitedStarts = [];
         let visitedEnds = [];
         let validPath = false;
@@ -67,7 +67,7 @@ export class BackSpriteGrid extends CanvasGrid {
         }
     }
 
-    getValidSpawnPoint( spawnPointsToFilter: SpawnPointModel[] = [] ): SpawnPointModel {
+    getValidSpawnPoint( spawnPointsToFilter: GridCellModel[] = [] ): GridCellModel {
         let availableSpawnPoints = this.model.spawnPoints.filter( ( e ) => {
             let point = e;
             return spawnPointsToFilter.length !== 0 ? spawnPointsToFilter.filter( ( x ) => {
@@ -78,23 +78,23 @@ export class BackSpriteGrid extends CanvasGrid {
         return unblockedSpawnPoints[Math.floor( Math.random() * unblockedSpawnPoints.length )];
     }
 
-    getValidSpawnStart(): SpawnPointModel {
+    getValidSpawnStart(): GridCellModel {
         let validLocations = this.filterSpawnPoints( )
         return validLocations[ Math.floor( Math.random( ) * validLocations.length ) ];
     }
 
-    getValidSpawnDestination( startLocation: SpawnPointModel ): SpawnPointModel {
+    getValidSpawnDestination( startLocation: GridCellModel ): GridCellModel {
         let validLocations = this.filterSpawnPoints( startLocation );
         return validLocations[ Math.floor( Math.random( ) * validLocations.length ) ];
     }
 
-    filterSpawnPoints( startLocation: SpawnPointModel = null ): SpawnPointModel[] {
+    filterSpawnPoints( startLocation: GridCellModel = null ): GridCellModel[] {
         return this.model.spawnPoints.filter( ( e) => {
             return !isTileBlocked( e ) && ( startLocation == null || (e.column != startLocation.column && e.row !== startLocation.row));
         })
     }
 
-    generateRandomWalkingSprite( start: SpawnPointModel, destination: SpawnPointModel ) {
+    generateRandomWalkingSprite( start: GridCellModel, destination: GridCellModel ) {
         let tile = this.getTileAtCell( start.column, start.row );
         let sprites = getNeighbourhoodModel().characterTypes
         let characterDto = {

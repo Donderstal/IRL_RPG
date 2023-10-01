@@ -1,8 +1,8 @@
 import type { EventChainType } from "../enumerables/EventChainType";
 import type { TriggerType } from "../enumerables/TriggerType";
-import type { CellPosition } from "./CellPositionModel";
+import type { GridCellModel } from "./GridCellModel";
 
-export type TriggerModel = CellPosition & {
+export type TriggerModel = GridCellModel & {
 	eventId: string,
 	eventChainType?: EventChainType,
 	triggerType?: TriggerType,

@@ -1,4 +1,3 @@
-import type { CellPosition } from "../../models/CellPositionModel";
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { BackTileGrid } from "../canvas/BackTileGrid";
 import type { Sprite } from "../core/Sprite";
@@ -82,7 +81,7 @@ const registerBlockedTiles = ( tiles: Tile[] ): void => {
         e.blocked ? baseCellStateList.push( null ) : baseCellStateList.push( { column: e.column, row: e.row } );
     } )
 }
-const registerMapSpecificUnblockedTiles = ( cells: CellPosition[] ): void => {
+const registerMapSpecificUnblockedTiles = ( cells: GridCellModel[] ): void => {
     cells.forEach( ( e ) => {
         baseCellStateList[getIndex( e.column, e.row )] = { column: e.column, row: e.row };
     } )

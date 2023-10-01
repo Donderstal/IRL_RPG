@@ -5,7 +5,6 @@ import { getBackTilesGrid } from "../game/canvas/canvasGetter";
 import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import { tileIsValidDestination } from "../game/map/blockedTilesRegistry";
-import type { DestinationCellModel } from "../models/DestinationCellModel";
 import type { GridCellModel } from "../models/GridCellModel";
 
 export const fetchJSONWithCallback = ( url: string, callback: Function, callbackParams: any[] = [] ): void => {
@@ -151,7 +150,7 @@ export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
     }
 }
 
-export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): DestinationCellModel => {
+export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): GridCellModel => {
     const back = getBackTilesGrid();
     const columnsInGrid = back.grid.columns;
     const rowsInGrid = back.grid.rows;

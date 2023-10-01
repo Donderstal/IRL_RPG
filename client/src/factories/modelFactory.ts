@@ -1,5 +1,4 @@
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
-import type { SpawnPointModel } from "../models/SpawnPointModel";
 import type { RoadModel } from "../models/RoadModel";
 import type { TileModel } from "../models/TileModel";
 import type { MapModel } from "../models/MapModel";
@@ -64,7 +63,7 @@ export const initNeighbourhoodModel = ( neighbourhoodData ): NeighbourhoodModel 
             ? neighbourhoodData.roads.map( ( road ): RoadModel => { return initRoadModel( road ) } )
             : [],
         spawnPoints: neighbourhoodData.spawnPoints != undefined
-            ? neighbourhoodData.spawnPoints.map( ( spawnPoint ): SpawnPointModel => { return initSpawnPointModel( spawnPoint ) } )
+            ? neighbourhoodData.spawnPoints.map( ( spawnPoint ): GridCellModel => { return initSpawnPointModel( spawnPoint ) } )
             : []
     };
     return neighbourhoodModel;
@@ -94,8 +93,8 @@ export const initRoadModel = ( roadData ): RoadModel => {
     return roadModel;
 }
 
-export const initSpawnPointModel = ( spawnPointData ): SpawnPointModel => {
-    const spawnPointModel: SpawnPointModel = {
+export const initSpawnPointModel = ( spawnPointData ): GridCellModel => {
+    const spawnPointModel: GridCellModel = {
         row: spawnPointData.row,
         column: spawnPointData.column,
         direction: spawnPointData.direction

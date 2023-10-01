@@ -1,6 +1,5 @@
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import type { CanvasObjectModel } from "../../../models/CanvasObjectModel";
-import type { CellPosition } from "../../../models/CellPositionModel";
 import type { RoadModel } from "../../../models/RoadModel";
 import { getDataModelByKey } from "../../../resources/spriteDataResources";
 import type { Tile } from "../../core/Tile";
@@ -10,6 +9,7 @@ import { RoadPosition } from "./RoadPosition";
 import { getHorizontalRoadEndTileList, getVerticalRoadStartTileList, getHorizontalRoadStartTileList, getVerticalRoadEndTileList, hasTurnToIntersectingRoad, hasTurnFromIntersectingRoad } from "./roadPositionHelpers";
 import { RoadAlignmentEnum } from "../../../enumerables/RoadAlignmentEnum";
 import type { DirectionXy } from "../../../models/DirectionXyModel";
+import type { GridCellModel } from "../../../models/GridCellModel";
 
 export class Road {
     id: string;
@@ -143,7 +143,7 @@ export class Road {
         }
     }
 
-    cellIsInRoad( cellPosition: CellPosition ): boolean {
+    cellIsInRoad( cellPosition: GridCellModel ): boolean {
         let model = this.model;
         let inColumns = false;
         let inRows = false;
@@ -163,7 +163,7 @@ export class Road {
         return inColumns && inRows;
     }
 
-    getRoadStartPosition(): CellPosition {
+    getRoadStartPosition(): GridCellModel {
         return this.startingPosition.getRelativeStartingCell();
     }
 

@@ -1,6 +1,6 @@
+import type { GridCellModel } from "./GridCellModel";
 import type { MapModel } from "./MapModel";
 import type { RoadModel } from "./RoadModel";
-import type { SpawnPointModel } from "./SpawnPointModel";
 
 export type NeighbourhoodModel = {
     key: string;
@@ -17,5 +17,5 @@ export type NeighbourhoodModel = {
     spawnableActions?: string[];
     mapDictionary: { [key: string]: MapModel };
     roads: RoadModel[];
-    spawnPoints: SpawnPointModel[];
+    spawnPoints: GridCellModel[];
 }

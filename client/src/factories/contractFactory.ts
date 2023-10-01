@@ -17,7 +17,6 @@ import { getNewContractId } from "../contracts/contractRegistry";
 import { ContractType } from "../enumerables/ContractType";
 import { MAX_BUBBLE_TEXT_WIDTH } from "../game-data/globals";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
-import type { CellPosition } from "../models/CellPositionModel";
 import type { GridCellModel } from "../models/GridCellModel";
 import type { TriggerModel } from "../models/TriggerModel";
 
@@ -113,7 +112,7 @@ export const getShowSpeechBubbleContract = ( speakingSpriteId: string, text: str
         sfx: sfx
     };
 };
-export const getSwitchCutsceneMapContract = ( mapId: string, focusTile: GridCellModel, setPlayerSprite: boolean = false, playerStart: CellPosition = null ): SwitchCutsceneMapContract => {
+export const getSwitchCutsceneMapContract = ( mapId: string, focusTile: GridCellModel, setPlayerSprite: boolean = false, playerStart: GridCellModel = null ): SwitchCutsceneMapContract => {
     return {
         ...getContractBase( ContractType.SwitchCutsceneMap ),
         mapId: mapId,

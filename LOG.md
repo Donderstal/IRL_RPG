@@ -1,5 +1,9 @@
 ### 
 
+#### OCT 1 2023
+* State boolean setting/getting with an Enum, to reduce exported functions
+* Removed CellPosition, DestinationCell and SpawnPoint models, replaced their refs with GridCellModel
+
 #### SEP 30 2023
 * Loading game with frameLoop instead of timeouts.
 * Using the new triggers -> eventchains -> contracts flow for entering and leaving map

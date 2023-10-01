@@ -1,13 +1,12 @@
 import type { RoadAlignmentEnum } from "../../../enumerables/RoadAlignmentEnum";
-import type { CellPosition } from "../../../models/CellPositionModel";
 import type { RoadModel } from "../../../models/RoadModel";
-
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
 import { TileSquare } from "../../../helpers/TileSquare";
 import { getAllActiveSprites } from "../../modules/sprites/spriteGetter";
 import type { Tile } from "../../core/Tile";
 import type { DirectionXy } from "../../../models/DirectionXyModel";
 import { cameraFocus } from "../../cameraFocus";
+import type { GridCellModel } from "../../../models/GridCellModel";
 
 export class RoadPosition extends TileSquare {
     id: string;
@@ -21,7 +20,7 @@ export class RoadPosition extends TileSquare {
         this.alignment = model.alignment;
     }
 
-    getRelativeStartingCell(): CellPosition {
+    getRelativeStartingCell(): GridCellModel {
         return { column: this.leftColumn, row: this.bottomRow, direction: this.direction };
     }
 

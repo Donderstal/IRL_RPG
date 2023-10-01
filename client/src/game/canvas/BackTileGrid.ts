@@ -2,8 +2,8 @@ import type { MapModel } from '../../models/MapModel';
 import type { TilesheetModel } from '../../models/TilesheetModel';
 import { CanvasGrid } from '../core/CanvasGrid';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
-import type { CellPosition } from '../../models/CellPositionModel';
 import { EventChainType } from '../../enumerables/EventChainType';
+import type { GridCellModel } from '../../models/GridCellModel';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
@@ -14,7 +14,7 @@ export class BackTileGrid extends CanvasGrid {
     mapSpecificBlockedTiles: number[];
     mapSpecificUnblockedTiles: number[];
 
-    unblockedCells: CellPosition[];
+    unblockedCells: GridCellModel[];
     constructor( x: number, y: number, canvas: OffscreenCanvas, type: CanvasTypeEnum ) {
         super( x, y, canvas, type );
         this.unblockedCells = [];
@@ -24,7 +24,7 @@ export class BackTileGrid extends CanvasGrid {
         this.mapName = mapName;
     }
 
-    setUnblockedTiles( tileList: CellPosition[] ): void {
+    setUnblockedTiles( tileList: GridCellModel[] ): void {
         tileList.forEach( ( e ) => {
             this.unblockedCells.push( e )
         } )

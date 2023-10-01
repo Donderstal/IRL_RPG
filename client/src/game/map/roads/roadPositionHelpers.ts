@@ -1,6 +1,6 @@
 import { CanvasTypeEnum } from "../../../enumerables/CanvasTypeEnum";
 import { DirectionEnum } from "../../../enumerables/DirectionEnum";
-import type { CellPosition } from "../../../models/CellPositionModel";
+import type { GridCellModel } from "../../../models/GridCellModel";
 import { getTileOnCanvasByCell } from "../../canvas/canvasGetter";
 import type { Tile } from "../../core/Tile";
 import type { Road } from "./Road";
@@ -8,7 +8,7 @@ import type { Road } from "./Road";
 const horiCarSpriteWidthInBlocks = 4;
 const carSpriteHeightInBlocks = 3;
 
-const getCellOnSpriteGrid = ( column: number, row: number ): CellPosition => {
+const getCellOnSpriteGrid = ( column: number, row: number ): GridCellModel => {
     return getTileOnCanvasByCell( { column: column, row: row }, CanvasTypeEnum.backSprites )
 }
 

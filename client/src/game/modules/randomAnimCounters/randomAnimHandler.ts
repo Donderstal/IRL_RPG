@@ -1,5 +1,5 @@
 import { getRandomDestinationInRadius } from "../../../helpers/utilFunctions";
-import type { DestinationCellModel } from "../../../models/DestinationCellModel";
+import type { GridCellModel } from "../../../models/GridCellModel";
 import type { Sprite } from "../../core/Sprite";
 import { getAssociatedRandomCounter } from "./randomAnimGetter";
 
@@ -13,7 +13,7 @@ export const randomAnimationCounterIsOverLimit = ( spriteId: string ): boolean =
     const counter = getAssociatedRandomCounter( spriteId );
     return counter.isCounterOverLimit();
 };
-export const getRandomDestination = ( sprite: Sprite ): DestinationCellModel => {
+export const getRandomDestination = ( sprite: Sprite ): GridCellModel => {
     return getRandomDestinationInRadius( sprite, cellRadius );
 };
 export const getRandomAnimation = ( sprite: Sprite ): string => {
