@@ -2,6 +2,7 @@ import { MOVEMENT_SPEED } from '../game-data/globals';
 import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
 import { DirectionEnum } from '../enumerables/DirectionEnum';
+import { isNullOrUndefined } from '../helpers/utilFunctions';
 
 enum CameraFocusMode {
     followSprite,
@@ -159,7 +160,7 @@ export class CameraFocus {
     }
 
     moveToNewFocus( sprite: Sprite ): void {
-        if ( ( sprite == undefined || sprite == null ) && sprite !== null ) {
+        if ( isNullOrUndefined(sprite) ) {
             this.movingToNewFocus = false;
             return;
         }

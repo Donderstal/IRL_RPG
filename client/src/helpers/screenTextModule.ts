@@ -14,26 +14,6 @@ let activeTextIsTitle: boolean = false;
 export const screenTextIsActive = (): boolean => { return typeWriter !== null; }
 export const screenTextIsWriting = (): boolean => { return typeWriter.isWriting; }
 
-const clearTextCanvas = (): void => {
-    textContext.clearRect( 0, 0, textCanvas.width, textCanvas.height );
-}
-const writeTypeWriterTextToCanvas = (): void => {
-    const text = typeWriter.breakTextIntoLines( textContext, textStartingX, textStartingY, maxPhraseWidth, activeTextIsTitle ? BATTLE_FONT_SIZE * 2 : LARGE_FONT_SIZE );
-    text.forEach( ( phrase ) => { writeTextLineToCanvas( phrase.phrase, phrase.x, phrase.y ); })
-}
-const writeTextLineToCanvas = ( text: string, x: number, y: number ): void => {
-    setFont( activeTextIsTitle ? BATTLE_FONT_SIZE * 2 : LARGE_FONT_SIZE, textContext );
-    textContext.fillStyle = "white";
-    textContext.fillText( text, x, y );
-}
-const displayFullTypeWriterText = (): void => {
-    typeWriter.displayFullText()
-}
-const unsetScreenTextFromCanvas = (): void => {
-    typeWriter = null;
-    clearTextCanvas();
-}
-
 export const setScreenTextCanvas = ( width: number, height: number ): void => {
     textCanvas = new OffscreenCanvas( width, height );
     textContext = textCanvas.getContext( "2d" );
@@ -68,4 +48,24 @@ export const handleScreenTextActionButton = (): void => {
     else {
         unsetScreenTextFromCanvas();
     }
+}
+
+const clearTextCanvas = (): void => {
+    textContext.clearRect( 0, 0, textCanvas.width, textCanvas.height );
+}
+const writeTypeWriterTextToCanvas = (): void => {
+    const text = typeWriter.breakTextIntoLines( textContext, textStartingX, textStartingY, maxPhraseWidth, activeTextIsTitle ? BATTLE_FONT_SIZE * 2 : LARGE_FONT_SIZE );
+    text.forEach( ( phrase ) => { writeTextLineToCanvas( phrase.phrase, phrase.x, phrase.y ); } )
+}
+const writeTextLineToCanvas = ( text: string, x: number, y: number ): void => {
+    setFont( activeTextIsTitle ? BATTLE_FONT_SIZE * 2 : LARGE_FONT_SIZE, textContext );
+    textContext.fillStyle = "white";
+    textContext.fillText( text, x, y );
+}
+const displayFullTypeWriterText = (): void => {
+    typeWriter.displayFullText()
+}
+const unsetScreenTextFromCanvas = (): void => {
+    typeWriter = null;
+    clearTextCanvas();
 }

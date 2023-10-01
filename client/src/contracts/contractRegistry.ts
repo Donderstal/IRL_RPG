@@ -1,4 +1,4 @@
-import { getUniqueId } from "../helpers/utilFunctions";
+import { getUniqueId, isInArray } from "../helpers/utilFunctions";
 import type { IContract } from "./IContract";
 
 let pendingContracts: IContract[] = [];
@@ -25,7 +25,7 @@ export const deregisterContractOnCompletion = ( id: string ): void => {
     pendingContracts = pendingContracts.filter( e => e.contractId !== id );
 };
 export const contractIsPublishedAndPending = ( id: string ): boolean => {
-    return pendingPublishedContractIds.indexOf( id ) > -1;
+    return isInArray( pendingPublishedContractIds, id );
 };
 export const markContractAsFailed = ( contractId: string ): void => {
     failedContractIds.push( contractId );

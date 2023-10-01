@@ -1,5 +1,6 @@
 import type { Sprite } from "../game/core/Sprite";
 import type { Tile } from "../game/core/Tile"
+import { isNullOrUndefined } from "../helpers/utilFunctions";
 import type { FrameModel } from "../models/SpriteFrameModel";
 import type { TriggerModel } from "../models/TriggerModel";
 import { getSpriteRelatedTriggerId, registerSpriteTriggerRelation, spriteTriggerRelationExists, unregisterSpriteTriggerRelation } from "../registries/spriteTriggerRelationRegistry";
@@ -11,7 +12,7 @@ export const setTrigger = ( model: TriggerModel, canvasObject: Tile | Sprite = n
     const trigger = new Trigger( frame, model );
     const triggerId = registerTrigger( trigger );
 
-    if ( model.spriteId !== null && model.spriteId !== undefined) {
+    if ( !isNullOrUndefined( model.spriteId ) ) {
         registerSpriteTriggerRelation( model.spriteId, triggerId, model.eventId );
     }
 }

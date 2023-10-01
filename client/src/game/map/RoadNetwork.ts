@@ -3,7 +3,7 @@ import { DestinationType } from '../../enumerables/DestinationType';
 import { RoadAlignmentEnum } from '../../enumerables/RoadAlignmentEnum';
 import { getCreateSpriteContract } from '../../factories/contractFactory';
 import { Counter } from '../../helpers/Counter';
-import { getUniqueId } from '../../helpers/utilFunctions';
+import { getUniqueId, isInArray } from '../../helpers/utilFunctions';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { DirectionXy } from '../../models/DirectionXyModel';
 import type { RoadModel } from '../../models/RoadModel';
@@ -106,7 +106,7 @@ export class RoadNetwork {
 
             const latestStepRoad = this.getRoadById( latestRoadIdInPath );
             const possibleTurns = latestStepRoad.getPossibleRoadTurnsFromXy( latestXyInPath );
-            const possibleTurnRoadIds = Object.keys( possibleTurns ).filter( ( e ) => { return visitedRoads.indexOf( latestRoadIdInPath ) == -1 });
+            const possibleTurnRoadIds = Object.keys( possibleTurns ).filter( ( e ) => { return !isInArray( visitedRoads, e ); });
 
             possibleTurnRoadIds.forEach( ( e ) => {
                 const otherRoad = this.getRoadById( e );

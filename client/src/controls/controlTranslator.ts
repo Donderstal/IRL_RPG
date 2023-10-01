@@ -1,4 +1,5 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
+import { isInArray } from "../helpers/utilFunctions";
 import { getGameControlState } from "../state/state";
 import { actionButtonKey, menuButtonKey, spaceEventKey, tabEventKey, enterEventKey, returnButtonKey, aEventKey, arrowLeftEventKey, wEventKey, arrowUpEventKey, dEventKey, arrowRightEventKey, sEventKey, arrowDownEventKey } from "./controlConstants";
 import { getPressedKeys } from "./controlDictionary"
@@ -15,7 +16,7 @@ const translatePressedKeys = (): any[] => {
     return Object.keys( pressedKeys ).filter( ( key ) => {
         return pressedKeys[key];
     } ).map( translateEventKey ).filter( ( key ) => {
-        return key !== null && activeControlSetting.indexOf( key ) > -1;
+        return key !== null && isInArray( activeControlSetting , key);
     } );
 }
 

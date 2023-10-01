@@ -1,4 +1,3 @@
-import { MAX_BUBBLE_TEXT_WIDTH } from '../game-data/globals';
 import { getBackSpritesGrid } from '../game/canvas/canvasGetter';
 
 export const drawFromImageToCanvas = (
@@ -20,43 +19,6 @@ export const drawFromImageToCanvas = (
 
 export const setFont = ( size: number, ctx: OffscreenCanvasRenderingContext2D = getBackSpritesGrid().ctx ): void => {
     ctx.font = size + "px " + 'PFRondaSeven';
-}
-
-export const breakTextIntoLines = ( text: string, fontSize: number ): string[] => {
-    const ctx = getBackSpritesGrid().ctx 
-    setFont(fontSize)
-    if ( ctx.measureText( text ).width > MAX_BUBBLE_TEXT_WIDTH ) {
-        const textArray         = text.split(' ');
-        let currentLineWidth    = 0;
-        let textLine            = "";
-        const textLineArray       = [ ];
-
-        for ( let i = 0; i < textArray.length; i++ ) {
-            setFont(fontSize);
-            const newWord = textArray[i] + " ";
-            const wordOverflowsTextbox = currentLineWidth + ctx.measureText(newWord + " ").width > MAX_BUBBLE_TEXT_WIDTH;
-            const lastWordIsNext = i === textArray.length - 1;
-
-            if ( wordOverflowsTextbox ) {
-                textLineArray.push( textLine )
-                textLine = newWord
-                currentLineWidth = 0
-                if ( lastWordIsNext ) {
-                    textLineArray.push(textLine)
-                }
-            }
-            else {
-                currentLineWidth += ctx.measureText(newWord).width
-                textLine += newWord
-                if ( lastWordIsNext ) {
-                    textLineArray.push(textLine)
-                }
-            }
-        }  
-        return textLineArray      
-    }
-
-    return [ text ]
 }
 
 export const drawRect = ( canvas: OffscreenCanvas, x: number, y: number, width: number, height: number, color: string = null ): void => {

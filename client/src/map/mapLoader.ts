@@ -13,7 +13,7 @@ import { getStaticSprites } from "../game/modules/sprites/spriteGetter";
 import { getActiveMap, getNeighbourhoodModel, initializeNeighbourhood, markMapAsActive } from "../game/neighbourhoodModule";
 import { setActiveMusic } from "../game/sound/sound";
 import { conditionIsTrue } from "../helpers/conditionalHelper";
-import { getOppositeDirection } from "../helpers/utilFunctions";
+import { getOppositeDirection, isNullOrUndefined } from "../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import type { MapModel } from "../models/MapModel";
 import type { TriggerModel } from "../models/TriggerModel";
@@ -70,7 +70,7 @@ const registerCreateSpriteContracts = ( spriteDtos: CanvasObjectModel[] ): void 
     } );
 }
 const registerCreatePlayerSpriteContract = ( contract: EnterMapContract, mapModelToLoad: MapModel ): void => {
-    let playerStart = contract.doorId === null || contract.doorId === undefined
+    let playerStart = isNullOrUndefined( contract.doorId )
         ? contract.playerStart
         : mapModelToLoad.triggers.filter( e => e.eventId === contract.doorId )[0];
 

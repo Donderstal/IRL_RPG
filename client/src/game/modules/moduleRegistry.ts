@@ -1,4 +1,5 @@
 import { SpriteModuleEnum } from "../../enumerables/SpriteModuleEnum";
+import { isNullOrUndefined } from "../../helpers/utilFunctions";
 import type { ModuleState } from "./ModuleState";
 
 export type ModuleStateRegistry = {
@@ -62,7 +63,7 @@ export const setModuleState = ( spriteId: string, moduleType: SpriteModuleEnum, 
 }
 
 const checkIfModuleIsActive = ( moduleState: ModuleState ): boolean => {
-	if ( moduleState === null || moduleState === undefined ) {
+	if ( isNullOrUndefined( moduleState ) ) {
 		return false;
 	}
 	return moduleState.set && moduleState.active;

@@ -13,6 +13,7 @@ import { alterGameControlState, alterGameState, getGameState } from "../state/st
 import { ControlState } from "../enumerables/ControlState";
 import { CUTSCENE_EVENT_CHAINS } from "../resources/eventChainResources/cutsceneEventChains";
 import { StateType } from "../enumerables/StateType";
+import { isInArray } from "../helpers/utilFunctions";
 
 let activeEventChain: IEventChain = null;
 let mainEventScript: IEventScript = null;
@@ -164,5 +165,5 @@ const getNextEventAfterEnterMap = (): IEventScript => {
     return null;
 };
 const eventTypeWasPreviousInChain = ( eventType: EventType ): boolean => {
-    return previousEventTypesInChain.indexOf( eventType ) > -1;
+    return isInArray( previousEventTypesInChain, eventType );
 }

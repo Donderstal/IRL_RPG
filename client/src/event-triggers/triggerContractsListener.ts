@@ -3,6 +3,7 @@ import { deregisterContractOnCompletion, markContractAsFailed, removeFromPending
 import { CanvasTypeEnum } from "../enumerables/CanvasTypeEnum";
 import { getTileOnCanvasByCell } from "../game/canvas/canvasGetter";
 import { getSpriteById } from "../game/modules/sprites/spriteGetter";
+import { isNullOrUndefined } from "../helpers/utilFunctions";
 import type { TriggerModel } from "../models/TriggerModel";
 import { setTrigger } from "./triggerSetter";
 
@@ -24,10 +25,10 @@ export const acknowledgeSetTriggerContract = ( contract: SetTriggerContract ): v
     }
 }
 const setTriggerFromContract = ( trigger: TriggerModel ): void => {
-    if ( trigger.spriteId !== null && trigger.spriteId !== undefined ) {
+    if ( !isNullOrUndefined( trigger.spriteId ) ) {
         setSpriteBasedTrigger( trigger );
     }
-    else if ( trigger.triggerType !== null && trigger.triggerType !== undefined ) {
+    else if ( !isNullOrUndefined( trigger.triggerType ) ) {
         setTrigger( trigger );
     }
     else {

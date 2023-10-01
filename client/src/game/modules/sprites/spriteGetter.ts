@@ -1,4 +1,5 @@
 import { PLAYER_ID } from "../../../game-data/interactionGlobals";
+import { isInArray } from "../../../helpers/utilFunctions";
 import type { Sprite } from "../../core/Sprite";
 import { getAllSpritesAsList, getBackSpritesArray, getDynamicCollisionSprites, getFrontSpritesArray, getSpriteIds, getStaticCollisionSprites } from "./spriteRegistry";
 
@@ -34,8 +35,7 @@ export const getDynamicSprites = (): Sprite[] => {
 }
 
 const spriteWithIdExists = ( id: string ) => {
-    const spriteIds = getSpriteIds();
-    return spriteIds.indexOf( id ) > -1;
+    return isInArray( getSpriteIds(), id )
 }
 const getBackSpriteById = ( spriteId: string ): Sprite => {
     const backSprites = getBackSpritesArray();

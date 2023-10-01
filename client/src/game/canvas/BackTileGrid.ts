@@ -4,6 +4,7 @@ import { CanvasGrid } from '../core/CanvasGrid';
 import type { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { EventChainType } from '../../enumerables/EventChainType';
 import type { GridCellModel } from '../../models/GridCellModel';
+import { isInArray } from '../../helpers/utilFunctions';
 
 export class BackTileGrid extends CanvasGrid {
     model: MapModel;
@@ -35,10 +36,10 @@ export class BackTileGrid extends CanvasGrid {
     }
 
     setBlockedTiles( blockedTileIndexes: number[] ): void {
-        let blockedIndexes = blockedTileIndexes.filter( ( e ) => { return this.mapSpecificUnblockedTiles.indexOf( e ) === -1; } )
+        let blockedIndexes = blockedTileIndexes.filter( ( e ) => { return !isInArray( this.mapSpecificUnblockedTiles, e ); } )
         blockedIndexes = [...blockedIndexes, ...this.mapSpecificBlockedTiles];
         this.grid.array.forEach( ( tile ) => {
-            if ( blockedIndexes.indexOf( tile.model.id ) > - 1 || tile.model.id  == null) {
+            if ( isInArray( blockedIndexes, tile.model.id ) || tile.model.id  == null) {
                 tile.blocked = true;
             }
             if ( this.unblockedCells.filter( ( e ) => { return e.column === tile.column && e.row === tile.row; } ).length > 0 ) {

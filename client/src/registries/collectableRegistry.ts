@@ -1,4 +1,5 @@
 import { CollectableType } from "../enumerables/CollectableTypeEnum";
+import { isInArray } from "../helpers/utilFunctions";
 
 let coins: string[] = [];
 let totalCoins = 100;
@@ -25,9 +26,9 @@ export const addCollectableToRegistry = ( collectableId: string, type: Collectab
 export const isInCollectableRegistry = ( collectableId: string, type: CollectableType ): boolean => {
     switch ( type ) {
         case CollectableType.coin:
-            return coins.indexOf( collectableId ) > -1;
+            return isInArray( coins, collectableId );
         case CollectableType.can:
-            return juiceCans.indexOf( collectableId ) > -1;
+            return isInArray( juiceCans, collectableId );
     }
 }
 

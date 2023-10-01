@@ -8,6 +8,7 @@ import { CanvasTypeEnum } from '../../../enumerables/CanvasTypeEnum';
 import { markModuleAsActive, markModuleAsInActive } from '../../modules/moduleRegistrySetter';
 import { SpriteModuleEnum } from '../../../enumerables/SpriteModuleEnum';
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../../canvas/canvasGetter';
+import { isNullOrUndefined } from '../../../helpers/utilFunctions';
 
 export class Destination {
     type: DestinationType;
@@ -79,7 +80,7 @@ export class Destination {
 
     getCurrentStepTile(): Tile {
         if ( this.currentStep == undefined ) return null;
-        if ( this.currentStep.tile === undefined || this.currentStep.tile === null ) {
+        if ( isNullOrUndefined( this.currentStep.tile ) ) {
             return getTileOnCanvasByXy( this.currentStep, CanvasTypeEnum.background )
         }
         return getTileOnCanvasByCell( this.currentStep.tile, CanvasTypeEnum.background );
@@ -87,7 +88,7 @@ export class Destination {
 
     getNextStepTile(): Tile {
         if ( this.nextStep == undefined ) return null;
-        if ( this.nextStep.tile === undefined || this.nextStep.tile === null ) {
+        if ( isNullOrUndefined( this.nextStep.tile ) ) {
             return getTileOnCanvasByXy( this.nextStep, CanvasTypeEnum.background )
         }
         return getTileOnCanvasByCell( this.nextStep.tile, CanvasTypeEnum.background );

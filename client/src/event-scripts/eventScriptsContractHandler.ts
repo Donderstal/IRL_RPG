@@ -15,6 +15,7 @@ import { getCreateSpriteContract, getDeleteSpriteContract, getFadeContract, getF
 import { initCanvasObjectModel } from "../factories/modelFactory";
 import { getBackSpritesGrid } from "../game/canvas/canvasGetter";
 import { getSpriteByName } from "../game/modules/sprites/spriteGetter";
+import { isNullOrUndefined } from "../helpers/utilFunctions";
 import type { CanvasObjectModel } from "../models/CanvasObjectModel";
 import type { AnimateSpriteScene, AnimationScene, CameraMoveToSpriteScene, CameraMoveToTileScene, CreateCarScene, CreateSpriteScene, DeleteSpriteScene, EmoteScene, FadeScene, LoadMapScene, MoveScene, ScreenTextScene, SpeakScene } from "../models/cutscenes/SceneAnimationModel";
 
@@ -126,12 +127,12 @@ const getContractFromSceenTextScene = ( animationScene: ScreenTextScene ): ShowS
     return getShowScreenTextContract( animationScene.text, animationScene.title, animationScene.maxWidth );
 }
 const getContractFromSpeakScene = ( animationScene: SpeakScene ): ShowSpeechBubbleContract => {
-    const conversationPartnerId = ( animationScene.speakWith !== undefined && animationScene.speakWith !== null ) ? getSpriteByName( animationScene.spriteName ).spriteId : null;
+    const conversationPartnerId = !isNullOrUndefined( animationScene.speakWith ) ? getSpriteByName( animationScene.speakWith ).spriteId : null;
     return getShowSpeechBubbleContract( getSpriteId( animationScene ), animationScene.text, conversationPartnerId, animationScene.sfx );
 }
 
 const getSpriteId = ( animationScene: AnimationScene ): string => {
-    if ( animationScene.spriteId !== null && animationScene.spriteId !== undefined ) {
+    if ( !isNullOrUndefined(animationScene.spriteId) ) {
         return animationScene.spriteId;
     }
     return getSpriteByName( animationScene.spriteName ).spriteId;

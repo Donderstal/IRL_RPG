@@ -1,3 +1,4 @@
+import { isInArray, isNullOrUndefined } from "../../helpers/utilFunctions";
 import type { GridCellModel } from "../../models/GridCellModel";
 import type { BackTileGrid } from "../canvas/BackTileGrid";
 import type { Sprite } from "../core/Sprite";
@@ -28,7 +29,7 @@ export const registerTilesBlockedByDynamicSprites = ( sprites: Sprite[] ): void 
     sprites.forEach( ( sprite ) => {
         const tileIndexes = sprite.getTilesBlockedBySprite();
         tileIndexes.forEach( ( tileIndex ) => {
-            if ( dynamicallyBlockedTileIndexes.indexOf( tileIndex ) < 0 ) {
+            if ( !isInArray( dynamicallyBlockedTileIndexes, tileIndex ) ) {
                 dynamicallyBlockedTileIndexes.push( tileIndex );
             }
         } );
@@ -50,7 +51,7 @@ export const isTileBlocked = ( cell: GridCellModel ): boolean => {
     const cellList = getBlockedCellList();
     const index = getIndex( cell.column, cell.row );
     const cellInList = cellList[index]
-    return cellInList === null || cellInList === undefined;
+    return isNullOrUndefined( cellInList );
 }
 export const tileIsOffMap = ( cell: GridCellModel ): boolean => {
     return cell.row < 1 || cell.row > rowsInActiveMap || cell.column < 1 || cell.column > columnsInActiveMap;

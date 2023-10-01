@@ -1,6 +1,6 @@
 import { EventChainType } from "../enumerables/EventChainType";
 import { TriggerType } from "../enumerables/TriggerType";
-import { getUniqueId } from "../helpers/utilFunctions";
+import { getUniqueId, isInArray, isNullOrUndefined } from "../helpers/utilFunctions";
 import type { TriggerModel } from "../models/TriggerModel";
 import type { Trigger } from "./Trigger";
 
@@ -20,7 +20,7 @@ const addTrigger = ( trigger: Trigger ) => {
     triggers.push( trigger );
 }
 const idInRegistry = ( id: string ) => {
-    return ids.indexOf( id ) > -1;
+    return isInArray( ids, id );
 }
 const triggerInRegistry = ( id: string ) => {
     return triggers.filter( e => e.id == id ).length > -1;
@@ -57,7 +57,7 @@ export const getTriggersByTriggerType = ( type: TriggerType ): Trigger[] => {
     return triggers.filter( ( e ) => { return filterTrigger(e.model, type) } );
 };
 const filterTrigger = ( triggerModel: TriggerModel, type: TriggerType ): boolean => {
-    if ( triggerModel.triggerType !== undefined && triggerModel.triggerType !== null ) {
+    if ( !isNullOrUndefined( triggerModel.triggerType ) ) {
         return type === triggerModel.triggerType;
     }
     switch ( triggerModel.eventChainType ) {

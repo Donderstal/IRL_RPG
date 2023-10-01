@@ -1,5 +1,6 @@
 import { StateType } from "./enumerables/StateType";
 import { animationLoop, stopAnimationLoop } from "./frameLoop";
+import { closeGameCanvas } from "./helpers/DOMEventHelpers";
 import { alterGameState, setGameStartParameters } from "./state/state";
 
 export const loadFilesAndStartGame = ( loadingFromSave: boolean, parameters: any[] ): void => {
@@ -10,8 +11,6 @@ export const loadFilesAndStartGame = ( loadingFromSave: boolean, parameters: any
     animationLoop();
 }
 export const stopGameAndClearGameData = (): void => {
-    stopControlsAndAnimation();
-}
-const stopControlsAndAnimation = (): void => {
     stopAnimationLoop();
+    closeGameCanvas();
 }

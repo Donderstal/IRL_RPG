@@ -21,6 +21,7 @@ import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { PLAYER_ID } from "../../game-data/interactionGlobals";
 import { StateType } from "../../enumerables/StateType";
 import { getGameState } from "../../state/state";
+import { isNullOrUndefined } from "../../helpers/utilFunctions";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
@@ -68,7 +69,7 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
                 const destinationTile = getTileOnCanvasByCell( destinationCell, CanvasTypeEnum.background )
                 const path = tryFindPath( startTile, destinationTile );
                 const destination = getSpriteDestination( sprite.spriteId );
-                if ( path === null || path === undefined || path.length === 0 ) {
+                if ( isNullOrUndefined( path ) || path.length === 0 ) {
                     destroySpriteMovementToDestination( sprite );
                     return;
                 }
@@ -90,7 +91,7 @@ export const checkIfSpriteShouldFindNewPath = ( sprite: Sprite, destination: Des
     if ( destination.type === DestinationType.randomGeneratedSprite && sprite.isVisible() ) {
         if ( sprite.isCar ) {
             const path = getBackSpritesGrid().roadNetwork.findPathFromDirectionXy( destination.currentStep );
-            if ( path === null || path === undefined || path.length === 0 ) {
+            if ( isNullOrUndefined( path ) || path.length === 0 ) {
                 destroySpriteMovementToDestination( sprite );
                 return;
             }

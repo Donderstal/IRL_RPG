@@ -29,6 +29,7 @@ export const getTilesheetImageForTile = ( tileModel: TileModel, sheetModel: Tile
     const angleObject = tileModel.mirrored ? images["mirrored"] : images["standard"];
     return angleObject[tileModel.angle.toString()];
 }
+
 const getSheetXyValues = ( mirrored: boolean, angle: number, blocksHeight: number ): { x: number, y: number }[] => {
     let tileX = getStartingX( mirrored, angle, blocksHeight );
     let tileY = getStartingY( mirrored, angle, blocksHeight );
@@ -44,7 +45,6 @@ const getSheetXyValues = ( mirrored: boolean, angle: number, blocksHeight: numbe
 
     return tilesheetXyValues;
 }
-
 const getStartingX = ( mirrored: boolean, angle: number, blocksHeight: number ): number => {
     switch ( angle ) {
         case 0:
@@ -57,7 +57,6 @@ const getStartingX = ( mirrored: boolean, angle: number, blocksHeight: number ):
             return 0;
     }
 }
-
 const getStartingY = ( mirrored: boolean, angle: number, blocksHeight: number ): number => {
     switch ( angle ) {
         case 0:
@@ -70,7 +69,6 @@ const getStartingY = ( mirrored: boolean, angle: number, blocksHeight: number ):
             return mirrored ? 0 : GRID_BLOCK_PX * 3;
     }
 }
-
 const getNextXy = ( tileX: number, tileY: number, mirrored: boolean, angle: number ): { [key in string]: number } => {
     let x;
     let y;

@@ -4,6 +4,7 @@ import { GRID_BLOCK_PX, LARGE_FONT_LINE_HEIGHT, LARGE_FONT_SIZE } from "../../ga
 import { writeTextLine } from "../../helpers/canvasHelpers";
 import { getSpeechBubbleDimensions, getSpeechBubbleXy } from "../../helpers/speechBubbleHelpers";
 import { TypeWriterWord } from "../../helpers/TypeWriter";
+import { isInArray } from "../../helpers/utilFunctions";
 import { TextBubbleBase } from "./TextBubbleBase";
 
 export class SelectionBubble extends TextBubbleBase {
@@ -61,7 +62,7 @@ export class SelectionBubble extends TextBubbleBase {
 
     activateFirstSlot(): void {
         this.slots.forEach( ( e, index ) => {
-            if ( this.disabledSlots.indexOf( index ) == -1 && this.activeSlotIndex === null ) {
+            if ( !isInArray( this.disabledSlots, index ) && this.activeSlotIndex === null ) {
                 this.activeSlotIndex = index;
             }
         } )
@@ -75,7 +76,7 @@ export class SelectionBubble extends TextBubbleBase {
             if ( index < 0 ) {
                 index = ( this.slots.length - 1 );
             }
-            if ( this.disabledSlots.indexOf( index ) === -1 ) {
+            if ( !isInArray( this.disabledSlots, index ) ) {
                 this.activeSlotIndex = index;
                 foundIndex = true;
             }
@@ -90,7 +91,7 @@ export class SelectionBubble extends TextBubbleBase {
             if ( index > ( this.slots.length - 1 ) ) {
                 index = 0;
             }
-            if ( this.disabledSlots.indexOf( index ) === -1 ) {
+            if ( !isInArray( this.disabledSlots, index ) ) {
                 this.activeSlotIndex = index;
                 foundIndex = true;
             }
@@ -103,7 +104,7 @@ export class SelectionBubble extends TextBubbleBase {
 
         let yCounter = this.textY;
         this.slots.forEach( ( e, index ) => {
-            const color = this.disabledSlots.indexOf( index ) == -1 ? "black" : "lightgrey";
+            const color = !isInArray( this.disabledSlots, index ) ? "black" : "lightgrey";
             const trailer = this.counter > 5 ? " " : this.trailingBlock.word;
             const text = this.activeSlotIndex === index ? ` ${e}${trailer}` : e;
             writeTextLine( text, this.textX, yCounter, LARGE_FONT_SIZE, context, color );

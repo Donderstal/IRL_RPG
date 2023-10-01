@@ -18,7 +18,7 @@ export const getSpriteFrameForPosition = ( framePosition: { x: number, y: number
     return model;
 }
 
-export const getFrameWidth = ( dataModel: SpriteDataModel, direction: DirectionEnum = null ): number => {
+const getFrameWidth = ( dataModel: SpriteDataModel, direction: DirectionEnum = null ): number => {
     if ( dataModel.dimensionalAlignment === SpriteSheetAlignmentEnum.standard || direction == null ) {
          return dataModel.widthBlocks * GRID_BLOCK_IN_SHEET_PX
     }
@@ -31,8 +31,7 @@ export const getFrameWidth = ( dataModel: SpriteDataModel, direction: DirectionE
         }
     }
 }
-
-export const getFrameHeight = ( dataModel: SpriteDataModel, direction: DirectionEnum = null ): number => {
+const getFrameHeight = ( dataModel: SpriteDataModel, direction: DirectionEnum = null ): number => {
     if ( dataModel.dimensionalAlignment === SpriteSheetAlignmentEnum.standard || direction == null ) {
         return dataModel.heightBlocks * GRID_BLOCK_IN_SHEET_PX
     }

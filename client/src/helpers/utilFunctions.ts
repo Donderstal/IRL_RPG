@@ -6,6 +6,10 @@ import type { Hitbox } from "../game/core/Hitbox";
 import type { Sprite } from "../game/core/Sprite";
 import { tileIsValidDestination } from "../game/map/blockedTilesRegistry";
 import type { GridCellModel } from "../models/GridCellModel";
+import type { FrameModel } from "../models/SpriteFrameModel";
+
+const idChars = "abcdefghijklmnopqrstuvwxyz1234567890";
+const idLength = 10;
 
 export const fetchJSONWithCallback = ( url: string, callback: Function, callbackParams: any[] = [] ): void => {
     fetch(url)
@@ -20,10 +24,6 @@ export const fetchJSONWithCallback = ( url: string, callback: Function, callback
         }
     )
 }
-
-const idChars   = "abcdefghijklmnopqrstuvwxyz1234567890";
-const idLength  = 10;
-
 export const generateId = ( ): string => {
     let id = "";
 
@@ -33,7 +33,6 @@ export const generateId = ( ): string => {
     }
     return id
 }
-
 export const getUniqueId = ( idList: string[] ): string => {
     const newId         = generateId( )
     let isUniqueId    = true;
@@ -48,15 +47,6 @@ export const getUniqueId = ( idList: string[] ): string => {
 
     return ( isUniqueId ) ? newId : getUniqueId( idList );
 }
-
-export const getNextIndexInArray = ( currentIndex: number, array: any[] ): number => {
-    return ( currentIndex + 1 === array.length ) ? 0 : currentIndex += 1 ;
-};
-
-export const getPreviousIndexInArray = ( currentIndex: number, array: any[] ): number => {
-    return ( currentIndex - 1 < 0 ) ? array.length - 1 : currentIndex - 1
-};
-
 export const cloneInstance = ( instance: any ): any => {
     return Object.assign(
         Object.create(
@@ -65,7 +55,6 @@ export const cloneInstance = ( instance: any ): any => {
         JSON.parse(JSON.stringify(instance)),
     );
 }
-
 export const getOppositeDirection = ( direction: DirectionEnum ): DirectionEnum => {
     switch ( direction ) {
         case DirectionEnum.left:
@@ -78,13 +67,12 @@ export const getOppositeDirection = ( direction: DirectionEnum ): DirectionEnum 
             return DirectionEnum.up;
     }
 };
+export const getSpriteFacingTowardsTargetDirection = ( spriteFrame: FrameModel, targetFrame: FrameModel ): DirectionEnum => {
+    const targetIsLeftOfSprite = targetFrame.x < spriteFrame.x;
+    const targetIsAboveSprite = targetFrame.y < spriteFrame.y;
 
-export const getSpriteFacingTowardsTargetDirection = ( spriteHitbox: Hitbox, target: Hitbox ): DirectionEnum => {
-    const targetIsLeftOfSprite = target.x < spriteHitbox.x;
-    const targetIsAboveSprite = target.y < spriteHitbox.y;
-
-    const xDifference = Math.abs( target.x - spriteHitbox.x );
-    const yDifference = Math.abs( target.y - spriteHitbox.y );
+    const xDifference = Math.abs( targetFrame.x - spriteFrame.x );
+    const yDifference = Math.abs( targetFrame.y - spriteFrame.y );
 
     if ( xDifference > yDifference ) {
         return targetIsLeftOfSprite ? DirectionEnum.left : DirectionEnum.right;
@@ -93,19 +81,6 @@ export const getSpriteFacingTowardsTargetDirection = ( spriteHitbox: Hitbox, tar
         return targetIsAboveSprite ? DirectionEnum.up : DirectionEnum.down;
     }
 }
-
-export const cellDistanceSquared = ( cellA: GridCellModel, cellB: GridCellModel ): number => {
-    const rowDiff = cellA.row - cellB.row;
-    const colDiff = cellA.column - cellB.column;
-    return (rowDiff*rowDiff) + (colDiff*colDiff);
-}
-
-export const xyDistanceSquared = ( positionA: { x: number, y: number }, positionB: { x: number, y: number } ) => {
-    const xDiff = positionA.x - positionB.x;
-    const yDiff = positionA.y - positionB.y
-    return ( xDiff * xDiff ) + ( yDiff * yDiff );
-}
-
 export const getClosestCell = ( start: GridCellModel, cellList: GridCellModel[] ): GridCellModel => {
     let closestCell = cellList[0];
     let shortestDistance = cellDistanceSquared(start, closestCell);
@@ -121,7 +96,6 @@ export const getClosestCell = ( start: GridCellModel, cellList: GridCellModel[] 
 
     return closestCell;
 }
-
 export const getClosestHitbox = ( start: Hitbox, hitboxList: Hitbox[] ): Hitbox => {
     let closestHitbox = hitboxList[0];
     let shortestDistance = xyDistanceSquared( start, closestHitbox );
@@ -137,19 +111,6 @@ export const getClosestHitbox = ( start: Hitbox, hitboxList: Hitbox[] ): Hitbox 
 
     return closestHitbox;
 }
-
-export const faceTowardsTarget = ( subject: Sprite, target: Sprite ) => {
-    const colDiff = Math.abs( subject.column - target.column );
-    const rowDiff = Math.abs( subject.row - target.row );
-
-    if ( rowDiff > colDiff ) {
-        return ( subject.row > target.row ) ? DirectionEnum.up : DirectionEnum.down;
-    }
-    else {
-        return ( subject.column > target.column ) ? DirectionEnum.left : DirectionEnum.right;
-    }
-}
-
 export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): GridCellModel => {
     const back = getBackTilesGrid();
     const columnsInGrid = back.grid.columns;
@@ -174,11 +135,26 @@ export const getRandomDestinationInRadius = ( sprite: Sprite, radius: number ): 
         return null;
     }
 }
-
 export const isHorizontal = ( direction: DirectionEnum ): boolean => {
     return direction === DirectionEnum.left || direction === DirectionEnum.right;
 }
-
 export const spriteIsPlayer = ( id: string ): boolean => {
     return id === PLAYER_ID;
+}
+export const isNullOrUndefined = ( value: any ): boolean => {
+    return value === null || value === undefined;
+}
+export const isInArray = ( array: any[], value: any ): boolean => {
+    return array.indexOf( value ) > -1
+}
+
+const cellDistanceSquared = ( cellA: GridCellModel, cellB: GridCellModel ): number => {
+    const rowDiff = cellA.row - cellB.row;
+    const colDiff = cellA.column - cellB.column;
+    return ( rowDiff * rowDiff ) + ( colDiff * colDiff );
+}
+const xyDistanceSquared = ( positionA: { x: number, y: number }, positionB: { x: number, y: number } ) => {
+    const xDiff = positionA.x - positionB.x;
+    const yDiff = positionA.y - positionB.y
+    return ( xDiff * xDiff ) + ( yDiff * yDiff );
 }

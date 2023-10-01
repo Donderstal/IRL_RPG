@@ -7,7 +7,6 @@ import { SpritePosition } from "./SpritePosition";
 export const getPlayerNextPosition = ( player: Sprite, movementDirection: DirectionEnum ): SpritePosition => {
     return getNextPositionByDirection( player, movementDirection );
 }
-
 export const getNonPlayerSpriteNextPosition = ( sprite: Sprite, destination: Destination ): SpritePosition => {
     const nextStepDirection = destination.getNextStepDirection( sprite );
     if ( nextStepDirection !== null ) return getNextPositionByDirection( sprite, nextStepDirection );
@@ -17,7 +16,6 @@ export const getNonPlayerSpriteNextPosition = ( sprite: Sprite, destination: Des
     const nextStep = destination.getStepByIndex( nextStepIndex );
     return getNextPositionByDestinationStep( sprite, nextStep );
 }
-
 export const getStaticSpritePosition = ( sprite: Sprite ): SpritePosition => {
     return new SpritePosition( sprite.x, sprite.y, sprite.width, sprite.height, sprite.model.groundedAtBottom || sprite.model.isCharacter, sprite.isCar );
 }
@@ -44,7 +42,6 @@ const getNextPositionByDirection = ( sprite: Sprite, movementDirection: Directio
 
     return new SpritePosition( sprite.x, sprite.y, sprite.width, sprite.height, sprite.model.groundedAtBottom || sprite.model.isCharacter, sprite.isCar );
 }
-
 const getNextPositionByDestinationStep = ( sprite: Sprite, nextStep: DirectionXy ): SpritePosition => {
     return new SpritePosition( nextStep.x, nextStep.y, sprite.width, sprite.height, sprite.model.groundedAtBottom || sprite.model.isCharacter, sprite.isCar );
 }
