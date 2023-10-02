@@ -3,6 +3,8 @@ import type { Sprite } from '../game/core/Sprite';
 import type { Tile } from '../game/core/Tile';
 import { DirectionEnum } from '../enumerables/DirectionEnum';
 import { isNullOrUndefined } from '../helpers/utilFunctions';
+import { markContractAsResolved } from '../contracts/contractRegistry';
+import { drawTilesToCanvasGrids } from './canvas/canvasSetter';
 
 enum CameraFocusMode {
     followSprite,
@@ -26,6 +28,8 @@ export class CameraFocus {
     lastFocusXy: { x: number; y: number }
     mode: CameraFocusMode;
     movingToDirections: DirectionEnum[];
+
+    currentCameraContractId: string;
     constructor() {
         this.setBaseValues();
 
@@ -80,22 +84,30 @@ export class CameraFocus {
         return this.focusTileId === tileIndex && !cameraFocus.movingToNewFocus;
     }
 
-    setSpriteFocus( sprite: Sprite, snapToSprite: boolean ): void {
-        this.unsetTileFocus( );
+    setSpriteFocus( sprite: Sprite, snapToSprite: boolean, contractId: string ): void {
+        this.unsetTileFocus();
+
         this.focusSpriteId = sprite.spriteId;
+        this.currentCameraContractId = contractId;
+
         if ( snapToSprite ) {
             this.centerOnXY( sprite.centerX, sprite.baseY );
+            this.resolveCameraContract();
         }
         else {
             this.initMoveToXY( sprite.centerX, sprite.baseY )
         }
     }
 
-    setTileFocus( tile: Tile, snapToTile: boolean ): void {
-        this.unsetSpriteFocus( );
+    setTileFocus( tile: Tile, snapToTile: boolean, contractId: string ): void {
+        this.unsetSpriteFocus();
+
         this.focusTileId = tile.index;
+        this.currentCameraContractId = contractId;
+
         if ( snapToTile ) {
             this.centerOnXY( tile.x, tile.y );
+            this.resolveCameraContract();
         }
         else {
             this.initMoveToXY( tile.x, tile.y );
@@ -108,6 +120,12 @@ export class CameraFocus {
 
     unsetTileFocus(): void {
         this.focusTileId = null;
+    }
+
+    resolveCameraContract(): void {
+        markContractAsResolved( this.currentCameraContractId );
+        this.currentCameraContractId = null;
+        drawTilesToCanvasGrids();
     }
 
     setBaseValues(): void {
@@ -190,6 +208,7 @@ export class CameraFocus {
         this.centerOnXY( moveToX, moveToY );
         if ( moveToX == this.newFocusXy.x && moveToY == this.newFocusXy.y ) {
             this.movingToNewFocus = false;
+            this.resolveCameraContract();
             this.centerOnXY( this.newFocusXy.x, this.newFocusXy.y );
         }
     }

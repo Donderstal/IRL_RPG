@@ -40,10 +40,11 @@ export const getEnterMapContract = ( doorId: string, mapId: string, playerStart:
         playerStart: playerStart
     };
 };
-export const getFadeContract = ( opacity: number, fadeBack: boolean = false ): FadeContract => {
+export const getFadeContract = ( opacity: number, fadeIn: boolean, fadeBack: boolean = false ): FadeContract => {
     return {
         ...getContractBase( ContractType.Fade ),
         targetOpacity: opacity,
+        fadeIn: fadeIn,
         fadeBack: fadeBack
     };
 };

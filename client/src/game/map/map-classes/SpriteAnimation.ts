@@ -12,7 +12,8 @@ export class SpriteAnimation {
     animationFinished: boolean;
     loops: number;
     looped: boolean;
-    constructor( model: SpriteAnimationModel ) {
+    contractId: string;
+    constructor( model: SpriteAnimationModel, contractId: string ) {
         this.model = model;
         this.index = 0;
         this.currentLoop = 0;
@@ -20,6 +21,7 @@ export class SpriteAnimation {
         this.animationFinished = false;
         this.loops = model.loops;
         this.looped = model.looped;
+        this.contractId = contractId;
     }
 
     spriteAnimationCounter( sprite: Sprite | SpeechBubble ): void {

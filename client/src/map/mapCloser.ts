@@ -1,3 +1,4 @@
+import { clearContractsRegistry } from "../contracts/contractRegistry";
 import { clearTriggerRegistry } from "../event-triggers/triggerRegistry"
 import { clearCanvasGridMaps, clearCanvasGrids } from "../game/canvas/canvasSetter";
 import { clearBlockedTilesRegistry } from "../game/map/blockedTilesRegistry";
@@ -19,4 +20,5 @@ export const clearMap = (): void => {
 
     clearTriggerRegistry();
     clearSpriteTriggerRelationRegistry();
+    clearContractsRegistry();
 }

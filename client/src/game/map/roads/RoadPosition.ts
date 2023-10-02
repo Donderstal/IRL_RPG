@@ -24,6 +24,10 @@ export class RoadPosition extends TileSquare {
         return { column: this.leftColumn, row: this.bottomRow, direction: this.direction };
     }
 
+    getRelativeEndingCell(): GridCellModel {
+        return { column: this.leftColumn, row: this.bottomRow, direction: this.direction };
+    }
+
     isNotOccupied(): boolean {
         const sprites = getAllActiveSprites().filter( ( e ) => { return e.model.canMove });
         let notOccupied = true;

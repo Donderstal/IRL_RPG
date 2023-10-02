@@ -6,10 +6,8 @@ import { Counter } from '../../helpers/Counter';
 import { getUniqueId, isInArray } from '../../helpers/utilFunctions';
 import type { CanvasObjectModel } from '../../models/CanvasObjectModel';
 import type { DirectionXy } from '../../models/DirectionXyModel';
+import type { GridCellModel } from '../../models/GridCellModel';
 import type { RoadModel } from '../../models/RoadModel';
-import { initializeSpriteMovement } from '../modules/moduleSetter';
-import { getSpriteById } from '../modules/sprites/spriteGetter';
-import { getSpriteIds } from '../modules/sprites/spriteRegistry';
 import { Road } from './roads/Road';
 
 export class RoadNetwork {
@@ -55,17 +53,15 @@ export class RoadNetwork {
     spawnCarWithRandomDestination(): void {
         const validRoads = this.roads.filter( ( e ) => { return e.hasUnoccupiedStart(); } );
         const randomRoad = validRoads[Math.floor( Math.random() * validRoads.length )];
-        const randomPath = randomRoad.getRandomPath();
 
-        const carModel = randomRoad.getRandomCarObjectModel();
-        const id = getUniqueId( getSpriteIds() );
-        carModel.id = id;
+        const destination: GridCellModel = {
+            ...randomRoad.getRoadEndPosition(),
+            type: DestinationType.randomGeneratedSprite
+        }
 
+        const carModel = randomRoad.getRandomCarObjectModel( destination );
         const createSpriteContract = getCreateSpriteContract( carModel );
         registerNewContract( createSpriteContract );
-
-        const sprite = getSpriteById( id );
-        initializeSpriteMovement( randomPath, DestinationType.randomGeneratedSprite, sprite );
     }
 
     registerIntersectingRoads() {

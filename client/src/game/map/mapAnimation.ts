@@ -11,7 +11,6 @@ import { getBackSpritesGrid, getTileOnCanvasByIndex } from '../canvas/canvasGett
 import { clearSpriteCanvasGrids, clearUICanvasGrids } from '../canvas/canvasSetter';
 import { moduleIsRunningForSprite } from '../modules/moduleRegistryGetter';
 import { handleSpriteModules } from '../modules/moduleHandler';
-import { handleSpritesScheduledForDelete } from '../modules/sprites/spriteHandler';
 import { getBaseCellList, getDynamicallyBlockedTileIndexes, registerTilesBlockedByDynamicSprites } from './blockedTilesRegistry';
 import { checkForEventTriggers, drawTriggers, updateAssociatedTrigger } from '../../event-triggers/triggerHandler';
 import { getAssociatedHitbox } from '../modules/hitboxes/hitboxGetter';
@@ -23,7 +22,6 @@ import { StateType } from '../../enumerables/StateType';
 export const handleMapAnimations = (): void => {
     clearSpriteCanvasGrids();
     clearUICanvasGrids()
-    handleSpritesScheduledForDelete();
     registerTilesBlockedByDynamicSprites( getDynamicSprites() );
 
     drawSpritesInOrder( )

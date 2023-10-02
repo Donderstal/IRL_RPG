@@ -1,3 +1,4 @@
+import { markContractAsResolved } from "../contracts/contractRegistry";
 import { playMusic } from "../game/sound/sound";
 import { drawRect } from "./canvasHelpers";
 
@@ -10,6 +11,7 @@ let holdBlackScreen = false;
 let fadeInAndOut = false;
 let A = null;
 let faderOpacity = null;
+let activeContractId = null;
 
 export const getRGBA = (): string => { return "rgba( " + RGB + A + ")"; };
 export const inFadingAnimation = (): boolean => { return fadingFromBlack || fadingToBlack || holdBlackScreen; };
@@ -18,13 +20,13 @@ export const fadedOut = (): boolean => { return !fadingToBlack && holdBlackScree
 export const setFaderCanvas = ( width : number, height: number ): void => {
     faderCanvas = new OffscreenCanvas( width, height );
 };
-export const startFadeToBlack = ( targetOpacity: number, fadeBack = false ): void => {
+export const startFadeToBlack = ( targetOpacity: number, fadeBack = false, activeContractId: string = null ): void => {
     faderOpacity = targetOpacity
     fadeInAndOut = fadeBack
     fadingToBlack = true;
     A = 0;
 };
-export const startFadeFromBlack = ( targetOpacity: number ): void => {
+export const startFadeFromBlack = ( targetOpacity: number, activeContractId: string = null ): void => {
     faderOpacity = targetOpacity
     fadingFromBlack = true;
     A = 1;
@@ -74,4 +76,8 @@ const unsetFadingAnimation = (): void => {
     fadingToBlack = false;
     fadingFromBlack = false;
     fadeInAndOut = false;
+    if ( activeContractId !== null ) {
+        markContractAsResolved( activeContractId );
+        activeContractId = null;
+    }
 }

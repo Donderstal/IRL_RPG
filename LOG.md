@@ -1,5 +1,8 @@
 ### 
 
+#### OCT 2 2023
+* Implementing contract structure for moving, animating, deleting sprites
+
 #### OCT 1 2023
 * State boolean setting/getting with an Enum, to reduce exported functions
 * Removed CellPosition, DestinationCell and SpawnPoint models, replaced their refs with GridCellModel

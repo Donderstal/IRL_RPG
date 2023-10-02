@@ -115,7 +115,7 @@ const getContractFromEmoteScene = ( animationScene: EmoteScene ): ShowEmoteContr
 }
 const getContractFromFadeScene = ( animationScene: FadeScene ): FadeContract => {
     let opacity = animationScene.targetOpacity == null ? ( animationScene.type === SceneAnimationType.fadeIn ? 0 : 1 ) : animationScene.targetOpacity;
-    return getFadeContract( opacity, animationScene.type === SceneAnimationType.fadeOutIn );
+    return getFadeContract( opacity, animationScene.type === SceneAnimationType.fadeIn, animationScene.type === SceneAnimationType.fadeOutIn );
 }
 const getContractFromSwitchMapScene = ( animationScene: LoadMapScene ) => {
     return getSwitchCutsceneMapContract( animationScene.mapName, animationScene.focusTile, animationScene.setPlayerSprite, animationScene.playerStart );

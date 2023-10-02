@@ -13,7 +13,6 @@ export const checkIfSpriteCanMove = ( sprite: Sprite, destination: Destination )
     }
     else if ( destination.hasNextStep ) {
         destination.setNextStep( sprite );
-        if ( sprite.isCar ) return true;
         return true;
     }
     return false;

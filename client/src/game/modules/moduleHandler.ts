@@ -10,18 +10,17 @@ import { getIdleAnimationFromList, idleAnimationCounterIsOverLimit, incrementIdl
 import { getRandomAnimation, getRandomDestination, incrementRandomAnimationCounter, randomAnimationCounterIsOverLimit, resetRandomAnimationCounter } from "./randomAnimCounters/randomAnimHandler";
 import { moduleIsRunningForSprite } from "./moduleRegistryGetter";
 import { getSpriteDestination, getSpriteDestinationCell, spriteHasDestinationCell } from "./destinations/destinationGetter";
-import { initializeSpriteAnimation } from "./animations/animationSetter";
 import { destroyBlockedSpriteCounter } from "./blockedCounters/blockedCounterSetter";
-import { destroySpriteMovementToDestination, initializeSpriteMovement } from "./moduleSetter";
-import { getBackSpritesGrid, getBackTilesGrid, getTileOnCanvasByCell } from "../canvas/canvasGetter";
+import { destroySpriteMovementToDestination } from "./moduleSetter";
+import { getBackSpritesGrid } from "../canvas/canvasGetter";
 import { DestinationType } from "../../enumerables/DestinationType";
-import { tryFindPath } from "../map/pathfinder";
 import type { Destination } from "../map/map-classes/Destination";
-import { CanvasTypeEnum } from "../../enumerables/CanvasTypeEnum";
 import { PLAYER_ID } from "../../game-data/interactionGlobals";
 import { StateType } from "../../enumerables/StateType";
 import { getGameState } from "../../state/state";
 import { isNullOrUndefined } from "../../helpers/utilFunctions";
+import { getMoveSpriteContract, getSetSpriteAnimationContract } from "../../factories/contractFactory";
+import { registerNewContract } from "../../contracts/contractRegistry";
 
 export const handleSpriteModules = ( sprite: Sprite ): void => {
 	let id = sprite.spriteId;
@@ -65,16 +64,8 @@ export const handleSpriteMoveToDestination = ( sprite: Sprite ): void => {
             destroyBlockedSpriteCounter( sprite.spriteId );
             if ( !sprite.isCar && spriteHasDestinationCell( sprite.spriteId ) ) {
                 const destinationCell = getSpriteDestinationCell( sprite.spriteId );
-                const startTile = getTileOnCanvasByCell( { column: sprite.column, row: sprite.row }, CanvasTypeEnum.background );
-                const destinationTile = getTileOnCanvasByCell( destinationCell, CanvasTypeEnum.background )
-                const path = tryFindPath( startTile, destinationTile );
-                const destination = getSpriteDestination( sprite.spriteId );
-                if ( isNullOrUndefined( path ) || path.length === 0 ) {
-                    destroySpriteMovementToDestination( sprite );
-                    return;
-                }
-                initializeSpriteMovement( path, destination.type, sprite );
-                return;
+                const contract = getMoveSpriteContract( sprite.spriteId, destinationCell );
+                registerNewContract( contract )
             }
             else if ( sprite.isCar && !sprite.isVisible() ) {
                 destroySpriteMovementToDestination( sprite );
@@ -95,7 +86,7 @@ export const checkIfSpriteShouldFindNewPath = ( sprite: Sprite, destination: Des
                 destroySpriteMovementToDestination( sprite );
                 return;
             }
-            initializeSpriteMovement( path, DestinationType.randomGeneratedSprite, sprite );
+            //initializeSpriteMovement( path, DestinationType.randomGeneratedSprite, sprite );
             return;
         }
     }
@@ -111,18 +102,15 @@ export const handleRandomAnimationCounter = ( sprite: Sprite ) => {
     const chance = Math.random() < .33;
     if ( sprite.animationType === AnimationTypeEnum.idle || ( chance && sprite.animationType === AnimationTypeEnum.semiIdle ) ) {
         const animation = getRandomAnimation( sprite );
-        initializeSpriteAnimation( sprite, animation, { looped: false, loops: 0 } )
+        const contract = getSetSpriteAnimationContract( sprite.spriteId, animation, false );
+        registerNewContract( contract );
     }
     else {
         const destination = getRandomDestination( sprite );
         if ( destination == null ) return;
 
-        const start = getBackTilesGrid().getTileAtCell( sprite.column, sprite.row );
-        const destinationTile = getBackTilesGrid().getTileAtCell( destination.column, destination.row );
-        const path = tryFindPath( start, destinationTile );
-        if ( path === null ) return;
-
-        initializeSpriteMovement( path, DestinationType.randomInRange, sprite, destination );
+        const contract = getMoveSpriteContract( id, destination );
+        registerNewContract( contract )
     }
 }
 
@@ -133,5 +121,6 @@ export const handleIdleAnimationCounter = ( sprite: Sprite ) => {
 
     resetIdleAnimationCounter( id );
     const animation = getIdleAnimationFromList( sprite );
-    initializeSpriteAnimation( sprite, animation, { looped: false, loops: 0 } );
+    const contract = getSetSpriteAnimationContract( sprite.spriteId, animation, false );
+    registerNewContract( contract );
 }

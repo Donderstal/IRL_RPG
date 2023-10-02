@@ -1,5 +1,5 @@
 import type { SetTriggerContract } from "../contracts/SetTriggerContract";
-import { deregisterContractOnCompletion, markContractAsFailed, removeFromPendingContractIds } from "../contracts/contractRegistry";
+import { markContractAsAcknowledged, markContractAsFailed, unmarkContractAsPending } from "../contracts/contractRegistry";
 import { CanvasTypeEnum } from "../enumerables/CanvasTypeEnum";
 import { getTileOnCanvasByCell } from "../game/canvas/canvasGetter";
 import { getSpriteById } from "../game/modules/sprites/spriteGetter";
@@ -10,12 +10,12 @@ import { setTrigger } from "./triggerSetter";
 export const acknowledgeSetTriggerContract = ( contract: SetTriggerContract ): void => {
     try {
         setTriggerFromContract( contract.triggerModel )
-        deregisterContractOnCompletion( contract.contractId );
+        markContractAsAcknowledged( contract.contractId );
     }
     catch ( exception ) {
         console.log( `Failed to set contract ${contract.contractId}, retrying in next frame` );
         contract.attempts++
-        removeFromPendingContractIds( contract.contractId );
+        unmarkContractAsPending( contract.contractId );
         if ( contract.attempts > 5 ) {
             console.error( `Failed to complete SetTriggerContract with id ${contract.contractId}.` );
             console.log( contract );

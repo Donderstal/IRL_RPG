@@ -19,7 +19,7 @@ import type { ShowEmoteContract } from "./ShowEmoteContract";
 import type { ShowScreenTextContract } from "./ShowScreenTextContract";
 import type { ShowSpeechBubbleContract } from "./ShowSpeechBubbleContract";
 import type { SwitchCutsceneMapContract } from "./SwitchCutsceneMapContract";
-import { addToPendingContractIds, contractIsPublishedAndPending, getPendingContracts } from "./contractRegistry";
+import { markContractAsPending, contractIsPublishedAndPending, getPendingContracts } from "./contractRegistry";
 
 export const publishNewContracts = (): void => {
     const contracts = getPendingContracts().filter( ( e ) => {
@@ -28,7 +28,7 @@ export const publishNewContracts = (): void => {
     contracts.forEach( publishContract );
 }
 const publishContract = ( contract: IContract ): void => {
-    addToPendingContractIds( contract.contractId );
+    markContractAsPending( contract.contractId );
     switch ( contract.contractType ) {
         case ContractType.CreateSprite:
             acknowledgeCreateSpriteContract( contract as CreateSpriteContract );

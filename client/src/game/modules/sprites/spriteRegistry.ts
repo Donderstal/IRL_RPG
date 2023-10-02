@@ -1,5 +1,4 @@
 import { CanvasTypeEnum } from "../../../enumerables/CanvasTypeEnum";
-import type { DeleteSpriteModel } from "../../../models/DeleteSpriteModel";
 import type { Sprite } from "../../core/Sprite";
 
 let backSpritesArray: Sprite[] = [];
@@ -10,8 +9,6 @@ let spriteIds: string[] = [];
 let nonCollisionSprites: Sprite[] = [];
 let staticCollisionSprites: Sprite[] = [];
 let dynamicCollisionSprites: Sprite[] = [];
-
-let spriteDeletionOptions: DeleteSpriteModel[] = [];
 
 export const getAllSpritesAsList = (): Sprite[] => {
     return allSpritesArray;
@@ -31,9 +28,6 @@ export const getStaticCollisionSprites = (): Sprite[] => {
 export const getDynamicCollisionSprites = (): Sprite[] => {
     return dynamicCollisionSprites;
 }
-export const getSpriteDeletionOptions = (): DeleteSpriteModel[] => {
-    return spriteDeletionOptions;
-}
 
 export const addSpriteToRegistry = ( sprite: Sprite, canvas: CanvasTypeEnum ): void => {
     const spriteId = sprite.spriteId
@@ -50,17 +44,7 @@ export const removeSpriteFromRegistry = ( spriteId: string ): void => {
     backSpritesArray = backSpritesArray.filter( ( e ) => { return e.spriteId !== spriteId } );
     clearSpriteFromCategories( spriteId );
 }
-
-export const addSpriteForDeletion = ( deleteSpriteOptions: DeleteSpriteModel ) => {
-    spriteDeletionOptions.push( deleteSpriteOptions );
-}
-
-export const removeSpriteScheduledForDeletion = ( id: string ) => {
-    spriteDeletionOptions = spriteDeletionOptions.filter( ( e ) => { return e.id !== id } );
-}
-
 export const clearSpriteArraysAndDictionaries = (): void => {
-    spriteDeletionOptions = [];
     backSpritesArray = [];
     frontSpritesArray = [];
     allSpritesArray = []

@@ -167,21 +167,26 @@ export class Road {
         return this.startingPosition.getRelativeStartingCell();
     }
 
+    getRoadEndPosition(): GridCellModel {
+        return this.endPosition.getRelativeEndingCell();
+    }
+
     hasUnoccupiedStart(): boolean {
         return this.model.hasStart && this.startingPosition.isNotOccupied() && !this.startingPosition.isVisible();
     }
 
-    getRandomCarObjectModel( isBus = false ): CanvasObjectModel {
+    getRandomCarObjectModel( destination: GridCellModel ): CanvasObjectModel {
         const carNames = getNeighbourhoodModel().carTypes;
         const startLocation = this.getRoadStartPosition();
         let randomIndex = Math.floor(Math.random() * carNames.length);
         let model: CanvasObjectModel = {
             direction: startLocation.direction,
-            type: isBus ? "bus" : carNames[randomIndex],
-            spriteDataModel: getDataModelByKey( isBus ? "bus" : carNames[randomIndex] ),
+            type: carNames[randomIndex],
+            spriteDataModel: getDataModelByKey( carNames[randomIndex] ),
             column: startLocation.column,
             row: startLocation.row,
-            hasCondition: false
+            hasCondition: false,
+            destination: destination
         }
         return model;
     }

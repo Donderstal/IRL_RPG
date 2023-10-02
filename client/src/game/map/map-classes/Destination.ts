@@ -9,6 +9,7 @@ import { markModuleAsActive, markModuleAsInActive } from '../../modules/moduleRe
 import { SpriteModuleEnum } from '../../../enumerables/SpriteModuleEnum';
 import { getTileOnCanvasByCell, getTileOnCanvasByXy } from '../../canvas/canvasGetter';
 import { isNullOrUndefined } from '../../../helpers/utilFunctions';
+import type { GridCellModel } from '../../../models/GridCellModel';
 
 export class Destination {
     type: DestinationType;
@@ -20,8 +21,9 @@ export class Destination {
     reachedDestination: boolean;
     spriteId: string;
     sprite: Sprite;
-    constructor( path: DirectionXy[], type: DestinationType, sprite: Sprite ) {
-        this.type = type;
+    contractId: string;
+    constructor( path: DirectionXy[], destination: GridCellModel, sprite: Sprite, contractId: string ) {
+        this.type = destination.type;
         this.inSideStep = false;
         this.reachedDestination = false;
 
@@ -32,6 +34,7 @@ export class Destination {
         this.pathfindingTries = 0;
         this.spriteId = sprite.spriteId;
         this.sprite = sprite;
+        this.contractId = contractId;
 
         this.startMovingToDestination( path, sprite );
     }
