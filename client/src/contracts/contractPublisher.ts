@@ -3,7 +3,7 @@ import { ContractType } from "../enumerables/ContractType";
 import { acknowledgeSetTriggerContract } from "../event-triggers/triggerContractsListener";
 import { acknowledgeEnterMapContract, acknowledgeLeaveMapContract, acknowledgeSwitchCutsceneMapContract } from "../map/mapContractsListener";
 import { acknowledgeCreateSpriteContract, acknowledgeDeleteSpriteContract, acknowledgeMoveSpriteContract, acknowledgeSetSpriteAnimationContract } from "../sprites/spriteContractsListener";
-import { acknowledgeShowEmoteContract, acknowledgeShowScreenTextContract, acknowledgeShowSpeechBubbleContract } from "../text/textContractsListener";
+import { acknowledgeShowCenterTextBubbleContract, acknowledgeShowEmoteContract, acknowledgeShowScreenTextContract, acknowledgeShowSpeechBubbleContract, acknowledgeShowSubtitleBubbleContract } from "../text/textContractsListener";
 import type { CreateSpriteContract } from "./CreateSpriteContract";
 import type { DeleteSpriteContract } from "./DeleteSpriteContract";
 import type { EnterMapContract } from "./EnterMapContract";
@@ -15,9 +15,11 @@ import type { LeaveMapContract } from "./LeaveMapContract";
 import type { MoveSpriteContract } from "./MoveSpriteContract";
 import type { SetSpriteAnimationContract } from "./SetSpriteAnimationContract";
 import type { SetTriggerContract } from "./SetTriggerContract";
+import type { ShowCenterTextBubbleContract } from "./ShowCenterTextBubbleContract";
 import type { ShowEmoteContract } from "./ShowEmoteContract";
 import type { ShowScreenTextContract } from "./ShowScreenTextContract";
 import type { ShowSpeechBubbleContract } from "./ShowSpeechBubbleContract";
+import type { ShowSubtitleBubbleContract } from "./ShowSubtitleBubbleContract";
 import type { SwitchCutsceneMapContract } from "./SwitchCutsceneMapContract";
 import { markContractAsPending, contractIsPublishedAndPending, getPendingContracts } from "./contractRegistry";
 
@@ -62,6 +64,12 @@ const publishContract = ( contract: IContract ): void => {
             break;
         case ContractType.ShowEmote:
             acknowledgeShowEmoteContract( contract as ShowEmoteContract );
+            break;
+        case ContractType.ShowCenterTextBubble:
+            acknowledgeShowCenterTextBubbleContract( contract as ShowCenterTextBubbleContract );
+            break;
+        case ContractType.ShowSubtitleBubble:
+            acknowledgeShowSubtitleBubbleContract( contract as ShowSubtitleBubbleContract );
             break;
         case ContractType.ShowScreenText:
             acknowledgeShowScreenTextContract( contract as ShowScreenTextContract );

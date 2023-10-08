@@ -1,5 +1,5 @@
-import { clearSubtitleBubble, setNewSubtitleBubble } from "../game/controllers/bubbleController";
-import { playEffect } from "../game/sound/sound";
+import { registerNewContract } from "../contracts/contractRegistry";
+import { getShowSubtitleBubbleContract } from "../factories/contractFactory";
 import type { QuestModel } from "../models/QuestModel";
 
 export
@@ -34,11 +34,8 @@ export
     }
 
     displayQuestText( label: string ): void {
-        setNewSubtitleBubble( label + this.model.name );
-        playEffect( 'misc/menu-select.mp3' );
-        setTimeout( () => {
-            clearSubtitleBubble();
-        }, 5000 );
+        const contract = getShowSubtitleBubbleContract( label + this.model.name );
+        registerNewContract( contract );
     }
 
     completeQuest(): void {

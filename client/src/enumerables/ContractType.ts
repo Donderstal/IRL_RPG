@@ -10,6 +10,8 @@ export enum ContractType {
     SetSpriteAnimation,
     SetTrigger,
     ShowEmote,
+    ShowCenterTextBubble,
+    ShowSubtitleBubble,
     ShowScreenText,
     ShowSpeechBubble,
     SwitchCutsceneMap

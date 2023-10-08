@@ -12,7 +12,7 @@ import { setNewParty } from "./game/party/partyController";
 import { openGameCanvas, showGameCanvas } from "./helpers/DOMEventHelpers";
 import { mobileAgent } from "./helpers/screenOrientation";
 import { setScreenTextCanvas } from "./helpers/screenTextModule";
-import { initializeBubbleCanvases } from "./helpers/speechBubbleHelpers";
+import { initializeBubbleCanvases } from "./text/textController";
 import type { GridCellModel } from "./models/GridCellModel";
 import type { SaveGame } from "./models/SaveGameModel";
 import { setCollectableRegistry } from "./registries/collectableRegistry";
@@ -54,7 +54,7 @@ export const loadGame = () => {
 
         initTilesheetModels();
         initializeDataModels();
-        initializeBubbleCanvases();
+        initializeBubbleCanvases( cameraFocus.screenWidth, cameraFocus.screenHeight );
     }
     else if ( loadingFrameCount == loadedFilesAtFrame + 1 ) {
         loadingGameFromSave ? startLoadGame() : startNewGame();

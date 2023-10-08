@@ -1,8 +1,6 @@
 import { DirectionEnum } from "../enumerables/DirectionEnum";
 import { PLAYER_ID } from "../game-data/interactionGlobals";
 import { getMenuGrid } from "../game/canvas/canvasGetter";
-import { hasActiveSelectionBubble, hasActiveSpeechBubbles } from "../game/controllers/bubbleController";
-import { handleMenuBubbleActionButton, handleMenuBubbleSelectionButton, handleSelectionKeys, handleTextBubbleActionButton } from "../game/controllers/bubbleActionController";
 import type { Sprite } from "../game/core/Sprite";
 import { spriteNextPositionIsBlocked } from "../game/map/collision";
 import { spriteHasAnimation } from "../game/modules/animations/animationGetter";
@@ -10,7 +8,6 @@ import { destroySpriteAnimation } from "../game/modules/animations/animationSett
 import { moveSpriteInDirection } from "../game/modules/destinations/destinationHandler";
 import { resetIdleAnimationCounter } from "../game/modules/idleAnimCounters/idleAnimHandler";
 import { getPlayer } from "../game/modules/sprites/spriteGetter";
-import { handleScreenTextActionButton, screenTextIsActive } from "../helpers/screenTextModule";
 import { actionButtonKey, menuButtonKey, returnButtonKey } from "./controlConstants";
 import { getActiveControls } from "./controlTranslator";
 import { getAssociatedHitbox } from "../game/modules/hitboxes/hitboxGetter";
@@ -18,6 +15,7 @@ import { checkForEventTriggers } from "../event-triggers/triggerHandler";
 import { TriggerType } from "../enumerables/TriggerType";
 import { getGameControlState } from "../state/state";
 import { ControlState } from "../enumerables/ControlState";
+import { handleCutsceneText } from "../text/textController";
 
 let actionButtonWasPressedLastFrame = false;
 let menuButtonWasPressedLastFrame = false;
@@ -28,7 +26,7 @@ export const handleControls = (): void => {
     const controlState = getGameControlState()
     switch ( controlState ) {
         case ControlState.cinematic:
-            handleCinematicControls( activeControls );
+            handleCutsceneText( activeControls );
             break;
         case ControlState.menu:
             handleMenuControls( activeControls );
@@ -46,7 +44,7 @@ export const handleControls = (): void => {
     returnButtonWasPressedLastFrame = activeControls.includes( returnButtonKey );
 }
 
-export const handleWebsiteControls = ( activeControls: any[] ): void => {
+const handleWebsiteControls = ( activeControls: any[] ): void => {
     if ( activeControls.includes( actionButtonKey ) && !actionButtonWasPressedLastFrame ) {
         console.log( 'action/return in website' );
     }
@@ -66,7 +64,7 @@ export const handleWebsiteControls = ( activeControls: any[] ): void => {
         console.log( 'down in website' )
     }
 }
-export const handleOpenWorldControls = ( activeControls: any[] ): void => {
+const handleOpenWorldControls = ( activeControls: any[] ): void => {
     if ( activeControls.includes( menuButtonKey ) && !menuButtonWasPressedLastFrame ) {
         getMenuGrid().show();
     }
@@ -91,36 +89,7 @@ export const handleOpenWorldControls = ( activeControls: any[] ): void => {
         return;
     }
 }
-export const handleCinematicControls = ( activeControls: any[] ): void => {
-    const activeMenuBubble = hasActiveSelectionBubble();
-    const activeTextBubble = hasActiveSpeechBubbles();
-    const activeScreenText = screenTextIsActive()
-
-    if ( activeControls.includes( actionButtonKey ) && !actionButtonWasPressedLastFrame ) {
-        if ( activeMenuBubble ) {
-            handleMenuBubbleActionButton();
-        }
-        if ( activeTextBubble ) {
-            handleTextBubbleActionButton();
-        }
-        if ( activeScreenText ) {
-            handleScreenTextActionButton();
-        }
-    }
-    if ( activeControls.includes( DirectionEnum.left ) ) {
-        handleSelectionKeys();
-    }
-    if ( activeControls.includes( DirectionEnum.up ) ) {
-        handleMenuBubbleSelectionButton( DirectionEnum.up );
-    }
-    if ( activeControls.includes( DirectionEnum.right ) ) {
-        handleSelectionKeys();
-    }
-    if ( activeControls.includes( DirectionEnum.down ) ) {
-        handleMenuBubbleSelectionButton( DirectionEnum.down );
-    }
-}
-export const handleMenuControls = ( activeControls: any[] ): void => {
+const handleMenuControls = ( activeControls: any[] ): void => {
     if ( activeControls.includes( menuButtonKey ) && !menuButtonWasPressedLastFrame ) {
         getMenuGrid().hide();
     }

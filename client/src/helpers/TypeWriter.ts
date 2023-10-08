@@ -55,15 +55,18 @@ export class TypeWriter {
 
     displayFull: boolean;
     countFrames: boolean;
+    wroteLastFrame: boolean;
 
     fullText: TypeWriterWord[];
     _activeText: TypeWriterWord[];
+
+    showTrailingCharacter: boolean;
     trailingCharacter: TypeWriterWord;
     trailingBlock: TypeWriterWord;
 
     innerCanvas: OffscreenCanvas;
     innerCtx: OffscreenCanvasRenderingContext2D;
-    constructor( text ) {
+    constructor( text: string, showTrailingCharacter = false ) {
         this.index  = 0;
         this.speed = 50;
         this.counter = 0;
@@ -72,15 +75,18 @@ export class TypeWriter {
         this.fullText = [];
         this.displayFull = false;
         this.activeText = [];
+        this.wroteLastFrame = false;
 
         this.innerCanvas = new OffscreenCanvas( GRID_BLOCK_PX, GRID_BLOCK_PX );
         this.innerCtx = this.innerCanvas.getContext( '2d' );
 
+        this.showTrailingCharacter = showTrailingCharacter;
         this.trailingCharacter = new TypeWriterWord( "_", "B", 0, 0, this.innerCtx );
         this.trailingCharacter.setWordUntilCharacterLimit( 1000 );
 
         this.trailingBlock = new TypeWriterWord( "■", "B", 0, 0, this.innerCtx );
         this.trailingBlock.setWordUntilCharacterLimit( 1000 );
+
         this.initText( text );
         this.write( );
     }
@@ -103,7 +109,7 @@ export class TypeWriter {
     }
 
     get activeText() {
-        if ( !this.countFrames ) {
+        if ( !this.countFrames || !this.showTrailingCharacter ) {
             return [...this._activeText]
         }
 
@@ -123,8 +129,13 @@ export class TypeWriter {
         }
     }
 
-    write( ): void {
+    write(): void {
+        if ( this.wroteLastFrame ) {
+            this.wroteLastFrame = false;
+            return;
+        }
         if ( this.isWriting ) {
+            this.wroteLastFrame = true;
             this.activeText = [];
             let newText = []
             this.fullText.forEach((e)=>{

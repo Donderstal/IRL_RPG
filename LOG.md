@@ -1,5 +1,8 @@
 ### 
 
+#### OCT 8 2023
+* All text display and speechbubble functionalities now use the contract structure
+
 #### OCT 2 2023
 * Implementing contract structure for moving, animating, deleting sprites
 

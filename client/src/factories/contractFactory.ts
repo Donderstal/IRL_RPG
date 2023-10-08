@@ -10,6 +10,8 @@ import type { MoveSpriteContract } from "../contracts/MoveSpriteContract";
 import type { SetSpriteAnimationContract } from "../contracts/SetSpriteAnimationContract";
 import type { SetTriggerContract } from "../contracts/SetTriggerContract";
 import type { ShowEmoteContract } from "../contracts/ShowEmoteContract";
+import type { ShowCenterTextBubbleContract } from "../contracts/ShowCenterTextBubbleContract";
+import type { ShowSubtitleBubbleContract } from "../contracts/ShowSubtitleBubbleContract";
 import type { ShowScreenTextContract } from "../contracts/ShowScreenTextContract";
 import type { ShowSpeechBubbleContract } from "../contracts/ShowSpeechBubbleContract";
 import type { SwitchCutsceneMapContract } from "../contracts/SwitchCutsceneMapContract";
@@ -96,9 +98,21 @@ export const getShowEmoteContract = ( spriteId: string, emoteName: string ): Sho
         emote: emoteName
     };
 };
+export const getShowCenterTextBubbleContract = ( text: string ): ShowCenterTextBubbleContract => {
+    return {
+        ...getContractBase( ContractType.ShowCenterTextBubble ),
+        text: text
+    };
+};
+export const getShowSubtitleBubbleContract = ( text: string ): ShowSubtitleBubbleContract => {
+    return {
+        ...getContractBase( ContractType.ShowSubtitleBubble ),
+        text: text
+    };
+};
 export const getShowScreenTextContract = ( text: string, isTitle: boolean, maxWidth: number = MAX_BUBBLE_TEXT_WIDTH ): ShowScreenTextContract => {
     return {
-        ...getContractBase( ContractType.ShowEmote ),
+        ...getContractBase( ContractType.ShowScreenText ),
         text: text,
         isTitle: isTitle,
         maxWidth: maxWidth
@@ -106,7 +120,7 @@ export const getShowScreenTextContract = ( text: string, isTitle: boolean, maxWi
 };
 export const getShowSpeechBubbleContract = ( speakingSpriteId: string, text: string, speakingToSpriteId: string = null, sfx: string = null ): ShowSpeechBubbleContract => {
     return {
-        ...getContractBase( ContractType.ShowEmote ),
+        ...getContractBase( ContractType.ShowSpeechBubble ),
         speakingSpriteId: speakingSpriteId,
         text: text,
         speakingToSpriteId: speakingToSpriteId,

@@ -2,7 +2,6 @@ import { FRAME_LIMIT } from "../../../game-data/globals";
 import type { SpriteAnimationModel } from "../../../models/SpriteAnimationModel";
 import type { FrameModel } from "../../../models/SpriteFrameModel";
 import type { Sprite } from "../../core/Sprite";
-import type { SpeechBubble } from "../../cutscenes/SpeechBubble";
 
 export class SpriteAnimation {
     model: SpriteAnimationModel;
@@ -24,7 +23,7 @@ export class SpriteAnimation {
         this.contractId = contractId;
     }
 
-    spriteAnimationCounter( sprite: Sprite | SpeechBubble ): void {
+    spriteAnimationCounter( sprite: Sprite ): void {
         sprite.countFrame();
         this.checkFrameLimit( sprite );
         sprite.setActiveFrame( this.getActiveFrame() );
@@ -35,7 +34,7 @@ export class SpriteAnimation {
         return this.model.frames[this.index];
     }
 
-    checkFrameLimit( sprite: Sprite | SpeechBubble ): void {
+    checkFrameLimit( sprite: Sprite ): void {
         if ( sprite.frameCount >= FRAME_LIMIT ) {
             sprite.frameCount = 0;
             this.index++;

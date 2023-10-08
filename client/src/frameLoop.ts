@@ -5,7 +5,6 @@ import { cameraFocus } from './game/cameraFocus';
 import { getFaderCanvas, handleFadeAnimation, inFadingAnimation } from './helpers/faderModule';
 import { clearRenderCanvases, clearSpriteCanvasGrids } from './game/canvas/canvasSetter';
 import { getBackSpritesGrid, getBackTilesGrid, getDOMContext, getFrontTilesGrid, getPreRenderCanvas, getPreRenderContext, getSpeechBubbleGrid } from './game/canvas/canvasGetter';
-import { hasActiveSpeechBubbles, hasActiveUiBubbles } from './game/controllers/bubbleController';
 import { getScreenTextCanvas, handleScreenText, screenTextIsActive } from './helpers/screenTextModule';
 import { drawNewTilesInCameraFocus } from './helpers/dynamicTileDrawer';
 import { handleControls } from './controls/controlHandler';
@@ -19,6 +18,8 @@ import { loadGame } from './gameLoader';
 import { getPendingContracts } from './contracts/contractRegistry';
 import { registerBlockedTilesOnMap } from './map/mapLoader';
 import { StateType } from './enumerables/StateType';
+import { drawActiveText, textBubblesAreActive } from './text/textController';
+import { setCenterBubbleForNewLocation } from './game/neighbourhoodModule';
 
 let lastDateNow: number;
 let newDateNow: number;
@@ -70,6 +71,7 @@ const handleMapIsLoadLoop = (): void => {
     if ( pendingContracts.length < 1 ) {
         registerBlockedTilesOnMap();
         alterGameState( StateType.loadingMap, false );
+        setCenterBubbleForNewLocation();
     }
 }
 const handleDefaultLoop = (): void => {
@@ -85,6 +87,7 @@ const handleDefaultLoop = (): void => {
 
     handleControls();
     drawNewTilesInCameraFocus( cameraFocus );
+    drawActiveText();
     handleOffscreenCanvasBitmaps();
 
     if ( cameraFocus.movingToNewFocus ) {
@@ -108,7 +111,7 @@ const handleOffscreenCanvasBitmaps = () => {
     preRenderContext.drawImage( getBackSpritesGrid().canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
     preRenderContext.drawImage( getFrontTilesGrid().canvas, Math.floor( offscreenX ), Math.floor( offscreenY ), width, height, 0, 0, width, height );
 
-    if ( hasActiveSpeechBubbles() || hasActiveUiBubbles() ) {
+    if ( textBubblesAreActive() ) {
         const speechBubbleCanvas = getSpeechBubbleGrid();
         const bubbleX = ( preRenderCanvas.width - speechBubbleCanvas.canvas.width ) / 2;
         const bubbleY = ( preRenderCanvas.height - speechBubbleCanvas.canvas.height ) / 2;

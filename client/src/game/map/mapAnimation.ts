@@ -1,6 +1,5 @@
 import { MovementType } from '../../enumerables/MovementTypeEnum';
 import type { Sprite } from '../core/Sprite';
-import { drawBubbles } from '../controllers/bubbleController';
 import { CanvasTypeEnum } from '../../enumerables/CanvasTypeEnum';
 import { getBackSprites, getDynamicSprites, getPlayer } from '../modules/sprites/spriteGetter';
 import { drawRect } from '../../helpers/canvasHelpers';
@@ -29,8 +28,6 @@ export const handleMapAnimations = (): void => {
 
     //TO DO - handleRoadNetworkFuncs()
     handleNpcCounter()
-
-    drawBubbles();
 
     const playerHitbox = getAssociatedHitbox( PLAYER_ID );
     const player = getPlayer();

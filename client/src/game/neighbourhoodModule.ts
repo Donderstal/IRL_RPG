@@ -3,8 +3,9 @@ import { Counter } from "../helpers/Counter";
 import { getNeighbourhood } from "../resources/mapResources";
 import type { MapModel } from "../models/MapModel";
 import type { NeighbourhoodModel } from "../models/NeighbourhoodModel";
-import { setNewCenterBubble } from "./controllers/bubbleController";
 import { getBackSpritesGrid } from "./canvas/canvasGetter";
+import { getShowCenterTextBubbleContract } from "../factories/contractFactory";
+import { registerNewContract } from "../contracts/contractRegistry";
 
 let model: NeighbourhoodModel;
 let mapModel: MapModel;
@@ -43,7 +44,12 @@ export const markMapAsActive = ( mapKey: string ): void => {
     previousMapLocation = activeMapLocation;
     activeMapKey = mapKey;
     activeMapLocation = getActiveMap().location;
-    setNewCenterBubble( activeMapLocation );
+}
+export const setCenterBubbleForNewLocation = (): void => {
+    if ( previousMapLocation !== activeMapLocation ) {
+        const centerTextContract = getShowCenterTextBubbleContract( activeMapLocation );
+        registerNewContract( centerTextContract );
+    }
 }
 export const setNeighbourhoodNPCCounter = (): void => {
     NPCCounter = new Counter( model.characterSpawnRate, true )
